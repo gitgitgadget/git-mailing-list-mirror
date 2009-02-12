@@ -1,54 +1,57 @@
-From: Prenom Nom <utilisateur_768@yahoo.fr>
-Subject: git-cvsimport : fatal: 'Root_branche_2_0_*_' is not a valid tag name.
-Date: Thu, 12 Feb 2009 08:26:36 +0100
-Message-ID: <4993CF2C.6010704@yahoo.fr>
+From: Aneesh Kumar <aneesh.kumar@gmail.com>
+Subject: [topgit] tg update error
+Date: Thu, 12 Feb 2009 13:39:06 +0530
+Message-ID: <cc723f590902120009w432f5f61xd6550409835cdbb7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 12 08:25:25 2009
+To: Junio C Hamano <gitster@pobox.com>, madduck@debian.org,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 12 09:10:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXVwp-0001jt-Dw
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 08:25:23 +0100
+	id 1LXWeb-0004pI-Vy
+	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 09:10:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754110AbZBLHYA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2009 02:24:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753818AbZBLHYA
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 02:24:00 -0500
-Received: from n21.bullet.mail.ukl.yahoo.com ([87.248.110.138]:21017 "HELO
-	n21.bullet.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752108AbZBLHX7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Feb 2009 02:23:59 -0500
-X-Greylist: delayed 1534 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Feb 2009 02:23:58 EST
-Received: from [217.146.182.178] by n21.bullet.mail.ukl.yahoo.com with NNFMP; 12 Feb 2009 07:23:57 -0000
-Received: from [87.248.110.115] by t4.bullet.ukl.yahoo.com with NNFMP; 12 Feb 2009 07:23:57 -0000
-Received: from [127.0.0.1] by omp220.mail.ukl.yahoo.com with NNFMP; 12 Feb 2009 07:23:58 -0000
-X-Yahoo-Newman-Id: 836184.82182.bm@omp220.mail.ukl.yahoo.com
-Received: (qmail 52105 invoked from network); 12 Feb 2009 07:23:57 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.fr;
-  h=Received:X-YMail-OSG:X-Yahoo-Newman-Property:Message-ID:Date:From:User-Agent:MIME-Version:To:Subject:Content-Type:Content-Transfer-Encoding;
-  b=UKwEspjXy2lUobtdcIjUmCcAr9eZmtTZY6+BmBQzk2o6TbvLFv9HtGUVJKW46X5e8OyUeTeYgfMR/WrF/VdzTpUFijbsIfFY+dBKhpqNPdIltNxQTACg/pzws5+VRspcVKkMkoEIpp1QW0BI8nvuxlXKYBbnkNJHAeOAsGUP3Xs=  ;
-Received: from unknown (HELO ?192.168.0.54?) (utilisateur_768@82.101.43.206 with plain)
-  by smtp146.mail.ukl.yahoo.com with SMTP; 12 Feb 2009 07:23:56 -0000
-X-YMail-OSG: s.TJP6UVM1m9_Z5M7KkMmvJqz6P4whyAvYtoqCPUT9LnBl.5ihgVAza2xm5P0EDrBwHiS4iEXy3aR3QxyFHXGgnuW2lyNQs83gQXufzcDqCQN7yllcEGy1nm8.2r9Cm9hQGunjxDzVaJJj8XIc6fJi02
-X-Yahoo-Newman-Property: ymail-3
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+	id S1750991AbZBLIJK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2009 03:09:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750877AbZBLIJJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 03:09:09 -0500
+Received: from mail-fx0-f20.google.com ([209.85.220.20]:32788 "EHLO
+	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750730AbZBLIJI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2009 03:09:08 -0500
+Received: by fxm13 with SMTP id 13so1586639fxm.13
+        for <git@vger.kernel.org>; Thu, 12 Feb 2009 00:09:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=CrQzOKLbTQZbam0+Toq1MKExN3Fl9KXbKwXd0QC7/Rg=;
+        b=Ng7dWOIujResI6sRI4WIdE2es2w8jxnvSipoX3kepBeRvp4q7+j77uIXMmPptf/pYj
+         FK5Z9PtPn499GyXtHQKxIxA3703aOCBqAL/UaPseKu75V6Mu51nwD1PrMPTcmZdRaJai
+         Z5MT9uXMFB+NTdfXBV2+EuJfIL4lSAFY3Nj7U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=BATCQFEgikBXj/iLIrpAmfi5Q+GnqQXOPVMB7q5356kbDBx2miq5UGa06YXV4mWrNc
+         IMxRJ0mV+S+fXmTsAPnYW+HFMccwLcmf/r369qT9jIfjHJoCzp7BhlMmpVQp6A0MBCR+
+         RcbZNPWPtk8xrLQ+Vqk5xxr4Hv7DrO4xg7TRo=
+Received: by 10.180.241.8 with SMTP id o8mr216693bkh.102.1234426146278; Thu, 
+	12 Feb 2009 00:09:06 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109581>
 
-Hi,
-during a run of git-cvsimport, i got this error :
-fatal: 'Root_branche_2_0_*_' is not a valid tag name.
-Cannot create tag Root_branche_2_0_*_: Bad file descriptor
+doing a tg update with latest git gives the below error
 
-I can't use -p -b xxx since i would like to test branch merging in git 
-so i need HEAD AND some CVS branch (you can't use -b 2 times for cvsps).
+[extent_validate@linux-2.6]$ tg update
+fatal: Refusing to point HEAD outside of refs/heads/
+[extent_validate@linux-2.6]$
 
-So i guess i won't be able to test git branch merging...
+-aneesh
