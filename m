@@ -1,67 +1,92 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [PATCH] stash: --keep option just saves
-Date: Thu, 12 Feb 2009 17:28:23 +0900
-Message-ID: <fc339e4a0902120028tdbad235xad7c38d504b89bc6@mail.gmail.com>
-References: <20090212062514.6117@nanako3.lavabit.com>
-	 <7vljscbp60.fsf@gitster.siamese.dyndns.org>
-	 <buovdrgckpa.fsf@dhlpc061.dev.necel.com>
-	 <20090212171742.6117@nanako3.lavabit.com>
+From: martin f krafft <madduck@debian.org>
+Subject: Re: [topgit] tg update error
+Date: Thu, 12 Feb 2009 09:48:11 +0100
+Organization: The Debian project
+Message-ID: <20090212084811.GA14261@piper.oerlikon.madduck.net>
+References: <cc723f590902120009w432f5f61xd6550409835cdbb7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Thu Feb 12 09:30:25 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="VS++wcV0S1rZb1Fb"
+To: Aneesh Kumar <aneesh.kumar@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 12 09:49:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXWxd-0001jK-My
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 09:30:18 +0100
+	id 1LXXGZ-0007uw-RB
+	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 09:49:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757444AbZBLI23 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2009 03:28:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751873AbZBLI22
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 03:28:28 -0500
-Received: from wf-out-1314.google.com ([209.85.200.174]:47078 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757415AbZBLI20 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2009 03:28:26 -0500
-Received: by wf-out-1314.google.com with SMTP id 28so683285wfa.4
-        for <git@vger.kernel.org>; Thu, 12 Feb 2009 00:28:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=RrUx51RR7jsLqUdc0S0B2S0GRHGcxq5o3GBSY0RFGOU=;
-        b=u4/4fN+u6bw9kpxWSOgJws5oDyV79MihMxqTInuvwJqG5prB/4syycah9oo6+9q9iT
-         PzWL+bL9n+TrSGD7wLYTBE6MgxqYWpfvB1NVXFoASFqUMvo9h1N9fFsYmmQ6MuEg7C8Z
-         kbx0Egh82bBD0tIZzAuuulTklpF4HRqLYZevo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=SNqiYWPkFlccCTXWNkAuTUTX1z/UQF6plfjYs+pqyP5VEkIC8UlD9b8YZR4UK4pnIC
-         mK83oHfVuTnpM0zPYRLL8GjMUL5ubqtFNXx5VXJ76HyG7IjaX+mpm8BdSki3MUeoL36/
-         utE/PqSuX3F+Mh/UsR8zbAm4knZRYhgJYjzuA=
-Received: by 10.142.134.17 with SMTP id h17mr281360wfd.211.1234427303946; Thu, 
-	12 Feb 2009 00:28:23 -0800 (PST)
-In-Reply-To: <20090212171742.6117@nanako3.lavabit.com>
-X-Google-Sender-Auth: 20061cc29397e14f
+	id S1754607AbZBLIsY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2009 03:48:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754587AbZBLIsY
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 03:48:24 -0500
+Received: from clegg.madduck.net ([193.242.105.96]:54725 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754220AbZBLIsX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2009 03:48:23 -0500
+Received: from wall.oerlikon.madduck.net (wall.oerlikon.madduck.net [IPv6:2001:41e0:ff12::1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id E0EB71D409B;
+	Thu, 12 Feb 2009 09:48:12 +0100 (CET)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTPS id 00B7F9F13D;
+	Thu, 12 Feb 2009 09:48:11 +0100 (CET)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id 8DAB84454; Thu, 12 Feb 2009 09:48:11 +0100 (CET)
+Mail-Followup-To: Aneesh Kumar <aneesh.kumar@gmail.com>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <cc723f590902120009w432f5f61xd6550409835cdbb7@mail.gmail.com>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux 5.0 kernel 2.6.26-1-amd64 x86_64
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94.2/8981/Thu Feb 12 01:28:11 2009 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109586>
 
-On Thu, Feb 12, 2009 at 5:17 PM, Nanako Shiraishi <nanako3@lavabit.com> wrote:
-> I suspect you either didn't read or didn't understand the rest of Junio's message in which he explained why it isn't a good use of git.
 
-See the final paragraph of my message.
+--VS++wcV0S1rZb1Fb
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--Miles
+also sprach Aneesh Kumar <aneesh.kumar@gmail.com> [2009.02.12.0909 +0100]:
+> doing a tg update with latest git gives the below error
+>=20
+> [extent_validate@linux-2.6]$ tg update
+> fatal: Refusing to point HEAD outside of refs/heads/
+> [extent_validate@linux-2.6]$
 
--- 
-Do not taunt Happy Fun Ball.
+Which version? And could you please provide (a lot) more information
+about your repository or make it available?
+
+--=20
+ .''`.   martin f. krafft <madduck@d.o>      Related projects:
+: :'  :  proud Debian developer               http://debiansystem.info
+`. `'`   http://people.debian.org/~madduck    http://vcs-pkg.org
+  `-  Debian - when you have better things to do than fixing systems
+=20
+"to me, vi is zen. to use vi is to practice zen. every command is
+ a koan. profound to the user, unintelligible to the uninitiated.
+ you discover truth everytime you use it."
+                                       -- reddy =E4t lion.austin.ibm.com
+
+--VS++wcV0S1rZb1Fb
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkmT4ksACgkQIgvIgzMMSnXQdACg7grzZUFtfGj5HhRNzcl/LNO5
+2TcAoL58qUftIPASpYr3fcQLJlXwT+Op
+=RxzZ
+-----END PGP SIGNATURE-----
+
+--VS++wcV0S1rZb1Fb--
