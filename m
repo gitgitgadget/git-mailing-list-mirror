@@ -1,140 +1,118 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: [topgit] tg update error
-Date: Thu, 12 Feb 2009 10:32:27 +0100
-Message-ID: <20090212093227.GC20248@piper.oerlikon.madduck.net>
-References: <cc723f590902120009w432f5f61xd6550409835cdbb7@mail.gmail.com> <20090212084811.GA14261@piper.oerlikon.madduck.net> <20090212092558.GB21074@skywalker>
+From: Finn Arne Gangstad <finnag@pvv.org>
+Subject: [PATCH v3] Support "\" in non-wildcard exclusion entries
+Date: Thu, 12 Feb 2009 10:32:50 +0100
+Message-ID: <20090212093250.GA9623@pvv.org>
+References: <20090210121149.GA1226@pvv.org> <alpine.DEB.1.00.0902101354460.10279@pacific.mpi-cbg.de> <20090210125800.GA14800@pvv.org> <alpine.DEB.1.00.0902101402230.10279@pacific.mpi-cbg.de> <20090210142017.GA16478@pvv.org> <alpine.DEB.1.00.0902101525380.10279@pacific.mpi-cbg.de> <20090210143742.GB16478@pvv.org> <7vab8upb5v.fsf@gitster.siamese.dyndns.org> <7v7i3ynt1z.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="s/l3CgOIzMHHjg/5"
-To: "Aneesh Kumar K.V" <aneesh.kumar@linux.vnet.ibm.com>,
-	Aneesh Kumar <aneesh.kumar@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 12 10:34:20 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 12 10:34:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXXxW-0006mc-QO
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 10:34:15 +0100
+	id 1LXXxg-0006pp-Bg
+	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 10:34:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755754AbZBLJcs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2009 04:32:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755720AbZBLJcr
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 04:32:47 -0500
-Received: from clegg.madduck.net ([193.242.105.96]:53693 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755690AbZBLJcq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2009 04:32:46 -0500
-Received: from wall.oerlikon.madduck.net (wall.oerlikon.madduck.net [IPv6:2001:41e0:ff12::1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTPS id 883FD1D409B;
-	Thu, 12 Feb 2009 10:32:29 +0100 (CET)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTPS id 622AE9F13D;
-	Thu, 12 Feb 2009 10:32:28 +0100 (CET)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id E65514454; Thu, 12 Feb 2009 10:32:27 +0100 (CET)
+	id S1755897AbZBLJcz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2009 04:32:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755857AbZBLJcz
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 04:32:55 -0500
+Received: from decibel.pvv.ntnu.no ([129.241.210.179]:57914 "EHLO
+	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755738AbZBLJcy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2009 04:32:54 -0500
+Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
+	(envelope-from <finnag@pvv.ntnu.no>)
+	id 1LXXwA-0005QC-67; Thu, 12 Feb 2009 10:32:50 +0100
 Content-Disposition: inline
-In-Reply-To: <20090212092558.GB21074@skywalker>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux 5.0 kernel 2.6.26-1-amd64 x86_64
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: ClamAV 0.94.2/8981/Thu Feb 12 01:28:11 2009 on clegg.madduck.net
-X-Virus-Status: Clean
+In-Reply-To: <7v7i3ynt1z.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109591>
 
+On Tue, Feb 10, 2009 at 08:41:12AM -0800, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> Oh, by the way, do we really want to add a new test script?  I am
+> wondering why the test is not an update to an existing test for the
+> exclusion feature, such as t/t3001-ls-files-others-exclude.sh
 
---s/l3CgOIzMHHjg/5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Ok, here is the final version with your suggested test-modification,
+which seems to to the trick!
 
-also sprach Aneesh Kumar K.V <aneesh.kumar@linux.vnet.ibm.com> [2009.02.12.=
-1025 +0100]:
-> Latest git and topgit. Moving to git version v1.6.1.3 fixed the issue.
-> I can reproduce the problem on any test repo. Just do a tg update after
-> committing something in the dependent branch.
+- Finn Arne
 
-This is not helpful. Please provide a complete transcript of
-a session reproducing the problem.
+--8<--
+Support "\" in non-wildcard exclusion entries
 
-I can't:
+"\" was treated differently in exclude rules depending on whether a
+wildcard match was done. For wildcard rules, "\" was de-escaped in
+fnmatch, but this was not done for other rules since they used strcmp
+instead.  A file named "#foo" would not be excluded by "\#foo", but would
+be excluded by "\#foo*".
 
-piper:~|master|.tmp/cdt.GydvBgiR% echo foo > bar                           =
-                      #10002
-piper:~|master|.tmp/cdt.GydvBgiR% giti                                     =
-                      #10003
-Initialized empty Git repository in /home/madduck/.tmp/cdt.GydvBgiR/.git/
-Created initial commit 0f189f3: initial checkin
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644 bar
-piper:~/.tmp/cdt.GydvBgiR|master|% tg create test                          =
-                      #10004
-tg: Automatically marking dependency on master
-tg: Creating test base from master...
-Switched to a new branch "test"
-tg: Topic branch test set up. Please fill .topmsg now and make initial comm=
-it.
-tg: To abort: git rm -f .top* && git checkout master && tg delete test
-cached/staged changes:
- .topdeps |    1 +
- .topmsg  |    6 ++++++
-piper:~/.tmp/cdt.GydvBgiR|master|% git commit -minit                       =
-                      #10005
-Created commit d49ea41: init
- 2 files changed, 7 insertions(+), 0 deletions(-)
- create mode 100644 .topdeps
- create mode 100644 .topmsg
-piper:~/.tmp/cdt.GydvBgiR|test|% echo bar >> bar                           =
-                      #10006
-changes on filesystem:
- bar |    1 +
-piper:~/.tmp/cdt.GydvBgiR|test|% git add bar                               =
-                      #10007
-cached/staged changes:
- bar |    1 +
-piper:~/.tmp/cdt.GydvBgiR|test|% git commit -m'append'                     =
-                      #10008
-Created commit e85457e: append
- 1 files changed, 1 insertions(+), 0 deletions(-)
-piper:~/.tmp/cdt.GydvBgiR|test|% tg update                                 =
-                      #10009
-tg: The base is up-to-date.
-tg: The test head is up-to-date wrt. the base.
-piper:~/.tmp/cdt.GydvBgiR|test|% git --version                             =
-                      #10010
-git version 1.6.0.2
-piper:~/.tmp/cdt.GydvBgiR|test|% tg --version                              =
-                      #10011
-Unknown subcommand: --version
-TopGit v0.5 - A different patch queue manager
-Usage: tg [-r REMOTE] (create|delete|depend|export|import|info|mail|patch|r=
-emote|summary|update|help) ...
+We now treat all rules with "\" as wildcard rules.
 
---=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-this space intentionally left blank.
-=20
-spamtraps: madduck.bogus@madduck.net
+Another solution could be to de-escape all non-wildcard rules as we
+read them, but we would have to do the de-escaping exactly as fnmatch
+does it to avoid inconsistencies.
 
---s/l3CgOIzMHHjg/5
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
+Signed-off-by: Finn Arne Gangstad <finnag@pvv.org>
+---
+ dir.c                              |    2 +-
+ t/t3001-ls-files-others-exclude.sh |    7 +++++++
+ 2 files changed, 8 insertions(+), 1 deletions(-)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkmT7KsACgkQIgvIgzMMSnUXBwCbBbvBDqWUMMcJSKGCJqE8P5V9
-srsAnRhiD+b6tSaEp5RaEGpA1VKWefvJ
-=mcDk
------END PGP SIGNATURE-----
-
---s/l3CgOIzMHHjg/5--
+diff --git a/dir.c b/dir.c
+index cfd1ea5..2245749 100644
+--- a/dir.c
++++ b/dir.c
+@@ -137,7 +137,7 @@ int match_pathspec(const char **pathspec, const char *name, int namelen,
+ 
+ static int no_wildcard(const char *string)
+ {
+-	return string[strcspn(string, "*?[{")] == '\0';
++	return string[strcspn(string, "*?[{\\")] == '\0';
+ }
+ 
+ void add_exclude(const char *string, const char *base,
+diff --git a/t/t3001-ls-files-others-exclude.sh b/t/t3001-ls-files-others-exclude.sh
+index 85aef12..9be9557 100755
+--- a/t/t3001-ls-files-others-exclude.sh
++++ b/t/t3001-ls-files-others-exclude.sh
+@@ -19,6 +19,9 @@ do
+     >$dir/a.$i
+   done
+ done
++>"#ignore1"
++>"#ignore2"
++>"#hidden"
+ 
+ cat >expect <<EOF
+ a.2
+@@ -42,6 +45,9 @@ three/a.8
+ EOF
+ 
+ echo '.gitignore
++\#ignore1
++\#ignore2*
++\#hid*n
+ output
+ expect
+ .gitignore
+@@ -82,6 +88,7 @@ test_expect_success \
+ cat > excludes-file << EOF
+ *.[1-8]
+ e*
++\#*
+ EOF
+ 
+ git config core.excludesFile excludes-file
+-- 
+1.6.2.rc0.11.g665ed
