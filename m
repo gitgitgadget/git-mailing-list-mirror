@@ -1,60 +1,77 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 2/3] builtin-remote: teach show to display remote HEAD
-Date: Thu, 12 Feb 2009 16:34:01 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0902121627520.19665@iabervon.org>
-References: <1234332083-45147-1-git-send-email-jaysoffian@gmail.com> <1234332083-45147-2-git-send-email-jaysoffian@gmail.com> <1234332083-45147-3-git-send-email-jaysoffian@gmail.com> <20090212002612.GC30231@coredump.intra.peff.net>
- <76718490902111748j58f80591ma149f8ec9fb8b352@mail.gmail.com> <alpine.LNX.1.00.0902121519160.19665@iabervon.org> <7vfxijjqlb.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH] Teach rebase to rebase even if upstream is up to
+ date with -f
+Date: Thu, 12 Feb 2009 13:34:59 -0800
+Message-ID: <7vbpt7jq4c.fsf@gitster.siamese.dyndns.org>
+References: <1234468061-29923-1-git-send-email-srabbelier@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jay Soffian <jaysoffian@gmail.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 12 22:35:42 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "Git Mailinglist" <git@vger.kernel.org>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Eric Wong" <normalperson@yhbt.net>,
+	"Shawn O. Pear, Sverre Rabbelier <srabbelier@gmail.com>"@b-sasl-quonix.sasl.smtp.pobox.com
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 12 22:36:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXjDZ-0003Jx-62
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 22:35:33 +0100
+	id 1LXjEa-0003jh-Ab
+	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 22:36:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758072AbZBLVeG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2009 16:34:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756772AbZBLVeF
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 16:34:05 -0500
-Received: from iabervon.org ([66.92.72.58]:53176 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754932AbZBLVeE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2009 16:34:04 -0500
-Received: (qmail 2380 invoked by uid 1000); 12 Feb 2009 21:34:01 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 12 Feb 2009 21:34:01 -0000
-In-Reply-To: <7vfxijjqlb.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1758227AbZBLVfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2009 16:35:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757290AbZBLVfJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 16:35:09 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38876 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755322AbZBLVfI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2009 16:35:08 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 392BB2AFF5;
+	Thu, 12 Feb 2009 16:35:07 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 47CB02AFE8; Thu,
+ 12 Feb 2009 16:35:02 -0500 (EST)
+In-Reply-To: <1234468061-29923-1-git-send-email-srabbelier@gmail.com> (Sverre
+ Rabbelier's message of "Thu, 12 Feb 2009 20:47:41 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 045FFBE8-F94D-11DD-BE19-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109663>
 
-On Thu, 12 Feb 2009, Junio C Hamano wrote:
+Sverre Rabbelier <srabbelier@gmail.com> writes:
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > I have the vague memory, as well, that there's some way for a transport to 
-> > report that it actually knows that HEAD is a symref to something in 
-> > particular, and so git shouldn't guess.
-> 
-> I think you are thinking about:
-> 
->     http://thread.gmane.org/gmane.comp.version-control.git/102039
+> Say I have a bunch of new commits ready to submit to origin, but I want to fix
+> some whitespace damage, I could do something like this:
+>
+> $ git checkout master
+> $ git branch -b rebase-me
+> $ git reset --hard origin/master
+> $ git commit --allow-empty "force rebase"
+> $ git checkout rebase-me
+> $ git rebase --whitespace=fix master
+> $ git rebase -i master # kick out the 'force rebase' commit
+> $ git checkout master
+> $ git reset --hard rebase-me
+> $ git branch -d rebase-me
 
-Actually, I think I missed that thread entirely; I was thinking of earlier 
-work to allow the http transport, when it finds that HEAD is a symref 
-file, to report that there's a ref named "HEAD", with a particular value, 
-and that it's incidentally known to be a symref to another particular ref.
+For that, I would prefer to see:
 
-Ended up in be885d96fe0ebed47e637f3b0dd24fc5902f7081, but I don't think 
-anything was set up to actually do anything with the information.
+	git format-patch --stdout origin >my.mbox
+	git fetch origin
+        git checkout origin             ;# yes, detach
+        git am --whitespace=fix my.mbox
+        make test
+        git format-patch -o to-send-out origin
+	git send-email ..options.. to-send-out
 
-	-Daniel
-*This .sig left intentionally blank*
+for two reasons.
+
+It fixes whitespace breakages, but more importantly, the procedure makes
+sure that what you will be sending out will apply cleanly to the origin
+that may have progressed since you last looked at it.
