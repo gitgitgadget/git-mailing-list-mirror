@@ -1,68 +1,114 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: git gc --prune consumes *lots* of memory with repos cloned
-	with --reference
-Date: Thu, 12 Feb 2009 19:59:25 +0100
-Message-ID: <20090212185925.GC20552@atjola.homenet>
-References: <cccedfc60902121032y17180739r2a049197323d3588@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 1/3] builtin-remote: move duplicated cleanup code its
+ own  function
+Date: Thu, 12 Feb 2009 15:13:31 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0902121458450.19665@iabervon.org>
+References: <1234332083-45147-1-git-send-email-jaysoffian@gmail.com>  <1234332083-45147-2-git-send-email-jaysoffian@gmail.com>  <20090212001836.GB30231@coredump.intra.peff.net> <76718490902111744p27e83238x34cb7004d8e3e48f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jon Nelson <jnelson@jamponi.net>
-X-From: git-owner@vger.kernel.org Thu Feb 12 20:01:03 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, gitster@pobox.com
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 12 21:15:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXgo1-00028X-7M
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 20:01:01 +0100
+	id 1LXhxi-0006BF-2Z
+	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 21:15:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758381AbZBLS7d convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Feb 2009 13:59:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758282AbZBLS7d
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 13:59:33 -0500
-Received: from mail.gmx.net ([213.165.64.20]:35099 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758238AbZBLS7c (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2009 13:59:32 -0500
-Received: (qmail invoked by alias); 12 Feb 2009 18:59:28 -0000
-Received: from i577B878B.versanet.de (EHLO atjola.local) [87.123.135.139]
-  by mail.gmx.net (mp052) with SMTP; 12 Feb 2009 19:59:28 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1+uv+xCrzKuI2J54Rl/DOTgBDDxY6BQlFx1Y5QiT1
-	gjfYeopweO8sl3
-Content-Disposition: inline
-In-Reply-To: <cccedfc60902121032y17180739r2a049197323d3588@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.61
+	id S1756980AbZBLUNe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2009 15:13:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756610AbZBLUNd
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 15:13:33 -0500
+Received: from iabervon.org ([66.92.72.58]:45808 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751339AbZBLUNd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2009 15:13:33 -0500
+Received: (qmail 26638 invoked by uid 1000); 12 Feb 2009 20:13:31 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 12 Feb 2009 20:13:31 -0000
+In-Reply-To: <76718490902111744p27e83238x34cb7004d8e3e48f@mail.gmail.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109638>
 
-On 2009.02.12 12:32:13 -0600, Jon Nelson wrote:
-> The situation:
->=20
-> I cloned linux-2.6
-> Then I cloned netdev-2.6 with --reference $PWD/linux-2.6
-> Then I cloned net-2.6 with --reference $PWD/netdev-2.6
->=20
-> The problem:
->=20
-> git gc --prune on netdev-2.6 takes WAY more memory than git gc --prun=
-e
-> on linux-2.6
-> git gc --prune on net-2.6 takes WAY WAY more memory. 1.5G and countin=
-g.
->=20
-> Why does git gc --prune take 1.5G? (git pack-objects is the actual
-> memory-hungry process)
+On Wed, 11 Feb 2009, Jay Soffian wrote:
 
-Probably an older git version? There was a bug that caused a memory lea=
-k
-with unreachable objects being forced to be loose objects. That was
-fixed in 1.6.0.3
+> On Wed, Feb 11, 2009 at 7:18 PM, Jeff King <peff@peff.net> wrote:
+> > On Wed, Feb 11, 2009 at 01:01:21AM -0500, Jay Soffian wrote:
+> >
+> >> +static void free_remote_ref_states(struct ref_states *states)
+> >> +{
+> >> +     /* NEEDSWORK: free remote */
+> >> +     string_list_clear(&states->new, 0);
+> >> +     string_list_clear(&states->stale, 0);
+> >> +     string_list_clear(&states->tracked, 0);
+> >> +}
+> >
+> > Hmm. I don't know anything about this code, so maybe it is not trivial.
+> > But anytime you are touching an area that NEEDSWORK, I think it is worth
+> > looking at whether you can fix that problem (since you have already
+> > spent a few brain cycles understanding what is going on in general).
+> 
+> I spent about 5 minutes which was enough time for me to realize that
+> the reason the previous author left it as "NEEDSWORK" is because
+> fixing it is more than 5 minutes of work. This is the remote object --
+> maybe you could offer me some clues that allow me to know which of its
+> fields need to be freed individually:
+> 
+> struct remote {
+> 	const char *name;
+> 	int origin;
+> 
+> 	const char **url;
+> 	int url_nr;
+> 	int url_alloc;
+> 
+> 	const char **push_refspec;
+> 	struct refspec *push;
+> 	int push_refspec_nr;
+> 	int push_refspec_alloc;
+> 
+> 	const char **fetch_refspec;
+> 	struct refspec *fetch;
+> 	int fetch_refspec_nr;
+> 	int fetch_refspec_alloc;
+> 
+> 	/*
+> 	 * -1 to never fetch tags
+> 	 * 0 to auto-follow tags on heuristic (default)
+> 	 * 1 to always auto-follow tags
+> 	 * 2 to always fetch tags
+> 	 */
+> 	int fetch_tags;
+> 	int skip_default_update;
+> 	int mirror;
+> 
+> 	const char *receivepack;
+> 	const char *uploadpack;
+> 
+> 	/*
+> 	 * for curl remotes only
+> 	 */
+> 	char *http_proxy;
+> };
+> 
+> I *think* const is a clue that the field need not be freed, because
+> the pointer is to storage that is on the stack. But I wasn't sure, esp
+> with the double pointers. And I really wasn't sure about the struct
+> pointers.
 
-Bj=F6rn
+Actually, the comment is wrong; "remote" comes from remote_get(), which 
+returns things from a cache in remote.c; there could be a remote_put() to 
+let the code know that the caller is done with the object, but it wouldn't 
+presently do anything.
+
+(The code actually reads the config files once, generating info for all of 
+the configured remotes, and just returns them, except that it will 
+generate a new object for unconfigured, individually requested URLs)
+
+	-Daniel
+*This .sig left intentionally blank*
