@@ -1,341 +1,176 @@
-From: Yann Simon <yann.simon.fr@gmail.com>
-Subject: [PATCH JGIT] Add "compare with index" action.
-Date: Thu, 12 Feb 2009 15:18:26 +0100
-Message-ID: <49942FB2.9040903@gmail.com>
+From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+Subject: Re: [PATCH] git-rebase.txt: Mention that --whitespace cannot be used with interactive rebase.
+Date: Thu, 12 Feb 2009 08:44:52 -0600
+Message-ID: <200902120844.59224.bss@iguanasuicide.net>
+References: <20090212102119.1de19087@crow> <alpine.DEB.1.00.0902121156550.10279@pacific.mpi-cbg.de> <20090212113252.26b9788f@crow>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: multipart/signed;
+  boundary="nextPart3215900.n6VfOtU7MT";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Feb 12 15:20:13 2009
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git <git@vger.kernel.org>
+To: Mark Burton <markb@ordern.com>
+X-From: git-owner@vger.kernel.org Thu Feb 12 15:46:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXcQ4-0005Pj-FO
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 15:20:01 +0100
+	id 1LXcpk-0008Rw-Hy
+	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 15:46:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755469AbZBLOSc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2009 09:18:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755237AbZBLOSc
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 09:18:32 -0500
-Received: from mail-fx0-f20.google.com ([209.85.220.20]:64145 "EHLO
-	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752896AbZBLOSa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2009 09:18:30 -0500
-Received: by fxm13 with SMTP id 13so2029487fxm.13
-        for <git@vger.kernel.org>; Thu, 12 Feb 2009 06:18:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:content-type
-         :content-transfer-encoding;
-        bh=QW9nf5rPmqLhX6hzl7LTQ4bwUgRS8OtxOEGwfaLJ480=;
-        b=Up/8XOMrcNaNhfIkhxrrd1xCCYk+HGkcfdfGbxDedUxxAtshQe4+qBmp4igYwr3nAS
-         hjEoHgta0v7Zwu7QPS940wHunDZGCgQlemDPFxOc+6iIF3ze2AxzmX2rqnhYFik6fh5k
-         oyrtQjbKetK2ZEzuHrtddDxK2E43qMGXCcnlQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding;
-        b=T0R+LK0CI9PXkYcw44hhkMaG5gJnRDJDU3BI4gS+htUYfxDPKkI5fKdcvQwS2uNaEY
-         k4NZMS6gDY85m81TCGP7WesTgjXCYFghCHCuhSK++nBdhGtsyL+U63z3hDeKpT7drFQ/
-         8pcTbzwkxe0BjipnW2jcd9Ltmj2BptTpxK2zc=
-Received: by 10.86.99.9 with SMTP id w9mr988283fgb.31.1234448308224;
-        Thu, 12 Feb 2009 06:18:28 -0800 (PST)
-Received: from ?10.11.2.21? (port-87-193-216-74.static.qsc.de [87.193.216.74])
-        by mx.google.com with ESMTPS id l19sm1249781fgb.47.2009.02.12.06.18.27
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 12 Feb 2009 06:18:27 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+	id S1757469AbZBLOpE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2009 09:45:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757396AbZBLOpE
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 09:45:04 -0500
+Received: from eastrmmtao101.cox.net ([68.230.240.7]:52145 "EHLO
+	eastrmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757141AbZBLOpC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2009 09:45:02 -0500
+Received: from eastrmimpo03.cox.net ([68.1.16.126])
+          by eastrmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090212144502.IOZY15713.eastrmmtao101.cox.net@eastrmimpo03.cox.net>;
+          Thu, 12 Feb 2009 09:45:02 -0500
+Received: from localhost ([72.204.50.125])
+	by eastrmimpo03.cox.net with bizsmtp
+	id F2l01b0022i4SyG022l0WQ; Thu, 12 Feb 2009 09:45:00 -0500
+X-Authority-Analysis: v=1.0 c=1 a=-TwC5px8Zo0A:10 a=m1gWPYpK1nIA:10
+ a=2C6YHBdLAAAA:8 a=Fq1VQ0LPAAAA:8 a=7g5QXpzBYLF7PSbbg38A:9
+ a=YO_WDl3aKdjYhNXtU4oA:7 a=rco__N2CvQNnVa5rmqu4YRHurM0A:4 a=_RhRFcbxBZMA:10
+ a=T3brmoaXcPoA:10 a=LY0hPdMaydYA:10 a=BI8X1VcwyvTJE5ySkoUA:9
+ a=Zux6kYVWHSG7datTyHxVMvezMOIA:4 a=rPt6xJ-oxjAA:10
+X-CM-Score: 0.00
+Received: from bss by localhost with local (Exim 4.69)
+	(envelope-from <bss@iguanasuicide.net>)
+	id 1LXcoF-0000u5-Fd; Thu, 12 Feb 2009 08:44:59 -0600
+User-Agent: KMail/1.11.0 (Linux/2.6.26-1-amd64; KDE/4.2.0; x86_64; ; )
+In-Reply-To: <20090212113252.26b9788f@crow>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109620>
 
-In the Compare With... menu, the "compare with index" action opens
-a diff editor that compares the workspace version of a file and its
-index version.
+--nextPart3215900.n6VfOtU7MT
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-The local file can be modified and saved.
+On Thursday 12 February 2009 05:32:52 Mark wrote:
+> On Thu, 12 Feb 2009 11:58:25 +0100 (CET)
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > Would be nice to have important information like that (I mean that it is
+> > already handled, not that I was stupid enough to write the patch) in the
+> > commit message, don't you agree?
+>
+> Actually, no.
+>
+> I am very glad that the git guardians are diligent and careful because
+> it gives me confidence that my favourite software is going to work
+> reliably and efficiently, etc.
+>
+> However, if that diligence and attention to detail, etc. extends to the
+> point where a humble git user (not a developer) cannot submit a patch that
+> he thinks will, in some small way, improve the software, without being
+> quizzed, grilled or, in extreme cases, mocked or abused (it happens)
+> because the patch is not 100% perfect in every way, then, I am happy to
+> let the development process continue without my feeble contributions.
 
-Signed-off-by: Yann Simon <yann.simon.fr@gmail.com>
----
-This is the second version of the patch and replace the first one
-(except if it was in the time applied, in which case I will provide
-a diff).
+Junio does final fix-up on a lot of patches, but it's better if he doesn't=
+=20
+have to spend much time doing that and can spend more time merging and writ=
+ing=20
+patches.
 
-This version permits to modify and save the local file.
+High-quality commits are what makes git high-quality software.  You seem to=
+=20
+want the later, but don't want to provide the former.  You might not have t=
+o. =20
+Someone may pick up you patch and apply the fixes you won't spend time on. =
+=20
+However, if no one does, blame yourself.  You know enough about the process=
+ to=20
+submit the patch once.  You should know enough to submit the patch as many=
+=20
+times as needed to get an Ack.
 
--- yann
+> So, I left something out of the commit message, did I? Oh my gawd, I
+> better top myself!
 
- .../core/internal/storage/GitFileRevision.java     |   11 +++
- org.spearce.egit.ui/plugin.properties              |    3 +
- org.spearce.egit.ui/plugin.xml                     |    7 ++
- .../GitCompareFileRevisionEditorInput.java         |   24 +++--
- .../internal/actions/CompareWithIndexAction.java   |   92
-++++++++++++++++++++
- 5 files changed, 127 insertions(+), 10 deletions(-)
- create mode 100644
-org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CompareWithIndexAction.java
+Dscho wasn't saying that.  However, if you left something out of the commit=
+=20
+message (and you seem to admit you did), you should add it and resubmit.
 
-diff --git
-a/org.spearce.egit.core/src/org/spearce/egit/core/internal/storage/GitFileRevision.java
-b/org.spearce.egit.core/src/org/spearce/egit/core/internal/storage/GitFileRevision.java
-index 21ba19e..2f23c7d 100644
----
-a/org.spearce.egit.core/src/org/spearce/egit/core/internal/storage/GitFileRevision.java
-+++
-b/org.spearce.egit.core/src/org/spearce/egit/core/internal/storage/GitFileRevision.java
-@@ -49,6 +49,17 @@ public static GitFileRevision inCommit(final
-Repository db,
-         return new CommitFileRevision(db, commit, path, blobId);
-     }
- 
-+    /**
-+     * @param db
-+     *            the repository which contains the index to use.
-+     * @param path
-+     *            path of the resource in the index
-+     * @return revision implementation for the given path in the index
-+     */
-+    public static GitFileRevision inIndex(final Repository db, final
-String path) {
-+        return new IndexFileRevision(db, path);
-+    }
-+
-     private final String path;
- 
-     GitFileRevision(final String fileName) {
-diff --git a/org.spearce.egit.ui/plugin.properties
-b/org.spearce.egit.ui/plugin.properties
-index fa043f1..0fc869b 100644
---- a/org.spearce.egit.ui/plugin.properties
-+++ b/org.spearce.egit.ui/plugin.properties
-@@ -31,6 +31,9 @@ Decorator_description=Shows Git specific information
-on resources in projects un
- CompareWithRevisionAction_label=Compare With Git Revision
- CompareWithRevisionAction_tooltip=Compare With a Git Revision
- 
-+CompareWithIndexAction_label=Compare with index version
-+CompareWithIndexAction_tooltip=Compare with index version
-+
- ShowResourceInHistoryAction_label=Show in Resource History
- ShowResourceInHistoryAction_tooltip=Show selected files in the resource
-history view.
- 
-diff --git a/org.spearce.egit.ui/plugin.xml b/org.spearce.egit.ui/plugin.xml
-index 869108c..c706309 100644
---- a/org.spearce.egit.ui/plugin.xml
-+++ b/org.spearce.egit.ui/plugin.xml
-@@ -108,6 +108,13 @@
-                label="%CommitAction_label"
-                menubarPath="team.main/group1"
-                tooltip="%CommitAction_tooltip"/>
-+         <action
-+              
-class="org.spearce.egit.ui.internal.actions.CompareWithIndexAction"
-+              
-id="org.spearce.egit.ui.internal.actions.CompareWithIndexAction"
-+               label="%CompareWithIndexAction_label"
-+               menubarPath="compareWithMenu/gitCompareWithGroup"
-+               tooltip="&amp;CompareWithIndexAction_tooltip">
-+         </action>
-       </objectContribution>
-       <objectContribution
-          id="org.spearce.egit.ui.resetto"
-diff --git
-a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/GitCompareFileRevisionEditorInput.java
-b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/GitCompareFileRevisionEditorInput.java
-index 8aa076f..a54c2ee 100644
----
-a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/GitCompareFileRevisionEditorInput.java
-+++
-b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/GitCompareFileRevisionEditorInput.java
-@@ -11,7 +11,6 @@
- import java.lang.reflect.InvocationTargetException;
- 
- import org.eclipse.compare.CompareConfiguration;
--import org.eclipse.compare.CompareEditorInput;
- import org.eclipse.compare.IEditableContent;
- import org.eclipse.compare.IResourceProvider;
- import org.eclipse.compare.ITypedElement;
-@@ -33,14 +32,16 @@
- import org.eclipse.team.internal.ui.TeamUIPlugin;
- import org.eclipse.team.internal.ui.Utils;
- import org.eclipse.team.internal.ui.history.FileRevisionTypedElement;
-+import
-org.eclipse.team.internal.ui.history.CompareFileRevisionEditorInput.MyDiffNode;
- import org.eclipse.team.internal.ui.synchronize.LocalResourceTypedElement;
-+import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
- import org.eclipse.ui.IWorkbenchPage;
- 
- /**
-  * The input provider for the compare editor when working on resources
-  * under Git control.
-  */
--public class GitCompareFileRevisionEditorInput extends CompareEditorInput {
-+public class GitCompareFileRevisionEditorInput extends
-SaveableCompareEditorInput {
- 
-     private ITypedElement left;
-     private ITypedElement right;
-@@ -52,7 +53,7 @@
-      * @param page
-      */
-     public GitCompareFileRevisionEditorInput(ITypedElement left,
-ITypedElement right, IWorkbenchPage page) {
--        super(new CompareConfiguration());
-+        super(new CompareConfiguration(), page);
-         this.left = left;
-         this.right = right;
-     }
-@@ -326,12 +327,13 @@ private String getContentIdentifier(ITypedElement
-element){
-         return TeamUIMessages.CompareFileRevisionEditorInput_2;
-     }
- 
--//    /* (non-Javadoc)
--//     * @see
-org.eclipse.team.ui.synchronize.LocalResourceCompareEditorInput#fireInputChange()
--//     */
--//    protected void fireInputChange() {
--//        ((DiffNode)getCompareResult()).fireChange();
--//    }
-+    /* (non-Javadoc)
-+     * @see
-org.eclipse.team.ui.synchronize.SaveableCompareEditorInput#fireInputChange()
-+     */
-+    @Override
-+    protected void fireInputChange() {
-+        ((MyDiffNode)getCompareResult()).fireChange();
-+    }
- //
- //    /* (non-Javadoc)
- //     * @see
-org.eclipse.team.ui.synchronize.SaveableCompareEditorInput#contentsCreated()
-@@ -359,7 +361,9 @@ private LocalResourceTypedElement getLocalElement() {
-         return null;
-     }
- 
--    protected Object prepareInput(IProgressMonitor monitor) throws
-InvocationTargetException, InterruptedException {
-+    @Override
-+    protected ICompareInput prepareCompareInput(IProgressMonitor monitor)
-+            throws InvocationTargetException, InterruptedException {
-         ICompareInput input = createCompareInput();
-         getCompareConfiguration().setLeftEditable(isLeftEditable(input));
-         getCompareConfiguration().setRightEditable(false);
-diff --git
-a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CompareWithIndexAction.java
-b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CompareWithIndexAction.java
-new file mode 100644
-index 0000000..7e14cc9
---- /dev/null
-+++
-b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CompareWithIndexAction.java
-@@ -0,0 +1,92 @@
-+/*
-+ * Copyright (C) 2009, Yann Simon <yann.simon.fr@gmail.com>
-+ *
-+ * All rights reserved.
-+ *
-+ * Redistribution and use in source and binary forms, with or
-+ * without modification, are permitted provided that the following
-+ * conditions are met:
-+ *
-+ * - Redistributions of source code must retain the above copyright
-+ *   notice, this list of conditions and the following disclaimer.
-+ *
-+ * - Redistributions in binary form must reproduce the above
-+ *   copyright notice, this list of conditions and the following
-+ *   disclaimer in the documentation and/or other materials provided
-+ *   with the distribution.
-+ *
-+ * - Neither the name of the Git Development Community nor the
-+ *   names of its contributors may be used to endorse or promote
-+ *   products derived from this software without specific prior
-+ *   written permission.
-+ *
-+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
-+ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-+ */
-+
-+package org.spearce.egit.ui.internal.actions;
-+
-+import org.eclipse.compare.CompareUI;
-+import org.eclipse.compare.ITypedElement;
-+import org.eclipse.core.resources.IFile;
-+import org.eclipse.core.resources.IResource;
-+import org.eclipse.jface.action.IAction;
-+import org.eclipse.team.core.history.IFileRevision;
-+import org.eclipse.team.internal.ui.history.FileRevisionTypedElement;
-+import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
-+import org.spearce.egit.core.internal.storage.GitFileRevision;
-+import org.spearce.egit.core.project.RepositoryMapping;
-+import org.spearce.egit.ui.internal.GitCompareFileRevisionEditorInput;
-+import org.spearce.jgit.lib.Repository;
-+
-+/**
-+ * The "compare with index" action. This action opens a diff editor
-comparing
-+ * the file as found in the working directory and the version found in
-the index
-+ * of the repository.
-+ */
-+@SuppressWarnings("restriction")
-+public class CompareWithIndexAction extends RepositoryAction {
-+
-+    @Override
-+    public void execute(IAction action) {
-+        final IResource resource = getSelectedResources()[0];
-+        final RepositoryMapping mapping =
-RepositoryMapping.getMapping(resource.getProject());
-+        final Repository repository = mapping.getRepository();
-+        final String gitPath = mapping.getRepoRelativePath(resource);
-+
-+        final IFileRevision nextFile =
-GitFileRevision.inIndex(repository, gitPath);
-+
-+        final IFile baseFile = (IFile)resource;
-+        final ITypedElement base =
-SaveableCompareEditorInput.createFileElement(baseFile);
-+        final ITypedElement next = new FileRevisionTypedElement(nextFile);
-+
-+        final GitCompareFileRevisionEditorInput in = new
-GitCompareFileRevisionEditorInput(
-+                base, next, null);
-+        CompareUI.openCompareEditor(in);
-+    }
-+
-+    @Override
-+    public boolean isEnabled() {
-+        final IResource[] selectedResources = getSelectedResources();
-+        if (selectedResources.length != 1)
-+            return false;
-+        final IResource resource = selectedResources[0];
-+        if (!(resource instanceof IFile)) {
-+            return false;
-+        }
-+        final RepositoryMapping mapping =
-RepositoryMapping.getMapping(resource.getProject());
-+        return mapping != null;
-+    }
-+
-+}
-\ No newline at end of file
--- 
-1.6.1.2
+> Johannes, you're the worst of the pedants. Ease up man, you'll bust a
+> blood vessel!
+
+After I read this list for about a month, I has convinced that Dscho's main=
+=20
+purpose in life was to prevent patches from being accepted.  After reading =
+the=20
+list for 3 months, I recognized that Dscho's performing an important servic=
+e=20
+for the list that definitely drives up the quality of the code seen in git.=
+ =20
+Unfortunately, doing that job makes people grumpy, so occasionally you may =
+see=20
+Dscho come off as brusque.
+
+At http://www.kroah.com/log/linux/ols_2006_keynote.html, Greg Kroah-Hartman=
+=20
+wrote about reviewing patches for the Linux kernel:
+
+"The Linux kernel mailing list also has another kind of perceived problem.=
+=20
+Lots of people can find the reaction of developers on this list as very=20
+"harsh" at times. They post their code, and get back scathing reviews of=20
+everything they did wrong. Usually the reviewers only criticize the code=20
+itself, but for most people, this can be a very hard thing to be on the=20
+receiving end of. They just put out what they felt was a perfect thing, onl=
+y=20
+to see it cut into a zillion tiny pieces.
+
+"The big problem of this, is we really only have a very small group of peop=
+le=20
+reviewing code in the kernel community. Reviewing code is a hard, unrewardi=
+ng,=20
+tough thing to do. It really makes you grumpy and rude in a very short peri=
+od=20
+of time. I tried it out for a whole week, and at the end of it, I was writi=
+ng=20
+emails like this one:
+
+'Wow, for such a small file, every single function was incorrect.  And you=
+=20
+abused sysfs in a new and interesting way that I didn't think was even=20
+possible.  I think this is two new records you have set here,=20
+congratulations.'
+
+"Other people who review code, aren't even as nice as I was here."
+
+In short, reviewing is hard and thankless and we are lucky we have Dscho (a=
+nd=20
+others) to do it for us.
+=2D-=20
+Boyd Stephen Smith Jr.                   ,=3D ,-_-. =3D.
+bss@iguanasuicide.net                   ((_/)o o(\_))
+ICQ: 514984 YM/AIM: DaTwinkDaddy         `-'(. .)`-'
+http://iguanasuicide.net/                    \_/
+
+
+--nextPart3215900.n6VfOtU7MT
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkmUNeUACgkQ55pqL7G1QFl9XgCcCEFkAyNrtpsTGfV8zsH5rwTt
+w6YAn1mDkuQGYHl9weKmpqWB8E8XcrNd
+=PTzw
+-----END PGP SIGNATURE-----
+
+--nextPart3215900.n6VfOtU7MT--
