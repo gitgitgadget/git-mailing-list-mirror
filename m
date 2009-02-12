@@ -1,61 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] shortstatus v1
-Date: Wed, 11 Feb 2009 19:49:21 -0500
-Message-ID: <20090212004921.GD30231@coredump.intra.peff.net>
-References: <1234227067-56666-1-git-send-email-tuncer.ayaz@gmail.com> <20090210110330.GB12089@coredump.intra.peff.net> <7vwsbynv0o.fsf@gitster.siamese.dyndns.org> <20090210181052.GA19634@coredump.intra.peff.net> <20090210191118.GA26651@coredump.intra.peff.net> <7vtz72kjz0.fsf@gitster.siamese.dyndns.org> <20090210225539.GC26954@coredump.intra.peff.net> <7v3aellwoa.fsf@gitster.siamese.dyndns.org>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: [ANNOUNCE] tig-0.14
+Date: Thu, 12 Feb 2009 02:08:14 +0100
+Message-ID: <2c6b72b30902111708t4513aa18wca9b7306796509ce@mail.gmail.com>
+References: <20090205204436.GA6072@diku.dk> <49930F1A.6030509@tedpavlic.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Tuncer Ayaz <tuncer.ayaz@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 12 01:50:54 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: Ted Pavlic <ted@tedpavlic.com>
+X-From: git-owner@vger.kernel.org Thu Feb 12 02:09:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXPn1-00013m-VU
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 01:50:52 +0100
+	id 1LXQ5O-0005l1-VH
+	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 02:09:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752546AbZBLAtY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 19:49:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750945AbZBLAtY
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 19:49:24 -0500
-Received: from peff.net ([208.65.91.99]:37589 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750730AbZBLAtY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 19:49:24 -0500
-Received: (qmail 4366 invoked by uid 107); 12 Feb 2009 00:49:40 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 11 Feb 2009 19:49:40 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Feb 2009 19:49:21 -0500
-Content-Disposition: inline
-In-Reply-To: <7v3aellwoa.fsf@gitster.siamese.dyndns.org>
+	id S1754333AbZBLBIV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 20:08:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753890AbZBLBIV
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 20:08:21 -0500
+Received: from mail-bw0-f161.google.com ([209.85.218.161]:41889 "EHLO
+	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752903AbZBLBIU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 20:08:20 -0500
+Received: by bwz5 with SMTP id 5so686545bwz.13
+        for <git@vger.kernel.org>; Wed, 11 Feb 2009 17:08:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=cC+M0WTgLIybaksp5XPM2CACtbFTwvq1ux2DFLYbzmg=;
+        b=EYhRhBne6uNC44TkL9PyBbax/7v5NJCORpEwOyOmp3aeEfGQrXpgHhtQ5Ze7FN+d0H
+         bGZY7A3WFIYvl/mpeicDBCodRU6JrovmvwqOPJIndpqTa41IXV+Sgqyxb0/O2rpf0Hse
+         81nU3zvHGtXcmp6kJL8G44woRTw7LPjF39XaM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=AA7JfGabEVxOUiwM+4dXGB7ehGeKK/Sguu6Q8cA4lJTjeqpk2ZxeUVzRrdvNDfVkSF
+         yssKKVOBt7z1/0yINw2u6jpdujR8a4Qixgk1phAvkZWCHJlvfJFo/k/5R634RyNwWEh4
+         e3D6McXmlOmC1Ih9da3w0fRnv2NJqk2j9p1WI=
+Received: by 10.181.141.7 with SMTP id t7mr101430bkn.10.1234400894324; Wed, 11 
+	Feb 2009 17:08:14 -0800 (PST)
+In-Reply-To: <49930F1A.6030509@tedpavlic.com>
+X-Google-Sender-Auth: d410a65c52c2aebd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109552>
 
-On Tue, Feb 10, 2009 at 03:05:57PM -0800, Junio C Hamano wrote:
+On Wed, Feb 11, 2009 at 18:47, Ted Pavlic <ted@tedpavlic.com> wrote:
+> *) Is there any way for "tig" to emulate "less -R"?
+>
+> That is, if an output is already colorized, can tig just pass through the
+> ANSI?
 
-> There is an obvious optimization you can do to "diff-index --cached" using
-> cache-tree.  If your index is really clean, computing the tree object the
-> index would represent (without writing the tree object out) and comparing
-> it against HEAD^{tree} may be a tad faster.
+Tig is heavily tied to ncurses and as far as I know ncurses does not
+support this. So it would require tig to parse the ANSI terminal codes
+into some representation from which the equivalent calls to the
+ncurses API is made.
 
-Clever, but I think you may just be trading one scenario for "worst
-case" versus another (i.e., now when you _do_ have a difference to do an
-early return, you still have to touch everything in the cache).
+> *) When doing "git diff|tig" when there directory is clean, tig should
+> probably exit immediately, right?
 
-Just for fun, I timed a quick and dirty implementation. It looks like
-generating the tree actually ends up taking just a little bit longer,
-even with an unchanged index (which should be the case it speeds up).
+Yes, good idea. The blame and main view currently does this too. Will
+look into it.
 
-But maybe I just did it wrong. My implementation was basically just:
+> *) Also, is there a way to configure "tig" to colorize and *exit* if the
+> piped text doesn't fill a page?
 
-  t = cache_tree();
-  if (!cache_tree_fully_valid(t))
-    cache_tree_update(t, active_cache, active_nr, 0, 0);
-  get_sha1("HEAD", sha1);
-  return hashcmp(t->sha1, sha1);
+No. However, this I have actually considered to support at some point,
+since it would make it possible to test the rendering. Again, this is
+not something ncurses supports as far as I know, so would require some
+kind ofl "ANSI" code emitter.
 
--Peff
+> (in other words, I'd like "tig" to be able to replace my current "less -FRX"
+> pager)
+
+It will probably take a some time to get there, but I am open to
+moving in this direction.
+
+-- 
+Jonas Fonseca
