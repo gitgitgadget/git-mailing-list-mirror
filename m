@@ -1,70 +1,73 @@
-From: Adam Panayis <adam@movency.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
 Subject: Re: Strange branch merging.
-Date: Thu, 12 Feb 2009 12:59:56 +0000
-Message-ID: <49941D4C.80502@movency.com>
-References: <49940D93.6000204@movency.com> <E65A809A-65AD-4755-8AA7-32AA11C9AB5A@frim.nl> <499418A4.9060401@movency.com> <FADBCA93-6742-43E8-A4A6-0090FBFF8BAB@frim.nl>
+Date: Thu, 12 Feb 2009 13:08:07 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngp87pn.50p.sitaramc@sitaramc.homelinux.net>
+References: <49940D93.6000204@movency.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Pieter de Bie <pieter@frim.nl>
-X-From: git-owner@vger.kernel.org Thu Feb 12 14:01:42 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 12 14:10:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXbCD-0007xJ-G8
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 14:01:37 +0100
+	id 1LXbKF-0002ms-S4
+	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 14:09:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757227AbZBLNAK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2009 08:00:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756607AbZBLNAI
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 08:00:08 -0500
-Received: from august.movency.com ([87.194.169.126]:53050 "EHLO
-	august.movency.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755942AbZBLNAH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2009 08:00:07 -0500
-Received: from [192.168.1.68] (bashful.movency.com [192.168.1.68])
-	(authenticated bits=0)
-	by august.movency.com (8.14.2/8.13.8) with ESMTP id n1CCw1tV024911
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 12 Feb 2009 12:58:01 GMT
-User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
-In-Reply-To: <FADBCA93-6742-43E8-A4A6-0090FBFF8BAB@frim.nl>
-X-Virus-Scanned: ClamAV 0.93.3/8981/Thu Feb 12 00:28:11 2009 on march.movency.com
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-1.3 required=5.0 tests=ALL_TRUSTED,AWL autolearn=ham
-	version=3.2.5
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on march.movency.com
+	id S1757448AbZBLNI1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2009 08:08:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757076AbZBLNI1
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 08:08:27 -0500
+Received: from main.gmane.org ([80.91.229.2]:54433 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755870AbZBLNI0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2009 08:08:26 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LXbIh-00005m-5n
+	for git@vger.kernel.org; Thu, 12 Feb 2009 13:08:19 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 12 Feb 2009 13:08:19 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 12 Feb 2009 13:08:19 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109615>
 
-Pieter de Bie wrote:
-> Hey,
+On 2009-02-12, Adam Panayis <adam@movency.com> wrote:
+> I have a local machine, on this I have 2 branches. The master and one 
+> named blah. My git repository is in the following location: /git/.git/
 >
-> [ Please don't top-post here, it makes following the discussion harder ]
+> I have made changes to a file on the blah branch and committed these 
+> changes.
 >
-> On Feb 12, 2009, at 12:40 PM, Adam Panayis wrote:
->> When I try to do that on box B I get the master branch from box A but 
->> I get the changes made to branch blah on box A.
->>
->> I do not understand why, on box B, the master branch is showing 
->> changes made to the blah branch on box A. (Yet on box A the changes 
->> to the blah branch are not shown in the master)
+> I checkout the master branch and as expected the changes are no longer 
+> there. I flip back to blah and I can see my changes. So far so good.
 >
-> You probably pulled in the 'blah' branch rather than the 'master' 
-> branch because that was
-> the branch that is checked out on box A. You can verify this by 
-> looking at 'git log' and
-> see that the commit on the blah branch is also there. To pull the 
-> master branch, specify
-> it explicitly, like this:
+> I then, on a remote machine use the pull command, the remote machine 
+> shows only the master branch as I have not asked it to pull blah. The 
+> command I use is as follows: git pull -v ssh://user@machine one/git/.git/
 >
->     git pull boxA:path/to/repo master
->
-> - Pieter
-Pieter, thank you very much. Looks like that is indeed the mistake I was 
-making.
+> Once this is done I double check my branches and it shows I still only 
+> have the master. Perfect. However, when I check the file I edited on my 
+> local machine on the blah branch, the changes are there.
+
+On the remote machine, your current branch was 'master'.
+When you did a 'git pull', whatever you did would affect
+this branch.  Meanwhile, the currently checked-out branch on
+the other side was 'blah', which is what came in.
+
+What you need to do is add the word 'master' to the 'git
+pull...' command you used.  This will ensure that,
+regardless of what the currently checkedout branch on the
+sending side is, you will get the master branch.
