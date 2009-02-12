@@ -1,82 +1,89 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [topgit] tg update error
-Date: Thu, 12 Feb 2009 15:14:50 -0800
-Message-ID: <7vocx7i6xh.fsf@gitster.siamese.dyndns.org>
-References: <cc723f590902120009w432f5f61xd6550409835cdbb7@mail.gmail.com>
- <20090212084811.GA14261@piper.oerlikon.madduck.net>
- <20090212092558.GB21074@skywalker>
- <20090212125621.GB5397@sigill.intra.peff.net>
- <7veiy3l689.fsf@gitster.siamese.dyndns.org>
- <20090212214106.GC26573@piper.oerlikon.madduck.net>
+Subject: Re: [RFC PATCH] Teach rebase to rebase even if upstream is up to
+ date  with -f
+Date: Thu, 12 Feb 2009 15:22:09 -0800
+Message-ID: <7viqnfi6la.fsf@gitster.siamese.dyndns.org>
+References: <1234468061-29923-1-git-send-email-srabbelier@gmail.com>
+ <7vbpt7jq4c.fsf@gitster.siamese.dyndns.org>
+ <bd6139dc0902121357l1eea7b8xe890513b756e97c2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.vnet.ibm.com>,
-	Aneesh Kumar <aneesh.kumar@gmail.com>, git@vger.kernel.org,
-	pasky@suse.cz
-To: martin f krafft <madduck@debian.org>
-X-From: git-owner@vger.kernel.org Fri Feb 13 00:16:44 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailinglist <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Eric Wong <normalperson@yhbt.net>,
+	"Shawn O. Pear, Sverre Rabbelier <srabbelier@gmail.com>"@b-sasl-quonix.sasl.smtp.pobox.com
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 13 00:23:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXknL-0006pT-V6
-	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 00:16:36 +0100
+	id 1LXkuI-0001sf-VK
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 00:23:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759062AbZBLXPF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2009 18:15:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755632AbZBLXPE
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 18:15:04 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35375 "EHLO
+	id S932065AbZBLXWU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Feb 2009 18:22:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760844AbZBLXWU
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 18:22:20 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37273 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756773AbZBLXPC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2009 18:15:02 -0500
+	with ESMTP id S1760784AbZBLXWT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Feb 2009 18:22:19 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F17CD99ACB;
-	Thu, 12 Feb 2009 18:15:00 -0500 (EST)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id EB32799B5C;
+	Thu, 12 Feb 2009 18:22:17 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id BE1BA99AC7; Thu,
- 12 Feb 2009 18:14:52 -0500 (EST)
-In-Reply-To: <20090212214106.GC26573@piper.oerlikon.madduck.net> (martin f.
- krafft's message of "Thu, 12 Feb 2009 22:41:06 +0100")
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id F264399B59; Thu,
+ 12 Feb 2009 18:22:10 -0500 (EST)
+In-Reply-To: <bd6139dc0902121357l1eea7b8xe890513b756e97c2@mail.gmail.com>
+ (Sverre Rabbelier's message of "Thu, 12 Feb 2009 22:57:17 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F8ED54F0-F95A-11DD-8520-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: FD623B80-F95B-11DD-A5F5-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109680>
 
-martin f krafft <madduck@debian.org> writes:
+Sverre Rabbelier <srabbelier@gmail.com> writes:
 
-> TopGit would need to make
-> a proper branch, merge the bases into it, merge that branch into the
-> topic branch, and the probably delete the branch pointer, as it's no
-> longer needed and would only pollute the refs/heads/* namespace.
+> On Thu, Feb 12, 2009 at 22:34, Junio C Hamano <gitster@pobox.com> wro=
+te:
+>> For that, I would prefer to see:
+>> =C2=A0(1)=C2=A0 =C2=A0git format-patch --stdout origin >my.mbox
+>> =C2=A0(2)=C2=A0 =C2=A0git fetch origin
+>> =C2=A0(3)=C2=A0 =C2=A0git checkout origin =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 ;# yes, detach
+>> =C2=A0(4)=C2=A0 =C2=A0git am --whitespace=3Dfix my.mbox
+>> =C2=A0(5)=C2=A0 =C2=A0make test
+>> =C2=A0(6)  =C2=A0git format-patch -o to-send-out origin
+>> =C2=A0(7)=C2=A0 =C2=A0git send-email ..options.. to-send-out
+>
+> If I understand things correctly 'git rebase -f --whitespace=3Dfix
+> origin' does only 1 and 4, yes? In my workflow I do 2 and 5 as 'git
+> pull --rebase' before I push anything, and since I push rather then
+> send-email, I never use 6 and 7. That leaves 3, which I guess is
+> specific to your workflow? I am guessing you detach to make it easier
+> to easily test many different topic branches.
+>
+>> It fixes whitespace breakages, but more importantly, the procedure m=
+akes
+>> sure that what you will be sending out will apply cleanly to the ori=
+gin
+>> that may have progressed since you last looked at it.
+>
+> Mhhh, would 'git fetch && git rebase -f whitespace=3Dfix orgin' do th=
+e
+> same? Do you see any other problems with the patch?
 
-So it happens purely inside TopGit and the end user never sees a state
-that HEAD points outside refs/heads/, right?
+No, because I didn't read the patch text; I don't read patches that are
+larger than 20 lines during the day-job hours.
 
-Why can't the base flipping operation you descibed be done on detached
-HEAD?  Perhaps with a shell variable or two that hold commit object names
-you need to keep track of while it is doing is work?
+I was only commenting on your "rebase does not work if I am up to date
+with respect to origin and here is my workaround".
 
-> Point being: I understand the reason behind the restriction, and
-> I wouldn't mind if it were default, but maybe there could be
-> a controlled way to circumvent it for cases like the one described
-> above, where it is safe to assume that the user^W^W the tool "knows"
-> what it is doing.
-
-Sure, the tool would know what it is doing, I wouldn't doubt that.
-
-But the end users don't.  If TopGit dies (or killed) during the base
-flipping operation, doesn't the end user left in a funny state (granted, a
-detached HEAD is also a funny state, but it is already a known funny state
-they are familiar with.  HEAD that is a symref but points outside
-refs/heads/ is a lot funnier).
-
-You did not actually answer a larger question.  What other undocumented
-features/restrictions does the code depend on, that tightening them to
-help normal git users inadvertently may cause breakages similar to this
-one in TopGit?
+Obviously neither the "fetch origin and reapply" nor "pull --rebase" wo=
+uld
+make any difference if you were indeed up to date.
