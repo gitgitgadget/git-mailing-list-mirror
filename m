@@ -1,83 +1,101 @@
-From: Deskin Miller <deskinm@umich.edu>
-Subject: [PATCH] add -i: revisit hunk on editor failure
-Date: Thu, 12 Feb 2009 00:19:41 -0500
-Message-ID: <1234415981-22789-1-git-send-email-deskinm@umich.edu>
-Cc: gitster@pobox.com, Deskin Miller <deskinm@umich.edu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 12 06:21:22 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] builtin-branch: improve output when displaying remote 
+ branches
+Date: Wed, 11 Feb 2009 21:42:13 -0800
+Message-ID: <7vhc30qki2.fsf@gitster.siamese.dyndns.org>
+References: <1234263701-95463-1-git-send-email-jaysoffian@gmail.com>
+ <7vskmkqpp4.fsf@gitster.siamese.dyndns.org>
+ <76718490902112030x46bddd84r561705a6b4f9d4b4@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 12 06:43:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXU0k-0001rt-BS
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 06:21:18 +0100
+	id 1LXUMa-0006PP-UD
+	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 06:43:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750848AbZBLFTu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2009 00:19:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750817AbZBLFTu
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 00:19:50 -0500
-Received: from el-out-1112.google.com ([209.85.162.182]:27977 "EHLO
-	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750783AbZBLFTt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2009 00:19:49 -0500
-Received: by el-out-1112.google.com with SMTP id b25so382164elf.1
-        for <git@vger.kernel.org>; Wed, 11 Feb 2009 21:19:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:from:to:cc:subject
-         :date:message-id:x-mailer;
-        bh=u4s7Obo53HDBO+HuOddG82NavN5qGngubRicOjaR/sA=;
-        b=Kcyjw76NNENMWjXDpHjWg9/a2cTuLNWdjY5HnCgzuE6Nmt4QfrYWRJNkGL6FV9ZsOw
-         XT+f6uAeZzUxDOKPvw7aq/ISQ4b6RLE7mIT+Cdh9WlrzIQeljsEBxJi/fml3hH0rWUHh
-         hMY8FW/RemAB3mN3gzR3m/07PhVOMCpvPPJQc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer;
-        b=IaPIgiVre6pHfNV2iMDyCFtxny4XP2QJDhh1cSPSqGyfjWyMkrDWAY4ffY/HfRs2Ze
-         IUlKqmz4OKm8Z9XhLVsovH3iLZ8cA4ZFluZIUyaP3/0PGgHvEM5dKJYhrjdGv014m5nx
-         3g+49X4Pg7vrovwTCxCbZhmV5YUdYWd98m4zE=
-Received: by 10.64.65.17 with SMTP id n17mr216900qba.69.1234415988010;
-        Wed, 11 Feb 2009 21:19:48 -0800 (PST)
-Received: from localhost.localdomain ([68.40.49.130])
-        by mx.google.com with ESMTPS id p31sm785554qbp.21.2009.02.11.21.19.46
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 11 Feb 2009 21:19:47 -0800 (PST)
-X-Mailer: git-send-email 1.6.1.399.g0d272
+	id S1750848AbZBLFmX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2009 00:42:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750817AbZBLFmW
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 00:42:22 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56327 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750800AbZBLFmV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2009 00:42:21 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4C25398AB8;
+	Thu, 12 Feb 2009 00:42:19 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D61B098AB6; Thu,
+ 12 Feb 2009 00:42:15 -0500 (EST)
+In-Reply-To: <76718490902112030x46bddd84r561705a6b4f9d4b4@mail.gmail.com>
+ (Jay Soffian's message of "Wed, 11 Feb 2009 23:30:52 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: E9A23FDA-F8C7-11DD-8FA6-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109577>
 
-Similar to the behaviour for editing a commit message, let terminating
-the editor with a failure abort the current hunk edit and revisit the
-option selection for the hunk.
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-Signed-off-by: Deskin Miller <deskinm@umich.edu>
----
-I find it much easier to type :cq in vi than to read the helpful
-message that's in the comments and then delete all the hunk lines.
-Besides, I already learned how to abort a commit message this way.
+> On Wed, Feb 11, 2009 at 10:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Jay Soffian <jaysoffian@gmail.com> writes:
+>>
+>>> $ git branch -rv
+>>>   origin/HEAD -> master
+>>>   origin/html           6116912 Autogenerated HTML docs for v1.6.2-rc0-10-gf6b9
+>>
+>> Doesn't the misalignment between the above two bother you?
+>
+> This comment makes me sad. In fact, a previous iteration looked like this:
+>
+> $ git branch -rv
+>  origin/HEAD -> master
+>  origin/html   6116912 Autogenerated HTML docs for v1.6.2-rc0-10-gf6b9
+>  origin/maint  7e1100e gitweb: add $prevent_xss option to prevent XSS
+> by repository content
+>  origin/man    67cb1a7 Autogenerated manpages for v1.6.2-rc0-10-gf6b9
+>  origin/master f6b98e4 git-web--browse: Fix check for /bin/start
+>  origin/next   417ce12 Merge branch 'master' into next
+>  origin/pu     9d798e7 Merge branch 'db/foreign-scm' into pu
+>  origin/todo   5ed7079 What's in update
+>
+> IOW, align based on the width of the branch name, completely ignoring
+> the width of " -> ...". But I found that ugly. It was actually more
+> work to get it the way it is.
 
-Deskin Miller
+Wouldn't something like this easier to read?
 
- git-add--interactive.perl |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+>  origin/HEAD   ------> master
+>  origin/html   6116912 Autogenerated HTML docs for v1.6.2-rc0-10-gf6b9
+>  origin/maint  7e1100e gitweb: add $prevent_xss option to prevent XSS
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 5f129a4..f7b0761 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -753,6 +753,10 @@ EOF
- 		|| $ENV{VISUAL} || $ENV{EDITOR} || "vi";
- 	system('sh', '-c', $editor.' "$@"', $editor, $hunkfile);
- 
-+	if ($? != 0) {
-+		return undef;
-+	}
-+
- 	open $fh, '<', $hunkfile
- 		or die "failed to open hunk edit file for reading: " . $!;
- 	my @newtext = grep { !/^#/ } <$fh>;
--- 
-1.6.1.399.g0d272
+I am not sure about the long arrow.  It may be easier to use "->" aligned
+th the right end, but that now falls into bikeshedding, so I'll leve that
+to the list.
+
+>> It can become something like:
+>>
+>>        if (newitem->kind == REF_REMOTE_BRANCH)
+>>                newitem->dest = resolve_remote_symref(refname - 13);
+>>        else
+>>                newitem->dest = NULL;
+>>        if (newitem->dest)
+>>                ...
+>>
+>> no?
+>
+> Yes indeed.
+
+Another thing you may want to consider is to introduce another variable
+"name" that is supposed to be the human readable part (i.e. refname-13
+etc.) and leave the refname the full name starting from "refs/".  The code
+to add and then subtract to go back and forth made my head spin when I
+read it.
