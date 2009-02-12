@@ -1,82 +1,109 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: showing SHA1 of parent commit in tig [was Re: [ANNOUNCE] tig-0.14
-Date: Thu, 12 Feb 2009 03:28:40 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrngp75r8.q57.sitaramc@sitaramc.homelinux.net>
-References: <20090205204436.GA6072@diku.dk> <20090206104946.GE7259@b2j>
- <2c6b72b30902060629i2539ddds48ab858e83d4bb4@mail.gmail.com>
- <slrngooljv.urh.sitaramc@sitaramc.homelinux.net>
- <2c6b72b30902080207m4a1e14b7j4862f9a8b7ca32a9@mail.gmail.com>
- <slrngp5tqk.u46.sitaramc@sitaramc.homelinux.net>
- <2c6b72b30902111719r6fd25dc7uc22b471f7904bedc@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] builtin-branch: improve output when displaying remote
+ branches
+Date: Wed, 11 Feb 2009 19:49:59 -0800
+Message-ID: <7vskmkqpp4.fsf@gitster.siamese.dyndns.org>
+References: <1234263701-95463-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 12 04:30:39 2009
+Cc: git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 12 04:51:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXSHX-0005aa-6V
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 04:30:31 +0100
+	id 1LXSbw-0001HW-IO
+	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 04:51:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756696AbZBLD3A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Feb 2009 22:29:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756703AbZBLD27
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 22:28:59 -0500
-Received: from main.gmane.org ([80.91.229.2]:57144 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755515AbZBLD26 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Feb 2009 22:28:58 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LXSFx-0005Tl-9M
-	for git@vger.kernel.org; Thu, 12 Feb 2009 03:28:53 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 12 Feb 2009 03:28:53 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 12 Feb 2009 03:28:53 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1754777AbZBLDuK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Feb 2009 22:50:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752359AbZBLDuJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Feb 2009 22:50:09 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41346 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751953AbZBLDuI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Feb 2009 22:50:08 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id E21782AF31;
+	Wed, 11 Feb 2009 22:50:03 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E49972AF30; Wed,
+ 11 Feb 2009 22:50:00 -0500 (EST)
+In-Reply-To: <1234263701-95463-1-git-send-email-jaysoffian@gmail.com> (Jay
+ Soffian's message of "Tue, 10 Feb 2009 06:01:41 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 3B091372-F8B8-11DD-BF54-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109570>
 
-On 2009-02-12, Jonas Fonseca <jonas.fonseca@gmail.com> wrote:
-> On Wed, Feb 11, 2009 at 17:05, Sitaram Chamarty <sitaramc@gmail.com> wrote:
->> Is there any way to see the sha1 of the parent commit in any
->> of the displays, like gitk does?
->>
->> I know you're only parsing the 4 or 5 basic git commands,
->> and none of those do, so I guess I know the answer :-( but
->> it doesn't hurt to ask.
->
-> It is sort of possible by setting the TIG_DIFF_CMD environment
-> variable to something appropriate, for example using (and I don't know
-> if this will be formatted correctly):
->
-> export TIG_DIFF_CMD='git show -p --stat -C -M
-> --pretty=format:commit%x20%H%d%nAuthor:%x20%an%x20<%ae>%x20%ai%nParent:%x20%P%nSubject:%x20%s%n%n%b
-> %(commit)'
->
-> You need to avoid using space except for where it really separates
-> arguments, which is why the obscure %x20 is used. ;)
->
-> Another solution would be to create a script, which just expects the
-> commit SHA1 as its first argument and then do the formatting there and
-> then use:
->
-> export TIG_DIFF_CMD="/my/script %(commit)"
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-OK thanks -- I'll give that a shot when I get a chance.
+> $ git branch -rv
+>   origin/HEAD -> master
+>   origin/html           6116912 Autogenerated HTML docs for v1.6.2-rc0-10-gf6b9
 
-Regards,
+Doesn't the misalignment between the above two bother you?
 
-Sitaram
+> diff --git a/builtin-branch.c b/builtin-branch.c
+> index 56a1971..03ad757 100644
+> --- a/builtin-branch.c
+> +++ b/builtin-branch.c
+> @@ -181,7 +181,8 @@ static int delete_branches(int argc, const char **argv, int force, int kinds)
+> +static char *resolve_remote_head_symref(const char *head_name) {
+> +	unsigned char sha1[20];
+> +	int flag;
+> +	const char *refname;
+> +	refname = resolve_ref(head_name, sha1, 0, &flag);
+> +	if (refname && (flag & REF_ISSYMREF) &&
+> +	    !prefixcmp(refname, "refs/remotes/"))
+> +		return xstrdup(refname + strlen(head_name) - 4);
+
+Here, head_name is like "refs/remotes/frotz/HEAD", and you are assuming
+that resolved refname begins with "refs/remotes/frotz/" without checking
+the "frotz" part. It may point at "refs/remotes/x/y" in a misconfigured
+repository and your xstrdup() just ran past the end of the string.
+
+If the ref you feed to this function turns out not to be a symbolic ref,
+the caller does do the right thing.  It makes wonder if your caller should
+always call this, so that you would still work sensibly even if the tracking
+hierarchy has a funny symref refs/remotes/origin/TAIL that is not HEAD.
+
+The caller is currently this dense code.
+
+> +	newitem->len = strlen(newitem->name);
+> +	newitem->dest = (newitem->kind == REF_REMOTE_BRANCH &&
+> +			 newitem->len > 5 &&
+> +			 !strcmp(newitem->name + newitem->len - 5, "/HEAD"))
+> +			? resolve_remote_head_symref(refname - 13) : NULL;
+> +	/* adjust for " -> " */
+> +	if (newitem->dest)
+> +		newitem->len += strlen(newitem->dest) + 4;
+
+It can become something like:
+
+	if (newitem->kind == REF_REMOTE_BRANCH)
+		newitem->dest = resolve_remote_symref(refname - 13);
+	else
+		newitem->dest = NULL;
+        if (newitem->dest)
+        	...
+	
+no?
+
+> @@ -250,8 +272,11 @@ static void free_ref_list(struct ref_list *ref_list)
+>  {
+>  	int i;
+>  
+> -	for (i = 0; i < ref_list->index; i++)
+> +	for (i = 0; i < ref_list->index; i++) {
+>  		free(ref_list->list[i].name);
+> +		if (ref_list->list[i].dest)
+> +			free(ref_list->list[i].dest);
+> +	}
+
+free(NULL) is Ok; omit the extra check.
