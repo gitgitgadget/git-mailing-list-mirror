@@ -1,77 +1,96 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Thunderbird and patches
-Date: Thu, 12 Feb 2009 11:07:15 +0100
-Message-ID: <4993F4D3.1060501@drmicha.warpmail.net>
-References: <498E50E2.8050309@codeweavers.com>	<200902072310.12764.bss@iguanasuicide.net>	<498F01C2.5080105@codeweavers.com>	<alpine.DEB.1.00.0902081827140.10279@pacific.mpi-cbg.de>	<499022D3.3000200@drmicha.warpmail.net> <49902EDC.6020901@beonex.com>	<alpine.DEB.1.00.0902091433270.10279@pacific.mpi-cbg.de>	<49903521.1060101@codeweavers.com> <49903B27.8070608@beonex.com>	<49904DE7.2080205@codeweavers.com>	<4990519C.8060601@drmicha.warpmail.net> <499058B4.4070009@beonex.com>	<qXxPO6LuQr7-9QoWMdojOMbuADIJ55oaOVr5t_8eLGR9vvNpW72wyA@cipher.nrlssc.navy.mil>	<49907F75.2050100@beonex.com>	<alpine.DEB.1.00.0902092013260.10279@pacific.mpi-cbg.de>	<RD8dEuXN_TYvtiDHum-mdwL3m_eJP49xWrl9-YgiLfhOFN6weRXVhg@cipher.nrlssc.navy.mil>	<alpine.DEB.1.00.0902092105230.10279@pacific.mpi-cbg.de>	<499151C9.7090502
- @drmicha.warpmail.net> <buo4oz0e0dg.fsf@dhlpc061.dev.necel.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv2 5/6] gitweb: last-modified time should be commiter, not  author
+Date: Thu, 12 Feb 2009 11:11:44 +0100
+Message-ID: <200902121111.51147.jnareb@gmail.com>
+References: <1232970616-21167-1-git-send-email-giuseppe.bilotta@gmail.com> <200902121007.29867.jnareb@gmail.com> <cb7bb73a0902120152h7b3e0ac6w379bd9319712ea2b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	Ben Bucksch <ben.bucksch.news@beonex.com>,
-	Jeremy White <jwhite@codeweavers.com>,
-	"Boyd Stephen Smith Jr." <bss@iguanasuicide.net>,
-	git@vger.kernel.org
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Feb 12 11:09:19 2009
+Cc: Deskin Miller <deskinm@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 12 11:13:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXYV0-0001tT-PV
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 11:08:51 +0100
+	id 1LXYZb-0003sU-SW
+	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 11:13:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755868AbZBLKHX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2009 05:07:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755691AbZBLKHX
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 05:07:23 -0500
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:58245 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755085AbZBLKHW (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Feb 2009 05:07:22 -0500
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id 3FFE3292A12;
-	Thu, 12 Feb 2009 05:07:21 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Thu, 12 Feb 2009 05:07:21 -0500
-X-Sasl-enc: +ncr4repM+Wzp+zVpBaAYfTKb2HApLf9nkmofuOoLuPe 1234433240
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 0C0B6296E1;
-	Thu, 12 Feb 2009 05:07:19 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090209 Shredder/3.0b2pre
-In-Reply-To: <buo4oz0e0dg.fsf@dhlpc061.dev.necel.com>
+	id S1755754AbZBLKMK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2009 05:12:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751060AbZBLKMH
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 05:12:07 -0500
+Received: from mail-fx0-f20.google.com ([209.85.220.20]:57133 "EHLO
+	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750848AbZBLKMF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2009 05:12:05 -0500
+Received: by fxm13 with SMTP id 13so1708071fxm.13
+        for <git@vger.kernel.org>; Thu, 12 Feb 2009 02:12:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=1nbtrwvKxcYVYwN2HJu8hm8PRT+M18hF4UjibgucrbU=;
+        b=HRWMMuVc/lZORojFbMx2RrO/D/+5oDUXY/d0QZuG5v44oJc7pwdOVkYKwsQ5vD7My1
+         XMi5QwqvrBKzKNfhXRAJdj5cV4Thhbw/gBJ7u8KRvUkxXLpiRZPLkEsKObS6IIt97LSY
+         om3lZ57U4NuFfvtJgN/VapqMBtTTnxxh8oxaA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=uwZDvxOGFpzhyqjns4+O9L0nBSTyGnz5GMl+9ujeEis+N+KqKwJQIxfUJGsGobCigY
+         XGLee4DcJjVXi80HQcodZl01wShEajHeHDZ12NcvGYPrDNVHWCY6SQYTYAFD4bWXhx54
+         ++XohMNwhERD3A0RQ+mFD6jBUKCn8Sx/KQU2I=
+Received: by 10.102.247.4 with SMTP id u4mr268600muh.104.1234433522886;
+        Thu, 12 Feb 2009 02:12:02 -0800 (PST)
+Received: from ?192.168.1.13? (abxc167.neoplus.adsl.tpnet.pl [83.8.252.167])
+        by mx.google.com with ESMTPS id 23sm3167619mum.7.2009.02.12.02.12.00
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 12 Feb 2009 02:12:01 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <cb7bb73a0902120152h7b3e0ac6w379bd9319712ea2b@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109594>
 
-Miles Bader venit, vidit, dixit 12.02.2009 05:37:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
->>> In other words: use the right tool.  Or, as somebody put it at the 
->>> GitTogether: to a hammer, everything looks like a nail.
->> It just seems that the workflow "required" here on the git list is the
->> way it is because it caters for differently abled MUAs which can't
->> handle certain standards (inline disposition) efficiently.  Mutt
->> obviously can, so it's not a matter of John Doe's MUA versus geeky
->> MUAs.
+On Thu, 12 Feb 2009, Giuseppe Bilotta wrote:
+> On Thu, Feb 12, 2009 at 10:07 AM, Jakub Narebski <jnareb@gmail.com> 
+> wrote: 
+
+>> You can disable reflog by setting core.logAllRefUpdates to false...
+>> which of course do not remove reflog.  But checking for this config
+>> variable in gitweb shouldn't be too hard, although you would need
+>> to somehow change assumption that we are interested only in ^gitweb\.
+>> section of config.
+>>
+>> There is other side of this issue: reflog is expired, so you can
+>> have empty reflog if branch was updated long time ago.
 > 
-> So, since you decry flames later in your message, why did you feel it
-> necessary to throw in this rather creaky bit of flamebait?
-> 
-> [The issue is apparently MUAs which munge messages when not wanted; that
-> says _nothing_ about what non-munging MUAs can or can not "handle".]
+> I'm thinking that what I could do (that should always work as
+> expected) is to consider as 'last modified' the most recent date
+> between the commit date and the reflog date (if the reflog is found).
+> This basically implements an 'automatic' fallback for
+> disabled/obsolete/expired reflog to commit date. (Of course, assuming
+> the last commit doesn't suffer from a ridicously long clockskew in the
+> future.)
 
-I think we all (all who participated so far) agreed that the MUAs we
-talked about have different abilities, thus are differently abled (pun
-intended).
+That is, I think, a very good idea. It also covers situation where we
+use non-head 'h'/'hb', for example explicit SHA-1 (not that it makes
+sense, but...) 
+ 
+Well, that beside my little doubt whether using publish date is a good
+idea or not...
 
-By now, all sides have worked constructively together to make things
-work for all MUAs and all users. Dscho even cooked up a Thunderbird
-extension, Ben provided input for git-imap-send.
 
-If you want to fuel the flames you're too late. If you want to
-contribute you're welcome to.
-
-Michael
+P.S. What would you do for explicit and implicit HEAD? HEAD reflog,
+or 'current branch' reflog?
+-- 
+Jakub Narebski
+Poland
