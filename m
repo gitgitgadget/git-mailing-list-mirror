@@ -1,97 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] stash: --keep option just saves
-Date: Thu, 12 Feb 2009 13:04:48 -0800
-Message-ID: <7vskmjjrin.fsf@gitster.siamese.dyndns.org>
-References: <20090212062514.6117@nanako3.lavabit.com>
- <7vljscbp60.fsf@gitster.siamese.dyndns.org>
- <20090212171732.6117@nanako3.lavabit.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Thu Feb 12 22:06:38 2009
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: [PATCH] gitweb: fix wrong base URL when non-root DirectoryIndex
+Date: Thu, 12 Feb 2009 22:11:12 +0100
+Message-ID: <1234473072-9901-1-git-send-email-giuseppe.bilotta@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Giuseppe Bilotta <oblomov@rbot.ratry.ru>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 12 22:12:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXilL-0000Wo-Og
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 22:06:24 +0100
+	id 1LXir5-0002k7-Tb
+	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 22:12:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758683AbZBLVE4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2009 16:04:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756637AbZBLVE4
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 16:04:56 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43729 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750776AbZBLVEz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2009 16:04:55 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 447BC99EDA;
-	Thu, 12 Feb 2009 16:04:54 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id AF43099ED9; Thu,
- 12 Feb 2009 16:04:50 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: CBC35DCE-F948-11DD-BF73-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1753038AbZBLVKw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2009 16:10:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751238AbZBLVKw
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 16:10:52 -0500
+Received: from mail-fx0-f20.google.com ([209.85.220.20]:34307 "EHLO
+	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751003AbZBLVKv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2009 16:10:51 -0500
+Received: by fxm13 with SMTP id 13so2700094fxm.13
+        for <git@vger.kernel.org>; Thu, 12 Feb 2009 13:10:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=plyZABIUG4uX50ngaDTaHVLhmAEDe9GMYhn4Oa8x+O4=;
+        b=WIxTe/uzZjHELFS5qL/qsHXVchSE89Wa7/RNYNG6/S77tY31Xf6Y9xofTyNoz/HpOh
+         dIq64kFf1Ad4IUI1iiK2crZz/DzTkkCMNFHjZBblGC/vONikwnY9vQwPTCg235whqP41
+         mLq+0pZJ41q8B2SjLsMhUK6ny6I1CjM3Xfxrk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=cDENrHNJPVj0TBM6ofpbHg08QxK7jcDOrCo7gJm3pyPeDrtFN753/x0+LBqroyzg/0
+         8gh2EgT5NWD748q4p3pVtjxvQS/IL+BKkYWXIcGODmOTWLntdVAykSIeZHUCzuT5opHn
+         6zLQwW7ztv5vxpJK+SxvlTe/FndfMgS4Wxqgk=
+Received: by 10.103.93.18 with SMTP id v18mr665980mul.43.1234473049611;
+        Thu, 12 Feb 2009 13:10:49 -0800 (PST)
+Received: from localhost (host-78-13-54-17.cust-adsl.tiscali.it [78.13.54.17])
+        by mx.google.com with ESMTPS id j10sm844932muh.1.2009.02.12.13.10.48
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 12 Feb 2009 13:10:49 -0800 (PST)
+X-Mailer: git-send-email 1.5.6.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109655>
 
-Nanako Shiraishi <nanako3@lavabit.com> writes:
+From: Giuseppe Bilotta <oblomov@rbot.ratry.ru>
 
-> I'm sorry. I didn't think about such a negative aspect of adding the
-> feature.
+CGI::url() has some issues when rebuilding the script URL if the script
+is a DirectoryIndex.
 
-No need to be sorry about anything, please.  Nobody has to apologise after
-trying a constructive contribution to solve a perceived problem.
+One of these issue is the inability to strip PATH_INFO, which is why we
+had to do it ourselves.
 
-> I can imagine that, after using many 'stash save --keep', I'll naturally
-> want to manipulate changes between kept stashes, like running 'git log'
-> to view the difference between each step and cherry-picking a change
-> between ones next to each other etc. Because a list of stashes doesn't
-> support such operations, additional support for them is needed to make
-> it useful, but I agree with you that such additions are not real
-> features that are necessary, because git already supports these
-> operations if I used commits on a normal branch instead. Use of 'stash
-> save --keep' is making it necessary to implement duplicated features for
-> no good reason.
+Another issue is that the resulting URL cannot be used for the <base>
+tag: it works if we're the DirectoryIndex at the root level, but not
+otherwise.
 
-That was exactly my point.  "save --keep" (or --no-reset) might look as if
-it is a new convenience feature, but you will realize that it really is
-not, once you think things through.  It is not new because there already
-is a way meant to be used to snapshot before going forward (i.e. regular
-commits on a private branch for experiment), and it is not convenient
-because its results cannot be used as flexibly with existing tools as the
-results by the other, existing approach.
+We fix this by building the proper base URL ourselves, and improve the
+documentation about the need to strip PATH_INFO manually while we're at
+it.
+---
+ gitweb/gitweb.perl |   16 ++++++++++++----
+ 1 files changed, 12 insertions(+), 4 deletions(-)
 
-It can be argued that it adds one huge convenience.  It is quicker to say
-'git stash save --keep' than 'git commit -a -m "WIP as of $(date)"', and
-in addition, you first have to do a "checkout -b wip" once, if you use the
-approach with regular commits on a exprimental branch forked from the
-target branch, instead of the approach with regular commits directly on
-the target branch.
-
-But if that convenience is the real motivation behind it, adding an option
-"git commit --snap" that runs 'git commit -a -m "WIP as of $(date)"' would
-be a far more superiour solution that does not have the problem of feature
-duplication (and no, please do not suggest "git alias snap ..."; the point
-is to make it easy to do this for *everybody* out of the box).
-
-> It may also confuse users by unnecessarily adding another way to do the
-> same thing.
-
-I actually did not think of that issue, but you may be right.
-
->> This topic won't go beyond 'next' during this round because it started way
->> after -rc0 was tagged.  It is not urgent to decide what will happen to the
->> recent "snapshot" related topics, and we have plenty of time to toss ideas
->> around, but currently I have to say that I am not very enthused about any
->> of the causes mentioned in various discussion threads.
->
-> You already applied my patch on pu branch. It's OK by me if you dropped it.
-
-Rather, lets let a hundred flowers blossom and see what happens.  I will
-promise it will not be followed by a purge ;-).
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index c2c8080..48cfd5f 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -27,15 +27,23 @@ our $version = "++GIT_VERSION++";
+ our $my_url = $cgi->url();
+ our $my_uri = $cgi->url(-absolute => 1);
+ 
+-# if we're called with PATH_INFO, we have to strip that
+-# from the URL to find our real URL
+-# we make $path_info global because it's also used later on
++# When the script is used as DirectoryIndex, the URL does not contain the name
++# of the script file itself, and $cgi->url() fails to strip PATH_INFO, so we
++# have to do it ourselves. We make $path_info global because it's also used
++# later on
+ our $path_info = $ENV{"PATH_INFO"};
+ if ($path_info) {
+ 	$my_url =~ s,\Q$path_info\E$,,;
+ 	$my_uri =~ s,\Q$path_info\E$,,;
+ }
+ 
++# Another issue with the script being the DirectoryIndex is that the resulting
++# $my_url data is not the full script URL: this is good, because we want
++# generated links to keep implying the script name if it wasn't explicitly
++# indicated in the URL we're handling, but it means that $my_url cannot be used
++# as base URL. Therefore, we have to build the base URL ourselves:
++our $base_url = $cgi->url(-base => 1) . $ENV{'SCRIPT_NAME'};
++
+ # core git executable to use
+ # this can just be "git" if your webserver has a sensible PATH
+ our $GIT = "++GIT_BINDIR++/git";
+@@ -2908,7 +2916,7 @@ EOF
+ 	# the stylesheet, favicon etc urls won't work correctly with path_info
+ 	# unless we set the appropriate base URL
+ 	if ($ENV{'PATH_INFO'}) {
+-		print "<base href=\"".esc_url($my_url)."\" />\n";
++		print "<base href=\"".esc_url($base_url)."\" />\n";
+ 	}
+ 	# print out each stylesheet that exist, providing backwards capability
+ 	# for those people who defined $stylesheet in a config file
+-- 
+1.5.6.4
