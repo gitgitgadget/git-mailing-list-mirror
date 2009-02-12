@@ -1,102 +1,131 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH 2/3] builtin-remote: teach show to display remote HEAD
-Date: Thu, 12 Feb 2009 16:37:27 -0500
-Message-ID: <76718490902121337l4b7f6f1dh25e6daa9adb48160@mail.gmail.com>
-References: <1234332083-45147-1-git-send-email-jaysoffian@gmail.com>
-	 <1234332083-45147-2-git-send-email-jaysoffian@gmail.com>
-	 <1234332083-45147-3-git-send-email-jaysoffian@gmail.com>
-	 <20090212002612.GC30231@coredump.intra.peff.net>
-	 <76718490902111748j58f80591ma149f8ec9fb8b352@mail.gmail.com>
-	 <alpine.LNX.1.00.0902121519160.19665@iabervon.org>
+From: martin f krafft <madduck@debian.org>
+Subject: Re: [topgit] tg update error
+Date: Thu, 12 Feb 2009 22:41:06 +0100
+Organization: The Debian project
+Message-ID: <20090212214106.GC26573@piper.oerlikon.madduck.net>
+References: <cc723f590902120009w432f5f61xd6550409835cdbb7@mail.gmail.com> <20090212084811.GA14261@piper.oerlikon.madduck.net> <20090212092558.GB21074@skywalker> <20090212125621.GB5397@sigill.intra.peff.net> <7veiy3l689.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, gitster@pobox.com
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Thu Feb 12 22:38:59 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="eHhjakXzOLJAF9wJ"
+To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.vnet.ibm.com>,
+	Aneesh Kumar <aneesh.kumar@gmail.com>, git@vger.kernel.org,
+	pasky@suse.cz
+X-From: git-owner@vger.kernel.org Thu Feb 12 22:43:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXjGq-0004cv-L8
-	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 22:38:57 +0100
+	id 1LXjKr-00067Z-8f
+	for gcvg-git-2@gmane.org; Thu, 12 Feb 2009 22:43:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756980AbZBLVha (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2009 16:37:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754748AbZBLVh3
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 16:37:29 -0500
-Received: from rv-out-0506.google.com ([209.85.198.224]:65238 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753113AbZBLVh3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2009 16:37:29 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so441002rvb.1
-        for <git@vger.kernel.org>; Thu, 12 Feb 2009 13:37:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=GQHXh3honELSqf/80FQeoQLw3jIcMhwv9vhsZySITU0=;
-        b=mXo9CqHtDsNgg+/lo5P/RGCNVjOtWyWICgi0k+97r4cr0K4DdEWTDOyNUhwvh4gx7N
-         m5kScvLmibJ3KYDnvtd2AZ4eFAoTsg/XkRUFc0dkl1PlIhsRJ4GDrI86Y/NYuoIAhQg7
-         SwYz0vyeym35YmJIC3hIfixJIzkC97xpWY8lY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Me957mN3xk52+e3EIi1dDR5i0Bexdr2+fqhdOrMilxV/1LBveoCWjnt9kfESyiBLvm
-         LKceGuf9U0QkWkIiJ2TL0yvIil7gtS9WlmsxryxPze+fFG9zyaVyK2bZQdPyFemALJgi
-         U9ttg2CaurkHoazkWKqjzzvZQjMl7DQEPEx9o=
-Received: by 10.141.106.14 with SMTP id i14mr765655rvm.143.1234474648135; Thu, 
-	12 Feb 2009 13:37:28 -0800 (PST)
-In-Reply-To: <alpine.LNX.1.00.0902121519160.19665@iabervon.org>
+	id S1758783AbZBLVlh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2009 16:41:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758674AbZBLVlh
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 16:41:37 -0500
+Received: from clegg.madduck.net ([193.242.105.96]:42422 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753456AbZBLVlg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2009 16:41:36 -0500
+Received: from wall.oerlikon.madduck.net (wall.oerlikon.madduck.net [IPv6:2001:41e0:ff12::1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id AC7F71D409B;
+	Thu, 12 Feb 2009 22:41:07 +0100 (CET)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTPS id 64FE49F13D;
+	Thu, 12 Feb 2009 22:41:06 +0100 (CET)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id 1D8964463; Thu, 12 Feb 2009 22:41:06 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7veiy3l689.fsf@gitster.siamese.dyndns.org>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux 5.0 kernel 2.6.26-1-amd64 x86_64
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94.2/8984/Thu Feb 12 15:24:21 2009 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109665>
 
-On Thu, Feb 12, 2009 at 3:27 PM, Daniel Barkalow <barkalow@iabervon.org> wrote:
->
-> struct ref *head = locate_head(refs, refs, NULL);
-> return head ? xstrdup(abbrev_branch(head->name)) : NULL;
->
-> ?
 
-No, I don't _think_ so. refs is everything from the remote side (tags,
-etc). I want to only match those things under refs/heads.
+--eHhjakXzOLJAF9wJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think I have to do something like this (this is more or less what
-builtin-clone does):
+also sprach Junio C Hamano <gitster@pobox.com> [2009.02.12.2201 +0100]:
+> It would be nice to hear TopGit people defend why setting HEAD to outside
+> refs/heads/ is justified, why doing so should not break other things, and
+> why it was needed.
 
-struct ref *remote_refs, *mapped_refs = NULL;
-struct refspec branch_refspec;
+As far as I understand it, TopGit does not /need/ to set HEAD to
+refs/top-bases/foo, but it currently does so as part of its
+algorithm:
 
-branch_refspec.force = 0;
-branch_refspec.src = branch_refspec.dst = "refs/heads";
+When tg-update updates a depending branch, it first merges the
+dependent branch into the base of the topic branch, which is pointed
+to by the corresponding top-base (refs/top-bases/foo). It then
+merges the top-base into the topic branch, "foo" in this case.
 
-remote_refs = transport_get_remote_refs(transport);
-get_fetch_map(remote_refs, branch_refspec, &mapped_refs, 0);
-head_points_at = locate_head(refs, mapped_refs, NULL);
+The result is the same as if the base branch had been merged into
+"foo", and refs/top-bases/foo updated to point to the head of the
+base branch.
 
-> I'd somehow thought I'd moved locate_head() somewhere common, but it
-> really ought to be done.
+This stops working, however, as soon as you have a topic branch
+depending on more than one base branches. Since you need to track
+the base of a topic branch (e.g. in order to be able to get the diff
+represented by the TopGit branch), you now have a problem: which of
+the base branches is the base to diff against?
 
-I plan to move it into remote.c.
+TopGit addresses this requirement by creating a "virtual" branch
+into which it merges all the bases (into the top-base) first, and
+then merging this "virtual" branch into the topic branch. The result
+is a merge commit combining all bases, which is a parent of the
+merge commit into the topic branch, and can thus serve as the origin
+of a diff calculation.
 
-> There were periodic discussions of how you find
-> out when the remote repo changes its HEAD and you might want to do
-> something locally about it, and we never came up with a specific thing
-> for git to do, but the facility is probably useful.
+TopGit right now does all of this while HEAD is detached: it points
+into the refs/top-bases/* namespace -- the "virtual" branch. Here,
+it does the merges of the bases, and then checks out the topic
+branch to merge this combined ("virtual") base.
 
-Thus "git remote set-head -a" is the best I could come up with for
-setting it to what the remote has.
+To work around the new restriction in Git, TopGit would need to make
+a proper branch, merge the bases into it, merge that branch into the
+topic branch, and the probably delete the branch pointer, as it's no
+longer needed and would only pollute the refs/heads/* namespace. It
+could certainly do this (with a minor performance impact), but it
+seems like jumping through hoops and around Git's restrictions,
+without any real benefit.
 
-> I have the vague memory, as well, that there's some way for a transport to
-> report that it actually knows that HEAD is a symref to something in
-> particular, and so git shouldn't guess.
+Point being: I understand the reason behind the restriction, and
+I wouldn't mind if it were default, but maybe there could be
+a controlled way to circumvent it for cases like the one described
+above, where it is safe to assume that the user^W^W the tool "knows"
+what it is doing.
 
-I think for http://, but not for git://, but I'm *far* from an expert
-in this area.
+--=20
+ .''`.   martin f. krafft <madduck@d.o>      Related projects:
+: :'  :  proud Debian developer               http://debiansystem.info
+`. `'`   http://people.debian.org/~madduck    http://vcs-pkg.org
+  `-  Debian - when you have better things to do than fixing systems
+=20
+in the beginning was the word,
+and the word was content-type: text/plain
 
-j.
+--eHhjakXzOLJAF9wJ
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkmUl3EACgkQIgvIgzMMSnUF3QCg535/jZJ1Z4ey07nS9MAZFL9D
+6L8AnjvQuFA11JiXuW/Hh3rItF33LmfD
+=nlAM
+-----END PGP SIGNATURE-----
+
+--eHhjakXzOLJAF9wJ--
