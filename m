@@ -1,107 +1,78 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH 4/4] builtin-remote: add set-head verb
-Date: Fri, 13 Feb 2009 05:52:57 -0500
-Message-ID: <76718490902130252t18f4f9dav7aada6fe7bb6ab1b@mail.gmail.com>
-References: <1234515275-91263-1-git-send-email-jaysoffian@gmail.com>
-	 <1234515275-91263-2-git-send-email-jaysoffian@gmail.com>
-	 <1234515275-91263-3-git-send-email-jaysoffian@gmail.com>
-	 <1234515275-91263-4-git-send-email-jaysoffian@gmail.com>
-	 <1234515275-91263-5-git-send-email-jaysoffian@gmail.com>
-	 <7vtz6yabsy.fsf@gitster.siamese.dyndns.org>
-	 <7vhc2yaak8.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFH] How to review patches: Documentation/ReviewingPatches?
+Date: Fri, 13 Feb 2009 12:05:42 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902131200380.10279@pacific.mpi-cbg.de>
+References: <200902130045.59395.jnareb@gmail.com> <alpine.DEB.1.00.0902130055370.26370@racer> <49952728.2080404@trolltech.com> <7vocx6bu9r.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, peff@peff.net, barkalow@iabervon.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Marius Storm-Olsen <marius@trolltech.com>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 13 11:54:46 2009
+X-From: git-owner@vger.kernel.org Fri Feb 13 12:07:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXvgo-0000iC-Hk
-	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 11:54:35 +0100
+	id 1LXvsI-0005CP-2K
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 12:06:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758146AbZBMKxA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2009 05:53:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758140AbZBMKxA
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 05:53:00 -0500
-Received: from rv-out-0506.google.com ([209.85.198.227]:56478 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758119AbZBMKw6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2009 05:52:58 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so646785rvb.1
-        for <git@vger.kernel.org>; Fri, 13 Feb 2009 02:52:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=KVvLK/8b+2Ye1sAYIaXOQS4TNWmftUyVpeq4Sh2C3Y8=;
-        b=X681y/dHtsl0S6TFvom4+1FhLj4MwY++TVkEEvh8wLTncJLn1GNB/ZN5XgrCTgfpl+
-         yg7aHKCLg9iUYRKkBWv6gpnZGbGSXsT+D84Y2o5aCFADco6E2Ehop9rw8mGqn6LINfHi
-         SPgEj8m7KIpn6OKGVp1qGRbchA14YUh9f2KqM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=gVo5SPR4y2ndPD4AtX0NnZAVz9+DLF84E4OKsPEYs0Ig3gK/LT3C04bT3WOfWVJYH3
-         2XWSdg4lBnHNbFqlGNciLT788CGUwfg5IGRXnEp5trOUOBxOZX4Sr6gCvDPYI6ciPWPh
-         FFOdzhgYCmeWQW+QxVNK7hQBZVYqlxHJuWYfA=
-Received: by 10.141.29.14 with SMTP id g14mr1085909rvj.232.1234522377197; Fri, 
-	13 Feb 2009 02:52:57 -0800 (PST)
-In-Reply-To: <7vhc2yaak8.fsf@gitster.siamese.dyndns.org>
+	id S1751653AbZBMLE5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2009 06:04:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750911AbZBMLE5
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 06:04:57 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56670 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751473AbZBMLE4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2009 06:04:56 -0500
+Received: (qmail invoked by alias); 13 Feb 2009 11:04:53 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp045) with SMTP; 13 Feb 2009 12:04:53 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18pTtV9eNkpxvzyI8itYjnAz+MgNiK5M7+IZSk5JC
+	JFb9eitKaqrQTb
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7vocx6bu9r.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109740>
 
-On Fri, Feb 13, 2009 at 5:35 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> A few things I forgot (and before I go to bed).
+Hi,
+
+On Fri, 13 Feb 2009, Junio C Hamano wrote:
+
+> Marius Storm-Olsen <marius@trolltech.com> writes:
+> 
+> > One thing I've wondered about though when sending patches, is how to 
+> > send the fixups. Lets say I have a patch serie with 8 patches, do I 
+> > send the whole serie each time, or do I just send an update to each 
+> > individual patch? Do I attach it to the previous thread, or start a 
+> > new one?
 >
-> If remotes/<name>/HEAD already points at a branch frotz, and you peek the
-> remote (i.e. you do not actually run "fetch" to download objects, but just
-> "ls-remote" it) and find out that "HEAD" does not point at the same commit
-> as "frotz" but it now points at the same commit as another branch
-> "nitfol", you probably would want to update it to point at "nitfol", but
-> it was unclear from the description in the documentation if this option
-> was meant to perform this kind fo update, or only to set a missing HEAD.
+>  * Resending the whole series would help, especially if their earlier
+>    round did not hit 'pu'.
 
-- set-head -d <remote> deletes
-- set-head -a <remote> sets HEAD to whatever remote it
-- set-head <remote> <foo> sets HEAD to foo
+Note that I chose to do it differently quite a number of times.  When I 
+feel that a particular part of the patch series is in deep discussion 
+mode, I will reply to the discussions with updates to that particular 
+patch, often only as an interdiff.
 
-I don't know how to be more explicit than that I think that's what the
-documentation indicates.
+When I feel that the result is in a shape that could be applied, or when I 
+feel that people are substantially confused as to what is the current 
+state, I send out a whole updated series.  This is to avoid sending 
+v1..v99 of an 18-strong patch series, and basically dominate the volume of 
+the list.
 
-> If you meant to do an update, there is one thing to watch out for when you
-> reuse the logic used by clone.  It favors "master" if more than one
-> branches point at the same commit as HEAD.
+> Subsytem maintainers like Paulus for gitk, Shawn for git-gui and bash
+> completion, Eric for git-svn, and Alexandre for emacs really have helped,
 
-Yes, I know.
+... and Jakub for gitweb, Simon for git-p4, Hannes for mingw.git, the New 
+Zealand gang for cvsserver/cvsimport, not to forget Shawn for 
+fast-import...  It is really great to see all that development going on!
 
-> You need to customize it to
-> favor the one that the HEAD points at on the local side before you start
-> (iow, try to keep the current value when you can).
->
-> For example, if it points at "frotz" locally when the command was started,
-> and you found out that HEAD now points at the commit at the tip of "frotz"
-> and "master" branches by peeking, you do not want to repoint HEAD from
-> "frotz" to "master".
-
-I think that is an unnecessary complication for what is really a
-corner case. And anyway, it is just hacking around the fact that we
-don't really know what the remote side is if multiple branch heads
-have the same SHA1 as HEAD.
-
-You proposed a series a while back so that git could unambiguously
-determine what a remote symref points to, and I think that's the
-better way to fix this problem.
-
-If the user runs "git remote set-head -a <remote>" they will get
-whatever "git show <remote>" indicates is the remote HEAD. If they
-don't like that, they can set their <remote>/HEAD explicitly using the
-alternate syntax.
-
-j.
+Ciao,
+Dscho
