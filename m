@@ -1,108 +1,107 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: [PATCH v2] builtin-branch: improve output when displaying
-	remote branches
-Date: Fri, 13 Feb 2009 07:47:07 +0100
-Message-ID: <20090213064707.GA17681@piper.oerlikon.madduck.net>
-References: <7vhc30qki2.fsf@gitster.siamese.dyndns.org> <1234503271-78569-1-git-send-email-jaysoffian@gmail.com> <7v7i3ug7y9.fsf@gitster.siamese.dyndns.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [RFC PATCH] Teach rebase to rebase even if upstream is up to date 
+	with -f
+Date: Fri, 13 Feb 2009 07:51:17 +0100
+Message-ID: <bd6139dc0902122251j24696806xb89de3e338d49cb@mail.gmail.com>
+References: <1234468061-29923-1-git-send-email-srabbelier@gmail.com>
+	 <7vbpt7jq4c.fsf@gitster.siamese.dyndns.org>
+	 <bd6139dc0902121357l1eea7b8xe890513b756e97c2@mail.gmail.com>
+	 <7viqnfi6la.fsf@gitster.siamese.dyndns.org>
+	 <bd6139dc0902121524o776703bdw1bb199caecbc9c21@mail.gmail.com>
+	 <7vhc2zglz4.fsf@gitster.siamese.dyndns.org>
+	 <bd6139dc0902122202r25e2e320m19810097cbb54225@mail.gmail.com>
+	 <7vd4dmg8k1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ZPt4rx8FFjLCG7dd"
-To: Junio C Hamano <gitster@pobox.com>,
-	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 13 07:48:55 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailinglist <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Eric Wong <normalperson@yhbt.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 13 07:52:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXrr5-0002gf-5Z
-	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 07:48:55 +0100
+	id 1LXruu-0003hl-MF
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 07:52:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751263AbZBMGr1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2009 01:47:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751126AbZBMGr0
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 01:47:26 -0500
-Received: from clegg.madduck.net ([193.242.105.96]:41405 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751078AbZBMGrZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2009 01:47:25 -0500
-Received: from wall.oerlikon.madduck.net (wall.oerlikon.madduck.net [IPv6:2001:41e0:ff12::1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTPS id 154D71D409B;
-	Fri, 13 Feb 2009 07:47:09 +0100 (CET)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTPS id 30AC99F13D;
-	Fri, 13 Feb 2009 07:47:08 +0100 (CET)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id C32FD4464; Fri, 13 Feb 2009 07:47:07 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <7v7i3ug7y9.fsf@gitster.siamese.dyndns.org>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux 5.0 kernel 2.6.26-1-amd64 x86_64
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: ClamAV 0.94.2/8985/Thu Feb 12 23:11:57 2009 on clegg.madduck.net
-X-Virus-Status: Clean
+	id S1751285AbZBMGv0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Feb 2009 01:51:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751273AbZBMGvZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 01:51:25 -0500
+Received: from mail-bw0-f161.google.com ([209.85.218.161]:48192 "EHLO
+	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751064AbZBMGvY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Feb 2009 01:51:24 -0500
+Received: by bwz5 with SMTP id 5so1504889bwz.13
+        for <git@vger.kernel.org>; Thu, 12 Feb 2009 22:51:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=mn9VZBMTzRBxJcZql6pVNCAnX3I5LF8VWD+fgAEpeIQ=;
+        b=tA5jNGyQCtSZii79zOamfAUZN675TLXW+AduZW2ezWgtpD8TnbD8kxtz7ewisa7/np
+         DI4ohLhmjg6Et3Mjo5v14jJUBoJYby98a5kfC6+Ba8zf3PBs1Qm5dNaVZ2pQHOJ21/mN
+         1+JKL7c/3g9ou3DPJuIh42PlAJ9wjFDSio8Hk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=D0HlLNa0+VrTYqVlzaFfKEBSjp1eGql3KJkKWgiwJ09GCjuXjZQ0X4Pov5y2GzPuAi
+         KNygnupliV89liWbiEnvI5x0DubkQfu+UAwYuF7GNiV6evuI45kVuee3dvJ/4a5tUg2J
+         Al6w7Gy6g+qpLvM5kXKua9DkFsxeOEjXZoiBE=
+Received: by 10.86.60.14 with SMTP id i14mr88842fga.70.1234507877466; Thu, 12 
+	Feb 2009 22:51:17 -0800 (PST)
+In-Reply-To: <7vd4dmg8k1.fsf@gitster.siamese.dyndns.org>
+X-Google-Sender-Auth: ce5b986e56efaebb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109715>
 
+On Fri, Feb 13, 2009 at 07:22, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> I thought I left it up to you ;-).
 
---ZPt4rx8FFjLCG7dd
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Ah, I failed to notice that, my bad.
 
-also sprach Junio C Hamano <gitster@pobox.com> [2009.02.13.0735 +0100]:
-> Once you start making each case arm do more things, it might make sense to
-> rewrite the above unrolled loop into something like this:
-[...]
-> 	} ref_kind[] =3D {
->         	{ REF_LOCAL_BRANCH, "refs/heads/", 11 },
->         	{ REF_REMOTE_BRANCH, "refs/remotes/", 13 },
-> 	};
-[...]
+> I can not think of a practical purpose of "git rebase -f" without oth=
+er
+> options that actively modify the tree each commit records (e.g. the "=
+fix
+> whitespace" option), perhaps other than to pretend that you committed=
+ them
+> later than you actually did. =A0A patch that implements --force alone=
+ is
+> harder to justify, because it is unclear what good it does. =A0It is
+> especially true if you make --whitespace=3Dfix imply that behaviour.
 
-> Then we can later add new elements more easily, e.g.
->=20
->                 { REF_TOPGIT_BASE, "refs/top-base/", 14 },
+Agreed, thanks for the explanation.
 
-As soon as TopGit is integrated into Git proper, this could make
-sense. However, I don't know when this will happen. In the mean
-time, hardcoding extensions like you suggest might not scale too
-well. Wouldn't it make more sense to provide an interface that
-allowed tools to register their own namespaces, and handle those
-appropriately within Git?
+> One more thing. =A0I kept saying "detect --whitespace=3Dfix (or its s=
+ynonym
+> strip)" because people can have "apply.whitespace =3D fix" in their
+> configuration file for use with "git am", and countermand the
+> configuration with "git rebase --whitespace=3Dwarn". =A0Such a usage =
+should
+> not imply --force.
 
-Much of that handling could be taken straight from refs/remotes/*,
-as they are conceptually the same. refs/remotes/* just has
-additional treatment inside Git, because it's part of the basic
-feature set. An external feature's namespace wouldn't be, but Git
-also doesn't need to know anything about those, or treat them
-specially.
+Ok, so having 'apply.whitespace =3D fix' in your config _should_ imply
+-f, and '--whitespace=3D[no]warn' as commandline option should not
+affect '-f'. This does mean though that anyone with 'apply.whitespace
+=3D fix' in their git config that does a rebase on an up-to-date branch
+will automagically have the whitespace fixed. Then again, that
+behavior is probably desired for those with 'apply.whitespace =3D fix'
+set.
+
+I'll look into making --whitespace=3Dfix/strip imply -f then, and this
+time add some tests :).
 
 --=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-"doesn't he know who i think i am?"
-                                                     -- phil collins
-=20
-spamtraps: madduck.bogus@madduck.net
+Cheers,
 
---ZPt4rx8FFjLCG7dd
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkmVF2sACgkQIgvIgzMMSnXEHQCfYu3RYm39eVU49KKurf+kRD94
-CNEAoJgz9m5d9VdIaXSG3XuHdfDPA3VH
-=DSQR
------END PGP SIGNATURE-----
-
---ZPt4rx8FFjLCG7dd--
+Sverre Rabbelier
