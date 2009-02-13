@@ -1,137 +1,76 @@
-From: Jay Soffian <jaysoffian@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 4/4] builtin-remote: add set-head verb
-Date: Fri, 13 Feb 2009 05:21:20 -0500
-Message-ID: <76718490902130221q3114fbdbt89692e79158530ff@mail.gmail.com>
+Date: Fri, 13 Feb 2009 02:35:51 -0800
+Message-ID: <7vhc2yaak8.fsf@gitster.siamese.dyndns.org>
 References: <1234515275-91263-1-git-send-email-jaysoffian@gmail.com>
-	 <1234515275-91263-2-git-send-email-jaysoffian@gmail.com>
-	 <1234515275-91263-3-git-send-email-jaysoffian@gmail.com>
-	 <1234515275-91263-4-git-send-email-jaysoffian@gmail.com>
-	 <1234515275-91263-5-git-send-email-jaysoffian@gmail.com>
-	 <7vtz6yabsy.fsf@gitster.siamese.dyndns.org>
+ <1234515275-91263-2-git-send-email-jaysoffian@gmail.com>
+ <1234515275-91263-3-git-send-email-jaysoffian@gmail.com>
+ <1234515275-91263-4-git-send-email-jaysoffian@gmail.com>
+ <1234515275-91263-5-git-send-email-jaysoffian@gmail.com>
+ <7vtz6yabsy.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, peff@peff.net, barkalow@iabervon.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 13 11:22:51 2009
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 13 11:37:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXvC4-00061C-Kc
-	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 11:22:49 +0100
+	id 1LXvQI-0002LY-LL
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 11:37:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757266AbZBMKVY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2009 05:21:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751013AbZBMKVY
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 05:21:24 -0500
-Received: from rv-out-0506.google.com ([209.85.198.236]:51283 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756944AbZBMKVW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2009 05:21:22 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so639193rvb.1
-        for <git@vger.kernel.org>; Fri, 13 Feb 2009 02:21:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=n9EuJLUBJ4clDsOor8I8TSuhH04QVrkGOpdXX+ShJJI=;
-        b=xuW4BLd47lC7t6fSnZQSEaon2EITWu8Uq8U7Bmh450AWJKSZyO55ViRDOYxbQvXMgT
-         67sozPw/1Udnpmv9x5G9s3Rkcg4QV5Jtv7Hx4YMwCSmjCbd/C9ehdx+Mj/bazxTgoPb5
-         CgIF9fq4cHLAp9i1XfijlU1lcoDJSszfTycvE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ayLsvccR+a3vBmgvJg09FuISwug15pJxmNrWEEio8Xy+k2SxfxWA2FqfeS8PvVvX9p
-         SODk6uqfFhbG+oQmHQvUfGtmwMG+DFlz2G3611/0nc/pPBIN4CTHVVuA00DDzUobMut4
-         DMlHhpPkG20vAz5mD7P4FnixkSlwTijhvHkT8=
-Received: by 10.141.201.1 with SMTP id d1mr1077876rvq.157.1234520480910; Fri, 
-	13 Feb 2009 02:21:20 -0800 (PST)
-In-Reply-To: <7vtz6yabsy.fsf@gitster.siamese.dyndns.org>
+	id S1751013AbZBMKgF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2009 05:36:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751089AbZBMKgD
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 05:36:03 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51797 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750770AbZBMKgB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2009 05:36:01 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 59B092B097;
+	Fri, 13 Feb 2009 05:35:59 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 4D7CC2AA9C; Fri,
+ 13 Feb 2009 05:35:53 -0500 (EST)
+In-Reply-To: <7vtz6yabsy.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Fri, 13 Feb 2009 02:09:01 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 1A6C28C2-F9BA-11DD-A964-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109738>
 
-On Fri, Feb 13, 2009 at 5:09 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Calling the subcommand a "verb" is somewhat new, though.  Existing
-> documentation for git commands that take multiple actions seem to call
-> them subcommands, including "git-remote.txt" itself.
-
-Okay.
-
-> Hmph, what does "-a" stand for?  I would have expected to see "-u" that
-> stands for "update" here.
-
---automatic -- as in figure out the name automatically from the other side.
+Junio C Hamano <gitster@pobox.com> writes:
 
 > Also it may be better to be more explicit about both the syntax and the
-> semantics of `<branch>`.
-
-Okay.
-
-> Do you expect "refs/remotes/<name>/master" or
-> just "master" (I assume the latter)?
-
-Yes, the latter.  If you did the wrong thing the error ought clue you in:
-
-$ ./git remote set-head origin refs/remotes/origin/master
-error: Not a valid ref: refs/remotes/origin/refs/remotes/origin/master
-
-> Is it an error if the branch does
-> not exist in the specified hierarchy?
-
-Yes it is an error per-above. Well, at least on-top of next it is.
-
-> Can you force to set to a branch
+> semantics of `<branch>`.  Do you expect "refs/remotes/<name>/master" or
+> just "master" (I assume the latter)?  Is it an error if the branch does
+> not exist in the specified hierarchy?  Can you force to set to a branch
 > that does not exist in your tracking side (yet) but you know exists on the
 > remote side already?
 
-No.
+A few things I forgot (and before I go to bed).
 
->> diff --git a/builtin-remote.c b/builtin-remote.c
->> index 465c87a..677e20e 100644
->> --- a/builtin-remote.c
->> +++ b/builtin-remote.c
->> @@ -658,7 +659,8 @@ static void free_remote_ref_states(struct ref_states *states)
->>       string_list_clear(&states->new, 0);
->>       string_list_clear(&states->stale, 0);
->>       string_list_clear(&states->tracked, 0);
->> -     free(states->head_name);
->> +     if (states->head_name)
->> +             free(states->head_name);
->>  }
->
-> Regression?
+If remotes/<name>/HEAD already points at a branch frotz, and you peek the
+remote (i.e. you do not actually run "fetch" to download objects, but just
+"ls-remote" it) and find out that "HEAD" does not point at the same commit
+as "frotz" but it now points at the same commit as another branch
+"nitfol", you probably would want to update it to point at "nitfol", but
+it was unclear from the description in the documentation if this option
+was meant to perform this kind fo update, or only to set a missing HEAD.
 
-Indeed.
+If you meant to do an update, there is one thing to watch out for when you
+reuse the logic used by clone.  It favors "master" if more than one
+branches point at the same commit as HEAD.  You need to customize it to
+favor the one that the HEAD points at on the local side before you start
+(iow, try to keep the current value when you can).
 
-> set_head()?
-
-Yep.
-
-> The code will scale better, especially for a young subcommand that may acquire
-> new options, if the check is done by each codepath that deals with a
-> specific option to do this kind of check.  That is, e.g.
->
->        if (opt_delete) {
->                error if the arg is not remote (alone)
->                do the "delete" thing
->        } else if (opt_update) {
->                error if the arg is not remote (alone)
->                do the "update" thing
->        } else {
->                error if the args are not (remote, branch)
->                do the "set" thing
->        }
-
-Got it. I really am trying to match existing code, but it seems the
-standards have gotten higher, so I need to do better than existing
-code.
-
-Thanks,
-
-j.
+For example, if it points at "frotz" locally when the command was started,
+and you found out that HEAD now points at the commit at the tip of "frotz"
+and "master" branches by peeking, you do not want to repoint HEAD from
+"frotz" to "master".
