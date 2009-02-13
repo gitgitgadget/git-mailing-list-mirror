@@ -1,201 +1,109 @@
 From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH 1/4] builtin-clone: move locate_head() to remote.c so it can be re-used
-Date: Fri, 13 Feb 2009 03:54:32 -0500
-Message-ID: <1234515275-91263-2-git-send-email-jaysoffian@gmail.com>
-References: <1234515275-91263-1-git-send-email-jaysoffian@gmail.com>
+Subject: [PATCH 0/4] remote HEAD improvements take 2
+Date: Fri, 13 Feb 2009 03:54:31 -0500
+Message-ID: <1234515275-91263-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Cc: Jay Soffian <jaysoffian@gmail.com>, peff@peff.net,
 	gitster@pobox.com, barkalow@iabervon.org
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 13 09:56:15 2009
+X-From: git-owner@vger.kernel.org Fri Feb 13 09:56:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXtqC-0003ao-QM
-	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 09:56:09 +0100
+	id 1LXtqC-0003ao-33
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 09:56:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752010AbZBMIym (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2009 03:54:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751854AbZBMIym
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 03:54:42 -0500
-Received: from yw-out-2324.google.com ([74.125.46.29]:50221 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751301AbZBMIyl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2009 03:54:41 -0500
-Received: by yw-out-2324.google.com with SMTP id 5so588604ywh.1
-        for <git@vger.kernel.org>; Fri, 13 Feb 2009 00:54:39 -0800 (PST)
+	id S1751566AbZBMIyj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2009 03:54:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751301AbZBMIyj
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 03:54:39 -0500
+Received: from yx-out-2324.google.com ([74.125.44.28]:49917 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750774AbZBMIyi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2009 03:54:38 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so587057yxm.1
+        for <git@vger.kernel.org>; Fri, 13 Feb 2009 00:54:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=Ma7GdJ6wNW+q9YIG/W4kDhqpDuNNFSu0WW01XksJQKM=;
-        b=mKuodAMqyIln7Ge+Z73oLpDqbAgjRu89o0wnYybW+8zLGDwZikoMJmgKW4YL08FeT7
-         1vk4UEkKsbPxtl/rcSyp+9GrE8IN9gDwHIz5cY29E/WXLdgp8T5OJAAFJ/Ntd9SOKSwM
-         hbj/2TVKJNc+r/vSVfaG0eL0oHlVlpyKX5D/g=
+         :message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=nIQLJjIj86amtjTDQpCETr7TVy7ndVugyj7Ic1gsdcs=;
+        b=MlcRc8WVr8UtqrthO/k7IoX4QdlrpQT4vvxbTlp2dyZgwDP9Q8sHsEoVM0vx8E4B9r
+         SHitdlkw45LmkS/m+5lmJrQEQb5AfGCFOYmKXn4U2ydOmdEfsrAhnJR+30qPkGcu8IJ+
+         88EOBxZg+U1kEcFGAkRaFaYExpmt7yNm7HYxA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=w+d9StM4GjcBEf/9/45MJ6nQhblYRwEW3KJvx0mr9BPp3NNLNUKvv8W4EkarJAUSMc
-         KQVXLsu3FeAyAH4xV+JYwvl+bUaWE8NeOcX685JdShZjSGu3WVCbjrwS9EzKiXqFP5Ct
-         E/8sT19XK/5eq0oNV/1pJOL2jfzwp3DbPtL4Y=
-Received: by 10.101.71.6 with SMTP id y6mr876623ank.103.1234515279741;
-        Fri, 13 Feb 2009 00:54:39 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=aypD24K8s3nYJd/dtbPoLcCAfX5TKYtowL7PXlUkk+6Ab3K3k9wExTj8+1hpnshlJR
+         iCBgkGy+EZpVFJkKYInhlFcYUjV/aNLwYJwfaOSG6gTQd0vbXCfeXdv933Iiue6gi2zd
+         BB8k7M3rpWIeI+6Ugo/HVdYkmIr6RivhFpEnI=
+Received: by 10.100.144.11 with SMTP id r11mr2507184and.24.1234515277294;
+        Fri, 13 Feb 2009 00:54:37 -0800 (PST)
 Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
-        by mx.google.com with ESMTPS id b32sm1487600ana.15.2009.02.13.00.54.38
+        by mx.google.com with ESMTPS id d24sm2170345and.50.2009.02.13.00.54.36
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 13 Feb 2009 00:54:39 -0800 (PST)
+        Fri, 13 Feb 2009 00:54:36 -0800 (PST)
 X-Mailer: git-send-email 1.6.2.rc0.209.g7c178
-In-Reply-To: <1234515275-91263-1-git-send-email-jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109729>
 
-Move locate_head() to remote.c and rename it to guess_remote_head() to
-more accurately reflect what it does. This is in preparation for being
-able to call it from builtin-remote.c
+There is currently no porcelain for dealing with remote HEADs (i.e.
+$GIT_DIR/remotes/<remote>/HEAD). This series:
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
- builtin-clone.c |   41 +++--------------------------------------
- remote.c        |   37 +++++++++++++++++++++++++++++++++++++
- remote.h        |    9 +++++++++
- 3 files changed, 49 insertions(+), 38 deletions(-)
+1) Refactors locate_head() from builtin-clone.c to remote.c so it can be used
+   by builtin-remote.c as well. I also renamed it to guess_remote_head().
 
-diff --git a/builtin-clone.c b/builtin-clone.c
-index f73029e..280b866 100644
---- a/builtin-clone.c
-+++ b/builtin-clone.c
-@@ -20,6 +20,7 @@
- #include "dir.h"
- #include "pack-refs.h"
- #include "sigchain.h"
-+#include "remote.h"
- 
- /*
-  * Overall FIXMEs:
-@@ -293,43 +294,6 @@ static void remove_junk_on_signal(int signo)
- 	raise(signo);
- }
- 
--static const struct ref *locate_head(const struct ref *refs,
--				     const struct ref *mapped_refs,
--				     const struct ref **remote_head_p)
--{
--	const struct ref *remote_head = NULL;
--	const struct ref *remote_master = NULL;
--	const struct ref *r;
--	for (r = refs; r; r = r->next)
--		if (!strcmp(r->name, "HEAD"))
--			remote_head = r;
--
--	for (r = mapped_refs; r; r = r->next)
--		if (!strcmp(r->name, "refs/heads/master"))
--			remote_master = r;
--
--	if (remote_head_p)
--		*remote_head_p = remote_head;
--
--	/* If there's no HEAD value at all, never mind. */
--	if (!remote_head)
--		return NULL;
--
--	/* If refs/heads/master could be right, it is. */
--	if (remote_master && !hashcmp(remote_master->old_sha1,
--				      remote_head->old_sha1))
--		return remote_master;
--
--	/* Look for another ref that points there */
--	for (r = mapped_refs; r; r = r->next)
--		if (r != remote_head &&
--		    !hashcmp(r->old_sha1, remote_head->old_sha1))
--			return r;
--
--	/* Nothing is the same */
--	return NULL;
--}
--
- static struct ref *write_remote_refs(const struct ref *refs,
- 		struct refspec *refspec, const char *reflog)
- {
-@@ -532,7 +496,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 
- 		mapped_refs = write_remote_refs(refs, &refspec, reflog_msg.buf);
- 
--		head_points_at = locate_head(refs, mapped_refs, &remote_head);
-+		head_points_at = guess_remote_head(refs, mapped_refs,
-+						   &remote_head);
- 	}
- 	else {
- 		warning("You appear to have cloned an empty repository.");
-diff --git a/remote.c b/remote.c
-index d7079c6..447f091 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1376,3 +1376,40 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
- 			    base, num_ours, num_theirs);
- 	return 1;
- }
-+
-+const struct ref *guess_remote_head(const struct ref *refs,
-+				    const struct ref *mapped_refs,
-+				    const struct ref **remote_head_p)
-+{
-+	const struct ref *remote_head = NULL;
-+	const struct ref *remote_master = NULL;
-+	const struct ref *r;
-+	for (r = refs; r; r = r->next)
-+		if (!strcmp(r->name, "HEAD"))
-+			remote_head = r;
-+
-+	for (r = mapped_refs; r; r = r->next)
-+		if (!strcmp(r->name, "refs/heads/master"))
-+			remote_master = r;
-+
-+	if (remote_head_p)
-+		*remote_head_p = remote_head;
-+
-+	/* If there's no HEAD value at all, never mind. */
-+	if (!remote_head)
-+		return NULL;
-+
-+	/* If refs/heads/master could be right, it is. */
-+	if (remote_master && !hashcmp(remote_master->old_sha1,
-+				      remote_head->old_sha1))
-+		return remote_master;
-+
-+	/* Look for another ref that points there */
-+	for (r = mapped_refs; r; r = r->next)
-+		if (r != remote_head &&
-+		    !hashcmp(r->old_sha1, remote_head->old_sha1))
-+			return r;
-+
-+	/* Nothing is the same */
-+	return NULL;
-+}
-diff --git a/remote.h b/remote.h
-index a46a5be..cabb14a 100644
---- a/remote.h
-+++ b/remote.h
-@@ -137,4 +137,13 @@ enum match_refs_flags {
- int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs);
- int format_tracking_info(struct branch *branch, struct strbuf *sb);
- 
-+/*
-+ * Look in refs for HEAD. Then look for a matching SHA1 in mapped_refs,
-+ * first checking if refs/heads/master matches. Return NULL if nothing matches
-+ * or if there is no HEAD in refs. remote_head_p is assigned HEAD if not NULL.
-+ */
-+const struct ref *guess_remote_head(const struct ref *refs,
-+				    const struct ref *mapped_refs,
-+				    const struct ref **remote_head_p);
-+
- #endif
--- 
-1.6.2.rc0.209.g7c178
+   Daniel suggested having it specifically check that it returns a ref from
+   refs/heads/, but I wasn't sure what impact that might have (good or
+   bad...), so I punted on that change.
+
+2) Teaches git remote show to display the remote HEAD:
+
+  $ git remote show origin
+
+* remote origin
+  URL: git://git.kernel.org/pub/scm/git/git.git
+  HEAD: master
+
+3) Teaches git remote a new "set-head" verb:
+
+  To set a remote HEAD explicitly:
+  $ git remote set-head <name> <branch>
+
+  To set a remote HEAD to match the upstream repo:
+  $ git remote set-head <name> -a
+
+  To delete a remote HEAD:
+  $ git remote set-head <name> -d
+
+  I changed it from "sethead" to "set-head" per Jeff.
+
+  I also remembered to update git-completion.bash this time.
+
+4) Documents the new set-head verb. I also correct the git remote man page
+   w/respect to the "-m <master>" option. The man page implied that the remote
+   HEAD was set automatically when adding a remote (a la git clone), but this
+   is not true. And, since I couldn't find anywhere else that the point of
+   having a remote HEAD is documented, I documented it here.
+
+Jay Soffian (4):
+  builtin-clone: move locate_head() to remote.c so it can be re-used
+  builtin-remote: move duplicated cleanup code its own function
+  builtin-remote: teach show to display remote HEAD
+  builtin-remote: add set-head verb
+
+ Documentation/git-remote.txt           |   20 ++++++-
+ builtin-clone.c                        |   41 +-------------
+ builtin-remote.c                       |   96 +++++++++++++++++++++++++++++---
+ contrib/completion/git-completion.bash |    2 +-
+ remote.c                               |   37 ++++++++++++
+ remote.h                               |    9 +++
+ 6 files changed, 156 insertions(+), 49 deletions(-)
