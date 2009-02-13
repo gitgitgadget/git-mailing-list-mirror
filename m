@@ -1,72 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [Virtual PATCH] Add an option to wrap a patch in <pre> in  
- git-imap-send which ironically results in a cleaner patch from Thunderbird.
-Date: Fri, 13 Feb 2009 09:49:15 -0800
-Message-ID: <7v4oyy9qhw.fsf@gitster.siamese.dyndns.org>
-References: <499446D0.90602@codeweavers.com>
- <7viqnfezo5.fsf@gitster.siamese.dyndns.org>
- <49955860.80504@drmicha.warpmail.net>
+From: Caleb Cushing <xenoterracide@gmail.com>
+Subject: Re: gmail screws up patches looking for workable workaround
+Date: Fri, 13 Feb 2009 13:00:32 -0500
+Message-ID: <81bfc67a0902131000n2d67e88epd743c7c39842fbc@mail.gmail.com>
+References: <81bfc67a0902130909i154a7c2epeff98347985c3fb8@mail.gmail.com>
+	 <8c9a060902130926j48b59785l624a3966254517e5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeremy White <jwhite@codeweavers.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Feb 13 18:54:00 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Dan Robbins <drobbins@funtoo.org>
+To: Jacob Helwig <jacob.helwig@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 13 19:02:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LY2Cb-0003Wd-Qr
-	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 18:51:50 +0100
+	id 1LY2Mp-0000Ll-V3
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 19:02:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751794AbZBMRtY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2009 12:49:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751313AbZBMRtY
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 12:49:24 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39033 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751293AbZBMRtX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2009 12:49:23 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E8FA899628;
-	Fri, 13 Feb 2009 12:49:21 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 954419961D; Fri,
- 13 Feb 2009 12:49:16 -0500 (EST)
-In-Reply-To: <49955860.80504@drmicha.warpmail.net> (Michael J. Gruber's
- message of "Fri, 13 Feb 2009 12:24:16 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A52AE23C-F9F6-11DD-8518-0433C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1752634AbZBMSAg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2009 13:00:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752283AbZBMSAg
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 13:00:36 -0500
+Received: from mail-qy0-f11.google.com ([209.85.221.11]:47504 "EHLO
+	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752182AbZBMSAf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2009 13:00:35 -0500
+Received: by qyk4 with SMTP id 4so1779963qyk.13
+        for <git@vger.kernel.org>; Fri, 13 Feb 2009 10:00:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=g60fLAaGJwl5ZNIkn89BMiFl5zUJWLrBy0/Q3r7kz8k=;
+        b=ZBxmnJNYTF75+w3G16IQ2WWf3B87sVU5lUDuKkEsL9sqFbfcR78KUQA9u5JaPVuQ7A
+         KdNhpUk6MRW3kq8zscIY+UbvOCnpv4pK4/oK+n3tZZK9R+Fn7EEdVxFZam4m4R4M0caS
+         v7vmd3TR8MxeF7ujgzJ/aUR9ux+vZ5qTpszO4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=T963BLWzh0LJC8oAyXGMSAhCaVjFffdU1gt+VxLo/DC38XPdOoKziml56Ft0e+Noce
+         ZC9NDZ8ifQncQQI6Bg58kVAzCmNzwv/UeHTtA2y0wBKUp/uMBenfTsCLVSwT5RDcKpAE
+         F25Cwk45wmL2UvtgO2MC7LvcW8STPPyUXDBBw=
+Received: by 10.229.109.194 with SMTP id k2mr746457qcp.6.1234548032897; Fri, 
+	13 Feb 2009 10:00:32 -0800 (PST)
+In-Reply-To: <8c9a060902130926j48b59785l624a3966254517e5@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109767>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
-
->> What worries me the most is if there is any guarantee that this bug you
->> are exploiting to force it to send a patch in the common denominator
->> format _will not be fixed_ in future versions of Thunderbird.
+> ~/.gitconfig
+> [sendemail]
+>    smtpserver = smtp.gmail.com
+>    smtpserverport = 587
+>    smtpuser = your.email@gmail.com
+>    smtppass = yourPassword
+>    smtpencryption = tls
 >
-> It's not a bug, it's a feature ;)
+> $ git format-patch <options>
+> # add comments to 00*.patch files.
+> $ git send-email 00*
+> I've never seen any mangling using send-email, and the gmail SMTP
+> server.  I've never actually tried using imap-send.  Not quite the
+> answer to your question, but hopefully, it's another option.
 >
-> In fact it really is: preformatted text in HTML (<pre>) is by definition
-> left alone. Now, when you are about to send an HTML mail TB asks you
-> what to do (or takes a choice from preferences/addressbook): send as
-> HTML, as text or both.
 
-Ok, "TB asks you what to do and you choose 'text-only'" is the part I
-missed.  In that case, I'd agree it definitely is a feature not to use
-flowed to convert that <pre>..</pre> to a plain text.  Thanks for an
-explanation.
+[sendmail]
+    smtpserver = smtp.gmail.com
+    smtpserverport = 587
+    smtpuser = xenoterracide@gmail.com
+    smtppass = YeahITypedThisRight
+    smtpencryption = tls
 
->> I see your patch deals only with ampersand, less-than, greater-than and
->> dquot.  Do you know if this is enough, or would letters outside US-ASCII
->> need to be expressed in ampersand-hash "character reference" notation?
->
-> According to Ben of Mozilla fame this is enough for special characters.
-> I don't know about UTF-8, though. Usually, TB recognizes the proper
-> encoding.
+everything look good here? because mail isn't actually reaching it's
+destination. I have a feeling that's because the MTA isn't set up. I
+/could/ set that up... but I don't think that's something that anyone
+should have to do to send email patches.
 
-Yeah, anything outside US-ASCII.  That was what I was wondering about.
+also according to someone else the reason git can't handle the
+attachments is because they are still base64 encoded.
+-- 
+Caleb Cushing
+
+http://xenoterracide.blogspot.com
