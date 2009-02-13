@@ -1,60 +1,117 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2] builtin-branch: improve output when displaying remote
- branches
-Date: Fri, 13 Feb 2009 08:37:19 +0100
-Message-ID: <4995232F.1090206@viscovery.net>
-References: <7vhc30qki2.fsf@gitster.siamese.dyndns.org> <1234503271-78569-1-git-send-email-jaysoffian@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 13 08:39:00 2009
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: [PATCH] gitweb: fix wrong base URL when non-root DirectoryIndex
+Date: Fri, 13 Feb 2009 08:40:03 +0100
+Message-ID: <1234510803-23268-1-git-send-email-giuseppe.bilotta@gmail.com>
+References: <200902122303.37499.jnareb@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Petr Baudis <pasky@suse.cz>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 13 08:41:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXsdU-0007FO-50
-	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 08:38:56 +0100
+	id 1LXsfe-0007p5-BJ
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 08:41:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756118AbZBMHh2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2009 02:37:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754167AbZBMHh1
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 02:37:27 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:19778 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753911AbZBMHh0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2009 02:37:26 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1LXsbv-0006pL-LY; Fri, 13 Feb 2009 08:37:19 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 6050769F; Fri, 13 Feb 2009 08:37:19 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <1234503271-78569-1-git-send-email-jaysoffian@gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1751999AbZBMHjm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2009 02:39:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751742AbZBMHjm
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 02:39:42 -0500
+Received: from mail-fx0-f20.google.com ([209.85.220.20]:36451 "EHLO
+	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751181AbZBMHjl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2009 02:39:41 -0500
+Received: by fxm13 with SMTP id 13so3059625fxm.13
+        for <git@vger.kernel.org>; Thu, 12 Feb 2009 23:39:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=irND+YwB3hX6+I7y8xx6rFkQkM6gcjrZl6NRDjyHCqw=;
+        b=mgcII3hwmFr/39ELp5l5jWolFCme0bUnyNoqr9/Vipt7NDuGgoUi6zJYgHHqdkXWE6
+         gDEZLa9NjOKMZ1/pXmOnwUJPDF1Rra5/1nM7Fa3ag071YgAkMdkO4P/sOIEgiK9GW4hH
+         uFEwhuyIGnz4nhGxPMsP5OkCjK1s1QN9ZiNXM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=gSAtGKAPgpz8xaaziXJ+2cC+wL7Ylxm2LrElJt633Iv9QZWOS+MMATRm80EKIl8vek
+         djNOU+6TamO1cCt57IhWToeCpGWcU7Jdp0whThsyh2pCDTVJ8YJqdmqdoO63Z1FNtd88
+         CvJAqRXqgSG0grYVAMFToF664Fj7hWVpS6bAU=
+Received: by 10.86.33.10 with SMTP id g10mr106939fgg.47.1234510779909;
+        Thu, 12 Feb 2009 23:39:39 -0800 (PST)
+Received: from localhost (host-78-13-54-17.cust-adsl.tiscali.it [78.13.54.17])
+        by mx.google.com with ESMTPS id l12sm1320983fgb.31.2009.02.12.23.39.38
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 12 Feb 2009 23:39:39 -0800 (PST)
+X-Mailer: git-send-email 1.5.6.5
+In-Reply-To: <200902122303.37499.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109722>
 
-Jay Soffian schrieb:
-> $ git branch -av
->   foo                     -> master
-> * master                  51cecb2 initial
->   rather-long-branch-name 51cecb2 initial
->   remotes/frotz/HEAD      -> frotz/master
->   remotes/frotz/master    e1d8130 added file2
->   remotes/origin/HEAD     -> origin/master
->   remotes/origin/WTF      -> refs/heads/master
->   remotes/origin/master   e1d8130 added file2
+CGI::url() has some issues when rebuilding the script URL if the script
+is a DirectoryIndex.
 
-Just in case there's another iteration of this patch, I'd like to see
-example output like this one (or even more of them) in the commit message
-(perhaps WTF renamed to something else ;).
+One of these issue is the inability to strip PATH_INFO, which is why we
+had to do it ourselves.
 
-Thanks,
--- Hannes
+Another issue is that the resulting URL cannot be used for the <base>
+tag: it works if we're the DirectoryIndex at the root level, but not
+otherwise.
+
+We fix this by building the proper base URL ourselves, and improve the
+documentation about the need to strip PATH_INFO manually while we're at
+it.
+
+Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+---
+ gitweb/gitweb.perl |   16 ++++++++++++----
+ 1 files changed, 12 insertions(+), 4 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index c2c8080..48cfd5f 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -27,15 +27,23 @@ our $version = "++GIT_VERSION++";
+ our $my_url = $cgi->url();
+ our $my_uri = $cgi->url(-absolute => 1);
+ 
+-# if we're called with PATH_INFO, we have to strip that
+-# from the URL to find our real URL
+-# we make $path_info global because it's also used later on
++# When the script is used as DirectoryIndex, the URL does not contain the name
++# of the script file itself, and $cgi->url() fails to strip PATH_INFO, so we
++# have to do it ourselves. We make $path_info global because it's also used
++# later on
+ our $path_info = $ENV{"PATH_INFO"};
+ if ($path_info) {
+ 	$my_url =~ s,\Q$path_info\E$,,;
+ 	$my_uri =~ s,\Q$path_info\E$,,;
+ }
+ 
++# Another issue with the script being the DirectoryIndex is that the resulting
++# $my_url data is not the full script URL: this is good, because we want
++# generated links to keep implying the script name if it wasn't explicitly
++# indicated in the URL we're handling, but it means that $my_url cannot be used
++# as base URL. Therefore, we have to build the base URL ourselves:
++our $base_url = $cgi->url(-base => 1) . $ENV{'SCRIPT_NAME'};
++
+ # core git executable to use
+ # this can just be "git" if your webserver has a sensible PATH
+ our $GIT = "++GIT_BINDIR++/git";
+@@ -2908,7 +2916,7 @@ EOF
+ 	# the stylesheet, favicon etc urls won't work correctly with path_info
+ 	# unless we set the appropriate base URL
+ 	if ($ENV{'PATH_INFO'}) {
+-		print "<base href=\"".esc_url($my_url)."\" />\n";
++		print "<base href=\"".esc_url($base_url)."\" />\n";
+ 	}
+ 	# print out each stylesheet that exist, providing backwards capability
+ 	# for those people who defined $stylesheet in a config file
+-- 
+1.5.6.5
