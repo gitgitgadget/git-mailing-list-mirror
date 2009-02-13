@@ -1,78 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFH] How to review patches: Documentation/ReviewingPatches?
-Date: Fri, 13 Feb 2009 12:05:42 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902131200380.10279@pacific.mpi-cbg.de>
-References: <200902130045.59395.jnareb@gmail.com> <alpine.DEB.1.00.0902130055370.26370@racer> <49952728.2080404@trolltech.com> <7vocx6bu9r.fsf@gitster.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [Virtual PATCH] Add an option to wrap a patch in <pre> in   git-imap-send
+ which ironically results in a cleaner patch from Thunderbird.
+Date: Fri, 13 Feb 2009 12:24:16 +0100
+Message-ID: <49955860.80504@drmicha.warpmail.net>
+References: <499446D0.90602@codeweavers.com> <7viqnfezo5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Marius Storm-Olsen <marius@trolltech.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jeremy White <jwhite@codeweavers.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 13 12:07:26 2009
+X-From: git-owner@vger.kernel.org Fri Feb 13 12:25:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXvsI-0005CP-2K
-	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 12:06:26 +0100
+	id 1LXwB8-0005GE-7y
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 12:25:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751653AbZBMLE5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2009 06:04:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750911AbZBMLE5
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 06:04:57 -0500
-Received: from mail.gmx.net ([213.165.64.20]:56670 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751473AbZBMLE4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2009 06:04:56 -0500
-Received: (qmail invoked by alias); 13 Feb 2009 11:04:53 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp045) with SMTP; 13 Feb 2009 12:04:53 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18pTtV9eNkpxvzyI8itYjnAz+MgNiK5M7+IZSk5JC
-	JFb9eitKaqrQTb
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7vocx6bu9r.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1751616AbZBMLYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2009 06:24:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751231AbZBMLYY
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 06:24:24 -0500
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:59795 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751306AbZBMLYY (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Feb 2009 06:24:24 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 2ADA9294B97;
+	Fri, 13 Feb 2009 06:24:22 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 13 Feb 2009 06:24:22 -0500
+X-Sasl-enc: ITdFEAkcSiu1kEpCh6KeBd+yQOJ5jMg8mIloHfohgmEL 1234524261
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 47C85FF2F;
+	Fri, 13 Feb 2009 06:24:21 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090209 Shredder/3.0b2pre
+In-Reply-To: <7viqnfezo5.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109741>
 
-Hi,
-
-On Fri, 13 Feb 2009, Junio C Hamano wrote:
-
-> Marius Storm-Olsen <marius@trolltech.com> writes:
+Junio C Hamano venit, vidit, dixit 13.02.2009 05:19:
+> I do not think of a reason, other than to trigger the workaround you
+> mentioned in the documentation part of the patch, why any sane user would
+> want to send a patch as HTML.  This configuration variable sounds more
+> like "imap.forceThunderbirdToSendNonFlowedTextByExploitingItsBug" than
+> "imap.html", in other words.
 > 
-> > One thing I've wondered about though when sending patches, is how to 
-> > send the fixups. Lets say I have a patch serie with 8 patches, do I 
-> > send the whole serie each time, or do I just send an update to each 
-> > individual patch? Do I attach it to the previous thread, or start a 
-> > new one?
->
->  * Resending the whole series would help, especially if their earlier
->    round did not hit 'pu'.
+> What worries me the most is if there is any guarantee that this bug you
+> are exploiting to force it to send a patch in the common denominator
+> format _will not be fixed_ in future versions of Thunderbird.
 
-Note that I chose to do it differently quite a number of times.  When I 
-feel that a particular part of the patch series is in deep discussion 
-mode, I will reply to the discussions with updates to that particular 
-patch, often only as an interdiff.
+It's not a bug, it's a feature ;)
 
-When I feel that the result is in a shape that could be applied, or when I 
-feel that people are substantially confused as to what is the current 
-state, I send out a whole updated series.  This is to avoid sending 
-v1..v99 of an 18-strong patch series, and basically dominate the volume of 
-the list.
+In fact it really is: preformatted text in HTML (<pre>) is by definition
+left alone. Now, when you are about to send an HTML mail TB asks you
+what to do (or takes a choice from preferences/addressbook): send as
+HTML, as text or both.
 
-> Subsytem maintainers like Paulus for gitk, Shawn for git-gui and bash
-> completion, Eric for git-svn, and Alexandre for emacs really have helped,
+The fact that the current HTML->text converter respects preformated text
+without reflowing (and without f-f, which would allow reflowing on the
+receiving side) is a feature. TB trys to represent the HTML in text form
+as closely as possible.
 
-... and Jakub for gitweb, Simon for git-p4, Hannes for mingw.git, the New 
-Zealand gang for cvsserver/cvsimport, not to forget Shawn for 
-fast-import...  It is really great to see all that development going on!
+> I see your patch deals only with ampersand, less-than, greater-than and
+> dquot.  Do you know if this is enough, or would letters outside US-ASCII
+> need to be expressed in ampersand-hash "character reference" notation?
 
-Ciao,
-Dscho
+According to Ben of Mozilla fame this is enough for special characters.
+I don't know about UTF-8, though. Usually, TB recognizes the proper
+encoding.
+
+Michael J Gruber
