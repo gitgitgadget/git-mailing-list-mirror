@@ -1,111 +1,105 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH] Documentation: pruning recipe for destructive filter-branch
-Date: Fri, 13 Feb 2009 18:14:39 +0100
-Message-ID: <1234545279-23153-1-git-send-email-trast@student.ethz.ch>
+From: Jacob Helwig <jacob.helwig@gmail.com>
+Subject: Re: gmail screws up patches looking for workable workaround
+Date: Fri, 13 Feb 2009 09:26:21 -0800
+Message-ID: <8c9a060902130926j48b59785l624a3966254517e5@mail.gmail.com>
+References: <81bfc67a0902130909i154a7c2epeff98347985c3fb8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 13 18:16:19 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Dan Robbins <drobbins@funtoo.org>
+To: Caleb Cushing <xenoterracide@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 13 18:28:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LY1eC-0004wB-6p
-	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 18:16:16 +0100
+	id 1LY1pS-0001E9-Qy
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 18:27:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750971AbZBMROt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Feb 2009 12:14:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750883AbZBMROt
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 12:14:49 -0500
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:57246 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750858AbZBMROs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2009 12:14:48 -0500
-Received: from xfe1.d.ethz.ch ([82.130.124.41]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 13 Feb 2009 18:14:47 +0100
-Received: from localhost.localdomain ([77.56.223.244]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 13 Feb 2009 18:14:46 +0100
-X-Mailer: git-send-email 1.6.2.rc0.274.g97213
-X-OriginalArrivalTime: 13 Feb 2009 17:14:46.0356 (UTC) FILETIME=[91C49940:01C98DFE]
+	id S1751967AbZBMR0Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2009 12:26:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751303AbZBMR0Y
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 12:26:24 -0500
+Received: from mail-qy0-f11.google.com ([209.85.221.11]:39810 "EHLO
+	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750971AbZBMR0X (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2009 12:26:23 -0500
+Received: by qyk4 with SMTP id 4so1758290qyk.13
+        for <git@vger.kernel.org>; Fri, 13 Feb 2009 09:26:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=eYfwHa0lZCDFbRFu4uAH8h+k+8tVn8/ozc8qB3GRKp0=;
+        b=dfS+wDgLQUk2DMo0IHwq4Z3V/OYOGmvSNYFOyGXt8KxZ85TJAeG+7aGRT1GBSWCmk3
+         xdDVYEbd1NbrVgbIQ2tV8V1H+naYaSwEdtGyqioioY7f10cFGPVU3+Y+Y54LS7LfzMEm
+         kFcLBtezfm6A7SVJ9GdJitXf5svMrRwLxynbA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=HB2QWX6fxdlcUBkKis2oDZms/sEQqu/zB4VWF0ewIcozBx5CcSDuDLrNWAWpAToD8j
+         rwZsFFHWjZRl4wXLnoDOGTivG5+fJWKzfUQNHuSIN6Yv4YCnS4HMEjLM8NZ0koKQDAIz
+         ub+xs635lS8gn3xZ439cdQXSlnHaloRTC5IF8=
+Received: by 10.224.89.75 with SMTP id d11mr2310708qam.383.1234545981560; Fri, 
+	13 Feb 2009 09:26:21 -0800 (PST)
+In-Reply-To: <81bfc67a0902130909i154a7c2epeff98347985c3fb8@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109762>
 
-Add a section about how to shrink a repository's size after running
-git-filter-branch to remove large blobs from history.
+On Fri, Feb 13, 2009 at 09:09, Caleb Cushing <xenoterracide@gmail.com> wrote:
+> I've followed all the steps in the git Submitting patches guide. In
+> fact it works fine for any patch where all lines are less than 80?
+> chars. however, some of the patches store sha256 hashes (and the like)
+> and have really long lines and gmail word wraps them.
+>
+> I've tried submitting patches as follows.
+>
+> git format-patch -1 -M --stdout | git imap-send
+>
+> git format-patch -1 -M --stdout --attach | git imap-send
+>
+> git format-patch -1 -M --stdout --inline | git imap-send
+>
+>
+> we know the first corrupts the patches. but what I can't figure out is
+> why the next 2 don't work on the receiving end. The comment was.
+>
+>
+> git am -3 -i, when I choose [v]iew patch, I get a binary output.
+>
+>
+> I'm trying to figure out how I can submit patches via gmail for
+> someone that uses git am. what is being done wrong?
+>
+> --
+> Caleb Cushing
+>
+> http://xenoterracide.blogspot.com
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
 
-This comes up every week or so on IRC, and the commands required to
-handle every case are not very newbie-friendly, so hopefully writing
-them down somewhere leads to fewer questions.
+This is the setup I use for emailing patches using git:
 
-Thanks to doener (Bj=C3=B6rn Steinbrink) for comments and corrections.
+~/.gitconfig
+[sendemail]
+    smtpserver = smtp.gmail.com
+    smtpserverport = 587
+    smtpuser = your.email@gmail.com
+    smtppass = yourPassword
+    smtpencryption = tls
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
+$ git format-patch <options>
+# add comments to 00*.patch files.
+$ git send-email 00*
 
-Or we could just add an option --prune-everything-I-have-a-backup-I-pro=
-mise
-to git-filter-branch, so that users can get the same result with less e=
-ffort.
-
-
- Documentation/git-filter-branch.txt |   36 +++++++++++++++++++++++++++=
-++++++++
- 1 files changed, 36 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-fi=
-lter-branch.txt
-index 1fbbbb4..737c555 100644
---- a/Documentation/git-filter-branch.txt
-+++ b/Documentation/git-filter-branch.txt
-@@ -339,6 +339,42 @@ git filter-branch --index-filter \
- ---------------------------------------------------------------
-=20
-=20
-+
-+Checklist for Shrinking a Repository
-+------------------------------------
-+
-+git-filter-branch is often used to get rid of a subset of files,
-+usually with some combination of `\--index-filter` and
-+`\--subdirectory-filter`.  If you want to physically shrink the
-+repository afterwards, you have some choices:
-+
-+* Clone it with `git clone file:///path/to/repo`.  The clone will not
-+  have the removed objects.  See linkgit:git-clone[1].  (Note that
-+  cloning with a plain path just hardlinks everything!)
-+
-+If you really don't want to clone it, for whatever reasons, check the
-+following points (in this order).  This is a very destructive
-+approach, so *make a backup* or go back to cloning it.  You have been
-+warned.
-+
-+* Make sure you really removed all variants of a filename, if a blob
-+  was moved over its lifetime.  `git log \--follow \--all \-- foo` can
-+  help you find renames.
-+
-+* Make sure you really filtered all refs: use `\--tag-name-filter cat
-+  \-- \--all` when calling git-filter-branch.
-+
-+* Make sure you remove the original refs backed up by
-+  git-filter-branch: say `git for-each-ref \--format=3D"%(refname)"
-+  refs/original/ | xargs -n 1 git update-ref -d`.
-+
-+* Expire all reflogs with `git reflog expire \--expire=3Dnow \--all`.
-+
-+* Repack to remove packed objects with `git repack -ad`.
-+
-+* Prune unpacked unreferenced objects with `git prune \--expire=3Dnow`=
-=2E
-+
-+
- Author
- ------
- Written by Petr "Pasky" Baudis <pasky@suse.cz>,
---=20
-1.6.2.rc0.274.g97213
+I've never seen any mangling using send-email, and the gmail SMTP
+server.  I've never actually tried using imap-send.  Not quite the
+answer to your question, but hopefully, it's another option.
