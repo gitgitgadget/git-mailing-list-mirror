@@ -1,78 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] builtin-branch: improve output when displaying remote
- branches
-Date: Thu, 12 Feb 2009 23:36:45 -0800
-Message-ID: <7viqneeqk2.fsf@gitster.siamese.dyndns.org>
-References: <7vhc30qki2.fsf@gitster.siamese.dyndns.org>
- <1234503271-78569-1-git-send-email-jaysoffian@gmail.com>
- <7v7i3ug7y9.fsf@gitster.siamese.dyndns.org>
- <20090213064707.GA17681@piper.oerlikon.madduck.net>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH] gitweb: fix wrong base URL when non-root DirectoryIndex
+Date: Fri, 13 Feb 2009 08:36:54 +0100
+Message-ID: <cb7bb73a0902122336k1726698ftef85fd4ea0e25085@mail.gmail.com>
+References: <1234473072-9901-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <200902122303.37499.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-To: martin f krafft <madduck@madduck.net>
-X-From: git-owner@vger.kernel.org Fri Feb 13 08:38:23 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Petr Baudis <pasky@suse.cz>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 13 08:38:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXscw-00075k-9z
-	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 08:38:22 +0100
+	id 1LXscx-00075k-0p
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 08:38:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753455AbZBMHgy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2009 02:36:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753260AbZBMHgx
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 02:36:53 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35658 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753176AbZBMHgw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2009 02:36:52 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1190598D5A;
-	Fri, 13 Feb 2009 02:36:52 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id BAE5D98D58; Fri,
- 13 Feb 2009 02:36:47 -0500 (EST)
-In-Reply-To: <20090213064707.GA17681@piper.oerlikon.madduck.net> (martin f.
- krafft's message of "Fri, 13 Feb 2009 07:47:07 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 1487DBD6-F9A1-11DD-B0DC-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1754120AbZBMHg5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2009 02:36:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753911AbZBMHg5
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 02:36:57 -0500
+Received: from ey-out-2122.google.com ([74.125.78.27]:16963 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753260AbZBMHg4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2009 02:36:56 -0500
+Received: by ey-out-2122.google.com with SMTP id 25so128058eya.37
+        for <git@vger.kernel.org>; Thu, 12 Feb 2009 23:36:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=4cQw4qLpwEA86BB54Cl4nCwwYlL6WWrDz1FpDvrzZVM=;
+        b=ez8oxo6tWwMgU0dXBLi5oAxun+19jSP6by6OdBymEAGxVFnlStHq5dp7NIAu1BECDk
+         WNN5mhr6qVot2vilQAt/P0xFtznngNSgwDSnR01LkzzL9WFf8tMXDATaoLM7wAb9f2Nk
+         owYuz5UIk9XmbyObbMsPSjv32OvMh5spQq7Kg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=LGdb0MxRgnykpz6ZUw/IN4W4+JWDpHXZSEUUPi414hWzxWIhTrpYZB6qf29yT2IOWA
+         0mZGUfJUbOBwlPkS7PYbxjrndbq7mD33vY1HY2QF/r4PMBMM1mp+5zNyOu4k2W8KDI0e
+         YD0ZjdiGYLCTH30y/TP0vxinZ4jjAFI32kzcY=
+Received: by 10.210.127.13 with SMTP id z13mr1396864ebc.92.1234510614602; Thu, 
+	12 Feb 2009 23:36:54 -0800 (PST)
+In-Reply-To: <200902122303.37499.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109720>
 
-martin f krafft <madduck@madduck.net> writes:
-
-> also sprach Junio C Hamano <gitster@pobox.com> [2009.02.13.0735 +0100]:
->> Once you start making each case arm do more things, it might make sense to
->> rewrite the above unrolled loop into something like this:
-> [...]
->> 	} ref_kind[] = {
->>         	{ REF_LOCAL_BRANCH, "refs/heads/", 11 },
->>         	{ REF_REMOTE_BRANCH, "refs/remotes/", 13 },
->> 	};
-> [...]
+On Thu, Feb 12, 2009 at 11:03 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+> On Thu, 12 Feb 2009, Giuseppe Bilotta wrote:
 >
->> Then we can later add new elements more easily, e.g.
->> 
->>                 { REF_TOPGIT_BASE, "refs/top-base/", 14 },
+>> From: Giuseppe Bilotta <oblomov@rbot.ratry.ru>
 >
-> As soon as TopGit is integrated into Git proper, this could make
-> sense. However, I don't know when this will happen. In the mean
-> time, hardcoding extensions like you suggest might not scale too
-> well. Wouldn't it make more sense to provide an interface that
-> allowed tools to register their own namespaces, and handle those
-> appropriately within Git?
+> Why different email? Was it intended, or was it an accident, and
+> authorship of this patch should be to
+>
+>        Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 
-The comment applies to the way how ref_kind[] array is initialized, and
-yes it would be nicer to make it extensible once the code that uses the
-array is in palce.
+I created this patch on a different computer and forgot to set the
+authorship as usual. I'll resend.
 
-However, the codepath that uses the array once it is initialized will not
-have to change, if you add your interface to register namespaces.
+> Very good. The only thing I wonder about is if we should add this info
+> also to gitweb/README, or if it is good as it is now.
 
-That is why I suggested the code restructuring first *with* the known two
-hierarchies we know we would want to handle *now*.
+I think there is no need to adjust the README, as in fact this fix is
+needed to make sure that the instructions in README are correct even
+for subpaths.
+
+> Signoff?
+
+Will add that too.
+
+-- 
+Giuseppe "Oblomov" Bilotta
