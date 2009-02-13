@@ -1,131 +1,108 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH v2] builtin-branch: improve output when displaying remote 
-	branches
-Date: Fri, 13 Feb 2009 01:45:33 -0500
-Message-ID: <76718490902122245q6f530bb5sc85a65e065966eda@mail.gmail.com>
-References: <7vhc30qki2.fsf@gitster.siamese.dyndns.org>
-	 <1234503271-78569-1-git-send-email-jaysoffian@gmail.com>
-	 <7v7i3ug7y9.fsf@gitster.siamese.dyndns.org>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: [PATCH v2] builtin-branch: improve output when displaying
+	remote branches
+Date: Fri, 13 Feb 2009 07:47:07 +0100
+Message-ID: <20090213064707.GA17681@piper.oerlikon.madduck.net>
+References: <7vhc30qki2.fsf@gitster.siamese.dyndns.org> <1234503271-78569-1-git-send-email-jaysoffian@gmail.com> <7v7i3ug7y9.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 13 07:47:06 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="ZPt4rx8FFjLCG7dd"
+To: Junio C Hamano <gitster@pobox.com>,
+	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 13 07:48:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXrpH-00028C-5Y
-	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 07:47:03 +0100
+	id 1LXrr5-0002gf-5Z
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 07:48:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751181AbZBMGpg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2009 01:45:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751126AbZBMGpf
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 01:45:35 -0500
-Received: from rv-out-0506.google.com ([209.85.198.229]:40227 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751064AbZBMGpe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2009 01:45:34 -0500
-Received: by rv-out-0506.google.com with SMTP id g9so91227rvb.5
-        for <git@vger.kernel.org>; Thu, 12 Feb 2009 22:45:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=/R/IpqmemmQ+K2U0VkX4xHeK5h6OHH/gFjgGlQuxWng=;
-        b=DMaKOjGm06JXnrHKqI/3D5nK4FOdmUqxSnO8TVu1DCQxXux4SUvSippO+pBCUH/B8r
-         7IdYweRtQkyOkClvSEsaqT2v1ug9DA4CLjZhodj+ns3puf/9R88vQNPLTcBKhatKPTI8
-         nu/ErtpiIhUsfsj5Zgm2AdAfGHaz3VRAwwdzU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=RIjgtsce8PHVxNaaX5LwV24J8hy4UNL5jnhue3RoscM1w5MANZIEBKGCgcpy+uhOci
-         up4UZLKnrInx8TpAMYJKeCZ73ppx0eFPdlAUblppg7n4QKiMwy5mBLlfOberLCn2TceK
-         wBImjfy42umgHD/F5DwkkB2hQ0foGCk6J9M/s=
-Received: by 10.140.139.3 with SMTP id m3mr987342rvd.77.1234507533750; Thu, 12 
-	Feb 2009 22:45:33 -0800 (PST)
+	id S1751263AbZBMGr1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2009 01:47:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751126AbZBMGr0
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 01:47:26 -0500
+Received: from clegg.madduck.net ([193.242.105.96]:41405 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751078AbZBMGrZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2009 01:47:25 -0500
+Received: from wall.oerlikon.madduck.net (wall.oerlikon.madduck.net [IPv6:2001:41e0:ff12::1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id 154D71D409B;
+	Fri, 13 Feb 2009 07:47:09 +0100 (CET)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTPS id 30AC99F13D;
+	Fri, 13 Feb 2009 07:47:08 +0100 (CET)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id C32FD4464; Fri, 13 Feb 2009 07:47:07 +0100 (CET)
+Content-Disposition: inline
 In-Reply-To: <7v7i3ug7y9.fsf@gitster.siamese.dyndns.org>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux 5.0 kernel 2.6.26-1-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94.2/8985/Thu Feb 12 23:11:57 2009 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109714>
 
-On Fri, Feb 13, 2009 at 1:35 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jay Soffian <jaysoffian@gmail.com> writes:
->
->> +     if (prefix && !prefixcmp(dst, prefix))
->> +             return xstrdup(skip_prefix(dst, prefix));
->> +     else
->> +             return xstrdup(dst);
->> +}
->
-> I wonder modern compilers are clever enough to optimze the above to
-> something more like:
->
->        pfxlen = prefix ? strlen(prefix) : 0;
->        if (pfxlen && !strncmp(dst, prefix, pfxlen))
->                return xstrdup(dst + pfxlen);
->        else
->                return xstrdup(dst);
->
-> given that skip_prefix is an inline function but prefixcmp is not
-> (anymore), perhaps not.
->
->>  static int append_ref(const char *refname, const unsigned char *sha1, int flags, void *cb_data)
->>  {
->>       struct ref_list *ref_list = (struct ref_list*)(cb_data);
->>       struct ref_item *newitem;
->>       struct commit *commit;
->>       int kind;
->> -     int len;
->> +     const char *prefix, *orig_refname = refname;
->>
->>       /* Detect kind */
->>       if (!prefixcmp(refname, "refs/heads/")) {
->>               kind = REF_LOCAL_BRANCH;
->>               refname += 11;
->> +             prefix = "refs/heads/";
->>       } else if (!prefixcmp(refname, "refs/remotes/")) {
->>               kind = REF_REMOTE_BRANCH;
->>               refname += 13;
->> +             prefix = "refs/remotes/";
->>       } else
->>               return 0;
->
+
+--ZPt4rx8FFjLCG7dd
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+also sprach Junio C Hamano <gitster@pobox.com> [2009.02.13.0735 +0100]:
 > Once you start making each case arm do more things, it might make sense to
 > rewrite the above unrolled loop into something like this:
->
->        static struct {
->                int kind;
->                const char *prefix;
->                int pfxlen;
->        } ref_kind[] = {
->                { REF_LOCAL_BRANCH, "refs/heads/", 11 },
->                { REF_REMOTE_BRANCH, "refs/remotes/", 13 },
->        };
->
->        for (i = 0; i < ARRAY_SIZE(ref_kind); i++) {
->                prefix = ref_kind[i].prefix;
->                if (strncmp(refname, prefix, ref_kind[i].pfxlen))
->                        continue;
->                kind = ref_kind[i].kind;
->                refname += ref_kind[i].pfxlen;
->                break;
->        }
->        if (ARRAY_SIZE(ref_kind) <= i)
->                return 0;
->
+[...]
+> 	} ref_kind[] =3D {
+>         	{ REF_LOCAL_BRANCH, "refs/heads/", 11 },
+>         	{ REF_REMOTE_BRANCH, "refs/remotes/", 13 },
+> 	};
+[...]
+
 > Then we can later add new elements more easily, e.g.
->
->                { REF_TOPGIT_BASE, "refs/top-base/", 14 },
-> ;-)
+>=20
+>                 { REF_TOPGIT_BASE, "refs/top-base/", 14 },
 
-This strikes me as premature optimization. We're just emitting a few
-branch names here. I'm beginning to lose my motivation to keep working
-on this patch. I just wanted to improve the UI slightly. :-(
+As soon as TopGit is integrated into Git proper, this could make
+sense. However, I don't know when this will happen. In the mean
+time, hardcoding extensions like you suggest might not scale too
+well. Wouldn't it make more sense to provide an interface that
+allowed tools to register their own namespaces, and handle those
+appropriately within Git?
 
-j.
+Much of that handling could be taken straight from refs/remotes/*,
+as they are conceptually the same. refs/remotes/* just has
+additional treatment inside Git, because it's part of the basic
+feature set. An external feature's namespace wouldn't be, but Git
+also doesn't need to know anything about those, or treat them
+specially.
+
+--=20
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+"doesn't he know who i think i am?"
+                                                     -- phil collins
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--ZPt4rx8FFjLCG7dd
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkmVF2sACgkQIgvIgzMMSnXEHQCfYu3RYm39eVU49KKurf+kRD94
+CNEAoJgz9m5d9VdIaXSG3XuHdfDPA3VH
+=DSQR
+-----END PGP SIGNATURE-----
+
+--ZPt4rx8FFjLCG7dd--
