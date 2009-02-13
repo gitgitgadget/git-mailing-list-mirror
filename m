@@ -1,339 +1,147 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH v3] builtin-branch: improve output when displaying remote branches
-Date: Fri, 13 Feb 2009 04:40:18 -0500
-Message-ID: <1234518018-94636-1-git-send-email-jaysoffian@gmail.com>
-References: <76718490902130006r4f125752wa207056d72630e84@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/4] builtin-remote: add set-head verb
+Date: Fri, 13 Feb 2009 02:09:01 -0800
+Message-ID: <7vtz6yabsy.fsf@gitster.siamese.dyndns.org>
+References: <1234515275-91263-1-git-send-email-jaysoffian@gmail.com>
+ <1234515275-91263-2-git-send-email-jaysoffian@gmail.com>
+ <1234515275-91263-3-git-send-email-jaysoffian@gmail.com>
+ <1234515275-91263-4-git-send-email-jaysoffian@gmail.com>
+ <1234515275-91263-5-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jay Soffian <jaysoffian@gmail.com>, gitster@pobox.com,
-	j.sixt@viscovery.net, madduck@madduck.net
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 13 10:41:55 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, peff@peff.net, barkalow@iabervon.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 13 11:10:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXuYU-0001TV-Bo
-	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 10:41:55 +0100
+	id 1LXv0K-00023d-Ap
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 11:10:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751306AbZBMJkZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2009 04:40:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751263AbZBMJkY
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 04:40:24 -0500
-Received: from an-out-0708.google.com ([209.85.132.240]:59113 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750913AbZBMJkX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2009 04:40:23 -0500
-Received: by an-out-0708.google.com with SMTP id c2so630702anc.1
-        for <git@vger.kernel.org>; Fri, 13 Feb 2009 01:40:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=9H9tTUZr+sd8kEw3df2wpvTIE7zWutzvRMumWxYGn6E=;
-        b=Z+vnFSglx+rG8ho+auQfUKp8Di/PqFYztyX+he/B6KRUMFfVzH5ooI+87liEjVvndk
-         WNUPeyhPv/TZkYvbqdMoiR+AAKcNbEzDPVru8cRIGWx+ribOFni7WPzGcD7W2lw9UBph
-         3XgWJGIyNm8LjOnDVo5Ly4ZoIf5/k20HxvYkc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=E6IEjMbMix846cKE/b71fzRkX0ZiHK7ArYlCSPHSFx0DZgKbZUL3cLnEJALJpH+d1G
-         goCFRxVU1w6iIToS0yy29DV/BtCZMP80ekCWToU2tFLI7m+7q36lcwA5VV4unXctpEPJ
-         NTiKm3fVDV6CUoTUbK0IW++ql+sVjsXOUegXA=
-Received: by 10.100.32.6 with SMTP id f6mr2510243anf.90.1234518021956;
-        Fri, 13 Feb 2009 01:40:21 -0800 (PST)
-Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
-        by mx.google.com with ESMTPS id d21sm1992433and.46.2009.02.13.01.40.20
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 13 Feb 2009 01:40:21 -0800 (PST)
-X-Mailer: git-send-email 1.6.2.rc0.209.g7c178
-In-Reply-To: <76718490902130006r4f125752wa207056d72630e84@mail.gmail.com>
+	id S1751794AbZBMKJN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2009 05:09:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751561AbZBMKJM
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 05:09:12 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53282 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750889AbZBMKJL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2009 05:09:11 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 14B289950E;
+	Fri, 13 Feb 2009 05:09:09 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 402849950B; Fri,
+ 13 Feb 2009 05:09:02 -0500 (EST)
+In-Reply-To: <1234515275-91263-5-git-send-email-jaysoffian@gmail.com> (Jay
+ Soffian's message of "Fri, 13 Feb 2009 03:54:35 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 5A9D4A10-F9B6-11DD-BE13-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109736>
 
-When encountering a symref (typically refs/remotes/<remote>/HEAD),
-display the ref target.
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-When displaying local and remote branches, prefix the remote branch
-names with "remotes/" to make the remote branches clear from the local
-branches. If displaying only the remote branches, the prefix is not
-shown since it would be redundant.
+> Provide a porcelain command for setting/deleting
+> $GIT_DIR/remotes/<remote>/HEAD.
 
-Sample output:
+The entire series looks sane from a very cursory look; especially the
+earlier ones are obviously good.
 
-$ git branch
-  foo -> master
-* master
-  rather-long-branch-name
+Calling the subcommand a "verb" is somewhat new, though.  Existing
+documentation for git commands that take multiple actions seem to call
+them subcommands, including "git-remote.txt" itself.
 
-$ git branch -v
-  foo                     -> master
-* master                  51cecb2 initial
-  rather-long-branch-name 51cecb2 initial
+> diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+> index fad983e..80f2cfe 100644
+> --- a/Documentation/git-remote.txt
+> +++ b/Documentation/git-remote.txt
+> @@ -76,6 +76,22 @@ the configuration file format.
+>  Remove the remote named <name>. All remote tracking branches and
+>  configuration settings for the remote are removed.
+>  
+> +'set-head'::
+> +
+> +Sets or deletes the default branch (`$GIT_DIR/remotes/<name>/HEAD`) for
+> +the named remote. Having a default branch for a remote is not required,
+> +but allows the name of the remote to be specified in lieu of a specific
+> +branch. For example, if the default branch for `origin` is set to
+> +`master`, then `origin` may be specified wherever you would normally
+> +specify `origin/master`.
+> ++
+> +With `-d`, `$GIT_DIR/remotes/<name>/HEAD` is deleted.
+> ++
+> +With `-a`, the remote is queried to determine its `HEAD`, then
+> +`$GIT_DIR/remotes/<name>/HEAD` is set to the same branch.
+> ++
+> +Use `<branch>` to set `$GIT_DIR/remotes/<name>/HEAD` explicitly.
+> +
 
-$ git branch -v --no-abbrev
-  foo                     -> master
-* master                  51cecb2dbb1a1902bb4df79b543c8f951ee59d83 initial
-  rather-long-branch-name 51cecb2dbb1a1902bb4df79b543c8f951ee59d83 initial
+Hmph, what does "-a" stand for?  I would have expected to see "-u" that
+stands for "update" here.
 
-$ git branch -r
-  frotz/HEAD -> frotz/master
-  frotz/master
-  origin/HEAD -> origin/master
-  origin/UNUSUAL -> refs/heads/master
-  origin/master
+Also it may be better to be more explicit about both the syntax and the
+semantics of `<branch>`.  Do you expect "refs/remotes/<name>/master" or
+just "master" (I assume the latter)?  Is it an error if the branch does
+not exist in the specified hierarchy?  Can you force to set to a branch
+that does not exist in your tracking side (yet) but you know exists on the
+remote side already?
 
-$ git branch -a
-  foo -> master
-* master
-  rather-long-branch-name
-  remotes/frotz/HEAD -> frotz/master
-  remotes/frotz/master
-  remotes/origin/HEAD -> origin/master
-  remotes/origin/UNUSUAL -> refs/heads/master
-  remotes/origin/master
+> diff --git a/builtin-remote.c b/builtin-remote.c
+> index 465c87a..677e20e 100644
+> --- a/builtin-remote.c
+> +++ b/builtin-remote.c
+> @@ -658,7 +659,8 @@ static void free_remote_ref_states(struct ref_states *states)
+>  	string_list_clear(&states->new, 0);
+>  	string_list_clear(&states->stale, 0);
+>  	string_list_clear(&states->tracked, 0);
+> -	free(states->head_name);
+> +	if (states->head_name)
+> +		free(states->head_name);
+>  }
 
-$ git branch -rv
-  frotz/HEAD     -> frotz/master
-  frotz/master   e1d8130 added file2
-  origin/HEAD    -> origin/master
-  origin/UNUSUAL -> refs/heads/master
-  origin/master  e1d8130 added file2
+Regression?
 
-$ git branch -av
-  foo                     -> master
-* master                  51cecb2 initial
-  rather-long-branch-name 51cecb2 initial
-  remotes/frotz/HEAD      -> frotz/master
-  remotes/frotz/master    e1d8130 added file2
-  remotes/origin/HEAD     -> origin/master
-  remotes/origin/UNUSUAL  -> refs/heads/master
-  remotes/origin/master   e1d8130 added file2
+> @@ -777,6 +779,54 @@ static int show(int argc, const char **argv)
+>  	return result;
+>  }
+>  
+> +static int sethead(int argc, const char **argv)
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
-Improvements since v2 - http://thread.gmane.org/gmane.comp.version-control.git/109200/focus=109706
+set_head()?
 
- * Moved the sample output into the commit message as suggested by Hannes
+> +{
+> +	int opt_a = 0, opt_d = 0, result = 0;
+> +	struct strbuf buf = STRBUF_INIT, buf2 = STRBUF_INIT;
+> +	char *head_name = NULL;
+> +
+> +	struct option options[] = {
+> +		OPT_GROUP("set-head specific options"),
+> +		OPT_BOOLEAN('a', 0, &opt_a,
+> +		            "set refs/remotes/<name>/HEAD according to remote"),
+> +		OPT_BOOLEAN('d', 0, &opt_d, "delete refs/remotes/<name>/HEAD"),
+> +		OPT_END()
+> +	};
+> +	argc = parse_options(argc, argv, options, builtin_remote_usage, 0);
+> +	if ((argc == 1 && !(opt_a || opt_d)) ||
+> +	   ((argc == 2 && (opt_a || opt_d))) || argc < 1 || argc > 2)
+> +		usage_with_options(builtin_remote_usage, options);
 
- * Refactored an if statement into a loop as suggested by Junio. This adds more
-   LOC of now, but hopefully it will pay off in the future as git branch learns
-   to emit other branch types than local and remote.
+The code will scale better, especially for a young subcommand that may acquire
+new options, if the check is done by each codepath that deals with a
+specific option to do this kind of check.  That is, e.g.
 
-   I personally disagree w/doing this now as there are other places that will
-   need to be touched to handle a third (or more) branch type. I think at the
-   time the next branch type is added, that is when to look for this type of
-   refactoring. Right now it seems like needless churn to me.
-
-   With that off my chest, I will defer to the maintainer. :-)
-
- * Junio delicately pointed out that I was an idiot :-) :-) :-) to call
-   prefixcmp(), just to call skip_prefix() immediately afterward. I think I did
-   better job this time.
-
- builtin-branch.c |  105 ++++++++++++++++++++++++++++++++++++++---------------
- 1 files changed, 75 insertions(+), 30 deletions(-)
-
-diff --git a/builtin-branch.c b/builtin-branch.c
-index 56a1971..7607f6a 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -181,7 +181,8 @@ static int delete_branches(int argc, const char **argv, int force, int kinds)
- 
- struct ref_item {
- 	char *name;
--	unsigned int kind;
-+	char *dest;
-+	unsigned int kind, len;
- 	struct commit *commit;
- };
- 
-@@ -193,22 +194,47 @@ struct ref_list {
- 	int kinds;
- };
- 
-+static char *resolve_symref(const char *src, const char *prefix)
-+{
-+	unsigned char sha1[20];
-+	int flag;
-+	const char *dst, *cp;
-+
-+	dst = resolve_ref(src, sha1, 0, &flag);
-+	if (!(dst && (flag & REF_ISSYMREF)))
-+		return NULL;
-+	if (prefix && (cp = skip_prefix(dst, prefix)))
-+		dst = cp;
-+	return xstrdup(dst);
-+}
-+
- static int append_ref(const char *refname, const unsigned char *sha1, int flags, void *cb_data)
- {
- 	struct ref_list *ref_list = (struct ref_list*)(cb_data);
- 	struct ref_item *newitem;
- 	struct commit *commit;
--	int kind;
--	int len;
-+	int kind, i;
-+	const char *prefix, *orig_refname = refname;
-+
-+	static struct {
-+		int kind;
-+		const char *prefix;
-+		int pfxlen;
-+	} ref_kind[] = {
-+		{ REF_LOCAL_BRANCH, "refs/heads/", 11 },
-+		{ REF_REMOTE_BRANCH, "refs/remotes/", 13 },
-+	};
- 
- 	/* Detect kind */
--	if (!prefixcmp(refname, "refs/heads/")) {
--		kind = REF_LOCAL_BRANCH;
--		refname += 11;
--	} else if (!prefixcmp(refname, "refs/remotes/")) {
--		kind = REF_REMOTE_BRANCH;
--		refname += 13;
--	} else
-+	for (i = 0; i < ARRAY_SIZE(ref_kind); i++) {
-+		prefix = ref_kind[i].prefix;
-+		if (strncmp(refname, prefix, ref_kind[i].pfxlen))
-+			continue;
-+		kind = ref_kind[i].kind;
-+		refname += ref_kind[i].pfxlen;
-+		break;
-+	}
-+	if (ARRAY_SIZE(ref_kind) <= i)
- 		return 0;
- 
- 	commit = lookup_commit_reference_gently(sha1, 1);
-@@ -239,9 +265,14 @@ static int append_ref(const char *refname, const unsigned char *sha1, int flags,
- 	newitem->name = xstrdup(refname);
- 	newitem->kind = kind;
- 	newitem->commit = commit;
--	len = strlen(newitem->name);
--	if (len > ref_list->maxwidth)
--		ref_list->maxwidth = len;
-+	newitem->len = strlen(refname);
-+	newitem->dest = resolve_symref(orig_refname, prefix);
-+	/* adjust for "remotes/" */
-+	if (newitem->kind == REF_REMOTE_BRANCH &&
-+	    ref_list->kinds != REF_REMOTE_BRANCH)
-+		newitem->len += 8;
-+	if (newitem->len > ref_list->maxwidth)
-+		ref_list->maxwidth = newitem->len;
- 
- 	return 0;
- }
-@@ -250,8 +281,10 @@ static void free_ref_list(struct ref_list *ref_list)
- {
- 	int i;
- 
--	for (i = 0; i < ref_list->index; i++)
-+	for (i = 0; i < ref_list->index; i++) {
- 		free(ref_list->list[i].name);
-+		free(ref_list->list[i].dest);
-+	}
- 	free(ref_list->list);
- }
- 
-@@ -292,11 +325,12 @@ static int matches_merge_filter(struct commit *commit)
- }
- 
- static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
--			   int abbrev, int current)
-+			   int abbrev, int current, char *prefix)
- {
- 	char c;
- 	int color;
- 	struct commit *commit = item->commit;
-+	struct strbuf out = STRBUF_INIT, name = STRBUF_INIT;
- 
- 	if (!matches_merge_filter(commit))
- 		return;
-@@ -319,7 +353,18 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
- 		color = COLOR_BRANCH_CURRENT;
- 	}
- 
--	if (verbose) {
-+	strbuf_addf(&name, "%s%s", prefix, item->name);
-+	if (verbose)
-+		strbuf_addf(&out, "%c %s%-*s%s", c, branch_get_color(color),
-+			    maxwidth, name.buf,
-+			    branch_get_color(COLOR_BRANCH_RESET));
-+	else
-+		strbuf_addf(&out, "%c %s%s%s", c, branch_get_color(color),
-+			    name.buf, branch_get_color(COLOR_BRANCH_RESET));
-+
-+	if (item->dest)
-+		strbuf_addf(&out, " -> %s", item->dest);
-+	else if (verbose) {
- 		struct strbuf subject = STRBUF_INIT, stat = STRBUF_INIT;
- 		const char *sub = " **** invalid ref ****";
- 
-@@ -333,28 +378,25 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
- 		if (item->kind == REF_LOCAL_BRANCH)
- 			fill_tracking_info(&stat, item->name);
- 
--		printf("%c %s%-*s%s %s %s%s\n", c, branch_get_color(color),
--		       maxwidth, item->name,
--		       branch_get_color(COLOR_BRANCH_RESET),
--		       find_unique_abbrev(item->commit->object.sha1, abbrev),
--		       stat.buf, sub);
-+		strbuf_addf(&out, " %s %s%s",
-+			find_unique_abbrev(item->commit->object.sha1, abbrev),
-+			stat.buf, sub);
- 		strbuf_release(&stat);
- 		strbuf_release(&subject);
--	} else {
--		printf("%c %s%s%s\n", c, branch_get_color(color), item->name,
--		       branch_get_color(COLOR_BRANCH_RESET));
- 	}
-+	printf("%s\n", out.buf);
-+	strbuf_release(&name);
-+	strbuf_release(&out);
- }
- 
- static int calc_maxwidth(struct ref_list *refs)
- {
--	int i, l, w = 0;
-+	int i, w = 0;
- 	for (i = 0; i < refs->index; i++) {
- 		if (!matches_merge_filter(refs->list[i].commit))
- 			continue;
--		l = strlen(refs->list[i].name);
--		if (l > w)
--			w = l;
-+		if (refs->list[i].len > w)
-+			w = refs->list[i].len;
- 	}
- 	return w;
- }
-@@ -394,7 +436,7 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev, str
- 		item.commit = head_commit;
- 		if (strlen(item.name) > ref_list.maxwidth)
- 			ref_list.maxwidth = strlen(item.name);
--		print_ref_item(&item, ref_list.maxwidth, verbose, abbrev, 1);
-+		print_ref_item(&item, ref_list.maxwidth, verbose, abbrev, 1, "");
- 		free(item.name);
- 	}
- 
-@@ -402,8 +444,11 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev, str
- 		int current = !detached &&
- 			(ref_list.list[i].kind == REF_LOCAL_BRANCH) &&
- 			!strcmp(ref_list.list[i].name, head);
-+		char *prefix = (kinds != REF_REMOTE_BRANCH &&
-+				ref_list.list[i].kind == REF_REMOTE_BRANCH)
-+				? "remotes/" : "";
- 		print_ref_item(&ref_list.list[i], ref_list.maxwidth, verbose,
--			       abbrev, current);
-+			       abbrev, current, prefix);
- 	}
- 
- 	free_ref_list(&ref_list);
--- 
-1.6.2.rc0.209.g7c178
+	if (opt_delete) {
+        	error if the arg is not remote (alone)
+                do the "delete" thing
+	} else if (opt_update) {
+        	error if the arg is not remote (alone)
+                do the "update" thing
+	} else {
+        	error if the args are not (remote, branch)
+		do the "set" thing
+	}
