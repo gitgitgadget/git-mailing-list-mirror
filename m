@@ -1,69 +1,92 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH 0/4] remote HEAD improvements take 2
-Date: Fri, 13 Feb 2009 03:57:13 -0500
-Message-ID: <76718490902130057g4b05f87cn716bdf9769fda7bc@mail.gmail.com>
-References: <1234515275-91263-1-git-send-email-jaysoffian@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [topgit] tg update error
+Date: Fri, 13 Feb 2009 01:04:16 -0800
+Message-ID: <7v63jebtdb.fsf@gitster.siamese.dyndns.org>
+References: <cc723f590902120009w432f5f61xd6550409835cdbb7@mail.gmail.com>
+ <20090212084811.GA14261@piper.oerlikon.madduck.net>
+ <20090212092558.GB21074@skywalker>
+ <20090212125621.GB5397@sigill.intra.peff.net>
+ <7veiy3l689.fsf@gitster.siamese.dyndns.org>
+ <20090212214106.GC26573@piper.oerlikon.madduck.net>
+ <7vocx7i6xh.fsf@gitster.siamese.dyndns.org>
+ <20090213062818.GB16434@piper.oerlikon.madduck.net>
+ <7vmycqeqqh.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 13 09:58:54 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.vnet.ibm.com>,
+	Aneesh Kumar <aneesh.kumar@gmail.com>, git@vger.kernel.org,
+	pasky@suse.cz
+To: martin f krafft <madduck@debian.org>
+X-From: git-owner@vger.kernel.org Fri Feb 13 10:06:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXtsh-0004Kt-ON
-	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 09:58:44 +0100
+	id 1LXtzk-0006It-5O
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 10:06:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758169AbZBMI5Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2009 03:57:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757913AbZBMI5P
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 03:57:15 -0500
-Received: from rv-out-0506.google.com ([209.85.198.234]:44868 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757139AbZBMI5O (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2009 03:57:14 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so617592rvb.1
-        for <git@vger.kernel.org>; Fri, 13 Feb 2009 00:57:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=LmIIydqBJIPv5TMx+6JhjBFdlDLaWqHGyDFEMRybKDU=;
-        b=N1WNnsVtw7JpRWiC4ryQ8eTUiY3gk5cKL9wY2W2OGL/pAHw2e53yunMcUCUyl2D9DO
-         8tEMt0RFfwOMltJfe72503dTw7y2OdOjzx3RIJ9TbeBb0juSpe1Vg40Hj+04jY6Zby0b
-         FnuRImBhUU+2ubgsizeAphaOeF2/bpL2Wo40I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=D4eZdklZbNOSAe2lfxSKxf8CSt8drDzsmKNDfZB+Mh9Br/rowKsIYD2LP/G+aBU1qf
-         M6UwmEfn64EYkafhdxxvffHdneX2wi59k/bLhwIVZWjSYBVOBe9BSNyH/Y3totPV5QvD
-         +SVcBAykdcvzCOTqHUj+7pKTyFZBEPZ+nadFs=
-Received: by 10.141.20.6 with SMTP id x6mr1047005rvi.40.1234515433817; Fri, 13 
-	Feb 2009 00:57:13 -0800 (PST)
-In-Reply-To: <1234515275-91263-1-git-send-email-jaysoffian@gmail.com>
+	id S1752010AbZBMJEd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2009 04:04:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751653AbZBMJEb
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 04:04:31 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38716 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750774AbZBMJE2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2009 04:04:28 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 117EC9923D;
+	Fri, 13 Feb 2009 04:04:27 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 64F669923A; Fri,
+ 13 Feb 2009 04:04:18 -0500 (EST)
+In-Reply-To: <7vmycqeqqh.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 12 Feb 2009 23:32:54 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 50C109EA-F9AD-11DD-B317-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109734>
 
-On Fri, Feb 13, 2009 at 3:54 AM, Jay Soffian <jaysoffian@gmail.com> wrote:
-> There is currently no porcelain for dealing with remote HEADs (i.e.
-> $GIT_DIR/remotes/<remote>/HEAD). This series:
+Junio C Hamano <gitster@pobox.com> writes:
 
-Crud, sorry for the duplicates.
+> If you *are* setting HEAD to some ref that is outside refs/heads (or even
+> inside refs/heads for that matter), at that point the HEAD is *not*
+> detached, so no, it obviously is *not* what is happening.
+>
+> I am asking why you need to use a ref to do that, *if* it is a tentative
+> state while the program is running.  You are probably calling a git
+> plumbing or Porcelain command that updates HEAD, and the reason why you
+> point HEAD outside refs/heads/ is beause you would want the command you
+> call to update one of the refs/top-bases/ ref through HEAD.  I am asking
+> why you are not running these commands on a normal detached HEAD, and then
+> use update-ref (not symbolic-ref) plumbing to update the refs/top-bases/
+> ref you would want to update when it is done.
 
-And I just noticed a send-email bug -- it doesn't handle multiple Cc:
-recipients the way they are formated by format-patch. e.g, format
-patch does this:
+Ok, I did read the script (yuck).  You do break out of TopGit process when
+a merge conflict prevents the update operation to complete and do give
+control back to the end user, so you can leave HEAD in a state that points
+at a non-branch, and you do use the fact that the HEAD is pointing at
+something funny as a sign that you are in the middle of conflicted merge
+resolution.
 
-Cc: firstperson@example.com,
-    secondperson@example.com
+It is just like how vanilla git uses MERGE_HEAD as the marker to signal
+that it is in a funny state.
 
-But send-email only picks up the first address, and further, appears
-to mangle it.
+While I think it is a cute idea to use which funny hierarchy HEAD points
+at to indicate what funny/intermediate state your interrupted operation is
+in, and it may seem to be cleaner than using a marker file like MERGE_HEAD
+at first sight, I do not think it is a wise thing to do in the long run.
 
-j.
+You can only express two pieces of information (the overall "category of
+state" by which funny ref/ hierarchy HEAD points at, and one object name
+by storing it in the ref pointed at by HEAD), and if you need more (such
+as MERGE_MSG that stores pre-packaged log message pieces is used during a
+merge, in addition to MERGE_HEAD), you would need to use more than just
+the "cute HEAD" trick to store them *anyway*.  Which means that it is a
+bad tradeoff to use "cute HEAD" --- it closes the possibility to detect
+user error to point HEAD at an incorrect place and I do not see the
+benefit of "cute HEAD" outweigh the downside.
