@@ -1,118 +1,135 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFH] How to review patches: Documentation/ReviewingPatches?
-Date: Fri, 13 Feb 2009 00:44:48 -0800
-Message-ID: <7vocx6bu9r.fsf@gitster.siamese.dyndns.org>
-References: <200902130045.59395.jnareb@gmail.com>
- <alpine.DEB.1.00.0902130055370.26370@racer> <49952728.2080404@trolltech.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: fix wrong base URL when non-root DirectoryIndex
+Date: Fri, 13 Feb 2009 09:45:19 +0100
+Message-ID: <200902130945.20601.jnareb@gmail.com>
+References: <200902122303.37499.jnareb@gmail.com> <1234510803-23268-1-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Marius Storm-Olsen <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Fri Feb 13 09:46:32 2009
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Petr Baudis <pasky@suse.cz>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 13 09:47:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXtgt-0000lI-IT
-	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 09:46:32 +0100
+	id 1LXthH-0000s1-37
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 09:46:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752193AbZBMIpA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2009 03:45:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752134AbZBMIpA
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 03:45:00 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:47857 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751818AbZBMIo7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2009 03:44:59 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id EF0E82B079;
-	Fri, 13 Feb 2009 03:44:55 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9C6ED1CD52; Fri,
- 13 Feb 2009 03:44:50 -0500 (EST)
-In-Reply-To: <49952728.2080404@trolltech.com> (Marius Storm-Olsen's message
- of "Fri, 13 Feb 2009 08:54:16 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 96BBD64E-F9AA-11DD-8C92-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1751854AbZBMIp1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2009 03:45:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751561AbZBMIp1
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 03:45:27 -0500
+Received: from mail-bw0-f161.google.com ([209.85.218.161]:53395 "EHLO
+	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751426AbZBMIp0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2009 03:45:26 -0500
+Received: by bwz5 with SMTP id 5so1552143bwz.13
+        for <git@vger.kernel.org>; Fri, 13 Feb 2009 00:45:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=1q/yzng9PnHC903ZYe15tnb10f1t60M9xAiDngxg6GU=;
+        b=VUMpTAars+YGBTwduMFm8e/f6uGaFucaow2+iaM5qHiCghYKq9nUaLwQRIOzFlKt37
+         vwCDMZDn12yVB1rwQtcBVHhA1UA+XMiwXeON/zhZFDWpSCo4j1o/AZd48tx9KBtJ5Z55
+         A1AFOIvBCfIrZFxD7pabzEiH8Avsuwg+5G8ms=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=Rv2fOdPFgHtTbG2Z8A8NB4M4ONmZLlP+WTFVEurUPMWF+rgiGyxFFgWOhqhy2XJnqN
+         LNtZTeBav1HEUbRcbfdEjxH3EbBr4EX6n1eAnMyvHh2S7x8cZ/9Kg0sTrC/0eGnSCTOY
+         m4mQ2fOFnZHgtywQO/y1G8m7mWsAVv0b3jcWI=
+Received: by 10.86.99.9 with SMTP id w9mr120754fgb.68.1234514724433;
+        Fri, 13 Feb 2009 00:45:24 -0800 (PST)
+Received: from ?192.168.1.13? (abvs153.neoplus.adsl.tpnet.pl [83.8.216.153])
+        by mx.google.com with ESMTPS id e11sm2478120fga.40.2009.02.13.00.45.23
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 13 Feb 2009 00:45:24 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1234510803-23268-1-git-send-email-giuseppe.bilotta@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109727>
 
-Marius Storm-Olsen <marius@trolltech.com> writes:
+On Fri, 13 Feb 2009, Giuseppe Bilotta wrote:
 
-> One thing I've wondered about though when sending patches, is how to
-> send the fixups. Lets say I have a patch serie with 8 patches, do I
-> send the whole serie each time, or do I just send an update to each
-> individual patch? Do I attach it to the previous thread, or start a
-> new one?
->
-> I couldn't really draw any conclusion by watching the list, since all
-> methods are used. However, I'd like to do what's easiest for the
-> reviewers and maintainers. Probably a new series each time is easiest
-> for Junio to parse and apply, without single updates deep in a
-> thread. However, that might also be considered a tad 'spamming' of the
-> list?
+> CGI::url() has some issues when rebuilding the script URL if the script
+> is a DirectoryIndex.
+> 
+> One of these issue is the inability to strip PATH_INFO, which is why we
+> had to do it ourselves.
+> 
+> Another issue is that the resulting URL cannot be used for the <base>
+> tag: it works if we're the DirectoryIndex at the root level, but not
+> otherwise.
+> 
+> We fix this by building the proper base URL ourselves, and improve the
+> documentation about the need to strip PATH_INFO manually while we're at
+> it.
+> 
+> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 
-People work at different paces, especially because we are mostly
-volunteers and hobbists who work on git not on full-time basis [*1*].
+Sounds good. I don't use gitweb as DirectoryIndex myself, but
+Acked-by: Jakub Narebski <jnareb@gmail.com>
 
-Although I obviously appreciate if people make it easy for _me_ to process
-patches, and it may become necessary to optimize the rules to remove the
-maintainer bottleneck if/when the amount of useful patches in the overall
-list traffic starts to exceed my bandwidth [*2*], I do not think it is a
-healthy thing to implement rules to make contributors' life more difficult
-to make _my_ life easier.
+> ---
+>  gitweb/gitweb.perl |   16 ++++++++++++----
+>  1 files changed, 12 insertions(+), 4 deletions(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index c2c8080..48cfd5f 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -27,15 +27,23 @@ our $version = "++GIT_VERSION++";
+>  our $my_url = $cgi->url();
+>  our $my_uri = $cgi->url(-absolute => 1);
+>  
+> -# if we're called with PATH_INFO, we have to strip that
+> -# from the URL to find our real URL
+> -# we make $path_info global because it's also used later on
+> +# When the script is used as DirectoryIndex, the URL does not contain the name
+> +# of the script file itself, and $cgi->url() fails to strip PATH_INFO, so we
+> +# have to do it ourselves. We make $path_info global because it's also used
+> +# later on
+>  our $path_info = $ENV{"PATH_INFO"};
+>  if ($path_info) {
+>  	$my_url =~ s,\Q$path_info\E$,,;
+>  	$my_uri =~ s,\Q$path_info\E$,,;
+>  }
+>  
+> +# Another issue with the script being the DirectoryIndex is that the resulting
+> +# $my_url data is not the full script URL: this is good, because we want
+> +# generated links to keep implying the script name if it wasn't explicitly
+> +# indicated in the URL we're handling, but it means that $my_url cannot be used
+> +# as base URL. Therefore, we have to build the base URL ourselves:
+> +our $base_url = $cgi->url(-base => 1) . $ENV{'SCRIPT_NAME'};
+> +
+>  # core git executable to use
+>  # this can just be "git" if your webserver has a sensible PATH
+>  our $GIT = "++GIT_BINDIR++/git";
+> @@ -2908,7 +2916,7 @@ EOF
+>  	# the stylesheet, favicon etc urls won't work correctly with path_info
+>  	# unless we set the appropriate base URL
+>  	if ($ENV{'PATH_INFO'}) {
+> -		print "<base href=\"".esc_url($my_url)."\" />\n";
+> +		print "<base href=\"".esc_url($base_url)."\" />\n";
+>  	}
+>  	# print out each stylesheet that exist, providing backwards capability
+>  	# for those people who defined $stylesheet in a config file
+> -- 
+> 1.5.6.5
+> 
+> 
 
-So please do not take this message as me setting a rule.  Take it just as
-a datapoint from me.  Other reviewers may have different preference, and I
-am interested in hearing from them, too, especially their preference is
-different from mine.
-
- * Marking the second and the third iterations as [PATCH v2], [PATCH v3]
-   really helps, especially if you are a busy contributor whose throughput
-   exceeds reviewers' throughput.
-
- * Resending the whole series would help, especially if their earlier
-   round did not hit 'pu'.  If an earlier round did not land on 'pu', it
-   is a sign that I either did not read them carefully to judge if they
-   are 'pu' worthy, I did not even look at it beyond their commit log
-   messages, I thought they were outright wrong, or I saw objections from
-   others that were reasonable.
-
- * Once you have an earlier round in 'pu', it is Ok to resend only the
-   updated ones, with a cover letter that says "the second and the third
-   ones are the same as the previous round, so I am sending the updates
-   for the first one and the fourth one, and this round additionally has
-   the fifth one."
-
-   But I suspect resending the whole series may help reviewers who missed
-   the previous round in this case, too.
-
- * If you are resending the same patch as the previous round, I'd really
-   appreciate a single line comment "This is unchanged from the last
-   round" after the three-dash marker.  I often end up saving two messages
-   to temporary files and run diff on them to see if they are the same
-   without such indication.
-
- * If you are sending an updated patch, unless the whole series has been
-   re-split and there is no one-to-one correspondence with the previous
-   round, it is appreciated if you list the changes from the previous
-   round below the three-dash marker.  Many people already do this, and it
-   helps when reading the interdiff with the previous version.
-
-[Footnotes]
-
-*1* I am allowed to work on git for 20% of my day-job time budget by my
-employer and NEC, so I am not a 100% full-time hobbist.
-
-*2* At some point, I suspect we would have a problem similar to the one
-pre-BK Linux kernel project had, the "maintainer does not scale" problem.
-
-Subsytem maintainers like Paulus for gitk, Shawn for git-gui and bash
-completion, Eric for git-svn, and Alexandre for emacs really have helped,
-as I can choose to either ignore or simply kibitz on patches in these
-areas, without having to worry about dropping patches in these areas.
+-- 
+Jakub Narebski
+Poland
