@@ -1,107 +1,115 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [RFC PATCH] Teach rebase to rebase even if upstream is up to date 
-	with -f
-Date: Fri, 13 Feb 2009 07:51:17 +0100
-Message-ID: <bd6139dc0902122251j24696806xb89de3e338d49cb@mail.gmail.com>
-References: <1234468061-29923-1-git-send-email-srabbelier@gmail.com>
-	 <7vbpt7jq4c.fsf@gitster.siamese.dyndns.org>
-	 <bd6139dc0902121357l1eea7b8xe890513b756e97c2@mail.gmail.com>
-	 <7viqnfi6la.fsf@gitster.siamese.dyndns.org>
-	 <bd6139dc0902121524o776703bdw1bb199caecbc9c21@mail.gmail.com>
-	 <7vhc2zglz4.fsf@gitster.siamese.dyndns.org>
-	 <bd6139dc0902122202r25e2e320m19810097cbb54225@mail.gmail.com>
-	 <7vd4dmg8k1.fsf@gitster.siamese.dyndns.org>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [PATCH] stash: --keep option just saves
+Date: Fri, 13 Feb 2009 08:07:24 +0100
+Message-ID: <20090213070724.GD20552@atjola.homenet>
+References: <20090212062514.6117@nanako3.lavabit.com> <7vljscbp60.fsf@gitster.siamese.dyndns.org> <20090212171732.6117@nanako3.lavabit.com> <7vskmjjrin.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailinglist <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eric Wong <normalperson@yhbt.net>
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 13 07:52:56 2009
+X-From: git-owner@vger.kernel.org Fri Feb 13 08:08:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXruu-0003hl-MF
-	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 07:52:53 +0100
+	id 1LXsAV-0007p1-2d
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 08:08:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751285AbZBMGv0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Feb 2009 01:51:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751273AbZBMGvZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 01:51:25 -0500
-Received: from mail-bw0-f161.google.com ([209.85.218.161]:48192 "EHLO
-	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751064AbZBMGvY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Feb 2009 01:51:24 -0500
-Received: by bwz5 with SMTP id 5so1504889bwz.13
-        for <git@vger.kernel.org>; Thu, 12 Feb 2009 22:51:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=mn9VZBMTzRBxJcZql6pVNCAnX3I5LF8VWD+fgAEpeIQ=;
-        b=tA5jNGyQCtSZii79zOamfAUZN675TLXW+AduZW2ezWgtpD8TnbD8kxtz7ewisa7/np
-         DI4ohLhmjg6Et3Mjo5v14jJUBoJYby98a5kfC6+Ba8zf3PBs1Qm5dNaVZ2pQHOJ21/mN
-         1+JKL7c/3g9ou3DPJuIh42PlAJ9wjFDSio8Hk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=D0HlLNa0+VrTYqVlzaFfKEBSjp1eGql3KJkKWgiwJ09GCjuXjZQ0X4Pov5y2GzPuAi
-         KNygnupliV89liWbiEnvI5x0DubkQfu+UAwYuF7GNiV6evuI45kVuee3dvJ/4a5tUg2J
-         Al6w7Gy6g+qpLvM5kXKua9DkFsxeOEjXZoiBE=
-Received: by 10.86.60.14 with SMTP id i14mr88842fga.70.1234507877466; Thu, 12 
-	Feb 2009 22:51:17 -0800 (PST)
-In-Reply-To: <7vd4dmg8k1.fsf@gitster.siamese.dyndns.org>
-X-Google-Sender-Auth: ce5b986e56efaebb
+	id S1751871AbZBMHH3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Feb 2009 02:07:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751647AbZBMHH3
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 02:07:29 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54532 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751181AbZBMHH2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2009 02:07:28 -0500
+Received: (qmail invoked by alias); 13 Feb 2009 07:07:26 -0000
+Received: from i577B878B.versanet.de (EHLO atjola.local) [87.123.135.139]
+  by mail.gmx.net (mp060) with SMTP; 13 Feb 2009 08:07:26 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+YUHhKZdyY8G9Ov0s6HDdBF1zapzmYAqXFBKYMss
+	zWWwCzaWcdZRLN
+Content-Disposition: inline
+In-Reply-To: <7vskmjjrin.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109716>
 
-On Fri, Feb 13, 2009 at 07:22, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> I thought I left it up to you ;-).
+On 2009.02.12 13:04:48 -0800, Junio C Hamano wrote:
+> It can be argued that it adds one huge convenience.  It is quicker to=
+ say
+> 'git stash save --keep' than 'git commit -a -m "WIP as of $(date)"', =
+and
+> in addition, you first have to do a "checkout -b wip" once, if you us=
+e the
+> approach with regular commits on a exprimental branch forked from the
+> target branch, instead of the approach with regular commits directly =
+on
+> the target branch.
 
-Ah, I failed to notice that, my bad.
+Another thing that came to my mind is that stash --keep would not affec=
+t
+"git diff". I often look at the current diff to reassure myself of what
+I'm actually doing, and when you do intermediate commits, you can no
+longer use a plain "git diff", but need to use, for example, "git diff
+master", assuming that your current branch is exclusively for this thin=
+g
+you're working on. But the whole idea of taking snapshots feels more
+like it is for a use case that assumes that you end up with a single
+commit, that might in the end be a part of some bigger commit series. S=
+o
+for the "git diff <whatever>" to be convenient, you might need a
+(temporary) branch for just this one commit to be, or you need to tag
+your starting point.
 
-> I can not think of a practical purpose of "git rebase -f" without oth=
-er
-> options that actively modify the tree each commit records (e.g. the "=
-fix
-> whitespace" option), perhaps other than to pretend that you committed=
- them
-> later than you actually did. =A0A patch that implements --force alone=
- is
-> harder to justify, because it is unclear what good it does. =A0It is
-> especially true if you make --whitespace=3Dfix imply that behaviour.
+And (in part) you also lose the ability to dynamically mark parts of
+your changes as "good" by staging and unstaging them. I use that quite
+often to "trim" the diff output to the currently interesting part. When
+I refactor some function, that might need a lot of callers to be
+trivially changed, and I don't want to be bothered with those trivial
+changes when I look at the diff to review my changes. So I temporarily
+stage that trivial stuff, do a review of the "interesting" part, change
+something here and there and might eventually unstage all the stuff
+again. Often that's more comfortable than passing a list of interesting
+files to each "git diff" command, and sometime that's the only way to
+get things filtered down enough to make me happy, because the trivial
+and the interesting changes are in the same file.
 
-Agreed, thanks for the explanation.
+I think it could make sense to have that "snapshot" thing committing to
+another branch (or some ref in /refs/snapshots/, or whatever). Say you
+have topicA checked out, and work on some change "foo" that's likely
+going to be a single commit, but you want to test several versions of
+that thing, while always keeping your changes uncommitted as far as HEA=
+D
+is concerned. Then "git snapshot foo", could do something like:
 
-> One more thing. =A0I kept saying "detect --whitespace=3Dfix (or its s=
-ynonym
-> strip)" because people can have "apply.whitespace =3D fix" in their
-> configuration file for use with "git am", and countermand the
-> configuration with "git rebase --whitespace=3Dwarn". =A0Such a usage =
-should
-> not imply --force.
+export GIT_INDEX_FILE=3D.git/snap_index
 
-Ok, so having 'apply.whitespace =3D fix' in your config _should_ imply
--f, and '--whitespace=3D[no]warn' as commandline option should not
-affect '-f'. This does mean though that anyone with 'apply.whitespace
-=3D fix' in their git config that does a rebase on an up-to-date branch
-will automagically have the whitespace fixed. Then again, that
-behavior is probably desired for those with 'apply.whitespace =3D fix'
-set.
+parent_ref=3D$(git rev-parse --symbolic-full-name HEAD)
+parent_ref=3D${parent_ref#refs/heads/}
 
-I'll look into making --whitespace=3Dfix/strip imply -f then, and this
-time add some tests :).
+snap_ref=3D"refs/snapshots/$parent_ref/$1"
 
---=20
-Cheers,
+git read-tree HEAD
+git add -u # Or maybe git add -A?
 
-Sverre Rabbelier
+parent=3D$(git rev-parse --verify --quiet "$snap_ref" || echo HEAD)
+commit=3D$(echo "Snapshot" | git commit-tree $(git write-tree) -p "$par=
+ent")
+
+git update-ref "$snap_ref" "$commit"
+rm "$GIT_INDEX_FILE"
+
+
+So you get the benefits of having your snapshots stored much like
+intermediate commits, but don't lose the "benefits" of having
+uncommitted changes, like the plain "git diff" invocation instead of
+"git diff <what's_my_base_today>".
+
+Bj=F6rn
