@@ -1,92 +1,103 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Bugfix: GIT_EXTERNAL_DIFF with more than one changed
-	files
-Date: Fri, 13 Feb 2009 13:07:40 -0500
-Message-ID: <20090213180740.GA31860@coredump.intra.peff.net>
-References: <20090212133614.GA12746@bigbear> <20090212140740.GB3057@coredump.intra.peff.net> <7vskmjl729.fsf@gitster.siamese.dyndns.org>
+From: Jacob Helwig <jacob.helwig@gmail.com>
+Subject: Re: gmail screws up patches looking for workable workaround
+Date: Fri, 13 Feb 2009 10:11:19 -0800
+Message-ID: <8c9a060902131011u5bc7d0dft4edc4adb1af1dad8@mail.gmail.com>
+References: <81bfc67a0902130909i154a7c2epeff98347985c3fb8@mail.gmail.com>
+	 <8c9a060902130926j48b59785l624a3966254517e5@mail.gmail.com>
+	 <81bfc67a0902131000n2d67e88epd743c7c39842fbc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nazri Ramliy <ayiehere@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 13 19:09:12 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Dan Robbins <drobbins@funtoo.org>
+To: Caleb Cushing <xenoterracide@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 13 19:12:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LY2TP-00031v-KP
-	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 19:09:12 +0100
+	id 1LY2Ww-0004YK-D1
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 19:12:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753254AbZBMSHn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2009 13:07:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752879AbZBMSHn
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 13:07:43 -0500
-Received: from peff.net ([208.65.91.99]:50009 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752841AbZBMSHn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2009 13:07:43 -0500
-Received: (qmail 25298 invoked by uid 107); 13 Feb 2009 18:08:00 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 13 Feb 2009 13:08:00 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Feb 2009 13:07:40 -0500
-Content-Disposition: inline
-In-Reply-To: <7vskmjl729.fsf@gitster.siamese.dyndns.org>
+	id S1751186AbZBMSLV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2009 13:11:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750913AbZBMSLV
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 13:11:21 -0500
+Received: from mail-qy0-f11.google.com ([209.85.221.11]:46619 "EHLO
+	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750738AbZBMSLU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2009 13:11:20 -0500
+Received: by qyk4 with SMTP id 4so1787593qyk.13
+        for <git@vger.kernel.org>; Fri, 13 Feb 2009 10:11:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=h9k0BSEAKy5YnHOQu3+Xzd1+bCJWQkcO6V1acT69p24=;
+        b=OrgkKlqG0Wdr6Dis7TLyOEtFeVeKpbBCytIyVeHMNQGkPCwA/ZIlR0ZCacINVuWkCR
+         PMmxHP9Lc9Re6LgyC+L+vUlqnUh3VvvTmvAdxYRwu52HNr7fRbo/vWw3Gb+jdnfi5nEp
+         3eVWxYDqmyMpmm3au0X3qHP+rTRMylBGzDeJY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=pcxBVXxiopCpIPT80en11Ejv3tuvhVsztRePAUIioCkn1umEvCedLtP6pfHC4NKPgM
+         3CZtPL7hJBAhaAoGqjY2dp6XZIQlnCia7QPJf+nw6U7BR/YE8WgLlCHAFM6kapICq1WX
+         vlCOkwcYUegwqEzZ2fTFSlADMGjZ4sSylb4eU=
+Received: by 10.224.19.145 with SMTP id a17mr3808484qab.22.1234548679079; Fri, 
+	13 Feb 2009 10:11:19 -0800 (PST)
+In-Reply-To: <81bfc67a0902131000n2d67e88epd743c7c39842fbc@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109769>
 
-On Thu, Feb 12, 2009 at 12:43:42PM -0800, Junio C Hamano wrote:
+On Fri, Feb 13, 2009 at 10:00, Caleb Cushing <xenoterracide@gmail.com> wrote:
+>> ~/.gitconfig
+>> [sendemail]
+>>    smtpserver = smtp.gmail.com
+>>    smtpserverport = 587
+>>    smtpuser = your.email@gmail.com
+>>    smtppass = yourPassword
+>>    smtpencryption = tls
+>>
+>> $ git format-patch <options>
+>> # add comments to 00*.patch files.
+>> $ git send-email 00*
+>> I've never seen any mangling using send-email, and the gmail SMTP
+>> server.  I've never actually tried using imap-send.  Not quite the
+>> answer to your question, but hopefully, it's another option.
+>>
+>
+> [sendmail]
+>    smtpserver = smtp.gmail.com
+>    smtpserverport = 587
+>    smtpuser = xenoterracide@gmail.com
+>    smtppass = YeahITypedThisRight
+>    smtpencryption = tls
+>
+> everything look good here? because mail isn't actually reaching it's
+> destination. I have a feeling that's because the MTA isn't set up. I
+> /could/ set that up... but I don't think that's something that anyone
+> should have to do to send email patches.
+>
+> also according to someone else the reason git can't handle the
+> attachments is because they are still base64 encoded.
+> --
+> Caleb Cushing
+>
+> http://xenoterracide.blogspot.com
+>
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > So this bug should trigger only in the face of reusing worktree files. I
-> > checked your test; it constructs a diff between the worktree and the
-> > index, so it correctly finds the problem.
-> >
-> > Acked-by: Jeff King <peff@peff.net>
-> 
-> Thanks, both.
-> 
-> Jeff, according to your analysis, this shouldn't trigger when
-> core.autocrlf is set, should it?
+"git imap-send" doesn't use the [sendmail] section of the .gitconfig.
+It uses the [imap] section.  The [sendmail] configuration is if you're
+using "git send-email".
 
-Depending on the diff you are doing. If one of the sides is the
-worktree, then we should always be using the worktree file. But for
-"diff --cached" it depends on the file contents matching the index (in
-theory, it would work for arbitrary tree diffs when one side matches the
-worktree, but see the comment in reuse_worktree_file -- if nobody has
-looked at the cache already, we don't load it just for this).
+If you setup the smtp* options, you don't need a local MTA, since
+send-email will use the SMTP server you configured.
 
-I tried to construct a simple test that shows this behavior, but I
-couldn't. I did:
-
-  mkdir repo && cd repo && git init
-
-  git config core.autocrlf true
-
-  printf 'one\r\n' >file1
-  printf 'one\r\n' >file2
-  git add .
-  git commit -m one
-
-  printf 'two\r\n' >file1
-  printf 'two\r\n' >file2
-  git add -u
-
-  PAGER=cat GIT_EXTERNAL_DIFF=echo git diff --cached
-
-which should fail without the core.autocrlf setting, but work otherwise.
-But it doesn't, and the reason is that the content in the index actually
-has the CRLF:
-
-  $ xxd < file1
-  0000000: 7477 6f0d 0a                             two..
-  $ git cat-file blob :file1 | xxd
-  0000000: 7477 6f0d 0a                             two..
-
-which has me confused. Am I using autocrlf wrong? I have been fortunate
-enough in the past never to work on filesystems that needed such a
-thing.
-
--Peff
+Are you still getting the corruption if you let format-patch generate
+the patch on disk (don't use the --stdout option), and give the patch
+filename(s) as the final arguments to send-email?  (Could you show the
+new sequence of commands you're using, and what the output is?)
