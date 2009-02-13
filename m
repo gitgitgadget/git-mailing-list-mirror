@@ -1,96 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-rebase.txt: Mention that --whitespace cannot be used
- with interactive rebase.
-Date: Thu, 12 Feb 2009 16:50:13 -0800
-Message-ID: <7vy6wbgny2.fsf@gitster.siamese.dyndns.org>
-References: <20090212102119.1de19087@crow>
- <7veiy3i61g.fsf@gitster.siamese.dyndns.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: not all tests pass when on an NFS partition
+Date: Thu, 12 Feb 2009 18:54:30 -0600
+Message-ID: <Aq-rucZsypJQU8SHtTE8X62cEZZn-xSpOOIfA-I5czdtCkm2IyMjDw@cipher.nrlssc.navy.mil>
+References: <3a69fa7c0902121220n4ea2f19di6fe984dd2002772@mail.gmail.com> <7vk57vjqsd.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mark Burton <markb@ordern.com>
-X-From: git-owner@vger.kernel.org Fri Feb 13 01:51:59 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: E R <pc88mxer@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 13 01:56:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXmHZ-0003Zb-B4
-	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 01:51:53 +0100
+	id 1LXmLa-0004YF-QT
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 01:56:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757084AbZBMAuW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2009 19:50:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756176AbZBMAuU
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 19:50:20 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46465 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754327AbZBMAuT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2009 19:50:19 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E06F79922A;
-	Thu, 12 Feb 2009 19:50:18 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C984C99229; Thu,
- 12 Feb 2009 19:50:15 -0500 (EST)
-In-Reply-To: <7veiy3i61g.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu, 12 Feb 2009 15:34:03 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 49142C62-F968-11DD-9A4C-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1758284AbZBMAyf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2009 19:54:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758225AbZBMAye
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 19:54:34 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:46899 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752299AbZBMAye (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2009 19:54:34 -0500
+Received: by mail.nrlssc.navy.mil id n1D0sUUU029097; Thu, 12 Feb 2009 18:54:30 -0600
+In-Reply-To: <7vk57vjqsd.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 13 Feb 2009 00:54:30.0684 (UTC) FILETIME=[A0E545C0:01C98D75]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109698>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Junio C Hamano wrote:
+> E R <pc88mxer@gmail.com> writes:
+> 
+>> When I run 'make test' for git-1.6.1.3 it will fail on this test when
+>> running on an NFS partition.
+> 
+> ... when the filesystem clock and the machine clock are out of sync.
 
-> Mark Burton <markb@ordern.com> writes:
->
->> Signed-off-by: Mark Burton <markb@ordern.com>
->> ---
->>  Documentation/git-rebase.txt |    1 +
->>  1 files changed, 1 insertions(+), 0 deletions(-)
->>
->> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
->> index 3d6d429..60582a4 100644
->> --- a/Documentation/git-rebase.txt
->> +++ b/Documentation/git-rebase.txt
->> @@ -246,6 +246,7 @@ OPTIONS
->>  --whitespace=<nowarn|warn|error|error-all|strip>::
->>  	This flag is passed to the 'git-apply' program
->>  	(see linkgit:git-apply[1]) that applies the patch.
->> +	Not supported when using the --interactive option.
->
-> So is it "not supported when using", or "incompatible with"?
->
-> If the option is silently ignored, it is former, and we have a bug.  If
-> the program refuses to work then it is the latter.
+I previously modified t5304 to make test-chmtime modify the mtime of
+the file based on the system time rather than the file mtime precisely to
+avoid this problem.  i.e. the argument to test-chmtime is now prefixed with '='
 
-It appears it is the latter, so I've queued with a rewrite.  Hope it is Ok
-with you.
+So I don't think it is related to out of sync clock on NFS server and client.
+There may be a bug in the NFS client though.
 
-Thanks.
+>> Is this a known problem? Is this a real problem?
 
--- >8 --
-From: Mark Burton <markb@ordern.com>
-Date: Thu, 12 Feb 2009 10:21:19 +0000
-Subject: [PATCH] git-rebase.txt: --interactive does not work with --whitespace
+Known by me, but I haven't mentioned it since I haven't had a moment to
+diagnose it.
 
-Signed-off-by: Mark Burton <markb@ordern.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-rebase.txt |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+>> My uname -a: Linux XXX 2.6.18-92.1.17.el5 #1 SMP Tue Nov 4 13:45:01
+>> EST 2008 i686 athlon i386 GNU/Linux
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 3d6d429..30487de 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -246,6 +246,7 @@ OPTIONS
- --whitespace=<nowarn|warn|error|error-all|strip>::
- 	This flag is passed to the 'git-apply' program
- 	(see linkgit:git-apply[1]) that applies the patch.
-+	Incompatible with the --interactive option.
- 
- -i::
- --interactive::
+RHEL 5.2? me too.
+
+RHEL 4.7 works fine, same NFS server (running 5.2).
+
+-brandon
