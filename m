@@ -1,82 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] Teach rebase to rebase even if upstream is up to
- date  with -f
-Date: Thu, 12 Feb 2009 17:32:47 -0800
-Message-ID: <7vhc2zglz4.fsf@gitster.siamese.dyndns.org>
-References: <1234468061-29923-1-git-send-email-srabbelier@gmail.com>
- <7vbpt7jq4c.fsf@gitster.siamese.dyndns.org>
- <bd6139dc0902121357l1eea7b8xe890513b756e97c2@mail.gmail.com>
- <7viqnfi6la.fsf@gitster.siamese.dyndns.org>
- <bd6139dc0902121524o776703bdw1bb199caecbc9c21@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git merge ignoring whitespace
+Date: Fri, 13 Feb 2009 02:38:19 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902130231300.26370@racer>
+References: <2754.1233876289@relay.known.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailinglist <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eric Wong <normalperson@yhbt.net>,
-	"Shawn O. Pear, Sverre Rabbelier <srabbelier@gmail.com>"@b-sasl-quonix.sasl.smtp.pobox.com
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 13 02:34:57 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: layer <layer@known.net>
+X-From: git-owner@vger.kernel.org Fri Feb 13 02:40:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXmxC-00071M-Tl
-	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 02:34:55 +0100
+	id 1LXn2U-0008IN-G4
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 02:40:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752437AbZBMBdB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2009 20:33:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752299AbZBMBdA
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 20:33:00 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58707 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751127AbZBMBdA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2009 20:33:00 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id D61EF2B02D;
-	Thu, 12 Feb 2009 20:32:55 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 986A72B025; Thu,
- 12 Feb 2009 20:32:49 -0500 (EST)
-In-Reply-To: <bd6139dc0902121524o776703bdw1bb199caecbc9c21@mail.gmail.com>
- (Sverre Rabbelier's message of "Fri, 13 Feb 2009 00:24:14 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 3D25FEA2-F96E-11DD-8281-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1760535AbZBMBi1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2009 20:38:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754487AbZBMBi0
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 20:38:26 -0500
+Received: from mail.gmx.net ([213.165.64.20]:49022 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1760364AbZBMBiZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2009 20:38:25 -0500
+Received: (qmail invoked by alias); 13 Feb 2009 01:38:22 -0000
+Received: from pD9EB2494.dip0.t-ipconnect.de (EHLO noname) [217.235.36.148]
+  by mail.gmx.net (mp007) with SMTP; 13 Feb 2009 02:38:22 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18eP2VkxdQeD7Xg3tCUGbvNUxajkOVWJQ4wYcbMMh
+	C4/2qUg4JWyMWA
+X-X-Sender: gene099@racer
+In-Reply-To: <2754.1233876289@relay.known.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109700>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+Hi,
 
-> On Fri, Feb 13, 2009 at 00:22, Junio C Hamano <gitster@pobox.com> wrote:
->> No, because I didn't read the patch text; I don't read patches that are
->> larger than 20 lines during the day-job hours.
->
-> Hehe, that sounds like a fair policy.
->
->> I was only commenting on your "rebase does not work if I am up to date
->> with respect to origin and here is my workaround".
->
-> Ok, thanks for the comment then, I'll wait for more comment and maybe
-> write some tests tomorrow.
+On Thu, 5 Feb 2009, layer wrote:
 
-Ok, now it is past 5pm, I've read the patch.
+> Junio, on 3/25/07 you said:
+> 
+>   I know Linus does not like applying patches with whitespace
+>   fuzziness, but I personally think a merge that ignores
+>   whitespace changes would be a useful thing to have, without
+>   having to call an external specialized merge backend. In other
+>   words, I do not think it is so special a thing to want to, but
+>   it is rather an unfortunate norm.  I am not opposed to give
+>   git-merge-recursive a command line option to tell it to merge
+>   ignoring the whitespace-only changes, when it does the 3-way
+>   file-level merge internally.
+> 
+> Whatever came of this?  I tried giving git merge a --ignore-whitespace
+> argument and the error message that followed show no equivalent
+> argument.
 
-I wonder if we can (and if so should) make this a bit more automatic
-without having to say "rebase -f --whitespace=fix".
+I can think of two issues:
 
-When you say "git rebase --whitespace=fix origin" from the command line,
-you are explicitly saying "I want to *fix* breakages in the commits since
-'origin'", and at that point, it stops mattering if origin stayed dormant
-since you forked from it.  I'd say that the current behaviour is a bug
-introduced by the commit that added --whitespace=fix option.
+- there was this -X patch by Junio, but I think it is a bad interface to 
+  pass merge backend options, as it is not closely coupled with the 
+  backend.  Just imagine this:
 
-The logic is the same as "git rebase --interactive origin" that does not
-refuse to work even if you are already ahead of the origin.
+	git merge -X ignore-whitespace -s resolve,recursive
 
-So my suggestion would be to add --force (or -f) like your patch does, and
-also detect --whitespace=$option given from the command line, and if it is
-fix (or its synonym "strip"), automatically enable --force, perhaps as a
-follow up patch, or in the same patch.
+  Does the "-X ignore-whitespace" impact resolve, recursive, or both?  And 
+  we'd need some way to specify the option to the backend.  I thought that
+
+	git merge -s resolve,recursive/ignore-whitespace
+
+  would be a sane syntax, but at least _I_ did not have a need to pass 
+  backend options yet.
+
+- more fundamental, how should the merge ignoring whitespace work?  Which 
+  version would it take if the lines agree _except_ for whitespace 
+  changes?  This needs to be well designed, as we have not only merges 
+  (where we have "ours" and "theirs"), but also rebases (where we have 
+  "theirs" and _then_ "ours"), and of course recursive merges when there 
+  is more than a single merge base (and there, it gets really nasty, so 
+  you better have the semantics of the whitespace-ignoring merge put down 
+  quite clearly).
+
+> It would sure come in handy right now.  Is there some other way to do
+> it that I didn't find searching the mailing list?
+
+Of course, you could try to "normalize" the whitespace, and perform the 
+merge after that.
+
+Ciao,
+Dscho
+
+  
