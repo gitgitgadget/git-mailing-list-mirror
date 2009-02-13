@@ -1,108 +1,66 @@
-From: Jacob Helwig <jacob.helwig@gmail.com>
-Subject: Re: gmail screws up patches looking for workable workaround
-Date: Fri, 13 Feb 2009 11:35:47 -0800
-Message-ID: <8c9a060902131135m2b8e89d3s25d3b4455dae0f32@mail.gmail.com>
-References: <81bfc67a0902130909i154a7c2epeff98347985c3fb8@mail.gmail.com>
-	 <8c9a060902130926j48b59785l624a3966254517e5@mail.gmail.com>
-	 <81bfc67a0902131000n2d67e88epd743c7c39842fbc@mail.gmail.com>
-	 <8c9a060902131011u5bc7d0dft4edc4adb1af1dad8@mail.gmail.com>
-	 <81bfc67a0902131020w66e114b7ke642ab8308e530c3@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] log: make --abbrev-commit's ellipsis configurable
+Date: Fri, 13 Feb 2009 13:32:59 -0800
+Message-ID: <7vprhm81kk.fsf@gitster.siamese.dyndns.org>
+References: <1234529920-9694-1-git-send-email-trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Dan Robbins <drobbins@funtoo.org>
-To: Caleb Cushing <xenoterracide@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 13 20:37:31 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Adeodato =?utf-8?Q?Sim=C3=B3?= <dato@net.com.org.es>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Feb 13 22:35:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LY3qr-0003gp-G5
-	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 20:37:29 +0100
+	id 1LY5gg-0001E9-LQ
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 22:35:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752182AbZBMTfz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2009 14:35:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752010AbZBMTfz
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 14:35:55 -0500
-Received: from mail-qy0-f11.google.com ([209.85.221.11]:50591 "EHLO
-	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751001AbZBMTfy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2009 14:35:54 -0500
-Received: by qyk4 with SMTP id 4so1840838qyk.13
-        for <git@vger.kernel.org>; Fri, 13 Feb 2009 11:35:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=FdGj1hQ+LrVei7DBX3g9UaRQ208hP0eTHl4Y7swEcmw=;
-        b=azgPH1mfnXr2mDp40fGc/zmJleO6NIzv1rNuxb7EACdcYGxzO8YCj5Ad9GXI9nIxD8
-         9OwuuPfypeN1XEmBZ5bAIgsijS0GApY0uRfIZ4TrLEfoSrSRlP4EzTiX4UZ476+vGGzr
-         SC/9PlTrnlfca1zVK3Bqx1Gmr16pQ36rmOq9s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=dj+2qpwhxQE/zyDBN8x3tqIEHlG3FVcYmTeyeohHtbKtYm6MVm0B6v9t6VSJCDF2yT
-         km39/Y694y3eaTuQq/EhDsiot7W55LAfJM7LOjgU1sAF6/ujYDIeCVaAZ0wkVe/838pQ
-         7wdgJP5Mj4mChOYcNkd+So5fheZd6kyOR24gM=
-Received: by 10.224.19.131 with SMTP id a3mr292558qab.199.1234553747592; Fri, 
-	13 Feb 2009 11:35:47 -0800 (PST)
-In-Reply-To: <81bfc67a0902131020w66e114b7ke642ab8308e530c3@mail.gmail.com>
+	id S1759537AbZBMVdO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2009 16:33:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753125AbZBMVdO
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 16:33:14 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:62061 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758928AbZBMVdN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2009 16:33:13 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3508C99953;
+	Fri, 13 Feb 2009 16:33:08 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id CABB199952; Fri,
+ 13 Feb 2009 16:33:03 -0500 (EST)
+In-Reply-To: <1234529920-9694-1-git-send-email-trast@student.ethz.ch> (Thomas
+ Rast's message of "Fri, 13 Feb 2009 13:58:40 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: E7D7F43E-FA15-11DD-BF6D-0433C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109775>
 
-On Fri, Feb 13, 2009 at 10:20, Caleb Cushing <xenoterracide@gmail.com> wrote:
->> "git imap-send" doesn't use the [sendmail] section of the .gitconfig.
->> It uses the [imap] section.  The [sendmail] configuration is if you're
->> using "git send-email".
->
-> yeah... I've both set up, and followed your sendmail instructions explicitly
->
->> If you setup the smtp* options, you don't need a local MTA, since
->> send-email will use the SMTP server you configured.
->
-> tell that to the postdrop (postfix) error that I saw on the screen.
->
->> Are you still getting the corruption if you let format-patch generate
->> the patch on disk (don't use the --stdout option), and give the patch
->> filename(s) as the final arguments to send-email?  (Could you show the
->> new sequence of commands you're using, and what the output is?)
->>
->
-> no... no corruption locally. the problem is the mail never arrives. I
-> don't know where it disappears at, but it doesn't make it to the inbox
-> I send it to, and I really, really, really do not want to troubleshoot
-> any of the 1000 places it could have gone wrong
->
->  git send-email 00*
-> 0001-remove-mysql-community-5.1-beta.patch
-> Who should the emails appear to be from? [Caleb Cushing
-> <xenoterracide@gmail.com>]
-> Emails will be sent from: Caleb Cushing <xenoterracide@gmail.com>
-> Who should the emails be sent to? xenoterracide@gmail.com
-> Message-ID to be used as In-Reply-To for the first email?
-> xenoterracide@gmail.com
-> (mbox) Adding cc: Caleb Cushing <xenoterracide@gmail.com> from line
-> 'From: Caleb Cushing <xenoterracide@gmail.com>'
-> (sob) Adding cc: Caleb Cushing <xenoterracide@gmail.com> from line
-> 'Signed-off-by: Caleb Cushing <xenoterracide@gmail.com>'
-> postdrop: warning: unable to look up public/pickup: No such file or directory
-> OK. Log says:
-> Sendmail: /usr/sbin/sendmail -i xenoterracide@gmail.com
+Thomas Rast <trast@student.ethz.ch> writes:
 
-I should have looked more closely, when you posted your config.  You
-have "[sendmail]", instead of "[sendemail]".  You're missing the "e"
-on "email".  What made me re-look is the line right after "OK. Log
-says:".
+> 'git log --abbrev-commit' adds an ellipsis to all commit names that
+> were abbreviated.  This is annoying if you want to cut&paste the sha1
+> from the terminal, since selecting by word will pick up '...' too.
+> (And this cannot be fixed by making '.' a non-word character; in other
+> instances, such as the '123457..abcdef0' from git-fetch, it's part of
+> the expression.)
 
-You should have seen:
-OK. Log says:
-Server: smtp.gmail.com
+I actually think that it is a bug that --abbrev-commit uses ellipses.
 
-Not:
-OK. Log says:
-Sendmail: /usr/sbin/sendmail -i xenoterracide@gmail.com
+It has been there since "diff --abbrev" was first introduced by commit
+47dd0d5 (diff: --abbrev option, 2005-12-13).  It did make sense to align
+columns in abbreviated raw diff output with ellipses, but it did not make
+much sense to do that for commit object names.
+
+Some scripts might be relying on the presense of ellipses but depending on
+the object distribution, the length of the ellipses can range from zero to
+three; if they are expecting to always see three dots, such scripts are
+already broken.
+
+For this reason, I do not think it is necessarily a bad idea to make this
+change even unconditionally to both plumbing and Porcelain.
