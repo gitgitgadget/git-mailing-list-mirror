@@ -1,67 +1,62 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: error: http-push died with strange error
-Date: Fri, 13 Feb 2009 22:58:38 +0800
-Message-ID: <be6fef0d0902130658x12610aa3hd40077ab53dfab25@mail.gmail.com>
-References: <1234528752345-2320994.post@n2.nabble.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v2] log: make --abbrev-commit's ellipsis configurable
+Date: Fri, 13 Feb 2009 16:32:26 +0100
+Message-ID: <4995928A.5000908@viscovery.net>
+References: <alpine.DEB.1.00.0902131445390.10279@pacific.mpi-cbg.de> <1234535092-20133-1-git-send-email-trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Prasad <maninc@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 13 16:00:19 2009
+Cc: git@vger.kernel.org,
+	=?ISO-8859-15?Q?Adeodato_Sim=F3?= <dato@net.com.org.es>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Feb 13 16:34:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXzWV-0003ac-IQ
-	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 16:00:12 +0100
+	id 1LY03D-00020l-9G
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 16:33:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759537AbZBMO6m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2009 09:58:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758934AbZBMO6m
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 09:58:42 -0500
-Received: from wa-out-1112.google.com ([209.85.146.183]:65265 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759425AbZBMO6l (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2009 09:58:41 -0500
-Received: by wa-out-1112.google.com with SMTP id v33so621799wah.21
-        for <git@vger.kernel.org>; Fri, 13 Feb 2009 06:58:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=yTRbeyDeUOfLzznaFA5yihm2OSY1cnuJbBgt08OW4dQ=;
-        b=nVLSjSNnRvHapSge0CSZ9udaTgpOX6HMM4SweWPy7np+PD2MGQmvAxgPXsm8LCgDu/
-         23dpUsmz2J4Iy10EU117A8KNH3gsc5OoBY9koY4NZX9KTlnt4XP/uxkUKlKoQSFgy5KF
-         p58FSOCVmsZY6wr4NgY5wU6SS2Z1nvDdC2yB4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=R/KGTpXbOEAwXLX4H/JcKEFc7nslWZUiCp2rdUgQqboyDLCC2dxs2Qf25oXg2pxvl8
-         1GfTo0tOtKcpHPjzRZ8O4lHr6NHOgfbFgWDo0ibLM6T5XXmRA0QGDfPBFmTjzneQkIyT
-         B2RHFrIMXS8uKmNGrMK8V1F9mXd8n2FXfyEdw=
-Received: by 10.114.61.1 with SMTP id j1mr899514waa.207.1234537118853; Fri, 13 
-	Feb 2009 06:58:38 -0800 (PST)
-In-Reply-To: <1234528752345-2320994.post@n2.nabble.com>
+	id S1758053AbZBMPcd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2009 10:32:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757569AbZBMPcd
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 10:32:33 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:49169 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751509AbZBMPcc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2009 10:32:32 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LY01j-0006Tf-1q; Fri, 13 Feb 2009 16:32:27 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id B85E769F; Fri, 13 Feb 2009 16:32:26 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <1234535092-20133-1-git-send-email-trast@student.ethz.ch>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109754>
 
-Hi,
+Thomas Rast schrieb:
+> So we introduce a new variable format.abbrevEllipsis that defaults to
+> true (previous behaviour).
 
-On Fri, Feb 13, 2009 at 8:39 PM, Prasad <maninc@gmail.com> wrote:
->
-> I am facing this error below when i try to push my changes to server.
->
+How about format.hideAbbrevDots that defaults to false? Then you can write
+in the config file:
 
-Could you tell us what version of git you're using? Sounds like a
-possible memory problem.
+    [format]
+         hideAbbrevDots
 
+(note: without '= true').
 
--- 
-Cheers,
-Ray Chuan
+Even though I usually detest double negations (and I would count
+hideAbbrevDots=false as one), the ability to set the non-default value of
+a Boolean variable in this way trumps my taste.
+
+-- Hannes
