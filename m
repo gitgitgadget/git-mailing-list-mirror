@@ -1,67 +1,96 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [JGIT PATCH 0/6] Add prune of stale tracking branches to fetch
-Date: Thu, 12 Feb 2009 16:48:08 -0800
-Message-ID: <7v3aeji2lz.fsf@gitster.siamese.dyndns.org>
-References: <1234482880-1316-1-git-send-email-spearce@spearce.org>
- <7v7i3vi33b.fsf@gitster.siamese.dyndns.org>
- <20090213004245.GZ30949@spearce.org>
+Subject: Re: [PATCH] git-rebase.txt: Mention that --whitespace cannot be used
+ with interactive rebase.
+Date: Thu, 12 Feb 2009 16:50:13 -0800
+Message-ID: <7vy6wbgny2.fsf@gitster.siamese.dyndns.org>
+References: <20090212102119.1de19087@crow>
+ <7veiy3i61g.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Feb 13 01:49:48 2009
+Cc: git@vger.kernel.org
+To: Mark Burton <markb@ordern.com>
+X-From: git-owner@vger.kernel.org Fri Feb 13 01:51:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXmFT-00032I-RI
-	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 01:49:44 +0100
+	id 1LXmHZ-0003Zb-B4
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 01:51:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757530AbZBMAsQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Feb 2009 19:48:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757330AbZBMAsQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 19:48:16 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46093 "EHLO
+	id S1757084AbZBMAuW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Feb 2009 19:50:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756176AbZBMAuU
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Feb 2009 19:50:20 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46465 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757093AbZBMAsQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Feb 2009 19:48:16 -0500
+	with ESMTP id S1754327AbZBMAuT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Feb 2009 19:50:19 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 579BC99207;
-	Thu, 12 Feb 2009 19:48:14 -0500 (EST)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E06F79922A;
+	Thu, 12 Feb 2009 19:50:18 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 063D399203; Thu,
- 12 Feb 2009 19:48:09 -0500 (EST)
-In-Reply-To: <20090213004245.GZ30949@spearce.org> (Shawn O. Pearce's message
- of "Thu, 12 Feb 2009 16:42:45 -0800")
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C984C99229; Thu,
+ 12 Feb 2009 19:50:15 -0500 (EST)
+In-Reply-To: <7veiy3i61g.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu, 12 Feb 2009 15:34:03 -0800")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: FED5C552-F967-11DD-9A4C-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 49142C62-F968-11DD-9A4C-8B21C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109697>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> wrote:
->> "Shawn O. Pearce" <spearce@spearce.org> writes:
->> 
->> > This series teaches "jgit fetch" how to prune stale tracking branches
->> > that have been removed from the remote repository.  We can now do
->> > both a fetch and a prune in a single network connection.
->> 
->> I am not sure if that is a good feature.
->> 
->> The user at the local side may well be using the (now stale) tracking
->> branch as an achoring point to remember where his own development forked
->> from, and that may be the reason he is fetching but not running "remote
->> prune", not to lose that anchor.
+> Mark Burton <markb@ordern.com> writes:
 >
-> Well.
+>> Signed-off-by: Mark Burton <markb@ordern.com>
+>> ---
+>>  Documentation/git-rebase.txt |    1 +
+>>  1 files changed, 1 insertions(+), 0 deletions(-)
+>>
+>> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+>> index 3d6d429..60582a4 100644
+>> --- a/Documentation/git-rebase.txt
+>> +++ b/Documentation/git-rebase.txt
+>> @@ -246,6 +246,7 @@ OPTIONS
+>>  --whitespace=<nowarn|warn|error|error-all|strip>::
+>>  	This flag is passed to the 'git-apply' program
+>>  	(see linkgit:git-apply[1]) that applies the patch.
+>> +	Not supported when using the --interactive option.
 >
-> Its off by default.
+> So is it "not supported when using", or "incompatible with"?
 >
-> You have to ask for it with "jgit fetch --prune origin".
+> If the option is silently ignored, it is former, and we have a bug.  If
+> the program refuses to work then it is the latter.
 
-Ok, then.  Sorry for the noise.
+It appears it is the latter, so I've queued with a rewrite.  Hope it is Ok
+with you.
+
+Thanks.
+
+-- >8 --
+From: Mark Burton <markb@ordern.com>
+Date: Thu, 12 Feb 2009 10:21:19 +0000
+Subject: [PATCH] git-rebase.txt: --interactive does not work with --whitespace
+
+Signed-off-by: Mark Burton <markb@ordern.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/git-rebase.txt |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 3d6d429..30487de 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -246,6 +246,7 @@ OPTIONS
+ --whitespace=<nowarn|warn|error|error-all|strip>::
+ 	This flag is passed to the 'git-apply' program
+ 	(see linkgit:git-apply[1]) that applies the patch.
++	Incompatible with the --interactive option.
+ 
+ -i::
+ --interactive::
