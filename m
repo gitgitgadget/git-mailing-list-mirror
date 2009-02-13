@@ -1,90 +1,69 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [topgit] tg update error
-Date: Fri, 13 Feb 2009 13:26:09 -0500
-Message-ID: <20090213182609.GB31860@coredump.intra.peff.net>
-References: <cc723f590902120009w432f5f61xd6550409835cdbb7@mail.gmail.com> <20090212084811.GA14261@piper.oerlikon.madduck.net> <20090212092558.GB21074@skywalker> <20090212125621.GB5397@sigill.intra.peff.net> <7veiy3l689.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH] log: make --abbrev-commit's ellipsis configurable
+Date: Fri, 13 Feb 2009 14:27:24 -0500
+Message-ID: <20090213192724.GA6782@coredump.intra.peff.net>
+References: <1234529920-9694-1-git-send-email-trast@student.ethz.ch> <alpine.DEB.1.00.0902131418230.10279@pacific.mpi-cbg.de> <200902131437.49293.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.vnet.ibm.com>,
-	Aneesh Kumar <aneesh.kumar@gmail.com>, madduck@debian.org,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 13 19:27:41 2009
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org,
+	Adeodato =?utf-8?B?U2ltw7M=?= <dato@net.com.org.es>,
+	Junio C Hamano <gitster@pobox.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Feb 13 20:29:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LY2lH-0001kj-Rw
-	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 19:27:40 +0100
+	id 1LY3iZ-0000Qa-Kt
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 20:28:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752638AbZBMS0M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2009 13:26:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752634AbZBMS0M
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 13:26:12 -0500
-Received: from peff.net ([208.65.91.99]:60251 "EHLO peff.net"
+	id S1752500AbZBMT11 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2009 14:27:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752302AbZBMT11
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 14:27:27 -0500
+Received: from peff.net ([208.65.91.99]:42168 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752350AbZBMS0M (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2009 13:26:12 -0500
-Received: (qmail 25459 invoked by uid 107); 13 Feb 2009 18:26:29 -0000
+	id S1751531AbZBMT11 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2009 14:27:27 -0500
+Received: (qmail 25724 invoked by uid 107); 13 Feb 2009 19:27:44 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 13 Feb 2009 13:26:29 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Feb 2009 13:26:09 -0500
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 13 Feb 2009 14:27:44 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Feb 2009 14:27:24 -0500
 Content-Disposition: inline
-In-Reply-To: <7veiy3l689.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <200902131437.49293.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109773>
 
-On Thu, Feb 12, 2009 at 01:01:42PM -0800, Junio C Hamano wrote:
+On Fri, Feb 13, 2009 at 02:37:39PM +0100, Thomas Rast wrote:
 
-> > Junio, I think we should probably revert b229d18 (and loosen
-> > symbolic-ref's check to just "refs/"). Even if you want to argue that
-> > topgit should be changed to handle this differently, we are still
-> > breaking existing topgit installations, and who knows what other scripts
-> > which might have relied on doing something like this.
+> > How about making this an option, and passing it in rev_opts instead?  This 
+> > option could then be defaulted to in git-log, when the user said 
+> > --abbrev-commit.
 > 
-> I'm Ok with the revert (and I agree it is absolutely the right thing to do
-> at least for the short term).
+> But the 'git_config(git_log_config, NULL);' that sets the new variable
+> to false is only called from cmd_{log,show,whatchanged,reflog}.  I
+> should have indicated this in the commit messaged, sorry.
 
-It looks like you have already pushed out the revert. But I think we
-need this on top to make topgit work correctly.
+We use that technique elsewhere in git, and personally I am not a fan of
+it, as it comes down to setting a global variable. That worked fine when
+we had a lot of one-shot programs that read the config, did a defined
+piece of work, and then exited.
 
--- >8 --
-Subject: [PATCH] symbolic-ref: allow refs/<whatever> in HEAD
+But more and more we are performing multiple actions in a single run
+(especially as many scripts become builtin porcelains), and those
+globals are applied to all actions. So a porcelain trying to do a
+plumbing-ish thing can run into problems.
 
-Commit afe5d3d5 introduced a safety valve to symbolic-ref to
-disallow installing an invalid HEAD. It was accompanied by
-b229d18a, which changed validate_headref to require that
-HEAD contain a pointer to refs/heads/ instead of just refs/.
-Therefore, the safety valve also checked for refs/heads/.
+I can't recall the exact details, but I remember dealing with something
+like this related to external diff. Using an ALLOW_EXTERNAL diffopt
+ended up being more reliable, _and_ easier to read and follow in the
+code.
 
-As it turns out, topgit is using refs/top-bases/ in HEAD,
-leading us to re-loosen (at least temporarily) the
-validate_headref check made in b229d18a. This patch does the
-corresponding loosening for the symbolic-ref safety valve,
-so that the two are in agreement once more.
+Now I don't think this is probably a big problem for this particular
+option, but I'd rather not see the technique propagated.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin-symbolic-ref.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/builtin-symbolic-ref.c b/builtin-symbolic-ref.c
-index cafc4eb..6ae6bcc 100644
---- a/builtin-symbolic-ref.c
-+++ b/builtin-symbolic-ref.c
-@@ -45,8 +45,8 @@ int cmd_symbolic_ref(int argc, const char **argv, const char *prefix)
- 		break;
- 	case 2:
- 		if (!strcmp(argv[0], "HEAD") &&
--		    prefixcmp(argv[1], "refs/heads/"))
--			die("Refusing to point HEAD outside of refs/heads/");
-+		    prefixcmp(argv[1], "refs/"))
-+			die("Refusing to point HEAD outside of refs/");
- 		create_symref(argv[0], argv[1], msg);
- 		break;
- 	default:
--- 
-1.6.2.rc0.241.g088a
+-Peff
