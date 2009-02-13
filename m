@@ -1,77 +1,95 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: Unexpected local changes immediately after fresh clone
-Date: Fri, 13 Feb 2009 00:56:28 -0500
-Message-ID: <76718490902122156l547a5bd8j56e48d7d3c7c4438@mail.gmail.com>
-References: <3D94CDCE-88EB-479A-9D36-6B92FCFCBAF4@hoskings.net>
-	 <76718490902122141h578a72e3k70366d6583d6c8c3@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [RFC PATCH] Teach rebase to rebase even if upstream is up to date 
+	with -f
+Date: Fri, 13 Feb 2009 07:02:10 +0100
+Message-ID: <bd6139dc0902122202r25e2e320m19810097cbb54225@mail.gmail.com>
+References: <1234468061-29923-1-git-send-email-srabbelier@gmail.com>
+	 <7vbpt7jq4c.fsf@gitster.siamese.dyndns.org>
+	 <bd6139dc0902121357l1eea7b8xe890513b756e97c2@mail.gmail.com>
+	 <7viqnfi6la.fsf@gitster.siamese.dyndns.org>
+	 <bd6139dc0902121524o776703bdw1bb199caecbc9c21@mail.gmail.com>
+	 <7vhc2zglz4.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Ben Hoskings <ben@hoskings.net>
-X-From: git-owner@vger.kernel.org Fri Feb 13 06:58:01 2009
+Cc: Git Mailinglist <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Eric Wong <normalperson@yhbt.net>,
+	"Shawn O. Pear, Sverre Rabbelier <srabbelier@gmail.com>"@b-sasl-quonix.sasl.smtp.pobox.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 13 07:04:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LXr3m-0007tS-MF
-	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 06:57:59 +0100
+	id 1LXr9J-0000o3-Lr
+	for gcvg-git-2@gmane.org; Fri, 13 Feb 2009 07:03:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750939AbZBMF4a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2009 00:56:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750843AbZBMF4a
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 00:56:30 -0500
-Received: from rv-out-0506.google.com ([209.85.198.235]:34625 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750828AbZBMF43 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2009 00:56:29 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so573346rvb.1
-        for <git@vger.kernel.org>; Thu, 12 Feb 2009 21:56:28 -0800 (PST)
+	id S1751036AbZBMGCN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2009 01:02:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750939AbZBMGCN
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 01:02:13 -0500
+Received: from mu-out-0910.google.com ([209.85.134.191]:11504 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750876AbZBMGCM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2009 01:02:12 -0500
+Received: by mu-out-0910.google.com with SMTP id i10so392118mue.1
+        for <git@vger.kernel.org>; Thu, 12 Feb 2009 22:02:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ott1oKjwnkAB0Zq8Wp5ENVQa+wY/0jK2g4cZEWT1qLQ=;
-        b=c5DiiuXOKxPNJULQLK5R7y7uxCvlE08BbzoiGqG+szLwM32ESg2jch5LMhMUGtqvNf
-         xeSXD0apu5LCPveq03q9a/uFKfXHhs2yGnZwvDSEj58sqMhr218jdQUJfLSipUL3KDRU
-         rtz9ybB6pBcNr2f0E05i/pRzGnhyNnjedsEXM=
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=ARStnCo6NLgYACLqoYQW3jNFVDreszw9sd/oGXvr6s0=;
+        b=bx3BD9yNEMavboN2th8Ha1G1FwWvb4Tp2fysYI402BhBQ5hkw59DsNSlSoKxFo03S5
+         PwBvYVorDOqv3WXez/UhBOIYATH0+k4R41GP7VdotnSG9jjaYN92i+Ge8xPgNN+tBJnU
+         G01zwqpw907sI1Rj3nnZIgzSLAxK9/RFY5J8U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=kIFrb73P2G2bi4p7at2N0OZtKilwPH5q2yRIIUGmNehaUvBK7nBu1be8lVPsQfrEZa
-         16QC+ImGNU+mIPrO1DS+GlZRfCmhk9ewRhOeXvbUSV2pPaQHnA9I4/43r3LGolWRQ098
-         xcs9I/MVW0xL1xRISg71tRt0BAYkIY0GCbteI=
-Received: by 10.140.247.11 with SMTP id u11mr962919rvh.123.1234504588691; Thu, 
-	12 Feb 2009 21:56:28 -0800 (PST)
-In-Reply-To: <76718490902122141h578a72e3k70366d6583d6c8c3@mail.gmail.com>
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=uY6Cgk1Ce3t8tjdMJG2zH7qZS9SOMDKHdoHEEUMT1Xq436OkrsG7tuMmlUiWumVVI1
+         TVmeYLWxaigihLeGmQ2lkfL2wVtiX1zx391BUDgOt2BXgUF0JGauMnyYpKxd1ohbYgxU
+         u2OYlMBLQ0uoGBbhFTtP17cWDxugvgxUkj7tg=
+Received: by 10.86.70.3 with SMTP id s3mr78979fga.56.1234504930418; Thu, 12 
+	Feb 2009 22:02:10 -0800 (PST)
+In-Reply-To: <7vhc2zglz4.fsf@gitster.siamese.dyndns.org>
+X-Google-Sender-Auth: b9dfcbf897944f8f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109709>
 
-On Fri, Feb 13, 2009 at 12:41 AM, Jay Soffian <jaysoffian@gmail.com> wrote:
-> On Thu, Feb 12, 2009 at 11:08 PM, Ben Hoskings <ben@hoskings.net> wrote:
->> My system is a Mac OS X 10.5.6 box (aluminium MacBook); some details are
->> below.
->
-> HFS+ is case-insensitive by default. The Linux kernel has files which
-> collide on a case-insensitive filesystem, which is what you're seeing.
->
-> Create a disk image using Disk Utility, you can use "Mac OS Extended
-> (Case-sensitive)". Check-out the repo to the disk-image.
+On Fri, Feb 13, 2009 at 02:32, Junio C Hamano <gitster@pobox.com> wrote:
+> I wonder if we can (and if so should) make this a bit more automatic
+> without having to say "rebase -f --whitespace=fix".
 
-Or:
+I have been thinking of that, having whitespace=fix imply -f, but I
+wasn't sure whether it makes sense for all workflows that might use
+rebase together with whitespace=fix. I aliased 'fixwhitespace' to
+'rebase -f --whitespace=fix origin' myself, so I figured I'd send the
+patch as-is and see what people think :).
 
-$ hdiutil create -size 1g -fs UFS -type SPARSEBUNDLE -nospotlight
--attach -volname linux-2.6 linux-2.6
-$ cd /Volume/linux-2.6
-$ git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+> The logic is the same as "git rebase --interactive origin" that does not
+> refuse to work even if you are already ahead of the origin.
 
-I think SPARSEBUNDLE will be a little friendlier to Time Machine.
-Using UFS isn't strictly needed for checking out the kernel repo, but
-it's not brain-damaged like HFS+ w/respect to Unicode.
+This makes sense, and after thinking about it some, I don't really see
+any harm in running 'git rebase --whitespace=...' even if the branch
+is up to date.
 
-j.
+> So my suggestion would be to add --force (or -f) like your patch does, and
+> also detect --whitespace=$option given from the command line, and if it is
+> fix (or its synonym "strip"), automatically enable --force, perhaps as a
+> follow up patch, or in the same patch.
+
+The patch to do so would be fairly trivial I think? That is, add
+'force_rebase=t' in the --whitespace=... part. Is that change small
+enough to be a single patch, or should it be a follow-up since the
+first patch is a-means-to-an-end for the second one?
+
+-- 
+Cheers,
+
+Sverre Rabbelier
