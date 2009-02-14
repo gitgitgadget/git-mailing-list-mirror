@@ -1,99 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Documentation: pruning recipe for destructive
- filter-branch
-Date: Sat, 14 Feb 2009 11:29:46 -0800
-Message-ID: <7vab8ou89h.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0902141248220.10279@pacific.mpi-cbg.de>
- <1234621328-8998-1-git-send-email-trast@student.ethz.ch>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/4] t3301: fix confusing test for valid notes ref
+Date: Sat, 14 Feb 2009 20:32:14 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902142029420.10279@pacific.mpi-cbg.de>
+References: <b36bbe2f7f0ede6a2caa47190ada868dd4c0099c.1234638466.git.trast@student.ethz.ch> <21cefcfb71849535430c75575a9decf1f9fe9c06.1234638466.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
 To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sat Feb 14 20:31:37 2009
+X-From: git-owner@vger.kernel.org Sat Feb 14 20:32:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYQEa-0004jM-5L
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 20:31:28 +0100
+	id 1LYQFu-0005CM-0j
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 20:32:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752046AbZBNT35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 14:29:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751808AbZBNT35
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 14:29:57 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:61974 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752029AbZBNT34 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 14:29:56 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E4CE6991A5;
-	Sat, 14 Feb 2009 14:29:54 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id CDA02991A0; Sat,
- 14 Feb 2009 14:29:48 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: DB84C334-FACD-11DD-84A5-0433C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1752052AbZBNTbW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2009 14:31:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751898AbZBNTbW
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 14:31:22 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39532 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751841AbZBNTbW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 14:31:22 -0500
+Received: (qmail invoked by alias); 14 Feb 2009 19:31:20 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp043) with SMTP; 14 Feb 2009 20:31:20 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19YDxthh9lYV7HQMnhW2BoKQ7DLRZivRBwigUXy8z
+	rBgEjATGeanVAh
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <21cefcfb71849535430c75575a9decf1f9fe9c06.1234638466.git.trast@student.ethz.ch>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109906>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+Hi,
 
-> +git-filter-branch is often used to get rid of a subset of files,
-> +usually with some combination of `\--index-filter` and
-> +`\--subdirectory-filter`.  If you want to physically shrink the
-> +repository afterwards, you have some choices:
-> +
-> +* Make sure you really removed all variants of a filename, if a blob
-> +  was moved over its lifetime.  `git log \--name-only \--follow \--all
-> +  \-- filename` can help you find renames.
-> +
-> +* Make sure you really filtered all refs: use `\--tag-name-filter cat
-> +  \-- \--all` when calling git-filter-branch.
-> +
-> +* Clone it with `git clone file:///path/to/repo`.  The clone will not
-> +  have the removed objects.  See linkgit:git-clone[1].  (Note that
-> +  cloning with a plain path just hardlinks everything!)
-> +
-> +If you really don't want to clone it, for whatever reasons, check the
-> +following points instead (in this order).  This is a very destructive
-> +approach, so *make a backup* or go back to cloning it.  You have been
-> +warned.
-> +
-> +* Remove the original refs backed up by git-filter-branch: say `git
-> +  for-each-ref \--format="%(refname)" refs/original/ | xargs -n 1 git
-> +  update-ref -d`.
-> +
-> +* Expire all reflogs with `git reflog expire \--expire=now \--all`.
-> +
-> +* Garbage collect all unreferenced objects with `git gc
-> +  \--prune-expire=now` (or if your git-gc is not new enough to have
-> +  that option, `git repack -ad; git prune`).
+On Sat, 14 Feb 2009, Thomas Rast wrote:
 
-I am sorry, but the above does not flow well.  The first two common
-preparatory steps appear as if it is only for the "clone" method.
+> The test used single quotes in the test code, but also single quotes
+> to wrap the entire test snippet, thus effectively skipping _out_ of
+> quoted mode.  Since it doesn't matter here, just drop the quotes to
+> cause less confusion.
 
-	... often used to get rid of ... and people expect the resulting
-        repository to be smaller than the original, but you need a few
-        more steps to actually make it smaller, because git tries hard 
-        not to lose your objects until you tell it to.  First make sure
-	that:
+ACK.
 
-	* you really removed all...
+> Also, the test passed a MSG variable to 'git notes show', but that
+> never calls an editor.
 
-	* you reall filtered all...
+That was actually what I tried to test by passing MSG=2...  So I'd like to 
+keep it.
 
-	Then, there are two ways to get a smaller repository.  A safer way
-	is to clone, that keeps your original intact.
+> As an aside, is there a specific reason why all the negative tests use 
+> '! VAR=foo bar' instead of 'VAR=foo test_must_fail bar'?  I thought the 
+> latter was preferred to catch segfaults.
 
-	* Clone it with ...
+I guess that back then when I wrote the first version of notes (which I 
+hoped Johan Herland would take custody of), test_must_fail either did not 
+exist or was too new for me to have picked up yet.
 
-	If you do not want to ...
-
-	* Remove the original refs...
-
-	* Expire all...
+Ciao,
+Dscho
