@@ -1,94 +1,122 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/4] builtin-remote: add set-head verb
-Date: Fri, 13 Feb 2009 19:22:53 -0500
-Message-ID: <20090214002253.GA7769@coredump.intra.peff.net>
-References: <1234515275-91263-1-git-send-email-jaysoffian@gmail.com> <1234515275-91263-2-git-send-email-jaysoffian@gmail.com> <1234515275-91263-3-git-send-email-jaysoffian@gmail.com> <1234515275-91263-4-git-send-email-jaysoffian@gmail.com> <1234515275-91263-5-git-send-email-jaysoffian@gmail.com> <7vtz6yabsy.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [RFC] git-send-email: making --no-chain-reply-to the default
+Date: Fri, 13 Feb 2009 16:29:11 -0800
+Message-ID: <7veiy16eug.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
-	barkalow@iabervon.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 14 01:24:49 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: lsorense@csclub.uwaterloo.ca (Lennart Sorensen),
+	Ingo Oeser <ioe-lkml@rameria.de>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 14 01:30:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LY8Kq-0001VB-LU
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 01:24:45 +0100
+	id 1LY8Ql-0003KP-LF
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 01:30:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759537AbZBNAW6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2009 19:22:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753403AbZBNAW6
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 19:22:58 -0500
-Received: from peff.net ([208.65.91.99]:56162 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752826AbZBNAW5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2009 19:22:57 -0500
-Received: (qmail 27030 invoked by uid 107); 14 Feb 2009 00:23:13 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 13 Feb 2009 19:23:13 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Feb 2009 19:22:53 -0500
-Content-Disposition: inline
-In-Reply-To: <7vtz6yabsy.fsf@gitster.siamese.dyndns.org>
+	id S1753005AbZBNA3Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2009 19:29:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752752AbZBNA3X
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 19:29:23 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:43375 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751337AbZBNA3X (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2009 19:29:23 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 8429E2B12A;
+	Fri, 13 Feb 2009 19:29:21 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3DE812B144; Fri,
+ 13 Feb 2009 19:29:15 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 860A691C-FA2E-11DD-B62F-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109790>
 
-On Fri, Feb 13, 2009 at 02:09:01AM -0800, Junio C Hamano wrote:
+There was a short complaint-fest on the kernel mailing list about the
+default behaviour of send-email being "chain-reply-to".
 
-> The entire series looks sane from a very cursory look; especially the
-> earlier ones are obviously good.
+As I am moving the discussion to where it should belong, here is a
+summary of what was said so far.
 
-I also think it looks good. You raised a few style points below which I
-thought were sensible and won't bother repeating.
+When there are more than two patches in a series, we often see three
+different styles (explanation taken from Lennart Sorensen's message):
 
-> Hmph, what does "-a" stand for?  I would have expected to see "-u" that
-> stands for "update" here.
+  Split: (multiple seperate threads)
+  foobar patch 1
+  +-comment on patch 1
+  foobar patch 2
+  foobar patch 3
+  +-comment on patch 3
+  foobar patch 4
+  foobar patch 5
 
-It was immediately obvious to me as "auto" (I think I even suggested
-"-a" in another thread, so maybe that is why it seems so sensible to
-me). However, I think as a rule it is nice to always provide a "long"
-alternative for every option. With parse-options, there really is no
-downside; it is literally s/0/"auto"/ on the option line. And I think
-it:
+  Shallow: (all patches as response to a cover letter)
+  foobar patch 0 (usually a summary/overview)
+  +-foobar patch 1
+  | +-comment on patch 1
+  +-foobar patch 2
+  +-foobar patch 3
+  | +-comment on patch 3
+  +-foobar patch 4
+  +-foobar patch 5
 
-  - lets people who want to illustrate a command in a more readable
-    manner do so (e.g., if they are showing it to somebody else)
+  Deep: (One long chain of messages)
+  foobar patch 0
+  +-foobar patch 1
+    +-foobar patch 2
+    | +-foobar patch 3
+    |   +-foobar patch 4
+    |   | +-foobar patch 5
+    |   +-comment on patch 3
+    +-comment on patch 1
 
-  - makes it more obvious in the documentation and usage message what
-    the command does. That is, I remember commands much better as "this
-    is the --auto option, whose meaningful name reminds me that it does
-    X, and -a is the obvious shorthand" rather than "-a does X".
+Lennart reports that from early January to early Feburary on the Linux
+kernel mailing list, there were 25 split sets, 56 shallow sets and 6 deep
+sets.
 
-  - enables extra parse-options syntax like automatic "--no-" handling
-    (though I doubt anyone is likely to use "--no-auto" in this case,
-    the point is that it is easier to allow such constructs consistently
-    than to try to guess when people might want it)
+I counted 30 shallow sets and 50 deep sets in a recent git mailing list
+messages (I counted this by only looking at 3/N patch among 5200
+messages).
 
-Which is maybe more argument than you cared to read about this
-particular option, but I want to make clear that I think this should be
-the case for just about every command-line option we add.
+The numbers themselves may show what the senders consider appropriate to
+submit, but they do not talk about the reader preference, which matters
+more.  The messages should be sent in a form that is easier to read.
 
-> Also it may be better to be more explicit about both the syntax and the
-> semantics of `<branch>`.  Do you expect "refs/remotes/<name>/master" or
-> just "master" (I assume the latter)?  Is it an error if the branch does
+Given that many patches on the Kernel list do not even originate from git,
+as opposed to here a lot more are coming from git-send-email, I interpret
+the differences of these numbers to mean that people prefer shallow style
+when they have a choice, but many just use git-send-email with its default
+configuration and end up producing Deep style threads.
 
-I thought it was obvious that you would do:
+I personally agree with a short list of people who expressed their opinion
+there that it is a bad default as it produces the "Deep" kind illustrated
+below that is hard to follow, and would like to propose to change the
+default not to chain-reply-to in a future release (but not in 1.6.2, it is
+too late for that).
 
-  git remote set-head master
+But the people complained were only a tiny fraction of the Linux kernel
+mailing list readership, and these days git is not a property of the
+kernel community alone anymore.  People tend to speak out loud only when
+they do not like the status quo, so I'd like to give people who do not
+want the default to change a chance to voice their opinions.
 
-in the same way that you would do:
+Yes, I said "opinions" and that means I am not taking a poll of individual
+preferences and "+1" and "mee too" are unwelcome noise.  Making convincing
+arguments such as "Among $N major communities that use git as the primary
+SCM, $M projects spell their patch submission policy to use Deep style,
+which is a majority; please teach members of the minority projects to how
+to configure git-send-email to match their style instead and do not change
+the default." is good, if you can make one.
 
-  git remote add -m master $remote $url
+Unless we hear convincing arguments *why* the default should *not* change,
+I'll announce that it will change in 1.6.3 in the release notes to 1.6.2.
 
-But I suppose clarifying it doesn't hurt.
-
--Peff
-
-PS There is a thread elsewhere on the list discussing "what can I do to
-make life easy for reviewers?". I think this series (and Jay's patches
-in general) model many good behaviors: clearly labeled versions,
-discussion of what changed in each version, proper threading, and cc'ing
-people who have been involved.
+Thanks.
