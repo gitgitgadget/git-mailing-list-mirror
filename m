@@ -1,74 +1,105 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] config: Use parseopt.
-Date: Sat, 14 Feb 2009 22:15:59 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902142213090.10279@pacific.mpi-cbg.de>
-References: <1234577142-22965-1-git-send-email-felipe.contreras@gmail.com>  <7vab8pweod.fsf@gitster.siamese.dyndns.org>  <94a0d4530902140237o7d26ff4j1c7350d926d12c1a@mail.gmail.com>  <7vhc2wu8a0.fsf@gitster.siamese.dyndns.org>
- <94a0d4530902141209j7a3a9976l80355bee526852ed@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] builtin-remote: better handling of multiple remote
+	HEADs
+Date: Sat, 14 Feb 2009 16:15:48 -0500
+Message-ID: <20090214211548.GA14898@coredump.intra.peff.net>
+References: <20090214034345.GB24545@coredump.intra.peff.net> <1234607430-5403-1-git-send-email-jaysoffian@gmail.com> <20090214175420.GA3457@coredump.intra.peff.net> <alpine.LNX.1.00.0902141503230.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 14 22:17:00 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sat Feb 14 22:18:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYRsU-0003xR-1R
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 22:16:46 +0100
+	id 1LYRth-0004Mj-8q
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 22:18:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754125AbZBNVPM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 16:15:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754121AbZBNVPK
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 16:15:10 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44851 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754141AbZBNVPH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 16:15:07 -0500
-Received: (qmail invoked by alias); 14 Feb 2009 21:15:05 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp069) with SMTP; 14 Feb 2009 22:15:05 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/SwKpSzIbSyDpKda5Y2fYXrUzNqICTXBjw6fWOtu
-	ZOLHr/Rs6NZ01F
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <94a0d4530902141209j7a3a9976l80355bee526852ed@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1754366AbZBNVPx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2009 16:15:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754236AbZBNVPw
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 16:15:52 -0500
+Received: from peff.net ([208.65.91.99]:57343 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754038AbZBNVPv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 16:15:51 -0500
+Received: (qmail 2634 invoked by uid 107); 14 Feb 2009 21:16:09 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 14 Feb 2009 16:16:09 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 14 Feb 2009 16:15:49 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.LNX.1.00.0902141503230.19665@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109931>
 
-Hi,
+On Sat, Feb 14, 2009 at 03:21:30PM -0500, Daniel Barkalow wrote:
 
-On Sat, 14 Feb 2009, Felipe Contreras wrote:
+> I haven't checked lately, but I think that what's actually needed is to 
+> have the locate_head() function notice if the struct ref for HEAD actually 
+> has the symref field non-NULL, and report that as the unambiguous answer. 
 
-> On Sat, Feb 14, 2009 at 9:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> > Felipe Contreras <felipe.contreras@gmail.com> writes:
-> >
-> >> This is more a "I would like to increase the chances of my patches 
-> >> being accepted so I'd do some chores to gain the trust of some 
-> >> developers", and Johannes Schindelin was pushing me to do this.
-> >>
-> >> Also it's a bit of "I would like to improve git and learn the API 
-> >> while doing so".
-> >
-> > I personally do not think "I rewrote this command's option parser 
-> > using parseopt" earns any "trust point".  I think the latter is a 
-> > *great* thing to do, though.
-> 
-> I disagree. Making a patch pass through all the filters must mean 
-> something, and the more patches the more trust.
+Indeed. Something like the patch below works (on top of Jay's patches).
+But it has two shortcomings:
 
-Maybe I should point out something that is obvious to somebody who 
-followed the Git list for a long time: there are two areas of the code 
-that had such a track record of regressions that Junio grew a distaste for 
-them: git-config and parse options.
+  1. There is no test script, since we have no infrastructure for
+     testing over http. I might be able to build something on top of
+     what's in the http-push tests.
 
-However, I imagine if you manage to provide a patch that touches both 
-areas _and_ that are without flaws, then you get some brownie points :-)
+     I was hoping we could do the same trick for local file repos, which
+     would be easy to test. But the transport code just treats them as
+     regular pack uploaders; only some specialized code in clone cares
+     about the difference.
 
-Ciao,
-Dscho
+     In theory we could add a new transport for local repos. I don't
+     think it would make sense for its get_remote_refs function to get
+     _all_ of the refs, but it could specially peek at HEAD and set the
+     symref field appropriately.
+
+  2. The guess_remote_head function is getting a little long. I think it
+     would help to refactor it into two functions; one for finding the
+     remote HEAD in the refs list, and the other for guessing at a ref
+     which matches the HEAD.
+
+I will try to make something a little neater later today.
+
+> This should also allow it to automatically pick up any other 
+> disambiguation by future sources of lists of refs that include HEAD, 
+> whether that's git protocol extensions, filesystem access to the repo, or 
+> foreign VCSes where some branches is inherently primary, or whatever.
+
+Yes, I think the symref field for the ref is a very sensible way of
+communicating the information for that reason.
+
+Patch is below.
+
+---
+diff --git a/remote.c b/remote.c
+index 6385a22..afbaccc 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1404,6 +1404,20 @@ const struct ref *guess_remote_head(const struct ref *refs,
+ 	if (!remote_head)
+ 		return NULL;
+ 
++	/* if the underlying transport can represent symrefs,
++	 * then we don't need to guess at all */
++	if (remote_head->symref) {
++		for (r = mapped_refs; r; r = r->next) {
++			if (!strcmp(r->name, remote_head->symref)) {
++				if (all_matches_p) {
++					*all_matches_p = copy_ref(r);
++					(*all_matches_p)->peer_ref = NULL;
++				}
++				return r;
++			}
++		}
++	}
++
+ 	/* If refs/heads/master could be right, it is. */
+ 	if (remote_master && !hashcmp(remote_master->old_sha1,
+ 				      remote_head->old_sha1))
