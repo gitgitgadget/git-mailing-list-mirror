@@ -1,255 +1,131 @@
 From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH 3/3 v2] send-email: --suppress-cc improvements
-Date: Sat, 14 Feb 2009 00:37:03 -0500
-Message-ID: <1234589823-67610-1-git-send-email-jaysoffian@gmail.com>
-References: <1234583491-61260-4-git-send-email-jaysoffian@gmail.com>
+Subject: [PATCH] send-email: allow send-email to run outside a repo
+Date: Sat, 14 Feb 2009 00:38:33 -0500
+Message-ID: <1234589913-67684-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Ryan Anderson <ryan@michonline.com>, gitster@pobox.com,
-	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
+	Pierre Habouzit <madcoder@debian.org>, gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 14 06:38:44 2009
+X-From: git-owner@vger.kernel.org Sat Feb 14 06:40:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYDEg-0002at-UW
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 06:38:43 +0100
+	id 1LYDG1-0002rH-NY
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 06:40:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751581AbZBNFhM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 00:37:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751542AbZBNFhK
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 00:37:10 -0500
-Received: from yx-out-2324.google.com ([74.125.44.28]:23046 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751455AbZBNFhI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 00:37:08 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so740217yxm.1
-        for <git@vger.kernel.org>; Fri, 13 Feb 2009 21:37:07 -0800 (PST)
+	id S1751830AbZBNFij (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2009 00:38:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751464AbZBNFij
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 00:38:39 -0500
+Received: from mail-gx0-f222.google.com ([209.85.217.222]:53951 "EHLO
+	mail-gx0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751420AbZBNFii (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 00:38:38 -0500
+Received: by gxk22 with SMTP id 22so1501217gxk.13
+        for <git@vger.kernel.org>; Fri, 13 Feb 2009 21:38:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=Aklk8hO3nDrDPCYFbh90t5cJ0koPSOx8/vXLBGzed/g=;
-        b=P42H8uUd8s5/jrgB28a5mJSsUCpquhG7r77AxcK/ryyppdVi+6VxmLqx5J8GeDDZNt
-         hdh0sI5DxfiVaozoY+OnpUg4Hx4m6bdQsZm0iYDdColn4+eTAUpzXS6OscuhcGGygf34
-         1TMvpw9emPAf+EAINggGcNYJS09vgmh9V3Ejc=
+         :message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=yqEY4rOOsWaVMTrw9qUODSMV6O3ugZox8OluGKe4W1s=;
+        b=hEh7cQoFlqUIXPIc7HdyfT9EMHrG46O3RN3DHEDr7QojwSKbmzYpxzp7wq9FF1gwa6
+         bBrvNe4SQS9BeVyjLlFMZYl6EJjsUMYohuVQu0uKB8+DdnCY8/UZdkgUEcFtszSN9DPD
+         L+IpD39Q+yrYzDDDw8/SX9+esqvy0ShHeqCb0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=snMFtrdw1/DEfKbjXwkTWygndQDnzZSbr0gpxU1Mjkm15gwU3k6TojmZbXejqJckyJ
-         AkmJvuRoZVllgMWAhX1STn3gxbPiRlHSahmRmzjjx+uDVGLuOpJ1F9JgFi3qeiNQquHw
-         osRCptqIRrLqqSck1yGF0OmMl4BCbo46WK87s=
-Received: by 10.151.9.1 with SMTP id m1mr250302ybi.59.1234589826315;
-        Fri, 13 Feb 2009 21:37:06 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=gib5hvOJaueseOZqJVT65hR5AxhF9CG+lMOaADb66T3LkbUOD1UOTMbX2buK0HU+JE
+         JAv070m+NRiKROxsmYRKGZlEdW843PnonImAZN6Kf4UJR4ViUByHjj7sR2t/Ihhewl0G
+         KCHJWdufVVVhwed6GDIJsdoeu86Gd30rrtXqA=
+Received: by 10.150.144.17 with SMTP id r17mr381793ybd.215.1234589916034;
+        Fri, 13 Feb 2009 21:38:36 -0800 (PST)
 Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
-        by mx.google.com with ESMTPS id z26sm5251080ele.0.2009.02.13.21.37.04
+        by mx.google.com with ESMTPS id u25sm5215236ele.16.2009.02.13.21.38.34
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 13 Feb 2009 21:37:05 -0800 (PST)
+        Fri, 13 Feb 2009 21:38:35 -0800 (PST)
 X-Mailer: git-send-email 1.6.2.rc0.239.gfa9f6
-In-Reply-To: <1234583491-61260-4-git-send-email-jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109822>
 
 From: Jay Soffian <jaysoffian@gmail.com>
 
-Commit 656482830ddc4a4e2af132fabb118a25190439c2 added the --suppress-cc
-option. However, it made --suppress-cc=sob suppress both SOB lines and
-body Cc lines (but not header Cc lines), which seems contrary to how
-it is named.
+send-email is supposed to be able to run from outside a repo. This
+ability was broken by commits caf0c3d6 (make the message file name more
+specific) and 5df9fcf6 (interpret unknown files as revision lists).
 
-After this commit, 'sob' suppresses only SOB lines and --suppress-cc
-takes two additional values:
-
- * 'body' suppresses both SOB and body Cc lines (i.e. what 'sob'
-    used to do).
-
- * 'bodycc' suppresses body Cc lines, but not header Cc lines.
-
-For backwards compatibility, --no-signed-off-by-cc, acts like 'body'.
-
-Also update the documentation and add a few tests.
+This commit provides a fix for both.
 
 Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
 ---
-Sorry, please ignore the previous 3/3, it had an obvious breakage;
---suppress-cc=body was causing then entire message body not to be read
-in at all.
+Junio,
 
- Documentation/git-send-email.txt |   14 ++++++++------
- git-send-email.perl              |   23 ++++++++++++++++-------
- t/t9001-send-email.sh            |   38 ++++++++++++++++++++++++++++++++++++--
- 3 files changed, 60 insertions(+), 15 deletions(-)
+This is on top of my previous send-email commits from tonight. I'm not
+sure whether it applies cleanly otherwise.
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index ff4aeff..d6af035 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -166,12 +166,14 @@ Automating
- 	Specify an additional category of recipients to suppress the
- 	auto-cc of.  'self' will avoid including the sender, 'author' will
- 	avoid including the patch author, 'cc' will avoid including anyone
--	mentioned in Cc lines in the patch, 'sob' will avoid including
--	anyone mentioned in Signed-off-by lines, and 'cccmd' will avoid
--	running the --cc-cmd.  'all' will suppress all auto cc values.
--	Default is the value of 'sendemail.suppresscc' configuration value;
--	if that is unspecified, default to 'self' if --suppress-from is
--	specified, as well as 'sob' if --no-signed-off-cc is specified.
-+	mentioned in Cc lines in the patch header, 'ccbody' will avoid
-+	including anyone mentioned in Cc lines in the patch body (commit
-+	message), 'sob' will avoid including anyone mentioned in Signed-off-by
-+	lines, and 'cccmd' will avoid running the --cc-cmd. 'body' is
-+	equivalent to 'sob' + 'ccbody'. 'all' will suppress all auto cc
-+	values.  Default is the value of 'sendemail.suppresscc' configuration
-+	value; if that is unspecified, default to 'self' if --suppress-from is
-+	specified, as well as 'body' if --no-signed-off-cc is specified.
- 
- --[no-]suppress-from::
- 	If this is set, do not add the From: address to the cc: list.
+j.
+
+ git-send-email.perl |   13 +++++++++++--
+ 1 files changed, 11 insertions(+), 2 deletions(-)
+
 diff --git a/git-send-email.perl b/git-send-email.perl
-index 2a3e3e8..23a55e2 100755
+index 23a55e2..49ed8c2 100755
 --- a/git-send-email.perl
 +++ b/git-send-email.perl
-@@ -68,7 +68,7 @@ git send-email [options] <file | directory | rev-list options >
-   Automating:
-     --identity              <str>  * Use the sendemail.<id> options.
-     --cc-cmd                <str>  * Email Cc: via `<str> \$patch_path`
--    --suppress-cc           <str>  * author, self, sob, cccmd, all.
-+    --suppress-cc           <str>  * author, self, sob, cc, cccmd, body, bodycc, all.
-     --[no-]signed-off-by-cc        * Send to Cc: and Signed-off-by:
-                                      addresses. Default on.
-     --[no-]suppress-from           * Send to self. Default off.
-@@ -319,21 +319,28 @@ my(%suppress_cc);
- if (@suppress_cc) {
- 	foreach my $entry (@suppress_cc) {
- 		die "Unknown --suppress-cc field: '$entry'\n"
--			unless $entry =~ /^(all|cccmd|cc|author|self|sob)$/;
-+			unless $entry =~ /^(all|cccmd|cc|author|self|sob|body|bodycc)$/;
- 		$suppress_cc{$entry} = 1;
- 	}
+@@ -23,7 +23,7 @@ use Getopt::Long;
+ use Text::ParseWords;
+ use Data::Dumper;
+ use Term::ANSIColor;
+-use File::Temp qw/ tempdir /;
++use File::Temp qw/ tempdir tempfile /;
+ use Error qw(:try);
+ use Git;
+ 
+@@ -157,7 +157,10 @@ if ($@) {
+ # Behavior modification variables
+ my ($quiet, $dry_run) = (0, 0);
+ my $format_patch;
+-my $compose_filename = $repo->repo_path() . "/.gitsendemail.msg.$$";
++my $compose_filename = ($repo ?
++	tempfile(".gitsendemail.msg.XXXXXX", DIR => $repo->repo_path()) :
++	tempfile(".gitsendemail.msg.XXXXXX", DIR => "."))[1];
++
+ 
+ # Handle interactive edition of files.
+ my $multiedit;
+@@ -268,6 +271,9 @@ unless ($rc) {
+     usage();
  }
  
- if ($suppress_cc{'all'}) {
--	foreach my $entry (qw (ccmd cc author self sob)) {
-+	foreach my $entry (qw (ccmd cc author self sob body bodycc)) {
- 		$suppress_cc{$entry} = 1;
- 	}
- 	delete $suppress_cc{'all'};
++die "Cannot run git format-patch from outside a repository\n"
++	if $format_patch and not $repo;
++
+ # Now, let's fill any that aren't set in with defaults:
+ 
+ sub read_config {
+@@ -420,6 +426,7 @@ if (@alias_files and $aliasfiletype and defined $parse_alias{$aliasfiletype}) {
+ 
+ # returns 1 if the conflict must be solved using it as a format-patch argument
+ sub check_file_rev_conflict($) {
++	return unless $repo;
+ 	my $f = shift;
+ 	try {
+ 		$repo->command('rev-parse', '--verify', '--quiet', $f);
+@@ -461,6 +468,8 @@ while (defined(my $f = shift @ARGV)) {
  }
  
-+if ($suppress_cc{'sob'} && $suppress_cc{'bodycc'}) {
-+	$suppress_cc{'body'} = 1;
-+}
-+
- # If explicit old-style ones are specified, they trump --suppress-cc.
- $suppress_cc{'self'} = $suppress_from if defined $suppress_from;
--$suppress_cc{'sob'} = !$signed_off_by_cc if defined $signed_off_by_cc;
-+# For backwards compatibility, old-style --signed-off-by-cc suppresses
-+# SOB and body Cc lines, whereas --supress-cc=sob suppresses just the SOB
-+# line, but not the body Cc.
-+$suppress_cc{'body'} = !$signed_off_by_cc if defined $signed_off_by_cc;
- 
- # Debugging, print out the suppressions.
- if (0) {
-@@ -1007,14 +1014,16 @@ foreach my $t (@files) {
- 	# Now parse the message body
- 	while(<F>) {
- 		$message .=  $_;
-+		next if $suppress_cc{'body'};
- 		if (/^(Signed-off-by|Cc): (.*)$/i) {
--			next if ($suppress_cc{'sob'});
- 			chomp;
--			my $c = $2;
-+			my ($what, $c) = ($1, $2);
- 			chomp $c;
-+			next if $suppress_cc{'sob'} and $what =~ /Signed-off-by/i;
-+			next if $suppress_cc{'bodycc'} and $what =~ /Cc/i;
- 			next if ($c eq $sender and $suppress_cc{'self'});
- 			push @cc, $c;
--			printf("(sob) Adding cc: %s from line '%s'\n",
-+			printf("(body) Adding cc: %s from line '%s'\n",
- 				$c, $_) unless $quiet;
- 		}
- 	}
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index da54835..d7766f9 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -32,11 +32,11 @@ clean_fake_sendmail() {
+ if (@rev_list_opts) {
++	die "Cannot run git format-patch from outside a repository\n"
++		unless $repo;
+ 	push @files, $repo->command('format-patch', '-o', tempdir(CLEANUP => 1), @rev_list_opts);
  }
  
- test_expect_success 'Extract patches' '
--    patches=`git format-patch --cc="One <one@example.com>" --cc=two@example.com -n HEAD^1`
-+    patches=`git format-patch -s --cc="One <one@example.com>" --cc=two@example.com -n HEAD^1`
- '
- 
- test_expect_success 'Send patches' '
--     git send-email --from="Example <nobody@example.com>" --to=nobody@example.com --smtp-server="$(pwd)/fake.sendmail" $patches 2>errors
-+     git send-email --suppress-cc=sob --from="Example <nobody@example.com>" --to=nobody@example.com --smtp-server="$(pwd)/fake.sendmail" $patches 2>errors
- '
- 
- cat >expected <<\EOF
-@@ -74,6 +74,7 @@ EOF
- test_expect_success 'Show all headers' '
- 	git send-email \
- 		--dry-run \
-+		--suppress-cc=sob \
- 		--from="Example <from@example.com>" \
- 		--to=to@example.com \
- 		--cc=cc@example.com \
-@@ -195,6 +196,7 @@ test_expect_success 'sendemail.cc set' '
- 	git config sendemail.cc cc@example.com &&
- 	git send-email \
- 		--dry-run \
-+		--suppress-cc=sob \
- 		--from="Example <from@example.com>" \
- 		--to=to@example.com \
- 		--smtp-server relay.example.com \
-@@ -230,6 +232,38 @@ test_expect_success 'sendemail.cc unset' '
- 	git config --unset sendemail.cc &&
- 	git send-email \
- 		--dry-run \
-+		--suppress-cc=sob \
-+		--from="Example <from@example.com>" \
-+		--to=to@example.com \
-+		--smtp-server relay.example.com \
-+		$patches |
-+	sed	-e "s/^\(Date:\).*/\1 DATE-STRING/" \
-+		-e "s/^\(Message-Id:\).*/\1 MESSAGE-ID-STRING/" \
-+		-e "s/^\(X-Mailer:\).*/\1 X-MAILER-STRING/" \
-+		>actual-show-all-headers &&
-+	test_cmp expected-show-all-headers actual-show-all-headers
-+'
-+
-+cat >expected-show-all-headers <<\EOF
-+0001-Second.patch
-+Dry-OK. Log says:
-+Server: relay.example.com
-+MAIL FROM:<from@example.com>
-+RCPT TO:<to@example.com>
-+From: Example <from@example.com>
-+To: to@example.com
-+Subject: [PATCH 1/1] Second.
-+Date: DATE-STRING
-+Message-Id: MESSAGE-ID-STRING
-+X-Mailer: X-MAILER-STRING
-+
-+Result: OK
-+EOF
-+
-+test_expect_success '--suppress-cc=all' '
-+	git send-email \
-+		--dry-run \
-+		--suppress-cc=all \
- 		--from="Example <from@example.com>" \
- 		--to=to@example.com \
- 		--smtp-server relay.example.com \
 -- 
 1.6.2.rc0.238.g0c1fe
