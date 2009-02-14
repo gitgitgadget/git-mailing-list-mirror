@@ -1,74 +1,82 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: human readable diffs, was Re: [PATCH v2] config: Use parseopt.
-Date: Sat, 14 Feb 2009 22:08:38 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902142157000.10279@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0902141230250.10279@pacific.mpi-cbg.de> <1234612989-32297-1-git-send-email-felipe.contreras@gmail.com> <alpine.DEB.1.00.0902142041370.10279@pacific.mpi-cbg.de> <7viqncsreo.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] config: Use parseopt.
+Date: Sat, 14 Feb 2009 13:10:03 -0800
+Message-ID: <7vtz6wrahg.fsf@gitster.siamese.dyndns.org>
+References: <1234577142-22965-1-git-send-email-felipe.contreras@gmail.com>
+ <7vab8pweod.fsf@gitster.siamese.dyndns.org>
+ <94a0d4530902140237o7d26ff4j1c7350d926d12c1a@mail.gmail.com>
+ <7vhc2wu8a0.fsf@gitster.siamese.dyndns.org>
+ <94a0d4530902141209j7a3a9976l80355bee526852ed@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 14 22:09:23 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 14 22:11:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYRlC-0001ZD-6R
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 22:09:14 +0100
+	id 1LYRnZ-0002Py-E9
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 22:11:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753316AbZBNVHq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 16:07:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753298AbZBNVHq
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 16:07:46 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44258 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753277AbZBNVHp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 16:07:45 -0500
-Received: (qmail invoked by alias); 14 Feb 2009 21:07:43 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp068) with SMTP; 14 Feb 2009 22:07:43 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+6x3dMSra672i/bQbTmTDuCaLWvp2fHLVC10jwe0
-	9Ww79c8uWzxoSH
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7viqncsreo.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1752140AbZBNVKO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2009 16:10:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752060AbZBNVKN
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 16:10:13 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63832 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751870AbZBNVKM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 16:10:12 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 78C1099796;
+	Sat, 14 Feb 2009 16:10:09 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 101B399795; Sat,
+ 14 Feb 2009 16:10:04 -0500 (EST)
+In-Reply-To: <94a0d4530902141209j7a3a9976l80355bee526852ed@mail.gmail.com>
+ (Felipe Contreras's message of "Sat, 14 Feb 2009 22:09:59 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: DC78B918-FADB-11DD-8669-0433C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109928>
 
-Hi,
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-On Sat, 14 Feb 2009, Junio C Hamano wrote:
+>> Unfortunately, not many patch authors write such a summary.  Sometimes we
+>> see summaries on things that were discussed but nobody has followed
+>> through posted by third parties (including myself), but we do not seem to
+>> have enough helpers to do that either.  This does not take much technical
+>> skills but is a good "trust point" earner.
+>
+> For me it's easier, and more fun to write a separate patch that fixes
+> the issues than writing a summary,...
 
->     I also noticed that the diff was impossible to read because it 
->     matched the lines with only an indented close brace or whitespace 
->     between the preimage and the postimage too aggressively.  Your 
->     --patience did seem to help a little bit, at least it produced a 
->     different result, but not much (not that patience was meant to make 
->     this kind of change easier to read).  It may have helped if we had 
->     that "do not match trivial lines too aggressively just to reduce the 
->     patch size" option.
+That certainly is something we should take into consideration.
 
-Yeah, I think that your objections to my '--collapse-non-alnums' patch 
-show to be relevant especially with this patch: an '} else {' matches, but 
-actually disturbs readability.
+I however think an unwritten assumption around here so far has been that
+the patch author who gets review comments is expected to keep track of the
+issues raised, both about the patch itself and about the similar breakages
+in the existing code pointed out during the review process, if only
+because the patch author is the focal point of the discussion.
 
-So an option would be nice, indeed, which can merge a single matching line 
-(or a given maximal number of matching lines) between runs of a certain 
-minimal number of _non-matching_ lines.
+We probably need to break that.
 
-But how to call it?
+Because it is very likely that the reviewer does not even realize that
+such similar breakages in the existing code when a review is made, we
+cannot ask reviewers to always start a separate discussion.  Some reviews
+do say "Admittedly, we already have the same pattern in here and there,
+but this in your patch is wrong," but the way how we collectively realize
+an existing breakage is often by hearing the patch author respond with
+"but there already are this and that breakages in the existing code."
 
-And how determine the ideal ratio between matching/non-matching lines 
-until which to consider the matching lines to be non-matches?  Maybe a 
-simple fraction would be enough...
-
-Or maybe an absolute number of matching lines?  But it is obvious how to 
-construct a case where this breaks down.
-
-Ciao,
-Dscho
+We do not want such knowledge of existing breakages go to waste in either
+case.  Perhaps it would be a good start to make it the responsibility of
+the first person who mentions an existing breakage (either the reviewer's
+"Admittedly", or the patch author's "but there already are") to begin a
+separate thread, so that mail archive would remember it.  It shouldn't
+take more than 3 minutes.
