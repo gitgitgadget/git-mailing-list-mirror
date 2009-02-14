@@ -1,81 +1,149 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH v3] parse-opt: migrate builtin-ls-files.
-Date: Sat, 14 Feb 2009 13:16:31 +0100
-Message-ID: <20090214121631.GG4371@genesis.frugalware.org>
-References: <20090107144640.GD831@artemis.corp> <1231376145-32331-1-git-send-email-vmiklos@frugalware.org> <20090115001410.GE30710@genesis.frugalware.org> <7vljtdw961.fsf@gitster.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] config: Use parseopt.
+Date: Sat, 14 Feb 2009 14:15:37 +0200
+Message-ID: <94a0d4530902140415j4168d09dh8abac0d6eba0b8cf@mail.gmail.com>
+References: <1234577142-22965-1-git-send-email-felipe.contreras@gmail.com>
+	 <7vab8pweod.fsf@gitster.siamese.dyndns.org>
+	 <94a0d4530902140237o7d26ff4j1c7350d926d12c1a@mail.gmail.com>
+	 <alpine.DEB.1.00.0902141230250.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="UfEAyuTBtIjiZzX6"
-Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 14 13:21:35 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Feb 14 13:21:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYJWY-0003pd-CO
+	id 1LYJWX-0003pd-LL
 	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 13:21:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751533AbZBNMQg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 07:16:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751431AbZBNMQf
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 07:16:35 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:32881 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751389AbZBNMQe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 07:16:34 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 5185D580DF;
-	Sat, 14 Feb 2009 13:16:33 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id CBD86446A6;
-	Sat, 14 Feb 2009 13:16:31 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id AB0D511B877C; Sat, 14 Feb 2009 13:16:31 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <7vljtdw961.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751507AbZBNMPl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2009 07:15:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751389AbZBNMPk
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 07:15:40 -0500
+Received: from fg-out-1718.google.com ([72.14.220.152]:15491 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751227AbZBNMPj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 07:15:39 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so43764fgg.17
+        for <git@vger.kernel.org>; Sat, 14 Feb 2009 04:15:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=LodV08K5uznKF7XKvnNzZGsmtCvyskm1RwfYKYYf8o0=;
+        b=D3+WTliEorR4Fq48JV2hWC4xSeaCCvjobKh5tYzSK3H+P8/zJpVsLKB5WZ9RXz9kVH
+         W6O4vtQTrsc/LMTOaohmtbENmXUkSCKvOH77hterkD92hYKICTJ+gsg67O/mFZd7aM18
+         AjBOBvSEwPQuEFEt65GSjSpyxcXjjpyR2h6Ak=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=AfNXybRERwquJ5hsZdVhlnOdg6lLvkCqDX4QGXCkuCXme7jzYPUi5TfK5Ec8PV1YHC
+         Y1qLoffkoZ9YNk3EDlusGVIYa4LvKrITF6V5EDsWNUcg+t+uGwu/btI4dlZpikRMM4+B
+         iD+Gelt4KjgyeEgToKmg3QECUs/W8wMgysHbA=
+Received: by 10.86.100.19 with SMTP id x19mr293320fgb.29.1234613737831; Sat, 
+	14 Feb 2009 04:15:37 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0902141230250.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109868>
 
+On Sat, Feb 14, 2009 at 1:40 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Sat, 14 Feb 2009, Felipe Contreras wrote:
+>
+>> Then why are you asking?
+>
+> Out of curiosity, I guess, as it would happen to answer my curiosity as
+> well.
+>
+>> This is more a "I would like to increase the chances of my patches
+>> being accepted so I'd do some chores to gain the trust of some
+>> developers", and Johannes Schindelin was pushing me to do this.
+>
+> Heh, I'll gladly take the blame for that!
+>
+> Note that in contrast to Junio, I think "git config" is a chimera between
+> plumbing and porcelain, and would benefit tremendously from a nice help.
 
---UfEAyuTBtIjiZzX6
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I agree on that.
 
-On Wed, Jan 14, 2009 at 07:16:38PM -0800, Junio C Hamano <gitster@pobox.com=
-> wrote:
-> Miklos Vajna <vmiklos@frugalware.org> writes:
->=20
-> > Was this dropped on the floor by accident?
->=20
-> I am not fundamentally opposed to the parseopt conversion, but I was
-> somewhat discouraged from taking another one, after we got burned by the
-> one that converted git-apply without much visible gain but with a new bug.
->=20
-> Because ls-files is a plumbing, it has somewhat lower priority for user
-> friendliness than any other patches currently in-flight on the list; hence
-> it has been backburnered.  It still is kept in my Inbox.
+>> >> +static int type_int, type_bool, type_bool_or_int;
+>> >
+>> > You can have either (no type specified, int, bool, bool-or-int) at the
+>> > end.  Using three independent variables does not feel right.
+>> >
+>> > Hint: OPTION_SET_INT.
+>>
+>> That definitely makes things easier, it would have been nice to see an
+>> example of this; I didn't knew it was there.
+>>
+>> The only problem is that --bool and --int would be possible in the
+>> same command and there would be no way to output an error, but I guess
+>> that's not a big problem.
+>
+> I think that is okay.
+>
+>> >> +     else if (do_add) {
+>> >> +             if (argc > 2)
+>> >> +                     die("Too many arguments.");
+>> >> +             if (argc != 2)
+>> >> +                     die("Need name value.");
+>> >> +             value = normalize_value(argv[0], argv[1]);
+>> >> +             return git_config_set_multivar(argv[0], value, "^$", 0);
+>> >
+>> > This part did not lose argc error checking, but...
+>> >
+>> >> +     }
+>> >> +     else if (do_replace_all) {
+>> >> +             value = normalize_value(argv[0], argv[1]);
+>> >> +             return git_config_set_multivar(argv[0], value, (argc == 3 ? argv[2] : NULL), 1);
+>> >
+>> > You do not check argc here (nor in many "else if" below) to make sure you
+>> > have sufficient number of arguments.  "git config --unset" is now allowed
+>> > to segfault, and "git config --unset a b c d e f" can silently ignore
+>> > excess arguments for example?
+>>
+>> Yes the arguments check need to be revised.
+>>
+>> My hope was somebody would review this and suggest a clever and
+>> generic way of doing this. Perhaps a util function check_min_args, or
+>> maybe something in parseopt that receives the number of args?
+>
+> Maybe a helper, yes.  Something like:
+>
+>        static void check_argc(int argc, int min, int max) {
+>                if (argc >= min && argc <= max)
+>                        return;
+>                fprintf(stderr, "Wrong number of arguments: %d\n", argc);
+>                usage_with_options(config_usage, config_options);
+>        }
+>
+> Of course, this assumes that config_usage and config_options are global...
 
-I'm just asking again as I see the parseopt patch for builtin-config now
-on the list.
+Cool.
 
-Should I just resend this patch after v1.6.2?
+I've sent a new patch with this helper (a bit modified), and all the
+changes Junio suggested.
 
---UfEAyuTBtIjiZzX6
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+I still have a few doubts:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+1) --list when no config file is given uses all the config files,
+wouldn't it make sense to have a --repo option?
 
-iEYEARECAAYFAkmWth8ACgkQe81tAgORUJYj8ACeLtjauJHmGrCEg/9KM1kFywVb
-t4YAn2ED56fmC97+KltSsgQEMtSGWObX
-=z+YG
------END PGP SIGNATURE-----
+2) --get-colorbool prints "true" or "false" only when there are two
+arguments, is that correct or should stdout_is_tty be used instead?
 
---UfEAyuTBtIjiZzX6--
+3) should the documentation be updated for the --get-color* options to
+use 'slot' instead of 'name'?
+
+-- 
+Felipe Contreras
