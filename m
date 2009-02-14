@@ -1,79 +1,98 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [RFC PATCH v2] Teach rebase to rebase even if upstream is up to 
-	date
-Date: Sat, 14 Feb 2009 18:57:28 +0100
-Message-ID: <bd6139dc0902140957pa5852d6m61211054b3f5e395@mail.gmail.com>
-References: <1234565281-20960-1-git-send-email-srabbelier@gmail.com>
-	 <alpine.DEB.1.00.0902140703540.10279@pacific.mpi-cbg.de>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH] builtin-remote: better handling of multiple remote HEADs
+Date: Sat, 14 Feb 2009 13:35:03 -0500
+Message-ID: <76718490902141035o5430707ck47cd72d9efe87318@mail.gmail.com>
+References: <20090214034345.GB24545@coredump.intra.peff.net>
+	 <1234607430-5403-1-git-send-email-jaysoffian@gmail.com>
+	 <20090214175420.GA3457@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailinglist <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Cc: git@vger.kernel.org, barkalow@iabervon.org,
 	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 14 18:59:22 2009
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Feb 14 19:36:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYOnM-0008NO-Op
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 18:59:17 +0100
+	id 1LYPNV-0003mw-4Z
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 19:36:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751737AbZBNR5b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 12:57:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751728AbZBNR5b
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 12:57:31 -0500
-Received: from fg-out-1718.google.com ([72.14.220.158]:33253 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751611AbZBNR5a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 12:57:30 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so64962fgg.17
-        for <git@vger.kernel.org>; Sat, 14 Feb 2009 09:57:28 -0800 (PST)
+	id S1751795AbZBNSfG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2009 13:35:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751808AbZBNSfG
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 13:35:06 -0500
+Received: from rv-out-0506.google.com ([209.85.198.230]:55589 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751784AbZBNSfE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 13:35:04 -0500
+Received: by rv-out-0506.google.com with SMTP id g37so1055506rvb.1
+        for <git@vger.kernel.org>; Sat, 14 Feb 2009 10:35:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=dAoZN/bJomGd+qEuVoki8Ws5WTP4kqRXHiJQzlQIwBs=;
-        b=QffGw4gFEJYET0o1kB+h9ysXjmyahFFPSEAa4HigJFr9TE0BZimBnigJDu4QHlLyWk
-         q96TAapve8lJeFW4DA+kVgezr0aMc9m0QUWr7yv6lHR4NV5mSBxP/ZVgnAwE7cTvmeVW
-         pD7KnLdtprcGJKyXf3p/oeSZc9bmezO//Xd8o=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=NHLbsXNqjWL+dW8wyakn9tSvf6ZhzscCF4Yltx5GEe8=;
+        b=mIIvVYhiUcVgvWTvtickvtB/84WMPq0ZuJRxEvCqjpHZoXDfgOEgz0norPhTy8cafd
+         pZwHEck8+64it5s0jxO6liig0GxCOHLoTO3YntRWqcI41n3ZLxVu1QsyZr6zf3hJO3H9
+         VKuc4voxxyTqgmsnBg4sPL4XWqZoangDPuuak=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=N4CXWFj9GcBF4hiRgrP4HU+5fgj0urtI8nKT4zfBg7FkHEFOc87eijoS4RKlliX9gp
-         8Xz1V5+kYY09WjjjAY1iLwsn7gcvDZ4t8nk3VUzNuryGioGHQTMaoQpDmhiIkxccZvZl
-         7tbStyydAUzipaByoXwbmFje817AbVZbL7EXc=
-Received: by 10.86.100.19 with SMTP id x19mr448798fgb.18.1234634248926; Sat, 
-	14 Feb 2009 09:57:28 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0902140703540.10279@pacific.mpi-cbg.de>
-X-Google-Sender-Auth: 5b1938348ebd8764
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=buI6E6sYhA4ofUq2sKuSc8hMHm9GjE7uQihtvi3s3DUq/mhQGEy9rdzYQKa+AJCpFZ
+         cdw3cs42WNa7jU1AdVplExhiUROaqXGJQ7TrjcaQ8bHw9X69nnkpwZq+XZR78m9eA2rd
+         dgti+wJMRdTnJvdKOnz8VnXxBx98Wab9GJUQM=
+Received: by 10.141.209.6 with SMTP id l6mr1774200rvq.192.1234636503496; Sat, 
+	14 Feb 2009 10:35:03 -0800 (PST)
+In-Reply-To: <20090214175420.GA3457@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109889>
 
-On Sat, Feb 14, 2009 at 07:07, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> I know that you can turn it off with --whitespace=nowarn, but that's
-> such an outlier that we do not have to care about it, right?
-
-Well, actually, in the v1 thread Junio mentioned that it should not
-imply -f for --whitespace=nowarn.
-
-> Or if we really want to:
+On Sat, Feb 14, 2009 at 12:54 PM, Jeff King <peff@peff.net> wrote:
+>> +             if (opt_a)
+>> +                     printf("%s/HEAD set to %s\n", argv[0], head_name);
 >
->        --whitespace=nowarn) ;;
->        --whitespace=*) force_rebase=t ;;
+> This was a surprise based on reading the commit message, but I think it
+> is a sensible enhancement.
+
+It seemed that when doing something "--automatically" it might be nice
+to tell the user what we just did, but I'm confused why this was a
+surprise.
+
+>> +cat > test/expect <<EOF
+>> +origin/HEAD set to master
+>> +EOF
+>> +
+>> +test_expect_success 'set-head --auto' '
+>> +     (cd test &&
+>> +      git remote set-head --auto origin > output &&
+>> +      git symbolic-ref refs/remotes/origin/HEAD &&
+>> +     test_cmp expect output)
+>> +'
 >
-> Hm?
+> I had to read this test a few times to convince myself it was right,
+> since you throw away the output of symbolic-ref. I think it makes more
+> sense to just test the post-command state, which is what you actually
+> care about (and then you are also not dependent on the human-readable
+> output of "remote set-head"). I.e.:
+>
+> cat > test/expect <<EOF
+> refs/remotes/origin/master
+> EOF
+>
+> test_expect_success 'set-head --auto' '
+>        (cd test &&
+>         git remote set-head --auto origin &&
+>         git symbolic-ref refs/remotes/origin/HEAD > output &&
+>        test_cmp expect output)
+> '
 
-No strong opinion on my side, what does the gitster have to say about it?
+Right.
 
--- 
-Cheers,
-
-Sverre Rabbelier
+j.
