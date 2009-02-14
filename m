@@ -1,89 +1,133 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] config: Use parseopt.
-Date: Sat, 14 Feb 2009 12:35:35 -0800
-Message-ID: <7v8wo8sqnc.fsf@gitster.siamese.dyndns.org>
-References: <1234577142-22965-1-git-send-email-felipe.contreras@gmail.com>
- <7vab8pweod.fsf@gitster.siamese.dyndns.org>
- <94a0d4530902140237o7d26ff4j1c7350d926d12c1a@mail.gmail.com>
- <7vhc2wu8a0.fsf@gitster.siamese.dyndns.org>
- <94a0d4530902141209j7a3a9976l80355bee526852ed@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v3] parse-opt: migrate builtin-ls-files.
+Date: Sat, 14 Feb 2009 21:56:04 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902142127040.10279@pacific.mpi-cbg.de>
+References: <1231376145-32331-1-git-send-email-vmiklos@frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 14 21:37:11 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Sat Feb 14 21:56:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYRGA-0008Oz-NI
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 21:37:11 +0100
+	id 1LYRZ4-0006FD-4f
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 21:56:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752046AbZBNUfo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 15:35:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752020AbZBNUfn
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 15:35:43 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61114 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751647AbZBNUfm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 15:35:42 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1C81B2B226;
-	Sat, 14 Feb 2009 15:35:41 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E89982B225; Sat,
- 14 Feb 2009 15:35:36 -0500 (EST)
-In-Reply-To: <94a0d4530902141209j7a3a9976l80355bee526852ed@mail.gmail.com>
- (Felipe Contreras's message of "Sat, 14 Feb 2009 22:09:59 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 0BA11C8A-FAD7-11DD-9A28-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1752053AbZBNUzO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2009 15:55:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751739AbZBNUzN
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 15:55:13 -0500
+Received: from mail.gmx.net ([213.165.64.20]:52619 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751357AbZBNUzM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 15:55:12 -0500
+Received: (qmail invoked by alias); 14 Feb 2009 20:55:10 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp011) with SMTP; 14 Feb 2009 21:55:10 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/ipaZH5aXi/VYkx2YCTqHMKlryfQN436xwtJ8NTf
+	x8ARLMJneqGa+t
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1231376145-32331-1-git-send-email-vmiklos@frugalware.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.52
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109924>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Hi,
 
->> I personally do not think "I rewrote this command's option parser using
->> parseopt" earns any "trust point".  I think the latter is a *great* thing
->> to do, though.
->
-> I disagree. Making a patch pass through all the filters must mean
-> something, and the more patches the more trust.
+On Thu, 8 Jan 2009, Miklos Vajna wrote:
 
-Why are you arguing?
+> +static int option_parse_z(const struct option *opt,
+> +			  const char *arg, int unset)
+> +{
+> +	if (unset)
+> +		line_terminator = '\n';
+> +	else
+> +		line_terminator = 0;
+> +	return 0;
+> +}
 
-I am saying I do not feel more trust in people _merely because_ they
-rewrote command parser to use parseopt.  Telling me that I am wrong and I
-should trust you more for such a patch would not help.
+	line_terminator = unset ? '\0' : '\n';
 
->> Mistakes made in the past and resulting flaws that remain in the current
->> source do not justify a new patch adding more mistakes to the codebase.
->> Reviewers help the author from adding more.
->>
->> One bad thing about the current process (and I am certainly one of the
->> guilty parties because I do a lot of reviews) around this area is that a
->> review comment that points out a mistake similar to the ones made in the
->> past sound to the author of the patch as if the reviewer is telling that
->> the patch will not be accepted unless the existing mistakes are also fixed
->> by the patch author.  Such a review certainly does not mean that ...
->> ...
-> But, if there's code that already has the same issues the patch has,
-> it doesn't look like a good argument for patch rejection. Perhaps the
-> quality standards increased, but on the other hand things wouldn't get
-> worst by applying the patch.
+Hmm?
 
-If you read the above quoted block again, you will notice that we are
-almost in full agreement, *if* you change "by applying the patch" in your
-last sentence to "by applying a patch that is revised to fix the problem
-pointed out during the review in it, even if it does not address the
-similar ones in the existing code".
+> +static int option_parse_exclude(const struct option *opt,
+> +				const char *arg, int unset)
+> +{
+> +	struct dir_struct *dir = opt->value;
+> +
+> +	exc_given = 1;
+> +	add_exclude(arg, "", 0, &dir->exclude_list[EXC_CMDL]);
 
-Adding more breakages of the same kind may not increase the number of
-classes of breakages, but surely it increases the number of places that
-need to be fixed later, and it is actively wrong to discard time and
-energy somebody already spent to prevent one more instance of known
-breakage to get into the codebase.
+Why is &dir->exclude_list[EXC_CMDL] not stored in opt->value directly?
+
+> +static int option_parse_ignored(const struct option *opt,
+> +				const char *arg, int unset)
+> +{
+> +	struct dir_struct *dir = opt->value;
+> +
+> +	dir->show_ignored = !unset;
+> +
+> +	return 0;
+> +}
+
+Maybe this wants to be converted into an OPTION_BIT compatible data type?
+
+> +static int option_parse_directory(const struct option *opt,
+> +				  const char *arg, int unset)
+> +{
+> +	struct dir_struct *dir = opt->value;
+> +
+> +	dir->show_other_directories = !unset;
+> +
+> +	return 0;
+> +}
+
+Likewise?
+
+> +static int option_parse_empty(const struct option *opt,
+> +				 const char *arg, int unset)
+> +{
+> +	struct dir_struct *dir = opt->value;
+> +
+> +	dir->hide_empty_directories = unset;
+> +
+> +	return 0;
+> +}
+
+Maybe we need an OPT_BIT_NEG?
+
+> +static int option_parse_full_name(const struct option *opt,
+> +				  const char *arg, int unset)
+> +{
+> +	prefix_offset = 0;
+> +
+> +	return 0;
+> +}
+
+Not that it matters much, but maybe you can guard this with an
+"if (!unset)"?
+
+> +		{ OPTION_CALLBACK, 0, "full-name", NULL, NULL,
+> +			"make the output relative to the project top directory",
+> +			PARSE_OPT_NOARG, option_parse_full_name },
+
+Maybe OPT_NONEG, and maybe SET_INT?
+
+> +	if (dir.exclude_per_dir)
+> +		exc_given = 1;
+
+You could use a boolean to handle --exclude-standard, too... But you did 
+not do that so that there is no regression with specific ordering of the 
+exclude options, right?
+
+Ciao,
+Dscho
