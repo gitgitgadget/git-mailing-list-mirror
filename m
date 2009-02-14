@@ -1,203 +1,94 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v2] gc: make --prune useful again by accepting an optional
- parameter
-Date: Sat, 14 Feb 2009 23:10:10 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902142306400.10279@pacific.mpi-cbg.de>
-References: <1234545279-23153-1-git-send-email-trast@student.ethz.ch> <20090214074954.7e423dd2@perceptron> <alpine.DEB.1.00.0902141959060.10279@pacific.mpi-cbg.de> <200902142233.07190.trast@student.ethz.ch> <3651.78.34.159.109.1234647192.squirrel@heapsort.de>
- <1234545279-23153-1-git-send-email-trast@student.ethz.ch>    <20090214025115.615119bf@perceptron>    <alpine.DEB.1.00.0902140642520.10279@pacific.mpi-cbg.de>    <20090214074954.7e423dd2@perceptron>    <alpine.DEB.1.00.0902141959060.10279@pacific.mpi-cbg.de>
- <3651.78.34.159.109.1234647192.squirrel@heapsort.de> <alpine.DEB.1.00.0902142301030.10279@pacific.mpi-cbg.de>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH v3] send-email: --suppress-cc improvements
+Date: Sat, 14 Feb 2009 23:21:11 +0100
+Message-ID: <200902142321.22904.trast@student.ethz.ch>
+References: <7vzlgpzfru.fsf@gitster.siamese.dyndns.org> <1234631186-10179-1-git-send-email-trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-538790407-1234649411=:10279"
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Thomas Rast <trast@student.ethz.ch>,
-	=?ISO-8859-15?Q?Jan_Kr=FCger?= <jk@jk.gs>
-X-From: git-owner@vger.kernel.org Sat Feb 14 23:10:52 2009
+Content-Type: multipart/signed;
+  boundary="nextPart1295549.zrAdzidnjz";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 14 23:23:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYSim-00027p-TY
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 23:10:49 +0100
+	id 1LYSub-0005ay-Ms
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 23:23:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752226AbZBNWJW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 17:09:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752158AbZBNWJV
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 17:09:21 -0500
-Received: from mail.gmx.net ([213.165.64.20]:55420 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752138AbZBNWJU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 17:09:20 -0500
-Received: (qmail invoked by alias); 14 Feb 2009 22:09:16 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp017) with SMTP; 14 Feb 2009 23:09:16 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+VeQZoW/WVhbyyajXmHgAHjY5OP8Y8mYfhkEhGSN
-	pBdHlqDQ3aI6Ox
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.DEB.1.00.0902142301030.10279@pacific.mpi-cbg.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.41
+	id S1752358AbZBNWVd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2009 17:21:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752344AbZBNWVd
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 17:21:33 -0500
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:38870 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752328AbZBNWVc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 17:21:32 -0500
+Received: from xfe1.d.ethz.ch ([82.130.124.41]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 14 Feb 2009 23:21:31 +0100
+Received: from thomas.localnet ([77.56.223.244]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 14 Feb 2009 23:21:30 +0100
+User-Agent: KMail/1.11.0 (Linux/2.6.27.7-9-default; KDE/4.2.0; x86_64; ; )
+In-Reply-To: <1234631186-10179-1-git-send-email-trast@student.ethz.ch>
+X-OriginalArrivalTime: 14 Feb 2009 22:21:31.0131 (UTC) FILETIME=[964824B0:01C98EF2]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109940>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+--nextPart1295549.zrAdzidnjz
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
---8323328-538790407-1234649411=:10279
-Content-Type: TEXT/PLAIN; charset=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
+I just noticed that I lost the comments after '---' due to repeated
+format-patch'ing, so here goes:
 
-With this patch, "git gc --no-prune" will not prune any loose (and
-dangling) object, and "git gc --prune=5.minutes.ago" will prune
-all loose objects older than 5 minutes.
+Thomas Rast wrote:
+> From: Jay Soffian <jaysoffian@gmail.com>
+>=20
+> Since 6564828 (git-send-email: Generalize auto-cc recipient
+> mechanism., 2007-12-25) we can suppress automatic Cc generation
+> separately for each of the possible address sources.  However,
+> --suppress-cc=3Dsob suppressed both SOB lines and body (but not header)
+> Cc lines, contrary to the name.
+>=20
+> Change --suppress-cc=3Dsob to mean only SOB lines, and add separate
+> choices 'bodycc' (body Cc lines) and 'body' (both 'sob' and 'bodycc').
+> The option --no-signed-off-by-cc now acts like --suppress-cc=3Dsob,
+> which is not backwards compatible but matches the name of the option.
+>=20
+> Also update the documentation and add a few tests.
+>=20
+> Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+> ---
 
-This patch benefitted from suggestions by Thomas Rast and Jan Krüger.
+I tried to address Junio's comments, mostly by reformatting the docs
+and expanding the tests, but also changing the handling of 'body' in
+the code.  I also edited the patch message to my liking.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/git-gc.txt |   10 +++++++++-
- builtin-gc.c             |   19 ++++++++++++-------
- t/t5304-prune.sh         |   38 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 59 insertions(+), 8 deletions(-)
+Of course your SOB above is now forged, so you'll have to ack it.
 
-diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
-index 7086eea..b292e98 100644
---- a/Documentation/git-gc.txt
-+++ b/Documentation/git-gc.txt
-@@ -8,7 +8,7 @@ git-gc - Cleanup unnecessary files and optimize the local repository
- 
- SYNOPSIS
- --------
--'git gc' [--aggressive] [--auto] [--quiet]
-+'git gc' [--aggressive] [--auto] [--quiet] [--prune=<date> | --no-prune]
- 
- DESCRIPTION
- -----------
-@@ -59,6 +59,14 @@ are consolidated into a single pack by using the `-A` option of
- 'git-repack'. Setting `gc.autopacklimit` to 0 disables
- automatic consolidation of packs.
- 
-+--prune=<date>::
-+	Prune loose objects older than date (default is 2 weeks ago,
-+	overrideable by the config variable `gc.pruneExpire`).  This
-+	option is on by default.
-+
-+--no-prune::
-+	Do not prune any loose objects.
-+
- --quiet::
- 	Suppress all progress reports.
- 
-diff --git a/builtin-gc.c b/builtin-gc.c
-index a201438..8d990ed 100644
---- a/builtin-gc.c
-+++ b/builtin-gc.c
-@@ -161,7 +161,8 @@ static int need_to_gc(void)
- 	 */
- 	if (too_many_packs())
- 		append_option(argv_repack,
--			      !strcmp(prune_expire, "now") ? "-a" : "-A",
-+			      prune_expire && !strcmp(prune_expire, "now") ?
-+			      "-a" : "-A",
- 			      MAX_ADD);
- 	else if (!too_many_loose_objects())
- 		return 0;
-@@ -173,14 +174,15 @@ static int need_to_gc(void)
- 
- int cmd_gc(int argc, const char **argv, const char *prefix)
- {
--	int prune = 0;
- 	int aggressive = 0;
- 	int auto_gc = 0;
- 	int quiet = 0;
- 	char buf[80];
- 
- 	struct option builtin_gc_options[] = {
--		OPT_BOOLEAN(0, "prune", &prune, "prune unreferenced objects (deprecated)"),
-+		{ OPTION_STRING, 0, "prune", &prune_expire, "date",
-+			"prune unreferenced objects",
-+			PARSE_OPT_OPTARG, NULL, (intptr_t)prune_expire },
- 		OPT_BOOLEAN(0, "aggressive", &aggressive, "be more thorough (increased runtime)"),
- 		OPT_BOOLEAN(0, "auto", &auto_gc, "enable auto-gc mode"),
- 		OPT_BOOLEAN('q', "quiet", &quiet, "suppress progress reports"),
-@@ -218,7 +220,8 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
- 			"\"git help gc\" for more information.\n");
- 	} else
- 		append_option(argv_repack,
--			      !strcmp(prune_expire, "now") ? "-a" : "-A",
-+			      prune_expire && !strcmp(prune_expire, "now")
-+			      ? "-a" : "-A",
- 			      MAX_ADD);
- 
- 	if (pack_refs && run_command_v_opt(argv_pack_refs, RUN_GIT_CMD))
-@@ -230,9 +233,11 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
- 	if (run_command_v_opt(argv_repack, RUN_GIT_CMD))
- 		return error(FAILED_RUN, argv_repack[0]);
- 
--	argv_prune[2] = prune_expire;
--	if (run_command_v_opt(argv_prune, RUN_GIT_CMD))
--		return error(FAILED_RUN, argv_prune[0]);
-+	if (prune_expire) {
-+		argv_prune[2] = prune_expire;
-+		if (run_command_v_opt(argv_prune, RUN_GIT_CMD))
-+			return error(FAILED_RUN, argv_prune[0]);
-+	}
- 
- 	if (run_command_v_opt(argv_rerere, RUN_GIT_CMD))
- 		return error(FAILED_RUN, argv_rerere[0]);
-diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
-index 771c0a0..55ed7c7 100755
---- a/t/t5304-prune.sh
-+++ b/t/t5304-prune.sh
-@@ -112,4 +112,42 @@ test_expect_success 'prune: do not prune heads listed as an argument' '
- 
- '
- 
-+test_expect_success 'gc --no-prune' '
-+
-+	before=$(git count-objects | sed "s/ .*//") &&
-+	BLOB=$(echo aleph_0 | git hash-object -w --stdin) &&
-+	BLOB_FILE=.git/objects/$(echo $BLOB | sed "s/^../&\//") &&
-+	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
-+	test -f $BLOB_FILE &&
-+	test-chmtime =-$((86400*5001)) $BLOB_FILE &&
-+	git config gc.pruneExpire 2.days.ago &&
-+	git gc --no-prune &&
-+	test 1 = $(git count-objects | sed "s/ .*//") &&
-+	test -f $BLOB_FILE
-+
-+'
-+
-+test_expect_success 'gc respects gc.pruneExpire' '
-+
-+	git config gc.pruneExpire 5002.days.ago &&
-+	git gc &&
-+	test -f $BLOB_FILE &&
-+	git config gc.pruneExpire 5000.days.ago &&
-+	git gc &&
-+	test ! -f $BLOB_FILE
-+
-+'
-+
-+test_expect_success 'gc --prune=<date>' '
-+
-+	BLOB=$(echo aleph_0 | git hash-object -w --stdin) &&
-+	BLOB_FILE=.git/objects/$(echo $BLOB | sed "s/^../&\//") &&
-+	test-chmtime =-$((86400*5001)) $BLOB_FILE &&
-+	git gc --prune=5002.days.ago &&
-+	test -f $BLOB_FILE &&
-+	git gc --prune=5000.days.ago &&
-+	test ! -f $BLOB_FILE
-+
-+'
-+
- test_done
--- 
-1.6.2.rc0.367.g7f9a5
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
 
+--nextPart1295549.zrAdzidnjz
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
---8323328-538790407-1234649411=:10279--
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkmXQ+IACgkQqUud07tmzP1hswCfda07SKqJI2sKbWWkdLmSNc+d
+EncAn3Ee4p0ce0+lhlOUOTY0ng2JNeY8
+=oaVb
+-----END PGP SIGNATURE-----
+
+--nextPart1295549.zrAdzidnjz--
