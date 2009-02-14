@@ -1,132 +1,255 @@
-From: Eric Kidd <git@randomhacks.net>
-Subject: Re: [RFC/PATCHv2] git submodule split
-Date: Sat, 14 Feb 2009 00:17:25 -0500
-Message-ID: <431341160902132117s1696c975mbf20dfbdc65a7df3@mail.gmail.com>
-References: <431341160902121350x45076c8cj26afab0b7a51cac5@mail.gmail.com>
-	 <1234578258-48870-1-git-send-email-git@randomhacks.net>
-	 <7v3aeh3a84.fsf@gitster.siamese.dyndns.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: [PATCH 3/3 v2] send-email: --suppress-cc improvements
+Date: Sat, 14 Feb 2009 00:37:03 -0500
+Message-ID: <1234589823-67610-1-git-send-email-jaysoffian@gmail.com>
+References: <1234583491-61260-4-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Ping Yin <pkufranky@gmail.com>, Lars Hjemli <hjemli@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 14 06:25:05 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Ryan Anderson <ryan@michonline.com>, gitster@pobox.com,
+	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 14 06:38:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYD16-0008GJ-J0
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 06:24:41 +0100
+	id 1LYDEg-0002at-UW
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 06:38:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751389AbZBNFXO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 00:23:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751331AbZBNFXN
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 00:23:13 -0500
-Received: from yw-out-2324.google.com ([74.125.46.30]:4440 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751287AbZBNFXM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 00:23:12 -0500
-Received: by yw-out-2324.google.com with SMTP id 5so740203ywh.1
-        for <git@vger.kernel.org>; Fri, 13 Feb 2009 21:23:10 -0800 (PST)
+	id S1751581AbZBNFhM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2009 00:37:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751542AbZBNFhK
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 00:37:10 -0500
+Received: from yx-out-2324.google.com ([74.125.44.28]:23046 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751455AbZBNFhI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 00:37:08 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so740217yxm.1
+        for <git@vger.kernel.org>; Fri, 13 Feb 2009 21:37:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=Gm93eKSgxi+EfxKQduCQ66JmzjPLe19AxU4XACAtPEs=;
-        b=LeXQ0I8+gOKjO9j+dAmbxvEKJr7/6nKu1PtQJ8jP1+t7V9uR/B7fGe/vmIHvGYC8HB
-         ywK7Ra8HRBy95PJxsYMqiZX3nC9Mu/7BOaVX06UrvjwxUNMUCI9k+Tw7glE3OHzIrkfm
-         FR+O8GGSDIsHuTQVUsUSEJoxPUawI4k+J39hE=
+        bh=Aklk8hO3nDrDPCYFbh90t5cJ0koPSOx8/vXLBGzed/g=;
+        b=P42H8uUd8s5/jrgB28a5mJSsUCpquhG7r77AxcK/ryyppdVi+6VxmLqx5J8GeDDZNt
+         hdh0sI5DxfiVaozoY+OnpUg4Hx4m6bdQsZm0iYDdColn4+eTAUpzXS6OscuhcGGygf34
+         1TMvpw9emPAf+EAINggGcNYJS09vgmh9V3Ejc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=wHSwhjyTTVJBK7c2jwdaKfQoUQyPKVV465m0HYPvTPJjAVxjgRB0GTjJKbMerTYeaH
-         2OWdE/5FnDI05HQAeLJIrI3auq13veza52axsSiyDBzKM2NuWFt1r6wOPu+gBW8wmSfn
-         nXMH/ugYMBEou7Gt7EAplMr4VN6Hf+cD6tkrU=
-Received: by 10.151.106.4 with SMTP id i4mr2779948ybm.204.1234588645993; Fri, 
-	13 Feb 2009 21:17:25 -0800 (PST)
-In-Reply-To: <7v3aeh3a84.fsf@gitster.siamese.dyndns.org>
-X-Google-Sender-Auth: 2919d41f46af1174
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=snMFtrdw1/DEfKbjXwkTWygndQDnzZSbr0gpxU1Mjkm15gwU3k6TojmZbXejqJckyJ
+         AkmJvuRoZVllgMWAhX1STn3gxbPiRlHSahmRmzjjx+uDVGLuOpJ1F9JgFi3qeiNQquHw
+         osRCptqIRrLqqSck1yGF0OmMl4BCbo46WK87s=
+Received: by 10.151.9.1 with SMTP id m1mr250302ybi.59.1234589826315;
+        Fri, 13 Feb 2009 21:37:06 -0800 (PST)
+Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
+        by mx.google.com with ESMTPS id z26sm5251080ele.0.2009.02.13.21.37.04
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 13 Feb 2009 21:37:05 -0800 (PST)
+X-Mailer: git-send-email 1.6.2.rc0.239.gfa9f6
+In-Reply-To: <1234583491-61260-4-git-send-email-jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109821>
 
-On Fri, Feb 13, 2009 at 11:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Kidd <git@randomhacks.net> writes:
->> ...
->> If the submodule has moved around the source tree, specify one or more
->> values for alternate_dir.  To specify the URL of the newly created
->> repository (for use in .gitmodules), use the --url parameter.
->
-> Unfortunately, I do not think we have designed fully (nor implemented at
-> all) behaviour to check out different points of history that has the same
-> submodule moved around in the superproject tree.
->
-> There were several unconcluded discussions done in the past (and I admit I
-> participated in a few of them), but it may be hard to use the resulting
-> repository out of this tool.
+From: Jay Soffian <jaysoffian@gmail.com>
 
-Thank you for looking at this proposal!
+Commit 656482830ddc4a4e2af132fabb118a25190439c2 added the --suppress-cc
+option. However, it made --suppress-cc=sob suppress both SOB lines and
+body Cc lines (but not header Cc lines), which seems contrary to how
+it is named.
 
-I think that the resulting repository is usable (though it could
-certainly be better). In particular, the following commands will
-always give you a working checkout:
+After this commit, 'sob' suppresses only SOB lines and --suppress-cc
+takes two additional values:
 
-  git checkout any-version
-  git submodule update --init
+ * 'body' suppresses both SOB and body Cc lines (i.e. what 'sob'
+    used to do).
 
-The unit tests for git-submodule-split.sh actually walk through the
-entire history and run 'git submodule update --init' at each revision.
-This works correctly because git-submodule-split creates the necessary
-.gitmodules entries for each revision, and includes the
-submodule.*.url value that you specify.
+ * 'bodycc' suppresses body Cc lines, but not header Cc lines.
 
-Unfortunately, this means that whenever the submodule moves to a new
-location in the tree, 'git submodule --init' will actually have to
-clone it again. That's not a perfect situation, but it will work for
-reasonably small submodules.
+For backwards compatibility, --no-signed-off-by-cc, acts like 'body'.
 
->>   1) Right now, this command is actually git-submodule-split.sh.  Should
->>      I include this code directly into git-submodule.sh, or move it
->>      to git-submodule--split.sh and hook it into git-submodule.sh?
->
-> How about in contrib/ somewhere?
+Also update the documentation and add a few tests.
 
-Sounds good to me! I'd like to include the unit tests and some
-documentation, if that's OK.
+Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+---
+Sorry, please ignore the previous 3/3, it had an obvious breakage;
+--suppress-cc=body was causing then entire message body not to be read
+in at all.
 
-I'll let you know when the patch has been reviewed, and submit it for
-inclusion in contrib.
+ Documentation/git-send-email.txt |   14 ++++++++------
+ git-send-email.perl              |   23 ++++++++++++++++-------
+ t/t9001-send-email.sh            |   38 ++++++++++++++++++++++++++++++++++++--
+ 3 files changed, 60 insertions(+), 15 deletions(-)
 
->>   2) Should I implement a --force flag based on filter-branch?  Johannes
->>      Schindelin has suggested that it might be better to remove the
->>      --force flag from filter-branch and just rely on the reflog to keep
->>      backups.
->
-> Sounds sensible to me, but I do not have strong feeling about this either way.
-
-I realized that there's a problem with removing  --force from
-filter-branch: The reflog doesn't contain backups of the rewritten
-tags. So I'm afraid --force and the refs/original/ directory will need
-to remain for now. (Any thoughts, Johannes?)
-
->>   4) We're obviously going to need to support revision arguments other
->>      than --all (which is what we currently pass to filter-branch).  Should
->>      we default to the current branch only, or to --all?
->
-> Matching what filter-branch defaults to would be the most natural,
-> wouldn't it?
-
-I think so, although many (or most?) users will probably want to use '-- --all'.
-
-Thank you very much for your suggestions!
-
-Cheers,
-Eric
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index ff4aeff..d6af035 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -166,12 +166,14 @@ Automating
+ 	Specify an additional category of recipients to suppress the
+ 	auto-cc of.  'self' will avoid including the sender, 'author' will
+ 	avoid including the patch author, 'cc' will avoid including anyone
+-	mentioned in Cc lines in the patch, 'sob' will avoid including
+-	anyone mentioned in Signed-off-by lines, and 'cccmd' will avoid
+-	running the --cc-cmd.  'all' will suppress all auto cc values.
+-	Default is the value of 'sendemail.suppresscc' configuration value;
+-	if that is unspecified, default to 'self' if --suppress-from is
+-	specified, as well as 'sob' if --no-signed-off-cc is specified.
++	mentioned in Cc lines in the patch header, 'ccbody' will avoid
++	including anyone mentioned in Cc lines in the patch body (commit
++	message), 'sob' will avoid including anyone mentioned in Signed-off-by
++	lines, and 'cccmd' will avoid running the --cc-cmd. 'body' is
++	equivalent to 'sob' + 'ccbody'. 'all' will suppress all auto cc
++	values.  Default is the value of 'sendemail.suppresscc' configuration
++	value; if that is unspecified, default to 'self' if --suppress-from is
++	specified, as well as 'body' if --no-signed-off-cc is specified.
+ 
+ --[no-]suppress-from::
+ 	If this is set, do not add the From: address to the cc: list.
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 2a3e3e8..23a55e2 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -68,7 +68,7 @@ git send-email [options] <file | directory | rev-list options >
+   Automating:
+     --identity              <str>  * Use the sendemail.<id> options.
+     --cc-cmd                <str>  * Email Cc: via `<str> \$patch_path`
+-    --suppress-cc           <str>  * author, self, sob, cccmd, all.
++    --suppress-cc           <str>  * author, self, sob, cc, cccmd, body, bodycc, all.
+     --[no-]signed-off-by-cc        * Send to Cc: and Signed-off-by:
+                                      addresses. Default on.
+     --[no-]suppress-from           * Send to self. Default off.
+@@ -319,21 +319,28 @@ my(%suppress_cc);
+ if (@suppress_cc) {
+ 	foreach my $entry (@suppress_cc) {
+ 		die "Unknown --suppress-cc field: '$entry'\n"
+-			unless $entry =~ /^(all|cccmd|cc|author|self|sob)$/;
++			unless $entry =~ /^(all|cccmd|cc|author|self|sob|body|bodycc)$/;
+ 		$suppress_cc{$entry} = 1;
+ 	}
+ }
+ 
+ if ($suppress_cc{'all'}) {
+-	foreach my $entry (qw (ccmd cc author self sob)) {
++	foreach my $entry (qw (ccmd cc author self sob body bodycc)) {
+ 		$suppress_cc{$entry} = 1;
+ 	}
+ 	delete $suppress_cc{'all'};
+ }
+ 
++if ($suppress_cc{'sob'} && $suppress_cc{'bodycc'}) {
++	$suppress_cc{'body'} = 1;
++}
++
+ # If explicit old-style ones are specified, they trump --suppress-cc.
+ $suppress_cc{'self'} = $suppress_from if defined $suppress_from;
+-$suppress_cc{'sob'} = !$signed_off_by_cc if defined $signed_off_by_cc;
++# For backwards compatibility, old-style --signed-off-by-cc suppresses
++# SOB and body Cc lines, whereas --supress-cc=sob suppresses just the SOB
++# line, but not the body Cc.
++$suppress_cc{'body'} = !$signed_off_by_cc if defined $signed_off_by_cc;
+ 
+ # Debugging, print out the suppressions.
+ if (0) {
+@@ -1007,14 +1014,16 @@ foreach my $t (@files) {
+ 	# Now parse the message body
+ 	while(<F>) {
+ 		$message .=  $_;
++		next if $suppress_cc{'body'};
+ 		if (/^(Signed-off-by|Cc): (.*)$/i) {
+-			next if ($suppress_cc{'sob'});
+ 			chomp;
+-			my $c = $2;
++			my ($what, $c) = ($1, $2);
+ 			chomp $c;
++			next if $suppress_cc{'sob'} and $what =~ /Signed-off-by/i;
++			next if $suppress_cc{'bodycc'} and $what =~ /Cc/i;
+ 			next if ($c eq $sender and $suppress_cc{'self'});
+ 			push @cc, $c;
+-			printf("(sob) Adding cc: %s from line '%s'\n",
++			printf("(body) Adding cc: %s from line '%s'\n",
+ 				$c, $_) unless $quiet;
+ 		}
+ 	}
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index da54835..d7766f9 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -32,11 +32,11 @@ clean_fake_sendmail() {
+ }
+ 
+ test_expect_success 'Extract patches' '
+-    patches=`git format-patch --cc="One <one@example.com>" --cc=two@example.com -n HEAD^1`
++    patches=`git format-patch -s --cc="One <one@example.com>" --cc=two@example.com -n HEAD^1`
+ '
+ 
+ test_expect_success 'Send patches' '
+-     git send-email --from="Example <nobody@example.com>" --to=nobody@example.com --smtp-server="$(pwd)/fake.sendmail" $patches 2>errors
++     git send-email --suppress-cc=sob --from="Example <nobody@example.com>" --to=nobody@example.com --smtp-server="$(pwd)/fake.sendmail" $patches 2>errors
+ '
+ 
+ cat >expected <<\EOF
+@@ -74,6 +74,7 @@ EOF
+ test_expect_success 'Show all headers' '
+ 	git send-email \
+ 		--dry-run \
++		--suppress-cc=sob \
+ 		--from="Example <from@example.com>" \
+ 		--to=to@example.com \
+ 		--cc=cc@example.com \
+@@ -195,6 +196,7 @@ test_expect_success 'sendemail.cc set' '
+ 	git config sendemail.cc cc@example.com &&
+ 	git send-email \
+ 		--dry-run \
++		--suppress-cc=sob \
+ 		--from="Example <from@example.com>" \
+ 		--to=to@example.com \
+ 		--smtp-server relay.example.com \
+@@ -230,6 +232,38 @@ test_expect_success 'sendemail.cc unset' '
+ 	git config --unset sendemail.cc &&
+ 	git send-email \
+ 		--dry-run \
++		--suppress-cc=sob \
++		--from="Example <from@example.com>" \
++		--to=to@example.com \
++		--smtp-server relay.example.com \
++		$patches |
++	sed	-e "s/^\(Date:\).*/\1 DATE-STRING/" \
++		-e "s/^\(Message-Id:\).*/\1 MESSAGE-ID-STRING/" \
++		-e "s/^\(X-Mailer:\).*/\1 X-MAILER-STRING/" \
++		>actual-show-all-headers &&
++	test_cmp expected-show-all-headers actual-show-all-headers
++'
++
++cat >expected-show-all-headers <<\EOF
++0001-Second.patch
++Dry-OK. Log says:
++Server: relay.example.com
++MAIL FROM:<from@example.com>
++RCPT TO:<to@example.com>
++From: Example <from@example.com>
++To: to@example.com
++Subject: [PATCH 1/1] Second.
++Date: DATE-STRING
++Message-Id: MESSAGE-ID-STRING
++X-Mailer: X-MAILER-STRING
++
++Result: OK
++EOF
++
++test_expect_success '--suppress-cc=all' '
++	git send-email \
++		--dry-run \
++		--suppress-cc=all \
+ 		--from="Example <from@example.com>" \
+ 		--to=to@example.com \
+ 		--smtp-server relay.example.com \
+-- 
+1.6.2.rc0.238.g0c1fe
