@@ -1,103 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] builtin-remote: better handling of multiple remote
-	HEADs
-Date: Sat, 14 Feb 2009 12:54:20 -0500
-Message-ID: <20090214175420.GA3457@coredump.intra.peff.net>
-References: <20090214034345.GB24545@coredump.intra.peff.net> <1234607430-5403-1-git-send-email-jaysoffian@gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [RFC PATCH v2] Teach rebase to rebase even if upstream is up to 
+	date
+Date: Sat, 14 Feb 2009 18:57:28 +0100
+Message-ID: <bd6139dc0902140957pa5852d6m61211054b3f5e395@mail.gmail.com>
+References: <1234565281-20960-1-git-send-email-srabbelier@gmail.com>
+	 <alpine.DEB.1.00.0902140703540.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, barkalow@iabervon.org,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailinglist <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Junio C Hamano <gitster@pobox.com>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 14 18:56:07 2009
+X-From: git-owner@vger.kernel.org Sat Feb 14 18:59:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYOkH-0007Hm-DG
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 18:56:05 +0100
+	id 1LYOnM-0008NO-Op
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 18:59:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751733AbZBNRyX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 12:54:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751808AbZBNRyX
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 12:54:23 -0500
-Received: from peff.net ([208.65.91.99]:34918 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751728AbZBNRyW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 12:54:22 -0500
-Received: (qmail 1045 invoked by uid 107); 14 Feb 2009 17:54:41 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 14 Feb 2009 12:54:41 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 14 Feb 2009 12:54:20 -0500
-Content-Disposition: inline
-In-Reply-To: <1234607430-5403-1-git-send-email-jaysoffian@gmail.com>
+	id S1751737AbZBNR5b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2009 12:57:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751728AbZBNR5b
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 12:57:31 -0500
+Received: from fg-out-1718.google.com ([72.14.220.158]:33253 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751611AbZBNR5a (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 12:57:30 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so64962fgg.17
+        for <git@vger.kernel.org>; Sat, 14 Feb 2009 09:57:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=dAoZN/bJomGd+qEuVoki8Ws5WTP4kqRXHiJQzlQIwBs=;
+        b=QffGw4gFEJYET0o1kB+h9ysXjmyahFFPSEAa4HigJFr9TE0BZimBnigJDu4QHlLyWk
+         q96TAapve8lJeFW4DA+kVgezr0aMc9m0QUWr7yv6lHR4NV5mSBxP/ZVgnAwE7cTvmeVW
+         pD7KnLdtprcGJKyXf3p/oeSZc9bmezO//Xd8o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=N4CXWFj9GcBF4hiRgrP4HU+5fgj0urtI8nKT4zfBg7FkHEFOc87eijoS4RKlliX9gp
+         8Xz1V5+kYY09WjjjAY1iLwsn7gcvDZ4t8nk3VUzNuryGioGHQTMaoQpDmhiIkxccZvZl
+         7tbStyydAUzipaByoXwbmFje817AbVZbL7EXc=
+Received: by 10.86.100.19 with SMTP id x19mr448798fgb.18.1234634248926; Sat, 
+	14 Feb 2009 09:57:28 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0902140703540.10279@pacific.mpi-cbg.de>
+X-Google-Sender-Auth: 5b1938348ebd8764
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109888>
 
-On Sat, Feb 14, 2009 at 05:30:30AM -0500, Jay Soffian wrote:
+On Sat, Feb 14, 2009 at 07:07, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> I know that you can turn it off with --whitespace=nowarn, but that's
+> such an outlier that we do not have to care about it, right?
 
-> In this situation, git remote set-head --auto should not try to guess
-> which HEAD the user wants. This patch causes set-head to provide a
-> useful error instead:
-> 
-> $ git remote set-head origin --auto
-> error: Multiple remote HEAD branches. Please choose one explicitly with:
->   git remote set-head origin another
->   git remote set-head origin master
+Well, actually, in the v1 thread Junio mentioned that it should not
+imply -f for --whitespace=nowarn.
 
-Thanks. The patch looks good to me, with two comments and one style nit:
+> Or if we really want to:
+>
+>        --whitespace=nowarn) ;;
+>        --whitespace=*) force_rebase=t ;;
+>
+> Hm?
 
-> +		else if (states.heads.nr == 1)
-> +			printf("  HEAD branch: %s\n",
-> +				states.heads.items[0].string);
-> +		else
-> +			show_list("  HEAD branch%s:", &states.heads, "");
+No strong opinion on my side, what does the gitster have to say about it?
 
-I was happy to see the common case of "we unambiguously determined HEAD"
-falls back to nicer output (though I admit I did a double-take seeing
-both show_list and the states.heads.nr check, I see it is because
-show_list always insists on a newline).
+-- 
+Cheers,
 
-That should help current users with simple setups, but also support
-unambiguous HEAD reporting in the future (and based on what Daniel said
-earlier, http should just need a client patch to pass the information
-up the callstack).
-
-> +		if (opt_a)
-> +			printf("%s/HEAD set to %s\n", argv[0], head_name);
-
-This was a surprise based on reading the commit message, but I think it
-is a sensible enhancement.
-
-> +cat > test/expect <<EOF
-> +origin/HEAD set to master
-> +EOF
-> +
-> +test_expect_success 'set-head --auto' '
-> +	(cd test &&
-> +	 git remote set-head --auto origin > output &&
-> +	 git symbolic-ref refs/remotes/origin/HEAD &&
-> +	test_cmp expect output)
-> +'
-
-I had to read this test a few times to convince myself it was right,
-since you throw away the output of symbolic-ref. I think it makes more
-sense to just test the post-command state, which is what you actually
-care about (and then you are also not dependent on the human-readable
-output of "remote set-head"). I.e.:
-
-cat > test/expect <<EOF
-refs/remotes/origin/master
-EOF
-
-test_expect_success 'set-head --auto' '
-	(cd test &&
-	 git remote set-head --auto origin &&
-	 git symbolic-ref refs/remotes/origin/HEAD > output &&
-	test_cmp expect output)
-'
-
--Peff
+Sverre Rabbelier
