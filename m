@@ -1,113 +1,103 @@
 From: =?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH] rerere: remove duplicated functions
-Date: Sat, 14 Feb 2009 17:18:04 +0100
-Message-ID: <1234628284-4246-1-git-send-email-szeder@ira.uka.de>
+Subject: [PATCH 1/2] Move 'rev-parse --git-dir' test to t1500
+Date: Sat, 14 Feb 2009 17:16:28 +0100
+Message-ID: <1234628189-3635-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org,
 	=?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 14 17:19:45 2009
+X-From: git-owner@vger.kernel.org Sat Feb 14 17:19:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYNF3-0002Cu-7p
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 17:19:45 +0100
+	id 1LYNF2-0002Cu-Ff
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 17:19:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751418AbZBNQSM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Feb 2009 11:18:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750967AbZBNQSL
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 11:18:11 -0500
-Received: from moutng.kundenserver.de ([212.227.126.171]:64287 "EHLO
+	id S1751464AbZBNQQm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Feb 2009 11:16:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751418AbZBNQQm
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 11:16:42 -0500
+Received: from moutng.kundenserver.de ([212.227.126.186]:64611 "EHLO
 	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750752AbZBNQSK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 11:18:10 -0500
+	with ESMTP id S1750822AbZBNQQl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 11:16:41 -0500
 Received: from [127.0.1.1] (p5B130271.dip0.t-ipconnect.de [91.19.2.113])
 	by mrelayeu.kundenserver.de (node=mrelayeu8) with ESMTP (Nemesis)
-	id 0ML31I-1LYNDQ2pb5-0007TO; Sat, 14 Feb 2009 17:18:06 +0100
+	id 0ML31I-1LYNBs2d11-0007uG; Sat, 14 Feb 2009 17:16:32 +0100
 X-Mailer: git-send-email 1.6.2.rc0.111.g246ed
-X-Provags-ID: V01U2FsdGVkX183YswyRsvSRBH/TkenhL8aRXMLAs+qGKW1qzy
- t5cADShCClHvbfGPR5sIgN7rK6MSTLaMAR/Dyi/NcQxXYq1VEs
- X8kJG3aa/JO3Ar5R0xGkA==
+X-Provags-ID: V01U2FsdGVkX1+C+ZUc0+C8Juan4kpKxQ9Ma53oxHAwjLK33E7
+ MgZSRwk37bokoQ9DRgIf6RNA8XhnA6VVXwfasGmZ2wsOzT0tCO
+ SuU0GkywDox/aWs0ohXXg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109877>
 
-Both rerere.c and builtin-rerere.c define the static functions
-rr_path() and has_resolution() the exact same way.  To eliminate this
-code duplication this patch turns the functions in rerere.c
-non-static, and makes builtin-rerere.c use them.
+Commit 72183cb2 (Fix gitdir detection when in subdir of
+gitdir, 2009-01-16) added a test to 't1501-worktree' to check the
+behaviour of 'git rev-parse --git-dir' in a special case.  However,
+t1501 is about testing separate work tree setups, and not about basic
+'rev-parse' functionality, which is tested in t1500-rev-parse.
+Therefore, this patch moves that test to t1500.
 
 Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
 ---
- builtin-rerere.c |   11 -----------
- rerere.c         |    4 ++--
- rerere.h         |    2 ++
- 3 files changed, 4 insertions(+), 13 deletions(-)
+ t/t1500-rev-parse.sh |   11 +++++++++--
+ t/t1501-worktree.sh  |    7 -------
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/builtin-rerere.c b/builtin-rerere.c
-index bd8fc77..b175334 100644
---- a/builtin-rerere.c
-+++ b/builtin-rerere.c
-@@ -13,23 +13,12 @@ static const char git_rerere_usage[] =3D
- static int cutoff_noresolve =3D 15;
- static int cutoff_resolve =3D 60;
-=20
--static const char *rr_path(const char *name, const char *file)
--{
--	return git_path("rr-cache/%s/%s", name, file);
--}
--
- static time_t rerere_created_at(const char *name)
- {
- 	struct stat st;
- 	return stat(rr_path(name, "preimage"), &st) ? (time_t) 0 : st.st_mtim=
-e;
+diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
+index 85da4ca..186792e 100755
+--- a/t/t1500-rev-parse.sh
++++ b/t/t1500-rev-parse.sh
+@@ -26,16 +26,23 @@ test_rev_parse() {
+ 	"test '$1' =3D \"\$(git rev-parse --show-prefix)\""
+ 	shift
+ 	[ $# -eq 0 ] && return
++
++	test_expect_success "$name: git-dir" \
++	"test '$1' =3D \"\$(git rev-parse --git-dir)\""
++	shift
++	[ $# -eq 0 ] && return
  }
 =20
--static int has_resolution(const char *name)
--{
--	struct stat st;
--	return !stat(rr_path(name, "postimage"), &st);
--}
+-# label is-bare is-inside-git is-inside-work prefix
++# label is-bare is-inside-git is-inside-work prefix git-dir
++
++ROOT=3D$(pwd)
+=20
+ test_rev_parse toplevel false false true ''
+=20
+ cd .git || exit 1
+ test_rev_parse .git/ false true false ''
+ cd objects || exit 1
+-test_rev_parse .git/objects/ false true false ''
++test_rev_parse .git/objects/ false true false '' "$ROOT/.git"
+ cd ../.. || exit 1
+=20
+ mkdir -p sub/dir || exit 1
+diff --git a/t/t1501-worktree.sh b/t/t1501-worktree.sh
+index 27dc6c5..f6a6f83 100755
+--- a/t/t1501-worktree.sh
++++ b/t/t1501-worktree.sh
+@@ -92,13 +92,6 @@ cd sub/dir || exit 1
+ test_rev_parse 'in repo.git/sub/dir' false true true sub/dir/
+ cd ../../../.. || exit 1
+=20
+-test_expect_success 'detecting gitdir when cwd is in a subdir of gitdi=
+r' '
+-	(expected=3D$(pwd)/repo.git &&
+-	 cd repo.git/refs &&
+-	 unset GIT_DIR &&
+-	 test "$expected" =3D "$(git rev-parse --git-dir)")
+-'
 -
- static void unlink_rr_item(const char *name)
- {
- 	unlink(rr_path(name, "thisimage"));
-diff --git a/rerere.c b/rerere.c
-index 3518207..ac89b80 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -12,12 +12,12 @@ static int rerere_autoupdate;
-=20
- static char *merge_rr_path;
-=20
--static const char *rr_path(const char *name, const char *file)
-+const char *rr_path(const char *name, const char *file)
- {
- 	return git_path("rr-cache/%s/%s", name, file);
- }
-=20
--static int has_resolution(const char *name)
-+int has_resolution(const char *name)
- {
- 	struct stat st;
- 	return !stat(rr_path(name, "postimage"), &st);
-diff --git a/rerere.h b/rerere.h
-index f9b0386..45b5087 100644
---- a/rerere.h
-+++ b/rerere.h
-@@ -5,5 +5,7 @@
-=20
- extern int setup_rerere(struct string_list *);
- extern int rerere(void);
-+extern const char *rr_path(const char *name, const char *file);
-+extern int has_resolution(const char *name);
-=20
- #endif
+ test_expect_success 'repo finds its work tree' '
+ 	(cd repo.git &&
+ 	 : > work/sub/dir/untracked &&
 --=20
-1.6.2.rc0.111.g246ed
+1.6.2.rc0.81.g79856
