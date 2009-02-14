@@ -1,74 +1,103 @@
-From: Kjetil Barvik <barvik@broadpark.no>
-Subject: Re: [PATCH/RFC v3 7/9] write_entry(): use fstat() instead of lstat()
- when file is open
-Date: Sat, 14 Feb 2009 18:50:34 +0100
-Organization: private
-Message-ID: <86ab8olxg5.fsf@broadpark.no>
-References: <cover.1233751281.git.barvik@broadpark.no>
- <21073c1f3f6c2c81b26a632f495325f5e7a7de5a.1233751281.git.barvik@broadpark.no>
- <49899FA4.2020003@viscovery.net> <7vfxiut57t.fsf@gitster.siamese.dyndns.org>
- <86tz7ayo51.fsf_-_@broadpark.no> <498A9FD3.2020601@viscovery.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] builtin-remote: better handling of multiple remote
+	HEADs
+Date: Sat, 14 Feb 2009 12:54:20 -0500
+Message-ID: <20090214175420.GA3457@coredump.intra.peff.net>
+References: <20090214034345.GB24545@coredump.intra.peff.net> <1234607430-5403-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Sat Feb 14 18:52:38 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, barkalow@iabervon.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 14 18:56:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYOgo-00065k-2y
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 18:52:30 +0100
+	id 1LYOkH-0007Hm-DG
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 18:56:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751773AbZBNRui (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 12:50:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751766AbZBNRui
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 12:50:38 -0500
-Received: from osl1smout1.broadpark.no ([80.202.4.58]:42703 "EHLO
-	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751741AbZBNRui (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 12:50:38 -0500
-Received: from osl1sminn1.broadpark.no ([80.202.4.59])
- by osl1smout1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KF2001BKHKB1N60@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Sat, 14 Feb 2009 18:50:35 +0100 (CET)
-Received: from localhost ([84.48.79.110]) by osl1sminn1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KF200FD8HKA0B20@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Sat, 14 Feb 2009 18:50:35 +0100 (CET)
-In-reply-to: <498A9FD3.2020601@viscovery.net>
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
+	id S1751733AbZBNRyX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2009 12:54:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751808AbZBNRyX
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 12:54:23 -0500
+Received: from peff.net ([208.65.91.99]:34918 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751728AbZBNRyW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 12:54:22 -0500
+Received: (qmail 1045 invoked by uid 107); 14 Feb 2009 17:54:41 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 14 Feb 2009 12:54:41 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 14 Feb 2009 12:54:20 -0500
+Content-Disposition: inline
+In-Reply-To: <1234607430-5403-1-git-send-email-jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109887>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+On Sat, Feb 14, 2009 at 05:30:30AM -0500, Jay Soffian wrote:
 
-> Kjetil Barvik schrieb:
->>   And, yes, since each lstat() call cost approximately 44 microseconds
->>   compared to 12-16 for each lstat() on my Linux box, there was a little
->                                ^^^^^^^ fstat()?
->>   performance gain from this patch.
->
-> This does look like a good gain. But do you have hard numbers that back
-> the claim?
+> In this situation, git remote set-head --auto should not try to guess
+> which HEAD the user wants. This patch causes set-head to provide a
+> useful error instead:
+> 
+> $ git remote set-head origin --auto
+> error: Multiple remote HEAD branches. Please choose one explicitly with:
+>   git remote set-head origin another
+>   git remote set-head origin master
 
-  OK, I have done some testing/profiling with oprofile(1), and one thing
-  I found out was that my Linux kernel was built with SLUB debug, and of
-  course it cost some system time to run the VM debug code.  After I
-  turned this off, the total system time when down from aprox 6 to 3
-  seconds for the 'git checkout -q my-v2.6.25/7' test.
+Thanks. The patch looks good to me, with two comments and one style nit:
 
-  Also, from strace output each lstat() call now take around 16
-  microseconds, and each fstat() call around 12 microseconds, so for
-  aprox 14000 changed calls (lstat() => fstat()) the performance gain
-  should now only be (* 14000 (- 16 12)) = 56 ms, compared to 467 ms,
-  which I reported before.
+> +		else if (states.heads.nr == 1)
+> +			printf("  HEAD branch: %s\n",
+> +				states.heads.items[0].string);
+> +		else
+> +			show_list("  HEAD branch%s:", &states.heads, "");
 
-  -- kjetil
+I was happy to see the common case of "we unambiguously determined HEAD"
+falls back to nicer output (though I admit I did a double-take seeing
+both show_list and the states.heads.nr check, I see it is because
+show_list always insists on a newline).
 
-  1) http://oprofile.sourceforge.net/about/
+That should help current users with simple setups, but also support
+unambiguous HEAD reporting in the future (and based on what Daniel said
+earlier, http should just need a client patch to pass the information
+up the callstack).
+
+> +		if (opt_a)
+> +			printf("%s/HEAD set to %s\n", argv[0], head_name);
+
+This was a surprise based on reading the commit message, but I think it
+is a sensible enhancement.
+
+> +cat > test/expect <<EOF
+> +origin/HEAD set to master
+> +EOF
+> +
+> +test_expect_success 'set-head --auto' '
+> +	(cd test &&
+> +	 git remote set-head --auto origin > output &&
+> +	 git symbolic-ref refs/remotes/origin/HEAD &&
+> +	test_cmp expect output)
+> +'
+
+I had to read this test a few times to convince myself it was right,
+since you throw away the output of symbolic-ref. I think it makes more
+sense to just test the post-command state, which is what you actually
+care about (and then you are also not dependent on the human-readable
+output of "remote set-head"). I.e.:
+
+cat > test/expect <<EOF
+refs/remotes/origin/master
+EOF
+
+test_expect_success 'set-head --auto' '
+	(cd test &&
+	 git remote set-head --auto origin &&
+	 git symbolic-ref refs/remotes/origin/HEAD > output &&
+	test_cmp expect output)
+'
+
+-Peff
