@@ -1,82 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: [PATCH] config: Use parseopt.
-Date: Sat, 14 Feb 2009 13:10:03 -0800
-Message-ID: <7vtz6wrahg.fsf@gitster.siamese.dyndns.org>
+Date: Sat, 14 Feb 2009 23:13:23 +0200
+Message-ID: <94a0d4530902141313i24ddc571m6a041f3879960ab2@mail.gmail.com>
 References: <1234577142-22965-1-git-send-email-felipe.contreras@gmail.com>
- <7vab8pweod.fsf@gitster.siamese.dyndns.org>
- <94a0d4530902140237o7d26ff4j1c7350d926d12c1a@mail.gmail.com>
- <7vhc2wu8a0.fsf@gitster.siamese.dyndns.org>
- <94a0d4530902141209j7a3a9976l80355bee526852ed@mail.gmail.com>
+	 <7vab8pweod.fsf@gitster.siamese.dyndns.org>
+	 <94a0d4530902140237o7d26ff4j1c7350d926d12c1a@mail.gmail.com>
+	 <alpine.DEB.1.00.0902141230250.10279@pacific.mpi-cbg.de>
+	 <94a0d4530902140415j4168d09dh8abac0d6eba0b8cf@mail.gmail.com>
+	 <alpine.DEB.1.00.0902142003300.10279@pacific.mpi-cbg.de>
+	 <94a0d4530902141114s7352841cmf5c4259211a793e3@mail.gmail.com>
+	 <alpine.DEB.1.00.0902142022340.10279@pacific.mpi-cbg.de>
+	 <alpine.DEB.1.00.0902142025420.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 14 22:11:43 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Feb 14 22:15:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYRnZ-0002Py-E9
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 22:11:41 +0100
+	id 1LYRr3-0003XF-2S
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 22:15:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752140AbZBNVKO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 16:10:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752060AbZBNVKN
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 16:10:13 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63832 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751870AbZBNVKM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 16:10:12 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 78C1099796;
-	Sat, 14 Feb 2009 16:10:09 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 101B399795; Sat,
- 14 Feb 2009 16:10:04 -0500 (EST)
-In-Reply-To: <94a0d4530902141209j7a3a9976l80355bee526852ed@mail.gmail.com>
- (Felipe Contreras's message of "Sat, 14 Feb 2009 22:09:59 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: DC78B918-FADB-11DD-8669-0433C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1754157AbZBNVN1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2009 16:13:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754150AbZBNVN0
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 16:13:26 -0500
+Received: from fg-out-1718.google.com ([72.14.220.158]:6677 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754130AbZBNVNZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 16:13:25 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so77315fgg.17
+        for <git@vger.kernel.org>; Sat, 14 Feb 2009 13:13:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=AjTwKbtOxljB7Ovj9PEwhuh3XV1w+IzznmxEykHiS0w=;
+        b=nwEyt9sFgUDKr5l20k6TAU8JP3KTz54ILu5F/d16Ybtb6MY8YPrx8go2SRIn9wgol8
+         vXthfPD8kzfy7W13VHYcdGnGVjGVx69wY33FS+xmTIQbAEzd+GTMg+hphjx0RHeFzZDy
+         jTCqyqugNkxVE1x9slJxdldTALxkw5gcW1hSI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=jvHk4aAk6vkDO3SSH4HWg0FrXRvXagnqrbx9zING3uuX/XszEPalreqmqsmIKMMxMs
+         QRrZxSN41P5Xh/vJ3YJ7JEcCa7foaN83EM2bWxhy7F96qoRelh7cJaA7MyaTn+p0Ns+a
+         1VJNoLc2rnl0qRP9SOVUjzI9XqBts4ZUFJFBQ=
+Received: by 10.86.92.9 with SMTP id p9mr531633fgb.15.1234646003454; Sat, 14 
+	Feb 2009 13:13:23 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0902142025420.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109929>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
-
->> Unfortunately, not many patch authors write such a summary.  Sometimes we
->> see summaries on things that were discussed but nobody has followed
->> through posted by third parties (including myself), but we do not seem to
->> have enough helpers to do that either.  This does not take much technical
->> skills but is a good "trust point" earner.
+On Sat, Feb 14, 2009 at 9:26 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
 >
-> For me it's easier, and more fun to write a separate patch that fixes
-> the issues than writing a summary,...
+> On Sat, 14 Feb 2009, Johannes Schindelin wrote:
+>
+>> On Sat, 14 Feb 2009, Felipe Contreras wrote:
+>>
+>> > On Sat, Feb 14, 2009 at 9:11 PM, Johannes Schindelin
+>> > <Johannes.Schindelin@gmx.de> wrote:
+>> > > Hi,
+>> > >
+>> > > On Sat, 14 Feb 2009, Felipe Contreras wrote:
+>> > >
+>> > >> 1) --list when no config file is given uses all the config files,
+>> > >> wouldn't it make sense to have a --repo option?
+>> > >
+>> > > The idea of --list is not "cat .git/config".  The idea is to help users or
+>> > > scripts to list the current settings (_including_ the global settings).
+>> > >
+>> > > You can force showing the repo-specific config with "git --file
+>> > > .git/config", though.
+>> >
+>> > When you are on the root directory of the repo, and you don't have
+>> > GIT_DIR, or --git-dir.
+>>
+>> When I wrote my response, I briefly considered if I had to be verbose, and
+>> decided against it.
+>>
+>> But this is what I should have written:
+>>
+>>       git --file $(git rev-parse --git-dir)/config --list
+>
+> Okay, before anybody points out that I was not verbose enough -- again --
+> this is what I really should have written:
+>
+>        git --file "$(git rev-parse --git-dir)"/config --list
 
-That certainly is something we should take into consideration.
+Yeap, it's possible, but I think people would not complain about "git
+--repo --list". I think it would be much clearer to have --global
+--system --repo and --all. Then we can say --list by default uses
+--all, and --edit uses --repo, and it doesn't make sense to do --edit
+--all.
 
-I however think an unwritten assumption around here so far has been that
-the patch author who gets review comments is expected to keep track of the
-issues raised, both about the patch itself and about the similar breakages
-in the existing code pointed out during the review process, if only
-because the patch author is the focal point of the discussion.
+Anyway, I don't care that much.
 
-We probably need to break that.
-
-Because it is very likely that the reviewer does not even realize that
-such similar breakages in the existing code when a review is made, we
-cannot ask reviewers to always start a separate discussion.  Some reviews
-do say "Admittedly, we already have the same pattern in here and there,
-but this in your patch is wrong," but the way how we collectively realize
-an existing breakage is often by hearing the patch author respond with
-"but there already are this and that breakages in the existing code."
-
-We do not want such knowledge of existing breakages go to waste in either
-case.  Perhaps it would be a good start to make it the responsibility of
-the first person who mentions an existing breakage (either the reviewer's
-"Admittedly", or the patch author's "but there already are") to begin a
-separate thread, so that mail archive would remember it.  It shouldn't
-take more than 3 minutes.
+-- 
+Felipe Contreras
