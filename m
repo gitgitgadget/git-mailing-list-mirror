@@ -1,94 +1,232 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH v3] send-email: --suppress-cc improvements
-Date: Sat, 14 Feb 2009 23:21:11 +0100
-Message-ID: <200902142321.22904.trast@student.ethz.ch>
-References: <7vzlgpzfru.fsf@gitster.siamese.dyndns.org> <1234631186-10179-1-git-send-email-trast@student.ethz.ch>
+From: =?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: [PATCH] rerere: remove duplicated functions
+Date: Sat, 14 Feb 2009 23:21:04 +0100
+Message-ID: <1234650064-639-1-git-send-email-szeder@ira.uka.de>
+References: <alpine.DEB.1.00.0902141944030.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1295549.zrAdzidnjz";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 14 23:23:09 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	=?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Feb 14 23:23:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYSub-0005ay-Ms
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 23:23:02 +0100
+	id 1LYSua-0005ay-11
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 23:23:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752358AbZBNWVd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 17:21:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752344AbZBNWVd
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 17:21:33 -0500
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:38870 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752328AbZBNWVc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 17:21:32 -0500
-Received: from xfe1.d.ethz.ch ([82.130.124.41]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 14 Feb 2009 23:21:31 +0100
-Received: from thomas.localnet ([77.56.223.244]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 14 Feb 2009 23:21:30 +0100
-User-Agent: KMail/1.11.0 (Linux/2.6.27.7-9-default; KDE/4.2.0; x86_64; ; )
-In-Reply-To: <1234631186-10179-1-git-send-email-trast@student.ethz.ch>
-X-OriginalArrivalTime: 14 Feb 2009 22:21:31.0131 (UTC) FILETIME=[964824B0:01C98EF2]
+	id S1752220AbZBNWVK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Feb 2009 17:21:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751655AbZBNWVK
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 17:21:10 -0500
+Received: from moutng.kundenserver.de ([212.227.17.10]:60095 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751417AbZBNWVI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 17:21:08 -0500
+Received: from [127.0.1.1] (p5B130271.dip0.t-ipconnect.de [91.19.2.113])
+	by mrelayeu.kundenserver.de (node=mrelayeu0) with ESMTP (Nemesis)
+	id 0MKwh2-1LYSsg46m9-0006Lb; Sat, 14 Feb 2009 23:21:06 +0100
+X-Mailer: git-send-email 1.6.2.rc0.111.g246ed
+In-Reply-To: <alpine.DEB.1.00.0902141944030.10279@pacific.mpi-cbg.de>
+X-Provags-ID: V01U2FsdGVkX1+oxjBKiQkNjN7Ll5nh4rOUmuNvB56HNNhK0mz
+ XiacYVNxFA9ks/nKlrTj1Z5vdXLKVbLWw/hD0gyCDbOgtodbw3
+ P/rdlC/BVd7rW6oMeQJ7g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109941>
 
---nextPart1295549.zrAdzidnjz
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Both rerere.c and builtin-rerere.c define the static functions
+rr_path() and has_resolution() the exact same way.  To eliminate this
+code duplication this patch turns the functions in rerere.c
+non-static, and makes builtin-rerere.c use them.  Also, since this
+puts these two functions into the global namespace, rename them to
+rerere_path() and has_rerere_resolution(), respectively, and rename
+their "name" parameter to "hex", because it better reflects what that
+parameter actually is.
 
-I just noticed that I lost the comments after '---' due to repeated
-format-patch'ing, so here goes:
+Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+---
 
-Thomas Rast wrote:
-> From: Jay Soffian <jaysoffian@gmail.com>
->=20
-> Since 6564828 (git-send-email: Generalize auto-cc recipient
-> mechanism., 2007-12-25) we can suppress automatic Cc generation
-> separately for each of the possible address sources.  However,
-> --suppress-cc=3Dsob suppressed both SOB lines and body (but not header)
-> Cc lines, contrary to the name.
->=20
-> Change --suppress-cc=3Dsob to mean only SOB lines, and add separate
-> choices 'bodycc' (body Cc lines) and 'body' (both 'sob' and 'bodycc').
-> The option --no-signed-off-by-cc now acts like --suppress-cc=3Dsob,
-> which is not backwards compatible but matches the name of the option.
->=20
-> Also update the documentation and add a few tests.
->=20
-> Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
-> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-> ---
+  On Sat, Feb 14, 2009 at 07:47:36PM +0100, Johannes Schindelin wrote:
+  > > +extern const char *rr_path(const char *name, const char *file);
+  > > +extern int has_resolution(const char *name);
+  >=20
+  > You might argue that rr_path() is a unique enough name (although I'=
+d
+  > rather name it rerere_path() instead), but has_resolution() is not =
+a
+  > good description of what the function does when it lives in the glo=
+bal
+  > name space.  has_rerere_resolution() (with "hex" instead of "name",=
+ to
+  > make it obvious what the parameter actually _is_) should be a much
+  > better name.
 
-I tried to address Junio's comments, mostly by reformatting the docs
-and expanding the tests, but also changing the handling of 'body' in
-the code.  I also edited the patch message to my liking.
+  You are right;  I was aiming for a minimal change and haven't noticed
+  the naming issue.  Renamed both functions and their "name" parameter,
+  as you suggested.
 
-Of course your SOB above is now forged, so you'll have to ack it.
 
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+ builtin-rerere.c |   25 +++++++------------------
+ rerere.c         |   22 +++++++++++-----------
+ rerere.h         |    2 ++
+ 3 files changed, 20 insertions(+), 29 deletions(-)
 
---nextPart1295549.zrAdzidnjz
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkmXQ+IACgkQqUud07tmzP1hswCfda07SKqJI2sKbWWkdLmSNc+d
-EncAn3Ee4p0ce0+lhlOUOTY0ng2JNeY8
-=oaVb
------END PGP SIGNATURE-----
-
---nextPart1295549.zrAdzidnjz--
+diff --git a/builtin-rerere.c b/builtin-rerere.c
+index bd8fc77..020af73 100644
+--- a/builtin-rerere.c
++++ b/builtin-rerere.c
+@@ -13,28 +13,17 @@ static const char git_rerere_usage[] =3D
+ static int cutoff_noresolve =3D 15;
+ static int cutoff_resolve =3D 60;
+=20
+-static const char *rr_path(const char *name, const char *file)
+-{
+-	return git_path("rr-cache/%s/%s", name, file);
+-}
+-
+ static time_t rerere_created_at(const char *name)
+ {
+ 	struct stat st;
+-	return stat(rr_path(name, "preimage"), &st) ? (time_t) 0 : st.st_mtim=
+e;
+-}
+-
+-static int has_resolution(const char *name)
+-{
+-	struct stat st;
+-	return !stat(rr_path(name, "postimage"), &st);
++	return stat(rerere_path(name, "preimage"), &st) ? (time_t) 0 : st.st_=
+mtime;
+ }
+=20
+ static void unlink_rr_item(const char *name)
+ {
+-	unlink(rr_path(name, "thisimage"));
+-	unlink(rr_path(name, "preimage"));
+-	unlink(rr_path(name, "postimage"));
++	unlink(rerere_path(name, "thisimage"));
++	unlink(rerere_path(name, "preimage"));
++	unlink(rerere_path(name, "postimage"));
+ 	rmdir(git_path("rr-cache/%s", name));
+ }
+=20
+@@ -65,7 +54,7 @@ static void garbage_collect(struct string_list *rr)
+ 		then =3D rerere_created_at(e->d_name);
+ 		if (!then)
+ 			continue;
+-		cutoff =3D (has_resolution(e->d_name)
++		cutoff =3D (has_rerere_resolution(e->d_name)
+ 			  ? cutoff_resolve : cutoff_noresolve);
+ 		if (then < now - cutoff * 86400)
+ 			string_list_append(e->d_name, &to_remove);
+@@ -124,7 +113,7 @@ int cmd_rerere(int argc, const char **argv, const c=
+har *prefix)
+ 	if (!strcmp(argv[1], "clear")) {
+ 		for (i =3D 0; i < merge_rr.nr; i++) {
+ 			const char *name =3D (const char *)merge_rr.items[i].util;
+-			if (!has_resolution(name))
++			if (!has_rerere_resolution(name))
+ 				unlink_rr_item(name);
+ 		}
+ 		unlink(git_path("rr-cache/MERGE_RR"));
+@@ -137,7 +126,7 @@ int cmd_rerere(int argc, const char **argv, const c=
+har *prefix)
+ 		for (i =3D 0; i < merge_rr.nr; i++) {
+ 			const char *path =3D merge_rr.items[i].string;
+ 			const char *name =3D (const char *)merge_rr.items[i].util;
+-			diff_two(rr_path(name, "preimage"), path, path, path);
++			diff_two(rerere_path(name, "preimage"), path, path, path);
+ 		}
+ 	else
+ 		usage(git_rerere_usage);
+diff --git a/rerere.c b/rerere.c
+index 3518207..713c6e1 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -12,15 +12,15 @@ static int rerere_autoupdate;
+=20
+ static char *merge_rr_path;
+=20
+-static const char *rr_path(const char *name, const char *file)
++const char *rerere_path(const char *hex, const char *file)
+ {
+-	return git_path("rr-cache/%s/%s", name, file);
++	return git_path("rr-cache/%s/%s", hex, file);
+ }
+=20
+-static int has_resolution(const char *name)
++int has_rerere_resolution(const char *hex)
+ {
+ 	struct stat st;
+-	return !stat(rr_path(name, "postimage"), &st);
++	return !stat(rerere_path(hex, "postimage"), &st);
+ }
+=20
+ static void read_rr(struct string_list *rr)
+@@ -208,12 +208,12 @@ static int merge(const char *name, const char *pa=
+th)
+ 	mmbuffer_t result =3D {NULL, 0};
+ 	xpparam_t xpp =3D {XDF_NEED_MINIMAL};
+=20
+-	if (handle_file(path, NULL, rr_path(name, "thisimage")) < 0)
++	if (handle_file(path, NULL, rerere_path(name, "thisimage")) < 0)
+ 		return 1;
+=20
+-	if (read_mmfile(&cur, rr_path(name, "thisimage")) ||
+-			read_mmfile(&base, rr_path(name, "preimage")) ||
+-			read_mmfile(&other, rr_path(name, "postimage")))
++	if (read_mmfile(&cur, rerere_path(name, "thisimage")) ||
++			read_mmfile(&base, rerere_path(name, "preimage")) ||
++			read_mmfile(&other, rerere_path(name, "postimage")))
+ 		return 1;
+ 	ret =3D xdl_merge(&base, &cur, "", &other, "",
+ 			&xpp, XDL_MERGE_ZEALOUS, &result);
+@@ -291,7 +291,7 @@ static int do_plain_rerere(struct string_list *rr, =
+int fd)
+ 			string_list_insert(path, rr)->util =3D hex;
+ 			if (mkdir(git_path("rr-cache/%s", hex), 0755))
+ 				continue;
+-			handle_file(path, NULL, rr_path(hex, "preimage"));
++			handle_file(path, NULL, rerere_path(hex, "preimage"));
+ 			fprintf(stderr, "Recorded preimage for '%s'\n", path);
+ 		}
+ 	}
+@@ -307,7 +307,7 @@ static int do_plain_rerere(struct string_list *rr, =
+int fd)
+ 		const char *path =3D rr->items[i].string;
+ 		const char *name =3D (const char *)rr->items[i].util;
+=20
+-		if (has_resolution(name)) {
++		if (has_rerere_resolution(name)) {
+ 			if (!merge(name, path)) {
+ 				if (rerere_autoupdate)
+ 					string_list_insert(path, &update);
+@@ -326,7 +326,7 @@ static int do_plain_rerere(struct string_list *rr, =
+int fd)
+ 			continue;
+=20
+ 		fprintf(stderr, "Recorded resolution for '%s'.\n", path);
+-		copy_file(rr_path(name, "postimage"), path, 0666);
++		copy_file(rerere_path(name, "postimage"), path, 0666);
+ 	mark_resolved:
+ 		rr->items[i].util =3D NULL;
+ 	}
+diff --git a/rerere.h b/rerere.h
+index f9b0386..13313f3 100644
+--- a/rerere.h
++++ b/rerere.h
+@@ -5,5 +5,7 @@
+=20
+ extern int setup_rerere(struct string_list *);
+ extern int rerere(void);
++extern const char *rerere_path(const char *hex, const char *file);
++extern int has_rerere_resolution(const char *hex);
+=20
+ #endif
+--=20
+1.6.2.rc0.111.g246ed
