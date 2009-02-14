@@ -1,105 +1,109 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] builtin-remote: better handling of multiple remote
-	HEADs
-Date: Sat, 14 Feb 2009 16:15:48 -0500
-Message-ID: <20090214211548.GA14898@coredump.intra.peff.net>
-References: <20090214034345.GB24545@coredump.intra.peff.net> <1234607430-5403-1-git-send-email-jaysoffian@gmail.com> <20090214175420.GA3457@coredump.intra.peff.net> <alpine.LNX.1.00.0902141503230.19665@iabervon.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] config: Use parseopt.
+Date: Sat, 14 Feb 2009 23:24:03 +0200
+Message-ID: <94a0d4530902141324w1cea462ex99a698e5a702d85a@mail.gmail.com>
+References: <1234577142-22965-1-git-send-email-felipe.contreras@gmail.com>
+	 <7vab8pweod.fsf@gitster.siamese.dyndns.org>
+	 <94a0d4530902140237o7d26ff4j1c7350d926d12c1a@mail.gmail.com>
+	 <7vhc2wu8a0.fsf@gitster.siamese.dyndns.org>
+	 <94a0d4530902141209j7a3a9976l80355bee526852ed@mail.gmail.com>
+	 <7vtz6wrahg.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Sat Feb 14 22:18:12 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 14 22:25:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYRth-0004Mj-8q
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 22:18:01 +0100
+	id 1LYS13-0006bf-QV
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 22:25:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754366AbZBNVPx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 16:15:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754236AbZBNVPw
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 16:15:52 -0500
-Received: from peff.net ([208.65.91.99]:57343 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754038AbZBNVPv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 16:15:51 -0500
-Received: (qmail 2634 invoked by uid 107); 14 Feb 2009 21:16:09 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 14 Feb 2009 16:16:09 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 14 Feb 2009 16:15:49 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.LNX.1.00.0902141503230.19665@iabervon.org>
+	id S1752300AbZBNVYK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2009 16:24:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752242AbZBNVYI
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 16:24:08 -0500
+Received: from fg-out-1718.google.com ([72.14.220.159]:54557 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752138AbZBNVYF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 16:24:05 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so77837fgg.17
+        for <git@vger.kernel.org>; Sat, 14 Feb 2009 13:24:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=jsvgQt7mz9osOdcH9chxkIxRPlLFOFqLdemw/7zRfD0=;
+        b=lnmngWSWjB4/w65yYK+dvGHbuWxcWKZC6Vb8FLNkmvmhiSsDyXE6yRZl5kpCfu77R8
+         cAEP0pPjzesdpKSkgu482LfihoCNSe5yY2Xvwv+pZWsTZPR1ZJKY4KQd6edA90HMNIWP
+         1BLR18nBGjVLebn1dUXZQFIARxIhExTjR365E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=IC7FcFM38YnzaSXjMgzQfE27yQPkrxwEFcqMCBgQ8MutLd0pXEFRQ8WJe7/S4XtAjD
+         aVJT5fHWElsvLjasO2rTaoERqHIdFIiXzVgMKxCFP+zM9Yy6kASj4Q3uAETVzVht2vll
+         AKExf7aG2Vzr+fdFtXQgbYLayvFbgG/aaoNv0=
+Received: by 10.86.72.15 with SMTP id u15mr533950fga.8.1234646643671; Sat, 14 
+	Feb 2009 13:24:03 -0800 (PST)
+In-Reply-To: <7vtz6wrahg.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109932>
 
-On Sat, Feb 14, 2009 at 03:21:30PM -0500, Daniel Barkalow wrote:
+On Sat, Feb 14, 2009 at 11:10 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>>> Unfortunately, not many patch authors write such a summary.  Sometimes we
+>>> see summaries on things that were discussed but nobody has followed
+>>> through posted by third parties (including myself), but we do not seem to
+>>> have enough helpers to do that either.  This does not take much technical
+>>> skills but is a good "trust point" earner.
+>>
+>> For me it's easier, and more fun to write a separate patch that fixes
+>> the issues than writing a summary,...
+>
+> That certainly is something we should take into consideration.
+>
+> I however think an unwritten assumption around here so far has been that
+> the patch author who gets review comments is expected to keep track of the
+> issues raised, both about the patch itself and about the similar breakages
+> in the existing code pointed out during the review process, if only
+> because the patch author is the focal point of the discussion.
+>
+> We probably need to break that.
+>
+> Because it is very likely that the reviewer does not even realize that
+> such similar breakages in the existing code when a review is made, we
+> cannot ask reviewers to always start a separate discussion.  Some reviews
+> do say "Admittedly, we already have the same pattern in here and there,
+> but this in your patch is wrong," but the way how we collectively realize
+> an existing breakage is often by hearing the patch author respond with
+> "but there already are this and that breakages in the existing code."
+>
+> We do not want such knowledge of existing breakages go to waste in either
+> case.  Perhaps it would be a good start to make it the responsibility of
+> the first person who mentions an existing breakage (either the reviewer's
+> "Admittedly", or the patch author's "but there already are") to begin a
+> separate thread, so that mail archive would remember it.  It shouldn't
+> take more than 3 minutes.
 
-> I haven't checked lately, but I think that what's actually needed is to 
-> have the locate_head() function notice if the struct ref for HEAD actually 
-> has the symref field non-NULL, and report that as the unambiguous answer. 
+That is true, however I propose something a bit different. At least in
+this review there has been a number of issues brought up, it would be
+overkill to create a separate thread for each one of these issues as
+they where found, and if the patch submitter is new, he probably
+wouldn't know about this rule.
 
-Indeed. Something like the patch below works (on top of Jay's patches).
-But it has two shortcomings:
+So, I propose that at the end of the patch review process the ack
+person (or somebody else) asks the patch submitter (possibly cc'ing
+the reviewers) to start a new thread mentioning the pending issues
+brought up in the review.
 
-  1. There is no test script, since we have no infrastructure for
-     testing over http. I might be able to build something on top of
-     what's in the http-push tests.
-
-     I was hoping we could do the same trick for local file repos, which
-     would be easy to test. But the transport code just treats them as
-     regular pack uploaders; only some specialized code in clone cares
-     about the difference.
-
-     In theory we could add a new transport for local repos. I don't
-     think it would make sense for its get_remote_refs function to get
-     _all_ of the refs, but it could specially peek at HEAD and set the
-     symref field appropriately.
-
-  2. The guess_remote_head function is getting a little long. I think it
-     would help to refactor it into two functions; one for finding the
-     remote HEAD in the refs list, and the other for guessing at a ref
-     which matches the HEAD.
-
-I will try to make something a little neater later today.
-
-> This should also allow it to automatically pick up any other 
-> disambiguation by future sources of lists of refs that include HEAD, 
-> whether that's git protocol extensions, filesystem access to the repo, or 
-> foreign VCSes where some branches is inherently primary, or whatever.
-
-Yes, I think the symref field for the ref is a very sensible way of
-communicating the information for that reason.
-
-Patch is below.
-
----
-diff --git a/remote.c b/remote.c
-index 6385a22..afbaccc 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1404,6 +1404,20 @@ const struct ref *guess_remote_head(const struct ref *refs,
- 	if (!remote_head)
- 		return NULL;
- 
-+	/* if the underlying transport can represent symrefs,
-+	 * then we don't need to guess at all */
-+	if (remote_head->symref) {
-+		for (r = mapped_refs; r; r = r->next) {
-+			if (!strcmp(r->name, remote_head->symref)) {
-+				if (all_matches_p) {
-+					*all_matches_p = copy_ref(r);
-+					(*all_matches_p)->peer_ref = NULL;
-+				}
-+				return r;
-+			}
-+		}
-+	}
-+
- 	/* If refs/heads/master could be right, it is. */
- 	if (remote_master && !hashcmp(remote_master->old_sha1,
- 				      remote_head->old_sha1))
+-- 
+Felipe Contreras
