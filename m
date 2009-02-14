@@ -1,68 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH v2] Teach rebase to rebase even if upstream is up to 
- date
-Date: Sat, 14 Feb 2009 11:56:58 -0800
-Message-ID: <7vr620ssfp.fsf@gitster.siamese.dyndns.org>
-References: <1234565281-20960-1-git-send-email-srabbelier@gmail.com>
- <alpine.DEB.1.00.0902140703540.10279@pacific.mpi-cbg.de>
- <bd6139dc0902140957pa5852d6m61211054b3f5e395@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] config: Use parseopt.
+Date: Sat, 14 Feb 2009 20:59:36 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902142041370.10279@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.0902141230250.10279@pacific.mpi-cbg.de> <1234612989-32297-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailinglist <git@vger.kernel.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 14 20:58:38 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 14 21:00:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYQeq-0004jP-D4
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 20:58:36 +0100
+	id 1LYQgN-00057E-FH
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 21:00:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752124AbZBNT5J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 14:57:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752046AbZBNT5H
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 14:57:07 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59422 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752059AbZBNT5H (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 14:57:07 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 69F702B21F;
-	Sat, 14 Feb 2009 14:57:04 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A5BAF2B21E; Sat,
- 14 Feb 2009 14:57:00 -0500 (EST)
-In-Reply-To: <bd6139dc0902140957pa5852d6m61211054b3f5e395@mail.gmail.com>
- (Sverre Rabbelier's message of "Sat, 14 Feb 2009 18:57:28 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A6C76512-FAD1-11DD-82C5-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1752102AbZBNT6p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2009 14:58:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751923AbZBNT6o
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 14:58:44 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53455 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751904AbZBNT6n (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 14:58:43 -0500
+Received: (qmail invoked by alias); 14 Feb 2009 19:58:41 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp052) with SMTP; 14 Feb 2009 20:58:41 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19XTexjxH1X/UrjGmewJYhTwqNvL2OeY/6G5uTEgn
+	H/F1iXRI9TKfu2
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1234612989-32297-1-git-send-email-felipe.contreras@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.49
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109912>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+Hi,
 
-> On Sat, Feb 14, 2009 at 07:07, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
->> I know that you can turn it off with --whitespace=nowarn, but that's
->> such an outlier that we do not have to care about it, right?
->
-> Well, actually, in the v1 thread Junio mentioned that it should not
-> imply -f for --whitespace=nowarn.
->
->> Or if we really want to:
->>
->>        --whitespace=nowarn) ;;
->>        --whitespace=*) force_rebase=t ;;
->>
->> Hm?
->
-> No strong opinion on my side, what does the gitster have to say about it?
+On Sat, 14 Feb 2009, Felipe Contreras wrote:
 
-"Fix" is obviously a request to "fix" things.  On the other hand, at least
-to me, "warn" is more about "*if you were to* rewrite and find issues,
-please notify me".  So I prefer what is queued already.
+> @@ -231,7 +264,7 @@ static int get_diff_color_found;
+>  static int git_get_colorbool_config(const char *var, const char *value,
+>  		void *cb)
+>  {
+> -	if (!strcmp(var, get_color_slot)) {
+> +	if (!strcmp(var, get_colorbool_slot)) {
+>  		get_colorbool_found =
+>  			git_config_colorbool(var, value, stdout_is_tty);
+>  	}
+
+Name changes like this make it harder to read the patch; can you separate 
+that change out into its own patch?
+
+> +	if (use_global_config) {
+> +		char *home = getenv("HOME");
+> +		if (home) {
+> +			char *user_config = xstrdup(mkpath("%s/.gitconfig", home));
+> +			config_exclusive_filename = user_config;
+
+In a subsequent patch, you might add a check only one of --global, 
+--system or --file was given.
+
+> +	else if (given_config_file) {
+> +		if (!is_absolute_path(given_config_file) && file)
+> +			file = prefix_filename(file, strlen(file),
+> +					       given_config_file);
+> +		else
+> +			file = given_config_file;
+> +		config_exclusive_filename = file;
+
+It took me a considerable amount of time to figure out that "file" is 
+actually the "prefix"!  That cleanup would be nice to have before the 
+parseopt patch, methinks, especially since the code is reindented, and 
+thus hard to follow in the diff.
+
+> +	if (actions & ACTION_LIST) {
+> +		if (git_config(show_all_config, NULL) < 0 &&
+> +		    file && errno)
+
+Should this not be config_exclusive_filename?
+
+> +			die("unable to read config file %s: %s", file,
+> +			    strerror(errno));
+
+Do we really only want to die() in case we know the file name?  AFAICT at 
+this point we have no idea in which of the possibly three files the error 
+occurred.  And there need not be any errno set, for example when there was 
+a parse error.
+
+> +	else if (actions & ACTION_EDIT) {
+> +		const char *config_filename;
+> +		if (config_exclusive_filename)
+> +			config_filename = config_exclusive_filename;
+> +		else
+> +			config_filename = git_path("config");
+
+Why not reuse config_exclusive_filename here?
+
+> +	else if (actions & ACTION_ADD) {
+> +		check_argc(argc, 2, 2);
+
+BTW what about check_argc() in the previous two cases?
+
+> +		return git_config_set_multivar(argv[0], value, "^$", 0);
+
+Now that I see this, there is another idea for a possible cleanup after 
+the parseoptification: cmd_config() should not return -1, as that will be 
+turned into the exit status.  So maybe prefix the return value with "!!"?
+
+Or maybe even better: set a variable "ret" and at the end of cmd_config(), 
+"return !!ret;"?
+
+The rest looks good to me.
+ 
+Thanks,
+Dscho
