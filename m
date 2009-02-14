@@ -1,144 +1,161 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 2/2] Teach @{-1} to git merge
-Date: Sat, 14 Feb 2009 01:39:29 -0800
-Message-ID: <7vskmhuzla.fsf_-_@gitster.siamese.dyndns.org>
-References: <7v4oyxzeay.fsf@gitster.siamese.dyndns.org>
- <76718490902132311j5add87bcpb103c951a8192b05@mail.gmail.com>
- <7vzlgpxz4g.fsf@gitster.siamese.dyndns.org>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH] use a hash of the lock token as the suffix for PUT/MOVE
+Date: Sat, 14 Feb 2009 17:52:14 +0800
+Message-ID: <4996944E.9000104@gmail.com>
+References: <49967321.10800@gmail.com> <7vskmhwh6m.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jay Soffian <jaysoffian@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 14 10:41:11 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 14 10:54:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYH1D-00047Q-CO
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 10:41:03 +0100
+	id 1LYHDg-0007VH-7z
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 10:53:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751223AbZBNJjg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 04:39:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751145AbZBNJjg
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 04:39:36 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63774 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750931AbZBNJjf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 04:39:35 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 29B772B1A6;
-	Sat, 14 Feb 2009 04:39:34 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 321E62B1A5; Sat,
- 14 Feb 2009 04:39:31 -0500 (EST)
-In-Reply-To: <7vzlgpxz4g.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Fri, 13 Feb 2009 23:21:19 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 6319F100-FA7B-11DD-A7DE-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1750834AbZBNJw2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2009 04:52:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751053AbZBNJw1
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 04:52:27 -0500
+Received: from ti-out-0910.google.com ([209.85.142.190]:22020 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750832AbZBNJwZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 04:52:25 -0500
+Received: by ti-out-0910.google.com with SMTP id d10so1187305tib.23
+        for <git@vger.kernel.org>; Sat, 14 Feb 2009 01:52:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=L9I/SRZ+XSB3kYbV64sK+LevQSgpDmgrMdxHc4tzSSQ=;
+        b=R1gdSSbXPyUyDVYPBWC6kUlH58kM3KiyLMptL3XZJ39On6756/Fdl9UuOUMgym+F8X
+         vMw23qh086KSzNibMqg4lTblNoI3j914kvTj5S5fcqCG7tuZmvoUxnqb7+nAOBNcjRAc
+         EYHb4TmHndMhvVEFJjruBxFzvgoaWmkDHzJ1E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=JhiQwcAm1BIdAEY0PUp9CMNtncB2Jj5f6JRNR5BP3ZGyqY3uiPscDDVXKvqAe5bYBp
+         +KHT8vToDQwzrITPOR5htjYx4irIpSkRPT21qoZ9kPtOqmqJmVhSPXDJlqLc+b1FjHFQ
+         oVaLJbVY/KDWK0QD0ELtwn1UB0PnvZPMVpXIQ=
+Received: by 10.110.103.16 with SMTP id a16mr1108125tic.19.1234605143122;
+        Sat, 14 Feb 2009 01:52:23 -0800 (PST)
+Received: from ?116.87.149.13? ([116.87.149.13])
+        by mx.google.com with ESMTPS id i9sm1317764tid.33.2009.02.14.01.52.21
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 14 Feb 2009 01:52:22 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <7vskmhwh6m.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109853>
 
-1.6.2 will have @{-1} syntax advertised as "usable anywhere you can use
-a branch name".  However, "git merge @{-1}" did not work.
+After 753bc91 ("Remove the requirement opaquelocktoken uri scheme"),
+lock tokens are in the URI forms in which they are received from the
+server, eg. 'opaquelocktoken:', 'urn:uuid:'.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+However, "start_put" (and consequently "start_move"), which attempts to
+create a unique temporary file using the UUID of the lock token,
+inadvertently uses the lock token in its URI form. These file
+operations on the server may not be successful (specifically, in
+Windows), due to the colon ':' character from the URI form of the lock
+token in the file path.
+
+This patch uses a hash of the lock token instead, guaranteeing only
+"safe" characters (a-f, 0-9) are used in the file path.
+
+The token's hash is generated when the lock token is received from the
+server in handle_new_lock_ctx, minimizing the number of times of
+hashing.
+
+Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
 ---
- * I know "show-branch @{-1} HEAD" does not dereference @{-1}, but I
-   suspect there may be many others.
 
- builtin-merge.c     |   15 ++++++++++++---
- t/t0100-previous.sh |   23 +++++++++++++++++++++++
- 2 files changed, 35 insertions(+), 3 deletions(-)
+This patch is a result of the discussion on "[PATCH] use lock token in
+non-URI form in start_put"; you can read it at
+http://kerneltrap.org/mailarchive/git/2009/2/7/4922094.
 
-diff --git a/builtin-merge.c b/builtin-merge.c
-index 885fad9..6d2160d 100644
---- a/builtin-merge.c
-+++ b/builtin-merge.c
-@@ -356,9 +356,14 @@ static void merge_name(const char *remote, struct strbuf *msg)
- 	struct object *remote_head;
- 	unsigned char branch_head[20], buf_sha[20];
- 	struct strbuf buf = STRBUF_INIT;
-+	struct strbuf bname = STRBUF_INIT;
- 	const char *ptr;
- 	int len, early;
- 
-+	len = strlen(remote);
-+	if (interpret_nth_last_branch(remote, &bname) == len)
-+		remote = bname.buf;
+The decision to use a hash of the token is so that one can avoid
+handling the URI scheme of the lock token, which may be a deeply
+nested URI, or (the more likely scenario) contain "unsafe" characters
+for a file name, such as colons, slashes and spaces.
+
+* use tmpfile_suffix instead of token_sha1_hex in remote_lock, as
+suggested by Junio, and absorb '_' as a result
+* memcpy string from sha1_to_hex to tmpfile_suffix
+
+ http-push.c          |   13 +++++++++++--
+ t/t5540-http-push.sh |    7 +++++++
+ 2 files changed, 18 insertions(+), 2 deletions(-)
+
+diff --git a/http-push.c b/http-push.c
+index eefd64c..edbff58 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -153,6 +153,7 @@ struct remote_lock
+ 	char *url;
+ 	char *owner;
+ 	char *token;
++	char tmpfile_suffix[41];
+ 	time_t start_time;
+ 	long timeout;
+ 	int refreshing;
+@@ -557,8 +558,7 @@ static void start_put(struct transfer_request *request)
+ 	request->dest = strbuf_detach(&buf, NULL);
+
+ 	append_remote_object_url(&buf, remote->url, hex, 0);
+-	strbuf_addstr(&buf, "_");
+-	strbuf_addstr(&buf, request->lock->token);
++	strbuf_add(&buf, request->lock->tmpfile_suffix, 41);
+ 	request->url = strbuf_detach(&buf, NULL);
+
+ 	slot = get_active_slot();
+@@ -1130,6 +1130,8 @@ static void handle_lockprop_ctx(struct xml_ctx *ctx, int tag_closed)
+ static void handle_new_lock_ctx(struct xml_ctx *ctx, int tag_closed)
+ {
+ 	struct remote_lock *lock = (struct remote_lock *)ctx->userData;
++	git_SHA_CTX sha_ctx;
++	unsigned char lock_token_sha1[20];
+
+ 	if (tag_closed && ctx->cdata) {
+ 		if (!strcmp(ctx->name, DAV_ACTIVELOCK_OWNER)) {
+@@ -1142,6 +1144,13 @@ static void handle_new_lock_ctx(struct xml_ctx *ctx, int tag_closed)
+ 		} else if (!strcmp(ctx->name, DAV_ACTIVELOCK_TOKEN)) {
+ 			lock->token = xmalloc(strlen(ctx->cdata) + 1);
+ 			strcpy(lock->token, ctx->cdata);
 +
- 	memset(branch_head, 0, sizeof(branch_head));
- 	remote_head = peel_to_type(remote, 0, NULL, OBJ_COMMIT);
- 	if (!remote_head)
-@@ -371,7 +376,7 @@ static void merge_name(const char *remote, struct strbuf *msg)
- 	if (!hashcmp(remote_head->sha1, branch_head)) {
- 		strbuf_addf(msg, "%s\t\tbranch '%s' of .\n",
- 			sha1_to_hex(branch_head), remote);
--		return;
-+		goto cleanup;
- 	}
- 
- 	/* See if remote matches <name>^^^.. or <name>~<number> */
-@@ -411,7 +416,8 @@ static void merge_name(const char *remote, struct strbuf *msg)
- 				    sha1_to_hex(remote_head->sha1),
- 				    truname.buf + 11,
- 				    (early ? " (early part)" : ""));
--			return;
-+			strbuf_release(&truname);
-+			goto cleanup;
++			git_SHA1_Init(&sha_ctx);
++			git_SHA1_Update(&sha_ctx, lock->token, strlen(lock->token));
++			git_SHA1_Final(lock_token_sha1, &sha_ctx);
++
++			lock->tmpfile_suffix[0] = '_';
++			memcpy(lock->tmpfile_suffix + 1, sha1_to_hex(lock_token_sha1), 40);
  		}
  	}
- 
-@@ -432,10 +438,13 @@ static void merge_name(const char *remote, struct strbuf *msg)
- 			strbuf_remove(&line, ptr-line.buf+1, 13);
- 		strbuf_addbuf(msg, &line);
- 		strbuf_release(&line);
--		return;
-+		goto cleanup;
- 	}
- 	strbuf_addf(msg, "%s\t\tcommit '%s'\n",
- 		sha1_to_hex(remote_head->sha1), remote);
-+cleanup:
-+	strbuf_release(&buf);
-+	strbuf_release(&bname);
  }
- 
- static int git_merge_config(const char *k, const char *v, void *cb)
-diff --git a/t/t0100-previous.sh b/t/t0100-previous.sh
-index db51b42..315b9b3 100755
---- a/t/t0100-previous.sh
-+++ b/t/t0100-previous.sh
-@@ -22,5 +22,28 @@ test_expect_success 'branch -d @{-12} when there is not enough switches yet' '
- 	git rev-parse --verify refs/heads/master
+diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
+index c236b5e..11b3432 100755
+--- a/t/t5540-http-push.sh
++++ b/t/t5540-http-push.sh
+@@ -94,6 +94,13 @@ test_expect_success 'MKCOL sends directory names with trailing slashes' '
+
  '
- 
-+test_expect_success 'merge @{-1}' '
-+	git checkout A &&
-+	test_commit B &&
-+	git checkout A &&
-+	test_commit C &&
-+	git branch -f master B &&
-+	git branch -f other &&
-+	git checkout other &&
-+	git checkout master &&
-+	git merge @{-1} &&
-+	git cat-file commit HEAD | grep "Merge branch '\''other'\''"
+
++test_expect_success 'PUT and MOVE sends object to URLs with SHA-1 hash suffix' '
++
++	grep -P "\"(?:PUT|MOVE) .+objects/[\da-z]{2}/[\da-z]{38}_[\da-z\-]{40} HTTP/[0-9.]+\" 20\d" \
++		< "$HTTPD_ROOT_PATH"/access.log
++
 +'
 +
-+test_expect_success 'merge @{-1} when there is not enough switches yet' '
-+	git reflog expire --expire=now &&
-+	git checkout -f master &&
-+	git reset --hard B &&
-+	git branch -f other C &&
-+	git checkout other &&
-+	git checkout master &&
-+	test_must_fail git merge @{-12}
-+'
-+
+ stop_httpd
+
  test_done
- 
 -- 
-1.6.2.rc0.80.ge11dd
+1.6.1.2.278.g9a9e.dirty
