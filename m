@@ -1,122 +1,78 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] config: Use parseopt.
-Date: Sat, 14 Feb 2009 20:59:36 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902142041370.10279@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0902141230250.10279@pacific.mpi-cbg.de> <1234612989-32297-1-git-send-email-felipe.contreras@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] parse-opt: migrate builtin-ls-files.
+Date: Sat, 14 Feb 2009 12:04:44 -0800
+Message-ID: <7vmycoss2r.fsf@gitster.siamese.dyndns.org>
+References: <20090107144640.GD831@artemis.corp>
+ <1231376145-32331-1-git-send-email-vmiklos@frugalware.org>
+ <20090115001410.GE30710@genesis.frugalware.org>
+ <7vljtdw961.fsf@gitster.siamese.dyndns.org>
+ <20090214121631.GG4371@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 14 21:00:12 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Sat Feb 14 21:06:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYQgN-00057E-FH
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 21:00:11 +0100
+	id 1LYQmJ-0006qO-48
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 21:06:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752102AbZBNT6p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 14:58:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751923AbZBNT6o
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 14:58:44 -0500
-Received: from mail.gmx.net ([213.165.64.20]:53455 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751904AbZBNT6n (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 14:58:43 -0500
-Received: (qmail invoked by alias); 14 Feb 2009 19:58:41 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp052) with SMTP; 14 Feb 2009 20:58:41 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19XTexjxH1X/UrjGmewJYhTwqNvL2OeY/6G5uTEgn
-	H/F1iXRI9TKfu2
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <1234612989-32297-1-git-send-email-felipe.contreras@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.49
+	id S1752001AbZBNUEv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2009 15:04:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751973AbZBNUEv
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 15:04:51 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59814 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751611AbZBNUEu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 15:04:50 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3B9192B220;
+	Sat, 14 Feb 2009 15:04:50 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 686372B21F; Sat,
+ 14 Feb 2009 15:04:46 -0500 (EST)
+In-Reply-To: <20090214121631.GG4371@genesis.frugalware.org> (Miklos Vajna's
+ message of "Sat, 14 Feb 2009 13:16:31 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: BC6C6894-FAD2-11DD-82C5-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109913>
 
-Hi,
+Miklos Vajna <vmiklos@frugalware.org> writes:
 
-On Sat, 14 Feb 2009, Felipe Contreras wrote:
+> On Wed, Jan 14, 2009 at 07:16:38PM -0800, Junio C Hamano <gitster@pobox.com> wrote:
+>> Miklos Vajna <vmiklos@frugalware.org> writes:
+>> 
+>> > Was this dropped on the floor by accident?
+>> 
+>> I am not fundamentally opposed to the parseopt conversion, but I was
+>> somewhat discouraged from taking another one, after we got burned by the
+>> one that converted git-apply without much visible gain but with a new bug.
+>> 
+>> Because ls-files is a plumbing, it has somewhat lower priority for user
+>> friendliness than any other patches currently in-flight on the list; hence
+>> it has been backburnered.  It still is kept in my Inbox.
+>
+> I'm just asking again as I see the parseopt patch for builtin-config now
+> on the list.
+>
+> Should I just resend this patch after v1.6.2?
 
-> @@ -231,7 +264,7 @@ static int get_diff_color_found;
->  static int git_get_colorbool_config(const char *var, const char *value,
->  		void *cb)
->  {
-> -	if (!strcmp(var, get_color_slot)) {
-> +	if (!strcmp(var, get_colorbool_slot)) {
->  		get_colorbool_found =
->  			git_config_colorbool(var, value, stdout_is_tty);
->  	}
+You can do it either way, and a resend after v1.6.2 is certainly
+appreciated,
 
-Name changes like this make it harder to read the patch; can you separate 
-that change out into its own patch?
+As I said earlier in "What's cooking", 'pu' and 'next' are open during
+this freeze cycle as an experiment.
 
-> +	if (use_global_config) {
-> +		char *home = getenv("HOME");
-> +		if (home) {
-> +			char *user_config = xstrdup(mkpath("%s/.gitconfig", home));
-> +			config_exclusive_filename = user_config;
+I limit my bandwidth for handing anything non-fix during the rc freeze
+period as always.  The only difference from previous cycles is that the
+cap used to be set to near-absolute-zero, but in this cycle it is not.
 
-In a subsequent patch, you might add a check only one of --global, 
---system or --file was given.
-
-> +	else if (given_config_file) {
-> +		if (!is_absolute_path(given_config_file) && file)
-> +			file = prefix_filename(file, strlen(file),
-> +					       given_config_file);
-> +		else
-> +			file = given_config_file;
-> +		config_exclusive_filename = file;
-
-It took me a considerable amount of time to figure out that "file" is 
-actually the "prefix"!  That cleanup would be nice to have before the 
-parseopt patch, methinks, especially since the code is reindented, and 
-thus hard to follow in the diff.
-
-> +	if (actions & ACTION_LIST) {
-> +		if (git_config(show_all_config, NULL) < 0 &&
-> +		    file && errno)
-
-Should this not be config_exclusive_filename?
-
-> +			die("unable to read config file %s: %s", file,
-> +			    strerror(errno));
-
-Do we really only want to die() in case we know the file name?  AFAICT at 
-this point we have no idea in which of the possibly three files the error 
-occurred.  And there need not be any errno set, for example when there was 
-a parse error.
-
-> +	else if (actions & ACTION_EDIT) {
-> +		const char *config_filename;
-> +		if (config_exclusive_filename)
-> +			config_filename = config_exclusive_filename;
-> +		else
-> +			config_filename = git_path("config");
-
-Why not reuse config_exclusive_filename here?
-
-> +	else if (actions & ACTION_ADD) {
-> +		check_argc(argc, 2, 2);
-
-BTW what about check_argc() in the previous two cases?
-
-> +		return git_config_set_multivar(argv[0], value, "^$", 0);
-
-Now that I see this, there is another idea for a possible cleanup after 
-the parseoptification: cmd_config() should not return -1, as that will be 
-turned into the exit status.  So maybe prefix the return value with "!!"?
-
-Or maybe even better: set a variable "ret" and at the end of cmd_config(), 
-"return !!ret;"?
-
-The rest looks good to me.
- 
-Thanks,
-Dscho
+It still is capped and updates to 'pu' and 'next' are "as time permits"
+basis.
