@@ -1,58 +1,85 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] config: Use parseopt.
-Date: Sat, 14 Feb 2009 20:11:02 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902142003300.10279@pacific.mpi-cbg.de>
-References: <1234577142-22965-1-git-send-email-felipe.contreras@gmail.com>  <7vab8pweod.fsf@gitster.siamese.dyndns.org>  <94a0d4530902140237o7d26ff4j1c7350d926d12c1a@mail.gmail.com>  <alpine.DEB.1.00.0902141230250.10279@pacific.mpi-cbg.de>
- <94a0d4530902140415j4168d09dh8abac0d6eba0b8cf@mail.gmail.com>
+Subject: Re: [PATCH v2] Documentation: pruning recipe for destructive
+ filter-branch
+Date: Sat, 14 Feb 2009 20:12:27 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902142011410.10279@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.0902141248220.10279@pacific.mpi-cbg.de> <1234621328-8998-1-git-send-email-trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 14 20:11:41 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-395896675-1234638747=:10279"
+Cc: git@vger.kernel.org, =?ISO-8859-15?Q?Jan_Kr=FCger?= <jk@jk.gs>,
+	Junio C Hamano <gitster@pobox.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Sat Feb 14 20:13:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYPvO-0006qF-Uq
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 20:11:39 +0100
+	id 1LYPwl-0007Ke-24
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 20:13:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751808AbZBNTKK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 14:10:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751758AbZBNTKK
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 14:10:10 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50475 "HELO mail.gmx.net"
+	id S1751810AbZBNTLf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2009 14:11:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751628AbZBNTLf
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 14:11:35 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39138 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751269AbZBNTKJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 14:10:09 -0500
-Received: (qmail invoked by alias); 14 Feb 2009 19:10:07 -0000
+	id S1751572AbZBNTLe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 14:11:34 -0500
+Received: (qmail invoked by alias); 14 Feb 2009 19:11:32 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp008) with SMTP; 14 Feb 2009 20:10:07 +0100
+  by mail.gmx.net (mp017) with SMTP; 14 Feb 2009 20:11:32 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18ZxlAvenkZZlmp8EzSRsUViACwLrCLYJg3GRkUDL
-	4ylsXmHlTqjdX+
+X-Provags-ID: V01U2FsdGVkX1/Zu9AckyHZD1504S8PMy6c8MoF+iB+g4KmG9ioLV
+	0icSSShr/C/ht+
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <94a0d4530902140415j4168d09dh8abac0d6eba0b8cf@mail.gmail.com>
+In-Reply-To: <1234621328-8998-1-git-send-email-trast@student.ethz.ch>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.75
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109894>
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-395896675-1234638747=:10279
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
 Hi,
 
-On Sat, 14 Feb 2009, Felipe Contreras wrote:
+On Sat, 14 Feb 2009, Thomas Rast wrote:
 
-> 1) --list when no config file is given uses all the config files,
-> wouldn't it make sense to have a --repo option?
+> Johannes Schindelin wrote:
+> > On Sat, 14 Feb 2009, Jan Krüger wrote:
+> > 
+> > > Subject: [PATCH] gc: add --prune-expire option equivalent to gc.pruneExpire
+> > 
+> > I like it, and if nobody beats me to it, I will add a test for this 
+> > option tonight.
+> 
+> Cool, then let's use that in the docs.
 
-The idea of --list is not "cat .git/config".  The idea is to help users or 
-scripts to list the current settings (_including_ the global settings).
+This would be needed in addition, incase that my --prune=<date> patch is 
+taken:
 
-You can force showing the repo-specific config with "git --file 
-.git/config", though.
+diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+index d148e58..a8ad884 100644
+--- a/Documentation/git-filter-branch.txt
++++ b/Documentation/git-filter-branch.txt
+@@ -371,7 +371,7 @@ warned.
+ * Expire all reflogs with `git reflog expire \--expire=now \--all`.
+ 
+ * Garbage collect all unreferenced objects with `git gc
+-  \--prune-expire=now` (or if your git-gc is not new enough to have
++  \--prune=now` (or if your git-gc is not new enough to have
+   that option, `git repack -ad; git prune`).
+ 
+ 
+-- 
+1.6.2.rc0.367.g7f9a5
 
-Ciao,
-Dscho
+--8323328-395896675-1234638747=:10279--
