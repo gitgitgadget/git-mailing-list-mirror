@@ -1,59 +1,119 @@
-From: "Alfred M\. Szmidt" <ams@gnu.org>
-Subject: git-svn -- out of memory
-Date: Sat, 14 Feb 2009 11:40:03 +0100
-Message-ID: <1234608003.115771.3468.nullmailer@beryx.hq.kred>
-Reply-To: ams@gnu.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 14 12:07:58 2009
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] config: Use parseopt.
+Date: Sat, 14 Feb 2009 12:40:18 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902141230250.10279@pacific.mpi-cbg.de>
+References: <1234577142-22965-1-git-send-email-felipe.contreras@gmail.com>  <7vab8pweod.fsf@gitster.siamese.dyndns.org> <94a0d4530902140237o7d26ff4j1c7350d926d12c1a@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 14 12:40:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYINI-0001if-3m
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 12:07:56 +0100
+	id 1LYItE-0001VL-97
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 12:40:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751337AbZBNLG2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 06:06:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751227AbZBNLG1
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 06:06:27 -0500
-Received: from hq.kreditor.se ([213.136.42.58]:2445 "EHLO auxid.hq.kred"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750978AbZBNLG1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 06:06:27 -0500
-X-Greylist: delayed 1580 seconds by postgrey-1.27 at vger.kernel.org; Sat, 14 Feb 2009 06:06:26 EST
-Received: by auxid.hq.kred (Postfix, from userid 118)
-	id 337451378CA8; Sat, 14 Feb 2009 11:40:04 +0100 (CET)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on auxid.hq.kred
-X-Spam-Level: 
-X-Spam-Status: No, score=0.1 required=5.0 tests=AWL autolearn=disabled 
-	version=3.1.7-deb
-Received: from beryx.hq.kred (unknown [10.16.0.106])
-	by auxid.hq.kred (Postfix) with SMTP id 14D941378C83
-	for <git@vger.kernel.org>; Sat, 14 Feb 2009 11:40:04 +0100 (CET)
-Received: (nullmailer pid 3469 invoked by uid 1000);
-	Sat, 14 Feb 2009 10:40:03 -0000
+	id S1751422AbZBNLj3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2009 06:39:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751402AbZBNLj2
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 06:39:28 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54981 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751351AbZBNLj1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 06:39:27 -0500
+Received: (qmail invoked by alias); 14 Feb 2009 11:39:25 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp030) with SMTP; 14 Feb 2009 12:39:25 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18h2N9U8NEhhOJHsqsvoy8kRaX9f34s15grEV8BoG
+	aaSJrSjF+Rgcgp
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <94a0d4530902140237o7d26ff4j1c7350d926d12c1a@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109860>
 
 Hi,
 
-when doing a `git svn clone' on a subversion repository that contains
-a large file (>1GiB), `git svn' dies with the following:
+On Sat, 14 Feb 2009, Felipe Contreras wrote:
 
-ams@trillian:~$ git svn clone REPO -T trunk -b branches -t tags
-[...]
-fatal: Out of memory? mmap failed: Cannot allocate memory
-hash-object -w --stdin-paths: command returned error: 128
+> Then why are you asking?
 
-error closing pipe: Bad file descriptor at /usr/local/bin/libexec/git-core//git-svn line 0
-error closing pipe: Bad file descriptor at /usr/local/bin/libexec/git-core//git-svn line 0
+Out of curiosity, I guess, as it would happen to answer my curiosity as 
+well.
 
-Doing a `git repack' doesn't help either.  Anyone got a clue how to
-either solve, or work around this?
+> This is more a "I would like to increase the chances of my patches
+> being accepted so I'd do some chores to gain the trust of some
+> developers", and Johannes Schindelin was pushing me to do this.
 
-git version 1.6.1.3
+Heh, I'll gladly take the blame for that!
 
-Cheers.
+Note that in contrast to Junio, I think "git config" is a chimera between 
+plumbing and porcelain, and would benefit tremendously from a nice help.
+
+> >> +static int type_int, type_bool, type_bool_or_int;
+> >
+> > You can have either (no type specified, int, bool, bool-or-int) at the
+> > end.  Using three independent variables does not feel right.
+> >
+> > Hint: OPTION_SET_INT.
+> 
+> That definitely makes things easier, it would have been nice to see an
+> example of this; I didn't knew it was there.
+> 
+> The only problem is that --bool and --int would be possible in the
+> same command and there would be no way to output an error, but I guess
+> that's not a big problem.
+
+I think that is okay.
+
+> >> +     else if (do_add) {
+> >> +             if (argc > 2)
+> >> +                     die("Too many arguments.");
+> >> +             if (argc != 2)
+> >> +                     die("Need name value.");
+> >> +             value = normalize_value(argv[0], argv[1]);
+> >> +             return git_config_set_multivar(argv[0], value, "^$", 0);
+> >
+> > This part did not lose argc error checking, but...
+> >
+> >> +     }
+> >> +     else if (do_replace_all) {
+> >> +             value = normalize_value(argv[0], argv[1]);
+> >> +             return git_config_set_multivar(argv[0], value, (argc == 3 ? argv[2] : NULL), 1);
+> >
+> > You do not check argc here (nor in many "else if" below) to make sure you
+> > have sufficient number of arguments.  "git config --unset" is now allowed
+> > to segfault, and "git config --unset a b c d e f" can silently ignore
+> > excess arguments for example?
+> 
+> Yes the arguments check need to be revised.
+> 
+> My hope was somebody would review this and suggest a clever and
+> generic way of doing this. Perhaps a util function check_min_args, or
+> maybe something in parseopt that receives the number of args?
+
+Maybe a helper, yes.  Something like:
+
+	static void check_argc(int argc, int min, int max) {
+		if (argc >= min && argc <= max)
+			return;
+		fprintf(stderr, "Wrong number of arguments: %d\n", argc);
+		usage_with_options(config_usage, config_options);
+	}
+
+Of course, this assumes that config_usage and config_options are global...
+
+> Also, I think the code would be easier to maintain with parseopt.
+
+I agree.
+
+Thanks,
+Dscho
