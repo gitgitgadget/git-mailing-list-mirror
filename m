@@ -1,75 +1,54 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH v3] gitweb: fix wrong base URL when non-root 
-	DirectoryIndex
-Date: Sat, 14 Feb 2009 15:29:49 +0100
-Message-ID: <cb7bb73a0902140629pa1ad038pe898aa0d804d0707@mail.gmail.com>
-References: <200902122303.37499.jnareb@gmail.com>
-	 <7vskmh3gtv.fsf@gitster.siamese.dyndns.org>
-	 <200902140342.26270.jnareb@gmail.com>
-	 <200902141104.35042.jnareb@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] config: Use parseopt.
+Date: Sat, 14 Feb 2009 10:17:25 -0500
+Message-ID: <20090214151725.GB3887@sigill.intra.peff.net>
+References: <1234577142-22965-1-git-send-email-felipe.contreras@gmail.com> <m3skmhteuk.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Petr Baudis <pasky@suse.cz>
+Content-Type: text/plain; charset=utf-8
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 14 15:31:20 2009
+X-From: git-owner@vger.kernel.org Sat Feb 14 16:19:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYLY6-0000BU-Vg
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 15:31:19 +0100
+	id 1LYMJ0-0007Bj-SY
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 16:19:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751833AbZBNO3w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 09:29:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751786AbZBNO3v
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 09:29:51 -0500
-Received: from mail-ew0-f21.google.com ([209.85.219.21]:40031 "EHLO
-	mail-ew0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751603AbZBNO3v (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 09:29:51 -0500
-Received: by ewy14 with SMTP id 14so1342446ewy.13
-        for <git@vger.kernel.org>; Sat, 14 Feb 2009 06:29:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=SIhRNEQwn57fXWvNT3CHxiXdx2HTLevcffI7QJ7B1MA=;
-        b=tXU2hX2iZRUXNyDWHNHcA4QSjWatGEvq+Z5nLOa62BJc+0SLJIUMGmbENMzxx4uhN8
-         wJtEE96zELjvUctoVpdEW3vUAzjcIwHU9Qo+TUncOLVj6DQ4uHN4p1zKwrqRVBNDav8r
-         pxK/AgppB+J4VzEPdA6jqze1NjAcnbtVH3o18=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=lfwkSVPJ+KxNlxeN6S/ksB+gs9m2dXcKTHC2HZfKYPpq5v00w7ViGWXMMh2I7TzHDW
-         c/gUjuUOAw8yjAV1YhDbyXszGAYv7aCE2jvnrBXVec/nLYvnDU2gjdzjOjZGx5PHz374
-         0FghYpO3UrnTOv5HbIp0SbZv/vxjscySMGjcQ=
-Received: by 10.210.30.1 with SMTP id d1mr899271ebd.73.1234621789157; Sat, 14 
-	Feb 2009 06:29:49 -0800 (PST)
-In-Reply-To: <200902141104.35042.jnareb@gmail.com>
+	id S1753416AbZBNPRa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2009 10:17:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751830AbZBNPR3
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 10:17:29 -0500
+Received: from peff.net ([208.65.91.99]:54249 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753366AbZBNPR2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 10:17:28 -0500
+Received: (qmail 32450 invoked by uid 107); 14 Feb 2009 15:17:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Sat, 14 Feb 2009 10:17:46 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 14 Feb 2009 10:17:25 -0500
+Content-Disposition: inline
+In-Reply-To: <m3skmhteuk.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109872>
 
-On Sat, Feb 14, 2009 at 11:04 AM, Jakub Narebski <jnareb@gmail.com> wrote:
->
-> P.S. I wonder why Giuseppe's patch failed to apply, and failed
-> to do fallback 3-way merge...
+On Sat, Feb 14, 2009 at 03:52:56AM -0800, Jakub Narebski wrote:
 
-Because it depends on an additional quoting fix that I sent to the
-mailing list but that apparently didn't get through.
+> > -static const char git_config_set_usage[] =
+> > -"git config [ --global | --system | [ -f | --file ] config-file ] [ --bool | --int | --bool-or-int ] [ -z | --null ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --rename-section old_name new_name | --remove-section name | --list | --get-color var [default] | --get-colorbool name [stdout-is-tty] | --edit | -e ]";
+> > +static const char *const builtin_config_usage[] = {
+> > +	"git config [options]",
+> > +	NULL
+> > +};
+> 
+> Just asking: why this change?
 
-> -               print '<base href="'.esc_url($my_url).'" />\n';
-> +               print '<base href="'.esc_url($base_url).'" />\n';
+If you are asking about this specific hunk, it is because parse-options
+will generate the list of options.
 
-The quoting fix was here: double quotes are needed because otherwise
-the \n gets in literally. We can probably squash it with this patch.
-Gimme a sec and I'll cook it up again.
-
--- 
-Giuseppe "Oblomov" Bilotta
+-Peff
