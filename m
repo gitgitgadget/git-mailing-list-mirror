@@ -1,81 +1,81 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] config: Use parseopt.
-Date: Sat, 14 Feb 2009 14:06:41 +0200
-Message-ID: <94a0d4530902140406l5ccd79b6x964ad53b83079799@mail.gmail.com>
-References: <1234577142-22965-1-git-send-email-felipe.contreras@gmail.com>
-	 <m3skmhteuk.fsf@localhost.localdomain>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH v3] parse-opt: migrate builtin-ls-files.
+Date: Sat, 14 Feb 2009 13:16:31 +0100
+Message-ID: <20090214121631.GG4371@genesis.frugalware.org>
+References: <20090107144640.GD831@artemis.corp> <1231376145-32331-1-git-send-email-vmiklos@frugalware.org> <20090115001410.GE30710@genesis.frugalware.org> <7vljtdw961.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 14 13:08:29 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="UfEAyuTBtIjiZzX6"
+Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 14 13:21:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYJJq-0008Iv-SM
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 13:08:27 +0100
+	id 1LYJWY-0003pd-CO
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 13:21:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751505AbZBNMGp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 07:06:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751449AbZBNMGo
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 07:06:44 -0500
-Received: from fg-out-1718.google.com ([72.14.220.156]:12568 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751402AbZBNMGn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 Feb 2009 07:06:43 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so43232fgg.17
-        for <git@vger.kernel.org>; Sat, 14 Feb 2009 04:06:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=2HuJwOToybwemrCruq3CWQtvEm7zfYjsTLnrhlyYvKo=;
-        b=tF4P96e3Z38R/kRlRJ5gBBkLa475FY1uln/DyDtMK3pbx3eDCN/oh1CzpFJkQPVbzo
-         6JQvov2CdZ3sAD65Q1hTsn457VIeH2QlsGNlBDCO/YqRTqVKn0fU8zo+Wwcp1NqN/ocH
-         9SVcnWkdjgnAdRK19YYT6ALA54L68BQYqba50=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=osIvEPziPGmqb80zFxaBnMlhgqnF7UGWzFgYbwOEo0J5mVR6oXH3ZifOPMW2b09fli
-         HLrccIAF6NdxVOpEikksj79x4zKkKzLctMnfQcCl0rII4N27iY4m5BhX3rxncdKVfi23
-         7yu1yKkwlumB8z0exbJvII5wNFh4Wp2t9EXKA=
-Received: by 10.86.51.2 with SMTP id y2mr302347fgy.2.1234613201678; Sat, 14 
-	Feb 2009 04:06:41 -0800 (PST)
-In-Reply-To: <m3skmhteuk.fsf@localhost.localdomain>
+	id S1751533AbZBNMQg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2009 07:16:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751431AbZBNMQf
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 07:16:35 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:32881 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751389AbZBNMQe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 07:16:34 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 5185D580DF;
+	Sat, 14 Feb 2009 13:16:33 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id CBD86446A6;
+	Sat, 14 Feb 2009 13:16:31 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id AB0D511B877C; Sat, 14 Feb 2009 13:16:31 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7vljtdw961.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109867>
 
-On Sat, Feb 14, 2009 at 1:52 PM, Jakub Narebski <jnareb@gmail.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> Reorganizing the code to use parseopt as suggested by Johannes
->> Schindelin.
->
-> [...]
->> -static const char git_config_set_usage[] =
->> -"git config [ --global | --system | [ -f | --file ] config-file ] [ --bool | --int | --bool-or-int ] [ -z | --null ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --rename-section old_name new_name | --remove-section name | --list | --get-color var [default] | --get-colorbool name [stdout-is-tty] | --edit | -e ]";
->> +static const char *const builtin_config_usage[] = {
->> +     "git config [options]",
->> +     NULL
->> +};
->
-> Just asking: why this change?
 
-So it's easier to understand and maintain?
+--UfEAyuTBtIjiZzX6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->> +     OPT_BOOLEAN('z', "null", &end_null, "end values with null character"),
->
-> Terminate and NUL.
+On Wed, Jan 14, 2009 at 07:16:38PM -0800, Junio C Hamano <gitster@pobox.com=
+> wrote:
+> Miklos Vajna <vmiklos@frugalware.org> writes:
+>=20
+> > Was this dropped on the floor by accident?
+>=20
+> I am not fundamentally opposed to the parseopt conversion, but I was
+> somewhat discouraged from taking another one, after we got burned by the
+> one that converted git-apply without much visible gain but with a new bug.
+>=20
+> Because ls-files is a plumbing, it has somewhat lower priority for user
+> friendliness than any other patches currently in-flight on the list; hence
+> it has been backburnered.  It still is kept in my Inbox.
 
-Ok. Junio already suggested that.
+I'm just asking again as I see the parseopt patch for builtin-config now
+on the list.
 
--- 
-Felipe Contreras
+Should I just resend this patch after v1.6.2?
+
+--UfEAyuTBtIjiZzX6
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkmWth8ACgkQe81tAgORUJYj8ACeLtjauJHmGrCEg/9KM1kFywVb
+t4YAn2ED56fmC97+KltSsgQEMtSGWObX
+=z+YG
+-----END PGP SIGNATURE-----
+
+--UfEAyuTBtIjiZzX6--
