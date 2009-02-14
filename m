@@ -1,76 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [topgit] tg update error
-Date: Fri, 13 Feb 2009 18:16:23 -0800
-Message-ID: <7vocx53gqw.fsf@gitster.siamese.dyndns.org>
-References: <cc723f590902120009w432f5f61xd6550409835cdbb7@mail.gmail.com>
- <20090212084811.GA14261@piper.oerlikon.madduck.net>
- <20090212092558.GB21074@skywalker>
- <20090212125621.GB5397@sigill.intra.peff.net>
- <7veiy3l689.fsf@gitster.siamese.dyndns.org>
- <20090213182609.GB31860@coredump.intra.peff.net>
- <7vy6w93hdb.fsf@gitster.siamese.dyndns.org>
- <20090214020848.GA9907@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 4/4] builtin-remote: add set-head verb
+Date: Fri, 13 Feb 2009 21:18:31 -0500
+Message-ID: <20090214021831.GB9907@coredump.intra.peff.net>
+References: <1234515275-91263-1-git-send-email-jaysoffian@gmail.com> <1234515275-91263-2-git-send-email-jaysoffian@gmail.com> <1234515275-91263-3-git-send-email-jaysoffian@gmail.com> <1234515275-91263-4-git-send-email-jaysoffian@gmail.com> <1234515275-91263-5-git-send-email-jaysoffian@gmail.com> <7vtz6yabsy.fsf@gitster.siamese.dyndns.org> <20090214002253.GA7769@coredump.intra.peff.net> <7vab8p4w1u.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.vnet.ibm.com>,
-	Aneesh Kumar <aneesh.kumar@gmail.com>, madduck@debian.org,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Feb 14 03:18:02 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
+	barkalow@iabervon.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 14 03:20:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYA6R-0005Y4-JJ
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 03:18:00 +0100
+	id 1LYA8P-0005zC-MK
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 03:20:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753112AbZBNCQd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2009 21:16:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752704AbZBNCQc
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 21:16:32 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49159 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752600AbZBNCQc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2009 21:16:32 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 620A02B158;
-	Fri, 13 Feb 2009 21:16:31 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 60BFB2B156; Fri,
- 13 Feb 2009 21:16:25 -0500 (EST)
-In-Reply-To: <20090214020848.GA9907@coredump.intra.peff.net> (Jeff King's
- message of "Fri, 13 Feb 2009 21:08:48 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7E8941F4-FA3D-11DD-9D79-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1753654AbZBNCSf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2009 21:18:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753643AbZBNCSe
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 21:18:34 -0500
+Received: from peff.net ([208.65.91.99]:34984 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753598AbZBNCSd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2009 21:18:33 -0500
+Received: (qmail 27791 invoked by uid 107); 14 Feb 2009 02:18:51 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 13 Feb 2009 21:18:51 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Feb 2009 21:18:31 -0500
+Content-Disposition: inline
+In-Reply-To: <7vab8p4w1u.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109804>
 
-Jeff King <peff@peff.net> writes:
+On Fri, Feb 13, 2009 at 06:00:29PM -0800, Junio C Hamano wrote:
 
-> On Fri, Feb 13, 2009 at 06:02:56PM -0800, Junio C Hamano wrote:
->
->> > As it turns out, topgit is using refs/top-bases/ in HEAD,
->> > leading us to re-loosen (at least temporarily) the
->> > validate_headref check made in b229d18a. This patch does the
->> > corresponding loosening for the symbolic-ref safety valve,
->> > so that the two are in agreement once more.
->> >
->> > Signed-off-by: Jeff King <peff@peff.net>
->> 
->> Actually we should simply revert afe5d3d5 altogether with the above
->> message, as it introduced a test that expects the tightened behaviour.
->
-> Is there any reason to throw away the "must be in refs/" safety valve,
-> though? That was the actual patch I started with and solved my problem,
-> and the "tighten to refs/heads/" bit came from discussion. That is, I
-> think having a safety valve in symbolic-ref that matches
-> validate_headref is orthogonal to how tightly validate_headref matches.
->
-> But yes, I obviously failed to run the test suite on the follow-up patch
-> I sent. The final test in t1401 would need to be reverted, as well.
+> > It was immediately obvious to me as "auto" (I think I even suggested
+> > "-a" in another thread, so maybe that is why it seems so sensible to
+> > me).
+> 
+> Yeah, latest round has --auto in it.  Thanks, Jay.
 
-Sure.
+Oops. I even went back and double-checked to make sure that it was not
+there, but it would have helped if I actually checked the latest
+version. :(
+
+> I do not care too deeply if an explicit request to "set-head --auto"
+> screws up and sets a HEAD that was pointing at the right branch to another
+> branch because the command is not taught to give preference to the branch
+> HEAD originally points at, so I do not think I have any more issues with
+> the series for now, even though I may notice things later.
+
+I think that is reasonable; that is a separate enhancement which can
+come later and is no reason to block the existing patches.
+
+> I have this series queued to private topic branch but it still does not
+> pass tests (breaks #8 and #18 of t5505 at least) by itself; the previous
+> round was no better.  I think it is just the matter of updating the
+> expected output in the tests, but I didn't look further.
+
+Test #8 is just a matter of updating output. But #18 is explicitly about
+checking that "remote show" does not show symbolic refs. But Jay's patch
+is about explicitly showing symbolic refs (just doing so as a ref-name
+instead of a sha1):
+
+  * FAIL 18: "remote show" does not show symbolic refs
+                git clone one three &&
+                (cd three &&
+                 git remote show origin > output &&
+                 ! grep HEAD < output &&
+                 ! grep -i stale < output)
+
+I guess we could tighten the grep to
+
+  ! egrep "HEAD: [0-9a-f]{40}" < output
+
+but it may just make sense to get rid of the test; the exact output is
+already covered by test #8. Squashable patch is below.
+
+---
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index eb63718..8808580 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -136,6 +136,7 @@ EOF
+ cat > test/expect << EOF
+ * remote origin
+   URL: $(pwd)/one
++  HEAD: master
+   Remote branch merged with 'git pull' while on branch master
+     master
+   New remote branch (next fetch will store in remotes/origin)
+@@ -338,16 +339,6 @@ test_expect_success 'update default (overridden, with funny whitespace)' '
+ 
+ '
+ 
+-test_expect_success '"remote show" does not show symbolic refs' '
+-
+-	git clone one three &&
+-	(cd three &&
+-	 git remote show origin > output &&
+-	 ! grep HEAD < output &&
+-	 ! grep -i stale < output)
+-
+-'
+-
+ test_expect_success 'reject adding remote with an invalid name' '
+ 
+ 	test_must_fail git remote add some:url desired-name
