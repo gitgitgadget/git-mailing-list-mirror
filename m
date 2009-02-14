@@ -1,85 +1,68 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH 4/4] notes: refuse to edit notes outside refs/notes/
-Date: Sat, 14 Feb 2009 20:56:38 +0100
-Message-ID: <200902142056.42198.trast@student.ethz.ch>
-References: <b36bbe2f7f0ede6a2caa47190ada868dd4c0099c.1234638466.git.trast@student.ethz.ch> <ac3c2ce272e8e7f3000349f682a5a4843aea34e6.1234638466.git.trast@student.ethz.ch> <alpine.DEB.1.00.0902142032210.10279@pacific.mpi-cbg.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH v2] Teach rebase to rebase even if upstream is up to 
+ date
+Date: Sat, 14 Feb 2009 11:56:58 -0800
+Message-ID: <7vr620ssfp.fsf@gitster.siamese.dyndns.org>
+References: <1234565281-20960-1-git-send-email-srabbelier@gmail.com>
+ <alpine.DEB.1.00.0902140703540.10279@pacific.mpi-cbg.de>
+ <bd6139dc0902140957pa5852d6m61211054b3f5e395@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1389551.hUCO6CdmCU";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Feb 14 20:58:26 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailinglist <git@vger.kernel.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 14 20:58:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYQed-0004fY-M2
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 20:58:24 +0100
+	id 1LYQeq-0004jP-D4
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 20:58:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752116AbZBNT4x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 14:56:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752046AbZBNT4w
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 14:56:52 -0500
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:25085 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752001AbZBNT4v (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 14:56:51 -0500
-Received: from xfe1.d.ethz.ch ([82.130.124.41]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 14 Feb 2009 20:56:50 +0100
-Received: from thomas.localnet ([77.56.223.244]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 14 Feb 2009 20:56:49 +0100
-User-Agent: KMail/1.11.0 (Linux/2.6.27.7-9-default; KDE/4.2.0; x86_64; ; )
-In-Reply-To: <alpine.DEB.1.00.0902142032210.10279@pacific.mpi-cbg.de>
-X-OriginalArrivalTime: 14 Feb 2009 19:56:49.0991 (UTC) FILETIME=[5FEB4D70:01C98EDE]
+	id S1752124AbZBNT5J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2009 14:57:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752046AbZBNT5H
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 14:57:07 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59422 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752059AbZBNT5H (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 14:57:07 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 69F702B21F;
+	Sat, 14 Feb 2009 14:57:04 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A5BAF2B21E; Sat,
+ 14 Feb 2009 14:57:00 -0500 (EST)
+In-Reply-To: <bd6139dc0902140957pa5852d6m61211054b3f5e395@mail.gmail.com>
+ (Sverre Rabbelier's message of "Sat, 14 Feb 2009 18:57:28 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A6C76512-FAD1-11DD-82C5-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109911>
 
---nextPart1389551.hUCO6CdmCU
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Sverre Rabbelier <srabbelier@gmail.com> writes:
 
-Johannes Schindelin wrote:
-> On Sat, 14 Feb 2009, Thomas Rast wrote:
-> > Since it is supposed to be a plumbing frontend for the notes feature,
-> > simply forbid editing notes with GIT_NOTES_REF pointing anywhere but
-> > refs/notes/*.
->=20
-> ACK.
->=20
-> Except maybe for calling it "plumbing".  "git notes" is meant to be _the_=
-=20
-> porcelain of the "notes", and that is why I like the idea to restrict it=
-=20
-> to refs/notes/* for editing (not for anything else, though).
+> On Sat, Feb 14, 2009 at 07:07, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+>> I know that you can turn it off with --whitespace=nowarn, but that's
+>> such an outlier that we do not have to care about it, right?
+>
+> Well, actually, in the v1 thread Junio mentioned that it should not
+> imply -f for --whitespace=nowarn.
+>
+>> Or if we really want to:
+>>
+>>        --whitespace=nowarn) ;;
+>>        --whitespace=*) force_rebase=t ;;
+>>
+>> Hm?
+>
+> No strong opinion on my side, what does the gitster have to say about it?
 
-That's what I actually wanted to write.  Maybe I should go get more
-coffee...
-
-Thanks for the acks.  Will resend with 3/4 corrected, and add a
-conversion to test_must_fail.
-
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
-
---nextPart1389551.hUCO6CdmCU
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkmXIfoACgkQqUud07tmzP3OMQCglaQwq1EP9MwPTlShM7raFEtp
-/v0An12DuJKOSOvsXuRBwIDCZ3Hy9ZTe
-=hnqN
------END PGP SIGNATURE-----
-
---nextPart1389551.hUCO6CdmCU--
+"Fix" is obviously a request to "fix" things.  On the other hand, at least
+to me, "warn" is more about "*if you were to* rewrite and find issues,
+please notify me".  So I prefer what is queued already.
