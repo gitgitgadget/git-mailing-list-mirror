@@ -1,74 +1,113 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2] config: Use parseopt.
-Date: Sat, 14 Feb 2009 17:24:47 +0200
-Message-ID: <94a0d4530902140724m72fdb47bt7fead5dc22733299@mail.gmail.com>
-References: <alpine.DEB.1.00.0902141230250.10279@pacific.mpi-cbg.de>
-	 <1234612989-32297-1-git-send-email-felipe.contreras@gmail.com>
-	 <20090214152155.GD3887@sigill.intra.peff.net>
+From: =?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: [PATCH] rerere: remove duplicated functions
+Date: Sat, 14 Feb 2009 17:18:04 +0100
+Message-ID: <1234628284-4246-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Feb 14 16:26:34 2009
+	=?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 14 17:19:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYMPK-0000yl-PS
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 16:26:19 +0100
+	id 1LYNF3-0002Cu-7p
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 17:19:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751546AbZBNPYw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 10:24:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751342AbZBNPYv
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 10:24:51 -0500
-Received: from fg-out-1718.google.com ([72.14.220.157]:55076 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750806AbZBNPYu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 10:24:50 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so55226fgg.17
-        for <git@vger.kernel.org>; Sat, 14 Feb 2009 07:24:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=+8e4Z0Ovvt2tKEWiv3qgXCLwCbJycm+G3Dt8OiP8OvI=;
-        b=fzygOOew/294e8dLxhnPRTHVy5SSLpIYijUJ/o4J2NUuzY1UGLnuRPjTz5FKfxuVrc
-         7wAiw+SwSk6SPFm+FOURf5Q2scXFDEG5Auvruv9+G0gmgNbRu5vidwrgtwuaRVazwtXG
-         UNtcZxvM+4tDCLtbgFLODlXhTKavs0OMD12P8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=mRk1BmVFkZQJytPGh0QnNpYhI+7AfjbtcELpC6U0Pn1MYA4gcIgWkNppj7GyXI52UQ
-         4q8Z2wZdb3EPqt3q1VNsim57bJx6nO/GtEM+43E6zIH+p9TfLAWbBPj6YeXmaSAcBN+r
-         pxqOGNnUFBvbAbv0TM2uJc9jE/PTKhWfRytps=
-Received: by 10.86.33.10 with SMTP id g10mr371668fgg.44.1234625088011; Sat, 14 
-	Feb 2009 07:24:48 -0800 (PST)
-In-Reply-To: <20090214152155.GD3887@sigill.intra.peff.net>
+	id S1751418AbZBNQSM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Feb 2009 11:18:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750967AbZBNQSL
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 11:18:11 -0500
+Received: from moutng.kundenserver.de ([212.227.126.171]:64287 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750752AbZBNQSK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 11:18:10 -0500
+Received: from [127.0.1.1] (p5B130271.dip0.t-ipconnect.de [91.19.2.113])
+	by mrelayeu.kundenserver.de (node=mrelayeu8) with ESMTP (Nemesis)
+	id 0ML31I-1LYNDQ2pb5-0007TO; Sat, 14 Feb 2009 17:18:06 +0100
+X-Mailer: git-send-email 1.6.2.rc0.111.g246ed
+X-Provags-ID: V01U2FsdGVkX183YswyRsvSRBH/TkenhL8aRXMLAs+qGKW1qzy
+ t5cADShCClHvbfGPR5sIgN7rK6MSTLaMAR/Dyi/NcQxXYq1VEs
+ X8kJG3aa/JO3Ar5R0xGkA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109876>
 
-On Sat, Feb 14, 2009 at 5:21 PM, Jeff King <peff@peff.net> wrote:
-> On Sat, Feb 14, 2009 at 02:03:09PM +0200, Felipe Contreras wrote:
->
->> Reorganizing the code to use parseopt as suggested by Johannes
->> Schindelin.
->>
->> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->> ---
->>  builtin-config.c |  370 ++++++++++++++++++++++++++---------------------------
->>  1 files changed, 182 insertions(+), 188 deletions(-)
->
-> What is this built on top of? I get very large conflicts applying it on
-> top of Junio's "master".
+Both rerere.c and builtin-rerere.c define the static functions
+rr_path() and has_resolution() the exact same way.  To eliminate this
+code duplication this patch turns the functions in rerere.c
+non-static, and makes builtin-rerere.c use them.
 
-By mistake I used a dirty master branch, but it should apply on top of 'pu'.
+Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+---
+ builtin-rerere.c |   11 -----------
+ rerere.c         |    4 ++--
+ rerere.h         |    2 ++
+ 3 files changed, 4 insertions(+), 13 deletions(-)
 
--- 
-Felipe Contreras
+diff --git a/builtin-rerere.c b/builtin-rerere.c
+index bd8fc77..b175334 100644
+--- a/builtin-rerere.c
++++ b/builtin-rerere.c
+@@ -13,23 +13,12 @@ static const char git_rerere_usage[] =3D
+ static int cutoff_noresolve =3D 15;
+ static int cutoff_resolve =3D 60;
+=20
+-static const char *rr_path(const char *name, const char *file)
+-{
+-	return git_path("rr-cache/%s/%s", name, file);
+-}
+-
+ static time_t rerere_created_at(const char *name)
+ {
+ 	struct stat st;
+ 	return stat(rr_path(name, "preimage"), &st) ? (time_t) 0 : st.st_mtim=
+e;
+ }
+=20
+-static int has_resolution(const char *name)
+-{
+-	struct stat st;
+-	return !stat(rr_path(name, "postimage"), &st);
+-}
+-
+ static void unlink_rr_item(const char *name)
+ {
+ 	unlink(rr_path(name, "thisimage"));
+diff --git a/rerere.c b/rerere.c
+index 3518207..ac89b80 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -12,12 +12,12 @@ static int rerere_autoupdate;
+=20
+ static char *merge_rr_path;
+=20
+-static const char *rr_path(const char *name, const char *file)
++const char *rr_path(const char *name, const char *file)
+ {
+ 	return git_path("rr-cache/%s/%s", name, file);
+ }
+=20
+-static int has_resolution(const char *name)
++int has_resolution(const char *name)
+ {
+ 	struct stat st;
+ 	return !stat(rr_path(name, "postimage"), &st);
+diff --git a/rerere.h b/rerere.h
+index f9b0386..45b5087 100644
+--- a/rerere.h
++++ b/rerere.h
+@@ -5,5 +5,7 @@
+=20
+ extern int setup_rerere(struct string_list *);
+ extern int rerere(void);
++extern const char *rr_path(const char *name, const char *file);
++extern int has_resolution(const char *name);
+=20
+ #endif
+--=20
+1.6.2.rc0.111.g246ed
