@@ -1,68 +1,94 @@
-From: Jonas Fonseca <jonas.fonseca@gmail.com>
-Subject: Re: [ANNOUNCE] tig-0.14
-Date: Sat, 14 Feb 2009 00:57:02 +0100
-Message-ID: <2c6b72b30902131557w1bfe9e43l34b28a22d202e881@mail.gmail.com>
-References: <20090205204436.GA6072@diku.dk> <op.uo9di902a8ed4e@dellschleppa>
-	 <2c6b72b30902121424o5d4ac0d7u67a7afb3b861aa19@mail.gmail.com>
-	 <20090213023120.GA7322@b2j>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 4/4] builtin-remote: add set-head verb
+Date: Fri, 13 Feb 2009 19:22:53 -0500
+Message-ID: <20090214002253.GA7769@coredump.intra.peff.net>
+References: <1234515275-91263-1-git-send-email-jaysoffian@gmail.com> <1234515275-91263-2-git-send-email-jaysoffian@gmail.com> <1234515275-91263-3-git-send-email-jaysoffian@gmail.com> <1234515275-91263-4-git-send-email-jaysoffian@gmail.com> <1234515275-91263-5-git-send-email-jaysoffian@gmail.com> <7vtz6yabsy.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Jonas Fonseca <jonas.fonseca@gmail.com>,
-	Tilo Schwarz <tilo@tilo-schwarz.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 14 00:58:36 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
+	barkalow@iabervon.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 14 01:24:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LY7vW-0002A5-R4
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 00:58:35 +0100
+	id 1LY8Kq-0001VB-LU
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 01:24:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753402AbZBMX5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Feb 2009 18:57:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753048AbZBMX5H
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 18:57:07 -0500
-Received: from mail-bw0-f161.google.com ([209.85.218.161]:64271 "EHLO
-	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752724AbZBMX5F (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Feb 2009 18:57:05 -0500
-Received: by bwz5 with SMTP id 5so2078744bwz.13
-        for <git@vger.kernel.org>; Fri, 13 Feb 2009 15:57:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=s12Blx8aAplYasPULFgzWJUtoe5iYXdBW0POQTuU5Ek=;
-        b=c+eC1MrLE3eBYY6s6Egy0efSMXvD/p0Wza/U5inadx/2znT5DBh8qYqstrmV90tp8P
-         NHYkKRd/M4cQXYIM+DfDCsdBo0C78jftggy5KbBTXOTM5P5wty85zHcCK/H4l5Xk+bNj
-         t2Hci7WwiTPOX8BHYeVUSmicNB7q+x+3/y+OI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=hfYsAaPEDoNCVKWyZ17jR72/xFFvTNk35ma+zWKLWHLpEP2iNThB0wvRDj3/iVCN4Z
-         cTtVfW8+pegQ6gig02qIIfCJRBT0wqQtaxsch5we7p8mRdTNkZi3G+qRPxSblCfvksWI
-         UqXv+jDNeDsRyMq3Q+K6VkfNIePsA79xS6jH4=
-Received: by 10.181.31.16 with SMTP id i16mr900732bkj.129.1234569422595; Fri, 
-	13 Feb 2009 15:57:02 -0800 (PST)
-In-Reply-To: <20090213023120.GA7322@b2j>
+	id S1759537AbZBNAW6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Feb 2009 19:22:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753403AbZBNAW6
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Feb 2009 19:22:58 -0500
+Received: from peff.net ([208.65.91.99]:56162 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752826AbZBNAW5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Feb 2009 19:22:57 -0500
+Received: (qmail 27030 invoked by uid 107); 14 Feb 2009 00:23:13 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 13 Feb 2009 19:23:13 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Feb 2009 19:22:53 -0500
+Content-Disposition: inline
+In-Reply-To: <7vtz6yabsy.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109789>
 
-On Fri, Feb 13, 2009 at 03:31, bill lam <cbill.lam@gmail.com> wrote:
-> I can see that scroll-left/right only do it for one column, that is
-> not very convenient, Will it be possible to scroll for 10 columns or
-> half screen?
+On Fri, Feb 13, 2009 at 02:09:01AM -0800, Junio C Hamano wrote:
 
-Certainly, the one column thing was good for testing but agreeable not
-very usable so I have made the behavior of horizontal scrolling
-configurable. You can either set the 'horizontal-scroll' variable to
-the number of columns or the percentage of the view width you want to
-scroll. Defaults to scrolling 50% of the view width.
+> The entire series looks sane from a very cursory look; especially the
+> earlier ones are obviously good.
 
--- 
-Jonas Fonseca
+I also think it looks good. You raised a few style points below which I
+thought were sensible and won't bother repeating.
+
+> Hmph, what does "-a" stand for?  I would have expected to see "-u" that
+> stands for "update" here.
+
+It was immediately obvious to me as "auto" (I think I even suggested
+"-a" in another thread, so maybe that is why it seems so sensible to
+me). However, I think as a rule it is nice to always provide a "long"
+alternative for every option. With parse-options, there really is no
+downside; it is literally s/0/"auto"/ on the option line. And I think
+it:
+
+  - lets people who want to illustrate a command in a more readable
+    manner do so (e.g., if they are showing it to somebody else)
+
+  - makes it more obvious in the documentation and usage message what
+    the command does. That is, I remember commands much better as "this
+    is the --auto option, whose meaningful name reminds me that it does
+    X, and -a is the obvious shorthand" rather than "-a does X".
+
+  - enables extra parse-options syntax like automatic "--no-" handling
+    (though I doubt anyone is likely to use "--no-auto" in this case,
+    the point is that it is easier to allow such constructs consistently
+    than to try to guess when people might want it)
+
+Which is maybe more argument than you cared to read about this
+particular option, but I want to make clear that I think this should be
+the case for just about every command-line option we add.
+
+> Also it may be better to be more explicit about both the syntax and the
+> semantics of `<branch>`.  Do you expect "refs/remotes/<name>/master" or
+> just "master" (I assume the latter)?  Is it an error if the branch does
+
+I thought it was obvious that you would do:
+
+  git remote set-head master
+
+in the same way that you would do:
+
+  git remote add -m master $remote $url
+
+But I suppose clarifying it doesn't hurt.
+
+-Peff
+
+PS There is a thread elsewhere on the list discussing "what can I do to
+make life easy for reviewers?". I think this series (and Jay's patches
+in general) model many good behaviors: clearly labeled versions,
+discussion of what changed in each version, proper threading, and cc'ing
+people who have been involved.
