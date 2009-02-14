@@ -1,98 +1,74 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] builtin-remote: better handling of multiple remote HEADs
-Date: Sat, 14 Feb 2009 13:35:03 -0500
-Message-ID: <76718490902141035o5430707ck47cd72d9efe87318@mail.gmail.com>
-References: <20090214034345.GB24545@coredump.intra.peff.net>
-	 <1234607430-5403-1-git-send-email-jaysoffian@gmail.com>
-	 <20090214175420.GA3457@coredump.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] rerere: remove duplicated functions
+Date: Sat, 14 Feb 2009 19:47:36 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902141944030.10279@pacific.mpi-cbg.de>
+References: <1234628284-4246-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, barkalow@iabervon.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Feb 14 19:36:43 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1617186044-1234637256=:10279"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?ISO-8859-15?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Sat Feb 14 19:48:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYPNV-0003mw-4Z
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 19:36:37 +0100
+	id 1LYPZ4-0007Qe-1E
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 19:48:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751795AbZBNSfG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 13:35:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751808AbZBNSfG
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 13:35:06 -0500
-Received: from rv-out-0506.google.com ([209.85.198.230]:55589 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751784AbZBNSfE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 13:35:04 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so1055506rvb.1
-        for <git@vger.kernel.org>; Sat, 14 Feb 2009 10:35:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=NHLbsXNqjWL+dW8wyakn9tSvf6ZhzscCF4Yltx5GEe8=;
-        b=mIIvVYhiUcVgvWTvtickvtB/84WMPq0ZuJRxEvCqjpHZoXDfgOEgz0norPhTy8cafd
-         pZwHEck8+64it5s0jxO6liig0GxCOHLoTO3YntRWqcI41n3ZLxVu1QsyZr6zf3hJO3H9
-         VKuc4voxxyTqgmsnBg4sPL4XWqZoangDPuuak=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=buI6E6sYhA4ofUq2sKuSc8hMHm9GjE7uQihtvi3s3DUq/mhQGEy9rdzYQKa+AJCpFZ
-         cdw3cs42WNa7jU1AdVplExhiUROaqXGJQ7TrjcaQ8bHw9X69nnkpwZq+XZR78m9eA2rd
-         dgti+wJMRdTnJvdKOnz8VnXxBx98Wab9GJUQM=
-Received: by 10.141.209.6 with SMTP id l6mr1774200rvq.192.1234636503496; Sat, 
-	14 Feb 2009 10:35:03 -0800 (PST)
-In-Reply-To: <20090214175420.GA3457@coredump.intra.peff.net>
+	id S1752643AbZBNSqo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2009 13:46:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751507AbZBNSqo
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 13:46:44 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37076 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751269AbZBNSqn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 13:46:43 -0500
+Received: (qmail invoked by alias); 14 Feb 2009 18:46:41 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp069) with SMTP; 14 Feb 2009 19:46:41 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+Hlyw9ZA+Hs8KdAY2QizDmZbYv8xLa1/oFNcJsOG
+	LZHkcL+5AeDC+n
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1234628284-4246-1-git-send-email-szeder@ira.uka.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109890>
 
-On Sat, Feb 14, 2009 at 12:54 PM, Jeff King <peff@peff.net> wrote:
->> +             if (opt_a)
->> +                     printf("%s/HEAD set to %s\n", argv[0], head_name);
->
-> This was a surprise based on reading the commit message, but I think it
-> is a sensible enhancement.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-It seemed that when doing something "--automatically" it might be nice
-to tell the user what we just did, but I'm confused why this was a
-surprise.
+--8323328-1617186044-1234637256=:10279
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
->> +cat > test/expect <<EOF
->> +origin/HEAD set to master
->> +EOF
->> +
->> +test_expect_success 'set-head --auto' '
->> +     (cd test &&
->> +      git remote set-head --auto origin > output &&
->> +      git symbolic-ref refs/remotes/origin/HEAD &&
->> +     test_cmp expect output)
->> +'
->
-> I had to read this test a few times to convince myself it was right,
-> since you throw away the output of symbolic-ref. I think it makes more
-> sense to just test the post-command state, which is what you actually
-> care about (and then you are also not dependent on the human-readable
-> output of "remote set-head"). I.e.:
->
-> cat > test/expect <<EOF
-> refs/remotes/origin/master
-> EOF
->
-> test_expect_success 'set-head --auto' '
->        (cd test &&
->         git remote set-head --auto origin &&
->         git symbolic-ref refs/remotes/origin/HEAD > output &&
->        test_cmp expect output)
-> '
+Hi,
 
-Right.
+On Sat, 14 Feb 2009, SZEDER Gábor wrote:
 
-j.
+> diff --git a/rerere.h b/rerere.h
+> index f9b0386..45b5087 100644
+> --- a/rerere.h
+> +++ b/rerere.h
+> @@ -5,5 +5,7 @@
+>  
+>  extern int setup_rerere(struct string_list *);
+>  extern int rerere(void);
+> +extern const char *rr_path(const char *name, const char *file);
+> +extern int has_resolution(const char *name);
+
+You might argue that rr_path() is a unique enough name (although I'd 
+rather name it rerere_path() instead), but has_resolution() is not a good 
+description of what the function does when it lives in the global name 
+space.  has_rerere_resolution() (with "hex" instead of "name", to make it 
+obvious what the parameter actually _is_) should be a much better name.
+
+Thanks,
+Dscho
+
+--8323328-1617186044-1234637256=:10279--
