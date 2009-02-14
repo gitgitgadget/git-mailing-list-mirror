@@ -1,104 +1,178 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] builtin-remote: better handling of multiple remote
-	HEADs
-Date: Sat, 14 Feb 2009 13:54:11 -0500
-Message-ID: <20090214185411.GA13121@coredump.intra.peff.net>
-References: <20090214034345.GB24545@coredump.intra.peff.net> <1234607430-5403-1-git-send-email-jaysoffian@gmail.com> <20090214175420.GA3457@coredump.intra.peff.net> <76718490902141035o5430707ck47cd72d9efe87318@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] gc: make --prune useful again by accepting an optional
+ parameter
+Date: Sat, 14 Feb 2009 20:02:22 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902141959060.10279@pacific.mpi-cbg.de>
+References: <1234545279-23153-1-git-send-email-trast@student.ethz.ch> <20090214025115.615119bf@perceptron> <alpine.DEB.1.00.0902140642520.10279@pacific.mpi-cbg.de> <20090214074954.7e423dd2@perceptron>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, barkalow@iabervon.org,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
 	Junio C Hamano <gitster@pobox.com>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 14 19:56:27 2009
+To: =?ISO-8859-15?Q?Jan_Kr=FCger?= <jk@jk.gs>
+X-From: git-owner@vger.kernel.org Sat Feb 14 20:03:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYPgf-0001Xm-MP
-	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 19:56:26 +0100
+	id 1LYPn2-0003t6-TJ
+	for gcvg-git-2@gmane.org; Sat, 14 Feb 2009 20:03:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751298AbZBNSyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Feb 2009 13:54:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751269AbZBNSyO
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 13:54:14 -0500
-Received: from peff.net ([208.65.91.99]:52714 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750967AbZBNSyO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Feb 2009 13:54:14 -0500
-Received: (qmail 1354 invoked by uid 107); 14 Feb 2009 18:54:32 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 14 Feb 2009 13:54:32 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 14 Feb 2009 13:54:11 -0500
-Content-Disposition: inline
-In-Reply-To: <76718490902141035o5430707ck47cd72d9efe87318@mail.gmail.com>
+	id S1751801AbZBNTBb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Feb 2009 14:01:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751628AbZBNTBa
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Feb 2009 14:01:30 -0500
+Received: from mail.gmx.net ([213.165.64.20]:49239 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751572AbZBNTBa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Feb 2009 14:01:30 -0500
+Received: (qmail invoked by alias); 14 Feb 2009 19:01:27 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp051) with SMTP; 14 Feb 2009 20:01:27 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+ynmcC0imyZs++4EjS65jsQHmiLT8hEOjAB2OXIl
+	RJT6n7qV3m9q1D
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20090214074954.7e423dd2@perceptron>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.42
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109892>
 
-On Sat, Feb 14, 2009 at 01:35:03PM -0500, Jay Soffian wrote:
+With this patch, "git gc --no-prune" will not prune any loose (and
+dangling) object, and "git gc --prune=5.minutes.ago" will prune
+all loose objects older than 5 minutes.
 
-> On Sat, Feb 14, 2009 at 12:54 PM, Jeff King <peff@peff.net> wrote:
-> >> +             if (opt_a)
-> >> +                     printf("%s/HEAD set to %s\n", argv[0], head_name);
-> >
-> > This was a surprise based on reading the commit message, but I think it
-> > is a sensible enhancement.
-> 
-> It seemed that when doing something "--automatically" it might be nice
-> to tell the user what we just did, but I'm confused why this was a
-> surprise.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-I just meant that the commit message did not mention changes in this
-area, and it is largely orthogonal to the rest of the patch (you could
-just as easily apply this hunk without the rest of your patch, and it
-would have the same value). Thus I was surprised.
+	Actually, when trying to add tests to Jan's patch, I realized that 
+	I already have a patch in my personal tree, which makes --prune 
+	accept an optional parameter...
 
-But I do think it is a good change.
+	Jan, what do you think?  If you prefer --prune-expire, can you 
+	please adapt my test?
 
-> > cat > test/expect <<EOF
-> > refs/remotes/origin/master
-> > EOF
-> >
-> > test_expect_success 'set-head --auto' '
-> >        (cd test &&
-> >         git remote set-head --auto origin &&
-> >         git symbolic-ref refs/remotes/origin/HEAD > output &&
-> >        test_cmp expect output)
-> > '
-> 
-> Right.
+ Documentation/git-gc.txt |    9 ++++++++-
+ builtin-gc.c             |   19 ++++++++++++-------
+ t/t5304-prune.sh         |   20 ++++++++++++++++++++
+ 3 files changed, 40 insertions(+), 8 deletions(-)
 
-I suspect Junio can just fix this up during application if he agrees.
-
-<random process musing>
-Which made me think of something else, with all of this talk about
-reviewers that has been going on. Junio is actually in a little bit of a
-special position with small changes (like style issues) to say "I'll
-apply this, but tweak these changes". But the rest of us are stuck
-saying "I would change this one line" to the list; then either:
-
-  - the original submitter re-rolls the patch, which takes their time
-    and everyone else's time to look at the new patch, see that it is
-    trivially changed, etc
-
-    or
-
-  - Junio has to read the followup comments, then go back and find the
-    spot in the original patch to mark it up.
-
-Which means that there is a transaction cost to little comments due to
-the extra communication. And that cost can dwarf the actual time for the
-change.
-
-I don't know if there is a better method, or better tool support. I
-guess reviewers could act like the maintainer, tweaking patches and then
-publishing the result, which Junio would then pull. Or instead of
-publishing the result, publishing an interdiff along with comments. But
-basically putting the comments into a form that can be communicated and
-applied more easily, which cuts down on the communication costs.
-
-I don't know. Just thinking out loud.
-
--Peff
+diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
+index 7086eea..fcef5fb 100644
+--- a/Documentation/git-gc.txt
++++ b/Documentation/git-gc.txt
+@@ -8,7 +8,7 @@ git-gc - Cleanup unnecessary files and optimize the local repository
+ 
+ SYNOPSIS
+ --------
+-'git gc' [--aggressive] [--auto] [--quiet]
++'git gc' [--aggressive] [--auto] [--quiet] [--prune=<date>]
+ 
+ DESCRIPTION
+ -----------
+@@ -59,6 +59,13 @@ are consolidated into a single pack by using the `-A` option of
+ 'git-repack'. Setting `gc.autopacklimit` to 0 disables
+ automatic consolidation of packs.
+ 
++--prune=<date>::
++	Prune loose objects older than date (default is 2 weeks ago).
++	This option is on by default.
++
++--no-prune::
++	Do not prune any loose objects.
++
+ --quiet::
+ 	Suppress all progress reports.
+ 
+diff --git a/builtin-gc.c b/builtin-gc.c
+index a201438..a962f38 100644
+--- a/builtin-gc.c
++++ b/builtin-gc.c
+@@ -161,7 +161,8 @@ static int need_to_gc(void)
+ 	 */
+ 	if (too_many_packs())
+ 		append_option(argv_repack,
+-			      !strcmp(prune_expire, "now") ? "-a" : "-A",
++			      prune_expire && !strcmp(prune_expire, "now") ?
++			      "-a" : "-A",
+ 			      MAX_ADD);
+ 	else if (!too_many_loose_objects())
+ 		return 0;
+@@ -173,14 +174,15 @@ static int need_to_gc(void)
+ 
+ int cmd_gc(int argc, const char **argv, const char *prefix)
+ {
+-	int prune = 0;
+ 	int aggressive = 0;
+ 	int auto_gc = 0;
+ 	int quiet = 0;
+ 	char buf[80];
+ 
+ 	struct option builtin_gc_options[] = {
+-		OPT_BOOLEAN(0, "prune", &prune, "prune unreferenced objects (deprecated)"),
++		{ OPTION_STRING, 0, "prune", &prune_expire, "date",
++			"prune unreferenced objects (deprecated)",
++			PARSE_OPT_OPTARG, NULL, (intptr_t)prune_expire },
+ 		OPT_BOOLEAN(0, "aggressive", &aggressive, "be more thorough (increased runtime)"),
+ 		OPT_BOOLEAN(0, "auto", &auto_gc, "enable auto-gc mode"),
+ 		OPT_BOOLEAN('q', "quiet", &quiet, "suppress progress reports"),
+@@ -218,7 +220,8 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 			"\"git help gc\" for more information.\n");
+ 	} else
+ 		append_option(argv_repack,
+-			      !strcmp(prune_expire, "now") ? "-a" : "-A",
++			      prune_expire && !strcmp(prune_expire, "now")
++			      ? "-a" : "-A",
+ 			      MAX_ADD);
+ 
+ 	if (pack_refs && run_command_v_opt(argv_pack_refs, RUN_GIT_CMD))
+@@ -230,9 +233,11 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 	if (run_command_v_opt(argv_repack, RUN_GIT_CMD))
+ 		return error(FAILED_RUN, argv_repack[0]);
+ 
+-	argv_prune[2] = prune_expire;
+-	if (run_command_v_opt(argv_prune, RUN_GIT_CMD))
+-		return error(FAILED_RUN, argv_prune[0]);
++	if (prune_expire) {
++		argv_prune[2] = prune_expire;
++		if (run_command_v_opt(argv_prune, RUN_GIT_CMD))
++			return error(FAILED_RUN, argv_prune[0]);
++	}
+ 
+ 	if (run_command_v_opt(argv_rerere, RUN_GIT_CMD))
+ 		return error(FAILED_RUN, argv_rerere[0]);
+diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
+index 771c0a0..2e9c4a9 100755
+--- a/t/t5304-prune.sh
++++ b/t/t5304-prune.sh
+@@ -112,4 +112,24 @@ test_expect_success 'prune: do not prune heads listed as an argument' '
+ 
+ '
+ 
++test_expect_success 'gc --no-prune && gc --prune=<date>' '
++
++	before=$(git count-objects | sed "s/ .*//") &&
++	BLOB=$(echo aleph_0 | git hash-object -w --stdin) &&
++	BLOB_FILE=.git/objects/$(echo $BLOB | sed "s/^../&\//") &&
++	test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
++	test -f $BLOB_FILE &&
++	test-chmtime =-$((86400*5001)) $BLOB_FILE &&
++	git gc --no-prune &&
++	test 1 = $(git count-objects | sed "s/ .*//") &&
++	test -f $BLOB_FILE &&
++	git gc --prune=5002.days.ago &&
++	test 1 = $(git count-objects | sed "s/ .*//") &&
++	test -f $BLOB_FILE &&
++	git gc --prune=5000.days.ago &&
++	test 0 = $(git count-objects | sed "s/ .*//") &&
++	test ! -f $BLOB_FILE
++
++'
++
+ test_done
+-- 
+1.6.2.rc0.367.g7f9a5
