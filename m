@@ -1,70 +1,77 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] config: Use parseopt.
-Date: Sun, 15 Feb 2009 20:41:02 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902152040350.10279@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0902141230250.10279@pacific.mpi-cbg.de> <1234612989-32297-1-git-send-email-felipe.contreras@gmail.com> <alpine.DEB.1.00.0902142041370.10279@pacific.mpi-cbg.de> <94a0d4530902141231t143067e5n872558a4e515be4a@mail.gmail.com>
- <alpine.DEB.1.00.0902142328530.10279@pacific.mpi-cbg.de> <7v1vtzmr9j.fsf@gitster.siamese.dyndns.org>
+From: Kjetil Barvik <barvik@broadpark.no>
+Subject: [PATCH/RFC v1 0/2] The ext4 filesystem and racy git
+Date: Sun, 15 Feb 2009 20:46:13 +0100
+Message-ID: <cover.1234720401.git.barvik@broadpark.no>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 15 20:42:07 2009
+Content-Type: TEXT/PLAIN
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Kjetil Barvik <barvik@broadpark.no>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 15 20:47:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYmsF-0008Ca-4V
-	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 20:41:55 +0100
+	id 1LYmxv-0001UZ-2U
+	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 20:47:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751660AbZBOTk0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2009 14:40:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751512AbZBOTk0
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 14:40:26 -0500
-Received: from mail.gmx.net ([213.165.64.20]:34741 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751345AbZBOTk0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2009 14:40:26 -0500
-Received: (qmail invoked by alias); 15 Feb 2009 19:40:07 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp071) with SMTP; 15 Feb 2009 20:40:07 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX194QhhbovF4nsxsJ+iPLHZemRkK+yBVInB/V4/LJh
-	7BaemfkUrfcXEK
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7v1vtzmr9j.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+	id S1752285AbZBOTqT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2009 14:46:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751990AbZBOTqS
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 14:46:18 -0500
+Received: from osl1smout1.broadpark.no ([80.202.4.58]:37965 "EHLO
+	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750916AbZBOTqR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2009 14:46:17 -0500
+Received: from osl1sminn1.broadpark.no ([80.202.4.59])
+ by osl1smout1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KF400GLLHL4VQA0@osl1smout1.broadpark.no> for
+ git@vger.kernel.org; Sun, 15 Feb 2009 20:46:16 +0100 (CET)
+Received: from localhost.localdomain ([80.202.92.249])
+ by osl1sminn1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTPA id <0KF4000XQHL3HX70@osl1sminn1.broadpark.no> for
+ git@vger.kernel.org; Sun, 15 Feb 2009 20:46:16 +0100 (CET)
+X-Mailer: git-send-email 1.6.1.349.g99fa5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110044>
 
-Hi,
+Ext4 is marked stable in Linux v2.6.28, and I have done a very simple
+test on one disk-partition of my slow laptop, and the numbers look
+very promising.
 
-On Sun, 15 Feb 2009, Junio C Hamano wrote:
+With default created ext3 disk-partition on my harddisk the 'git
+checkout -q my-v2.6.25/27' test takes around 20 seconds real time for
+the best cases.  The same test run on a ext4 partition takes around 14
+seconds for the best cases.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> > Or maybe even better: set a variable "ret" and at the end of 
-> >> > cmd_config(), "return !!ret;"?
-> >> 
-> >> Huh? So git commands don't return negative error values?
-> >
-> > AFAICT an exit status is supposed to be between 0 and 127.
-> 
-> Are you two talking about the return value from cmd_config()?
-> 
-> git.c::run_builtin() already knows what to do with status codes from the
-> builtins to protect you from (rare) shells that do not cope with a
-> negative return that come from the common pattern of doing:
-> 
-> 	return error("it is wrong in this way")
-> 
-> So "negative" is not really a problem.
+And, since ext4 supports nanosecond timestamps, when I added patch
+2/2, the checkout time is much more stable and more close to 14-15
+seconds most of the time.
 
-Ooops.  I missed that.
+Conclusion: for GIT on my laptop the ext4 filesystem is a speedup!
 
-Ciao,
-Dscho
+>From '/proc/mounts' here is the mount options:
+
+  /dev/hda10 /home ext3 rw,noatime,errors=continue,data=ordered 0 0
+  /dev/hda12 /opt2 ext4 rw,noatime,barrier=1,journal_async_commit,data=ordered 0 0
+
+/dev/hda10 is formatted with default (gentoo) ext3 parameters, and the
+/dev/hda12 is formatted with:
+
+  /sbin/mkfs -t ext4 -I 256 -G 64 -Oflex_bg,uninit_bg /dev/hda12
+
+
+Kjetil Barvik (2):
+  fix compile error when USE_NSEC is defined
+  make USE_NSEC work as expected
+
+ builtin-fetch-pack.c |    4 +-
+ cache.h              |    6 ++--
+ read-cache.c         |   70 ++++++++++++++++++++++++++++++++++++++++----------
+ 3 files changed, 61 insertions(+), 19 deletions(-)
