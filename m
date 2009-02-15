@@ -1,135 +1,86 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Mention the fact that 'git annotate' is only for
- backward compatibility.
-Date: Fri, 05 Sep 2008 00:56:15 -0700
-Message-ID: <7vod33vxeo.fsf@gitster.siamese.dyndns.org>
-References: <bd6139dc0809040216v40914e82h6a4032941cf65996@mail.gmail.com>
- <1220529652-24050-1-git-send-email-Matthieu.Moy@imag.fr>
- <20080904123046.GX10544@machine.or.cz>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 5/8] config: Disallow multiple config file locations.
+Date: Sun, 15 Feb 2009 13:26:34 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902151324530.10279@pacific.mpi-cbg.de>
+References: <1234688460-9248-1-git-send-email-felipe.contreras@gmail.com> <1234688460-9248-2-git-send-email-felipe.contreras@gmail.com> <1234688460-9248-3-git-send-email-felipe.contreras@gmail.com> <1234688460-9248-4-git-send-email-felipe.contreras@gmail.com>
+ <1234688460-9248-5-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 5 Sep 2008 07:56:37 +0000 (UTC)
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Sun, 15 Feb 2009 12:26:01 +0000 (UTC)
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
-In-Reply-To: <20080904123046.GX10544@machine.or.cz> (Petr Baudis's message of
- "Thu, 4 Sep 2008 14:30:47 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 21099A98-7B20-11DD-99AC-3113EBD4C077-77302942!a-sasl-quonix.pobox.com
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19nahdsCYZnGhBJs17gEJvrg8lx62bRWuVFH2QdmX
+	0cKrXsW2lMYOB7
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1234688460-9248-5-git-send-email-felipe.contreras@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.59
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/95000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110000>
 Received: from vger.kernel.org ([209.132.176.167]) by lo.gmane.org with esmtp
- (Exim 4.50) id 1KbWC9-0005hr-OT for gcvg-git-2@gmane.org; Fri, 05 Sep 2008
- 09:57:30 +0200
+ (Exim 4.50) id 1LYg5U-0006lQ-1F for gcvg-git-2@gmane.org; Sun, 15 Feb 2009
+ 13:27:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752481AbYIEH4X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Sep 2008
- 03:56:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751898AbYIEH4X
- (ORCPT <rfc822;git-outgoing>); Fri, 5 Sep 2008 03:56:23 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60131 "EHLO
- sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1751042AbYIEH4W (ORCPT <rfc822;git@vger.kernel.org>); Fri, 5 Sep 2008
- 03:56:22 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1]) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 751967476A; Fri,  5
- Sep 2008 03:56:21 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-211.oc.oc.cox.net [68.225.240.211])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with
- ESMTPSA id 38F4A74769; Fri,  5 Sep 2008 03:56:16 -0400 (EDT)
+ S1753518AbZBOMZk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Feb 2009
+ 07:25:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753414AbZBOMZk
+ (ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 07:25:40 -0500
+Received: from mail.gmx.net ([213.165.64.20]:40978 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1753326AbZBOMZk
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 15 Feb 2009 07:25:40 -0500
+Received: (qmail invoked by alias); 15 Feb 2009 12:25:38 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38] by
+ mail.gmx.net (mp069) with SMTP; 15 Feb 2009 13:25:38 +0100
 Sender: git-owner@vger.kernel.org
 
-Petr Baudis <pasky@suse.cz> writes:
+Hi,
 
-> I'm also curious about
-> ...
-> in builtin-blame.c. Junio, you introduced this in e68989a739d - why
-> do you use a separate flag instead of OUTPUT_ANNOTATE_COMPAT?
+On Sun, 15 Feb 2009, Felipe Contreras wrote:
 
-Let's do this.  Still passes t8001 and t9400.
+> Either --global, --system, or --file should be used, but not any
+> combination.
+> 
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  builtin-config.c |   10 ++++++++++
+>  1 files changed, 10 insertions(+), 0 deletions(-)
+> 
+> diff --git a/builtin-config.c b/builtin-config.c
+> index 83f8b74..e744ad8 100644
+> --- a/builtin-config.c
+> +++ b/builtin-config.c
+> @@ -314,6 +314,16 @@ int cmd_config(int argc, const char **argv, const char *unused_prefix)
+>  
+>  	argc = parse_options(argc, argv, builtin_config_options, builtin_config_usage, 0);
+>  
+> +	{
+> +		int config_file_count = use_global_config + use_system_config;
+> +		if (given_config_file)
+> +			config_file_count++;
+> +		if (config_file_count > 1) {
+> +			error("only one config file at a time.");
+> +			usage_with_options(builtin_config_usage, builtin_config_options);
+> +		}
+> +	}
 
--- >8 --
-"blame -c" should be compatible with "annotate"
+Hmm.  Is this a convoluted way to write
 
-There is no reason to have a separate variable cmd_is_annotate;
-OUTPUT_ANNOTATE_COMPAT option is supposed to produce the compatibility
-output, and we should produce the same output even when the command was
-not invoked as "annotate" but as "blame -c".
+	if (use_global_config + use_system_config + !!given_config_file > 1)
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin-blame.c                 |    9 +++++----
- t/t9400-git-cvsserver-server.sh |   13 +++++++++++++
- 2 files changed, 18 insertions(+), 4 deletions(-)
+or am I misunderstanding anything?
 
-diff --git i/builtin-blame.c w/builtin-blame.c
-index d2fc68c..9bc901c 100644
---- i/builtin-blame.c
-+++ w/builtin-blame.c
-@@ -38,7 +38,6 @@ static int show_root;
- static int reverse;
- static int blank_boundary;
- static int incremental;
--static int cmd_is_annotate;
- static int xdl_opts = XDF_NEED_MINIMAL;
- static struct string_list mailmap;
- 
-@@ -1686,7 +1685,7 @@ static void emit_other(struct scoreboard *sb, struct blame_entry *ent, int opt)
- 		if (suspect->commit->object.flags & UNINTERESTING) {
- 			if (blank_boundary)
- 				memset(hex, ' ', length);
--			else if (!cmd_is_annotate) {
-+			else if (!(opt & OUTPUT_ANNOTATE_COMPAT)) {
- 				length--;
- 				putchar('^');
- 			}
-@@ -2317,8 +2316,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 	};
- 
- 	struct parse_opt_ctx_t ctx;
--
--	cmd_is_annotate = !strcmp(argv[0], "annotate");
-+	int cmd_is_annotate = !strcmp(argv[0], "annotate");
- 
- 	git_config(git_blame_config, NULL);
- 	init_revisions(&revs, NULL);
-@@ -2346,6 +2344,9 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- parse_done:
- 	argc = parse_options_end(&ctx);
- 
-+	if (cmd_is_annotate)
-+		output_option |= OUTPUT_ANNOTATE_COMPAT;
-+
- 	if (DIFF_OPT_TST(&revs.diffopt, FIND_COPIES_HARDER))
- 		opt |= (PICKAXE_BLAME_COPY | PICKAXE_BLAME_MOVE |
- 			PICKAXE_BLAME_COPY_HARDER);
-diff --git i/t/t9400-git-cvsserver-server.sh w/t/t9400-git-cvsserver-server.sh
-index 4b91f8d..c1850d2 100755
---- i/t/t9400-git-cvsserver-server.sh
-+++ w/t/t9400-git-cvsserver-server.sh
-@@ -488,4 +488,17 @@ test_expect_success 'cvs co -c (shows module database)' '
-     ! grep -v "^master[	 ]\+master$" < out
- '
- 
-+#------------
-+# CVS ANNOTATE
-+#------------
-+
-+cd "$WORKDIR"
-+test_expect_success 'cvs annotate' '
-+    cd cvswork &&
-+    GIT_CONFIG="$git_config" cvs annotate merge >../out &&
-+    sed -e "s/ .*//" ../out >../actual &&
-+    for i in 3 1 1 1 1 1 1 1 2 4; do echo 1.$i; done >../expect &&
-+    test_cmp ../expect ../actual
-+'
-+
+Ciao,
+Dscho
