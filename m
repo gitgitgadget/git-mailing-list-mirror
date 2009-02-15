@@ -1,81 +1,78 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH v2 4/5] t3301: use test_must_fail instead of !
-Date: Sun, 15 Feb 2009 23:07:09 +0100
-Message-ID: <200902152307.14571.trast@student.ethz.ch>
-References: <200902142056.42198.trast@student.ethz.ch> <200902151711.45099.trast@student.ethz.ch> <20090215181818.GA2291@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart17400799.Q92NaQ17jn";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Feb 15 23:09:04 2009
+Subject: [PATCH 0/8] Support coverage testing with GCC/gcov
+Date: Sun, 15 Feb 2009 23:25:37 +0100
+Message-ID: <cover.1234736374.git.trast@student.ethz.ch>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 15 23:27:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYpAd-0005vQ-V1
-	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 23:09:04 +0100
+	id 1LYpSs-0004VH-Dy
+	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 23:27:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754269AbZBOWH1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2009 17:07:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754174AbZBOWHZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 17:07:25 -0500
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:9887 "EHLO xsmtp1.ethz.ch"
+	id S1753346AbZBOWZ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2009 17:25:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752918AbZBOWZ4
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 17:25:56 -0500
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:11608 "EHLO xsmtp1.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754088AbZBOWHY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2009 17:07:24 -0500
+	id S1752703AbZBOWZz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2009 17:25:55 -0500
 Received: from xfe1.d.ethz.ch ([82.130.124.41]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 15 Feb 2009 23:07:23 +0100
-Received: from thomas.localnet ([77.56.223.244]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 15 Feb 2009 23:07:22 +0100
-User-Agent: KMail/1.11.0 (Linux/2.6.27.7-9-default; KDE/4.2.0; x86_64; ; )
-In-Reply-To: <20090215181818.GA2291@coredump.intra.peff.net>
-X-OriginalArrivalTime: 15 Feb 2009 22:07:22.0678 (UTC) FILETIME=[C6FA3D60:01C98FB9]
+	 Sun, 15 Feb 2009 23:25:54 +0100
+Received: from localhost.localdomain ([77.56.223.244]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sun, 15 Feb 2009 23:25:53 +0100
+X-Mailer: git-send-email 1.6.2.rc0.335.g1a2b
+X-OriginalArrivalTime: 15 Feb 2009 22:25:53.0819 (UTC) FILETIME=[5D44E6B0:01C98FBC]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110068>
 
---nextPart17400799.Q92NaQ17jn
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+So I found a new toy to play with ;-)
 
-Jeff King wrote:
-> Using "dash" will catch bash-isms, and is pretty commonly available, I
-> think.  But this behavior, IIRC, happens on FreeBSD's /bin/sh, which is
-> derived from "ash" (so is "dash", but I they have long since diverged).
+The first patch adds some Makefile rules to automate coverage testing.
+This initially resulted in a list of 497 untested functions.  Then I
+picked out some easy targets and made patches for them.  This shortens
+the list by 20.
 
-Thanks, that worked well enough.  It's not in the opensuse repos, but
-hey, they track it with git, so it must be good ;-)
+Note that the rules currently don't consider any of the
+subdirectories.  I'm not sure if arm, ppc, and compat are worth
+considering, but it would at least have been nice to support it for
+xdiff.  Unfortunately I can't convince the --coverage code to save
+results there, so no analysis is possible.  (Running gcc 4.3.2 here.)
 
-> So I don't think there is a catch-all shell that will help you, but some
-> "ash" variant is probably your best bet.
+BTW, I find it a bit scary that fsck (see 5/8) has so few tests, and
+even scarier that out of four simple tests I could come up with it
+only passes two.  Let's hope the other two are unreasonable.
 
-I tried plain "ash" (which is in the opensuse repos) but that falls
-down due to lack of 'cd -P'.
 
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Thomas Rast (8):
+  Support coverage testing with GCC/gcov
+  Test that diff can read from stdin
+  Test diff --dirstat functionality
+  Test log --graph
+  Test fsck a bit harder
+  Test log --decorate
+  Test rev-list --parents/--children
+  Test git-patch-id
 
---nextPart17400799.Q92NaQ17jn
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkmYkhIACgkQqUud07tmzP1HAQCfQR0zoJLkmoc2Wcq8r34b4+9g
-bCMAnAn1l67pMIXZkKXvVwIFSRBT1F6K
-=jcKZ
------END PGP SIGNATURE-----
-
---nextPart17400799.Q92NaQ17jn--
+ Makefile                                      |   23 ++++
+ t/t1450-fsck.sh                               |   65 +++++++++++
+ t/t4002-diff-basic.sh                         |    8 ++
+ t/t4013-diff-various.sh                       |    5 +
+ t/t4013/diff.diff_--dirstat_master~1_master~2 |    3 +
+ t/t4013/diff.log_--decorate_--all             |   34 ++++++
+ t/t4013/diff.rev-list_--children_HEAD         |    7 +
+ t/t4013/diff.rev-list_--parents_HEAD          |    7 +
+ t/t4202-log.sh                                |  148 +++++++++++++++++++++++++
+ t/t4203-patch-id.sh                           |   38 +++++++
+ 10 files changed, 338 insertions(+), 0 deletions(-)
+ create mode 100644 t/t4013/diff.diff_--dirstat_master~1_master~2
+ create mode 100644 t/t4013/diff.log_--decorate_--all
+ create mode 100644 t/t4013/diff.rev-list_--children_HEAD
+ create mode 100644 t/t4013/diff.rev-list_--parents_HEAD
+ create mode 100755 t/t4203-patch-id.sh
