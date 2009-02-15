@@ -1,95 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git diff ignore-space options should ignore missing EOL
-  at EOF differences
-Date: Sun, 15 Feb 2009 16:17:49 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902151615400.10279@pacific.mpi-cbg.de>
-References: <9b18b3110902150609q13333619k98f87a4a36a09030@mail.gmail.com>  <alpine.DEB.1.00.0902151554000.10279@pacific.mpi-cbg.de> <9b18b3110902150713q62a73febs3d76ebf6e0d93c46@mail.gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH 5/5] remote: use exact HEAD lookup if it is available
+Date: Sun, 15 Feb 2009 10:22:02 -0500
+Message-ID: <76718490902150722p3cd4f98ay192df5136300d2d3@mail.gmail.com>
+References: <20090215060815.GA7473@coredump.intra.peff.net>
+	 <20090215061818.GE30414@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git mailing list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>, davidel@xmailserver.org
-To: demerphq <demerphq@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 15 16:18:39 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>
+To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 15 16:23:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYilS-0004eR-Ef
-	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 16:18:38 +0100
+	id 1LYiqD-0005yR-Ra
+	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 16:23:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752326AbZBOPQ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2009 10:16:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751741AbZBOPQ4
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 10:16:56 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50761 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751372AbZBOPQ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2009 10:16:56 -0500
-Received: (qmail invoked by alias); 15 Feb 2009 15:16:53 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp006) with SMTP; 15 Feb 2009 16:16:53 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18U2fgRyJoUUckMJ1ODvKbmfpoJV76So0c2PIxLHI
-	JQ6gWu4qib6s2f
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <9b18b3110902150713q62a73febs3d76ebf6e0d93c46@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.52
+	id S1752449AbZBOPWH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2009 10:22:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751372AbZBOPWF
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 10:22:05 -0500
+Received: from rv-out-0506.google.com ([209.85.198.226]:60367 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751229AbZBOPWD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2009 10:22:03 -0500
+Received: by rv-out-0506.google.com with SMTP id g37so1233725rvb.1
+        for <git@vger.kernel.org>; Sun, 15 Feb 2009 07:22:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=1FkRhuE3sOAy/R/1/uC+LBUVAREuMQhvOair6aadD7A=;
+        b=Bv3dbaD1FwE9fEhuG6GGfbdwkcmW1brzV34hYAGDsPE3qSGAEfSHIJ6f5Qx4lOh8fc
+         f3AOCSm7VfkXj8JiWK1cOIuzQU0fjKTQxsuz/fBFG4HA4qlBPAEed+jGUE2cuvmvFWJB
+         Zpu2OAhMbuAGiJVabUX7p7MPf5+Y1YO7EtPwg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=WIdldGbanj4NrO8AdoAeUyr7U1ZNtkZreAQdTUgMGxqyc1gYQGkYvF7SomT7kYDM8l
+         lPqov9ObXRSm/xvs5zLvICw0z6I2SxyyNeMh4fgxNElv1ju1MqiPA8mLyAeH56YdXXr2
+         2tj7gAlbqjnpsn1RXnG+OM4RmxudtGX44f1D8=
+Received: by 10.140.136.5 with SMTP id j5mr2185390rvd.167.1234711322807; Sun, 
+	15 Feb 2009 07:22:02 -0800 (PST)
+In-Reply-To: <20090215061818.GE30414@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110017>
 
-Hi,
+On Sun, Feb 15, 2009 at 1:18 AM, Jeff King <peff@peff.net> wrote:
+> A possible 6/5 would be to do something similar for local repos (or
+> resurrecting the HEAD proposal).
 
-On Sun, 15 Feb 2009, demerphq wrote:
+http://thread.gmane.org/gmane.comp.version-control.git/102039
 
-> 2009/2/15 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> > Hi,
-> >
-> > On Sun, 15 Feb 2009, demerphq wrote:
-> >
-> >>  t/t4015-diff-whitespace.sh             |   79 ++++++++++++++++++++++++++++++++
-> >
-> > Phew, you certainly want to make sure that it works...
-> 
-> Yeah, Exhaustive testing is good. (When it doesn't take hours and
-> hours to run :-)
+I read that thread, and it wasn't clear to me why it died. Was there a
+v3 patch round that I cannot find?  The only unaddressed reply I see
+is from Jeff:
 
-You read my mind.
+http://thread.gmane.org/gmane.comp.version-control.git/102039
 
-> >> @@ -33,7 +33,14 @@ extern "C" {
-> >>  #define XDF_IGNORE_WHITESPACE_CHANGE (1 << 3)
-> >>  #define XDF_IGNORE_WHITESPACE_AT_EOL (1 << 4)
-> >>  #define XDF_PATIENCE_DIFF (1 << 5)
-> >> -#define XDF_WHITESPACE_FLAGS (XDF_IGNORE_WHITESPACE |
-> >> XDF_IGNORE_WHITESPACE_CHANGE | XDF_IGNORE_WHITESPACE_AT_EOL)
-> >> +#define XDF_IGNORE_WHITESPACE_AT_EOF (1 << 6)
-> >> +/*
-> >> + * note this is deliberately a different define from XDF_WHITESPACE_FLAGS as
-> >> + * there could be a new whitespace related flag which would not be part of
-> >> + * the XDF_IGNORE_WHITESPACE_AT_EOF_ANY flags.
-> >> + */
-> >> +#define XDF_IGNORE_WHITESPACE_AT_EOF_ANY
-> >> (XDF_IGNORE_WHITESPACE_AT_EOL | XDF_IGNORE_WHITESPACE_CHANGE |
-> >> XDF_IGNORE_WHITESPACE | XDF_IGNORE_WHITESPACE_AT_EOF)
-> >> +#define XDF_WHITESPACE_FLAGS (XDF_IGNORE_WHITESPACE |
-> >> XDF_IGNORE_WHITESPACE_CHANGE | XDF_IGNORE_WHITESPACE_AT_EOL |
-> >> XDF_IGNORE_WHITESPACE_AT_EOF)
-> >
-> > As I told you on IRC, I do not follow that reasoning.  Rather, I would add
-> > the exceptions to xemit.c, when -- and if(!) -- they are needed.
-> 
-> Yeah I know you said that, and I *think* I followed all your advice
-> (much appreciated by the way) except for that point as I've been
-> nailed by inappropriate addition of flags to masks before, and well,
-> you know, once bitten twice shy, and patchers perogative and all that
-> eh? :-)
+But that seems tangential to the proposal.
 
-I understand that, but IMHO it is overengineered.  I am not really 
-convinced that ignore-whitespace-at-sol makes sense, either...
-
-Ciao,
-Dscho
+j.
