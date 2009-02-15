@@ -1,104 +1,74 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2] config: Use parseopt.
-Date: Sun, 15 Feb 2009 14:07:44 +0200
-Message-ID: <94a0d4530902150407u1bc6669cr2584ff8f1a8b47af@mail.gmail.com>
-References: <alpine.DEB.1.00.0902141230250.10279@pacific.mpi-cbg.de>
-	 <1234612989-32297-1-git-send-email-felipe.contreras@gmail.com>
-	 <alpine.DEB.1.00.0902142041370.10279@pacific.mpi-cbg.de>
-	 <94a0d4530902141231t143067e5n872558a4e515be4a@mail.gmail.com>
-	 <alpine.DEB.1.00.0902142328530.10279@pacific.mpi-cbg.de>
-	 <94a0d4530902150104n555b845bofc5897230c64a5f2@mail.gmail.com>
-	 <alpine.DEB.1.00.0902151224450.10279@pacific.mpi-cbg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 7/8] config: Don't return negative exit codes.
+Date: Sun, 15 Feb 2009 13:22:30 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902151321310.10279@pacific.mpi-cbg.de>
+References: <1234688460-9248-1-git-send-email-felipe.contreras@gmail.com> <1234688460-9248-2-git-send-email-felipe.contreras@gmail.com> <1234688460-9248-3-git-send-email-felipe.contreras@gmail.com> <1234688460-9248-4-git-send-email-felipe.contreras@gmail.com>
+ <1234688460-9248-5-git-send-email-felipe.contreras@gmail.com> <1234688460-9248-6-git-send-email-felipe.contreras@gmail.com> <1234688460-9248-7-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Feb 15 13:09:18 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 15 13:23:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYfoB-0001ka-9N
-	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 13:09:15 +0100
+	id 1LYg1a-0005ZU-1A
+	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 13:23:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752573AbZBOMHs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2009 07:07:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752540AbZBOMHr
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 07:07:47 -0500
-Received: from fg-out-1718.google.com ([72.14.220.156]:28580 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752395AbZBOMHq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2009 07:07:46 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so116039fgg.17
-        for <git@vger.kernel.org>; Sun, 15 Feb 2009 04:07:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=oeQjkmCSorcg7GgKAmxUrlfOMO3Aul16FSvjvXGoA9w=;
-        b=ASuPNq8uiXoV7B4+P49sd4qqpnrdShizzG3FkQIaEk9o+dl4e9Km6wH5hwi2PivtqV
-         qt9suelo2c+vCXnu6a+tARZULEkr04Mukc8GjsVZrTQQANeC0OxkhTDkAb6wpY7CB2Cu
-         zGXbuBMf0wbHbWnySYr9cbdMyN71Nf9Ca34LM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=f5JgLKr318xg7hbL0s0TaSiYuLcht6sNTBwpJhTtfUMYaYdeb9DBggdlJkJ5u8lAAV
-         BOOSL9QKLKWieFhRF90QS095a9Rbd0hBVuv0ySHXRc6N+jmbxWxz7ROoSwYsoEaGpG1M
-         d1e0rKV+5gjz4L3wJw9vuJ1Hk+tCi1z27NIZI=
-Received: by 10.86.31.18 with SMTP id e18mr799389fge.72.1234699664807; Sun, 15 
-	Feb 2009 04:07:44 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0902151224450.10279@pacific.mpi-cbg.de>
+	id S1752587AbZBOMVi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2009 07:21:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752541AbZBOMVh
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 07:21:37 -0500
+Received: from mail.gmx.net ([213.165.64.20]:47479 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752395AbZBOMVh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2009 07:21:37 -0500
+Received: (qmail invoked by alias); 15 Feb 2009 12:21:34 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp026) with SMTP; 15 Feb 2009 13:21:34 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+PfutbhamPog2Necwpm9Tqxifxk+MkiLFRtT3/Y8
+	MVm6yMyfgNFH8S
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1234688460-9248-7-git-send-email-felipe.contreras@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109998>
 
-On Sun, Feb 15, 2009 at 1:26 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Sun, 15 Feb 2009, Felipe Contreras wrote:
->
->> On Sun, Feb 15, 2009 at 12:32 AM, Johannes Schindelin
->> <Johannes.Schindelin@gmx.de> wrote:
->> > Hi,
->> >
->> > On Sat, 14 Feb 2009, Felipe Contreras wrote:
->> >
->> >> On Sat, Feb 14, 2009 at 9:59 PM, Johannes Schindelin
->> >> <Johannes.Schindelin@gmx.de> wrote:
->> >>
->> >> > On Sat, 14 Feb 2009, Felipe Contreras wrote:
->> >> >
->> >> >> +     else if (actions & ACTION_EDIT) {
->> >> >> +             const char *config_filename;
->> >> >> +             if (config_exclusive_filename)
->> >> >> +                     config_filename = config_exclusive_filename;
->> >> >> +             else
->> >> >> +                     config_filename = git_path("config");
->> >> >
->> >> > Why not reuse config_exclusive_filename here?
->> >>
->> >> You mean:
->> >> if (!config_exclusive_filename)
->> >>   config_exclusive_filename = git_path("config");
->> >
->> > Yes.
->>
->> I'm not sure about this one. At least git_config should be moved before
->> that code, otherwise it will only try to read core.editor from the
->> exclusive_filename and that's not what we want.
->
-> Ah!  I did not think about core.editor, of course, but that is what got
-> you started with git-config, after all.
->
-> However, the next line sets config_exclusive_filename, does it not?
+Hi,
 
-Huh? Which line?
+On Sun, 15 Feb 2009, Felipe Contreras wrote:
 
--- 
-Felipe Contreras
+
+>  	else if (actions & ACTION_RENAME_SECTION) {
+> -		int ret;
+>  		check_argc(argc, 2, 2);
+>  		ret = git_config_rename_section(argv[0], argv[1]);
+> -		if (ret < 0)
+> -			return ret;
+>  		if (ret == 0)
+>  			die("No such section!");
+>  	}
+
+You need an "if (ret > 0) ret = 0;" to avoid regressions.
+
+>  	else if (actions & ACTION_REMOVE_SECTION) {
+> -		int ret;
+>  		check_argc(argc, 1, 1);
+>  		ret = git_config_rename_section(argv[0], NULL);
+> -		if (ret < 0)
+> -			return ret;
+>  		if (ret == 0)
+>  			die("No such section!");
+>  	}
+
+Likewise.
+
+Thanks,
+Dscho
