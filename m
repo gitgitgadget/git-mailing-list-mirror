@@ -1,85 +1,97 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [RFC - draft] List of proposed future changes that are backward
  incompatible
-Date: Mon, 16 Feb 2009 00:15:00 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902160009010.10279@pacific.mpi-cbg.de>
-References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.10.0902151544510.14911@asgard.lang.hm> <m3fxifticm.fsf@localhost.localdomain>
+Date: Mon, 16 Feb 2009 00:18:17 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902160016230.10279@pacific.mpi-cbg.de>
+References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.10.0902151544510.14911@asgard.lang.hm> <alpine.DEB.1.00.0902152358330.10279@pacific.mpi-cbg.de> <alpine.DEB.1.10.0902151613110.14911@asgard.lang.hm>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: david@lang.hm, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 16 00:15:42 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: david@lang.hm
+X-From: git-owner@vger.kernel.org Mon Feb 16 00:18:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYqD3-0001nS-KK
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 00:15:38 +0100
+	id 1LYqGC-0002kt-O2
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 00:18:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754088AbZBOXOL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2009 18:14:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754011AbZBOXOI
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 18:14:08 -0500
-Received: from mail.gmx.net ([213.165.64.20]:34480 "HELO mail.gmx.net"
+	id S1754039AbZBOXR0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2009 18:17:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754011AbZBOXRZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 18:17:25 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39779 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753720AbZBOXOH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2009 18:14:07 -0500
-Received: (qmail invoked by alias); 15 Feb 2009 23:14:04 -0000
+	id S1753963AbZBOXRY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2009 18:17:24 -0500
+Received: (qmail invoked by alias); 15 Feb 2009 23:17:23 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp046) with SMTP; 16 Feb 2009 00:14:04 +0100
+  by mail.gmx.net (mp069) with SMTP; 16 Feb 2009 00:17:23 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+A58Yqy5GAv+ipmv8Ml59WuEPL7Y2uEMD3QpuJui
-	eKdkG7vSPG+snO
+X-Provags-ID: V01U2FsdGVkX18+fTg9fkI+oY6tEvGPoYa65X3TwoMqtKVR3AJmmd
+	Rocm+yh4ReynKL
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <m3fxifticm.fsf@localhost.localdomain>
+In-Reply-To: <alpine.DEB.1.10.0902151613110.14911@asgard.lang.hm>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.68
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110084>
 
 Hi,
 
-On Sun, 15 Feb 2009, Jakub Narebski wrote:
+On Sun, 15 Feb 2009, david@lang.hm wrote:
 
-> david@lang.hm writes:
+> On Mon, 16 Feb 2009, Johannes Schindelin wrote:
 > 
-> > one thing that would help new users is if there was a way to create a 
-> > git config file that explicitly listed all the defaults. either as a 
-> > sample config, or to expand the existing config file with all the 
-> > defaults listed, but commented out.
-> > 
-> > I find that having such a config file helps me find config options I
-> > never thought to look for.
+> > On Sun, 15 Feb 2009, david@lang.hm wrote:
+> >
+> > > On Sun, 15 Feb 2009, Junio C Hamano wrote:
+> > >
+> > > > Thanks.
+> > > >
+> > > > * git-push to update the checked out branch will be refused by default
+> > > >
+> > > >  Make "git push" into a repository to update the branch that is checked
+> > > >  out fail by default.
+> > > >
+> > > >  http://thread.gmane.org/gmane.comp.version-control.git/107758/focus=108007
+> > >
+> > > If I understand this one, it will cause grief for quite a few people.
+> > >
+> > > I have a public repository that I push to and then have a trigger that
+> > > checks
+> > > out the current version, compiles it, publishes the compiled version,
+> > > sends an
+> > > announcement, etc
+> >
+> > So you have to set a config variable.  Big deal.
+> >
+> > Compared to that, the thousands of new Git users will no longer be bitten
+> > by the "do not push to a non-bare repository" issue without a useful error
+> > message.
+> >
+> > Please, please, publicize that if there is somebody who is doing the same
+> > as you (which I deem a dangerous workflow; I certainly do not use it
+> > myself) that they will have to adjust their receive.denyCurrentBranch
+> > variable.
 > 
-> That is a very good idea... if next to impossible now, I think, as
-> there is (I guess) no single place that stores default values.  But
-> perhaps I am mistaken.
+> since this repository isn't use for anything other than publishing for public
+> access, what's so dangerous about it?
 
-Of course, you have to ignore the fact that it would no longer possible to 
-update defaults for existing repositories.
+Hey, you do what you want...
 
-For example, setting something like receive.denyCurrentBranch to a saner 
-default would not reach existing repositories.
+I just keep in mind that it _is_ a working directory that can go dirty, 
+for whatever reasons.
 
-And you would also have to ignore the fact that sometimes, config 
-variables are deprecated, and this _also_ would not reach existing 
-repositories.  Of course, the same holds true if you set such a config 
-variable manually, but then you are _supposed_ to know the config 
-variable, and you are unlikely to learn the name of an obsolete variable.
+Which is why _I_ do things like your workflow locally, even if that means 
+that I log onto another machine (which is then "local").
 
-Do keep in mind, too, that most of the variables are next to useless 
-without the proper documentation.  And do you really want to replicate 
-Documentation/config.txt in the config file?  If not, how do you want to 
-make sure that the two different documentations do not go out of sync?
-
-Further, it would be much, much harder to see what is _actually_ set.
-
-Summary: I do not like that idea.
+But again, it is your choice.  And certainly, it will be possible in the 
+future, too, just more deprecated than it is already.
 
 Ciao,
 Dscho
