@@ -1,77 +1,81 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: Re: [PATCH] Fix file mark handling and sort side-effects in git.el
-Date: Sun, 15 Feb 2009 20:15:05 +0100
-Message-ID: <87k57rh5qe.fsf@wine.dyndns.org>
-References: <18834.27724.991388.339214@hungover.brentg.com>
-	<87hc31kzrb.fsf@wine.dyndns.org>
-	<e38bce640902120738h7b9bb75o42e1524cbfd95169@mail.gmail.com>
-	<18836.22386.987021.484807@hungover.brentg.com>
-	<87ocx3hbkq.fsf@wine.dyndns.org>
-	<e38bce640902151035s18e374e6j25e3887728722700@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] config: Use parseopt.
+Date: Sun, 15 Feb 2009 11:31:04 -0800
+Message-ID: <7v1vtzmr9j.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0902141230250.10279@pacific.mpi-cbg.de>
+ <1234612989-32297-1-git-send-email-felipe.contreras@gmail.com>
+ <alpine.DEB.1.00.0902142041370.10279@pacific.mpi-cbg.de>
+ <94a0d4530902141231t143067e5n872558a4e515be4a@mail.gmail.com>
+ <alpine.DEB.1.00.0902142328530.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Brent Goodrick <bgoodr@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 15 20:16:50 2009
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Feb 15 20:32:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYmTs-0000ec-7a
-	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 20:16:44 +0100
+	id 1LYmjJ-0005MV-7m
+	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 20:32:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753289AbZBOTPS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2009 14:15:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752860AbZBOTPQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 14:15:16 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:59549 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751760AbZBOTPP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2009 14:15:15 -0500
-Received: from adsl-84-226-2-29.adslplus.ch ([84.226.2.29] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <julliard@winehq.org>)
-	id 1LYmSK-00077L-0X; Sun, 15 Feb 2009 13:15:14 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id 8727F1E7203; Sun, 15 Feb 2009 20:15:05 +0100 (CET)
-In-Reply-To: <e38bce640902151035s18e374e6j25e3887728722700@mail.gmail.com>
-	(Brent Goodrick's message of "Sun, 15 Feb 2009 10:35:38 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.90 (gnu/linux)
-X-Spam-Score: -3.4
+	id S1751479AbZBOTbN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2009 14:31:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751410AbZBOTbN
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 14:31:13 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44666 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751389AbZBOTbM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2009 14:31:12 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 737D49A585;
+	Sun, 15 Feb 2009 14:31:11 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2835E9A583; Sun,
+ 15 Feb 2009 14:31:06 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.0902142328530.10279@pacific.mpi-cbg.de>
+ (Johannes Schindelin's message of "Sat, 14 Feb 2009 23:32:12 +0100 (CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 338CF758-FB97-11DD-8AB3-0433C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110035>
 
-Brent Goodrick <bgoodr@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Ok, now that makes sense to me. Part of the problem here is that there
-> is no statement in the user manual about git.el's intent to hide the
-> index. Perhaps something to the effect of "If you are new to using
-> Emacs but not new to git, then you need to know that bla bla ...".
-> Otherwise, I think users may get tripped up by this as I was. Was
-> there a manual in the works for git.el or did I just miss it in recent
-> checkins?
+>> > Or maybe even better: set a variable "ret" and at the end of 
+>> > cmd_config(), "return !!ret;"?
+>> 
+>> Huh? So git commands don't return negative error values?
+>
+> AFAICT an exit status is supposed to be between 0 and 127.
 
-There's no manual, and I'm not going to write one, I suck at writing
-documentation. If you would like to contribute one it would certainly be
-welcome.
+Are you two talking about the return value from cmd_config()?
 
-> However, the *git-status* buffer does properly reflect the two added
-> files by their state being changed to "Added". Since you may have a
-> ton of files that are being added, it probably doesn't make a whole
-> lot of sense to dump a long message into the minibuffer with all of
-> those names.  By the same token, it doesn't make sense to emit one
-> message per file either. Instead, would you be willing to change that
-> message to just state "Added n files" where "n" is the number of files
-> added?
+git.c::run_builtin() already knows what to do with status codes from the
+builtins to protect you from (rare) shells that do not cope with a
+negative return that come from the common pattern of doing:
 
-That's exactly what git-success-message already does. The only problem
-is that the list isn't always preserved properly (and that's only a
-cosmetic bug, the operations get carried out correctly).
+	return error("it is wrong in this way")
 
--- 
-Alexandre Julliard
-julliard@winehq.org
+So "negative" is not really a problem.
+
+Indeed, if the old code was doing:
+
+	ret = git_config_set_multivar(...);
+        if (ret)
+		return ret;
+
+and if you are changing it to:
+
+	ret = git_config_set_multivar(...);
+        if (ret)
+		return !!ret;
+
+you are changing an externally observable behaviour that _could_ break the
+calling end user scripts.
+
+.
