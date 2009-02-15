@@ -1,91 +1,88 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH 8/8] Test git-patch-id
-Date: Sun, 15 Feb 2009 23:25:45 +0100
-Message-ID: <23dc30ed8d645391d6a1072f182a37d98bde460a.1234736374.git.trast@student.ethz.ch>
-References: <cover.1234736374.git.trast@student.ethz.ch>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 15 23:28:08 2009
+From: david@lang.hm
+Subject: Re: [RFC - draft] List of proposed future changes that are backward
+ incompatible
+Date: Sun, 15 Feb 2009 15:53:50 -0800 (PST)
+Message-ID: <alpine.DEB.1.10.0902151544510.14911@asgard.lang.hm>
+References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 15 23:50:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYpSx-0004VH-Ob
-	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 23:28:00 +0100
+	id 1LYpoe-0002xP-8P
+	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 23:50:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753720AbZBOW0S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2009 17:26:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753626AbZBOW0P
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 17:26:15 -0500
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:11608 "EHLO xsmtp1.ethz.ch"
+	id S1754858AbZBOWs5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2009 17:48:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753443AbZBOWs4
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 17:48:56 -0500
+Received: from mail.lang.hm ([64.81.33.126]:42683 "EHLO bifrost.lang.hm"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753456AbZBOW0L (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2009 17:26:11 -0500
-Received: from xfe1.d.ethz.ch ([82.130.124.41]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 15 Feb 2009 23:25:56 +0100
-Received: from localhost.localdomain ([77.56.223.244]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 15 Feb 2009 23:25:55 +0100
-X-Mailer: git-send-email 1.6.2.rc0.335.g1a2b
-In-Reply-To: <cover.1234736374.git.trast@student.ethz.ch>
-X-OriginalArrivalTime: 15 Feb 2009 22:25:55.0366 (UTC) FILETIME=[5E30F460:01C98FBC]
+	id S1755433AbZBOWsz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2009 17:48:55 -0500
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n1FMmqS7019153;
+	Sun, 15 Feb 2009 14:48:52 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <7vk57ridyx.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110077>
 
-So far, git-patch-id was untested.  Add some simple checks for output
-format and patch (in)equality.
+On Sun, 15 Feb 2009, Junio C Hamano wrote:
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
- t/t4203-patch-id.sh |   38 ++++++++++++++++++++++++++++++++++++++
- 1 files changed, 38 insertions(+), 0 deletions(-)
- create mode 100755 t/t4203-patch-id.sh
+> Thanks.
+>
+> * git-push to update the checked out branch will be refused by default
+>
+>  Make "git push" into a repository to update the branch that is checked
+>  out fail by default.
+>
+>  http://thread.gmane.org/gmane.comp.version-control.git/107758/focus=108007
 
-diff --git a/t/t4203-patch-id.sh b/t/t4203-patch-id.sh
-new file mode 100755
-index 0000000..04f7bae
---- /dev/null
-+++ b/t/t4203-patch-id.sh
-@@ -0,0 +1,38 @@
-+#!/bin/sh
-+
-+test_description='git patch-id'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	test_commit initial foo a &&
-+	test_commit first foo b &&
-+	git checkout -b same HEAD^ &&
-+	test_commit same-msg foo b &&
-+	git checkout -b notsame HEAD^ &&
-+	test_commit notsame-msg foo c
-+'
-+
-+test_expect_success 'patch-id output is well-formed' '
-+	git log -p -1 | git patch-id > output &&
-+	grep "^[a-f0-9]\{40\} $(git rev-parse HEAD)$" output
-+'
-+
-+get_patch_id () {
-+	git log -p -1 "$1" | git patch-id |
-+		sed "s# .*##" > patch-id_"$1"
-+}
-+
-+test_expect_success 'patch-id detects equality' '
-+	get_patch_id master &&
-+	get_patch_id same &&
-+	test_cmp patch-id_master patch-id_same
-+'
-+
-+test_expect_success 'patch-id detects inequality' '
-+	get_patch_id master &&
-+	get_patch_id notsame &&
-+	! test_cmp patch-id_master patch-id_notsame
-+'
-+
-+test_done
--- 
-1.6.2.rc0.335.g1a2b
+If I understand this one, it will cause grief for quite a few people.
+
+I have a public repository that I push to and then have a trigger that 
+checks out the current version, compiles it, publishes the compiled 
+version, sends an announcement, etc
+
+if I am understanding the purpose of this change, you would prohibit the 
+update from taking place.
+
+the message in the thread that you link to discusses how you want to be 
+careful about the change, but I have to hunt around through the rest of 
+the thread to figure out what the change really means (and I'm not sure I 
+really figured it out)
+
+> * git-send-email won't make deep threads by default
+>
+>  Many people said that by default when sending more than 2 patches the
+>  threading git-send-email makes by default is hard to read, and they
+>  prefer the default be one cover letter and each patch as a direct
+>  follow-up to the cover letter.
+>
+>  http://article.gmane.org/gmane.comp.version-control.git/109790
+
+I have mixed feelings about this one, if some messages get delayed in 
+transit the deep threads still keeps them in order, while the 2-layer 
+option doesn't.
+
+that being said, I don't think it's that significant to change the 
+default.
+
+one thing that would help new users is if there was a way to create a git 
+config file that explicitly listed all the defaults. either as a sample 
+config, or to expand the existing config file with all the defaults 
+listed, but commented out.
+
+I find that having such a config file helps me find config options I never 
+thought to look for.
+
+David Lang
