@@ -1,86 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC - draft] List of proposed future changes that are backward
- incompatible
-Date: Sun, 15 Feb 2009 15:36:19 -0800
-Message-ID: <7v3aefi87g.fsf@gitster.siamese.dyndns.org>
-References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.10.0902151544510.14911@asgard.lang.hm>
- <alpine.DEB.1.00.0902152358330.10279@pacific.mpi-cbg.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC - draft] List of proposed future changes that are backward incompatible
+Date: Mon, 16 Feb 2009 00:38:23 +0100
+Message-ID: <200902160038.24838.jnareb@gmail.com>
+References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org> <m3fxifticm.fsf@localhost.localdomain> <alpine.DEB.1.00.0902160009010.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: david@lang.hm, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: david@lang.hm, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 16 00:37:56 2009
+X-From: git-owner@vger.kernel.org Mon Feb 16 00:39:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYqYd-0008FL-4f
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 00:37:55 +0100
+	id 1LYqaZ-0000FY-CH
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 00:39:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752807AbZBOXg3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2009 18:36:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752625AbZBOXg2
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 18:36:28 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59244 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752331AbZBOXg2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2009 18:36:28 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id D7FC92B360;
-	Sun, 15 Feb 2009 18:36:26 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0E1FB2B343; Sun,
- 15 Feb 2009 18:36:22 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.0902152358330.10279@pacific.mpi-cbg.de>
- (Johannes Schindelin's message of "Mon, 16 Feb 2009 00:01:08 +0100 (CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 769FC63E-FBB9-11DD-9B86-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1752869AbZBOXi3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2009 18:38:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752027AbZBOXi2
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 18:38:28 -0500
+Received: from mail-fx0-f20.google.com ([209.85.220.20]:63536 "EHLO
+	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752001AbZBOXi1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2009 18:38:27 -0500
+Received: by fxm13 with SMTP id 13so5227181fxm.13
+        for <git@vger.kernel.org>; Sun, 15 Feb 2009 15:38:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=t62lJuT4lLfHPdg4NSB2qefqKAEou3WeusGFCU1x6PE=;
+        b=GRoE4W+gwo0XxKZ++2PhlIBd518fMsb6i9fPTeKtPmHyQtdGeglv+AGCkTr50Ak2wW
+         YXrjTzXO7EPXK7p7wW0Drruhc57qR4HMSQeKFqpKRLpO0bl+TK2a4F3zTNSPmGy0vKwQ
+         06yYtR9WLiDi4FY6lTfvYQgB5dK4NzSjobBi0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=S1+pWGsTK8yXryswMCS/5lJ5WvouvcBAzhjG2L86Tl9d96hXh0mYHIdoBxAnB1mZne
+         tfigiYMhTVlo8t43Pagr3Z6ICmDRIj50/AYqoCrT8ueNrn0nWgjWi7H+yGWJFOmpkjAf
+         ASanQA1Q2TTcsZvJZQIOv78RN4d6mEu7sOrC8=
+Received: by 10.103.131.18 with SMTP id i18mr2516179mun.74.1234741105761;
+        Sun, 15 Feb 2009 15:38:25 -0800 (PST)
+Received: from ?192.168.1.13? (abwt47.neoplus.adsl.tpnet.pl [83.8.243.47])
+        by mx.google.com with ESMTPS id y2sm4139205mug.15.2009.02.15.15.38.24
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 15 Feb 2009 15:38:25 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <alpine.DEB.1.00.0902160009010.10279@pacific.mpi-cbg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110090>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hello!
 
-> Hi,
->
-> On Sun, 15 Feb 2009, david@lang.hm wrote:
->
->> On Sun, 15 Feb 2009, Junio C Hamano wrote:
+On Mon, 16 Feb 2009, Johannes Schindelin wrote:
+> On Sun, 15 Feb 2009, Jakub Narebski wrote:
+>> david@lang.hm writes:
 >> 
->> > Thanks.
->> >
->> > * git-push to update the checked out branch will be refused by default
->> >
->> >  Make "git push" into a repository to update the branch that is checked
->> >  out fail by default.
->> >
->> >  http://thread.gmane.org/gmane.comp.version-control.git/107758/focus=108007
+>>> one thing that would help new users is if there was a way to create a 
+>>> git config file that explicitly listed all the defaults. either as a 
+>>> sample config, or to expand the existing config file with all the 
+>>> defaults listed, but commented out.
+>>> 
+>>> I find that having such a config file helps me find config options I
+>>> never thought to look for.
 >> 
->> If I understand this one, it will cause grief for quite a few people.
->> 
->> I have a public repository that I push to and then have a trigger that checks
->> out the current version, compiles it, publishes the compiled version, sends an
->> announcement, etc
->
-> So you have to set a config variable.  Big deal.
->
-> Compared to that, the thousands of new Git users will no longer be bitten 
-> by the "do not push to a non-bare repository" issue without a useful error 
-> message.
->
-> Please, please, publicize that if there is somebody who is doing the same 
-> as you (which I deem a dangerous workflow; I certainly do not use it 
-> myself) that they will have to adjust their receive.denyCurrentBranch 
-> variable.
+>> That is a very good idea... if next to impossible now, I think, as
+>> there is (I guess) no single place that stores default values.  But
+>> perhaps I am mistaken.
+> 
+> Of course, you have to ignore the fact that it would no longer possible to 
+> update defaults for existing repositories.
+> 
+> For example, setting something like receive.denyCurrentBranch to a saner 
+> default would not reach existing repositories.
 
-Yuck.  I wasn't expecting a discussion itself here.  This was a request
-for help and comment for a future message that will ask to start the
-discussion.
+You missed that it would be a _sample_ config (or commented out sample
+config), and not the default config installed when creating repository.
 
-No need to *stop* discussing, but please retitle the thread so that we can
-later see which ones are discussion of a particular topic, and which ones
-are proposal for addition of new items.
+But...
+
+> 
+> And you would also have to ignore the fact that sometimes, config 
+> variables are deprecated, and this _also_ would not reach existing 
+> repositories.  Of course, the same holds true if you set such a config 
+> variable manually, but then you are _supposed_ to know the config 
+> variable, and you are unlikely to learn the name of an obsolete variable.
+> 
+> Do keep in mind, too, that most of the variables are next to useless 
+> without the proper documentation.  And do you really want to replicate 
+> Documentation/config.txt in the config file?  If not, how do you want to 
+> make sure that the two different documentations do not go out of sync?
+> 
+> Further, it would be much, much harder to see what is _actually_ set.
+> 
+> Summary: I do not like that idea.
+
+... perhaps an alternate solution: add switch to git-config or git-var
+which would list (only list, no description) all defaults.  Hmmm?
+
+-- 
+Jakub Narebski
+Poland
