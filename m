@@ -1,63 +1,467 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: filter-branch: Remove original/*
-Date: Sun, 15 Feb 2009 20:47:19 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902152046090.10279@pacific.mpi-cbg.de>
-References: <431341160902131845g58d99635ie0735b433802d6be@mail.gmail.com> <alpine.DEB.1.00.0902142219010.10279@pacific.mpi-cbg.de> <7vvdrblcl0.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Eric Kidd <git@randomhacks.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 15 20:48:19 2009
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] parse-opt: migrate builtin-ls-files.
+Date: Sun, 15 Feb 2009 20:54:07 +0100
+Message-ID: <1234727647-18523-1-git-send-email-vmiklos@frugalware.org>
+References: <alpine.DEB.1.00.0902142127040.10279@pacific.mpi-cbg.de>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Feb 15 20:55:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYmyM-0001d9-KW
-	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 20:48:15 +0100
+	id 1LYn59-0003hE-5g
+	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 20:55:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752635AbZBOTq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2009 14:46:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752571AbZBOTq1
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 14:46:27 -0500
-Received: from mail.gmx.net ([213.165.64.20]:36379 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752550AbZBOTq1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2009 14:46:27 -0500
-Received: (qmail invoked by alias); 15 Feb 2009 19:46:24 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp066) with SMTP; 15 Feb 2009 20:46:24 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+jG74rL9ij13ofgKT75zqgCoasWb3W5Aws3zAjVX
-	aPJqm2e12MyUMC
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7vvdrblcl0.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.71
+	id S1751365AbZBOTxr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2009 14:53:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751307AbZBOTxq
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 14:53:46 -0500
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:40213 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750916AbZBOTxp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2009 14:53:45 -0500
+Received: from vmobile.example.net (dsl5401C763.pool.t-online.hu [84.1.199.99])
+	by yugo.frugalware.org (Postfix) with ESMTPA id CED73446CEF;
+	Sun, 15 Feb 2009 20:53:42 +0100 (CET)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id 818061861FF; Sun, 15 Feb 2009 20:54:07 +0100 (CET)
+X-Mailer: git-send-email 1.6.1.3
+In-Reply-To: <alpine.DEB.1.00.0902142127040.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110048>
 
-Hi,
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-On Sun, 15 Feb 2009, Junio C Hamano wrote:
+On Sat, Feb 14, 2009 at 09:56:04PM +0100, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Thu, 8 Jan 2009, Miklos Vajna wrote:
+>
+> > +static int option_parse_z(const struct option *opt,
+> > +                     const char *arg, int unset)
+> > +{
+> > +   if (unset)
+> > +           line_terminator = '\n';
+> > +   else
+> > +           line_terminator = 0;
+> > +   return 0;
+> > +}
+>
+>       line_terminator = unset ? '\0' : '\n';
+>
+> Hmm?
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Hmm.  Indeed, we ignore reflogs in log_ref_write() when the ref starts 
-> > with refs/tags/ (implicitly, not explicitely).
-> >
-> > Maybe it is time to change that.
-> 
-> Why?  Most tags will be created once and will stay there.  That is how 
-> tags are supposed to behave, isn't it?
+The opposite:
 
-Exactly my point.  In the common case, it does not change a thing.
+        line_terminator = unset ? '\n' : '\0';
 
-However in the case that we _do_ change tags, would you not agree that the 
-reflog is _the_ place to record the change?
+> > +static int option_parse_exclude(const struct option *opt,
+> > +                           const char *arg, int unset)
+> > +{
+> > +   struct dir_struct *dir = opt->value;
+> > +
+> > +   exc_given = 1;
+> > +   add_exclude(arg, "", 0, &dir->exclude_list[EXC_CMDL]);
+>
+> Why is &dir->exclude_list[EXC_CMDL] not stored in opt->value directly?
 
-Ciao,
-Dscho
+Changed.
+
+> > +static int option_parse_ignored(const struct option *opt,
+> > +                           const char *arg, int unset)
+> > +{
+> > +   struct dir_struct *dir = opt->value;
+> > +
+> > +   dir->show_ignored = !unset;
+> > +
+> > +   return 0;
+> > +}
+>
+> Maybe this wants to be converted into an OPTION_BIT compatible data
+> type?
+
+I think that's not possible, as show_ignored is a bitfield.
+
+> > +static int option_parse_directory(const struct option *opt,
+> > +                             const char *arg, int unset)
+> > +{
+> > +   struct dir_struct *dir = opt->value;
+> > +
+> > +   dir->show_other_directories = !unset;
+> > +
+> > +   return 0;
+> > +}
+>
+> Likewise?
+
+Same, show_other_directories can't be passed as a pointer, either.
+
+> > +static int option_parse_empty(const struct option *opt,
+> > +                            const char *arg, int unset)
+> > +{
+> > +   struct dir_struct *dir = opt->value;
+> > +
+> > +   dir->hide_empty_directories = unset;
+> > +
+> > +   return 0;
+> > +}
+>
+> Maybe we need an OPT_BIT_NEG?
+
+I can do it, but hide_empty_directories is a bitfield as well.
+
+> > +           { OPTION_CALLBACK, 0, "full-name", NULL, NULL,
+> > +                   "make the output relative to the project top
+> > directory",
+> > +                   PARSE_OPT_NOARG, option_parse_full_name },
+>
+> Maybe OPT_NONEG, and maybe SET_INT?
+
+Ah yes, that makes option_parse_full_name useless, great. :-)
+
+> > +   if (dir.exclude_per_dir)
+> > +           exc_given = 1;
+>
+> You could use a boolean to handle --exclude-standard, too... But you
+> did
+> not do that so that there is no regression with specific ordering of
+> the
+> exclude options, right?
+
+Yes, exactly.
+
+ builtin-ls-files.c |  284 +++++++++++++++++++++++++++-------------------------
+ 1 files changed, 149 insertions(+), 135 deletions(-)
+
+diff --git a/builtin-ls-files.c b/builtin-ls-files.c
+index 9dec282..0070669 100644
+--- a/builtin-ls-files.c
++++ b/builtin-ls-files.c
+@@ -10,6 +10,7 @@
+ #include "dir.h"
+ #include "builtin.h"
+ #include "tree.h"
++#include "parse-options.h"
+ 
+ static int abbrev;
+ static int show_deleted;
+@@ -28,6 +29,7 @@ static const char **pathspec;
+ static int error_unmatch;
+ static char *ps_matched;
+ static const char *with_tree;
++static int exc_given;
+ 
+ static const char *tag_cached = "";
+ static const char *tag_unmerged = "";
+@@ -374,156 +376,168 @@ int report_path_error(const char *ps_matched, const char **pathspec, int prefix_
+ 	return errors;
+ }
+ 
+-static const char ls_files_usage[] =
+-	"git ls-files [-z] [-t] [-v] (--[cached|deleted|others|stage|unmerged|killed|modified])* "
+-	"[ --ignored ] [--exclude=<pattern>] [--exclude-from=<file>] "
+-	"[ --exclude-per-directory=<filename> ] [--exclude-standard] "
+-	"[--full-name] [--abbrev] [--] [<file>]*";
++static const char * const ls_files_usage[] = {
++	"git ls-files [options] [<file>]*",
++	NULL
++};
++
++static int option_parse_z(const struct option *opt,
++			  const char *arg, int unset)
++{
++	line_terminator = unset ? '\n' : '\0';
++
++	return 0;
++}
++
++static int option_parse_exclude(const struct option *opt,
++				const char *arg, int unset)
++{
++	struct exclude_list *list = opt->value;
++
++	exc_given = 1;
++	add_exclude(arg, "", 0, list);
++
++	return 0;
++}
++
++static int option_parse_exclude_from(const struct option *opt,
++				     const char *arg, int unset)
++{
++	struct dir_struct *dir = opt->value;
++
++	exc_given = 1;
++	add_excludes_from_file(dir, arg);
++
++	return 0;
++}
++
++static int option_parse_exclude_standard(const struct option *opt,
++					 const char *arg, int unset)
++{
++	struct dir_struct *dir = opt->value;
++
++	exc_given = 1;
++	setup_standard_excludes(dir);
++
++	return 0;
++}
++
++static int option_parse_ignored(const struct option *opt,
++				const char *arg, int unset)
++{
++	struct dir_struct *dir = opt->value;
++
++	dir->show_ignored = !unset;
++
++	return 0;
++}
++
++static int option_parse_directory(const struct option *opt,
++				  const char *arg, int unset)
++{
++	struct dir_struct *dir = opt->value;
++
++	dir->show_other_directories = !unset;
++
++	return 0;
++}
++
++static int option_parse_empty(const struct option *opt,
++				 const char *arg, int unset)
++{
++	struct dir_struct *dir = opt->value;
++
++	dir->hide_empty_directories = unset;
++
++	return 0;
++}
+ 
+ int cmd_ls_files(int argc, const char **argv, const char *prefix)
+ {
+-	int i;
+-	int exc_given = 0, require_work_tree = 0;
++	int require_work_tree = 0, show_tag = 0;
+ 	struct dir_struct dir;
++	struct option builtin_ls_files_options[] = {
++		{ OPTION_CALLBACK, 'z', NULL, NULL, NULL,
++			"paths are separated with NUL character",
++			PARSE_OPT_NOARG, option_parse_z },
++		OPT_BOOLEAN('t', NULL, &show_tag,
++			"identify the file status with tags"),
++		OPT_BOOLEAN('v', NULL, &show_valid_bit,
++			"use lowercase letters for 'assume unchanged' files"),
++		OPT_BOOLEAN('c', "cached", &show_cached,
++				"show cached files in the output (default)"),
++		OPT_BOOLEAN('d', "deleted", &show_deleted,
++				"show deleted files in the output"),
++		OPT_BOOLEAN('m', "modified", &show_modified,
++				"show modified files in the output"),
++		OPT_BOOLEAN('o', "others", &show_others,
++				"show other files in the output"),
++		{ OPTION_CALLBACK, 'i', "ignored", &dir, NULL,
++			"show ignored files in the output",
++			PARSE_OPT_NOARG, option_parse_ignored },
++		OPT_BOOLEAN('s', "stage", &show_stage,
++			"show staged contents' object name in the output"),
++		OPT_BOOLEAN('k', "killed", &show_killed,
++			"show files on the filesystem that need to be removed"),
++		{ OPTION_CALLBACK, 0, "directory", &dir, NULL,
++			"show 'other' directories' name only",
++			PARSE_OPT_NOARG, option_parse_directory },
++		{ OPTION_CALLBACK, 0, "empty-directory", &dir, NULL,
++			"list empty directories",
++			PARSE_OPT_NOARG, option_parse_empty },
++		OPT_BOOLEAN('u', "unmerged", &show_unmerged,
++			"show unmerged files in the output"),
++		{ OPTION_CALLBACK, 'x', "exclude", &dir.exclude_list[EXC_CMDL], "pattern",
++			"skip files matching pattern",
++			0, option_parse_exclude },
++		{ OPTION_CALLBACK, 'X', "exclude-from", &dir, "file",
++			"exclude patterns are read from <file>",
++			0, option_parse_exclude_from },
++		OPT_STRING(0, "exclude-per-directory", &dir.exclude_per_dir, "file",
++			"read additional per-directory exclude patterns in <file>"),
++		{ OPTION_CALLBACK, 0, "exclude-standard", &dir, NULL,
++			"add the standard git exclusions",
++			PARSE_OPT_NOARG, option_parse_exclude_standard },
++		{ OPTION_SET_INT, 0, "full-name", &prefix_offset, NULL,
++			"make the output relative to the project top directory",
++			PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL },
++		OPT_BOOLEAN(0, "error-unmatch", &error_unmatch,
++			"if any <file> is not in the index, treat this as an error"),
++		OPT_STRING(0, "with-tree", &with_tree, "tree-ish",
++			"pretend that paths removed since <tree-ish> are still present"),
++		OPT__ABBREV(&abbrev),
++		OPT_END()
++	};
+ 
+ 	memset(&dir, 0, sizeof(dir));
+ 	if (prefix)
+ 		prefix_offset = strlen(prefix);
+ 	git_config(git_default_config, NULL);
+ 
+-	for (i = 1; i < argc; i++) {
+-		const char *arg = argv[i];
+-
+-		if (!strcmp(arg, "--")) {
+-			i++;
+-			break;
+-		}
+-		if (!strcmp(arg, "-z")) {
+-			line_terminator = 0;
+-			continue;
+-		}
+-		if (!strcmp(arg, "-t") || !strcmp(arg, "-v")) {
+-			tag_cached = "H ";
+-			tag_unmerged = "M ";
+-			tag_removed = "R ";
+-			tag_modified = "C ";
+-			tag_other = "? ";
+-			tag_killed = "K ";
+-			if (arg[1] == 'v')
+-				show_valid_bit = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "-c") || !strcmp(arg, "--cached")) {
+-			show_cached = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "-d") || !strcmp(arg, "--deleted")) {
+-			show_deleted = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "-m") || !strcmp(arg, "--modified")) {
+-			show_modified = 1;
+-			require_work_tree = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "-o") || !strcmp(arg, "--others")) {
+-			show_others = 1;
+-			require_work_tree = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "-i") || !strcmp(arg, "--ignored")) {
+-			dir.show_ignored = 1;
+-			require_work_tree = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "-s") || !strcmp(arg, "--stage")) {
+-			show_stage = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "-k") || !strcmp(arg, "--killed")) {
+-			show_killed = 1;
+-			require_work_tree = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "--directory")) {
+-			dir.show_other_directories = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "--no-empty-directory")) {
+-			dir.hide_empty_directories = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "-u") || !strcmp(arg, "--unmerged")) {
+-			/* There's no point in showing unmerged unless
+-			 * you also show the stage information.
+-			 */
+-			show_stage = 1;
+-			show_unmerged = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "-x") && i+1 < argc) {
+-			exc_given = 1;
+-			add_exclude(argv[++i], "", 0, &dir.exclude_list[EXC_CMDL]);
+-			continue;
+-		}
+-		if (!prefixcmp(arg, "--exclude=")) {
+-			exc_given = 1;
+-			add_exclude(arg+10, "", 0, &dir.exclude_list[EXC_CMDL]);
+-			continue;
+-		}
+-		if (!strcmp(arg, "-X") && i+1 < argc) {
+-			exc_given = 1;
+-			add_excludes_from_file(&dir, argv[++i]);
+-			continue;
+-		}
+-		if (!prefixcmp(arg, "--exclude-from=")) {
+-			exc_given = 1;
+-			add_excludes_from_file(&dir, arg+15);
+-			continue;
+-		}
+-		if (!prefixcmp(arg, "--exclude-per-directory=")) {
+-			exc_given = 1;
+-			dir.exclude_per_dir = arg + 24;
+-			continue;
+-		}
+-		if (!strcmp(arg, "--exclude-standard")) {
+-			exc_given = 1;
+-			setup_standard_excludes(&dir);
+-			continue;
+-		}
+-		if (!strcmp(arg, "--full-name")) {
+-			prefix_offset = 0;
+-			continue;
+-		}
+-		if (!strcmp(arg, "--error-unmatch")) {
+-			error_unmatch = 1;
+-			continue;
+-		}
+-		if (!prefixcmp(arg, "--with-tree=")) {
+-			with_tree = arg + 12;
+-			continue;
+-		}
+-		if (!prefixcmp(arg, "--abbrev=")) {
+-			abbrev = strtoul(arg+9, NULL, 10);
+-			if (abbrev && abbrev < MINIMUM_ABBREV)
+-				abbrev = MINIMUM_ABBREV;
+-			else if (abbrev > 40)
+-				abbrev = 40;
+-			continue;
+-		}
+-		if (!strcmp(arg, "--abbrev")) {
+-			abbrev = DEFAULT_ABBREV;
+-			continue;
+-		}
+-		if (*arg == '-')
+-			usage(ls_files_usage);
+-		break;
++	argc = parse_options(argc, argv, builtin_ls_files_options,
++			ls_files_usage, 0);
++	if (show_tag || show_valid_bit) {
++		tag_cached = "H ";
++		tag_unmerged = "M ";
++		tag_removed = "R ";
++		tag_modified = "C ";
++		tag_other = "? ";
++		tag_killed = "K ";
+ 	}
++	if (show_modified || show_others || dir.show_ignored || show_killed)
++		require_work_tree = 1;
++	if (show_unmerged)
++		/* There's no point in showing unmerged unless
++		 * you also show the stage information.
++		 */
++		show_stage = 1;
++	if (dir.exclude_per_dir)
++		exc_given = 1;
+ 
+ 	if (require_work_tree && !is_inside_work_tree())
+ 		setup_work_tree();
+ 
+-	pathspec = get_pathspec(prefix, argv + i);
++	pathspec = get_pathspec(prefix, argv);
+ 
+ 	/* be nice with submodule patsh ending in a slash */
+ 	read_cache();
+-- 
+1.6.1.3
