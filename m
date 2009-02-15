@@ -1,86 +1,81 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] parse-opt: migrate builtin-ls-files.
-Date: Sun, 15 Feb 2009 23:07:06 +0100
-Message-ID: <20090215220706.GB4371@genesis.frugalware.org>
-References: <1234727647-18523-1-git-send-email-vmiklos@frugalware.org> <alpine.DEB.1.00.0902152108370.10279@pacific.mpi-cbg.de>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH v2 4/5] t3301: use test_must_fail instead of !
+Date: Sun, 15 Feb 2009 23:07:09 +0100
+Message-ID: <200902152307.14571.trast@student.ethz.ch>
+References: <200902142056.42198.trast@student.ethz.ch> <200902151711.45099.trast@student.ethz.ch> <20090215181818.GA2291@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="RyOXVFQXzAE23HDB"
+Content-Type: multipart/signed;
+  boundary="nextPart17400799.Q92NaQ17jn";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Feb 15 23:08:54 2009
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Feb 15 23:09:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYpAM-0005pO-Hy
-	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 23:08:46 +0100
+	id 1LYpAd-0005vQ-V1
+	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 23:09:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753443AbZBOWHN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2009 17:07:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752845AbZBOWHL
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 17:07:11 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:54708 "EHLO virgo.iok.hu"
+	id S1754269AbZBOWH1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2009 17:07:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754174AbZBOWHZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 17:07:25 -0500
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:9887 "EHLO xsmtp1.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752503AbZBOWHJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2009 17:07:09 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id EB22A580AE;
-	Sun, 15 Feb 2009 23:07:07 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 647BF446A6;
-	Sun, 15 Feb 2009 23:07:06 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 8988211B877C; Sun, 15 Feb 2009 23:07:06 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0902152108370.10279@pacific.mpi-cbg.de>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1754088AbZBOWHY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2009 17:07:24 -0500
+Received: from xfe1.d.ethz.ch ([82.130.124.41]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sun, 15 Feb 2009 23:07:23 +0100
+Received: from thomas.localnet ([77.56.223.244]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sun, 15 Feb 2009 23:07:22 +0100
+User-Agent: KMail/1.11.0 (Linux/2.6.27.7-9-default; KDE/4.2.0; x86_64; ; )
+In-Reply-To: <20090215181818.GA2291@coredump.intra.peff.net>
+X-OriginalArrivalTime: 15 Feb 2009 22:07:22.0678 (UTC) FILETIME=[C6FA3D60:01C98FB9]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110067>
 
-
---RyOXVFQXzAE23HDB
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--nextPart17400799.Q92NaQ17jn
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-
-On Sun, Feb 15, 2009 at 09:13:42PM +0100, Johannes Schindelin <Johannes.Sch=
-indelin@gmx.de> wrote:
-> > > > +   dir->show_ignored =3D !unset;
-> > > > +
-> > > > +   return 0;
-> > > > +}
-> > >
-> > > Maybe this wants to be converted into an OPTION_BIT compatible data=
-=20
-> > > type?
-> >=20
-> > I think that's not possible, as show_ignored is a bitfield.
->=20
-> Well, in my juvenile folly I dreamt of turning this into a proper=20
-> bitfield...
-
-Uhm, I think I haven't got what you mean. ;-)
-
-Personally I would just remove all problematic bitfields in struct
-dir_struct as I think it does not worth using them, but getting rid of
-them just because of parseopt sounds insane as well - so I sended up
-writing callback functions, as you saw in the patch.
-
---RyOXVFQXzAE23HDB
-Content-Type: application/pgp-signature
 Content-Disposition: inline
+
+Jeff King wrote:
+> Using "dash" will catch bash-isms, and is pretty commonly available, I
+> think.  But this behavior, IIRC, happens on FreeBSD's /bin/sh, which is
+> derived from "ash" (so is "dash", but I they have long since diverged).
+
+Thanks, that worked well enough.  It's not in the opensuse repos, but
+hey, they track it with git, so it must be good ;-)
+
+> So I don't think there is a catch-all shell that will help you, but some
+> "ash" variant is probably your best bet.
+
+I tried plain "ash" (which is in the opensuse repos) but that falls
+down due to lack of 'cd -P'.
+
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
+
+--nextPart17400799.Q92NaQ17jn
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+Version: GnuPG v2.0.9 (GNU/Linux)
 
-iEYEARECAAYFAkmYkgoACgkQe81tAgORUJYa3gCeJn2lQDXAzx0Djs2+6ee87o15
-6ecAn1R1e6Tk+A0ywOSGZZWJErk+0+F9
-=SKZS
+iEYEABECAAYFAkmYkhIACgkQqUud07tmzP1HAQCfQR0zoJLkmoc2Wcq8r34b4+9g
+bCMAnAn1l67pMIXZkKXvVwIFSRBT1F6K
+=jcKZ
 -----END PGP SIGNATURE-----
 
---RyOXVFQXzAE23HDB--
+--nextPart17400799.Q92NaQ17jn--
