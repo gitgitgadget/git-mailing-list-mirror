@@ -1,74 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Switch receive.denyCurrentBranch to "refuse"
-Date: Tue, 10 Feb 2009 17:04:11 -0800
-Message-ID: <7vskmliy2c.fsf@gitster.siamese.dyndns.org>
-References: <cover.1233275583u.git.johannes.schindelin@gmx.de>
- <alpine.DEB.1.00.0901300133070.3586@pacific.mpi-cbg.de>
- <20090130023040.GR21473@genesis.frugalware.org>
- <alpine.DEB.1.00.0901301426150.3586@pacific.mpi-cbg.de>
- <20090211001138.GU21473@genesis.frugalware.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 4/5] t3301: use test_must_fail instead of !
+Date: Sun, 15 Feb 2009 13:18:18 -0500
+Message-ID: <20090215181818.GA2291@coredump.intra.peff.net>
+References: <200902142056.42198.trast@student.ethz.ch> <8c50889d27e5baec1cbbd9a5775fa80b986c6df6.1234642638.git.trast@student.ethz.ch> <7vvdrcnnl0.fsf@gitster.siamese.dyndns.org> <200902151711.45099.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, gitster@pobox.com
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Wed Feb 11 02:06:04 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Sun Feb 15 19:20:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LX3Y3-0000gR-JJ
-	for gcvg-git-2@gmane.org; Wed, 11 Feb 2009 02:05:56 +0100
+	id 1LYlbg-00008a-Bp
+	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 19:20:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754153AbZBKBEW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Feb 2009 20:04:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756349AbZBKBEW
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Feb 2009 20:04:22 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38097 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752341AbZBKBEV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Feb 2009 20:04:21 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3E80F2ADC8;
-	Tue, 10 Feb 2009 20:04:20 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 17A842ADF6; Tue,
- 10 Feb 2009 20:04:12 -0500 (EST)
-In-Reply-To: <20090211001138.GU21473@genesis.frugalware.org> (Miklos Vajna's
- message of "Wed, 11 Feb 2009 01:11:38 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E9BB8300-F7D7-11DD-A2B0-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1753857AbZBOSSV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2009 13:18:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753780AbZBOSSV
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 13:18:21 -0500
+Received: from peff.net ([208.65.91.99]:46572 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753634AbZBOSSV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2009 13:18:21 -0500
+Received: (qmail 8758 invoked by uid 107); 15 Feb 2009 18:18:40 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 15 Feb 2009 13:18:40 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 15 Feb 2009 13:18:18 -0500
+Content-Disposition: inline
+In-Reply-To: <200902151711.45099.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110027>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
+On Sun, Feb 15, 2009 at 05:11:40PM +0100, Thomas Rast wrote:
 
-> [ Sorry for the late reply, I did not read my mail recently. ]
->
-> On Fri, Jan 30, 2009 at 02:28:39PM +0100, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->> > Shouldn't this be
->> > 
->> > git config receive.denyCurrentBranch ignore
->> > 
->> > instead of "true"?
->> 
->> Right.
->> 
->> However, as Junio pointed out, we do not want to give this resolution in 
->> the error message.  I am now leaning more to something like
->> 
->> 	refusing to update checked out branch '%s' in non-bare repository
->> 
->> Hmm?
->> 
->> Old-timers will know "oh, what the hell, I did not mark my repository as 
->> bare!", and new-timers will no longer be confused.
->
-> So in an "I know what I'm doing" mode, is "git config core.bare true" in
-> a non-bare repo considered as a better workaround than using "git config
-> receive.denyCurrentBranch ignore"?
+> > > +	MSG=3 test_must_fail git notes edit
+> > 
+> > test_must_fail is a shell function, and we have precedence 2d60615 (tests:
+> > Avoid single-shot environment export for shell function invocation,
+> > 2009-01-26) to avoid this construct.
+> 
+> Bah.  I really have a bad memory, don't I?
+> 
+> Is there a "bare minimum" POSIX shell that I can run the tests under,
+> to save myself such embarassment in the future?
 
-If you have to ask, you do not know what you're doing ;-)
+Using "dash" will catch bash-isms, and is pretty commonly available, I
+think.  But this behavior, IIRC, happens on FreeBSD's /bin/sh, which is
+derived from "ash" (so is "dash", but I they have long since diverged).
+
+There are even more quirks on more exotic systems, I expect, though I
+have to admit that I gave up on Solaris and just started using bash
+there. :)
+
+So I don't think there is a catch-all shell that will help you, but some
+"ash" variant is probably your best bet.
+
+-Peff
