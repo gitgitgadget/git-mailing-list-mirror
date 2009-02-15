@@ -1,71 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] parse-opt: migrate builtin-ls-files.
-Date: Sun, 15 Feb 2009 21:13:42 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902152108370.10279@pacific.mpi-cbg.de>
-References: <1234727647-18523-1-git-send-email-vmiklos@frugalware.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/8] config: Cleanup config file handling.
+Date: Sun, 15 Feb 2009 15:15:06 -0500
+Message-ID: <20090215201505.GC26779@coredump.intra.peff.net>
+References: <1234688460-9248-1-git-send-email-felipe.contreras@gmail.com> <1234688460-9248-2-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sun Feb 15 21:14:23 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 15 21:16:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYnNa-00013b-Id
-	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 21:14:19 +0100
+	id 1LYnPp-00024I-NH
+	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 21:16:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751723AbZBOUMv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2009 15:12:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751389AbZBOUMu
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 15:12:50 -0500
-Received: from mail.gmx.net ([213.165.64.20]:54868 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751272AbZBOUMt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2009 15:12:49 -0500
-Received: (qmail invoked by alias); 15 Feb 2009 20:12:47 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp011) with SMTP; 15 Feb 2009 21:12:47 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18l+as/arslYUTrH1NSY1VB+1seaD1TYHiADc93C3
-	YsSz7xJDXe5TVg
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <1234727647-18523-1-git-send-email-vmiklos@frugalware.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1752845AbZBOUPL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2009 15:15:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752525AbZBOUPJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 15:15:09 -0500
+Received: from peff.net ([208.65.91.99]:59791 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751481AbZBOUPI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2009 15:15:08 -0500
+Received: (qmail 9893 invoked by uid 107); 15 Feb 2009 20:15:27 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 15 Feb 2009 15:15:27 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 15 Feb 2009 15:15:06 -0500
+Content-Disposition: inline
+In-Reply-To: <1234688460-9248-2-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110054>
 
-Hi,
+On Sun, Feb 15, 2009 at 11:00:54AM +0200, Felipe Contreras wrote:
 
-On Sun, 15 Feb 2009, Miklos Vajna wrote:
+> As suggested by Johannes Schindelin.
 
-> On Sat, Feb 14, 2009 at 09:56:04PM +0100, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > On Thu, 8 Jan 2009, Miklos Vajna wrote:
-> >
-> > > +static int option_parse_ignored(const struct option *opt,
-> > > +                           const char *arg, int unset)
-> > > +{
-> > > +   struct dir_struct *dir = opt->value;
-> > > +
-> > > +   dir->show_ignored = !unset;
-> > > +
-> > > +   return 0;
-> > > +}
-> >
-> > Maybe this wants to be converted into an OPTION_BIT compatible data 
-> > type?
-> 
-> I think that's not possible, as show_ignored is a bitfield.
+Thank you for splitting this patch up. I have to admit I was too scared
+to read the original after seeing the diffstat.
 
-Well, in my juvenile folly I dreamt of turning this into a proper 
-bitfield...
+But part of the nice thing about splitting up is that you can write
+meaningful commit messages for each individual change. Reading this
+commit message, I don't know what to expect.
 
-Ciao,
-Dscho
+Your 1/8, though short, tells me what to expect: a trivial rename. But
+"clean up config file handling" is quite ambiguous. And after reading
+the patch, I am left wondering why the filename and errno are not useful
+as part of the die() message. I think even a single sentence would
+probably make it clear.
+
+And yes, I know I can look elsewhere in the thread to find the
+discussion between you and Dscho. But think of the poor "git log" user
+six months from now.
+
+-Peff
