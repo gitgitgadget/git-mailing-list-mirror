@@ -1,84 +1,82 @@
-From: =?UTF-8?Q?Antonio_Garc=C3=ADa_Dom=C3=ADnguez?= 
-	<nyoescape@gmail.com>
-Subject: "add -p" + filenames with UTF-8 multibyte characters = "No changes"
-Date: Sun, 15 Feb 2009 19:40:11 +0100
-Message-ID: <2b8265360902151040t49711942udd4862cc9df01da5@mail.gmail.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH] Make repack less likely to corrupt repository
+Date: Sun, 15 Feb 2009 19:42:14 +0100
+Message-ID: <200902151942.15055.robin.rosenberg.lists@dewire.com>
+References: <1234140299-29785-1-git-send-email-robin.rosenberg@dewire.com> <200902151715.19351.robin.rosenberg.lists@dewire.com> <alpine.DEB.1.00.0902151745270.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=000e0cd25dc0699a370462f9660f
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 15 19:41:42 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	spearce@spearce.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Feb 15 19:44:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYlvx-0006HO-Dd
-	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 19:41:41 +0100
+	id 1LYlxz-00070Y-Fk
+	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 19:43:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754166AbZBOSkP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2009 13:40:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753851AbZBOSkO
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 13:40:14 -0500
-Received: from fg-out-1718.google.com ([72.14.220.158]:57907 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753833AbZBOSkM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2009 13:40:12 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so141108fgg.17
-        for <git@vger.kernel.org>; Sun, 15 Feb 2009 10:40:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=4Tu9IKkFCXTOEs3vqRDdKs9OxSlcH7cd3boIIOeesEQ=;
-        b=YNNzDzCOx8k+bG1I/tL3oZOFzAF0qR2SB+7sCK+jaW8T2LxL6h7ZTT/EmCeaDcJpHB
-         lhcWcomjRVdcaUCYV1C6PLxCPNS5w955AgfKxHDn64RJBjUrdd7SF/oMU53NeGSFyiDI
-         NqkwKkzyYsl2sS9ccWN4UA9Wc61t2DBLYr3eA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=jUwyyWJMh+xeGmjJ1h5O0G7ECmJdwGAO3ewRcd4cgUOqM85ga7TAC74bmvR3cLQOC4
-         QpVYqGmi7fhC4OYQs5lGq7oHht68C8pCYBBbKPmyrNTYQaUlwbMinlxkRQhQEeuyiLJ2
-         YXJKTcHUcdLZx5h4Te+RCoyjcMeHQn8Pv+QCc=
-Received: by 10.86.98.18 with SMTP id v18mr960007fgb.46.1234723211417; Sun, 15 
-	Feb 2009 10:40:11 -0800 (PST)
+	id S1754518AbZBOSmU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Feb 2009 13:42:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754508AbZBOSmU
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 13:42:20 -0500
+Received: from mail.dewire.com ([83.140.172.130]:20062 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754129AbZBOSmT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Feb 2009 13:42:19 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 767D1147E8D5;
+	Sun, 15 Feb 2009 19:42:16 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Qd1G8mqtz2Fw; Sun, 15 Feb 2009 19:42:15 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.4])
+	by dewire.com (Postfix) with ESMTP id CCCB18006AA;
+	Sun, 15 Feb 2009 19:42:15 +0100 (CET)
+User-Agent: KMail/1.11.0 (Linux/2.6.27-11-generic; KDE/4.2.0; i686; ; )
+In-Reply-To: <alpine.DEB.1.00.0902151745270.10279@pacific.mpi-cbg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110031>
 
---000e0cd25dc0699a370462f9660f
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+s=F6ndag 15 februari 2009 17:46:59 skrev Johannes Schindelin:
+> Hi,
+>=20
+> On Sun, 15 Feb 2009, Robin Rosenberg wrote:
+> > -	exit 1
+> > +	echo >&2 "INFO: We recovered from the repack error, but your repo=
+"
+> > +	echo >&2 "INFO: is probably suboptimally packed. You may try to r=
+epack"
+> > +	echo >&2 "INFO: later. A common reason for repacking failure is t=
+hat"
+> > +	echo >&2 "INFO: a Windows program was locking one of the old pack=
+ files."
+> > +	echo >&2 "INFO: To repack successfully you may have to close that=
+ program"
+> > +	echo >&2 "INFO: before repacking."
+>=20
+> cat >&2 << EOF?
 
-Hello all,
+Yeah, but I followed the pattern from the warnings just prior to these =
+messages.
 
-I seem to have run into a bug in "add -p" and "add -i" when trying to
-stage diff hunks in tracked files with UTF-8 multibyte characters
-(such as "=C3=A1"). If I add "=C3=A1", commit, then modify it and try to ru=
-n
-"add -p" on it, Git reports "No changes". "add -i" doesn't do
-anything, either.
+> > +	exit
+>=20
+> You lose the error condition here, but I cannot find a convincing arg=
+ument=20
+> about that in the commit message.
 
-I've switched to 1.6.2.rc0.90.g0753 and the problem persists. If it
-helps, I've attached a small shell script with a minimal recipe for
-triggering the bug.
+I was thinking of my patch as an ammendment to Junios patch. In that co=
+ntext.
 
-This should incorrectly report "No changes":
-./test-accents.sh
+"Exit success if rollback fails after failing to rename old packs." Doe=
+sn't this
+count?
 
-And this should work fine:
-FILE=3Da ./test-accents.sh
-
--Antonio
-
---000e0cd25dc0699a370462f9660f
-Content-Type: application/x-sh; name="test-accents.sh"
-Content-Disposition: attachment; filename="test-accents.sh"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_fr82ag0j0
-
-IyEvYmluL3NoCgppZiBbIC16ICIkRklMRSIgXTsgdGhlbgogICBGSUxFPcOhCmZpCgpybSAtZnIg
-dGVzdApta2RpciB0ZXN0CmNkIHRlc3QKZWNobyB4ID4gIiRGSUxFIgpnaXQgaW5pdApnaXQgYWRk
-IC4KZ2l0IGNvbW1pdCAtbSAiaW5pdGlhbCBjb21taXQiCmVjaG8geSA+PiAiJEZJTEUiCmdpdCBh
-ZGQgLXAgIiRGSUxFIgo=
---000e0cd25dc0699a370462f9660f--
+-- robin
