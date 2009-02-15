@@ -1,85 +1,53 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
 Subject: Re: [PATCH] bash completion: offer more options for gitk
-Date: Sun, 15 Feb 2009 01:33:55 -0800
-Message-ID: <7vfxigniws.fsf@gitster.siamese.dyndns.org>
+Date: Sun, 15 Feb 2009 10:56:01 +0100
+Message-ID: <adf1fd3d0902150156w67a16e6fp3c946446c5ae2bfd@mail.gmail.com>
 References: <1234641270-14342-1-git-send-email-trast@student.ethz.ch>
+	 <7vfxigniws.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sun Feb 15 10:35:36 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 15 10:57:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYdPR-00081r-Tj
-	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 10:35:34 +0100
+	id 1LYdkj-0004QR-TO
+	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 10:57:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751492AbZBOJeH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2009 04:34:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751318AbZBOJeG
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 04:34:06 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54523 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750788AbZBOJeE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2009 04:34:04 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1C0972B2BB;
-	Sun, 15 Feb 2009 04:34:01 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5744A2B2B7; Sun,
- 15 Feb 2009 04:33:57 -0500 (EST)
-In-Reply-To: <1234641270-14342-1-git-send-email-trast@student.ethz.ch>
- (Thomas Rast's message of "Sat, 14 Feb 2009 20:54:30 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: C6FF58CC-FB43-11DD-9B67-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1751543AbZBOJ4H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2009 04:56:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751492AbZBOJ4F
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 04:56:05 -0500
+Received: from mail-fx0-f20.google.com ([209.85.220.20]:48221 "EHLO
+	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751285AbZBOJ4E (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2009 04:56:04 -0500
+Received: by fxm13 with SMTP id 13so4809283fxm.13
+        for <git@vger.kernel.org>; Sun, 15 Feb 2009 01:56:02 -0800 (PST)
+Received: by 10.103.226.10 with SMTP id d10mr2261108mur.105.1234691761967; 
+	Sun, 15 Feb 2009 01:56:01 -0800 (PST)
+In-Reply-To: <7vfxigniws.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109986>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+2009/2/15 Junio C Hamano <gitster@pobox.com>:
+> Many options you add here are useful for git-log and not present in its
+> completion, but as you point out not all git-log options necessarily make
+> sense for gitk.  I think it would make sense to introduce an extra
+> variable $__git_log_basic_options that holds the basic ones that can be in
+> both, and add the ones that are specific to gitk or git-log in their own
+> completion functions.  I suspect gitk's addition will be nil, while
+> git-log would add --graph, --walk-reflogs and --no-merges to the basic
+> set.
 
-> Add some more git-log options to the gitk completion.  Not all of them
-> make sense, unfortunately.
->
-> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-> ---
->
-> I was simply too lazy to keep typing --simplify-by-decoration.
->
-> I made two passes over the git-log manpage and simply selected all
-> options that seemed to make sense, _seemed_ to work, and that didn't
-> mangle the history view in horrible ways (such as disconnecting it
-> into little pieces).  It does handle --left-right correctly, very
-> nice!
+I sometimes use the --no-merges with gitk, normally within a range
+(the last 'next' update or so).
 
-The --left-right support in gitk was done in tandem with the low-level
-support.
-
-> +		__gitcomp "
-> +			--not --all $merge
-> +			--branches --tags --remotes
-> +			--first-parent
-> +			--dense --sparse --full-history
-> +			--simplify-merges --simplify-by-decoration
-> +			--since= --after= --until= --before=
-> +			--left-right
-> +			"
-
-Many options you add here are useful for git-log and not present in its
-completion, but as you point out not all git-log options necessarily make
-sense for gitk.  I think it would make sense to introduce an extra
-variable $__git_log_basic_options that holds the basic ones that can be in
-both, and add the ones that are specific to gitk or git-log in their own
-completion functions.  I suspect gitk's addition will be nil, while
-git-log would add --graph, --walk-reflogs and --no-merges to the basic
-set.
-
->  		return
->  		;;
->  	esac
-> -- 
-> 1.6.2.rc0.293.g947001
+Santi
