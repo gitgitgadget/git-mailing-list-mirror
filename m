@@ -1,62 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: filter-branch: Remove original/*
-Date: Sun, 15 Feb 2009 13:51:39 -0800
-Message-ID: <7vbpt3id1w.fsf@gitster.siamese.dyndns.org>
-References: <431341160902131845g58d99635ie0735b433802d6be@mail.gmail.com>
- <alpine.DEB.1.00.0902142219010.10279@pacific.mpi-cbg.de>
- <7vvdrblcl0.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0902152046090.10279@pacific.mpi-cbg.de>
- <7vvdrbie7k.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0902152230330.10279@pacific.mpi-cbg.de>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: Possible git bug when using filter-branch to remove large binaries
+Date: Sun, 15 Feb 2009 22:55:01 +0100
+Message-ID: <200902152255.05655.trast@student.ethz.ch>
+References: <34854909-55F5-4869-A7A6-0E179F2F7A44@talkhouse.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Kidd <git@randomhacks.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Feb 15 22:53:16 2009
+Content-Type: multipart/signed;
+  boundary="nextPart8957511.YR5lk54ab2";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Juan Zanos <juan_zanos@talkhouse.com>
+X-From: git-owner@vger.kernel.org Sun Feb 15 22:57:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYovK-00005v-Od
-	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 22:53:15 +0100
+	id 1LYoz0-0001MP-9c
+	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 22:57:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753814AbZBOVvr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2009 16:51:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753575AbZBOVvq
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 16:51:46 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53718 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753485AbZBOVvp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2009 16:51:45 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id D08E92B33E;
-	Sun, 15 Feb 2009 16:51:44 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D83212B339; Sun,
- 15 Feb 2009 16:51:40 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.0902152230330.10279@pacific.mpi-cbg.de>
- (Johannes Schindelin's message of "Sun, 15 Feb 2009 22:33:32 +0100 (CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: D63DF9F8-FBAA-11DD-B409-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1752803AbZBOVzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2009 16:55:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752755AbZBOVzR
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 16:55:17 -0500
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:8775 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752715AbZBOVzQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2009 16:55:16 -0500
+Received: from xfe1.d.ethz.ch ([82.130.124.41]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sun, 15 Feb 2009 22:55:15 +0100
+Received: from thomas.localnet ([77.56.223.244]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sun, 15 Feb 2009 22:55:14 +0100
+User-Agent: KMail/1.11.0 (Linux/2.6.27.7-9-default; KDE/4.2.0; x86_64; ; )
+In-Reply-To: <34854909-55F5-4869-A7A6-0E179F2F7A44@talkhouse.com>
+X-OriginalArrivalTime: 15 Feb 2009 21:55:14.0334 (UTC) FILETIME=[14D9C3E0:01C98FB8]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110064>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+--nextPart8957511.YR5lk54ab2
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
->> That merely means whoever changes the tag and wants the record of such an
->> update, which is uncommon, need to make sure reflog is created for that
->> tag (and that tag only).
->
-> The thing is: we cannot.  At least not at the moment.
+Juan Zanos wrote:
+> I'm trying to remove a directory of large binaries from a git =20
+> repository
+[...]
+> The directory successfully =20
+> vanishes. However, the repository + working directory only goes from =20
+> 216M down to 133M.   That means the binaries were only removed from =20
+> the working directory.
 
-$ mkdir -p .git/logs/refs/tags
-$ >.git/logs/refs/tags/junker
-$ git tag junker
-$ wc .git/logs/refs/tags/junker
-  1   8 134 .git/logs/refs/tags/junker
+We're in fact trying to make a generic recipe and put it in 'man
+git-filter-branch'.  The preliminary patch is here:
 
-Ok, it's not 180 byte as I said, but only 134 bytes.
+  http://article.gmane.org/gmane.comp.version-control.git/109925/
+
+Once you convince your eyes to ignore the leading +, it should be
+fairly easy to read in patch form. ;-)
+
+It would be very helpful if you could try the recipe, and report if it
+worked.
+
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
+
+--nextPart8957511.YR5lk54ab2
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkmYjzkACgkQqUud07tmzP31HgCeNjkQluZThP50AWD1NBWnJ8Qr
+P2gAnR4orJUTQKuE3GkBIgA1kNG2seWc
+=aj8s
+-----END PGP SIGNATURE-----
+
+--nextPart8957511.YR5lk54ab2--
