@@ -1,62 +1,50 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: [SoC RFC] about "restartable clone"
-Date: Sun, 15 Feb 2009 20:37:14 +0900
-Message-ID: <20090215203714.6117@nanako3.lavabit.com>
-References: <1dacb48d0902131838i3a717ec9r96d8ae8224f7bc66@mail.gmail.com>
+From: "Dolly" <whitebiso@6c.com>
+Subject: Will you be my Valentine?
+Date: Sun, 15 Feb 2009 12:45:18 +0100
+Message-ID: <20090215124518.2010300@6c.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-To: Henry Huang <henry.s.huang@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 15 12:41:27 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 15 13:00:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYfND-0003My-K2
-	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 12:41:24 +0100
+	id 1LYffy-0007ku-1p
+	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 13:00:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752252AbZBOLhn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2009 06:37:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752168AbZBOLhm
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 06:37:42 -0500
-Received: from karen.lavabit.com ([72.249.41.33]:33850 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752167AbZBOLhl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2009 06:37:41 -0500
-Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
-	by karen.lavabit.com (Postfix) with ESMTP id EFBAC11B8C0;
-	Sun, 15 Feb 2009 05:37:40 -0600 (CST)
-Received: from 8371.lavabit.com (212.62.97.21)
-	by lavabit.com with ESMTP id LN7AVBL0NR3O; Sun, 15 Feb 2009 05:37:40 -0600
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=2wmLuFHUaW0ckIQv+ulfaBnz74mUErCbo0bzlp7hLF78uduvH3Q5ofurzJpShRowMXNGDiq9YKe6GHtTDnVkOVwGIV4bqTkaojAAr05EFO+mgCphs1nq85mg0Zw6erahNMR/HMhb4oShG1vaBXblzhN7pPEBXnnsktBi+NO55Dk=;
-  h=From:To:Cc:Subject:In-Reply-To:References:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <1dacb48d0902131838i3a717ec9r96d8ae8224f7bc66@mail.gmail.com>
+	id S1752540AbZBOL7S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2009 06:59:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752483AbZBOL7S
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 06:59:18 -0500
+Received: from HSI-KBW-091-089-073-218.hsi2.kabelbw.de ([91.89.73.218]:32328
+	"HELO HSI-KBW-091-089-073-218.hsi2.kabelbw.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752400AbZBOL7S (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Feb 2009 06:59:18 -0500
+Received: from localhost.localdomain (abnr [192.168.34.144])
+	by HSI-KBW-091-089-073-218.hsi2.kabelbw.de (Postfix) with ESMTP id 08573603050
+	for <git@vger.kernel.org>; Sun, 15 Feb 2009 12:45:18 +0100
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109995>
+X-Spam-Report: 8.8 points;
+ *  3.4 RATWARE_RCVD_PF Bulk email fingerprint (Received PF) found
+ *  3.0 RAZOR2_CF_RANGE_51_100 BODY: Razor2 gives confidence level above 50%
+ *      [cf: 100]
+ *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
+ *  0.8 URIBL_PH_SURBL Contains an URL listed in the PH SURBL blocklist
+ *      [URIs: yourgreatlove.com]
+ *  0.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: yourgreatlove.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109996>
 
-Quoting Henry Huang <henry.s.huang@gmail.com>:
+Dolly mailed a postcard and wrote for you:
+"Melts my heart"
 
-> Now i have several problems:
->
-> 1) Less familiar with git source code
-> 2) Less experience in Open Source Development
-> 3) No proposal for this project
->
-> My questions:
->
-> 1) Are there any documents for git's internals ?-- (.git/ structure,
-> data structures: DAG of objects,
-> branches, tags, index etc.) and workflow of main operations
->
-> 2) Could anyone give me some hints -- where to begin with this project?
-
-A good starting point would be to download the source and look at the files in Documentation directory, including its technical subdirectory. The information in these files would answer large part of your questions in 1).
-
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+It is waiting for you at our card site, click on the following link to see your 
+Ecard:
+http://ro.yourgreatlove.com/?id=1cbe0d1c1b8d1dbd81a392bc3b9b2
+This eCard will remove after 16-03-2009 from our servers.
