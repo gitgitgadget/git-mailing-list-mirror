@@ -1,69 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] bash: add 'merge --ff' and '--no-ff' options
-Date: Sat, 14 Feb 2009 21:34:55 -0800
-Message-ID: <7v7i3sp8jk.fsf@gitster.siamese.dyndns.org>
-References: <1234628576-4686-1-git-send-email-szeder@ira.uka.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] builtin-remote: better handling of multiple remote
+	HEADs
+Date: Sun, 15 Feb 2009 01:08:15 -0500
+Message-ID: <20090215060815.GA7473@coredump.intra.peff.net>
+References: <20090214034345.GB24545@coredump.intra.peff.net> <1234607430-5403-1-git-send-email-jaysoffian@gmail.com> <20090214175420.GA3457@coredump.intra.peff.net> <alpine.LNX.1.00.0902141503230.19665@iabervon.org> <20090214211548.GA14898@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Sun Feb 15 06:36:52 2009
+Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sun Feb 15 07:09:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYZgN-00005m-4S
-	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 06:36:47 +0100
+	id 1LYaCI-0004qy-LA
+	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 07:09:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751015AbZBOFfR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Feb 2009 00:35:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751002AbZBOFfR
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 00:35:17 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48415 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750769AbZBOFfQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Feb 2009 00:35:16 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 6448F2B28D;
-	Sun, 15 Feb 2009 00:35:14 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C723D2B285; Sun,
- 15 Feb 2009 00:35:03 -0500 (EST)
-In-Reply-To: <1234628576-4686-1-git-send-email-szeder@ira.uka.de> (SZEDER
- =?utf-8?Q?G=C3=A1bor's?= message of "Sat, 14 Feb 2009 17:22:56 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 6B6FDD72-FB22-11DD-8A1E-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1750994AbZBOGIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2009 01:08:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750769AbZBOGIS
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 01:08:18 -0500
+Received: from peff.net ([208.65.91.99]:39916 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750718AbZBOGIR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2009 01:08:17 -0500
+Received: (qmail 5324 invoked by uid 107); 15 Feb 2009 06:08:36 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 15 Feb 2009 01:08:36 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 15 Feb 2009 01:08:15 -0500
+Content-Disposition: inline
+In-Reply-To: <20090214211548.GA14898@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/109965>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+On Sat, Feb 14, 2009 at 04:15:48PM -0500, Jeff King wrote:
 
-> Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
-> ---
->  contrib/completion/git-completion.bash |    1 +
->  1 files changed, 1 insertions(+), 0 deletions(-)
->
-> diff --git a/contrib/completion/git-completion.bash b/contrib/complet=
-ion/git-completion.bash
-> index e848d5d..ad45717 100755
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1037,6 +1037,7 @@ _git_merge ()
->  	--*)
->  		__gitcomp "
->  			--no-commit --no-stat --log --no-log --squash --strategy
-> +			--ff --no-ff
->  			"
->  		return
->  	esac
+> On Sat, Feb 14, 2009 at 03:21:30PM -0500, Daniel Barkalow wrote:
+> 
+> > I haven't checked lately, but I think that what's actually needed is to 
+> > have the locate_head() function notice if the struct ref for HEAD actually 
+> > has the symref field non-NULL, and report that as the unambiguous answer. 
+> 
+> Indeed. Something like the patch below works (on top of Jay's patches).
+> [...]
+> I will try to make something a little neater later today.
 
-I do not have objections to the patch per-se, but it made me stop think=
-ing
-for 2 minutes why there is --no-ff listed but not --no-squash, and I ga=
-ve
-up, not being able to figure out why.
+Here is a cleaner series. It depends on all of Jay's remote patches,
+including the set-head one. I can resend once the dust is a little more
+settled on those patches.
+
+The first two are prep for adding a test in 5/5:
+
+   1/5: test scripts: refactor start_httpd helper
+   2/5: add basic http clone/fetch tests
+
+These ones are code cleanup for 5/5:
+
+   3/5: refactor find_refs_by_name to accept const list
+   4/5: remote: refactor guess_remote_head
+
+And this is the useful one.
+
+   5/5: remote: use exact HEAD lookup if it is available
+
+-Peff
