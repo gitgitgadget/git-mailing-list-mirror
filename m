@@ -1,238 +1,63 @@
-From: Kjetil Barvik <barvik@broadpark.no>
-Subject: [PATCH/RFC v1 2/2] make USE_NSEC work as expected
-Date: Sun, 15 Feb 2009 20:46:15 +0100
-Message-ID: <2a800178e58702215aaa0436221412a49a5b3f66.1234720401.git.barvik@broadpark.no>
-References: <cover.1234720401.git.barvik@broadpark.no>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: filter-branch: Remove original/*
+Date: Sun, 15 Feb 2009 20:47:19 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902152046090.10279@pacific.mpi-cbg.de>
+References: <431341160902131845g58d99635ie0735b433802d6be@mail.gmail.com> <alpine.DEB.1.00.0902142219010.10279@pacific.mpi-cbg.de> <7vvdrblcl0.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Kjetil Barvik <barvik@broadpark.no>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 15 20:47:52 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Eric Kidd <git@randomhacks.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 15 20:48:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYmxw-0001UZ-DU
-	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 20:47:48 +0100
+	id 1LYmyM-0001d9-KW
+	for gcvg-git-2@gmane.org; Sun, 15 Feb 2009 20:48:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752551AbZBOTqY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2009 14:46:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752550AbZBOTqY
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 14:46:24 -0500
-Received: from osl1smout1.broadpark.no ([80.202.4.58]:37965 "EHLO
-	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751990AbZBOTqU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2009 14:46:20 -0500
-Received: from osl1sminn1.broadpark.no ([80.202.4.59])
- by osl1smout1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KF400GLTHL6VQA0@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Sun, 15 Feb 2009 20:46:18 +0100 (CET)
-Received: from localhost.localdomain ([80.202.92.249])
- by osl1sminn1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTPA id <0KF4000XQHL3HX70@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Sun, 15 Feb 2009 20:46:18 +0100 (CET)
-X-Mailer: git-send-email 1.6.1.349.g99fa5
-In-reply-to: <cover.1234720401.git.barvik@broadpark.no>
+	id S1752635AbZBOTq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2009 14:46:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752571AbZBOTq1
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 14:46:27 -0500
+Received: from mail.gmx.net ([213.165.64.20]:36379 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752550AbZBOTq1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2009 14:46:27 -0500
+Received: (qmail invoked by alias); 15 Feb 2009 19:46:24 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp066) with SMTP; 15 Feb 2009 20:46:24 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+jG74rL9ij13ofgKT75zqgCoasWb3W5Aws3zAjVX
+	aPJqm2e12MyUMC
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7vvdrblcl0.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110047>
 
-Since the filesystem ext4 is now defined as stable in Linux v2.6.28,
-and ext4 supports nanonsecond resolution timestamps natively, it is
-time to make USE_NSEC work as expected.
+Hi,
 
-This will make racy git situations less likely to happen.  For 'git
-checkout' this means it will be less likely that we have to open, read
-the contents of the file into RAM, and check if file is really
-modified or not.  The result sould be a litle less used CPU time, less
-pagefaults and a litle faster program, at least for 'git checkout'.
+On Sun, 15 Feb 2009, Junio C Hamano wrote:
 
-Since the number of possible racy git situations would increase when
-disks gets faster, this patch would be more and more helpfull as times
-go by.  For a fast Solid State Disk, this patch should be helpfull.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > Hmm.  Indeed, we ignore reflogs in log_ref_write() when the ref starts 
+> > with refs/tags/ (implicitly, not explicitely).
+> >
+> > Maybe it is time to change that.
+> 
+> Why?  Most tags will be created once and will stay there.  That is how 
+> tags are supposed to behave, isn't it?
 
-Note that, when file operations starts to take less than 1 nanosecond,
-one would again start to get more racy git situations.
+Exactly my point.  In the common case, it does not change a thing.
 
-For more info on racy git, see Documentation/technical/racy-git.txt
-For more info on ext4, see http://kernelnewbies.org/Ext4
+However in the case that we _do_ change tags, would you not agree that the 
+reflog is _the_ place to record the change?
 
-Signed-off-by: Kjetil Barvik <barvik@broadpark.no>
----
- cache.h      |    6 ++--
- read-cache.c |   70 ++++++++++++++++++++++++++++++++++++++++++++++-----------
- 2 files changed, 59 insertions(+), 17 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index 37dfb1c..309053d 100644
---- a/cache.h
-+++ b/cache.h
-@@ -140,8 +140,8 @@ struct ondisk_cache_entry_extended {
- };
- 
- struct cache_entry {
--	unsigned int ce_ctime;
--	unsigned int ce_mtime;
-+	struct cache_time ce_ctime;
-+	struct cache_time ce_mtime;
- 	unsigned int ce_dev;
- 	unsigned int ce_ino;
- 	unsigned int ce_mode;
-@@ -282,7 +282,7 @@ struct index_state {
- 	struct cache_entry **cache;
- 	unsigned int cache_nr, cache_alloc, cache_changed;
- 	struct cache_tree *cache_tree;
--	time_t timestamp;
-+	struct cache_time timestamp;
- 	void *alloc;
- 	unsigned name_hash_initialized : 1,
- 		 initialized : 1;
-diff --git a/read-cache.c b/read-cache.c
-index 940ec76..ca4bec2 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -67,8 +67,15 @@ void rename_index_entry_at(struct index_state *istate, int nr, const char *new_n
-  */
- void fill_stat_cache_info(struct cache_entry *ce, struct stat *st)
- {
--	ce->ce_ctime = st->st_ctime;
--	ce->ce_mtime = st->st_mtime;
-+	ce->ce_ctime.sec = (unsigned int)st->st_ctime;
-+	ce->ce_mtime.sec = (unsigned int)st->st_mtime;
-+#ifdef USE_NSEC
-+	ce->ce_ctime.nsec = (unsigned int)st->st_ctim.tv_nsec;
-+	ce->ce_mtime.nsec = (unsigned int)st->st_mtim.tv_nsec;
-+#else
-+	ce->ce_ctime.nsec = 0;
-+	ce->ce_mtime.nsec = 0;
-+#endif
- 	ce->ce_dev = st->st_dev;
- 	ce->ce_ino = st->st_ino;
- 	ce->ce_uid = st->st_uid;
-@@ -196,11 +203,18 @@ static int ce_match_stat_basic(struct cache_entry *ce, struct stat *st)
- 	default:
- 		die("internal error: ce_mode is %o", ce->ce_mode);
- 	}
--	if (ce->ce_mtime != (unsigned int) st->st_mtime)
-+	if (ce->ce_mtime.sec != (unsigned int)st->st_mtime)
- 		changed |= MTIME_CHANGED;
--	if (trust_ctime && ce->ce_ctime != (unsigned int) st->st_ctime)
-+	if (trust_ctime && ce->ce_ctime.sec != (unsigned int)st->st_ctime)
- 		changed |= CTIME_CHANGED;
- 
-+#ifdef USE_NSEC
-+	if (ce->ce_mtime.nsec != (unsigned int)st->st_mtim.tv_nsec)
-+		changed |= MTIME_CHANGED;
-+	if (trust_ctime && ce->ce_ctime.nsec != (unsigned int)st->st_ctim.tv_nsec)
-+		changed |= CTIME_CHANGED;
-+#endif
-+
- 	if (ce->ce_uid != (unsigned int) st->st_uid ||
- 	    ce->ce_gid != (unsigned int) st->st_gid)
- 		changed |= OWNER_CHANGED;
-@@ -232,8 +246,16 @@ static int ce_match_stat_basic(struct cache_entry *ce, struct stat *st)
- static int is_racy_timestamp(const struct index_state *istate, struct cache_entry *ce)
- {
- 	return (!S_ISGITLINK(ce->ce_mode) &&
--		istate->timestamp &&
--		((unsigned int)istate->timestamp) <= ce->ce_mtime);
-+		istate->timestamp.sec &&
-+#ifdef USE_NSEC
-+		 /* nanosecond timestamped files can also be racy! */
-+		(istate->timestamp.sec < ce->ce_mtime.sec ||
-+		 (istate->timestamp.sec == ce->ce_mtime.sec &&
-+		  istate->timestamp.nsec <= ce->ce_mtime.nsec))
-+#else
-+		istate->timestamp.sec <= ce->ce_mtime.sec
-+#endif
-+		 );
- }
- 
- int ie_match_stat(const struct index_state *istate,
-@@ -1139,8 +1161,15 @@ static void convert_from_disk(struct ondisk_cache_entry *ondisk, struct cache_en
- 	size_t len;
- 	const char *name;
- 
--	ce->ce_ctime = ntohl(ondisk->ctime.sec);
--	ce->ce_mtime = ntohl(ondisk->mtime.sec);
-+	ce->ce_ctime.sec = ntohl(ondisk->ctime.sec);
-+	ce->ce_mtime.sec = ntohl(ondisk->mtime.sec);
-+#ifdef USE_NSEC
-+	ce->ce_ctime.nsec = ntohl(ondisk->ctime.nsec);
-+	ce->ce_mtime.nsec = ntohl(ondisk->mtime.nsec);
-+#else
-+	ce->ce_ctime.nsec = 0;
-+	ce->ce_mtime.nsec = 0;
-+#endif
- 	ce->ce_dev   = ntohl(ondisk->dev);
- 	ce->ce_ino   = ntohl(ondisk->ino);
- 	ce->ce_mode  = ntohl(ondisk->mode);
-@@ -1206,7 +1235,8 @@ int read_index_from(struct index_state *istate, const char *path)
- 		return istate->cache_nr;
- 
- 	errno = ENOENT;
--	istate->timestamp = 0;
-+	istate->timestamp.sec = 0;
-+	istate->timestamp.nsec = 0;
- 	fd = open(path, O_RDONLY);
- 	if (fd < 0) {
- 		if (errno == ENOENT)
-@@ -1258,7 +1288,13 @@ int read_index_from(struct index_state *istate, const char *path)
- 		src_offset += ondisk_ce_size(ce);
- 		dst_offset += ce_size(ce);
- 	}
--	istate->timestamp = st.st_mtime;
-+	istate->timestamp.sec = st.st_mtime;
-+#ifdef USE_NSEC
-+	istate->timestamp.nsec = (unsigned int)st.st_mtim.tv_nsec;
-+#else
-+	istate->timestamp.nsec = 0;
-+#endif
-+
- 	while (src_offset <= mmap_size - 20 - 8) {
- 		/* After an array of active_nr index entries,
- 		 * there can be arbitrary number of extended
-@@ -1288,14 +1324,15 @@ unmap:
- 
- int is_index_unborn(struct index_state *istate)
- {
--	return (!istate->cache_nr && !istate->alloc && !istate->timestamp);
-+	return (!istate->cache_nr && !istate->alloc && !istate->timestamp.sec);
- }
- 
- int discard_index(struct index_state *istate)
- {
- 	istate->cache_nr = 0;
- 	istate->cache_changed = 0;
--	istate->timestamp = 0;
-+	istate->timestamp.sec = 0;
-+	istate->timestamp.nsec = 0;
- 	istate->name_hash_initialized = 0;
- 	free_hash(&istate->name_hash);
- 	cache_tree_free(&(istate->cache_tree));
-@@ -1441,10 +1478,15 @@ static int ce_write_entry(git_SHA_CTX *c, int fd, struct cache_entry *ce)
- 	struct ondisk_cache_entry *ondisk = xcalloc(1, size);
- 	char *name;
- 
--	ondisk->ctime.sec = htonl(ce->ce_ctime);
-+	ondisk->ctime.sec = htonl(ce->ce_ctime.sec);
-+	ondisk->mtime.sec = htonl(ce->ce_mtime.sec);
-+#ifdef USE_NSEC
-+	ondisk->ctime.nsec = htonl(ce->ce_ctime.nsec);
-+	ondisk->mtime.nsec = htonl(ce->ce_mtime.nsec);
-+#else
- 	ondisk->ctime.nsec = 0;
--	ondisk->mtime.sec = htonl(ce->ce_mtime);
- 	ondisk->mtime.nsec = 0;
-+#endif
- 	ondisk->dev  = htonl(ce->ce_dev);
- 	ondisk->ino  = htonl(ce->ce_ino);
- 	ondisk->mode = htonl(ce->ce_mode);
--- 
-1.6.1.349.g99fa5
+Ciao,
+Dscho
