@@ -1,38 +1,38 @@
 From: Sergio Callegari <sergio.callegari@gmail.com>
 Subject: Re: disallowing push to currently checked-out branch
-Date: Mon, 16 Feb 2009 10:06:37 +0000 (UTC)
-Message-ID: <loom.20090216T095523-830@post.gmane.org>
-References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.10.0902151544510.14911@asgard.lang.hm> <alpine.DEB.1.00.0902152358330.10279@pacific.mpi-cbg.de> <alpine.DEB.1.10.0902151613110.14911@asgard.lang.hm> <20090216000220.GA3503@coredump.intra.peff.net>
+Date: Mon, 16 Feb 2009 10:17:01 +0000 (UTC)
+Message-ID: <loom.20090216T101457-231@post.gmane.org>
+References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org> <20090215232013.GA11543@zakalwe.fi> <20090216000443.GB3503@coredump.intra.peff.net> <alpine.DEB.1.10.0902151727330.14911@asgard.lang.hm> <alpine.DEB.1.10.0902151738450.14911@asgard.lang.hm> <alpine.LNX.1.00.0902160322530.19665@iabervon.org> <7veixybw7u.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 16 11:08:26 2009
+X-From: git-owner@vger.kernel.org Mon Feb 16 11:18:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZ0Of-0003ux-MM
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 11:08:18 +0100
+	id 1LZ0Yg-0007KR-FF
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 11:18:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754042AbZBPKGu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 05:06:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753601AbZBPKGu
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 05:06:50 -0500
-Received: from main.gmane.org ([80.91.229.2]:46453 "EHLO ciao.gmane.org"
+	id S1753495AbZBPKRM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 05:17:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753317AbZBPKRK
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 05:17:10 -0500
+Received: from main.gmane.org ([80.91.229.2]:37512 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753236AbZBPKGu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 05:06:50 -0500
+	id S1750849AbZBPKRJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 05:17:09 -0500
 Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LZ0NB-0006AK-M5
-	for git@vger.kernel.org; Mon, 16 Feb 2009 10:06:46 +0000
+	id 1LZ0XE-0006cC-T5
+	for git@vger.kernel.org; Mon, 16 Feb 2009 10:17:09 +0000
 Received: from host172-56-dynamic.10-87-r.retail.telecomitalia.it ([87.10.56.172])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 16 Feb 2009 10:06:45 +0000
+        for <git@vger.kernel.org>; Mon, 16 Feb 2009 10:17:08 +0000
 Received: from sergio.callegari by host172-56-dynamic.10-87-r.retail.telecomitalia.it with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 16 Feb 2009 10:06:45 +0000
+        for <git@vger.kernel.org>; Mon, 16 Feb 2009 10:17:08 +0000
 X-Injected-Via-Gmane: http://gmane.org/
 X-Complaints-To: usenet@ger.gmane.org
 X-Gmane-NNTP-Posting-Host: main.gmane.org
@@ -42,29 +42,25 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110160>
 
-In my workflows (and let me remark it, in mine, which might well be mine only or
-even very stupid), what would be nice would be the possibility of triggering the
-following scenario:
+Junio C Hamano <gitster <at> pobox.com> writes:
 
-- When you push to a repo which is not bare, if you push to a checked out
-branch, the branch gets updated, the worktree is not touched, the head becomes
-detached, the branch the head was on gets saved somewhere, and when someone
-tries asking for status or committing on the repo he gets a message like:
+> 
+> Daniel Barkalow <barkalow <at> iabervon.org> writes:
+> 
+> > In fact, if you expect to be pushing to a non-bare repository, you
+> > probably want to have HEAD contain the actual commit currently checked
+> > out (instead of a reference to externally mutable storage), which you
+> > can do with "git checkout refs/heads/master".
+> 
+> "git checkout master^0" is shorter 
+> 
+> For people who do not follow the git list regularly, a "HEAD contain the
+> actual commit" is often called "detached".
+> 
 
-"The branch has been changed behind your shoulders from remote. Your work tree
-changes are anyway safe. Head has been detached, your former branch was .... You
-can either:
-- start a new branch with the changes that are currently in your worktree with
-command so and so...
-- stash the current status, peek at the new head of your former branch, try
-applying your current changes there."
 
-Also it would be nice to be able to store my "standard initial setup" in
-.gitinit or something like this, so that whenever I git init I have my own
-defaults (which is not the same as having global config info).
-
-...thanks for pre-announcing incompatible changes.
-
-Sergio
+Could you have that done automatically?
+Namely rather to denying push to a branch b where HEAD->b, when you get such
+push you detach head?
