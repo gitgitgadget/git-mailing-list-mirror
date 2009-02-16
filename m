@@ -1,84 +1,104 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: disallowing push to currently checked-out branch
-Date: Mon, 16 Feb 2009 13:48:08 -0500
-Message-ID: <76718490902161048i3c19bb43h30b1cfc62dd9a61e@mail.gmail.com>
-References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org>
-	 <20090216000443.GB3503@coredump.intra.peff.net>
-	 <alpine.DEB.1.10.0902151727330.14911@asgard.lang.hm>
-	 <alpine.DEB.1.10.0902151738450.14911@asgard.lang.hm>
-	 <alpine.LNX.1.00.0902160322530.19665@iabervon.org>
-	 <7veixybw7u.fsf@gitster.siamese.dyndns.org>
-	 <loom.20090216T101457-231@post.gmane.org>
-	 <20090216135812.GA20377@coredump.intra.peff.net>
-	 <49999ED6.7010608@gmail.com>
-	 <alpine.DEB.1.00.0902161839120.6289@intel-tinevez-2-302>
+From: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+Subject: [JGIT PATCH v2] Fixed QuotedStringGitPathStyleTest.testDequote_OctalAll 
+	test that generated incorrect UTF-8 escape sequences
+Date: Mon, 16 Feb 2009 21:50:21 +0300
+Message-ID: <85647ef50902161050i43b478d4kb7faaa211dee727d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Sergio Callegari <sergio.callegari@gmail.com>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 16 19:49:42 2009
+To: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 16 19:52:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZ8XE-00023j-Jg
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 19:49:41 +0100
+	id 1LZ8ZM-0002rF-2l
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 19:51:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751451AbZBPSsM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 13:48:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750880AbZBPSsK
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 13:48:10 -0500
-Received: from rv-out-0506.google.com ([209.85.198.227]:50964 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750778AbZBPSsJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 13:48:09 -0500
-Received: by rv-out-0506.google.com with SMTP id g9so1143323rvb.5
-        for <git@vger.kernel.org>; Mon, 16 Feb 2009 10:48:08 -0800 (PST)
+	id S1751455AbZBPSuZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 13:50:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751095AbZBPSuY
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 13:50:24 -0500
+Received: from mail-bw0-f161.google.com ([209.85.218.161]:43284 "EHLO
+	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750952AbZBPSuY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 13:50:24 -0500
+Received: by bwz5 with SMTP id 5so3309975bwz.13
+        for <git@vger.kernel.org>; Mon, 16 Feb 2009 10:50:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=vwdrRDgxn/UCo9eOA3pNjuaqJQEjbM1CmnJGvvvFfkE=;
-        b=k5dgeU9Ar8cafTKWppNyObH08QiBUcu3U1E+C+pwbURmMBsLqaVuEcWotrzq2l+OtF
-         MVfEw/66At977fmI0g/FHhNYytiXb/Zgp0Rp049H7aXyOtzG7zBaq/eFjYS9BWgmXxM/
-         89tcdWrIKhSkqVkUt+LS6Olm0QcwwUrMpQizA=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=+ehhzPwyWfHcAaONvdToHU6lPdQQDye56YbpTqlYQyw=;
+        b=jjp+2h48kcSn7BdkMCqzI5I++rg1dJPv+M90BtaBLWDhw1i3WjmL9GkUXMwGYZUxEd
+         hHIYClLTNJXaLx31ogjtG2vWR0RkvVoeKnGF2h28hMKRv6Zt3ARfyramIW2Rjvi7BChC
+         d5LVeLndQ1SoPb9fuTWAKpGXKmm7DnXD1fe4U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=pRvifLR+zv/PpuYQLRhwlvgzVtMBRFwppEVziSdWyqrqoPfdKy8DKrbFJv1pmpaFOQ
-         zt9VN4elL5G1vosucu96+R/dHZzNCliKoMfcSvCKSEojmJqJwI7zr1Q9MANooClgCanc
-         UvFXFXF+XPxUAQ98V1LIvE0veUdQu4K8gXkSc=
-Received: by 10.140.127.13 with SMTP id z13mr2805558rvc.145.1234810088210; 
-	Mon, 16 Feb 2009 10:48:08 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0902161839120.6289@intel-tinevez-2-302>
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=EQzSpPgtOLr3h3ghr8PP0CEGd2/yjTrXkXK007Wd/RjnGZ7vi3NwlIYDPIEwSPEJZS
+         dVHmvNzugDeUcA+7a7oDWuj+qwQStNPw3DaY+JUOvtUdxIaJq7mF8OUOr6eq97YODRQ6
+         uJGgsMKqy3bpgYj8DJLTgNJnJ7lU4bqpdOw5o=
+Received: by 10.181.235.6 with SMTP id m6mr790912bkr.190.1234810221930; Mon, 
+	16 Feb 2009 10:50:21 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110228>
 
-On Mon, Feb 16, 2009 at 12:43 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> And of course, you need a way to show the user all the updates the branch
-> went through while the HEAD was detached, so that the user has a chance of
-> understanding what happened in the meantime.
->
-> So much additional work, just to fix up the shortcomings of the 'detach'
-> paradigm?  I take it as a clear mark of a not-so-elegant design.
+The test was failing on the system that use a encoding different
+from ISO-8859-1. The reason was that invalid UTF-8 bytes were
+generated for codepoints greater than U+7F, and in this case
+the method RawParseUtils.decodeNoFallback falls backs to the
+default system encoding.
 
-You did plant a seed in my head with PUSH_HEAD though, and I'm still
-thinking about it. :-)
+Signed-off-by: Constantine Plotnikov <Constantine.Plotnikov@jetbrains.com>
+---
 
-I think the right thing is *not to detach*, but rather when pushing
-into a non-bare repo for it to go into refs/remotes. Too bad clone
-doesn't set it up this way by default when cloning from a non-bare
-repo[*]. That would probably make more sense for new users.
+The bug was causing failure for the maven build on the windows
+environment that uses Cp1251 as a system encoding. However the test
+worked from Eclipse until I have specified jvm option
+-Dfile.ecoding=Cp1251, in the test case started to fail in Eclipse as
+well.
 
-[*] Clone can't currently know it's cloning from a non-bare repo, at
-least via git://, as I recall...
+ .../jgit/util/QuotedStringGitPathStyleTest.java    |   21 ++++++++++++++-----
+ 1 files changed, 15 insertions(+), 6 deletions(-)
 
-j.
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/util/QuotedStringGitPathStyleTest.java
+b/org.spearce.jgit.test/tst/org/spearce/jgit/util/QuotedStringGitPathStyleTest.java
+index 54fbd31..7d29f21 100644
+--- a/org.spearce.jgit.test/tst/org/spearce/jgit/util/QuotedStringGitPathStyleTest.java
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/util/QuotedStringGitPathStyleTest.java
+@@ -127,13 +127,22 @@ public void testDequote_NamedEscapes() {
+ 	}
+
+ 	public void testDequote_OctalAll() {
+-		for (int i = 0; i < 256; i++) {
+-			String s = Integer.toOctalString(i);
+-			while (s.length() < 3) {
+-				s = "0" + s;
+-			}
+-			assertDequote("" + (char) i, "\\" + s);
++		for (int i = 0; i < 127; i++) {
++			assertDequote("" + (char) i, octalEscape(i));
+ 		}
++		for (int i = 128; i < 256; i++) {
++			int f = 0xC0 | (i >> 6);
++			int s = 0x80 | (i & 0x3f);
++			assertDequote("" + (char) i, octalEscape(f)+octalEscape(s));
++		}
++	}
++
++	private String octalEscape(int i) {
++		String s = Integer.toOctalString(i);
++		while (s.length() < 3) {
++			s = "0" + s;
++		}
++		return "\\"+s;
+ 	}
+
+ 	public void testQuote_OctalAll() {
+-- 
+1.6.1.2
