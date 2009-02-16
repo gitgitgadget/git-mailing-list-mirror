@@ -1,139 +1,97 @@
-From: "Tilo Schwarz" <tilo@tilo-schwarz.de>
-Subject: Re: [ANNOUNCE] tig-0.14
-Date: Mon, 16 Feb 2009 22:12:40 +0100
-Message-ID: <op.upgqjej6a8ed4e@dellschleppa>
-References: <20090205204436.GA6072@diku.dk> <op.uo9di902a8ed4e@dellschleppa>
- <2c6b72b30902121424o5d4ac0d7u67a7afb3b861aa19@mail.gmail.com>
- <op.uo9hiqqqa8ed4e@dellschleppa>
- <2c6b72b30902151547q5bf183f2q1e846f261825671c@mail.gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: disallowing push to currently checked-out branch
+Date: Mon, 16 Feb 2009 16:12:58 -0500
+Message-ID: <76718490902161312j2aee999bga00d95231fa85647@mail.gmail.com>
+References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org>
+	 <alpine.DEB.1.10.0902151738450.14911@asgard.lang.hm>
+	 <alpine.LNX.1.00.0902160322530.19665@iabervon.org>
+	 <7veixybw7u.fsf@gitster.siamese.dyndns.org>
+	 <loom.20090216T101457-231@post.gmane.org>
+	 <20090216135812.GA20377@coredump.intra.peff.net>
+	 <49999ED6.7010608@gmail.com>
+	 <alpine.DEB.1.00.0902161839120.6289@intel-tinevez-2-302>
+	 <76718490902161048i3c19bb43h30b1cfc62dd9a61e@mail.gmail.com>
+	 <alpine.DEB.1.00.0902162102180.6289@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; delsp=yes; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jonas Fonseca" <jonas.fonseca@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 16 22:14:24 2009
+Cc: Sergio Callegari <sergio.callegari@gmail.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Feb 16 22:15:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZAnD-0005Ak-DR
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 22:14:19 +0100
+	id 1LZAnn-0005Rh-10
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 22:14:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754783AbZBPVMo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 16:12:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754701AbZBPVMo
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 16:12:44 -0500
-Received: from mo-p00-ob.rzone.de ([81.169.146.161]:29881 "EHLO
-	mo-p00-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754504AbZBPVMm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 16:12:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1234818761; l=3245;
-	s=domk; d=tilo-schwarz.de;
-	h=In-Reply-To:Content-Transfer-Encoding:References:MIME-Version:
-	Content-Type:Cc:From:Subject:To:Date:X-RZG-CLASS-ID:X-RZG-AUTH:
-	DomainKey-Signature;
-	bh=Cb42xwnhTrDh9vDdzyCqgyp6ZwY/QpRssCrT1DSCCHA=;
-	b=PZZkpGFovUQB7Uc6HWNwBwqfACi3I+wmnhntmI8JyXdeemBd7gAlcUESbloCs6ieein
-	4nGki/kj8Mf5YpCsGfpIWiX55b1qRCiuMIIzPeblN5mbzXm6imc3/BjViR/Bog/VajAyM
-	9Q78Q7CdPFvJhHDKXuk7080jfTsh9sEp/ko=
-DomainKey-Signature: a=rsa-sha256; s=domk; d=tilo-schwarz.de; c=nofws; q=dns;
-	h=X-RZG-AUTH:X-RZG-CLASS-ID:Date:To:Subject:From:Cc:Content-Type:
-	MIME-Version:References:Content-Transfer-Encoding:In-Reply-To;
-	b=lcRN/vAR2klNLcQpXVYuy1B1iXcN4P8Xpm2oseizoLr6HC3CIJEDyu25mRvRPwV39jA
-	JdQMAqcmJKUgxz8AM2E4YR/hArU9Rg5krw55ygf3owG+r9ARVGBCRBkUIQaypEWhqYgix
-	awWHx1qss9atKGoJwCJndVL8HcFfwMMtaZ4=
-X-RZG-AUTH: :IW0NeWC8cvPlgn0IPTehqi9r6o/0DSXjJ1Me0yWdPTUrUVR0TMXac2ZAlsdx1cxOGaI=
-X-RZG-CLASS-ID: mo00
-Received: from dellschleppa (p549CD3A5.dip.t-dialin.net [84.156.211.165])
-	by post.strato.de (fruni mo21) (RZmta 18.18)
-	with ESMTP id 600be1l1GL1m31 ; Mon, 16 Feb 2009 22:12:40 +0100 (MET)
-In-Reply-To: <2c6b72b30902151547q5bf183f2q1e846f261825671c@mail.gmail.com>
-User-Agent: Opera Mail/9.63 (Linux)
+	id S1752516AbZBPVNB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 16:13:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751418AbZBPVNA
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 16:13:00 -0500
+Received: from rv-out-0506.google.com ([209.85.198.228]:57081 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751883AbZBPVM7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 16:12:59 -0500
+Received: by rv-out-0506.google.com with SMTP id g37so1709042rvb.1
+        for <git@vger.kernel.org>; Mon, 16 Feb 2009 13:12:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=nkPN5Zi4VwViigT0Sr2QG3iXsG+Vul4qqqdWtZIcoQI=;
+        b=a1+35HQeLRMnM2NANRw499e53kn8G96igyAK7q9veoOKtO6Wc3uR0Ok40ZiNk/+2RN
+         gf0Og+YbsKWCxhLU9LWvTrGIzgsEbb1ePM4NodlQLrefO1ns7Z408YoROR7ROwjzCNCN
+         eOi7VLSJpzez6g6Y38llJWhK9PLq3jLeuQReQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=gq/iWU0T/tx0oIZI4lIA/SlHVOxAUZGuUsvQaTFJz6PSxpeuwpVB94nVvISnrgUfzK
+         KB2PN409FNWrS9RhIB8slVUQnJz/GEyiRy098AgEMbt14neg6jdeGq7gelJPk54j/QMm
+         MHNOMJ9WYjfaFWTD5Ehg2Mn9qRmciHyjlHdAI=
+Received: by 10.141.36.10 with SMTP id o10mr818944rvj.59.1234818778681; Mon, 
+	16 Feb 2009 13:12:58 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0902162102180.6289@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110243>
 
-On Mon, 16 Feb 2009 00:47:05 +0100, Jonas Fonseca  
-<jonas.fonseca@gmail.com> wrote:
-
-> On Fri, Feb 13, 2009 at 00:14, Tilo Schwarz <tilo@tilo-schwarz.de> wrote:
->> Then I have another question: Did you ever thought of a branch view,  
->> where
->> you can see, create, delete and merge the different branches which are  
->> in a
->> git project.
+On Mon, Feb 16, 2009 at 3:02 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
 >
-> I have thought about it. The question is if a separate view is
-> necessary or if the main view would do. For example, I sometimes use
-> gitk when I need to rename branches or prepare for rebasing a
-> patchset. One idea I would like to explore is to provide a compressed
-> version of the main view, where "intermediate" commits are hidden,
-> this way you could easily get a view of the relationship between
-> branches.
-
-I'm not sure if I understood it correctly. Do you mean, only commits are  
-shown, which are heads of some branch? If so, what if more than one head  
-points to the same commit?
-
-The branch thing came into my mind, because it's the only thing which  
-keeps me from using tig exclusively. I sometimes switch to git-gui to do  
-the branch handling. Since I really like those "one key press is one  
-command" kind of programs like tig (or mc, aptitude, mocp, ...), it would  
-be really nice to have the branches in tig too. The nice thing of programs  
-like tig is (matter of taste of course), that once you get used to the  
-keys, you don't have to think about commands anymore, you just do them.
-
-I think I would prefer a branch view, because then one could also have a  
-branch-view keymap with specialized commands. One possibility would be  
-(just as example):
-
-The view shows something like this (here an example from the tig git  
-repository)
-
-   master
-* my_feature_bar
-X my_feature_foo
-   origin/HEAD
-   origin/master
-   origin/release
-
-The current branch is marked by '*'. Now let's assume, I am with my cursor  
-on the line with the 'X', I could think of the keys
-
-d (d)elete the X-marked branch, given is has already been merged into  
-another branch
-n create a (n)ew branch, based on the X-marked branch,
-   ask for the new name and (maybe checkout the new branch)
-c (c)heckout the branch
-r (r)ename the branch
-R (r)eset branch
-...
-
-I don't think it's necessary to reproduce all the nice options git-gui  
-has, but if there would be a branch view with the most used 5 commands /  
-work steps, it would cover 95% of the daily "branch work" which is needed.  
-And it would be simply awesome, if we could do this without leaving tig,  
-but instead use this very nice and fast "one key, one command" also for  
-the branches. Of course the more complicated and special cases can be  
-always handled by tig by pressing ':' and entering a git command.
-
-> The simplest thing to make it easier to experiment with new features
-> would probably be to introduce a new external command specifier:
-> %(prompt:<msg>), possibly with some regex for validation. Then you
-> could add in your ~/.tigrc:
+> On Mon, 16 Feb 2009, Jay Soffian wrote:
 >
-> bind main A !git branch %(prompt:^wip/[a-z-]+$:Name) %(commit)
+>> I think the right thing is *not to detach*, but rather when pushing
+>> into a non-bare repo for it to go into refs/remotes.
+>
+> I do not think that is consistent.
 
-Ahh, ok, so tig would issue a prompt and ask me for the name?
+Not consistent with what?
 
+So let's say I have a workstation and a laptop. The "sane" thing to do
+is probably something like this:
 
-Thanks for the great program!
+workstation$ mkdir project && cd project && git init
+workstation$ (add, commit, ...)
+workstation$ git clone --bare . ../project.git
+workstation$ git remote add origin ../project.git
+laptop$ git clone ssh://workstation/~/project.git project
 
+And now I have two non-bare working repos with the intermediate bare
+repo. So at both ends I can push/pull in the way that the designers of
+git had in mind. :-)
 
-BTW, is the git list the right list to discuss bugs / patches for tig?
+But I don't think this recipe is well documented for beginners. So
+they end up w/o the intermediate bare repository, and all the ensues.
 
-Best regards,
+IOW, I think pushing into refs/remotes makes sense in the situation
+where the user has two non-bare repos that they want to exchange
+commits between.
 
-     Tilo
+j.
