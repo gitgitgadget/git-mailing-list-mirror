@@ -1,77 +1,64 @@
-From: "Alfred M\. Szmidt" <ams@gnu.org>
-Subject: Re: git-svn -- out of memory
-Date: Mon, 16 Feb 2009 15:23:40 +0100
-Message-ID: <1234794220.676511.4320.nullmailer@beryx.hq.kred>
-Reply-To: ams@gnu.org
-Cc: normalperson@yhbt.net, git@vger.kernel.org, peff@peff.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 16 15:27:29 2009
+From: david@lang.hm
+Subject: Re: [RFC - draft] List of proposed future changes that are backward
+ incompatible
+Date: Mon, 16 Feb 2009 07:33:28 -0800 (PST)
+Message-ID: <alpine.DEB.1.10.0902160731420.14911@asgard.lang.hm>
+References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.10.0902151544510.14911@asgard.lang.hm> <alpine.DEB.1.00.0902152358330.10279@pacific.mpi-cbg.de> <alpine.DEB.1.10.0902151613110.14911@asgard.lang.hm> <alpine.DEB.1.00.0902160016230.10279@pacific.mpi-cbg.de>
+ <alpine.DEB.1.10.0902151636510.14911@asgard.lang.hm> <alpine.DEB.1.00.0902161121290.10279@pacific.mpi-cbg.de>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Feb 16 15:30:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZ4Q7-000621-FC
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 15:26:03 +0100
+	id 1LZ4UM-00088h-Ax
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 15:30:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756383AbZBPOYe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 09:24:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755263AbZBPOYe
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 09:24:34 -0500
-Received: from hq.kreditor.se ([213.136.42.58]:1443 "EHLO auxid.hq.kred"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753870AbZBPOYd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 09:24:33 -0500
-Received: by auxid.hq.kred (Postfix, from userid 118)
-	id E61DB1379520; Mon, 16 Feb 2009 15:24:24 +0100 (CET)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on auxid.hq.kred
-X-Spam-Level: 
-X-Spam-Status: No, score=0.1 required=5.0 tests=AWL autolearn=disabled 
-	version=3.1.7-deb
-Received: from beryx.hq.kred (unknown [10.16.0.106])
-	by auxid.hq.kred (Postfix) with SMTP id 77CEA1379598;
-	Mon, 16 Feb 2009 15:23:49 +0100 (CET)
-Received: (nullmailer pid 4321 invoked by uid 1000);
-	Mon, 16 Feb 2009 14:23:40 -0000
-In-reply-to: message from Junio C Hamano on Mon, 16 Feb 2009 02:05:54 -0800
-References: 
+	id S1757682AbZBPO2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 09:28:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757675AbZBPO2d
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 09:28:33 -0500
+Received: from mail.lang.hm ([64.81.33.126]:51252 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757678AbZBPO2d (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 09:28:33 -0500
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n1GESRCD026110;
+	Mon, 16 Feb 2009 06:28:27 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <alpine.DEB.1.00.0902161121290.10279@pacific.mpi-cbg.de>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110184>
 
-   >    > when doing a `git svn clone' on a subversion repository that contains
-   >    > a large file (>1GiB), `git svn' dies with the following:
-   >    > 
-   >    > ams@trillian:~$ git svn clone REPO -T trunk -b branches -t tags
-   >    > [...]
-   >    > fatal: Out of memory? mmap failed: Cannot allocate memory
-   >    > hash-object -w --stdin-paths: command returned error: 128
+On Mon, 16 Feb 2009, Johannes Schindelin wrote:
 
-   Ding...
+> On Sun, 15 Feb 2009, david@lang.hm wrote:
+>
+>> please be careful with the term 'deprecated', just becouse you would do
+>> something a different way doesn't make it 'deprecated', that term should
+>> only be used for features that are on their way out of the product, but
+>> haven't been removed yet.
+>
+> It is not deprecated because I do not like it.  Actually, I am pretty
+> indifferent about the pushing into a non-bare repository.
+>
+> It is deprecated because a lot of people active in the Git community spend
+> a real lot of time explaining to a whole bunch of new users on IRC and
+> recently even on this list why their pushing into a non-bare repository
+> does not work, and why their suggestions how to solve the issue does not
+> work either.
 
-   >    > git version 1.6.1.3
-   >
-   >    Core git requires objects to be able to fit into (virtual) memory.
-   >    Adding more swap space should solve the problem for you, but this is not
-   >    only a git-svn problem.
-   >
-   > In this case, the machine has 32G RAM, including ~20G swap.  So I do
-   > not think that this is the case, it could be I suppose...
+if it is the correct thing to do with some workloads, it's not being 
+deprecated. if it was deprecated then it is a capability that would be 
+scheduled for complete removal, and nobody should ever use. not just the 
+case where it needs to be used carefully, and you are putting in a warning 
+about it.
 
-   The hash-object error message sounds like the issue that was fixed with
-   915308b (avoid 31-bit truncation in write_loose_object, 2009-01-29).  Does
-   v1.6.2-rc1 help?
-
-ams@trillian:~/# git --version
-git version 1.6.2.rc1
-ams@trillian:~/# git svn clone REPO -T trunk -b branches -t tags
-[...]
-fatal: Out of memory? mmap failed: Cannot allocate memory
-hash-object -w --stdin-paths: command returned error: 128
-
-Nope, behaves the same way.
-
-I'll try adding more swap and see what happens...
-
-Thanks for the help.
+David Lang
