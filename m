@@ -1,101 +1,53 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: CVS import [SOLVED]
-Date: Mon, 16 Feb 2009 14:53:07 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902161451210.6289@intel-tinevez-2-302>
-References: <19651.77.61.241.211.1234775877.squirrel@hupie.xs4all.nl> <7291.77.61.241.211.1234790434.squirrel@hupie.xs4all.nl> <alpine.DEB.1.00.0902161443230.6289@intel-tinevez-2-302>
+From: Jeff King <peff@peff.net>
+Subject: Re: disallowing push to currently checked-out branch
+Date: Mon, 16 Feb 2009 08:58:12 -0500
+Message-ID: <20090216135812.GA20377@coredump.intra.peff.net>
+References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org> <20090215232013.GA11543@zakalwe.fi> <20090216000443.GB3503@coredump.intra.peff.net> <alpine.DEB.1.10.0902151727330.14911@asgard.lang.hm> <alpine.DEB.1.10.0902151738450.14911@asgard.lang.hm> <alpine.LNX.1.00.0902160322530.19665@iabervon.org> <7veixybw7u.fsf@gitster.siamese.dyndns.org> <loom.20090216T101457-231@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
-X-From: git-owner@vger.kernel.org Mon Feb 16 14:54:48 2009
+To: Sergio Callegari <sergio.callegari@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 16 15:00:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZ3vj-0002To-T4
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 14:54:40 +0100
+	id 1LZ40v-0004Y1-9y
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 15:00:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756878AbZBPNxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 08:53:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756863AbZBPNxL
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 08:53:11 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38090 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756415AbZBPNxK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 08:53:10 -0500
-Received: (qmail invoked by alias); 16 Feb 2009 13:53:08 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp014) with SMTP; 16 Feb 2009 14:53:08 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19IOaw/cx1I8YdVO9Yr1EOm6fVe9IU5zMEsyuT0GL
-	hqttX2bU26aYin
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <alpine.DEB.1.00.0902161443230.6289@intel-tinevez-2-302>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5
+	id S1757691AbZBPN6P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 08:58:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757297AbZBPN6P
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 08:58:15 -0500
+Received: from peff.net ([208.65.91.99]:33314 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755368AbZBPN6O (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 08:58:14 -0500
+Received: (qmail 16293 invoked by uid 107); 16 Feb 2009 13:58:34 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 16 Feb 2009 08:58:34 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Feb 2009 08:58:12 -0500
+Content-Disposition: inline
+In-Reply-To: <loom.20090216T101457-231@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110182>
 
-Hi,
+On Mon, Feb 16, 2009 at 10:17:01AM +0000, Sergio Callegari wrote:
 
-On Mon, 16 Feb 2009, Johannes Schindelin wrote:
-
-> On Mon, 16 Feb 2009, Ferry Huberts (Pelagic) wrote:
+> > For people who do not follow the git list regularly, a "HEAD contain the
+> > actual commit" is often called "detached".
 > 
-> > I solved it:
-> > 
-> > it has to do with the
-> > core.autocrlf=input
-> > core.safecrlf=true
-> > 
-> > settings I had in my global config.
-> 
-> Thanks!
-> 
-> > Maybe the manual page should warn against having these defined?
-> 
-> Maybe it should be solved differently?  As cvsimport needs to operate with 
-> autocrlf=false, it seems, it could set that variable when it creates a 
-> repository, and check the variable otherwise (erroring out if it is set 
-> inappropriately)?
+> Could you have that done automatically?
+> Namely rather to denying push to a branch b where HEAD->b, when you get such
+> push you detach head?
 
-IOW something like this:
+See
 
--- snip --
- git-cvsimport.perl |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+  http://article.gmane.org/gmane.comp.version-control.git/108923
 
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index e439202..a27cc94 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -562,12 +562,16 @@ my %index; # holds filenames of one index per branch
- unless (-d $git_dir) {
- 	system("git-init");
- 	die "Cannot init the GIT db at $git_tree: $?\n" if $?;
-+	system("git-config core.autocrlf false");
-+	die "Cannot set core.autocrlf false" if $?;
- 	system("git-read-tree");
- 	die "Cannot init an empty tree: $?\n" if $?;
- 
- 	$last_branch = $opt_o;
- 	$orig_branch = "";
- } else {
-+	die "Cannot operate with core.autocrlf other than 'false'"
-+		if (`git-config --bool core.autocrlf` =~ /true|input/);
- 	open(F, "git-symbolic-ref HEAD |") or
- 		die "Cannot run git-symbolic-ref: $!\n";
- 	chomp ($last_branch = <F>);
--- snap --
+for discussion.
 
-If you could add a test to t9600 and a few words to the man page, that 
-would be awesome.
-
-Ciao,
-Dscho
-
-P.S.: I think the same strategy should be applied to git-svn...
+-Peff
