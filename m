@@ -1,74 +1,73 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: Re: "add -p" + filenames with UTF-8 multibyte characters = "No changes"
-Date: Mon, 16 Feb 2009 07:13:23 +0200
-Message-ID: <87ljs7ynf0.fsf@iki.fi>
-References: <2b8265360902151040t49711942udd4862cc9df01da5@mail.gmail.com>
-	<87tz6vr0g4.fsf@iki.fi>
-	<2b8265360902151100n2eca0182odf9543c1dd8a7f98@mail.gmail.com>
-	<87prhjqzwb.fsf@iki.fi>
-	<20090216033634.GA12461@coredump.intra.peff.net>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH] Make repack less likely to corrupt repository
+Date: Mon, 16 Feb 2009 06:17:20 +0100
+Message-ID: <200902160617.21122.robin.rosenberg.lists@dewire.com>
+References: <1234140299-29785-1-git-send-email-robin.rosenberg@dewire.com> <200902151942.15055.robin.rosenberg.lists@dewire.com> <7vvdrbjwbt.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 16 06:15:20 2009
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, spearce@spearce.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 16 06:18:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYvp8-0000DS-Df
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 06:15:18 +0100
+	id 1LYvsf-0000lg-4B
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 06:18:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751172AbZBPFNn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 00:13:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751135AbZBPFNn
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 00:13:43 -0500
-Received: from mta-out.inet.fi ([195.156.147.13]:48502 "EHLO jenni2.inet.fi"
+	id S1751256AbZBPFR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 00:17:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751217AbZBPFR3
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 00:17:29 -0500
+Received: from mail.dewire.com ([83.140.172.130]:22088 "EHLO dewire.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751051AbZBPFNm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 00:13:42 -0500
-Received: from mithlond.arda.local (80.220.180.181) by jenni2.inet.fi (8.5.014)
-        id 48FC5A880520EC57; Mon, 16 Feb 2009 07:13:36 +0200
-Received: from dtw by mithlond.arda.local with local (Exim 4.69)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1LYvnH-0000vW-SC; Mon, 16 Feb 2009 07:13:23 +0200
-In-Reply-To: <20090216033634.GA12461@coredump.intra.peff.net> (Jeff King's message of "Sun\, 15 Feb 2009 22\:36\:34 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1751172AbZBPFR2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 00:17:28 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id F1CB6803211;
+	Mon, 16 Feb 2009 06:17:24 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id UWpjmMxBVqAs; Mon, 16 Feb 2009 06:17:24 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.4])
+	by dewire.com (Postfix) with ESMTP id C594B802872;
+	Mon, 16 Feb 2009 06:17:23 +0100 (CET)
+User-Agent: KMail/1.11.0 (Linux/2.6.27-11-generic; KDE/4.2.0; i686; ; )
+In-Reply-To: <7vvdrbjwbt.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110140>
 
-On 2009-02-15 22:36 (-0500), Jeff King wrote:
+Junio C Hamano <gitster@pobox.com> wrote:
 
-> I am not opposed to setting this as a default, but I think there may
-> be some encoding issues to be dealt with. At the very least,
-> format-patch generates messages without a content-type header. E.g.,:
+> If you were arguing for using a different but still non-zero exit status
+> to signal the "you asked us to repack but I refused to do so because I
+> couldn't move the in-use packs away; by the way I did not corrupt your
+> repository because I successfully rolled back everything I did, so do not
+> worry to much about it" case, I agree that such a change would be better
+> than what we have.  It would allow an automated process to tell a more
+> grave repository error and "I need to kill the git object server that is
+> pinning some of the packfiles open and re-run the repack" situation apart.
 
-> But what is the right encoding to specify? We can guess that it is
-> whatever the commit message is in (defaulting to utf-8). It is by no
-> means correct, but it would probably work pretty well in practice.
+I can live with that. So what are our exit codes then?
 
-I have a small script which adds/rewrites MIME headers. It defaults to
-UTF-8/8bit:
+0 = successful, repack did what we wanted it to
 
-    #!/bin/sh
+1 = serious error, no idea really, user should investigate
+	(now we know they don't anyway, but that's another problem).
 
-    charset="${1:-UTF-8}"
-    encoding="${2:-8bit}"
+2 = not too good, we didn't succeed in repacking, but we didn't destroy
+	anything and the user does not necessarily have to do anything.
+	GUI's should probably flag this differently from exit code 1.
 
-    formail -I "MIME-Version: 1.0" \
-            -I "Content-Type: text/plain; charset=$charset" \
-            -I "Content-Transfer-Encoding: $encoding" \
-            -s
+This would simply introduce a new error code, but the drawback is that
+they are "out of order", i.e. most severe does not have the highest code.
 
-I have used the script this way:
-
-    git format-patch --stdout [...] | add-mime-headers | \
-        formail -s sh -c 'cat >$FILENO.patch'
-
-It may be difficult and unreliable to try to detect the encoding of file
-content so maybe "git format-patch" could be taught an option like
-"--charset=<charset>". (And perhaps also a configuration variable.) That
-would just write MIME headers (charset) as the user wishes.
+-- robin
