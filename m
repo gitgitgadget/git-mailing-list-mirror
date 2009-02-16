@@ -1,81 +1,103 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] builtin-remote: better handling of multiple remote HEADs
-Date: Sun, 15 Feb 2009 21:58:48 -0500
-Message-ID: <76718490902151858j78c0d06bxa659ffd3bd2dad01@mail.gmail.com>
-References: <20090214034345.GB24545@coredump.intra.peff.net>
-	 <1234607430-5403-1-git-send-email-jaysoffian@gmail.com>
-	 <20090215052740.GA11522@coredump.intra.peff.net>
-	 <76718490902150613i79517e6dwcec8e1e40c56bcc8@mail.gmail.com>
-	 <7v7i3rglza.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Improving CRLF error message; also, enabling autocrlf and
+	safecrlf by default
+Date: Sun, 15 Feb 2009 22:04:46 -0500
+Message-ID: <20090216030446.GC18780@sigill.intra.peff.net>
+References: <loom.20090216T022524-78@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	barkalow@iabervon.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 16 04:00:23 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Jason Spiro <jasonspiro4@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 16 04:07:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYtiU-00028e-WE
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 04:00:19 +0100
+	id 1LYtpK-0003XP-Of
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 04:07:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755690AbZBPC6v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2009 21:58:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755565AbZBPC6v
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 21:58:51 -0500
-Received: from rv-out-0506.google.com ([209.85.198.235]:43843 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755413AbZBPC6t (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2009 21:58:49 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so1372305rvb.1
-        for <git@vger.kernel.org>; Sun, 15 Feb 2009 18:58:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=AC27CyGqeVg+dIZq0GRFqvAqugPi6CeQZ0GEdeXgQTs=;
-        b=VMrQgdPealGL8Wll6a8cFf0FEFizMR7UoT6tqoo4PSODaLJySZa292ieTtPheYdAg3
-         yMMxYW2fdniRjzBCwyjTeGlk66i7Hxdf/SODBY27f+7Andpbtsvt7yC+3+2qPkg9JM5D
-         /xoYfeL3bNi9KvJVipPwzbRYS8IReRCTI2iJQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=d7J7FRAK8pSPHq7HBj4C5yaKbK9IOQt+1WFuxf0XAgLEHkSRlxOuDt1rpPyu+lN9vj
-         5rDHP/IF8W1CVlbl2QuFP1WVD8gHH1GyJjUPSbPIK51JT4QDsI7VOuAWaIdXxYLEp+qg
-         wunGY9KbhmfVZcR8Q0Nt4o8t5ILnGSERhMGSQ=
-Received: by 10.141.176.6 with SMTP id d6mr2436024rvp.233.1234753128786; Sun, 
-	15 Feb 2009 18:58:48 -0800 (PST)
-In-Reply-To: <7v7i3rglza.fsf@gitster.siamese.dyndns.org>
+	id S1755546AbZBPDEz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2009 22:04:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755226AbZBPDEy
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 22:04:54 -0500
+Received: from peff.net ([208.65.91.99]:40515 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752859AbZBPDEx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2009 22:04:53 -0500
+Received: (qmail 12511 invoked by uid 107); 16 Feb 2009 03:05:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 15 Feb 2009 22:05:13 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 15 Feb 2009 22:04:46 -0500
+Content-Disposition: inline
+In-Reply-To: <loom.20090216T022524-78@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110120>
 
-On Sun, Feb 15, 2009 at 9:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>               &>word
->>               >&word
-> Just to clarify, the above is not a recommendation for shell scripts in
-> git project.
+On Mon, Feb 16, 2009 at 02:45:43AM +0000, Jason Spiro wrote:
 
-Indeed not! My use of it wasn't even intentional, I was a tcsh
-(cringe...) user for a long time and I only finally switched to bash
-about a year ago. It must've been muscle memory that made me type it,
-but a pox on bash for not rejecting it outright -- the bash man page
-claims posix'ish compliance when invoked as /bin/sh, so I don't know
-why it allows such syntax in its posix'ish mode.
+> One of the pre-commit hooks detects trailing whitespace:
+> 
+> if (/\s$/) {
+> bad_line("trailing whitespace", $_);
+> }
 
-> By the say, does anybody know why bash people recommend &>word form?
->
-> Neither &>word nor >&word to send both stderr and stdout to the file is
-> from true Bourne, but at least the use of >&word form for this purpose is
-> more familiar to people who are used to Csh.
+Not since 03e2b63 (Update sample pre-commit hook to use "diff --check",
+2008-06-26), when that line was removed.
 
-<tongue in cheek>it is exactly because it is familiar to csh people
-that they recommend the opposite</tongue in cheek>
+I'm happy you want to improve git; but please, if you want to report
+problems, check what the status is in a more recent version (or at least
+tell us your version, which can help).
 
-j.
+> Unfortunately, when I try to check in a file with DOS (CR+LF) line
+> endings, this hook triggers on every line.  This happens on Cygwin.  I
+> haven't checked, but I bet it happens on other platforms as well, as
+> long as this hook runs.
+
+Yes, I believe carriage returns are considered trailing whitespace. I
+think (and I am not 100% sure here, because I have the good fortune not
+to have to deal with line-ending conversions on any of my platforms)
+that the general philosophy is that the "canonical" form in the
+repository should be LF-only, and that conversions can optionally make
+the worktree version CRLF (or whatever your platform desires it). But
+it's important that the canonical version be the same across platforms
+so that the blob sha-1's (and therefore the tree and commit sha-1's) all
+match.
+
+IOW, setting up core.autocrlf properly should make this go away.
+
+> But the error message "trailing whitespace" doesn't clearly tell me
+> what's wrong.
+
+Modern versions use "diff --check", which should look like this (on my
+LF-only box, at least):
+
+  $ mkdir repo && cd repo && git init
+  $ touch file && git add file && git commit -m one
+  $ printf 'foo\r\n' >file
+  $ git diff --check
+  file:1: trailing whitespace.
+  +foo^M
+
+and if you use "git diff --color --check", the problem is highlighted.
+
+> 1.  Could you please modify Git so that, when such a problem happens,
+> it instead prints an message saying that the file has CR+LF line
+> endings, and that Git does not allow this?
+
+It might be worth splitting the trailing whitespace detection into
+"spaces and tabs at the end" and "CRLF", and providing different
+messages (though it is hopefully also obvious with the new output that
+it is a CRLF issue).
+
+> 2.  In addition, could you please enable the core.autocrlf and core.safecrlf 
+> options by default in the next version of Git?
+
+I think that is up to your platform packaging, I think. I think msysgit
+is shipping with core.autocrlf on by default these days. But again, I
+don't know very much about that area.
+
+-Peff
