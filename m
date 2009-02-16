@@ -1,75 +1,59 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: "add -p" + filenames with UTF-8 multibyte characters = "No
-	changes"
-Date: Sun, 15 Feb 2009 22:36:34 -0500
-Message-ID: <20090216033634.GA12461@coredump.intra.peff.net>
-References: <2b8265360902151040t49711942udd4862cc9df01da5@mail.gmail.com> <87tz6vr0g4.fsf@iki.fi> <2b8265360902151100n2eca0182odf9543c1dd8a7f98@mail.gmail.com> <87prhjqzwb.fsf@iki.fi>
+Subject: Re: Improving CRLF error message; also, enabling autocrlf
+	and?safecrlf by default
+Date: Sun, 15 Feb 2009 22:43:11 -0500
+Message-ID: <20090216034311.GA12616@coredump.intra.peff.net>
+References: <loom.20090216T022524-78@post.gmane.org> <20090216030446.GC18780@sigill.intra.peff.net> <loom.20090216T032551-612@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Teemu Likonen <tlikonen@iki.fi>
-X-From: git-owner@vger.kernel.org Mon Feb 16 04:38:08 2009
+Cc: git@vger.kernel.org
+To: Jason Spiro <jasonspiro4@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 16 04:47:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYuJ2-0000Pz-Fx
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 04:38:04 +0100
+	id 1LYuS1-0001nv-IJ
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 04:47:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755861AbZBPDgi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Feb 2009 22:36:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755546AbZBPDgh
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 22:36:37 -0500
-Received: from peff.net ([208.65.91.99]:56493 "EHLO peff.net"
+	id S1755858AbZBPDnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2009 22:43:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752912AbZBPDnO
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 22:43:14 -0500
+Received: from peff.net ([208.65.91.99]:33343 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752862AbZBPDgg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2009 22:36:36 -0500
-Received: (qmail 12809 invoked by uid 107); 16 Feb 2009 03:36:56 -0000
+	id S1752862AbZBPDnN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2009 22:43:13 -0500
+Received: (qmail 12851 invoked by uid 107); 16 Feb 2009 03:43:33 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 15 Feb 2009 22:36:56 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 15 Feb 2009 22:36:34 -0500
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 15 Feb 2009 22:43:33 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 15 Feb 2009 22:43:11 -0500
 Content-Disposition: inline
-In-Reply-To: <87prhjqzwb.fsf@iki.fi>
+In-Reply-To: <loom.20090216T032551-612@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110127>
 
-On Sun, Feb 15, 2009 at 09:11:00PM +0200, Teemu Likonen wrote:
+On Mon, Feb 16, 2009 at 03:29:23AM +0000, Jason Spiro wrote:
 
-> "core.quotepath=3Dfalse" is good for other purposes too. It prints UT=
-=46-8
-> filenames in diff headers in form that is actually readable. I think =
-it
-> would be better default.
+> > > 2.  In addition, could you please enable the core.autocrlf and 
+> core.safecrlf 
+> > > options by default in the next version of Git?
+> > 
+> > I think that is up to your platform packaging, I think. I think msysgit
+> > is shipping with core.autocrlf on by default these days. But again, I
+> > don't know very much about that area.
+> 
+> Are you saying that only my platform's packager can decide what options are 
+> enabled by default, and that you upstream folks have no influence at all?  :)
 
-I am not opposed to setting this as a default, but I think there may be
-some encoding issues to be dealt with. At the very least, format-patch
-generates messages without a content-type header. E.g.,:
-
-  $ touch f=C3=B6=C3=B6 && git add . && git commit -m one
-  $ echo content >f=C3=B6=C3=B6 && git commit -a -m two
-
-  $ git format-patch --stdout HEAD^ | sed '/^$/q'
-
-     vs
-
-  $ git config core.quotepath false
-  $ git format-patch --stdout HEAD^ | sed '/^$/q'
-
-So now we have non-ascii in our email, but no header specifying
-encoding. Previous experience has shown that intermediate MTAs (like
-vger) will add their own header with whatever encoding they think is
-sensible (in the case of vger, iso8859-1), corrupting the mail if they
-guess wrong.
-
-But what is the right encoding to specify? We can guess that it is
-whatever the commit message is in (defaulting to utf-8). It is by no
-means correct, but it would probably work pretty well in practice.
-
-On the other hand, we already have the same problem for encoded file
-_contents_. So maybe it is not a big problem in practice.
+Not necessarily. But I don't think we want core.autocrlf on by default
+for all platforms. So the decision needs to be made on a platform by
+platform basis. The cleanest way to do that (in my opinion) is through a
+system-level configuration file. But git built from src does not
+distribute such a configuration file at all; that seems to be in the
+scope of package distributors.
 
 -Peff
