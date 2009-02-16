@@ -1,118 +1,81 @@
-From: Sergio Callegari <sergio.callegari@gmail.com>
-Subject: Re: disallowing push to currently checked-out branch
-Date: Mon, 16 Feb 2009 20:24:04 +0100
-Message-ID: <4999BD54.8090805@gmail.com>
-References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org> <20090215232013.GA11543@zakalwe.fi> <20090216000443.GB3503@coredump.intra.peff.net> <alpine.DEB.1.10.0902151727330.14911@asgard.lang.hm> <alpine.DEB.1.10.0902151738450.14911@asgard.lang.hm> <alpine.LNX.1.00.0902160322530.19665@iabervon.org> <7veixybw7u.fsf@gitster.siamese.dyndns.org> <loom.20090216T101457-231@post.gmane.org> <20090216135812.GA20377@coredump.intra.peff.net> <49999ED6.7010608@gmail.com> <alpine.DEB.1.00.0902161839120.6289@intel-tinevez-2-302>
+From: Jonas Fonseca <jonas.fonseca@gmail.com>
+Subject: Re: [ANNOUNCE] tig-0.14
+Date: Mon, 16 Feb 2009 20:52:19 +0100
+Message-ID: <2c6b72b30902161152q3de61b9brad746b25bfcea025@mail.gmail.com>
+References: <20090205204436.GA6072@diku.dk> <op.uo9di902a8ed4e@dellschleppa>
+	 <2c6b72b30902121424o5d4ac0d7u67a7afb3b861aa19@mail.gmail.com>
+	 <op.uo9hiqqqa8ed4e@dellschleppa>
+	 <2c6b72b30902151547q5bf183f2q1e846f261825671c@mail.gmail.com>
+	 <slrngphgk1.hul.sitaramc@sitaramc.homelinux.net>
+	 <2c6b72b30902160410g25e80514q318b65ea4614cdc1@mail.gmail.com>
+	 <slrngpj0md.e6h.sitaramc@sitaramc.homelinux.net>
+	 <18071eea0902160725n2e918883wbc9bfc57be0b7d45@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 16 20:25:57 2009
+Cc: Sitaram Chamarty <sitaramc@gmail.com>, git@vger.kernel.org
+To: Thomas Adam <thomas.adam22@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 16 20:53:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZ964-0007iw-Re
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 20:25:41 +0100
+	id 1LZ9XK-0001Ui-Gb
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 20:53:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751516AbZBPTYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 14:24:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751119AbZBPTYK
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 14:24:10 -0500
-Received: from mail-bw0-f161.google.com ([209.85.218.161]:34211 "EHLO
+	id S1751304AbZBPTwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 14:52:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750729AbZBPTwW
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 14:52:22 -0500
+Received: from mail-bw0-f161.google.com ([209.85.218.161]:33991 "EHLO
 	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751104AbZBPTYJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 14:24:09 -0500
-Received: by bwz5 with SMTP id 5so3337200bwz.13
-        for <git@vger.kernel.org>; Mon, 16 Feb 2009 11:24:06 -0800 (PST)
+	with ESMTP id S1750705AbZBPTwW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 14:52:22 -0500
+Received: by bwz5 with SMTP id 5so3362452bwz.13
+        for <git@vger.kernel.org>; Mon, 16 Feb 2009 11:52:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=lp3NrMtP1tWnZ38eSMYmp8oGeq2pLJldlCynhAcihxE=;
-        b=v+qWKVj/dOUDR3u5mIktzBXRb67rNVcochS4oE5CjDdINLnxRlY2P2ce9DEX2JVzcv
-         pW+X58TFyglUaYm94EQyO+Tu6OCC72JdbLjg+NLYQujifmOG6mY+l1L+sI7K7xixsqb5
-         HKwyyGtAkpcOrGyZQaVEMCNfurpSdrVU1by2E=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=FVjvvO0CSx9CNlIoBevsKOriLvmg4uQwL6tCoXp9aXQ=;
+        b=iLg7IwdvtqV/Ug9L7Y5JDASCEZk6fNaiDWDrXE72zTOwXaeirs0z5zw1hmkMQquPey
+         Q1rbM/aTP/sy4UiCSY5hH6pyWRY7pzF1fUk03clCmS2cjUuHB0piFhK99VZMfWCbNuWi
+         Lpyh/Zn4/Mu01UGViyEeOoZgNMrkPNCnLRnLU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=ULHXaE702gA6FyeHOJ8XjwspYvjKbJ39wi8TvFxvNWn9I4Sp+1aU5Prj+t8f6arzvq
-         GFFYZAj6gqSnor91yyXZPZOC9R21ojIbyt0j/JgqsAgW10Xxm9tkpTsO2lFM/P87GgRy
-         mDUnjcgsLZqEeR5a4EcdoNoYDuKmG2ou5/PnM=
-Received: by 10.103.49.12 with SMTP id b12mr3134816muk.81.1234812246550;
-        Mon, 16 Feb 2009 11:24:06 -0800 (PST)
-Received: from ?192.168.1.99? (host172-56-dynamic.10-87-r.retail.telecomitalia.it [87.10.56.172])
-        by mx.google.com with ESMTPS id n10sm514973mue.9.2009.02.16.11.24.04
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 16 Feb 2009 11:24:05 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
-In-Reply-To: <alpine.DEB.1.00.0902161839120.6289@intel-tinevez-2-302>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=m72OIyzhTImh0R0fv33UbJ7AD9ZBRK3sVLacEytLfaG8Oh53V7tcPyzBeQHCu/Z70o
+         Up0/p4RLL4ZirOeTIhr+cXnBmbpS+wMBoLB22HdPmC0f84bi9aKzEajV3lwXNsjWmIVh
+         P9yGY5ZtEa0LR0RfaxoiUE74ErMu1+Zivgww4=
+Received: by 10.181.192.11 with SMTP id u11mr2077678bkp.50.1234813939813; Mon, 
+	16 Feb 2009 11:52:19 -0800 (PST)
+In-Reply-To: <18071eea0902160725n2e918883wbc9bfc57be0b7d45@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110231>
 
-Johannes Schindelin wrote:
-> Wrong.  It cries out loud when you detach, not when you commit to a 
-> detached HEAD.  For good reason: Already at the second commit it would 
-> stop being funny.
->   
-Right, I was wrong in expecting complaints. But... if it cried out at 
-the first commit, for many people there would probably not be a second. 
-Btw, I am ignorant on this: is there some case where one wants and has 
-reasons to commit to a detached head before making a temporary branch on it?
->   
->> Furthermore, one could do just a bit more than detaching, namely store 
->> the fact that head got detached and the name of the branch where the 
->> head was. With this, when the unconscious user types git status or git 
->> commit the system could alert him that head got detached because someone 
->> updated the branch behind his shoulders from remote...
->>     
+On Mon, Feb 16, 2009 at 16:25, Thomas Adam <thomas.adam22@gmail.com> wrote:
+> 2009/2/16 Sitaram Chamarty <sitaramc@gmail.com>:
+>> Yes I was going to ask about that, having been confused by
+>> the graph once in a while.  You may want to consider using a
+>> few other characters than the 4 you currently do (if indeed
+>> that is the problem).
 >
-> And of course, you need a way to show the user all the updates the branch 
-> went through while the HEAD was detached, so that the user has a chance of 
-> understanding what happened in the meantime.
->   
-> So much additional work, just to fix up the shortcomings of the 'detach' 
-> paradigm?  I take it as a clear mark of a not-so-elegant design.
->   
-Well not that much additional work...
+> I started work on this last year, but it got pushed further and
+> further down my todo list.   Basically, there's extended characters
+> defined as part of ncurses for just this sort of "drawing" operation.
 
-when you push to the checked out branch, head gets detached and branch 
-name (say /ref/heads/master) gets stored (say in .git/pre_push_branch).
-when you run status or commit, you realize that there is a 
-pre_push_branch and you give the warning, saying what the 
-pre_push_branch was.
-Now, since before the push you were at the tip of that branch, to know 
-what happened it should be enough to ask the log (or the diff) from 
-pre_push_branch to HEAD.
-At the first user command that moves HEAD, pre_push_branch should get 
-deleted.
-Btw, what does happen now if you delete the branch the remote worktree 
-is on? Don't you get a "dangling" head pointing to a non-existing branch 
-and the system claiming that it is at the initial commit? Maybe, this 
-too is a bit inelegant. In the other scenario, you would get a detached 
-head and in pre_push_branch the info the name of a no more existing 
-branch (mainig clear that you were on a branch that got deleted) and 
-this info could be returned to the user.
+Yes, I think we need to go for something squarish like qgit and giggle.
 
-Of course, I am not claiming that forbidding pushes to branches with 
-checked out tree is bad. It is a good idea in my opinion.
-I am just suggesting that one still wanting to allow that push in spite 
-of all the potential consequences (namely wanting to mess with the 
-relevant config variable), might prefer detaching head, storing the 
-pre_push_branch and getting some info on status and commit rather than 
-merely allowing the push.
+With this rewrite I it could also be nice to allow the graph rendering
+to be more incremental by changing the commit struct to point to the
+parent commits. This will also enable support for moving the cursor to
+the parent commit in the main view and calculate information like the
+Follows/Preceeds in gitk.
 
-In fact, I believe that the point is that with the current push-allowing 
-behavior, when the push happens you loose the information about the 
-precise commit against which the changes in the worktree were made. 
-Which might be a useful piece of info.
-
-Ciao,
-
-Sergio
+-- 
+Jonas Fonseca
