@@ -1,80 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: disallowing push to currently checked-out branch
-Date: Mon, 16 Feb 2009 13:43:03 -0800
-Message-ID: <7vprhidpnc.fsf@gitster.siamese.dyndns.org>
-References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org>
- <20090215232013.GA11543@zakalwe.fi>
- <20090216000443.GB3503@coredump.intra.peff.net>
- <alpine.DEB.1.10.0902151727330.14911@asgard.lang.hm>
- <alpine.DEB.1.10.0902151738450.14911@asgard.lang.hm>
- <alpine.LNX.1.00.0902160322530.19665@iabervon.org>
- <7veixybw7u.fsf@gitster.siamese.dyndns.org>
- <loom.20090216T101457-231@post.gmane.org>
- <20090216135812.GA20377@coredump.intra.peff.net> <49999ED6.7010608@gmail.com>
- <alpine.DEB.1.00.0902161839120.6289@intel-tinevez-2-302>
- <4999BD54.8090805@gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] Turn the flags in struct dir_struct into a single
+	variable
+Date: Mon, 16 Feb 2009 22:47:56 +0100
+Message-ID: <20090216214756.GG4371@genesis.frugalware.org>
+References: <1234727647-18523-1-git-send-email-vmiklos@frugalware.org> <alpine.DEB.1.00.0902152108370.10279@pacific.mpi-cbg.de> <20090215220706.GB4371@genesis.frugalware.org> <alpine.DEB.1.00.0902161317570.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Sergio Callegari <sergio.callegari@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 16 22:44:49 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="hUen2UJD5eWDKlb+"
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Feb 16 22:49:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZBGi-0007pP-KQ
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 22:44:49 +0100
+	id 1LZBLD-000120-1y
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 22:49:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752564AbZBPVnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 16:43:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752432AbZBPVnO
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 16:43:14 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46167 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752304AbZBPVnM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 16:43:12 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 6DE802B467;
-	Mon, 16 Feb 2009 16:43:10 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 83D112B430; Mon,
- 16 Feb 2009 16:43:05 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: CE0BC670-FC72-11DD-A7F9-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1752432AbZBPVr6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 16:47:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751923AbZBPVr6
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 16:47:58 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:52845 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751883AbZBPVr6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 16:47:58 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 356455818E;
+	Mon, 16 Feb 2009 22:47:58 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id B014D446A6;
+	Mon, 16 Feb 2009 22:47:56 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 96D0A11B877C; Mon, 16 Feb 2009 22:47:56 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0902161317570.10279@pacific.mpi-cbg.de>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110250>
 
-Sergio Callegari <sergio.callegari@gmail.com> writes:
 
-> ... is there some case where one wants
-> and has reasons to commit to a detached head before making a temporary
-> branch on it?
+--hUen2UJD5eWDKlb+
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Absolutely. I do it all the time for minor fix-ups after applying other's
-patches on a newly created topic branch.
+On Mon, Feb 16, 2009 at 01:20:25PM +0100, Johannes Schindelin <Johannes.Sch=
+indelin@gmx.de> wrote:
+> By having flags represented as bits in the new member variable 'flags',
+> it will be easier to use parse_options when dir_struct is involved.
+>=20
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>=20
+> 	On Sun, 15 Feb 2009, Miklos Vajna wrote:
+>=20
+> 	> On Sun, Feb 15, 2009 at 09:13:42PM +0100, Johannes Schindelin
+> 	> <Johannes.Schindelin@gmx.de> wrote:
+> 	>
+> 	> > Well, in my juvenile folly I dreamt of turning this into a proper=20
+> 	> > bitfield...
+> 	>=20
+> 	> Uhm, I think I haven't got what you mean. ;-)
+>=20
+> 	I meant this...
 
-If you want a push to the current branch of _your_ repository detach HEAD
-automatically and record which branch it was pointing at before you
-detached, I am reasonably sure you can do that in post-receive hook, no?
+Aah. That definitely makes the parseopt code shorter, thanks. :-)
 
-I do not think it is such a bad thing to have a new value 'detach' to
-receive.denyCurrentBranch as a possible non-default choice per-se, but the
-earlier discussion Jeff pointed out is only showing that detaching alone
-is not enough to help the user recover from the resulting state, and Dscho
-discussed in this thread that detaching and recording the original branch
-may not be enough either.  IOW, we do not know yet precisely what needs to
-happen other than detaching HEAD when the configuration tells us to
-'detach' to be useful.
+--hUen2UJD5eWDKlb+
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-So how about you experiment the workflow by setting the configuration to
-'ignore', setting up a hook to detach _and do some other useful things_ as
-necessary, and help all of us figuring out what other information is
-useful to record when you receive such a push, and what new indications
-you could give users to reduce the possibility of confusion?  Once we know
-what we want to happen, we can have it as one of the canned choices and it
-would help users.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkmZ3wwACgkQe81tAgORUJbPLwCfWQnyqWutgQWSlKeOifhIgIk5
+FpAAn0ZLA11bkNSrzk0FNiT/WPBxUFYQ
+=qzsx
+-----END PGP SIGNATURE-----
+
+--hUen2UJD5eWDKlb+--
