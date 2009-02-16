@@ -1,98 +1,67 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Setting up a bug tracking system where users can file bug
- reports and feature requests for Git
-Date: Sun, 15 Feb 2009 19:52:05 -0800
-Message-ID: <7vab8nf38a.fsf@gitster.siamese.dyndns.org>
-References: <loom.20090216T025046-863@post.gmane.org>
+Subject: Re: "add -p" + filenames with UTF-8 multibyte characters = "No
+ changes"
+Date: Sun, 15 Feb 2009 20:00:03 -0800
+Message-ID: <7v63jbf2v0.fsf@gitster.siamese.dyndns.org>
+References: <2b8265360902151040t49711942udd4862cc9df01da5@mail.gmail.com>
+ <87tz6vr0g4.fsf@iki.fi>
+ <2b8265360902151100n2eca0182odf9543c1dd8a7f98@mail.gmail.com>
+ <87prhjqzwb.fsf@iki.fi> <20090216033634.GA12461@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jason Spiro <jasonspiro4@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 16 04:53:40 2009
+Cc: Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 16 05:01:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYuY7-0002pa-Fw
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 04:53:39 +0100
+	id 1LYufs-0004HN-81
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 05:01:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756010AbZBPDwN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2009 22:52:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755965AbZBPDwM
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 22:52:12 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41334 "EHLO
+	id S1755948AbZBPEAL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2009 23:00:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753440AbZBPEAL
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 23:00:11 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41848 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755858AbZBPDwM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2009 22:52:12 -0500
+	with ESMTP id S1752862AbZBPEAJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2009 23:00:09 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id DBDEC2B392;
-	Sun, 15 Feb 2009 22:52:09 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 537B02B398;
+	Sun, 15 Feb 2009 23:00:09 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0406C2B390; Sun,
- 15 Feb 2009 22:52:06 -0500 (EST)
-In-Reply-To: <loom.20090216T025046-863@post.gmane.org> (Jason Spiro's message
- of "Mon, 16 Feb 2009 02:55:33 +0000 (UTC)")
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 6F0ED2B383; Sun,
+ 15 Feb 2009 23:00:05 -0500 (EST)
+In-Reply-To: <20090216033634.GA12461@coredump.intra.peff.net> (Jeff King's
+ message of "Sun, 15 Feb 2009 22:36:34 -0500")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 2FC5E422-FBDD-11DD-96F1-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 4D8B389E-FBDE-11DD-96F1-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110130>
 
-Jason Spiro <jasonspiro4@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Is there a bug tracking system where I can file bug reports and feature
-> requests for Git?  If not, could you please set up such a system?  I am
-> more likely to send bug reports and feature requests to a bug tracking
-> system than a mailing list, since I know that they can't be lost in the
-> mists of time and forgotten forever.  :)
+> But what is the right encoding to specify? We can guess that it is
+> whatever the commit message is in (defaulting to utf-8). It is by no
+> means correct, but it would probably work pretty well in practice.
+>
+> On the other hand, we already have the same problem for encoded file
+> _contents_. So maybe it is not a big problem in practice.
 
-This come up on the list from time to time.
+I did not spell the specifics out because this change won't happen in any
+near future anyway, but my thinking was to give a way for "add -p" to
+either (1) internally run without quotepath regardless of the user's
+settings or (2) unquote the paths correctly when it learns the set of
+paths affected by the change.
 
-I am not fundamentally opposed to using an automated way to help tracking
-issues, but a tracking system is not a panacea.
+I think the right approach is (2), because you need to unquote pathnames
+with some byte values that even with core.quotepath=false will not pass
+unquoted *anyway*.
 
-A tracking system is just a tool.  You need to have a competent and stable
-project secretary whose job is to look after the issues database.  The
-tasks involved are to expire the stale ones, to reject invalid entries, to
-prod the bug reporter for additional information, to find a volunteer to
-take up on an individual issue, to prod the bug reporter for confirmation
-on the fix once it is ready, and to close completed issues.
-
-And do not tell me that debbugs can route messages.  People do not respond
-to automated messages the same way as they would to messages from a warm
-and respected body.
-
-We handle the "to expire the stale ones and to reject the invalid ones"
-part by losing the ones that even the original complainer does not feel
-motivated enough to be persistent in the mists of time (yes, it is a
-*feature* of mailing list based community, not a deficiency).
-
-A mailing list based workflow lacks support for other tasks a competent
-project secratary performs: finding a taker for a task and prodding the
-party whose court the ball currently is in.  That is currently done purely
-on voluntary basis.  Often the person who introduced the bug originally
-feels ashamed enough to look into the issue.  A diligent bug reporter asks
-if the issue previously reported has a resolution when a certain period of
-silence passes, and such a "prodding" raises the awareness of the issue in
-the group of volunteer developers and gives the issue a higher priority.
-
-I would agree 100% with you if you said relying on such a purely volunteer
-based system would not be ideal.  It is not.  But given that the ratio
-between gimme-whiners and can-do-contributors is not so great, that's the
-best we can currently do.
-
-It would be great to have a competent and stable project secretary to fill
-the gap.  From time to time, we do see some people playing that role,
-summarizing the issues raised, discussed and then left unresolved, but
-that too is purely on voluntary basis.  I do that as a part of the task
-for the maintainer, but obviously I have to do other things as well.
-
-If you are volunteering to be the lead for the project secretaries group,
-that would be great.  
-
-Such a person may choose a tracking system he or she is the most familiar
-with, and if that helps the progress of the project, that would be even
-better.
+I also happen to think that it may be a good idea to ignore core.quotepath
+settings in format-patch, but that is a separate topic.
