@@ -1,51 +1,84 @@
-From: "Stephen" <puses@toll.com.au>
-Subject: Stephen has sent you an ecard!
-Date: Mon, 16 Feb 2009 13:29:46 -0500
-Message-ID: <20090216132946.7000002@toll.com.au>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: disallowing push to currently checked-out branch
+Date: Mon, 16 Feb 2009 13:48:08 -0500
+Message-ID: <76718490902161048i3c19bb43h30b1cfc62dd9a61e@mail.gmail.com>
+References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org>
+	 <20090216000443.GB3503@coredump.intra.peff.net>
+	 <alpine.DEB.1.10.0902151727330.14911@asgard.lang.hm>
+	 <alpine.DEB.1.10.0902151738450.14911@asgard.lang.hm>
+	 <alpine.LNX.1.00.0902160322530.19665@iabervon.org>
+	 <7veixybw7u.fsf@gitster.siamese.dyndns.org>
+	 <loom.20090216T101457-231@post.gmane.org>
+	 <20090216135812.GA20377@coredump.intra.peff.net>
+	 <49999ED6.7010608@gmail.com>
+	 <alpine.DEB.1.00.0902161839120.6289@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 16 19:43:58 2009
+Cc: Sergio Callegari <sergio.callegari@gmail.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Feb 16 19:49:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZ8Ra-0008IN-5b
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 19:43:50 +0100
+	id 1LZ8XE-00023j-Jg
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 19:49:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751359AbZBPSlq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 13:41:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751332AbZBPSlp
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 13:41:45 -0500
-Received: from [74.10.1.66] ([74.10.1.66]:4527 "HELO wergvan"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with SMTP
-	id S1751013AbZBPSlp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 13:41:45 -0500
-Received: from localhost.localdomain (ucuipf [192.168.195.251])
-	by wergvan (Postfix) with ESMTP id 45AB17C5CE0
-	for <git@vger.kernel.org>; Mon, 16 Feb 2009 13:29:46 -0500
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+	id S1751451AbZBPSsM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 13:48:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750880AbZBPSsK
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 13:48:10 -0500
+Received: from rv-out-0506.google.com ([209.85.198.227]:50964 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750778AbZBPSsJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 13:48:09 -0500
+Received: by rv-out-0506.google.com with SMTP id g9so1143323rvb.5
+        for <git@vger.kernel.org>; Mon, 16 Feb 2009 10:48:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=vwdrRDgxn/UCo9eOA3pNjuaqJQEjbM1CmnJGvvvFfkE=;
+        b=k5dgeU9Ar8cafTKWppNyObH08QiBUcu3U1E+C+pwbURmMBsLqaVuEcWotrzq2l+OtF
+         MVfEw/66At977fmI0g/FHhNYytiXb/Zgp0Rp049H7aXyOtzG7zBaq/eFjYS9BWgmXxM/
+         89tcdWrIKhSkqVkUt+LS6Olm0QcwwUrMpQizA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=pRvifLR+zv/PpuYQLRhwlvgzVtMBRFwppEVziSdWyqrqoPfdKy8DKrbFJv1pmpaFOQ
+         zt9VN4elL5G1vosucu96+R/dHZzNCliKoMfcSvCKSEojmJqJwI7zr1Q9MANooClgCanc
+         UvFXFXF+XPxUAQ98V1LIvE0veUdQu4K8gXkSc=
+Received: by 10.140.127.13 with SMTP id z13mr2805558rvc.145.1234810088210; 
+	Mon, 16 Feb 2009 10:48:08 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0902161839120.6289@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 12.8 points;
- *  3.4 RATWARE_RCVD_PF Bulk email fingerprint (Received PF) found
- *  3.0 RAZOR2_CF_RANGE_51_100 BODY: Razor2 gives confidence level above 50%
- *      [cf: 100]
- *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
- *  0.8 URIBL_PH_SURBL Contains an URL listed in the PH SURBL blocklist
- *      [URIs: wapcitynews.com]
- *  0.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: wapcitynews.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: wapcitynews.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110227>
 
-Stephen sent a Valentine greeting card and wrote for you:
-"Be mine"
+On Mon, Feb 16, 2009 at 12:43 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> And of course, you need a way to show the user all the updates the branch
+> went through while the HEAD was detached, so that the user has a chance of
+> understanding what happened in the meantime.
+>
+> So much additional work, just to fix up the shortcomings of the 'detach'
+> paradigm?  I take it as a clear mark of a not-so-elegant design.
 
-Click here to view your Valentine card:
-http://sucfx.wapcitynews.com/?id=2173670098d1be0465
-Blessings to you from the bluemountain.com.
+You did plant a seed in my head with PUSH_HEAD though, and I'm still
+thinking about it. :-)
+
+I think the right thing is *not to detach*, but rather when pushing
+into a non-bare repo for it to go into refs/remotes. Too bad clone
+doesn't set it up this way by default when cloning from a non-bare
+repo[*]. That would probably make more sense for new users.
+
+[*] Clone can't currently know it's cloning from a non-bare repo, at
+least via git://, as I recall...
+
+j.
