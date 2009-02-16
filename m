@@ -1,105 +1,115 @@
-From: Sergio Callegari <sergio.callegari@gmail.com>
-Subject: Re: disallowing push to currently checked-out branch
-Date: Mon, 16 Feb 2009 18:13:58 +0100
-Message-ID: <49999ED6.7010608@gmail.com>
-References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org> <20090215232013.GA11543@zakalwe.fi> <20090216000443.GB3503@coredump.intra.peff.net> <alpine.DEB.1.10.0902151727330.14911@asgard.lang.hm> <alpine.DEB.1.10.0902151738450.14911@asgard.lang.hm> <alpine.LNX.1.00.0902160322530.19665@iabervon.org> <7veixybw7u.fsf@gitster.siamese.dyndns.org> <loom.20090216T101457-231@post.gmane.org> <20090216135812.GA20377@coredump.intra.peff.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [JGIT PATCH] 1/2: Externalizable items
+Date: Mon, 16 Feb 2009 09:20:25 -0800
+Message-ID: <20090216172025.GE18525@spearce.org>
+References: <320075ff0902160845m264f78cdh8dc5307b24f4c3ed@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 16 18:15:35 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Git ML <git@vger.kernel.org>
+To: Nigel Magnay <nigel.magnay@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 16 18:21:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZ749-0007wS-PS
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 18:15:34 +0100
+	id 1LZ7AI-0001wP-30
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 18:21:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750995AbZBPROG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 12:14:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750833AbZBPROE
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 12:14:04 -0500
-Received: from mail-bw0-f161.google.com ([209.85.218.161]:60695 "EHLO
-	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750732AbZBPROB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 12:14:01 -0500
-Received: by bwz5 with SMTP id 5so3238825bwz.13
-        for <git@vger.kernel.org>; Mon, 16 Feb 2009 09:13:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=gRByugeXBqJ94u6DR+4vHpe8DVkFLAzK/d5B16955/U=;
-        b=UpS3/dXYlUqRibkgfSpeygsOprp5HNl3dbEd1Qo+5fJuW0W9rsRpncxbC57fDY1Cjk
-         MT8zFwBfMhSt/JyAuvfVhPMcQKVweGcaxG+De5PeZb+kV2bl2eCYGI8tBA+ZQJCbXqOO
-         wXKrOnVF2EqEuBPLLBwKCN47ff42OdJCZzAlU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=O2wsWTFNqBjG5njtiIxXJegUjsN0T73z9xYtbyhNzV3kXBie8TCn7eKuvk/dXcfKv5
-         As5XwSg9nCZXX8dIQZ6LClPaUC97+CCoVSExYmp8MLpOvi6WSwPJRADCQXT9odq7FYU1
-         bhFSVeHPpjXtrG+mwtB+O1PArPWH97j0lYIEI=
-Received: by 10.223.107.19 with SMTP id z19mr111514fao.27.1234804439437;
-        Mon, 16 Feb 2009 09:13:59 -0800 (PST)
-Received: from ?192.168.1.99? (host172-56-dynamic.10-87-r.retail.telecomitalia.it [87.10.56.172])
-        by mx.google.com with ESMTPS id 35sm3967790fkt.3.2009.02.16.09.13.58
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 16 Feb 2009 09:13:59 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
-In-Reply-To: <20090216135812.GA20377@coredump.intra.peff.net>
+	id S1751176AbZBPRU0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 12:20:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751076AbZBPRU0
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 12:20:26 -0500
+Received: from george.spearce.org ([209.20.77.23]:49303 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750888AbZBPRUZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 12:20:25 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 1CEB4381FF; Mon, 16 Feb 2009 17:20:25 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <320075ff0902160845m264f78cdh8dc5307b24f4c3ed@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110214>
 
-Jeff King wrote:
-> On Mon, Feb 16, 2009 at 10:17:01AM +0000, Sergio Callegari wrote:
->
->   
->>> For people who do not follow the git list regularly, a "HEAD contain the
->>> actual commit" is often called "detached".
->>>       
->> Could you have that done automatically?
->> Namely rather to denying push to a branch b where HEAD->b, when you get such
->> push you detach head?
->>     
->
-> See
->
->   http://article.gmane.org/gmane.comp.version-control.git/108923
->
-> for discussion.
->
-> -Peff
->   
-Thanks for the pointer!
+Nigel Magnay <nigel.magnay@gmail.com> wrote:
+> Make parts of jgit externalizable, so that they can be marshalled over
+> the wire or onto disk,
+> using formats from git mailing list.
 
-However, wrt point 1)
+As Dscho pointed out, a bit more detail here would be appreciated.
+ 
+> diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
+> b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
+> index 52ce0d4..1385325 100644
+> --- a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
+> +++ b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
+> @@ -56,6 +60,13 @@
+>  	}
+> 
+>  	/**
+> +	 * Empty constructor, for Externalizable.
+> +	 */
+> +	public ObjectId() {
+> +		// For Externalizable
+> +	}
 
-> If you set 'detach' option, this clueless user is not helped; he will
->      happily keep working and would make tons of commits on detached HEAD,
->      and next time he switches to another branch, will lose all of them.
->   
-I guess that git does not let you commit on a detached head without 
-crying out loud.
+Yikes.  Do we really need a public no-arg constructor for
+Externalizable?  If we do, maybe we should use Serializable instead
+so we can hide this constructor.  I don't like the idea of people
+creating ObjectId.zeroId() by new ObjectId().  That's not a pattern
+we should encourage.
 
-Furthermore, one could do just a bit more than detaching, namely store 
-the fact that head got detached and the name of the branch where the 
-head was.
-With this, when the unconscious user types git status or git commit the 
-system could alert him that head got detached because someone updated 
-the branch behind his shoulders from remote... and then suggest the 
-option to either create a new branch from the detached head (I believe 
-that this is what gets suggested anyway when one tries to commit from a 
-detached head) or to stash the current tree status, get back onto the 
-former branch and try applying the changes on the new head of the branch.
-The flag triggering this warning at a git status or git commit command 
-should then be cleared at the first occasion when the head is changed.
+> @@ -269,4 +280,22 @@ protected ObjectId(final AnyObjectId src) {
+>  	public ObjectId toObjectId() {
+>  		return this;
+>  	}
+> +
+> +	public void readExternal(ObjectInput in) throws IOException,
+> +			ClassNotFoundException {
+> +		byte[] sha1 = new byte[20];
+> +		in.read(sha1);
+> +		
+> +		w1 = NB.decodeInt32(sha1, 0);
+> +		w2 = NB.decodeInt32(sha1, 4);
+> +		w3 = NB.decodeInt32(sha1, 8);
+> +		w4 = NB.decodeInt32(sha1, 12);
+> +		w5 = NB.decodeInt32(sha1, 16);
+> +	}
+> +
+> +	public void writeExternal(ObjectOutput out) throws IOException {
+> +		byte[] sha1 = new byte[20];
+> +		copyRawTo(sha1, 0);
+> +		out.write(sha1);
+> +	}
 
-To me this seems natural and helpful. Am I missing something?
+Hmm.  I was thinking of just writing the 5 ints out, and reading
+the 5 ints back in.  We're always talking to another Java process.
+The ints are written in network byte order anyway on a serialization
+stream.  Doing this conversion to a byte[] thrases the caller's
+per-thread new generation rather hard.  I think applications using
+this type in a serialization stream would expect it to be quick.
 
-Sergio
+> diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteConfig.java
+> b/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteConfig.java
+> index 5bbf664..22443b4 100644
+> --- a/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteConfig.java
+> +++ b/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteConfig.java
+> +
+> +	public void readExternal(ObjectInput in) throws IOException,
+> +			ClassNotFoundException {
+> +		name = in.readUTF();
+> +		int items = in.readInt();
+> +
+> +		Map<String, Collection<String>> map = new HashMap<String,
+> Collection<String>>();
+> +		for (int i = 0; i < items; i++) {
+> +			String key = in.readUTF();
+> +			String value = in.readUTF();
+
+Why not just serialize the Map in the stream?
+
+-- 
+Shawn.
