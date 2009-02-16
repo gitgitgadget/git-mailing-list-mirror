@@ -1,56 +1,64 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH v2] bash: add missing 'git merge' options
-Date: Mon, 16 Feb 2009 07:56:46 -0800
-Message-ID: <20090216155646.GB18525@spearce.org>
-References: <7v7i3sp8jk.fsf@gitster.siamese.dyndns.org> <1234704311-14774-1-git-send-email-szeder@ira.uka.de>
+Subject: Re: [SoC RFC] about "restartable clone"
+Date: Mon, 16 Feb 2009 08:00:01 -0800
+Message-ID: <20090216160001.GC18525@spearce.org>
+References: <1dacb48d0902131838i3a717ec9r96d8ae8224f7bc66@mail.gmail.com> <20090215203714.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Mon Feb 16 16:58:22 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Henry Huang <henry.s.huang@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 16 17:02:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZ5rL-0000eu-92
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 16:58:15 +0100
+	id 1LZ5uW-00023h-7k
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 17:01:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751105AbZBPP4r convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Feb 2009 10:56:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751025AbZBPP4r
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 10:56:47 -0500
-Received: from george.spearce.org ([209.20.77.23]:43273 "EHLO
+	id S1751123AbZBPQAF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 11:00:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751110AbZBPQAE
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 11:00:04 -0500
+Received: from george.spearce.org ([209.20.77.23]:43280 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751013AbZBPP4r (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 10:56:47 -0500
+	with ESMTP id S1751105AbZBPQAD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 11:00:03 -0500
 Received: by george.spearce.org (Postfix, from userid 1001)
-	id 6B96238211; Mon, 16 Feb 2009 15:56:46 +0000 (UTC)
+	id 3C46A38215; Mon, 16 Feb 2009 16:00:01 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <1234704311-14774-1-git-send-email-szeder@ira.uka.de>
+In-Reply-To: <20090215203714.6117@nanako3.lavabit.com>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110198>
 
-SZEDER G=E1bor <szeder@ira.uka.de> wrote:
-> Namely: '--commit', '--stat', '--no-squash', '--ff', '--no-ff'.
->=20
-> One might wonder why add options that specify the default behaviour
-> anyway (e.g. '--commit', '--no-squash', etc.).  Users can override th=
-e
-> default with config options (e.g. 'branch.<name>.mergeoptions',
-> 'merge.log'), but sometimes might still need the default behaviour.
->=20
-> Signed-off-by: SZEDER G=E1bor <szeder@ira.uka.de>
-> ---
+Nanako Shiraishi <nanako3@lavabit.com> wrote:
+> Quoting Henry Huang <henry.s.huang@gmail.com>:
+> 
+> > Now i have several problems:
+> >
+> > 1) Less familiar with git source code
+> > 2) Less experience in Open Source Development
+> > 3) No proposal for this project
+> >
+> > My questions:
+> >
+> > 1) Are there any documents for git's internals ?-- (.git/ structure,
+> > data structures: DAG of objects,
+> > branches, tags, index etc.) and workflow of main operations
+> >
+> > 2) Could anyone give me some hints -- where to begin with this project?
+> 
+> A good starting point would be to download the source and look at the files in Documentation directory, including its technical subdirectory. The information in these files would answer large part of your questions in 1).
 
-Acked-by: Shawn O. Pearce <spearce@spearce.org>
+Also, the Git Community Book (http://book.git-scm.com/) chapter
+7 "Internals and Plumbing" has some really nice detail on this.
+I'm not sure it fully covers the algorithms used to generate a
+pack file, but it does cover the data structures involved in
+detail, with pretty graphics to help explain it.  Scott has done
+a wonderful job editing this text.
 
->  contrib/completion/git-completion.bash |    1 +
->  1 files changed, 1 insertions(+), 0 deletions(-)
-
---=20
+-- 
 Shawn.
