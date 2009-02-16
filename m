@@ -1,53 +1,61 @@
-From: Pedro Melo <melo@simplicidade.org>
-Subject: Perl module for Git
-Date: Mon, 16 Feb 2009 15:44:45 +0000
-Message-ID: <2E5115F2-7692-4E6F-B163-3DD2D3943C25@simplicidade.org>
-Mime-Version: 1.0 (Apple Message framework v928.1)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: Git Mailinglist <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 16 16:53:14 2009
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 2/2] bash: update 'git svn' options
+Date: Mon, 16 Feb 2009 07:54:29 -0800
+Message-ID: <20090216155429.GA18525@spearce.org>
+References: <1234628513-4573-1-git-send-email-szeder@ira.uka.de> <1234628513-4573-2-git-send-email-szeder@ira.uka.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Mon Feb 16 16:55:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZ5mJ-00072s-US
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 16:53:04 +0100
+	id 1LZ5p8-00089z-H8
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 16:55:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750995AbZBPPvd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 10:51:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750923AbZBPPvd
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 10:51:33 -0500
-Received: from speed.simplicidade.org ([81.92.204.129]:34371 "HELO
-	speed.simplicidade.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1750897AbZBPPvd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 10:51:33 -0500
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Mon, 16 Feb 2009 10:51:32 EST
-Received: (qmail 2107 invoked from network); 16 Feb 2009 15:44:56 -0000
-Received: from bl4-150-79.dsl.telepac.pt (HELO [192.168.0.201]) (81.193.150.79)
-  (smtp-auth username melo@simplicidade.org, mechanism cram-md5)
-  by speed.simplicidade.org (qpsmtpd/0.43rc1) with (AES256-SHA encrypted) ESMTPSA; Mon, 16 Feb 2009 15:44:56 +0000
-Jabber-Id: melo@simplicidade.org
-X-Mailer: Apple Mail (2.928.1)
+	id S1751011AbZBPPyb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Feb 2009 10:54:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750995AbZBPPya
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 10:54:30 -0500
+Received: from george.spearce.org ([209.20.77.23]:53618 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750980AbZBPPya (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 10:54:30 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 67472381FF; Mon, 16 Feb 2009 15:54:29 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1234628513-4573-2-git-send-email-szeder@ira.uka.de>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110196>
 
-Hi,
+SZEDER G=E1bor <szeder@ira.uka.de> wrote:
+> 'git svn' got some new subcommands and otions in the last couple of
+> months.  This patch adds completion support for them.
+>=20
+> In particular:
+>=20
+>   * 'fetch', 'clone', etc.: '--ignore-paths=3D'
+>   * 'init' and 'clone': '--prefix=3D', '--use-log-author',
+>                         '--add-author-from'
+>   * 'dcommit': '--commit-url', '--revision'
+>   * 'log': '--color'
+>   * 'rebase': '--dry-run'
+>   * 'branch', 'tag', 'blame', 'migrate' subcommands and their options
+>=20
+> Signed-off-by: SZEDER G=E1bor <szeder@ira.uka.de>
 
-I'm writting a small web-based tool for designers to manage a small  
-set of HTML templates. They will use SFTP or DAV to edit the templates  
-in a development server, and then use the web-based tool to commit  
-their changes and push to the test server.
+Acked-by: Shawn O. Pearce <spearce@spearce.org>
 
-What is the best Perl module for this? I'm thinking on using Git.pm  
-but I wonder if there isn't a better solution?
+>  contrib/completion/git-completion.bash |   31 ++++++++++++++++++++++=
++++------
+>  1 files changed, 25 insertions(+), 6 deletions(-)
 
-Thanks,
--- 
-Pedro Melo
-Blog: http://www.simplicidade.org/notes/
-XMPP ID: melo@simplicidade.org
-Use XMPP!
+--=20
+Shawn.
