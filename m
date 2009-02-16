@@ -1,87 +1,59 @@
-From: david@lang.hm
-Subject: Re: disallowing push to currently checked-out branch
-Date: Sun, 15 Feb 2009 17:33:59 -0800 (PST)
-Message-ID: <alpine.DEB.1.10.0902151727330.14911@asgard.lang.hm>
-References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org> <20090215232013.GA11543@zakalwe.fi> <20090216000443.GB3503@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC - draft] List of proposed future changes that are backward
+ incompatible
+Date: Sun, 15 Feb 2009 16:29:14 -0800
+Message-ID: <7vprhjgr6t.fsf@gitster.siamese.dyndns.org>
+References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.10.0902151544510.14911@asgard.lang.hm>
+ <alpine.DEB.1.00.0902152358330.10279@pacific.mpi-cbg.de>
+ <alpine.DEB.1.10.0902151613110.14911@asgard.lang.hm>
+ <alpine.DEB.1.00.0902160016230.10279@pacific.mpi-cbg.de>
+ <alpine.DEB.1.10.0902151636510.14911@asgard.lang.hm>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Heikki Orsila <shdl@zakalwe.fi>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 16 01:30:45 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: david@lang.hm
+X-From: git-owner@vger.kernel.org Mon Feb 16 01:31:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYrNi-0004ou-Qz
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 01:30:43 +0100
+	id 1LYrNv-0004tx-4I
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 01:30:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754206AbZBPA3J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2009 19:29:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754079AbZBPA3I
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 19:29:08 -0500
-Received: from mail.lang.hm ([64.81.33.126]:33375 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752087AbZBPA3I (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2009 19:29:08 -0500
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n1G0T1UJ019777;
-	Sun, 15 Feb 2009 16:29:01 -0800
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <20090216000443.GB3503@coredump.intra.peff.net>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1754364AbZBPA3W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2009 19:29:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754268AbZBPA3W
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 19:29:22 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47658 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754079AbZBPA3V (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2009 19:29:21 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 57C2C9A4E5;
+	Sun, 15 Feb 2009 19:29:20 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 209BB9A4DD; Sun,
+ 15 Feb 2009 19:29:15 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.10.0902151636510.14911@asgard.lang.hm>
+ (david@lang.hm's message of "Sun, 15 Feb 2009 16:38:36 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: DA286060-FBC0-11DD-A582-0433C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110102>
 
-On Sun, 15 Feb 2009, Jeff King wrote:
+david@lang.hm writes:
 
-> On Mon, Feb 16, 2009 at 01:20:13AM +0200, Heikki Orsila wrote:
+> On Mon, 16 Feb 2009, Johannes Schindelin wrote:
 >
->>> * git-push to update the checked out branch will be refused by default
->>>
->>>   Make "git push" into a repository to update the branch that is checked
->>>   out fail by default.
->>>
->>>   http://thread.gmane.org/gmane.comp.version-control.git/107758/focus=108007
->>
->> If this is implemented, it shouldn't, in my opinion, be a default
->> setting. I regularly push to checkout repos when I'm doing cross machine
->> development. However, I could live with a configurable setting as
->> proposed in the given URL. I think Git should not be too cautious about
->> following users instructions. The user knows what is best for him/her ;)
+>>>> So you have to set a config variable.  Big deal.
 >
-> It is already implemented; the proposal is about setting the default.
-> The plans for 1.6.2 are already to issue a warning and ask the user to
-> set the config variable to shut it up.
+> the dashed names were the same way, but they definantly were a big deal.
 
-if this is going to be done the timeframe for making the change should be 
-quite long. think in terms of debian stable or RHEL, whatever version they 
-ship is what their users are going to use. it doesn't matter how many new 
-versions and what warnings you have the produce in the meantime, the users 
-won't see them.
-
-to the progression needs to be
-
-one upgrade cycle the user is using the old version with no warning.
-
-next upgrade cycle the user is using a version with a warning.
-
-the third upgrade cycle the user is using the version with the default 
-changed.
-
-the problem is that these upgrade cycles are 3-5 years each, and it's not 
-unusual for the types of users that use dbian stable or RHEL to be running 
-these systems in places where they do not get patched during their 
-lifetime.
-
-note that this isn't always stupid to do, if you are deploying them on a 
-network with no Internet access the stability of knowing that things are 
-_exactly_ what you tested may be worth more than updates that close bugs 
-that you don't hit or add features that you aren't using (or introduce 
-unexpected changes like spitting warnings or errors for things that the 
-old version didn't, which is exactly what is being proposed.
-
-David Lang
+Dscho, why do you think you saw the message you are responding to?  If it
+were not a big deal, I wouldn't have bothered.
