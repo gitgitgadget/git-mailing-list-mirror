@@ -1,101 +1,72 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: disallowing push to currently checked-out branch
-Date: Mon, 16 Feb 2009 16:42:07 -0500
-Message-ID: <76718490902161342w176c2dfawb35e97fcaf934b05@mail.gmail.com>
-References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org>
-	 <alpine.DEB.1.10.0902151738450.14911@asgard.lang.hm>
-	 <alpine.LNX.1.00.0902160322530.19665@iabervon.org>
-	 <7veixybw7u.fsf@gitster.siamese.dyndns.org>
-	 <loom.20090216T101457-231@post.gmane.org>
-	 <20090216135812.GA20377@coredump.intra.peff.net>
-	 <49999ED6.7010608@gmail.com>
-	 <alpine.DEB.1.00.0902161839120.6289@intel-tinevez-2-302>
-	 <4999BD54.8090805@gmail.com>
-	 <alpine.DEB.1.00.0902162103580.6289@intel-tinevez-2-302>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [ANNOUNCE] GIT 1.6.2-rc1
+Date: Mon, 16 Feb 2009 13:42:59 -0800
+Message-ID: <7vvdradpng.fsf@gitster.siamese.dyndns.org>
+References: <7v8wo6bvn9.fsf@gitster.siamese.dyndns.org>
+ <76718490902160902q50c0d730j4f18664455626b93@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Sergio Callegari <sergio.callegari@gmail.com>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 16 22:43:44 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 16 22:44:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZBFW-0007Sx-Ls
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 22:43:35 +0100
+	id 1LZBGW-0007mK-0A
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 22:44:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752306AbZBPVmL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 16:42:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751233AbZBPVmJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 16:42:09 -0500
-Received: from rv-out-0506.google.com ([209.85.198.233]:61206 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751923AbZBPVmI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 16:42:08 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so1717836rvb.1
-        for <git@vger.kernel.org>; Mon, 16 Feb 2009 13:42:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=JC6hR61oJ0PgzpyDzfReDE5QhH/+NjdK4cobKZThSAk=;
-        b=BrVui56aqDvbtoscUMzZMux6GqUuF9Q6Y86X2kQSkJJzKQ69LvdKw+5qcIeqBbJavN
-         smV1XhIiIR1hmcMrvbk5ClAKi2hYVlPPXviyF803LrTmCqdi1FgJZ+hHHlTb3r+S90r9
-         WwIqhs6sxtJ3muZCLrcKTzCHYIeRvdHqffEGM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=snMx5ihsJJViWNEleL/Li58+Gh2TCLmSokLeLvuzSaCdII8lziM65ZJJCWSqKvNKxe
-         T0ntvJQNJXiFy4R7gB6BMMutubJKy14pTQm6u0uChIVSn3RlAQyv0/8JPGlJTjRCPmdP
-         1375dtGsDVEQDEVpot53KXMSE/uo4N9GJB8OQ=
-Received: by 10.141.100.15 with SMTP id c15mr1314888rvm.52.1234820527483; Mon, 
-	16 Feb 2009 13:42:07 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0902162103580.6289@intel-tinevez-2-302>
+	id S1752558AbZBPVnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 16:43:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752304AbZBPVnG
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 16:43:06 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46145 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752032AbZBPVnE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 16:43:04 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C08CA2B467;
+	Mon, 16 Feb 2009 16:43:03 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id ACC8F2B430; Mon,
+ 16 Feb 2009 16:43:00 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: CA13798C-FC72-11DD-813B-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110248>
 
-On Mon, Feb 16, 2009 at 3:09 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> What you are suggesting, though, is that the _pusher_ detaches the HEAD.
-> So the _local_ user will never know.
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-I'm going to be presumptuous here and say that I think that you're
-thinking about this the wrong way.
+>  master> git checkout next
+>    next> git branch --track mybranch @{-1}
+>
+> Creates "mybranch" from master, *not from next*, correct?
+>
+> Also, the "--track" option is an unnecessary distraction to the
+> example, isn't it?
 
-I would wager that when someone is pushing into a non-bare repo, it is
-very likely that the pusher and the local user are the same person.
-i.e., there are two common combinations: 1) a shared bare repo; 2) an
-individual (non-shared) non-bare repo.
+When a new branch is created in "git branch --track A B" form, B is used
+in two ways.
 
-I think it is the shared non-bare repo which is rather uncommon, and
-used mostly by advanced users or for specialized situations like
-publishing web-roots.
+ * Obviously, the new branch A initially points at the same commit as
+   commit B.  For this, B does not have to be the name of a branch.  It
+   only has to be a commit-ish.
 
-If I'm right, then I still think that what might better sense is:
+ * With --track, the new branch A is marked as a fork of the branch B, but
+   obviously for this additional feature to kick in, you cannot give an
+   arbitrary commit-ish as B.  It has to be the name of a branch you are
+   forking from.
 
+If B were spelled @{1}, the latter does not happen, as @{1} is a way to
+say "The _commit_ my current branch was pointing at before it point the
+current commit".  On the other hand, @{-1} is a way to say "The _branch_
+I switched from my last 'git checkout' command", and the command ought to
+behave the same as if you gave it a branch name, and --track takes place.
 
-non-bare repo                     non-bare repo
--------------------               ---------------------
-refs/heads            ---push-->  refs/remotes/incoming
-   ^                                     |
-   |                                   merge
- merge                                   |
-   |                                     v
-refs/remotes/origin   <--fetch--  refs/heads
-
-
-Yes, you can set this up, but it is quite a few extra steps to do so.
-The defaults assume there is a bare repo that you're pulling/pushing
-from/to, hence the confusion for new users when that's not the
-scenario they are in.
-
-But instead of all this talk, maybe I should pony up some RFC patches. :-)
-
-j.
+So having --track explicitly in the example is a good way to clarify the
+point that @{-N} notation is a way to spell _a branch name_, and it is not
+merely another commit-ish.
