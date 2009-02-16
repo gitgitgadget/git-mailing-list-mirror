@@ -1,393 +1,82 @@
-From: Nigel Magnay <nigel.magnay@gmail.com>
-Subject: [JGIT PATCH] 1/2 : (reworked) Externalizable/Serializable Items
-Date: Mon, 16 Feb 2009 20:12:29 +0000
-Message-ID: <320075ff0902161212s1980cd70r8cdc4c21550333ee@mail.gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [RFC PATCH] format-patch: thread as reply to cover letter even 
+	with in-reply-to
+Date: Mon, 16 Feb 2009 15:22:14 -0500
+Message-ID: <76718490902161222p7f1ecbf9x6f965ff94b3cfae7@mail.gmail.com>
+References: <cover.1234801852.git.trast@student.ethz.ch>
+	 <1234810812-30499-1-git-send-email-trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: Git ML <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 16 21:14:01 2009
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Feb 16 21:23:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZ9qq-00006t-MH
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 21:14:01 +0100
+	id 1LZA0G-0003YO-IA
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 21:23:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751980AbZBPUMe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 15:12:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751968AbZBPUMd
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 15:12:33 -0500
-Received: from mu-out-0910.google.com ([209.85.134.186]:13367 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751940AbZBPUMc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 15:12:32 -0500
-Received: by mu-out-0910.google.com with SMTP id i10so939000mue.1
-        for <git@vger.kernel.org>; Mon, 16 Feb 2009 12:12:29 -0800 (PST)
+	id S1752014AbZBPUWQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 15:22:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751209AbZBPUWQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 15:22:16 -0500
+Received: from rv-out-0506.google.com ([209.85.198.225]:58776 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750705AbZBPUWP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 15:22:15 -0500
+Received: by rv-out-0506.google.com with SMTP id g37so1693203rvb.1
+        for <git@vger.kernel.org>; Mon, 16 Feb 2009 12:22:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=7it2Vh6/zUEBZtjpC7lKCWHmdh+NOdpN8VD4+h4uQkc=;
-        b=LXJ0SEQoZBb03BLyKD5u4bPU3zOkdSOkdDqOFE9kXhTzOIp7nZr7jZIVGNPqItnsf7
-         GYi0uCXOOUKNJINiVjghQJ2rETv5J2WF4NE+SRFQ29LNqJrLArmudCt/hI26Aec0MGl9
-         f3FWL2/cEHRDs8yIypY8ATMUaBrQGlQYpTz5Y=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=eAtGl+p4TeHZOwvcaOUaV7L2PaM7GRupGUzy98by8RE=;
+        b=dpSa3teaNxK53sihpTpfuKjfZ1f8FxOyEZAbDsw9Az9OXpw6EmS/OiP2e80SelezP6
+         htEg7yG4QJKoxqlUXYg9+ob+CWE/ets7wi7T7Jqg5ba3wbWErj0aaMvUP4PRpE7k5FjJ
+         nmWsHWcczWotq28LmB20mdeGLPa8HS4OnXbxs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=Kal0gieFUjoodRoc1ntxRA0GX4fE4HL4E/F0jCKgXT4zOhnGrxBhMEwoqisARk3FiI
-         Y0VkhvO06mweGXYUzDGRyFxAUUwyRiwrGZr7dc2FaRzSAwSR0V+3UZoi+E8dq2srN2Ah
-         adVvhMC7YtOg8+anapD/+AD1EErBhsY+/3+NM=
-Received: by 10.103.229.12 with SMTP id g12mr3174133mur.16.1234815149706; Mon, 
-	16 Feb 2009 12:12:29 -0800 (PST)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=QiW/zU0neHwiUvyDEsLPxmCLFWeb12xRtxuo6FXWEJOHMdwvYSlmsHBf++hjL3UkHK
+         UPRgjoUVt1vr1zL7TtaFE5IjBLfbeaZUKYESBMNAi2r5SFWU72JDsgOOPfJ1vZuWQxkS
+         wXMp0CjPAob72aRP9x24y4y4YhxUCV4cei/Zw=
+Received: by 10.141.153.16 with SMTP id f16mr787288rvo.272.1234815734932; Mon, 
+	16 Feb 2009 12:22:14 -0800 (PST)
+In-Reply-To: <1234810812-30499-1-git-send-email-trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110234>
 
-JGit is used as a library in external projects such as build tools.
-Some of the representations of git data structures are useful
-in these external tools - but - it is often desirable to be able to
-either persist these objects, or serialize them across the wire.
+On Mon, Feb 16, 2009 at 2:00 PM, Thomas Rast <trast@student.ethz.ch> wrote:
+> Currently, format-patch --thread --cover-letter --in-reply-to $parent
+> makes all mails, including the cover letter, a reply to $parent.
+> However, we would want the reader to consider the cover letter above
+> all the patches.
+>
+> This changes the semantics so that only the cover letter is a reply to
+> $parent, while all the patches are formatted as replies to the cover
+> letter.
 
-Apply Externalizable to URIish and RefSpec, and Serializable to
-ObjectId and RemoteConfig (in order to avoid the undesirable
-requirement of a public, no-args constructor needed for Externalizable).
+I think this change may be okay, but I think to go with it the
+cover-letter and all the patches should have a "References:" header
+with the message-id given by --in-reply-to.
 
- Signed-off-by: Nigel Magnay <nigel.magnay@gmail.com>
+RFC 2822 says:
 
----
- .../src/org/spearce/jgit/lib/ObjectId.java         |   22 +++++-
- .../src/org/spearce/jgit/transport/RefSpec.java    |   77 +++++++++++++------
- .../org/spearce/jgit/transport/RemoteConfig.java   |   79 +++++++++++++++++++-
- .../src/org/spearce/jgit/transport/URIish.java     |   29 +++++++-
- 4 files changed, 179 insertions(+), 28 deletions(-)
+   The "In-Reply-To:" and "References:" fields are used when creating a
+   reply to a message.  They hold the message identifier of the original
+   message and the message identifiers of other messages (for example,
+   in the case of a reply to a message which was itself a reply).  The
+   "In-Reply-To:" field may be used to identify the message (or
+   messages) to which the new message is a reply, while the
+   "References:" field may be used to identify a "thread" of
+   conversation.
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
-b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
-index 52ce0d4..7c3b922 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
-@@ -38,6 +38,10 @@
-
- package org.spearce.jgit.lib;
-
-+import java.io.IOException;
-+import java.io.ObjectInputStream;
-+import java.io.ObjectOutputStream;
-+import java.io.Serializable;
- import java.io.UnsupportedEncodingException;
-
- import org.spearce.jgit.util.NB;
-@@ -45,7 +49,7 @@
- /**
-  * A SHA-1 abstraction.
-  */
--public class ObjectId extends AnyObjectId {
-+public class ObjectId extends AnyObjectId implements Serializable {
- 	private static final ObjectId ZEROID;
-
- 	private static final String ZEROID_STR;
-@@ -269,4 +273,20 @@ protected ObjectId(final AnyObjectId src) {
- 	public ObjectId toObjectId() {
- 		return this;
- 	}
-+
-+	private void writeObject(ObjectOutputStream os)  throws IOException {
-+		os.writeInt(w1);
-+		os.writeInt(w2);
-+		os.writeInt(w3);
-+		os.writeInt(w4);
-+		os.writeInt(w5);
-+	}
-+	
-+	private void readObject(ObjectInputStream ois)  throws IOException {
-+		w1 = ois.readInt();
-+		w2 = ois.readInt();
-+		w3 = ois.readInt();
-+		w4 = ois.readInt();
-+		w5 = ois.readInt();
-+	}
- }
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/RefSpec.java
-b/org.spearce.jgit/src/org/spearce/jgit/transport/RefSpec.java
-index 521110b..0ee89b0 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/RefSpec.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/RefSpec.java
-@@ -37,6 +37,11 @@
-
- package org.spearce.jgit.transport;
-
-+import java.io.Externalizable;
-+import java.io.IOException;
-+import java.io.ObjectInput;
-+import java.io.ObjectOutput;
-+
- import org.spearce.jgit.lib.Constants;
- import org.spearce.jgit.lib.Ref;
-
-@@ -46,7 +51,7 @@
-  * A ref specification provides matching support and limited rules to rewrite a
-  * reference in one repository to another reference in another repository.
-  */
--public class RefSpec {
-+public class RefSpec implements Externalizable {
- 	/**
- 	 * Suffix for wildcard ref spec component, that indicate matching all refs
- 	 * with specified prefix.
-@@ -109,30 +114,7 @@ public RefSpec() {
- 	 *             the specification is invalid.
- 	 */
- 	public RefSpec(final String spec) {
--		String s = spec;
--		if (s.startsWith("+")) {
--			force = true;
--			s = s.substring(1);
--		}
--
--		final int c = s.indexOf(':');
--		if (c == 0) {
--			s = s.substring(1);
--			if (isWildcard(s))
--				throw new IllegalArgumentException("Invalid wildcards " + spec);
--			dstName = s;
--		} else if (c > 0) {
--			srcName = s.substring(0, c);
--			dstName = s.substring(c + 1);
--			if (isWildcard(srcName) && isWildcard(dstName))
--				wildcard = true;
--			else if (isWildcard(srcName) || isWildcard(dstName))
--				throw new IllegalArgumentException("Invalid wildcards " + spec);
--		} else {
--			if (isWildcard(s))
--				throw new IllegalArgumentException("Invalid wildcards " + spec);
--			srcName = s;
--		}
-+		initializeFromString(spec);
- 	}
-
- 	/**
-@@ -161,6 +143,42 @@ private RefSpec(final RefSpec p) {
- 	}
-
- 	/**
-+	 * Initialize the ref specification from a string.
-+	 *
-+	 * @param spec
-+	 *            string describing the specification.
-+	 * @throws IllegalArgumentException
-+	 *             the specification is invalid.
-+	 */
-+	private void initializeFromString(final String spec) {
-+		srcName = null;
-+		String s = spec;
-+		if (s.startsWith("+")) {
-+			force = true;
-+			s = s.substring(1);
-+		}
-+
-+		final int c = s.indexOf(':');
-+		if (c == 0) {
-+			s = s.substring(1);
-+			if (isWildcard(s))
-+				throw new IllegalArgumentException("Invalid wildcards " + spec);
-+			dstName = s;
-+		} else if (c > 0) {
-+			srcName = s.substring(0, c);
-+			dstName = s.substring(c + 1);
-+			if (isWildcard(srcName) && isWildcard(dstName))
-+				wildcard = true;
-+			else if (isWildcard(srcName) || isWildcard(dstName))
-+				throw new IllegalArgumentException("Invalid wildcards " + spec);
-+		} else {
-+			if (isWildcard(s))
-+				throw new IllegalArgumentException("Invalid wildcards " + spec);
-+			srcName = s;
-+		}
-+	}
-+	
-+	/**
- 	 * Check if this specification wants to forcefully update the destination.
- 	 *
- 	 * @return true if this specification asks for updates without merge tests.
-@@ -421,4 +439,13 @@ public String toString() {
- 		}
- 		return r.toString();
- 	}
-+
-+	public void readExternal(ObjectInput in) throws IOException,
-+			ClassNotFoundException {
-+		initializeFromString(in.readUTF());	
-+	}
-+
-+	public void writeExternal(ObjectOutput out) throws IOException {
-+		out.writeUTF(toString());
-+	}
- }
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteConfig.java
-b/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteConfig.java
-index 5bbf664..899f73f 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteConfig.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteConfig.java
-@@ -38,6 +38,10 @@
-
- package org.spearce.jgit.transport;
-
-+import java.io.IOException;
-+import java.io.ObjectInputStream;
-+import java.io.ObjectOutputStream;
-+import java.io.Serializable;
- import java.net.URISyntaxException;
- import java.util.ArrayList;
- import java.util.Collections;
-@@ -53,7 +57,7 @@
-  * describing how refs should be transferred between this repository and the
-  * remote repository.
-  */
--public class RemoteConfig {
-+public class RemoteConfig implements Serializable {
- 	private static final String SECTION = "remote";
-
- 	private static final String KEY_URL = "url";
-@@ -382,4 +386,77 @@ public TagOpt getTagOpt() {
- 	public void setTagOpt(final TagOpt option) {
- 		tagopt = option != null ? option : TagOpt.AUTO_FOLLOW;
- 	}
-+	
-+	private void writeObject(ObjectOutputStream os) throws IOException {
-+
-+	    // Name
-+	    os.writeUTF(name);
-+	
-+	    // Key, Value pairs
-+	    for (URIish uri : uris) {
-+            os.writeUTF(KEY_URL);
-+            os.writeUTF(uri.toPrivateString());
-+        }
-+
-+        for (RefSpec refspec : fetch) {
-+            os.writeUTF(KEY_FETCH);
-+            os.writeUTF(refspec.toString());
-+        }
-+
-+        for (RefSpec refspec : push) {
-+        	os.writeUTF(KEY_PUSH);
-+            os.writeUTF(refspec.toString());
-+        }
-+
-+        os.writeUTF(KEY_UPLOADPACK);
-+        os.writeUTF(uploadpack);
-+
-+        os.writeUTF(KEY_RECEIVEPACK);
-+        os.writeUTF(receivepack);
-+
-+        os.writeUTF(KEY_TAGOPT);
-+        os.writeUTF(tagopt.option());
-+
-+        // End marker
-+        os.writeUTF("");
-+    }
-+
-+    private void readObject(ObjectInputStream ois) throws IOException {
-+		uris = new ArrayList<URIish>();
-+        fetch = new ArrayList<RefSpec>();
-+        push = new ArrayList<RefSpec>();
-+        uploadpack = DEFAULT_UPLOAD_PACK;
-+        receivepack = DEFAULT_RECEIVE_PACK;
-+
-+        name = ois.readUTF();
-+
-+		for (String key = ois.readUTF(); key.length() > 0; key = ois.readUTF()) {
-+			String value = ois.readUTF();
-+
-+			if (key.equals(KEY_URL)) {
-+				try {
-+					uris.add(new URIish(value));
-+				} catch (URISyntaxException e) {
-+					throw new IOException("Invalid URI in RemoteConfig : "
-+							+ value);
-+				}
-+			} else if (key.equals(KEY_FETCH)) {
-+				fetch.add(new RefSpec(value));
-+
-+			} else if (key.equals(KEY_PUSH)) {
-+				push.add(new RefSpec(value));
-+
-+			} else if (key.equals(KEY_UPLOADPACK)) {
-+				uploadpack = value;
-+
-+			} else if (key.equals(KEY_RECEIVEPACK)) {
-+				receivepack = value;
-+
-+			} else if (key.equals(KEY_TAGOPT)) {
-+				tagopt = TagOpt.fromOption(value);
-+			}
-+
-+		}
-+
-+    }
- }
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/URIish.java
-b/org.spearce.jgit/src/org/spearce/jgit/transport/URIish.java
-index b86e00c..6b85f45 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/URIish.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/URIish.java
-@@ -38,6 +38,10 @@
-
- package org.spearce.jgit.transport;
-
-+import java.io.Externalizable;
-+import java.io.IOException;
-+import java.io.ObjectInput;
-+import java.io.ObjectOutput;
- import java.net.URISyntaxException;
- import java.net.URL;
- import java.util.regex.Matcher;
-@@ -49,7 +53,7 @@
-  * RFC 2396 URI's is that no URI encoding/decoding ever takes place. A space or
-  * any special character is written as-is.
-  */
--public class URIish {
-+public class URIish implements Externalizable {
- 	private static final Pattern FULL_URI = Pattern
- 			.compile("^(?:([a-z][a-z0-9+-]+)://(?:([^/]+?)(?::([^/]+?))?@)?(?:([^/]+?))?(?::(\\d+))?)?((?:[A-Za-z]:)?/.+)$");
-
-@@ -75,6 +79,16 @@
- 	 * @throws URISyntaxException
- 	 */
- 	public URIish(String s) throws URISyntaxException {
-+		initializeFromString(s);
-+	}
-+	
-+	/**
-+	 * Set fields from string based URI.
-+	 *
-+	 * @param s
-+	 * @throws URISyntaxException
-+	 */
-+	private void initializeFromString(String s)  throws URISyntaxException {
- 		s = s.replace('\\', '/');
- 		Matcher matcher = FULL_URI.matcher(s);
- 		if (matcher.matches()) {
-@@ -357,4 +371,17 @@ private String format(final boolean includePassword) {
-
- 		return r.toString();
- 	}
-+
-+	public void readExternal(ObjectInput in) throws IOException,
-+			ClassNotFoundException {
-+	    try {
-+			initializeFromString(in.readUTF());
-+		} catch (URISyntaxException e) {
-+			throw new IOException("Incorrect format URI");
-+		}
-+	}
-+
-+	public void writeExternal(ObjectOutput out) throws IOException {
-+		out.writeUTF(format(true));
-+	}
- }
--- 
-1.6.0.2
+j.
