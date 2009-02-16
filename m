@@ -1,103 +1,96 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Improving CRLF error message; also, enabling autocrlf and
-	safecrlf by default
-Date: Sun, 15 Feb 2009 22:04:46 -0500
-Message-ID: <20090216030446.GC18780@sigill.intra.peff.net>
+ safecrlf by default
+Date: Sun, 15 Feb 2009 19:08:53 -0800
+Message-ID: <7vljs7f58a.fsf@gitster.siamese.dyndns.org>
 References: <loom.20090216T022524-78@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Jason Spiro <jasonspiro4@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 16 04:07:23 2009
+X-From: git-owner@vger.kernel.org Mon Feb 16 04:10:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYtpK-0003XP-Of
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 04:07:23 +0100
+	id 1LYtsg-00047d-2R
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 04:10:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755546AbZBPDEz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2009 22:04:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755226AbZBPDEy
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 22:04:54 -0500
-Received: from peff.net ([208.65.91.99]:40515 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752859AbZBPDEx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2009 22:04:53 -0500
-Received: (qmail 12511 invoked by uid 107); 16 Feb 2009 03:05:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 15 Feb 2009 22:05:13 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 15 Feb 2009 22:04:46 -0500
-Content-Disposition: inline
-In-Reply-To: <loom.20090216T022524-78@post.gmane.org>
+	id S1755765AbZBPDJB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2009 22:09:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755751AbZBPDJA
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 22:09:00 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64966 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755729AbZBPDI7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2009 22:08:59 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 32C5C9ADA8;
+	Sun, 15 Feb 2009 22:08:58 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0BDE59ADA7; Sun,
+ 15 Feb 2009 22:08:54 -0500 (EST)
+In-Reply-To: <loom.20090216T022524-78@post.gmane.org> (Jason Spiro's message
+ of "Mon, 16 Feb 2009 02:45:43 +0000 (UTC)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 26FFED20-FBD7-11DD-9AD9-0433C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110121>
 
-On Mon, Feb 16, 2009 at 02:45:43AM +0000, Jason Spiro wrote:
+Jason Spiro <jasonspiro4@gmail.com> writes:
 
 > One of the pre-commit hooks detects trailing whitespace:
-> 
+
+All sample hooks are shipped disabled by default, so it shouldn't be
+triggering unless you enabled it yourself.  The only known exception is
+the binary packaged one for Cygwin, which we do not have much control over
+here.
+
 > if (/\s$/) {
 > bad_line("trailing whitespace", $_);
 > }
+>
+> Unfortunately, when I try to check in a file with DOS (CR+LF) line endings, 
+> this hook triggers on every line.  This happens on Cygwin.  I haven't checked, 
+> but I bet it happens on other platforms as well, as long as this hook runs.
+>
+> But the error message "trailing whitespace" doesn't clearly tell me what's 
+> wrong.
 
-Not since 03e2b63 (Update sample pre-commit hook to use "diff --check",
-2008-06-26), when that line was removed.
+I and other people agreed with your analysis above wholeheartedly several
+months ago, and as a result, v1.6.0 and later version of git use a
+different implementation for this check in the sample hook.  It does know
+your CRLF line endings and therefore it should behave much better.
 
-I'm happy you want to improve git; but please, if you want to report
-problems, check what the status is in a more recent version (or at least
-tell us your version, which can help).
+The fix to your situation might be just the matter of taking a copy of
+templates/hooks--pre-commit.sample from the current git source code and
+replacing .git/hooks/pre-commit in your repository.
 
-> Unfortunately, when I try to check in a file with DOS (CR+LF) line
-> endings, this hook triggers on every line.  This happens on Cygwin.  I
-> haven't checked, but I bet it happens on other platforms as well, as
-> long as this hook runs.
+The sample hook looks like the attached one these days.  It relies on an
+enhancement 346245a (hard-code the empty tree object, 2008-02-13) that
+appeared first in v1.5.5 so it may not work if your copy of git is older
+than that version.
 
-Yes, I believe carriage returns are considered trailing whitespace. I
-think (and I am not 100% sure here, because I have the good fortune not
-to have to deal with line-ending conversions on any of my platforms)
-that the general philosophy is that the "canonical" form in the
-repository should be LF-only, and that conversions can optionally make
-the worktree version CRLF (or whatever your platform desires it). But
-it's important that the canonical version be the same across platforms
-so that the blob sha-1's (and therefore the tree and commit sha-1's) all
-match.
+-- >8 -- cut here -- >8 --
+#!/bin/sh
+#
+# An example hook script to verify what is about to be committed.
+# Called by git-commit with no arguments.  The hook should
+# exit with non-zero status after issuing an appropriate message if
+# it wants to stop the commit.
+#
+# To enable this hook, rename this file to "pre-commit".
 
-IOW, setting up core.autocrlf properly should make this go away.
+if git-rev-parse --verify HEAD 2>/dev/null
+then
+	against=HEAD
+else
+	# Initial commit: diff against an empty tree object
+	against=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+fi
 
-> But the error message "trailing whitespace" doesn't clearly tell me
-> what's wrong.
-
-Modern versions use "diff --check", which should look like this (on my
-LF-only box, at least):
-
-  $ mkdir repo && cd repo && git init
-  $ touch file && git add file && git commit -m one
-  $ printf 'foo\r\n' >file
-  $ git diff --check
-  file:1: trailing whitespace.
-  +foo^M
-
-and if you use "git diff --color --check", the problem is highlighted.
-
-> 1.  Could you please modify Git so that, when such a problem happens,
-> it instead prints an message saying that the file has CR+LF line
-> endings, and that Git does not allow this?
-
-It might be worth splitting the trailing whitespace detection into
-"spaces and tabs at the end" and "CRLF", and providing different
-messages (though it is hopefully also obvious with the new output that
-it is a CRLF issue).
-
-> 2.  In addition, could you please enable the core.autocrlf and core.safecrlf 
-> options by default in the next version of Git?
-
-I think that is up to your platform packaging, I think. I think msysgit
-is shipping with core.autocrlf on by default these days. But again, I
-don't know very much about that area.
-
--Peff
+exec git diff-index --check --cached $against --
