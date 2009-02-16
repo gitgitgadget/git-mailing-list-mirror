@@ -1,75 +1,81 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [ANNOUNCE] GIT 1.6.2-rc1
-Date: Mon, 16 Feb 2009 12:02:27 -0500
-Message-ID: <76718490902160902q50c0d730j4f18664455626b93@mail.gmail.com>
-References: <7v8wo6bvn9.fsf@gitster.siamese.dyndns.org>
+From: Nigel Magnay <nigel.magnay@gmail.com>
+Subject: Re: [JGIT PATCH] 1/2: Externalizable items
+Date: Mon, 16 Feb 2009 17:10:03 +0000
+Message-ID: <320075ff0902160910v723d077bp5eb3559c1d8f998a@mail.gmail.com>
+References: <320075ff0902160845m264f78cdh8dc5307b24f4c3ed@mail.gmail.com>
+	 <alpine.DEB.1.00.0902161758030.6289@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 16 18:04:05 2009
+Cc: Git ML <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Feb 16 18:12:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZ6su-0003Ya-OP
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 18:03:57 +0100
+	id 1LZ71P-0006xB-A9
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 18:12:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751685AbZBPRCa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 12:02:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751590AbZBPRC3
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 12:02:29 -0500
-Received: from rv-out-0506.google.com ([209.85.198.230]:43741 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751575AbZBPRC2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 12:02:28 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so1625927rvb.1
-        for <git@vger.kernel.org>; Mon, 16 Feb 2009 09:02:27 -0800 (PST)
+	id S1750726AbZBPRKK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 12:10:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750718AbZBPRKK
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 12:10:10 -0500
+Received: from mail-fx0-f20.google.com ([209.85.220.20]:40927 "EHLO
+	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750705AbZBPRKJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 12:10:09 -0500
+Received: by fxm13 with SMTP id 13so6142489fxm.13
+        for <git@vger.kernel.org>; Mon, 16 Feb 2009 09:10:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=yswVaBq1PTfZksBpwifrJHCu+XOg2nO8jpPXc9CibOc=;
-        b=e13D2gTIVdQ2O1A0bz+S890CPbE2GX1onYIiIjiL6ZbQ5cID5P1HDCsId5b8CsfmbJ
-         /VmDPUdAY6YzjMnDycvWy8i9ldN6ElEpyXFFrpRFEDjwVBWrp+LsiTXb0bu3LDXXj7CU
-         I1UC9wr+LFTpACRlTB5cgwAgdyO6UMOOn43PY=
+        bh=fuNGV/tGt061ed6fr2HsTsBDG5UehDYbpeKhV2Ey+Kk=;
+        b=QnRKwurp+zzj9zXtpVHBdZeBRZXS06ijcHlNMK1xPxMgyGqWRg93S1qUCBHni7JN36
+         6Jdz6/z2H5Ax7aahkUsKkRUJ3cTojkTP45nMTSJodJrA+IqL659pRqDVQhwE1aaLf6wk
+         WqwQS2Ft3ViaublqCeyTqyRDCKYI9twcol9to=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=fvKikuR8Q8o5w5CVrEkTtTG6N4ZhH5gaN94jUje9dVVUsR3cyhkL0KWUKp9l8xXriP
-         TvIBfFlAc53FhS9waYwUpRVcHsIW0LPM7Px0bTTI2JLESJT6CerzSq5DJydGwev/XYkO
-         QEjb24S2H17Gd6YdSUdDLhytsMaO6BqhN3gXY=
-Received: by 10.141.29.21 with SMTP id g21mr2765807rvj.198.1234803747604; Mon, 
-	16 Feb 2009 09:02:27 -0800 (PST)
-In-Reply-To: <7v8wo6bvn9.fsf@gitster.siamese.dyndns.org>
+        b=h7hKQoL1cWP++HhvqHieSGit07oiCCTCmANxDswxvyG8pUMzlMBYfJZQgBDsi/j36Q
+         Ak2aqa9QMbcxy03IhA1z/9Ndn81pu/KB8C89zFHY+QoBK3gJG/VeZmy7rOrrTd8XZgC4
+         kG5x2PbiEAacRObSQ3fZUr8u5Y9EX7oSAUFps=
+Received: by 10.103.248.1 with SMTP id a1mr3066883mus.40.1234804203249; Mon, 
+	16 Feb 2009 09:10:03 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0902161758030.6289@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110212>
 
-On Mon, Feb 16, 2009 at 4:04 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> * @{-1} is a way to refer to the last branch you were on.  This is
->  accepted not only where an object name is expected, but anywhere
->  a branch name is expected and acts as if you typed the branch name.
->  E.g. "git branch --track mybranch @{-1}", "git merge @{-1}", and
->  "git rev-parse --symbolic-full-name @{-1}" would work as expected.
+Externalizable is the java standard for Serializable, but controlling
+the exact format (rather than using introspection).
 
-I always find explicit examples clearer, especially since you really
-have no idea what the reader expects. Some folks just have
-unreasonable expectations. :-)
+http://n2.nabble.com/-PATCH-JGIT--Minor-%3A-Make-ObjectId%2C-RemoteConfig-Serializable-td2286559.html#none
 
-So,
 
- master> git checkout next
-   next> git branch --track mybranch @{-1}
-
-Creates "mybranch" from master, *not from next*, correct?
-
-Also, the "--track" option is an unnecessary distraction to the
-example, isn't it?
-
-j.
+On Mon, Feb 16, 2009 at 4:59 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Mon, 16 Feb 2009, Nigel Magnay wrote:
+>
+>> Make parts of jgit externalizable, so that they can be marshalled over
+>> the wire or onto disk,
+>> using formats from git mailing list.
+>
+> Hmm.  I have to be honest and admit that I have no idea what you mean by
+> externalizable.  From the "marshalling" comment, I'd have assumed that you
+> mean Serializable, but then I still do not understand what "formats from
+> git mailing list" are.  And that being a regular of said list for quite
+> some time...
+>
+> Care to enlighten me?
+>
+> Ciao,
+> Dscho
+>
