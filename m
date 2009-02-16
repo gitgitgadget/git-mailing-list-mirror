@@ -1,97 +1,88 @@
-From: Constantine Plotnikov <constantine.plotnikov@gmail.com>
-Subject: [JGIT PATCH 1/1] Invalid test preventing a build using maven
-Date: Mon, 16 Feb 2009 20:46:31 +0300
-Message-ID: <85647ef50902160946m480542a3m1511366f6cafe04e@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH v2] git-archive: Add new option "--output" to write 
+	archive to a file instead of stdout.
+Date: Mon, 16 Feb 2009 18:59:33 +0100
+Message-ID: <bd6139dc0902160959h689470e3mf55407bc24c96816@mail.gmail.com>
+References: <599636D7828020419E3AB2DE5CCC8130036BF8B1D5@NOK-EUMSG-02.mgdnok.nokia.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 16 18:48:03 2009
+Cc: git@vger.kernel.org
+To: carlos.duclos@nokia.com
+X-From: git-owner@vger.kernel.org Mon Feb 16 19:01:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZ7Zb-0003YL-Af
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 18:48:03 +0100
+	id 1LZ7mq-0000VY-Gi
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 19:01:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751390AbZBPRqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 12:46:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751253AbZBPRqe
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 12:46:34 -0500
-Received: from mail-bw0-f161.google.com ([209.85.218.161]:38372 "EHLO
-	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751389AbZBPRqe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 12:46:34 -0500
-Received: by bwz5 with SMTP id 5so3259893bwz.13
-        for <git@vger.kernel.org>; Mon, 16 Feb 2009 09:46:32 -0800 (PST)
+	id S1751209AbZBPR7g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 12:59:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750877AbZBPR7g
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 12:59:36 -0500
+Received: from fg-out-1718.google.com ([72.14.220.159]:3116 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751079AbZBPR7f (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 12:59:35 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so273551fgg.17
+        for <git@vger.kernel.org>; Mon, 16 Feb 2009 09:59:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=G3A02YJDtZ/cyUaRHNxtoPIiSUs77qHzknno3o941z0=;
-        b=r98eOA8EVxtJdDqfJrBilnj2RknCmrpsWBt1QlPfj3u27oEbxcTw6mQ3X5gR5Tuh3r
-         OjLfxvNONaBjIQutLdJ62ZKB5fmZXHv1+lURhgauGjPjoWAdulaUiEMm2kf45MS1EEa3
-         uEmFJJoYs+zBSFUb0fJAdOLXDGbK0kD46CRHk=
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=c80YYa0lyEBofeLHz9cCvPbEmNROOVo8VD4PjY/IQUc=;
+        b=OLfMJi6tW3Csxebog20pC2X1sytz4MMttwPhUC5wMDcU9p0131kK52CQWmxqaPuep1
+         ZdFgqnGAaqKKnZMoDmX1baXi+JtFZxEOqd2lWNzIaxN321NvYzP7/X551MUPN7oQUJwh
+         bQ8L97tE4jd/+jipYrZ6B9UkXc8WMEb1GRkus=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        b=eKkHSpLuZ5B4LU2eGa0dogfsO1lMILT/lgYgj3Xo7ZTo/ShEjHu0WCQ0veGO++muXd
-         cCY07JHjgjj806TQOUOIrvkhgaAh9MleTi0Gh8XpHY0gm5JOmfJYeqKqnLgGdXUBEABm
-         oy85PU0GA6Zo3hI5lYZL+xM2jsZcscgjtPO10=
-Received: by 10.180.224.13 with SMTP id w13mr537416bkg.160.1234806391753; Mon, 
-	16 Feb 2009 09:46:31 -0800 (PST)
+        b=shZxBvlEKqpBDc9njpHX42U6eRUzebWay1CA7RgljCIQTAADFEwsjkymBQTZ56sxfI
+         8gsBDnAl0NaZgvIHsxY1zXLHDJL7p7AquzydoJlA6K71BtgHOeGGxETaT9GBkQFVaqJr
+         FPJ5RJmj8Run7Z4EHo0Xyg9GMFuuHRL61tayU=
+Received: by 10.86.62.3 with SMTP id k3mr297979fga.27.1234807173669; Mon, 16 
+	Feb 2009 09:59:33 -0800 (PST)
+In-Reply-To: <599636D7828020419E3AB2DE5CCC8130036BF8B1D5@NOK-EUMSG-02.mgdnok.nokia.com>
+X-Google-Sender-Auth: 40a23165ba46e461
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110219>
 
-I have tried to build jgit using maven on Windows and build failed due
-to the failed test. The test
-QuotedStringGitPathStyleTest.testDequote_OctalAll was dependent on the
-system charset. If the test is run with -Dfile.encoding=Cp1251 under
-eclipse, it failed as well.
+Heya,
 
-This was cased that by the fact that corresponding test generated
-invalid UTF-8 character sequence for code points U+80 - U+FF. In that
-case the method RawParseUtils.decodeNoFallback fall backs to the
-default system encoding that is Cp1251 in my environment.
+On Mon, Feb 16, 2009 at 18:37,  <carlos.duclos@nokia.com> wrote:
+> When archiving a repository there is no way to specify a file as output.
+> This patch adds a new option "--output" that redirects the output to a file
+> instead of stdout.
+>
+> Signed-off by: Carlos Manuel Duclos Vergara <carlos.duclos@nokia.com>
+> ---
+>
+>    NOTE: I can only use a webmail client, so some of the tabs might
+>    have overwritten by it. If  that's the case I'll resend the patch as
+>    MIME attachment.
+>
+>  Documentation/git-archive.txt |    3 +
+>  archive-zip.c                 |    1 -
+>  archive.c                     |   17 +++++
+>  t/t0024-crlf-archive.sh       |   19 +++++
+>  t/t5000-tar-tree.sh           |  148 +++++++++++++++++++++++++++++++++++++++++
+>  5 files changed, 187 insertions(+), 1 deletions(-)
 
-The attached patch ensures that correct UTF-8 character sequence is
-used in the test.
+Fixed that for ya :).
+Anything that should not go in the commit message should go after the
+triple dashes. Also, please wrap your lines at 80 characters. If your
+web-client does not support this, please do so manually.
+For your convenience, here is a line of 79 characters:
+-------------------------------------------------------------------------------
 
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/util/QuotedStringGitPathStyleTest.java
-b/org.spearce.jgit.test/tst/org/spearce/jgit/util/QuotedStringGitPathStyleTest.java
-index 54fbd31..7d29f21 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/util/QuotedStringGitPathStyleTest.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/util/QuotedStringGitPathStyleTest.java
-@@ -127,13 +127,22 @@ public void testDequote_NamedEscapes() {
- 	}
+-- 
+Cheers,
 
- 	public void testDequote_OctalAll() {
--		for (int i = 0; i < 256; i++) {
--			String s = Integer.toOctalString(i);
--			while (s.length() < 3) {
--				s = "0" + s;
--			}
--			assertDequote("" + (char) i, "\\" + s);
-+		for (int i = 0; i < 127; i++) {
-+			assertDequote("" + (char) i, octalEscape(i));
- 		}
-+		for (int i = 128; i < 256; i++) {
-+			int f = 0xC0 | (i >> 6);
-+			int s = 0x80 | (i & 0x3f);
-+			assertDequote("" + (char) i, octalEscape(f)+octalEscape(s));
-+		}
-+	}
-+
-+	private String octalEscape(int i) {
-+		String s = Integer.toOctalString(i);
-+		while (s.length() < 3) {
-+			s = "0" + s;
-+		}
-+		return "\\"+s;
- 	}
-
- 	public void testQuote_OctalAll() {
+Sverre Rabbelier
