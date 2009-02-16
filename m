@@ -1,72 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] GIT 1.6.2-rc1
-Date: Mon, 16 Feb 2009 13:42:59 -0800
-Message-ID: <7vvdradpng.fsf@gitster.siamese.dyndns.org>
-References: <7v8wo6bvn9.fsf@gitster.siamese.dyndns.org>
- <76718490902160902q50c0d730j4f18664455626b93@mail.gmail.com>
+Subject: Re: disallowing push to currently checked-out branch
+Date: Mon, 16 Feb 2009 13:43:03 -0800
+Message-ID: <7vprhidpnc.fsf@gitster.siamese.dyndns.org>
+References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org>
+ <20090215232013.GA11543@zakalwe.fi>
+ <20090216000443.GB3503@coredump.intra.peff.net>
+ <alpine.DEB.1.10.0902151727330.14911@asgard.lang.hm>
+ <alpine.DEB.1.10.0902151738450.14911@asgard.lang.hm>
+ <alpine.LNX.1.00.0902160322530.19665@iabervon.org>
+ <7veixybw7u.fsf@gitster.siamese.dyndns.org>
+ <loom.20090216T101457-231@post.gmane.org>
+ <20090216135812.GA20377@coredump.intra.peff.net> <49999ED6.7010608@gmail.com>
+ <alpine.DEB.1.00.0902161839120.6289@intel-tinevez-2-302>
+ <4999BD54.8090805@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 16 22:44:37 2009
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Sergio Callegari <sergio.callegari@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 16 22:44:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZBGW-0007mK-0A
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 22:44:36 +0100
+	id 1LZBGi-0007pP-KQ
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 22:44:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752558AbZBPVnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 16:43:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752304AbZBPVnG
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 16:43:06 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46145 "EHLO
+	id S1752564AbZBPVnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 16:43:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752432AbZBPVnO
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 16:43:14 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46167 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752032AbZBPVnE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 16:43:04 -0500
+	with ESMTP id S1752304AbZBPVnM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 16:43:12 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C08CA2B467;
-	Mon, 16 Feb 2009 16:43:03 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 6DE802B467;
+	Mon, 16 Feb 2009 16:43:10 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id ACC8F2B430; Mon,
- 16 Feb 2009 16:43:00 -0500 (EST)
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 83D112B430; Mon,
+ 16 Feb 2009 16:43:05 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: CA13798C-FC72-11DD-813B-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: CE0BC670-FC72-11DD-A7F9-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110249>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+Sergio Callegari <sergio.callegari@gmail.com> writes:
 
->  master> git checkout next
->    next> git branch --track mybranch @{-1}
->
-> Creates "mybranch" from master, *not from next*, correct?
->
-> Also, the "--track" option is an unnecessary distraction to the
-> example, isn't it?
+> ... is there some case where one wants
+> and has reasons to commit to a detached head before making a temporary
+> branch on it?
 
-When a new branch is created in "git branch --track A B" form, B is used
-in two ways.
+Absolutely. I do it all the time for minor fix-ups after applying other's
+patches on a newly created topic branch.
 
- * Obviously, the new branch A initially points at the same commit as
-   commit B.  For this, B does not have to be the name of a branch.  It
-   only has to be a commit-ish.
+If you want a push to the current branch of _your_ repository detach HEAD
+automatically and record which branch it was pointing at before you
+detached, I am reasonably sure you can do that in post-receive hook, no?
 
- * With --track, the new branch A is marked as a fork of the branch B, but
-   obviously for this additional feature to kick in, you cannot give an
-   arbitrary commit-ish as B.  It has to be the name of a branch you are
-   forking from.
+I do not think it is such a bad thing to have a new value 'detach' to
+receive.denyCurrentBranch as a possible non-default choice per-se, but the
+earlier discussion Jeff pointed out is only showing that detaching alone
+is not enough to help the user recover from the resulting state, and Dscho
+discussed in this thread that detaching and recording the original branch
+may not be enough either.  IOW, we do not know yet precisely what needs to
+happen other than detaching HEAD when the configuration tells us to
+'detach' to be useful.
 
-If B were spelled @{1}, the latter does not happen, as @{1} is a way to
-say "The _commit_ my current branch was pointing at before it point the
-current commit".  On the other hand, @{-1} is a way to say "The _branch_
-I switched from my last 'git checkout' command", and the command ought to
-behave the same as if you gave it a branch name, and --track takes place.
-
-So having --track explicitly in the example is a good way to clarify the
-point that @{-N} notation is a way to spell _a branch name_, and it is not
-merely another commit-ish.
+So how about you experiment the workflow by setting the configuration to
+'ignore', setting up a hook to detach _and do some other useful things_ as
+necessary, and help all of us figuring out what other information is
+useful to record when you receive such a push, and what new indications
+you could give users to reduce the possibility of confusion?  Once we know
+what we want to happen, we can have it as one of the canned choices and it
+would help users.
