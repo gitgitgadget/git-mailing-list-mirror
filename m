@@ -1,411 +1,393 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH v2] git-archive: Add new option "--output" to write archive
-   to a file instead of stdout.
-Date: Mon, 16 Feb 2009 21:11:48 +0100
-Message-ID: <4999C884.5050209@lsrfire.ath.cx>
-References: <599636D7828020419E3AB2DE5CCC8130036BF8B1D5@NOK-EUMSG-02.mgdnok.nokia.com>
+From: Nigel Magnay <nigel.magnay@gmail.com>
+Subject: [JGIT PATCH] 1/2 : (reworked) Externalizable/Serializable Items
+Date: Mon, 16 Feb 2009 20:12:29 +0000
+Message-ID: <320075ff0902161212s1980cd70r8cdc4c21550333ee@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: carlos.duclos@nokia.com
-X-From: git-owner@vger.kernel.org Mon Feb 16 21:13:37 2009
+Content-Transfer-Encoding: 7bit
+To: Git ML <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Feb 16 21:14:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZ9qK-0008LQ-AS
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 21:13:29 +0100
+	id 1LZ9qq-00006t-MH
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 21:14:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751725AbZBPUL7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Feb 2009 15:11:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751623AbZBPUL6
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 15:11:58 -0500
-Received: from india601.server4you.de ([85.25.151.105]:43202 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751516AbZBPUL5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 15:11:57 -0500
-Received: from [10.0.1.101] (p57B7D33D.dip.t-dialin.net [87.183.211.61])
-	by india601.server4you.de (Postfix) with ESMTPSA id 720092F8057;
-	Mon, 16 Feb 2009 21:11:55 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
-In-Reply-To: <599636D7828020419E3AB2DE5CCC8130036BF8B1D5@NOK-EUMSG-02.mgdnok.nokia.com>
+	id S1751980AbZBPUMe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 15:12:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751968AbZBPUMd
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 15:12:33 -0500
+Received: from mu-out-0910.google.com ([209.85.134.186]:13367 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751940AbZBPUMc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 15:12:32 -0500
+Received: by mu-out-0910.google.com with SMTP id i10so939000mue.1
+        for <git@vger.kernel.org>; Mon, 16 Feb 2009 12:12:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=7it2Vh6/zUEBZtjpC7lKCWHmdh+NOdpN8VD4+h4uQkc=;
+        b=LXJ0SEQoZBb03BLyKD5u4bPU3zOkdSOkdDqOFE9kXhTzOIp7nZr7jZIVGNPqItnsf7
+         GYi0uCXOOUKNJINiVjghQJ2rETv5J2WF4NE+SRFQ29LNqJrLArmudCt/hI26Aec0MGl9
+         f3FWL2/cEHRDs8yIypY8ATMUaBrQGlQYpTz5Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=Kal0gieFUjoodRoc1ntxRA0GX4fE4HL4E/F0jCKgXT4zOhnGrxBhMEwoqisARk3FiI
+         Y0VkhvO06mweGXYUzDGRyFxAUUwyRiwrGZr7dc2FaRzSAwSR0V+3UZoi+E8dq2srN2Ah
+         adVvhMC7YtOg8+anapD/+AD1EErBhsY+/3+NM=
+Received: by 10.103.229.12 with SMTP id g12mr3174133mur.16.1234815149706; Mon, 
+	16 Feb 2009 12:12:29 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110233>
 
-carlos.duclos@nokia.com schrieb:
-> NOTE: I can only use a webmail client, so some of the tabs might have
-> overwritten by it. If  that's the case I'll resend the patch as MIME
-> attachment.
+JGit is used as a library in external projects such as build tools.
+Some of the representations of git data structures are useful
+in these external tools - but - it is often desirable to be able to
+either persist these objects, or serialize them across the wire.
 
-Please do, as applying the patch as-is would be difficult, painful even=
-=2E
+Apply Externalizable to URIish and RefSpec, and Serializable to
+ObjectId and RemoteConfig (in order to avoid the undesirable
+requirement of a public, no-args constructor needed for Externalizable).
 
-> When archiving a repository there is no way to specify a file as outp=
-ut.
-> This patch adds a new option "--output" that redirects the output to =
-a
-> file instead of stdout.
->=20
-> Signed-off by: Carlos Manuel Duclos Vergara <carlos.duclos@nokia.com>
-> ---
->  Documentation/git-archive.txt |    3 +
->  archive-zip.c                 |    1 -
->  archive.c                     |   17 +++++
->  t/t0024-crlf-archive.sh       |   19 +++++
->  t/t5000-tar-tree.sh           |  148 +++++++++++++++++++++++++++++++=
-++++++++++
->  5 files changed, 187 insertions(+), 1 deletions(-)
->=20
-> diff --git a/Documentation/git-archive.txt b/Documentation/git-archiv=
-e.txt
-> index 41cbf9c..04b05f3 100644
-> --- a/Documentation/git-archive.txt
-> +++ b/Documentation/git-archive.txt
-> @@ -47,6 +47,9 @@ OPTIONS
->  --prefix=3D<prefix>/::
->         Prepend <prefix>/ to each filename in the archive.
->=20
-> +--output=3D<file>::
-> +       Writes the archive to <file> instead of stdout.
+ Signed-off-by: Nigel Magnay <nigel.magnay@gmail.com>
 
-Please use imperative ("Write") instead of present tense to match the
-style used to describe other options.
+---
+ .../src/org/spearce/jgit/lib/ObjectId.java         |   22 +++++-
+ .../src/org/spearce/jgit/transport/RefSpec.java    |   77 +++++++++++++------
+ .../org/spearce/jgit/transport/RemoteConfig.java   |   79 +++++++++++++++++++-
+ .../src/org/spearce/jgit/transport/URIish.java     |   29 +++++++-
+ 4 files changed, 179 insertions(+), 28 deletions(-)
 
-> +
->  <extra>::
->         This can be any options that the archiver backend understand.
->         See next section.
-> diff --git a/archive-zip.c b/archive-zip.c
-> index cf28504..de5e540 100644
-> --- a/archive-zip.c
-> +++ b/archive-zip.c
-> @@ -266,7 +266,6 @@ int write_zip_archive(struct archiver_args *args)
->         int err;
->=20
->         dos_time(&args->time, &zip_date, &zip_time);
-> -
->         zip_dir =3D xmalloc(ZIP_DIRECTORY_MIN_SIZE);
->         zip_dir_size =3D ZIP_DIRECTORY_MIN_SIZE;
->=20
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
+b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
+index 52ce0d4..7c3b922 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
+@@ -38,6 +38,10 @@
 
-This hunk doesn't seem to belong in here.
+ package org.spearce.jgit.lib;
 
-> diff --git a/archive.c b/archive.c
-> index e6de039..fde8602 100644
-> --- a/archive.c
-> +++ b/archive.c
-> @@ -239,6 +239,18 @@ static void parse_treeish_arg(const char **argv,
->         ar_args->time =3D archive_time;
->  }
->=20
-> +static void create_output_file(const char *output_file)
-> +{
-> +       int output_fd =3D creat(output_file, 0666);
-> +       if (output_fd < 0)
-> +               die("could not create archive file");
++import java.io.IOException;
++import java.io.ObjectInputStream;
++import java.io.ObjectOutputStream;
++import java.io.Serializable;
+ import java.io.UnsupportedEncodingException;
 
-Reporting the file name here could help the user to spot typos.
+ import org.spearce.jgit.util.NB;
+@@ -45,7 +49,7 @@
+ /**
+  * A SHA-1 abstraction.
+  */
+-public class ObjectId extends AnyObjectId {
++public class ObjectId extends AnyObjectId implements Serializable {
+ 	private static final ObjectId ZEROID;
 
-> +       if (dup2(output_fd, 1) !=3D 1)
-> +       {
-> +               close(output_fd);
-> +               die("could not redirect output");
-> +       }
-> +}
+ 	private static final String ZEROID_STR;
+@@ -269,4 +273,20 @@ protected ObjectId(final AnyObjectId src) {
+ 	public ObjectId toObjectId() {
+ 		return this;
+ 	}
++
++	private void writeObject(ObjectOutputStream os)  throws IOException {
++		os.writeInt(w1);
++		os.writeInt(w2);
++		os.writeInt(w3);
++		os.writeInt(w4);
++		os.writeInt(w5);
++	}
++	
++	private void readObject(ObjectInputStream ois)  throws IOException {
++		w1 = ois.readInt();
++		w2 = ois.readInt();
++		w3 = ois.readInt();
++		w4 = ois.readInt();
++		w5 = ois.readInt();
++	}
+ }
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/RefSpec.java
+b/org.spearce.jgit/src/org/spearce/jgit/transport/RefSpec.java
+index 521110b..0ee89b0 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/RefSpec.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/RefSpec.java
+@@ -37,6 +37,11 @@
 
-Style:
-	if (condition) {
-		do(something);
-		...
-	}
+ package org.spearce.jgit.transport;
 
-output_fd can be closed after dup2()ing.
++import java.io.Externalizable;
++import java.io.IOException;
++import java.io.ObjectInput;
++import java.io.ObjectOutput;
++
+ import org.spearce.jgit.lib.Constants;
+ import org.spearce.jgit.lib.Ref;
 
-A successful dup2() call can return 0 on some systems (mingw here).
+@@ -46,7 +51,7 @@
+  * A ref specification provides matching support and limited rules to rewrite a
+  * reference in one repository to another reference in another repository.
+  */
+-public class RefSpec {
++public class RefSpec implements Externalizable {
+ 	/**
+ 	 * Suffix for wildcard ref spec component, that indicate matching all refs
+ 	 * with specified prefix.
+@@ -109,30 +114,7 @@ public RefSpec() {
+ 	 *             the specification is invalid.
+ 	 */
+ 	public RefSpec(final String spec) {
+-		String s = spec;
+-		if (s.startsWith("+")) {
+-			force = true;
+-			s = s.substring(1);
+-		}
+-
+-		final int c = s.indexOf(':');
+-		if (c == 0) {
+-			s = s.substring(1);
+-			if (isWildcard(s))
+-				throw new IllegalArgumentException("Invalid wildcards " + spec);
+-			dstName = s;
+-		} else if (c > 0) {
+-			srcName = s.substring(0, c);
+-			dstName = s.substring(c + 1);
+-			if (isWildcard(srcName) && isWildcard(dstName))
+-				wildcard = true;
+-			else if (isWildcard(srcName) || isWildcard(dstName))
+-				throw new IllegalArgumentException("Invalid wildcards " + spec);
+-		} else {
+-			if (isWildcard(s))
+-				throw new IllegalArgumentException("Invalid wildcards " + spec);
+-			srcName = s;
+-		}
++		initializeFromString(spec);
+ 	}
 
-> +
->  #define OPT__COMPR(s, v, h, p) \
->         { OPTION_SET_INT, (s), NULL, (v), NULL, (h), \
->           PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, (p) }
-> @@ -253,6 +265,7 @@ static int parse_archive_args(int argc, const cha=
-r **argv,
->         const char *base =3D NULL;
->         const char *remote =3D NULL;
->         const char *exec =3D NULL;
-> +    const char *output =3D NULL;
+ 	/**
+@@ -161,6 +143,42 @@ private RefSpec(final RefSpec p) {
+ 	}
 
-One tab indent, please.
+ 	/**
++	 * Initialize the ref specification from a string.
++	 *
++	 * @param spec
++	 *            string describing the specification.
++	 * @throws IllegalArgumentException
++	 *             the specification is invalid.
++	 */
++	private void initializeFromString(final String spec) {
++		srcName = null;
++		String s = spec;
++		if (s.startsWith("+")) {
++			force = true;
++			s = s.substring(1);
++		}
++
++		final int c = s.indexOf(':');
++		if (c == 0) {
++			s = s.substring(1);
++			if (isWildcard(s))
++				throw new IllegalArgumentException("Invalid wildcards " + spec);
++			dstName = s;
++		} else if (c > 0) {
++			srcName = s.substring(0, c);
++			dstName = s.substring(c + 1);
++			if (isWildcard(srcName) && isWildcard(dstName))
++				wildcard = true;
++			else if (isWildcard(srcName) || isWildcard(dstName))
++				throw new IllegalArgumentException("Invalid wildcards " + spec);
++		} else {
++			if (isWildcard(s))
++				throw new IllegalArgumentException("Invalid wildcards " + spec);
++			srcName = s;
++		}
++	}
++	
++	/**
+ 	 * Check if this specification wants to forcefully update the destination.
+ 	 *
+ 	 * @return true if this specification asks for updates without merge tests.
+@@ -421,4 +439,13 @@ public String toString() {
+ 		}
+ 		return r.toString();
+ 	}
++
++	public void readExternal(ObjectInput in) throws IOException,
++			ClassNotFoundException {
++		initializeFromString(in.readUTF());	
++	}
++
++	public void writeExternal(ObjectOutput out) throws IOException {
++		out.writeUTF(toString());
++	}
+ }
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteConfig.java
+b/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteConfig.java
+index 5bbf664..899f73f 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteConfig.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteConfig.java
+@@ -38,6 +38,10 @@
 
->         int compression_level =3D -1;
->         int verbose =3D 0;
->         int i;
-> @@ -262,6 +275,7 @@ static int parse_archive_args(int argc, const cha=
-r **argv,
->                 OPT_STRING(0, "format", &format, "fmt", "archive form=
-at"),
->                 OPT_STRING(0, "prefix", &base, "prefix",
->                         "prepend prefix to each pathname in the archi=
-ve"),
-> +               OPT_STRING(0, "output", &output, "file", "write the r=
-esults to this file"),
+ package org.spearce.jgit.transport;
 
-Please wrap lines to fit into 80 columns, like it was done for the
-preceding option.  And perhaps replace "results" with "archive"?
++import java.io.IOException;
++import java.io.ObjectInputStream;
++import java.io.ObjectOutputStream;
++import java.io.Serializable;
+ import java.net.URISyntaxException;
+ import java.util.ArrayList;
+ import java.util.Collections;
+@@ -53,7 +57,7 @@
+  * describing how refs should be transferred between this repository and the
+  * remote repository.
+  */
+-public class RemoteConfig {
++public class RemoteConfig implements Serializable {
+ 	private static final String SECTION = "remote";
 
->                 OPT__VERBOSE(&verbose),
->                 OPT__COMPR('0', &compression_level, "store only", 0),
->                 OPT__COMPR('1', &compression_level, "compress faster"=
-, 1),
-> @@ -294,6 +308,9 @@ static int parse_archive_args(int argc, const cha=
-r **argv,
->         if (!base)
->                 base =3D "";
->=20
-> +       if(output)
-> +               create_output_file(output);
-> +
+ 	private static final String KEY_URL = "url";
+@@ -382,4 +386,77 @@ public TagOpt getTagOpt() {
+ 	public void setTagOpt(final TagOpt option) {
+ 		tagopt = option != null ? option : TagOpt.AUTO_FOLLOW;
+ 	}
++	
++	private void writeObject(ObjectOutputStream os) throws IOException {
++
++	    // Name
++	    os.writeUTF(name);
++	
++	    // Key, Value pairs
++	    for (URIish uri : uris) {
++            os.writeUTF(KEY_URL);
++            os.writeUTF(uri.toPrivateString());
++        }
++
++        for (RefSpec refspec : fetch) {
++            os.writeUTF(KEY_FETCH);
++            os.writeUTF(refspec.toString());
++        }
++
++        for (RefSpec refspec : push) {
++        	os.writeUTF(KEY_PUSH);
++            os.writeUTF(refspec.toString());
++        }
++
++        os.writeUTF(KEY_UPLOADPACK);
++        os.writeUTF(uploadpack);
++
++        os.writeUTF(KEY_RECEIVEPACK);
++        os.writeUTF(receivepack);
++
++        os.writeUTF(KEY_TAGOPT);
++        os.writeUTF(tagopt.option());
++
++        // End marker
++        os.writeUTF("");
++    }
++
++    private void readObject(ObjectInputStream ois) throws IOException {
++		uris = new ArrayList<URIish>();
++        fetch = new ArrayList<RefSpec>();
++        push = new ArrayList<RefSpec>();
++        uploadpack = DEFAULT_UPLOAD_PACK;
++        receivepack = DEFAULT_RECEIVE_PACK;
++
++        name = ois.readUTF();
++
++		for (String key = ois.readUTF(); key.length() > 0; key = ois.readUTF()) {
++			String value = ois.readUTF();
++
++			if (key.equals(KEY_URL)) {
++				try {
++					uris.add(new URIish(value));
++				} catch (URISyntaxException e) {
++					throw new IOException("Invalid URI in RemoteConfig : "
++							+ value);
++				}
++			} else if (key.equals(KEY_FETCH)) {
++				fetch.add(new RefSpec(value));
++
++			} else if (key.equals(KEY_PUSH)) {
++				push.add(new RefSpec(value));
++
++			} else if (key.equals(KEY_UPLOADPACK)) {
++				uploadpack = value;
++
++			} else if (key.equals(KEY_RECEIVEPACK)) {
++				receivepack = value;
++
++			} else if (key.equals(KEY_TAGOPT)) {
++				tagopt = TagOpt.fromOption(value);
++			}
++
++		}
++
++    }
+ }
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/URIish.java
+b/org.spearce.jgit/src/org/spearce/jgit/transport/URIish.java
+index b86e00c..6b85f45 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/URIish.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/URIish.java
+@@ -38,6 +38,10 @@
 
-Ah, you make it possible to write the list of formats into a file,
-too, as Junio mentioned.  So the "results" above is correct after
-all.  But is this intended?
+ package org.spearce.jgit.transport;
 
->         if (list) {
->                 for (i =3D 0; i < ARRAY_SIZE(archivers); i++)
->                         printf("%s\n", archivers[i].name);
-> diff --git a/t/t0024-crlf-archive.sh b/t/t0024-crlf-archive.sh
-> index e533039..237a8f6 100755
-> --- a/t/t0024-crlf-archive.sh
-> +++ b/t/t0024-crlf-archive.sh
-> @@ -26,6 +26,15 @@ test_expect_success 'tar archive' '
->=20
->  '
->=20
-> +test_expect_success 'tar archive output redirected' '
-> +
-> +       git archive --format=3Dtar --output=3Dtest.tar HEAD &&
-> +       ( mkdir untarred2 && cd untarred2 && "$TAR" -xf ../test.tar )
-> +
-> +       test_cmp sample untarred2/sample
-> +
-> +'
-> +
->  "$UNZIP" -v >/dev/null 2>&1
->  if [ $? -eq 127 ]; then
->         echo "Skipping ZIP test, because unzip was not found"
-> @@ -43,4 +52,14 @@ test_expect_success 'zip archive' '
->=20
->  '
->=20
-> +test_expect_success 'zip archive output redirected' '
-> +
-> +       git archive --format=3Dzip --output=3Dtest.zip HEAD &&
-> +
-> +       ( mkdir unzipped2 && cd unzipped2 && unzip ../test.zip ) &&
-> +
-> +       test_cmp sample unzipped2/sample
-> +
-> +'
-> +
->  test_done
-> diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
-> index c942c8b..b11e504 100755
-> --- a/t/t5000-tar-tree.sh
-> +++ b/t/t5000-tar-tree.sh
-> @@ -66,6 +66,11 @@ test_expect_success \
->      'remove ignored file' \
->      'rm a/ignored'
->=20
-> +
-> +#
-> +# Tar tests
-> +#
-> +
->  test_expect_success \
->      'git archive' \
->      'git archive HEAD >b.tar'
-> @@ -160,6 +165,91 @@ test_expect_success \
->        diff a/substfile2 g/prefix/a/substfile2
->  '
->=20
-> +#
-> +# Same tests as above but now using redirection
-> +#
-> +
-> +test_expect_success \
-> +    'git archive' \
-> +    'git archive --output=3Db20.tar HEAD'
-> +
-> +test_expect_success \
-> +    'git tar-tree' \
-> +    'git tar-tree HEAD >b21.tar'
-> +
-> +test_expect_success \
-> +    'git archive vs. git tar-tree' \
-> +    'diff b20.tar b21.tar'
-> +
-> +test_expect_success \
-> +    'git archive in a bare repo' \
-> +    '(cd bare.git && git archive --output=3D../b22.tar HEAD)'
-> +
-> +test_expect_success \
-> +    'git archive vs. the same in a bare repo' \
-> +    'test_cmp b20.tar b22.tar'
-> +
-> +test_expect_success \
-> +    'validate file modification time' \
-> +    'mkdir extract2 &&
-> +     "$TAR" xf b20.tar -C extract2 a/a &&
-> +     test-chmtime -v +0 extract2/a/a |cut -f 1 >b20.mtime &&
-> +     echo "1117231200" >expected.mtime &&
-> +     diff expected.mtime b20.mtime'
-> +
-> +test_expect_success \
-> +    'git get-tar-commit-id' \
-> +    'git get-tar-commit-id <b20.tar >b20.commitid &&
-> +     diff .git/$(git symbolic-ref HEAD) b20.commitid'
-> +
-> +test_expect_success \
-> +    'extract tar archive' \
-> +    '(mkdir b20 && cd b20 && "$TAR" xf -) <b20.tar'
-> +
-> +test_expect_success \
-> +    'validate filenames' \
-> +    '(cd b20/a && find .) | sort >b20.lst &&
-> +     diff a.lst b20.lst'
-> +
-> +test_expect_success \
-> +    'validate file contents' \
-> +    'diff -r a b20/a'
-> +
-> +test_expect_success \
-> +    'create archives with substfiles' \
-> +    'echo "substfile?" export-subst >a/.gitattributes &&
-> +     git archive --output=3Df20.tar HEAD &&
-> +     git archive --prefix=3Dprefix/ --output=3Dg20.tar HEAD &&
-> +     rm a/.gitattributes'
-> +
-> +test_expect_success \
-> +    'extract substfiles' \
-> +    '(mkdir f20 && cd f20 && "$TAR" xf -) <f20.tar'
-> +
-> +test_expect_success \
-> +     'validate substfile contents' \
-> +     'git log --max-count=3D1 "--pretty=3Dformat:A${SUBSTFORMAT}O" H=
-EAD \
-> +      >f20/a/substfile1.expected &&
-> +      diff f20/a/substfile1.expected f20/a/substfile1 &&
-> +      diff a/substfile2 f20/a/substfile2
-> +'
-> +
-> +test_expect_success \
-> +    'extract substfiles from archive with prefix' \
-> +    '(mkdir g20 && cd g20 && "$TAR" xf -) <g20.tar'
-> +
-> +test_expect_success \
-> +     'validate substfile contents from archive with prefix' \
-> +     'git log --max-count=3D1 "--pretty=3Dformat:A${SUBSTFORMAT}O" H=
-EAD \
-> +      >g20/prefix/a/substfile1.expected &&
-> +      diff g20/prefix/a/substfile1.expected g20/prefix/a/substfile1 =
-&&
-> +      diff a/substfile2 g20/prefix/a/substfile2
-> +'
-> +
-> +#
-> +# Zip tests
-> +#
-> +
->  test_expect_success \
->      'git archive --format=3Dzip' \
->      'git archive --format=3Dzip HEAD >d.zip'
-> @@ -172,6 +262,26 @@ test_expect_success \
->      'git archive --format=3Dzip vs. the same in a bare repo' \
->      'test_cmp d.zip d1.zip'
->=20
-> +#
-> +# Same tests as above but now using redirection
-> +#
-> +
-> +test_expect_success \
-> +    'git archive --format=3Dzip --output=3Dd10.zip' \
-> +    'git archive --format=3Dzip --output=3Dd10.zip HEAD'
-> +
-> +test_expect_success \
-> +    'git archive --format=3Dzip --output=3Dd11.zip in a bare repo' \
-> +    '(cd bare.git && git archive --format=3Dzip --output=3D../d11.zi=
-p HEAD)'
-> +
-> +test_expect_success \
-> +    'git archive --format=3Dzip redirected output vs. the same in a =
-bare repo' \
-> +    'test_cmp d10.zip d11.zip'
-> +
-> +#
-> +# Zip tests
-> +#
-> +
->  $UNZIP -v >/dev/null 2>&1
->  if [ $? -eq 127 ]; then
->         echo "Skipping ZIP tests, because unzip was not found"
-> @@ -213,4 +323,42 @@ test_expect_success \
->      'git archive --list outside of a git repo' \
->      'GIT_DIR=3Dsome/non-existing/directory git archive --list'
->=20
-> +#
-> +# Same tests as above but now with redirected output
-> +#
-> +
-> +test_expect_success \
-> +    'extract ZIP archive from redirected output  archive' \
-> +    '(mkdir d10 && cd d10 && $UNZIP ../d10.zip)'
-> +
-> +test_expect_success \
-> +    'validate filenames from redirected output  archive' \
-> +    '(cd d10/a && find .) | sort >d10.lst &&
-> +     diff a.lst d10.lst'
-> +
-> +test_expect_success \
-> +    'validate file contents from redirected output  archive' \
-> +    'diff -r a d10/a'
-> +
-> +test_expect_success \
-> +    'git archive --format=3Dzip with prefix from redirected output  =
-archive' \
-> +    'git archive --format=3Dzip --prefix=3Dprefix/ --output=3De10.zi=
-p HEAD'
-> +
-> +test_expect_success \
-> +    'extract ZIP archive with prefix from redirected output  archive=
-' \
-> +    '(mkdir e10 && cd e10 && $UNZIP ../e10.zip)'
-> +
-> +test_expect_success \
-> +    'validate filenames with prefix from redirected output  archive'=
- \
-> +    '(cd e10/prefix/a && find .) | sort >e10.lst &&
-> +     diff a.lst e10.lst'
-> +
-> +test_expect_success \
-> +    'validate file contents with prefix from redirected output  arch=
-ive' \
-> +    'diff -r a e10/prefix/a'
-> +
-> +test_expect_success \
-> +    'git archive --list outside of a git repo' \
-> +    'GIT_DIR=3Dsome/non-existing/directory git archive --list'
-> +
->  test_done
-> --
-> 1.6.2.rc0.63.g7cbd0.dirty
->=20
++import java.io.Externalizable;
++import java.io.IOException;
++import java.io.ObjectInput;
++import java.io.ObjectOutput;
+ import java.net.URISyntaxException;
+ import java.net.URL;
+ import java.util.regex.Matcher;
+@@ -49,7 +53,7 @@
+  * RFC 2396 URI's is that no URI encoding/decoding ever takes place. A space or
+  * any special character is written as-is.
+  */
+-public class URIish {
++public class URIish implements Externalizable {
+ 	private static final Pattern FULL_URI = Pattern
+ 			.compile("^(?:([a-z][a-z0-9+-]+)://(?:([^/]+?)(?::([^/]+?))?@)?(?:([^/]+?))?(?::(\\d+))?)?((?:[A-Za-z]:)?/.+)$");
 
-Lot's of tests, nice!  But I think comparing the created archive to
-the one written to stdout using the same parameters is sufficient.
-There's no need to untar, unzip or otherwise look at the archives
-again if they are the the same.
+@@ -75,6 +79,16 @@
+ 	 * @throws URISyntaxException
+ 	 */
+ 	public URIish(String s) throws URISyntaxException {
++		initializeFromString(s);
++	}
++	
++	/**
++	 * Set fields from string based URI.
++	 *
++	 * @param s
++	 * @throws URISyntaxException
++	 */
++	private void initializeFromString(String s)  throws URISyntaxException {
+ 		s = s.replace('\\', '/');
+ 		Matcher matcher = FULL_URI.matcher(s);
+ 		if (matcher.matches()) {
+@@ -357,4 +371,17 @@ private String format(final boolean includePassword) {
 
-Ren=E9
+ 		return r.toString();
+ 	}
++
++	public void readExternal(ObjectInput in) throws IOException,
++			ClassNotFoundException {
++	    try {
++			initializeFromString(in.readUTF());
++		} catch (URISyntaxException e) {
++			throw new IOException("Incorrect format URI");
++		}
++	}
++
++	public void writeExternal(ObjectOutput out) throws IOException {
++		out.writeUTF(format(true));
++	}
+ }
+-- 
+1.6.0.2
