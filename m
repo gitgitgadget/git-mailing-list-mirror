@@ -1,90 +1,87 @@
-From: Joey Hess <joey@kitenet.net>
-Subject: pushing from a shallow repo allowed?
-Date: Thu, 12 Feb 2009 17:02:54 -0500
-Message-ID: <20090212220254.GA1517@gnu.kitenet.net>
+From: david@lang.hm
+Subject: Re: disallowing push to currently checked-out branch
+Date: Sun, 15 Feb 2009 17:33:59 -0800 (PST)
+Message-ID: <alpine.DEB.1.10.0902151727330.14911@asgard.lang.hm>
+References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org> <20090215232013.GA11543@zakalwe.fi> <20090216000443.GB3503@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="TB36FDmn/VVEgNH/"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 16 01:28:53 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Heikki Orsila <shdl@zakalwe.fi>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 16 01:30:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYrLv-0004L8-Tn
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 01:28:52 +0100
+	id 1LYrNi-0004ou-Qz
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 01:30:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754120AbZBPA1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2009 19:27:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753550AbZBPA1K
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 19:27:10 -0500
-Received: from wren.kitenet.net ([80.68.85.49]:48783 "EHLO kitenet.net"
+	id S1754206AbZBPA3J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Feb 2009 19:29:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754079AbZBPA3I
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 19:29:08 -0500
+Received: from mail.lang.hm ([64.81.33.126]:33375 "EHLO bifrost.lang.hm"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753174AbZBPA1J (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2009 19:27:09 -0500
-Received: from gnu.kitenet.net (unknown [67.223.5.142])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
-	by kitenet.net (Postfix) with ESMTPS id 81C1B314393
-	for <git@vger.kernel.org>; Thu, 12 Feb 2009 17:02:57 -0500 (EST)
-Received: by gnu.kitenet.net (Postfix, from userid 1000)
-	id 6A089A8D30; Thu, 12 Feb 2009 17:02:54 -0500 (EST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752087AbZBPA3I (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2009 19:29:08 -0500
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n1G0T1UJ019777;
+	Sun, 15 Feb 2009 16:29:01 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <20090216000443.GB3503@coredump.intra.peff.net>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110101>
 
+On Sun, 15 Feb 2009, Jeff King wrote:
 
---TB36FDmn/VVEgNH/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Mon, Feb 16, 2009 at 01:20:13AM +0200, Heikki Orsila wrote:
+>
+>>> * git-push to update the checked out branch will be refused by default
+>>>
+>>>   Make "git push" into a repository to update the branch that is checked
+>>>   out fail by default.
+>>>
+>>>   http://thread.gmane.org/gmane.comp.version-control.git/107758/focus=108007
+>>
+>> If this is implemented, it shouldn't, in my opinion, be a default
+>> setting. I regularly push to checkout repos when I'm doing cross machine
+>> development. However, I could live with a configurable setting as
+>> proposed in the given URL. I think Git should not be too cautious about
+>> following users instructions. The user knows what is best for him/her ;)
+>
+> It is already implemented; the proposal is about setting the default.
+> The plans for 1.6.2 are already to issue a warning and ask the user to
+> set the config variable to shut it up.
 
-git-clone(1):
-	A shallow repository has a number of
-        limitations (you cannot clone or fetch from it, nor push from nor
-        into it)
+if this is going to be done the timeframe for making the change should be 
+quite long. think in terms of debian stable or RHEL, whatever version they 
+ship is what their users are going to use. it doesn't matter how many new 
+versions and what warnings you have the produce in the meantime, the users 
+won't see them.
 
-This and other documentation (shallow.txt, RelNotes-1.5.0.txt) says you
-can't push from a shallow repo. But in a simple test of making a commit
-to a shallow repo and pushing it out, it seems to work. AFAICS, git only
-guards against pushes *into* a shallow repo, and fetching/cloning from a
-shallow repository.
+to the progression needs to be
 
-Are the docs out of date, or is there really still some problem
-with pushing from a shallow repo?
+one upgrade cycle the user is using the old version with no warning.
 
+next upgrade cycle the user is using a version with a warning.
 
-BTW, --depth seems to be ignored when making a local clone.
-This seems to have been fixed in the old shell git-clone in
-d4110a9726c7cd5cda35b7dd03dc8f85fe3dff0c, was it accidentially lost
-in the C version?
+the third upgrade cycle the user is using the version with the default 
+changed.
 
-joey@gnu:~/src/other> git clone --depth 2 git git.shallow
-Initialized empty Git repository in /home/joey/src/other/git.shallow/.git/
-joey@gnu:~/src/other> cd git.shallow=20
-joey@gnu:~/src/other/git.shallow> git-log --pretty=3Doneline|wc -l
-17009
+the problem is that these upgrade cycles are 3-5 years each, and it's not 
+unusual for the types of users that use dbian stable or RHEL to be running 
+these systems in places where they do not get patched during their 
+lifetime.
 
-git version 1.5.6.5
+note that this isn't always stupid to do, if you are deploying them on a 
+network with no Internet access the stability of knowing that things are 
+_exactly_ what you tested may be worth more than updates that close bugs 
+that you don't hit or add features that you aren't using (or introduce 
+unexpected changes like spitting warnings or errors for things that the 
+old version didn't, which is exactly what is being proposed.
 
---=20
-see shy jo
-
---TB36FDmn/VVEgNH/
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iD8DBQFJlJyLd8HHehbQuO8RAlTOAJ9+WoCooBR29UPsdIik11aG8tdKlACeMs2/
-qqicuvSK7EigJRJmEvU/gvk=
-=dHl8
------END PGP SIGNATURE-----
-
---TB36FDmn/VVEgNH/--
+David Lang
