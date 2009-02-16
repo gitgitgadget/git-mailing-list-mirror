@@ -1,66 +1,78 @@
-From: Sergio Callegari <sergio.callegari@gmail.com>
-Subject: Re: disallowing push to currently checked-out branch
-Date: Mon, 16 Feb 2009 10:17:01 +0000 (UTC)
-Message-ID: <loom.20090216T101457-231@post.gmane.org>
-References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org> <20090215232013.GA11543@zakalwe.fi> <20090216000443.GB3503@coredump.intra.peff.net> <alpine.DEB.1.10.0902151727330.14911@asgard.lang.hm> <alpine.DEB.1.10.0902151738450.14911@asgard.lang.hm> <alpine.LNX.1.00.0902160322530.19665@iabervon.org> <7veixybw7u.fsf@gitster.siamese.dyndns.org>
+From: Tor Arvid Lund <torarvid@gmail.com>
+Subject: Re: A little mystery - crash caused by empty commit message.
+Date: Mon, 16 Feb 2009 11:18:06 +0100
+Message-ID: <1a6be5fa0902160218r65965c18nd3ee90d040702b9@mail.gmail.com>
+References: <1a6be5fa0902100315q554dc457j8c8476d3f59a314f@mail.gmail.com>
+	 <20090210113234.GE12089@coredump.intra.peff.net>
+	 <1a6be5fa0902100458w246f2bfeu5c0c303d18d17a3b@mail.gmail.com>
+	 <20090210153048.GA17660@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 16 11:18:44 2009
+Cc: Git mailing list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 16 11:19:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZ0Yg-0007KR-FF
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 11:18:38 +0100
+	id 1LZ0Ze-0007dX-5i
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 11:19:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753495AbZBPKRM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 05:17:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753317AbZBPKRK
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 05:17:10 -0500
-Received: from main.gmane.org ([80.91.229.2]:37512 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750849AbZBPKRJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 05:17:09 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LZ0XE-0006cC-T5
-	for git@vger.kernel.org; Mon, 16 Feb 2009 10:17:09 +0000
-Received: from host172-56-dynamic.10-87-r.retail.telecomitalia.it ([87.10.56.172])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 16 Feb 2009 10:17:08 +0000
-Received: from sergio.callegari by host172-56-dynamic.10-87-r.retail.telecomitalia.it with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 16 Feb 2009 10:17:08 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 87.10.56.172 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.6) Gecko/2009020911 Ubuntu/8.10 (intrepid) Firefox/3.0.6)
+	id S1754106AbZBPKSM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 05:18:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754042AbZBPKSK
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 05:18:10 -0500
+Received: from mail-fx0-f20.google.com ([209.85.220.20]:48757 "EHLO
+	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753795AbZBPKSJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 05:18:09 -0500
+Received: by fxm13 with SMTP id 13so5546820fxm.13
+        for <git@vger.kernel.org>; Mon, 16 Feb 2009 02:18:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3xRoufbwZTV7TOHWf6RQH0VB/MZ7HFcYS3D0Bte22eI=;
+        b=NggA72q30LytdqjhH84Db/Aabt176uisLH45ZfWsIaMAMMqMWx46+czhVMsq6qftts
+         RCybvA3zib12V70Q6abhfyRt+EgpoNj5SssBTWV44wiLQjzcj33DDBC9hYYwxQmM8iZD
+         N9OWyUPKpp/Jm1a5DcWBXTEZZA4FGddp85uVk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=LeWrWhc14ISR210fYemkvA+BBMF40Uv5+D4bgw7TM4nfRTbKlLr6R4Ki2Dr6KV9Ls4
+         Fl4fAjx9NiMc67KxI1v49jlSAUQ+9c5kSqiie7GOtblkxfyki7VLoStg494RGV6CUxEt
+         sj8Plwyqy33DVeKunckodNKvhY6L/lyimBjhA=
+Received: by 10.103.220.18 with SMTP id x18mr2788298muq.38.1234779486690; Mon, 
+	16 Feb 2009 02:18:06 -0800 (PST)
+In-Reply-To: <20090210153048.GA17660@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110161>
 
-Junio C Hamano <gitster <at> pobox.com> writes:
+On Tue, Feb 10, 2009 at 4:30 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Feb 10, 2009 at 01:58:43PM +0100, Tor Arvid Lund wrote:
+>
+>> So - after the "+0100" on the committer line, hd tells me (as
+>> expected) that I have 0a 0a before "[HIA]". On the "faulty" commit I,
+>> for some reason, have 0a 00 instead. I do not understand why, but I
+>> guess strchr will return NULL when "\0[HIA]....." is passed to it, and
+>> segfault on the next iteration.
+>>
+>> So - I am no closer to understanding what got me to this state, but
+>> your reply was helpful anyway, thanks :-)
+>
+> Well, it certainly seems like a bug in one of the history-rewriting
+> programs. Can you try rebasing, cherry-picking, etc on the original
+> version of the commit to see if you can reproduce the breakage?
 
-> 
-> Daniel Barkalow <barkalow <at> iabervon.org> writes:
-> 
-> > In fact, if you expect to be pushing to a non-bare repository, you
-> > probably want to have HEAD contain the actual commit currently checked
-> > out (instead of a reference to externally mutable storage), which you
-> > can do with "git checkout refs/heads/master".
-> 
-> "git checkout master^0" is shorter 
-> 
-> For people who do not follow the git list regularly, a "HEAD contain the
-> actual commit" is often called "detached".
-> 
+Hi, I haven't had much time to test this thoroughly, but my primary
+suspect is now git-p4 in conjunction with python v2.6, which I
+recently installed. I will try to find some time to investigate
+further, and let you all know for sure.
 
-
-Could you have that done automatically?
-Namely rather to denying push to a branch b where HEAD->b, when you get such
-push you detach head?
+-Tor Arvid-
