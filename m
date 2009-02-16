@@ -1,109 +1,80 @@
-From: Lars Noschinski <lars@public.noschinski.de>
-Subject: [PATCH] filter-branch -d: Export GIT_DIR earlier
-Date: Mon, 16 Feb 2009 14:09:51 +0100
-Message-ID: <20090216130951.GA3769@lars.home.noschinski.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] filter-branch -d: Export GIT_DIR earlier
+Date: Mon, 16 Feb 2009 14:42:23 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902161441190.6289@intel-tinevez-2-302>
+References: <20090216130951.GA3769@lars.home.noschinski.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 16 14:24:14 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Lars Noschinski <lars@public.noschinski.de>
+X-From: git-owner@vger.kernel.org Mon Feb 16 14:44:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZ3SH-00078z-PW
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 14:24:14 +0100
+	id 1LZ3lK-0006d6-Vo
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 14:43:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751596AbZBPNWq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 08:22:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755929AbZBPNWo
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 08:22:44 -0500
-Received: from smtprelay04.ispgateway.de ([80.67.18.16]:52636 "EHLO
-	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755860AbZBPNWo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 08:22:44 -0500
-X-Greylist: delayed 770 seconds by postgrey-1.27 at vger.kernel.org; Mon, 16 Feb 2009 08:22:43 EST
-Received: from [134.61.47.191] (helo=fruehjahrsmuede.home.noschinski.de)
-	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <lars@public.noschinski.de>)
-	id 1LZ3EO-0004tZ-A9
-	for git@vger.kernel.org; Mon, 16 Feb 2009 14:09:52 +0100
-Received: from lars by fruehjahrsmuede.home.noschinski.de with local (Exim 4.69)
-	(envelope-from <lars@public.noschinski.de>)
-	id 1LZ3EN-0000zv-MH
-	for git@vger.kernel.org; Mon, 16 Feb 2009 14:09:51 +0100
-Content-Disposition: inline
-User-Agent: mutt-ng/devel-r804 (Linux)
-X-Df-Sender: 336680
+	id S1756346AbZBPNm1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 08:42:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755368AbZBPNm1
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 08:42:27 -0500
+Received: from mail.gmx.net ([213.165.64.20]:40774 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754795AbZBPNm0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 08:42:26 -0500
+Received: (qmail invoked by alias); 16 Feb 2009 13:42:24 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp025) with SMTP; 16 Feb 2009 14:42:24 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/5CNhRH2b5tMu+Gy51268OYRULy6kRii+TShNhO+
+	iPQqW5bWYgnFMF
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <20090216130951.GA3769@lars.home.noschinski.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110178>
 
-The improved error handling catches a bug in filter-branch when using
--d pointing to a path outside any git repository:
+Hi,
 
-$ mkdir foo
-$ cd foo
-$ git init
-$ touch bar
-$ git add bar
-$ git commit -m bar
-$ cd ..
-$ git clone --bare foo
-$ cd foo.git
-$ git filter-branch -d /tmp/filter master
-fatal: Not a git repository (or any of the parent directories): .git
+On Mon, 16 Feb 2009, Lars Noschinski wrote:
 
-This error message comes from git for-each-ref in line 224. GIT_DIR is
-set correctly by git-sh-setup (to the foo.git repository), but not
-exported (yet).
----
+> The improved error handling catches a bug in filter-branch when using
+> -d pointing to a path outside any git repository:
+> 
+> $ mkdir foo
+> $ cd foo
+> $ git init
+> $ touch bar
+> $ git add bar
+> $ git commit -m bar
+> $ cd ..
+> $ git clone --bare foo
+> $ cd foo.git
+> $ git filter-branch -d /tmp/filter master
+> fatal: Not a git repository (or any of the parent directories): .git
+> 
+> This error message comes from git for-each-ref in line 224. GIT_DIR is
+> set correctly by git-sh-setup (to the foo.git repository), but not
+> exported (yet).
 
-This fix is not yet ready for commit, as it lacks a test case.
+Thanks.
 
-Writing a test case for this bug, I wonder about the preferred way to use a
-directory outside any git repository in a test: Using some directory below
-git/t/ will not work, as (in most cases) git is a git repository.
+> ---
+> 
+> This fix is not yet ready for commit, as it lacks a test case.
+> 
+> Writing a test case for this bug, I wonder about the preferred way to use a
+> directory outside any git repository in a test: Using some directory below
+> git/t/ will not work, as (in most cases) git is a git repository.
 
-Using the system's temp directory via mktemp() or so directory would work most
-of the time - but not always. Any ideas?
+How about using a filter-branch call with a filter that echoes GIT_DIR 
+into a file, then fails, and then checking the exact contents of GIT_DIR?
 
-  - Lars.
-
-  git-filter-branch.sh |   12 ++++++------
-  1 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 27b57b8..9a09ba1 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -220,6 +220,12 @@ die ""
-  # Remove tempdir on exit
-  trap 'cd ../..; rm -rf "$tempdir"' 0
-  
-+ORIG_GIT_DIR="$GIT_DIR"
-+ORIG_GIT_WORK_TREE="$GIT_WORK_TREE"
-+ORIG_GIT_INDEX_FILE="$GIT_INDEX_FILE"
-+GIT_WORK_TREE=.
-+export GIT_DIR GIT_WORK_TREE
-+
-  # Make sure refs/original is empty
-  git for-each-ref > "$tempdir"/backup-refs || exit
-  while read sha1 type name
-@@ -234,12 +240,6 @@ do
-  	esac
-  done < "$tempdir"/backup-refs
-  
--ORIG_GIT_DIR="$GIT_DIR"
--ORIG_GIT_WORK_TREE="$GIT_WORK_TREE"
--ORIG_GIT_INDEX_FILE="$GIT_INDEX_FILE"
--GIT_WORK_TREE=.
--export GIT_DIR GIT_WORK_TREE
--
-  # The refs should be updated if their heads were rewritten
-  git rev-parse --no-flags --revs-only --symbolic-full-name \
-  	--default HEAD "$@" > "$tempdir"/raw-heads || exit
--- 
-1.6.2.rc0.90.g0753.dirty
+Ciao,
+Dscho
