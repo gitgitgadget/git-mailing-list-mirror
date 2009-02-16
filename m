@@ -1,104 +1,96 @@
-From: Constantine Plotnikov <constantine.plotnikov@gmail.com>
-Subject: [JGIT PATCH v2] Fixed QuotedStringGitPathStyleTest.testDequote_OctalAll 
-	test that generated incorrect UTF-8 escape sequences
-Date: Mon, 16 Feb 2009 21:50:21 +0300
-Message-ID: <85647ef50902161050i43b478d4kb7faaa211dee727d@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 16 19:52:03 2009
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [RFC PATCH] format-patch: thread as reply to cover letter even with in-reply-to
+Date: Mon, 16 Feb 2009 20:00:12 +0100
+Message-ID: <1234810812-30499-1-git-send-email-trast@student.ethz.ch>
+References: <cover.1234801852.git.trast@student.ethz.ch>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 16 20:02:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZ8ZM-0002rF-2l
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 19:51:52 +0100
+	id 1LZ8j6-0006g2-23
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 20:01:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751455AbZBPSuZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 13:50:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751095AbZBPSuY
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 13:50:24 -0500
-Received: from mail-bw0-f161.google.com ([209.85.218.161]:43284 "EHLO
-	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750952AbZBPSuY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 13:50:24 -0500
-Received: by bwz5 with SMTP id 5so3309975bwz.13
-        for <git@vger.kernel.org>; Mon, 16 Feb 2009 10:50:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=+ehhzPwyWfHcAaONvdToHU6lPdQQDye56YbpTqlYQyw=;
-        b=jjp+2h48kcSn7BdkMCqzI5I++rg1dJPv+M90BtaBLWDhw1i3WjmL9GkUXMwGYZUxEd
-         hHIYClLTNJXaLx31ogjtG2vWR0RkvVoeKnGF2h28hMKRv6Zt3ARfyramIW2Rjvi7BChC
-         d5LVeLndQ1SoPb9fuTWAKpGXKmm7DnXD1fe4U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=EQzSpPgtOLr3h3ghr8PP0CEGd2/yjTrXkXK007Wd/RjnGZ7vi3NwlIYDPIEwSPEJZS
-         dVHmvNzugDeUcA+7a7oDWuj+qwQStNPw3DaY+JUOvtUdxIaJq7mF8OUOr6eq97YODRQ6
-         uJGgsMKqy3bpgYj8DJLTgNJnJ7lU4bqpdOw5o=
-Received: by 10.181.235.6 with SMTP id m6mr790912bkr.190.1234810221930; Mon, 
-	16 Feb 2009 10:50:21 -0800 (PST)
+	id S1751830AbZBPTA2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 14:00:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751777AbZBPTA1
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 14:00:27 -0500
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:42357 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751688AbZBPTA0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 14:00:26 -0500
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 16 Feb 2009 20:00:25 +0100
+Received: from localhost.localdomain ([84.75.148.62]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 16 Feb 2009 20:00:24 +0100
+X-Mailer: git-send-email 1.6.2.rc0.328.g2c702
+In-Reply-To: <cover.1234801852.git.trast@student.ethz.ch>
+X-OriginalArrivalTime: 16 Feb 2009 19:00:24.0949 (UTC) FILETIME=[D31A6250:01C99068]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110229>
 
-The test was failing on the system that use a encoding different
-from ISO-8859-1. The reason was that invalid UTF-8 bytes were
-generated for codepoints greater than U+7F, and in this case
-the method RawParseUtils.decodeNoFallback falls backs to the
-default system encoding.
+Currently, format-patch --thread --cover-letter --in-reply-to $parent
+makes all mails, including the cover letter, a reply to $parent.
+However, we would want the reader to consider the cover letter above
+all the patches.
 
-Signed-off-by: Constantine Plotnikov <Constantine.Plotnikov@jetbrains.com>
+This changes the semantics so that only the cover letter is a reply to
+$parent, while all the patches are formatted as replies to the cover
+letter.
+
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
 
-The bug was causing failure for the maven build on the windows
-environment that uses Cp1251 as a system encoding. However the test
-worked from Eclipse until I have specified jvm option
--Dfile.ecoding=Cp1251, in the test case started to fail in Eclipse as
-well.
+Thomas Rast wrote:
+> Unrelated note regarding --thread usage:
+> 
+> Wouldn't it be better if format-patch made it so that the cover
+> letter, if any, is the (only) reply to the --in-reply-to, and all
+> actual patches are replies to the cover letter?
 
- .../jgit/util/QuotedStringGitPathStyleTest.java    |   21 ++++++++++++++-----
- 1 files changed, 15 insertions(+), 6 deletions(-)
+Maybe like this?
 
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/util/QuotedStringGitPathStyleTest.java
-b/org.spearce.jgit.test/tst/org/spearce/jgit/util/QuotedStringGitPathStyleTest.java
-index 54fbd31..7d29f21 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/util/QuotedStringGitPathStyleTest.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/util/QuotedStringGitPathStyleTest.java
-@@ -127,13 +127,22 @@ public void testDequote_NamedEscapes() {
- 	}
 
- 	public void testDequote_OctalAll() {
--		for (int i = 0; i < 256; i++) {
--			String s = Integer.toOctalString(i);
--			while (s.length() < 3) {
--				s = "0" + s;
--			}
--			assertDequote("" + (char) i, "\\" + s);
-+		for (int i = 0; i < 127; i++) {
-+			assertDequote("" + (char) i, octalEscape(i));
- 		}
-+		for (int i = 128; i < 256; i++) {
-+			int f = 0xC0 | (i >> 6);
-+			int s = 0x80 | (i & 0x3f);
-+			assertDequote("" + (char) i, octalEscape(f)+octalEscape(s));
-+		}
-+	}
-+
-+	private String octalEscape(int i) {
-+		String s = Integer.toOctalString(i);
-+		while (s.length() < 3) {
-+			s = "0" + s;
-+		}
-+		return "\\"+s;
- 	}
+ builtin-log.c |   20 +++++++++++++++-----
+ 1 files changed, 15 insertions(+), 5 deletions(-)
 
- 	public void testQuote_OctalAll() {
+diff --git a/builtin-log.c b/builtin-log.c
+index 2ae39af..ec11f95 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -1031,12 +1031,22 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 			/* Have we already had a message ID? */
+ 			if (rev.message_id) {
+ 				/*
+-				 * If we've got the ID to be a reply
+-				 * to, discard the current ID;
+-				 * otherwise, make everything a reply
+-				 * to that.
++				 * Without --cover-letter and
++				 * --in-reply-to, make every mail a
++				 * reply to the one before.
++				 *
++				 * With --in-reply-to but no
++				 * --cover-letter, make every mail a
++				 * reply to the <reply-to>.
++				 *
++				 * With --cover-letter, make every
++				 * mail but the cover letter a reply
++				 * to the cover letter.  The cover
++				 * letter is a reply to the
++				 * --in-reply-to, if specified.
+ 				 */
+-				if (rev.ref_message_id)
++				if (rev.ref_message_id
++				    && (!cover_letter || rev.nr > 1))
+ 					free(rev.message_id);
+ 				else
+ 					rev.ref_message_id = rev.message_id;
 -- 
-1.6.1.2
+1.6.2.rc0.328.g2c702
