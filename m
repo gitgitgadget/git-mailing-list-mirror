@@ -1,76 +1,75 @@
-From: Jason Spiro <jasonspiro4@gmail.com>
-Subject: Re: Improving CRLF error message; also, enabling autocrlf =?utf-8?b?YW5kCXNhZmVjcmxm?= by default
-Date: Mon, 16 Feb 2009 03:29:23 +0000 (UTC)
-Message-ID: <loom.20090216T032551-612@post.gmane.org>
-References: <loom.20090216T022524-78@post.gmane.org> <20090216030446.GC18780@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: "add -p" + filenames with UTF-8 multibyte characters = "No
+	changes"
+Date: Sun, 15 Feb 2009 22:36:34 -0500
+Message-ID: <20090216033634.GA12461@coredump.intra.peff.net>
+References: <2b8265360902151040t49711942udd4862cc9df01da5@mail.gmail.com> <87tz6vr0g4.fsf@iki.fi> <2b8265360902151100n2eca0182odf9543c1dd8a7f98@mail.gmail.com> <87prhjqzwb.fsf@iki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 16 04:31:04 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Mon Feb 16 04:38:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LYuCE-0007fi-2i
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 04:31:02 +0100
+	id 1LYuJ2-0000Pz-Fx
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 04:38:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755837AbZBPD3e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Feb 2009 22:29:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755729AbZBPD3e
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 22:29:34 -0500
-Received: from main.gmane.org ([80.91.229.2]:40978 "EHLO ciao.gmane.org"
+	id S1755861AbZBPDgi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Feb 2009 22:36:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755546AbZBPDgh
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Feb 2009 22:36:37 -0500
+Received: from peff.net ([208.65.91.99]:56493 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752862AbZBPD3e (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Feb 2009 22:29:34 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LYuAn-0000yB-Aq
-	for git@vger.kernel.org; Mon, 16 Feb 2009 03:29:33 +0000
-Received: from CPE00195b4d5e2c-CM0013718690da.cpe.net.cable.rogers.com ([99.226.154.227])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 16 Feb 2009 03:29:33 +0000
-Received: from jasonspiro4 by CPE00195b4d5e2c-CM0013718690da.cpe.net.cable.rogers.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 16 Feb 2009 03:29:33 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 99.226.154.227 (Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Chrome/1.0.154.48 Safari/525.19)
+	id S1752862AbZBPDgg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Feb 2009 22:36:36 -0500
+Received: (qmail 12809 invoked by uid 107); 16 Feb 2009 03:36:56 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 15 Feb 2009 22:36:56 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 15 Feb 2009 22:36:34 -0500
+Content-Disposition: inline
+In-Reply-To: <87prhjqzwb.fsf@iki.fi>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110126>
 
-Jeff King <peff <at> peff.net> writes:
-> 
-> On Mon, Feb 16, 2009 at 02:45:43AM +0000, Jason Spiro wrote:
-> 
-> > One of the pre-commit hooks detects trailing whitespace:
-> > 
-> > if (/\s$/) {
-> > bad_line("trailing whitespace", $_);
-> > }
-> 
-> Not since 03e2b63 (Update sample pre-commit hook to use "diff --check",
-> 2008-06-26), when that line was removed.
-> 
-> I'm happy you want to improve git; but please, if you want to report
-> problems, check what the status is in a more recent version (or at least
-> tell us your version, which can help).
+On Sun, Feb 15, 2009 at 09:11:00PM +0200, Teemu Likonen wrote:
 
-Sorry.  Will do.
+> "core.quotepath=3Dfalse" is good for other purposes too. It prints UT=
+=46-8
+> filenames in diff headers in form that is actually readable. I think =
+it
+> would be better default.
 
-...
-> > 2.  In addition, could you please enable the core.autocrlf and 
-core.safecrlf 
-> > options by default in the next version of Git?
-> 
-> I think that is up to your platform packaging, I think. I think msysgit
-> is shipping with core.autocrlf on by default these days. But again, I
-> don't know very much about that area.
+I am not opposed to setting this as a default, but I think there may be
+some encoding issues to be dealt with. At the very least, format-patch
+generates messages without a content-type header. E.g.,:
 
-Are you saying that only my platform's packager can decide what options are 
-enabled by default, and that you upstream folks have no influence at all?  :)
+  $ touch f=C3=B6=C3=B6 && git add . && git commit -m one
+  $ echo content >f=C3=B6=C3=B6 && git commit -a -m two
+
+  $ git format-patch --stdout HEAD^ | sed '/^$/q'
+
+     vs
+
+  $ git config core.quotepath false
+  $ git format-patch --stdout HEAD^ | sed '/^$/q'
+
+So now we have non-ascii in our email, but no header specifying
+encoding. Previous experience has shown that intermediate MTAs (like
+vger) will add their own header with whatever encoding they think is
+sensible (in the case of vger, iso8859-1), corrupting the mail if they
+guess wrong.
+
+But what is the right encoding to specify? We can guess that it is
+whatever the commit message is in (defaulting to utf-8). It is by no
+means correct, but it would probably work pretty well in practice.
+
+On the other hand, we already have the same problem for encoded file
+_contents_. So maybe it is not a big problem in practice.
+
+-Peff
