@@ -1,88 +1,56 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [RFC PATCH] format-patch: thread as reply to cover letter even with in-reply-to
-Date: Tue, 17 Feb 2009 00:27:04 +0100
-Message-ID: <200902170027.09406.trast@student.ethz.ch>
-References: <cover.1234801852.git.trast@student.ethz.ch> <200902162134.28850.trast@student.ethz.ch> <m3bpt2t8a6.fsf@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1405767.nhKByW6jN2";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Jakub Narebski <jnareb@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 17 00:28:47 2009
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [PATCH] Minor grammar fix in the 'Not a git repository' message
+Date: Tue, 17 Feb 2009 00:27:20 +0100
+Message-ID: <E8469C6E-A238-4DD0-B287-09E8ABCE4801@wincent.com>
+References: <cover.1234825069u.git.johannes.schindelin@gmx.de> <8787c5894e7831bbd1ace3b2fd6649f1362d4b78.1234825069u.git.johannes.schindelin@gmx.de>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Richard Hartmann <richih.mailinglist@gmail.com>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 17 00:29:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZCtJ-0001VY-0j
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 00:28:45 +0100
+	id 1LZCtZ-0001b1-TX
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 00:29:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751844AbZBPX1N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 18:27:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751402AbZBPX1N
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 18:27:13 -0500
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:20400 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750727AbZBPX1M (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 18:27:12 -0500
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 17 Feb 2009 00:27:11 +0100
-Received: from thomas.localnet ([84.75.148.62]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 17 Feb 2009 00:27:10 +0100
-User-Agent: KMail/1.11.0 (Linux/2.6.27.7-9-default; KDE/4.2.0; x86_64; ; )
-In-Reply-To: <m3bpt2t8a6.fsf@localhost.localdomain>
-X-OriginalArrivalTime: 16 Feb 2009 23:27:10.0585 (UTC) FILETIME=[17349E90:01C9908E]
+	id S1752058AbZBPX1b convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Feb 2009 18:27:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751765AbZBPX1a
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 18:27:30 -0500
+Received: from wincent1.inetu.net ([209.235.192.161]:52051 "EHLO
+	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751451AbZBPX1a convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Feb 2009 18:27:30 -0500
+Received: from cuzco.lan (54.pool85-53-5.dynamic.orange.es [85.53.5.54])
+	(authenticated bits=0)
+	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id n1GNRLCf008328
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Mon, 16 Feb 2009 18:27:23 -0500
+In-Reply-To: <8787c5894e7831bbd1ace3b2fd6649f1362d4b78.1234825069u.git.johannes.schindelin@gmx.de>
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110263>
 
---nextPart1405767.nhKByW6jN2
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+El 16/2/2009, a las 23:58, Johannes Schindelin escribi=F3:
 
-Jakub Narebski wrote:
-> Thomas Rast <trast@student.ethz.ch> writes:
-> > Jay Soffian wrote:
->=20
-> > > I think this change may be okay, but I think to go with it the
-> > > cover-letter and all the patches should have a "References:" header
-> > > with the message-id given by --in-reply-to.
-> >=20
-> > That's a completely separate issue.  I'm only proposing to change
-> > what is formatted as a reply to what, the In-Reply-To and References
-> > formatting is handled by the existing code.
-[...]
-> patches had both '--in-reply-to' message id AND cover letter id in
-> "References:" header.  That would make for safer threading...
+> It might cause less head-scratching to say 'nor any of the parent
+> directories' than 'or ...' after saying that this is not a git
+> repository.
+>
+> -			die("Not a git repository (or any of the parent directories): =20
+> %s", DEFAULT_GIT_DIR_ENVIRONMENT);
+> +			die("Not a git repository (nor any of the parent directories): =20
+> %s", DEFAULT_GIT_DIR_ENVIRONMENT);
 
-Oh, now I see what you meant.
+Or could just avoid the whole "or/nor" construct entirely by just =20
+saying?
 
-It seems that right now, send-email appends the right references for
-=2D-thread mode, and format-patch only does the one-reference case.
-I'll try and make a patch for that.
-
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
-
---nextPart1405767.nhKByW6jN2
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkmZ9k0ACgkQqUud07tmzP01+ACcD6fzC+P3cPs/AYJu6jTk1sUy
-yuQAn1D7l2/Z1GA8jfBQrg2i3DfA9YYI
-=sDrO
------END PGP SIGNATURE-----
-
---nextPart1405767.nhKByW6jN2--
+   "Not inside a git repository"
