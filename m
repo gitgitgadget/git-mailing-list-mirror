@@ -1,482 +1,653 @@
 From: Nigel Magnay <nigel.magnay@gmail.com>
-Subject: [JGIT PATCH] 1/2: Externalizable items
-Date: Mon, 16 Feb 2009 16:45:55 +0000
-Message-ID: <320075ff0902160845m264f78cdh8dc5307b24f4c3ed@mail.gmail.com>
+Subject: [JGIT PATCH] 2/2: Tests for externalizable items
+Date: Mon, 16 Feb 2009 16:46:52 +0000
+Message-ID: <320075ff0902160846o4c9782eax1513943cd1af8c2d@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: Git ML <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 16 17:47:48 2009
+X-From: git-owner@vger.kernel.org Mon Feb 16 17:49:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZ6dG-0005Eg-Jj
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 17:47:47 +0100
+	id 1LZ6eS-0005hX-WE
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 17:49:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751992AbZBPQqT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 11:46:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751732AbZBPQqS
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 11:46:18 -0500
-Received: from mail-fx0-f20.google.com ([209.85.220.20]:45532 "EHLO
+	id S1753240AbZBPQrS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 11:47:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752841AbZBPQrS
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 11:47:18 -0500
+Received: from mail-fx0-f20.google.com ([209.85.220.20]:39535 "EHLO
 	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751123AbZBPQqQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 11:46:16 -0500
-Received: by fxm13 with SMTP id 13so6101375fxm.13
-        for <git@vger.kernel.org>; Mon, 16 Feb 2009 08:46:14 -0800 (PST)
+	with ESMTP id S1753074AbZBPQrP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 11:47:15 -0500
+Received: by fxm13 with SMTP id 13so6103566fxm.13
+        for <git@vger.kernel.org>; Mon, 16 Feb 2009 08:47:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:date:message-id:subject
          :from:to:content-type:content-transfer-encoding;
-        bh=C3PVr39Xc8M94A5MlhL3/36dBLaM6whaemsHXZ/2bqw=;
-        b=wnX2ljH+CK/P1DOnKGfq0eQMgrQCuDcVE2wAs93K0No8RhLPE6VNArNkuRJcJBu7Xr
-         PggWb3vepBETocFfKrYU0yHt8VRo3JCFQj3sfAkGBBhkt6UysvUdwLBuQLtjzWSxIvY/
-         TZn3Vta2UfVXa6x07twWAz8+Cvc8aB3PR9ZWI=
+        bh=q764hUEvbEsLVV7XfzH+704hhxOnW3Rxtt0QYeGgugY=;
+        b=QRRAVf2/2EFE+UhZ2jgZeovwub0x7Kjz83NurWRz5Dbaq3JI5vacuiK6NtdOyFsIg4
+         y3C35BwcUQ4FSo+njoR6ruwFdaPr9OuXq3/KWYdZ29APCZYVZetYXGAjQm2ilV8jNG/7
+         QodWBkbezIv/7qoHN6psnS4/cidcfUx8Q+6v4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:date:message-id:subject:from:to:content-type
          :content-transfer-encoding;
-        b=ETVtM75P2jD6X1Dzh4Y4mOVbGWniuFiG3+Z3Q5KGBPBWG58WnpZRMsO84qRDaNWchq
-         LY8vGxE81CE8NJUb1+IemUU/atgu/tLdzlYPj6q5Bj7b5Q8IxJHrdCKzSagGrKlrvz20
-         fg/dVDV8Q6xERRsmVf+S9FYKocispJoCb4Xb4=
-Received: by 10.103.119.19 with SMTP id w19mr3043178mum.80.1234802755474; Mon, 
-	16 Feb 2009 08:45:55 -0800 (PST)
+        b=FVqIATa/gXDd8QmOj3xkgs3NQFlB4LuLBVj64M1v9y7rd+njqNZOkNykc23s0ISAlr
+         P1drgHJoRi0Y19b7FF5V/6aZq9XdcjwlJPC9iMnKg8CosDww4RmtEnenAidMtk6t35Hl
+         Ni1hQiFTtqoh8aC9m+iR7K/KHZcDcqQonIvns=
+Received: by 10.102.247.4 with SMTP id u4mr1652185muh.104.1234802812737; Mon, 
+	16 Feb 2009 08:46:52 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110208>
 
-Make parts of jgit externalizable, so that they can be marshalled over
-the wire or onto disk,
-using formats from git mailing list.
+Extend unit tests for Externalizable items so that each test checks,
+by round-tripping, the
+representation that it remains the same.
 
 Signed-off-by: Nigel Magnay <nigel.magnay@gmail.com>
 ---
- .../src/org/spearce/jgit/lib/ObjectId.java         |   31 ++++-
- .../src/org/spearce/jgit/transport/RefSpec.java    |   77 +++++++----
- .../org/spearce/jgit/transport/RemoteConfig.java   |  142 +++++++++++++++++++-
- .../src/org/spearce/jgit/transport/URIish.java     |   31 ++++-
- 4 files changed, 252 insertions(+), 29 deletions(-)
+ .../tst/org/spearce/jgit/lib/T0001_ObjectId.java   |   23 +++++++
+ .../spearce/jgit/transport/RefSpecTestCase.java    |   68 ++++++++++++++++----
+ .../spearce/jgit/transport/RemoteConfigTest.java   |   57 ++++++++++++++++
+ .../tst/org/spearce/jgit/transport/URIishTest.java |   36 ++++++++++
+ 4 files changed, 172 insertions(+), 12 deletions(-)
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
-b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
-index 52ce0d4..1385325 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
-@@ -38,6 +38,10 @@
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/T0001_ObjectId.java
+b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/T0001_ObjectId.java
+index 4c03667..be70b65 100644
+--- a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/T0001_ObjectId.java
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/T0001_ObjectId.java
+@@ -37,6 +37,12 @@
 
  package org.spearce.jgit.lib;
 
-+import java.io.Externalizable;
++import java.io.ByteArrayInputStream;
++import java.io.ByteArrayOutputStream;
 +import java.io.IOException;
-+import java.io.ObjectInput;
-+import java.io.ObjectOutput;
- import java.io.UnsupportedEncodingException;
++import java.io.ObjectInputStream;
++import java.io.ObjectOutputStream;
++
+ import junit.framework.TestCase;
 
- import org.spearce.jgit.util.NB;
-@@ -45,7 +49,7 @@
- /**
-  * A SHA-1 abstraction.
-  */
--public class ObjectId extends AnyObjectId {
-+public class ObjectId extends AnyObjectId implements Externalizable {
- 	private static final ObjectId ZEROID;
-
- 	private static final String ZEROID_STR;
-@@ -56,6 +60,13 @@
+ public class T0001_ObjectId extends TestCase {
+@@ -94,4 +100,21 @@ public void test010_toString() {
+ 		final String x = "0000000000000000000000000000000000000000";
+ 		assertEquals(x, ObjectId.toString(null));
  	}
-
- 	/**
-+	 * Empty constructor, for Externalizable.
-+	 */
-+	public ObjectId() {
-+		// For Externalizable
-+	}
 +	
-+	/**
- 	 * Get the special all-null ObjectId.
- 	 *
- 	 * @return the all-null ObjectId, often used to stand-in for no object.
-@@ -269,4 +280,22 @@ protected ObjectId(final AnyObjectId src) {
- 	public ObjectId toObjectId() {
- 		return this;
- 	}
-+
-+	public void readExternal(ObjectInput in) throws IOException,
-+			ClassNotFoundException {
-+		byte[] sha1 = new byte[20];
-+		in.read(sha1);
++	public void test011_roundTrip() throws IOException, ClassNotFoundException {
++		final String x = "0123456789abcdeffedcba987654321011223344";
++		final ObjectId oid = ObjectId.fromString(x);
 +		
-+		w1 = NB.decodeInt32(sha1, 0);
-+		w2 = NB.decodeInt32(sha1, 4);
-+		w3 = NB.decodeInt32(sha1, 8);
-+		w4 = NB.decodeInt32(sha1, 12);
-+		w5 = NB.decodeInt32(sha1, 16);
-+	}
++		ByteArrayOutputStream stream = new ByteArrayOutputStream();
++		ObjectOutputStream out = new ObjectOutputStream(stream);
++		out.writeObject(oid);
++		out.close();
 +
-+	public void writeExternal(ObjectOutput out) throws IOException {
-+		byte[] sha1 = new byte[20];
-+		copyRawTo(sha1, 0);
-+		out.write(sha1);
++		ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(
++				stream.toByteArray()));
++		ObjectId oid2 = (ObjectId) in.readObject();
++		in.close();
++		
++		assert(oid2.equals(oid));
 +	}
  }
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/RefSpec.java
-b/org.spearce.jgit/src/org/spearce/jgit/transport/RefSpec.java
-index 521110b..0ee89b0 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/RefSpec.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/RefSpec.java
-@@ -37,6 +37,11 @@
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/RefSpecTestCase.java
+b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/RefSpecTestCase.java
+index 341b4a4..ad100a7 100644
+--- a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/RefSpecTestCase.java
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/RefSpecTestCase.java
+@@ -38,12 +38,17 @@
 
  package org.spearce.jgit.transport;
 
-+import java.io.Externalizable;
-+import java.io.IOException;
-+import java.io.ObjectInput;
-+import java.io.ObjectOutput;
++import java.io.ByteArrayInputStream;
++import java.io.ByteArrayOutputStream;
++import java.io.ObjectInputStream;
++import java.io.ObjectOutputStream;
 +
- import org.spearce.jgit.lib.Constants;
+ import junit.framework.TestCase;
+
  import org.spearce.jgit.lib.Ref;
 
-@@ -46,7 +51,7 @@
-  * A ref specification provides matching support and limited rules to rewrite a
-  * reference in one repository to another reference in another repository.
-  */
--public class RefSpec {
-+public class RefSpec implements Externalizable {
- 	/**
- 	 * Suffix for wildcard ref spec component, that indicate matching all refs
- 	 * with specified prefix.
-@@ -109,30 +114,7 @@ public RefSpec() {
- 	 *             the specification is invalid.
- 	 */
- 	public RefSpec(final String spec) {
--		String s = spec;
--		if (s.startsWith("+")) {
--			force = true;
--			s = s.substring(1);
--		}
--
--		final int c = s.indexOf(':');
--		if (c == 0) {
--			s = s.substring(1);
--			if (isWildcard(s))
--				throw new IllegalArgumentException("Invalid wildcards " + spec);
--			dstName = s;
--		} else if (c > 0) {
--			srcName = s.substring(0, c);
--			dstName = s.substring(c + 1);
--			if (isWildcard(srcName) && isWildcard(dstName))
--				wildcard = true;
--			else if (isWildcard(srcName) || isWildcard(dstName))
--				throw new IllegalArgumentException("Invalid wildcards " + spec);
--		} else {
--			if (isWildcard(s))
--				throw new IllegalArgumentException("Invalid wildcards " + spec);
--			srcName = s;
--		}
-+		initializeFromString(spec);
+ public class RefSpecTestCase extends TestCase {
+-	public void testMasterMaster() {
++	public void testMasterMaster() throws Exception {
+ 		final String sn = "refs/heads/master";
+ 		final RefSpec rs = new RefSpec(sn + ":" + sn);
+ 		assertFalse(rs.isForceUpdate());
+@@ -61,9 +66,11 @@ public void testMasterMaster() {
+ 		r = new Ref(Ref.Storage.LOOSE, sn + "-and-more", null);
+ 		assertFalse(rs.matchSource(r));
+ 		assertFalse(rs.matchDestination(r));
++		
++		assertRoundTrip(rs);
  	}
 
- 	/**
-@@ -161,6 +143,42 @@ private RefSpec(final RefSpec p) {
+-	public void testForceMasterMaster() {
++	public void testForceMasterMaster() throws Exception {
+ 		final String sn = "refs/heads/master";
+ 		final RefSpec rs = new RefSpec("+" + sn + ":" + sn);
+ 		assertTrue(rs.isForceUpdate());
+@@ -81,9 +88,11 @@ public void testForceMasterMaster() {
+ 		r = new Ref(Ref.Storage.LOOSE, sn + "-and-more", null);
+ 		assertFalse(rs.matchSource(r));
+ 		assertFalse(rs.matchDestination(r));
++		
++		assertRoundTrip(rs);
  	}
 
- 	/**
-+	 * Initialize the ref specification from a string.
-+	 *
-+	 * @param spec
-+	 *            string describing the specification.
-+	 * @throws IllegalArgumentException
-+	 *             the specification is invalid.
-+	 */
-+	private void initializeFromString(final String spec) {
-+		srcName = null;
-+		String s = spec;
-+		if (s.startsWith("+")) {
-+			force = true;
-+			s = s.substring(1);
-+		}
-+
-+		final int c = s.indexOf(':');
-+		if (c == 0) {
-+			s = s.substring(1);
-+			if (isWildcard(s))
-+				throw new IllegalArgumentException("Invalid wildcards " + spec);
-+			dstName = s;
-+		} else if (c > 0) {
-+			srcName = s.substring(0, c);
-+			dstName = s.substring(c + 1);
-+			if (isWildcard(srcName) && isWildcard(dstName))
-+				wildcard = true;
-+			else if (isWildcard(srcName) || isWildcard(dstName))
-+				throw new IllegalArgumentException("Invalid wildcards " + spec);
-+		} else {
-+			if (isWildcard(s))
-+				throw new IllegalArgumentException("Invalid wildcards " + spec);
-+			srcName = s;
-+		}
+-	public void testMaster() {
++	public void testMaster() throws Exception {
+ 		final String sn = "refs/heads/master";
+ 		final RefSpec rs = new RefSpec(sn);
+ 		assertFalse(rs.isForceUpdate());
+@@ -101,9 +110,11 @@ public void testMaster() {
+ 		r = new Ref(Ref.Storage.LOOSE, sn + "-and-more", null);
+ 		assertFalse(rs.matchSource(r));
+ 		assertFalse(rs.matchDestination(r));
++		
++		assertRoundTrip(rs);
+ 	}
+
+-	public void testForceMaster() {
++	public void testForceMaster() throws Exception {
+ 		final String sn = "refs/heads/master";
+ 		final RefSpec rs = new RefSpec("+" + sn);
+ 		assertTrue(rs.isForceUpdate());
+@@ -121,9 +132,11 @@ public void testForceMaster() {
+ 		r = new Ref(Ref.Storage.LOOSE, sn + "-and-more", null);
+ 		assertFalse(rs.matchSource(r));
+ 		assertFalse(rs.matchDestination(r));
++		
++		assertRoundTrip(rs);
+ 	}
+
+-	public void testDeleteMaster() {
++	public void testDeleteMaster() throws Exception {
+ 		final String sn = "refs/heads/master";
+ 		final RefSpec rs = new RefSpec(":" + sn);
+ 		assertFalse(rs.isForceUpdate());
+@@ -141,9 +154,11 @@ public void testDeleteMaster() {
+ 		r = new Ref(Ref.Storage.LOOSE, sn + "-and-more", null);
+ 		assertFalse(rs.matchSource(r));
+ 		assertFalse(rs.matchDestination(r));
++		
++		assertRoundTrip(rs);
+ 	}
+
+-	public void testForceRemotesOrigin() {
++	public void testForceRemotesOrigin() throws Exception {
+ 		final String srcn = "refs/heads/*";
+ 		final String dstn = "refs/remotes/origin/*";
+ 		final RefSpec rs = new RefSpec("+" + srcn + ":" + dstn);
+@@ -174,18 +189,22 @@ public void testForceRemotesOrigin() {
+ 		r = new Ref(Ref.Storage.LOOSE, "refs/tags/v1.0", null);
+ 		assertFalse(rs.matchSource(r));
+ 		assertFalse(rs.matchDestination(r));
++		
++		assertRoundTrip(rs);
+ 	}
+
+-	public void testCreateEmpty() {
++	public void testCreateEmpty() throws Exception {
+ 		final RefSpec rs = new RefSpec();
+ 		assertFalse(rs.isForceUpdate());
+ 		assertFalse(rs.isWildcard());
+ 		assertEquals("HEAD", rs.getSource());
+ 		assertNull(rs.getDestination());
+ 		assertEquals("HEAD", rs.toString());
++		assertRoundTrip(rs);
++		
+ 	}
+
+-	public void testSetForceUpdate() {
++	public void testSetForceUpdate() throws Exception {
+ 		final String s = "refs/heads/*:refs/remotes/origin/*";
+ 		final RefSpec a = new RefSpec(s);
+ 		assertFalse(a.isForceUpdate());
+@@ -195,25 +214,31 @@ public void testSetForceUpdate() {
+ 		assertTrue(b.isForceUpdate());
+ 		assertEquals(s, a.toString());
+ 		assertEquals("+" + s, b.toString());
++		assertRoundTrip(a);
++		assertRoundTrip(b);
+ 	}
+
+-	public void testSetSource() {
++	public void testSetSource() throws Exception {
+ 		final RefSpec a = new RefSpec();
+ 		final RefSpec b = a.setSource("refs/heads/master");
+ 		assertNotSame(a, b);
+ 		assertEquals("HEAD", a.toString());
+ 		assertEquals("refs/heads/master", b.toString());
++		assertRoundTrip(a);
++		assertRoundTrip(b);
+ 	}
+
+-	public void testSetDestination() {
++	public void testSetDestination() throws Exception {
+ 		final RefSpec a = new RefSpec();
+ 		final RefSpec b = a.setDestination("refs/heads/master");
+ 		assertNotSame(a, b);
+ 		assertEquals("HEAD", a.toString());
+ 		assertEquals("HEAD:refs/heads/master", b.toString());
++		assertRoundTrip(a);
++		assertRoundTrip(b);
+ 	}
+
+-	public void testSetDestination_SourceNull() {
++	public void testSetDestination_SourceNull() throws Exception {
+ 		final RefSpec a = new RefSpec();
+ 		RefSpec b;
+
+@@ -222,14 +247,33 @@ public void testSetDestination_SourceNull() {
+ 		assertNotSame(a, b);
+ 		assertEquals("HEAD", a.toString());
+ 		assertEquals(":refs/heads/master", b.toString());
++		assertRoundTrip(a);
++		assertRoundTrip(b);
+ 	}
+
+-	public void testSetSourceDestination() {
++	public void testSetSourceDestination() throws Exception {
+ 		final RefSpec a = new RefSpec();
+ 		final RefSpec b;
+ 		b = a.setSourceDestination("refs/heads/*", "refs/remotes/origin/*");
+ 		assertNotSame(a, b);
+ 		assertEquals("HEAD", a.toString());
+ 		assertEquals("refs/heads/*:refs/remotes/origin/*", b.toString());
++		assertRoundTrip(a);
++		assertRoundTrip(b);
++		
 +	}
 +	
-+	/**
- 	 * Check if this specification wants to forcefully update the destination.
- 	 *
- 	 * @return true if this specification asks for updates without merge tests.
-@@ -421,4 +439,13 @@ public String toString() {
- 		}
- 		return r.toString();
++	protected void assertRoundTrip(RefSpec refspec) throws Exception {
++		ByteArrayOutputStream stream = new ByteArrayOutputStream();
++		ObjectOutputStream out = new ObjectOutputStream(stream);
++		out.writeObject(refspec);
++		out.close();
++
++		ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(
++				stream.toByteArray()));
++		RefSpec refspec2 = (RefSpec) in.readObject();
++		in.close();
++		
++		assertEquals(refspec, refspec2);
  	}
-+
-+	public void readExternal(ObjectInput in) throws IOException,
-+			ClassNotFoundException {
-+		initializeFromString(in.readUTF());	
-+	}
-+
-+	public void writeExternal(ObjectOutput out) throws IOException {
-+		out.writeUTF(toString());
-+	}
  }
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteConfig.java
-b/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteConfig.java
-index 5bbf664..22443b4 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteConfig.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteConfig.java
-@@ -38,10 +38,17 @@
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/RemoteConfigTest.java
+b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/RemoteConfigTest.java
+index 6b72b64..f1deb86 100644
+--- a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/RemoteConfigTest.java
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/RemoteConfigTest.java
+@@ -38,10 +38,14 @@
 
  package org.spearce.jgit.transport;
 
-+import java.io.Externalizable;
-+import java.io.IOException;
-+import java.io.ObjectInput;
-+import java.io.ObjectOutput;
- import java.net.URISyntaxException;
- import java.util.ArrayList;
-+import java.util.Collection;
- import java.util.Collections;
-+import java.util.HashMap;
++import java.io.ByteArrayInputStream;
++import java.io.ByteArrayOutputStream;
+ import java.io.File;
+ import java.io.FileNotFoundException;
+ import java.io.FileOutputStream;
+ import java.io.IOException;
++import java.io.ObjectInputStream;
++import java.io.ObjectOutputStream;
+ import java.io.UnsupportedEncodingException;
  import java.util.List;
-+import java.util.Map;
 
- import org.spearce.jgit.lib.RepositoryConfig;
+@@ -91,6 +95,8 @@ writeConfig("[remote \"spearce\"]\n"
+ 		assertEquals("refs/remotes/spearce/*", spec.getDestination());
 
-@@ -53,7 +60,7 @@
-  * describing how refs should be transferred between this repository and the
-  * remote repository.
-  */
--public class RemoteConfig {
-+public class RemoteConfig implements Externalizable {
- 	private static final String SECTION = "remote";
-
- 	private static final String KEY_URL = "url";
-@@ -166,6 +173,17 @@ public RemoteConfig(final RepositoryConfig rc,
-final String remoteName)
+ 		assertEquals(0, rc.getPushRefSpecs().size());
++		
++		checkRoundTrip(rc);
  	}
 
- 	/**
-+	 * Construct an empty remote config.
-+	 */
-+	public RemoteConfig() {
-+		uris = new ArrayList<URIish>();
-+		fetch = new ArrayList<RefSpec>();
-+		push = new ArrayList<RefSpec>();
-+		uploadpack = DEFAULT_UPLOAD_PACK;
-+		receivepack = DEFAULT_RECEIVE_PACK;
+ 	public void testSimpleNoTags() throws Exception {
+@@ -100,6 +106,7 @@ writeConfig("[remote \"spearce\"]\n"
+ 				+ "tagopt = --no-tags\n");
+ 		final RemoteConfig rc = new RemoteConfig(db.getConfig(), "spearce");
+ 		assertSame(TagOpt.NO_TAGS, rc.getTagOpt());
++		checkRoundTrip(rc);
+ 	}
+
+ 	public void testSimpleAlwaysTags() throws Exception {
+@@ -109,6 +116,7 @@ writeConfig("[remote \"spearce\"]\n"
+ 				+ "tagopt = --tags\n");
+ 		final RemoteConfig rc = new RemoteConfig(db.getConfig(), "spearce");
+ 		assertSame(TagOpt.FETCH_TAGS, rc.getTagOpt());
++		checkRoundTrip(rc);
+ 	}
+
+ 	public void testMirror() throws Exception {
+@@ -144,6 +152,7 @@ writeConfig("[remote \"spearce\"]\n"
+ 		assertEquals("refs/tags/*", spec.getDestination());
+
+ 		assertEquals(0, rc.getPushRefSpecs().size());
++		checkRoundTrip(rc);
+ 	}
+
+ 	public void testBackup() throws Exception {
+@@ -180,6 +189,7 @@ writeConfig("[remote \"backup\"]\n"
+ 		assertTrue(spec.isWildcard());
+ 		assertEquals("refs/tags/*", spec.getSource());
+ 		assertEquals("refs/tags/*", spec.getDestination());
++		checkRoundTrip(rc);
+ 	}
+
+ 	public void testUploadPack() throws Exception {
+@@ -212,6 +222,7 @@ writeConfig("[remote \"example\"]\n"
+
+ 		assertEquals("/path/to/git/git-upload-pack", rc.getUploadPack());
+ 		assertEquals("/path/to/git/git-receive-pack", rc.getReceivePack());
++		checkRoundTrip(rc);
+ 	}
+
+ 	public void testUnknown() throws Exception {
+@@ -223,6 +234,7 @@ public void testUnknown() throws Exception {
+ 		assertEquals(0, rc.getPushRefSpecs().size());
+ 		assertEquals("git-upload-pack", rc.getUploadPack());
+ 		assertEquals("git-receive-pack", rc.getReceivePack());
++		checkRoundTrip(rc);
+ 	}
+
+ 	public void testAddURI() throws Exception {
+@@ -238,6 +250,7 @@ public void testAddURI() throws Exception {
+
+ 		assertFalse(rc.addURI(new URIish(uri.toString())));
+ 		assertEquals(1, rc.getURIs().size());
++		checkRoundTrip(rc);
+ 	}
+
+ 	public void testRemoveFirstURI() throws Exception {
+@@ -260,6 +273,7 @@ public void testRemoveFirstURI() throws Exception {
+ 		assertEquals(2, rc.getURIs().size());
+ 		assertSame(b, rc.getURIs().get(0));
+ 		assertSame(c, rc.getURIs().get(1));
++		checkRoundTrip(rc);
+ 	}
+
+ 	public void testRemoveMiddleURI() throws Exception {
+@@ -282,6 +296,7 @@ public void testRemoveMiddleURI() throws Exception {
+ 		assertEquals(2, rc.getURIs().size());
+ 		assertSame(a, rc.getURIs().get(0));
+ 		assertSame(c, rc.getURIs().get(1));
++		checkRoundTrip(rc);
+ 	}
+
+ 	public void testRemoveLastURI() throws Exception {
+@@ -304,6 +319,7 @@ public void testRemoveLastURI() throws Exception {
+ 		assertEquals(2, rc.getURIs().size());
+ 		assertSame(a, rc.getURIs().get(0));
+ 		assertSame(b, rc.getURIs().get(1));
++		checkRoundTrip(rc);
+ 	}
+
+ 	public void testRemoveOnlyURI() throws Exception {
+@@ -318,6 +334,7 @@ public void testRemoveOnlyURI() throws Exception {
+
+ 		assertTrue(rc.removeURI(a));
+ 		assertEquals(0, rc.getURIs().size());
++		checkRoundTrip(rc);
+ 	}
+
+ 	public void testCreateOrigin() throws Exception {
+@@ -332,6 +349,7 @@ checkFile(new File(db.getDirectory(), "config"), "[core]\n"
+ 				+ "\trepositoryformatversion = 0\n" + "\tfilemode = true\n"
+ 				+ "[remote \"origin\"]\n" + "\turl = /some/dir\n"
+ 				+ "\tfetch = +refs/heads/*:refs/remotes/origin/*\n");
++		checkRoundTrip(rc);
+ 	}
+
+ 	public void testSaveAddURI() throws Exception {
+@@ -351,6 +369,7 @@ checkFile(new File(db.getDirectory(), "config"), "[core]\n"
+ 				+ "\turl = http://www.spearce.org/egit.git\n"
+ 				+ "\turl = /some/dir\n"
+ 				+ "\tfetch = +refs/heads/*:refs/remotes/spearce/*\n");
++		checkRoundTrip(rc);
+ 	}
+
+ 	public void testSaveRemoveLastURI() throws Exception {
+@@ -371,6 +390,7 @@ checkFile(new File(db.getDirectory(), "config"), "[core]\n"
+ 				+ "[remote \"spearce\"]\n"
+ 				+ "\turl = http://www.spearce.org/egit.git\n"
+ 				+ "\tfetch = +refs/heads/*:refs/remotes/spearce/*\n");
++		checkRoundTrip(rc);
+ 	}
+
+ 	public void testSaveRemoveFirstURI() throws Exception {
+@@ -390,6 +410,7 @@ checkFile(new File(db.getDirectory(), "config"), "[core]\n"
+ 				+ "\trepositoryformatversion = 0\n" + "\tfilemode = true\n"
+ 				+ "[remote \"spearce\"]\n" + "\turl = /some/dir\n"
+ 				+ "\tfetch = +refs/heads/*:refs/remotes/spearce/*\n");
++		checkRoundTrip(rc);
+ 	}
+
+ 	public void testSaveNoTags() throws Exception {
+@@ -406,6 +427,7 @@ checkFile(new File(db.getDirectory(), "config"), "[core]\n"
+ 				+ "[remote \"origin\"]\n" + "\turl = /some/dir\n"
+ 				+ "\tfetch = +refs/heads/*:refs/remotes/origin/*\n"
+ 				+ "\ttagopt = --no-tags\n");
++		checkRoundTrip(rc);
+ 	}
+
+ 	public void testSaveAllTags() throws Exception {
+@@ -422,5 +444,40 @@ checkFile(new File(db.getDirectory(), "config"), "[core]\n"
+ 				+ "[remote \"origin\"]\n" + "\turl = /some/dir\n"
+ 				+ "\tfetch = +refs/heads/*:refs/remotes/origin/*\n"
+ 				+ "\ttagopt = --tags\n");
++		checkRoundTrip(rc);
 +	}
 +	
-+	/**
- 	 * Update this remote's definition within the configuration.
- 	 *
- 	 * @param rc
-@@ -382,4 +400,126 @@ public TagOpt getTagOpt() {
- 	public void setTagOpt(final TagOpt option) {
- 		tagopt = option != null ? option : TagOpt.AUTO_FOLLOW;
++	protected void checkRoundTrip(RemoteConfig rc) throws IOException,
+ClassNotFoundException {
++		ByteArrayOutputStream stream = new ByteArrayOutputStream();
++		ObjectOutputStream out = new ObjectOutputStream(stream);
++		out.writeObject(rc);
++		out.close();
++
++		ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(
++				stream.toByteArray()));
++		RemoteConfig rc2 = (RemoteConfig) in.readObject();
++		in.close();
++
++		assertEquals(rc.getName(), rc2.getName());
++		assertEquals(rc.getUploadPack(), rc2.getUploadPack());
++		assertEquals(rc.getTagOpt(), rc2.getTagOpt());
++
++		assertEquals(rc.getURIs().size(), rc2.getURIs().size());
++		assertEquals(rc.getFetchRefSpecs().size(), rc2.getFetchRefSpecs()
++				.size());
++		assertEquals(rc.getPushRefSpecs().size(), rc2.getPushRefSpecs().size());
++
++		for (URIish uri : rc.getURIs()) {
++			assertTrue (rc2.getURIs().contains(uri));
++		}
++
++		for (RefSpec refspec : rc.getFetchRefSpecs()) {
++		    assertTrue (rc2.getFetchRefSpecs().contains(refspec));
++		}
++
++		for (RefSpec refspec : rc.getPushRefSpecs()) {
++		    assertTrue (rc2.getPushRefSpecs().contains(refspec));
++		}
++
  	}
-+
-+	private Map<String, Collection<String>> toMap() {
-+		Map<String, Collection<String>> map = new HashMap<String,
-Collection<String>>();
-+		
-+		if (uris.size() > 0) {
-+			Collection<String> values = new ArrayList<String>();
-+			for (URIish uri : uris) {
-+				values.add(uri.toPrivateString());
-+			}
-+			map.put(KEY_URL, values);
-+		}
-+		
-+		if (fetch.size() > 0) {
-+			Collection<String> values = new ArrayList<String>();
-+			for (RefSpec refspec : fetch) {
-+				values.add(refspec.toString());
-+			}
-+			map.put(KEY_FETCH, values);
-+		}
-+		
-+		if (push.size() > 0) {
-+			Collection<String> values = new ArrayList<String>();
-+			for (RefSpec refspec : push) {
-+				values.add(refspec.toString());
-+			}
-+			map.put(KEY_PUSH, values);
-+		}
-+		
-+		Collection<String> uploads = new ArrayList<String>(1);
-+		uploads.add(uploadpack);
-+		map.put(KEY_UPLOADPACK, uploads);
-+		
-+		Collection<String> receives = new ArrayList<String>(1);
-+		receives.add(uploadpack);
-+		map.put(KEY_RECEIVEPACK, receives);
-+		
-+		Collection<String> tag = new ArrayList<String>(1);
-+		tag.add(tagopt.option());
-+		map.put(KEY_TAGOPT, tag);
-+		
-+		
-+		return map;
-+	}
-+
-+	private void fromMap(Map<String, Collection<String>> map)
-+			throws URISyntaxException {
-+		for (Map.Entry<String, Collection<String>> entry : map.entrySet()) {
-+			String key = entry.getKey();
-+
-+			if (key.equals(KEY_URL)) {
-+				for (String value : entry.getValue()) {
-+					uris.add(new URIish(value));
-+				}
-+			} else if (key.equals(KEY_FETCH)) {
-+				for (String value : entry.getValue()) {
-+					fetch.add(new RefSpec(value));
-+				}
-+			} else if (key.equals(KEY_PUSH)) {
-+				for (String value : entry.getValue()) {
-+					push.add(new RefSpec(value));
-+				}
-+			} else if (key.equals(KEY_UPLOADPACK)) {
-+				for (String value : entry.getValue()) {
-+					uploadpack = value;
-+				}
-+			} else if (key.equals(KEY_RECEIVEPACK)) {
-+				for (String value : entry.getValue()) {
-+					receivepack = value;
-+				}
-+			} else if (key.equals(KEY_TAGOPT)) {
-+				for (String value : entry.getValue()) {
-+					tagopt = TagOpt.fromOption(value);
-+				}
-+			}
-+		}
-+	}
-+
-+	public void readExternal(ObjectInput in) throws IOException,
-+			ClassNotFoundException {
-+		name = in.readUTF();
-+		int items = in.readInt();
-+
-+		Map<String, Collection<String>> map = new HashMap<String,
-Collection<String>>();
-+		for (int i = 0; i < items; i++) {
-+			String key = in.readUTF();
-+			String value = in.readUTF();
-+
-+			Collection<String> values = map.get(key);
-+			if (values == null) {
-+				values = new ArrayList<String>();
-+				map.put(key, values);
-+			}
-+
-+			values.add(value);
-+		}
-+
-+		try {
-+			fromMap(map);
-+		} catch (URISyntaxException ex) {
-+			throw new IOException("Problem reading RemoteConfig map");
-+		}
-+	}
-+
-+	public void writeExternal(ObjectOutput out) throws IOException {
-+		Map<String, Collection<String>> map = toMap();
-+		
-+		int size = 0;
-+		
-+		for (Map.Entry<String, Collection<String>> entry : map.entrySet()) {
-+			size += entry.getValue().size();
-+		}
-+		
-+		out.writeUTF(name);
-+		out.writeInt(size);
-+
-+		for (Map.Entry<String, Collection<String>> entry : map.entrySet()) {
-+			for (String value : entry.getValue()) {
-+				out.writeUTF(entry.getKey());
-+				out.writeUTF(value);
-+			}
-+		}
-+	}
  }
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/URIish.java
-b/org.spearce.jgit/src/org/spearce/jgit/transport/URIish.java
-index b86e00c..05e24b2 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/URIish.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/URIish.java
-@@ -38,6 +38,10 @@
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/URIishTest.java
+b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/URIishTest.java
+index 2ea9d60..beb2e88 100644
+--- a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/URIishTest.java
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/URIishTest.java
+@@ -38,6 +38,11 @@
 
  package org.spearce.jgit.transport;
 
-+import java.io.Externalizable;
-+import java.io.IOException;
-+import java.io.ObjectInput;
-+import java.io.ObjectOutput;
- import java.net.URISyntaxException;
- import java.net.URL;
- import java.util.regex.Matcher;
-@@ -49,7 +53,7 @@
-  * RFC 2396 URI's is that no URI encoding/decoding ever takes place. A space or
-  * any special character is written as-is.
-  */
--public class URIish {
-+public class URIish implements Externalizable {
- 	private static final Pattern FULL_URI = Pattern
- 			.compile("^(?:([a-z][a-z0-9+-]+)://(?:([^/]+?)(?::([^/]+?))?@)?(?:([^/]+?))?(?::(\\d+))?)?((?:[A-Za-z]:)?/.+)$");
++import java.io.ByteArrayInputStream;
++import java.io.ByteArrayOutputStream;
++import java.io.ObjectInputStream;
++import java.io.ObjectOutputStream;
++
+ import junit.framework.TestCase;
 
-@@ -75,7 +79,17 @@
- 	 * @throws URISyntaxException
- 	 */
- 	public URIish(String s) throws URISyntaxException {
--		s = s.replace('\\', '/');
-+		initializeFromString(s);
+ public class URIishTest extends TestCase {
+@@ -50,6 +55,7 @@ public void testUnixFile() throws Exception {
+ 		assertEquals(str, u.getPath());
+ 		assertEquals(str, u.toString());
+ 		assertEquals(u, new URIish(str));
++		assertRoundTrip(u);
+ 	}
+
+ 	public void testWindowsFile() throws Exception {
+@@ -60,6 +66,7 @@ public void testWindowsFile() throws Exception {
+ 		assertEquals(str, u.getPath());
+ 		assertEquals(str, u.toString());
+ 		assertEquals(u, new URIish(str));
++		assertRoundTrip(u);
+ 	}
+
+ 	public void testWindowsFile2() throws Exception {
+@@ -70,6 +77,7 @@ public void testWindowsFile2() throws Exception {
+ 		assertEquals("D:/m y", u.getPath());
+ 		assertEquals("D:/m y", u.toString());
+ 		assertEquals(u, new URIish(str));
++		assertRoundTrip(u);
+ 	}
+
+ 	public void testUNC() throws Exception {
+@@ -80,6 +88,7 @@ public void testUNC() throws Exception {
+ 		assertEquals("//some/place", u.getPath());
+ 		assertEquals("//some/place", u.toString());
+ 		assertEquals(u, new URIish(str));
++		assertRoundTrip(u);
+ 	}
+
+ 	public void testFileProtoUnix() throws Exception {
+@@ -90,6 +99,7 @@ public void testFileProtoUnix() throws Exception {
+ 		assertEquals("/home/m y", u.getPath());
+ 		assertEquals(str, u.toString());
+ 		assertEquals(u, new URIish(str));
++		assertRoundTrip(u);
+ 	}
+
+ 	public void testFileProtoWindows() throws Exception {
+@@ -100,6 +110,7 @@ public void testFileProtoWindows() throws Exception {
+ 		assertEquals("D:/m y", u.getPath());
+ 		assertEquals(str, u.toString());
+ 		assertEquals(u, new URIish(str));
++		assertRoundTrip(u);
+ 	}
+
+ 	public void testGitProtoUnix() throws Exception {
+@@ -111,6 +122,7 @@ public void testGitProtoUnix() throws Exception {
+ 		assertEquals("/home/m y", u.getPath());
+ 		assertEquals(str, u.toString());
+ 		assertEquals(u, new URIish(str));
++		assertRoundTrip(u);
+ 	}
+
+ 	public void testGitProtoUnixPort() throws Exception {
+@@ -123,6 +135,7 @@ public void testGitProtoUnixPort() throws Exception {
+ 		assertEquals(333, u.getPort());
+ 		assertEquals(str, u.toString());
+ 		assertEquals(u, new URIish(str));
++		assertRoundTrip(u);
+ 	}
+
+ 	public void testGitProtoWindowsPort() throws Exception {
+@@ -135,6 +148,7 @@ public void testGitProtoWindowsPort() throws Exception {
+ 		assertEquals("example.com", u.getHost());
+ 		assertEquals(str, u.toString());
+ 		assertEquals(u, new URIish(str));
++		assertRoundTrip(u);
+ 	}
+
+ 	public void testGitProtoWindows() throws Exception {
+@@ -147,6 +161,7 @@ public void testGitProtoWindows() throws Exception {
+ 		assertEquals(-1, u.getPort());
+ 		assertEquals(str, u.toString());
+ 		assertEquals(u, new URIish(str));
++		assertRoundTrip(u);
+ 	}
+
+ 	public void testScpStyleWithoutUser() throws Exception {
+@@ -159,6 +174,7 @@ public void testScpStyleWithoutUser() throws Exception {
+ 		assertEquals(-1, u.getPort());
+ 		assertEquals(str, u.toString());
+ 		assertEquals(u, new URIish(str));
++		assertRoundTrip(u);
+ 	}
+
+ 	public void testScpStyleWithUser() throws Exception {
+@@ -172,6 +188,7 @@ public void testScpStyleWithUser() throws Exception {
+ 		assertEquals(-1, u.getPort());
+ 		assertEquals(str, u.toString());
+ 		assertEquals(u, new URIish(str));
++		assertRoundTrip(u);
+ 	}
+
+ 	public void testGitSshProto() throws Exception {
+@@ -184,6 +201,7 @@ public void testGitSshProto() throws Exception {
+ 		assertEquals(-1, u.getPort());
+ 		assertEquals(str, u.toString());
+ 		assertEquals(u, new URIish(str));
++		assertRoundTrip(u);
+ 	}
+
+ 	public void testSshGitProto() throws Exception {
+@@ -196,6 +214,7 @@ public void testSshGitProto() throws Exception {
+ 		assertEquals(-1, u.getPort());
+ 		assertEquals(str, u.toString());
+ 		assertEquals(u, new URIish(str));
++		assertRoundTrip(u);
+ 	}
+
+ 	public void testSshProto() throws Exception {
+@@ -208,6 +227,7 @@ public void testSshProto() throws Exception {
+ 		assertEquals(-1, u.getPort());
+ 		assertEquals(str, u.toString());
+ 		assertEquals(u, new URIish(str));
++		assertRoundTrip(u);
+ 	}
+
+ 	public void testSshProtoWithUserAndPort() throws Exception {
+@@ -222,6 +242,7 @@ public void testSshProtoWithUserAndPort() throws Exception {
+ 		assertEquals(33, u.getPort());
+ 		assertEquals(str, u.toString());
+ 		assertEquals(u, new URIish(str));
++		assertRoundTrip(u);
+ 	}
+
+ 	public void testSshProtoWithUserPassAndPort() throws Exception {
+@@ -237,5 +258,20 @@ public void testSshProtoWithUserPassAndPort()
+throws Exception {
+ 		assertEquals(str, u.toPrivateString());
+ 		assertEquals(u.setPass(null).toPrivateString(), u.toString());
+ 		assertEquals(u, new URIish(str));
++		assertRoundTrip(u);
 +	}
 +	
-+	/**
-+	 * Set fields from string based URI.
-+	 *
-+	 * @param s
-+	 * @throws URISyntaxException
-+	 */
-+	private void initializeFromString(String s)  throws URISyntaxException {
-+	    s = s.replace('\\', '/');
- 		Matcher matcher = FULL_URI.matcher(s);
- 		if (matcher.matches()) {
- 			scheme = matcher.group(1);
-@@ -357,4 +371,17 @@ private String format(final boolean includePassword) {
-
- 		return r.toString();
++	protected void assertRoundTrip(URIish uri) throws Exception {
++		ByteArrayOutputStream stream = new ByteArrayOutputStream();
++		ObjectOutputStream out = new ObjectOutputStream(stream);
++		out.writeObject(uri);
++		out.close();
++
++		ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(
++				stream.toByteArray()));
++		URIish uri2 = (URIish) in.readObject();
++		in.close();
++		
++		assert(uri2.equals(uri));
  	}
-+
-+	public void readExternal(ObjectInput in) throws IOException,
-+			ClassNotFoundException {
-+	    try {
-+			initializeFromString(in.readUTF());
-+		} catch (URISyntaxException e) {
-+			throw new IOException("Incorrect format URI");
-+		}
-+	}
-+
-+	public void writeExternal(ObjectOutput out) throws IOException {
-+		out.writeUTF(format(true));
-+	}
  }
 -- 
 1.6.0.2
