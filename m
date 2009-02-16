@@ -1,97 +1,109 @@
-From: Jay Soffian <jaysoffian@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: disallowing push to currently checked-out branch
-Date: Mon, 16 Feb 2009 16:12:58 -0500
-Message-ID: <76718490902161312j2aee999bga00d95231fa85647@mail.gmail.com>
-References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org>
-	 <alpine.DEB.1.10.0902151738450.14911@asgard.lang.hm>
-	 <alpine.LNX.1.00.0902160322530.19665@iabervon.org>
-	 <7veixybw7u.fsf@gitster.siamese.dyndns.org>
-	 <loom.20090216T101457-231@post.gmane.org>
-	 <20090216135812.GA20377@coredump.intra.peff.net>
-	 <49999ED6.7010608@gmail.com>
-	 <alpine.DEB.1.00.0902161839120.6289@intel-tinevez-2-302>
-	 <76718490902161048i3c19bb43h30b1cfc62dd9a61e@mail.gmail.com>
-	 <alpine.DEB.1.00.0902162102180.6289@intel-tinevez-2-302>
+Date: Mon, 16 Feb 2009 21:09:11 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902162103580.6289@intel-tinevez-2-302>
+References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org> <20090215232013.GA11543@zakalwe.fi> <20090216000443.GB3503@coredump.intra.peff.net> <alpine.DEB.1.10.0902151727330.14911@asgard.lang.hm> <alpine.DEB.1.10.0902151738450.14911@asgard.lang.hm>
+ <alpine.LNX.1.00.0902160322530.19665@iabervon.org> <7veixybw7u.fsf@gitster.siamese.dyndns.org> <loom.20090216T101457-231@post.gmane.org> <20090216135812.GA20377@coredump.intra.peff.net> <49999ED6.7010608@gmail.com> <alpine.DEB.1.00.0902161839120.6289@intel-tinevez-2-302>
+ <4999BD54.8090805@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Sergio Callegari <sergio.callegari@gmail.com>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 16 22:15:10 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Sergio Callegari <sergio.callegari@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 16 22:15:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZAnn-0005Rh-10
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 22:14:55 +0100
+	id 1LZAo0-0005Xl-5e
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 22:15:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752516AbZBPVNB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 16:13:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751418AbZBPVNA
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 16:13:00 -0500
-Received: from rv-out-0506.google.com ([209.85.198.228]:57081 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751883AbZBPVM7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 16:12:59 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so1709042rvb.1
-        for <git@vger.kernel.org>; Mon, 16 Feb 2009 13:12:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=nkPN5Zi4VwViigT0Sr2QG3iXsG+Vul4qqqdWtZIcoQI=;
-        b=a1+35HQeLRMnM2NANRw499e53kn8G96igyAK7q9veoOKtO6Wc3uR0Ok40ZiNk/+2RN
-         gf0Og+YbsKWCxhLU9LWvTrGIzgsEbb1ePM4NodlQLrefO1ns7Z408YoROR7ROwjzCNCN
-         eOi7VLSJpzez6g6Y38llJWhK9PLq3jLeuQReQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=gq/iWU0T/tx0oIZI4lIA/SlHVOxAUZGuUsvQaTFJz6PSxpeuwpVB94nVvISnrgUfzK
-         KB2PN409FNWrS9RhIB8slVUQnJz/GEyiRy098AgEMbt14neg6jdeGq7gelJPk54j/QMm
-         MHNOMJ9WYjfaFWTD5Ehg2Mn9qRmciHyjlHdAI=
-Received: by 10.141.36.10 with SMTP id o10mr818944rvj.59.1234818778681; Mon, 
-	16 Feb 2009 13:12:58 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0902162102180.6289@intel-tinevez-2-302>
+	id S1751170AbZBPVNi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 16:13:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750873AbZBPVNi
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 16:13:38 -0500
+Received: from mail.gmx.net ([213.165.64.20]:35648 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750777AbZBPVNh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 16:13:37 -0500
+Received: (qmail invoked by alias); 16 Feb 2009 20:09:13 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp069) with SMTP; 16 Feb 2009 21:09:13 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19SjJYJnJtSvJ6TBmzd0ikYErVuOn/1KLx0bTdyJA
+	Mhf8lm23mmYAi7
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <4999BD54.8090805@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110244>
 
-On Mon, Feb 16, 2009 at 3:02 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
+Hi,
+
+On Mon, 16 Feb 2009, Sergio Callegari wrote:
+
+> Johannes Schindelin wrote:
+> > Wrong.  It cries out loud when you detach, not when you commit to a 
+> > detached HEAD.  For good reason: Already at the second commit it would 
+> > stop being funny.
 >
-> On Mon, 16 Feb 2009, Jay Soffian wrote:
->
->> I think the right thing is *not to detach*, but rather when pushing
->> into a non-bare repo for it to go into refs/remotes.
->
-> I do not think that is consistent.
+> Right, I was wrong in expecting complaints. But... if it cried out at 
+> the first commit, for many people there would probably not be a second. 
 
-Not consistent with what?
+What you are suggesting, though, is that the _pusher_ detaches the HEAD.  
+So the _local_ user will never know.
 
-So let's say I have a workstation and a laptop. The "sane" thing to do
-is probably something like this:
+> Btw, I am ignorant on this: is there some case where one wants and has 
+> reasons to commit to a detached head before making a temporary branch on 
+> it?
 
-workstation$ mkdir project && cd project && git init
-workstation$ (add, commit, ...)
-workstation$ git clone --bare . ../project.git
-workstation$ git remote add origin ../project.git
-laptop$ git clone ssh://workstation/~/project.git project
+Yes.  When you try fixups on a commit you just jumped to, for example.  Or 
+when bisecting.
 
-And now I have two non-bare working repos with the intermediate bare
-repo. So at both ends I can push/pull in the way that the designers of
-git had in mind. :-)
+I often use the detached HEAD as kind of a stash during a bisect.  I try 
+to fix it there, at the bad commit, and then cherry-pick HEAD@{1} into 
+the branch after resetting the bisect.
 
-But I don't think this recipe is well documented for beginners. So
-they end up w/o the intermediate bare repository, and all the ensues.
+> > > Furthermore, one could do just a bit more than detaching, namely 
+> > > store the fact that head got detached and the name of the branch 
+> > > where the head was. With this, when the unconscious user types git 
+> > > status or git commit the system could alert him that head got 
+> > > detached because someone updated the branch behind his shoulders 
+> > > from remote...
+> >
+> > And of course, you need a way to show the user all the updates the branch
+> > went through while the HEAD was detached, so that the user has a chance of
+> > understanding what happened in the meantime.
+> >
+> > So much additional work, just to fix up the shortcomings of the 
+> > 'detach' paradigm?  I take it as a clear mark of a not-so-elegant 
+> > design.
+>   
+> Well not that much additional work...
+> 
+> when you push to the checked out branch, head gets detached and branch name
+> (say /ref/heads/master) gets stored (say in .git/pre_push_branch).
+> when you run status or commit, you realize that there is a pre_push_branch and
+> you give the warning, saying what the pre_push_branch was.
 
-IOW, I think pushing into refs/remotes makes sense in the situation
-where the user has two non-bare repos that they want to exchange
-commits between.
+Of course, you assume there that it was only one push between detaching 
+the HEAD and inspecting the mess.
 
-j.
+> Now, since before the push you were at the tip of that branch, to know 
+> what happened it should be enough to ask the log (or the diff) from 
+> pre_push_branch to HEAD. At the first user command that moves HEAD, 
+> pre_push_branch should get deleted.
+
+And you call that not much work?
+
+> Btw, what does happen now if you delete the branch the remote worktree 
+> is on?
+
+See the related discussion of receive.denyDeleteCurrent.
+
+Ciao,
+Dscho
