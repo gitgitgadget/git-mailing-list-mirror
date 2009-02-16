@@ -1,83 +1,70 @@
-From: Sebastien Cevey <seb@cine7.net>
-Subject: Re: What's cooking in git.git (Feb 2009, #04; Sun, 15)
-Date: Mon, 16 Feb 2009 16:27:22 +0100
-Message-ID: <1234798042.499985da2915e@mail.nimag.net>
-References: <7v1vu0nfu4.fsf@gitster.siamese.dyndns.org> <m3ocx4t0mv.fsf@localhost.localdomain>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-svn -- out of memory
+Date: Mon, 16 Feb 2009 10:37:45 -0500
+Message-ID: <20090216153745.GA22886@coredump.intra.peff.net>
+References: <1234794220.676511.4320.nullmailer@beryx.hq.kred>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 16 16:29:18 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, normalperson@yhbt.net,
+	git@vger.kernel.org
+To: "Alfred M. Szmidt" <ams@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Feb 16 16:39:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZ5Oy-00066N-J6
-	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 16:28:57 +0100
+	id 1LZ5Yy-0001tp-4g
+	for gcvg-git-2@gmane.org; Mon, 16 Feb 2009 16:39:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751906AbZBPP12 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 10:27:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751732AbZBPP11
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 10:27:27 -0500
-Received: from mail.hebweb.net ([62.220.136.4]:41037 "HELO
-	mail-unsh.hebweb.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1751445AbZBPP10 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 10:27:26 -0500
-Received: (qmail 17583 invoked by uid 33); 16 Feb 2009 15:27:22 -0000
-Received: from 146.101.142.69 ([146.101.142.69]) 
-	by mail.nimag.net (IMP) with HTTP 
-	for <postmaster@cine7.net@mail.nimag.net>; Mon, 16 Feb 2009 16:27:22 +0100
-In-Reply-To: <m3ocx4t0mv.fsf@localhost.localdomain>
-User-Agent: Internet Messaging Program (IMP) 3.2.2
-X-Originating-IP: 146.101.142.69
+	id S1751052AbZBPPhs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 10:37:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751026AbZBPPhs
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 10:37:48 -0500
+Received: from peff.net ([208.65.91.99]:54493 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750937AbZBPPhr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 10:37:47 -0500
+Received: (qmail 20151 invoked by uid 107); 16 Feb 2009 15:38:07 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 16 Feb 2009 10:38:07 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Feb 2009 10:37:45 -0500
+Content-Disposition: inline
+In-Reply-To: <1234794220.676511.4320.nullmailer@beryx.hq.kred>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110192>
 
-Selon Jakub Narebski <jnareb@gmail.com>:
+On Mon, Feb 16, 2009 at 03:23:40PM +0100, Alfred M. Szmidt wrote:
 
-Hello Jakub,
-
-> Junio C Hamano <gitster@pobox.com> writes:
+> ams@trillian:~/# git --version
+> git version 1.6.2.rc1
+> ams@trillian:~/# git svn clone REPO -T trunk -b branches -t tags
+> [...]
+> fatal: Out of memory? mmap failed: Cannot allocate memory
+> hash-object -w --stdin-paths: command returned error: 128
 > 
-> > * sc/gitweb-category (Fri Dec 12 00:45:12 2008 +0100) 3 commits
-> >  - gitweb: Optional grouping of projects by category
-> >  - gitweb: Split git_project_list_body in two functions
-> >  - gitweb: Modularized git_get_project_description to be more generic
-> > 
-> > Design discussion between Jakub and Sebastien seems to have stalled.
-> 
-> But I am bit stalled at second patch in the series, which extract
-> _printing_ the rows in separate function... while it should IMHO also
-> refactor _filtering_ projects list, and not have "filtering as we
-> print" current code uses... which would be night incompatibile with
-> dividing projects list into pages.
-> 
-> I think this patch series is definitely for after 1.6.2
+> Nope, behaves the same way.
 
-Okay, I am sorry but I'm going to give up at this point. This patch has been in
-the pipeline since July 27, 2008. I understand the iterative review process to
-ensure a certain code quality and acknowledge that these patches weren't
-perfect
-(and probably still aren't), but it's a bit too much of extra rewrite to
-support
-features that didn't exist and still don't exist yet AFAIK (page splitting of
-projects page?). Feel free to take over and do the changes you have in mind,
-it'd probably be faster than trying to guide me through it; I still believe
-it'd
-be a welcome feature, and we've been waiting for it to be merged upstream for
-quite a while to activate it on the XMMS2 gitweb.
+Hmm. It would help to know what object it is failing on. I assume you
+repo is too large to be easily shared? If not, can you try instrumenting
+hash-object with the patch below and seeing which file it is barfing on?
 
-I have to admit I'm not particularly fond of hacking Perl, but the effort to
-get
-this rather simple and isolated feature merged don't make it very attractive.
+I'd be curious to see the size of the file (in case it is >2G and we
+have another signed integer problem) and its position in the list (in
+case we are leaking memory and you are hitting a system limit).
 
-It's a single 6300+ line Perl script we're talking about after all.
-
-Regards,
-
--- 
-Sebastien Cevey - inso.cc
+---
+diff --git a/hash-object.c b/hash-object.c
+index 37e6677..20371d0 100644
+--- a/hash-object.c
++++ b/hash-object.c
+@@ -44,6 +44,7 @@ static void hash_stdin_paths(const char *type, int write_objects)
+ 				die("line is badly quoted");
+ 			strbuf_swap(&buf, &nbuf);
+ 		}
++		fprintf(stderr, "debug: hashing %s\n", buf.buf);
+ 		hash_object(buf.buf, type, write_objects, buf.buf);
+ 	}
+ 	strbuf_release(&buf);
