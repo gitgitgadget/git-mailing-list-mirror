@@ -1,94 +1,67 @@
-From: Ward Wouts <ward@wouts.nl>
-Subject: Re: git-svn error: Unable to parse date
-Date: Tue, 17 Feb 2009 20:35:50 +0100
-Message-ID: <20090217193550.GT7504@wouts.nl>
-References: <20090217094850.GQ7504@wouts.nl> <7vd4dg6h93.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: PUSH_HEAD, was Re: disallowing push to currently checked-out
+	branch
+Date: Tue, 17 Feb 2009 14:48:27 -0500
+Message-ID: <20090217194827.GB16067@coredump.intra.peff.net>
+References: <alpine.DEB.1.00.0902161839120.6289@intel-tinevez-2-302> <76718490902161048i3c19bb43h30b1cfc62dd9a61e@mail.gmail.com> <alpine.DEB.1.00.0902162102180.6289@intel-tinevez-2-302> <76718490902161312j2aee999bga00d95231fa85647@mail.gmail.com> <alpine.DEB.1.00.0902162215200.6289@intel-tinevez-2-302> <76718490902161428k7d252a02i3e79e4f197608891@mail.gmail.com> <20090216225226.GB23764@sigill.intra.peff.net> <76718490902162153m6a524b2dv335be66a0f0294ca@mail.gmail.com> <alpine.DEB.1.00.0902171200250.6185@intel-tinevez-2-302> <76718490902170929v3ed9e3c2tb2f7fb1bfc01b3ab@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ward Wouts <ward@wouts.nl>, git@vger.kernel.org,
-	Eric Wong <normalperson@yhbt.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 17 20:37:37 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Sergio Callegari <sergio.callegari@gmail.com>,
+	git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 17 20:50:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZVkw-000734-Ey
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 20:37:22 +0100
+	id 1LZVx8-000447-Ie
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 20:49:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753242AbZBQTfx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 14:35:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753212AbZBQTfw
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 14:35:52 -0500
-Received: from mailhost.tue.nl ([131.155.2.19]:49970 "EHLO mailhost.tue.nl"
+	id S1753197AbZBQTsa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 14:48:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752186AbZBQTsa
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 14:48:30 -0500
+Received: from peff.net ([208.65.91.99]:55932 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752318AbZBQTfw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 14:35:52 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mailhost.tue.nl (Postfix) with ESMTP id D9CC55C06F;
-	Tue, 17 Feb 2009 20:35:50 +0100 (CET)
-X-Virus-Scanned: amavisd-new at tue.nl
-Received: from mailhost.tue.nl ([131.155.2.19])
-	by localhost (pastinakel.tue.nl [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id K3vqn5u372Ct; Tue, 17 Feb 2009 20:35:50 +0100 (CET)
-Received: from umta.win.tue.nl (umta.win.tue.nl [131.155.71.100])
-	by mailhost.tue.nl (Postfix) with ESMTP id A14AF5C05F;
-	Tue, 17 Feb 2009 20:35:50 +0100 (CET)
-Received: from sandcat.nl (pcwin165 [131.155.69.121])
-	by umta.win.tue.nl (Postfix) with ESMTP id 754B64BC1F7;
-	Tue, 17 Feb 2009 20:35:50 +0100 (CET)
-Received: by sandcat.nl (Postfix, from userid 1104)
-	id 8199B11407C; Tue, 17 Feb 2009 20:35:50 +0100 (CET)
+	id S1752085AbZBQTs3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 14:48:29 -0500
+Received: (qmail 31627 invoked by uid 107); 17 Feb 2009 19:48:49 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 17 Feb 2009 14:48:49 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Feb 2009 14:48:27 -0500
 Content-Disposition: inline
-In-Reply-To: <7vd4dg6h93.fsf@gitster.siamese.dyndns.org>
-X-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.11
+In-Reply-To: <76718490902170929v3ed9e3c2tb2f7fb1bfc01b3ab@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110446>
 
-On Tue, Feb 17, 2009 at 10:38:32AM -0800, Junio C Hamano wrote:
-> Ward Wouts <ward@wouts.nl> writes:
-> 
-> > Unable to parse date: 2004-03-09T09:44:33.Z
-> >  at /usr/bin/git-svn line 3995
-> 
-> A very nice problem description, illustrating what the code should accept
-> but doesn't.
+On Tue, Feb 17, 2009 at 12:29:53PM -0500, Jay Soffian wrote:
 
-Thank you.
+> So both you and Junio have changed your mind since that thread then.
+> Because in that thread, you propose  receive.guardCurrentBranch, which
+> was quite similar to today's receive.denyCurrentBranch. Junio then
+> argues that treating just the checked-out branch as special, as
+> opposed to all local branches is not the right thing to do:
 
-> > The message goes away with this one character patch:
-> >
-> > $ diff -bru git-svn*
-> > --- git-svn     2009-02-17 10:23:24.000000000 +0100
-> > +++ git-svn.orig        2009-02-17 10:20:30.000000000 +0100
-> > @@ -2387,7 +2387,7 @@
-> >  sub parse_svn_date {
-> >         my $date = shift || return '+0000 1970-01-01 00:00:00';
-> >         my ($Y,$m,$d,$H,$M,$S) = ($date =~ /^(\d{4})\-(\d\d)\-(\d\d)T
-> > -                                           (\d\d)\:(\d\d)\:(\d\d).\d*Z$/x) or
-> > +                                           (\d\d)\:(\d\d)\:(\d\d).\d+Z$/x) or
-> >                                          croak "Unable to parse date: $date\n";
-> >         "+0000 $Y-$m-$d $H:$M:$S";
-> >  }
-> 
-> You had me scratch my head by giving a reverse patch.
+I have to admit, I found that thread a very interesting read, because I
+somehow missed it the first time and it seemed the opposite of what
+happened later.
 
-Yes, I'm sorry about that. Hopefully my other post about this subject,
-sent after the remarks Deskin made, is in the proper format.
+> So, I'm not sure what happened in the intervening time between the
+> receive.localBranches proposal and the receive.denyCurrentBranch
+> implementation that suddenly what is basically guardCurrentBranch
+> became a good idea.
 
-> I think neither regexp is quite correct, assuming that SVN timestamp is
-> supposed to always have decimal point after seconds, with optional
-> fractional part, followed by Z (presumably to mean Zulu).
-> 
-> -                                           (\d\d)\:(\d\d)\:(\d\d).\d+Z$/x) or
-> +                                           (\d\d)\:(\d\d)\:(\d\d)\.\d*Z$/x) or
-> 
-> The decimal point should get quoted.
+I think what happened (partially) is that I never read the original,
+then at GitTogether somebody (Sam?) was complaining about usability
+issues, so I wrote the denyCurrentBranch patch. Why and how people
+changed their minds is a mystery to me, though.
 
-I think you're right.
+-Peff
 
-Ward
+PS I seem to have an uncanny knack for writing a patch, then finding out
+that Dscho wrote the exact same patch months or years earlier. I think
+this is the third time it has happened.
