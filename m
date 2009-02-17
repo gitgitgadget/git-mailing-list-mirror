@@ -1,81 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 1/8] config: Trivial rename in preparation for
- parseopt.
-Date: Tue, 17 Feb 2009 12:58:42 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902171257360.6185@intel-tinevez-2-302>
-References: <1234832094-15541-1-git-send-email-felipe.contreras@gmail.com> <7v3aedet0j.fsf@gitster.siamese.dyndns.org> <20090217090015.5334.qmail@ea511e23bd6d9a.315fe32.mid.smarden.org>
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: [PATCH 1/2] Modify description file to say what this file is
+Date: Tue, 17 Feb 2009 11:59:43 +0000
+Message-ID: <43d8ce650902170359l2c3fa87at3efdf91f12a8812b@mail.gmail.com>
+References: <200902171044.59974.johnflux@gmail.com>
+	 <bd6139dc0902170337o6cdc084cje313f726584fe1a7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git@vger.kernel.org
-To: Gerrit Pape <pape@smarden.org>
-X-From: git-owner@vger.kernel.org Tue Feb 17 13:00:17 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 17 13:01:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZOcY-0001lU-2n
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 13:00:14 +0100
+	id 1LZOdU-00021z-9E
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 13:01:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751727AbZBQL6q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 06:58:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751705AbZBQL6p
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 06:58:45 -0500
-Received: from mail.gmx.net ([213.165.64.20]:56625 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751663AbZBQL6p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 06:58:45 -0500
-Received: (qmail invoked by alias); 17 Feb 2009 11:58:43 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp041) with SMTP; 17 Feb 2009 12:58:43 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+/xSxYLku/CSXNVAqSzdNYzyqeOmxWLJrlsaklLV
-	uqL2SaBrBenro8
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <20090217090015.5334.qmail@ea511e23bd6d9a.315fe32.mid.smarden.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.48
+	id S1751627AbZBQL7p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 06:59:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751390AbZBQL7p
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 06:59:45 -0500
+Received: from mail-gx0-f222.google.com ([209.85.217.222]:62395 "EHLO
+	mail-gx0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751241AbZBQL7o (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 06:59:44 -0500
+Received: by gxk22 with SMTP id 22so3970859gxk.13
+        for <git@vger.kernel.org>; Tue, 17 Feb 2009 03:59:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=runkPpHR+SI0UOpDh9luiPpu3n9OzXDDePUWi87PMfg=;
+        b=sG2VHhsVlgfg8X6vxkrhXZtLiMjk13fej436+WbaE+7dQd3K64+ND61FyALVgQgzCR
+         P7WoFLkY2YsH5bpxua1mxTBqCwBb+D8zrL4+1qTyqxfpVDGzdf6nrfuCbQHhAsVrZZk6
+         i4YNFzgEvMXski1y8rBADmrUF5L4Tbi1XMjzI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=YJpOUpc67QTsoGf805XfYmthE5qNd3O6kS9RCX1Y3fBNm7V5uPX0IYGRnW/QUXE0zp
+         6PG3M9m6k615AEbZGztOzODpssC57T34ARw3D/z/mwMJkrlM1Loti2myo4pd2EoIEMJa
+         o7sNMgzkn0NxUVK9V+4QVhwsxUXVImSqtpXSk=
+Received: by 10.150.204.19 with SMTP id b19mr5210810ybg.232.1234871983227; 
+	Tue, 17 Feb 2009 03:59:43 -0800 (PST)
+In-Reply-To: <bd6139dc0902170337o6cdc084cje313f726584fe1a7@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110363>
 
-Hi,
+2009/2/17 Sverre Rabbelier <srabbelier@gmail.com>:
+> Heya,
+>
+> On Tue, Feb 17, 2009 at 11:44, John Tapsell <johnflux@gmail.com> wrote:
+>> A lot of people see this message for the first time on the gitweb
+>> interface, where there is no clue as to what 'this file' means.
+>
+> It seems you somehow managed to send the exact same message 4 times, what gives?
 
-On Tue, 17 Feb 2009, Gerrit Pape wrote:
+I'm really sorry.  Gmail kept mangling it, then my email client said
+it wasn't sending..  bah.  I've got it sorted it out now.
 
-> On Mon, Feb 16, 2009 at 05:45:00PM -0800, Junio C Hamano wrote:
-> > Felipe Contreras <felipe.contreras@gmail.com> writes:
-> > > When using the --list option general errors where not properly reported,
-> > > only errors related with the 'file'. Now they are reported, and 'file'
-> > > is irrelevant.
-> > > ...
-> > > @@ -299,10 +300,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
-> > >  		else if (!strcmp(argv[1], "--list") || !strcmp(argv[1], "-l")) {
-> > >  			if (argc != 2)
-> > >  				usage(git_config_set_usage);
-> > > -			if (git_config(show_all_config, NULL) < 0 &&
-> > > -					file && errno)
-> > > -				die("unable to read config file %s: %s", file,
-> > > -				    strerror(errno));
-> > > +			if (git_config(show_all_config, NULL) < 0)
-> > > +				die("error processing config file(s)");
-> > 
-> > Does the author of 93a56c2 (git-config: print error message if the config
-> > file cannot be read, 2007-10-12) have any comment on this change (cc:ed)?
-> 
-> Hm, we lose some information from the error message when called with
-> --file, but it seems to improve on other cases.  The filename doesn't
-> matter that much, but it would be nice to know the reason.  I wouldn't
-> object against this hunk though if that isn't possible.
+John
 
-The point is: when _not_ using --file, the output could be wrong 
-(mentioning another config file than the one having an issue), or not be 
-shown at all -- I haven't checked, but both options to not look good to 
-me.
-
-Ciao,
-Dscho
+>
+> --
+> Cheers,
+>
+> Sverre Rabbelier
+>
