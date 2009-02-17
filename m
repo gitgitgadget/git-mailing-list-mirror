@@ -1,123 +1,95 @@
-From: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
-Subject: Re: CVS import [SOLVED]
-Date: Tue, 17 Feb 2009 12:19:42 +0100 (CET)
-Message-ID: <50713.77.61.241.211.1234869582.squirrel@hupie.xs4all.nl>
-References: <19651.77.61.241.211.1234775877.squirrel@hupie.xs4all.nl>
-    <7291.77.61.241.211.1234790434.squirrel@hupie.xs4all.nl>
-    <60044.192.168.0.51.1234816333.squirrel@hupie.xs4all.nl>
-    <alpine.DEB.1.00.0902162157080.6289@intel-tinevez-2-302>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: PUSH_HEAD, was Re: disallowing push to currently checked-out
+ branch
+Date: Tue, 17 Feb 2009 12:28:46 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902171200250.6185@intel-tinevez-2-302>
+References: <7veixybw7u.fsf@gitster.siamese.dyndns.org>  <20090216135812.GA20377@coredump.intra.peff.net>  <49999ED6.7010608@gmail.com>  <alpine.DEB.1.00.0902161839120.6289@intel-tinevez-2-302>  <76718490902161048i3c19bb43h30b1cfc62dd9a61e@mail.gmail.com> 
+ <alpine.DEB.1.00.0902162102180.6289@intel-tinevez-2-302>  <76718490902161312j2aee999bga00d95231fa85647@mail.gmail.com>  <alpine.DEB.1.00.0902162215200.6289@intel-tinevez-2-302>  <76718490902161428k7d252a02i3e79e4f197608891@mail.gmail.com> 
+ <20090216225226.GB23764@sigill.intra.peff.net> <76718490902162153m6a524b2dv335be66a0f0294ca@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Ferry Huberts" <ferry.huberts@pelagic.nl>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 17 12:21:16 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>,
+	Sergio Callegari <sergio.callegari@gmail.com>,
+	git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 17 12:30:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZO0p-0007Ew-4x
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 12:21:15 +0100
+	id 1LZO9d-0001Vj-C1
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 12:30:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751157AbZBQLTr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 06:19:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbZBQLTq
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 06:19:46 -0500
-Received: from hupie.xs4all.nl ([82.95.241.251]:48309 "EHLO
-	Lighthouse.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751008AbZBQLTq (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Feb 2009 06:19:46 -0500
-Received: by Lighthouse.internal.Hupie.com (Postfix, from userid 48)
-	id 9ED0C58BDCE; Tue, 17 Feb 2009 12:19:42 +0100 (CET)
-Received: from 77.61.241.211
-        (SquirrelMail authenticated user ferry.huberts@pelagic.nl)
-        by hupie.xs4all.nl with HTTP;
-        Tue, 17 Feb 2009 12:19:42 +0100 (CET)
-In-Reply-To: <alpine.DEB.1.00.0902162157080.6289@intel-tinevez-2-302>
-User-Agent: SquirrelMail/1.4.8-5.el5.centos.3
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S1751535AbZBQL2u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 06:28:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751253AbZBQL2u
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 06:28:50 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37278 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751332AbZBQL2t (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 06:28:49 -0500
+Received: (qmail invoked by alias); 17 Feb 2009 11:28:47 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp033) with SMTP; 17 Feb 2009 12:28:47 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+fuzkkWmWflyv7synioUiVcGQRMDZ3Euv3iXfM3B
+	CkthJaWoHLspL8
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <76718490902162153m6a524b2dv335be66a0f0294ca@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110359>
 
-Ok.
+Hi,
 
-I tested all combinations of autocrlf and safecrlf on an artificial cvs
-repository with only a dos text file and a Unix text file. Here are my results.
+On Tue, 17 Feb 2009, Jay Soffian wrote:
 
+> My head is playing around with two ideas now that Dscho has mentioned:
+> 
+> receive.localBranches = (refuse | allow)
+> 
+> http://thread.gmane.org/gmane.comp.version-control.git/77955/focus=78065
 
- autocrlf safecrlf
-1 false    false
-2 false     warn
-3 false     true
-4 input    false
-5 input     warn
-6 input     true
-7 true     false
-8 true      warn
-9 true      true
+In the meantime, we have receive.denyCurrentBranch, which is much superior 
+to the localBranches design: it tackles the _real_ issue -- the only 
+reason why a current branch cannot be updated lightly is that it might 
+have a working directory which would be forced out-of-sync.
 
+> And PUSH_HEAD.
+> 
+> The idea would be for side-pushes never to update a local branch, but to 
+> be recorded in PUSH_HEAD. You'd be able to rebase/merge local branch 
+> on-top of changes in PUSH_HEAD. I'm trying to figure out what can make 
+> sense when pulling from such a repo.
 
-1- correct import, no warnings
-2- correct import, no warnings
-3- correct import, no warnings
-4- correct import, no warnings
-5- correct import, warning on the dos text file
-6- correct import, no warnings
-7- correct import, no warnings
-8- correct import, no warnings
-9- fail:
+Sorry, I should clarify what I mean by PUSH_HEAD:
 
-Initialized empty Git repository in /data/home.f9/ferry/testarea/cvsimport/wc.git.true.true/.git/
-Running cvsps...
-cvs_direct initialized to CVSROOT /data/home.f9/ferry/testarea/cvsimport/cvs
-cvs rlog: Logging master
-* UNKNOWN LINE * Branches:
-Fetching dos.txt   v 1.1
-New dos.txt: 25 bytes
-Fetching unix.txt   v 1.1
-New unix.txt: 22 bytes
-fatal: LF would be replaced by CRLF in /tmp/gitcvs.RT1XN8
-Use of uninitialized value $sha in scalar chomp at /usr/bin/git-cvsimport line 928.
-Use of uninitialized value in concatenation (.) or string at /usr/bin/git-cvsimport line 674, <CVS> line 14.
-fatal: malformed index info 100666 	unix.txt
-unable to write to git-update-index:  at /usr/bin/git-cvsimport line 679, <CVS> line 14.
+The idea is to have the _same_ as FETCH_HEAD, i.e. a simple file 
+(.git/FETCH_HEAD) listing all the branch tips that have been pushed, _no 
+matter_ if they were successfully stored as refs.
 
+Just do this in a repository which is lagging behind origin a little:
 
-So 9 crashes while 6 does not. Apparently the artificial repo with the 2 text files
-doesn't give enough coverage: my problem was with 6.
+	$ git fetch origin
 
-It seems that the import script does not detect a fatal from git. It seems to
-me that it does not check the return code because it tries to continue.
-Must be here (from line 923):
+and then see that a file .git/FETCH_HEAD exists.  As long as you are only 
+interested in the first rev, you can even use "FETCH_HEAD" as a rev name:
 
-print "".($init ? "New" : "Update")." $fn: $size bytes\n" if $opt_v;
-my $pid = open(my $F, '-|');
-die $! unless defined $pid;
-if (!$pid) {
-	exec("git-hash-object", "-w", $tmpname)
-	or die "Cannot create object: $!\n";
-}
-my $sha = <$F>;
-chomp $sha;
-close $F;
+	$ git show FETCH_HEAD
 
+The important feature of this method is that FETCH_HEAD is not fetchable.  
+Neither 'ls-remote' nor 'branch' will show it.
 
-I think the culprit here is git-hash-object. Either it does return a non-zero
-exit code or cvsimport does not see the exit code correctly.
-I've traced it in the code to the file convert.c, function
-static void check_safe_crlf(const char *path, int action,
-                            struct text_stat *stats, enum safe_crlf checksafe)
+BTW a PUSH_HEAD could also help the issue that when updating of a ref was 
+refused, all the objects will have to be transferred via the wire again 
+when pushing somewhere else.
 
-It does do a 'die' which will exit with code 128, but apparently isn't picked
-up by perl. I'm stuck now as I don't know Perl well enough.
+Having said all that, I can easily live without PUSH_HEAD.
 
-
-Back to the issue:
-I think requiring autocrlf = false is too strict. Requiring autocrlf = false
-should be enough. That combined with a bit of text in the manual page about
-these settings: autocrlf = false is strongly recommended. Also, safecrlf is
-required to be set to false.
+Ciao,
+Dscho
