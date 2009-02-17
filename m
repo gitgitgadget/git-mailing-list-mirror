@@ -1,61 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [DRY HUMOR PATCH] Add a few more values for
-	receive.denyCurrentBranch
-Date: Mon, 16 Feb 2009 20:14:24 -0500
-Message-ID: <20090217011424.GA24822@coredump.intra.peff.net>
-References: <cover.1234820890u.git.johannes.schindelin@gmx.de> <bfeaa5d164c9dc2d1080545e4bb9480920762ff2.1234820890u.git.johannes.schindelin@gmx.de> <20090217005824.GA23892@coredump.intra.peff.net> <237967ef0902161710k4672e972rdffab0357b8872a8@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: disallowing push to currently checked-out branch
+Date: Mon, 16 Feb 2009 17:18:57 -0800
+Message-ID: <7v7i3peu7y.fsf@gitster.siamese.dyndns.org>
+References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org>
+ <20090215232013.GA11543@zakalwe.fi>
+ <20090216000443.GB3503@coredump.intra.peff.net>
+ <alpine.DEB.1.10.0902151727330.14911@asgard.lang.hm>
+ <alpine.DEB.1.10.0902151738450.14911@asgard.lang.hm>
+ <alpine.LNX.1.00.0902160322530.19665@iabervon.org>
+ <7veixybw7u.fsf@gitster.siamese.dyndns.org>
+ <loom.20090216T101457-231@post.gmane.org>
+ <20090216135812.GA20377@coredump.intra.peff.net> <49999ED6.7010608@gmail.com>
+ <alpine.DEB.1.00.0902161839120.6289@intel-tinevez-2-302>
+ <4999BD54.8090805@gmail.com>
+ <alpine.DEB.1.00.0902162103580.6289@intel-tinevez-2-302>
+ <4999FFCE.3060605@gmail.com>
+ <alpine.DEB.1.00.0902170112580.10279@pacific.mpi-cbg.de>
+ <499A07C4.5000908@gmail.com>
+ <alpine.DEB.1.00.0902170154330.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Mikael Magnusson <mikachu@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 17 02:15:58 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Sergio Callegari <sergio.callegari@gmail.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 17 02:20:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZEZ0-0005m2-Ee
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 02:15:54 +0100
+	id 1LZEdX-0006jT-Hd
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 02:20:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751473AbZBQBO1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 20:14:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751377AbZBQBO1
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 20:14:27 -0500
-Received: from peff.net ([208.65.91.99]:44647 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750825AbZBQBO0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 20:14:26 -0500
-Received: (qmail 24602 invoked by uid 107); 17 Feb 2009 01:14:46 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 16 Feb 2009 20:14:46 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Feb 2009 20:14:24 -0500
-Content-Disposition: inline
-In-Reply-To: <237967ef0902161710k4672e972rdffab0357b8872a8@mail.gmail.com>
+	id S1751473AbZBQBTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 20:19:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751377AbZBQBTI
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 20:19:08 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48148 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751339AbZBQBTG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 20:19:06 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2167C989D8;
+	Mon, 16 Feb 2009 20:19:05 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 6E85F989CB; Mon,
+ 16 Feb 2009 20:18:59 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.0902170154330.10279@pacific.mpi-cbg.de>
+ (Johannes Schindelin's message of "Tue, 17 Feb 2009 01:56:29 +0100 (CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: F7A3168C-FC90-11DD-9710-0433C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110290>
 
-On Tue, Feb 17, 2009 at 02:10:33AM +0100, Mikael Magnusson wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> 2009/2/17 Jeff King <peff@peff.net>:
-> > On Mon, Feb 16, 2009 at 10:52:05PM +0100, Johannes Schindelin wrote:
-> >
-> >> @@ -75,7 +77,12 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
-> >>       }
-> >>
-> >>       if (!strcmp(var, "receive.denycurrentbranch")) {
-> >> -             deny_current_branch = parse_deny_action(var, value);
-> >> +             if (value && !strcasecmp(value, "updateinstead"))
-> >> +                     deny_current_branch = DENY_UPDATE_INSTEAD;
-> >> +             else if (value && !strcasecmp(value, "detachinstead"))
-> >
-> > Config variables are already lower-cased. ;P
-> 
-> But surely the values are not?
+> Nope.  There was code flying around at some stage to record in the index 
+> what commit it was based on.
+>
+> I forgot why it was thrown out again; you'll have to look up the 
+> discussion yourself.
 
-Heh. Ouch. You are right, of course, and now I have been caught being
-wrong while making smart-ass comments, so I'll shut up. ;)
+A good starting point may be:
 
--Peff
+    http://article.gmane.org/gmane.comp.version-control.git/67089/
+    http://thread.gmane.org/gmane.comp.version-control.git/44360/focus=44508
+
+It is frustrating that I cannot seem to find a way to tell gmane to "jump
+to approximately this timeperiod", but right now, the thread appears at
+around 635th page from the tip.  By the time you read this message you may
+have to flip a bit more pages, though ;-)
