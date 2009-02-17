@@ -1,70 +1,86 @@
-From: Lars Noschinski <lars@public.noschinski.de>
-Subject: Re: [PATCH v2] filter-branch -d: Export GIT_DIR earlier
-Date: Tue, 17 Feb 2009 09:53:01 +0100
-Message-ID: <20090217085301.GA7446@lars.home.noschinski.de>
-References: <20090217083146.GA7338@lars.home.noschinski.de>
+From: John Tapsell <johnflux@gmail.com>
+Subject: [PATCH] Modify description file to say what this file is
+Date: Tue, 17 Feb 2009 08:58:40 +0000
+Message-ID: <43d8ce650902170058l7163b060x4ab89cf327395357@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 17 09:54:42 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 17 10:00:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZLiz-0002hW-SS
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 09:54:42 +0100
+	id 1LZLoH-00049J-Vo
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 10:00:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751110AbZBQIxI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 03:53:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751100AbZBQIxG
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 03:53:06 -0500
-Received: from smtprelay08.ispgateway.de ([80.67.29.8]:37428 "EHLO
-	smtprelay08.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751110AbZBQIxF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 03:53:05 -0500
-Received: from [87.78.71.97] (helo=fruehjahrsmuede.home.noschinski.de)
-	by smtprelay08.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <lars@public.noschinski.de>)
-	id 1LZLhO-0004RK-4K; Tue, 17 Feb 2009 09:53:02 +0100
-Received: from lars by fruehjahrsmuede.home.noschinski.de with local (Exim 4.69)
-	(envelope-from <lars@public.noschinski.de>)
-	id 1LZLhN-0001wJ-GG; Tue, 17 Feb 2009 09:53:01 +0100
-Content-Disposition: inline
-In-Reply-To: <20090217083146.GA7338@lars.home.noschinski.de>
-User-Agent: mutt-ng/devel-r804 (Linux)
-X-Df-Sender: 336680
+	id S1751095AbZBQI6m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 03:58:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751022AbZBQI6m
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 03:58:42 -0500
+Received: from mail-gx0-f222.google.com ([209.85.217.222]:47289 "EHLO
+	mail-gx0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750925AbZBQI6l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 03:58:41 -0500
+Received: by gxk22 with SMTP id 22so3893306gxk.13
+        for <git@vger.kernel.org>; Tue, 17 Feb 2009 00:58:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=dfR6AhGU4b976i+JN8VBj3igomDgXnJqUqmAh9+DX4s=;
+        b=gIYn9erA80RyyI7r53wdi9pxql6YJ4oaiESlmU6sKvArgokqoZ0ARZTDug9GhI8saW
+         vaPNKuiJ4vY0XfpPuDVlJuwCoai/pFHKVWX0P+FT1kytqbTMSgXavjYC7GHNenhXawRT
+         7dgMNxFv6KZkDyt+n2ifDbz1deUK/12eUHfbw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=UykuNDlArAARVU3xrpWqlwmmD8EUV30QFE6vUhioNvlB1NHXjf8IBauqPfbIUucNih
+         7AlaGeVAvTU2XfG4Pu17VXvs1prrHrMm68LC9adXAJH0IJePoG8xfGw6nEq6EITzfAKD
+         b1cr6/ZYltmYeiVbc9lxGJ3N8iYlNeOC1Pj1s=
+Received: by 10.151.8.8 with SMTP id l8mr2035962ybi.36.1234861120374; Tue, 17 
+	Feb 2009 00:58:40 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110339>
 
-* Lars Noschinski <lars@public.noschinski.de> [09-02-17 09:31]:
->The improved error handling catches a bug in filter-branch when using
->-d pointing to a path outside any git repository:
->
->$ mkdir foo
->$ cd foo
->$ git init
->$ touch bar
->$ git add bar
->$ git commit -m bar
->$ cd ..
->$ git clone --bare foo
->$ cd foo.git
->$ git filter-branch -d /tmp/filter master
->fatal: Not a git repository (or any of the parent directories): .git
->
->This error message comes from git for-each-ref in line 224. GIT_DIR is
->set correctly by git-sh-setup (to the foo.git repository), but not
->exported (yet).
+A lot of people see this message for the first time on the gitweb
+interface, where there is no clue as to what 'this file' means.
 
-Ops, forgot the
+Signed-off-by: John Tapsell <johnflux@gmail.com>
+---
+ templates/hooks--update.sample |    5 +++--
+ templates/this--description    |    2 +-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-Signed-off-by: Lars Noschinski <lars@public.noschinski.de>
+diff --git a/templates/hooks--update.sample b/templates/hooks--update.sample
+index 93c6055..f753d28 100755
+--- a/templates/hooks--update.sample
++++ b/templates/hooks--update.sample
+@@ -43,10 +43,11 @@ allowdeletetag=$(git config --bool hooks.allowdeletetag)
 
-Feel free to add it. I can also resend the patch.
+ # check for no description
+ projectdesc=$(sed -e '1q' "$GIT_DIR/description")
+-if [ -z "$projectdesc" -o "$projectdesc" = "Unnamed repository; edit
+this file to name it for gitweb." ]; then
++case $projectdesc in "Unnamed repository;"*|'')
+ 	echo "*** Project description file hasn't been set" >&2
+ 	exit 1
+-fi
++	;;
++esac
 
-   - Lars
+ # --- Check types
+ # if $newrev is 0000...0000, it's a commit to delete a ref.
+diff --git a/templates/this--description b/templates/this--description
+index c6f25e8..914a64e 100644
+--- a/templates/this--description
++++ b/templates/this--description
+@@ -1 +1 @@
+-Unnamed repository; edit this file to name it for gitweb.
++Unnamed repository; edit the .git/description file to name it for gitweb.
+-- 
+1.6.2.rc1
