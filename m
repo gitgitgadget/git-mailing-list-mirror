@@ -1,66 +1,49 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [ANNOUNCE] Gerrit Code Review 2.0.3
-Date: Tue, 17 Feb 2009 09:09:15 -0800
-Message-ID: <20090217170915.GJ18525@spearce.org>
-References: <20090217011256.GA23314@spearce.org> <1976ea660902162311q12e11ec5g7a43ab637186985e@mail.gmail.com> <20090217151838.GI18525@spearce.org> <8c9a060902170813ie8f5bc1gfed53e4f31f64c23@mail.gmail.com> <alpine.DEB.1.00.0902171743280.6185@intel-tinevez-2-302>
+From: Mike Hommey <mh@glandium.org>
+Subject: hg-fast-export and branches
+Date: Tue, 17 Feb 2009 18:10:55 +0100
+Message-ID: <20090217171055.GA3547@glandium.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jacob Helwig <jacob.helwig@gmail.com>, Frank Li <lznuaa@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 17 18:10:48 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 17 18:12:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZTT2-0005Zm-U7
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 18:10:45 +0100
+	id 1LZTUt-0006PN-RX
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 18:12:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752160AbZBQRJQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 12:09:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752072AbZBQRJQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 12:09:16 -0500
-Received: from george.spearce.org ([209.20.77.23]:59987 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751816AbZBQRJQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 12:09:16 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 3B804381FF; Tue, 17 Feb 2009 17:09:15 +0000 (UTC)
+	id S1752686AbZBQRLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 12:11:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752489AbZBQRLK
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 12:11:10 -0500
+Received: from vuizook.err.no ([85.19.221.46]:49937 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752349AbZBQRLK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 12:11:10 -0500
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <mh@glandium.org>)
+	id 1LZTTH-0002Na-7c
+	for git@vger.kernel.org; Tue, 17 Feb 2009 18:11:01 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1LZTTD-00010F-BO
+	for git@vger.kernel.org; Tue, 17 Feb 2009 18:10:55 +0100
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0902171743280.6185@intel-tinevez-2-302>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110414>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Tue, 17 Feb 2009, Jacob Helwig wrote:
-> > On Tue, Feb 17, 2009 at 07:18, Shawn O. Pearce <spearce@spearce.org> wrote:
-> > >
-> > > Something is busted in the IE AJAX code used by Gerrit Code Review.
-> > 
-> > I've found IEs4Linux helpful for debugging IE-only issues under Linux.
-> > 
-> > http://www.tatanka.com.br/ies4linux/page/Main_Page
-> > 
-> > I don't recall, off hand, if it'll provide IE 7 (and the site isn't
-> > working for me right now, so I can't confirm this).  It does provide
-> > IE 5.0, 5.5, and 6.0, however.
-> 
-> If I understand Shawn (and the motto "scratch your own itch") correctly, 
-> Shawn was not so much interested in being pointed to a way of running IE 
-> himself, but more in people who absolutely want to run IE themselves to go 
-> and fix the issues.
+Hi,
 
-Indeed.
+Has anyone got a recipe to track several mercurial branches in a single
+git repository ?
 
-There are probably also license issues with running IE under Linux.
-IIRC Microsoft only licenses IE for use under Windows itself,
-and with a valid Windows OS license.  As a professional developer,
-I do actually try to respect the license under which software is
-delivered to me, even if I have no respect for the vendor... ;-)
-
--- 
-Shawn.
+Mike
