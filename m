@@ -1,73 +1,55 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Blamming a diff between two commits?
-Date: Tue, 17 Feb 2009 15:03:58 +0100
-Message-ID: <vpqocx1qhwx.fsf@bauges.imag.fr>
-References: <499AB8A1.7090909@datacom.ind.br>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: CVS import [SOLVED]
+Date: Tue, 17 Feb 2009 15:18:17 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902171517180.6185@intel-tinevez-2-302>
+References: <19651.77.61.241.211.1234775877.squirrel@hupie.xs4all.nl>    <7291.77.61.241.211.1234790434.squirrel@hupie.xs4all.nl>    <60044.192.168.0.51.1234816333.squirrel@hupie.xs4all.nl>    <alpine.DEB.1.00.0902162157080.6289@intel-tinevez-2-302>
+ <50713.77.61.241.211.1234869582.squirrel@hupie.xs4all.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Samuel Lucas Vaz de Mello <samuellucas@datacom.ind.br>
-X-From: git-owner@vger.kernel.org Tue Feb 17 15:16:03 2009
+To: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
+X-From: git-owner@vger.kernel.org Tue Feb 17 15:20:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZQji-0001O7-8z
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 15:15:46 +0100
+	id 1LZQnd-0003Lq-1Q
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 15:19:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751743AbZBQOOW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 09:14:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751526AbZBQOOW
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 09:14:22 -0500
-Received: from imag.imag.fr ([129.88.30.1]:38955 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751340AbZBQOOV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 09:14:21 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n1HE47Q0006252
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 17 Feb 2009 15:04:07 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1LZQYI-0006Ki-TE; Tue, 17 Feb 2009 15:03:58 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1LZQYI-0004aa-Qs; Tue, 17 Feb 2009 15:03:58 +0100
-In-Reply-To: <499AB8A1.7090909@datacom.ind.br> (Samuel Lucas Vaz de Mello's message of "Tue\, 17 Feb 2009 10\:16\:17 -0300")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 17 Feb 2009 15:04:07 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751332AbZBQOSU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 09:18:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbZBQOSU
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 09:18:20 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51411 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750941AbZBQOST (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 09:18:19 -0500
+Received: (qmail invoked by alias); 17 Feb 2009 14:18:17 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp022) with SMTP; 17 Feb 2009 15:18:17 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+6Yrgk3BO6GnTVoyV/Bqx0ytnEK4fZUrKuplzyk8
+	mILi0b2Dt9BYE5
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <50713.77.61.241.211.1234869582.squirrel@hupie.xs4all.nl>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6899999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110387>
 
-Samuel Lucas Vaz de Mello <samuellucas@datacom.ind.br> writes:
+Hi,
 
-> Hi,
->
-> Is there any way to git blame (or annotate) a diff between two commits?
+On Tue, 17 Feb 2009, Ferry Huberts (Pelagic) wrote:
 
-I don't think this is implemented (but would be nice).
+> 1- correct import, no warnings
 
-> Using a git-blame in the resulting file give me the commits for the
-> lines added, but not for the deleted ones.
+When you say "correct import", do you mean that the import worked, or that 
+the imported file is actually bytewise identical to what is stored in the 
+CVS _repository_ (as opposed to the working directory)?
 
-A preliminary implementation of "git blame --reverse" was proposed by
-Junio here:
-
-  http://kerneltrap.org/mailarchive/git/2008/4/3/1338234
-
-And an approximation of it is proposed in the thread:
-
-  http://kerneltrap.org/mailarchive/git/2008/4/3/1343554
-
-I don't know the status of this patch (dropped?).
-
--- 
-Matthieu
+Ciao,
+Dscho
