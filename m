@@ -1,56 +1,153 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Re: Minor grammar fix in the 'Not a git repository'
- message
-Date: Mon, 16 Feb 2009 16:51:03 -0800
-Message-ID: <7vk57pevig.fsf@gitster.siamese.dyndns.org>
-References: <cover.1234825069u.git.johannes.schindelin@gmx.de>
- <8787c5894e7831bbd1ace3b2fd6649f1362d4b78.1234825069u.git.johannes.schindelin@gmx.de> <7vd4diez2z.fsf@gitster.siamese.dyndns.org> <20090217001747.GA23278@vidovic>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nicolas Sebrecht <nicolas.s-dev@laposte.net>
-X-From: git-owner@vger.kernel.org Tue Feb 17 01:52:44 2009
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v2 1/8] config: Trivial rename in preparation for parseopt.
+Date: Tue, 17 Feb 2009 02:54:47 +0200
+Message-ID: <1234832094-15541-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 17 01:56:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZECX-00075p-7z
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 01:52:41 +0100
+	id 1LZEGB-00084m-IH
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 01:56:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751516AbZBQAvM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 19:51:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751413AbZBQAvK
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 19:51:10 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:39531 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751342AbZBQAvJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 19:51:09 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C39892B48D;
-	Mon, 16 Feb 2009 19:51:08 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2EB4D2B47D; Mon,
- 16 Feb 2009 19:51:05 -0500 (EST)
-In-Reply-To: <20090217001747.GA23278@vidovic> (Nicolas Sebrecht's message of
- "Tue, 17 Feb 2009 01:17:47 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 1077B400-FC8D-11DD-A3AF-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1751516AbZBQAy7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 19:54:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751319AbZBQAy7
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 19:54:59 -0500
+Received: from mail-bw0-f161.google.com ([209.85.218.161]:51434 "EHLO
+	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751169AbZBQAy7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 19:54:59 -0500
+Received: by bwz5 with SMTP id 5so3545414bwz.13
+        for <git@vger.kernel.org>; Mon, 16 Feb 2009 16:54:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=YSVjKDSJNiF7xm/+KeN500HnOLbmFqZ/5T4a8+eykmk=;
+        b=a0zyBmAOfChBT9wV6iLl1lWBXqUJ+r78qbjF6d/cYsJqF3owIKJIGuVP5DJCndh+H7
+         Bpwkc3CNH8qeZKTMqA49ylQbOXJUdlXTHjUpIYU92DZN3QEQyrHBOTah+OH+V82jyvtU
+         PxYeUJEXLKpNJH5EQpF+eVhzAHioy/PsURUNA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=eUJmGLPGyIF7+xcP67KQKzGNbV00pSO47UbPoIXEzQ9E+SgmeXtZ6Qj0f38dAMpPMg
+         RqO4TjMnPM3O7SdUePWSl9DtsRW8B5WzR3Of+EFQJpHS5s4uTQsOyxElf2wQigtjLfeT
+         +JEUc4dZK9XLxXK8fJBQpXWzUS5Eoywamwrrk=
+Received: by 10.103.198.15 with SMTP id a15mr3281963muq.60.1234832096819;
+        Mon, 16 Feb 2009 16:54:56 -0800 (PST)
+Received: from localhost (a91-153-251-222.elisa-laajakaista.fi [91.153.251.222])
+        by mx.google.com with ESMTPS id j9sm63137mue.40.2009.02.16.16.54.56
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 16 Feb 2009 16:54:56 -0800 (PST)
+X-Mailer: git-send-email 1.6.1.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110275>
 
-Nicolas Sebrecht <nicolas.s-dev@laposte.net> writes:
+Essensially this replaces 'file' with 'prefix' in the cases where the
+variable is used as a prefix, which is consistent with other git
+commands.
 
-> The message
-> 	"Not inside a git repository" 
-> of Wincent looks like the clearest and the fairest one.
+When using the --list option general errors where not properly reported,
+only errors related with the 'file'. Now they are reported, and 'file'
+is irrelevant.
 
-I tend to agree.  I was only trying to see if we can salvage a more
-precise diagnosis f66bc5f (Always show which directory is not a git
-repository, 2008-12-22) tried to give users, but to do it throughly the
-sentence will become even more awkward.
+That reduces the rest of 'file' usage to nothing, therefore now only
+'prefix' remains.
 
-    "Not inside a bare git repository nor a work tree that has .git/ somewhere in it."
+Suggested by Johannes Schindelin.
+
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ builtin-config.c |   27 +++++++++++++--------------
+ 1 files changed, 13 insertions(+), 14 deletions(-)
+
+diff --git a/builtin-config.c b/builtin-config.c
+index 6937eaf..da754e0 100644
+--- a/builtin-config.c
++++ b/builtin-config.c
+@@ -178,6 +178,7 @@ static char *normalize_value(const char *key, const char *value)
+ 
+ static int get_color_found;
+ static const char *get_color_slot;
++static const char *get_colorbool_slot;
+ static char parsed_color[COLOR_MAXLEN];
+ 
+ static int git_get_color_config(const char *var, const char *value, void *cb)
+@@ -231,7 +232,7 @@ static int get_diff_color_found;
+ static int git_get_colorbool_config(const char *var, const char *value,
+ 		void *cb)
+ {
+-	if (!strcmp(var, get_color_slot)) {
++	if (!strcmp(var, get_colorbool_slot)) {
+ 		get_colorbool_found =
+ 			git_config_colorbool(var, value, stdout_is_tty);
+ 	}
+@@ -263,11 +264,11 @@ static int get_colorbool(int argc, const char **argv)
+ 		usage(git_config_set_usage);
+ 	get_colorbool_found = -1;
+ 	get_diff_color_found = -1;
+-	get_color_slot = argv[0];
++	get_colorbool_slot = argv[0];
+ 	git_config(git_get_colorbool_config, NULL);
+ 
+ 	if (get_colorbool_found < 0) {
+-		if (!strcmp(get_color_slot, "color.diff"))
++		if (!strcmp(get_colorbool_slot, "color.diff"))
+ 			get_colorbool_found = get_diff_color_found;
+ 		if (get_colorbool_found < 0)
+ 			get_colorbool_found = git_use_color_default;
+@@ -281,11 +282,11 @@ static int get_colorbool(int argc, const char **argv)
+ 	}
+ }
+ 
+-int cmd_config(int argc, const char **argv, const char *prefix)
++int cmd_config(int argc, const char **argv, const char *unused_prefix)
+ {
+ 	int nongit;
+ 	char* value;
+-	const char *file = setup_git_directory_gently(&nongit);
++	const char *prefix = setup_git_directory_gently(&nongit);
+ 
+ 	config_exclusive_filename = getenv(CONFIG_ENVIRONMENT);
+ 
+@@ -299,10 +300,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		else if (!strcmp(argv[1], "--list") || !strcmp(argv[1], "-l")) {
+ 			if (argc != 2)
+ 				usage(git_config_set_usage);
+-			if (git_config(show_all_config, NULL) < 0 &&
+-					file && errno)
+-				die("unable to read config file %s: %s", file,
+-				    strerror(errno));
++			if (git_config(show_all_config, NULL) < 0)
++				die("error processing config file(s)");
+ 			return 0;
+ 		}
+ 		else if (!strcmp(argv[1], "--global")) {
+@@ -319,12 +318,12 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		else if (!strcmp(argv[1], "--file") || !strcmp(argv[1], "-f")) {
+ 			if (argc < 3)
+ 				usage(git_config_set_usage);
+-			if (!is_absolute_path(argv[2]) && file)
+-				file = prefix_filename(file, strlen(file),
+-						       argv[2]);
++			if (!is_absolute_path(argv[2]) && prefix)
++				config_exclusive_filename = prefix_filename(prefix,
++									    strlen(prefix),
++									    argv[2]);
+ 			else
+-				file = argv[2];
+-			config_exclusive_filename = file;
++				config_exclusive_filename = argv[2];
+ 			argc--;
+ 			argv++;
+ 		}
+-- 
+1.6.1.3
