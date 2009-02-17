@@ -1,70 +1,129 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: diff.defaultOptions implementation design [was diff.primer]
-Date: Tue, 17 Feb 2009 14:56:58 -0500
-Message-ID: <20090217195658.GC16067@coredump.intra.peff.net>
-References: <1233598855-1088-1-git-send-email-keith@cs.ucla.edu> <1233598855-1088-2-git-send-email-keith@cs.ucla.edu> <20090203071516.GC21367@sigill.intra.peff.net> <alpine.GSO.2.00.0902030833250.5994@kiwi.cs.ucla.edu> <20090206161954.GA18956@coredump.intra.peff.net> <alpine.GSO.2.00.0902090921270.719@kiwi.cs.ucla.edu> <20090213222233.GA7424@coredump.intra.peff.net> <alpine.GSO.2.00.0902162312030.17111@kiwi.cs.ucla.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Keith Cascio <keith@CS.UCLA.EDU>
-X-From: git-owner@vger.kernel.org Tue Feb 17 20:58:31 2009
+From: Pieter de Bie <pieter@frim.nl>
+Subject: Re: [RFC] Common library for Git GUIs
+Date: Tue, 17 Feb 2009 20:08:23 +0000
+Message-ID: <74161B7F-A178-49CB-990D-DF7299235C58@frim.nl>
+References: <20090216212459.GA25046@efreet.light.src>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Jonas Fonseca <fonseca@diku.dk>,
+	Marco Costalba <mcostalba@gmail.com>,
+	David Aguilar <davvid@gmail.com>,
+	Abhijit Bhopatkar <bain@devslashzero.com>,
+	Henk <henk_westhuis@hotmail.com>, Frank Li <lznuaa@gmail.com>
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Tue Feb 17 21:11:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZW5N-0007UH-TI
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 20:58:30 +0100
+	id 1LZWGr-0003sk-Su
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 21:10:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753166AbZBQT5B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 14:57:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753128AbZBQT5B
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 14:57:01 -0500
-Received: from peff.net ([208.65.91.99]:43557 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751717AbZBQT5A (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 14:57:00 -0500
-Received: (qmail 31721 invoked by uid 107); 17 Feb 2009 19:57:20 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 17 Feb 2009 14:57:20 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Feb 2009 14:56:58 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.GSO.2.00.0902162312030.17111@kiwi.cs.ucla.edu>
+	id S1753280AbZBQUIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 15:08:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753382AbZBQUIg
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 15:08:36 -0500
+Received: from frim.nl ([87.230.85.232]:50729 "EHLO
+	lvps87-230-85-232.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753276AbZBQUIf (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Feb 2009 15:08:35 -0500
+Received: from cnat081.wlan.net.ed.ac.uk ([129.215.5.81] helo=[172.20.196.1])
+	by lvps87-230-85-232.dedicated.hosteurope.de with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <pieter@frim.nl>)
+	id 1LZWF4-0001N7-De; Tue, 17 Feb 2009 21:08:30 +0100
+In-Reply-To: <20090216212459.GA25046@efreet.light.src>
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110448>
 
-On Mon, Feb 16, 2009 at 11:24:33PM -0800, Keith Cascio wrote:
+Hi,
 
-> I like the idea of using parse-options to handle diff options and I
-> too would like all switches negatable.  I will come back to the other
-> ideas you mention if necessary.  You laid it all out nicely.
+On Feb 16, 2009, at 9:24 PM, Jan Hudec wrote:
 
-If you are interested in parse-optification of diff options, search the
-archive for messages from Pierre Habouzit on the topic in the last 6
-months or so. It was discussed at the GitTogether, and he had some
-preliminary patches.
+> What it should use:
+>
+> - It should probably be in C++ or C, with bindings for at least Perl,
+>   Python, Ruby, C#(CLR) and Java. The bindings can be done either  
+> with Swig,
+>   or using some base library that already has them.
 
-> diff_setup().  But diff_setup() must still ascertain at least one
-> runtime fact: whether or not we are running one of the commands that
-> respects default options {diff, log, show}.  Is there an elegant way
-> to ascertain that fact from inside diff_setup()?  How do you
-> recommend?  (BTW I believe my design achieves this elegantly).
+It should be either C++ or C. If you want git devvers to work on it too,
+you'll probably want to go with C.
 
-You can impact the argument parsing by touching the diffopt struct
-before doing the parsing. I.e., something like:
+>   I think Java or CLR, while more portable, would not be appropriate  
+> because
+>   there is no standard way to combine them with other languages like  
+> Perl,
+>   Python and Ruby and those languages are still superior for the UI
+>   programming itself. I somewhat prefer C++, because polymorphism  
+> and some
+>   template tools would be useful here, but I am open to arguments.
 
-  /* we generally get diff options from a rev_info structure */
-  struct rev_info rev;
-  /* initialize the structures */
-  init_revisions(&rev, prefix);
-  /* now set any preferences specific to this command */
-  DIFF_OPT_SET(&rev.diffopt, ALLOW_DEFAULT_CONFIG);
-  /* and then actually parse */
-  setup_revisions(argc, argv, rev, "HEAD");
+I think JGit is pretty far along for someone who wants to create a Java
+GUI.
+>    - Bindings for languages. We can use Swig, but it has e.g. no  
+> support for
+>      callbacks, so having portable runtime with already existing  
+> bindings
+>      that support this would be an advantage.
 
-See for example how cmd_whatchanged does it in builtin-log.c. Any
-porcelains which wanted this feature would opt in to it.
+I'd say bindings are pretty easy to create yourself.
 
--Peff
+> Portable runtime options:
+>
+> So what do you people think would be best? I see several options:
+>
+> - QtCore
+>
+>   Qt seems to be the most popular library among Git GUI writers and  
+> since
+>   version 4.5 will be LGPL, so it will be allowed to link with  
+> anything.
+>   It is also probably the most portable one. On the downside, it's  
+> rather
+>   large and it's language bindings are a bit worse (the garbage  
+> collector
+>   integration was a bit bad last time I looked).
+>
+> - Glib
+>
+>   This is C based, so the core could be in plain C. It is also quite  
+> modular
+>   and has very good support for bindings to various languages. On the
+>   downside it's a bit less portable and less used among the existing  
+> guis.
+>   C would mean more work, but we could probably save some of it by  
+> using
+>   gob2 (g object builder)
+>
+> - STL + Boost
+>
+>   I don't have experience with it, though I read some of the  
+> documentation.
+>   It should be sensibly portable. I know it has python bindings, the  
+> rest
+>   would probably have to be dealt with using swig.
+
+None of these, if you want any GUI's to use it. Noone is going to
+create a Gtk / Cocoa / Windows app that depends on Qt. Nobody wants
+to use Boost in any situation and Glib, while being smaller than the
+rest, is also difficult as it isn't shipped with many OS's, for example
+OS X.
+
+> - POSIX + Msys on Windows
+>
+>   I guess it would technically be usable, but I think it would be  
+> rather lot
+>   of additional work. It would probably be quite lightweight, though.
+
+I think lightweight is the way to go. If you go for C++, you can also  
+use
+the STL.
+
+But, isn't this time spent better on getting libgit2 off the ground?
