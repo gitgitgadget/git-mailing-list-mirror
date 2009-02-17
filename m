@@ -1,175 +1,106 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: [RFC] Common library for Git GUIs
-Date: Tue, 17 Feb 2009 21:39:42 +0100
-Message-ID: <20090217203942.GB2216@efreet.light.src>
-References: <20090216212459.GA25046@efreet.light.src> <8b65902a0902170455lda80ea3ybb8ca94eb86d0453@mail.gmail.com>
+From: Jacob Helwig <jacob.helwig@gmail.com>
+Subject: Re: [ANNOUNCE] Gerrit Code Review 2.0.3
+Date: Tue, 17 Feb 2009 13:06:14 -0800
+Message-ID: <8c9a060902171306w5926c20ej439489de450e04f5@mail.gmail.com>
+References: <20090217011256.GA23314@spearce.org>
+	 <1976ea660902162311q12e11ec5g7a43ab637186985e@mail.gmail.com>
+	 <20090217151838.GI18525@spearce.org>
+	 <8c9a060902170813ie8f5bc1gfed53e4f31f64c23@mail.gmail.com>
+	 <alpine.DEB.1.00.0902171743280.6185@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Guilhem Bonnefille <guilhem.bonnefille@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 17 21:41:49 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Frank Li <lznuaa@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 17 22:08:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZWkk-0008EN-GH
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 21:41:15 +0100
+	id 1LZXAc-0002Wu-Q0
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 22:07:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753295AbZBQUjp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 15:39:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753236AbZBQUjp
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 15:39:45 -0500
-Received: from cuda1.bluetone.cz ([212.158.128.5]:37845 "EHLO mail.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752832AbZBQUjp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 15:39:45 -0500
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by mail.bluetone.cz (Spam Firewall) with ESMTP
-	id 6390029CD7F; Tue, 17 Feb 2009 21:39:42 +0100 (CET)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145]) by mail.bluetone.cz with ESMTP id aq8NSCemlWHbVQCC; Tue, 17 Feb 2009 21:39:42 +0100 (CET)
-Received: from bulb by efreet.light.src with local (Exim 4.69)
-	(envelope-from <bulb@ucw.cz>)
-	id 1LZWjG-0001AI-12; Tue, 17 Feb 2009 21:39:42 +0100
-Content-Disposition: inline
-In-Reply-To: <8b65902a0902170455lda80ea3ybb8ca94eb86d0453@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752566AbZBQVGS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 16:06:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752407AbZBQVGR
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 16:06:17 -0500
+Received: from qw-out-2122.google.com ([74.125.92.26]:33005 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752222AbZBQVGQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 16:06:16 -0500
+Received: by qw-out-2122.google.com with SMTP id 5so1690009qwi.37
+        for <git@vger.kernel.org>; Tue, 17 Feb 2009 13:06:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=6QZKMMRlfDUd7ryHmZdnKnFTJ8hKvix7qtuLeh2pdoY=;
+        b=wi3aQDQufokzbP7x9QbVbrAEymc8f/xCj3Xr/+tI6K2+k67Lfu3f1D0z0NustEXGfQ
+         +xUGGG5yZbIw1gp+bSqEJw6p7NUHlCjAoO8Tgh6Bu0iWz1A1XaNnfWbMfuzRBSWR5KfI
+         wxg67nHAhl39RLIWWYogctnBHd8Cn6rJ7AyGQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=qSO4kfgYJCElVcz4Bd4NatC55ijS+QC26JjHiFH6rceDstzyCoqYBUNcE0+LllWCuL
+         DrJGOOi+tTrmB6g6yYoO7bOWSmmQM/efsZYRQrx39c8Es4TT+ErEtX60fWBHm/EpHO2W
+         p49jvqg1A6Qb1Qyjjn2k2KoGgQMSZsLLaGpl8=
+Received: by 10.224.28.143 with SMTP id m15mr3894895qac.82.1234904774953; Tue, 
+	17 Feb 2009 13:06:14 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0902171743280.6185@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110452>
 
-On Tue, Feb 17, 2009 at 13:55:04 +0100, Guilhem Bonnefille wrote:
-> I don't know if it is possible to elect a toolkit. Each toolkit is good.
+On Tue, Feb 17, 2009 at 08:44, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Tue, 17 Feb 2009, Jacob Helwig wrote:
+>
+>> On Tue, Feb 17, 2009 at 07:18, Shawn O. Pearce <spearce@spearce.org> wrote:
+>> > Gerrit is known to not work in Internet Explorer.  As an open source
+>> > developer, my primary desktop system runs Linux.  My portable laptops
+>> > all run Mac OS X, because its shiny.  I have no system capable of
+>> > running Internet Explorer, nor do I desire to send dollars towards
+>> > Redmond in order to obtain an OS license in order to do so.
+>> >
+>> > Something is busted in the IE AJAX code used by Gerrit Code Review.
+>> > I'm guessing that instead of making the data available to the AJAX
+>> > callback, IE wants to save it as a file on disk.  No clue why.
+>> > And due to the lack of IE, I am unable to debug the problem myself.
+>> > I am waiting for someone who really cares about using IE to debug
+>> > it and contribute the patch back.
+>> >
+>>
+>> I've found IEs4Linux helpful for debugging IE-only issues under Linux.
+>>
+>> http://www.tatanka.com.br/ies4linux/page/Main_Page
+>>
+>> I don't recall, off hand, if it'll provide IE 7 (and the site isn't
+>> working for me right now, so I can't confirm this).  It does provide
+>> IE 5.0, 5.5, and 6.0, however.
+>
+> If I understand Shawn (and the motto "scratch your own itch") correctly,
+> Shawn was not so much interested in being pointed to a way of running IE
+> himself, but more in people who absolutely want to run IE themselves to go
+> and fix the issues.
+>
+> Ciao,
+> Dscho
+>
+>
 
-Unfortunately this is quite important question. The selected foundation
-needs to be very portable and fairly lightweight. Heavy dependency would
-discourage gui implementors from using it.
+Oh, I understand "scratch your own itch", but there's also a
+difference between unable to, and unwilling to. ;-)  I wouldn't have
+questioned it, or said anything, if it was simply put as: "Known
+issue, but we don't use IE, so it's not a priority for us.  Patches
+welcome."
 
-Note, that I am *not* talking about GUI toolkit! The layer I am proposing
-should be gui toolkit agnostic or mostly so. Consider a model-view-controller
-design pattern. The goal is to provide generic model and controller parts in
-one layer and adaptors to model interfaces (like QAbstractItemModel and
-GtkTreeModel) in a set of thin layers for each gui toolkit.
-
-Another set of thin layers could wrap them for various dynamic languages --
-python, perl, ruby, C# (CLR) and Java, either using binding infrastructure of
-the selected toolkit, or using Swig.
-
-> Concerning the design of the library, I think it is better to split
-> the library into different layers. The part of the e-world I know
-> concern Gtk/Gnome, so I will use it for my example.
-> 
-> IMHO, it should be interesting to build a library containing only
-> GObject'ification of Git and some wrappers/helpers to construct these
-> objects. For example, some objects to represent authors, commits,
-> branches, remotes and so on. Coupled to these base-types, this library
-> should provide solutions to construct these base-types (wrappers
-> around Git commands and/or internal files).
-> This library can be named libgit-glib for example.
-> Such library can help developement of current UI (giggle, gitg,
-> anjuta-git plugin, and probably others I don't know).
-
-Yes -- that's my idea. Basically it would be one layer for calling to git
-program behind the scenes, parsing and caching the results and presenting
-them in a form of genericish API.
-
-Such API must not be too generic -- that would be just pointless wrapping one
-interface in another. The API would be strongly tied to the GUI features --
-e.g. an object holding all data a dialog for preparing commit needs. But it
-must not be tied to any particular GUI, because that is usually restricted by
-the environment one wants to integrate git with.
-
-> Then, on top of this library, we can imagine another one providing
-> high-level widgets. But it seems harder to identify common widgets
-> between different GUI.
-
-Actually it is quite possible. There is a rather restricted set of
-primitives:
- - button (also toolbar button and simple menu item)
- - choice (toggle button, check button, radio button group, combo box)
- - entry (entry, label (read-only entry))
-   - number entry (spinbutton, slider, scrollbar)
-   - text edit (for longer texts)
- - multi-column tree
-
-For each of these primitives, you can create a generic interface:
- - button:
-
-   This is a method to be executed on the button activation. It might be
-   accompanied by name of the action, it's icon and a flag whether it should
-   be enabled.
-
-   Gtk has GtkAction and Qt has QAction, that do just this. We can easily
-   create simple object with the same properties and adapt it to both of
-   these and any similar interface used by any other toolkit.
-
- - choice:
-
-   This is a variable with current value, that can be read and written and an
-   array of valid choices. Some kind of signal must be emited when the value
-   is changed, either by gui or by underlying application logic.
-
-   I don't think there is a generic interface for this in either Gtk or Qt,
-   but a generic one can be written and connections to the relevant widgets
-   would than be generic for each toolkit.
-
- - entry:
-
-   This is just a variable with current value, that can be read and written.
-   Again, I don't think there is generic interface in Gtk or Qt, but one can
-   be written and the connections would than be generic.
-
- - number entry:
-
-   This is again a variable with current value, this time accompanied by
-   minimum, maximum, precision and possibly page size. Adaptation can be done
-   generically again.
-
-   I am not sure we actually need this. The only I can think of is some
-   numerical configuration options (like gc.reflogexpire) and that might not
-   be worth the hassle. Definitely for the earlier versions.
-
- - text entry:
-
-   Gtk has GtkTextBuffer, but Qt does not seem to have anything similar and
-   to tell the truth I don't think we need either. We simply provide the
-   initial text and get fed the final from the widget.
-   
-   Simple interface would be like for entry, where we provide the intial text
-   and get fed the final one.
-
-   Advanced interface needs to additionally support handling selection, so we
-   can support things like selecting hunks in a diff.
-
- - multi-column tree:
-
-   This is the most complex thing. It provides a tree of items, each of them
-   consisting of several columns. Each column may additionally be editable,
-   so it may need to be necessary to create one of the simple interfaces for
-   it. Selection handling, at least single-line, would also be needed.
-
-   For Gtk this would implement the GtkTreeModel and for Qt the
-   QAbstractItemModel. All modern widget toolkits (Gtk, Qt, Windows.Forms,
-   Cocoa, ...) have some kind of interface like that and they will be similar
-   enough so that we can create some and than generically implement the rest
-   in terms of that.
-
-This is where I'd stop, since everything above that is very much specific to
-the selected toolkit. However, if layer like this is done right, it can
-really simplify creating the GUI itself quite a lot.
-
-> In order to justify my idea, take a look at Qt. They started with a
-> large library, merging low-level with widgets. And then, they split it
-> in order to allow access to low-level features only.
-> 
-> I'm really interested in such project. So, if someone knows such
-> project, or create such a project, drop me a line, please.
-
-I am not aware of it existing. I was playing with an idea of refactoring some
-of the existing GUIs to get a generic library out of it. Mainly because I am
-not really satisfied with any of them and I thought such refactoring would
-simplify adding new features.
-
--- 
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+(Note: I'm not saying that Shawn should be willing to, just that he's
+not "unable" to. I also don't claim to know the full nuances of any
+possible licensing issues.)
