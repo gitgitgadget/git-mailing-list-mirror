@@ -1,114 +1,94 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: [RFC] Common library for Git GUIs
-Date: Tue, 17 Feb 2009 22:21:45 +0100
-Message-ID: <20090217212145.GC2216@efreet.light.src>
-References: <20090216212459.GA25046@efreet.light.src> <74161B7F-A178-49CB-990D-DF7299235C58@frim.nl>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn error: Unable to parse date
+Date: Tue, 17 Feb 2009 13:49:14 -0800
+Message-ID: <20090217214914.GD26706@dcvr.yhbt.net>
+References: <20090217094850.GQ7504@wouts.nl> <7vd4dg6h93.fsf@gitster.siamese.dyndns.org> <20090217193550.GT7504@wouts.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Jonas Fonseca <fonseca@diku.dk>,
-	Marco Costalba <mcostalba@gmail.com>,
-	David Aguilar <davvid@gmail.com>,
-	Abhijit Bhopatkar <bain@devslashzero.com>,
-	Henk <henk_westhuis@hotmail.com>, Frank Li <lznuaa@gmail.com>
-To: Pieter de Bie <pieter@frim.nl>
-X-From: git-owner@vger.kernel.org Tue Feb 17 22:23:19 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Ward Wouts <ward@wouts.nl>
+X-From: git-owner@vger.kernel.org Tue Feb 17 22:51:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZXPR-0000s9-LX
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 22:23:18 +0100
+	id 1LZXqR-0002J8-Cz
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 22:51:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751665AbZBQVVu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 16:21:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751492AbZBQVVt
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 16:21:49 -0500
-Received: from cuda1.bluetone.cz ([212.158.128.5]:43867 "EHLO mail.bluetone.cz"
+	id S1754679AbZBQVtR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 16:49:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754653AbZBQVtR
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 16:49:17 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:36828 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751118AbZBQVVs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 16:21:48 -0500
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by mail.bluetone.cz (Spam Firewall) with ESMTP
-	id D7D194A79B1; Tue, 17 Feb 2009 22:21:45 +0100 (CET)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145]) by mail.bluetone.cz with ESMTP id xs7yvsBpGAMnADUi; Tue, 17 Feb 2009 22:21:45 +0100 (CET)
-Received: from bulb by efreet.light.src with local (Exim 4.69)
-	(envelope-from <bulb@ucw.cz>)
-	id 1LZXNx-0004S2-IG; Tue, 17 Feb 2009 22:21:45 +0100
+	id S1754633AbZBQVtP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 16:49:15 -0500
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE0671F447;
+	Tue, 17 Feb 2009 21:49:14 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <74161B7F-A178-49CB-990D-DF7299235C58@frim.nl>
+In-Reply-To: <20090217193550.GT7504@wouts.nl>
 User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110455>
 
-On Tue, Feb 17, 2009 at 20:08:23 +0000, Pieter de Bie wrote:
-> On Feb 16, 2009, at 9:24 PM, Jan Hudec wrote:
->> What it should use:
->> - It should probably be in C++ or C, with bindings for at least Perl,
->>   Python, Ruby, C#(CLR) and Java. The bindings can be done either with
->>   Swig, or using some base library that already has them.
-> It should be either C++ or C. If you want git devvers to work on it too,
-> you'll probably want to go with C.
+Ward Wouts <ward@wouts.nl> wrote:
+> On Tue, Feb 17, 2009 at 10:38:32AM -0800, Junio C Hamano wrote:
+> > Ward Wouts <ward@wouts.nl> writes:
+> > 
+> > > Unable to parse date: 2004-03-09T09:44:33.Z
+> > >  at /usr/bin/git-svn line 3995
+> > 
+> > A very nice problem description, illustrating what the code should accept
+> > but doesn't.
+> 
+> Thank you.
+> 
+> > > The message goes away with this one character patch:
+> > >
+> > > $ diff -bru git-svn*
+> > > --- git-svn     2009-02-17 10:23:24.000000000 +0100
+> > > +++ git-svn.orig        2009-02-17 10:20:30.000000000 +0100
+> > > @@ -2387,7 +2387,7 @@
+> > >  sub parse_svn_date {
+> > >         my $date = shift || return '+0000 1970-01-01 00:00:00';
+> > >         my ($Y,$m,$d,$H,$M,$S) = ($date =~ /^(\d{4})\-(\d\d)\-(\d\d)T
+> > > -                                           (\d\d)\:(\d\d)\:(\d\d).\d*Z$/x) or
+> > > +                                           (\d\d)\:(\d\d)\:(\d\d).\d+Z$/x) or
+> > >                                          croak "Unable to parse date: $date\n";
+> > >         "+0000 $Y-$m-$d $H:$M:$S";
+> > >  }
+> > 
+> > You had me scratch my head by giving a reverse patch.
+> 
+> Yes, I'm sorry about that. Hopefully my other post about this subject,
+> sent after the remarks Deskin made, is in the proper format.
+> 
+> > I think neither regexp is quite correct, assuming that SVN timestamp is
+> > supposed to always have decimal point after seconds, with optional
+> > fractional part, followed by Z (presumably to mean Zulu).
+> > 
+> > -                                           (\d\d)\:(\d\d)\:(\d\d).\d+Z$/x) or
+> > +                                           (\d\d)\:(\d\d)\:(\d\d)\.\d*Z$/x) or
+> > 
+> > The decimal point should get quoted.
+> 
+> I think you're right.
 
-I don't think the really core devs need to work on this -- their time is best
-spent on the core. And many of the existing guis are in C++. For me, it
-depends on the user portable runtime more than anything else.
+Yup.  Consider a patch with the quoted decimal point to be
+  Acked-by: Eric Wong <normalperson@yhbt.net>
 
->>    - Bindings for languages. We can use Swig, but it has e.g. no  support
->>      for callbacks, so having portable runtime with already existing
->>      bindings that support this would be an advantage.
-> I'd say bindings are pretty easy to create yourself.
+Thanks Junio, Deskin and Ward.
 
-The advantage of swing is, that one definition with a few typedefs would
-generate Python, Perl, Ruby, CLR, Java and a few more bindings. GObject would
-need more language-specific work, but would nicely solve integration into the
-garbage collector. You know, I want to save as much work as possible.
 
->> Portable runtime options:
->> So what do you people think would be best? I see several options:
->> - QtCore
->> - Glib
->> - STL + Boost
-> None of these, if you want any GUI's to use it. Noone is going to
-> create a Gtk / Cocoa / Windows app that depends on Qt. Nobody wants
-> to use Boost in any situation and Glib, while being smaller than the
-> rest, is also difficult as it isn't shipped with many OS's, for example
-> OS X.
+Ward: Just curious, which version of the SVN libraries are you running?
 
-I fully agree that nobody will want to depend on Qt -- QtCore is now
-a separate library, but the sources are not shipped separately AFAIK, so it'd
-be a pain. I would not think the case is as strong against boost and glib,
-though. People would either be getting binaries, in which case we can just
-bundle whatever dependency along, or building it and than one extra source
-tree (that can also be bundled for convenience) is not so much pain.
-
->> - POSIX + Msys on Windows
-> I think lightweight is the way to go. If you go for C++, you can also use
-> the STL.
-
-STL does not have any support for threads, event loop nor signals. Though
-thinking about it, we may not actually need them.
- - we only need threads if our event loop can't be integrated into gui's one
-   and the gui can start our in thread itself -- it's not too much code.
- - we only need file descriptors in the event loop and it needs to be
-   integratable into the gui's one anyway.
- - simple callback is quite likely good enough for us -- the gui will need
-   multiple callbacks, but it will need to connect in it's own signal system
-   anyway.
-So the shell invocation remains and that's little enough we can cut&paste
-that from glib.
-
-> But, isn't this time spent better on getting libgit2 off the ground?
-
-No, because what I have in mind is orthogonal to libgit2. libgit2 is supposed
-to be generic API for git, while I am proposing a specifically gui-oriented
-interface, which should implement all logic of a gui except opening dialogs
-and the widgets themselves, allowing the guis built on top of it to be
-totally dumb. Actually part of my idea is to create something, that can be
-later ported to libgit2 and immediately benefit many git interfaces.
+Odd that this hasn't come up before, I wonder if it's the latest
+versions (which I haven't tried, still on 1.5.1) or if SVN just
+truncates the zeroes...
 
 -- 
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+Eric Wong
