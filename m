@@ -1,84 +1,95 @@
-From: Sergio Callegari <sergio.callegari@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: disallowing push to currently checked-out branch
-Date: Tue, 17 Feb 2009 01:41:40 +0100
-Message-ID: <499A07C4.5000908@gmail.com>
-References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org> <20090215232013.GA11543@zakalwe.fi> <20090216000443.GB3503@coredump.intra.peff.net> <alpine.DEB.1.10.0902151727330.14911@asgard.lang.hm> <alpine.DEB.1.10.0902151738450.14911@asgard.lang.hm> <alpine.LNX.1.00.0902160322530.19665@iabervon.org> <7veixybw7u.fsf@gitster.siamese.dyndns.org> <loom.20090216T101457-231@post.gmane.org> <20090216135812.GA20377@coredump.intra.peff.net> <49999ED6.7010608@gmail.com> <alpine.DEB.1.00.0902161839120.6289@intel-tinevez-2-302> <4999BD54.8090805@gmail.com> <alpine.DEB.1.00.0902162103580.6289@intel-tinevez-2-302> <4999FFCE.3060605@gmail.com> <alpine.DEB.1.00.0902170112580.10279@pacific.mpi-cbg.de>
+Date: Mon, 16 Feb 2009 16:43:03 -0800
+Message-ID: <7vocx1evvs.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LNX.1.00.0902160322530.19665@iabervon.org>
+ <7veixybw7u.fsf@gitster.siamese.dyndns.org>
+ <loom.20090216T101457-231@post.gmane.org>
+ <20090216135812.GA20377@coredump.intra.peff.net> <49999ED6.7010608@gmail.com>
+ <alpine.DEB.1.00.0902161839120.6289@intel-tinevez-2-302>
+ <4999BD54.8090805@gmail.com> <7vprhidpnc.fsf@gitster.siamese.dyndns.org>
+ <20090216224330.GA23764@sigill.intra.peff.net>
+ <7vhc2uezl7.fsf@gitster.siamese.dyndns.org>
+ <20090217002352.GA23507@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 17 01:43:16 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Sergio Callegari <sergio.callegari@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 17 01:44:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZE3M-0004tP-7w
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 01:43:12 +0100
+	id 1LZE4o-0005Ca-I7
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 01:44:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751224AbZBQAlo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 19:41:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751031AbZBQAln
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 19:41:43 -0500
-Received: from mail-bw0-f161.google.com ([209.85.218.161]:63650 "EHLO
-	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750960AbZBQAln (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 19:41:43 -0500
-Received: by bwz5 with SMTP id 5so3540102bwz.13
-        for <git@vger.kernel.org>; Mon, 16 Feb 2009 16:41:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=219g11p2upiHnW9WJ11RXG4T28kQFFSa9AJPjXwKiwE=;
-        b=hTx8n37k2APLOnuWCptc4nfMZofwaFwvU3foO1mho2POFeHqoleQSQpUIJIQiaE1BP
-         yo0Kge7AXOzSYUdOdC32FdWE1MBC95WHwefoREXvx8CIZZJU3X8nncYAzaaR1veGFx+j
-         /QQF7KNmFrjvAjYTx9cVbtz8V4OM4OnouXiew=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=nb+lFAf+uXjVNnOyH4MC3RBCLNJ4ex9I7TDADDQxn7UgVBu/T9Ga/SQlHJrb3vBJOL
-         MROi56GHdBnq6MO45DSBgrQDg42bsnZcP1h8jJUnhNwNxxBlt5ZGIh31c4zOzEhWVaAW
-         3WaNf+9ZjinUyy/oHWhZE7OI7bsp40+/XbWLE=
-Received: by 10.103.12.8 with SMTP id p8mr2373825mui.44.1234831301127;
-        Mon, 16 Feb 2009 16:41:41 -0800 (PST)
-Received: from ?192.168.1.99? (host172-56-dynamic.10-87-r.retail.telecomitalia.it [87.10.56.172])
-        by mx.google.com with ESMTPS id i5sm849935mue.13.2009.02.16.16.41.40
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 16 Feb 2009 16:41:40 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
-In-Reply-To: <alpine.DEB.1.00.0902170112580.10279@pacific.mpi-cbg.de>
+	id S1751331AbZBQAnN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 19:43:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751253AbZBQAnM
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 19:43:12 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35002 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751287AbZBQAnL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 19:43:11 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id ADD132B488;
+	Mon, 16 Feb 2009 19:43:10 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 730992B486; Mon,
+ 16 Feb 2009 19:43:05 -0500 (EST)
+In-Reply-To: <20090217002352.GA23507@coredump.intra.peff.net> (Jeff King's
+ message of "Mon, 16 Feb 2009 19:23:52 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: F38100FA-FC8B-11DD-A3AF-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110272>
 
-Johannes Schindelin wrote:
-> Of course, you can go on and on and on with the detached HEAD ide, but so 
-> far you haven't convinced me that this is a sensible thing to do.
->   
-I will not... it's time to sleep where I am! And I am just a user of git 
-and you are a developer, which makes me think that you might know much 
-better.
-But the exchange was insightful, thanks.
+Jeff King <peff@peff.net> writes:
 
-Rather, I'll turn again the question...
-
-Let us assume that I am working on branch B and that my worktree is 
-based on commit XYZ. Let's also assume that someone pushes behind my 
-shoulders and moves the tip of B (or even deletes B alltogether) either 
-in one or in multiple pushes.  Is there an easy way so that I can now 
-find out at what commit (XYZ) I was before the push(es)?  That would 
-already make me quite satisfied, because with this I can write wrappers 
-or aliases that can check the HEAD against that commit on every 
-status/commit operation and warn the user just in case.
-
-Sergio
-
-> Ciao,
-> Dscho
+> On Mon, Feb 16, 2009 at 03:23:00PM -0800, Junio C Hamano wrote:
 >
->   
+>> >   1. How can we improve this situation?
+>> 
+>> The situation you described is all about "don't allow a push that is NOT
+>> CONTROLLED BY YOU and that can interfere with what you are doing into a
+>> live repository", and you are right, we have operations that deliberately
+>> detach the HEAD and expect nobody mucks with the branch.
+>
+> I don't agree that it has to be a push not controlled by you. I have
+> many times left a rebase-in-progress sitting in a repository, either
+> accidentally because I meant to "--abort" it after a conflict but
+> forgot, or because I got interrupted during an interactive edit and
+> needed to come back to it.
+
+That sounds similar to saying "I left my editor open without saving my
+changes, and accidentally opened another instance of an editor from a
+different terminal and edited the same file, the result is a mess".  The
+editors protect users from such a situation by locking the file they are
+editing.
+
+Perhaps operations that detaches HEAD (rebase and perhaps sequencer) can
+all agree to use a single marker file that says "Do not mess with these
+refs via push or fetch" and make receive-pack and fetch honor that?  Then
+the issue you raised in your earlier message about receive-pack having to
+know random states random set of tools leave will be alleviated.  We need
+to make sure that the marker is cleaned up correctly when the command is
+done with the lock, of course.
+
+If we were to go that route, I think the same receive.denyCurrentBranch
+configuration variable can and should be used to control this, even though
+its name originally comes from the most visible operation that can cause
+the confusion (i.e. "pushing into the current branch").  It is about
+protecting the person who is currently using the work tree, or who will
+use the work tree next.
+
+> I am really just proposing that the "ref was not what we expected"
+> message to better indicate what is going on, and how the user might get
+> out of it. Do you not agree with that?
+
+The recovery recipe you described looked good.
