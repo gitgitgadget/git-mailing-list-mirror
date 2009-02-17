@@ -1,91 +1,81 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Re: Minor grammar fix in the 'Not a git repository' message
-Date: Tue, 17 Feb 2009 01:29:27 -0800 (PST)
-Message-ID: <m31vtxtntf.fsf@localhost.localdomain>
-References: <cover.1234825069u.git.johannes.schindelin@gmx.de>
-	<20090217001747.GA23278@vidovic>
-	<7vk57pevig.fsf@gitster.siamese.dyndns.org>
-	<200902162116.55484.bss@iguanasuicide.net>
+From: Mike Ralphson <mike.ralphson@gmail.com>
+Subject: Re: [PATCH v2 4/5] t3301: use test_must_fail instead of !
+Date: Tue, 17 Feb 2009 09:29:57 +0000
+Message-ID: <e2b179460902170129s7ae613cehe237619be5e84936@mail.gmail.com>
+References: <200902142056.42198.trast@student.ethz.ch>
+	 <8c50889d27e5baec1cbbd9a5775fa80b986c6df6.1234642638.git.trast@student.ethz.ch>
+	 <7vvdrcnnl0.fsf@gitster.siamese.dyndns.org>
+	 <200902151711.45099.trast@student.ethz.ch>
+	 <20090215181818.GA2291@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	git@vger.kernel.org
-To: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-X-From: git-owner@vger.kernel.org Tue Feb 17 10:31:00 2009
+To: Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 17 10:31:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZMI6-0005iZ-Lk
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 10:30:59 +0100
+	id 1LZMId-0005ri-1K
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 10:31:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751123AbZBQJ3b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 04:29:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751056AbZBQJ3b
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 04:29:31 -0500
-Received: from mail-fx0-f20.google.com ([209.85.220.20]:54113 "EHLO
-	mail-fx0-f20.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751047AbZBQJ3a (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 04:29:30 -0500
-Received: by fxm13 with SMTP id 13so6563515fxm.13
-        for <git@vger.kernel.org>; Tue, 17 Feb 2009 01:29:28 -0800 (PST)
+	id S1751332AbZBQJaA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 04:30:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751296AbZBQJaA
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 04:30:00 -0500
+Received: from mail-qy0-f11.google.com ([209.85.221.11]:53757 "EHLO
+	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751141AbZBQJ37 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 04:29:59 -0500
+Received: by qyk4 with SMTP id 4so3622716qyk.13
+        for <git@vger.kernel.org>; Tue, 17 Feb 2009 01:29:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=xpdoTWGEuT9DgwRvylvAvTgvxqHCaelSBv28cRDRdtk=;
-        b=nyMJIc/dFNMgxc3IQFb+UJp44IKWmzhYmU2Bm+0/oO99nymwyI5y6W5v1SU9CrA5rU
-         Is8INJlxaITKocbUNEGlwLlfkl7NyVt+K7tAD/15YyPsXFJAB+oke23XPCrBdg9r3C2o
-         jUgfmK+TwfScVqA4OkZA/PcpK15idyphlCtSo=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=lwMRnQD5v/t8uXUFmQkXLuP/pLUrYhpgY/IUpJ17Wxg=;
+        b=E6tsMUWTZDIKxE2vETfOoJ92D+zGj31dZHdkEEezXL6GFYn0iz7EZUM472ojn2c3j/
+         OnfvAAFkJTcK/ybBhpc06cP458MQ1dHJ7hTdaYlMIw4sH4m7gVLAFJo7Lq5/OYaIaw9s
+         8Xzk444W6Iz0cPr+WTTVRKL9pfbFBckihsjQw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=WFacEMLMX238PMCQa3DWQJX0JqKmhvREEMqPtMkeeNOHoYwE0cEhGorbZCN2ULWvMB
-         5+QKd+qd6//XgZ/nLJ6geyqfL9crrflbZbOD3qMDU9wEJbmsYX3FwLEX7ERtij4YmUbJ
-         O70gprsjZUfRfpUB/j9HnCwZdfVvxsFxOfVGM=
-Received: by 10.103.249.19 with SMTP id b19mr720472mus.86.1234862968385;
-        Tue, 17 Feb 2009 01:29:28 -0800 (PST)
-Received: from localhost.localdomain (abwe74.neoplus.adsl.tpnet.pl [83.8.228.74])
-        by mx.google.com with ESMTPS id 12sm1378803muq.5.2009.02.17.01.29.21
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 17 Feb 2009 01:29:27 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n1H9ShKs009986;
-	Tue, 17 Feb 2009 10:28:54 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n1H9SCWF009981;
-	Tue, 17 Feb 2009 10:28:12 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <200902162116.55484.bss@iguanasuicide.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=wUM2U4MIkAkefrYu6En00KEQSbqwUmfDOW05OsOMu7w2QgSgJtDxbB6kx5kTp5w3ff
+         f2L6mySKtZhPjzoDfDJTZtT3B/1erHcnNRyXw6hoCdhxCOZUHwqgsfVhlJ727h7A7bGS
+         1lutkjz4LiWUEkWp0Xee1oPO7I2OSRmr0tl/I=
+Received: by 10.224.15.15 with SMTP id i15mr9799157qaa.12.1234862997301; Tue, 
+	17 Feb 2009 01:29:57 -0800 (PST)
+In-Reply-To: <20090215181818.GA2291@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110346>
 
-"Boyd Stephen Smith Jr." <bss@iguanasuicide.net> writes:
-> On Monday 16 February 2009 18:51:03 Junio C Hamano wrote:
-> > Nicolas Sebrecht <nicolas.s-dev@laposte.net> writes:
+2009/2/15 Jeff King <peff@peff.net>:
+> On Sun, Feb 15, 2009 at 05:11:40PM +0100, Thomas Rast wrote:
+>> Is there a "bare minimum" POSIX shell that I can run the tests under,
+>> to save myself such embarassment in the future?
+>
+> Using "dash" will catch bash-isms, and is pretty commonly available, I
+> think.  But this behavior, IIRC, happens on FreeBSD's /bin/sh, which is
+> derived from "ash" (so is "dash", but I they have long since diverged).
+>
+> There are even more quirks on more exotic systems, I expect, though I
+> have to admit that I gave up on Solaris and just started using bash
+> there. :)
+>
+> So I don't think there is a catch-all shell that will help you, but some
+> "ash" variant is probably your best bet.
 
-> > > The message
-> > > 	"Not inside a git repository"
-> > > of Wincent looks like the clearest and the fairest one.
-> >
-> > I tend to agree.  I was only trying to see if we can salvage a more
-> > precise diagnosis f66bc5f (Always show which directory is not a git
-> > repository, 2008-12-22) tried to give users.
-> 
-> "Not in a git repository or work tree: %s", DEFAULT_GIT_DIR_ENVIRONMENT
-> ?
+posh? http://packages.debian.org/lenny/posh
 
-"Not in a git repository or in a work tree: %s" perhaps...
-cwd or DEFAULT_GIT_DIR_ENVIRONMENT?
+I've heard that if you unset POSIXLY_CORRECT it just sits there and
+hums until you set it again. 8-)
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Mike
