@@ -1,80 +1,127 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 1/8] config: Trivial rename in preparation for 
-	parseopt.
-Date: Tue, 17 Feb 2009 15:59:28 +0200
-Message-ID: <94a0d4530902170559r74d0b9acyea9be124ece0adeb@mail.gmail.com>
-References: <1234832094-15541-1-git-send-email-felipe.contreras@gmail.com>
-	 <7v3aedet0j.fsf@gitster.siamese.dyndns.org>
-	 <94a0d4530902161842s1d1d9fech3786cce1f1a1135d@mail.gmail.com>
-	 <alpine.DEB.1.00.0902171300450.6185@intel-tinevez-2-302>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: Blamming a diff between two commits?
+Date: Tue, 17 Feb 2009 15:09:18 +0100
+Message-ID: <200902171509.21434.trast@student.ethz.ch>
+References: <499AB8A1.7090909@datacom.ind.br>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/signed;
+  boundary="nextPart1604842.APSADoQgTe";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Gerrit Pape <pape@smarden.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 17 15:01:19 2009
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Samuel Lucas Vaz de Mello <samuellucas@datacom.ind.br>
+X-From: git-owner@vger.kernel.org Tue Feb 17 15:11:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZQVi-0004OQ-14
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 15:01:18 +0100
+	id 1LZQf3-0007rY-5W
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 15:10:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751332AbZBQN7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 08:59:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752869AbZBQN7b
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 08:59:31 -0500
-Received: from fg-out-1718.google.com ([72.14.220.157]:30776 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751255AbZBQN7a (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 08:59:30 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so420698fgg.17
-        for <git@vger.kernel.org>; Tue, 17 Feb 2009 05:59:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=5xhtAEzBIKatRv1HWxxUMunQm1v2KAh6bVDoqs5rkdg=;
-        b=lAAFieGYUsohzfzy3CiNoCQrY+qpr/MHuyxHsvKh3ZffvbJDoT+RSMw01v5TKy8U26
-         yw1SGED+ffWNGo2cQ9Xn5ToFlp1J5HTdjhaQ6OHAAUo9kp2XVmDhgQDuCRHhqg8LMJnA
-         LGAWzLaFQjfFYI/huXVnvo7jR/W9DZ4qPH6OY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=j7ds1/JyY1MIdJv3PZN+tcN45FuryN9bWv60Qid577Kz9ftRvvI8XhL5pSL/J/mjZM
-         Tr4z1zs128lq1wyRDmHMQzVACN+5teLv3VhLKMMywKXgQ4mYSFyB9IxfCC5iCPX7Tj8i
-         9MQRj0oxD4v3DvLkNfEKiEaxN7FcC8u7p0Lms=
-Received: by 10.86.77.5 with SMTP id z5mr2071081fga.63.1234879168652; Tue, 17 
-	Feb 2009 05:59:28 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0902171300450.6185@intel-tinevez-2-302>
+	id S1751499AbZBQOJY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 09:09:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751454AbZBQOJY
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 09:09:24 -0500
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:59641 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751255AbZBQOJX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 09:09:23 -0500
+Received: from xfe1.d.ethz.ch ([82.130.124.41]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 17 Feb 2009 15:09:22 +0100
+Received: from thomas.localnet ([129.132.153.233]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 17 Feb 2009 15:09:21 +0100
+User-Agent: KMail/1.11.0 (Linux/2.6.27.7-9-default; KDE/4.2.0; x86_64; ; )
+In-Reply-To: <499AB8A1.7090909@datacom.ind.br>
+X-OriginalArrivalTime: 17 Feb 2009 14:09:21.0909 (UTC) FILETIME=[54BBB250:01C99109]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110383>
 
-On Tue, Feb 17, 2009 at 2:01 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Tue, 17 Feb 2009, Felipe Contreras wrote:
->
->>         free(repo_config);
->> +       if (found == 0)
->> +               error("no config file found");
->>         return ret;
->
-> Err, you mean "return error(..)"?
->
-> But it might be not an error at all: think of "cd / && git ls-remote $URL"
-> without /etc/gitconfig nor $HOME/.gitconfig.
+--nextPart1604842.APSADoQgTe
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Yeah, I thought about that when doing the patch. I've removed the
-error(), now it will only return -1. Almost nobody is checking the
-return code anyways.
+Samuel Lucas Vaz de Mello wrote:
+> Is there any way to git blame (or annotate) a diff between two
+> commits?
 
--- 
-Felipe Contreras
+Piecing it together from existing tools isn't really hard, and made
+for a nice distraction.
+
+Call it as './git-blame-diff.perl HEAD^ HEAD' or so.
+
+This lacks proper argument checking and a chdir to the repository top
+level.  Maybe you could fill in the gaps and shape it as a contrib
+patch?  For bonus points, change it so that the workdir version can be
+used as the new side of the diff, by omitting the second argument.
+
+=2D-- 8< ---
+#!/usr/bin/perl -w
+
+sub parse_hunk_header {
+	my ($line) =3D @_;
+	my ($o_ofs, $o_cnt, $n_ofs, $n_cnt) =3D
+	    $line =3D~ /^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@/;
+	$o_cnt =3D 1 unless defined $o_cnt;
+	$n_cnt =3D 1 unless defined $n_cnt;
+	return ($o_ofs, $o_cnt, $n_ofs, $n_cnt);
+}
+
+sub get_blame_prefix {
+	my ($line) =3D @_;
+	$line =3D~ /^([0-9a-f]+\s+\([^\)]+\))/ or die "bad blame output: $line";
+	return $1;
+}
+
+my ($oldrev, $newrev) =3D @ARGV;
+open($diff, '-|', 'git', '--no-pager', 'diff', $oldrev, $newrev) or die;
+
+my ($pre, $post);
+my $filename;
+while (<$diff>) {
+	if (m{^diff --git ./(.*) ./\1$}) {
+		$filename =3D $1;
+	} elsif (m{^(\+\+\+|---) ./$filename$}) {
+		# ignore
+	} elsif (m{^@@ }) {
+		my ($o_ofs, $o_cnt, $n_ofs, $n_cnt)
+			=3D parse_hunk_header($_);
+		my $o_end =3D $o_ofs + $o_cnt;
+		my $n_end =3D $n_ofs + $n_cnt;
+		open($pre, '-|', 'git', 'blame', "-L$o_ofs,$o_end",
+		     $oldrev, '--', $filename) or die;
+		open($post, '-|', 'git', 'blame', "-L$n_ofs,$n_end",
+		     $newrev, '--', $filename) or die;
+	} elsif (m{^ }) {
+		print get_blame_prefix(scalar <$pre>), "\t", $_;
+		scalar <$post>; # discard
+	} elsif (m{^\-}) {
+		print get_blame_prefix(scalar <$pre>), "\t", $_;
+	} elsif (m{^\+}) {
+		print get_blame_prefix(scalar <$post>), "\t", $_;
+	}=20
+}
+
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
+
+--nextPart1604842.APSADoQgTe
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkmaxREACgkQqUud07tmzP2VuQCfXKNp6IhdfjXvGw12sp/R6tlg
+OrsAn3UEdqVGBeInPewIFEMTAKtvviy0
+=QElX
+-----END PGP SIGNATURE-----
+
+--nextPart1604842.APSADoQgTe--
