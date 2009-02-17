@@ -1,71 +1,61 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [ANNOUNCE] Gerrit Code Review 2.0.3
-Date: Mon, 16 Feb 2009 17:12:56 -0800
-Message-ID: <20090217011256.GA23314@spearce.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [DRY HUMOR PATCH] Add a few more values for
+	receive.denyCurrentBranch
+Date: Mon, 16 Feb 2009 20:14:24 -0500
+Message-ID: <20090217011424.GA24822@coredump.intra.peff.net>
+References: <cover.1234820890u.git.johannes.schindelin@gmx.de> <bfeaa5d164c9dc2d1080545e4bb9480920762ff2.1234820890u.git.johannes.schindelin@gmx.de> <20090217005824.GA23892@coredump.intra.peff.net> <237967ef0902161710k4672e972rdffab0357b8872a8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 17 02:14:25 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Mikael Magnusson <mikachu@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 17 02:15:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZEXY-0005Kz-MS
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 02:14:25 +0100
+	id 1LZEZ0-0005m2-Ee
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 02:15:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751339AbZBQBM6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 20:12:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751306AbZBQBM5
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 20:12:57 -0500
-Received: from george.spearce.org ([209.20.77.23]:60016 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751253AbZBQBM4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 20:12:56 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 32EA6381FF; Tue, 17 Feb 2009 01:12:56 +0000 (UTC)
+	id S1751473AbZBQBO1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 20:14:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751377AbZBQBO1
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 20:14:27 -0500
+Received: from peff.net ([208.65.91.99]:44647 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750825AbZBQBO0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 20:14:26 -0500
+Received: (qmail 24602 invoked by uid 107); 17 Feb 2009 01:14:46 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 16 Feb 2009 20:14:46 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Feb 2009 20:14:24 -0500
 Content-Disposition: inline
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <237967ef0902161710k4672e972rdffab0357b8872a8@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110289>
 
-Gerrit is a web based code review system, facilitating online code
-reviews for projects using the Git version control system.
+On Tue, Feb 17, 2009 at 02:10:33AM +0100, Mikael Magnusson wrote:
 
-Gerrit makes reviews easier by showing changes in a side-by-side
-display, and allowing inline comments to be added by any reviewer.
+> 2009/2/17 Jeff King <peff@peff.net>:
+> > On Mon, Feb 16, 2009 at 10:52:05PM +0100, Johannes Schindelin wrote:
+> >
+> >> @@ -75,7 +77,12 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
+> >>       }
+> >>
+> >>       if (!strcmp(var, "receive.denycurrentbranch")) {
+> >> -             deny_current_branch = parse_deny_action(var, value);
+> >> +             if (value && !strcasecmp(value, "updateinstead"))
+> >> +                     deny_current_branch = DENY_UPDATE_INSTEAD;
+> >> +             else if (value && !strcasecmp(value, "detachinstead"))
+> >
+> > Config variables are already lower-cased. ;P
+> 
+> But surely the values are not?
 
-Gerrit simplifies Git based project maintainership by permitting
-any authorized user to submit changes to the master Git repository,
-rather than requiring all approved changes to be merged in by
-hand by the project maintainer.  This functionality enables a more
-centralized usage of Git.
+Heh. Ouch. You are right, of course, and now I have been caught being
+wrong while making smart-ass comments, so I'll shut up. ;)
 
-Gerrit 2.x and later run in any standard Java servlet container,
-and includes an embedded SSH daemon, providing gitosis like group
-security and data access.  If desired, the review process can be
-skipped by directly pushing branches/tags, if the necessary access
-has been granted to the user.
-
-The last time I announced Gerrit on this list, it only ran on
-Google App Engine.  Gerrit 2.x and later is designed to run in
-any environment, without requiring the use of a Google product,
-or network connectivity to the Internet.  This makes it much more
-suited for corporate deployments, or open source projects which
-already have their own servers.
-
-Currently, Gerrit is under very active development, with stable
-releases being made about once per week.  As such, I won't be
-announcing future releases here very often.
-
-For more information:
-
-  Homepage:   http://code.google.com/p/gerrit/
-  Live Demo:  http://review.source.android.com/open
-  Source:     git://android.git.kernel.org/tools/gerrit.git
-              (but see http://code.google.com/p/gerrit/wiki/Source?tm=4)
-
--- 
-Shawn.
+-Peff
