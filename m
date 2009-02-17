@@ -1,129 +1,90 @@
-From: Pieter de Bie <pieter@frim.nl>
-Subject: Re: [RFC] Common library for Git GUIs
-Date: Tue, 17 Feb 2009 20:08:23 +0000
-Message-ID: <74161B7F-A178-49CB-990D-DF7299235C58@frim.nl>
-References: <20090216212459.GA25046@efreet.light.src>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Jonas Fonseca <fonseca@diku.dk>,
-	Marco Costalba <mcostalba@gmail.com>,
-	David Aguilar <davvid@gmail.com>,
-	Abhijit Bhopatkar <bain@devslashzero.com>,
-	Henk <henk_westhuis@hotmail.com>, Frank Li <lznuaa@gmail.com>
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Tue Feb 17 21:11:04 2009
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 4/5] t3301: use test_must_fail instead of !
+Date: Tue, 17 Feb 2009 15:27:32 -0500
+Message-ID: <20090217202731.GA16586@coredump.intra.peff.net>
+References: <200902142056.42198.trast@student.ethz.ch> <8c50889d27e5baec1cbbd9a5775fa80b986c6df6.1234642638.git.trast@student.ethz.ch> <7vvdrcnnl0.fsf@gitster.siamese.dyndns.org> <200902151711.45099.trast@student.ethz.ch> <20090215181818.GA2291@coredump.intra.peff.net> <e2b179460902170129s7ae613cehe237619be5e84936@mail.gmail.com> <20090217163413.GB31297@sigill.intra.peff.net> <e2b179460902171000s605675dct1f499a9425c3ebb2@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Mike Ralphson <mike.ralphson@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 17 21:29:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZWGr-0003sk-Su
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 21:10:22 +0100
+	id 1LZWZ0-0003Ry-3x
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 21:29:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753280AbZBQUIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 15:08:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753382AbZBQUIg
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 15:08:36 -0500
-Received: from frim.nl ([87.230.85.232]:50729 "EHLO
-	lvps87-230-85-232.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753276AbZBQUIf (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Feb 2009 15:08:35 -0500
-Received: from cnat081.wlan.net.ed.ac.uk ([129.215.5.81] helo=[172.20.196.1])
-	by lvps87-230-85-232.dedicated.hosteurope.de with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <pieter@frim.nl>)
-	id 1LZWF4-0001N7-De; Tue, 17 Feb 2009 21:08:30 +0100
-In-Reply-To: <20090216212459.GA25046@efreet.light.src>
-X-Mailer: Apple Mail (2.930.3)
+	id S1752690AbZBQU1g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 15:27:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752602AbZBQU1f
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 15:27:35 -0500
+Received: from peff.net ([208.65.91.99]:52788 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752541AbZBQU1e (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 15:27:34 -0500
+Received: (qmail 31907 invoked by uid 107); 17 Feb 2009 20:27:54 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 17 Feb 2009 15:27:54 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Feb 2009 15:27:32 -0500
+Content-Disposition: inline
+In-Reply-To: <e2b179460902171000s605675dct1f499a9425c3ebb2@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110449>
 
-Hi,
+On Tue, Feb 17, 2009 at 06:00:17PM +0000, Mike Ralphson wrote:
 
-On Feb 16, 2009, at 9:24 PM, Jan Hudec wrote:
+> > Hmm. I tried "make SHELL_PATH=/bin/posh test", and posh segfaulted during
+> > t0005. So I don't think it's quite ready for mainstream use. ;)
+> 
+> Works ok for me as far as t3404-rebase-interactive on next, though
+> what I actually grabbed in the end was 0.6.16[1], which claims to fix
+> a segfault bug[2], but then it also claims to be 0.6.12 as well, so
+> who knows? 8-)
+> 
+> Maybe a Debian user would like to report a repeat of [3]?
 
-> What it should use:
->
-> - It should probably be in C++ or C, with bindings for at least Perl,
->   Python, Ruby, C#(CLR) and Java. The bindings can be done either  
-> with Swig,
->   or using some base library that already has them.
+Hmm. It sort of fixes the segfault bug. With posh 0.6.16, I can do:
 
-It should be either C++ or C. If you want git devvers to work on it too,
-you'll probably want to go with C.
+  $ posh -x
+  $ ls
+  + ls
+  ...
 
->   I think Java or CLR, while more portable, would not be appropriate  
-> because
->   there is no standard way to combine them with other languages like  
-> Perl,
->   Python and Ruby and those languages are still superior for the UI
->   programming itself. I somewhat prefer C++, because polymorphism  
-> and some
->   template tools would be useful here, but I am open to arguments.
+but:
 
-I think JGit is pretty far along for someone who wants to create a Java
-GUI.
->    - Bindings for languages. We can use Swig, but it has e.g. no  
-> support for
->      callbacks, so having portable runtime with already existing  
-> bindings
->      that support this would be an advantage.
+ $ posh -x t0005-signals.sh
+ Segmentation fault
 
-I'd say bindings are pretty easy to create yourself.
+OK, maybe it doesn't like non-interactive shells. Let's try sourcing the
+script:
 
-> Portable runtime options:
->
-> So what do you people think would be best? I see several options:
->
-> - QtCore
->
->   Qt seems to be the most popular library among Git GUI writers and  
-> since
->   version 4.5 will be LGPL, so it will be allowed to link with  
-> anything.
->   It is also probably the most portable one. On the downside, it's  
-> rather
->   large and it's language bindings are a bit worse (the garbage  
-> collector
->   integration was a bit bad last time I looked).
->
-> - Glib
->
->   This is C based, so the core could be in plain C. It is also quite  
-> modular
->   and has very good support for bindings to various languages. On the
->   downside it's a bit less portable and less used among the existing  
-> guis.
->   C would mean more work, but we could probably save some of it by  
-> using
->   gob2 (g object builder)
->
-> - STL + Boost
->
->   I don't have experience with it, though I read some of the  
-> documentation.
->   It should be sensibly portable. I know it has python bindings, the  
-> rest
->   would probably have to be dealt with using swig.
+ $ posh -x
+ $ . t0005-signals.sh
+ + . t0005-signals.sh
+ posh: .: t0005-signals.sh: not found
 
-None of these, if you want any GUI's to use it. Noone is going to
-create a Gtk / Cocoa / Windows app that depends on Qt. Nobody wants
-to use Boost in any situation and Glib, while being smaller than the
-rest, is also difficult as it isn't shipped with many OS's, for example
-OS X.
+OK, maybe it is looking in the PATH?
 
-> - POSIX + Msys on Windows
->
->   I guess it would technically be usable, but I think it would be  
-> rather lot
->   of additional work. It would probably be quite lightweight, though.
+ $ PATH=$PATH:.
+ Segmentation fault
 
-I think lightweight is the way to go. If you go for C++, you can also  
-use
-the STL.
+Oops. How about a new shell with a more exact path?
 
-But, isn't this time spent better on getting libgit2 off the ground?
+ $ posh -x
+ $ . ./t0005-signals.sh
+ Segmentation fault
+
+Oops. So I think there are some serious problems (at least with -x).
+
+Of course it's hard to diagnose the non "-x" segfault in t0005 without
+"-x". ;)
+
+But this is just unproductive complaining to do it on the git list (I'm
+just amazed at how frequently it is segfaulting). I'll go file some
+Debian bug reports.
+
+-Peff
