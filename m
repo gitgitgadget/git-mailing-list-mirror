@@ -1,69 +1,60 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH v3] git-archive: Add new option "--output" to write  
- archive to a file instead of stdout.
-Date: Tue, 17 Feb 2009 23:59:50 +0100
-Message-ID: <499B4166.90609@lsrfire.ath.cx>
-References: <599636D7828020419E3AB2DE5CCC8130036BF8B1D6@NOK-EUMSG-02.mgdnok.nokia.com> <7v7i3o6h8x.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] filter-branch -d: Export GIT_DIR earlier
+Date: Wed, 18 Feb 2009 00:01:41 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902172359210.10279@pacific.mpi-cbg.de>
+References: <20090217083146.GA7338@lars.home.noschinski.de> <alpine.DEB.1.00.0902171327270.6185@intel-tinevez-2-302> <20090217175959.GA3564@lars.home.noschinski.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: carlos.duclos@nokia.com, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 18 00:01:47 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Lars Noschinski <lars@public.noschinski.de>
+X-From: git-owner@vger.kernel.org Wed Feb 18 00:02:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZYwW-0004HM-9t
-	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 00:01:32 +0100
+	id 1LZYx9-0004aB-QT
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 00:02:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753918AbZBQXAC convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Feb 2009 18:00:02 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753911AbZBQXAB
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 18:00:01 -0500
-Received: from india601.server4you.de ([85.25.151.105]:34736 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753906AbZBQXAB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 18:00:01 -0500
-Received: from [10.0.1.101] (p57B7D224.dip.t-dialin.net [87.183.210.36])
-	by india601.server4you.de (Postfix) with ESMTPSA id 927082F8057;
-	Tue, 17 Feb 2009 23:59:58 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
-In-Reply-To: <7v7i3o6h8x.fsf@gitster.siamese.dyndns.org>
+	id S1754002AbZBQXAo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 18:00:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753998AbZBQXAn
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 18:00:43 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56642 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753996AbZBQXAm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 18:00:42 -0500
+Received: (qmail invoked by alias); 17 Feb 2009 23:00:40 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp058) with SMTP; 18 Feb 2009 00:00:40 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18tvXAKVygtvdl9b52QLpnVKZQsq17eEeboMskhcW
+	8HszPl3mVEf3o+
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20090217175959.GA3564@lars.home.noschinski.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.66
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110469>
 
-Junio C Hamano schrieb:
-> <carlos.duclos@nokia.com> writes:
->> +static void create_output_file(const char *output_file)
->> +{
->> +	int output_fd =3D open(output_file, O_CREAT | O_WRONLY | O_TRUNC, =
-0666);
->> +	if (output_fd < 0)
->> +		die("could not create archive file: %s ", output_file);
->> +	if (output_fd !=3D 1)
->> +		if (dup2(output_fd, 1) < 0) {
->> +			/*
->> +			 * dup2 closes output_fd on success, if something=20
->> +			 * goes wrong we close output_fd here to avoid
->> +			 * problems.
->> +			 */
->> +			close(output_fd);
->> +			die("could not redirect output");
->=20
-> The comment and close() are probably unnecessary, as you will die()
-> immediately.
+Hi,
 
-dup2() closes the second file, not the first one (but not if it's the
-same as the first one), so the comment is incorrect.  And I agree it's
-OK to just die() without cleaning up, as this is a fatal error anyway
-and an unlikely one on top of that.  How about something like this?
+On Tue, 17 Feb 2009, Lars Noschinski wrote:
 
-	if (dup2(output_fd, 1) < 0)
-		die("could not redirect output");
-	close(output_fd);
+> I'll change [make_commit] to test_commit.
 
-Ren=C3=A9
+Oops, sorry, I actually was not trying to suggest that, but relate a story 
+that I found funny ;-)
+
+> I think as it does not bite us, it would be unnecessary code churn to 
+> remove the remaining usage of make_commit?
+
+Probably.  I mean, every cleanup bears a very real possibility of 
+introducing a regression, so it better be worth it.  As t7003 seems to 
+work on (case) insensitive filesystems, let's leave it.
+
+Ciao,
+Dscho
