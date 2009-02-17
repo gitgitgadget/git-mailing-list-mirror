@@ -1,57 +1,58 @@
-From: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
-Subject: Re: CVS import [SOLVED]
-Date: Tue, 17 Feb 2009 16:16:08 +0100
-Message-ID: <499AD4B8.3040505@pelagic.nl>
-References: <19651.77.61.241.211.1234775877.squirrel@hupie.xs4all.nl>    <7291.77.61.241.211.1234790434.squirrel@hupie.xs4all.nl>    <60044.192.168.0.51.1234816333.squirrel@hupie.xs4all.nl>    <alpine.DEB.1.00.0902162157080.6289@intel-tinevez-2-302> <50713.77.61.241.211.1234869582.squirrel@hupie.xs4all.nl> <alpine.DEB.1.00.0902171517180.6185@intel-tinevez-2-302>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [ANNOUNCE] Gerrit Code Review 2.0.3
+Date: Tue, 17 Feb 2009 07:13:50 -0800
+Message-ID: <20090217151350.GH18525@spearce.org>
+References: <20090217011256.GA23314@spearce.org> <20090217090142.5573.qmail@a4b546cad31603.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 17 16:15:01 2009
+To: Gerrit Pape <pape@smarden.org>
+X-From: git-owner@vger.kernel.org Tue Feb 17 16:15:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZRf1-00088S-5H
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 16:14:59 +0100
+	id 1LZRfd-0008OX-1P
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 16:15:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753030AbZBQPMn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 10:12:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753013AbZBQPMm
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 10:12:42 -0500
-Received: from hupie.xs4all.nl ([82.95.241.251]:52725 "EHLO
-	Lighthouse.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752196AbZBQPMl (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Feb 2009 10:12:41 -0500
-Received: from [192.168.0.50] (Paul.internal.Hupie.com [192.168.0.50])
-	by Lighthouse.internal.Hupie.com (Postfix) with ESMTP id B4B7658BD88;
-	Tue, 17 Feb 2009 16:12:39 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
-In-Reply-To: <alpine.DEB.1.00.0902171517180.6185@intel-tinevez-2-302>
+	id S1751505AbZBQPNy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 10:13:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751451AbZBQPNw
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 10:13:52 -0500
+Received: from george.spearce.org ([209.20.77.23]:32841 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751255AbZBQPNw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 10:13:52 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 7CE7A381FF; Tue, 17 Feb 2009 15:13:50 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20090217090142.5573.qmail@a4b546cad31603.315fe32.mid.smarden.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110397>
 
-Johannes Schindelin wrote:
-> Hi,
->
-> On Tue, 17 Feb 2009, Ferry Huberts (Pelagic) wrote:
->
->   
->> 1- correct import, no warnings
->>     
->
-> When you say "correct import", do you mean that the import worked, or that 
-> the imported file is actually bytewise identical to what is stored in the 
-> CVS _repository_ (as opposed to the working directory)?
->
->   
-as far as i could tell (but i looked at the checkout, not the 
-repository) it means that the files were imported 1:1. no modifications.
-(which is actually a bit weird as for some of the cases the autocrlf 
-option was set to true or input)
+Gerrit Pape <pape@smarden.org> wrote:
+> On Mon, Feb 16, 2009 at 05:12:56PM -0800, Shawn O. Pearce wrote:
+> > Gerrit is a web based code review system, facilitating online code
+> > Gerrit makes reviews easier by showing changes in a side-by-side
+> > Gerrit simplifies Git based project maintainership by permitting
+> > Gerrit 2.x and later run in any standard Java servlet container,
+> 
+> > Currently, Gerrit is under very active development, with stable
+> 
+> Somehow this scares me.
 
-Ferry
+Me too.  :)
+
+http://code.google.com/p/gerrit/wiki/Background
+
+explains some of Gerrit Code Review's lineage.  It goes back to
+a fork of Rietveld, which was named after the Dutch architect
+Gerrit Rietveld.  Because we forked so far away from Rietveld,
+we renamed it to Gerrit...
+
+-- 
+Shawn.
