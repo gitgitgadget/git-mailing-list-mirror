@@ -1,67 +1,65 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 1/2] Modify description file to say what this file is
-Date: Tue, 17 Feb 2009 12:37:48 +0100
-Message-ID: <bd6139dc0902170337o6cdc084cje313f726584fe1a7@mail.gmail.com>
-References: <200902171044.59974.johnflux@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 3/8] config: Use parseopt.
+Date: Tue, 17 Feb 2009 12:55:38 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902171255220.6185@intel-tinevez-2-302>
+References: <1234832094-15541-1-git-send-email-felipe.contreras@gmail.com>  <1234832094-15541-2-git-send-email-felipe.contreras@gmail.com>  <1234832094-15541-3-git-send-email-felipe.contreras@gmail.com>  <7vab8laa7p.fsf@gitster.siamese.dyndns.org>
+ <94a0d4530902170235g4e481e07t39a6157894dff9aa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: John Tapsell <johnflux@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 17 12:39:22 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 17 12:57:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZOIJ-00041A-IK
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 12:39:20 +0100
+	id 1LZOZa-0000tB-Sj
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 12:57:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751470AbZBQLhu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 06:37:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751334AbZBQLhu
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 06:37:50 -0500
-Received: from fg-out-1718.google.com ([72.14.220.157]:58872 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751253AbZBQLhu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 06:37:50 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so384014fgg.17
-        for <git@vger.kernel.org>; Tue, 17 Feb 2009 03:37:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=T+WdSGhCT28R/FnzcGo24Mb2PsfH6uHJQK7Z+BCJuAE=;
-        b=sErmLDqHcvGL7CvKdz/xogdiXwhJxb9NxDYpLvVtCFzYhc1TRwxWE7XtAbsawHT4WW
-         zdOrbMIhsn9Ys+WnmACYDsu63eQw/RsIBH/feC/+LgJZjZ/0xALRl55UpE0JlD3faTwS
-         IHU9gMW3hhkwfrBJrc67ykFyYWYJ5pAYk+bOQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=fpJL/jnVwWGlHkYGr2T5kIkeKJM+8WFKrXkn8Gi4VrGGLM3ZJVHHpU/v11Tf62SG+x
-         m7oo7kZmZQy/P8FgLkqfdK2DrpPPzZCbB56c8YG4HDujCn9fSp26utstLV+BGm1tknrG
-         4NSwpN0VrJnME3FjuY6RCRgzifFV4sU3R9n6Y=
-Received: by 10.86.80.5 with SMTP id d5mr1969095fgb.39.1234870668146; Tue, 17 
-	Feb 2009 03:37:48 -0800 (PST)
-In-Reply-To: <200902171044.59974.johnflux@gmail.com>
-X-Google-Sender-Auth: f57d1356ef624d08
+	id S1754040AbZBQLzm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 06:55:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753675AbZBQLzm
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 06:55:42 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50275 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753501AbZBQLzl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 06:55:41 -0500
+Received: (qmail invoked by alias); 17 Feb 2009 11:55:39 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp057) with SMTP; 17 Feb 2009 12:55:39 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19fS5lvFqlfrx9eHpzoSHkwQoP2POiDY4V/Jywg7t
+	H+UHovRbacLmYK
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <94a0d4530902170235g4e481e07t39a6157894dff9aa@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110361>
 
-Heya,
+Hi,
 
-On Tue, Feb 17, 2009 at 11:44, John Tapsell <johnflux@gmail.com> wrote:
-> A lot of people see this message for the first time on the gitweb
-> interface, where there is no clue as to what 'this file' means.
+On Tue, 17 Feb 2009, Felipe Contreras wrote:
 
-It seems you somehow managed to send the exact same message 4 times, what gives?
+> On Tue, Feb 17, 2009 at 7:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> > I've queued the entire series on top of fc/config-editor topic and even
+> > merged the result in 'pu' once, but I had to reintegrate 'pu' without the
+> > series.
+> >
+> > Before this commit, t/t1300-repo-config.sh passes, but this one breaks
+> > the test.
+> 
+> Ah, I didn't know there was a test for that.
+> 
+> I've fixed most the issues but unfortunately parseopt barfs when -1 is
+> used as an argument. That should be fixed somehow, otherwise this
+> patch will never pass the test.
 
--- 
-Cheers,
+Have you seen PARSE_OPT_STOP_AT_NON_OPTION?
 
-Sverre Rabbelier
+Ciao,
+Dscho
