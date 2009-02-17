@@ -1,167 +1,80 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 1/8] config: Trivial rename in preparation for 
-	parseopt.
-Date: Tue, 17 Feb 2009 04:42:38 +0200
-Message-ID: <94a0d4530902161842s1d1d9fech3786cce1f1a1135d@mail.gmail.com>
-References: <1234832094-15541-1-git-send-email-felipe.contreras@gmail.com>
-	 <7v3aedet0j.fsf@gitster.siamese.dyndns.org>
+From: Brent Goodrick <bgoodr@gmail.com>
+Subject: Re: Cloning into an existing directory
+Date: Mon, 16 Feb 2009 18:53:17 -0800
+Message-ID: <e38bce640902161853s20d44f5bmde42713ab66963df@mail.gmail.com>
+References: <e38bce640902152310x195a14e5p445817bdfc6e319f@mail.gmail.com>
+	 <c1b8b6670902152331p9bbdb8fo7bf7048039b5301c@mail.gmail.com>
+	 <e38bce640902160813u2771d55co3eb583a0922c09c5@mail.gmail.com>
+	 <a030d93b0902160848x1c0521c3jb5ed2f1bf865a097@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Gerrit Pape <pape@smarden.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 17 03:44:20 2009
+Cc: git@vger.kernel.org
+To: Andrew Ruder <andy@aeruder.net>
+X-From: git-owner@vger.kernel.org Tue Feb 17 03:54:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZFwY-0000bD-Je
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 03:44:19 +0100
+	id 1LZG6k-0002re-Mm
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 03:54:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751781AbZBQCmm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 21:42:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751717AbZBQCml
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 21:42:41 -0500
-Received: from mail-bw0-f161.google.com ([209.85.218.161]:36358 "EHLO
-	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751555AbZBQCml (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 21:42:41 -0500
-Received: by bwz5 with SMTP id 5so3595736bwz.13
-        for <git@vger.kernel.org>; Mon, 16 Feb 2009 18:42:38 -0800 (PST)
+	id S1751866AbZBQCxU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 21:53:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751862AbZBQCxU
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 21:53:20 -0500
+Received: from yx-out-2324.google.com ([74.125.44.29]:56745 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751717AbZBQCxT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 21:53:19 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so1050081yxm.1
+        for <git@vger.kernel.org>; Mon, 16 Feb 2009 18:53:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=TIwF6yQlAkaK7D1TNKoB5zsKcBr9XG3xNLm8J+QNZUo=;
-        b=eE5ZGRwBQulEujiK/4idxLswp9bGpQczb+KO2iZmZvkK2c/1ZL8EeNhpwSgRsIGPNC
-         ql7/AtxwgQ4DAbSeqJYgY5fBMosh4OhRXTyvpDzri53Myrmu7lphfgU2PLf4aLI7Apit
-         /JrRnvU/0OwUaiW287BsTjC/kqmbCKO6WCWyk=
+        bh=hkDg3fArQBfhPs1L9S5JqbI3h0wf2qF7b7wBkUs0YBc=;
+        b=oe5Ba7eQG1UrKqgQ/+7Mn2VzkmoixCK5IBT2Yy5G5YEzQwC1wGGZn44MTLp7pRNxBf
+         t4eMzfrE5rcUdUmA6MyN5t36jbGj4hORBUkChs7/xFEsEi8l/tOFerD5vr8FkODJUO1Z
+         GMZDBYjuD/Uc7dC/RWqlAO/T+Os3+mU7OYELs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=Mo9MKbYjctucc+9lexQJz5zKtuWY5fPJdoILIB0noABfMha3H0vNbS1NYyip/9AKP1
-         ApMUQ3FtmiH+FM56aLIrkjZOSv4A2fJuQnonfo918KnZVrP7VjbeG2v9veGsLuvyXo0Q
-         2RUcvW0IVUlIOHN9LwUZ7/YIEznndy6TGbhAs=
-Received: by 10.181.216.12 with SMTP id t12mr524239bkq.122.1234838558801; Mon, 
-	16 Feb 2009 18:42:38 -0800 (PST)
-In-Reply-To: <7v3aedet0j.fsf@gitster.siamese.dyndns.org>
+        b=FjhVG0WMgvwzM/wJe8B64EhpBcwcqEq35ZuJmNZhNyaF89AW/iUPr76gqtlQ6u5gm8
+         dOAYfc8gDBFto3s4cgEt8XholfMgoPxCrXVD4znzskEOzCCBKDo75kiA9I66lcim2lQu
+         qcKWjSEUZaPZQEqYo/Tig89ZRrgkdYphMY9t4=
+Received: by 10.90.98.12 with SMTP id v12mr787252agb.105.1234839197973; Mon, 
+	16 Feb 2009 18:53:17 -0800 (PST)
+In-Reply-To: <a030d93b0902160848x1c0521c3jb5ed2f1bf865a097@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110300>
 
-On Tue, Feb 17, 2009 at 3:45 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Mon, Feb 16, 2009 at 8:48 AM, Andrew Ruder <andy@aeruder.net> wrote:
 >
->> When using the --list option general errors where not properly reported,
->> only errors related with the 'file'. Now they are reported, and 'file'
->> is irrelevant.
->> ...
->> @@ -299,10 +300,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
->>               else if (!strcmp(argv[1], "--list") || !strcmp(argv[1], "-l")) {
->>                       if (argc != 2)
->>                               usage(git_config_set_usage);
->> -                     if (git_config(show_all_config, NULL) < 0 &&
->> -                                     file && errno)
->> -                             die("unable to read config file %s: %s", file,
->> -                                 strerror(errno));
->> +                     if (git_config(show_all_config, NULL) < 0)
->> +                             die("error processing config file(s)");
+> On Mon, Feb 16, 2009 at 9:13 AM, Brent Goodrick <bgoodr@gmail.com> wrote:
+> > 1. Move aside each file it complains about
+> > 2. Run the git-checkout command again
+> > 3. Move each file back to their original names, thus creating a local
+> > edit w.r.t. git
 >
-> Does the author of 93a56c2 (git-config: print error message if the config
-> file cannot be read, 2007-10-12) have any comment on this change (cc:ed)?
+> Actually, on my git (1.6.0.4) this just magically works due to the
+> fact that 'git init' sets up the repository with HEAD pointing to
+> refs/heads/master (which doesn't exist yet) and you go ahead and
+> create the master branch with the 'git branch' command.
+>
+> In other words, in this particular situation the 'git checkout'
+> command is completely unnecessary and if you just run a 'git status'
+> you should already see that git sees all the differences already as
+> local edits (assuming you didn't call you branch in the 'git branch'
+> step something other than master).
 
-I looked at the debian bug report[1], the guy complains about 2 things:
+Well, it does show them as local edits, and actually shows the file as
+deleted. I ended up having to do a git-add on those files and commit
+them, which will work for me.
 
-1) git-config --file fails silently if the filename isn't absolute
-
-This is still fixed.
-
-2) git-config -l --file doesn't do what you might expect and list the
-contents of the specified file. Instead it ignores the --file option since it
-came after the -l. Nice way to shoot oneself in the foot.
-
-This is now fixed after the parseopt patch.
-
-Also, before this patch 'git config --global -l' would fail silently
-if there isn't any ~/.gitconfig. Now at least git reports "error
-processing config file(s)".
-
-A more ideal solution would be:
-
-if (config_exclusive_filename)
-	die("unable to read config file %s: %s",
-	    config_exclusive_filename, strerror(errno));
-else
-	die("error processing config file(s)");
-
-So, if a file is specified with --file, --global, or --system, then
-the correct error would be reported.
-
-I digged a bit more and it turns out if there's parse error
-git_config() will die immediately, and the only time it will return a
-negative value is when the config file(s) are not present, at which
-point there will be an errno set, and when config_exclusive_filename
-is specified that means the errno will be the one of fopen trying to
-open that file.
-
-Still, "error processing config file(s)" will be reported when no file
-is specified 'git config -l', there isn't any repo config file (cwd is
-not in a git repo).
-
-Even better I think would be to allow 'git config -l' to work even if
-we are not in a git repo, and error only when there isn't any config
-file (repo, system or global).
-
-This is how it would look like:
-
- int git_config(config_fn_t fn, void *data)
- {
--       int ret = 0;
-+       int ret = 0, found = 0;
-        char *repo_config = NULL;
-        const char *home = NULL;
-
-        /* Setting $GIT_CONFIG makes git read _only_ the given config file. */
-        if (config_exclusive_filename)
-                return git_config_from_file(fn,
-config_exclusive_filename, data);
--       if (git_config_system() && !access(git_etc_gitconfig(), R_OK))
-+       if (git_config_system() && !access(git_etc_gitconfig(), R_OK)) {
-                ret += git_config_from_file(fn, git_etc_gitconfig(),
-                                            data);
-+               found += 1;
-+       }
-
-        home = getenv("HOME");
-        if (git_config_global() && home) {
-                char *user_config = xstrdup(mkpath("%s/.gitconfig", home));
--               if (!access(user_config, R_OK))
-+               if (!access(user_config, R_OK)) {
-                        ret += git_config_from_file(fn, user_config, data);
-+                       found += 1;
-+               }
-                free(user_config);
-        }
-
-        repo_config = git_pathdup("config");
--       ret += git_config_from_file(fn, repo_config, data);
-+       if (!access(repo_config, R_OK)) {
-+               ret += git_config_from_file(fn, repo_config, data);
-+               found += 1;
-+       }
-        free(repo_config);
-+       if (found == 0)
-+               error("no config file found");
-        return ret;
- }
-
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=445208
-
--- 
-Felipe Contreras
+bg
