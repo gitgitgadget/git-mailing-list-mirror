@@ -1,68 +1,68 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Use DIFF_XDL_SET/DIFF_OPT_SET instead of raw
- bit-masking
-Date: Tue, 17 Feb 2009 23:57:10 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902172354570.10279@pacific.mpi-cbg.de>
-References: <1234841209-3960-1-git-send-email-keith@cs.ucla.edu> <alpine.DEB.1.00.0902171304130.6185@intel-tinevez-2-302> <alpine.GSO.2.00.0902170918180.27811@kiwi.cs.ucla.edu>
+Subject: PUSH_HEAD, was Re: FETCH_HEAD question
+Date: Tue, 17 Feb 2009 23:58:13 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902172357450.10279@pacific.mpi-cbg.de>
+References: <76718490902162043k78e615b5g7ba4b7ac95e73b18@mail.gmail.com>  <7veixxaale.fsf@gitster.siamese.dyndns.org>  <76718490902162221i31e02052j48c9f620a2d47985@mail.gmail.com>  <7vr61x8ra4.fsf@gitster.siamese.dyndns.org>  <76718490902162341y2f122427i470c77d3915ff554@mail.gmail.com>
+  <7vy6w5795h.fsf@gitster.siamese.dyndns.org>  <76718490902170914p6258b77ak81318f13757f0dfd@mail.gmail.com>  <alpine.DEB.1.00.0902171821190.6185@intel-tinevez-2-302> <76718490902170934u5e2c17ffl7599ddeb5ee59812@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Pierre Habouzit <madcoder@madism.org>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Keith Cascio <keith@CS.UCLA.EDU>
-X-From: git-owner@vger.kernel.org Tue Feb 17 23:57:52 2009
+	Git Mailing List <git@vger.kernel.org>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 17 23:59:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZYsx-0002xP-Ag
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 23:57:51 +0100
+	id 1LZYtz-0003Hu-5K
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 23:58:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753945AbZBQW4N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 17:56:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753721AbZBQW4N
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 17:56:13 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50345 "HELO mail.gmx.net"
+	id S1753760AbZBQW5Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 17:57:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753770AbZBQW5Q
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 17:57:16 -0500
+Received: from mail.gmx.net ([213.165.64.20]:57895 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751778AbZBQW4M (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 17:56:12 -0500
-Received: (qmail invoked by alias); 17 Feb 2009 22:56:10 -0000
+	id S1752949AbZBQW5P (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 17:57:15 -0500
+Received: (qmail invoked by alias); 17 Feb 2009 22:57:13 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp071) with SMTP; 17 Feb 2009 23:56:10 +0100
+  by mail.gmx.net (mp012) with SMTP; 17 Feb 2009 23:57:13 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+QwAIYcSGQOEgD6jI/GGrrZgQVc0R0m/S2AyF5gk
-	ws6X6Ue3iUJGtu
+X-Provags-ID: V01U2FsdGVkX1+B0+oU/JGB174CNSw1OmivM8S2f16LXHCcdK4L6h
+	ah6SlpQAZljrEk
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.GSO.2.00.0902170918180.27811@kiwi.cs.ucla.edu>
+In-Reply-To: <76718490902170934u5e2c17ffl7599ddeb5ee59812@mail.gmail.com>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.71
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110466>
 
 Hi,
 
-On Tue, 17 Feb 2009, Keith Cascio wrote:
+On Tue, 17 Feb 2009, Jay Soffian wrote:
 
-> On Tue, 17 Feb 2009, Johannes Schindelin wrote:
+> On Tue, Feb 17, 2009 at 12:22 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >> Unless dwim_ref() is updated to handle FETCH_HEAD specially, and
+> >> return not the first SHA1, but the one not marked "not-for-merge".
+> >> Then the UI would at least be consistent, but this would not be
+> >> backward compatible.
+> >
+> > You cannot fix parsing FETCH_HEAD as a ref (and neither will you be able
+> > to do with PUSH_HEAD), as it can contain _more_ than one SHA-1s.  This
+> > still holds true when ignoring the not-for-merge lines, as an octopus is
+> > a quite real possibility.
 > 
-> But these improvements stand well on their own.
-
-That was my point; without anything on top I would not like to risk 
-regressions that easily.
-
-> > ... this does not look good to me, without a compelling reason why we 
-> > want to have the patch nevertheless.
+> An even better argument against than it not being backward compatible. :-)
 > 
-> Is there something you dislike about the code style?  As always I'm 
-> happy to adjust it.
+> And there is no PUSH_HEAD.
 
-If you had not so conveniently clipped what I quoted just before the three 
-dots, I could point out that it adds roughly double the number of lines 
-as it removes.
+Heh, that's why I used the future tense :-)
 
 Ciao,
 Dscho
