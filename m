@@ -1,84 +1,91 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 5/8] config: Disallow multiple config file locations.
-Date: Tue, 17 Feb 2009 02:54:51 +0200
-Message-ID: <1234832094-15541-5-git-send-email-felipe.contreras@gmail.com>
-References: <1234832094-15541-1-git-send-email-felipe.contreras@gmail.com>
- <1234832094-15541-2-git-send-email-felipe.contreras@gmail.com>
- <1234832094-15541-3-git-send-email-felipe.contreras@gmail.com>
- <1234832094-15541-4-git-send-email-felipe.contreras@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: disallowing push to currently checked-out branch
+Date: Mon, 16 Feb 2009 16:57:55 -0800
+Message-ID: <7veixxev70.fsf@gitster.siamese.dyndns.org>
+References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org>
+ <20090215232013.GA11543@zakalwe.fi>
+ <20090216000443.GB3503@coredump.intra.peff.net>
+ <alpine.DEB.1.10.0902151727330.14911@asgard.lang.hm>
+ <alpine.DEB.1.10.0902151738450.14911@asgard.lang.hm>
+ <alpine.LNX.1.00.0902160322530.19665@iabervon.org>
+ <7veixybw7u.fsf@gitster.siamese.dyndns.org>
+ <loom.20090216T101457-231@post.gmane.org>
+ <20090216135812.GA20377@coredump.intra.peff.net> <49999ED6.7010608@gmail.com>
+ <alpine.DEB.1.00.0902161839120.6289@intel-tinevez-2-302>
+ <4999BD54.8090805@gmail.com>
+ <alpine.DEB.1.00.0902162103580.6289@intel-tinevez-2-302>
+ <4999FFCE.3060605@gmail.com>
+ <alpine.DEB.1.00.0902170112580.10279@pacific.mpi-cbg.de>
+ <499A07C4.5000908@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 17 01:57:34 2009
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Sergio Callegari <sergio.callegari@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 17 01:59:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZEGg-0008Gx-Nu
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 01:56:59 +0100
+	id 1LZEJE-0000gK-6e
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 01:59:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751816AbZBQAzP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 19:55:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751769AbZBQAzN
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 19:55:13 -0500
-Received: from mail-bw0-f161.google.com ([209.85.218.161]:56109 "EHLO
-	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751579AbZBQAzH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 19:55:07 -0500
-Received: by mail-bw0-f161.google.com with SMTP id 5so3545431bwz.13
-        for <git@vger.kernel.org>; Mon, 16 Feb 2009 16:55:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=KFt+fQrWuZ0Xgd1Wn1dHxPA3Nnt7EV4VGiZAdyxwKAg=;
-        b=Z04K3xgPZrZLc20jkWNECItu2+uKIB6AmTD89a8EuhkbriVLRZTPuT4vuxZhnLkJDR
-         pogQm4KAuDK88khFnnnfWpcXT75Q+q9Sm1BwNQFD/u77oqV5eIXneNofv+rIxcNOWPLB
-         AGOirX8WqhKaiOqPJjLgzyuM9rlUjxu6Rho9Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=QKuFM1GH+ZVBfldhyI7k93FZa2z9VpldU8ydyKh/iI+LmdsWCSclxtNw+OkaIQvlSz
-         0yI455ePwypafcTL16ov4KPkCjpqKBaSyldeSNrReYW36k2iBu975xrWxZamrR/5bos9
-         viDmdadrUXOPKd9nTKMCXqVe5+BbHQZMpUjC0=
-Received: by 10.103.106.1 with SMTP id i1mr766433mum.101.1234832105986;
-        Mon, 16 Feb 2009 16:55:05 -0800 (PST)
-Received: from localhost (a91-153-251-222.elisa-laajakaista.fi [91.153.251.222])
-        by mx.google.com with ESMTPS id e10sm796045muf.11.2009.02.16.16.55.05
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 16 Feb 2009 16:55:05 -0800 (PST)
-X-Mailer: git-send-email 1.6.1.3
-In-Reply-To: <1234832094-15541-4-git-send-email-felipe.contreras@gmail.com>
+	id S1751389AbZBQA6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 19:58:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751293AbZBQA6H
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 19:58:07 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42628 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751224AbZBQA6G (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 19:58:06 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 96B87987FE;
+	Mon, 16 Feb 2009 19:58:02 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E394F987F7; Mon,
+ 16 Feb 2009 19:57:56 -0500 (EST)
+In-Reply-To: <499A07C4.5000908@gmail.com> (Sergio Callegari's message of
+ "Tue, 17 Feb 2009 01:41:40 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 071DDB4A-FC8E-11DD-A1F0-0433C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110284>
 
-Either --global, --system, or --file should be used, but not any
-combination.
+Sergio Callegari <sergio.callegari@gmail.com> writes:
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- builtin-config.c |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+> Johannes Schindelin wrote:
+>> Of course, you can go on and on and on with the detached HEAD ide,
+>> but so far you haven't convinced me that this is a sensible thing to
+>> do.
+>>
+> I will not... it's time to sleep where I am! And I am just a user of
+> git and you are a developer, which makes me think that you might know
+> much better.
+> But the exchange was insightful, thanks.
+>
+> Rather, I'll turn again the question...
+>
+> Let us assume that I am working on branch B and that my worktree is
+> based on commit XYZ. Let's also assume that someone pushes behind my
+> shoulders and moves the tip of B (or even deletes B alltogether)
+> either in one or in multiple pushes.  Is there an easy way so that I
+> can now find out at what commit (XYZ) I was before the push(es)?
 
-diff --git a/builtin-config.c b/builtin-config.c
-index 30de93e..cdd8a12 100644
---- a/builtin-config.c
-+++ b/builtin-config.c
-@@ -313,6 +313,11 @@ int cmd_config(int argc, const char **argv, const char *unused_prefix)
- 
- 	argc = parse_options(argc, argv, builtin_config_options, builtin_config_usage, 0);
- 
-+	if (use_global_config + use_system_config + !!given_config_file > 1) {
-+		error("only one config file at a time.");
-+		usage_with_options(builtin_config_usage, builtin_config_options);
-+	}
-+
- 	if (use_global_config) {
- 		char *home = getenv("HOME");
- 		if (home) {
--- 
-1.6.1.3
+I am afraind that you are going on-and-on-and-on Dscho warned you about.
+
+What commit XYZ your next commit should build on is already recorded by
+HEAD (which in turn often refers to the tip of the branch you have checked
+out by pointing at it).
+
+HEAD (and the tip of the branch) is *supposed* to be updated by operations
+you do from the work tree *alone*, not by push from sideways.  Therefore
+there is no such duplicated information kept.
+
+The index is an obvious place to save that duplicated information if you
+really wanted to, and you are welcome to try it again, but I have to warn
+you that we have already tried this once and the fallout was not very
+pretty.
