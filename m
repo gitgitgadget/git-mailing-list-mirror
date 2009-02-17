@@ -1,80 +1,94 @@
-From: Brent Goodrick <bgoodr@gmail.com>
-Subject: Re: Cloning into an existing directory
-Date: Mon, 16 Feb 2009 18:53:17 -0800
-Message-ID: <e38bce640902161853s20d44f5bmde42713ab66963df@mail.gmail.com>
-References: <e38bce640902152310x195a14e5p445817bdfc6e319f@mail.gmail.com>
-	 <c1b8b6670902152331p9bbdb8fo7bf7048039b5301c@mail.gmail.com>
-	 <e38bce640902160813u2771d55co3eb583a0922c09c5@mail.gmail.com>
-	 <a030d93b0902160848x1c0521c3jb5ed2f1bf865a097@mail.gmail.com>
+From: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
+Subject: Re: git commit <path> scanning entire working tree?
+Date: Mon, 16 Feb 2009 20:57:47 -0600
+Message-ID: <200902162057.48460.bss@iguanasuicide.net>
+References: <2729632a0902161458m732af362od59e5f35af5643c3@mail.gmail.com> <7vwsbpewkl.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: multipart/signed;
+  boundary="nextPart3743124.5QelxT5nxL";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Andrew Ruder <andy@aeruder.net>
-X-From: git-owner@vger.kernel.org Tue Feb 17 03:54:51 2009
+Cc: skillzero@gmail.com, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 17 03:59:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZG6k-0002re-Mm
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 03:54:51 +0100
+	id 1LZGB4-0004Pd-LR
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 03:59:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751866AbZBQCxU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Feb 2009 21:53:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751862AbZBQCxU
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 21:53:20 -0500
-Received: from yx-out-2324.google.com ([74.125.44.29]:56745 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751717AbZBQCxT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Feb 2009 21:53:19 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so1050081yxm.1
-        for <git@vger.kernel.org>; Mon, 16 Feb 2009 18:53:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=hkDg3fArQBfhPs1L9S5JqbI3h0wf2qF7b7wBkUs0YBc=;
-        b=oe5Ba7eQG1UrKqgQ/+7Mn2VzkmoixCK5IBT2Yy5G5YEzQwC1wGGZn44MTLp7pRNxBf
-         t4eMzfrE5rcUdUmA6MyN5t36jbGj4hORBUkChs7/xFEsEi8l/tOFerD5vr8FkODJUO1Z
-         GMZDBYjuD/Uc7dC/RWqlAO/T+Os3+mU7OYELs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=FjhVG0WMgvwzM/wJe8B64EhpBcwcqEq35ZuJmNZhNyaF89AW/iUPr76gqtlQ6u5gm8
-         dOAYfc8gDBFto3s4cgEt8XholfMgoPxCrXVD4znzskEOzCCBKDo75kiA9I66lcim2lQu
-         qcKWjSEUZaPZQEqYo/Tig89ZRrgkdYphMY9t4=
-Received: by 10.90.98.12 with SMTP id v12mr787252agb.105.1234839197973; Mon, 
-	16 Feb 2009 18:53:17 -0800 (PST)
-In-Reply-To: <a030d93b0902160848x1c0521c3jb5ed2f1bf865a097@mail.gmail.com>
+	id S1751930AbZBQC5v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Feb 2009 21:57:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751919AbZBQC5v
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Feb 2009 21:57:51 -0500
+Received: from eastrmmtao107.cox.net ([68.230.240.59]:58728 "EHLO
+	eastrmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751717AbZBQC5u (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Feb 2009 21:57:50 -0500
+Received: from eastrmimpo03.cox.net ([68.1.16.126])
+          by eastrmmtao107.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090217025749.USBM23750.eastrmmtao107.cox.net@eastrmimpo03.cox.net>;
+          Mon, 16 Feb 2009 21:57:49 -0500
+Received: from localhost ([72.204.50.125])
+	by eastrmimpo03.cox.net with bizsmtp
+	id Gqxp1b0012i4SyG02qxpjd; Mon, 16 Feb 2009 21:57:49 -0500
+X-Authority-Analysis: v=1.0 c=1 a=ohHnUL2ZxUIA:10 a=q3Gvrb_Qno0A:10
+ a=Fq1VQ0LPAAAA:8 a=sTNlf8Jhr5LSyD-pvJ8A:9 a=kI3v3ODY67BNoOqLiCIA:7
+ a=AOK3CvwkxrtUBo4F0N_okQ0qLS0A:4 a=MSl-tDqOz04A:10 a=T3brmoaXcPoA:10
+ a=LY0hPdMaydYA:10 a=13Fcbj3vLCfy2GXz1BQA:9 a=CvEwjOKCYcwWlAq7qOPyBsndn-0A:4
+ a=rPt6xJ-oxjAA:10
+X-CM-Score: 0.00
+Received: from bss by localhost with local (Exim 4.69)
+	(envelope-from <bss@iguanasuicide.net>)
+	id 1LZG9c-000Dum-Iu; Mon, 16 Feb 2009 20:57:48 -0600
+User-Agent: KMail/1.11.0 (Linux/2.6.26-1-amd64; KDE/4.2.0; x86_64; ; )
+In-Reply-To: <7vwsbpewkl.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110301>
 
-On Mon, Feb 16, 2009 at 8:48 AM, Andrew Ruder <andy@aeruder.net> wrote:
->
-> On Mon, Feb 16, 2009 at 9:13 AM, Brent Goodrick <bgoodr@gmail.com> wrote:
-> > 1. Move aside each file it complains about
-> > 2. Run the git-checkout command again
-> > 3. Move each file back to their original names, thus creating a local
-> > edit w.r.t. git
->
-> Actually, on my git (1.6.0.4) this just magically works due to the
-> fact that 'git init' sets up the repository with HEAD pointing to
-> refs/heads/master (which doesn't exist yet) and you go ahead and
-> create the master branch with the 'git branch' command.
->
-> In other words, in this particular situation the 'git checkout'
-> command is completely unnecessary and if you just run a 'git status'
-> you should already see that git sees all the differences already as
-> local edits (assuming you didn't call you branch in the 'git branch'
-> step something other than master).
+--nextPart3743124.5QelxT5nxL
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Well, it does show them as local edits, and actually shows the file as
-deleted. I ended up having to do a git-add on those files and commit
-them, which will work for me.
+On Monday 16 February 2009 18:28:10 Junio C Hamano wrote:
+> skillzero@gmail.com writes:
+> > When I do a 'git commit <path to a single file>', git seems to scan
+> > the entire working tree.  [I]t takes quite a while (5 or so
+> > seconds) before I can even edit the commit message.
+>
+> Do you mean you edit the commit message, starting from the message
+> template "git commit" gives you?
+>
+> The template lists "Changes to be committed", but
+> also "Changed but not updated" and "Untracked files".  You cannot generate
+> the latter two lists without checking with your work tree.
 
-bg
+So, specify one or more -m options and you shouldn't see the scan.
+=2D-=20
+Boyd Stephen Smith Jr.                   ,=3D ,-_-. =3D.
+bss@iguanasuicide.net                   ((_/)o o(\_))
+ICQ: 514984 YM/AIM: DaTwinkDaddy         `-'(. .)`-'
+http://iguanasuicide.net/                    \_/
+
+
+--nextPart3743124.5QelxT5nxL
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkmaJ6wACgkQ55pqL7G1QFlP7QCeOdyrcGREaLMqk45dLnbM+ve0
+Z+8An0DeMYGqfGh1uVVIICkhUUMFT9PO
+=N7VC
+-----END PGP SIGNATURE-----
+
+--nextPart3743124.5QelxT5nxL--
