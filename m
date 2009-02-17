@@ -1,146 +1,114 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: PUSH_HEAD, was Re: disallowing push to currently checked-out 
-	branch
-Date: Tue, 17 Feb 2009 12:29:53 -0500
-Message-ID: <76718490902170929v3ed9e3c2tb2f7fb1bfc01b3ab@mail.gmail.com>
-References: <7veixybw7u.fsf@gitster.siamese.dyndns.org>
-	 <alpine.DEB.1.00.0902161839120.6289@intel-tinevez-2-302>
-	 <76718490902161048i3c19bb43h30b1cfc62dd9a61e@mail.gmail.com>
-	 <alpine.DEB.1.00.0902162102180.6289@intel-tinevez-2-302>
-	 <76718490902161312j2aee999bga00d95231fa85647@mail.gmail.com>
-	 <alpine.DEB.1.00.0902162215200.6289@intel-tinevez-2-302>
-	 <76718490902161428k7d252a02i3e79e4f197608891@mail.gmail.com>
-	 <20090216225226.GB23764@sigill.intra.peff.net>
-	 <76718490902162153m6a524b2dv335be66a0f0294ca@mail.gmail.com>
-	 <alpine.DEB.1.00.0902171200250.6185@intel-tinevez-2-302>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH] Proof-of-concept streamed hashing, demoed in `git
+	hash-object`
+Date: Tue, 17 Feb 2009 12:33:03 -0500
+Message-ID: <20090217173302.GC31297@sigill.intra.peff.net>
+References: <0984029E-57D0-4EFA-A060-E0B6FFA77D58@hoskings.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>,
-	Sergio Callegari <sergio.callegari@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 17 18:31:39 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Ben Hoskings <ben@hoskings.net>
+X-From: git-owner@vger.kernel.org Tue Feb 17 18:34:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZTnA-00063A-Nv
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 18:31:33 +0100
+	id 1LZTqA-0007JG-MO
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 18:34:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752959AbZBQR3z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 12:29:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752912AbZBQR3z
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 12:29:55 -0500
-Received: from rv-out-0506.google.com ([209.85.198.225]:27845 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752805AbZBQR3y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 12:29:54 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so2100794rvb.1
-        for <git@vger.kernel.org>; Tue, 17 Feb 2009 09:29:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=RNufQWdPQUFQxoFY03tnsLA+LKzzzgVl91X4O9JJ5/E=;
-        b=XHV0VdC/Gik5LAg9AiWXAGPIPLO8HL8fUjt6TW/sM1v/EoqoYx/wgqC2xHU4+WX1LA
-         qVDmr+31vqDd74rOtJYtaDM413Aq4ZNvVa5HeHRS8J9COUgNTM7/WfeVXveX48Dwv89R
-         BDKcPQC4eJyuL0riN0bTBn9oxCRV/dYdv6jnI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=OJ5CF0jGg0RYkVvJY0JhwW9fuNMjYToy+AVF2WtE2fH5qCpW2q78F/SoZmKfOPi3DN
-         ZKgk04/t4Y/V3ZATfolpuWk/BXQGIzW4G8MumSo9/v+ZNx7WSHnocH+mj+BRbwPj9OfM
-         IlKuwzM9ikwW2qSmM9XLenjAt8OMpOUrAnnfA=
-Received: by 10.141.177.2 with SMTP id e2mr32422rvp.266.1234891794011; Tue, 17 
-	Feb 2009 09:29:54 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0902171200250.6185@intel-tinevez-2-302>
+	id S1752863AbZBQRdL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 12:33:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752692AbZBQRdJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 12:33:09 -0500
+Received: from peff.net ([208.65.91.99]:52788 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751460AbZBQRdI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 12:33:08 -0500
+Received: (qmail 30473 invoked by uid 107); 17 Feb 2009 17:33:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 17 Feb 2009 12:33:28 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Feb 2009 12:33:03 -0500
+Content-Disposition: inline
+In-Reply-To: <0984029E-57D0-4EFA-A060-E0B6FFA77D58@hoskings.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110419>
 
-On Tue, Feb 17, 2009 at 6:28 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->> receive.localBranches = (refuse | allow)
->>
->> http://thread.gmane.org/gmane.comp.version-control.git/77955/focus=78065
->
-> In the meantime, we have receive.denyCurrentBranch, which is much superior
-> to the localBranches design: it tackles the _real_ issue -- the only
-> reason why a current branch cannot be updated lightly is that it might
-> have a working directory which would be forced out-of-sync.
+On Wed, Feb 18, 2009 at 12:31:35AM +1000, Ben Hoskings wrote:
 
-Hmpfh.
+> This patch adds a proof-of-concept implementation of streaming SHA1  
+> calculation in sha1_file.c, as demoed with `git hash-object <large input 
+> file>`. Instead of the command's memory footprint being equal to the input 
+> file's size, this caps it at SHA1_CHUNK_SIZE (currently 64MB).
 
-So both you and Junio have changed your mind since that thread then.
-Because in that thread, you propose  receive.guardCurrentBranch, which
-was quite similar to today's receive.denyCurrentBranch. Junio then
-argues that treating just the checked-out branch as special, as
-opposed to all local branches is not the right thing to do:
+This might be nice to reduce the memory footprint for _some_ operations
+that only need to look at the data once, but...
 
---- snip ---
-http://thread.gmane.org/gmane.comp.version-control.git/77955/focus=78062
+> Capping memory use this easily seems like a win, but then all this code 
+> does is stream-calculate a SHA1 and print it to stdout. There seem to be a 
+> lot of disparate places throughout the codebase where objects have their 
+> SHA1 calculated.
 
-Step back a bit and think _why_ you wanted to prevent current branch tip
-from getting updated in the first place.  There are two issues:
+...as you noticed, there are a lot of other places where we need the
+whole object. So you are not suddenly making git not suck with a 700MB
+file on a 512MB system.
 
- * Why is it _current_ branch, and not _these branches_, that can be
-   configured by the user to be protected from a push from sideways?
+But more importantly, hash-object (via index_fd) already mmaps the input
+when it is possible to do so. So on memory-tight systems, won't the OS
+already release memory when appropriate (i.e., your virtual size is
+large, but the OS is free to optimize what is actually paged in as
+appropriate).
 
- * Why is it undesirable for the work tree and the index to go out of sync
-   with respect to the branch tip to begin with?
+I suppose this is an extra hint to the OS that we don't care about past
+chunks. On systems which support it, perhaps using madvise with
+MADV_SEQUENTIAL would be another useful hint.
 
-The latter is simpler to answer, so let's deal with it first.  The reason
-why it is bad is because allowing a push to the current branch interferes
-with the work actively being done in the repository, using the work tree
-contents.  There is a person, you, who is actively editing the work tree
-in order to advance the tip of the branch by making commits.  If the
-branch tip moves without your knowing, that destabilizes your working
-environment.  Your work tree wanted to make a new commit on top of some
-known state, but that state was moved underneath you.  Not good.
+> Then again, I presume most of these are working with blobs and not entire 
+> files, and hence wouldn't require streaming anyway. (I'm assuming blobs 
+> don't grow large enough to warrant it - is that necessarily true?)
 
-When you are using the repository for real work (i.e. advance the tips of
-its branches), you want a stable environment.  You do not want its HEAD
-bobbing around outside your control, and silently detaching to cause your
-later commits to go to unnamed branch without your knowing is just as bad
-(which you already correctly objected to).
---- snip ---
+Either I don't understand what you are saying here, or you are missing
+something fundamental about hwo git works: blobs _are_ entire files.
 
-And you end up agreeing:
+> On my machine, the original implementation hashed a 700MB file in 5.8sec. 
+> My patch does it in 6.2sec with SHA1_CHUNK_SIZE set to 64MB.
 
---- snip ---
-http://thread.gmane.org/gmane.comp.version-control.git/77955/focus=78062
+Hmph. So it's slower? I'm not sure what the advantage is, then. On a
+low-memory machine, the OS's paging strategy should be reasonable,
+especially with MADV_SEQUENTIAL (though I haven't tested it). And on a
+machine with enough memory, it's slower.
 
-> Now think.  What if one of these operations you do in the repository to
-> advance the tip was to merge from one of _your_ local branches?  Yes,
-> you end up merging something you did not expect to merge if you allowed
-> a push from sideways to affect that local branch, only because the
-> branch happened to be un-checked-out and you implemented this protection
-> to forbid only to current branch.  Allowing a push from sideways to any
-> local branch destabilizes your work environment, not just the current
-> one.
+I guess you are evicting fewer pages from other processes on the system
+in the meantime.
 
-Okay, I am starting to see the light.
+> +inline void write_sha1_fd_process_chunk(int fd, unsigned long len,
+> +                                        unsigned long offset,  
+> git_SHA_CTX *c,
+> +                                        void *buf)
+> +{
+> +  buf = xmmap(NULL, len, PROT_READ, MAP_PRIVATE, fd, offset);
+> +  git_SHA1_Update(c, buf, len);
+> +  munmap(buf, len);
+> +}
 
-How about
+What is the point of the buf input parameter, which is promptly
+overwritten?
 
-	receive.localBranches = (refuse | allow)
---- snip ---
+> +int hash_sha1_fd(int fd, unsigned long len, const char *type,
+> +                 unsigned char *sha1)
+> +{
+> +	char hdr[32];
+> +	int hdrlen;
+> +	write_sha1_fd_prepare(fd, len, type, sha1, hdr, &hdrlen);
+> +	return 0;
+> +}
 
-Then the thread died, with receive.localBranches going into TODO, but
-never got an implementation. Sometime later, receive.denyCurrentBranch
-came along, which is the original idea you proposed, Junio argued
-against, and then you agreed.
+What is the point of the hdr and hdrlen variables being passed in to
+receive values, when we never actually look at them? I would think you
+are conforming to an existing interface except that you just added the
+function earlier in the patch.
 
-So, I'm not sure what happened in the intervening time between the
-receive.localBranches proposal and the receive.denyCurrentBranch
-implementation that suddenly what is basically guardCurrentBranch
-became a good idea.
-
-But, I happen to agree with Junio's argument in gmane 77955.
-
-j.
+-Peff
