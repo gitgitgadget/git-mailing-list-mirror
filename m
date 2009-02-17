@@ -1,52 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 4/5] t3301: use test_must_fail instead of !
-Date: Tue, 17 Feb 2009 11:34:13 -0500
-Message-ID: <20090217163413.GB31297@sigill.intra.peff.net>
-References: <200902142056.42198.trast@student.ethz.ch> <8c50889d27e5baec1cbbd9a5775fa80b986c6df6.1234642638.git.trast@student.ethz.ch> <7vvdrcnnl0.fsf@gitster.siamese.dyndns.org> <200902151711.45099.trast@student.ethz.ch> <20090215181818.GA2291@coredump.intra.peff.net> <e2b179460902170129s7ae613cehe237619be5e84936@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [ANNOUNCE] Gerrit Code Review 2.0.3
+Date: Tue, 17 Feb 2009 17:44:23 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902171743280.6185@intel-tinevez-2-302>
+References: <20090217011256.GA23314@spearce.org>  <1976ea660902162311q12e11ec5g7a43ab637186985e@mail.gmail.com>  <20090217151838.GI18525@spearce.org> <8c9a060902170813ie8f5bc1gfed53e4f31f64c23@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Mike Ralphson <mike.ralphson@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 17 17:36:11 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Frank Li <lznuaa@gmail.com>, git@vger.kernel.org
+To: Jacob Helwig <jacob.helwig@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 17 17:46:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZSvC-0007gx-7k
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 17:35:46 +0100
+	id 1LZT57-0003hw-Nt
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 17:46:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752482AbZBQQeT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 11:34:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752361AbZBQQeS
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 11:34:18 -0500
-Received: from peff.net ([208.65.91.99]:55052 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752088AbZBQQeS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 11:34:18 -0500
-Received: (qmail 30100 invoked by uid 107); 17 Feb 2009 16:34:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 17 Feb 2009 11:34:38 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Feb 2009 11:34:13 -0500
-Content-Disposition: inline
-In-Reply-To: <e2b179460902170129s7ae613cehe237619be5e84936@mail.gmail.com>
+	id S1753236AbZBQQod (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 11:44:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753053AbZBQQoc
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 11:44:32 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48564 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752815AbZBQQob (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 11:44:31 -0500
+Received: (qmail invoked by alias); 17 Feb 2009 16:44:28 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp049) with SMTP; 17 Feb 2009 17:44:28 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+yosx5O4GybgzDJAlkrz9L214HghRE9IRi6WBLmj
+	KypDVnYBwmMT3Y
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <8c9a060902170813ie8f5bc1gfed53e4f31f64c23@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.5600000000000001
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110410>
 
-On Tue, Feb 17, 2009 at 09:29:57AM +0000, Mike Ralphson wrote:
+Hi,
 
-> posh? http://packages.debian.org/lenny/posh
+On Tue, 17 Feb 2009, Jacob Helwig wrote:
+
+> On Tue, Feb 17, 2009 at 07:18, Shawn O. Pearce <spearce@spearce.org> wrote:
+> > Gerrit is known to not work in Internet Explorer.  As an open source
+> > developer, my primary desktop system runs Linux.  My portable laptops
+> > all run Mac OS X, because its shiny.  I have no system capable of
+> > running Internet Explorer, nor do I desire to send dollars towards
+> > Redmond in order to obtain an OS license in order to do so.
+> >
+> > Something is busted in the IE AJAX code used by Gerrit Code Review.
+> > I'm guessing that instead of making the data available to the AJAX
+> > callback, IE wants to save it as a file on disk.  No clue why.
+> > And due to the lack of IE, I am unable to debug the problem myself.
+> > I am waiting for someone who really cares about using IE to debug
+> > it and contribute the patch back.
+> >
 > 
-> I've heard that if you unset POSIXLY_CORRECT it just sits there and
-> hums until you set it again. 8-)
+> I've found IEs4Linux helpful for debugging IE-only issues under Linux.
+> 
+> http://www.tatanka.com.br/ies4linux/page/Main_Page
+> 
+> I don't recall, off hand, if it'll provide IE 7 (and the site isn't
+> working for me right now, so I can't confirm this).  It does provide
+> IE 5.0, 5.5, and 6.0, however.
 
-Hmm. I tried "make SHELL_PATH=/bin/posh test", and posh segfaulted during
-t0005. So I don't think it's quite ready for mainstream use. ;)
+If I understand Shawn (and the motto "scratch your own itch") correctly, 
+Shawn was not so much interested in being pointed to a way of running IE 
+himself, but more in people who absolutely want to run IE themselves to go 
+and fix the issues.
 
--Peff
+Ciao,
+Dscho
