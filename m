@@ -1,85 +1,120 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: send-email sending shallow threads by default
-Date: Tue, 17 Feb 2009 09:30:40 +0100
-Message-ID: <499A75B0.5050600@op5.se>
-References: <7vk57ridyx.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.10.0902151544510.14911@asgard.lang.hm> <20090216000732.GC3503@coredump.intra.peff.net>
+From: Lars Noschinski <lars@public.noschinski.de>
+Subject: [PATCH v2] filter-branch -d: Export GIT_DIR earlier
+Date: Tue, 17 Feb 2009 09:31:46 +0100
+Message-ID: <20090217083146.GA7338@lars.home.noschinski.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: david@lang.hm, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 17 09:32:23 2009
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 17 09:33:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZLNN-0005CF-4N
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 09:32:21 +0100
+	id 1LZLOH-0005SV-O8
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 09:33:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751348AbZBQIat (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 03:30:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751334AbZBQIat
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 03:30:49 -0500
-Received: from mail.op5.se ([193.201.96.20]:35413 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751317AbZBQIas (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 03:30:48 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id E7B1924B0002;
-	Tue, 17 Feb 2009 09:32:43 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ODQZHk8k0e7Y; Tue, 17 Feb 2009 09:32:39 +0100 (CET)
-Received: from clix.int.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id E9E6C1B8010D;
-	Tue, 17 Feb 2009 09:32:37 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
-In-Reply-To: <20090216000732.GC3503@coredump.intra.peff.net>
+	id S1751296AbZBQIbu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 03:31:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751249AbZBQIbu
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 03:31:50 -0500
+Received: from smtprelay09.ispgateway.de ([80.67.29.23]:33137 "EHLO
+	smtprelay09.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751141AbZBQIbt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 03:31:49 -0500
+Received: from [87.78.71.97] (helo=fruehjahrsmuede.home.noschinski.de)
+	by smtprelay09.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <lars@public.noschinski.de>)
+	id 1LZLMp-0007k0-CC; Tue, 17 Feb 2009 09:31:47 +0100
+Received: from lars by fruehjahrsmuede.home.noschinski.de with local (Exim 4.69)
+	(envelope-from <lars@public.noschinski.de>)
+	id 1LZLMo-0001ue-IC; Tue, 17 Feb 2009 09:31:46 +0100
+Content-Disposition: inline
+User-Agent: mutt-ng/devel-r804 (Linux)
+X-Df-Sender: 336680
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110331>
 
-Jeff King wrote:
-> On Sun, Feb 15, 2009 at 03:53:50PM -0800, david@lang.hm wrote:
-> 
->>> * git-send-email won't make deep threads by default
->>>
->>>  Many people said that by default when sending more than 2 patches the
->>>  threading git-send-email makes by default is hard to read, and they
->>>  prefer the default be one cover letter and each patch as a direct
->>>  follow-up to the cover letter.
->>>
->>>  http://article.gmane.org/gmane.comp.version-control.git/109790
->> I have mixed feelings about this one, if some messages get delayed in  
->> transit the deep threads still keeps them in order, while the 2-layer  
->> option doesn't.
-> 
-> Is that the case? mutt at least orders by thread, but by rfc822 date
-> within a single level of thread. So as long as the date fields (set by
-> the sender) are correct, it looks right no matter what order they arrive
-> in.
-> 
-> Are there common readers that thread but do not order by date?
-> 
+The improved error handling catches a bug in filter-branch when using
+-d pointing to a path outside any git repository:
 
-Thunderbird does it. I haven't found an option to sort by "date sent"
-inside threads, .
+$ mkdir foo
+$ cd foo
+$ git init
+$ touch bar
+$ git add bar
+$ git commit -m bar
+$ cd ..
+$ git clone --bare foo
+$ cd foo.git
+$ git filter-branch -d /tmp/filter master
+fatal: Not a git repository (or any of the parent directories): .git
 
-FWIW, I like this change either way. Deep threading is nice for up to
-five or so patches. After that it becomes messy. Shallow threading
-simply scales much better, so it's easier to be consistent if that's
-the default.
+This error message comes from git for-each-ref in line 224. GIT_DIR is
+set correctly by git-sh-setup (to the foo.git repository), but not
+exported (yet).
+---
 
+The tests copies backup-ref into another directory and checks
+that it contains a branch from the rewritten repository.
+
+  git-filter-branch.sh     |   12 ++++++------
+  t/t7003-filter-branch.sh |    9 +++++++++
+  2 files changed, 15 insertions(+), 6 deletions(-)
+
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 27b57b8..9a09ba1 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -220,6 +220,12 @@ die ""
+  # Remove tempdir on exit
+  trap 'cd ../..; rm -rf "$tempdir"' 0
+  
++ORIG_GIT_DIR="$GIT_DIR"
++ORIG_GIT_WORK_TREE="$GIT_WORK_TREE"
++ORIG_GIT_INDEX_FILE="$GIT_INDEX_FILE"
++GIT_WORK_TREE=.
++export GIT_DIR GIT_WORK_TREE
++
+  # Make sure refs/original is empty
+  git for-each-ref > "$tempdir"/backup-refs || exit
+  while read sha1 type name
+@@ -234,12 +240,6 @@ do
+  	esac
+  done < "$tempdir"/backup-refs
+  
+-ORIG_GIT_DIR="$GIT_DIR"
+-ORIG_GIT_WORK_TREE="$GIT_WORK_TREE"
+-ORIG_GIT_INDEX_FILE="$GIT_INDEX_FILE"
+-GIT_WORK_TREE=.
+-export GIT_DIR GIT_WORK_TREE
+-
+  # The refs should be updated if their heads were rewritten
+  git rev-parse --no-flags --revs-only --symbolic-full-name \
+  	--default HEAD "$@" > "$tempdir"/raw-heads || exit
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index 56b5ecc..446700b 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -48,6 +48,15 @@ test_expect_success 'result is really identical' '
+  	test $H = $(git rev-parse HEAD)
+  '
+  
++TRASHDIR=$(pwd)
++test_expect_success 'correct GIT_DIR while using -d' '
++        mkdir drepo && cd drepo && git init && make_commit drepo &&
++        git filter-branch -d "$TRASHDIR/dfoo" \
++            --index-filter "cp \"$TRASHDIR\"/dfoo/backup-refs \"$TRASHDIR\"" &&
++        cd .. &&
++        grep drepo "$TRASHDIR/backup-refs"
++'
++
+  test_expect_success 'Fail if commit filter fails' '
+  	test_must_fail git filter-branch -f --commit-filter "exit 1" HEAD
+  '
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+1.6.1.3
