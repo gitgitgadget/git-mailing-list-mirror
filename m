@@ -1,78 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (Feb 2009, #05; Mon, 16)
-Date: Tue, 17 Feb 2009 15:12:38 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902171509010.6185@intel-tinevez-2-302>
-References: <7vfxid8phr.fsf@gitster.siamese.dyndns.org> <m3wsbps708.fsf@localhost.localdomain> <200902171204.20184.trast@student.ethz.ch>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Blamming a diff between two commits?
+Date: Tue, 17 Feb 2009 15:03:58 +0100
+Message-ID: <vpqocx1qhwx.fsf@bauges.imag.fr>
+References: <499AB8A1.7090909@datacom.ind.br>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Feb 17 15:14:14 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Samuel Lucas Vaz de Mello <samuellucas@datacom.ind.br>
+X-From: git-owner@vger.kernel.org Tue Feb 17 15:16:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZQi9-0000cq-H6
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 15:14:10 +0100
+	id 1LZQji-0001O7-8z
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 15:15:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751321AbZBQOMm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 09:12:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751224AbZBQOMl
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 09:12:41 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43247 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751171AbZBQOMl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 09:12:41 -0500
-Received: (qmail invoked by alias); 17 Feb 2009 14:12:39 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp006) with SMTP; 17 Feb 2009 15:12:39 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+2oH0n4uy2dFqjh2re1rjpWD6fM/YDkr1OoB4z4U
-	NyJ/Df4TQJzPsq
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <200902171204.20184.trast@student.ethz.ch>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.61
+	id S1751743AbZBQOOW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 09:14:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751526AbZBQOOW
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 09:14:22 -0500
+Received: from imag.imag.fr ([129.88.30.1]:38955 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751340AbZBQOOV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 09:14:21 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n1HE47Q0006252
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 17 Feb 2009 15:04:07 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1LZQYI-0006Ki-TE; Tue, 17 Feb 2009 15:03:58 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1LZQYI-0004aa-Qs; Tue, 17 Feb 2009 15:03:58 +0100
+In-Reply-To: <499AB8A1.7090909@datacom.ind.br> (Samuel Lucas Vaz de Mello's message of "Tue\, 17 Feb 2009 10\:16\:17 -0300")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.60 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 17 Feb 2009 15:04:07 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110386>
 
-Hi,
+Samuel Lucas Vaz de Mello <samuellucas@datacom.ind.br> writes:
 
-On Tue, 17 Feb 2009, Thomas Rast wrote:
+> Hi,
+>
+> Is there any way to git blame (or annotate) a diff between two commits?
 
-> Jakub Narebski wrote:
-> > > * tr/gcov (Sun Feb 15 23:25:45 2009 +0100) 8 commits
-> > >  - Test git-patch-id
-> > >  - Test rev-list --parents/--children
-> > >  - Test log --decorate
-> > >  - Test fsck a bit harder
-> > >  - Test log --graph
-> > >  - Test diff --dirstat functionality
-> > >  - Test that diff can read from stdin
-> > >  - Support coverage testing with GCC/gcov
-> > 
-> > Hmmmm... wouldn't it be nice to have more tests?
-> 
-> I was hoping the coverage patch would give people an incentive to
-> write some ;-)
-> 
-> Seriously, the list is huge.
+I don't think this is implemented (but would be nice).
 
-Well, judging from your patch-id example, I am somewhat doubtful: the meat 
-of patch-id is exercized in the --cherry-pick patches.
+> Using a git-blame in the resulting file give me the commits for the
+> lines added, but not for the deleted ones.
 
-IMHO the biggest shortcoming of gcov is that it cannot distinguish between 
-functions that need thorough testing and functions which don't.
+A preliminary implementation of "git blame --reverse" was proposed by
+Junio here:
 
-Don't get me wrong, I do not want to downplay the importance of tr/gcov, 
-I'd like to have it in git.git, but just making tests for all the 
-uncovered functions would just make a full test run longer, for dubitable 
-value.
+  http://kerneltrap.org/mailarchive/git/2008/4/3/1338234
 
-Ciao,
-Dscho
+And an approximation of it is proposed in the thread:
+
+  http://kerneltrap.org/mailarchive/git/2008/4/3/1343554
+
+I don't know the status of this patch (dropped?).
+
+-- 
+Matthieu
