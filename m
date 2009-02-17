@@ -1,80 +1,98 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: What's cooking in git.git (Feb 2009, #05; Mon, 16)
-Date: Tue, 17 Feb 2009 23:28:14 +0100
-Message-ID: <20090217222814.GA19085@diku.dk>
-References: <7vfxid8phr.fsf@gitster.siamese.dyndns.org> <20090217193027.GA16093@coredump.intra.peff.net>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: PUSH_HEAD, was Re: disallowing push to currently checked-out 
+	branch
+Date: Tue, 17 Feb 2009 17:42:35 -0500
+Message-ID: <76718490902171442q38dd8977ob5754fc071812f98@mail.gmail.com>
+References: <7veixybw7u.fsf@gitster.siamese.dyndns.org>
+	 <alpine.DEB.1.00.0902162102180.6289@intel-tinevez-2-302>
+	 <76718490902161312j2aee999bga00d95231fa85647@mail.gmail.com>
+	 <alpine.DEB.1.00.0902162215200.6289@intel-tinevez-2-302>
+	 <76718490902161428k7d252a02i3e79e4f197608891@mail.gmail.com>
+	 <20090216225226.GB23764@sigill.intra.peff.net>
+	 <76718490902162153m6a524b2dv335be66a0f0294ca@mail.gmail.com>
+	 <alpine.DEB.1.00.0902171200250.6185@intel-tinevez-2-302>
+	 <76718490902170929v3ed9e3c2tb2f7fb1bfc01b3ab@mail.gmail.com>
+	 <7vy6w43duw.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 17 23:29:53 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>,
+	Sergio Callegari <sergio.callegari@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 17 23:44:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZYRo-0000OF-Sn
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 23:29:49 +0100
+	id 1LZYfd-0006Qd-Ig
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 23:44:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753015AbZBQW2V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 17:28:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752876AbZBQW2V
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 17:28:21 -0500
-Received: from mgw2.diku.dk ([130.225.96.92]:42032 "EHLO mgw2.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752631AbZBQW2U (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 17:28:20 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mgw2.diku.dk (Postfix) with ESMTP id CFE1319BB69;
-	Tue, 17 Feb 2009 23:28:18 +0100 (CET)
-Received: from mgw2.diku.dk ([127.0.0.1])
- by localhost (mgw2.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 14219-14; Tue, 17 Feb 2009 23:28:17 +0100 (CET)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw2.diku.dk (Postfix) with ESMTP id AAD2519BB72;
-	Tue, 17 Feb 2009 23:28:14 +0100 (CET)
-Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id A82E56DF84F; Tue, 17 Feb 2009 23:26:13 +0100 (CET)
-Received: by tyr.diku.dk (Postfix, from userid 3873)
-	id 8256C39AA06; Tue, 17 Feb 2009 23:28:14 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20090217193027.GA16093@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-Virus-Scanned: amavisd-new at diku.dk
+	id S1753592AbZBQWmh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 17:42:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753367AbZBQWmh
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 17:42:37 -0500
+Received: from rv-out-0506.google.com ([209.85.198.231]:48982 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752798AbZBQWmg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 17:42:36 -0500
+Received: by rv-out-0506.google.com with SMTP id g37so2218910rvb.1
+        for <git@vger.kernel.org>; Tue, 17 Feb 2009 14:42:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=LWSpXX1vd5QnjYaIvx1G9a5zud7/fLq1W4nSlFn2FpI=;
+        b=GE7j3aOP3G3X/dhQgDdpNq/lMp5vcth1q0UvirFOV4sTnChZ3Q47PhlZx31rDvX5GT
+         M+J9rGrzPuHcHW7tv6sAPwz0qFW2qb3Fr11+S6ON4S72YuqeTaJMxyN/JUbX957jku0J
+         6PEWdw4yYjba8bFBY8iB6/EAfj8BAxv6qqs6M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=huNVBqY10eSYbZkWaL4oHvlI7eS6Uv93MC8UtvOyVxsH21sl4MqRPudqh8MyTR38ne
+         snwLsL9fKzmyt63ibZME6e5nXWjruhl6lNN0JxHtng0tSd3stHhAULp9ipckIv3CEsEM
+         PCjsCNe2XXfhzS0+ZBFvjcifX5P48Gx0Pt62c=
+Received: by 10.140.157.1 with SMTP id f1mr2779249rve.196.1234910555567; Tue, 
+	17 Feb 2009 14:42:35 -0800 (PST)
+In-Reply-To: <7vy6w43duw.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110459>
 
-Jeff King <peff@peff.net> wrote Tue, Feb 17, 2009:
-> On Mon, Feb 16, 2009 at 11:57:36PM -0800, Junio C Hamano wrote:
-> > * jc/blame (Wed Jun 4 22:58:40 2008 -0700) 2 commits
-> >  + blame: show "previous" information in --porcelain/--incremental
-> >    format
-> >  + git-blame: refactor code to emit "porcelain format" output
-> > 
-> > This gives Porcelains (like gitweb) the information on the commit _before_
-> > the one that the final blame is laid on, which should save them one
-> > rev-parse to dig further.  The line number in the "previous" information
-> > may need refining, and sanity checking code for reference counting may
-> > need to be resurrected before this can move forward.
-> > 
-> > I thought recent tig discussion may blow new life into it, but is this
-> > unneeded?  If so I'd rather revert it (or discard after 1.6.2).
-> 
-> I never got a chance to look closely at this patch series;
+On Tue, Feb 17, 2009 at 5:20 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jay Soffian <jaysoffian@gmail.com> writes:
+>
+>> So both you and Junio have changed your mind since that thread then.
+>
+> At least I didn't.
 
-Sorry, me neither. Generally, I am all for pushing as much as possible
-into git, and was also happy to see a recent patch making it possible to
-launch an editor. Especially, since tig would then benefit if a better
-heuristic comes along. Unfortunately, I won't be able to offer to do
-what I think is a request for someone to polish it off.
+Ah, I didn't mean to mischaracterize your intent from that thread then.
 
-> So a blame implementation might help other callers, but I don't think
-> there is much motivation from tig's point of view.
+> I personally was not too worried about protecting either local branches
+> nor the current branch (and I do not lose sleep over them now either).
+> Either is about forbidding an end user who knows from doing an operation
+> we have allowed so far, only because an abuse of the feature by other end
+> users who either don't know what they are doing or are careless can result
+> in confusing the latter.  I do not particularly like that kind of safety
+> valve.
+>
+> The current round of protecting only local branches is there because it is
+> of much lessor impact, with simpler code (and easier revertibility if
+> needed), than the full blown "protect these branches" one in which issues
+> in its design still has to be ironed out if we go that route (see my other
+> message from yesterday to Jeff --- we discuss exactly that in the context
+> of detached HEAD and other operations).  The need for "current branch
+> protection" this round implements also comes from an observed confusions
+> in real world users Dscho and others saw on #git and other places.  The
+> more general "protect these branches" is conceptually nicer but the need
+> for such safeguard is still under discussion as far as I understood what
+> was said in the recent discussions.
 
-Yeah, tig will be stuck with (falling back to) diff-tree anyway.
+Okay, that makes sense.
 
--- 
-Jonas Fonseca
+j.
