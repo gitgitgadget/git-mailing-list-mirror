@@ -1,94 +1,79 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn error: Unable to parse date
-Date: Tue, 17 Feb 2009 13:49:14 -0800
-Message-ID: <20090217214914.GD26706@dcvr.yhbt.net>
-References: <20090217094850.GQ7504@wouts.nl> <7vd4dg6h93.fsf@gitster.siamese.dyndns.org> <20090217193550.GT7504@wouts.nl>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: PUSH_HEAD, was Re: disallowing push to currently checked-out 
+ branch
+Date: Tue, 17 Feb 2009 14:20:07 -0800
+Message-ID: <7vy6w43duw.fsf@gitster.siamese.dyndns.org>
+References: <7veixybw7u.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0902161839120.6289@intel-tinevez-2-302>
+ <76718490902161048i3c19bb43h30b1cfc62dd9a61e@mail.gmail.com>
+ <alpine.DEB.1.00.0902162102180.6289@intel-tinevez-2-302>
+ <76718490902161312j2aee999bga00d95231fa85647@mail.gmail.com>
+ <alpine.DEB.1.00.0902162215200.6289@intel-tinevez-2-302>
+ <76718490902161428k7d252a02i3e79e4f197608891@mail.gmail.com>
+ <20090216225226.GB23764@sigill.intra.peff.net>
+ <76718490902162153m6a524b2dv335be66a0f0294ca@mail.gmail.com>
+ <alpine.DEB.1.00.0902171200250.6185@intel-tinevez-2-302>
+ <76718490902170929v3ed9e3c2tb2f7fb1bfc01b3ab@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Ward Wouts <ward@wouts.nl>
-X-From: git-owner@vger.kernel.org Tue Feb 17 22:51:12 2009
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>,
+	Sergio Callegari <sergio.callegari@gmail.com>,
+	git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 17 23:22:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZXqR-0002J8-Cz
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 22:51:11 +0100
+	id 1LZYK5-0005aJ-50
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 23:21:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754679AbZBQVtR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 16:49:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754653AbZBQVtR
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 16:49:17 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:36828 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754633AbZBQVtP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 16:49:15 -0500
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE0671F447;
-	Tue, 17 Feb 2009 21:49:14 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20090217193550.GT7504@wouts.nl>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752848AbZBQWUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 17:20:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752813AbZBQWUT
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 17:20:19 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41011 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752630AbZBQWUS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 17:20:18 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 92D492B59C;
+	Tue, 17 Feb 2009 17:20:15 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 81EA92B55C; Tue,
+ 17 Feb 2009 17:20:09 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 26BBD0E8-FD41-11DD-8DD8-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110456>
 
-Ward Wouts <ward@wouts.nl> wrote:
-> On Tue, Feb 17, 2009 at 10:38:32AM -0800, Junio C Hamano wrote:
-> > Ward Wouts <ward@wouts.nl> writes:
-> > 
-> > > Unable to parse date: 2004-03-09T09:44:33.Z
-> > >  at /usr/bin/git-svn line 3995
-> > 
-> > A very nice problem description, illustrating what the code should accept
-> > but doesn't.
-> 
-> Thank you.
-> 
-> > > The message goes away with this one character patch:
-> > >
-> > > $ diff -bru git-svn*
-> > > --- git-svn     2009-02-17 10:23:24.000000000 +0100
-> > > +++ git-svn.orig        2009-02-17 10:20:30.000000000 +0100
-> > > @@ -2387,7 +2387,7 @@
-> > >  sub parse_svn_date {
-> > >         my $date = shift || return '+0000 1970-01-01 00:00:00';
-> > >         my ($Y,$m,$d,$H,$M,$S) = ($date =~ /^(\d{4})\-(\d\d)\-(\d\d)T
-> > > -                                           (\d\d)\:(\d\d)\:(\d\d).\d*Z$/x) or
-> > > +                                           (\d\d)\:(\d\d)\:(\d\d).\d+Z$/x) or
-> > >                                          croak "Unable to parse date: $date\n";
-> > >         "+0000 $Y-$m-$d $H:$M:$S";
-> > >  }
-> > 
-> > You had me scratch my head by giving a reverse patch.
-> 
-> Yes, I'm sorry about that. Hopefully my other post about this subject,
-> sent after the remarks Deskin made, is in the proper format.
-> 
-> > I think neither regexp is quite correct, assuming that SVN timestamp is
-> > supposed to always have decimal point after seconds, with optional
-> > fractional part, followed by Z (presumably to mean Zulu).
-> > 
-> > -                                           (\d\d)\:(\d\d)\:(\d\d).\d+Z$/x) or
-> > +                                           (\d\d)\:(\d\d)\:(\d\d)\.\d*Z$/x) or
-> > 
-> > The decimal point should get quoted.
-> 
-> I think you're right.
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-Yup.  Consider a patch with the quoted decimal point to be
-  Acked-by: Eric Wong <normalperson@yhbt.net>
+> So both you and Junio have changed your mind since that thread then.
 
-Thanks Junio, Deskin and Ward.
+At least I didn't.
 
+I personally was not too worried about protecting either local branches
+nor the current branch (and I do not lose sleep over them now either).
+Either is about forbidding an end user who knows from doing an operation
+we have allowed so far, only because an abuse of the feature by other end
+users who either don't know what they are doing or are careless can result
+in confusing the latter.  I do not particularly like that kind of safety
+valve.
 
-Ward: Just curious, which version of the SVN libraries are you running?
-
-Odd that this hasn't come up before, I wonder if it's the latest
-versions (which I haven't tried, still on 1.5.1) or if SVN just
-truncates the zeroes...
-
--- 
-Eric Wong
+The current round of protecting only local branches is there because it is
+of much lessor impact, with simpler code (and easier revertibility if
+needed), than the full blown "protect these branches" one in which issues
+in its design still has to be ironed out if we go that route (see my other
+message from yesterday to Jeff --- we discuss exactly that in the context
+of detached HEAD and other operations).  The need for "current branch
+protection" this round implements also comes from an observed confusions
+in real world users Dscho and others saw on #git and other places.  The
+more general "protect these branches" is conceptually nicer but the need
+for such safeguard is still under discussion as far as I understood what
+was said in the recent discussions.
