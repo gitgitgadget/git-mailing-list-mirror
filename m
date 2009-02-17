@@ -1,65 +1,88 @@
-From: Keith Cascio <keith@CS.UCLA.EDU>
-Subject: Re: diff.defaultOptions implementation design [was diff.primer]
-Date: Mon, 16 Feb 2009 23:24:33 -0800 (PST)
-Message-ID: <alpine.GSO.2.00.0902162312030.17111@kiwi.cs.ucla.edu>
-References: <1233598855-1088-1-git-send-email-keith@cs.ucla.edu> <1233598855-1088-2-git-send-email-keith@cs.ucla.edu> <20090203071516.GC21367@sigill.intra.peff.net> <alpine.GSO.2.00.0902030833250.5994@kiwi.cs.ucla.edu> <20090206161954.GA18956@coredump.intra.peff.net>
- <alpine.GSO.2.00.0902090921270.719@kiwi.cs.ucla.edu> <20090213222233.GA7424@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rev-list: estimate number of bisection step left
+Date: Mon, 16 Feb 2009 23:28:18 -0800
+Message-ID: <7vljs58qul.fsf@gitster.siamese.dyndns.org>
+References: <20090217060944.488184b0.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 17 08:26:12 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ingo Molnar <mingo@elte.hu>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Tue Feb 17 08:29:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZKLJ-00055I-MP
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 08:26:10 +0100
+	id 1LZKOy-0005vS-3w
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 08:29:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751121AbZBQHYl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 02:24:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751110AbZBQHYl
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 02:24:41 -0500
-Received: from Kiwi.CS.UCLA.EDU ([131.179.128.19]:41707 "EHLO kiwi.cs.ucla.edu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750848AbZBQHYk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 02:24:40 -0500
-Received: from kiwi.cs.ucla.edu (localhost.cs.ucla.edu [127.0.0.1])
-	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/UCLACS-6.0) with ESMTP id n1H7OYfe018100;
-	Mon, 16 Feb 2009 23:24:34 -0800 (PST)
-Received: from localhost (keith@localhost)
-	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/Submit) with ESMTP id n1H7OYWm018097;
-	Mon, 16 Feb 2009 23:24:34 -0800 (PST)
-X-Authentication-Warning: kiwi.cs.ucla.edu: keith owned process doing -bs
-In-Reply-To: <20090213222233.GA7424@coredump.intra.peff.net>
-User-Agent: Alpine 2.00 (GSO 1167 2008-08-23)
+	id S1751213AbZBQH22 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 02:28:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750973AbZBQH22
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 02:28:28 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40875 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750848AbZBQH21 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 02:28:27 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3A69399473;
+	Tue, 17 Feb 2009 02:28:26 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id CB79399472; Tue,
+ 17 Feb 2009 02:28:21 -0500 (EST)
+In-Reply-To: <20090217060944.488184b0.chriscool@tuxfamily.org> (Christian
+ Couder's message of "Tue, 17 Feb 2009 06:09:44 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 90AEFD36-FCC4-11DD-B807-0433C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110321>
 
-Peff,
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-On Fri, 13 Feb 2009, Jeff King wrote:
+> +static int estimate_bisect_steps(int all)
+> +{
+> +	int log2 = 0;
+> +	int left = (all >> 1) - 1;
+> +
+> +	if (left <= 0)
+> +		return 0;
+> +
+> +	do {
+> +		left = left >> 1;
+> +		log2++;
+> +	} while (left);
+> +
+> +	return log2;
+> +}
+> ...
+> diff --git a/git-bisect.sh b/git-bisect.sh
+> index 85db4ba..6b23439 100755
+> --- a/git-bisect.sh
+> +++ b/git-bisect.sh
+> @@ -500,7 +500,7 @@ bisect_next() {
+>  	# commit is also a "skip" commit (see above).
+>  	exit_if_skipped_commits "$bisect_rev"
+>  
+> -	bisect_checkout "$bisect_rev" "$bisect_nr revisions left to test after this"
+> +	bisect_checkout "$bisect_rev" "$bisect_nr revisions left to test after this (roughtly $bisect_steps steps)"
 
-> So I think doing it right is a bit more work in the long run, but the extra 
-> work is generally improving git.
-> 
-> All that being said, though, I still think we can do the equivalent of 
-> --no-primer. The trick to avoiding multiple passes is for the option to exist 
-> outside of the set of primer'd options.
+"roughly".
 
-I like the idea of using parse-options to handle diff options and I too would 
-like all switches negatable.  I will come back to the other ideas you mention if 
-necessary.  You laid it all out nicely.
+all	left
+0	0
+1	0
+2	0
+3	0
+4	1
+5	1
+6	2
+7	2
+8	2
+9	2
 
-Assuming we can do away with the switches --[no-]default-options, thereby 
-hopefully eliminating the need to accumulate options in any kind of fancy way, 
-certainly the right place to "walk" is in diff_setup().  But diff_setup() must 
-still ascertain at least one runtime fact: whether or not we are running one of 
-the commands that respects default options {diff, log, show}.  Is there an 
-elegant way to ascertain that fact from inside diff_setup()?  How do you 
-recommend?  (BTW I believe my design achieves this elegantly).
-
-                                       -- Keith
+It seems that at the very low end the estimate is a bit too optimistic.
+How about showing this number from the Porcelain only when $bisect_steps
+is more than 2 (or all is more than 9)?
