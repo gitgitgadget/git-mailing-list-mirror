@@ -1,68 +1,77 @@
-From: E R <pc88mxer@gmail.com>
-Subject: Re: not all tests pass when on an NFS partition
-Date: Tue, 17 Feb 2009 08:41:30 -0600
-Message-ID: <3a69fa7c0902170641m2ba9b8aeo950c9e3868ba6244@mail.gmail.com>
-References: <3a69fa7c0902121220n4ea2f19di6fe984dd2002772@mail.gmail.com>
-	 <7vk57vjqsd.fsf@gitster.siamese.dyndns.org>
-	 <Aq-rucZsypJQU8SHtTE8X62cEZZn-xSpOOIfA-I5czdtCkm2IyMjDw@cipher.nrlssc.navy.mil>
-	 <3a69fa7c0902151219y270681f7r17a108fdf44213ad@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] rev-list: estimate number of bisection step left
+Date: Tue, 17 Feb 2009 15:44:54 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902171542490.6185@intel-tinevez-2-302>
+References: <20090217060944.488184b0.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Tue Feb 17 15:43:09 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Ingo Molnar <mingo@elte.hu>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Tue Feb 17 15:46:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZRA4-0004Ff-Oz
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 15:43:01 +0100
+	id 1LZRDS-0005ks-51
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 15:46:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751832AbZBQOlc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 09:41:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751516AbZBQOlc
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 09:41:32 -0500
-Received: from an-out-0708.google.com ([209.85.132.244]:12837 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751479AbZBQOlb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 09:41:31 -0500
-Received: by an-out-0708.google.com with SMTP id c2so1179008anc.1
-        for <git@vger.kernel.org>; Tue, 17 Feb 2009 06:41:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=IED3rBPLtcELBZX4i5BF4LhcUjWqrmDB/jrvKSetmuQ=;
-        b=Ca3E+19V6kZQ46LTXB8JppVtcUF/e9fE04FsLv3SKw7uS+sfNCUMotCC3BT5FjgOU7
-         FkH/mBbWaCyMMZe7BBeeOo5c07OSlZnnwMftctQRl+jPSJ2YfY13G5v1QTYjI5tn4qT2
-         5QbCnv3DPuUxAlD4X8bOM7MT0RIHV6wDWnNAQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ONKLjrVqZ2GZkNkA3fZrDAixgFjGe0EeIuaNNCkWUWxBXzg6A/5fnfl701atHkGvlF
-         XN5d3mo8K11kH6A01M/i6OZ56yIf3wEGpD0k0/hqrbMGO2HeF+1HVedw1cXim49/KVC6
-         DU36jBwSeL0u/nuFmrLY+ZGEe/mPPsybbjCSM=
-Received: by 10.100.3.4 with SMTP id 4mr2311453anc.103.1234881690271; Tue, 17 
-	Feb 2009 06:41:30 -0800 (PST)
-In-Reply-To: <3a69fa7c0902151219y270681f7r17a108fdf44213ad@mail.gmail.com>
+	id S1752558AbZBQOo7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 09:44:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752518AbZBQOo6
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 09:44:58 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56673 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752125AbZBQOo6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 09:44:58 -0500
+Received: (qmail invoked by alias); 17 Feb 2009 14:44:56 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp046) with SMTP; 17 Feb 2009 15:44:56 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18X6P5+Z8IXrJkgefT3G+qEPl1pdR20VMUi4wp98k
+	POHKxuq0/ZuPAe
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <20090217060944.488184b0.chriscool@tuxfamily.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110393>
 
-Btw - what kind of risks are involved in using git when test
-t5304-prune.sh doesn't pass? Do we risk repository corruption?
+Hi,
 
-On Sun, Feb 15, 2009 at 2:19 PM, E R <pc88mxer@gmail.com> wrote:
-> On Thu, Feb 12, 2009 at 6:54 PM, Brandon Casey <casey@nrlssc.navy.mil> wrote:
->
->> RHEL 5.2? me too.
->>
->> RHEL 4.7 works fine, same NFS server (running 5.2).
->
-> Yes - it's Centos 5.2. Very interesting.
->
+On Tue, 17 Feb 2009, Christian Couder wrote:
+
+> +static int estimate_bisect_steps(int all)
+> +{
+> +	int log2 = 0;
+> +	int left = (all >> 1) - 1;
+> +
+> +	if (left <= 0)
+> +		return 0;
+> +
+> +	do {
+> +		left = left >> 1;
+> +		log2++;
+> +	} while (left);
+> +
+> +	return log2;
+> +}
+
+How about this instead, calling it from cmd_rev_list directly?
+
+	static int log2(int n)
+	{
+		int log2;
+
+		for (log2 = 0; n > 1; log2++)
+			n >>= 1;
+
+		return log2;
+	}
+
+Ciao,
+Dscho
