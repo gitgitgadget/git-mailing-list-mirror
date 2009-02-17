@@ -1,67 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/5] t3301: use test_must_fail instead of !
-Date: Tue, 17 Feb 2009 14:20:23 -0800
-Message-ID: <7vr61w3dug.fsf@gitster.siamese.dyndns.org>
-References: <200902142056.42198.trast@student.ethz.ch>
- <7vvdrcnnl0.fsf@gitster.siamese.dyndns.org>
- <200902170944.08827.trast@student.ethz.ch>
- <200902170946.52093.trast@student.ethz.ch>
- <tJ6pp2ZnBjKVBLynGfYewBaGmSehbwZNLOShEvpXmtkD3IMXRugEKg@cipher.nrlssc.navy.mil>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: What's cooking in git.git (Feb 2009, #05; Mon, 16)
+Date: Tue, 17 Feb 2009 23:28:14 +0100
+Message-ID: <20090217222814.GA19085@diku.dk>
+References: <7vfxid8phr.fsf@gitster.siamese.dyndns.org> <20090217193027.GA16093@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Tue Feb 17 23:22:12 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 17 23:29:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZYKG-0005e7-64
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 23:22:00 +0100
+	id 1LZYRo-0000OF-Sn
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 23:29:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752876AbZBQWUc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 17:20:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752872AbZBQWUb
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 17:20:31 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41040 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752851AbZBQWUa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 17:20:30 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id CFE952B59C;
-	Tue, 17 Feb 2009 17:20:29 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E05912B550; Tue,
- 17 Feb 2009 17:20:24 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 2F3D3824-FD41-11DD-9805-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1753015AbZBQW2V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 17:28:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752876AbZBQW2V
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 17:28:21 -0500
+Received: from mgw2.diku.dk ([130.225.96.92]:42032 "EHLO mgw2.diku.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752631AbZBQW2U (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 17:28:20 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mgw2.diku.dk (Postfix) with ESMTP id CFE1319BB69;
+	Tue, 17 Feb 2009 23:28:18 +0100 (CET)
+Received: from mgw2.diku.dk ([127.0.0.1])
+ by localhost (mgw2.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 14219-14; Tue, 17 Feb 2009 23:28:17 +0100 (CET)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw2.diku.dk (Postfix) with ESMTP id AAD2519BB72;
+	Tue, 17 Feb 2009 23:28:14 +0100 (CET)
+Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id A82E56DF84F; Tue, 17 Feb 2009 23:26:13 +0100 (CET)
+Received: by tyr.diku.dk (Postfix, from userid 3873)
+	id 8256C39AA06; Tue, 17 Feb 2009 23:28:14 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20090217193027.GA16093@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-Virus-Scanned: amavisd-new at diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110458>
 
-Brandon Casey <casey@nrlssc.navy.mil> writes:
+Jeff King <peff@peff.net> wrote Tue, Feb 17, 2009:
+> On Mon, Feb 16, 2009 at 11:57:36PM -0800, Junio C Hamano wrote:
+> > * jc/blame (Wed Jun 4 22:58:40 2008 -0700) 2 commits
+> >  + blame: show "previous" information in --porcelain/--incremental
+> >    format
+> >  + git-blame: refactor code to emit "porcelain format" output
+> > 
+> > This gives Porcelains (like gitweb) the information on the commit _before_
+> > the one that the final blame is laid on, which should save them one
+> > rev-parse to dig further.  The line number in the "previous" information
+> > may need refining, and sanity checking code for reference counting may
+> > need to be resurrected before this can move forward.
+> > 
+> > I thought recent tig discussion may blow new life into it, but is this
+> > unneeded?  If so I'd rather revert it (or discard after 1.6.2).
+> 
+> I never got a chance to look closely at this patch series;
 
-> Notice the 'export' lines.  Comparing it to Thomas's v2 5/5 patch, it
-> looks like the first line which sets the variables is correct and the
-> export line should just be 'export MSG GIT_NOTES_REF' in both tests.
+Sorry, me neither. Generally, I am all for pushing as much as possible
+into git, and was also happy to see a recent patch making it possible to
+launch an editor. Especially, since tig would then benefit if a better
+heuristic comes along. Unfortunately, I won't be able to offer to do
+what I think is a request for someone to polish it off.
 
-Thanks for catching my late-night typos.
+> So a blame implementation might help other callers, but I don't think
+> there is much motivation from tig's point of view.
 
-Some shells do not like "export var=val", and the right way to write these
-is to do an usual assignment and then export just variable names.
+Yeah, tig will be stuck with (falling back to) diff-tree anyway.
 
-We need to fix the following:
-
-$ git grep -n -e 'export .*=' --and --not -e '-export' pu -- t/
-pu:t/t3301-notes.sh:42:	 export MSG= GIT_NOTES_REF=refs/heads/bogus &&
-pu:t/t3301-notes.sh:48:	 export MSG= GIT_NOTES_REF=refs/heads/bogus &&
-pu:t/t3302-notes-index-expensive.sh:32:		export GIT_INDEX_FILE=.git/temp;
-pu:t/t3302-notes-index-expensive.sh:66:			export GIT_NOTES_REF=non-existing
-pu:t/t9301-fast-export.sh:188:export GIT_AUTHOR_NAME='A U Thor'
-pu:t/t9301-fast-export.sh:189:export GIT_COMMITTER_NAME='C O Mitter'
-pu:t/test-lib.sh:101:		export GIT_TEST_LONG=t; shift ;;
+-- 
+Jonas Fonseca
