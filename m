@@ -1,70 +1,52 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH v3 01/10] config: Codestyle cleanups.
-Date: Tue, 17 Feb 2009 17:33:01 +0100
-Message-ID: <bd6139dc0902170833r7e6672f4p831dacb2ed841b32@mail.gmail.com>
-References: <1234878776-13250-1-git-send-email-felipe.contreras@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 4/5] t3301: use test_must_fail instead of !
+Date: Tue, 17 Feb 2009 11:34:13 -0500
+Message-ID: <20090217163413.GB31297@sigill.intra.peff.net>
+References: <200902142056.42198.trast@student.ethz.ch> <8c50889d27e5baec1cbbd9a5775fa80b986c6df6.1234642638.git.trast@student.ethz.ch> <7vvdrcnnl0.fsf@gitster.siamese.dyndns.org> <200902151711.45099.trast@student.ethz.ch> <20090215181818.GA2291@coredump.intra.peff.net> <e2b179460902170129s7ae613cehe237619be5e84936@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 17 17:34:49 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Mike Ralphson <mike.ralphson@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 17 17:36:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZSuE-0007Bm-Mh
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 17:34:47 +0100
+	id 1LZSvC-0007gx-7k
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 17:35:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752349AbZBQQdH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 11:33:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752289AbZBQQdG
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 11:33:06 -0500
-Received: from fg-out-1718.google.com ([72.14.220.156]:3442 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751241AbZBQQdD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 11:33:03 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so466982fgg.17
-        for <git@vger.kernel.org>; Tue, 17 Feb 2009 08:33:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=WAFsno6NS6HOsluMH0nhgTXNpsPGA+7Y2mAHbH1tcFI=;
-        b=w7iOe05sVNgauBKQ/cnQmTHKBUZCYR0XM6AMR20XnMTF3wq2WmtVLdqu4cxnmbJk7f
-         +X3GPatVzX2RVKWxQfgBzC57hQCy0Jm6yzEvMdjFSVZ3Y52dgHRlAfNVrZiYOZfXXad8
-         zcjOLv9T2HIeKzI5kwCgieoO9UF6rXgQ6wf4k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=wejrpHaC82HDBQxh0goBK7VUueT1juBFboDg22cmiNm19XFVU5RUzmAPNrijqXqbNS
-         WNbaM3WPeIgKvyaB6fpd9oVs6lVnQXXc8YjK4S+xJiG5zid7OO61MqV5UcRrKNHR6fbg
-         LH62OcK47iNnBazBJ7OsMeAq5UBS3Tcy4czLw=
-Received: by 10.86.33.10 with SMTP id g10mr2163310fgg.44.1234888381806; Tue, 
-	17 Feb 2009 08:33:01 -0800 (PST)
-In-Reply-To: <1234878776-13250-1-git-send-email-felipe.contreras@gmail.com>
-X-Google-Sender-Auth: bc10734cd3bfbee1
+	id S1752482AbZBQQeT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 11:34:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752361AbZBQQeS
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 11:34:18 -0500
+Received: from peff.net ([208.65.91.99]:55052 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752088AbZBQQeS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 11:34:18 -0500
+Received: (qmail 30100 invoked by uid 107); 17 Feb 2009 16:34:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 17 Feb 2009 11:34:38 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Feb 2009 11:34:13 -0500
+Content-Disposition: inline
+In-Reply-To: <e2b179460902170129s7ae613cehe237619be5e84936@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110409>
 
-On Tue, Feb 17, 2009 at 14:52, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+On Tue, Feb 17, 2009 at 09:29:57AM +0000, Mike Ralphson wrote:
 
-Did I miss 0/10 somehow? If not, it would be nice to have one if you
-send a long patch series :). That way I can ignore v3 of the series if
-the cover letter tells me nothing significant (to me) has changed. 1
-minutes to write for you, saves 5 minutes for all reviewers :).
+> posh? http://packages.debian.org/lenny/posh
+> 
+> I've heard that if you unset POSIXLY_CORRECT it just sits there and
+> hums until you set it again. 8-)
 
--- 
-Cheers,
+Hmm. I tried "make SHELL_PATH=/bin/posh test", and posh segfaulted during
+t0005. So I don't think it's quite ready for mainstream use. ;)
 
-Sverre Rabbelier
+-Peff
