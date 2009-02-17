@@ -1,126 +1,93 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: First round of UGFWIINI results
-Date: Tue, 17 Feb 2009 18:39:57 +0100
-Message-ID: <20090217173957.GA22426@piper.oerlikon.madduck.net>
-References: <alpine.DEB.1.00.0902171745320.6185@intel-tinevez-2-302>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH 2/2] Google has renamed the imap folder
+Date: Tue, 17 Feb 2009 12:45:17 -0500
+Message-ID: <76718490902170945s5c15228bn798fe6b7e0063da@mail.gmail.com>
+References: <200902171045.05904.johnflux@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="7AUc2qLy4jB3hD7Z"
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 17 18:41:59 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 17 18:46:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZTx1-0001ox-T7
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 18:41:44 +0100
+	id 1LZU1v-0003qD-GX
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 18:46:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752954AbZBQRkQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 12:40:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752912AbZBQRkP
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 12:40:15 -0500
-Received: from clegg.madduck.net ([193.242.105.96]:50709 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752830AbZBQRkO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 12:40:14 -0500
-Received: from wall.oerlikon.madduck.net (wall.oerlikon.madduck.net [IPv6:2001:41e0:ff12::1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTPS id 56B871D409D;
-	Tue, 17 Feb 2009 18:39:59 +0100 (CET)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTPS id 5340B9F13D;
-	Tue, 17 Feb 2009 18:39:58 +0100 (CET)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id E30B64468; Tue, 17 Feb 2009 18:39:57 +0100 (CET)
-Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0902171745320.6185@intel-tinevez-2-302>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux 5.0 kernel 2.6.26-1-amd64 x86_64
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: ClamAV 0.94.2/8998/Tue Feb 17 04:40:00 2009 on clegg.madduck.net
-X-Virus-Status: Clean
+	id S1753048AbZBQRpV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 12:45:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753039AbZBQRpU
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 12:45:20 -0500
+Received: from rv-out-0506.google.com ([209.85.198.226]:25987 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753027AbZBQRpS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 12:45:18 -0500
+Received: by rv-out-0506.google.com with SMTP id g37so2106573rvb.1
+        for <git@vger.kernel.org>; Tue, 17 Feb 2009 09:45:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=jFBccsopiALpO8KpRweSIkQsbTf3io9WJrtjC1kDKpE=;
+        b=IjZe4Y686OouTWjAUoLzSTe2cyoS5dmuYiIK5GusXH21PmQ0D9DGyY9C4dvCIcMhnp
+         s8/0ZxbIHJrZzfi+2DJStsX1rGvHktZ5sdSo5mIIfYTNGiwQzsvetfzn0+dJq6B1A4pT
+         YVMRjaQlphAw+tivvREiBVVPLNIy77wLBBsK0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=rHRIjXl2mZS5gotOCb9b54nmfHfTseBrnYp5N2BTYAgI2fc5ErmFYK2WrZF5Eshzvj
+         Wy6/OtmUNWSknmHkspNK2tzFlRsxzpMUj2AazrqTQfzoYE+YDi6y0dw9mArfvdpGDSGJ
+         Y67BBqwXCJoe0qXhj7M4fzp8V0ZzrjbI583YA=
+Received: by 10.141.115.20 with SMTP id s20mr2122803rvm.70.1234892717613; Tue, 
+	17 Feb 2009 09:45:17 -0800 (PST)
+In-Reply-To: <200902171045.05904.johnflux@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110423>
 
+On Tue, Feb 17, 2009 at 5:45 AM, John Tapsell <johnflux@gmail.com> wrote:
+> Also add a comment that the web interface wraps the lines
+>
+> Signed-off-by: John Tapsell <johnflux@gmail.com>
+> ---
+>  Documentation/SubmittingPatches |   10 +++++++++-
+>  1 files changed, 9 insertions(+), 1 deletions(-)
+>
+> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+> index 9b559ad..aa41c9e 100644
+> --- a/Documentation/SubmittingPatches
+> +++ b/Documentation/SubmittingPatches
+> @@ -491,12 +491,18 @@ message, complete the addressing and subject fields, and press send.
+>  Gmail
+>  -----
+>
+> +GMail does not appear to have any way to turn off line wrapping in the web
+> +interface, so this will mangle any emails that you send.  You can however
+> +use any IMAP email client to connect to the google imap server, and forward
+> +the emails through that.  Just make sure to disable line wrapping in that
+> +email client.
+> +
+>  Submitting properly formatted patches via Gmail is simple now that
+>  IMAP support is available. First, edit your ~/.gitconfig to specify your
+>  account settings:
+>
+>  [imap]
+> -       folder = "[Gmail]/Drafts"
+> +       folder = "[Google Mail]/Drafts"
+>        host = imaps://imap.gmail.com
+>        user = user@gmail.com
+>        pass = p4ssw0rd
 
---7AUc2qLy4jB3hD7Z
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hmm, maybe just point users at send-email? It has SSL support built-in
+now so it can trivially use gmail's SMTP servers and you need not
+worry about mangling. So the only remaining reason to use the imap
+kludge is so that you have access to your gmail address book for
+filling in the To/Cc fields and the subject.
 
-also sprach Johannes Schindelin <Johannes.Schindelin@gmx.de> [2009.02.17.17=
-47 +0100]:
-> a while ago I announced the UGFWIINI contest, a glorious battle of ideas
-> how to
->=20
-> 	Use Git For What It Is Not Indended
->=20
-> As most of you probably did not find my blog yet, this may come as a
-> surprise to you, but it will not be the only surprise in this email.
-
-A shame that I didn't see the contest start. I would have had
-a number of cases to add using Git
-
-  - to track your ~ (cf. http://vcs-home.madduck.net)
-  - to track /etc (cf. http://kitenet.net/~joey/code/etckeeper/)
-  - as the backend for a service like snapshot.debian.net
-  - as a mail store and complete replacement of IMAP
-
-anyway, enter me for round 2!!
-
-
-
-> Avery Pennarun explains his endeavor of tracking windows with
-> git... "If I get a virus, I can 'git revert' it."
-> http://alumnit.ca/~apenwarr/log/?m=3D200901#21
-> =20
-> Sverre remarks: "It even beats the way we use Git to track the
-> MSys installation in msysgit.git..."
->=20
-> This is also related to Martin Krafft's idea to sort of replace
-> the Debian packaging management by using Git, but...
-
-I had this idea? Well, maybe something related: vcs-pkg.org, which
-is about using distributed VCS for distro package maintenance. More
-Debian-specific is my goal to replace source packages with services
-that build straight from trees identified by Git tags, which I've
-written a bit about here:
-
-  http://madduck.net/blog/2005.08.11:rcs-uploads/
-
-This is up high on my list of todos, so expect more on this topic
-soon.
-
-Anyway, thanks Johannes for the fun! :)
-
---=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-"wenn elephanten tanzen leidet das gras."
-                                                 -- die vogelpredigt
-=20
-spamtraps: madduck.bogus@madduck.net
-
---7AUc2qLy4jB3hD7Z
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkma9m0ACgkQIgvIgzMMSnUg8QCfZf6aZt1++QnQUHW16FieHrHb
-w/AAoKdniyNc94D4pZY0ECUVCMp1AA6Q
-=ScdI
------END PGP SIGNATURE-----
-
---7AUc2qLy4jB3hD7Z--
+j.
