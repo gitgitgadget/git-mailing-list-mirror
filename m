@@ -1,90 +1,91 @@
-From: Ward Wouts <ward@wouts.nl>
-Subject: [PATCH] Fixes an 'Unable to parse date' error message in git-svn
-Date: Tue, 17 Feb 2009 16:16:25 +0100
-Message-ID: <20090217151625.GR7504@wouts.nl>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] rev-list: estimate number of bisection step left
+Date: Tue, 17 Feb 2009 16:31:43 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902171630130.6185@intel-tinevez-2-302>
+References: <20090217060944.488184b0.chriscool@tuxfamily.org>  <alpine.DEB.1.00.0902171542490.6185@intel-tinevez-2-302> <43d8ce650902170711r1edb1e40udfacce4b9123b0a5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Deskin Miller <deskinm@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 17 16:27:13 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Ingo Molnar <mingo@elte.hu>
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 17 16:33:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZRqa-0004Xb-Bw
-	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 16:26:56 +0100
+	id 1LZRwi-00077u-Qa
+	for gcvg-git-2@gmane.org; Tue, 17 Feb 2009 16:33:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753484AbZBQPZG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 10:25:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751385AbZBQPZF
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 10:25:05 -0500
-Received: from mailhost.tue.nl ([131.155.2.19]:55957 "EHLO mailhost.tue.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753485AbZBQPZD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 10:25:03 -0500
-X-Greylist: delayed 516 seconds by postgrey-1.27 at vger.kernel.org; Tue, 17 Feb 2009 10:25:03 EST
-Received: from localhost (localhost [127.0.0.1])
-	by mailhost.tue.nl (Postfix) with ESMTP id 65C935C03E;
-	Tue, 17 Feb 2009 16:16:26 +0100 (CET)
-X-Virus-Scanned: amavisd-new at tue.nl
-Received: from mailhost.tue.nl ([131.155.2.19])
-	by localhost (pastinakel.tue.nl [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Jb03MD+EvJbh; Tue, 17 Feb 2009 16:16:26 +0100 (CET)
-Received: from umta.win.tue.nl (umta.win.tue.nl [131.155.71.100])
-	by mailhost.tue.nl (Postfix) with ESMTP id 3038C5C03B;
-	Tue, 17 Feb 2009 16:16:26 +0100 (CET)
-Received: from sandcat.nl (pcwin165 [131.155.69.121])
-	by umta.win.tue.nl (Postfix) with ESMTP id F0FA64BC262;
-	Tue, 17 Feb 2009 16:16:25 +0100 (CET)
-Received: by sandcat.nl (Postfix, from userid 1104)
-	id C771411407C; Tue, 17 Feb 2009 16:16:25 +0100 (CET)
-Content-Disposition: inline
-X-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.11
+	id S1752773AbZBQPbr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 10:31:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752690AbZBQPbr
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 10:31:47 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50145 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752526AbZBQPbq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 10:31:46 -0500
+Received: (qmail invoked by alias); 17 Feb 2009 15:31:44 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp021) with SMTP; 17 Feb 2009 16:31:44 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19FI71xv6NFD7l1ZhxM2pDF2oh0s42g3WA6MWp9Ix
+	Y9XYkvwlx8xNTA
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <43d8ce650902170711r1edb1e40udfacce4b9123b0a5@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110400>
 
-I got the following error message while trying to fetch a subversion
-repository:
+Hi,
 
-$ git svn init file:///home/mg/svn/mg git-svn-test
-Initialized empty Git repository in /home/ward/worktrees/git-svn-test/.git/
-$ cd git-svn-test
-$ git svn fetch
+On Tue, 17 Feb 2009, John Tapsell wrote:
 
-r59 = c20f5b6c61bb8b2babc1b3644b6372e023d9d428 (git-svn)
-W: +empty_dir: CFE
-r60 = 1b8ad7c39dd60897319545c9f3f08b3b2b82b863 (git-svn)
-        A       CFE/Makefile
-Unable to parse date: 2004-03-09T09:44:33.Z
- at /usr/bin/git-svn line 3995
+> 2009/2/17 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+>
+> > On Tue, 17 Feb 2009, Christian Couder wrote:
+> >
+> >> +static int estimate_bisect_steps(int all)
+> >> +{
+> >> +     int log2 = 0;
+> >> +     int left = (all >> 1) - 1;
+> >> +
+> >> +     if (left <= 0)
+> >> +             return 0;
+> >> +
+> >> +     do {
+> >> +             left = left >> 1;
+> >> +             log2++;
+> >> +     } while (left);
+> >> +
+> >> +     return log2;
+> >> +}
+> >
+> > How about this instead, calling it from cmd_rev_list directly?
+> >
+> >        static int log2(int n)
+> >        {
+> >                int log2;
+> >
+> >                for (log2 = 0; n > 1; log2++)
+> >                        n >>= 1;
+> >
+> >                return log2;
+> >        }
+> 
+> This would work, if you want a non-iterative solution
+> 
+> unsigned int log2_integer_approximate(unsigned int n){
+> *((float*)&n) = (float)n;
+> return ((n & (~((1<<23) - 1))) >> 23) - 127;
+> }
 
-This patch makes the matching of subseconds optional, which prevents the
-error message from showing. Since the subseconds match isn't actually
-used this should not be a problem.
+That assumes that your floats are IEEE floats, right?
 
-Signed-off-by: Ward Wouts <ward@wouts.nl>
-Acked-by: Deskin Miller <deskinm@umich.edu>
----
- git-svn.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index 83cb36f..8ffadcc 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -2526,7 +2526,7 @@ sub get_untracked {
- sub parse_svn_date {
- 	my $date = shift || return '+0000 1970-01-01 00:00:00';
- 	my ($Y,$m,$d,$H,$M,$S) = ($date =~ /^(\d{4})\-(\d\d)\-(\d\d)T
--	                                    (\d\d)\:(\d\d)\:(\d\d).\d+Z$/x) or
-+	                                    (\d\d)\:(\d\d)\:(\d\d).\d*Z$/x) or
- 	                                 croak "Unable to parse date: $date\n";
- 	my $parsed_date;    # Set next.
- 
--- 
-1.5.6.6
+Ciao,
+Dscho
