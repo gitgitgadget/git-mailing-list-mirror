@@ -1,184 +1,159 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH RFC 1/2] gitweb: Fix warnings with override permitted but
- no repo override
-Date: Wed, 18 Feb 2009 00:40:27 -0800
-Message-ID: <7vvdr8yw78.fsf@gitster.siamese.dyndns.org>
-References: <499AD871.8000808@oak.homeunix.org>
- <1234926043-7471-1-git-send-email-marcel@oak.homeunix.org>
+From: <carlos.duclos@nokia.com>
+Subject: [PATCH v4] git-archive: Add new option "--output" to write archive
+ to a file instead of stdout.
+Date: Wed, 18 Feb 2009 10:05:33 +0100
+Message-ID: <599636D7828020419E3AB2DE5CCC8130036BF8B1DC@NOK-EUMSG-02.mgdnok.nokia.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, jnareb@gmail.com, fg@one2team.net,
-	giuseppe.bilotta@gmail.com, pasky@suse.cz
-To: "Marcel M. Cary" <marcel@oak.homeunix.org>
-X-From: git-owner@vger.kernel.org Wed Feb 18 09:42:08 2009
+Content-Type: multipart/mixed;
+	boundary="_002_599636D7828020419E3AB2DE5CCC8130036BF8B1DCNOKEUMSG02mgd_"
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 18 10:10:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZi0N-0006TH-0k
-	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 09:42:07 +0100
+	id 1LZiRj-0006pN-LN
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 10:10:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750971AbZBRIkk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2009 03:40:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751692AbZBRIkj
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 03:40:39 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:65493 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751655AbZBRIki (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2009 03:40:38 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id F0ED72B61C;
-	Wed, 18 Feb 2009 03:40:36 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 8D0282B579; Wed,
- 18 Feb 2009 03:40:29 -0500 (EST)
-In-Reply-To: <1234926043-7471-1-git-send-email-marcel@oak.homeunix.org>
- (Marcel M. Cary's message of "Tue, 17 Feb 2009 19:00:42 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: D06D78D4-FD97-11DD-B797-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1751492AbZBRJI4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2009 04:08:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751381AbZBRJIz
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 04:08:55 -0500
+Received: from smtp.nokia.com ([192.100.122.233]:52007 "EHLO
+	mgw-mx06.nokia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751372AbZBRJIx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2009 04:08:53 -0500
+Received: from vaebh105.NOE.Nokia.com (vaebh105.europe.nokia.com [10.160.244.31])
+	by mgw-mx06.nokia.com (Switch-3.2.6/Switch-3.2.6) with ESMTP id n1I98Uda002002
+	for <git@vger.kernel.org>; Wed, 18 Feb 2009 11:08:48 +0200
+Received: from vaebh104.NOE.Nokia.com ([10.160.244.30]) by vaebh105.NOE.Nokia.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 18 Feb 2009 11:08:28 +0200
+Received: from smtp.mgd.nokia.com ([65.54.30.5]) by vaebh104.NOE.Nokia.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 18 Feb 2009 11:08:19 +0200
+Received: from nok-am1mhub-08.mgdnok.nokia.com (65.54.30.15) by
+ NOK-am1MHUB-01.mgdnok.nokia.com (65.54.30.5) with Microsoft SMTP Server (TLS)
+ id 8.1.291.1; Wed, 18 Feb 2009 10:08:19 +0100
+Received: from NOK-EUMSG-02.mgdnok.nokia.com ([65.54.30.107]) by
+ nok-am1mhub-08.mgdnok.nokia.com ([65.54.30.15]) with mapi; Wed, 18 Feb 2009
+ 10:08:19 +0100
+Thread-Topic: [PATCH v4] git-archive: Add new option "--output" to write
+ archive to a file instead of stdout.
+Thread-Index: AQHJkahmyi67RZJmlk+NrwX5VcwZwg==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
+X-OriginalArrivalTime: 18 Feb 2009 09:08:19.0669 (UTC) FILETIME=[71365850:01C991A8]
+X-Nokia-AV: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110516>
 
-"Marcel M. Cary" <marcel@oak.homeunix.org> writes:
+--_002_599636D7828020419E3AB2DE5CCC8130036BF8B1DCNOKEUMSG02mgd_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-> When a feature like "blame" is permitted to be overridden in the
-> repository configuration but it is not actually set in the
-> repository, a warning is emitted due to the undefined value
-> of the repository configuration, even though it's a perfectly
-> normal condition.
->
-> The warning is grounds for test failure in the gitweb test script,
-> so it causes some new feature tests of mine to fail.
->
-> This patch prevents warning and adds a test case to exercise it.
->
-> Signed-off-by: Marcel M. Cary <marcel@oak.homeunix.org>
-> ---
->
-> Here's a small patch I put together while tinkering with bug hyperlinking.
-> Does this look reasonable?
+Hi,
 
-To my cursory look, it doesn't, and it is not entirely your fault, but if
-we applied this patch, it would not improve things very much.  It just
-would shift the same problem around.
+Patch attached as MIME.
 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 7c48181..653f0be 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -402,13 +402,13 @@ sub feature_bool {
->  	my $key = shift;
->  	my ($val) = git_get_project_config($key, '--bool');
->  
-> -	if ($val eq 'true') {
-> +	if (!defined $val) {
-> +		return ($_[0]);
-> +	} elsif ($val eq 'true') {
->  		return (1);
->  	} elsif ($val eq 'false') {
->  		return (0);
->  	}
+Patch highlights:
+1. Remove duplicated tests
+1.1 Tests are present on t0024.
+1.2 Introduced some comments in t5000 to make it easy to read.
+2. Removed close(2) and comments from archive.c
+3. Rewrote commit message.
+4. Signed off.
 
-I think the warning you are talking about is to compare $val with 'true'
-with 'eq' operator when $val could be undef.  The check to see if $val is
-undefined ato avoid that 'eq' comparison is fine, and the intent to return
-false is also good, but I think feature_bool is meant to say "yes" or
-"no", and existing code for 'false' is returning (0).  I'd rather see your
-new codepath normalize incoming undef the same way string 'false' is
-normalized to return (0).  Granted, the caller should be prepared to take
-the answer as boolean and treat the usual Perl false values (numeric zero,
-a string with single "0", or an undef) without barfing, so returning (undef)
-from here ought to be safe (otherwise the callers are broken), but I'd
-rather see this function play safe.
+Cheers!
 
-But it certainly is not my main complaint.
+--_002_599636D7828020419E3AB2DE5CCC8130036BF8B1DCNOKEUMSG02mgd_
+Content-Type: text/x-diff;
+	name="0001-git-archive-add-output-file-to-send-output-to-a.patch"
+Content-Description: 0001-git-archive-add-output-file-to-send-output-to-a.patch
+Content-Disposition: attachment;
+	filename="0001-git-archive-add-output-file-to-send-output-to-a.patch";
+	size=4260; creation-date="Wed, 18 Feb 2009 10:08:10 GMT";
+	modification-date="Wed, 18 Feb 2009 10:08:10 GMT"
+Content-Transfer-Encoding: base64
 
->  sub feature_snapshot {
-> @@ -1978,6 +1978,8 @@ sub git_get_project_config {
->  		$config_file = "$git_dir/config";
->  	}
->  
-> +	return undef if (!defined $config{"gitweb.$key"});
-> +
+RnJvbSAzYTE0MzI0NGI4NGQ4MGFkYmE5MWYzNzMwN2UzMGVjOGZiM2E2NzAxIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBDYXJsb3MgTWFudWVsIER1Y2xvcyBWZXJnYXJhIDxjYXJsb3Mu
+ZHVjbG9zQG5va2lhLmNvbT4KRGF0ZTogTW9uLCAxNiBGZWIgMjAwOSAxODoyMDoyNSArMDEwMApT
+dWJqZWN0OiBbUEFUQ0hdIGdpdC1hcmNoaXZlOiBhZGQgLS1vdXRwdXQ9PGZpbGU+IHRvIHNlbmQg
+b3V0cHV0IHRvIGEgZmlsZSBpbnN0ZWFkIG9mIHN0ZG91dC4KIFdoZW4gYXJjaGl2aW5nIGEgcmVw
+b3NpdG9yeSB0aGVyZSBpcyBubyB3YXkgdG8gc3BlY2lmeSBhIGZpbGUgYXMgb3V0cHV0LgogVGhp
+cyBwYXRjaCBhZGRzIGEgbmV3IG9wdGlvbiAiLS1vdXRwdXQiIHRoYXQgcmVkaXJlY3RzIHRoZSBv
+dXRwdXQgdG8gYSBmaWxlCiBpbnN0ZWFkIG9mIHN0ZG91dC4KClNpZ25lZC1vZmYtYnk6IENhcmxv
+cyBNYW51ZWwgRHVjbG9zIFZlcmdhcmEgPGNhcmxvcy5kdWNsb3NAbm9raWEuY29tPgotLS0KIERv
+Y3VtZW50YXRpb24vZ2l0LWFyY2hpdmUudHh0IHwgICAgMyArKysKIGFyY2hpdmUuYyAgICAgICAg
+ICAgICAgICAgICAgIHwgICAxNiArKysrKysrKysrKysrKysrCiB0L3QwMDI0LWNybGYtYXJjaGl2
+ZS5zaCAgICAgICB8ICAgMTkgKysrKysrKysrKysrKysrKysrKwogdC90NTAwMC10YXItdHJlZS5z
+aCAgICAgICAgICAgfCAgICA4ICsrKysrKysrCiA0IGZpbGVzIGNoYW5nZWQsIDQ2IGluc2VydGlv
+bnMoKyksIDAgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvRG9jdW1lbnRhdGlvbi9naXQtYXJj
+aGl2ZS50eHQgYi9Eb2N1bWVudGF0aW9uL2dpdC1hcmNoaXZlLnR4dAppbmRleCA0MWNiZjljLi41
+YmRlMTk3IDEwMDY0NAotLS0gYS9Eb2N1bWVudGF0aW9uL2dpdC1hcmNoaXZlLnR4dAorKysgYi9E
+b2N1bWVudGF0aW9uL2dpdC1hcmNoaXZlLnR4dApAQCAtNDcsNiArNDcsOSBAQCBPUFRJT05TCiAt
+LXByZWZpeD08cHJlZml4Pi86OgogCVByZXBlbmQgPHByZWZpeD4vIHRvIGVhY2ggZmlsZW5hbWUg
+aW4gdGhlIGFyY2hpdmUuCiAKKy0tb3V0cHV0PTxmaWxlPjo6CisJV3JpdGUgdGhlIGFyY2hpdmUg
+dG8gPGZpbGU+IGluc3RlYWQgb2Ygc3Rkb3V0LgorCiA8ZXh0cmE+OjoKIAlUaGlzIGNhbiBiZSBh
+bnkgb3B0aW9ucyB0aGF0IHRoZSBhcmNoaXZlciBiYWNrZW5kIHVuZGVyc3RhbmQuCiAJU2VlIG5l
+eHQgc2VjdGlvbi4KZGlmZiAtLWdpdCBhL2FyY2hpdmUuYyBiL2FyY2hpdmUuYwppbmRleCBlNmRl
+MDM5Li4zYTY0NmU1IDEwMDY0NAotLS0gYS9hcmNoaXZlLmMKKysrIGIvYXJjaGl2ZS5jCkBAIC0y
+MzksNiArMjM5LDE2IEBAIHN0YXRpYyB2b2lkIHBhcnNlX3RyZWVpc2hfYXJnKGNvbnN0IGNoYXIg
+Kiphcmd2LAogCWFyX2FyZ3MtPnRpbWUgPSBhcmNoaXZlX3RpbWU7CiB9CiAKK3N0YXRpYyB2b2lk
+IGNyZWF0ZV9vdXRwdXRfZmlsZShjb25zdCBjaGFyICpvdXRwdXRfZmlsZSkKK3sKKwlpbnQgb3V0
+cHV0X2ZkID0gb3BlbihvdXRwdXRfZmlsZSwgT19DUkVBVCB8IE9fV1JPTkxZIHwgT19UUlVOQywg
+MDY2Nik7CisJaWYgKG91dHB1dF9mZCA8IDApCisJCWRpZSgiY291bGQgbm90IGNyZWF0ZSBhcmNo
+aXZlIGZpbGU6ICVzICIsIG91dHB1dF9maWxlKTsKKwlpZiAob3V0cHV0X2ZkICE9IDEpCisJCWlm
+IChkdXAyKG91dHB1dF9mZCwgMSkgPCAwKQorCQkJZGllKCJjb3VsZCBub3QgcmVkaXJlY3Qgb3V0
+cHV0Iik7Cit9CisKICNkZWZpbmUgT1BUX19DT01QUihzLCB2LCBoLCBwKSBcCiAJeyBPUFRJT05f
+U0VUX0lOVCwgKHMpLCBOVUxMLCAodiksIE5VTEwsIChoKSwgXAogCSAgUEFSU0VfT1BUX05PQVJH
+IHwgUEFSU0VfT1BUX05PTkVHLCBOVUxMLCAocCkgfQpAQCAtMjUzLDYgKzI2Myw3IEBAIHN0YXRp
+YyBpbnQgcGFyc2VfYXJjaGl2ZV9hcmdzKGludCBhcmdjLCBjb25zdCBjaGFyICoqYXJndiwKIAlj
+b25zdCBjaGFyICpiYXNlID0gTlVMTDsKIAljb25zdCBjaGFyICpyZW1vdGUgPSBOVUxMOwogCWNv
+bnN0IGNoYXIgKmV4ZWMgPSBOVUxMOworCWNvbnN0IGNoYXIgKm91dHB1dCA9IE5VTEw7CiAJaW50
+IGNvbXByZXNzaW9uX2xldmVsID0gLTE7CiAJaW50IHZlcmJvc2UgPSAwOwogCWludCBpOwpAQCAt
+MjYyLDYgKzI3Myw4IEBAIHN0YXRpYyBpbnQgcGFyc2VfYXJjaGl2ZV9hcmdzKGludCBhcmdjLCBj
+b25zdCBjaGFyICoqYXJndiwKIAkJT1BUX1NUUklORygwLCAiZm9ybWF0IiwgJmZvcm1hdCwgImZt
+dCIsICJhcmNoaXZlIGZvcm1hdCIpLAogCQlPUFRfU1RSSU5HKDAsICJwcmVmaXgiLCAmYmFzZSwg
+InByZWZpeCIsCiAJCQkicHJlcGVuZCBwcmVmaXggdG8gZWFjaCBwYXRobmFtZSBpbiB0aGUgYXJj
+aGl2ZSIpLAorCQlPUFRfU1RSSU5HKDAsICJvdXRwdXQiLCAmb3V0cHV0LCAiZmlsZSIsIAorCQkJ
+IndyaXRlIHRoZSBhcmNoaXZlIHRvIHRoaXMgZmlsZSIpLAogCQlPUFRfX1ZFUkJPU0UoJnZlcmJv
+c2UpLAogCQlPUFRfX0NPTVBSKCcwJywgJmNvbXByZXNzaW9uX2xldmVsLCAic3RvcmUgb25seSIs
+IDApLAogCQlPUFRfX0NPTVBSKCcxJywgJmNvbXByZXNzaW9uX2xldmVsLCAiY29tcHJlc3MgZmFz
+dGVyIiwgMSksCkBAIC0yOTQsNiArMzA3LDkgQEAgc3RhdGljIGludCBwYXJzZV9hcmNoaXZlX2Fy
+Z3MoaW50IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmd2LAogCWlmICghYmFzZSkKIAkJYmFzZSA9ICIi
+OwogCisJaWYgKG91dHB1dCkKKwkJY3JlYXRlX291dHB1dF9maWxlKG91dHB1dCk7CisKIAlpZiAo
+bGlzdCkgewogCQlmb3IgKGkgPSAwOyBpIDwgQVJSQVlfU0laRShhcmNoaXZlcnMpOyBpKyspCiAJ
+CQlwcmludGYoIiVzXG4iLCBhcmNoaXZlcnNbaV0ubmFtZSk7CmRpZmYgLS1naXQgYS90L3QwMDI0
+LWNybGYtYXJjaGl2ZS5zaCBiL3QvdDAwMjQtY3JsZi1hcmNoaXZlLnNoCmluZGV4IGU1MzMwMzku
+LjIzN2E4ZjYgMTAwNzU1Ci0tLSBhL3QvdDAwMjQtY3JsZi1hcmNoaXZlLnNoCisrKyBiL3QvdDAw
+MjQtY3JsZi1hcmNoaXZlLnNoCkBAIC0yNiw2ICsyNiwxNSBAQCB0ZXN0X2V4cGVjdF9zdWNjZXNz
+ICd0YXIgYXJjaGl2ZScgJwogCiAnCiAKK3Rlc3RfZXhwZWN0X3N1Y2Nlc3MgJ3RhciBhcmNoaXZl
+IG91dHB1dCByZWRpcmVjdGVkJyAnCisKKwlnaXQgYXJjaGl2ZSAtLWZvcm1hdD10YXIgLS1vdXRw
+dXQ9dGVzdC50YXIgSEVBRCAmJgorCSggbWtkaXIgdW50YXJyZWQyICYmIGNkIHVudGFycmVkMiAm
+JiAiJFRBUiIgLXhmIC4uL3Rlc3QudGFyICkKKworCXRlc3RfY21wIHNhbXBsZSB1bnRhcnJlZDIv
+c2FtcGxlCisKKycKKwogIiRVTlpJUCIgLXYgPi9kZXYvbnVsbCAyPiYxCiBpZiBbICQ/IC1lcSAx
+MjcgXTsgdGhlbgogCWVjaG8gIlNraXBwaW5nIFpJUCB0ZXN0LCBiZWNhdXNlIHVuemlwIHdhcyBu
+b3QgZm91bmQiCkBAIC00Myw0ICs1MiwxNCBAQCB0ZXN0X2V4cGVjdF9zdWNjZXNzICd6aXAgYXJj
+aGl2ZScgJwogCiAnCiAKK3Rlc3RfZXhwZWN0X3N1Y2Nlc3MgJ3ppcCBhcmNoaXZlIG91dHB1dCBy
+ZWRpcmVjdGVkJyAnCisKKwlnaXQgYXJjaGl2ZSAtLWZvcm1hdD16aXAgLS1vdXRwdXQ9dGVzdC56
+aXAgSEVBRCAmJgorCisJKCBta2RpciB1bnppcHBlZDIgJiYgY2QgdW56aXBwZWQyICYmIHVuemlw
+IC4uL3Rlc3QuemlwICkgJiYKKworCXRlc3RfY21wIHNhbXBsZSB1bnppcHBlZDIvc2FtcGxlCisK
+KycKKwogdGVzdF9kb25lCmRpZmYgLS1naXQgYS90L3Q1MDAwLXRhci10cmVlLnNoIGIvdC90NTAw
+MC10YXItdHJlZS5zaAppbmRleCBjOTQyYzhiLi5hNzRkZDRhIDEwMDc1NQotLS0gYS90L3Q1MDAw
+LXRhci10cmVlLnNoCisrKyBiL3QvdDUwMDAtdGFyLXRyZWUuc2gKQEAgLTY2LDYgKzY2LDExIEBA
+IHRlc3RfZXhwZWN0X3N1Y2Nlc3MgXAogICAgICdyZW1vdmUgaWdub3JlZCBmaWxlJyBcCiAgICAg
+J3JtIGEvaWdub3JlZCcKIAorCisjCisjIFRhciB0ZXN0cworIworCiB0ZXN0X2V4cGVjdF9zdWNj
+ZXNzIFwKICAgICAnZ2l0IGFyY2hpdmUnIFwKICAgICAnZ2l0IGFyY2hpdmUgSEVBRCA+Yi50YXIn
+CkBAIC0xNTksNiArMTY0LDkgQEAgdGVzdF9leHBlY3Rfc3VjY2VzcyBcCiAgICAgICBkaWZmIGcv
+cHJlZml4L2Evc3Vic3RmaWxlMS5leHBlY3RlZCBnL3ByZWZpeC9hL3N1YnN0ZmlsZTEgJiYKICAg
+ICAgIGRpZmYgYS9zdWJzdGZpbGUyIGcvcHJlZml4L2Evc3Vic3RmaWxlMgogJworIworIyBaaXAg
+dGVzdHMKKyMKIAogdGVzdF9leHBlY3Rfc3VjY2VzcyBcCiAgICAgJ2dpdCBhcmNoaXZlIC0tZm9y
+bWF0PXppcCcgXAotLSAKMS42LjIucmMwLjYzLmc3Y2JkMC5kaXJ0eQoK
 
-I think this change is missing a lot of necessary fixes associated with
-it.  Have you actually audited all the callers of this function you are
-modifying?  For example, feature_bool does this:
-
-        sub feature_bool {
-                my $key = shift;
-                my ($val) = git_get_project_config($key, '--bool');
-
-                if ($val eq 'true') {
-                        return (1);
-                } elsif ($val eq 'false') {
-	...
-
-With your above change, I think a missing configuration variable will
-stuff undef in $val, and trigger the same "$val eq 'true'" comparison
-warning here.
-
-Granted, without your change the existing code triggers the same error in
-another way, by calling config_to_bool sub with undef here:
-
-	# ensure given type
-	if (!defined $type) {
-		return $config{"gitweb.$key"};
-	} elsif ($type eq 'bool') {
-		# backward compatibility: 'git config --bool' returns true/false
-		return config_to_bool($config{"gitweb.$key"}) ? 'true' : 'false';
-
-and config_to_bool sub is written in the same carelessness like so:
-
-        sub config_to_bool {
-                my $val = shift;
-
-                # strip leading and trailing whitespace
-                $val =~ s/^\s+//;
-
-and triggers the same error here in the s/// operation.  I think the right
-fix for this part would look like this:
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 7c48181..2b140cc 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1920,6 +1920,8 @@ sub git_parse_project_config {
- sub config_to_bool {
- 	my $val = shift;
- 
-+	return 1 if (!defined $val);
-+
- 	# strip leading and trailing whitespace
- 	$val =~ s/^\s+//;
- 	$val =~ s/\s+$//;
-
-Because
-
-	[gitweb]
-        	variable
-
-parsed by git_parse_project_config('gitweb') should return a hash that
-maps "gitweb.variable" to undef it must be fed as undef to
-config_to_bool.  This variable should be reported as "true".
-
-There are tons of undef unsafeness in this file from a very cursory look.
-
-Unrelated to any of these, I think the following is wrong:
-
-        sub feature_patches {
-                my @val = (git_get_project_config('patches', '--int'));
-
-                if (@val) {
-                        return @val;
-                }
-
-                return ($_[0]);
-        }
-
-As git_get_project_config() always returns something, hence "if (@val)"
-can never be false.
+--_002_599636D7828020419E3AB2DE5CCC8130036BF8B1DCNOKEUMSG02mgd_--
