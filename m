@@ -1,80 +1,116 @@
-From: skillzero@gmail.com
-Subject: Re: git commit <path> scanning entire working tree?
-Date: Tue, 17 Feb 2009 18:25:56 -0800
-Message-ID: <2729632a0902171825g2078755cx6b966417240a59ca@mail.gmail.com>
-References: <2729632a0902161458m732af362od59e5f35af5643c3@mail.gmail.com>
-	 <7vwsbpewkl.fsf@gitster.siamese.dyndns.org>
-	 <2729632a0902161937o4ac3a1aeg143dda509ba5e384@mail.gmail.com>
-	 <7vvdr98rkd.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: "Marcel M. Cary" <marcel@oak.homeunix.org>
+Subject: [PATCH RFC 1/2] gitweb: Fix warnings with override permitted but no repo override
+Date: Tue, 17 Feb 2009 19:00:42 -0800
+Message-ID: <1234926043-7471-1-git-send-email-marcel@oak.homeunix.org>
+References: <499AD871.8000808@oak.homeunix.org>
+Cc: jnareb@gmail.com, fg@one2team.net, giuseppe.bilotta@gmail.com,
+	pasky@suse.cz, "Marcel M. Cary" <marcel@oak.homeunix.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 18 03:27:56 2009
+X-From: git-owner@vger.kernel.org Wed Feb 18 04:02:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZcAE-0006Md-Mz
-	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 03:27:55 +0100
+	id 1LZchV-0005lw-TY
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 04:02:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753913AbZBRCZ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 21:25:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752892AbZBRCZ6
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 21:25:58 -0500
-Received: from yw-out-2324.google.com ([74.125.46.30]:44499 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751170AbZBRCZ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 21:25:58 -0500
-Received: by yw-out-2324.google.com with SMTP id 5so1220280ywh.1
-        for <git@vger.kernel.org>; Tue, 17 Feb 2009 18:25:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=exED+a8w9iTxDlIxcwRwQ/ctxvPVCcMDGCpo4lGuSWE=;
-        b=p6UbZavDsDyqViPKNFtgVBW+5ty5b+z1sYJdCvJVHSafGLCm4OBDv40rThFSF7IqHh
-         vBcao7GvRrtQrTOX3CBbS4JJ86QLa/E2Ko9DR8fflGTHfmcLGkn43Xq9r/Ih0G9SLH8Q
-         1D3sZnXJ5yczUe8sKgea4WnBFNEIuoXh6WSV8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=MAseIWXsQrlxHv/Ae5D8FmQEpQhUkIC2enMM0hde8/7hlAd4BB75OaZWHdS74EFZHD
-         t/qWU//iPI5dq3B9+HcduTaXyqrkvASrRZclKAn7tLsVh6bb+pAsLwgwKHL2i4MLfEzn
-         SHJ0gGyJHmPSJKPtW7xFPYn/mKTIJFspnKZ9s=
-Received: by 10.150.189.9 with SMTP id m9mr991191ybf.205.1234923956793; Tue, 
-	17 Feb 2009 18:25:56 -0800 (PST)
-In-Reply-To: <7vvdr98rkd.fsf@gitster.siamese.dyndns.org>
+	id S1752267AbZBRDAt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 22:00:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752016AbZBRDAt
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 22:00:49 -0500
+Received: from n26.bullet.mail.mud.yahoo.com ([68.142.206.221]:20528 "HELO
+	n26.bullet.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751379AbZBRDAs (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Feb 2009 22:00:48 -0500
+Received: from [68.142.200.221] by n26.bullet.mail.mud.yahoo.com with NNFMP; 18 Feb 2009 03:00:47 -0000
+Received: from [68.142.201.245] by t9.bullet.mud.yahoo.com with NNFMP; 18 Feb 2009 03:00:47 -0000
+Received: from [127.0.0.1] by omp406.mail.mud.yahoo.com with NNFMP; 18 Feb 2009 03:00:47 -0000
+X-Yahoo-Newman-Id: 287396.30263.bm@omp406.mail.mud.yahoo.com
+Received: (qmail 75426 invoked from network); 18 Feb 2009 03:00:46 -0000
+Received: from unknown (HELO ordinateur.home.org) (marcel@75.61.103.6 with plain)
+  by smtp110.sbc.mail.sp1.yahoo.com with SMTP; 18 Feb 2009 03:00:45 -0000
+X-Yahoo-Newman-Property: ymail-3
+Received: from polliwog.home.org ([192.168.0.18] helo=localhost.localdomain)
+	by ordinateur.home.org with esmtp (Exim 4.63)
+	(envelope-from <marcel@oak.homeunix.org>)
+	id 1LZcfz-0002PP-Cv; Tue, 17 Feb 2009 19:00:43 -0800
+X-Mailer: git-send-email 1.6.1
+In-Reply-To: <499AD871.8000808@oak.homeunix.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110499>
 
-On Mon, Feb 16, 2009 at 11:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> skillzero@gmail.com writes:
+When a feature like "blame" is permitted to be overridden in the
+repository configuration but it is not actually set in the
+repository, a warning is emitted due to the undefined value
+of the repository configuration, even though it's a perfectly
+normal condition.
 
-> People do rely on that information.  Why else we would spend cycles to show
-> them?
+The warning is grounds for test failure in the gitweb test script,
+so it causes some new feature tests of mine to fail.
 
-My guess was that most people didn't work with very large trees. For
-example, the Linux kernel tree stat's pretty quickly (.7 seconds when
-hot on my machine), but my tree contains the code for an entire OS
-distribution so even on a fast machine and OS, it takes many seconds.
+This patch prevents warning and adds a test case to exercise it.
 
-My thinking was that in the case when a path was specified, people
-might be less interested in changes/untracked files outside that path
-(although I may be totally wrong). If a path wasn't specified, I can
-see why it would be useful to show everything. I tend to do a 'git
-status' then a bunch of 'git commit <path>' commands.
+Signed-off-by: Marcel M. Cary <marcel@oak.homeunix.org>
+---
 
-> There is a precedence to allow a configuration variable to skip various
-> computation to help slow systems, e.g. 6c2ce04 (Add argument 'no'
-> commit/status option -u|--untracked-files, 2008-06-05).
+Here's a small patch I put together while tinkering with bug hyperlinking.
+Does this look reasonable?
 
-Thanks, I'll check it out. If that doesn't do what I need, maybe I can
-trying changing git to add support for automatically skipping files
-outside the specifies path and submit a patch for you guys to rip to
-shreds :)
+Marcel
+
+
+ gitweb/gitweb.perl                     |    8 +++++---
+ t/t9500-gitweb-standalone-no-errors.sh |    5 +++++
+ 2 files changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 7c48181..653f0be 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -402,13 +402,13 @@ sub feature_bool {
+ 	my $key = shift;
+ 	my ($val) = git_get_project_config($key, '--bool');
+ 
+-	if ($val eq 'true') {
++	if (!defined $val) {
++		return ($_[0]);
++	} elsif ($val eq 'true') {
+ 		return (1);
+ 	} elsif ($val eq 'false') {
+ 		return (0);
+ 	}
+-
+-	return ($_[0]);
+ }
+ 
+ sub feature_snapshot {
+@@ -1978,6 +1978,8 @@ sub git_get_project_config {
+ 		$config_file = "$git_dir/config";
+ 	}
+ 
++	return undef if (!defined $config{"gitweb.$key"});
++
+ 	# ensure given type
+ 	if (!defined $type) {
+ 		return $config{"gitweb.$key"};
+diff --git a/t/t9500-gitweb-standalone-no-errors.sh b/t/t9500-gitweb-standalone-no-errors.sh
+index 7c6f70b..559045e 100755
+--- a/t/t9500-gitweb-standalone-no-errors.sh
++++ b/t/t9500-gitweb-standalone-no-errors.sh
+@@ -662,6 +662,11 @@ cat >>gitweb_config.perl <<EOF
+ EOF
+ 
+ test_expect_success \
++	'config override: tree view, features not overridden in repo config' \
++	'gitweb_run "p=.git;a=tree"'
++test_debug 'cat gitweb.log'
++
++test_expect_success \
+ 	'config override: tree view, features disabled in repo config' \
+ 	'git config gitweb.blame no &&
+ 	 git config gitweb.snapshot none &&
+-- 
+1.6.1
