@@ -1,98 +1,89 @@
-From: Michael Spang <mspang@uwaterloo.ca>
-Subject: [PATCH] Skip timestamp differences for diff --no-index
-Date: Wed, 18 Feb 2009 01:48:06 -0500
-Message-ID: <1234939686-14932-1-git-send-email-mspang@uwaterloo.ca>
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 18 07:59:27 2009
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH RFC 1/2] gitweb: Fix warnings with override permitted but 
+	no repo override
+Date: Wed, 18 Feb 2009 08:41:54 +0100
+Message-ID: <cb7bb73a0902172341x2265e9d4r24a16ef2913bcda6@mail.gmail.com>
+References: <499AD871.8000808@oak.homeunix.org>
+	 <1234926043-7471-1-git-send-email-marcel@oak.homeunix.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, jnareb@gmail.com, fg@one2team.net,
+	pasky@suse.cz
+To: "Marcel M. Cary" <marcel@oak.homeunix.org>
+X-From: git-owner@vger.kernel.org Wed Feb 18 08:43:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZgOz-00040F-DK
-	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 07:59:25 +0100
+	id 1LZh5s-0006RF-IZ
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 08:43:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752609AbZBRG55 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2009 01:57:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752336AbZBRG55
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 01:57:57 -0500
-Received: from caffeine.csclub.uwaterloo.ca ([129.97.134.17]:46104 "EHLO
-	caffeine.csclub.uwaterloo.ca" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752042AbZBRG54 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Feb 2009 01:57:56 -0500
-X-Greylist: delayed 590 seconds by postgrey-1.27 at vger.kernel.org; Wed, 18 Feb 2009 01:57:56 EST
-Received: from caffeine.csclub.uwaterloo.ca (localhost [127.0.0.1])
-	by caffeine.csclub.uwaterloo.ca (Postfix) with ESMTP id 376ED73CF1;
-	Wed, 18 Feb 2009 01:48:06 -0500 (EST)
-Received: by caffeine.csclub.uwaterloo.ca (Postfix, from userid 21292)
-	id 284DD73CF8; Wed, 18 Feb 2009 01:48:06 -0500 (EST)
-X-Mailer: git-send-email 1.5.6.5
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1751237AbZBRHl4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2009 02:41:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750825AbZBRHl4
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 02:41:56 -0500
+Received: from mail-ew0-f31.google.com ([209.85.219.31]:45084 "EHLO
+	mail-ew0-f31.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750740AbZBRHl4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2009 02:41:56 -0500
+Received: by ewy12 with SMTP id 12so1165270ewy.13
+        for <git@vger.kernel.org>; Tue, 17 Feb 2009 23:41:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=zuzXEcB6jworFsygxSpvFRzQklN7AD0ylLIDVJTg4bE=;
+        b=FEcWxnEI5z61UmAdvSPQbEde92TCh3ffsaDm2Hw5icsGDfHMH181DH2+D1469StxwE
+         BlUIuflW+GsYVpI56VTI9dpLSMokLOlcHBpXYw6eonR3aNT2JrvwOVOaV+Aii9tB6yGD
+         Gs+VDEOnWbGJV+6fb4QIPQilnpERKTrR+Ec+Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=EdiFpw/nT27Pc8GsZYUbR5J7yZuG6YQioimh+4j19xlWDLykptb3pNYRaRqzoSTP0i
+         1qAO3XWFSs2RGsQUrO8aylULaVWM4gzkXMZflLJhnqbjUC/zzL8EoiozqCkeWRYD3nqD
+         3u3SvSevzCTJ4AJrvdfn5XyKzPn6QO5PIAa4M=
+Received: by 10.210.71.13 with SMTP id t13mr3031808eba.90.1234942914046; Tue, 
+	17 Feb 2009 23:41:54 -0800 (PST)
+In-Reply-To: <1234926043-7471-1-git-send-email-marcel@oak.homeunix.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110511>
 
-We display empty diffs for files whose timestamps have changed.
-Usually, refreshing the index makes those empty diffs go away.
-However, when not using the index they are not very useful and
-there is no option to suppress them.
+On Wed, Feb 18, 2009 at 4:00 AM, Marcel M. Cary <marcel@oak.homeunix.org> wrote:
+> When a feature like "blame" is permitted to be overridden in the
+> repository configuration but it is not actually set in the
+> repository, a warning is emitted due to the undefined value
+> of the repository configuration, even though it's a perfectly
+> normal condition.
+>
+> The warning is grounds for test failure in the gitweb test script,
+> so it causes some new feature tests of mine to fail.
+>
+> This patch prevents warning and adds a test case to exercise it.
+>
+> Signed-off-by: Marcel M. Cary <marcel@oak.homeunix.org>
+> ---
+>
+> Here's a small patch I put together while tinkering with bug hyperlinking.
+> Does this look reasonable?
 
-This forces on the skip_stat_unmatch option for diff --no-index,
-suppressing any empty diffs. This option is also used for diffs
-against the index when "diff.autorefreshindex" is set, but that
-option does not apply to diff --no-index.
+My only perplexity is about this:
 
-Signed-off-by: Michael Spang <mspang@uwaterloo.ca>
----
- diff-no-index.c                       |    1 +
- t/t4013-diff-various.sh               |    5 +++++
- t/t4013/diff.diff_--no-index_dir_dir3 |    2 ++
- 3 files changed, 8 insertions(+), 0 deletions(-)
- create mode 100644 t/t4013/diff.diff_--no-index_dir_dir3
+> @@ -1978,6 +1978,8 @@ sub git_get_project_config {
+>                $config_file = "$git_dir/config";
+>        }
+>
+> +       return undef if (!defined $config{"gitweb.$key"});
+> +
 
-diff --git a/diff-no-index.c b/diff-no-index.c
-index 0dbd9da..0a14268 100644
---- a/diff-no-index.c
-+++ b/diff-no-index.c
-@@ -247,6 +247,7 @@ void diff_no_index(struct rev_info *revs,
- 	else
- 		revs->diffopt.paths = argv + argc - 2;
- 	revs->diffopt.nr_paths = 2;
-+	revs->diffopt.skip_stat_unmatch = 1;
- 
- 	DIFF_OPT_SET(&revs->diffopt, EXIT_WITH_STATUS);
- 	DIFF_OPT_SET(&revs->diffopt, NO_INDEX);
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index aba5320..9c70902 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -74,6 +74,10 @@ test_expect_success setup '
- 	for i in 1 2; do echo $i; done >>dir/sub &&
- 	git update-index file0 dir/sub &&
- 
-+	mkdir dir3 &&
-+	cp dir/sub dir3/sub &&
-+	test-chmtime +1 dir3/sub &&
-+
- 	git config log.showroot false &&
- 	git commit --amend &&
- 	git show-branch
-@@ -262,6 +266,7 @@ diff --patch-with-raw -r initial..side
- diff --name-status dir2 dir
- diff --no-index --name-status dir2 dir
- diff --no-index --name-status -- dir2 dir
-+diff --no-index dir dir3
- diff master master^ side
- EOF
- 
-diff --git a/t/t4013/diff.diff_--no-index_dir_dir3 b/t/t4013/diff.diff_--no-index_dir_dir3
-new file mode 100644
-index 0000000..2142c2b
---- /dev/null
-+++ b/t/t4013/diff.diff_--no-index_dir_dir3
-@@ -0,0 +1,2 @@
-+$ git diff --no-index dir dir3
-+$
+I'm no Perl expert, so I have no idea: how do non-bool config checks
+(which expect arrays) cope with an undef? Also, you may want to add a
+non-bool override test in the test suite.
+
 -- 
-1.6.0.6
+Giuseppe "Oblomov" Bilotta
