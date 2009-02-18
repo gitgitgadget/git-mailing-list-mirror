@@ -1,70 +1,55 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [JGIT PATCH] 1/2 : (reworked) Externalizable/Serializable Items
-Date: Wed, 18 Feb 2009 23:19:15 +0100
-Message-ID: <bd6139dc0902181419n504dde97y8b3a8862b3f081cc@mail.gmail.com>
-References: <320075ff0902161212s1980cd70r8cdc4c21550333ee@mail.gmail.com>
-	 <20090218163002.GB22848@spearce.org>
-	 <200902182159.51027.robin.rosenberg.lists@dewire.com>
-	 <20090218214859.GN22848@spearce.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 1/2] Introduce the function strip_path_suffix()
+Date: Wed, 18 Feb 2009 23:27:16 +0100
+Message-ID: <499C8B44.1020106@kdbg.org>
+References: <cover.1234969572u.git.johannes.schindelin@gmx.de> <7b5ee74d497bbb7144b8683725cd83c8bbd33f9a.1234969572u.git.johannes.schindelin@gmx.de> <499C63E7.5040306@kdbg.org> <alpine.DEB.1.00.0902182211550.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Nigel Magnay <nigel.magnay@gmail.com>,
-	Git ML <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Feb 18 23:21:13 2009
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Steffen Prohaska <prohaska@zib.de>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 18 23:29:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZumc-0001Ar-Kp
-	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 23:20:47 +0100
+	id 1LZuus-0004Uw-8c
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 23:29:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752609AbZBRWTS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2009 17:19:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752329AbZBRWTS
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 17:19:18 -0500
-Received: from fg-out-1718.google.com ([72.14.220.152]:61075 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751558AbZBRWTR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2009 17:19:17 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so996887fgg.17
-        for <git@vger.kernel.org>; Wed, 18 Feb 2009 14:19:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=dftA3dDmDEDDuXc6vC8nv9+UdlpjA5q4qbY7Yuh/LTg=;
-        b=Jh3n0IXbjVZTMKcMuv3mc4nzRhpEc1CAua7Bvx2HRLcLkbaObDmJJgTaldZw/cTg5T
-         x8nd5rOfOQDvXtMPRTy5Sbg/rA9sGwCFa7aUQ9Rx2EyKP0Vw2mjp5rcTvUU/cWxISTTJ
-         2lYbWeyYuYcVuR1XfXGLVsR3UX4suInI7uf7c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=CFqgy1YjrT1m7bDqGu86WM2LmrylXsPYGG4PI8GCQVSd9DscldpJfXPIWN3BPRqQDN
-         F090duA+SMsunGbBfByNR5BmY0alkn3Fgmjp4Ss6/l2dn0b1wpzRm8708C3syKlTZuEZ
-         iwT49wdSTr5rzchXK9e8SwmKtfVJYY2Wg2C1A=
-Received: by 10.86.53.8 with SMTP id b8mr3026380fga.58.1234995555520; Wed, 18 
-	Feb 2009 14:19:15 -0800 (PST)
-In-Reply-To: <20090218214859.GN22848@spearce.org>
-X-Google-Sender-Auth: e05a5ef07d7449ca
+	id S1754242AbZBRW1a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2009 17:27:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752440AbZBRW13
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 17:27:29 -0500
+Received: from bsmtp.bon.at ([213.33.87.14]:22650 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751992AbZBRW13 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2009 17:27:29 -0500
+Received: from [77.117.243.175] (77.117.243.175.wireless.dyn.drei.com [77.117.243.175])
+	by bsmtp.bon.at (Postfix) with ESMTP id 2BDC02C4007;
+	Wed, 18 Feb 2009 23:27:19 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <alpine.DEB.1.00.0902182211550.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110588>
 
-On Wed, Feb 18, 2009 at 22:48, Shawn O. Pearce <spearce@spearce.org> wrote:
-> Non-Java reading a Java serialization stream?  Seriously?
+Johannes Schindelin schrieb:
+> On Wed, 18 Feb 2009, Johannes Sixt wrote:
+>> Johannes Schindelin schrieb:
+>>>  strip_path_suffix("C:\\msysgit/\\libexec\\git-core",
+>>>   "libexec///git-core", &prefix)
+>>>
+>>> will set prefix to "C:\\msysgit" and return 0.
+>> But you implemented it so that prefix is actually "C:\\msysgit/\\" 
+>> (unless, of course, I'm reading the code wrong).
+> 
+> This is supposed to handle that case:
+> 
+> 	*prefix = xstrndup(path, chomp_trailing_dir_sep(path, path_len));
 
-That would be a contender for UJSFWIINI :P (with JS standing for Java
-Serialization).
+Ah, I missed that final call of chomp_trailing_dir_sep.
 
--- 
-Cheers,
-
-Sverre Rabbelier
+-- Hannes
