@@ -1,118 +1,83 @@
-From: Lars Noschinski <lars@public.noschinski.de>
-Subject: Re: [PATCH v4] filter-branch -d: Export GIT_DIR earlier
-Date: Wed, 18 Feb 2009 09:35:36 +0100
-Message-ID: <20090218083535.GA5466@lars.home.noschinski.de>
-References: <20090217083146.GA7338@lars.home.noschinski.de> <alpine.DEB.1.00.0902171327270.6185@intel-tinevez-2-302> <20090217175959.GA3564@lars.home.noschinski.de> <20090217180540.GB3564@lars.home.noschinski.de> <alpine.DEB.1.00.0902180002090.10279@pacific.mpi-cbg.de>
+From: Francis Moreau <francis.moro@gmail.com>
+Subject: Re: Don't want to leave git for hg
+Date: Wed, 18 Feb 2009 09:39:07 +0100
+Message-ID: <38b2ab8a0902180039n5080e55t809c1f6ff13cef71@mail.gmail.com>
+References: <m27i3ou7fy.fsf@gmail.com>
+	 <alpine.DEB.1.00.0902180030500.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 18 09:37:08 2009
+X-From: git-owner@vger.kernel.org Wed Feb 18 09:40:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZhvY-0004uk-6w
-	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 09:37:08 +0100
+	id 1LZhyw-0005we-9Z
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 09:40:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751991AbZBRIfl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2009 03:35:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751910AbZBRIfk
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 03:35:40 -0500
-Received: from smtprelay10.ispgateway.de ([80.67.29.24]:58021 "EHLO
-	smtprelay10.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751882AbZBRIfj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2009 03:35:39 -0500
-Received: from [87.78.135.1] (helo=fruehjahrsmuede.home.noschinski.de)
-	by smtprelay10.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <lars@public.noschinski.de>)
-	id 1LZhu4-0007zU-T6; Wed, 18 Feb 2009 09:35:37 +0100
-Received: from lars by fruehjahrsmuede.home.noschinski.de with local (Exim 4.69)
-	(envelope-from <lars@public.noschinski.de>)
-	id 1LZhu4-0001TQ-5P; Wed, 18 Feb 2009 09:35:36 +0100
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0902180002090.10279@pacific.mpi-cbg.de>
-User-Agent: mutt-ng/devel-r804 (Linux)
-X-Df-Sender: 336680
+	id S1751623AbZBRIjM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2009 03:39:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751682AbZBRIjL
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 03:39:11 -0500
+Received: from mail-bw0-f161.google.com ([209.85.218.161]:44039 "EHLO
+	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751112AbZBRIjK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2009 03:39:10 -0500
+Received: by bwz5 with SMTP id 5so5089715bwz.13
+        for <git@vger.kernel.org>; Wed, 18 Feb 2009 00:39:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=2CWo3RVO92IQ+0s74UyLrFIBuQaOFYmxZvIt7ZY3Kjc=;
+        b=AJceGTpxESV4kPaP7dAcHV2EoSp27DYJSNh8Z/T56P4cupkVB/ob3lOx1aBixND/DB
+         L+pt4cc31Zq9cPbrOS2iWhBy90dpt65zJeypRohZNTkaSQkUPwIHIogQxqVVp2CgOr9j
+         Z8a4ds3Gm+nMc1IXx0Zv/REePDodi0Du/9lM4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=GZp0X0kV1+TvEU+gfLtGQ4oozXNNtWWWidx5RjxBTQ6o2KHGKelDcfhdgJBldyJsvz
+         cLzevfCk+rQuWAoNv44JBTJJKsvk16vDB4GpMLPi4nOqgwKl2nxD8es0KSVTDFFU5B1J
+         I+lr0YiGLaJ0pr3VVxQVKe5DGU9vkne24z25M=
+Received: by 10.181.48.4 with SMTP id a4mr871193bkk.59.1234946347962; Wed, 18 
+	Feb 2009 00:39:07 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0902180030500.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110514>
 
-The improved error handling catches a bug in filter-branch when using
--d pointing to a path outside any git repository:
+Hello,
 
-$ git filter-branch -d /tmp/foo master
-fatal: Not a git repository (or any of the parent directories): .git
+On Wed, Feb 18, 2009 at 12:34 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Tue, 17 Feb 2009, Francis Moreau wrote:
+>
+>> I found hg2git which could have solve my issue but it seems pretty old
+>> and no more maintained.
+>
+> You did not say from where you have it, so I would never know if you mean
+> the same as I do.
 
-This error message comes from git for-each-ref in line 224. GIT_DIR is
-set correctly by git-sh-setup (to the foo.git repository), but not
-exported (yet).
+I used the version hosted by github somehow:
 
-Signed-off-by: Lars Noschinski <lars@public.noschinski.de>
-Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
+git://github.com/vitaly/hg2git.git
 
-Last iteration :)
+> I use the hg2git from http://repo.or.cz/w/fast-export.git and it works
+> pretty well, most of the time.
 
- git-filter-branch.sh     |   12 ++++++------
- t/t7003-filter-branch.sh |   12 ++++++++++++
- 2 files changed, 18 insertions(+), 6 deletions(-)
+Ok I missed this one.
 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 27b57b8..9a09ba1 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -220,6 +220,12 @@ die ""
- # Remove tempdir on exit
- trap 'cd ../..; rm -rf "$tempdir"' 0
- 
-+ORIG_GIT_DIR="$GIT_DIR"
-+ORIG_GIT_WORK_TREE="$GIT_WORK_TREE"
-+ORIG_GIT_INDEX_FILE="$GIT_INDEX_FILE"
-+GIT_WORK_TREE=.
-+export GIT_DIR GIT_WORK_TREE
-+
- # Make sure refs/original is empty
- git for-each-ref > "$tempdir"/backup-refs || exit
- while read sha1 type name
-@@ -234,12 +240,6 @@ do
- 	esac
- done < "$tempdir"/backup-refs
- 
--ORIG_GIT_DIR="$GIT_DIR"
--ORIG_GIT_WORK_TREE="$GIT_WORK_TREE"
--ORIG_GIT_INDEX_FILE="$GIT_INDEX_FILE"
--GIT_WORK_TREE=.
--export GIT_DIR GIT_WORK_TREE
--
- # The refs should be updated if their heads were rewritten
- git rev-parse --no-flags --revs-only --symbolic-full-name \
- 	--default HEAD "$@" > "$tempdir"/raw-heads || exit
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index 56b5ecc..329c851 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -48,6 +48,18 @@ test_expect_success 'result is really identical' '
- 	test $H = $(git rev-parse HEAD)
- '
- 
-+TRASHDIR=$(pwd)
-+test_expect_success 'correct GIT_DIR while using -d' '
-+	mkdir drepo &&
-+	( cd drepo &&
-+	git init &&
-+	test_commit drepo &&
-+	git filter-branch -d "$TRASHDIR/dfoo" \
-+		--index-filter "cp \"$TRASHDIR\"/dfoo/backup-refs \"$TRASHDIR\"" \
-+	) &&
-+	grep drepo "$TRASHDIR/backup-refs"
-+'
-+
- test_expect_success 'Fail if commit filter fails' '
- 	test_must_fail git filter-branch -f --commit-filter "exit 1" HEAD
- '
+Since you may have the same needs as mine, I'm asking another
+question: once you have finished your work in your git repo, how do
+you reintegrate them into the hg repo ? do you use patches or
+something else ?
+
+thanks
 -- 
-1.6.1.3
+Francis
