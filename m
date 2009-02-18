@@ -1,83 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Is there a way to exclude user-specified files or directories 
- from participating in merges?
-Date: Tue, 17 Feb 2009 17:58:25 -0800
-Message-ID: <7vfxic1p6m.fsf@gitster.siamese.dyndns.org>
-References: <e38bce640902171649g765275a4n4e86d1d4f4aaf394@mail.gmail.com>
- <7v1vtw367w.fsf@gitster.siamese.dyndns.org>
- <e38bce640902171732j9b8801gca4223cdb96d2d34@mail.gmail.com>
+From: Eric Hanchrow <eric.hanchrow@gmail.com>
+Subject: Bug: git-svn dies with "Index mismatch"
+Date: Tue, 17 Feb 2009 18:15:40 -0800
+Message-ID: <36366a980902171815n37c3f17dw9836d62d4ff70a23@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Brent Goodrick <bgoodr@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 18 03:00:07 2009
+Content-Type: multipart/mixed; boundary=001636e911f7036539046327ffb3
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 18 03:17:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZbjK-0000B4-QR
-	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 03:00:07 +0100
+	id 1LZbzr-0003t0-QK
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 03:17:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752560AbZBRB6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 20:58:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752201AbZBRB6b
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 20:58:31 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38201 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751442AbZBRB6b (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 20:58:31 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4A2E29AEB1;
-	Tue, 17 Feb 2009 20:58:30 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2D1669AEB0; Tue,
- 17 Feb 2009 20:58:26 -0500 (EST)
-In-Reply-To: <e38bce640902171732j9b8801gca4223cdb96d2d34@mail.gmail.com>
- (Brent Goodrick's message of "Tue, 17 Feb 2009 17:32:03 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A3CCA968-FD5F-11DD-B367-0433C92D7133-77302942!a-sasl-fastnet.pobox.com
+	id S1752365AbZBRCPm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 21:15:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751803AbZBRCPm
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 21:15:42 -0500
+Received: from rv-out-0506.google.com ([209.85.198.229]:8538 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751597AbZBRCPl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 21:15:41 -0500
+Received: by rv-out-0506.google.com with SMTP id g37so2298974rvb.1
+        for <git@vger.kernel.org>; Tue, 17 Feb 2009 18:15:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=6fmBGjLm96PNSkYXeUPVbx1fXU116+5KRFENj/Hht6k=;
+        b=Jfd6quv5OoF06k0qHvBxukzLgbCKMgI6xxaecFe3IhzXbMDCuEYLPbZnGz+WyYHB5d
+         kuQ7EyD8X2qYF7Af3iGqrYcmRcOUZm0yqK1mVz4mah56RyX/EzLjCnC2w8pTmDYWs3rO
+         ngEdvBSL49NX/x4/MfwMOdKxvRPQ7mnacFTWU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=SbYHu+ZHaUDuyyQKf049qaZzPWC1Bow4/ZgmuZcNpSBShaWKjpvtbqHSPPIw+s4Hts
+         +RqfBHnKB3UK6OV/89uK0BPN/tl8a3kRF7NZv3W26Tx6Y2nbIedks6BZDXJa8AJTr4It
+         ZjOavZC5RmgfloKOKjCYa3aFnHCUx5Z39Zd9Y=
+Received: by 10.143.6.1 with SMTP id j1mr854738wfi.226.1234923340129; Tue, 17 
+	Feb 2009 18:15:40 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110495>
 
-Brent Goodrick <bgoodr@gmail.com> writes:
+--001636e911f7036539046327ffb3
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-> Thanks. Well, I should have said in my initial request: "Without
-> manually forwarding changes from branch to branch and without having
-> to remember special rules about what I can and cannot merge into which
-> branch", since that is likely to get forgotten. :)
->
-> The answer I am hearing you say is that git doesn't have a way to
-> automatically exclude files akin to how rsync handles include/exclude.
->  Is that what you are saying? Or, could the hook mechanism be
-> exploited to get this behavior?
+This is git version 1.6.2.rc0.10.gf6b9
 
-A merge is defined as a whole tree operation simply because there is no
-sane way to support repeated merges (even a single direction merges)
-otherwise.  What I explained was one (note that I am not saying "one true"
-here) workflow that naturally supports "common version and multiple
-variants" pattern that logically follows the definition of what a merge
-is.
+The attached file clearly reproduces the problem.
 
-I would imagine you could define a custom merge strategy that knows to
-ignore changes you made to work.sh file when you merge from work to common
-(and home.sh file when you merge from home to common) to implement what
-you would want, but for one thing the resulting history would not make
-sense (e.g. a merge from work to central would appear as if it reverts all
-the changes work made to certain files).  It would be Ok if you were using
-git as a mere backup+sneakernet medium (in such a case you would not care
-what the history would show you), but that is not the intended target of
-git, so there is no such built-in support.
+--001636e911f7036539046327ffb3
+Content-Type: application/x-sh; name="bug.sh"
+Content-Disposition: attachment; filename="bug.sh"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_frbdcy250
 
-Also such a custom merge strategy would be very project specific and as
-your project grows and/or as you add more deployments, I suspect its rules
-will have to become a lot more complicated.  I haven't even thought about
-what should happen in such a merge strategy when you try to merge work to
-home.
-
-Compared to that, the two simple rules "commit chagnes to generic things
-only to the generic branch" and "merge only from generic to specific" will
-not grow as your project grows complexity.
+IyEvYmluL3NoCgpzZXQgLWUKCnRyYXAgImVjaG8gJ0Jyb3VnaHQgdG8geW91IGJ5JyA7IGdpdCAt
+LXZlcnNpb24iIEVYSVQKCnM9L3RtcC9zdm4tcmVwb3MKZz0vdG1wL2ltcG9ydGVkLmdpdAp3PS90
+bXAvc3ZuLXdjCgpybSAtcmYgJHMgJGcgJHcKCiMgQ3JlYXRlIGEgcmVwb3NpdG9yeSB3aXRoIGEg
+bGl0dGxlIGJpdCBvZiBoaXN0b3J5Lgpzdm5hZG1pbiBjcmVhdGUgJHMKc3ZuIGNvIGZpbGU6Ly8k
+cyAkdwpjZCAkdwpta2RpciB0cnVuayBicmFuY2hlcyB0YWdzCnN2biBhZGQgKgpzdm4gY2kgLW0g
+IkluaXRpYWwgZGlyZWN0b3J5IGxheW91dCIKCigKICAgIGNkIHRydW5rCiAgICB0b3VjaCBmYWJ1
+bG91cwogICAgc3ZuIGFkZCBmYWJ1bG91cwogICAgc3ZuIGNpIC1tICJJdCdzIG5pY2UgdG8gaGF2
+ZSBmaWxlcyBpbiBvbmUncyB0cnVuay4iCikKCiMgTWFrZSBzb21lIHN0cnVjdHVyZSBpbiB0aGUg
+c3ZuIHJlcG8gdGhhdCB3aWxsIGNvbmZ1c2UgZ2l0LXN2bi4Kc3ZuIG1rZGlyIGJyYW5jaGVzL2Zy
+ZWQKc3ZuIGNpIC1tICJBIGJyYW5jaCEiCgpzdm4gcm0gYnJhbmNoZXMvZnJlZApzdm4gY2kgLW0g
+Ik9vcHMsIEkgZGlkbid0IG1lYW4gdG8gY3JlYXRlIGFuIGVtcHR5IGRpcmVjdG9yeSEiCgpzdm4g
+Y3AgLXIyIHRydW5rIGJyYW5jaGVzL2ZyZWQKc3ZuIGNpIC1tICJPSywgbm93IF90aGF0J3NfIGhv
+dyB3ZSBtYWtlIGJyYW5jaGVzIGhlcmUgaW4gVGV4YXMuIgoKIyBOb3cgY29udmVydCB0aGUgc3Zu
+IHJlcG8gdG8gZ2l0IC4uLiBhbmQgd2F0Y2ggdGhlIGNhcm5hZ2UuCmdpdCBzdm4gY2xvbmUgLVQg
+dHJ1bmsgLWIgYnJhbmNoZXMgZmlsZTovLyRzICRnCg==
+--001636e911f7036539046327ffb3--
