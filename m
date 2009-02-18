@@ -1,66 +1,95 @@
 From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] test suite: correct export var=val usage
-Date: Wed, 18 Feb 2009 08:19:15 -0500
-Message-ID: <76718490902180519s3b5f4469m391aa34456059d37@mail.gmail.com>
-References: <7vr61w3dug.fsf@gitster.siamese.dyndns.org>
-	 <1234911457-37188-1-git-send-email-jaysoffian@gmail.com>
-	 <0E74A2BF-1E59-4D82-A750-380697667F10@wincent.com>
+Subject: Re: [PATCH] disallow providing multiple upstream branches to rebase, 
+	pull --rebase
+Date: Wed, 18 Feb 2009 08:23:15 -0500
+Message-ID: <76718490902180523l6df2067bxc1274a105756d16b@mail.gmail.com>
+References: <1234932262-63469-1-git-send-email-jaysoffian@gmail.com>
+	 <alpine.DEB.1.00.0902181118160.6274@intel-tinevez-2-302>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Wed Feb 18 14:20:54 2009
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 18 14:24:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZmM1-00080d-Mx
-	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 14:20:46 +0100
+	id 1LZmPs-00016G-6o
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 14:24:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751765AbZBRNTR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2009 08:19:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751563AbZBRNTR
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 08:19:17 -0500
-Received: from rv-out-0506.google.com ([209.85.198.227]:58242 "EHLO
+	id S1752106AbZBRNXR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2009 08:23:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752048AbZBRNXQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 08:23:16 -0500
+Received: from rv-out-0506.google.com ([209.85.198.237]:55719 "EHLO
 	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751492AbZBRNTQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2009 08:19:16 -0500
-Received: by rv-out-0506.google.com with SMTP id g9so2023666rvb.5
-        for <git@vger.kernel.org>; Wed, 18 Feb 2009 05:19:15 -0800 (PST)
+	with ESMTP id S1751788AbZBRNXQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2009 08:23:16 -0500
+Received: by rv-out-0506.google.com with SMTP id g9so2024963rvb.5
+        for <git@vger.kernel.org>; Wed, 18 Feb 2009 05:23:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=YrlnULy5+MII76d0NhNPzg0DkZMnBR3YefZpisi8RAg=;
-        b=ci4aFHnbFZKTVLz6MTdTPs17gVSfrlfZcKOpBVIHwfnhj863djqXdYoBcyJL1pUB8W
-         2L1GuP3ts0EO4SeePtAQnmMQdrhIqOlsEKdWcNKPCpHvBHynH9ZCXdhDpevATqPx1KL3
-         Qsvc3cXCpgVwxNm8wuNkLb/atkXX5r/UVLGy0=
+        bh=JIVk0zka0ZQ8E5Sof3JB0EXyY2owd8iCaE66fBXl8oE=;
+        b=Jh57YOKjgiMSmjXKu3y5tUqjCb4GWf8O43d9WbwDsOAVuA26c0RJ18anmNHYOlgChZ
+         qMIAwFrDkbmpoKA3fxgZDU5JSYdAPxLjNQTLs4bCZw/8tlJMTRpcn4vShlWoLYwh/n2y
+         0dpCD2x9P5cIGYgF8EjONjfNy7keHqtVNhTYc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=oDliL9chL2oAOyyMPZQwJyiPnyu+Yx9CG+6z/QztJTZFkNxe5QvsRp5YdMdQbF4d0f
-         TgzTTEwLckWAVMsW8Qtzl42jx43FP9yTfJ8kw1DxF+cOaYKgRa+1+tBj4z8shln1PWa2
-         6mMdp7JK9nnnLfVLq6Ta4z4bdFGK+G1guwZmQ=
-Received: by 10.140.164.6 with SMTP id m6mr3958634rve.144.1234963155523; Wed, 
-	18 Feb 2009 05:19:15 -0800 (PST)
-In-Reply-To: <0E74A2BF-1E59-4D82-A750-380697667F10@wincent.com>
+        b=R8e+RSWPZ/M6ujEF95kXnmxC4oS61NF4yzlDFafltQQzuVSuBeva2FqY5fCnIVBUYB
+         q4yWw8FEKji4rMNJatlEFhJyPkg0e9NiRK2hUhN3IQly7vp19al7r8RZ4dbFKKx9Jrtv
+         hta3dqdOCrWfAsv19hIBYpqdddb4blbskCQxk=
+Received: by 10.141.97.5 with SMTP id z5mr4101rvl.212.1234963395492; Wed, 18 
+	Feb 2009 05:23:15 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0902181118160.6274@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110533>
 
-On Wed, Feb 18, 2009 at 5:06 AM, Wincent Colaiuta <win@wincent.com> wrote:
-> Perhaps my eyes are playing tricks on me but I see the original version
-> setting MSG to an empty string and exporting it, and your version setting
-> MSG to "1" and exporting it. So which one is wrong? The original or yours?
+On Wed, Feb 18, 2009 at 5:18 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>> diff --git a/git-rebase.sh b/git-rebase.sh
+>> index 5d9a393..ffb6027 100755
+>> --- a/git-rebase.sh
+>> +++ b/git-rebase.sh
+>> @@ -319,6 +319,7 @@ do
+>>       esac
+>>       shift
+>>  done
+>> +test $# -gt 1 && usage
+>
+> Did you just break
+>
+>        $ git rebase $UPSTREAM $BRANCH_TO_SWITCH_TO
 
-http://thread.gmane.org/gmane.comp.version-control.git/109897/focus=110462
+Crap, I missed that usage somehow (and I guess the test suite doesn't
+rely on it either...). I think moving the "test $# -gt 1 && usage"
+below:
+
+if test -z "$rebase_root"
+then
+	# The upstream head must be given.  Make sure it is valid.
+	upstream_name="$1"
+	shift
+	upstream=`git rev-parse --verify "${upstream_name}^0"` ||
+	die "invalid upstream $upstream_name"
+	unset root_flag
+	upstream_arg="$upstream_name"
+else
+	test -z "$newbase" && die "--root must be used with --onto"
+	unset upstream_name
+	unset upstream
+	root_flag="--root"
+	upstream_arg="$root_flag"
+fi
+
+will do the trick, yes?
 
 j.
