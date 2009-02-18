@@ -1,95 +1,82 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] disallow providing multiple upstream branches to rebase, 
-	pull --rebase
-Date: Wed, 18 Feb 2009 08:23:15 -0500
-Message-ID: <76718490902180523l6df2067bxc1274a105756d16b@mail.gmail.com>
-References: <1234932262-63469-1-git-send-email-jaysoffian@gmail.com>
-	 <alpine.DEB.1.00.0902181118160.6274@intel-tinevez-2-302>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Gforge's cvssh.pl script and git
+Date: Wed, 18 Feb 2009 14:24:17 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902181417510.6274@intel-tinevez-2-302>
+References: <2c0671440902180124v50570270gc40b745d4a8b1245@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 18 14:24:48 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Bosko Ivanisevic <bosko.ivanisevic@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 18 14:25:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZmPs-00016G-6o
-	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 14:24:44 +0100
+	id 1LZmQv-0001Wh-Tt
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 14:25:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752106AbZBRNXR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2009 08:23:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752048AbZBRNXQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 08:23:16 -0500
-Received: from rv-out-0506.google.com ([209.85.198.237]:55719 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751788AbZBRNXQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2009 08:23:16 -0500
-Received: by rv-out-0506.google.com with SMTP id g9so2024963rvb.5
-        for <git@vger.kernel.org>; Wed, 18 Feb 2009 05:23:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=JIVk0zka0ZQ8E5Sof3JB0EXyY2owd8iCaE66fBXl8oE=;
-        b=Jh57YOKjgiMSmjXKu3y5tUqjCb4GWf8O43d9WbwDsOAVuA26c0RJ18anmNHYOlgChZ
-         qMIAwFrDkbmpoKA3fxgZDU5JSYdAPxLjNQTLs4bCZw/8tlJMTRpcn4vShlWoLYwh/n2y
-         0dpCD2x9P5cIGYgF8EjONjfNy7keHqtVNhTYc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=R8e+RSWPZ/M6ujEF95kXnmxC4oS61NF4yzlDFafltQQzuVSuBeva2FqY5fCnIVBUYB
-         q4yWw8FEKji4rMNJatlEFhJyPkg0e9NiRK2hUhN3IQly7vp19al7r8RZ4dbFKKx9Jrtv
-         hta3dqdOCrWfAsv19hIBYpqdddb4blbskCQxk=
-Received: by 10.141.97.5 with SMTP id z5mr4101rvl.212.1234963395492; Wed, 18 
-	Feb 2009 05:23:15 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0902181118160.6274@intel-tinevez-2-302>
+	id S1752558AbZBRNYV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2009 08:24:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752466AbZBRNYV
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 08:24:21 -0500
+Received: from mail.gmx.net ([213.165.64.20]:44230 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752423AbZBRNYT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2009 08:24:19 -0500
+Received: (qmail invoked by alias); 18 Feb 2009 13:24:17 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp070) with SMTP; 18 Feb 2009 14:24:17 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+m3/pNlGCmp6DkrBegLGZMXpBrKBinAI9gH6YxoT
+	r89gXdO6i0vbdN
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <2c0671440902180124v50570270gc40b745d4a8b1245@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.63
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110534>
 
-On Wed, Feb 18, 2009 at 5:18 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->> diff --git a/git-rebase.sh b/git-rebase.sh
->> index 5d9a393..ffb6027 100755
->> --- a/git-rebase.sh
->> +++ b/git-rebase.sh
->> @@ -319,6 +319,7 @@ do
->>       esac
->>       shift
->>  done
->> +test $# -gt 1 && usage
->
-> Did you just break
->
->        $ git rebase $UPSTREAM $BRANCH_TO_SWITCH_TO
+Hi,
 
-Crap, I missed that usage somehow (and I guess the test suite doesn't
-rely on it either...). I think moving the "test $# -gt 1 && usage"
-below:
+On Wed, 18 Feb 2009, Bosko Ivanisevic wrote:
 
-if test -z "$rebase_root"
-then
-	# The upstream head must be given.  Make sure it is valid.
-	upstream_name="$1"
-	shift
-	upstream=`git rev-parse --verify "${upstream_name}^0"` ||
-	die "invalid upstream $upstream_name"
-	unset root_flag
-	upstream_arg="$upstream_name"
-else
-	test -z "$newbase" && die "--root must be used with --onto"
-	unset upstream_name
-	unset upstream
-	root_flag="--root"
-	upstream_arg="$root_flag"
-fi
+> In the company I'm working someone has restricted access to all users
+> to only use cvs via cvssh.pl script (source at the end of message)
+> taken from gforge. This script is set as a shell for all users. Now I
+> would like to change it so I can run git too. I've tried by adding
+> 'git', 'git-upload-pack', 'git-receive-pack' and 'git-shell' in the
+> array @allowed_commands. After that if I try to clone existing
+> repository with:
+> 
+> git clone ssh://testuser@server_name/tmp/test.git
+> 
+> I get following error:
+> 
+> fatal: ''/tmp/test.git'': unable to chdir or not a git archive
+> fatal: The remote end hung up unexpectedly
+> 
+> I first thought that testuser doesn't have permissions to read
+> directory /tmp/test.git so I changed mode and gave r+w permissions
+> recursively on that folder, but result was same.
 
-will do the trick, yes?
+r+w?  Not a+rwx?
 
-j.
+And only on /tmp/test.git/, or also on /tmp/?
+
+A better way would be to use 'sudo -u testuser git ls-remote 
+/tmp/test.git' if sudo is available (you haven't revealed useful 
+information about the host).
+
+> There is no way I can avoid this perl script (company policy) but I
+> can change it. Problem is that I do not know Perl so much and I do not
+> know what git is exactly doing behind the scene when it is run via
+> ssh.
+
+I'd use 'system("some shell >&2");' to try to debug it.
+
+Hth,
+Dscho
