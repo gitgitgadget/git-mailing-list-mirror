@@ -1,179 +1,135 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Is there a way to exclude user-specified files or directories
- from  participating in merges?
-Date: Tue, 17 Feb 2009 17:36:17 -0800
-Message-ID: <7vmyck1q7i.fsf@gitster.siamese.dyndns.org>
-References: <e38bce640902171649g765275a4n4e86d1d4f4aaf394@mail.gmail.com>
- <7v1vtw367w.fsf@gitster.siamese.dyndns.org>
+From: Frank Li <lznuaa@gmail.com>
+Subject: Re: [RFC] Common library for Git GUIs
+Date: Wed, 18 Feb 2009 09:38:42 +0800
+Message-ID: <1976ea660902171738j777e0af3mbd3b8aae8d1e7aaf@mail.gmail.com>
+References: <20090216212459.GA25046@efreet.light.src>
+	 <74161B7F-A178-49CB-990D-DF7299235C58@frim.nl>
+	 <20090217212145.GC2216@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Brent Goodrick <bgoodr@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 18 02:37:56 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Pieter de Bie <pieter@frim.nl>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Jonas Fonseca <fonseca@diku.dk>,
+	Marco Costalba <mcostalba@gmail.com>,
+	David Aguilar <davvid@gmail.com>,
+	Abhijit Bhopatkar <bain@devslashzero.com>,
+	Henk <henk_westhuis@hotmail.com>,
+	tortoisegit-dev <tortoisegit-dev@googlegroups.com>
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Wed Feb 18 02:40:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZbNq-0002zg-1a
-	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 02:37:54 +0100
+	id 1LZbQ7-0003YR-Lr
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 02:40:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752833AbZBRBgY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 20:36:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752652AbZBRBgY
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 20:36:24 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63620 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752560AbZBRBgX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 20:36:23 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2B2712B5CC;
-	Tue, 17 Feb 2009 20:36:22 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 1D7132B5C9; Tue,
- 17 Feb 2009 20:36:18 -0500 (EST)
-In-Reply-To: <7v1vtw367w.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue, 17 Feb 2009 17:05:07 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 8C2DAEE0-FD5C-11DD-B4D6-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1754645AbZBRBip (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 20:38:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754555AbZBRBip
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 20:38:45 -0500
+Received: from mail-gx0-f163.google.com ([209.85.217.163]:38351 "EHLO
+	mail-gx0-f163.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752783AbZBRBin (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 20:38:43 -0500
+Received: by gxk7 with SMTP id 7so2278760gxk.13
+        for <git@vger.kernel.org>; Tue, 17 Feb 2009 17:38:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=UkmRP/U/is5O8Mw1ym9Wivr1Dw+ho7gRtPgI5/NsBjU=;
+        b=PsiL2QXK2Wb40s8GeB90hWL7AbK4msRdLs53PHaTkLW6bqwyeQS5yvb5hXPU1xUoF8
+         x/9iN0PojnuDJkW4MvEB2qECRKG++uEAvhlLiq/jGigBKkA8QOACRosQccK1Djgl6Ufp
+         g2Qgu3k5QqsAjikiottHLTLAqoBgRqsAq8SNI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=oMiWTjAvRGBo1rUSbKTlOLgIgYdUG37VuUQPUAIVRcXntUfrjSwb5Ko1JxArbzmx6g
+         DqeQU6p/EKB2inhb5M3DpCdSCczfLot9CrLOTgDRs25Y2P9Qyr9LEotpeym+ASs/XweD
+         nlcjQc2GU23geLk7YGiF7C2xXEavVhR9OQu6o=
+Received: by 10.150.177.20 with SMTP id z20mr4093813ybe.88.1234921122144; Tue, 
+	17 Feb 2009 17:38:42 -0800 (PST)
+In-Reply-To: <20090217212145.GC2216@efreet.light.src>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110492>
 
-Junio C Hamano <gitster@pobox.com> writes:
+I think TortoiseGit need C\C++ git library, which should be also used
+by git itself. Otherwise, it is difficult sync with git.
 
-> Brent Goodrick <bgoodr@gmail.com> writes:
+2009/2/18 Jan Hudec <bulb@ucw.cz>:
+> On Tue, Feb 17, 2009 at 20:08:23 +0000, Pieter de Bie wrote:
+>> On Feb 16, 2009, at 9:24 PM, Jan Hudec wrote:
+>>> What it should use:
+>>> - It should probably be in C++ or C, with bindings for at least Perl,
+>>>   Python, Ruby, C#(CLR) and Java. The bindings can be done either with
+>>>   Swig, or using some base library that already has them.
+>> It should be either C++ or C. If you want git devvers to work on it too,
+>> you'll probably want to go with C.
 >
->> Suppose I create a git repo called central.git on a machine I will
->> call "central". In that central.git repo, I put these files:
->>
->>   work.sh
->>   home.sh
->>   generic.sh
->>
->> When I clone the central.git repo on to a different machine I will
->> call "work", I want this fileset to be pulled:
->>
->>   work.sh
->>   generic.sh
->>
->> But not the home.sh file.
+> I don't think the really core devs need to work on this -- their time is best
+> spent on the core. And many of the existing guis are in C++. For me, it
+> depends on the user portable runtime more than anything else.
 >
-> You would have one common branch and one branch per deployment.
+>>>    - Bindings for languages. We can use Swig, but it has e.g. no  support
+>>>      for callbacks, so having portable runtime with already existing
+>>>      bindings that support this would be an advantage.
+>> I'd say bindings are pretty easy to create yourself.
 >
-> A common branch would host only common files (e.g. generic.sh file from
-> your example).  Per deployment branch, e.g. home, would branch from the
-> common branch (so it starts with some version of generic.sh) and may add
-> its own private files (e.g. home.sh).
+> The advantage of swing is, that one definition with a few typedefs would
+> generate Python, Perl, Ruby, CLR, Java and a few more bindings. GObject would
+> need more language-specific work, but would nicely solve integration into the
+> garbage collector. You know, I want to save as much work as possible.
 >
-> And stick to the following two rules:
+>>> Portable runtime options:
+>>> So what do you people think would be best? I see several options:
+>>> - QtCore
+>>> - Glib
+>>> - STL + Boost
+>> None of these, if you want any GUI's to use it. Noone is going to
+>> create a Gtk / Cocoa / Windows app that depends on Qt. Nobody wants
+>> to use Boost in any situation and Glib, while being smaller than the
+>> rest, is also difficult as it isn't shipped with many OS's, for example
+>> OS X.
 >
->  - You make edits to common files only on the common branch.
->  - You merge from common to deployment, never the other way.
+> I fully agree that nobody will want to depend on Qt -- QtCore is now
+> a separate library, but the sources are not shipped separately AFAIK, so it'd
+> be a pain. I would not think the case is as strong against boost and glib,
+> though. People would either be getting binaries, in which case we can just
+> bundle whatever dependency along, or building it and than one extra source
+> tree (that can also be bundled for convenience) is not so much pain.
 >
-> So at work, you would have a checkout of your work "deployment branch",
-> and find needs to change things.  It is Ok to edit both work.sh and
-> generic.sh (without being able to edit both, it would be hard to verify if
-> the changes would work together) at this time, but don't commit the result
-> in the work branch.
+>>> - POSIX + Msys on Windows
+>> I think lightweight is the way to go. If you go for C++, you can also use
+>> the STL.
 >
-> Save the changes to work.sh away (e.g. "git diff work.sh >P.diff" and then
-> "git checkout HEAD work.sh"), switch to the common branch, and commit the
-> changes to the generic file.  Switch back to the deployment branch, merge
-> the common branch (to pick up the changes to home.sh), reapply the changes
-> specific to the deployment you saved earlier (e.g. "git apply P.diff"),
-> tne commit the result.
-
-By the way, earlier in a different thread, somebody wondered if being able
-to make a commit on detached HEAD is a good thing, and this is a good
-example of why it is convenient.  When I use the above "one-way merge,
-never merging back" workflow in real life [*1*], I do not use a simple
-"git diff work.sh >P.diff && git checkout HEAD work.sh" to save away the
-tentative changes I made and verified on the deployment branch.  The above
-is an oversimplified example.
-
-For one, in real life projects, there are many files that are specific to
-individual deployments, and for another, distinction between generic vs
-deployment specific changes does not cleanly appear at file boundaries.
-
-Instead, I would make a real commit, with full intention of discarding it
-later.
-
-                  T work
-                 /
-         ...o---o
-               / 
-       ...o---o common
-
-I would go back to common branch ("git checkout common"), cherry-pick the
-commit from the deployment branch ("git cherry-pick --no-commit work").
-This would conflict heavily because the common branch does not have any
-changes specific to the deployment branch (i.e. files that were modified
-since the deployment forked from the generic, and files the deployment
-added).  That is Ok.  I would use "git add -i" and editor to sift out the
-deployment specific parts to discard, and commit only the parts of the
-change T made that are truly generic:
-
-                  T work
-                 /
-         ...o---o
-               / 
-       ...o---o---A common
-
-Then I would go back to the deployment, and detach the head at commit
-before the tentative commit T.  From here, I can merge the common branch
-in.
-
-                  T work
-                 /
-         ...o---o HEAD
-               / 
-       ...o---o---A common
-
-"git merge common" would make something like this:
-
-                  T work
-                 /
-         ...o---o---B HEAD
-               /   /
-       ...o---o---A common
-
-I know that the remainder of the change (i.e. difference between B and T)
-should be the parts that are specific to the deployment.  After reading
-through the output of "git diff HEAD work" to make sure that it has all
-deployment specific changes I made (and nothing that should have been in
-the commit A on common), I would:
-
-	git read-tree -m -u work && git commit
-
-to grow the history of detached HEAD.
-
-                  T work
-                 /
-         ...o---o---B---C HEAD
-               /   /
-       ...o---o---A common
-
-After this step, just wrap it up with:
-
-	git branch -f work && git checkout work
-
-to reach the final state:
-
-                  T
-                 /
-         ...o---o---B---C work
-               /   /
-       ...o---o---A common
-
-The tentative commit T becomes dangling but we know "diff T C" are empty
-and records the good state we verified when we made T.
-
-This is one case I still use the plumbing "read-tree -m -u".
-
-
-[Footnote]
-
-*1* http://gitster.livejournal.com/26540.html
+> STL does not have any support for threads, event loop nor signals. Though
+> thinking about it, we may not actually need them.
+>  - we only need threads if our event loop can't be integrated into gui's one
+>   and the gui can start our in thread itself -- it's not too much code.
+>  - we only need file descriptors in the event loop and it needs to be
+>   integratable into the gui's one anyway.
+>  - simple callback is quite likely good enough for us -- the gui will need
+>   multiple callbacks, but it will need to connect in it's own signal system
+>   anyway.
+> So the shell invocation remains and that's little enough we can cut&paste
+> that from glib.
+>
+>> But, isn't this time spent better on getting libgit2 off the ground?
+>
+> No, because what I have in mind is orthogonal to libgit2. libgit2 is supposed
+> to be generic API for git, while I am proposing a specifically gui-oriented
+> interface, which should implement all logic of a gui except opening dialogs
+> and the widgets themselves, allowing the guis built on top of it to be
+> totally dumb. Actually part of my idea is to create something, that can be
+> later ported to libgit2 and immediately benefit many git interfaces.
+>
+> --
+>                                                 Jan 'Bulb' Hudec <bulb@ucw.cz>
+>
