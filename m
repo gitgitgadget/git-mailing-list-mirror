@@ -1,65 +1,78 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [PATCH] Make tig call the correct git config command
-Date: Wed, 18 Feb 2009 12:29:14 +0100
-Message-ID: <20090218112914.GA7672@diku.dk>
-References: <237967ef0902072346x4537f70dua37ba897fac99361@mail.gmail.com> <237967ef0902072349t784e1519m3561ef02545a72de@mail.gmail.com> <2c6b72b30902080156u3b8ba41m736bffaa7b6f15e9@mail.gmail.com> <e51f4f550902180312y3e1999e8x5ff119516cd9bbae@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 4/5] t3301: use test_must_fail instead of !
+Date: Wed, 18 Feb 2009 12:53:37 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902181251160.6274@intel-tinevez-2-302>
+References: <8c50889d27e5baec1cbbd9a5775fa80b986c6df6.1234642638.git.trast@student.ethz.ch> <7vvdrcnnl0.fsf@gitster.siamese.dyndns.org> <200902151711.45099.trast@student.ethz.ch> <20090215181818.GA2291@coredump.intra.peff.net>
+ <e2b179460902170129s7ae613cehe237619be5e84936@mail.gmail.com> <20090217163413.GB31297@sigill.intra.peff.net> <e2b179460902171000s605675dct1f499a9425c3ebb2@mail.gmail.com> <20090217202731.GA16586@coredump.intra.peff.net> <20090218064121.GA16611@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0902181113210.6274@intel-tinevez-2-302> <20090218101615.GA23035@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Mikael Magnusson <mikachu@gmail.com>, git@vger.kernel.org
-To: Kris Shannon <kris@shannon.id.au>
-X-From: git-owner@vger.kernel.org Wed Feb 18 12:30:49 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Mike Ralphson <mike.ralphson@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 18 12:55:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZkda-0002Rc-88
-	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 12:30:46 +0100
+	id 1LZl1B-00027u-Nj
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 12:55:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751382AbZBRL3S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2009 06:29:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751334AbZBRL3S
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 06:29:18 -0500
-Received: from mgw2.diku.dk ([130.225.96.92]:48301 "EHLO mgw2.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751028AbZBRL3R (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2009 06:29:17 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mgw2.diku.dk (Postfix) with ESMTP id 193B419BB8A;
-	Wed, 18 Feb 2009 12:29:16 +0100 (CET)
-Received: from mgw2.diku.dk ([127.0.0.1])
- by localhost (mgw2.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 31890-12; Wed, 18 Feb 2009 12:29:14 +0100 (CET)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw2.diku.dk (Postfix) with ESMTP id D4FE719BB65;
-	Wed, 18 Feb 2009 12:29:14 +0100 (CET)
-Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 18A726DF835; Wed, 18 Feb 2009 12:27:13 +0100 (CET)
-Received: by tyr.diku.dk (Postfix, from userid 3873)
-	id BB2D739AA06; Wed, 18 Feb 2009 12:29:14 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <e51f4f550902180312y3e1999e8x5ff119516cd9bbae@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-Virus-Scanned: amavisd-new at diku.dk
+	id S1751700AbZBRLxm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2009 06:53:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751558AbZBRLxm
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 06:53:42 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51685 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751404AbZBRLxl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2009 06:53:41 -0500
+Received: (qmail invoked by alias); 18 Feb 2009 11:53:38 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp051) with SMTP; 18 Feb 2009 12:53:38 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX186JDgKCRc6uN05VduyvHTiNJY04nln1V9Mx11OoD
+	YE4xQVsR57smRf
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <20090218101615.GA23035@coredump.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110528>
 
-Kris Shannon <kris@shannon.id.au> wrote Wed, Feb 18, 2009:
-> 2009/2/8 Jonas Fonseca <fonseca@diku.dk>
-> > I wonder if this check in configure should not be removed anyway,
-> > since it is starting to be a long time since git-repo-config was
-> > renamed.
+Hi,
+
+On Wed, 18 Feb 2009, Jeff King wrote:
+
+> On Wed, Feb 18, 2009 at 11:14:10AM +0100, Johannes Schindelin wrote:
 > 
-> Speaking from a packaging standpoint,  as this is the only reason
-> git-core is a build dependency I would vote to get rid of it.
+> > > I can now get as far as t3404, which seems to have problems due to
+> > > rebase-interactive using parentheses, "-a", and "-o" with "test".
+> > 
+> > The parentheses will be fixed soon, but "-a" and "-o" really are 
+> > necessary.
 > 
-> (I currently already patch the configure so I can build without git-core
-> installed)
+> Really? Are they not easily replaced with
+> 
+> -test cond1 -a cond2 -o cond3
+> +test cond1 && test cond2 || test cond3
 
-Where can I get your patch?
+...which is substantially harder to read.
 
--- 
-Jonas Fonseca
+> ? The trickier part is the grouping, but that is what the parentheses 
+> are doing.
+
+I got rid of that code about two weeks ago.
+
+The upcoming rebase -i -p series is unfortunately not in a good shape at 
+the moment; intermediate stages fail the tests, so I will have to clean up 
+a bit.
+
+But at the moment, real world is taking my time, reducing my Git time 
+budget substantially.  On the positive side (well, half of it), I 
+fiddle with msysGit these days, as have to use Windows again.
+
+Ciao,
+Dscho
