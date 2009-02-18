@@ -1,97 +1,66 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH] disallow providing multiple upstream branches to rebase, pull --rebase
-Date: Tue, 17 Feb 2009 23:44:22 -0500
-Message-ID: <1234932262-63469-1-git-send-email-jaysoffian@gmail.com>
+From: Brent Goodrick <bgoodr@gmail.com>
+Subject: Re: Is there a way to exclude user-specified files or directories 
+	from participating in merges?
+Date: Tue, 17 Feb 2009 21:39:12 -0800
+Message-ID: <e38bce640902172139h6ddda8e8va089e514e625de52@mail.gmail.com>
+References: <e38bce640902171649g765275a4n4e86d1d4f4aaf394@mail.gmail.com>
+	 <7v1vtw367w.fsf@gitster.siamese.dyndns.org>
+	 <e38bce640902171732j9b8801gca4223cdb96d2d34@mail.gmail.com>
+	 <7vfxic1p6m.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 18 05:45:58 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 18 06:40:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZeJq-0002Ap-84
-	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 05:45:58 +0100
+	id 1LZfAn-0004hu-FV
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 06:40:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752940AbZBREoa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 23:44:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752902AbZBREoa
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 23:44:30 -0500
-Received: from mail-qy0-f11.google.com ([209.85.221.11]:61651 "EHLO
-	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751725AbZBREo3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 23:44:29 -0500
-Received: by qyk4 with SMTP id 4so4383094qyk.13
-        for <git@vger.kernel.org>; Tue, 17 Feb 2009 20:44:26 -0800 (PST)
+	id S1752382AbZBRFjO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2009 00:39:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751676AbZBRFjO
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 00:39:14 -0500
+Received: from mail-gx0-f222.google.com ([209.85.217.222]:48703 "EHLO
+	mail-gx0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751185AbZBRFjN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2009 00:39:13 -0500
+Received: by gxk22 with SMTP id 22so5027137gxk.13
+        for <git@vger.kernel.org>; Tue, 17 Feb 2009 21:39:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:mime-version:content-type
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=uGIVvE//j7RSAPet2gbfJinV0DQJmY5rRXuVBD4teUs=;
-        b=YgqSOK/Gk8idZTUVEiiItsTtp1u7ZJEGVwBQn9SdU8qYH6ksQS+rt4aapGzUDf2DNS
-         YnV2RjxViZyUIXtUxrpDKFD/7WxmZ6J3RWtPG+0+DPwViH+RcGiQLm8iiIXiDFvpGVDL
-         wnCP1dQ2OK60YGWJAlT5puOZOHUmn6LIP84Lg=
+        bh=CdGxKbpe9TXG2Oiqc7kvgFic0LawiCj17tdfiTW5oBc=;
+        b=DhBTu9xASOazq/5dzfd7NAnlGs8W2N8j2PrV0fCa494axhC+IKMxO2ia8oiygW0/zN
+         0f1NfwZlRzWqa0Jk7trfZxxHMxKYZbMmSVkz7fYTRqAYDfe5bgq2i6lG3zaTQygT3/n/
+         pzZ24ojnjXrcFj5e7/BON+4xxp4sor/rpTC9o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=n72zNTemx6dspj6ZU/+zd3s65wuxuau/HZffJwc1ZlVGdxTy/GhQZzRCtW/S+KWzq9
-         ui1jcr6v1iqGUBmcm5LM+soQMJE624Dp8nCpzzufcKGrxPGTWvqUqD7Ep6Cmn8DFNJE7
-         rEkouPieUQfDImNAMowelkSpD+bRNEC7SfT+M=
-Received: by 10.224.28.138 with SMTP id m10mr5951133qac.81.1234932266301;
-        Tue, 17 Feb 2009 20:44:26 -0800 (PST)
-Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
-        by mx.google.com with ESMTPS id 5sm1578656qwg.54.2009.02.17.20.44.25
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 17 Feb 2009 20:44:25 -0800 (PST)
-X-Mailer: git-send-email 1.6.2.rc1.218.g1b4fab
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=kz3S3NK5hwQeCg/EYoY75D6nyQS01RKX/m5xtOrcn1R6P3sPV9sRWEtdYUvBbJIG5l
+         ZCBlW93Rw6noH7bqBBhrdwyucUukuQupz1BATOKsihYcBZunhWDpQ5+TGumewTGQBa/G
+         J1Cfj+mBNIfeHtnF+wGEmNBQ55Hct7GjzxieQ=
+Received: by 10.100.144.11 with SMTP id r11mr876112and.24.1234935552108; Tue, 
+	17 Feb 2009 21:39:12 -0800 (PST)
+In-Reply-To: <7vfxic1p6m.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110505>
 
-It does not make sense to provide multiple upstream branches to either
-git pull --rebase, or to git rebase, so disallow both.
+On Tue, Feb 17, 2009 at 5:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Compared to that, the two simple rules "commit changes to generic things
+> only to the generic branch" and "merge only from generic to specific" will
+> not grow as your project grows in complexity.
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
- git-pull.sh   |    5 +++++
- git-rebase.sh |    1 +
- 2 files changed, 6 insertions(+), 0 deletions(-)
+I now I see the wisdom of the above statement.  You've given me a lot
+of approaches to think about and try. Thanks for your help!
 
-diff --git a/git-pull.sh b/git-pull.sh
-index 2c7f432..25adddf 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -171,6 +171,11 @@ case "$merge_head" in
- 		echo >&2 "Cannot merge multiple branches into empty head"
- 		exit 1
- 	fi
-+	if test true = "$rebase"
-+	then
-+		echo >&2 "Cannot rebase onto multiple branches"
-+		exit 1
-+	fi
- 	;;
- esac
- 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 5d9a393..ffb6027 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -319,6 +319,7 @@ do
- 	esac
- 	shift
- done
-+test $# -gt 1 && usage
- 
- # Make sure we do not have $GIT_DIR/rebase-apply
- if test -z "$do_merge"
--- 
-1.6.2.rc1.210.g159a
+bg
