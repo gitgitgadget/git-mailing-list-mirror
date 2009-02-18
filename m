@@ -1,110 +1,73 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: Is there a way to exclude user-specified files or directories
- from  participating in merges?
-Date: Wed, 18 Feb 2009 13:33:45 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrngpo3hp.boq.sitaramc@sitaramc.homelinux.net>
-References: <e38bce640902171649g765275a4n4e86d1d4f4aaf394@mail.gmail.com>
- <7v1vtw367w.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] test suite: correct export var=val usage
+Date: Wed, 18 Feb 2009 14:34:51 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902181433550.6274@intel-tinevez-2-302>
+References: <7vr61w3dug.fsf@gitster.siamese.dyndns.org>  <1234911457-37188-1-git-send-email-jaysoffian@gmail.com>  <0E74A2BF-1E59-4D82-A750-380697667F10@wincent.com>  <76718490902180519s3b5f4469m391aa34456059d37@mail.gmail.com>
+ <76718490902180529w7520ba64kb7d0d6b284b406bd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 18 14:35:40 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <casey@nrlssc.navy.mil>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 18 14:36:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZmaM-0005Nx-MM
-	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 14:35:35 +0100
+	id 1LZmb8-0005ef-CA
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 14:36:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752036AbZBRNeH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2009 08:34:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751793AbZBRNeF
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 08:34:05 -0500
-Received: from main.gmane.org ([80.91.229.2]:37942 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751582AbZBRNeE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2009 08:34:04 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LZmYn-00027k-I4
-	for git@vger.kernel.org; Wed, 18 Feb 2009 13:33:57 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 18 Feb 2009 13:33:57 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 18 Feb 2009 13:33:57 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1752113AbZBRNez (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2009 08:34:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751793AbZBRNey
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 08:34:54 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39885 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751753AbZBRNey (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2009 08:34:54 -0500
+Received: (qmail invoked by alias); 18 Feb 2009 13:34:52 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp071) with SMTP; 18 Feb 2009 14:34:52 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+JM0A8i3WJX0d8rr8SbX9fEmn1LfwKydTbNeJNJJ
+	GK/W6ESNqO1G4x
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <76718490902180529w7520ba64kb7d0d6b284b406bd@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110539>
 
-On 2009-02-18, Junio C Hamano <gitster@pobox.com> wrote:
-> And stick to the following two rules:
->
->  - You make edits to common files only on the common branch.
->  - You merge from common to deployment, never the other way.
->
-> So at work, you would have a checkout of your work "deployment branch",
-> and find needs to change things.  It is Ok to edit both work.sh and
-> generic.sh (without being able to edit both, it would be hard to verify if
-> the changes would work together) at this time, but don't commit the result
-> in the work branch.
->
-> Save the changes to work.sh away (e.g. "git diff work.sh >P.diff" and then
-> "git checkout HEAD work.sh"), switch to the common branch, and commit the
-> changes to the generic file.  Switch back to the deployment branch, merge
-> the common branch (to pick up the changes to home.sh), reapply the changes
-> specific to the deployment you saved earlier (e.g. "git apply P.diff"),
-> tne commit the result.
+Hi,
 
-[I did read your followup also; my question applies to both
-versions of the technique]
+On Wed, 18 Feb 2009, Jay Soffian wrote:
 
-Let me explain where I'm coming from: this is very often
-needed when you maintain customer specific branches, and the
-workflows in both your posts in this thread so far are too
-complex for, err, me <sheepish grin> :-)
+> On Wed, Feb 18, 2009 at 8:19 AM, Jay Soffian <jaysoffian@gmail.com> wrote:
+> > On Wed, Feb 18, 2009 at 5:06 AM, Wincent Colaiuta <win@wincent.com> wrote:
+> >> Perhaps my eyes are playing tricks on me but I see the original version
+> >> setting MSG to an empty string and exporting it, and your version setting
+> >> MSG to "1" and exporting it. So which one is wrong? The original or yours?
+> >
+> > http://thread.gmane.org/gmane.comp.version-control.git/109897/focus=110462
+> 
+> Rather, http://thread.gmane.org/gmane.comp.version-control.git/109897/focus=110457
+> 
+> (Cursed frame interface.)
+> 
+> (The original is wrong.)
 
-Would it not be easier to do something like this?  (I suck
-at 2-d drawing, even line... but this should still be
-understandable)
+Maybe the time would be better spent paraphrasing the gist of the thread, 
+instead of cursing?
 
-(W = work, T = temporary, C = common)
+Besides, where du you find a curses interface to gmane?
 
-  - make granular commits and test etc, from W to T
+:-)
 
-        O---a---b+1---c---2---d---3
-        W is pointing at commit O
-        T is pointing at commit 3
-        b+1 is a commit that contains both types of changes
-
-  - use rebase -i (including split commits if needed, as
-    described in 'git help rebase') to put all the changes
-    that go to master before the ones that only go to work.
-
-        O---a---b---c---d---1---2---3
-
-  - (retest if needed)
-
-  - cherry pick the first set of changes to common (in this
-    example, a, b, c, d will become a', etc on common)
-
-  - merge from common to work (x, y, etc are some other
-    changes that went into common since the last time you
-    merged)
-
-        O---x---y---a'---b'---c'---d'
-        W is now pointing at d'
-
-  - cherry pick the stuff that remains
-
-        O---x---y---a'---b'---c'---d'---1'---2'---3'
-        W is now pointing at 3'
+Ciao,
+Dscho
