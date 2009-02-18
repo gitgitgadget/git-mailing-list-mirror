@@ -1,124 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Gforge's cvssh.pl script and git
-Date: Wed, 18 Feb 2009 15:49:28 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902181547240.6274@intel-tinevez-2-302>
-References: <2c0671440902180124v50570270gc40b745d4a8b1245@mail.gmail.com>  <alpine.DEB.1.00.0902181417510.6274@intel-tinevez-2-302> <2c0671440902180631lbf08d5egb003082a3c683f62@mail.gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH 0/2] RUNTIME_PREFIX enhancements
+Date: Wed, 18 Feb 2009 16:10:54 +0100 (CET)
+Message-ID: <cover.1234969572u.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Bosko Ivanisevic <bosko.ivanisevic@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 18 15:51:09 2009
+Cc: Johannes Sixt <j6t@kdbg.org>, Steffen Prohaska <prohaska@zib.de>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Feb 18 16:12:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZnlN-0004IN-DC
-	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 15:51:01 +0100
+	id 1LZo66-0004s5-CV
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 16:12:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752368AbZBROtd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2009 09:49:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752214AbZBROtc
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 09:49:32 -0500
-Received: from mail.gmx.net ([213.165.64.20]:35301 "HELO mail.gmx.net"
+	id S1753746AbZBRPK6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2009 10:10:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753565AbZBRPK5
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 10:10:57 -0500
+Received: from mail.gmx.net ([213.165.64.20]:40625 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752124AbZBROtb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2009 09:49:31 -0500
-Received: (qmail invoked by alias); 18 Feb 2009 14:49:29 -0000
+	id S1753352AbZBRPK4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2009 10:10:56 -0500
+Received: (qmail invoked by alias); 18 Feb 2009 15:10:54 -0000
 Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp017) with SMTP; 18 Feb 2009 15:49:29 +0100
+  by mail.gmx.net (mp028) with SMTP; 18 Feb 2009 16:10:54 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX192ytZM7J52dipUxgHdREUPrcPs6NkCfa7qQpfE5J
-	PR5n1eI2//8bsT
+X-Provags-ID: V01U2FsdGVkX1+akV9TddeabbBUgCUGUlCl7MmjBgvLBwlwnuZctt
+	iTv3cYfBXGLg3S
 X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <2c0671440902180631lbf08d5egb003082a3c683f62@mail.gmail.com>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.52
+X-FuHaFi: 0.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110549>
 
-Hi,
+When I ran "make" in msysGit's /git/, I was greeted by a pretty unfriendly 
+message about a RUNTIME_PREFIX that could not be determined.
 
-On Wed, 18 Feb 2009, Bosko Ivanisevic wrote:
+Not understanding the code in exec_cmd.c, I went back to a comment I made 
+to one of the iterations of the RUNTIME_PREFIX patch series (back when I 
+spent a considerable amount of time to understand the code), and turned it 
+into a patch myself.
 
-> On Wed, Feb 18, 2009 at 2:24 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
->
-> > On Wed, 18 Feb 2009, Bosko Ivanisevic wrote:
-> >
-> >> In the company I'm working someone has restricted access to all users 
-> >> to only use cvs via cvssh.pl script (source at the end of message) 
-> >> taken from gforge. This script is set as a shell for all users. Now I 
-> >> would like to change it so I can run git too. I've tried by adding 
-> >> 'git', 'git-upload-pack', 'git-receive-pack' and 'git-shell' in the 
-> >> array @allowed_commands. After that if I try to clone existing 
-> >> repository with:
-> >>
-> >> git clone ssh://testuser@server_name/tmp/test.git
-> >>
-> >> I get following error:
-> >>
-> >> fatal: ''/tmp/test.git'': unable to chdir or not a git archive
-> >> fatal: The remote end hung up unexpectedly
-> >>
-> >> I first thought that testuser doesn't have permissions to read
-> >> directory /tmp/test.git so I changed mode and gave r+w permissions
-> >> recursively on that folder, but result was same.
-> >
-> > r+w?  Not a+rwx?
-> >
-> > And only on /tmp/test.git/, or also on /tmp/?
-> >
-> > A better way would be to use 'sudo -u testuser git ls-remote
-> > /tmp/test.git' if sudo is available (you haven't revealed useful
-> > information about the host).
-> 
-> Thanks for your reply. Here are more data. System is SuSe 10.3. On the 
-> test server which has same setup but I can change shell when I change 
-> testuser's shell to /bin/bash I can regularly clone git repository from 
-> remote machine, so all permissions are set correctly. Besides, output 
-> of:
-> 
-> git ls-remote ssh://testuser@server_name:/tmp/test.git
-> 
-> is:
-> 
-> 3446c5347e0563cb87e1d8951c57b7f36996f44b        HEAD
-> 3446c5347e0563cb87e1d8951c57b7f36996f44b        refs/heads/master
-> 
-> That leads me to conclusion that perl's exec command makes some mess
-> which prevents git of running correctly.
+I hope you will agree that the code introduced in 1/2 is more 
+understandable than what is removed in 2/2 in favor of the former.
 
-Maybe.  Maybe it is also unsetting ENV which causes grief.
+The real meat comes in patch 2/2:
 
-> >> There is no way I can avoid this perl script (company policy) but I 
-> >> can change it. Problem is that I do not know Perl so much and I do 
-> >> not know what git is exactly doing behind the scene when it is run 
-> >> via ssh.
-> >
-> > I'd use 'system("some shell >&2");' to try to debug it.
-> >
-> I didn't understand this part. If I change
-> 
-> exec @cmd;
-> 
-> command from perl script to:
-> 
-> system("/bin/bash >&2);
-> 
-> git clone just hangs on the client side. I guess I did something wrong
-> but don't know what.
+The problem is that Windows will look in the current directory before 
+looking in the PATH when it tries to execute a program.  So it will find 
+the executable C:\msysgit\git\git.exe and be unable to strip the suffices 
+"libexec/git-core" or "bin".
 
-I did not mean to replace the exec.  Rather, I meant you could do 
-something like
+I just added "git" (which should not hurt other users, but instead help 
+them if they did not install Git but run it in-place).
 
-	system('ls -l /tmp/test.git >&2');
+Johannes Schindelin (2):
+  Introduce the function strip_path_suffix()
+  system_path(): simplify using strip_path_suffix(), and add suffix
+    "git"
 
-to see what is actually happening.  I mean, it could be that for some 
-reason I do not understand, the whole thing runs in a chroot or some such.
-
-Ciao,
-Dscho
+ cache.h    |    2 ++
+ exec_cmd.c |   32 +++-----------------------------
+ path.c     |   33 +++++++++++++++++++++++++++++++++
+ 3 files changed, 38 insertions(+), 29 deletions(-)
