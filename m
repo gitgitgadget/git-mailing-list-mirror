@@ -1,95 +1,77 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] test suite: correct export var=val usage
-Date: Wed, 18 Feb 2009 18:05:36 +0100
-Message-ID: <200902181805.44145.trast@student.ethz.ch>
-References: <7vr61w3dug.fsf@gitster.siamese.dyndns.org> <76718490902180529w7520ba64kb7d0d6b284b406bd@mail.gmail.com> <F21AE3A2-480B-4311-81E7-32B75B49A356@wincent.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 1/3] git-gui: properly check for a bare repo
+Date: Wed, 18 Feb 2009 09:16:39 -0800
+Message-ID: <20090218171639.GE22848@spearce.org>
+References: <1234144850-2903-1-git-send-email-giuseppe.bilotta@gmail.com> <1234144850-2903-2-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2903955.pk0e24Epaa";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Wed Feb 18 18:08:14 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 18 18:18:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZptQ-0005Cm-4J
-	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 18:07:28 +0100
+	id 1LZq3m-0001ou-NL
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 18:18:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755267AbZBRRF4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2009 12:05:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755201AbZBRRFz
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 12:05:55 -0500
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:43991 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755009AbZBRRFy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2009 12:05:54 -0500
-Received: from xfe1.d.ethz.ch ([82.130.124.41]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 18 Feb 2009 18:05:53 +0100
-Received: from thomas.localnet ([129.132.153.233]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 18 Feb 2009 18:05:52 +0100
-User-Agent: KMail/1.11.0 (Linux/2.6.27.7-9-default; KDE/4.2.0; x86_64; ; )
-In-Reply-To: <F21AE3A2-480B-4311-81E7-32B75B49A356@wincent.com>
-X-OriginalArrivalTime: 18 Feb 2009 17:05:52.0883 (UTC) FILETIME=[27DBD430:01C991EB]
+	id S1753065AbZBRRQk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2009 12:16:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752866AbZBRRQk
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 12:16:40 -0500
+Received: from george.spearce.org ([209.20.77.23]:59462 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751697AbZBRRQj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2009 12:16:39 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 34B3C381FF; Wed, 18 Feb 2009 17:16:39 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1234144850-2903-2-git-send-email-giuseppe.bilotta@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110561>
 
---nextPart2903955.pk0e24Epaa
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Giuseppe Bilotta <giuseppe.bilotta@gmail.com> wrote:
+> When bare repository handling is not enabled, check for a bare
+> repository looking at the core.bare config option rather than refusing
+> to operate with a git directory ending with .git.
+> 
+> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+> ---
+> I know I should have probably used something like
+> git rev-parse --is-bare-repository instead, but I didn't feel like
+> adding another git call. Is the config approach robust enough?
+> 
+>  git-gui/git-gui.sh |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+> index e018e07..658a728 100755
+> --- a/git-gui/git-gui.sh
+> +++ b/git-gui/git-gui.sh
+> @@ -1071,7 +1071,7 @@ if {$_prefix ne {}} {
+>  	}
+>  	unset cdup
+>  } elseif {![is_enabled bare]} {
+> -	if {[lindex [file split $_gitdir] end] ne {.git}} {
+> +	if {[is_config_true core.bare]} {
 
-Wincent Colaiuta wrote:
-> I'm definitely blind then, or perhaps I didn't explain myself. At =20
-> least, I saw nothing in the message you linked that answers my =20
-> question. Let me try again.
->=20
-> - Prior to your patch, in the two hunks I quoted we set MSG to an =20
-> empty string and exported it
->=20
-> - After your patch, the hunks now set MSG to "1" (not the same string) =20
-> and export it
->=20
-> In other words, you not only changed the _style_ from "assign and =20
-> export in a single step" to "assign and then export as two separate =20
-> steps"; you also changed _what_ gets exported in two of those hunks.
+This doesn't work as you expect.  Its a chicken-and-egg problem.
+We haven't read the config yet because we aren't sure that the
+$_gitdir really is a git directory.  Consequently, core.bare is
+always false.
 
-Actually the original version was
+However, yes, in modern versions of git the core.bare setting in
+.git/config is *usually* accurate.
 
-  http://article.gmane.org/gmane.comp.version-control.git/109920
+The only time it isn't is when its not present (really old repository
+which hasn't been re-init'd in a long time), or when the user does
+"mv .git ../foo.git" to create a bare repository from a non-bare one.
 
-which was subsequently fixed by Junio to not use a single-shot export.
-Then Brandon noticed that during the fix-up, the export line suddenly
-started exporting values itself, and different ones at that.
+;-)
 
-So while Jay's patch indeed changes the semantics, the net result is
-what was intended all along, except it's now (hopefully) compatible
-with more shells.
-
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
-
---nextPart2903955.pk0e24Epaa
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkmcP+gACgkQqUud07tmzP1dbgCfV5uj5fb3lZl2/Kf61lwSrSqF
-iUwAoI13vkmtl5mFbPF5VktNXiiAHcG/
-=9w9Z
------END PGP SIGNATURE-----
-
---nextPart2903955.pk0e24Epaa--
+-- 
+Shawn.
