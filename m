@@ -1,88 +1,61 @@
-From: thestar@fussycoder.id.au
-Subject: Re: [ANNOUNCE] Gerrit Code Review 2.0.3
-Date: Wed, 18 Feb 2009 11:13:56 +1100
-Message-ID: <20090218111356.uabo6aff6ss00kcg@webmail.fussycoder.id.au>
-References: <20090217011256.GA23314@spearce.org>
-	<1976ea660902162311q12e11ec5g7a43ab637186985e@mail.gmail.com>
-	<20090217151838.GI18525@spearce.org>
-	<8c9a060902170813ie8f5bc1gfed53e4f31f64c23@mail.gmail.com>
-	<alpine.DEB.1.00.0902171743280.6185@intel-tinevez-2-302>
-	<8c9a060902171306w5926c20ej439489de450e04f5@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] Modify description file to say what this file is
+Date: Tue, 17 Feb 2009 16:16:36 -0800
+Message-ID: <7v63j838gr.fsf@gitster.siamese.dyndns.org>
+References: <200902171012.06176.johnflux@gmail.com>
+ <7vvdr852nj.fsf@gitster.siamese.dyndns.org>
+ <43d8ce650902171531r47bd79cco1524ec883e4c6114@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset=UTF-8;
-	DelSp="Yes";
-	format="flowed"
-Content-Transfer-Encoding: 8BIT
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Frank Li <lznuaa@gmail.com>, git@vger.kernel.org
-To: Jacob Helwig <jacob.helwig@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 18 01:15:37 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 18 01:18:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZa6C-0005FB-VT
-	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 01:15:37 +0100
+	id 1LZa8j-0005zz-5o
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 01:18:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751334AbZBRAOK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 19:14:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751194AbZBRAOH
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 19:14:07 -0500
-Received: from cherry.cbr.hosting-server.com.au ([203.88.118.153]:41149 "EHLO
-	cherry.cbr.hosting-server.com.au" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751131AbZBRAOG convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 19:14:06 -0500
-Received: (qmail 16543 invoked by uid 48); 18 Feb 2009 11:13:56 +1100
-Received: from  ( [unknown]) by webmail.fussycoder.id.au (Horde MIME
-	library) with HTTP; Wed, 18 Feb 2009 11:13:56 +1100
-In-Reply-To: <8c9a060902171306w5926c20ej439489de450e04f5@mail.gmail.com>
-Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) H3 (4.1.5)
+	id S1751422AbZBRAQp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 19:16:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751396AbZBRAQp
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 19:16:45 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53265 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751372AbZBRAQp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 19:16:45 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B65042B5AB;
+	Tue, 17 Feb 2009 19:16:41 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id ED9F22B5A7; Tue,
+ 17 Feb 2009 19:16:37 -0500 (EST)
+In-Reply-To: <43d8ce650902171531r47bd79cco1524ec883e4c6114@mail.gmail.com>
+ (John Tapsell's message of "Wed, 18 Feb 2009 08:31:08 +0900")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 6AD1FAFE-FD51-11DD-8F99-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110484>
 
-Quoting Jacob Helwig <jacob.helwig@gmail.com>:
+John Tapsell <johnflux@gmail.com> writes:
 
-> On Tue, Feb 17, 2009 at 08:44, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
->> Hi,
->>
->> On Tue, 17 Feb 2009, Jacob Helwig wrote:
-<snip>
->>>
->>> I've found IEs4Linux helpful for debugging IE-only issues under Linux.
->>>
->>> http://www.tatanka.com.br/ies4linux/page/Main_Page
->>>
->>> I don't recall, off hand, if it'll provide IE 7 (and the site isn't
->>> working for me right now, so I can't confirm this).  It does provide
->>> IE 5.0, 5.5, and 6.0, however.
->>
->> If I understand Shawn (and the motto "scratch your own itch") correctly,
->> Shawn was not so much interested in being pointed to a way of running IE
->> himself, but more in people who absolutely want to run IE themselves to go
->> and fix the issues.
->>
->> Ciao,
->> Dscho
->>
->>
+> 2009/2/18 Junio C Hamano <gitster@pobox.com>:
 >
-> Oh, I understand "scratch your own itch", but there's also a
-> difference between unable to, and unwilling to. ;-)  I wouldn't have
-> questioned it, or said anything, if it was simply put as: "Known
-> issue, but we don't use IE, so it's not a priority for us.  Patches
-> welcome."
->
-> (Note: I'm not saying that Shawn should be willing to, just that he's
-> not "unable" to. I also don't claim to know the full nuances of any
-> possible licensing issues.)
+> Btw, google seems to show other programs using the description file,
+> not just gitweb.  How about changing it to "Unnamed repository: edit
+> the file 'description' to name the repository" ?
 
-I would've thought that impossible license situations would result in  
-one being unable to use it.
+Sure.
+
+I also think "edit this file 'description' to name..." (not "the", but
+"this") would give a bit more hint to a user with a better intuition that
+the message is not something that is given by an individual program
+(e.g. gitweb or the sample hook) but is a product of catting a file that
+exists somewhere in the repository in question, and may reduce unnecessary
+requests for help saying "The program tells me to edit 'description' file,
+but where should I *create* one?"
