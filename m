@@ -1,90 +1,110 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] disallow providing multiple upstream branches to rebase, 
-	pull --rebase
-Date: Wed, 18 Feb 2009 08:32:43 -0500
-Message-ID: <76718490902180532l1de135ccyd4e58c713e6af2c@mail.gmail.com>
-References: <1234932262-63469-1-git-send-email-jaysoffian@gmail.com>
-	 <alpine.DEB.1.00.0902181118160.6274@intel-tinevez-2-302>
-	 <76718490902180523l6df2067bxc1274a105756d16b@mail.gmail.com>
-	 <alpine.DEB.1.00.0902181427030.6274@intel-tinevez-2-302>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: Is there a way to exclude user-specified files or directories
+ from  participating in merges?
+Date: Wed, 18 Feb 2009 13:33:45 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngpo3hp.boq.sitaramc@sitaramc.homelinux.net>
+References: <e38bce640902171649g765275a4n4e86d1d4f4aaf394@mail.gmail.com>
+ <7v1vtw367w.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 18 14:34:15 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 18 14:35:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZmZ3-0004sx-Gm
-	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 14:34:13 +0100
+	id 1LZmaM-0005Nx-MM
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 14:35:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752246AbZBRNcp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2009 08:32:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752048AbZBRNcp
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 08:32:45 -0500
-Received: from rv-out-0506.google.com ([209.85.198.226]:55693 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752001AbZBRNco (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2009 08:32:44 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so2520387rvb.1
-        for <git@vger.kernel.org>; Wed, 18 Feb 2009 05:32:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=6B6rmVmRzr9/TcYL54j6fn/oHiLAwkf4zl3H1SR7/6Y=;
-        b=tTTgokE+MLrBbhdWl9hJMVxADQE8KQ34Siv/vD4Obq+hBIWGxKFFaCU4qDx+571wWG
-         BBaaIgksdG0RbvRgPqxWbPh2sjzB83Slgbk9D6ch2/LpxQ6Z6cAfI4l38Un8opPYj+yp
-         jygItePm2imotuRMZRsnafQOd/GcfKZaVgDAs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=akjeeUZhjHEK38B/vRqJrHDNAZikFV2i09qEcu10UrDW5lXyyXYSXIchzUxV8O3ae7
-         lXfLgtmcerZlXBHc9MXoHth9kX/SAGX+NT4y4zCyyU4i/0VS1hlBuRfOX1oqMCOqCC/W
-         UnCF38/M1RgN93dydqSxeUqnj7eNfaiRUH9MI=
-Received: by 10.141.114.15 with SMTP id r15mr3971900rvm.42.1234963963747; Wed, 
-	18 Feb 2009 05:32:43 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0902181427030.6274@intel-tinevez-2-302>
+	id S1752036AbZBRNeH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2009 08:34:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751793AbZBRNeF
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 08:34:05 -0500
+Received: from main.gmane.org ([80.91.229.2]:37942 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751582AbZBRNeE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2009 08:34:04 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LZmYn-00027k-I4
+	for git@vger.kernel.org; Wed, 18 Feb 2009 13:33:57 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 18 Feb 2009 13:33:57 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 18 Feb 2009 13:33:57 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110538>
 
-On Wed, Feb 18, 2009 at 8:28 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->> if test -z "$rebase_root"
->> then
->>       # The upstream head must be given.  Make sure it is valid.
->>       upstream_name="$1"
->>       shift
->>       upstream=`git rev-parse --verify "${upstream_name}^0"` ||
->>       die "invalid upstream $upstream_name"
->>       unset root_flag
->>       upstream_arg="$upstream_name"
->> else
->>       test -z "$newbase" && die "--root must be used with --onto"
->>       unset upstream_name
->>       unset upstream
->>       root_flag="--root"
->>       upstream_arg="$root_flag"
->> fi
->>
->> will do the trick, yes?
+On 2009-02-18, Junio C Hamano <gitster@pobox.com> wrote:
+> And stick to the following two rules:
 >
-> Nope.  Note the "shift" in the first arm?  It is so that the code below
-> can check for $#, and it indeed does, in a 'case' statement.
+>  - You make edits to common files only on the common branch.
+>  - You merge from common to deployment, never the other way.
+>
+> So at work, you would have a checkout of your work "deployment branch",
+> and find needs to change things.  It is Ok to edit both work.sh and
+> generic.sh (without being able to edit both, it would be hard to verify if
+> the changes would work together) at this time, but don't commit the result
+> in the work branch.
+>
+> Save the changes to work.sh away (e.g. "git diff work.sh >P.diff" and then
+> "git checkout HEAD work.sh"), switch to the common branch, and commit the
+> changes to the generic file.  Switch back to the deployment branch, merge
+> the common branch (to pick up the changes to home.sh), reapply the changes
+> specific to the deployment you saved earlier (e.g. "git apply P.diff"),
+> tne commit the result.
 
-The case statement checks $# against 1 and *, not 1 and 0. And I don't
-see how > 1 is valid at that point. So I can modify the case statement
-to check against 1, 0, and have * emit usage, or I think moving the
-"test $# -gt 1 && usage" to where I suggested in the last message
-would do the trick. The only difference would be whether a pre-rebase
-hook runs in the case of invalid arguments (the case statement is
-after that hook runs).
+[I did read your followup also; my question applies to both
+versions of the technique]
 
-j.
+Let me explain where I'm coming from: this is very often
+needed when you maintain customer specific branches, and the
+workflows in both your posts in this thread so far are too
+complex for, err, me <sheepish grin> :-)
+
+Would it not be easier to do something like this?  (I suck
+at 2-d drawing, even line... but this should still be
+understandable)
+
+(W = work, T = temporary, C = common)
+
+  - make granular commits and test etc, from W to T
+
+        O---a---b+1---c---2---d---3
+        W is pointing at commit O
+        T is pointing at commit 3
+        b+1 is a commit that contains both types of changes
+
+  - use rebase -i (including split commits if needed, as
+    described in 'git help rebase') to put all the changes
+    that go to master before the ones that only go to work.
+
+        O---a---b---c---d---1---2---3
+
+  - (retest if needed)
+
+  - cherry pick the first set of changes to common (in this
+    example, a, b, c, d will become a', etc on common)
+
+  - merge from common to work (x, y, etc are some other
+    changes that went into common since the last time you
+    merged)
+
+        O---x---y---a'---b'---c'---d'
+        W is now pointing at d'
+
+  - cherry pick the stuff that remains
+
+        O---x---y---a'---b'---c'---d'---1'---2'---3'
+        W is now pointing at 3'
