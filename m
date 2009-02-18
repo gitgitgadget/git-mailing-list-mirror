@@ -1,71 +1,64 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Is there a way to exclude user-specified files or directories
- from  participating in merges?
-Date: Wed, 18 Feb 2009 11:02:30 -0800
-Message-ID: <7v3aeby3eh.fsf@gitster.siamese.dyndns.org>
-References: <e38bce640902171649g765275a4n4e86d1d4f4aaf394@mail.gmail.com>
- <7v1vtw367w.fsf@gitster.siamese.dyndns.org>
- <slrngpo3hp.boq.sitaramc@sitaramc.homelinux.net>
+Subject: Re: [PATCH v3 01/10] config: Codestyle cleanups.
+Date: Wed, 18 Feb 2009 11:02:23 -0800
+Message-ID: <7v8wo3y3eo.fsf@gitster.siamese.dyndns.org>
+References: <1234878776-13250-1-git-send-email-felipe.contreras@gmail.com>
+ <bd6139dc0902170833r7e6672f4p831dacb2ed841b32@mail.gmail.com>
+ <94a0d4530902180118j4746a690q7a42ea087e23488@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sitaram Chamarty <sitaramc@gmail.com>
+Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Felipe Contreras <felipe.contreras@gmail.com>
 X-From: git-owner@vger.kernel.org Wed Feb 18 20:04:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZriI-0000gU-IA
-	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 20:04:07 +0100
+	id 1LZriH-0000gU-R7
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 20:04:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753301AbZBRTCg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2009 14:02:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753221AbZBRTCg
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 14:02:36 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57304 "EHLO
+	id S1753038AbZBRTCd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2009 14:02:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752918AbZBRTCd
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 14:02:33 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57291 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753175AbZBRTCf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2009 14:02:35 -0500
+	with ESMTP id S1752896AbZBRTCc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2009 14:02:32 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2FE1B2B686;
-	Wed, 18 Feb 2009 14:02:35 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 146142B686;
+	Wed, 18 Feb 2009 14:02:30 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 797F12B683; Wed,
- 18 Feb 2009 14:02:32 -0500 (EST)
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 291042B683; Wed,
+ 18 Feb 2009 14:02:24 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B3D046AA-FDEE-11DD-8C9C-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: B0C421A2-FDEE-11DD-8D78-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110567>
 
-Sitaram Chamarty <sitaramc@gmail.com> writes:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> Let me explain where I'm coming from: this is very often needed when you
-> maintain customer specific branches, and the workflows in both your
-> posts in this thread so far are too complex for, err, me <sheepish grin>
-> :-)
->
-> Would it not be easier to do something like this?  (I suck at 2-d
-> drawing, even line... but this should still be understandable)
+> Hmm, right. I was thinking on Junio and Johanness that already know
+> the context, so they don't need an introduction, but I forgot about
+> other people that might be interested in giving this a review.
 
-What you drew is a detailed discussion on a technique to use to group
-together common part and customer specific part, and I think it is Ok to
-do whatever you feel comfortable with.  It is essentially the same as my
-"in real life, 'git diff >P.diff' is not how I would do this" example,
-just going into more detail on what you would do to sift 'common only' vs
-'specific to work branch' apart, and I think what you are doing is sane.
+Also please don't assume anything about what other people may remember
+from your earlier series, after you received "this round is not ready to
+be applied because of this and that" comments.  As far as the reviewer is
+concerned, that's the end of the story about the entire series, until you
+send a revised one.  The reviewers are not promising to remember the fine
+details of the code and to help you improve the series, thinking about the
+series all the time until its next round materializes by reviewing the
+first round, and it is unrealistic to expect them to.  There are a lot
+more patches and patch writers than there are people who review them.
 
-But if you wrote it as a draft of a document to explain how-to to new
-people, I think you need to clarify a few things.
-
-It is unclear in your description how the "common" branch progressed in
-the whole process, and how the resulting history looks.  I can guess that
-you meant commits marked with alphabet letters are of common kind and
-numbers are of work kind, but you do not want to force readers to guess.
-
-It also is not quite clear that you are using a temporary branch in
-addition to common and work, and where in your sequence you are doing "git
-checkout" to switch branches.
+The reason you are encouraged to say want was changed since the previous
+series when you are sending v(n+1) patch in each patch after three-dash
+lines is exactly because by default we expect reviewers remember nothing
+about the previous round and jogging their memory in such a way would help
+reviewing the new round.
