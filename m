@@ -1,77 +1,99 @@
-From: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
-Subject: Re: New GitExtensions website
-Date: Wed, 18 Feb 2009 14:37:49 +0100
-Message-ID: <20090218133749.GA6372@denkbrett.schottelius.org>
-References: <1234095843855-2292583.post@n2.nabble.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: [PATCH v2] disallow providing multiple upstream branches to rebase, pull --rebase
+Date: Wed, 18 Feb 2009 08:44:02 -0500
+Message-ID: <1234964642-95381-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="bp/iNruPH9dso1Pn"
-Cc: git@vger.kernel.org
-To: Henk <henk_westhuis@hotmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 18 14:39:25 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 18 14:45:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZme2-0006jN-EP
-	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 14:39:22 +0100
+	id 1LZmkI-0000tj-Bo
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 14:45:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752470AbZBRNhy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2009 08:37:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752459AbZBRNhx
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 08:37:53 -0500
-Received: from mx3.schottelius.org ([77.109.138.221]:40994 "EHLO
-	mx3.schottelius.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752001AbZBRNhx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2009 08:37:53 -0500
-Received: from ikn.ethz.ch (ikn.inf.ethz.ch [129.132.130.3])
-	by mx3.schottelius.org (Postfix) with ESMTPSA id C10EB197A055;
-	Wed, 18 Feb 2009 14:37:48 +0100 (CET)
-Received: by ikn.ethz.ch (Postfix, from userid 1000)
-	id 2B5292C0F5; Wed, 18 Feb 2009 14:37:50 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <1234095843855-2292583.post@n2.nabble.com>
-User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
-X-Unix-Info: http://unix.schottelius.org/
-X-Netzseite: http://nico.schottelius.org/
-X-System-Info: ikn (Linux 2.6.29-rc4-ikn-00001-gd5b5623 x86_64)
+	id S1752778AbZBRNoK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2009 08:44:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752652AbZBRNoI
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 08:44:08 -0500
+Received: from an-out-0708.google.com ([209.85.132.247]:25655 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752539AbZBRNoH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2009 08:44:07 -0500
+Received: by an-out-0708.google.com with SMTP id c2so1352139anc.1
+        for <git@vger.kernel.org>; Wed, 18 Feb 2009 05:44:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=ymkiNYEUZuKuao4IgvMmqzjqsTCumNaro2WxUKepzlU=;
+        b=UH2posQZ4x+Pl5gi7mhj7G93i2LHyKVV5KU3GEbymUiagoeQ50YMUzOABmFoPrlvqq
+         tofC2QWuNuZutDqcwCdAjBqzK09hVIPHHfLhBI8YeZQqIE4cY7rToBK947+1uzRflY4i
+         h3yVnLuF1NMuuRYyP4VqBL6LJHnGEOuTRsG54=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=WFxU2oVcsd5kPKDf9LtLiV+WmxiLfE1QN1MLvdfszi8boFbaQzYhk/qm33DCMXjufG
+         2rZrFhpZYwR3KlWoCHktejqGbwVecc0s/DPu9rEGRcD42ztzoUPusqzv/mO8Rzebigvj
+         KvDRfAglTOndrocNt8Y0MBtHAIQsdsH8W0tBQ=
+Received: by 10.64.195.20 with SMTP id s20mr4573220qbf.72.1234964645552;
+        Wed, 18 Feb 2009 05:44:05 -0800 (PST)
+Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
+        by mx.google.com with ESMTPS id p9sm14960566qbp.24.2009.02.18.05.44.04
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 18 Feb 2009 05:44:05 -0800 (PST)
+X-Mailer: git-send-email 1.6.2.rc1.218.g1b4fab
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110543>
 
+It does not make sense to provide multiple upstream branches to either
+git pull --rebase, or to git rebase, so disallow both.
 
---bp/iNruPH9dso1Pn
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+---
+This time w/o breaking git rebase $UPSTREAM $BRANCH_TO_SWITCH_TO
 
-Henk [Sun, Feb 08, 2009 at 04:24:03AM -0800]:
->=20
-> _GitExtensions]
+ git-pull.sh   |    5 +++++
+ git-rebase.sh |    1 +
+ 2 files changed, 6 insertions(+), 0 deletions(-)
 
-I don't have windows, but your screenshots look cool.
-
-Nico
-
---=20
-Think about Free and Open Source Software (FOSS).
-http://nico.schottelius.org/documentations/foss/the-term-foss/
-
-PGP: BFE4 C736 ABE5 406F 8F42  F7CF B8BE F92A 9885 188C
-
---bp/iNruPH9dso1Pn
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkmcDy0ACgkQuL75KpiFGIxIeACghsjekDhoAzw80gaj8jNo2VFz
-ijkAn3DJMi2UVtzw9Kkixazns/mAGkUu
-=IbT/
------END PGP SIGNATURE-----
-
---bp/iNruPH9dso1Pn--
+diff --git a/git-pull.sh b/git-pull.sh
+index 2c7f432..25adddf 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -171,6 +171,11 @@ case "$merge_head" in
+ 		echo >&2 "Cannot merge multiple branches into empty head"
+ 		exit 1
+ 	fi
++	if test true = "$rebase"
++	then
++		echo >&2 "Cannot rebase onto multiple branches"
++		exit 1
++	fi
+ 	;;
+ esac
+ 
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 5d9a393..c2a9b1f 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -319,6 +319,7 @@ do
+ 	esac
+ 	shift
+ done
++test $# -gt 2 && usage
+ 
+ # Make sure we do not have $GIT_DIR/rebase-apply
+ if test -z "$do_merge"
+-- 
+1.6.2.rc1.218.g1b4fab
