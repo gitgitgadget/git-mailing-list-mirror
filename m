@@ -1,83 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] better introduction of GIT with USE_NSEC defined
-Date: Wed, 04 Mar 2009 16:41:44 -0800
-Message-ID: <7vk5744x87.fsf@gitster.siamese.dyndns.org>
-References: <cover.1236187259.git.barvik@broadpark.no>
- <6d937a859ca499f534eea08720fca84f3d4ded2f.1236187259.git.barvik@broadpark.no>
+From: Abhijit Bhopatkar <bain@devslashzero.com>
+Subject: Re: [RFC] Common library for Git GUIs
+Date: Wed, 18 Feb 2009 11:26:14 +0530
+Message-ID: <1234936574.20168.11.camel@bain-laptop>
+References: <20090216212459.GA25046@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Kjetil Barvik <barvik@broadpark.no>
-X-From: git-owner@vger.kernel.org Thu Mar 05 01:44:11 2009
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Jonas Fonseca <fonseca@diku.dk>,
+	Marco Costalba <mcostalba@gmail.com>,
+	David Aguilar <davvid@gmail.com>,
+	Henk <henk_westhuis@hotmail.com>, Frank Li <lznuaa@gmail.com>
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Wed Feb 18 06:58:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lf1gx-0003wO-EJ
-	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 01:44:03 +0100
+	id 1LZfRt-0008Ck-GL
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 06:58:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753839AbZCEAlw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Mar 2009 19:41:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753621AbZCEAlw
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 19:41:52 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41447 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753794AbZCEAlv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Mar 2009 19:41:51 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 864239F01F;
-	Wed,  4 Mar 2009 19:41:49 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 62BC69F01E; Wed,
-  4 Mar 2009 19:41:46 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 69BB7B08-091E-11DE-AD85-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1755069AbZBRF42 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2009 00:56:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755060AbZBRF42
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 00:56:28 -0500
+Received: from ti-out-0910.google.com ([209.85.142.188]:7804 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755063AbZBRF41 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2009 00:56:27 -0500
+Received: by ti-out-0910.google.com with SMTP id d10so2285940tib.23
+        for <git@vger.kernel.org>; Tue, 17 Feb 2009 21:56:25 -0800 (PST)
+Received: by 10.110.73.19 with SMTP id v19mr2841988tia.40.1234936585062;
+        Tue, 17 Feb 2009 21:56:25 -0800 (PST)
+Received: from ?192.168.1.208? ([59.95.17.232])
+        by mx.google.com with ESMTPS id w12sm2594481tib.20.2009.02.17.21.56.20
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 17 Feb 2009 21:56:24 -0800 (PST)
+In-Reply-To: <20090216212459.GA25046@efreet.light.src>
+X-Mailer: Evolution 2.24.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112248>
 
-Kjetil Barvik <barvik@broadpark.no> writes:
 
-> Change the source code such that when USE_NSEC is not defined,
-> possible nanosecond timestamps will still be saved in the index file,
-> but not used inside if-test's, and will therefore not affect the
-> outcome of GIT commands, other than the saved nanosecond timestamps in
-> the index file.
->
-> This will make it easier to use a system with 2 versions of GIT, one
-> with and one without USE_NSEC defined.
+> Looking at the current situation with Git GUIs, I thought it might be useful
+> to create a generic library that would make it easier to develop git guis
+> (especially plugins to various tools) and to add a new features to many of
+> them with less effort. What do you people think about such idea?
+> 
+I don't think lack of library is holding this back, all the
+functionality is exposed through cli and i find it perfectly fine
+interface. ( on teamgit side its lack of devtime :( thats holding it
+back) On the other hand a generic Qt/Gtk lib to interface with cli's
+would be nice.
+In any event i do not plan to switch to a library. Mainly because there
+is no value add (barring performance). And of-course, i already worked
+so hard to interface with the cli :D.
 
-I take it that you are responding to my earlier question with this patch?
+> Unfortunately in current situation no gui really supports all I would need to
+> get my colleagues at work to accept git (they are somewhat obsessed with
+> plugin to Visual Studio and explorer and generally avoiding command line).
+> I started working on VS plugin some time ago, but I feel like a bit more
+> reuse would be in order.
+BTW take a look at git extensions for windows, it should provide both,
+win ui and VS plugin based on msysgit
 
-    From: Junio C Hamano <gitster@pobox.com>
-    Subject: Re: [PATCH/RFC v2 2/3] make USE_NSEC work as expected
-    Date: Fri, 20 Feb 2009 00:35:35 -0800
-    Message-ID: <7vab8hfqug.fsf@gitster.siamese.dyndns.org>
+> 
+> The proposed library should contain:
+> 
+I think an effort to convert git into libgit+cli is already underway,
+unless i missed something very obvious and you are talking about/for the
+same effort.
 
-    Kjetil Barvik <barvik@broadpark.no> writes:
+Anyway,
+Sorry folks no interest here.
 
-    > diff --git a/read-cache.c b/read-cache.c
-    > index 940ec76..ca4bec2 100644
-    > --- a/read-cache.c
-    > +++ b/read-cache.c
-    > @@ -67,8 +67,15 @@ void rename_index_entry_at(struct index_state *istate,..
-    >   */
-    >  void fill_stat_cache_info(struct cache_entry *ce, struct stat *st)
-    >  {
-    > -	ce->ce_ctime = st->st_ctime;
-    > -	ce->ce_mtime = st->st_mtime;
-    > +	ce->ce_ctime.sec = (unsigned int)st->st_ctime;
-    > +	ce->ce_mtime.sec = (unsigned int)st->st_mtime;
-    > +#ifdef USE_NSEC
-    > +	ce->ce_ctime.nsec = (unsigned int)st->st_ctim.tv_nsec;
-    > +	ce->ce_mtime.nsec = (unsigned int)st->st_mtim.tv_nsec;
-    > +#else
-    > +	ce->ce_ctime.nsec = 0;
-    > +	ce->ce_mtime.nsec = 0;
-    > +#endif
-
-    How does this affect a use case where the same index file used with two 
-    instances of git (one compiled with and another without USE_NSEC)?
+BAIN
