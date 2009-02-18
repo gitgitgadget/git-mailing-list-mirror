@@ -1,114 +1,84 @@
-From: Brent Goodrick <bgoodr@gmail.com>
-Subject: Is there a way to exclude user-specified files or directories from 
-	participating in merges?
-Date: Tue, 17 Feb 2009 16:49:01 -0800
-Message-ID: <e38bce640902171649g765275a4n4e86d1d4f4aaf394@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Is there a way to exclude user-specified files or directories
+ from  participating in merges?
+Date: Tue, 17 Feb 2009 17:05:07 -0800
+Message-ID: <7v1vtw367w.fsf@gitster.siamese.dyndns.org>
+References: <e38bce640902171649g765275a4n4e86d1d4f4aaf394@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 18 01:50:40 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Brent Goodrick <bgoodr@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 18 02:06:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZae4-0007iF-QP
-	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 01:50:37 +0100
+	id 1LZath-0003a7-4A
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 02:06:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752183AbZBRAtH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 19:49:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751953AbZBRAtF
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 19:49:05 -0500
-Received: from rv-out-0506.google.com ([209.85.198.229]:1572 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751723AbZBRAtD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 19:49:03 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so2266522rvb.1
-        for <git@vger.kernel.org>; Tue, 17 Feb 2009 16:49:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=TYlWxpylFaie+TT+L9TmMXdR4B98hGIoEHZwCIBrd0Q=;
-        b=RUWXqoIdZV4oMC4Oiy481bv7Zj43qkRSFrMnmzr+AInR31BweNP52ag9uoJB+fz+Ts
-         p2DoLorZRun7u4IAB0F+cYveQn6Wo7IuluuXgK3yPSA66LGweM1Hi0VGgyKMHXolJBNg
-         w9n6prubhGdu5wRN4RNDNHoWFH6MDRWe6RB3E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=AvseI3CkHDuREAGYTGfE56ccfPT7JBzoyM5dCn7wJfkU4Q1VFy37jpN9UATn+drncT
-         4DmxEy3Lk4U6PJ2petmHgiszv3ir9trRfzIqvgF67soPb2UN3ISZqncetjgC8K4OLAEY
-         DSJikstJOdViM/B3gYaaoOaOLEBabIMp5KELw=
-Received: by 10.141.177.2 with SMTP id e2mr221206rvp.266.1234918142005; Tue, 
-	17 Feb 2009 16:49:02 -0800 (PST)
+	id S1753355AbZBRBFR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 20:05:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751473AbZBRBFP
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 20:05:15 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43649 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751938AbZBRBFO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 20:05:14 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B0BB09A9FC;
+	Tue, 17 Feb 2009 20:05:12 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 991F29A9FA; Tue,
+ 17 Feb 2009 20:05:08 -0500 (EST)
+In-Reply-To: <e38bce640902171649g765275a4n4e86d1d4f4aaf394@mail.gmail.com>
+ (Brent Goodrick's message of "Tue, 17 Feb 2009 16:49:01 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 31E49182-FD58-11DD-A0A0-0433C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110489>
 
-Suppose I create a git repo called central.git on a machine I will
-call "central". In that central.git repo, I put these files:
+Brent Goodrick <bgoodr@gmail.com> writes:
 
-  work.sh
-  home.sh
-  generic.sh
+> Suppose I create a git repo called central.git on a machine I will
+> call "central". In that central.git repo, I put these files:
+>
+>   work.sh
+>   home.sh
+>   generic.sh
+>
+> When I clone the central.git repo on to a different machine I will
+> call "work", I want this fileset to be pulled:
+>
+>   work.sh
+>   generic.sh
+>
+> But not the home.sh file.
 
-When I clone the central.git repo on to a different machine I will
-call "work", I want this fileset to be pulled:
+You would have one common branch and one branch per deployment.
 
-  work.sh
-  generic.sh
+A common branch would host only common files (e.g. generic.sh file from
+your example).  Per deployment branch, e.g. home, would branch from the
+common branch (so it starts with some version of generic.sh) and may add
+its own private files (e.g. home.sh).
 
-But not the home.sh file.
+And stick to the following two rules:
 
-Similarly, when I clone the central.git repo on a machine I will call
-"home", I want this fileset to be pulled:
+ - You make edits to common files only on the common branch.
+ - You merge from common to deployment, never the other way.
 
-  home.sh
-  generic.sh
+So at work, you would have a checkout of your work "deployment branch",
+and find needs to change things.  It is Ok to edit both work.sh and
+generic.sh (without being able to edit both, it would be hard to verify if
+the changes would work together) at this time, but don't commit the result
+in the work branch.
 
-But not the work.sh file.
-
-What I think I need are two branches, one called "home_branch" and
-"work_branch", but read on for the twist:
-
-Say I'm working on editing the work machines fileset on the work repo
-I had cloned originally from central.git, and commit a change to both
-generic.sh and work.sh.  I do a git-push to an appropriate remote
-branch I have set up on the central.git repo, so that I can do a
-git-merge type of integration on the central machine in the
-central.git repo into the other branches (i.e., into the home_branch),
-specifically so that the home_branch gets updated with the change to
-the generic.sh file.  However, I want the home_branch to be updated
-with the change I made to generic.sh, but I don't ever want the
-work.sh to show up in the home_branch that would occur during a normal
-merge. Likewise, I would not ever want the home.sh file to participate
-in merges from the work fileset back over to the home fileset (and
-likewise I would not ever want to see the work.sh file show up on the
-home_branch).
-
-The above should apply for all files certain special directories. For
-instance, if I were to have a work_files directory and a home_files
-directory, then the the work_files is for the "work" machine (and
-work_branch) and the "home_files" is for the "home" machine (and
-home_branch).
-
-How do I mark certain files and/or directories (via relative file
-paths or with file globbing) on certain branches to be excluded from
-being merged into all other (or a specified list of) branches?
-Ideally I would want to only have to add some logic to the .git/config
-file in the central.git repo that specifies the exclusions/exceptions,
-and not have to remember to make corresponding changes into any of the
-other repos that are cloned from it. Is this possible?
-
-Also, is there a way to avoid the home.sh file from ever being added
-to any file underneath the .git directory of the repo I cloned on the
-"work" machine. I would not want there to be any risk that anyone with
-network access to the "work" machine (say, a sysadmin with sufficient
-privileges) to be able to see any form of the home.sh file since it
-exists on some branch in the .git directory.
-
-Thanks,
-Brent
+Save the changes to work.sh away (e.g. "git diff work.sh >P.diff" and then
+"git checkout HEAD work.sh"), switch to the common branch, and commit the
+changes to the generic file.  Switch back to the deployment branch, merge
+the common branch (to pick up the changes to home.sh), reapply the changes
+specific to the deployment you saved earlier (e.g. "git apply P.diff"),
+tne commit the result.
