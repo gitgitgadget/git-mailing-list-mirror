@@ -1,88 +1,118 @@
-From: Marco Costalba <mcostalba@gmail.com>
-Subject: Re: [RFC] Common library for Git GUIs
-Date: Wed, 18 Feb 2009 09:04:47 +0100
-Message-ID: <e5bfff550902180004x5e10e391wb80988fa892da413@mail.gmail.com>
-References: <20090216212459.GA25046@efreet.light.src>
-	 <e5bfff550902162337m43156398kb06320796838c953@mail.gmail.com>
-	 <20090217192825.GA2216@efreet.light.src>
+From: Lars Noschinski <lars@public.noschinski.de>
+Subject: Re: [PATCH v4] filter-branch -d: Export GIT_DIR earlier
+Date: Wed, 18 Feb 2009 09:35:36 +0100
+Message-ID: <20090218083535.GA5466@lars.home.noschinski.de>
+References: <20090217083146.GA7338@lars.home.noschinski.de> <alpine.DEB.1.00.0902171327270.6185@intel-tinevez-2-302> <20090217175959.GA3564@lars.home.noschinski.de> <20090217180540.GB3564@lars.home.noschinski.de> <alpine.DEB.1.00.0902180002090.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Wed Feb 18 09:06:34 2009
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 18 09:37:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZhRh-0003tk-7E
-	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 09:06:17 +0100
+	id 1LZhvY-0004uk-6w
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 09:37:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751649AbZBRIEu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2009 03:04:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751191AbZBRIEu
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 03:04:50 -0500
-Received: from mail-bw0-f161.google.com ([209.85.218.161]:58032 "EHLO
-	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751092AbZBRIEt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2009 03:04:49 -0500
-Received: by bwz5 with SMTP id 5so5057761bwz.13
-        for <git@vger.kernel.org>; Wed, 18 Feb 2009 00:04:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=UMgH8hvzbZtQrovqKf1Cpnx0h/LYw1XL27WCMbRdVGs=;
-        b=Ppq3Q9xEUG/LcVgPow815i46kOKW19c+jhwqy5WKoDTtx3t913Q0wRW7RZNSMnMehs
-         hq+G2AmHQEPKzEO8FyqxqlPHaqQLO0QuHZwV++jRwV4S2FYLJdSojVnwzaP4WUlWqiy6
-         aTKC3d20NrP7RW+a3MqMhmTveX2D9Lj7BnHTA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Gngt7T04PpEjnK5opgdxcMrn2wnDbP+hAtLzZ+42W2eoZjhaTvj1IYFf2BC5d6xkxO
-         ztCo5VvFjbLlfvkKQE6PvRqePdcImWoPTg5xBs+nEAcPfWsK9LC5oQc6n6qjVqJuc5Ob
-         vDaIu5iY2SFwTEbQASo/NO84DbNwPaYKWFtxs=
-Received: by 10.181.146.11 with SMTP id y11mr1863403bkn.5.1234944287626; Wed, 
-	18 Feb 2009 00:04:47 -0800 (PST)
-In-Reply-To: <20090217192825.GA2216@efreet.light.src>
+	id S1751991AbZBRIfl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2009 03:35:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751910AbZBRIfk
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 03:35:40 -0500
+Received: from smtprelay10.ispgateway.de ([80.67.29.24]:58021 "EHLO
+	smtprelay10.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751882AbZBRIfj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2009 03:35:39 -0500
+Received: from [87.78.135.1] (helo=fruehjahrsmuede.home.noschinski.de)
+	by smtprelay10.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <lars@public.noschinski.de>)
+	id 1LZhu4-0007zU-T6; Wed, 18 Feb 2009 09:35:37 +0100
+Received: from lars by fruehjahrsmuede.home.noschinski.de with local (Exim 4.69)
+	(envelope-from <lars@public.noschinski.de>)
+	id 1LZhu4-0001TQ-5P; Wed, 18 Feb 2009 09:35:36 +0100
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0902180002090.10279@pacific.mpi-cbg.de>
+User-Agent: mutt-ng/devel-r804 (Linux)
+X-Df-Sender: 336680
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110513>
 
-On Tue, Feb 17, 2009 at 20:28, Jan Hudec <bulb@ucw.cz> wrote:
->
-> Often I need to configure some options in ~/.gitconfig and .git/config, but
-> the GUIs generally only allow to set very few basic ones. I had to resort to
-> editing ~/.gitconfig to turn off the cursed core.autocrlf, because git gui
-> does not have that setting. And there are many more settings like that that
-> users may want to tweak and something to guide them would be highly
-> appreciated especially by the command-line-fearing windooze users.
->
-> So my idea is to provide some kind of "property sheet" -- a treeview with all
-> the sections and options with editable values with proper constraints (so
-> boolean and enum values could be entered with drop-down menus) and
-> descriptions.
+The improved error handling catches a bug in filter-branch when using
+-d pointing to a path outside any git repository:
 
+$ git filter-branch -d /tmp/foo master
+fatal: Not a git repository (or any of the parent directories): .git
 
-This is nice. Thanks for the idea, I will implement that in qgit when
-I find a bit of time :-)
+This error message comes from git for-each-ref in line 224. GIT_DIR is
+set correctly by git-sh-setup (to the foo.git repository), but not
+exported (yet).
 
+Signed-off-by: Lars Noschinski <lars@public.noschinski.de>
+Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
 
+Last iteration :)
 
-Regarding your proposal I really wish you good luck and especially "have fun!!!"
+ git-filter-branch.sh     |   12 ++++++------
+ t/t7003-filter-branch.sh |   12 ++++++++++++
+ 2 files changed, 18 insertions(+), 6 deletions(-)
 
-For me it is like to trash out 95% of the stuff and start again from
-zero because of the last 5% is missing (but I can add it anyway with
-much smaller effort and time spent).
-
-I understand the main reason, as per any GPL project, is having fun
-and good time coding and exchanging ideas with peers, but I really
-lack time and I am now moving to different interests. So, thank you
-very much, but I think I'll stick with qgit.
-
-Best
-Marco
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 27b57b8..9a09ba1 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -220,6 +220,12 @@ die ""
+ # Remove tempdir on exit
+ trap 'cd ../..; rm -rf "$tempdir"' 0
+ 
++ORIG_GIT_DIR="$GIT_DIR"
++ORIG_GIT_WORK_TREE="$GIT_WORK_TREE"
++ORIG_GIT_INDEX_FILE="$GIT_INDEX_FILE"
++GIT_WORK_TREE=.
++export GIT_DIR GIT_WORK_TREE
++
+ # Make sure refs/original is empty
+ git for-each-ref > "$tempdir"/backup-refs || exit
+ while read sha1 type name
+@@ -234,12 +240,6 @@ do
+ 	esac
+ done < "$tempdir"/backup-refs
+ 
+-ORIG_GIT_DIR="$GIT_DIR"
+-ORIG_GIT_WORK_TREE="$GIT_WORK_TREE"
+-ORIG_GIT_INDEX_FILE="$GIT_INDEX_FILE"
+-GIT_WORK_TREE=.
+-export GIT_DIR GIT_WORK_TREE
+-
+ # The refs should be updated if their heads were rewritten
+ git rev-parse --no-flags --revs-only --symbolic-full-name \
+ 	--default HEAD "$@" > "$tempdir"/raw-heads || exit
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index 56b5ecc..329c851 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -48,6 +48,18 @@ test_expect_success 'result is really identical' '
+ 	test $H = $(git rev-parse HEAD)
+ '
+ 
++TRASHDIR=$(pwd)
++test_expect_success 'correct GIT_DIR while using -d' '
++	mkdir drepo &&
++	( cd drepo &&
++	git init &&
++	test_commit drepo &&
++	git filter-branch -d "$TRASHDIR/dfoo" \
++		--index-filter "cp \"$TRASHDIR\"/dfoo/backup-refs \"$TRASHDIR\"" \
++	) &&
++	grep drepo "$TRASHDIR/backup-refs"
++'
++
+ test_expect_success 'Fail if commit filter fails' '
+ 	test_must_fail git filter-branch -f --commit-filter "exit 1" HEAD
+ '
+-- 
+1.6.1.3
