@@ -1,77 +1,85 @@
-From: Eric Hanchrow <eric.hanchrow@gmail.com>
-Subject: Bug: git-svn dies with "Index mismatch"
-Date: Tue, 17 Feb 2009 18:15:40 -0800
-Message-ID: <36366a980902171815n37c3f17dw9836d62d4ff70a23@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Retry conflicting merge with matching line endings?
+Date: Tue, 17 Feb 2009 18:18:58 -0800
+Message-ID: <7v8wo41o8d.fsf@gitster.siamese.dyndns.org>
+References: <2729632a0902171755n3e89e717p6b3a38b556252bfb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=001636e911f7036539046327ffb3
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 18 03:17:19 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: skillzero@gmail.com
+X-From: git-owner@vger.kernel.org Wed Feb 18 03:20:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZbzr-0003t0-QK
-	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 03:17:12 +0100
+	id 1LZc38-0004hS-Nq
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 03:20:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752365AbZBRCPm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Feb 2009 21:15:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751803AbZBRCPm
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 21:15:42 -0500
-Received: from rv-out-0506.google.com ([209.85.198.229]:8538 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751597AbZBRCPl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Feb 2009 21:15:41 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so2298974rvb.1
-        for <git@vger.kernel.org>; Tue, 17 Feb 2009 18:15:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=6fmBGjLm96PNSkYXeUPVbx1fXU116+5KRFENj/Hht6k=;
-        b=Jfd6quv5OoF06k0qHvBxukzLgbCKMgI6xxaecFe3IhzXbMDCuEYLPbZnGz+WyYHB5d
-         kuQ7EyD8X2qYF7Af3iGqrYcmRcOUZm0yqK1mVz4mah56RyX/EzLjCnC2w8pTmDYWs3rO
-         ngEdvBSL49NX/x4/MfwMOdKxvRPQ7mnacFTWU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=SbYHu+ZHaUDuyyQKf049qaZzPWC1Bow4/ZgmuZcNpSBShaWKjpvtbqHSPPIw+s4Hts
-         +RqfBHnKB3UK6OV/89uK0BPN/tl8a3kRF7NZv3W26Tx6Y2nbIedks6BZDXJa8AJTr4It
-         ZjOavZC5RmgfloKOKjCYa3aFnHCUx5Z39Zd9Y=
-Received: by 10.143.6.1 with SMTP id j1mr854738wfi.226.1234923340129; Tue, 17 
-	Feb 2009 18:15:40 -0800 (PST)
+	id S1753355AbZBRCTG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Feb 2009 21:19:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752947AbZBRCTG
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Feb 2009 21:19:06 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41169 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752862AbZBRCTF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Feb 2009 21:19:05 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 660A19AFFE;
+	Tue, 17 Feb 2009 21:19:03 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 461199AFFC; Tue,
+ 17 Feb 2009 21:18:59 -0500 (EST)
+In-Reply-To: <2729632a0902171755n3e89e717p6b3a38b556252bfb@mail.gmail.com>
+ (skillzero@gmail.com's message of "Tue, 17 Feb 2009 17:55:42 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 82CB002C-FD62-11DD-8FB3-0433C92D7133-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110496>
 
---001636e911f7036539046327ffb3
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+skillzero@gmail.com writes:
 
-This is git version 1.6.2.rc0.10.gf6b9
+> I've been running into a lot of merge conflicts due to line endings
+> changing. For example, I branch from master when a file has CRLF line
+> endings (incorrectly) then somebody fixes a bug in that file (still
+> has CRLF line endings) on master then I realize the file should have
+> LF line endings so I change them. When I try to rebase on master
+> later, I get a merge conflict because it looks like every line has
+> changed and it conflicts with that other bug fix.
+>
+> Would it be reasonable that if you get a conflict during a merge and
+> the line endings of the two commits are different then change the line
+> endings to match, retry the merge of that file, then apply the line
+> ending change commit?
 
-The attached file clearly reproduces the problem.
+This is not specific to fixing line ending but applies any "global token
+replacement" (e.g. you renamed a variable) operation in general.
 
---001636e911f7036539046327ffb3
-Content-Type: application/x-sh; name="bug.sh"
-Content-Disposition: attachment; filename="bug.sh"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_frbdcy250
+Suppose the conflicted path is hello.c when you were merging branch
+"other", e.g. 
 
-IyEvYmluL3NoCgpzZXQgLWUKCnRyYXAgImVjaG8gJ0Jyb3VnaHQgdG8geW91IGJ5JyA7IGdpdCAt
-LXZlcnNpb24iIEVYSVQKCnM9L3RtcC9zdm4tcmVwb3MKZz0vdG1wL2ltcG9ydGVkLmdpdAp3PS90
-bXAvc3ZuLXdjCgpybSAtcmYgJHMgJGcgJHcKCiMgQ3JlYXRlIGEgcmVwb3NpdG9yeSB3aXRoIGEg
-bGl0dGxlIGJpdCBvZiBoaXN0b3J5Lgpzdm5hZG1pbiBjcmVhdGUgJHMKc3ZuIGNvIGZpbGU6Ly8k
-cyAkdwpjZCAkdwpta2RpciB0cnVuayBicmFuY2hlcyB0YWdzCnN2biBhZGQgKgpzdm4gY2kgLW0g
-IkluaXRpYWwgZGlyZWN0b3J5IGxheW91dCIKCigKICAgIGNkIHRydW5rCiAgICB0b3VjaCBmYWJ1
-bG91cwogICAgc3ZuIGFkZCBmYWJ1bG91cwogICAgc3ZuIGNpIC1tICJJdCdzIG5pY2UgdG8gaGF2
-ZSBmaWxlcyBpbiBvbmUncyB0cnVuay4iCikKCiMgTWFrZSBzb21lIHN0cnVjdHVyZSBpbiB0aGUg
-c3ZuIHJlcG8gdGhhdCB3aWxsIGNvbmZ1c2UgZ2l0LXN2bi4Kc3ZuIG1rZGlyIGJyYW5jaGVzL2Zy
-ZWQKc3ZuIGNpIC1tICJBIGJyYW5jaCEiCgpzdm4gcm0gYnJhbmNoZXMvZnJlZApzdm4gY2kgLW0g
-Ik9vcHMsIEkgZGlkbid0IG1lYW4gdG8gY3JlYXRlIGFuIGVtcHR5IGRpcmVjdG9yeSEiCgpzdm4g
-Y3AgLXIyIHRydW5rIGJyYW5jaGVzL2ZyZWQKc3ZuIGNpIC1tICJPSywgbm93IF90aGF0J3NfIGhv
-dyB3ZSBtYWtlIGJyYW5jaGVzIGhlcmUgaW4gVGV4YXMuIgoKIyBOb3cgY29udmVydCB0aGUgc3Zu
-IHJlcG8gdG8gZ2l0IC4uLiBhbmQgd2F0Y2ggdGhlIGNhcm5hZ2UuCmdpdCBzdm4gY2xvbmUgLVQg
-dHJ1bmsgLWIgYnJhbmNoZXMgZmlsZTovLyRzICRnCg==
---001636e911f7036539046327ffb3--
+	$ git merge other
+	$ git ls-files -u
+        100644 b040a96e50... 1	hello.c	
+	100644 6b9c715d21... 2	hello.c
+	100644 1c57d4c958... 3	hello.c
+
+You can first extract the blobs involved into plain files, apply such
+"global token replacement" (be it fixing the line ending or renaming a
+variable) to the common ancestor version and the other's version, and run
+three-way file-level merge.
+
+	$ git cat-file blob :1:hello.c | replacement_filter >ancestor
+        $ git cat-file blob :2:hello.c >mine
+        $ git cat-file blob :3:hello.c | replacement_filter >theirs
+	$ git merge-file mine ancestor theirs
+
+where replacement_filter would be whatever global replacement you did to
+your version since the ancestor (e.g. dos2unix).
+
+The "mine" file merge-file leaves will hopefully have much smaller
+conflicts, as it won't have to see your line endings change.  If it looks
+Ok, cat it into hello.c and "git add" it.
