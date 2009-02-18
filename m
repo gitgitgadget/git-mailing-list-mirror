@@ -1,66 +1,69 @@
-From: Keith Cascio <keith@CS.UCLA.EDU>
-Subject: Re: [PATCH] Use DIFF_XDL_SET/DIFF_OPT_SET instead of raw
- bit-masking
-Date: Wed, 18 Feb 2009 14:59:29 -0800 (PST)
-Message-ID: <alpine.GSO.2.00.0902181437260.6181@kiwi.cs.ucla.edu>
-References: <1234841209-3960-1-git-send-email-keith@cs.ucla.edu> <alpine.DEB.1.00.0902171304130.6185@intel-tinevez-2-302> <alpine.GSO.2.00.0902170918180.27811@kiwi.cs.ucla.edu> <alpine.DEB.1.00.0902172354570.10279@pacific.mpi-cbg.de>
- <alpine.GSO.2.00.0902181238320.29723@kiwi.cs.ucla.edu> <alpine.DEB.1.00.0902182219370.10279@pacific.mpi-cbg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] Introduce the function strip_path_suffix()
+Date: Thu, 19 Feb 2009 00:18:17 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902190017460.10279@pacific.mpi-cbg.de>
+References: <cover.1234969572u.git.johannes.schindelin@gmx.de> <7b5ee74d497bbb7144b8683725cd83c8bbd33f9a.1234969572u.git.johannes.schindelin@gmx.de> <499C63E7.5040306@kdbg.org> <alpine.DEB.1.00.0902182211550.10279@pacific.mpi-cbg.de>
+ <499C8B44.1020106@kdbg.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Pierre Habouzit <madcoder@madism.org>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Feb 19 00:01:10 2009
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Steffen Prohaska <prohaska@zib.de>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Thu Feb 19 00:18:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZvPh-0000aS-OJ
-	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 00:01:10 +0100
+	id 1LZvgl-0006lC-HU
+	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 00:18:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751938AbZBRW7l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2009 17:59:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751898AbZBRW7k
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 17:59:40 -0500
-Received: from Kiwi.CS.UCLA.EDU ([131.179.128.19]:42269 "EHLO kiwi.cs.ucla.edu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751676AbZBRW7k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2009 17:59:40 -0500
-Received: from kiwi.cs.ucla.edu (localhost.cs.ucla.edu [127.0.0.1])
-	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/UCLACS-6.0) with ESMTP id n1IMxTQu008559;
-	Wed, 18 Feb 2009 14:59:29 -0800 (PST)
-Received: from localhost (keith@localhost)
-	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/Submit) with ESMTP id n1IMxT8I008555;
-	Wed, 18 Feb 2009 14:59:29 -0800 (PST)
-X-Authentication-Warning: kiwi.cs.ucla.edu: keith owned process doing -bs
-In-Reply-To: <alpine.DEB.1.00.0902182219370.10279@pacific.mpi-cbg.de>
-User-Agent: Alpine 2.00 (GSO 1167 2008-08-23)
+	id S1753379AbZBRXRT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2009 18:17:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753271AbZBRXRS
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 18:17:18 -0500
+Received: from mail.gmx.net ([213.165.64.20]:44695 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752609AbZBRXRS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2009 18:17:18 -0500
+Received: (qmail invoked by alias); 18 Feb 2009 23:17:15 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp054) with SMTP; 19 Feb 2009 00:17:15 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18q/uJsVjsq6jmjQv1QdywEB9/Mh7mLeBcOeXPhlM
+	ADNDDeH+jVERds
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <499C8B44.1020106@kdbg.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.66
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110592>
 
-On Wed, 18 Feb 2009, Johannes Schindelin wrote:
+Hi,
 
-> Okay, you asked for it.  I tried to be gentle.
+On Wed, 18 Feb 2009, Johannes Sixt wrote:
+
+> Johannes Schindelin schrieb:
+> > On Wed, 18 Feb 2009, Johannes Sixt wrote:
+> > > Johannes Schindelin schrieb:
+> > > >  strip_path_suffix("C:\\msysgit/\\libexec\\git-core",
+> > > >   "libexec///git-core", &prefix)
+> > > >
+> > > > will set prefix to "C:\\msysgit" and return 0.
+> > > But you implemented it so that prefix is actually "C:\\msysgit/\\"
+> > > (unless, of course, I'm reading the code wrong).
+> > 
+> > This is supposed to handle that case:
+> > 
+> >  *prefix = xstrndup(path, chomp_trailing_dir_sep(path, path_len));
 > 
-> I see _no_ value in your changes, and the diffstat as a _very_ real downside.
-> 
-> If the code would become clearer with your patch, I would not mind.  But I 
-> find that the result is not more readable than the original.
-> 
-> As part of a parse-optification, I would not mind.  But before that, no.
+> Ah, I missed that final call of chomp_trailing_dir_sep.
 
-Actually I appreciate your feedback, and the more direct the better.  The chief 
-value I see in revising the code to accomplish these bit settings uniformly 
-using well known macros is that later, if someone has good reason to extend the 
-macro so it results in some new side effect, e.g. to update a dirty bit mask, 
-the new behavior automatically cascades to every appropriate use out there in 
-the code.  A macro is essentially a "code constant".  As with other constants, 
-the benefit comes from defining it once and using it everywhere.  Is this effect 
-not worth as much as I think it is?  Is there a hidden gotcha in my ideal?  Or 
-does anyone else see value here?  Please speak up!
+I have to admit that I was aware of the fact that it is easy to miss, but 
+could not find a better way to present it.
 
-                                             -- Keith
+Ciao,
+Dscho
