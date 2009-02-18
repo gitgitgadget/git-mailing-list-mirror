@@ -1,73 +1,69 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 3/3] git-gui: define correct GIT_DIR for gitk
-Date: Wed, 18 Feb 2009 09:22:52 -0800
-Message-ID: <20090218172252.GG22848@spearce.org>
-References: <1234144850-2903-1-git-send-email-giuseppe.bilotta@gmail.com> <1234144850-2903-4-git-send-email-giuseppe.bilotta@gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH] Avoid segfault with 'git branch' when the HEAD is detached
+Date: Wed, 18 Feb 2009 19:14:59 +0100 (CET)
+Message-ID: <ad680bce413ddea084d84b3fcd7c4cc356c3cb0e.1234980819u.git.johannes.schindelin@gmx.de>
+References: <cover.1234980819u.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 18 18:24:23 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jay Soffian <jaysoffian@gmail.com>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Feb 18 19:17:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZq9m-0004i1-1y
-	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 18:24:22 +0100
+	id 1LZqyw-0004Sd-GK
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 19:17:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752918AbZBRRWy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2009 12:22:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752654AbZBRRWx
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 12:22:53 -0500
-Received: from george.spearce.org ([209.20.77.23]:58433 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752768AbZBRRWx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2009 12:22:53 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 85FF4381FF; Wed, 18 Feb 2009 17:22:52 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1234144850-2903-4-git-send-email-giuseppe.bilotta@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753575AbZBRSPH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2009 13:15:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753549AbZBRSPH
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 13:15:07 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48689 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752898AbZBRSPF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2009 13:15:05 -0500
+Received: (qmail invoked by alias); 18 Feb 2009 18:15:03 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp067) with SMTP; 18 Feb 2009 19:15:03 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19weE9ScndwIPiMneX+kMjpTDqxbOCSgglzVYKVJy
+	wttFbWD3m6EarY
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <cover.1234980819u.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.5600000000000001
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110564>
 
-Giuseppe Bilotta <giuseppe.bilotta@gmail.com> wrote:
-> When invoking gitk, git-gui assumed that the worktree was the dirname of
-> $_gitdir and that, by consequence, the git dir could be set to the tail of
-> $_gitdir once we changed to the worktree root directory.
-> 
-> The assumption is no longer true since the previous commit introduced
-> support for more generic worktree locations, so export a GIT_DIR
-> environment variable set to the full, normalized path of $_gitdir
-> instead.
+A recent addition to the ref_item struct was not taken care of, leading
+to a segmentation fault when accessing the (uninitialized) "dest" member.
 
-Since this is a one line patch to fix a bug introduced by the prior
-patch, I'd rather just see this squash into the prior patch.
- 
-> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-> ---
->  git-gui/git-gui.sh |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-> index 94317c7..de3f29c 100755
-> --- a/git-gui/git-gui.sh
-> +++ b/git-gui/git-gui.sh
-> @@ -1908,7 +1908,7 @@ proc do_gitk {revs} {
->  
->  		set pwd [pwd]
->  		cd $_gitworktree
-> -		set env(GIT_DIR) [file tail [gitdir]]
-> +		set env(GIT_DIR) [file normalize [gitdir]]
->  
->  		eval exec $cmd $revs &
->  
-> -- 
-> 1.6.2.rc0.173.g5e148
-> 
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
+	Unfortunately not found by valgrind.
+
+ builtin-branch.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/builtin-branch.c b/builtin-branch.c
+index 8c37c78..ded0a82 100644
+--- a/builtin-branch.c
++++ b/builtin-branch.c
+@@ -441,7 +441,9 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev, str
+ 	    is_descendant_of(head_commit, with_commit)) {
+ 		struct ref_item item;
+ 		item.name = xstrdup("(no branch)");
++		item.len = strlen(item.name);
+ 		item.kind = REF_LOCAL_BRANCH;
++		item.dest = NULL;
+ 		item.commit = head_commit;
+ 		if (strlen(item.name) > ref_list.maxwidth)
+ 			ref_list.maxwidth = strlen(item.name);
 -- 
-Shawn.
+1.6.2.rc1.349.g70b801
