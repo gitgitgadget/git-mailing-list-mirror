@@ -1,84 +1,85 @@
-From: Patrick Notz <patnotz@gmail.com>
-Subject: Re: post-receive email
-Date: Wed, 18 Feb 2009 06:36:19 -0700
-Message-ID: <1cd1989b0902180536o48a216edu3b835f3ce9b704c4@mail.gmail.com>
-References: <556409.61398.qm@web35708.mail.mud.yahoo.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] disallow providing multiple upstream branches to rebase,
+  pull --rebase
+Date: Wed, 18 Feb 2009 14:36:58 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902181436380.6274@intel-tinevez-2-302>
+References: <1234932262-63469-1-git-send-email-jaysoffian@gmail.com>  <alpine.DEB.1.00.0902181118160.6274@intel-tinevez-2-302>  <76718490902180523l6df2067bxc1274a105756d16b@mail.gmail.com>  <alpine.DEB.1.00.0902181427030.6274@intel-tinevez-2-302>
+ <76718490902180532l1de135ccyd4e58c713e6af2c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Arya, Manish Kumar" <m.arya@yahoo.com>
-X-From: git-owner@vger.kernel.org Wed Feb 18 14:37:56 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 18 14:38:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZmcY-0006CW-Ck
-	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 14:37:50 +0100
+	id 1LZmdA-0006PP-Vo
+	for gcvg-git-2@gmane.org; Wed, 18 Feb 2009 14:38:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752308AbZBRNgX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2009 08:36:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751601AbZBRNgX
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 08:36:23 -0500
-Received: from mail-bw0-f161.google.com ([209.85.218.161]:38208 "EHLO
-	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752015AbZBRNgW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2009 08:36:22 -0500
-Received: by bwz5 with SMTP id 5so5426645bwz.13
-        for <git@vger.kernel.org>; Wed, 18 Feb 2009 05:36:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=hDvNlaCnU1IZ0NioAJeziLMNDAU9Jf8M72CoDUdtHos=;
-        b=MxbZ12sdQ8Fk5a6EBRsM1MuLxWewLBshEPUEZ5bCRq9Lz92W3H7RgbHiTBJ1ckgqBX
-         4eTSxEZA07jaKMXjPIYNU7w20Uv0mYcEUnhI/8j2Mauq6IWChdtOxxdxV91j5S9A5NWL
-         3YVWtfR9bdKKdO3vLc9ybiJG9vP5dPIcgNMfA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=G9WcO3nN1kZaJpJRUY2XgqbeTocF00CqIf3I3bXp0RzF5H3yHT1Yuu5Y48dXUjJU3U
-         4lYuE8mKEfzcaTt4ZTSlxLaIe47NAFrKeocG0c//ndSSMDCwp4ROWkXN5Vtohz9Z7vkZ
-         cFMyTXOsZop28TfHWkgRSNdrrXep6V0DE2deY=
-Received: by 10.103.131.18 with SMTP id i18mr383302mun.74.1234964180012; Wed, 
-	18 Feb 2009 05:36:20 -0800 (PST)
-In-Reply-To: <556409.61398.qm@web35708.mail.mud.yahoo.com>
+	id S1752385AbZBRNhF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2009 08:37:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753821AbZBRNhD
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 08:37:03 -0500
+Received: from mail.gmx.net ([213.165.64.20]:32789 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752180AbZBRNhB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2009 08:37:01 -0500
+Received: (qmail invoked by alias); 18 Feb 2009 13:36:59 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp016) with SMTP; 18 Feb 2009 14:36:59 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/q3VpSVhPqHVIFfpAO1qxDoFvenzXh+qmPhDIgf/
+	rpQDGV9ThQ5yFT
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <76718490902180532l1de135ccyd4e58c713e6af2c@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110541>
 
-On Wed, Feb 18, 2009 at 5:44 AM, Arya, Manish Kumar <m.arya@yahoo.com> wrote:
->
-> Hi,
->
->  I am using git 1.6.1
->
-> I have configured post-receive hook for sending emails on remote push activity.
+Hi,
 
-Are you using the example contrib/hooks/post-receive-email that comes with Git?
+On Wed, 18 Feb 2009, Jay Soffian wrote:
 
->
-> But I am getting this error while push. any one using this script for email. can you suggest some other working script for this ?
->
-> ----------------------------------
-> Counting objects: 5, done.
-> Compressing objects: 100% (3/3)   Compressing objects: 100% (3/3), done.
-> Writing objects: 100% (3/3)   Writing objects: 100% (3/3), 344 bytes, done.
-> Total 3 (delta 1), reused 0 (delta 0)
-> hooks/post-receive: syntax error at line 73: `oldrev=$' unexpected
-> error: hooks/post-receive exited with error code 2
-> Pushing to ssh://xxx.xxx.xxx.net/opt/repos/mka.git
-> To ssh://xxx.xxx.xxx.net/opt/repos/mka.git
->   db4b382..186b0af  master -> master
-> -----------------------------------
->
->
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> On Wed, Feb 18, 2009 at 8:28 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >> if test -z "$rebase_root"
+> >> then
+> >>       # The upstream head must be given.  Make sure it is valid.
+> >>       upstream_name="$1"
+> >>       shift
+> >>       upstream=`git rev-parse --verify "${upstream_name}^0"` ||
+> >>       die "invalid upstream $upstream_name"
+> >>       unset root_flag
+> >>       upstream_arg="$upstream_name"
+> >> else
+> >>       test -z "$newbase" && die "--root must be used with --onto"
+> >>       unset upstream_name
+> >>       unset upstream
+> >>       root_flag="--root"
+> >>       upstream_arg="$root_flag"
+> >> fi
+> >>
+> >> will do the trick, yes?
+> >
+> > Nope.  Note the "shift" in the first arm?  It is so that the code below
+> > can check for $#, and it indeed does, in a 'case' statement.
+> 
+> The case statement checks $# against 1 and *, not 1 and 0. And I don't
+> see how > 1 is valid at that point. So I can modify the case statement
+> to check against 1, 0, and have * emit usage, or I think moving the
+> "test $# -gt 1 && usage" to where I suggested in the last message
+> would do the trick. The only difference would be whether a pre-rebase
+> hook runs in the case of invalid arguments (the case statement is
+> after that hook runs).
+
+Of course, you could also leave the test where it was, and just replace 
+the 1 by a 2.
+
+Ciao,
+Dscho
