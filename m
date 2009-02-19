@@ -1,85 +1,132 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 4/4] remote: new show output style
-Date: Thu, 19 Feb 2009 17:33:54 +0100
-Message-ID: <bd6139dc0902190833p6ef34591i28f56495acc3e196@mail.gmail.com>
-References: <1235020471-59982-1-git-send-email-jaysoffian@gmail.com>
-	 <1235020471-59982-2-git-send-email-jaysoffian@gmail.com>
-	 <1235020471-59982-3-git-send-email-jaysoffian@gmail.com>
-	 <1235020471-59982-4-git-send-email-jaysoffian@gmail.com>
-	 <1235020471-59982-5-git-send-email-jaysoffian@gmail.com>
-	 <499D82BC.7020500@xiplink.com>
-	 <bd6139dc0902190816m3c70923eg132e89bff28a216f@mail.gmail.com>
-	 <499D894F.90508@xiplink.com>
+From: "Marcel M. Cary" <marcel@oak.homeunix.org>
+Subject: Re: [RFC] Configuring (future) committags support in gitweb, especially
+ bug linking
+Date: Thu, 19 Feb 2009 09:08:05 -0800
+Message-ID: <499D91F5.6010605@oak.homeunix.org>
+References: <200811082007.55045.jnareb@gmail.com> <200811082335.49505.jnareb@gmail.com> <499AD871.8000808@oak.homeunix.org> <200902180438.55081.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-2
 Content-Transfer-Encoding: 7bit
-Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Thu Feb 19 17:35:57 2009
+Cc: Francis Galiegue <fg@one2team.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Petr Baudis <pasky@suse.cz>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 19 18:09:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaBs2-00082V-3k
-	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 17:35:30 +0100
+	id 1LaCP8-0007Mf-SW
+	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 18:09:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753218AbZBSQeA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2009 11:34:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753171AbZBSQeA
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 11:34:00 -0500
-Received: from fg-out-1718.google.com ([72.14.220.159]:9165 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753134AbZBSQd7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2009 11:33:59 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so1242963fgg.17
-        for <git@vger.kernel.org>; Thu, 19 Feb 2009 08:33:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=Ojr3RnJSUCp7pCoW6pw9+7T/oedStrZMKiS6Hy+3REs=;
-        b=dVmsWhQVBhvd7ej2ooq7Jbuts89JaMqmDMJu9qvjiedXliP2GqVO+7WKgtpefOicjM
-         NMWltIcZuwxkQ1yoAKJg/h7NXpQyG6Iom1OpCpS8g+sDQFqlRGyS9jf2lI6aweUAJZXX
-         86ildHWFFJNK955iD0dudiSCmTlZmhxteExMo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=W64E3f6WN97tvV9aYNZkpt8yEwuMEJ6t/FvPWFv7xK2ND1DcMF7hH07HVhhKU3P/UP
-         NeE+ej7oLGm3q86dah4HZBB+nPrWwC+osGwHpCAm4IgvD0yGGHnnnaTA0kr18mMJRhHD
-         h8rnaHa7gGtUcGQJVN8tpbv14Vq2f6655FPRo=
-Received: by 10.86.73.1 with SMTP id v1mr429893fga.52.1235061237270; Thu, 19 
-	Feb 2009 08:33:57 -0800 (PST)
-In-Reply-To: <499D894F.90508@xiplink.com>
-X-Google-Sender-Auth: 4df3db1121cae539
+	id S1752997AbZBSRIO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2009 12:08:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753106AbZBSRIO
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 12:08:14 -0500
+Received: from smtp116.sbc.mail.sp1.yahoo.com ([69.147.64.89]:21619 "HELO
+	smtp116.sbc.mail.sp1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752903AbZBSRIN (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Feb 2009 12:08:13 -0500
+Received: (qmail 89539 invoked from network); 19 Feb 2009 17:08:12 -0000
+Received: from unknown (HELO ordinateur.home.org) (marcel@75.61.103.6 with plain)
+  by smtp116.sbc.mail.sp1.yahoo.com with SMTP; 19 Feb 2009 17:08:11 -0000
+X-YMail-OSG: ej3PAQQVM1kq80dUvFRqKVdJuvJGUWcbyzXJmA0ALMw2SghaUk81mEoo_PmrQBPns_5GMBeuXCfig7pPG27qYjb5bXfAwD1S8VSYpMMsYmyoEj51n22N5gsZHqqABQwQ1XxLp5ORhTDoXjoKRMBSBKFwiw_aUpJul_XQ0z_UO_ZA4CFanfWaXG6yoeM-
+X-Yahoo-Newman-Property: ymail-3
+Received: from polliwog.home.org ([192.168.0.18])
+	by ordinateur.home.org with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <marcel@oak.homeunix.org>)
+	id 1LaCNc-0007yK-6r; Thu, 19 Feb 2009 09:08:08 -0800
+User-Agent: Thunderbird 2.0.0.6 (X11/20070801)
+In-Reply-To: <200902180438.55081.jnareb@gmail.com>
+X-Enigmail-Version: 0.95.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110718>
 
-On Thu, Feb 19, 2009 at 17:31, Marc Branchaud <marcnarc@xiplink.com> wrote:
-> So commits A and B are basically left dangling?
+Jakub Narebski wrote:
+> On Tue, 17 Feb 2009, Marcel M. Cary wrote:
+>
+>> I'm interested in cross-linking bug references in commit messages to
+>> a bug tracking system.  I started tinkering a couple weeks ago and am
+>> finally understanding that committags encompass this functionality.
+>> (From the subject line I first understood "tags" to mean git tags
+>> rather than commit message munging.)
+>
+> What would you name this feature, then?
 
-Correct, that's why it's not desirable to do so when it's not your
-private repo/branch ;).
+Heh, I'm not sure.  It's like a filter in the unix pipeline sense, but
+"commit message filter" sounds to me like some messages might be
+rejected.  Most of the drivers markup static text with HTML tags, but
+not all of them.  Maybe "commit message embellishment".
 
-> If that's the case, then I'd say "replaces" or "overwrites" is the right
-> word to use in the 'remote show' output.
+Perhaps a more important question is: will people find the feature once
+it's implemented?  I think that won't be a problem provided that it's
+listed in the gitweb docs like the other configs.
 
-Yes, that would be a better wording.
+>> Is the committags idea still under active development?
+>
+> Well, it is in my todo list, rather further on...
 
-> But more importantly, I think the 'git push' man page needs to explain this!
+Is any code for it published in a repository anywhere?  I see a branch
+jn/gitweb-committag merged into master that looks relevant, but it only
+has the sha1 regex improvement.
 
->From my cursory glance the term 'non-fast forward' is indeed not
-explained in the man-page, feel like writing a patch? ;)
+>> Two regexes would make it easier to configure a driver without
+>> needing look-ahead and look-behind assertions.  For example, if you
+>> want to match non-negative integers but only in the context of a
+>> Resolves-bug header:
+>>
+>>     Resolves-bug: 1234, 1235
+>
+> [...]
+>> I got the two-regex idea from a spec I ran across while evaluating
+>> Subversion:
+>>
+>>
+http://guest:@tortoisesvn.tigris.org/svn/tortoisesvn/trunk/doc/issuetrackers.txt
+>
+> You don't need multiple regexps for that, and in above example it is
+> used _single_ regexp; only with more than one catching group.
 
--- 
-Cheers,
+I'm not sure what exactly you propose.  In the second example in the
+bugtraq spec, there are two regexes.  Maybe you mean something like
+this, but it breaks with three bugs:
 
-Sverre Rabbelier
+    $ perl -MData::Dumper -wne '
+        m/^Resolves-bug: (\d+)(?:, (\d+))*/;
+        print Dumper([$1, $2, $3, $4]);
+    '
+    Resolves-bug: 123
+    $VAR1 = [
+          '123',
+          undef,
+          undef,
+          undef
+        ];
+    Resolves-bug: 123, 124
+    $VAR1 = [
+          '123',
+          '124',
+          undef,
+          undef
+        ];
+    Resolves-bug: 123, 124, 125
+    $VAR1 = [
+          '123',
+          '125',
+          undef,
+          undef
+        ];
+
+Maybe something like this?  But it's limited to an arbitrary number of
+bug matches.  Maybe it's good enough for pratical purposes, but it's
+prone to unexpected breakage when the user exceeds the threshold of, in
+this case, four bugs.
+
+    /^Resolves-bug: (\d+)(?:, (\d+))?(?:, (\d+))?(?:, (\d+))?/
+
+
+Marcel
