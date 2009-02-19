@@ -1,181 +1,245 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] Make sure objects/pack exists before creating a new pack
-Date: Wed, 18 Feb 2009 20:48:07 -0800
-Message-ID: <7vr61vnibc.fsf@gitster.siamese.dyndns.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: [PATCH 1/4] remote: minor code cleanups in preparation for changing "show" output
+Date: Thu, 19 Feb 2009 00:14:28 -0500
+Message-ID: <1235020471-59982-2-git-send-email-jaysoffian@gmail.com>
+References: <1235020471-59982-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j.sixt@viscovery.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 19 05:49:43 2009
+X-From: git-owner@vger.kernel.org Thu Feb 19 06:16:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1La0r0-0008GD-KG
-	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 05:49:43 +0100
+	id 1La1Gj-0005K5-Su
+	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 06:16:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752287AbZBSEsO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2009 23:48:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752193AbZBSEsN
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 23:48:13 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40631 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751709AbZBSEsN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2009 23:48:13 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 5B3802B706;
-	Wed, 18 Feb 2009 23:48:11 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 6483F2B701; Wed,
- 18 Feb 2009 23:48:09 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 829B94A2-FE40-11DD-8E39-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1751265AbZBSFOm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2009 00:14:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751189AbZBSFOl
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 00:14:41 -0500
+Received: from el-out-1112.google.com ([209.85.162.176]:11557 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750914AbZBSFOi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Feb 2009 00:14:38 -0500
+Received: by el-out-1112.google.com with SMTP id b25so136026elf.1
+        for <git@vger.kernel.org>; Wed, 18 Feb 2009 21:14:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=1z/0wwtmC4B+Lv70oZyx3wABqfeIXqYSOD6f1pvoPqM=;
+        b=A00rYBDsWtnqqhdT76yyAdIPwaNv8TQfzuoUd1yk8lb+N8Ai/7sLVOrcOCU8OirdjM
+         Rr8MXNwvy529I34V2EGJ7Jhuxkzd2v1wpg/wdtZ9M7JoebRwTf09N1Zft7X0aX0IxZIf
+         mRScOBiAtICZimtjaMNlCWGBSP0A7xbAKEkXE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=dLM5lMBjGJphp0O5uedxjUynCxoG7fdzxslxcMRO0OPV/uhwjHEY7vACGb62uRqmYG
+         REZo6LYz7aW93Z2HIscZTxVLccgsANGtAY7ObKAruoYw/35IfLreXjGRTuWyQvSBrla0
+         IA+G/7Rz+97XeKPpkJNQDCM3oAV0tLAvve5vs=
+Received: by 10.151.143.3 with SMTP id v3mr581961ybn.246.1235020476419;
+        Wed, 18 Feb 2009 21:14:36 -0800 (PST)
+Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
+        by mx.google.com with ESMTPS id n29sm2021073elf.10.2009.02.18.21.14.34
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 18 Feb 2009 21:14:35 -0800 (PST)
+X-Mailer: git-send-email 1.6.2.rc1.218.g1b4fab
+In-Reply-To: <1235020471-59982-1-git-send-email-jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110622>
 
-In a repository created with git older than f49fb35 (git-init-db: create
-"pack" subdirectory under objects, 2005-06-27), objects/pack/ directory is
-not created upon initialization.  It was Ok because subdirectories are
-created as needed inside directories init-db creates.
+* Rename char *remote to remote_name to distinguish it clearly from the
+  struct remote pointer, also named remote.
 
-8b4eb6b (Do not perform cross-directory renames when creating packs,
-2008-09-22) moved the location temporary pack files are created from
-objects/ directory to objects/pack/ directory; this move broke many
-operations in such a repository, because it was not careful enough to make
-sure leading directories exist.
+* There is no need to call sort_string_list() on branch_list, as its
+  items are added to it via string_list_insert() which maintains its
+  order.
 
-Introduce odb_mkstemp() which is a specialized version of mkstemp() to
-refactor the code and teach it to create a leading directories properly
-to fix this buglet.
+* Sort states->new and states->tracked so that we can use binary search
+  string_list_has_string() on them instead of less efficient linear
+  unsorted_string_list_has_string. This alters the output of "remote
+  show" slightly, so update the tests to match.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+* Simplify get_ref_states(); nothing is using the pointer to states that
+  is being copied into util.
+
+* Have get_remote_ref_states() populate states->tracked even when it is
+  not querying the remote so that this need not be done by the caller.
+
+Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
 ---
+I added a function prototype for get_remote_ref_states() so I didn't
+need to move its location in this diff, which kept the diff cleaner.
+The next patch then moves the function and gets rid of the prototype.
 
- * I don't know why, but I somehow found doing this patch highly amusing.
+ builtin-remote.c  |   45 ++++++++++++++++++++++-----------------------
+ t/t5505-remote.sh |    2 +-
+ 2 files changed, 23 insertions(+), 24 deletions(-)
 
- builtin-pack-objects.c |    5 ++---
- fast-import.c          |   10 ++++------
- git-compat-util.h      |    1 +
- index-pack.c           |    5 ++---
- pack-write.c           |    4 +---
- wrapper.c              |   17 +++++++++++++++++
- 6 files changed, 27 insertions(+), 15 deletions(-)
-
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index cb51916..bcefa52 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -488,9 +488,8 @@ static void write_pack_file(void)
- 		} else {
- 			char tmpname[PATH_MAX];
- 			int fd;
--			snprintf(tmpname, sizeof(tmpname),
--				 "%s/pack/tmp_pack_XXXXXX", get_object_directory());
--			fd = xmkstemp(tmpname);
-+			fd = odb_mkstemp(tmpname, sizeof(tmpname),
-+					 "pack/tmp_pack_XXXXXX");
- 			pack_tmp_name = xstrdup(tmpname);
- 			f = sha1fd(fd, pack_tmp_name);
- 		}
-diff --git a/fast-import.c b/fast-import.c
-index 3ef3413..99e4df4 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -817,9 +817,8 @@ static void start_packfile(void)
- 	struct pack_header hdr;
- 	int pack_fd;
+diff --git a/builtin-remote.c b/builtin-remote.c
+index d6958d4..ea5e808 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -23,6 +23,9 @@ static int verbose;
  
--	snprintf(tmpfile, sizeof(tmpfile),
--		"%s/pack/tmp_pack_XXXXXX", get_object_directory());
--	pack_fd = xmkstemp(tmpfile);
-+	pack_fd = odb_mkstemp(tmpfile, sizeof(tmpfile),
-+			      "pack/tmp_pack_XXXXXX");
- 	p = xcalloc(1, sizeof(*p) + strlen(tmpfile) + 2);
- 	strcpy(p->pack_name, tmpfile);
- 	p->pack_fd = pack_fd;
-@@ -879,9 +878,8 @@ static char *create_index(void)
- 		c = next;
- 	}
+ static int show_all(void);
  
--	snprintf(tmpfile, sizeof(tmpfile),
--		"%s/pack/tmp_idx_XXXXXX", get_object_directory());
--	idx_fd = xmkstemp(tmpfile);
-+	idx_fd = odb_mkstemp(tmpfile, sizeof(tmpfile),
-+			     "pack/tmp_idx_XXXXXX");
- 	f = sha1fd(idx_fd, tmpfile);
- 	sha1write(f, array, 256 * sizeof(int));
- 	git_SHA1_Init(&ctx);
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 079cbe9..c1744b9 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -303,6 +303,7 @@ extern ssize_t xwrite(int fd, const void *buf, size_t len);
- extern int xdup(int fd);
- extern FILE *xfdopen(int fd, const char *mode);
- extern int xmkstemp(char *template);
-+extern int odb_mkstemp(char *template, size_t limit, const char *pattern);
- 
- static inline size_t xsize_t(off_t len)
++static int append_ref_to_tracked_list(const char *refname,
++	const unsigned char *sha1, int flags, void *cb_data);
++
+ static inline int postfixcmp(const char *string, const char *postfix)
  {
-diff --git a/index-pack.c b/index-pack.c
-index f7a3807..0350c29 100644
---- a/index-pack.c
-+++ b/index-pack.c
-@@ -172,9 +172,8 @@ static char *open_pack_file(char *pack_name)
- 		input_fd = 0;
- 		if (!pack_name) {
- 			static char tmpfile[PATH_MAX];
--			snprintf(tmpfile, sizeof(tmpfile),
--				 "%s/pack/tmp_pack_XXXXXX", get_object_directory());
--			output_fd = xmkstemp(tmpfile);
-+			output_fd = odb_mkstemp(tmpfile, sizeof(tmpfile),
-+						"pack/tmp_pack_XXXXXX");
- 			pack_name = xstrdup(tmpfile);
- 		} else
- 			output_fd = open(pack_name, O_CREAT|O_EXCL|O_RDWR, 0600);
-diff --git a/pack-write.c b/pack-write.c
-index b426006..3ab55b9 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -44,9 +44,7 @@ char *write_idx_file(char *index_name, struct pack_idx_entry **objects,
- 
- 	if (!index_name) {
- 		static char tmpfile[PATH_MAX];
--		snprintf(tmpfile, sizeof(tmpfile),
--			 "%s/pack/tmp_idx_XXXXXX", get_object_directory());
--		fd = xmkstemp(tmpfile);
-+		fd = odb_mkstemp(tmpfile, sizeof(tmpfile), "pack/tmp_idx_XXXXXX");
- 		index_name = xstrdup(tmpfile);
- 	} else {
- 		unlink(index_name);
-diff --git a/wrapper.c b/wrapper.c
-index c85ca52..371cee1 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -197,6 +197,23 @@ int xmkstemp(char *template)
- 	return fd;
+ 	int len1 = strlen(string), len2 = strlen(postfix);
+@@ -144,7 +147,7 @@ static int add(int argc, const char **argv)
  }
  
-+int odb_mkstemp(char *template, size_t limit, const char *pattern)
-+{
-+	int fd;
+ struct branch_info {
+-	char *remote;
++	char *remote_name;
+ 	struct string_list merge;
+ };
+ 
+@@ -183,9 +186,9 @@ static int config_read_branches(const char *key, const char *value, void *cb)
+ 			item->util = xcalloc(sizeof(struct branch_info), 1);
+ 		info = item->util;
+ 		if (type == REMOTE) {
+-			if (info->remote)
++			if (info->remote_name)
+ 				warning("more than one branch.%s", key);
+-			info->remote = xstrdup(value);
++			info->remote_name = xstrdup(value);
+ 		} else {
+ 			char *space = strchr(value, ' ');
+ 			value = abbrev_branch(value);
+@@ -207,7 +210,6 @@ static void read_branches(void)
+ 	if (branch_list.nr)
+ 		return;
+ 	git_config(config_read_branches, NULL);
+-	sort_string_list(&branch_list);
+ }
+ 
+ struct ref_states {
+@@ -228,10 +230,8 @@ static int handle_one_branch(const char *refname,
+ 		const char *name = abbrev_branch(refspec.src);
+ 		/* symbolic refs pointing nowhere were handled already */
+ 		if ((flags & REF_ISSYMREF) ||
+-				unsorted_string_list_has_string(&states->tracked,
+-					name) ||
+-				unsorted_string_list_has_string(&states->new,
+-					name))
++		    string_list_has_string(&states->tracked, name) ||
++		    string_list_has_string(&states->new, name))
+ 			return 0;
+ 		item = string_list_append(name, &states->stale);
+ 		item->util = xstrdup(refname);
+@@ -251,21 +251,16 @@ static int get_ref_states(const struct ref *ref, struct ref_states *states)
+ 
+ 	states->new.strdup_strings = states->tracked.strdup_strings = 1;
+ 	for (ref = fetch_map; ref; ref = ref->next) {
+-		struct string_list *target = &states->tracked;
+ 		unsigned char sha1[20];
+-		void *util = NULL;
+-
+ 		if (!ref->peer_ref || read_ref(ref->peer_ref->name, sha1))
+-			target = &states->new;
+-		else {
+-			target = &states->tracked;
+-			if (hashcmp(sha1, ref->new_sha1))
+-				util = &states;
+-		}
+-		string_list_append(abbrev_branch(ref->name), target)->util = util;
++			string_list_append(abbrev_branch(ref->name), &states->new);
++		else
++			string_list_append(abbrev_branch(ref->name), &states->tracked);
+ 	}
+ 	free_refs(fetch_map);
+ 
++	sort_string_list(&states->new);
++	sort_string_list(&states->tracked);
+ 	for_each_ref(handle_one_branch, states);
+ 	sort_string_list(&states->stale);
+ 
+@@ -490,7 +485,7 @@ static int mv(int argc, const char **argv)
+ 	for (i = 0; i < branch_list.nr; i++) {
+ 		struct string_list_item *item = branch_list.items + i;
+ 		struct branch_info *info = item->util;
+-		if (info->remote && !strcmp(info->remote, rename.old)) {
++		if (info->remote_name && !strcmp(info->remote_name, rename.old)) {
+ 			strbuf_reset(&buf);
+ 			strbuf_addf(&buf, "branch.%s.remote", item->string);
+ 			if (git_config_set(buf.buf, rename.new)) {
+@@ -600,7 +595,7 @@ static int rm(int argc, const char **argv)
+ 	for (i = 0; i < branch_list.nr; i++) {
+ 		struct string_list_item *item = branch_list.items + i;
+ 		struct branch_info *info = item->util;
+-		if (info->remote && !strcmp(info->remote, remote->name)) {
++		if (info->remote_name && !strcmp(info->remote_name, remote->name)) {
+ 			const char *keys[] = { "remote", "merge", NULL }, **k;
+ 			for (k = keys; *k; k++) {
+ 				strbuf_reset(&buf);
+@@ -685,6 +680,9 @@ static int get_remote_ref_states(const char *name,
+ 
+ 		get_head_names(ref, name, states);
+ 		get_ref_states(ref, states);
++	} else {
++		for_each_ref(append_ref_to_tracked_list, states);
++		sort_string_list(&states->tracked);
+ 	}
+ 
+ 	return 0;
+@@ -696,6 +694,9 @@ static int append_ref_to_tracked_list(const char *refname,
+ 	struct ref_states *states = cb_data;
+ 	struct refspec refspec;
+ 
++	if (flags & REF_ISSYMREF)
++		return 0;
 +
-+	snprintf(template, limit, "%s/%s",
-+		 get_object_directory(), pattern);
-+	fd = mkstemp(template);
-+	if (0 <= fd)
-+		return fd;
-+
-+	/* slow path */
-+	safe_create_leading_directories(template);
-+	snprintf(template, limit, "%s/%s",
-+		 get_object_directory(), pattern);
-+	return xmkstemp(template);
-+}
-+
- /*
-  * zlib wrappers to make sure we don't silently miss errors
-  * at init time.
+ 	memset(&refspec, 0, sizeof(refspec));
+ 	refspec.dst = (char *)refname;
+ 	if (!remote_find_tracking(states->remote, &refspec))
+@@ -743,7 +744,7 @@ static int show(int argc, const char **argv)
+ 			struct branch_info *info = branch->util;
+ 			int j;
+ 
+-			if (!info->merge.nr || strcmp(*argv, info->remote))
++			if (!info->merge.nr || strcmp(*argv, info->remote_name))
+ 				continue;
+ 			printf("  Remote branch%s merged with 'git pull' "
+ 				"while on branch %s\n   ",
+@@ -762,8 +763,6 @@ static int show(int argc, const char **argv)
+ 				"prune')", &states.stale, "");
+ 		}
+ 
+-		if (no_query)
+-			for_each_ref(append_ref_to_tracked_list, &states);
+ 		show_list("  Tracked remote branch%s", &states.tracked, "");
+ 
+ 		if (states.remote->push_refspec_nr) {
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 104433d..fdc4a29 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -142,8 +142,8 @@ cat > test/expect << EOF
+   New remote branch (next fetch will store in remotes/origin)
+     master
+   Tracked remote branches
+-    side
+     master
++    side
+   Local branches pushed with 'git push'
+     master:upstream
+     +refs/tags/lastbackup
+-- 
+1.6.2.rc1.218.g1b4fab
