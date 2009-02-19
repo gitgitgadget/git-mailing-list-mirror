@@ -1,66 +1,57 @@
-From: Caleb Cushing <xenoterracide@gmail.com>
-Subject: merge smart enough to adapt to renames?
-Date: Thu, 19 Feb 2009 01:12:58 -0500
-Message-ID: <81bfc67a0902182212h578e677ck6029c56cb86f7bce@mail.gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] rev-list: estimate number of bisection step left
+Date: Thu, 19 Feb 2009 07:49:18 +0100
+Message-ID: <200902190749.19414.chriscool@tuxfamily.org>
+References: <20090217060944.488184b0.chriscool@tuxfamily.org> <200902190632.50156.chriscool@tuxfamily.org> <43d8ce650902182202s4c06a261jd68a2f86607f00ef@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 19 07:14:31 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Ingo Molnar <mingo@elte.hu>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Thomas Rast <trast@student.ethz.ch>
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 19 07:51:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1La2B4-0000Dl-2E
-	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 07:14:30 +0100
+	id 1La2l2-00087e-V7
+	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 07:51:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752189AbZBSGNB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2009 01:13:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752147AbZBSGNA
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 01:13:00 -0500
-Received: from mail-qy0-f11.google.com ([209.85.221.11]:52171 "EHLO
-	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751720AbZBSGNA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2009 01:13:00 -0500
-Received: by qyk4 with SMTP id 4so475826qyk.13
-        for <git@vger.kernel.org>; Wed, 18 Feb 2009 22:12:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=fJYNEly7K/CkqjlLCOTI0/W0Dueq34u3FAnXP3CMWBg=;
-        b=p7LPbXWflwwsOrh3Uq8ofQDr0hHsEc0VeyeBQCNtqTGX/2zb/pUEWtqoq4OKsg6Wee
-         8umbaP4Q6Aw7Jr6UGpD5kKaVv2/ekqoaVjg7aDf11P2knxlER2Rc9QpHoHXCcJtkjwdW
-         rWh+bfx1w7d4csY0OJ+iL8PXb3Zl8WxKDS+fo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=FMDpI8l7TwqEn7edAgAAlSPbW2jEMnVR6xI3uN4U2Lb/qmYv+xv390QSkSmYSpZgEs
-         eRkdRP9A9vOtOEzm1Kte3SAuBV631Y1RhGuce1OigtXf0wn6LsqbA8dr0jKvLvihnWpl
-         ytVkmsl8yr+scTHp/hzIIUdm9nd4h84HsoAJY=
-Received: by 10.229.85.1 with SMTP id m1mr3659688qcl.56.1235023978906; Wed, 18 
-	Feb 2009 22:12:58 -0800 (PST)
+	id S1753776AbZBSGuF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Feb 2009 01:50:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752456AbZBSGuE
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 01:50:04 -0500
+Received: from smtp4-g21.free.fr ([212.27.42.4]:54028 "EHLO smtp4-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752660AbZBSGuD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Feb 2009 01:50:03 -0500
+Received: from smtp4-g21.free.fr (localhost [127.0.0.1])
+	by smtp4-g21.free.fr (Postfix) with ESMTP id 1B5934C80E7;
+	Thu, 19 Feb 2009 07:49:53 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp4-g21.free.fr (Postfix) with ESMTP id 1A2FA4C80B1;
+	Thu, 19 Feb 2009 07:49:51 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <43d8ce650902182202s4c06a261jd68a2f86607f00ef@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110632>
 
-branch gentoo.org has a file profiles/package.mask
+Le jeudi 19 f=C3=A9vrier 2009, John Tapsell a =C3=A9crit :
+> 2009/2/19 Christian Couder <chriscool@tuxfamily.org>:
+> > Le jeudi 19 f=C3=A9vrier 2009, Christian Couder a =C3=A9crit :
+> >> But on Linux, log2 and exp2 are defined in "math.h" and available
+> >> with:
+>
+> log2 in math.h is for doubles, when we only want an integer answer.
+> There's no need for math.h here.
 
-the software that uses this supports having this be a directory as well.
+Yeah, you are right. Sorry about the noise. I will send a patch soon.
 
-I'm thinking of mv-ing this file in branch regen2.org to
-profiles/package.mask/gentoo.org
-
-since I can't change the location in gentoo.org (for mostly
-non-technical reasons) when I run git merge gentoo.org from regen2.org
-will git be smart enough to try to merge an updated
-profiles/package.mask into profiles/package.mask/gentoo.org in the
-future?
-
--- 
-Caleb Cushing
-
-http://xenoterracide.blogspot.com
+Thanks,
+Christian.
