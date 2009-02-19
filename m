@@ -1,68 +1,77 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 1/2] Introduce the function strip_path_suffix()
-Date: Thu, 19 Feb 2009 21:12:07 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902192110290.6223@intel-tinevez-2-302>
-References: <499C63E7.5040306@kdbg.org> <f6344cbba22e049806796f4920e229fb2e539d5c.1235070304u.git.johannes.schindelin@gmx.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Really slow 'git gc'
+Date: Thu, 19 Feb 2009 12:24:43 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0902191200010.21686@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <j6t@kdbg.org>, Steffen Prohaska <prohaska@zib.de>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Feb 19 21:13:44 2009
+To: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Feb 19 21:26:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaFHD-00057H-Gh
-	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 21:13:43 +0100
+	id 1LaFTk-00027F-F5
+	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 21:26:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757412AbZBSUMR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2009 15:12:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757385AbZBSUMR
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 15:12:17 -0500
-Received: from mail.gmx.net ([213.165.64.20]:47758 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756454AbZBSUMQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2009 15:12:16 -0500
-Received: (qmail invoked by alias); 19 Feb 2009 20:12:14 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp018) with SMTP; 19 Feb 2009 21:12:14 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18SOskvFeYS4ppDBGU6aA2O+tYKJhaMB5ZafLY5n4
-	d+hfigrWWPriI7
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <f6344cbba22e049806796f4920e229fb2e539d5c.1235070304u.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.68
+	id S1753780AbZBSUZL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2009 15:25:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753374AbZBSUZL
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 15:25:11 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:47308 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753280AbZBSUZK (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Feb 2009 15:25:10 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n1JKOitv012100
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 19 Feb 2009 12:24:45 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n1JKOhEV020680;
+	Thu, 19 Feb 2009 12:24:43 -0800
+X-X-Sender: torvalds@localhost.localdomain
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.457 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110743>
 
-Hi,
 
-On Thu, 19 Feb 2009, Johannes Schindelin wrote:
+Ok, so I was wondering why doing a 'git gc' on my kernel backup on one of 
+the linux-foundation machines was taking so long, and I think I've found a 
+performance problem.
 
-> The function strip_path_suffix() will try to strip a given suffix from 
-> a given path.  The suffix must start at a directory boundary (i.e. "core" 
-> is not a path suffix of "libexec/git-core", but "git-core" is).
-> 
-> Arbitrary runs of directory separators ("slashes") are assumed identical.
-> 
-> Example:
-> 
-> 	strip_path_suffix("C:\\msysgit/\\libexec\\git-core",
-> 		"libexec///git-core", &prefix)
-> 
-> will set prefix to "C:\\msysgit" and return 0.
+The way I do kernel back-ups is that I just push to two different sites 
+every once in a while (read: multiple times a day when I do lots of 
+merging), and one of them is master.kernel.org that then gets published to 
+others.
 
-Aargh, of course I managed to forget to adjust the example.  Here it goes:
+The other one is a linux-foundation machine that I have a login on, and 
+that's my "secondary" back-up, in case both kernel.org and my own home 
+machines were to be corrupted somehow. And because it's my secondary, I 
+seldom then log in an gc anything, so it's a mess.
 
-	prefix = strip_path_suffix("C:\\msysgit/\\libexec\\git-core",
-			"libexec///git-core");
+But it was _really_ slow when I finally did so today. The whole "Counting 
+objects" phase was counting by hundreds, which it really shouldn't do on a 
+fast machine.
 
-will set prefix to "C:\\msysgit".
+The reason? Tons and tons of pack-files. But just the existence of the 
+pack-files is not what killed it: things were _much_ faster if I just did 
+a "git pack-objects" by hand. 
 
-Ciao,
-Dscho
+The real reason _seems_ to be the "--unpacked=pack-....pack" arguments. I 
+literally had 232 pack-files, and it looks like a lot of the time was 
+spent in that silly loop oer 'ignore_packed' in find_pack_entry(), when 
+revision.c does that "has_sha1_pack()" thing. You get a O(n**2) effect in 
+number of pack-files: for each commit we look over every pack-file, and 
+for every pack-file we look at, we look over each ignore_pack entry.
+
+I didn't really analyze this a lot, and now the thing is packed and much 
+faster, but I thought I'd throw this out there..
+
+		Linus
