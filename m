@@ -1,61 +1,61 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT PATCH] 1/2 : (reworked) Externalizable/Serializable Items
-Date: Wed, 18 Feb 2009 15:27:45 -0800
-Message-ID: <20090218232745.GP22848@spearce.org>
-References: <320075ff0902161212s1980cd70r8cdc4c21550333ee@mail.gmail.com> <200902182159.51027.robin.rosenberg.lists@dewire.com> <20090218214859.GN22848@spearce.org> <200902190021.33382.robin.rosenberg.lists@dewire.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 4/5] t3301: use test_must_fail instead of !
+Date: Wed, 18 Feb 2009 19:37:27 -0500
+Message-ID: <20090219003727.GA25808@coredump.intra.peff.net>
+References: <200902151711.45099.trast@student.ethz.ch> <20090215181818.GA2291@coredump.intra.peff.net> <e2b179460902170129s7ae613cehe237619be5e84936@mail.gmail.com> <20090217163413.GB31297@sigill.intra.peff.net> <e2b179460902171000s605675dct1f499a9425c3ebb2@mail.gmail.com> <20090217202731.GA16586@coredump.intra.peff.net> <20090218064121.GA16611@coredump.intra.peff.net> <alpine.DEB.1.00.0902181113210.6274@intel-tinevez-2-302> <20090218101615.GA23035@coredump.intra.peff.net> <alpine.DEB.1.00.0902181251160.6274@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nigel Magnay <nigel.magnay@gmail.com>, Git ML <git@vger.kernel.org>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Thu Feb 19 00:29:30 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Mike Ralphson <mike.ralphson@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Feb 19 01:39:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZvqt-0001wM-DC
-	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 00:29:15 +0100
+	id 1LZwwl-0008H2-4z
+	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 01:39:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752667AbZBRX1r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2009 18:27:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752542AbZBRX1r
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 18:27:47 -0500
-Received: from george.spearce.org ([209.20.77.23]:37490 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750740AbZBRX1q (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2009 18:27:46 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id B2AC0381FF; Wed, 18 Feb 2009 23:27:45 +0000 (UTC)
+	id S1753074AbZBSAhb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2009 19:37:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752876AbZBSAhb
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 19:37:31 -0500
+Received: from peff.net ([208.65.91.99]:57755 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752246AbZBSAha (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2009 19:37:30 -0500
+Received: (qmail 18074 invoked by uid 107); 19 Feb 2009 00:37:51 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 18 Feb 2009 19:37:51 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Feb 2009 19:37:27 -0500
 Content-Disposition: inline
-In-Reply-To: <200902190021.33382.robin.rosenberg.lists@dewire.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <alpine.DEB.1.00.0902181251160.6274@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110596>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-> onsdag 18 februari 2009 22:48:59 skrev "Shawn O. Pearce" <spearce@spearce.org>:
+On Wed, Feb 18, 2009 at 12:53:37PM +0100, Johannes Schindelin wrote:
+
+> > Really? Are they not easily replaced with
 > > 
-> > Non-Java reading a Java serialization stream?  Seriously?
+> > -test cond1 -a cond2 -o cond3
+> > +test cond1 && test cond2 || test cond3
 > 
-> No, that was my objection to using writeObject, as that make
-> it a Java-only stream, but then it might not be worth doing
-> it via the serialization mechanism.
+> ...which is substantially harder to read.
 
-IMHO, if we are talking about either java.io.Serializable or
-java.io.Externalizable, there's no point in considering a non
-Java peer.
+I don't agree that it is harder to read, but that is beside the point.
+What is important is whether or not the construct is portable enough to
+meet git's standards.
 
-If you want a non-Java format, we'd need to consider a much
-more neutral encoding, like Google's protobuf, or *shudder*
-XML/JSON, or cooking up our own format.
+"-a" and "-o" are XSI extensions to POSIX, which is usually a sign that
+there may be problems. However, besides posh (which at this point I
+think can be considered a compliance-testing shell and not an actual
+shell in use), I haven't heard of problems in practice. Even FreeBSD's
+ash derivative supports it (along with parentheses).
 
-That wasn't this thread started with.  The original poster just
-wanted an easy way to serialize some basic data types from JGit,
-as part of some higher level stream being done in the container
-application.  Since that higher level stream is a apparently a
-Java object serialization stream, we just need to match that.
+So I don't think it needs to be changed (which is what I said in my
+original message). But I also think saying "-a and -o are necessary" is
+not true; they can be replaced if it turns out to be a problem.
 
--- 
-Shawn.
+-Peff
