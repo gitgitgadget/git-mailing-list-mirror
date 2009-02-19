@@ -1,91 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 0/8] Support coverage testing with GCC/gcov
-Date: Thu, 19 Feb 2009 14:46:09 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902191227260.6223@intel-tinevez-2-302>
-References: <7v7i3nqk0x.fsf@gitster.siamese.dyndns.org> <cover.1235041345.git.trast@student.ethz.ch>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: git rebase -i
+Date: Thu, 19 Feb 2009 14:02:37 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngpqpjt.j03.sitaramc@sitaramc.homelinux.net>
+References: <43d8ce650902190121v2e18aac1rfaa64a4ce6e799a3@mail.gmail.com>
+ <871vtudabm.fsf@iki.fi>
+ <43d8ce650902190152t6162593x8d0920be0e6d7a6d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Feb 19 14:48:04 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 19 15:04:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1La9Fe-00073K-Cp
-	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 14:47:42 +0100
+	id 1La9Vl-00064F-IM
+	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 15:04:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752720AbZBSNqN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2009 08:46:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751536AbZBSNqN
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 08:46:13 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58341 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751420AbZBSNqM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2009 08:46:12 -0500
-Received: (qmail invoked by alias); 19 Feb 2009 13:46:10 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp036) with SMTP; 19 Feb 2009 14:46:10 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/TCMV1adzTcDvGXzQ8WTt2j2nN3XyAx2sADnlUVc
-	zSKsn0qfepZDnh
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <cover.1235041345.git.trast@student.ethz.ch>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.54
+	id S1753141AbZBSOCw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2009 09:02:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752346AbZBSOCw
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 09:02:52 -0500
+Received: from main.gmane.org ([80.91.229.2]:57545 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751882AbZBSOCv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Feb 2009 09:02:51 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1La9UI-0001o0-L4
+	for git@vger.kernel.org; Thu, 19 Feb 2009 14:02:50 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 19 Feb 2009 14:02:50 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 19 Feb 2009 14:02:50 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110699>
 
-Hi,
+On 2009-02-19, John Tapsell <johnflux@gmail.com> wrote:
+> 2009/2/19 Teemu Likonen <tlikonen@iki.fi>:
+>> I think it's better to use aliases for this kind of personal things:
+>>
+>>    git config --global alias.my-rebase "rebase -i HEAD~10"
 
-On Thu, 19 Feb 2009, Thomas Rast wrote:
+perfectly reasonable
 
-> Junio C Hamano wrote:
-> > [Will merge to 'next' soon]
-> > 
-> > * tr/gcov (Sun Feb 15 23:25:45 2009 +0100) 8 commits
-> >  - Test git-patch-id
-> >  - Test rev-list --parents/--children
-> >  - Test log --decorate
-> >  - Test fsck a bit harder
-> >  - Test log --graph
-> >  - Test diff --dirstat functionality
-> >  - Test that diff can read from stdin
-> >  - Support coverage testing with GCC/gcov
-> 
-> I noticed two small things that I'd like to fix before this goes
-> 'next', so here they are:
-> 
-> * [1/8] Support coverage testing with GCC/gcov
-> 
->   Changed it so the compilation (but not the testing) uses the same -j
->   flags as the caller, so that compilation can be done in parallel.
->   (It's rather minor compared to the slow testing with optimizations
->   turned off, but still.)
+> I'm trying to make git more obvious and easier to use, rather than
+> find any solution :-)
 
-I strongly disagree that it is minor.  _Especially_ since the tests are 
-slow, -j makes a huge difference.
+I'm sorry I don't know what is obvious about any specific
+number, unless it is 42 ;-)
 
-And also without making the tests slower, -j makes a dramatic difference 
-here:
-
-	$ /usr/bin/time make -j50 test
-	...
-	60.41user 213.92system 2:49.34elapsed 162%CPU
-	(0avgtext+0avgdata 0maxresident)k
-	160inputs+401944outputs
-	(0major+37204627minor)pagefaults 0swaps
-
-	$ /usr/bin/time make test
-	...
-	88.08user 314.96system 7:28.28elapsed 89%CPU
-	(0avgtext+0avgdata 0maxresident)k
-	0inputs+401008outputs
-	(0major+37223584minor)pagefaults 0swaps
-
-Ciao,
-Dscho
+Seriously, forcing *some* default simply because some people
+use it with that value does not make it obvious to anyone
+but those few.  I'm not even arguing about the number; I'd
+hate to have *any* number be the default.
