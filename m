@@ -1,87 +1,66 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH 4/4] remote: new show output style
-Date: Thu, 19 Feb 2009 14:51:51 -0500
-Message-ID: <76718490902191151u7a893139p9f1c3a2c5d2b3267@mail.gmail.com>
-References: <1235020471-59982-1-git-send-email-jaysoffian@gmail.com>
-	 <1235020471-59982-2-git-send-email-jaysoffian@gmail.com>
-	 <1235020471-59982-3-git-send-email-jaysoffian@gmail.com>
-	 <1235020471-59982-4-git-send-email-jaysoffian@gmail.com>
-	 <1235020471-59982-5-git-send-email-jaysoffian@gmail.com>
-	 <499DB309.7000706@kdbg.org>
+From: Caleb Cushing <xenoterracide@gmail.com>
+Subject: Re: merge smart enough to adapt to renames?
+Date: Thu, 19 Feb 2009 14:58:52 -0500
+Message-ID: <81bfc67a0902191158x5f0f92d1p7e4af2f9cda50a12@mail.gmail.com>
+References: <81bfc67a0902182212h578e677ck6029c56cb86f7bce@mail.gmail.com>
+	 <slrngpqquq.j03.sitaramc@sitaramc.homelinux.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Marc Branchaud <marcnarc@xiplink.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Thu Feb 19 20:53:29 2009
+Cc: git@vger.kernel.org
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 19 21:00:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaExW-0004S7-PI
-	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 20:53:23 +0100
+	id 1LaF4J-0007cE-Gw
+	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 21:00:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753497AbZBSTvx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2009 14:51:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753338AbZBSTvw
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 14:51:52 -0500
-Received: from rv-out-0506.google.com ([209.85.198.239]:12073 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753400AbZBSTvw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2009 14:51:52 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so558958rvb.1
-        for <git@vger.kernel.org>; Thu, 19 Feb 2009 11:51:51 -0800 (PST)
+	id S1756235AbZBST64 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2009 14:58:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753571AbZBST64
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 14:58:56 -0500
+Received: from mail-qy0-f11.google.com ([209.85.221.11]:51440 "EHLO
+	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753565AbZBST6z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Feb 2009 14:58:55 -0500
+Received: by qyk4 with SMTP id 4so938986qyk.13
+        for <git@vger.kernel.org>; Thu, 19 Feb 2009 11:58:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=izyw1UUuMkn9EXwPZFa+7U1tr7qAbwhLUk9FGi9ll6M=;
-        b=O4S5FFrxLpuFlzl5h0viBb6OY9fp8ZLoSbwfHyhAoTUdKIgxdjUrn04AiZGny3I+ql
-         uj3m+2O8AWNVTqAu15D5in8rVwuLenn95Cr/GGJtzOXBtJi2XO04EwI0J/2fe7D2CV8h
-         eVSEXG7UUtvlfkNIQdi7GbQtrfqhUlcgYlJPc=
+        bh=id/9rXZBF8/EWvVebJhQWDi4AzF4nvXviJARaSTodaI=;
+        b=aRxQdQkeTViHMEab/8oDVbalpm1gdsSeOl4mL5CU9a6EoKuY4hSWZ1KO0iXAl5ubWp
+         50n5SBEz/r1zPZ30mb6KfysObFnvjPG5QRPx383GG1jEG5w0ASbA1O+oa08ND+SkjfQ1
+         UATC9MJeKqp/J7Nl4H+CxfDguqY3StAMS5CCo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=Fp1LO2PXq/oJvD4OmGBt04wfkPVBcAwES0Gt48mqtV195ua8wv9bA0Rq+TqUAiHoBW
-         5csarRxvQRX8LI30HkRTkhDU9bB1L5QgcdHujDK3tOvKnHn4Z9jNs0MN34m1aiSH0y+T
-         fsBvoLzZQaX7hCvMfODJCk5zQRoSNUrlHjqFY=
-Received: by 10.141.69.12 with SMTP id w12mr1477834rvk.108.1235073111091; Thu, 
-	19 Feb 2009 11:51:51 -0800 (PST)
-In-Reply-To: <499DB309.7000706@kdbg.org>
+        b=SBqu5VgUuYWLCfVnUQY6ZELe7+RoRLrg70g1p4b8S22i8cG7kmiBfYARP8vFG9oF/n
+         pXhAYvI8XRf4fjhtm2r7fsnZYiRr0Tep4lS4avTdrlq4gq2X/RICt4KjHZKkHA+WCFgD
+         liKCIjF7bKxxGAt1okVVSWDWIobOV9IMve8Q8=
+Received: by 10.229.84.213 with SMTP id k21mr4320582qcl.19.1235073532170; Thu, 
+	19 Feb 2009 11:58:52 -0800 (PST)
+In-Reply-To: <slrngpqquq.j03.sitaramc@sitaramc.homelinux.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110737>
 
-On Thu, Feb 19, 2009 at 2:29 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Jay Soffian schrieb:
->>
->>  * remote two
->>   URL: ../two
->> -  HEAD branches:
->> -    another
->> -    master
->> +  HEAD branches: another, master
->
-> Any reason why this list of branches is now horizontal instead of vertical?
+> Yes.  I maintain two copies of something (in different
+> repos) like this...
 
-Not a good one, but I thought it fit better w/how an octopus branch
-listing was displayed.
+nice... now the real kicker if I merge from another branch
+sunrise/reviewed and redirect it's package.mask to
+package.mask/sunrise will git be smart enough to differentiate from
+the gentoo.org one and the sunrise one? I think even more important is
+how would I even tell it to do that once I've moved the first one.
+-- 
+Caleb Cushing
 
-> I must admit that I don't know what is meant by "HEAD branches".
-> Can this list grow large?
-
-The git:// protocol does not currently have a way to determine what a
-remote sym ref is pointed to, so it guesses by matching SHA1s. In
-theory this list is unbounded, in practice I don't think it is likely
-to be large.
-
-I like the suggestion above about how to display the octopus merge
-tho, so I will put this back how it was.
-
-j.
+http://xenoterracide.blogspot.com
