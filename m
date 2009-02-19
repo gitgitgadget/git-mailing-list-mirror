@@ -1,94 +1,85 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Avoid segfault with 'git branch' when the HEAD is
-	detached
-Date: Wed, 18 Feb 2009 19:45:04 -0500
-Message-ID: <20090219004504.GB25808@coredump.intra.peff.net>
-References: <cover.1234980819u.git.johannes.schindelin@gmx.de> <ad680bce413ddea084d84b3fcd7c4cc356c3cb0e.1234980819u.git.johannes.schindelin@gmx.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 4/5] t3301: use test_must_fail instead of !
+Date: Thu, 19 Feb 2009 01:46:28 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902190142440.10279@pacific.mpi-cbg.de>
+References: <200902151711.45099.trast@student.ethz.ch> <20090215181818.GA2291@coredump.intra.peff.net> <e2b179460902170129s7ae613cehe237619be5e84936@mail.gmail.com> <20090217163413.GB31297@sigill.intra.peff.net> <e2b179460902171000s605675dct1f499a9425c3ebb2@mail.gmail.com>
+ <20090217202731.GA16586@coredump.intra.peff.net> <20090218064121.GA16611@coredump.intra.peff.net> <alpine.DEB.1.00.0902181113210.6274@intel-tinevez-2-302> <20090218101615.GA23035@coredump.intra.peff.net> <alpine.DEB.1.00.0902181251160.6274@intel-tinevez-2-302>
+ <20090219003727.GA25808@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Jay Soffian <jaysoffian@gmail.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Feb 19 01:46:59 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Mike Ralphson <mike.ralphson@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Feb 19 01:47:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZx3u-0001x2-Tx
-	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 01:46:47 +0100
+	id 1LZx47-00021G-Ld
+	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 01:47:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751934AbZBSApK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2009 19:45:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751816AbZBSApJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 19:45:09 -0500
-Received: from peff.net ([208.65.91.99]:59213 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751812AbZBSApI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2009 19:45:08 -0500
-Received: (qmail 18117 invoked by uid 107); 19 Feb 2009 00:45:27 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 18 Feb 2009 19:45:27 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Feb 2009 19:45:04 -0500
-Content-Disposition: inline
-In-Reply-To: <ad680bce413ddea084d84b3fcd7c4cc356c3cb0e.1234980819u.git.johannes.schindelin@gmx.de>
+	id S1752219AbZBSAp2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2009 19:45:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752128AbZBSAp2
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 19:45:28 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53893 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751816AbZBSAp1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2009 19:45:27 -0500
+Received: (qmail invoked by alias); 19 Feb 2009 00:45:25 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp029) with SMTP; 19 Feb 2009 01:45:25 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19nJPMpiK9nEM++vpQcJLdK5L3ei0e+hLaCz8MsCJ
+	HpJAyfA4gCsc61
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20090219003727.GA25808@coredump.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110598>
 
-On Wed, Feb 18, 2009 at 07:14:59PM +0100, Johannes Schindelin wrote:
+Hi,
 
-> A recent addition to the ref_item struct was not taken care of, leading
-> to a segmentation fault when accessing the (uninitialized) "dest" member.
+On Wed, 18 Feb 2009, Jeff King wrote:
+
+> On Wed, Feb 18, 2009 at 12:53:37PM +0100, Johannes Schindelin wrote:
 > 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
+> > > Really? Are they not easily replaced with
+> > > 
+> > > -test cond1 -a cond2 -o cond3
+> > > +test cond1 && test cond2 || test cond3
+> > 
+> > ...which is substantially harder to read.
 > 
-> 	Unfortunately not found by valgrind.
+> I don't agree that it is harder to read, but that is beside the point.
+> What is important is whether or not the construct is portable enough to
+> meet git's standards.
+> 
+> "-a" and "-o" are XSI extensions to POSIX, which is usually a sign that
+> there may be problems. However, besides posh (which at this point I
+> think can be considered a compliance-testing shell and not an actual
+> shell in use), I haven't heard of problems in practice. Even FreeBSD's
+> ash derivative supports it (along with parentheses).
+> 
+> So I don't think it needs to be changed (which is what I said in my
+> original message). But I also think saying "-a and -o are necessary" is
+> not true; they can be replaced if it turns out to be a problem.
 
-Meaning that the bug was created after your valgrind testing (which
-takes a painfully long time to run, and so only happens occasionally),
-and therefore you found it by hand? Or meaning that even running the
-test suite with valgrind did not reveal the problem?
+Even if they were in POSIX, I'd suggest not to change the constructs.  
+rebase is _bound_ to be built in.
 
-If the latter, isn't that an indication that this code path was not
-being exercised by the test suite and it should be?
+Even if Stephan is not a fan of my recent changes to rebase -i -p (which I 
+will present on this list once they all work as I want them to), I think I 
+can talk him into continuing the sequencer effort: he was not discussing 
+the design in the open, so he should have expected the process to be 
+dragged out.
 
-Now if only we had a way of measuring test coverage...
+Therefore, any changes to git-rebase--interactive (or for that matter, 
+git-rebase) before the sequencer would be wasted work.
 
-> --- a/builtin-branch.c
-> +++ b/builtin-branch.c
-> @@ -441,7 +441,9 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev, str
->  	    is_descendant_of(head_commit, with_commit)) {
->  		struct ref_item item;
->  		item.name = xstrdup("(no branch)");
-> +		item.len = strlen(item.name);
->  		item.kind = REF_LOCAL_BRANCH;
-> +		item.dest = NULL;
->  		item.commit = head_commit;
->  		if (strlen(item.name) > ref_list.maxwidth)
->  			ref_list.maxwidth = strlen(item.name);
-
-Maybe replace the repeated strlens below with item.len? I.e., squash in
-
-diff --git a/builtin-branch.c b/builtin-branch.c
-index 13e4de8..14d4b91 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -443,8 +443,8 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev, str
- 		item.kind = REF_LOCAL_BRANCH;
- 		item.dest = NULL;
- 		item.commit = head_commit;
--		if (strlen(item.name) > ref_list.maxwidth)
--			ref_list.maxwidth = strlen(item.name);
-+		if (item.len > ref_list.maxwidth)
-+			ref_list.maxwidth = item.len;
- 		print_ref_item(&item, ref_list.maxwidth, verbose, abbrev, 1, "");
- 		free(item.name);
- 	}
-
-Other than that, patch looks obviously correct (and I did a quick scan
-to see that there were no other locations).
-
--Peff
+Ciao,
+Dscho
