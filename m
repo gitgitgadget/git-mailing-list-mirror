@@ -1,99 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] http-push: using error() and warning() as appropriate
-Date: Thu, 19 Feb 2009 07:21:05 -0500
-Message-ID: <20090219122104.GA4602@sigill.intra.peff.net>
-References: <200902190736.49161.johnflux@gmail.com> <20090219081725.GB7774@coredump.intra.peff.net> <20090219120708.GM4371@genesis.frugalware.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	John Tapsell <johnflux@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Thu Feb 19 13:22:43 2009
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] Document git blame --reverse.
+Date: Thu, 19 Feb 2009 13:34:48 +0100
+Message-ID: <1235046888-1782-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 19 13:52:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1La7vM-0006jT-AP
-	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 13:22:40 +0100
+	id 1La8OB-00005E-5D
+	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 13:52:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752990AbZBSMVL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2009 07:21:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753545AbZBSMVK
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 07:21:10 -0500
-Received: from peff.net ([208.65.91.99]:50627 "EHLO peff.net"
+	id S1757516AbZBSMu7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2009 07:50:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757001AbZBSMu6
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 07:50:58 -0500
+Received: from imag.imag.fr ([129.88.30.1]:53837 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752238AbZBSMVK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2009 07:21:10 -0500
-Received: (qmail 23038 invoked by uid 107); 19 Feb 2009 12:21:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 19 Feb 2009 07:21:30 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Feb 2009 07:21:05 -0500
-Content-Disposition: inline
-In-Reply-To: <20090219120708.GM4371@genesis.frugalware.org>
+	id S1755851AbZBSMu5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Feb 2009 07:50:57 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n1JCYnKU001073
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 19 Feb 2009 13:34:49 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1La877-0007LS-1m; Thu, 19 Feb 2009 13:34:49 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1La876-0000TX-V2; Thu, 19 Feb 2009 13:34:48 +0100
+X-Mailer: git-send-email 1.6.2.rc1.14.g7f87d
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 19 Feb 2009 13:34:49 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110684>
 
-On Thu, Feb 19, 2009 at 01:07:08PM +0100, Miklos Vajna wrote:
+This was introduced in 85af7929ee125385c2771fa4eaccfa2f29dc63c9 but
+not documented outside the commit message.
 
-> Change three occurrences of using inconsistent error/warning reporting
-> by using the relevant error() / warning() calls to be consistent with
-> the rest of the code.
-> 
-> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
-> ---
-> 
-> On Thu, Feb 19, 2009 at 03:17:25AM -0500, Jeff King <peff@peff.net> wrote:
-> > http-push seems to be the odd man out. It contains one fprintf(stderr,
-> > "Error: ...") and one totally bogus error("Error: ..."), which will
-> > print "error: Error: ...". Perhaps it would be better to scan through
-> > the code and switch to using error() and warning() as appropriate.
-> 
-> I found these 3 occurrences.
-
-A few more are in the diff below. But there are even more:
-
-  - several "Warning: " lines in *.sh
-
-  - some warnings actually come with "WARNING:" on every line. I don't
-    think those should be changed, as they are obviously a more
-    strenuous warning.
-
-  - there are several places that manually print "warning: " via
-    fprintf. I suppose those can be cleaned up to use warning(), too.
-
--Peff
-
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
-diff --git a/builtin-mv.c b/builtin-mv.c
-index 01270fe..fc6bd82 100644
---- a/builtin-mv.c
-+++ b/builtin-mv.c
-@@ -172,9 +172,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 				 * check both source and destination
- 				 */
- 				if (S_ISREG(st.st_mode) || S_ISLNK(st.st_mode)) {
--					fprintf(stderr, "Warning: %s;"
--							" will overwrite!\n",
--							bad);
-+					warning("%s; will overwrite!", bad);
- 					bad = NULL;
- 				} else
- 					bad = "Cannot overwrite";
-diff --git a/http-walker.c b/http-walker.c
-index 0dbad3c..91abea7 100644
---- a/http-walker.c
-+++ b/http-walker.c
-@@ -235,7 +235,7 @@ static void finish_object_request(struct object_request *obj_req)
- 	close(obj_req->local); obj_req->local = -1;
+Actually, this doesn't fix the output of "git blame -h".
+I guess a parseopt specialist could do that with a trivial patch.
+
+ Documentation/blame-options.txt |    7 +++++++
+ Documentation/git-blame.txt     |    2 +-
+ 2 files changed, 8 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
+index 1ab1b96..7f28432 100644
+--- a/Documentation/blame-options.txt
++++ b/Documentation/blame-options.txt
+@@ -41,6 +41,13 @@ of lines before or after the line given by <start>.
+ -S <revs-file>::
+ 	Use revs from revs-file instead of calling linkgit:git-rev-list[1].
  
- 	if (obj_req->http_code == 416) {
--		fprintf(stderr, "Warning: requested range invalid; we may already have all the data.\n");
-+		warning("requested range invalid; we may already have all the data.");
- 	} else if (obj_req->curl_result != CURLE_OK) {
- 		if (stat(obj_req->tmpfile, &st) == 0)
- 			if (st.st_size == 0)
++--reverse::
++	Walk history forward instead of backward. Instead of showing
++	the revision in which a line appeared, this shows the last
++	revision in which a line has existed. This requires a range of
++	revision like START..END where the path to blame exists in
++	START.
++
+ -p::
+ --porcelain::
+ 	Show in a format designed for machine consumption.
+diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
+index 6999cf2..5aa1dcc 100644
+--- a/Documentation/git-blame.txt
++++ b/Documentation/git-blame.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ [verse]
+ 'git blame' [-c] [-b] [-l] [--root] [-t] [-f] [-n] [-s] [-p] [-w] [--incremental] [-L n,m]
+             [-S <revs-file>] [-M] [-C] [-C] [--since=<date>]
+-            [<rev> | --contents <file>] [--] <file>
++            [<rev> | --contents <file> | --reverse <rev>] [--] <file>
+ 
+ DESCRIPTION
+ -----------
+-- 
+1.6.2.rc1.14.g7f87d
