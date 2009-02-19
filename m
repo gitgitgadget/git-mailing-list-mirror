@@ -1,153 +1,160 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Make repack less likely to corrupt repository
-Date: Thu, 19 Feb 2009 23:44:37 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902192337040.6223@intel-tinevez-2-302>
-References: <1234140299-29785-1-git-send-email-robin.rosenberg@dewire.com> <200902151942.15055.robin.rosenberg.lists@dewire.com> <7vvdrbjwbt.fsf@gitster.siamese.dyndns.org> <200902192321.17802.robin.rosenberg.lists@dewire.com>
+From: Kyle Moffett <kyle@moffetthome.net>
+Subject: Re: [RFC/PATCHv2] git submodule split
+Date: Thu, 19 Feb 2009 18:04:36 -0500
+Message-ID: <f73f7ab80902191504p2745d2c0m20a9762013fb4501@mail.gmail.com>
+References: <431341160902121350x45076c8cj26afab0b7a51cac5@mail.gmail.com>
+	 <1234578258-48870-1-git-send-email-git@randomhacks.net>
+	 <7v3aeh3a84.fsf@gitster.siamese.dyndns.org>
+	 <431341160902132117s1696c975mbf20dfbdc65a7df3@mail.gmail.com>
+	 <8c5c35580902140103o3e5dd091qe2a18ca52b6fe44a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	spearce@spearce.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Thu Feb 19 23:46:21 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Eric Kidd <git@randomhacks.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Ping Yin <pkufranky@gmail.com>
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 20 00:06:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaHep-0006fs-Kr
-	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 23:46:16 +0100
+	id 1LaHy4-0005j4-Ih
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 00:06:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754717AbZBSWon (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2009 17:44:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754048AbZBSWom
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 17:44:42 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33056 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754223AbZBSWol (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2009 17:44:41 -0500
-Received: (qmail invoked by alias); 19 Feb 2009 22:44:38 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp051) with SMTP; 19 Feb 2009 23:44:38 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18/KeljLUc/bSIaO9Scclvsv/wN8KWXY4acPsxJKp
-	wqQ3T4bdVvJox6
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <200902192321.17802.robin.rosenberg.lists@dewire.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.49
+	id S1755064AbZBSXEj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2009 18:04:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755014AbZBSXEj
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 18:04:39 -0500
+Received: from yx-out-2324.google.com ([74.125.44.30]:58291 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754722AbZBSXEi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Feb 2009 18:04:38 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so265308yxm.1
+        for <git@vger.kernel.org>; Thu, 19 Feb 2009 15:04:36 -0800 (PST)
+Received: by 10.100.119.17 with SMTP id r17mr169102anc.130.1235084676699; Thu, 
+	19 Feb 2009 15:04:36 -0800 (PST)
+In-Reply-To: <8c5c35580902140103o3e5dd091qe2a18ca52b6fe44a@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110764>
 
-Hi,
+On Sat, Feb 14, 2009 at 4:03 AM, Lars Hjemli <hjemli@gmail.com> wrote:
+> On Sat, Feb 14, 2009 at 06:17, Eric Kidd <git@randomhacks.net> wrote:
+>> On Fri, Feb 13, 2009 at 11:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Eric Kidd <git@randomhacks.net> writes:
+>>>> ...
+>>>> If the submodule has moved around the source tree, specify one or more
+>>>> values for alternate_dir.  To specify the URL of the newly created
+>>>> repository (for use in .gitmodules), use the --url parameter.
+>>>
+>>> Unfortunately, I do not think we have designed fully (nor implemented at
+>>> all) behaviour to check out different points of history that has the same
+>>> submodule moved around in the superproject tree.
+>>>
+>>> There were several unconcluded discussions done in the past (and I admit I
+>>> participated in a few of them), but it may be hard to use the resulting
+>>> repository out of this tool.
+>>
+>> Thank you for looking at this proposal!
+>>
+>> I think that the resulting repository is usable (though it could
+>> certainly be better). In particular, the following commands will
+>> always give you a working checkout:
+>>
+>>  git checkout any-version
+>>  git submodule update --init
+>>
+>> The unit tests for git-submodule-split.sh actually walk through the
+>> entire history and run 'git submodule update --init' at each revision.
+>> This works correctly because git-submodule-split creates the necessary
+>> .gitmodules entries for each revision, and includes the
+>> submodule.*.url value that you specify.
+>>
+>> Unfortunately, this means that whenever the submodule moves to a new
+>> location in the tree, 'git submodule --init' will actually have to
+>> clone it again. That's not a perfect situation, but it will work for
+>> reasonably small submodules.
+>
+> <hand-waving>
+> I didn't look at the patch, but if the submodule uses a single
+> module-name while moving around, the re-cloning problem would by
+> solved if the submodule git-dir was stored inside the git-dir of the
+> containing repository  (by using the git-file mechanism). Maybe I
+> should try to finally implement this...
+> </hand-waving>
 
-On Thu, 19 Feb 2009, Robin Rosenberg wrote:
+We use submodules at my workplace to keep track of a variety of
+closely-related projects (branched from each other).  On account of
+some deficiencies in the interface of the GIT we're using (including a
+few that are still present), we have a bunch of custom scripts to
+clone and check out the whole mess, but it goes something like this:
 
-> Here is a new version on my ammendments to Junios patch.
+In super/.git/config in a checkout:
 
-s/on/of/
+    [remote "origin"]
+        fetch = +refs/heads/*:refs/remotes/origin/*
+        push = +refs/heads/*:refs/heads/kmoffett-branches/*
+        fetch = +refs/projects/heads/*:refs/projects/remotes/origin/*
+        push = +refs/projects/heads/*:refs/projects/heads/kmoffett-branches/*
 
-> 
-> -- robin
-> 
-> From 67347a63ce5ba324a750eb2c1ed7b9b0260d966a Mon Sep 17 00:00:00 2001
-> From: Robin Rosenberg <robin.rosenberg@dewire.com>
-> Date: Thu, 19 Feb 2009 23:18:59 +0100
-> Subject: [PATCH] Recover from some known repack failure situations
-> 
-> For the know problems that we can recover from we exit
-> with code 2 instead of 1.
+    [submodule "projects/FOO"]
+        url = ./projects/FOO/.git
 
-s/know/known/
 
-> Also removed the old packs when repack succeeds
+In super/.gitmodules:
 
-s/removed/remove/  s/$/./
+    [submodule "projects/FOO"]
+        path = projects/FOO
+        url = ./projects/FOO/.git
 
-> 
-> Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
-> ---
 
-I'd suggest a complete rewording of the commit message, though:
+In sub/.git/config (IE: super/projects/FOO/.git/config)
 
-	repack: exit with status 2 for non-fatal errors
+    [remote "origin"]
+        url = ../..
+        push = +refs/heads/*:refs/projects/heads/FOO/*
+        fetch = +refs/projects/heads/*:refs/remotes/parent/*
+        fetch = +refs/projects/remotes/*:refs/remotes/*
 
-	Under certain circumstances, e.g. on Windows, when a pack file 
-	is still in use, deleting files can fail.
+    [remote "parent"]
+        ${same as remote.origin}
 
-	This is a non-fatal error condition, as the repository is not 
-	corrupted as a consequence; however, it is an error nevertheless, 
-	as $GIT_DIR takes more space than it should.
 
-	We indicate that special condition with an exit status 2.
+In sub/.git/objects/info/alternates (IE:
+super/projects/FOO/.git/objects/info/alternates)
 
-> diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-> index aaa8852..e5ecd66 100644
-> --- a/Documentation/git-repack.txt
-> +++ b/Documentation/git-repack.txt
-> @@ -24,6 +24,12 @@ associated index file.
->  Packs are used to reduce the load on mirror systems, backup
->  engines, disk storage, etc.
->  
-> +On Windows repacking may fail because packs that should be replaced
-> +are locked by other programs. In this case the program will recover
-> +from the situation with an exit code of 2. The user does not have
-> +to take any action to recover. For repacking to succeed the user
-> +mustc stop the offending program or wait for it to close the packs.
+    ../../../../.git/objects
 
-s/The user does not have to take any action to recover. //
 
-(It is not true)
+In this environment, basically *all* objects are kept in the
+"superproject".  When doing a local commit into a subproject, the new
+objects are first stored there (is there any way to change that?), but
+on the first "git push" in the subproject they will be pushed up to
+the parent's objects directory and the next GC of the child project
+will clean them up.  All of the child branches are stored in
+"refs/projects", so they don't show up by default in various "git
+branch", etc, commands, but it's trivial to ensure they get pushed and
+pulled appropriately.
 
-s/mustc/must/
+Essentially the "superproject" consists of our project-management
+environment, with the subprojects being each individual project, which
+may be entirely independent.  There is a relatively tight feature
+coupling between the per-project scripts and the version of the
+management environment, so this works out relatively nicely for our
+uses.
 
-> +
->  OPTIONS
->  -------
->  
-> diff --git a/git-repack.sh b/git-repack.sh
-> index 0f13043..519c83a 100755
-> --- a/git-repack.sh
-> +++ b/git-repack.sh
-> @@ -136,8 +136,15 @@ then
->  		do
->  			echo >&2 "WARNING:   old-$file -> $file"
->  		done
-> +		exit 1
->  	fi
-> -	exit 1
-> +	echo >&2 "INFO: We recovered from the repack error, but your repo"
-> +	echo >&2 "INFO: is probably suboptimally packed. You may try to repack"
-> +	echo >&2 "INFO: later. A common reason for repacking failure is that"
-> +	echo >&2 "INFO: a Windows program was locking one of the old pack files."
-> +	echo >&2 "INFO: To repack successfully you may have to close that program"
+A clone by default will only get the superproject, if you want
+subprojects you have to add the appropriate branch refs to the
+.git/config file (as seen in the above example).  This is handy if
+you're only working on one of the particular projects.  Having them
+all as separate branches cloned from each other does make it very easy
+to diff/merge/cherry-pick between them, even though they are
+effectively independent.
 
-Two long lines.
-
-> +	echo >&2 "INFO: before repacking."
-> +	exit 2
->  fi
->  
->  # Now the ones with the same name are out of the way...
-> @@ -152,6 +159,15 @@ do
->  	exit
->  done
->  
-> +# Remove the "old-" files
-
-s/old-/old-pack-/
-
-> +for name in $names
-> +do
-> +	rm -f "$PACKDIR/old-pack-$name.idx"
-> +	rm -f "$PACKDIR/old-pack-$name.pack"
-> +done
-> +
-> +# End of pack replacement.
-
-Is this comment really needed here?
-
-Ciao,
-Dscho
+Cheers,
+Kyle Moffett
