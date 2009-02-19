@@ -1,83 +1,68 @@
-From: Kjetil Barvik <barvik@broadpark.no>
-Subject: [PATCH/RFC v2 3/3] verify_uptodate(): add ce_uptodate(ce) test
-Date: Thu, 19 Feb 2009 21:08:30 +0100
-Message-ID: <e00cfda6e7d884680f0d20ad714465672bb9a232.1235071656.git.barvik@broadpark.no>
-References: <cover.1235071656.git.barvik@broadpark.no>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 1/2] Introduce the function strip_path_suffix()
+Date: Thu, 19 Feb 2009 21:12:07 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902192110290.6223@intel-tinevez-2-302>
+References: <499C63E7.5040306@kdbg.org> <f6344cbba22e049806796f4920e229fb2e539d5c.1235070304u.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Kjetil Barvik <barvik@broadpark.no>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 19 21:10:49 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j6t@kdbg.org>, Steffen Prohaska <prohaska@zib.de>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Feb 19 21:13:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaFE8-0003d0-Gu
-	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 21:10:32 +0100
+	id 1LaFHD-00057H-Gh
+	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 21:13:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752555AbZBSUIm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2009 15:08:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752426AbZBSUIk
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 15:08:40 -0500
-Received: from osl1smout1.broadpark.no ([80.202.4.58]:52173 "EHLO
-	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752396AbZBSUIh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2009 15:08:37 -0500
-Received: from osl1sminn1.broadpark.no ([80.202.4.59])
- by osl1smout1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KFB00FW8XA9LA20@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Thu, 19 Feb 2009 21:08:33 +0100 (CET)
-Received: from localhost.localdomain ([80.203.78.205])
- by osl1sminn1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTPA id <0KFB00L04XA6CY10@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Thu, 19 Feb 2009 21:08:33 +0100 (CET)
-X-Mailer: git-send-email 1.6.1.349.g99fa5
-In-reply-to: <cover.1235071656.git.barvik@broadpark.no>
+	id S1757412AbZBSUMR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2009 15:12:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757385AbZBSUMR
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 15:12:17 -0500
+Received: from mail.gmx.net ([213.165.64.20]:47758 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756454AbZBSUMQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Feb 2009 15:12:16 -0500
+Received: (qmail invoked by alias); 19 Feb 2009 20:12:14 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp018) with SMTP; 19 Feb 2009 21:12:14 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18SOskvFeYS4ppDBGU6aA2O+tYKJhaMB5ZafLY5n4
+	d+hfigrWWPriI7
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <f6344cbba22e049806796f4920e229fb2e539d5c.1235070304u.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.68
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110742>
 
-If we inside verify_uptodate() can already tell from the ce entry that
-it is already uptodate by testing it with ce_uptodate(ce), there is no
-need to call lstat(2) and ie_match_stat() afterwards.
+Hi,
 
-And, reading from the commit log message from:
+On Thu, 19 Feb 2009, Johannes Schindelin wrote:
 
-    commit eadb5831342bb2e756fa05c03642c4aa1929d4f5
-    Author: Junio C Hamano <gitster@pobox.com>
-    Date:   Fri Jan 18 23:45:24 2008 -0800
+> The function strip_path_suffix() will try to strip a given suffix from 
+> a given path.  The suffix must start at a directory boundary (i.e. "core" 
+> is not a path suffix of "libexec/git-core", but "git-core" is).
+> 
+> Arbitrary runs of directory separators ("slashes") are assumed identical.
+> 
+> Example:
+> 
+> 	strip_path_suffix("C:\\msysgit/\\libexec\\git-core",
+> 		"libexec///git-core", &prefix)
+> 
+> will set prefix to "C:\\msysgit" and return 0.
 
-    Avoid running lstat(2) on the same cache entry.
+Aargh, of course I managed to forget to adjust the example.  Here it goes:
 
-this also seems to be correct usage of the ce_uptodate() macro
-introduced by that patch.
+	prefix = strip_path_suffix("C:\\msysgit/\\libexec\\git-core",
+			"libexec///git-core");
 
-This will avoid lots of lstat(2) calls in some cases, for example
-by running the 'git checkout' command.
+will set prefix to "C:\\msysgit".
 
-Signed-off-by: Kjetil Barvik <barvik@broadpark.no>
----
- unpack-trees.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 44714cc..1687aee 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -450,7 +450,7 @@ static int verify_uptodate(struct cache_entry *ce,
- {
- 	struct stat st;
- 
--	if (o->index_only || o->reset)
-+	if (o->index_only || o->reset || ce_uptodate(ce))
- 		return 0;
- 
- 	if (!lstat(ce->name, &st)) {
--- 
-1.6.1.349.g99fa5
+Ciao,
+Dscho
