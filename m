@@ -1,128 +1,63 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: [PATCH 1/6] Modify description file to say what this file is
-Date: Thu, 19 Feb 2009 10:18:33 +0000
-Message-ID: <43d8ce650902190218v513b8f58n8338086af41b79d9@mail.gmail.com>
-References: <200902190736.00462.johnflux@gmail.com>
-	 <7vy6w2n3cz.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: git rebase -i
+Date: Thu, 19 Feb 2009 05:20:53 -0500
+Message-ID: <20090219102053.GA17417@coredump.intra.peff.net>
+References: <43d8ce650902190121v2e18aac1rfaa64a4ce6e799a3@mail.gmail.com> <A3E3A7A0-F03F-4C8B-B3F8-756B0E89798C@wincent.com> <43d8ce650902190155m4de23643r8a9d3c35686ea4e9@mail.gmail.com> <2A7CAA9F-DB42-4782-BF61-41E8DA577DF2@wincent.com> <20090219101154.GB16119@coredump.intra.peff.net> <6887C6DB-E9C8-4DC8-BD1E-C20E92271FA5@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 19 11:20:07 2009
+Content-Type: text/plain; charset=utf-8
+Cc: John Tapsell <johnflux@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Thu Feb 19 11:22:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1La60i-0003zf-Er
-	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 11:20:04 +0100
+	id 1La62x-0004w3-4r
+	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 11:22:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754629AbZBSKSg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2009 05:18:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754485AbZBSKSf
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 05:18:35 -0500
-Received: from yx-out-2324.google.com ([74.125.44.29]:30692 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753755AbZBSKSe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2009 05:18:34 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so124444yxm.1
-        for <git@vger.kernel.org>; Thu, 19 Feb 2009 02:18:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ipsETJdfG+AMCssvndzaQ4l+OZ04oWuQR2U/aOwztzk=;
-        b=LosXpCwYn7h/uEbtA1Rg3wXlFjFGJb1crEDykbTA49YMtYHPYY1bca+xX5ytMgonpF
-         7K5F7fnL3t7aUxcrB9X4L/Ff8ubP6br5A+3uiHVa70RgW1wdkG89VKplE5MyHcP23YBH
-         jH+koiv+HTK9B/O6PR8OiPD/3C0Y65DXF+xAI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=aHeFlmjRDrZka5F6oXJP2xTU4NGmRin1jm7JMN6qgf/nwd/fB31jDlxVQyuMJwBBEo
-         H+mxDMVFP/H2HOzMAUI7xDgpMKEUKmgzwgEWaKpXMgpCap8Bhd9hC0O4v915ANxBMF7c
-         BAJDH0QGFb3vBFtb23Y7tjvASdy8kSCwaLFms=
-Received: by 10.150.11.14 with SMTP id 14mr824027ybk.180.1235038713519; Thu, 
-	19 Feb 2009 02:18:33 -0800 (PST)
-In-Reply-To: <7vy6w2n3cz.fsf@gitster.siamese.dyndns.org>
+	id S1753150AbZBSKUz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2009 05:20:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752941AbZBSKUz
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 05:20:55 -0500
+Received: from peff.net ([208.65.91.99]:40104 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751526AbZBSKUz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Feb 2009 05:20:55 -0500
+Received: (qmail 21636 invoked by uid 107); 19 Feb 2009 10:21:16 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 19 Feb 2009 05:21:16 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Feb 2009 05:20:53 -0500
+Content-Disposition: inline
+In-Reply-To: <6887C6DB-E9C8-4DC8-BD1E-C20E92271FA5@wincent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110668>
 
-2009/2/19 Junio C Hamano <gitster@pobox.com>:
-> [PATCH 1/6] Modify description file to say what this file is
->
-> Looks good.
->
-> [PATCH 2/6] Google has renamed the imap folder
->
-> Jeff already pointed out an obvious thinko; I could fix-up locally (just
-> ask).
->
-> [PATCH 3/6] Improve error message for branching an existing branch
->
-> The extra sentence is useless noise to annoy users and make them shout
-> "none of your business!" back to git.
->
-> I would probably get this error message "already exists." more from
-> forgetting to say "-f" in this sequence:
->
->    $ git branch -f pu next
->    $ git checkout pu
->    $ sh rebuild-pu-script
->
-> to rebuild pu on top of updated next, and "did you mean to checkout?"
-> misses the mark by a kilometer.
->
-> [PATCH 4/6] Improve error message for git-filter-branch
->
-> Looks good, with Sverre's rewording would be better, which I could locally
-> squash in.  Needs signoff, which I could locally forge (just ask to fix-up
-> and forge).
->
-> [PATCH 5/6] Change output "error: " to "Error: " etc
->
-> Jeff is right, and the patch is wrong.
->
-> [PATCH 6/6] Mention to the user that they can reorder commits
->
-> The placement of the new message does not feel right, as adding anything
-> near "If you remove ... WILL BE LOST" will cloud out that message which is
-> more important.
->
-> I think it should come near or perhaps even before Commands, if we were to
-> add anything here.
->
-> But I am afraid that the proposed new message will hurt the clueless users
-> more than it would help them.
->
-> The cheat-sheet at the top is not for learning what the command can do for
-> the first time.  It is there to remind people (who already have general
-> idea on what can be done) how exactly the commands are spelled.  If
-> somebody does not even know that the purpose of rebase-i is to amend and
-> resequence, he will more likely destroy his history by blindly using the
-> command without knowing what is going on, than making a lucky guess.
->
-> For that reason, a more appropriate line to add, if we were to add
-> anything, might be:
->
->  #  s, squash = use commit, but meld into previous commit
->  #
-> +# If you do not know what is going on, remove everything and exit the editor!
-> +#
->  # If you remove a line here THAT COMMIT WILL BE LOST.
->  # However, if you remove everything, the rebase will be aborted.
->
->
+On Thu, Feb 19, 2009 at 11:15:51AM +0100, Wincent Colaiuta wrote:
 
-Junio,
+>> Actually, I don't think that's true anymore with "rebase -i"; it is
+>> probably most convenient way in core git to rewrite the history of a
+>> patchset. E.g., a core part of my workflow as a contributor is:
+>>
+>>  $ git checkout -b jk/topic origin
+>>  $ while true; do hack hack hack; commit commit commit; done
+>>  $ git rebase -i origin
+>>
+>> which gives me a list of everything on the topic, ready to be
+>> reordered, squashed, or edited as appropriate.
+>
+> Yes, I do the same. But notice that you did "git rebase -i -- 
+> >>>origin<<<---". Seems to me you are definitely _thinking_ in terms of 
+> your topic _branch_ and not in terms of "the last few commits".
 
-  Thanks - I like everything you said.  Could you go ahead and commit
-the accepted ones, with all the fix ups mentioned?
+Perhaps. I think of it as "the set of commits not yet published"
+(since I publish only by sending patches to Junio, and he is my origin)
+and nothing to do with the topic branch itself.
 
-Thanks!
+But we are just quibbling over minor terminology. I think we both agree
+that HEAD~10 is silly and abitrary.
 
-JohnFlux
+-Peff
