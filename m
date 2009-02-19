@@ -1,83 +1,117 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] Expand explanation of the use of + in git push refspecs.
-Date: Thu, 19 Feb 2009 19:20:15 +0100
-Message-ID: <bd6139dc0902191020i787e56a7tbe88cedfc2cb4028@mail.gmail.com>
-References: <20090219180258.2C7983360A6@rincewind>
+From: Peter Oberndorfer <kumbayo84@arcor.de>
+Subject: [PATCH] git-svn: try to read the dcommit url from the config file
+Date: Thu, 19 Feb 2009 19:30:10 +0100
+Message-ID: <200902191930.10139.kumbayo84@arcor.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Thu Feb 19 19:22:29 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 19 19:37:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaDXE-0005X7-DN
-	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 19:22:08 +0100
+	id 1LaDll-0003ZR-Pc
+	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 19:37:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755012AbZBSSUV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2009 13:20:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754695AbZBSSUV
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 13:20:21 -0500
-Received: from fg-out-1718.google.com ([72.14.220.157]:43107 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754071AbZBSSUS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2009 13:20:18 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so1284486fgg.17
-        for <git@vger.kernel.org>; Thu, 19 Feb 2009 10:20:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=9vZ37ayl8wsNXzDIfx6QKrN5sPtL+hUDUoeFUUR7qn8=;
-        b=qNkZbqKMc2eaNF6iF1aEDUxK4AyTbMA3duYNnyHcjs8fVckMYiBO7KcBqwPRGt/rhg
-         SBv1qOth1Q4lhexEncXFh6C4ucpkep3HYbRYbRcvqptmHhI/hFRsGg+86aVFXfKadVc/
-         8R3p14HUtMQc2PAJadIqJV6BloBUZ+Yc+A/Qk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=TA7j/IAgiy5k3pq24Hw8bvzzq4KtYEbWSbYnUwRtytKqT1XVRMMXAZE0pwisDzZiW1
-         UzlqYNHoBgXkU8s+Mj5hPFUmc59iSCEKc6V9QgoxwVs9VJQlrUMweJp/SV5V00LEglaZ
-         sxEuJqy2R78kE3c7magcTzRk7fio67nNCDtdQ=
-Received: by 10.86.65.9 with SMTP id n9mr495576fga.61.1235067615872; Thu, 19 
-	Feb 2009 10:20:15 -0800 (PST)
-In-Reply-To: <20090219180258.2C7983360A6@rincewind>
-X-Google-Sender-Auth: 646065e9927e4cbf
+	id S1752093AbZBSSfm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2009 13:35:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751725AbZBSSfl
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 13:35:41 -0500
+Received: from mail-in-02.arcor-online.net ([151.189.21.42]:54529 "EHLO
+	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751531AbZBSSfk (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Feb 2009 13:35:40 -0500
+Received: from mail-in-01-z2.arcor-online.net (mail-in-01-z2.arcor-online.net [151.189.8.13])
+	by mx.arcor.de (Postfix) with ESMTP id A60773FE392
+	for <git@vger.kernel.org>; Thu, 19 Feb 2009 19:35:38 +0100 (CET)
+Received: from mail-in-06.arcor-online.net (mail-in-06.arcor-online.net [151.189.21.46])
+	by mail-in-01-z2.arcor-online.net (Postfix) with ESMTP id 738092BF27C
+	for <git@vger.kernel.org>; Thu, 19 Feb 2009 19:35:38 +0100 (CET)
+Received: from oberndorfer.lan (91-114-188-13.adsl.highway.telekom.at [91.114.188.13])
+	(Authenticated sender: kumbayo84@arcor.de)
+	by mail-in-06.arcor-online.net (Postfix) with ESMTPSA id EB80A39A66B
+	for <git@vger.kernel.org>; Thu, 19 Feb 2009 19:35:37 +0100 (CET)
+X-DKIM: Sendmail DKIM Filter v2.6.0 mail-in-06.arcor-online.net EB80A39A66B
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1235068538; bh=awi3xivv1S8Vse/Adrb2DwrZHVOnDxSdgCJyFpIcGWQ=;
+	h=From:Date:Subject:To:MIME-Version:Content-Transfer-Encoding:
+	 Message-Id; b=ZoP/F3g6zIaSeB9XjuGQoy7aiZwFVdXhi1gS3hBV6HZZvJW/pUis
+	Ia6bCwzTIfsJdO05jW+YhL5ymv0hnT7xwdqaYlJpdS5NibkQQdE1FtvNS3uOIyAMjhB
+	ecJRZdHBW1CppWebxS9ZAY6+K4/IMT9FK3sZWvSf0XyKpODpX6mI=
+X-Mailbox-Line: From 0edfa51119a44068050339a8e6bdbfc75afdaa5f Mon Sep 17 00:00:00 2001
+Content-Disposition: inline
+X-Virus-Scanned: ClamAV 0.94.2/9013/Thu Feb 19 17:34:10 2009 on mail-in-06.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110728>
 
-On Thu, Feb 19, 2009 at 18:39, Marc Branchaud <marcnarc@xiplink.com> wrote:
->  Documentation/git-push.txt |   40 ++++++++++++++++++++++++++++++++--------
->  1 files changed, 32 insertions(+), 8 deletions(-)
+The commit url is determined in the following order
+--commit-url commandline
+svn-remote.<name>.dcommiturl
+svn-remote.<name>.url
 
-Most of this is under examples, so I don't think this is cluttering
-the man page too much.
+Signed-off-by: Peter Oberndorfer <kumbayo84@arcor.de>
+---
 
-> +is recommended only for private, unshared repositories.)  See EXAMPLES
+I find it really boring to always specify --commit-url on the git svn dcommit command line.
+And it tends to fall out of my bash_history since i do not commit often.
+Setting up the commit url 1 time should be enough.
 
-I don't know about this line, I reckon Junio has a + refspec for the
-pu branch, that is, it's ok to use a + refspec if you let others know
-that the branch may be 'rebased'.
+I feel that the config key: part im the documentation should get more exposure or explanation.
+Maybe somebody can suggest some wording?
 
-> +       branch.  *This can abandon commits in the origin repository.*
+Also the dcommiturl name is still a suggestion
 
-I liked your wording with the commits becoming dangling better.
+My kdelibs git-svn config file no looks like this:
+
+[svn-remote "svn"]
+	url = svn://anonsvn.kde.org/home/kde/trunk/KDE/kdelibs
+	fetch = :refs/remotes/git-svn
+	dcommiturl = svn+ssh://username@svn.kde.org/home/kde/trunk/KDE/kdelibs
 
 
-> +That is, commits A and B would belong to an unreachable branch without a
-> +symbolic name.
+ Documentation/git-svn.txt |    2 ++
+ git-svn.perl              |   12 +++++++++++-
+ 2 files changed, 13 insertions(+), 1 deletions(-)
 
-Perhaps it would be better to say those commits "would no longer
-belong to a branch with a symbolic name, and thus become unreachable"?
-
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 3d45654..0d11428 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -169,6 +169,8 @@ and have no uncommitted changes.
+ 	reused if a user is later given access to an alternate transport
+ 	method (e.g. `svn+ssh://` or `https://`) for commit.
+ 
++config key: svn-remote.<name>.dcommiturl
++
+ 	Using this option for any other purpose (don't ask)
+ 	is very strongly discouraged.
+ --
+diff --git a/git-svn.perl b/git-svn.perl
+index 83cb36f..2ad3603 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -438,7 +438,17 @@ sub cmd_dcommit {
+ 		die "Unable to determine upstream SVN information from ",
+ 		    "$head history.\nPerhaps the repository is empty.";
+ 	}
+-	$url = defined $_commit_url ? $_commit_url : $gs->full_url;
++
++	if (defined $_commit_url) {
++		$url = $_commit_url;
++	} else {
++		$url = eval { command_oneline('config', '--get',
++			      "svn-remote.$gs->{repo_id}.dcommiturl") };
++		if (!$url) {
++			$url = $gs->full_url
++		}
++	}
++
+ 	my $last_rev = $_revision if defined $_revision;
+ 	if ($url) {
+ 		print "Committing to $url ...\n";
 -- 
-Cheers,
-
-Sverre Rabbelier
+1.6.1.3
