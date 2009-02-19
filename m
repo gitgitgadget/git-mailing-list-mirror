@@ -1,84 +1,131 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH 8/8] refs: use warning() instead of fprintf(stderr,
-	"warning: ")
-Date: Thu, 19 Feb 2009 13:55:44 +0100
-Message-ID: <628e1950be4069a614567fd4fc06aa2ce95a1004.1235047192.git.vmiklos@frugalware.org>
-References: <200902190736.49161.johnflux@gmail.com> <20090219081725.GB7774@coredump.intra.peff.net> <20090219120708.GM4371@genesis.frugalware.org> <20090219122104.GA4602@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, John Tapsell <johnflux@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 19 13:57:15 2009
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] More friendly message when locking the index fails.
+Date: Thu, 19 Feb 2009 13:54:18 +0100
+Message-ID: <1235048058-6181-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <7v63jn13qd.fsf@gitster.siamese.dyndns.org>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 19 14:09:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1La8Sp-0001wB-7P
-	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 13:57:15 +0100
+	id 1La8c4-0005XP-PB
+	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 14:06:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755310AbZBSMzq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2009 07:55:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754598AbZBSMzq
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 07:55:46 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:47478 "EHLO virgo.iok.hu"
+	id S1753776AbZBSNFV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2009 08:05:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752813AbZBSNFT
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 08:05:19 -0500
+Received: from imag.imag.fr ([129.88.30.1]:63418 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753165AbZBSMzq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2009 07:55:46 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id F2858580D1;
-	Thu, 19 Feb 2009 13:55:45 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id B4620446A6;
-	Thu, 19 Feb 2009 13:55:44 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 012BB11B877C; Thu, 19 Feb 2009 13:55:44 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <cover.1235047192.git.vmiklos@frugalware.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752469AbZBSNFS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Feb 2009 08:05:18 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n1JCsIdH003590
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 19 Feb 2009 13:54:18 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1La8Py-00088n-DW; Thu, 19 Feb 2009 13:54:18 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1La8Py-0001cL-BD; Thu, 19 Feb 2009 13:54:18 +0100
+X-Mailer: git-send-email 1.6.2.rc1.14.g7f87d
+In-Reply-To: <7v63jn13qd.fsf@gitster.siamese.dyndns.org>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 19 Feb 2009 13:54:18 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110695>
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+Just saying that index.lock exists doesn't tell the user _what_ to do
+to fix the problem. We should give an indication that it's normally
+safe to delete index.lock after making sure git isn't running here.
+
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- refs.c |    8 +++-----
- 1 files changed, 3 insertions(+), 5 deletions(-)
+> Perhaps it is a good idea to introduce
+> 
+> NORETURN void unable_to_lock_index_die(const char *path, int err)
+> {
+> 	if (err == EEXIST)
+> 	        die(...);
+>  	else
+>         	die(...);
+> }
+> 
+> in lockfile.c and call it from these two places you are touching?
 
-diff --git a/refs.c b/refs.c
-index 6eb5f53..fd96824 100644
---- a/refs.c
-+++ b/refs.c
-@@ -995,7 +995,7 @@ int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
+Here it is!
+
+ builtin-update-index.c |    3 +--
+ cache.h                |    1 +
+ lockfile.c             |   16 +++++++++++++++-
+ 3 files changed, 17 insertions(+), 3 deletions(-)
+
+diff --git a/builtin-update-index.c b/builtin-update-index.c
+index 5604977..dd43d5b 100644
+--- a/builtin-update-index.c
++++ b/builtin-update-index.c
+@@ -742,8 +742,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 		if (newfd < 0) {
+ 			if (refresh_flags & REFRESH_QUIET)
+ 				exit(128);
+-			die("unable to create '%s.lock': %s",
+-			    get_index_file(), strerror(lock_error));
++			unable_to_lock_index_die(get_index_file(), lock_error);
+ 		}
+ 		if (write_cache(newfd, active_cache, active_nr) ||
+ 		    commit_locked_index(lock_file))
+diff --git a/cache.h b/cache.h
+index 37dfb1c..bb5a190 100644
+--- a/cache.h
++++ b/cache.h
+@@ -484,6 +484,7 @@ struct lock_file {
+ };
+ #define LOCK_DIE_ON_ERROR 1
+ #define LOCK_NODEREF 2
++extern NORETURN void unable_to_lock_index_die(const char *path, int err);
+ extern int hold_lock_file_for_update(struct lock_file *, const char *path, int);
+ extern int hold_lock_file_for_append(struct lock_file *, const char *path, int);
+ extern int commit_lock_file(struct lock_file *);
+diff --git a/lockfile.c b/lockfile.c
+index 021c337..1db1a2f 100644
+--- a/lockfile.c
++++ b/lockfile.c
+@@ -155,11 +155,25 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
+ 	return lk->fd;
+ }
  
- 	err = unlink(git_path("logs/%s", lock->ref_name));
- 	if (err && errno != ENOENT)
--		fprintf(stderr, "warning: unlink(%s) failed: %s",
-+		warning("unlink(%s) failed: %s",
- 			git_path("logs/%s", lock->ref_name), strerror(errno));
- 	invalidate_cached_refs();
- 	unlock_ref(lock);
-@@ -1437,8 +1437,7 @@ int read_ref_at(const char *ref, unsigned long at_time, int cnt, unsigned char *
- 				if (get_sha1_hex(rec + 41, sha1))
- 					die("Log %s is corrupt.", logfile);
- 				if (hashcmp(logged_sha1, sha1)) {
--					fprintf(stderr,
--						"warning: Log %s has gap after %s.\n",
-+					warning("Log %s has gap after %s.",
- 						logfile, show_date(date, tz, DATE_RFC2822));
- 				}
- 			}
-@@ -1450,8 +1449,7 @@ int read_ref_at(const char *ref, unsigned long at_time, int cnt, unsigned char *
- 				if (get_sha1_hex(rec + 41, logged_sha1))
- 					die("Log %s is corrupt.", logfile);
- 				if (hashcmp(logged_sha1, sha1)) {
--					fprintf(stderr,
--						"warning: Log %s unexpectedly ended on %s.\n",
-+					warning("Log %s unexpectedly ended on %s.",
- 						logfile, show_date(date, tz, DATE_RFC2822));
- 				}
- 			}
++
++NORETURN void unable_to_lock_index_die(const char *path, int err)
++{
++	if (errno == EEXIST) {
++		die("Unable to create '%s.lock': %s.\n\n"
++		    "If no other git process is currently running, this probably means a\n"
++		    "git process crashed in this repository earlier. Make sure no other git\n"
++		    "process is running and remove the file manually to continue.",
++		    path, strerror(err));
++	} else {
++		die("Unable to create '%s.lock': %s", path, strerror(err));
++	}
++}
++
+ int hold_lock_file_for_update(struct lock_file *lk, const char *path, int flags)
+ {
+ 	int fd = lock_file(lk, path, flags);
+ 	if (fd < 0 && (flags & LOCK_DIE_ON_ERROR))
+-		die("unable to create '%s.lock': %s", path, strerror(errno));
++		unable_to_lock_index_die(path, errno);
+ 	return fd;
+ }
+ 
 -- 
-1.6.1
+1.6.2.rc1.14.g7f87d
