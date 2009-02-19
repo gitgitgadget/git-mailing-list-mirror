@@ -1,102 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/6] Modify description file to say what this file is
-Date: Thu, 19 Feb 2009 02:11:08 -0800
-Message-ID: <7vy6w2n3cz.fsf@gitster.siamese.dyndns.org>
-References: <200902190736.00462.johnflux@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git rebase -i
+Date: Thu, 19 Feb 2009 05:11:54 -0500
+Message-ID: <20090219101154.GB16119@coredump.intra.peff.net>
+References: <43d8ce650902190121v2e18aac1rfaa64a4ce6e799a3@mail.gmail.com> <A3E3A7A0-F03F-4C8B-B3F8-756B0E89798C@wincent.com> <43d8ce650902190155m4de23643r8a9d3c35686ea4e9@mail.gmail.com> <2A7CAA9F-DB42-4782-BF61-41E8DA577DF2@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: John Tapsell <johnflux@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 19 11:12:45 2009
+Content-Type: text/plain; charset=utf-8
+Cc: John Tapsell <johnflux@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Thu Feb 19 11:13:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1La5tc-0001Sh-7r
-	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 11:12:44 +0100
+	id 1La5uM-0001hb-KB
+	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 11:13:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753776AbZBSKLQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2009 05:11:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752523AbZBSKLQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 05:11:16 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40245 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751989AbZBSKLP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2009 05:11:15 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1805E9B320;
-	Thu, 19 Feb 2009 05:11:14 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 02D3C9B31D; Thu,
- 19 Feb 2009 05:11:10 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A39BA656-FE6D-11DD-94AC-B26E209B64D9-77302942!a-sasl-fastnet.pobox.com
+	id S1756947AbZBSKL5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2009 05:11:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756869AbZBSKL5
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 05:11:57 -0500
+Received: from peff.net ([208.65.91.99]:37265 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754127AbZBSKL4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Feb 2009 05:11:56 -0500
+Received: (qmail 21525 invoked by uid 107); 19 Feb 2009 10:12:17 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 19 Feb 2009 05:12:17 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Feb 2009 05:11:54 -0500
+Content-Disposition: inline
+In-Reply-To: <2A7CAA9F-DB42-4782-BF61-41E8DA577DF2@wincent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110664>
 
-[PATCH 1/6] Modify description file to say what this file is
+On Thu, Feb 19, 2009 at 10:59:15AM +0100, Wincent Colaiuta wrote:
 
-Looks good.
+>> If a sample of git users would expect "git rebase -i" to let you
+>> rebase the last few commits, then it doesn't really matter all that
+>> much what N is.  10 seems a reasonable default as any.
+>
+> That's exactly the problem. Most git users aren't going to expect "git  
+> rebase -i" to let you "rebase the last few commits".
+>
+> Rebase is mostly used, talked about, and conceptualized in terms of  
+> rebasing onto other _branches_.
 
-[PATCH 2/6] Google has renamed the imap folder
+Actually, I don't think that's true anymore with "rebase -i"; it is
+probably most convenient way in core git to rewrite the history of a
+patchset. E.g., a core part of my workflow as a contributor is:
 
-Jeff already pointed out an obvious thinko; I could fix-up locally (just
-ask).
+  $ git checkout -b jk/topic origin
+  $ while true; do hack hack hack; commit commit commit; done
+  $ git rebase -i origin
 
-[PATCH 3/6] Improve error message for branching an existing branch
+which gives me a list of everything on the topic, ready to be
+reordered, squashed, or edited as appropriate.
 
-The extra sentence is useless noise to annoy users and make them shout
-"none of your business!" back to git.
-
-I would probably get this error message "already exists." more from
-forgetting to say "-f" in this sequence:
-
-    $ git branch -f pu next
-    $ git checkout pu
-    $ sh rebuild-pu-script
-
-to rebuild pu on top of updated next, and "did you mean to checkout?"
-misses the mark by a kilometer.
-
-[PATCH 4/6] Improve error message for git-filter-branch
-
-Looks good, with Sverre's rewording would be better, which I could locally
-squash in.  Needs signoff, which I could locally forge (just ask to fix-up
-and forge).
-
-[PATCH 5/6] Change output "error: " to "Error: " etc
-
-Jeff is right, and the patch is wrong.
-
-[PATCH 6/6] Mention to the user that they can reorder commits
-
-The placement of the new message does not feel right, as adding anything
-near "If you remove ... WILL BE LOST" will cloud out that message which is
-more important.
-
-I think it should come near or perhaps even before Commands, if we were to
-add anything here.
-
-But I am afraid that the proposed new message will hurt the clueless users
-more than it would help them.
-
-The cheat-sheet at the top is not for learning what the command can do for
-the first time.  It is there to remind people (who already have general
-idea on what can be done) how exactly the commands are spelled.  If
-somebody does not even know that the purpose of rebase-i is to amend and
-resequence, he will more likely destroy his history by blindly using the
-command without knowing what is going on, than making a lucky guess.
-
-For that reason, a more appropriate line to add, if we were to add
-anything, might be:
-
- #  s, squash = use commit, but meld into previous commit
- #
-+# If you do not know what is going on, remove everything and exit the editor!
-+#
- # If you remove a line here THAT COMMIT WILL BE LOST.
- # However, if you remove everything, the rebase will be aborted.
+-Peff
