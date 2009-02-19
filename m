@@ -1,88 +1,128 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH 6/6] Mention to the user that they can reorder commits
-Date: Thu, 19 Feb 2009 11:16:38 +0100
-Message-ID: <20090219101638.GA20707@neumann>
-References: <200902190737.01121.johnflux@gmail.com>
-	<53F7BA4C-6F63-4993-A959-E67E4FB4F456@frim.nl>
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: [PATCH 1/6] Modify description file to say what this file is
+Date: Thu, 19 Feb 2009 10:18:33 +0000
+Message-ID: <43d8ce650902190218v513b8f58n8338086af41b79d9@mail.gmail.com>
+References: <200902190736.00462.johnflux@gmail.com>
+	 <7vy6w2n3cz.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: John Tapsell <johnflux@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Pieter de Bie <pieter@frim.nl>
-X-From: git-owner@vger.kernel.org Thu Feb 19 11:18:23 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 19 11:20:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1La5yw-0003Jg-Ph
-	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 11:18:15 +0100
+	id 1La60i-0003zf-Er
+	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 11:20:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754561AbZBSKQs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Feb 2009 05:16:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753755AbZBSKQr
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 05:16:47 -0500
-Received: from moutng.kundenserver.de ([212.227.126.171]:58328 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753195AbZBSKQq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2009 05:16:46 -0500
-Received: from [127.0.1.1] (p5B133A54.dip0.t-ipconnect.de [91.19.58.84])
-	by mrelayeu.kundenserver.de (node=mrelayeu7) with ESMTP (Nemesis)
-	id 0ML2xA-1La5xS1mTu-0006gs; Thu, 19 Feb 2009 11:16:44 +0100
-Content-Disposition: inline
-In-Reply-To: <53F7BA4C-6F63-4993-A959-E67E4FB4F456@frim.nl>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Provags-ID: V01U2FsdGVkX1+/5oaDnEjNc3dJRFdf79bmrWguHN5haCl+RUf
- 2P/LMCLMX9dOsGbUpgFLvyx7fLTYOdUWuC02AdQ5jm9+vfkQ2X
- mpVQdxxO6bu088NoXYrxg==
+	id S1754629AbZBSKSg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2009 05:18:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754485AbZBSKSf
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 05:18:35 -0500
+Received: from yx-out-2324.google.com ([74.125.44.29]:30692 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753755AbZBSKSe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Feb 2009 05:18:34 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so124444yxm.1
+        for <git@vger.kernel.org>; Thu, 19 Feb 2009 02:18:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ipsETJdfG+AMCssvndzaQ4l+OZ04oWuQR2U/aOwztzk=;
+        b=LosXpCwYn7h/uEbtA1Rg3wXlFjFGJb1crEDykbTA49YMtYHPYY1bca+xX5ytMgonpF
+         7K5F7fnL3t7aUxcrB9X4L/Ff8ubP6br5A+3uiHVa70RgW1wdkG89VKplE5MyHcP23YBH
+         jH+koiv+HTK9B/O6PR8OiPD/3C0Y65DXF+xAI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=aHeFlmjRDrZka5F6oXJP2xTU4NGmRin1jm7JMN6qgf/nwd/fB31jDlxVQyuMJwBBEo
+         H+mxDMVFP/H2HOzMAUI7xDgpMKEUKmgzwgEWaKpXMgpCap8Bhd9hC0O4v915ANxBMF7c
+         BAJDH0QGFb3vBFtb23Y7tjvASdy8kSCwaLFms=
+Received: by 10.150.11.14 with SMTP id 14mr824027ybk.180.1235038713519; Thu, 
+	19 Feb 2009 02:18:33 -0800 (PST)
+In-Reply-To: <7vy6w2n3cz.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110667>
 
-On Thu, Feb 19, 2009 at 09:13:49AM +0000, Pieter de Bie wrote:
+2009/2/19 Junio C Hamano <gitster@pobox.com>:
+> [PATCH 1/6] Modify description file to say what this file is
 >
-> On 19 feb 2009, at 07:37, John Tapsell wrote:
+> Looks good.
 >
->> Signed-off-by: John Tapsell <johnflux@gmail.com>
->> ---
+> [PATCH 2/6] Google has renamed the imap folder
 >
-> Yes, this has been raised many times in #git now, so it makes
-> sense to include it.
+> Jeff already pointed out an obvious thinko; I could fix-up locally (just
+> ask).
+>
+> [PATCH 3/6] Improve error message for branching an existing branch
+>
+> The extra sentence is useless noise to annoy users and make them shout
+> "none of your business!" back to git.
+>
+> I would probably get this error message "already exists." more from
+> forgetting to say "-f" in this sequence:
+>
+>    $ git branch -f pu next
+>    $ git checkout pu
+>    $ sh rebuild-pu-script
+>
+> to rebuild pu on top of updated next, and "did you mean to checkout?"
+> misses the mark by a kilometer.
+>
+> [PATCH 4/6] Improve error message for git-filter-branch
+>
+> Looks good, with Sverre's rewording would be better, which I could locally
+> squash in.  Needs signoff, which I could locally forge (just ask to fix-up
+> and forge).
+>
+> [PATCH 5/6] Change output "error: " to "Error: " etc
+>
+> Jeff is right, and the patch is wrong.
+>
+> [PATCH 6/6] Mention to the user that they can reorder commits
+>
+> The placement of the new message does not feel right, as adding anything
+> near "If you remove ... WILL BE LOST" will cloud out that message which is
+> more important.
+>
+> I think it should come near or perhaps even before Commands, if we were to
+> add anything here.
+>
+> But I am afraid that the proposed new message will hurt the clueless users
+> more than it would help them.
+>
+> The cheat-sheet at the top is not for learning what the command can do for
+> the first time.  It is there to remind people (who already have general
+> idea on what can be done) how exactly the commands are spelled.  If
+> somebody does not even know that the purpose of rebase-i is to amend and
+> resequence, he will more likely destroy his history by blindly using the
+> command without knowing what is going on, than making a lucky guess.
+>
+> For that reason, a more appropriate line to add, if we were to add
+> anything, might be:
+>
+>  #  s, squash = use commit, but meld into previous commit
+>  #
+> +# If you do not know what is going on, remove everything and exit the editor!
+> +#
+>  # If you remove a line here THAT COMMIT WILL BE LOST.
+>  # However, if you remove everything, the rebase will be aborted.
+>
+>
 
-A similar idea came around last week, and in turn Dscho explained why
-such a change is not a good idea.  I think he is fully right here.
+Junio,
 
+  Thanks - I like everything you said.  Could you go ahead and commit
+the accepted ones, with all the fix ups mentioned?
 
-<alpine.DEB.1.00.0902092228470.10279@pacific.mpi-cbg.de>
-http://article.gmane.org/gmane.comp.version-control.git/109136
+Thanks!
 
-  On Mon, Feb 09, 2009 at 10:31:56PM +0100, Johannes Schindelin wrote:
-  > If we start along those lines, we also have to add documentation ho=
-w
-  > to
-  >=20
-  > - split commit,
-  >=20
-  > - change authorship of commits,
-  >=20
-  > - deal with commits where --cherry-pick did not detect that they we=
-re=20
-  >   applied already,
-  >=20
-  > - deal with merge commits, and
-  >=20
-  > - possibly a lot more.
-  >=20
-  > I do not think that this is a good way to spend valuable screen
-  > estate; I=20
-  > think that is what the man page should cover.
-  >=20
-  > I only made an exception for the deletion of lines, as people were=20
-  > actively burnt.  Yes, they should have read the man page.  But the=20
-  > consequences of not doing so were bad.
-
-
-Regards,
-G=E1bor
+JohnFlux
