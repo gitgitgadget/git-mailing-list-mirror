@@ -1,67 +1,92 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] branch: clean up repeated strlen
-Date: Wed, 18 Feb 2009 22:35:45 -0500
-Message-ID: <20090219033545.GB18970@coredump.intra.peff.net>
-References: <20090219033329.GA13666@coredump.intra.peff.net>
+Subject: Re: [PATCH 1/2] add basic branch display tests
+Date: Wed, 18 Feb 2009 22:45:04 -0500
+Message-ID: <20090219034504.GA19862@coredump.intra.peff.net>
+References: <20090219033329.GA13666@coredump.intra.peff.net> <20090219033444.GA18970@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jay Soffian <jaysoffian@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Feb 19 04:37:20 2009
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 19 04:46:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LZzix-0001Vs-EH
-	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 04:37:19 +0100
+	id 1LZzry-0003QI-NL
+	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 04:46:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753599AbZBSDft (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Feb 2009 22:35:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753527AbZBSDfs
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 22:35:48 -0500
-Received: from peff.net ([208.65.91.99]:48564 "EHLO peff.net"
+	id S1751388AbZBSDpJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2009 22:45:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751170AbZBSDpI
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Feb 2009 22:45:08 -0500
+Received: from peff.net ([208.65.91.99]:38323 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753342AbZBSDfr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Feb 2009 22:35:47 -0500
-Received: (qmail 19043 invoked by uid 107); 19 Feb 2009 03:36:08 -0000
+	id S1751078AbZBSDpH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Feb 2009 22:45:07 -0500
+Received: (qmail 19093 invoked by uid 107); 19 Feb 2009 03:45:27 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 18 Feb 2009 22:36:08 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Feb 2009 22:35:45 -0500
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 18 Feb 2009 22:45:27 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Feb 2009 22:45:04 -0500
 Content-Disposition: inline
-In-Reply-To: <20090219033329.GA13666@coredump.intra.peff.net>
+In-Reply-To: <20090219033444.GA18970@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110616>
 
-Commit 45e2b61 fixed the initialization of a "len" struct
-parameter via strlen. We can use that to clean up what is
-now 3 strlens in a 6-line sequence.
+On Wed, Feb 18, 2009 at 10:34:44PM -0500, Jeff King wrote:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I guess a good compiler could optimize these out, but I think it
-actually reads a little bit nicer.
+> We were not testing the output of "git branch" anywhere.
 
- builtin-branch.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+There is one thing that occurred to me while writing these tests that I
+wanted to mention.
 
-diff --git a/builtin-branch.c b/builtin-branch.c
-index 13e4de8..14d4b91 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -443,8 +443,8 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev, str
- 		item.kind = REF_LOCAL_BRANCH;
- 		item.dest = NULL;
- 		item.commit = head_commit;
--		if (strlen(item.name) > ref_list.maxwidth)
--			ref_list.maxwidth = strlen(item.name);
-+		if (item.len > ref_list.maxwidth)
-+			ref_list.maxwidth = item.len;
- 		print_ref_item(&item, ref_list.maxwidth, verbose, abbrev, 1, "");
- 		free(item.name);
- 	}
--- 
-1.6.2.rc1.210.g1210c
+When we show a remote symref with "git branch -r", it looks like this:
+
+> +cat >expect <<'EOF'
+> +  origin/HEAD -> origin/branch-one
+> +  origin/branch-one
+> +  origin/branch-two
+> +EOF
+> +test_expect_success 'git branch -r shows remote branches' '
+> +	git branch -r >actual &&
+> +	test_cmp expect actual
+> +'
+
+which makes sense. <remote>/<symref> -> <remote>/<branch>
+
+> +cat >expect <<'EOF'
+> +  branch-one
+> +  branch-two
+> +* master
+> +  remotes/origin/HEAD -> origin/branch-one
+> +  remotes/origin/branch-one
+> +  remotes/origin/branch-two
+> +EOF
+> +test_expect_success 'git branch -a shows local and remote branches' '
+> +	git branch -a >actual &&
+> +	test_cmp expect actual
+> +'
+
+But here we stick the "remotes/" head on, since we are showing both
+types. But the right hand side of the symref doesn't get the same
+treatment.
+
+I don't think it's a big deal, but I wasn't sure if it was intentional,
+a bug, or simply that nobody cares (and since I have now codified it in
+a test script, it seems like we should make sure it is intentional).
+
+I also had a brief thought that reprinting the <remote> is pointless.
+That is, printing
+
+  origin/HEAD -> master
+
+shows what is happening with less text due to the context (i.e., we
+already know we are talking about remote "origin" -- and if it isn't in
+origin, we already show more). But that is probably a bad idea; that
+context is missing if you were to try to do something like "git show";
+<remote>/<branch> would work, but <branch> wouldn't.
+
+-Peff
