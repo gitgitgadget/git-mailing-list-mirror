@@ -1,66 +1,51 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: git rebase -i
-Date: Thu, 19 Feb 2009 14:02:37 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrngpqpjt.j03.sitaramc@sitaramc.homelinux.net>
-References: <43d8ce650902190121v2e18aac1rfaa64a4ce6e799a3@mail.gmail.com>
- <871vtudabm.fsf@iki.fi>
- <43d8ce650902190152t6162593x8d0920be0e6d7a6d@mail.gmail.com>
+From: Samium Gromoff <_deepfire@feelingofgreen.ru>
+Subject: Git-cvs import loops endlessly redownloading the same stuff.
+Date: Thu, 19 Feb 2009 16:57:33 +0300 (MSK)
+Message-ID: <20090219.165733.239525532716457724._deepfire@feelingofgreen.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: Text/Plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 19 15:04:22 2009
+X-From: git-owner@vger.kernel.org Thu Feb 19 15:06:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1La9Vl-00064F-IM
-	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 15:04:22 +0100
+	id 1La9Wr-0006KY-Et
+	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 15:05:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753141AbZBSOCw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2009 09:02:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752346AbZBSOCw
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 09:02:52 -0500
-Received: from main.gmane.org ([80.91.229.2]:57545 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751882AbZBSOCv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2009 09:02:51 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1La9UI-0001o0-L4
-	for git@vger.kernel.org; Thu, 19 Feb 2009 14:02:50 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 19 Feb 2009 14:02:50 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 19 Feb 2009 14:02:50 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1752548AbZBSOEA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2009 09:04:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752609AbZBSOEA
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 09:04:00 -0500
+Received: from 69-100-st.zelcom.ru ([80.92.100.69]:50907 "HELO
+	feelingofgreen.ru" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
+	with SMTP id S1752296AbZBSOD7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Feb 2009 09:03:59 -0500
+X-Greylist: delayed 397 seconds by postgrey-1.27 at vger.kernel.org; Thu, 19 Feb 2009 09:03:58 EST
+Received: (qmail 28420 invoked from network); 19 Feb 2009 16:56:59 +0300
+Received: from unknown (HELO localhost) (10.128.0.1)
+  by auriga.feelingofgreen.ru with SMTP; 19 Feb 2009 16:56:59 +0300
+X-Mailer: Mew version 5.2 on Emacs 23.0.90 / Mule 6.0 (HANACHIRUSATO)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110700>
 
-On 2009-02-19, John Tapsell <johnflux@gmail.com> wrote:
-> 2009/2/19 Teemu Likonen <tlikonen@iki.fi>:
->> I think it's better to use aliases for this kind of personal things:
->>
->>    git config --global alias.my-rebase "rebase -i HEAD~10"
 
-perfectly reasonable
+Good day list,
 
-> I'm trying to make git more obvious and easier to use, rather than
-> find any solution :-)
+it appears that git 1.6.1.3, as packaged by debian, fails to terminate
+when instructed like that:
 
-I'm sorry I don't know what is obvious about any specific
-number, unless it is 42 ;-)
+git cvsimport -d :pserver:anoncvs@sources.redhat.com:/cvs/src newlib
 
-Seriously, forcing *some* default simply because some people
-use it with that value does not make it obvious to anyone
-but those few.  I'm not even arguing about the number; I'd
-hate to have *any* number be the default.
+
+It gets two ~20MB files into /tmp, converts them into blobs, around
+8 and 9 megabytes, accordingly, and then attempts to proceed with the next,
+36M-large, piece, essentially locking into what appears to be a download-it,
+delete-it cycle.
+
+
+regards, Samium Gromoff
