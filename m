@@ -1,79 +1,62 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: git rebase -i
-Date: Thu, 19 Feb 2009 14:24:05 +0000
-Message-ID: <43d8ce650902190624q40bc4d96hbacd505350d72eb4@mail.gmail.com>
-References: <43d8ce650902190121v2e18aac1rfaa64a4ce6e799a3@mail.gmail.com>
-	 <871vtudabm.fsf@iki.fi>
-	 <43d8ce650902190152t6162593x8d0920be0e6d7a6d@mail.gmail.com>
-	 <slrngpqpjt.j03.sitaramc@sitaramc.homelinux.net>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: merge smart enough to adapt to renames?
+Date: Thu, 19 Feb 2009 14:25:30 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngpqquq.j03.sitaramc@sitaramc.homelinux.net>
+References: <81bfc67a0902182212h578e677ck6029c56cb86f7bce@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Feb 19 15:25:59 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 19 15:27:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1La9qM-0007T6-Se
-	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 15:25:39 +0100
+	id 1La9rt-0008IJ-Kg
+	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 15:27:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751844AbZBSOYL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2009 09:24:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751494AbZBSOYJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 09:24:09 -0500
-Received: from mail-gx0-f174.google.com ([209.85.217.174]:58416 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750826AbZBSOYI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2009 09:24:08 -0500
-Received: by gxk22 with SMTP id 22so1033964gxk.13
-        for <git@vger.kernel.org>; Thu, 19 Feb 2009 06:24:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=E9mAwwB6zigsaM8/KHhGjL/4837uhqCSC/JlNqgAh6o=;
-        b=xJeaaPnkMEVP2aIponYAONpf5OcmyzzNJz9p1VoH3LUKaEuHEA2BM+pX5+YpX0xnRC
-         JeMZWWwWpUD5q8deDGUgnolNAfJvetGYVNCJqjVCfr2ebDJANdUFMmW9OHggh9mtfFFs
-         ymQG9dDTIWlIL7JnXGVnmvdroI6N7onfFfrdA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=S4kRca6blEHjNTVfW4hP5mSFZfDFxZxc79jBDAvke7FYf2g5u9e6JQuZ0aO5ONq78d
-         z8V55VFp69zCfYwsS/qWDX/gfdy9BY6S6UEOAFHJNYvTXXJ77ap2/f1J6phOFRFS3s6h
-         zCa318zpIkBT2K0eDOfTd16GEeKrYnIwwp3oA=
-Received: by 10.151.39.2 with SMTP id r2mr424492ybj.243.1235053445398; Thu, 19 
-	Feb 2009 06:24:05 -0800 (PST)
-In-Reply-To: <slrngpqpjt.j03.sitaramc@sitaramc.homelinux.net>
+	id S1751254AbZBSOZq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2009 09:25:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750948AbZBSOZq
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 09:25:46 -0500
+Received: from main.gmane.org ([80.91.229.2]:50093 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750794AbZBSOZp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Feb 2009 09:25:45 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1La9qP-0002we-8t
+	for git@vger.kernel.org; Thu, 19 Feb 2009 14:25:41 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 19 Feb 2009 14:25:41 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 19 Feb 2009 14:25:41 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110707>
 
-2009/2/19 Sitaram Chamarty <sitaramc@gmail.com>:
-> On 2009-02-19, John Tapsell <johnflux@gmail.com> wrote:
->> 2009/2/19 Teemu Likonen <tlikonen@iki.fi>:
->>> I think it's better to use aliases for this kind of personal things:
->>>
->>>    git config --global alias.my-rebase "rebase -i HEAD~10"
+On 2009-02-19, Caleb Cushing <xenoterracide@gmail.com> wrote:
+> branch gentoo.org has a file profiles/package.mask
 >
-> perfectly reasonable
+> the software that uses this supports having this be a directory as well.
 >
->> I'm trying to make git more obvious and easier to use, rather than
->> find any solution :-)
+> I'm thinking of mv-ing this file in branch regen2.org to
+> profiles/package.mask/gentoo.org
 >
-> I'm sorry I don't know what is obvious about any specific
-> number, unless it is 42 ;-)
->
-> Seriously, forcing *some* default simply because some people
-> use it with that value does not make it obvious to anyone
-> but those few.  I'm not even arguing about the number; I'd
-> hate to have *any* number be the default.
+> since I can't change the location in gentoo.org (for mostly
+> non-technical reasons) when I run git merge gentoo.org from regen2.org
+> will git be smart enough to try to merge an updated
+> profiles/package.mask into profiles/package.mask/gentoo.org in the
+> future?
 
-Yep.  Some other people have come up with some pretty good ideas.
-Maybe defaulting to 'origin' or something is the best way forward.
-
-John
+Yes.  I maintain two copies of something (in different
+repos) like this...
