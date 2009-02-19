@@ -1,479 +1,181 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH 4/4] remote: new show output style
-Date: Thu, 19 Feb 2009 00:14:31 -0500
-Message-ID: <1235020471-59982-5-git-send-email-jaysoffian@gmail.com>
-References: <1235020471-59982-1-git-send-email-jaysoffian@gmail.com>
- <1235020471-59982-2-git-send-email-jaysoffian@gmail.com>
- <1235020471-59982-3-git-send-email-jaysoffian@gmail.com>
- <1235020471-59982-4-git-send-email-jaysoffian@gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] rev-list: estimate number of bisection step left
+Date: Thu, 19 Feb 2009 06:16:18 +0100
+Message-ID: <200902190616.18747.chriscool@tuxfamily.org>
+References: <20090217060944.488184b0.chriscool@tuxfamily.org> <7vljs58qul.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 19 06:16:31 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Ingo Molnar <mingo@elte.hu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 19 06:18:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1La1Gm-0005K5-2z
-	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 06:16:20 +0100
+	id 1La1Iu-0005qW-2c
+	for gcvg-git-2@gmane.org; Thu, 19 Feb 2009 06:18:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750930AbZBSFOu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2009 00:14:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751279AbZBSFOt
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 00:14:49 -0500
-Received: from mail-gx0-f174.google.com ([209.85.217.174]:48516 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751281AbZBSFOp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2009 00:14:45 -0500
-Received: by gxk22 with SMTP id 22so689334gxk.13
-        for <git@vger.kernel.org>; Wed, 18 Feb 2009 21:14:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=MYVL44of2iRnGMKV+IzyKI2wgU+cBnMrvL7mlnT1Q4g=;
-        b=CPU9Kpwr2i2PJ9VbgIWCcy2NFstqnZw9VchPt1fYI2S6tc5AgijCsJT9eD89wiodZY
-         0QRsC64kYuAK+A8NzGgtqoOSeptvbVCXWBfyq8DtaxFZgWbruQ0euq1OAM1Gi7+24HR0
-         b6FvukkXeotXGYRaT6TkfAaK38f3AzUKfNBZ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=NpXafd6upw9HM965CpHg1G4dBqZwAEAHuq89OCbdVrakG0OjqiPWOdmStalJdfsO/k
-         8EPF7S90TwRnNzIERSD9qCMPkhV4CFuQxPoQtN62S6I7NJnmL6fomvc0bWJby4oPNTQL
-         s7EhGQeX1bhNhvFze+DyvO35HMb3tO/+9Bow4=
-Received: by 10.151.44.15 with SMTP id w15mr580986ybj.249.1235020483897;
-        Wed, 18 Feb 2009 21:14:43 -0800 (PST)
-Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
-        by mx.google.com with ESMTPS id h27sm2004096elf.17.2009.02.18.21.14.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 18 Feb 2009 21:14:43 -0800 (PST)
-X-Mailer: git-send-email 1.6.2.rc1.218.g1b4fab
-In-Reply-To: <1235020471-59982-4-git-send-email-jaysoffian@gmail.com>
+	id S1751395AbZBSFRF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Feb 2009 00:17:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751370AbZBSFRE
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 00:17:04 -0500
+Received: from smtp4-g21.free.fr ([212.27.42.4]:36823 "EHLO smtp4-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751333AbZBSFRB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Feb 2009 00:17:01 -0500
+Received: from smtp4-g21.free.fr (localhost [127.0.0.1])
+	by smtp4-g21.free.fr (Postfix) with ESMTP id C4D7A4C802B;
+	Thu, 19 Feb 2009 06:16:53 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp4-g21.free.fr (Postfix) with ESMTP id C397B4C80B9;
+	Thu, 19 Feb 2009 06:16:50 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vljs58qul.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110627>
 
-The existing output of "git remote show <remote>" is too verbose for the
-information it provides. This patch teaches it to provide more
-information in less space.
+Le mardi 17 f=E9vrier 2009, Junio C Hamano a =E9crit :
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> > +static int estimate_bisect_steps(int all)
+> > +{
+> > +	int log2 =3D 0;
+> > +	int left =3D (all >> 1) - 1;
+> > +
+> > +	if (left <=3D 0)
+> > +		return 0;
+> > +
+> > +	do {
+> > +		left =3D left >> 1;
+> > +		log2++;
+> > +	} while (left);
+> > +
+> > +	return log2;
+> > +}
+> > ...
+> > diff --git a/git-bisect.sh b/git-bisect.sh
+> > index 85db4ba..6b23439 100755
+> > --- a/git-bisect.sh
+> > +++ b/git-bisect.sh
+> > @@ -500,7 +500,7 @@ bisect_next() {
+> >  	# commit is also a "skip" commit (see above).
+> >  	exit_if_skipped_commits "$bisect_rev"
+> >
+> > -	bisect_checkout "$bisect_rev" "$bisect_nr revisions left to test
+> > after this" +	bisect_checkout "$bisect_rev" "$bisect_nr revisions l=
+eft
+> > to test after this (roughtly $bisect_steps steps)"
+>
+> "roughly".
 
-Before the patch:
+Yes, thanks.
 
-$ git remote show origin
-* remote origin
-  URL: git://git.kernel.org/pub/scm/git/git.git
-  HEAD branch: master
-  Remote branch merged with 'git pull' while on branch master
-    master
-  Remote branch merged with 'git pull' while on branch next
-    next
-  Remote branches merged with 'git pull' while on branch octopus
-    foo bar baz frotz
-  New remote branch (next fetch will store in remotes/origin)
-    html
-  Stale tracking branch (use 'git remote prune')
-    bogus
-  Tracked remote branches
-    maint
-    man
-    master
-    next
-    pu
-    todo
+> all	left
+> 0	0
+> 1	0
+> 2	0
+> 3	0
+> 4	1
+> 5	1
+> 6	2
+> 7	2
+> 8	2
+> 9	2
+>
+> It seems that at the very low end the estimate is a bit too optimisti=
+c.
+> How about showing this number from the Porcelain only when $bisect_st=
+eps
+> is more than 2 (or all is more than 9)?
 
-After this patch:
+I think it's more consistent to always show it.
 
-$ git remote show origin
-* remote origin
-  URL: git://git.kernel.org/pub/scm/git/git.git
-  HEAD branch: master
-  Remote branches:
-    bogus  stale (use 'git remote prune' to remove)
-    html   new (next fetch will store in remotes/origin)
-    maint  tracked
-    man    tracked
-    master tracked
-    next   tracked
-    pu     tracked
-    todo   tracked
-  Local branches configured for 'git pull':
-    master  rebases onto remote master
-    next    rebases onto remote next
-    octopus merges w/remote foo, bar, baz, frotz
+Now for the algorithm, first please note that we are looking for an est=
+imate=20
+of the number of bisect steps left _after the current one_, and that gi=
+t=20
+bisect currently only displays an estimate of the number of revisions l=
+eft=20
+to test _after the current one_.
 
-$ git remote show origin -n
-* remote origin
-  URL: git://git.kernel.org/pub/scm/git/git.git
-  HEAD branch: (not queried)
-  Remote branches: (status not queried)
-    bogus
-    maint
-    man
-    master
-    next
-    pu
-    todo
-  Local branches configured for 'git pull':
-    master  rebases onto remote master
-    next    rebases onto remote next
-    octopus merges w/remote foo, bar, baz, frotz
+Here is a table to help analyse what should be the best estimate for
+the number of bisect steps left.
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
-Dscho, using --patience made this more readable. So thank you for
-adding that.
+N : linear case                    --> probabilities --> best | v1
+------------------------------------------------------------------
+1 : G-B                            --> 0             --> 0    | 0
+2 : G-U1-B                         --> 0             --> 0    | 0
+3 : G-U1-U2-B                      --> 0(1/3) 1(2/3) --> 1    | 0
+4 : G-U1-U2-U3-B                   --> 1             --> 1    | 1
+5 : G-U1-U2-U3-U4-B                --> 1(3/5) 2(2/5) --> 1    | 1
+6 : G-U1-U2-U3-U4-U5-B             --> 1(2/6) 2(4/6) --> 2    | 2
+7 : G-U1-U2-U3-U4-U5-U6-B          --> 1(1/7) 2(6/7) --> 2    | 2
+8 : G-U1-U2-U3-U4-U5-U6-U7-B       --> 2             --> 2    | 2
+9 : G-U1-U2-U3-U4-U5-U6-U7-U8-B    --> 2(7/9) 3(2/9) --> 2    | 2
+10: G-U1-U2-U3-U4-U5-U6-U7-U8-U9-B --> 2(6/10)3(4/10)--> 2    | 3
 
- builtin-remote.c  |  172 ++++++++++++++++++++++++++++++++++++++--------------
- t/t5505-remote.sh |   32 +++++-----
- 2 files changed, 141 insertions(+), 63 deletions(-)
+In the column "N", there is the number of revisions that could _now_
+be the first bad commit we are looking for.
 
-diff --git a/builtin-remote.c b/builtin-remote.c
-index b61f754..6f0e40f 100644
---- a/builtin-remote.c
-+++ b/builtin-remote.c
-@@ -146,6 +146,7 @@ static int add(int argc, const char **argv)
- struct branch_info {
- 	char *remote_name;
- 	struct string_list merge;
-+	int rebase;
- };
- 
- static struct string_list branch_list;
-@@ -162,10 +163,11 @@ static const char *abbrev_ref(const char *name, const char *prefix)
- static int config_read_branches(const char *key, const char *value, void *cb)
- {
- 	if (!prefixcmp(key, "branch.")) {
-+		char *orig_key = key;
- 		char *name;
- 		struct string_list_item *item;
- 		struct branch_info *info;
--		enum { REMOTE, MERGE } type;
-+		enum { REMOTE, MERGE, REBASE } type;
- 
- 		key += 7;
- 		if (!postfixcmp(key, ".remote")) {
-@@ -174,6 +176,9 @@ static int config_read_branches(const char *key, const char *value, void *cb)
- 		} else if (!postfixcmp(key, ".merge")) {
- 			name = xstrndup(key, strlen(key) - 6);
- 			type = MERGE;
-+		} else if (!postfixcmp(key, ".rebase")) {
-+			name = xstrndup(key, strlen(key) - 7);
-+			type = REBASE;
- 		} else
- 			return 0;
- 
-@@ -184,9 +189,9 @@ static int config_read_branches(const char *key, const char *value, void *cb)
- 		info = item->util;
- 		if (type == REMOTE) {
- 			if (info->remote_name)
--				warning("more than one branch.%s", key);
-+				warning("more than one %s", orig_key);
- 			info->remote_name = xstrdup(value);
--		} else {
-+		} else if (type == MERGE) {
- 			char *space = strchr(value, ' ');
- 			value = abbrev_branch(value);
- 			while (space) {
-@@ -197,7 +202,8 @@ static int config_read_branches(const char *key, const char *value, void *cb)
- 				space = strchr(value, ' ');
- 			}
- 			string_list_append(xstrdup(value), &info->merge);
--		}
-+		} else
-+			info->rebase = git_config_bool(orig_key, value);
- 	}
- 	return 0;
- }
-@@ -212,6 +218,7 @@ static void read_branches(void)
- struct ref_states {
- 	struct remote *remote;
- 	struct string_list new, stale, tracked, heads;
-+	int queried;
- };
- 
- static int handle_one_branch(const char *refname,
-@@ -634,20 +641,6 @@ static int rm(int argc, const char **argv)
- 	return result;
- }
- 
--static void show_list(const char *title, struct string_list *list,
--		      const char *extra_arg)
--{
--	int i;
--
--	if (!list->nr)
--		return;
--
--	printf(title, list->nr > 1 ? "es" : "", extra_arg);
--	printf("\n");
--	for (i = 0; i < list->nr; i++)
--		printf("    %s\n", list->items[i].string);
--}
--
- static void free_remote_ref_states(struct ref_states *states)
- {
- 	string_list_clear(&states->new, 0);
-@@ -698,10 +691,93 @@ static int get_remote_ref_states(const char *name,
- 		for_each_ref(append_ref_to_tracked_list, states);
- 		sort_string_list(&states->tracked);
- 	}
-+	states->queried = query;
- 
- 	return 0;
- }
- 
-+struct show_info {
-+	struct string_list *list;
-+	struct ref_states *states;
-+	int maxwidth;
-+};
-+
-+int add_remote_to_show_info(struct string_list_item *item, void *cb_data)
-+{
-+	struct show_info *info = cb_data;
-+	int n = strlen(item->string);
-+	if (n > info->maxwidth)
-+		info->maxwidth = n;
-+	string_list_insert(item->string, info->list);
-+	return 0;
-+}
-+
-+int show_remote_info_item(struct string_list_item *item, void *cb_data)
-+{
-+	struct show_info *info = cb_data;
-+	struct ref_states *states = info->states;
-+	const char *name = item->string;
-+
-+	if (states->queried) {
-+		const char *fmt = "%s";
-+		const char *arg = "";
-+		if (string_list_has_string(&states->new, name)) {
-+			fmt = " new (next fetch will store in remotes/%s)";
-+			arg = states->remote->name;
-+		} else if (string_list_has_string(&states->tracked, name))
-+			arg = " tracked";
-+		else if (string_list_has_string(&states->stale, name))
-+			arg = " stale (use 'git remote prune' to remove)";
-+		else
-+			arg = " ???";
-+		printf("    %-*s", info->maxwidth, name);
-+		printf(fmt, arg);
-+		printf("\n");
-+	} else
-+		printf("    %s\n", name);
-+
-+	return 0;
-+}
-+
-+int add_local_to_show_info(struct string_list_item *branch, void *cb_data)
-+{
-+	struct show_info *show_info = cb_data;
-+	struct ref_states *states = show_info->states;
-+	struct string_list_item *item;
-+	struct branch_info *branch_info = branch->util;
-+	struct strbuf buf = STRBUF_INIT;
-+	int i;
-+
-+	if (!branch_info->merge.nr ||
-+	    strcmp(states->remote->name, branch_info->remote_name))
-+		return 0;
-+	if ((i = strlen(branch->string)) > show_info->maxwidth)
-+		show_info->maxwidth = i;
-+
-+	item = string_list_insert(branch->string, show_info->list);
-+
-+	if (branch_info->rebase)
-+		strbuf_addf(&buf, "rebases onto remote");
-+	else
-+		strbuf_addf(&buf, "merges w/remote");
-+
-+	for (i = 0; i < branch_info->merge.nr; i++)
-+		strbuf_addf(&buf, " %s,", branch_info->merge.items[i].string);
-+
-+	if (buf.len)
-+		buf.buf[buf.len - 1] = '\0'; /* trailing comma */
-+
-+	item->util = strbuf_detach(&buf, NULL);
-+	return 0;
-+}
-+
-+int show_local_info_item(struct string_list_item *item, void *cb_data)
-+{
-+	struct show_info *info = cb_data;
-+	printf("    %-*s %s\n", info->maxwidth, item->string, (char *) item->util);
-+	return 0;
-+}
-+
- static int show(int argc, const char **argv)
- {
- 	int no_query = 0, result = 0;
-@@ -711,6 +787,10 @@ static int show(int argc, const char **argv)
- 		OPT_END()
- 	};
- 	struct ref_states states;
-+	struct string_list info_list = { NULL, 0, 0, 0 };
-+	struct show_info info;
-+	info.states = &states;
-+	info.list = &info_list;
- 
- 	argc = parse_options(argc, argv, options, builtin_remote_usage, 0);
- 
-@@ -730,40 +810,38 @@ static int show(int argc, const char **argv)
- 			printf("  HEAD branch: (not queried)\n");
- 		else if (!states.heads.nr)
- 			printf("  HEAD branch: (unknown)\n");
--		else if (states.heads.nr == 1)
--			printf("  HEAD branch: %s\n",
--				states.heads.items[0].string);
--		else
--			show_list("  HEAD branch%s:", &states.heads, "");
--
--		for (i = 0; i < branch_list.nr; i++) {
--			struct string_list_item *branch = branch_list.items + i;
--			struct branch_info *info = branch->util;
--			int j;
--
--			if (!info->merge.nr || strcmp(*argv, info->remote_name))
--				continue;
--			printf("  Remote branch%s merged with 'git pull' "
--				"while on branch %s\n   ",
--				info->merge.nr > 1 ? "es" : "",
--				branch->string);
--			for (j = 0; j < info->merge.nr; j++)
--				printf(" %s", info->merge.items[j].string);
--			printf("\n");
-+		else {
-+			printf("  HEAD branch%s: ", states.heads.nr > 1 ? "es" : "");
-+			for (i = 0; i < states.heads.nr; i++)
-+				printf("%s%s", states.heads.items[i].string,
-+					i < states.heads.nr - 1 ? ", " : "\n");
- 		}
- 
--		if (!no_query) {
--			show_list("  New remote branch%s (next fetch "
--				"will store in remotes/%s)",
--				&states.new, states.remote->name);
--			show_list("  Stale tracking branch%s (use 'git remote "
--				"prune')", &states.stale, "");
--		}
-+		/* remote branch info */
-+		for_each_string_list(add_remote_to_show_info, &states.new, &info);
-+		for_each_string_list(add_remote_to_show_info, &states.tracked, &info);
-+		for_each_string_list(add_remote_to_show_info, &states.stale, &info);
-+		if (info.list->nr)
-+			printf("  Remote branch%s:%s\n",
-+			       info.list->nr > 1 ? "es" : "",
-+				no_query ? " (status not queried)" : ""
-+			);
-+		for_each_string_list(show_remote_info_item, info.list, &info);
-+		string_list_clear(info.list, 0);
-+		info.maxwidth = 0;
- 
--		show_list("  Tracked remote branch%s", &states.tracked, "");
-+		/* git pull info */
-+		for_each_string_list(add_local_to_show_info, &branch_list, &info);
-+		if (info.list->nr)
-+			printf("  Local branch%s configured for 'git pull':\n",
-+			       info.list->nr > 1 ? "es" : "");
-+		for_each_string_list(show_local_info_item, info.list, &info);
-+		string_list_clear(info.list, 1);
-+		info.maxwidth = 0;
- 
-+		/* git push info */
- 		if (states.remote->push_refspec_nr) {
--			printf("  Local branch%s pushed with 'git push'\n",
-+			printf("  Local branch%s configured for 'git push':\n",
- 				states.remote->push_refspec_nr > 1 ?
- 					"es" : "");
- 			for (i = 0; i < states.remote->push_refspec_nr; i++) {
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index fdc4a29..d3dea3a 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -28,7 +28,7 @@ tokens_match () {
- }
- 
- check_remote_track () {
--	actual=$(git remote show "$1" | sed -e '1,/Tracked/d') &&
-+	actual=$(git remote show "$1" | sed -ne 's|^    \(.*\) tracked$|\1|p')
- 	shift &&
- 	tokens_match "$*" "$actual"
- }
-@@ -137,21 +137,18 @@ cat > test/expect << EOF
- * remote origin
-   URL: $(pwd)/one
-   HEAD branch: master
--  Remote branch merged with 'git pull' while on branch master
--    master
--  New remote branch (next fetch will store in remotes/origin)
--    master
--  Tracked remote branches
--    master
--    side
--  Local branches pushed with 'git push'
-+  Remote branches:
-+    master new (next fetch will store in remotes/origin)
-+    side   tracked
-+  Local branches configured for 'git pull':
-+    foo    rebases onto remote master
-+    master merges w/remote master
-+  Local branches configured for 'git push':
-     master:upstream
-     +refs/tags/lastbackup
- * remote two
-   URL: ../two
--  HEAD branches:
--    another
--    master
-+  HEAD branches: another, master
- EOF
- 
- test_expect_success 'show' '
-@@ -159,8 +156,10 @@ test_expect_success 'show' '
- 	 git config --add remote.origin.fetch \
- 		refs/heads/master:refs/heads/upstream &&
- 	 git fetch &&
-+	 git branch --track foo origin/master &&
- 	 git branch -d -r origin/master &&
- 	 git config --add remote.two.url ../two &&
-+	 git config branch.foo.rebase true &&
- 	 (cd ../one &&
- 	  echo 1 > file &&
- 	  test_tick &&
-@@ -170,6 +169,7 @@ test_expect_success 'show' '
- 	 git config --add remote.origin.push \
- 		+refs/tags/lastbackup &&
- 	 git remote show origin two > output &&
-+	 git branch -d foo &&
- 	 test_cmp expect output)
- '
- 
-@@ -177,12 +177,12 @@ cat > test/expect << EOF
- * remote origin
-   URL: $(pwd)/one
-   HEAD branch: (not queried)
--  Remote branch merged with 'git pull' while on branch master
--    master
--  Tracked remote branches
-+  Remote branches: (status not queried)
-     master
-     side
--  Local branches pushed with 'git push'
-+  Local branch configured for 'git pull':
-+    master merges w/remote master
-+  Local branches configured for 'git push':
-     master:upstream
-     +refs/tags/lastbackup
- EOF
--- 
-1.6.2.rc1.218.g1b4fab
+The "linear case" column describes the linear history corresponding to
+the number in column N. G means good, B means bad, and Ux means
+unknown. Note that the first bad revision we are looking for can be
+any Ux or B.
+
+In the "probabilities" column, there are the different outcomes in
+number of steps with the odds of each outcome in parenthesis
+corresponding to the linear case.
+
+The "best" column gives the most accurate estimate among the different
+outcomes in the "probabilities" column.
+
+The "v1" column gives the estimates according my first patch.
+
+Now looking at the table, we have the following:
+
+best(2^n) =3D=3D n - 1
+
+and for any x between 0 included and 2^n excluded, the probability for
+n - 1 steps left looks like:
+
+P(2^n + x) =3D=3D (2^n - x) / (2^n + x)=20
+
+If P(2^n + x) < 0.5 we should return n and otherwise n - 1.
+
+But P(2^n + x) < 0.5 means:
+
+2 * (2^n - x) < (2^n + x)
+
+that is: 2^n < 3x
+
+So the improved algorithm could be something like:
+
+static int estimate_bisect_steps(int all)
+{
+	int n, x, e;
+	float p;
+
+	if (all < 3)
+		return 0;
+
+	n =3D log2(all);
+	e =3D exp2(n);
+	x =3D all - e;
+
+	return (e < 3 * x) ? n : n - 1 ;
+}
+
+But on Linux, log2 and exp2 are defined in "math.h" and available with:
+
+_XOPEN_SOURCE >=3D 600 || _ISOC99_SOURCE; or cc -std=3Dc99
+
+and we must link with -lm, but I don't know about the other platforms.
+
+So I don't know what to do about them. Please advise.
+
+Thanks in advance,
+Christian.
