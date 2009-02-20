@@ -1,90 +1,53 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git merge --abort
-Date: Thu, 19 Feb 2009 21:24:49 -0800
-Message-ID: <7v7i3lk7dp.fsf@gitster.siamese.dyndns.org>
-References: <43d8ce650902190205yc2274c5gb8e658c8608267ff@mail.gmail.com>
- <7v63j6n16s.fsf@gitster.siamese.dyndns.org>
- <43d8ce650902190534j49e24f86k9b716190ae3d134b@mail.gmail.com>
- <76718490902191226k7b87f478p9a79b9b2372b464d@mail.gmail.com>
- <43d8ce650902192047g383a5cc1re6697e8009ad72fc@mail.gmail.com>
+From: "Graham" <silvio@maf-europe.org>
+Subject: You Received an Ecard
+Date: Fri, 20 Feb 2009 10:53:38 +0500
+Message-ID: <20090220105338.1090302@maf-europe.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: John Tapsell <johnflux@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 20 06:26:45 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 20 07:02:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaNuO-0004gs-Dc
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 06:26:44 +0100
+	id 1LaOT2-00035g-ML
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 07:02:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751219AbZBTFZL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2009 00:25:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751178AbZBTFZK
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 00:25:10 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51823 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751150AbZBTFZI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2009 00:25:08 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id D7C152B865;
-	Fri, 20 Feb 2009 00:25:04 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id F348B2B854; Fri,
- 20 Feb 2009 00:24:52 -0500 (EST)
-In-Reply-To: <43d8ce650902192047g383a5cc1re6697e8009ad72fc@mail.gmail.com>
- (John Tapsell's message of "Fri, 20 Feb 2009 04:47:39 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: D434832C-FF0E-11DD-A01B-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1751631AbZBTGBB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 01:01:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751602AbZBTGBA
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 01:01:00 -0500
+Received: from 84-254-148-82.ip.skylogicnet.com ([84.254.148.82]:60829 "HELO
+	84-254-148-82.ip.skylogicnet.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751517AbZBTGBA (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Feb 2009 01:01:00 -0500
+Received: from localhost.localdomain (xtihw [192.168.235.238])
+	by 84-254-148-82.ip.skylogicnet.com (Postfix) with ESMTP id 17B75E20669
+	for <git@vger.kernel.org>; Fri, 20 Feb 2009 10:53:38 +0500
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110797>
+X-Spam-Report: 12.7 points;
+ *  3.9 RATWARE_RCVD_PF Bulk email fingerprint (Received PF) found
+ *  3.0 RAZOR2_CF_RANGE_51_100 BODY: Razor2 gives confidence level above 50%
+ *      [cf: 100]
+ * -2.6 BAYES_00 BODY: Bayesian spam probability is 0 to 1%
+ *      [score: 0.0000]
+ *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
+ *  2.0 URIBL_PH_SURBL Contains an URL listed in the PH SURBL blocklist
+ *      [URIs: wirelessvalentineday.com]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: wirelessvalentineday.com]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: wirelessvalentineday.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110798>
 
-John Tapsell <johnflux@gmail.com> writes:
+Graham just sent you a custom online greeting and wrote for you:
+"You are my sweetheart!"
 
-> 2009/2/19 Jay Soffian <jaysoffian@gmail.com>:
->> On Thu, Feb 19, 2009 at 8:34 AM, John Tapsell <johnflux@gmail.com> wrote:
->>> There's no reliable way of getting back to the state before the merge?
->>
->> Sure there is. Commit or stash before you merge, so that your index
->> and working copy are clean.
->
-> Could a stash be done automatically by the merge command, for just a case?
-
-It cuts both ways.  For people who work on a well organized project
-(i.e. highly modularized) and tend to keep local changes in the work tree
-while doing a lot of merges, running "stash" every time would (1) remove
-the local change from the work tree, which he has to remember to manually
-unstash after resolving conflicts in the merge (which would not have
-conflicted with the local change anyway), which is an additional work for
-no real gain, and (2) clutter his stash.  My gut feeling is that it is a
-change that affects the way the end user has to work that is sufficiently
-different and disruptive for no real gain.
-
-If you read the original message more carefully, you will notice that the
-suggested "git merge --abort" would break down *only* if the user messes
-with the state conflicted merge left.  And an unmanageable conflicts are
-much rare compared to most merges that autoresolve, so you should optimze
-for the common case while giving a way to gain safety only when needed.
-
-Probably a much better workflow, if we add "merge --abort", would be:
-
-    $ edit ;# unrelated local changes are still here
-    $ git pull ;# or merge or whatever
-    ... oops, large conflict ...
-    ... look and see if it can easily be resolved ...
-    ... otherwise
-    $ git merge --abort
-    $ git stash
-    $ git pull ;# or whatever, try again
-    ... the same conflict but this time you only need to worry
-    ... about the merge itself
-    ... resolve, review, test to convince yourself that your
-    ... resolution is good and then...
-    $ git commit
-    $ git stash pop
+To pick up your greeting card, click on the link below:
+http://xjsgv.wirelessvalentineday.com/?ID=1b722a024a07736ed37710aeb
+Webmaster, greeting-cards.com.
