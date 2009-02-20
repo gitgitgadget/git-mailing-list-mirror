@@ -1,82 +1,62 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Shallow clones (git clone --depth) are broken?
-Date: Thu, 19 Feb 2009 21:49:49 -0500
-Message-ID: <20090220024948.GA22419@coredump.intra.peff.net>
-References: <20090219145524.32ca3915@vrm378-02.vrm378.am.mot.com>
+Subject: Re: Recovering from missing objects?
+Date: Thu, 19 Feb 2009 21:58:10 -0500
+Message-ID: <20090220025810.GB22419@coredump.intra.peff.net>
+References: <alpine.LRH.2.00.0902191447040.16988@vixen.sonytel.be> <7vvdr6j6hz.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Jim Ramsay <i.am@jimramsay.com>
-X-From: git-owner@vger.kernel.org Fri Feb 20 03:51:22 2009
+Cc: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 20 03:59:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaLU1-0006wI-EC
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 03:51:21 +0100
+	id 1LaLc6-0000EE-FN
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 03:59:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751882AbZBTCtx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2009 21:49:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751340AbZBTCtx
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 21:49:53 -0500
-Received: from peff.net ([208.65.91.99]:42573 "EHLO peff.net"
+	id S1752289AbZBTC6O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2009 21:58:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751392AbZBTC6O
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 21:58:14 -0500
+Received: from peff.net ([208.65.91.99]:42292 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751123AbZBTCtw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2009 21:49:52 -0500
-Received: (qmail 30974 invoked by uid 107); 20 Feb 2009 02:50:12 -0000
+	id S1751123AbZBTC6N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Feb 2009 21:58:13 -0500
+Received: (qmail 31062 invoked by uid 107); 20 Feb 2009 02:58:34 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 19 Feb 2009 21:50:12 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Feb 2009 21:49:49 -0500
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 19 Feb 2009 21:58:34 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Feb 2009 21:58:10 -0500
 Content-Disposition: inline
-In-Reply-To: <20090219145524.32ca3915@vrm378-02.vrm378.am.mot.com>
+In-Reply-To: <7vvdr6j6hz.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110782>
 
-On Thu, Feb 19, 2009 at 02:55:24PM -0500, Jim Ramsay wrote:
+On Thu, Feb 19, 2009 at 04:29:12PM -0800, Junio C Hamano wrote:
 
-> I've been trying to experiment with shallow clones, however I can't
-> seem to actually create one.  Here's what I've tried, for example:
+> > If I clone the remote repository, I have the object in the new clone.
+> > However, how do I get the missing object back into the .git directory of my
+> > working repository?
+> [...]
+> In the new clone:
 > 
-> git clone --depth 1 git://git.fluxbox.org/fluxbox.git
+> 	$ IT=c406ab0be69c912ea59233595a071478103cdad8
+> 	$ H=$(git rev-list --objects $IT | git pack-objects mine)
+>         $ mv mine-$H.pack /var/tmp
 > 
-> However, this gets me everything, and takes quite a while.  After it
-> completes, running gitk shows me the entire history, and the size of
-> the .git directory is the same as a full clone I've done previously.
+> Go to the repository that lacks the object and then
 > 
-> I've tried this with both 1.6.0.2 and 1.6.1.3, to the same effect.
-> 
-> Can anyone out there verify that this --depth option actually does
-> anything?  Or could it potentially be the version of git on the
-> server?
+> 	$ git unpack-objects </var/tmp/mine-$H.pack
 
-Sorry, I can't reproduce (using 1.6.0.2):
+Might it not be simpler to just copy or hardlink the pack from the new
+clone into the old directory's .git/objects/pack? That will get more
+than you need, but things should start working, at which point a "git
+repack -a -d" will make it small again.
 
-  $ git clone git://git.fluxbox.org/fluxbox.git full
-  Initialized empty Git repository in /home/peff/full/.git/
-  remote: Counting objects: 31521, done.
-  remote: Compressing objects: 100% (8013/8013), done.
-  remote: Total 31521 (delta 24321), reused 30542 (delta 23462)
-  Receiving objects: 100% (31521/31521), 8.08 MiB | 499 KiB/s, done.
-  Resolving deltas: 100% (24321/24321), done.
-  $ du -sh full/.git
-  9.2M    full/.git
-
-  $ git clone --depth 1 git://git.fluxbox.org/fluxbox.git shallow
-  Initialized empty Git repository in /home/peff/shallow/.git/
-  remote: Counting objects: 5402, done.
-  remote: Compressing objects: 100% (3310/3310), done.
-  remote: Total 5402 (delta 4148), reused 2969 (delta 2057)
-  Receiving objects: 100% (5402/5402), 3.07 MiB | 408 KiB/s, done.
-  Resolving deltas: 100% (4148/4148), done.
-  $ du -sh shallow/.git
-  3.5M    shallow/.git
-
-There is some server support required for shallow clone; I didn't check,
-but I assume that the client would degrade gracefully to a full clone.
-In which case, is it possible that fluxbox.org upgraded since you
-tested? Can you try again?
+Or am I misunderstanding something?
 
 -Peff
