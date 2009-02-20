@@ -1,84 +1,134 @@
-From: Marius Storm-Olsen <marius@trolltech.com>
-Subject: Re: [PATCH] Add bare repository indicator for __git_ps1
-Date: Fri, 20 Feb 2009 23:04:47 +0100
-Message-ID: <499F28FF.30905@trolltech.com>
-References: <499EC48B.9070004@trolltech.com> <alpine.DEB.1.00.0902201734450.6302@intel-tinevez-2-302> <200902201746.15242.trast@student.ethz.ch>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 2/2] --date=relative falls back to "short" format for
+ commits older than a year
+Date: Fri, 20 Feb 2009 14:15:22 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0902201409230.21686@localhost.localdomain>
+References: <1235165034-20299-1-git-send-email-eletuchy@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	spearce@spearce.org, Git Mailing List <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Feb 20 23:06:22 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: gitster@pobox.com, peff@peff.net, git@vger.kernel.org,
+	eletuchy@facebook.com, Eugene Letuchy <eugene@facebook.com>
+To: eletuchy@gmail.com
+X-From: git-owner@vger.kernel.org Fri Feb 20 23:17:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LadVf-0005YG-IB
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 23:06:16 +0100
+	id 1Ladgf-00017U-0C
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 23:17:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753971AbZBTWEs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2009 17:04:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753911AbZBTWEr
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 17:04:47 -0500
-Received: from hoat.troll.no ([62.70.27.150]:35743 "EHLO hoat.troll.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753792AbZBTWEq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2009 17:04:46 -0500
-Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id 0418E20FAA;
-	Fri, 20 Feb 2009 23:04:45 +0100 (CET)
-Received: from [172.20.1.78] (unknown [172.20.1.78])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hoat.troll.no (Postfix) with ESMTP id C034920EDF;
-	Fri, 20 Feb 2009 23:04:44 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.8.1.19) Gecko/20081209 Thunderbird/2.0.0.19 ThunderGit/0.1a Mnenhy/0.7.5.666
-In-Reply-To: <200902201746.15242.trast@student.ethz.ch>
-X-Enigmail-Version: 0.95.7
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
- hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
- 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
- 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
- ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
- oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
- tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
- Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
- 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
- nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
- KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
- 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
+	id S1753974AbZBTWQF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 17:16:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753772AbZBTWQC
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 17:16:02 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:42390 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752997AbZBTWQB (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Feb 2009 17:16:01 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n1KMFNoc018502
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 20 Feb 2009 14:15:24 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n1KMFM5H003337;
+	Fri, 20 Feb 2009 14:15:22 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <1235165034-20299-1-git-send-email-eletuchy@gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.956 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110896>
-
-Thomas Rast said the following on 20.02.2009 17:46:
-> Johannes Schindelin wrote:
->> On Fri, 20 Feb 2009, Marius Storm-Olsen wrote:
->>> +		local c
->>> +		+		if test "$(git config --bool core.bare)" ==
->>> "true"; then
->> Indeed, it seems that this got mangled, unfortunately.
-> 
-> Actually it seems the patch itself is fine, but the mail is still 
-> flagged format=flowed, so f=f-aware readers will mangle it on
-> display.
-
-Hmm, it looks ok for me as well, though I do see the incorrect 
-format=flowed for this unflowed mail. I think it's one of my other 
-extensions causing this, but I'm not sure. I need to disable them to 
-check.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110897>
 
 
-> It conflicts with e5dd864 (completion: Better __git_ps1 support
-> when not in working directory, 2009-02-11) however, which is on
-> next.
+Subject: Support 'raw' date format
 
-Ok, I think I was based on master. I'll rebase and do fixups on Monday.
+Talking about --date, one thing I wanted for the 1234567890 date was to 
+get things in the raw format. Sure, you get them with --pretty=raw, but it 
+felt a bit sad that you couldn't just ask for the date in raw format.
 
-Thanks!
+So here's a throw-away patch (meaning: I won't be re-sending it, because I 
+really don't think it's a big deal) to add "--date=raw". It just prints 
+out the internal raw git format - seconds since epoch plus timezone (put 
+another way: 'date +"%s %z"' format)
 
---
-.marius
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+---
+
+Not a whole lot of testing. But 
+
+	git show --date=raw v2.6.29-rc5
+
+works correctly.
+
+ Documentation/rev-list-options.txt |    4 +++-
+ cache.h                            |    3 ++-
+ date.c                             |    7 +++++++
+ 3 files changed, 12 insertions(+), 2 deletions(-)
+
+diff --git i/Documentation/rev-list-options.txt w/Documentation/rev-list-options.txt
+index b9f6e4d..5076322 100644
+--- i/Documentation/rev-list-options.txt
++++ w/Documentation/rev-list-options.txt
+@@ -13,7 +13,7 @@ include::pretty-options.txt[]
+ 
+ 	Synonym for `--date=relative`.
+ 
+---date={relative,local,default,iso,rfc,short}::
++--date={relative,local,default,iso,rfc,short,raw}::
+ 
+ 	Only takes effect for dates shown in human-readable format, such
+ 	as when using "--pretty". `log.date` config variable sets a default
+@@ -31,6 +31,8 @@ format, often found in E-mail messages.
+ +
+ `--date=short` shows only date but not time, in `YYYY-MM-DD` format.
+ +
++`--date=raw` shows the date in the internal raw git format `%s %z` format.
+++
+ `--date=default` shows timestamps in the original timezone
+ (either committer's or author's).
+ 
+diff --git i/cache.h w/cache.h
+index 21a6310..189151d 100644
+--- i/cache.h
++++ w/cache.h
+@@ -696,7 +696,8 @@ enum date_mode {
+ 	DATE_SHORT,
+ 	DATE_LOCAL,
+ 	DATE_ISO8601,
+-	DATE_RFC2822
++	DATE_RFC2822,
++	DATE_RAW
+ };
+ 
+ const char *show_date(unsigned long time, int timezone, enum date_mode mode);
+diff --git i/date.c w/date.c
+index 950b88f..d75dff4 100644
+--- i/date.c
++++ w/date.c
+@@ -89,6 +89,11 @@ const char *show_date(unsigned long time, int tz, enum date_mode mode)
+ 	struct tm *tm;
+ 	static char timebuf[200];
+ 
++	if (mode == DATE_RAW) {
++		snprintf(timebuf, sizeof(timebuf), "%lu %+05d", time, tz);
++		return timebuf;
++	}
++
+ 	if (mode == DATE_RELATIVE) {
+ 		unsigned long diff;
+ 		struct timeval now;
+@@ -615,6 +620,8 @@ enum date_mode parse_date_format(const char *format)
+ 		return DATE_LOCAL;
+ 	else if (!strcmp(format, "default"))
+ 		return DATE_NORMAL;
++	else if (!strcmp(format, "raw"))
++		return DATE_RAW;
+ 	else
+ 		die("unknown date format %s", format);
+ }
