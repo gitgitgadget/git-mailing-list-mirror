@@ -1,75 +1,77 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH/RFC v2 0/3] git checkout optimisation - part 3
-Date: Fri, 20 Feb 2009 10:26:04 +0100
-Message-ID: <bd6139dc0902200126j51177504hfeb23b4ec07dfea0@mail.gmail.com>
-References: <cover.1235071656.git.barvik@broadpark.no>
-	 <7vfxi9fqup.fsf@gitster.siamese.dyndns.org>
-	 <86r61tiio2.fsf@broadpark.no>
+From: Nigel Magnay <nigel.magnay@gmail.com>
+Subject: Re: [JGIT PATCH] 1/2 : (reworked) Externalizable/Serializable Items
+Date: Fri, 20 Feb 2009 09:28:38 +0000
+Message-ID: <320075ff0902200128o6b9772a4tcbd652e7654524e@mail.gmail.com>
+References: <320075ff0902161212s1980cd70r8cdc4c21550333ee@mail.gmail.com>
+	 <20090218163002.GB22848@spearce.org>
+	 <320075ff0902200127m3e516621m60a608bc891ab992@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Kjetil Barvik <barvik@broadpark.no>
-X-From: git-owner@vger.kernel.org Fri Feb 20 10:27:50 2009
+Content-Transfer-Encoding: 7bit
+To: Git ML <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Feb 20 10:35:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaRfb-00058T-PY
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 10:27:44 +0100
+	id 1LaRmz-0007M6-Pv
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 10:35:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753501AbZBTJ0J convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Feb 2009 04:26:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753499AbZBTJ0I
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 04:26:08 -0500
-Received: from fg-out-1718.google.com ([72.14.220.154]:3831 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752323AbZBTJ0H convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Feb 2009 04:26:07 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so1759516fgg.17
-        for <git@vger.kernel.org>; Fri, 20 Feb 2009 01:26:04 -0800 (PST)
+	id S1753759AbZBTJdv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 04:33:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753657AbZBTJdv
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 04:33:51 -0500
+Received: from mail-bw0-f161.google.com ([209.85.218.161]:54259 "EHLO
+	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752774AbZBTJdt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2009 04:33:49 -0500
+Received: by bwz5 with SMTP id 5so2262023bwz.13
+        for <git@vger.kernel.org>; Fri, 20 Feb 2009 01:33:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=1OKkobiDaIO1a4V3FbiA6HIyYdS+Np1hKraMCD5a9Dg=;
-        b=jwupnLKC1wFJd/ljOWqVlG6tPf4poRlvuABztWZ9SzxAnC77lQb6ZYMxGqDBUXzixO
-         QrHuPzaxgjIshv2y2nRw44VKgpwaWZltyTmiQnDPl0UwF27l5TQX/rtW6ZoXF0aKmPn9
-         g6128u+kOnDoiSYcWoCqJgpmyEOZtwe3KnlpM=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=rx+PT2/5BVkegMJDv9qimBAyLT9eMLdP8iM0EAmlV1Q=;
+        b=Myd819nqXT2LATRQ63j2P58oSxYsh1XX83N9rp8KtTriMUFsgCh4ouEK+95nDWA+X4
+         UnEEfhsbLszuaB5tcHWctcsCiRDutblus/h+g3rorc3Y2pT21aY7I4CE5qmGc2BvRFSD
+         JTpdTbN7wrjlXTJNI/lrXVlTUnCqAzxVopuls=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=EOaZARegJPGunEVbdyY117PWYcChJLcWH7ykRRc6tfRGWIlLI5QDbfSZN4KPcqKSVU
-         8SG2gxGWeXILH4ovtUhD0Ge3W3Lw+y/imhj0Tekg2oPsIIoFig9LOL0dLMlsdcvsbMdP
-         jG8B7dJI5syHIuU1XOT9g0VMVxWQfiJ9F4zYI=
-Received: by 10.86.52.6 with SMTP id z6mr863379fgz.35.1235121964849; Fri, 20 
-	Feb 2009 01:26:04 -0800 (PST)
-In-Reply-To: <86r61tiio2.fsf@broadpark.no>
-X-Google-Sender-Auth: a5d32d017b90d216
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=LuR6c53TFwXNC207ISCyTaP/1RKLp/JQJz5kwfzjiK8mfupm5HBKKfBmx6eGqLVlxr
+         apiV5JtK4W6DY32u2MsSu0n2jU8KaN6ADzOMVV4ZRyKcceyWZe+UFJgOm9bSAvjeraf0
+         cE/r8nS5cf/zHjshcFk0SMHpyoYY74LydXmio=
+Received: by 10.103.138.16 with SMTP id q16mr1393096mun.114.1235122118079; 
+	Fri, 20 Feb 2009 01:28:38 -0800 (PST)
+In-Reply-To: <320075ff0902200127m3e516621m60a608bc891ab992@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110829>
 
-Heya,
-
-On Fri, Feb 20, 2009 at 10:03, Kjetil Barvik <barvik@broadpark.no> wrot=
-e:
-> Junio C Hamano <gitster@pobox.com> writes:
->> Hmm, have you noticed that the rest of the stuff are queued on 'next=
-'?
+On Wed, Feb 18, 2009 at 4:30 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
 >
-> =A0Yes, I have! =A0I was also glad to receive my first acked-by git-t=
-ag!!
+> Nigel Magnay <nigel.magnay@gmail.com> wrote:
+> > +public class ObjectId extends AnyObjectId implements Serializable {
+>
+> We should define our own serialVersionUID:
+>
+>  private static final long serialVersionUID = 1L;
+>
+> is good enough to make Java happy.
 
-In that case, it wouldof been appopriate to base your further patches
-on next rather than master ;).
+I'll re-roll. Actually both that and the whitespace damage I'm
+partially blaming on eclipse. Eclipse curiously removes the warning to
+declare serialVersionUID if you declare both writeObject and
+readObject - that's wrong!
 
---=20
-Cheers,
+Also the formatting came from
+.settings/org.eclipse.core.resources.prefs which has a tab policy of
+"Tabs only" which has overridden my environment setting of
+spaces-only.
 
-Sverre Rabbelier
+I can modify it to spaces only - but the comment in 9268ced9d38 talks
+about spaces-per-tab..?
