@@ -1,53 +1,67 @@
-From: "Graham" <silvio@maf-europe.org>
-Subject: You Received an Ecard
-Date: Fri, 20 Feb 2009 10:53:38 +0500
-Message-ID: <20090220105338.1090302@maf-europe.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Recovering from missing objects?
+Date: Thu, 19 Feb 2009 22:09:20 -0800
+Message-ID: <7vmychiqr3.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LRH.2.00.0902191447040.16988@vixen.sonytel.be>
+ <7vvdr6j6hz.fsf@gitster.siamese.dyndns.org>
+ <20090220025810.GB22419@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 20 07:02:37 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 20 07:10:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaOT2-00035g-ML
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 07:02:33 +0100
+	id 1LaOb9-0004d6-PK
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 07:10:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751631AbZBTGBB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2009 01:01:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751602AbZBTGBA
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 01:01:00 -0500
-Received: from 84-254-148-82.ip.skylogicnet.com ([84.254.148.82]:60829 "HELO
-	84-254-148-82.ip.skylogicnet.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751517AbZBTGBA (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Feb 2009 01:01:00 -0500
-Received: from localhost.localdomain (xtihw [192.168.235.238])
-	by 84-254-148-82.ip.skylogicnet.com (Postfix) with ESMTP id 17B75E20669
-	for <git@vger.kernel.org>; Fri, 20 Feb 2009 10:53:38 +0500
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+	id S1751875AbZBTGJ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 01:09:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751754AbZBTGJ2
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 01:09:28 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53818 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750984AbZBTGJ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2009 01:09:27 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 4F2CD2B861;
+	Fri, 20 Feb 2009 01:09:26 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 6E00F2B85E; Fri,
+ 20 Feb 2009 01:09:22 -0500 (EST)
+In-Reply-To: <20090220025810.GB22419@coredump.intra.peff.net> (Jeff King's
+ message of "Thu, 19 Feb 2009 21:58:10 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 06B7AAF8-FF15-11DD-ACD0-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 12.7 points;
- *  3.9 RATWARE_RCVD_PF Bulk email fingerprint (Received PF) found
- *  3.0 RAZOR2_CF_RANGE_51_100 BODY: Razor2 gives confidence level above 50%
- *      [cf: 100]
- * -2.6 BAYES_00 BODY: Bayesian spam probability is 0 to 1%
- *      [score: 0.0000]
- *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
- *  2.0 URIBL_PH_SURBL Contains an URL listed in the PH SURBL blocklist
- *      [URIs: wirelessvalentineday.com]
- *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: wirelessvalentineday.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: wirelessvalentineday.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110799>
 
-Graham just sent you a custom online greeting and wrote for you:
-"You are my sweetheart!"
+Jeff King <peff@peff.net> writes:
 
-To pick up your greeting card, click on the link below:
-http://xjsgv.wirelessvalentineday.com/?ID=1b722a024a07736ed37710aeb
-Webmaster, greeting-cards.com.
+> Might it not be simpler to just copy or hardlink the pack from the new
+> clone into the old directory's .git/objects/pack? That will get more
+> than you need, but things should start working, at which point a "git
+> repack -a -d" will make it small again.
+>
+> Or am I misunderstanding something?
+
+If you already have a good clone and a half-broken one locally, of course,
+what you said is the easiest.
+
+I just assumed that Geert did not really want to copy the whole pack.
+Maybe he doesn't mind in this particular case, but the next breakage may
+involve gigapacks he'd rather not re-clone.
+
+I also assumed that anybody who is reading the message can easily guess
+that the copy I was demonstrating in the description could be done across
+machines, instead of via local /var/tmp/, and "In the new clone" steps
+could even be done in the original one.  Presenting the knowledge that
+way, the solution hopefully would be adjustable for more people who are
+reading this thread.
