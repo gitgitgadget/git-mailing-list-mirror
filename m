@@ -1,229 +1,81 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v2 next 1/4] format-patch: threading test reactivation
-Date: Fri, 20 Feb 2009 20:55:37 +0100
-Message-ID: <47e4d803ed1d784e9911a90e1ca052573f77b9d6.1235158956.git.trast@student.ethz.ch>
-References: <alpine.LNX.1.00.0902191734110.19665@iabervon.org> <cover.1235158956.git.trast@student.ethz.ch>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 20 20:57:37 2009
+Subject: Re: Blamming a diff between two commits?
+Date: Fri, 20 Feb 2009 21:04:31 +0100
+Message-ID: <200902202104.37695.trast@student.ethz.ch>
+References: <499AB8A1.7090909@datacom.ind.br> <200902171509.21434.trast@student.ethz.ch>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+  boundary="nextPart5543725.X2uqaWJKq8";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Samuel Lucas Vaz de Mello <samuellucas@datacom.ind.br>
+X-From: git-owner@vger.kernel.org Fri Feb 20 21:06:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LabV3-0006tb-D0
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 20:57:29 +0100
+	id 1Labdc-0001ZB-No
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 21:06:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754284AbZBTTz4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2009 14:55:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753841AbZBTTzz
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 14:55:55 -0500
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:28518 "EHLO xsmtp1.ethz.ch"
+	id S1753082AbZBTUEw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 15:04:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752924AbZBTUEv
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 15:04:51 -0500
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:37370 "EHLO XSMTP0.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752791AbZBTTzx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2009 14:55:53 -0500
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 20 Feb 2009 20:55:52 +0100
-Received: from localhost.localdomain ([77.56.223.244]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 20 Feb 2009 20:55:51 +0100
-X-Mailer: git-send-email 1.6.2.rc1.310.ga3b4a
-In-Reply-To: <cover.1235158956.git.trast@student.ethz.ch>
-X-OriginalArrivalTime: 20 Feb 2009 19:55:51.0756 (UTC) FILETIME=[3BAFD8C0:01C99395]
+	id S1752813AbZBTUEu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2009 15:04:50 -0500
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 20 Feb 2009 21:04:49 +0100
+Received: from thomas.localnet ([77.56.223.244]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 20 Feb 2009 21:04:49 +0100
+User-Agent: KMail/1.11.0 (Linux/2.6.27.7-9-default; KDE/4.2.0; x86_64; ; )
+In-Reply-To: <200902171509.21434.trast@student.ethz.ch>
+X-OriginalArrivalTime: 20 Feb 2009 20:04:49.0346 (UTC) FILETIME=[7C1D9220:01C99396]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110884>
 
-t4014 tests format-patch --thread since 7d812145, but the tests were
-ineffective right from the start at least for bash and dash.  The
-loops of the form
+--nextPart5543725.X2uqaWJKq8
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-  for ...; do something || break; done
+Thomas Rast wrote:
+> Samuel Lucas Vaz de Mello wrote:
+> > Is there any way to git blame (or annotate) a diff between two
+> > commits?
+[...]
+> Call it as './git-blame-diff.perl HEAD^ HEAD' or so.
 
-introduced by 7d812145 and 5d02294 always exit with status 0, even if
-'something' failed, because 'break' returns 0 unless there was no loop
-to break.
+Any reports from the field?  Does it do what you wanted?  Does it have
+other shortcomings than the ones I mentioned:
 
-We take a rather different approach that uses an admittedly heinous
-inline Perl script to mangle all interesting information into a format
-that is invariant between runs.  We can then test the full patch
-sequence in one go (with --stdout), doing away with the loop problem.
+> This lacks proper argument checking and a chdir to the repository top
+> level.  Maybe you could fill in the gaps and shape it as a contrib
+> patch?  For bonus points, change it so that the workdir version can be
+> used as the new side of the diff, by omitting the second argument.
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
 
-Same as v1.
+--nextPart5543725.X2uqaWJKq8
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
- t/t4014-format-patch.sh |  144 ++++++++++++++++++++++++++++++++++-------------
- 1 files changed, 104 insertions(+), 40 deletions(-)
+iEYEABECAAYFAkmfDNUACgkQqUud07tmzP0e8ACgghLfu+dU6xGRLeH0mxw89Qqq
+t/sAn333u7Ko+pROJPeIKHYb1uFp4wkC
+=SdIM
+-----END PGP SIGNATURE-----
 
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index f045898..345e6de 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -138,56 +138,120 @@ test_expect_success 'multiple files' '
- 	ls patches/0001-Side-changes-1.patch patches/0002-Side-changes-2.patch patches/0003-Side-changes-3-with-n-backslash-n-in-it.patch
- '
- 
--test_expect_success 'thread' '
-+check_threading () {
-+	expect="$1" &&
-+	shift &&
-+	(git format-patch --stdout "$@"; echo $? > status.out) |
-+	# Prints everything between the Message-ID and In-Reply-To,
-+	# and replaces all Message-ID-lookalikes by a sequence number
-+	perl -ne '
-+		if (/^(message-id|references|in-reply-to)/i) {
-+			$printing = 1;
-+		} elsif (/^\S/) {
-+			$printing = 0;
-+		}
-+		if ($printing) {
-+			$h{$1}=$i++ if (/<([^>]+)>/ and !exists $h{$1});
-+			for $k (keys %h) {s/$k/$h{$k}/};
-+			print;
-+		}
-+		print "---\n" if /^From /i;
-+	' > actual &&
-+	test 0 = "$(cat status.out)" &&
-+	test_cmp "$expect" actual
-+}
-+
-+cat >> expect.no-threading <<EOF
-+---
-+---
-+---
-+EOF
- 
--	rm -rf patches/ &&
-+test_expect_success 'no threading' '
- 	git checkout side &&
--	git format-patch --thread -o patches/ master &&
--	FIRST_MID=$(grep "Message-Id:" patches/0001-* | sed "s/^[^<]*\(<[^>]*>\).*$/\1/") &&
--	for i in patches/0002-* patches/0003-*
--	do
--	  grep "References: $FIRST_MID" $i &&
--	  grep "In-Reply-To: $FIRST_MID" $i || break
--	done
-+	check_threading expect.no-threading master
- '
- 
--test_expect_success 'thread in-reply-to' '
-+cat > expect.thread <<EOF
-+---
-+Message-Id: <0>
-+---
-+Message-Id: <1>
-+In-Reply-To: <0>
-+References: <0>
-+---
-+Message-Id: <2>
-+In-Reply-To: <0>
-+References: <0>
-+EOF
- 
--	rm -rf patches/ &&
--	git checkout side &&
--	git format-patch --in-reply-to="<test.message>" --thread -o patches/ master &&
--	FIRST_MID="<test.message>" &&
--	for i in patches/*
--	do
--	  grep "References: $FIRST_MID" $i &&
--	  grep "In-Reply-To: $FIRST_MID" $i || break
--	done
-+test_expect_success 'thread' '
-+	check_threading expect.thread --thread master
- '
- 
--test_expect_success 'thread cover-letter' '
-+cat > expect.in-reply-to <<EOF
-+---
-+Message-Id: <0>
-+In-Reply-To: <1>
-+References: <1>
-+---
-+Message-Id: <2>
-+In-Reply-To: <1>
-+References: <1>
-+---
-+Message-Id: <3>
-+In-Reply-To: <1>
-+References: <1>
-+EOF
- 
--	rm -rf patches/ &&
--	git checkout side &&
--	git format-patch --cover-letter --thread -o patches/ master &&
--	FIRST_MID=$(grep "Message-Id:" patches/0000-* | sed "s/^[^<]*\(<[^>]*>\).*$/\1/") &&
--	for i in patches/0001-* patches/0002-* patches/0003-*
--	do
--	  grep "References: $FIRST_MID" $i &&
--	  grep "In-Reply-To: $FIRST_MID" $i || break
--	done
-+test_expect_success 'thread in-reply-to' '
-+	check_threading expect.in-reply-to --in-reply-to="<test.message>" \
-+		--thread master
- '
- 
--test_expect_success 'thread cover-letter in-reply-to' '
-+cat > expect.cover-letter <<EOF
-+---
-+Message-Id: <0>
-+---
-+Message-Id: <1>
-+In-Reply-To: <0>
-+References: <0>
-+---
-+Message-Id: <2>
-+In-Reply-To: <0>
-+References: <0>
-+---
-+Message-Id: <3>
-+In-Reply-To: <0>
-+References: <0>
-+EOF
- 
--	rm -rf patches/ &&
--	git checkout side &&
--	git format-patch --cover-letter --in-reply-to="<test.message>" --thread -o patches/ master &&
--	FIRST_MID="<test.message>" &&
--	for i in patches/*
--	do
--	  grep "References: $FIRST_MID" $i &&
--	  grep "In-Reply-To: $FIRST_MID" $i || break
--	done
-+test_expect_success 'thread cover-letter' '
-+	check_threading expect.cover-letter --cover-letter --thread master
-+'
-+
-+cat > expect.cl-irt <<EOF
-+---
-+Message-Id: <0>
-+In-Reply-To: <1>
-+References: <1>
-+---
-+Message-Id: <2>
-+In-Reply-To: <1>
-+References: <1>
-+---
-+Message-Id: <3>
-+In-Reply-To: <1>
-+References: <1>
-+---
-+Message-Id: <4>
-+In-Reply-To: <1>
-+References: <1>
-+EOF
-+
-+test_expect_success 'thread cover-letter in-reply-to' '
-+	check_threading expect.cl-irt --cover-letter \
-+		--in-reply-to="<test.message>" --thread master
- '
- 
- test_expect_success 'excessive subject' '
--- 
-1.6.2.rc1.310.ga3b4a
+--nextPart5543725.X2uqaWJKq8--
