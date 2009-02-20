@@ -1,157 +1,71 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCHv2bis 2/2] git-gui: handle bare repos correctly
-Date: Fri, 20 Feb 2009 02:32:29 +0100
-Message-ID: <1235093549-5912-1-git-send-email-giuseppe.bilotta@gmail.com>
-References: <cb7bb73a0902191634n30f97c24t4d1840f5660c3eb3@mail.gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Feb 20 02:34:04 2009
+From: Caleb Cushing <xenoterracide@gmail.com>
+Subject: Re: merge smart enough to adapt to renames?
+Date: Thu, 19 Feb 2009 21:17:19 -0500
+Message-ID: <81bfc67a0902191817u11361d0bw1f2215a53e284f8f@mail.gmail.com>
+References: <81bfc67a0902182212h578e677ck6029c56cb86f7bce@mail.gmail.com>
+	 <slrngpqquq.j03.sitaramc@sitaramc.homelinux.net>
+	 <81bfc67a0902191158x5f0f92d1p7e4af2f9cda50a12@mail.gmail.com>
+	 <slrngprunn.hbo.sitaramc@sitaramc.homelinux.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 20 03:18:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaKHC-0006eQ-SW
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 02:34:03 +0100
+	id 1LaKyY-0008GS-Pv
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 03:18:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754379AbZBTBcf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2009 20:32:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754095AbZBTBcf
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 20:32:35 -0500
-Received: from fg-out-1718.google.com ([72.14.220.155]:32004 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750948AbZBTBce (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2009 20:32:34 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so1505058fgg.17
-        for <git@vger.kernel.org>; Thu, 19 Feb 2009 17:32:32 -0800 (PST)
+	id S1752116AbZBTCRV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2009 21:17:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750851AbZBTCRV
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 21:17:21 -0500
+Received: from mail-qy0-f11.google.com ([209.85.221.11]:55469 "EHLO
+	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752020AbZBTCRU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Feb 2009 21:17:20 -0500
+Received: by qyk4 with SMTP id 4so1185992qyk.13
+        for <git@vger.kernel.org>; Thu, 19 Feb 2009 18:17:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=fUfxbjaa3ZUybFD2a5+5NzNwZMFuSCW4t8hmBOiJFi8=;
-        b=kgSFRNa/xbLrWQOL4TmKID11qtNgEBG1hLAfGLJTVmC5yWjxFJ1WZ++HZqMCS6tnlD
-         4TD3/vyPsY6NWxGeyy4dYYNHbEKPY3mEzm0Sv79368EQAVn2NtWEVcT96wMVHxCZJJ2a
-         KayrBKrPvFUJVGOu+zLXOioPUT3QSzNSVohRI=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=wS1Djdh7S0io6sN55n1KNGqwN5+Ah9T09hw3PrxiFwA=;
+        b=bBr0AhsPbTWSOdb23kr4DSbSqDwdz9S9DVb2WvPI3ygrjPH0hYhtdwCEiaPAQiOlqR
+         hdXjwPKmKOqihiGIFPavWdO2qgV5NfXCImolpnhHoDEzSk4QRCPJ5ahlFEk6fayeur32
+         v+9+2Nrmq8wiTN3I00X9OvwDXFv8p/4hj2WM0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=w1YTWDyfB1wczsh+q+uRypf13pvU2R45vqEiFhP469//mhwssW/RT6SrszBs1t3tw2
-         swJH1rauK4f/VyRdz4AQyGWzuJmrX8uMzacHMqQlv4FXpie7pd1NjEfXknuvfQrjyTZo
-         +mHOtvcMVCNSGIi9ENSQWOCb914NmmgRX9NKo=
-Received: by 10.103.182.3 with SMTP id j3mr1178816mup.113.1235093552331;
-        Thu, 19 Feb 2009 17:32:32 -0800 (PST)
-Received: from localhost (host-78-13-59-64.cust-adsl.tiscali.it [78.13.59.64])
-        by mx.google.com with ESMTPS id n10sm2104642mue.39.2009.02.19.17.32.31
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 19 Feb 2009 17:32:31 -0800 (PST)
-X-Mailer: git-send-email 1.6.2.rc1.179.g17e82
-In-Reply-To: <cb7bb73a0902191634n30f97c24t4d1840f5660c3eb3@mail.gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=d5jsbfAJPMhzt/jgYZo0VgZxRYwVTx3tARIiKyHaikfpTi9smiGqCxUm+dOaZUTdKs
+         coget5TYGSQ1UOlyVa6YSFTe8Ilyh7U4rrfkpftNLbDuLSEC9QYDBIONT9EtdmnW9NjQ
+         DBkOJ9jJfG4rO5gt0l8qrnpkxtMeumKEXeCKU=
+Received: by 10.229.85.21 with SMTP id m21mr119633qcl.9.1235096239414; Thu, 19 
+	Feb 2009 18:17:19 -0800 (PST)
+In-Reply-To: <slrngprunn.hbo.sitaramc@sitaramc.homelinux.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110780>
 
-Refactor checking for a bare repository into its own proc, that relies
-on git rev-parse --is-bare-repository if possible. If that fails (e.g.
-older versions of git) we fall back to a logic such that the repository
-is considered bare if:
- * either the core.bare setting is true
- * or the worktree is not set and the directory name ends with .git
-The error message for the case of an unhandled bare repository is also
-updated to reflect the fact that the problem is not the funny name but
-the bareness.
+> Not sure I understood this completely, but I've found it
+> helps to make the rename/move as a separate commit, then
+> start changing stuff.  In other words, do too many things in
+> the same commit, and you could lose this coolness.
 
-The new refactored proc is also used to disable the menu entry to
-explore the working copy, and to skip changing to the worktree before
-the gitk invocation.
----
- git-gui/git-gui.sh |   43 ++++++++++++++++++++++++++++++++++++-------
- 1 files changed, 36 insertions(+), 7 deletions(-)
+well I the problem is.. in a sense I need to unmerge 2 files that I
+once merged... they currently have the same name and are in the same
+place, and where I merge them from they'll continue to have that  name
+(although they are different files with the same purpose) but I want
+them to have different names and spots in my tree/repo.
 
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index 12c7ff3..e42d254 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -122,6 +122,7 @@ unset oguimsg
- set _appname {Git Gui}
- set _gitdir {}
- set _gitworktree {}
-+set _isbare {}
- set _gitexec {}
- set _reponame {}
- set _iscygwin {}
-@@ -254,6 +255,32 @@ proc get_config {name} {
- 	}
- }
- 
-+proc is_bare {} {
-+	global _isbare
-+	global _gitdir
-+	global _gitworktree
-+
-+	if {$_isbare eq {}} {
-+		if {[catch {
-+			set _bare [git rev-parse --is-bare-repository]
-+			switch  -- $_bare {
-+			true { set _isbare 1 }
-+			false { set _isbare 0}
-+			default { throw }
-+			}
-+		}]} {
-+			if {[is_config_true core.bare]
-+				|| ($_gitworktree eq {}
-+					&& [lindex [file split $_gitdir] end] ne {.git})} {
-+				set _isbare 1
-+			} else {
-+				set _isbare 0
-+			}
-+		}
-+	}
-+	return $_isbare
-+}
-+
- ######################################################################
- ##
- ## handy utils
-@@ -1084,9 +1111,9 @@ if {$_prefix ne {}} {
- 	set _gitworktree [pwd]
- 	unset cdup
- } elseif {![is_enabled bare]} {
--	if {[lindex [file split $_gitdir] end] ne {.git}} {
-+	if {[is_bare]} {
- 		catch {wm withdraw .}
--		error_popup [strcat [mc "Cannot use funny .git directory:"] "\n\n$_gitdir"]
-+		error_popup [strcat [mc "Cannot use bare repository:"] "\n\n$_gitdir"]
- 		exit 1
- 	}
- 	if {$_gitworktree eq {}} {
-@@ -1913,7 +1940,7 @@ proc do_gitk {revs} {
- 		}
- 
- 		set pwd [pwd]
--		if { $_gitworktree ne {} } {
-+		if { ![is_bare] } {
- 			cd $_gitworktree
- 		}
- 		set env(GIT_DIR) [file normalize [gitdir]]
-@@ -2317,10 +2344,12 @@ if {[is_enabled multicommit] || [is_enabled singlecommit]} {
- #
- menu .mbar.repository
- 
--.mbar.repository add command \
--	-label [mc "Explore Working Copy"] \
--	-command {do_explore}
--.mbar.repository add separator
-+if {![is_bare]} {
-+	.mbar.repository add command \
-+		-label [mc "Explore Working Copy"] \
-+		-command {do_explore}
-+	.mbar.repository add separator
-+}
- 
- .mbar.repository add command \
- 	-label [mc "Browse Current Branch's Files"] \
 -- 
-1.6.2.rc1.179.g17e82
+Caleb Cushing
+
+http://xenoterracide.blogspot.com
