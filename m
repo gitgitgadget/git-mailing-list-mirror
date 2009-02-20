@@ -1,60 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/8] builtin-apply: use warning() instead of
- fprintf(stderr, "warning: ")
-Date: Thu, 19 Feb 2009 22:11:24 -0800
-Message-ID: <7viqn5iqnn.fsf@gitster.siamese.dyndns.org>
-References: <200902190736.49161.johnflux@gmail.com>
- <20090219081725.GB7774@coredump.intra.peff.net>
- <20090219120708.GM4371@genesis.frugalware.org>
- <20090219122104.GA4602@sigill.intra.peff.net>
- <4f61642d10063adbff86094e91b1b6e90efabe8e.1235047192.git.vmiklos@frugalware.org> <20090220030245.GC22419@coredump.intra.peff.net>
+From: John Williams <john.williams@petalogix.com>
+Subject: Wierd git over http behaviour
+Date: Fri, 20 Feb 2009 16:13:20 +1000
+Message-ID: <1d3f23370902192213g560020b3h7a2459c1439e5e5c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	John Tapsell <johnflux@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 20 07:13:15 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 20 07:14:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaOdB-0005M8-Dl
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 07:13:01 +0100
+	id 1LaOew-0005r2-1M
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 07:14:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752218AbZBTGLe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2009 01:11:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752331AbZBTGLd
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 01:11:33 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54073 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751626AbZBTGLd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2009 01:11:33 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C5E5C9BC82;
-	Fri, 20 Feb 2009 01:11:31 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 4D5879BC81; Fri,
- 20 Feb 2009 01:11:26 -0500 (EST)
-In-Reply-To: <20090220030245.GC22419@coredump.intra.peff.net> (Jeff King's
- message of "Thu, 19 Feb 2009 22:02:45 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 51823602-FF15-11DD-A009-B26E209B64D9-77302942!a-sasl-fastnet.pobox.com
+	id S1752444AbZBTGNW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 01:13:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752406AbZBTGNV
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 01:13:21 -0500
+Received: from wf-out-1314.google.com ([209.85.200.174]:35293 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752319AbZBTGNV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2009 01:13:21 -0500
+Received: by wf-out-1314.google.com with SMTP id 28so974015wfa.4
+        for <git@vger.kernel.org>; Thu, 19 Feb 2009 22:13:20 -0800 (PST)
+Received: by 10.143.12.11 with SMTP id p11mr239252wfi.19.1235110400591; Thu, 
+	19 Feb 2009 22:13:20 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110802>
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> Other than that, these all look pretty straightforward. Probably the
-> shell scripts should be switched to match, too. But it would be nice to
-> hear from Junio first that this cleanup is even desired (so you don't
-> waste time).
+We have a git tree that accesses fine via the git protocol, however I have
+also opened up http support for it as some of our users are behind
+git-unfriendly corporate firewalls.
 
-I think it is a good thing to do.  If the pre-release-freeze is a good
-time to do so it is a different matter.  A good way to judge would be 
-how much of these overlap with "git diff master next" (smaller the better,
-obviously).
+I know http transport is not encouraged, but not much I can do about that.
+
+Strange thing is, when doing an http fetch of said tree, it gets no updates
+to the tree later than about Jan 13 this year, even though the tree itself
+has many, many commits since then (its origin is Linus's tree and we pull
+regularly).  Heads created later than that date are also not visible (doing
+git branch -a) in the clone pulled over http.  Clones made using git: are
+fine.
+
+Anything I can look for in the .git repo on the server, permissions or
+similar that might be relevant?  It's almost like there's a single commit in
+there that somehow is making the http fetch puke.  If you browse the http
+tree with a web browser, it's all there as expected.
+
+For reference here are the URLs:
+
+git://developer.petalogix.cmo/linux-2.6-microblaze
+
+http://developer.petalogix.com/git2/linux-2.6-microblaze
+
+Initially the http reference was a symlink on the server to the actual git
+tree, but I also tried just rsync'ing it across to /var/www/html/git2 to
+make sure it wasn't the symlink breaking things - no change.
+
+Am I misunderstanding something or is this just flakey behaviour of the http
+protocol support?
+
+Thanks,
+
+John
