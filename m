@@ -1,66 +1,82 @@
-From: Jim Ramsay <i.am@jimramsay.com>
-Subject: Shallow clones (git clone --depth) are broken?
-Date: Thu, 19 Feb 2009 14:55:24 -0500
-Message-ID: <20090219145524.32ca3915@vrm378-02.vrm378.am.mot.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [RFC/PATCH] git-shortlog: respect i18n.logOutputEncoding config setting
+Date: Fri, 20 Feb 2009 02:12:38 +0100
+Message-ID: <1235092358-6895-1-git-send-email-vmiklos@frugalware.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 20 02:06:40 2009
+X-From: git-owner@vger.kernel.org Fri Feb 20 02:13:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaJqh-0000QY-Ul
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 02:06:40 +0100
+	id 1LaJxY-00021O-Ry
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 02:13:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752058AbZBTBFK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2009 20:05:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751392AbZBTBFJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 20:05:09 -0500
-Received: from main.gmane.org ([80.91.229.2]:45842 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750993AbZBTBFI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2009 20:05:08 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1LaJp9-0004tD-5y
-	for git@vger.kernel.org; Fri, 20 Feb 2009 01:05:03 +0000
-Received: from 144.190.95.61 ([144.190.95.61])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 20 Feb 2009 01:05:03 +0000
-Received: from i.am by 144.190.95.61 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 20 Feb 2009 01:05:03 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 144.190.95.61
-X-Newsreader: Claws Mail 3.6.1 (GTK+ 2.14.5; x86_64-pc-linux-gnu)
+	id S1756994AbZBTBMP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2009 20:12:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756575AbZBTBMO
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 20:12:14 -0500
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:50530 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756212AbZBTBMN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Feb 2009 20:12:13 -0500
+Received: from vmobile.example.net (catv-80-98-230-81.catv.broadband.hu [80.98.230.81])
+	by yugo.frugalware.org (Postfix) with ESMTPA id 22E05446CF0
+	for <git@vger.kernel.org>; Fri, 20 Feb 2009 02:12:11 +0100 (CET)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id C9BDA186208; Fri, 20 Feb 2009 02:12:38 +0100 (CET)
+X-Mailer: git-send-email 1.6.1.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110777>
 
-I've been trying to experiment with shallow clones, however I can't
-seem to actually create one.  Here's what I've tried, for example:
+As git-shortlog can be used as a filter as well, we do not really have
+the encoding info to do a reencode_string(), but in case
+i18n.logOutputEncoding is set, we can try to convert to the given value
+from utf-8.
 
-git clone --depth 1 git://git.fluxbox.org/fluxbox.git
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-However, this gets me everything, and takes quite a while.  After it
-completes, running gitk shows me the entire history, and the size of
-the .git directory is the same as a full clone I've done previously.
+It was just annoying for me that git log respected
+i18n.logOutputEncoding, but I still saw unencoded utf-8 in git-shortlog
+output. This patches fixes my problem.
 
-I've tried this with both 1.6.0.2 and 1.6.1.3, to the same effect.
+Yes, I'm aware that hardwiring that utf-8 value is a bit hackish. But at
+least this way the output encoding is correct in case the original
+encoding is utf-8, which is true in most cases.
 
-Can anyone out there verify that this --depth option actually does
-anything?  Or could it potentially be the version of git on the
-server?
+Or do you have a better idea?
 
-If it's not just something odd I'm doing, I can take the time to
-try to figure out in which version this *does* work, and when it
-stopped... Though others out there may be more equipped than I to chase
-this down.
+ builtin-shortlog.c |    8 +++++++-
+ 1 files changed, 7 insertions(+), 1 deletions(-)
 
+diff --git a/builtin-shortlog.c b/builtin-shortlog.c
+index badd912..cd95858 100644
+--- a/builtin-shortlog.c
++++ b/builtin-shortlog.c
+@@ -45,6 +45,7 @@ static void insert_one_record(struct shortlog *log,
+ 	const char *eol;
+ 	const char *boemail, *eoemail;
+ 	struct strbuf subject = STRBUF_INIT;
++	char *encoded_name = NULL;
+ 
+ 	boemail = strchr(author, '<');
+ 	if (!boemail)
+@@ -84,7 +85,12 @@ static void insert_one_record(struct shortlog *log,
+ 		snprintf(namebuf + len, room, " <%.*s>", maillen, emailbuf);
+ 	}
+ 
+-	item = string_list_insert(namebuf, &log->list);
++	if (git_log_output_encoding)
++		encoded_name = reencode_string(namebuf, git_log_output_encoding, "utf-8");
++	if (!encoded_name)
++		encoded_name = xstrdup(namebuf);
++	item = string_list_insert(encoded_name, &log->list);
++	free(encoded_name);
+ 	if (item->util == NULL)
+ 		item->util = xcalloc(1, sizeof(struct string_list));
+ 
 -- 
-Jim Ramsay
+1.6.1.3
