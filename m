@@ -1,67 +1,60 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Recovering from missing objects?
-Date: Fri, 20 Feb 2009 01:10:46 -0500
-Message-ID: <20090220061046.GA28122@coredump.intra.peff.net>
-References: <alpine.LRH.2.00.0902191447040.16988@vixen.sonytel.be> <7vvdr6j6hz.fsf@gitster.siamese.dyndns.org> <20090220025810.GB22419@coredump.intra.peff.net> <7vmychiqr3.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/8] builtin-apply: use warning() instead of
+ fprintf(stderr, "warning: ")
+Date: Thu, 19 Feb 2009 22:11:24 -0800
+Message-ID: <7viqn5iqnn.fsf@gitster.siamese.dyndns.org>
+References: <200902190736.49161.johnflux@gmail.com>
+ <20090219081725.GB7774@coredump.intra.peff.net>
+ <20090219120708.GM4371@genesis.frugalware.org>
+ <20090219122104.GA4602@sigill.intra.peff.net>
+ <4f61642d10063adbff86094e91b1b6e90efabe8e.1235047192.git.vmiklos@frugalware.org> <20090220030245.GC22419@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 20 07:12:50 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	John Tapsell <johnflux@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 20 07:13:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaOcY-000569-6q
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 07:12:22 +0100
+	id 1LaOdB-0005M8-Dl
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 07:13:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752385AbZBTGKu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2009 01:10:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752348AbZBTGKu
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 01:10:50 -0500
-Received: from peff.net ([208.65.91.99]:56956 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752129AbZBTGKs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2009 01:10:48 -0500
-Received: (qmail 32432 invoked by uid 107); 20 Feb 2009 06:11:10 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 20 Feb 2009 01:11:10 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Feb 2009 01:10:46 -0500
-Content-Disposition: inline
-In-Reply-To: <7vmychiqr3.fsf@gitster.siamese.dyndns.org>
+	id S1752218AbZBTGLe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 01:11:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752331AbZBTGLd
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 01:11:33 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54073 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751626AbZBTGLd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2009 01:11:33 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C5E5C9BC82;
+	Fri, 20 Feb 2009 01:11:31 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 4D5879BC81; Fri,
+ 20 Feb 2009 01:11:26 -0500 (EST)
+In-Reply-To: <20090220030245.GC22419@coredump.intra.peff.net> (Jeff King's
+ message of "Thu, 19 Feb 2009 22:02:45 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 51823602-FF15-11DD-A009-B26E209B64D9-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110801>
 
-On Thu, Feb 19, 2009 at 10:09:20PM -0800, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> > Might it not be simpler to just copy or hardlink the pack from the new
-> > clone into the old directory's .git/objects/pack? That will get more
-> > than you need, but things should start working, at which point a "git
-> > repack -a -d" will make it small again.
-> >
-> > Or am I misunderstanding something?
-> 
-> If you already have a good clone and a half-broken one locally, of course,
-> what you said is the easiest.
-> 
-> I just assumed that Geert did not really want to copy the whole pack.
-> Maybe he doesn't mind in this particular case, but the next breakage may
-> involve gigapacks he'd rather not re-clone.
+> Other than that, these all look pretty straightforward. Probably the
+> shell scripts should be switched to match, too. But it would be nice to
+> hear from Junio first that this cleanup is even desired (so you don't
+> waste time).
 
-Ah, OK. I had the impression that he had already made a new valid clone
-on the local box.
-
-> I also assumed that anybody who is reading the message can easily guess
-> that the copy I was demonstrating in the description could be done across
-> machines, instead of via local /var/tmp/, and "In the new clone" steps
-> could even be done in the original one.  Presenting the knowledge that
-> way, the solution hopefully would be adjustable for more people who are
-> reading this thread.
-
-Makes sense. Thanks.
-
--Peff
+I think it is a good thing to do.  If the pre-release-freeze is a good
+time to do so it is a different matter.  A good way to judge would be 
+how much of these overlap with "git diff master next" (smaller the better,
+obviously).
