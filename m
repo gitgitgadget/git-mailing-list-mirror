@@ -1,71 +1,82 @@
-From: Caleb Cushing <xenoterracide@gmail.com>
-Subject: Re: merge smart enough to adapt to renames?
-Date: Thu, 19 Feb 2009 21:17:19 -0500
-Message-ID: <81bfc67a0902191817u11361d0bw1f2215a53e284f8f@mail.gmail.com>
-References: <81bfc67a0902182212h578e677ck6029c56cb86f7bce@mail.gmail.com>
-	 <slrngpqquq.j03.sitaramc@sitaramc.homelinux.net>
-	 <81bfc67a0902191158x5f0f92d1p7e4af2f9cda50a12@mail.gmail.com>
-	 <slrngprunn.hbo.sitaramc@sitaramc.homelinux.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Shallow clones (git clone --depth) are broken?
+Date: Thu, 19 Feb 2009 21:49:49 -0500
+Message-ID: <20090220024948.GA22419@coredump.intra.peff.net>
+References: <20090219145524.32ca3915@vrm378-02.vrm378.am.mot.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 20 03:18:54 2009
+To: Jim Ramsay <i.am@jimramsay.com>
+X-From: git-owner@vger.kernel.org Fri Feb 20 03:51:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaKyY-0008GS-Pv
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 03:18:51 +0100
+	id 1LaLU1-0006wI-EC
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 03:51:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752116AbZBTCRV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2009 21:17:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750851AbZBTCRV
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 21:17:21 -0500
-Received: from mail-qy0-f11.google.com ([209.85.221.11]:55469 "EHLO
-	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752020AbZBTCRU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2009 21:17:20 -0500
-Received: by qyk4 with SMTP id 4so1185992qyk.13
-        for <git@vger.kernel.org>; Thu, 19 Feb 2009 18:17:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=wS1Djdh7S0io6sN55n1KNGqwN5+Ah9T09hw3PrxiFwA=;
-        b=bBr0AhsPbTWSOdb23kr4DSbSqDwdz9S9DVb2WvPI3ygrjPH0hYhtdwCEiaPAQiOlqR
-         hdXjwPKmKOqihiGIFPavWdO2qgV5NfXCImolpnhHoDEzSk4QRCPJ5ahlFEk6fayeur32
-         v+9+2Nrmq8wiTN3I00X9OvwDXFv8p/4hj2WM0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=d5jsbfAJPMhzt/jgYZo0VgZxRYwVTx3tARIiKyHaikfpTi9smiGqCxUm+dOaZUTdKs
-         coget5TYGSQ1UOlyVa6YSFTe8Ilyh7U4rrfkpftNLbDuLSEC9QYDBIONT9EtdmnW9NjQ
-         DBkOJ9jJfG4rO5gt0l8qrnpkxtMeumKEXeCKU=
-Received: by 10.229.85.21 with SMTP id m21mr119633qcl.9.1235096239414; Thu, 19 
-	Feb 2009 18:17:19 -0800 (PST)
-In-Reply-To: <slrngprunn.hbo.sitaramc@sitaramc.homelinux.net>
+	id S1751882AbZBTCtx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2009 21:49:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751340AbZBTCtx
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 21:49:53 -0500
+Received: from peff.net ([208.65.91.99]:42573 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751123AbZBTCtw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Feb 2009 21:49:52 -0500
+Received: (qmail 30974 invoked by uid 107); 20 Feb 2009 02:50:12 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 19 Feb 2009 21:50:12 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Feb 2009 21:49:49 -0500
+Content-Disposition: inline
+In-Reply-To: <20090219145524.32ca3915@vrm378-02.vrm378.am.mot.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110781>
 
-> Not sure I understood this completely, but I've found it
-> helps to make the rename/move as a separate commit, then
-> start changing stuff.  In other words, do too many things in
-> the same commit, and you could lose this coolness.
+On Thu, Feb 19, 2009 at 02:55:24PM -0500, Jim Ramsay wrote:
 
-well I the problem is.. in a sense I need to unmerge 2 files that I
-once merged... they currently have the same name and are in the same
-place, and where I merge them from they'll continue to have that  name
-(although they are different files with the same purpose) but I want
-them to have different names and spots in my tree/repo.
+> I've been trying to experiment with shallow clones, however I can't
+> seem to actually create one.  Here's what I've tried, for example:
+> 
+> git clone --depth 1 git://git.fluxbox.org/fluxbox.git
+> 
+> However, this gets me everything, and takes quite a while.  After it
+> completes, running gitk shows me the entire history, and the size of
+> the .git directory is the same as a full clone I've done previously.
+> 
+> I've tried this with both 1.6.0.2 and 1.6.1.3, to the same effect.
+> 
+> Can anyone out there verify that this --depth option actually does
+> anything?  Or could it potentially be the version of git on the
+> server?
 
--- 
-Caleb Cushing
+Sorry, I can't reproduce (using 1.6.0.2):
 
-http://xenoterracide.blogspot.com
+  $ git clone git://git.fluxbox.org/fluxbox.git full
+  Initialized empty Git repository in /home/peff/full/.git/
+  remote: Counting objects: 31521, done.
+  remote: Compressing objects: 100% (8013/8013), done.
+  remote: Total 31521 (delta 24321), reused 30542 (delta 23462)
+  Receiving objects: 100% (31521/31521), 8.08 MiB | 499 KiB/s, done.
+  Resolving deltas: 100% (24321/24321), done.
+  $ du -sh full/.git
+  9.2M    full/.git
+
+  $ git clone --depth 1 git://git.fluxbox.org/fluxbox.git shallow
+  Initialized empty Git repository in /home/peff/shallow/.git/
+  remote: Counting objects: 5402, done.
+  remote: Compressing objects: 100% (3310/3310), done.
+  remote: Total 5402 (delta 4148), reused 2969 (delta 2057)
+  Receiving objects: 100% (5402/5402), 3.07 MiB | 408 KiB/s, done.
+  Resolving deltas: 100% (4148/4148), done.
+  $ du -sh shallow/.git
+  3.5M    shallow/.git
+
+There is some server support required for shallow clone; I didn't check,
+but I assume that the client would degrade gracefully to a full clone.
+In which case, is it possible that fluxbox.org upgraded since you
+tested? Can you try again?
+
+-Peff
