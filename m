@@ -1,70 +1,90 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] git-tag: don't use gpg's stdin, stdout when signing tags
-Date: Fri, 20 Feb 2009 18:56:58 +0100
-Message-ID: <499EEEEA.2040600@kdbg.org>
-References: <20090220113856.6612.qmail@0bbdb5719a4668.315fe32.mid.smarden.org>
+From: Heiko Voigt <git-list@hvoigt.net>
+Subject: [RFC PATCH] hooks: add some defaults to support sane workflow to
+ pre-commit
+Date: Fri, 20 Feb 2009 19:13:10 +0100
+Message-ID: <499EF2B6.7060103@hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Gerrit Pape <pape@smarden.org>
-X-From: git-owner@vger.kernel.org Fri Feb 20 18:58:45 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 20 19:21:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaZe4-0001Dr-A0
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 18:58:40 +0100
+	id 1Laa06-0001Wz-Ua
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 19:21:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753314AbZBTR5L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2009 12:57:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752388AbZBTR5I
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 12:57:08 -0500
-Received: from bsmtp.bon.at ([213.33.87.14]:28968 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753013AbZBTR5H (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2009 12:57:07 -0500
-Received: from [77.117.34.56] (77.117.34.56.wireless.dyn.drei.com [77.117.34.56])
-	by bsmtp.bon.at (Postfix) with ESMTP id C0EFECDF9C;
-	Fri, 20 Feb 2009 18:57:01 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
-In-Reply-To: <20090220113856.6612.qmail@0bbdb5719a4668.315fe32.mid.smarden.org>
+	id S1751237AbZBTSTz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 13:19:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750851AbZBTSTz
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 13:19:55 -0500
+Received: from darksea.de ([83.133.111.250]:54288 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750740AbZBTSTy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2009 13:19:54 -0500
+X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Fri, 20 Feb 2009 13:19:53 EST
+Received: (qmail 4229 invoked from network); 20 Feb 2009 19:12:59 +0100
+Received: from unknown (HELO macbook.lan) (127.0.0.1)
+  by localhost with SMTP; 20 Feb 2009 19:12:59 +0100
+User-Agent: Thunderbird 2.0.0.19 (Macintosh/20081209)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110874>
 
-Gerrit Pape schrieb:
->  	memset(&gpg, 0, sizeof(gpg));
->  	gpg.argv = args;
-> -	gpg.in = -1;
-> -	gpg.out = -1;
-> +	gpg.in = 0;
-> +	gpg.out = 1;
+It sometimes happens that you move to a new machine and forget to setup your
+name and email address. To find this out after 10 commits can be quite
+frustrating.
 
-I assume you mean with this that gpg should read from fd 0 and write to 
-fd 1, IOW, it should use the standard channels. If I am right, then the 
-memset above has initialized gpg as needed already. Then gpg.argv is the 
-only thing you are setting up in struct child_process gpg; but in this 
-case you can use a convenience function...
+As far as I know all "sane" workflows involve topic branches, so
+normally a developer will never commit directly on master but use topic
+branch instead and merge them into master once finished.
 
->  	args[0] = "gpg";
->  	args[1] = "-bsau";
->  	args[2] = signingkey;
-> -	args[3] = NULL;
-...
-> +	args[3] = "-o";
-> +	args[4] = signpath;
-> +	args[5] = unsignpath;
-> +	args[6] = NULL;
-...
-> +	if (run_command(&gpg)) {
+One thing which could be dangerous is if you clone a project containing
+submodules. If you would immediately start working in a submodule you
+would create commits with detached head. This can be a dangerous operation
+in terms of loosing commits and should be forbidden by default.
 
-... here (note: no struct child_process needed):
+Signed-off-by: Heiko Voigt <git-list@hvoigt.net>
+---
 
-	if (run_command_v_opt(args, 0)) {
+I also would like to vote for enabling some hooks by default. 
 
-(Just in case this patch is required...)
+ templates/hooks--pre-commit.sample |   23 +++++++++++++++++++++++
+ 1 files changed, 23 insertions(+), 0 deletions(-)
 
--- Hannes
+diff --git a/templates/hooks--pre-commit.sample b/templates/hooks--pre-commit.sample
+index 0e49279..6360da0 100755
+--- a/templates/hooks--pre-commit.sample
++++ b/templates/hooks--pre-commit.sample
+@@ -16,3 +16,26 @@ else
+ fi
+ 
+ exec git diff-index --check --cached $against --
++
++# check if username and email are setup
++if [ -z "$(git config --global user.name)" ]; then
++    echo "Please set your name and email address"
++    exit 1
++fi
++if [ -z "$(git config --global user.email)" ]; then
++    echo "Please set your name and email address"
++    exit 1
++fi
++
++# work should always be done on a feature branch
++if git branch | grep "^* master" > /dev/null; then
++    echo "No commits on master, please !"
++    exit 1
++fi
++
++# do not allow commits on detached head
++if git branch | grep "^* (no branch)" > /dev/null; then
++    echo "Commit on detached HEAD is dangerous !"
++    echo "Please checkout a branch first ..."
++    exit 1
++fi
+-- 
+1.6.1.2.390.gba743
