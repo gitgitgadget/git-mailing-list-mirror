@@ -1,115 +1,90 @@
-From: Eugene Letuchy <eletuchy@facebook.com>
-Subject: Re: [PATCH] Make git blame date output format configurable, a la
- git log
-Date: Fri, 20 Feb 2009 05:55:19 -0800
-Organization: Facebook
-Message-ID: <499EB647.30606@facebook.com>
-References: <1235136252-29649-1-git-send-email-eletuchy@gmail.com> <alpine.DEB.1.00.0902201434460.6302@intel-tinevez-2-302>
-Reply-To: "eletuchy@gmail.com" <eletuchy@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: CVS import [SOLVED]
+Date: Fri, 20 Feb 2009 10:28:49 -0500
+Message-ID: <20090220152849.GA3826@coredump.intra.peff.net>
+References: <19651.77.61.241.211.1234775877.squirrel@hupie.xs4all.nl> <7291.77.61.241.211.1234790434.squirrel@hupie.xs4all.nl> <60044.192.168.0.51.1234816333.squirrel@hupie.xs4all.nl> <alpine.DEB.1.00.0902162157080.6289@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"marius@trolltech.com" <marius@trolltech.com>, <gitster@pobox.com>
+Content-Type: text/plain; charset=utf-8
+Cc: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>,
+	git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Feb 20 16:29:28 2009
+X-From: git-owner@vger.kernel.org Fri Feb 20 16:30:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaXJS-0001Wr-3M
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 16:29:14 +0100
+	id 1LaXKq-00024f-68
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 16:30:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752773AbZBTP1P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2009 10:27:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752444AbZBTP1O
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 10:27:14 -0500
-Received: from cm.out.snc1.tfbnw.net ([69.63.179.25]:38045 "EHLO
-	mailout-snc1.facebook.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752147AbZBTP1O (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2009 10:27:14 -0500
-X-Greylist: delayed 5504 seconds by postgrey-1.27 at vger.kernel.org; Fri, 20 Feb 2009 10:27:14 EST
-Received: from mail.thefacebook.com (intlb01.snat.snc1.facebook.com [10.128.203.17] (may be forged))
-	by pp01.snc1.tfbnw.net (8.14.1/8.14.1) with ESMTP id n1KDtKv6031982
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT);
-	Fri, 20 Feb 2009 05:55:20 -0800
-Received: from eletuchy.local (192.168.18.252) by mail.TheFacebook.com
- (192.168.18.104) with Microsoft SMTP Server (TLS) id 8.1.340.0; Fri, 20 Feb
- 2009 05:55:19 -0800
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.1b3pre) Gecko/20090219 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <alpine.DEB.1.00.0902201434460.6302@intel-tinevez-2-302>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=1.12.7400:2.4.4,1.2.40,4.0.166 definitions=2009-02-20_04:2009-02-10,2009-02-20,2009-02-20 signatures=0
+	id S1758666AbZBTP2x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 10:28:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758655AbZBTP2x
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 10:28:53 -0500
+Received: from peff.net ([208.65.91.99]:47512 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758638AbZBTP2w (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2009 10:28:52 -0500
+Received: (qmail 2959 invoked by uid 107); 20 Feb 2009 15:29:14 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 20 Feb 2009 10:29:14 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Feb 2009 10:28:49 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0902162157080.6289@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110855>
 
-Hi Johannes,
+On Mon, Feb 16, 2009 at 09:59:29PM +0100, Johannes Schindelin wrote:
 
-Thanks for your feedback. Any comments on the .c changes?
+> > I'm working on it now, and did some more testing: it's actually the 
+> > safecrlf setting, not the autocrlf option.
+> 
+> Oh.  That probably means that cvsimport gets confused by the extra 
+> warnings.
+> 
+> However, I think it is not correct to run cvsimport with autocrlf set to 
+> anything than false anyway (and safecrlf would not trigger then, right?).
+> 
+> So IMHO the solution is still to force autocrlf off.
 
-I'll modify the commit message to read as follows:
-"""
+I don't think that's right. What is happening is that git-hash-object is
+barfing, and git-cvsimport is not properly detecting the error.
+something like this (untested) would make that better:
 
-Add the following:
-  - git config value blame.date that expects one of the git log date
-    formats ({relative,local,default,iso,rfc,short})
-  - git blame command line option --date-format expects one of the git
-    log date formats ({relative,local,default,iso,rfc,short})
-  - documentation in blame-options.txt
-  - git blame uses the appropriate date.c functions and enums to
-    make sense of the date format and provide appropriate data
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index e439202..65e7990 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -926,6 +926,7 @@ while (<CVS>) {
+ 			my $sha = <$F>;
+ 			chomp $sha;
+ 			close $F;
++			$? and die "hash-object reported failure";
+ 			my $mode = pmode($cvs->{'mode'});
+ 			push(@new,[$mode, $sha, $fn]); # may be resurrected!
+ 		}
 
-The tests pass. The mailmap test needed to be modified to expect iso
-formatted blames rather than the new "default".
+But the problem is not autocrlf. It is that the combination of "autocrlf
+= input" and "safecrlf" is nonsensical. Just try this:
 
-Signed-off-by: Eugene Letuchy <eugene@facebook.com>
-"""
+  $ git init
+  $ git config core.autocrlf input
+  $ git config core.safecrlf true
+  $ printf 'DOS\r\n' >file
+  $ git add file
+  fatal: CRLF would be replaced by LF in file.
 
--Eugene
+which makes sense. SafeCRLF is about making sure that the file will be
+the same on checkin and checkout. But it won't, because we are only
+doing CRLF conversion half the time.
 
-+ cc: junio
+So the best workaround is disabling safecrlf, which makes no sense with
+his autocrlf setting. But I also think safecrlf could be smarter by
+treating autocrlf=input as autocrlf=true. That is, we don't care if in
+our _particular_ config it will come out the same; we care about whether
+one could, if so inclined, get the CRLF's back to create a byte-for-byte
+identical object.
 
-On 2/20/09 5:40 AM, Johannes Schindelin wrote:
-> Hi,
->
-> Disclaimer: if you are offended by constructive criticism, or likely to
-> answer with insults to the comments I offer, please stop reading this mail
-> now (and please to not answer my mail, either). :-)
->
-> Still with me?  Good.  Nice to meet you.
->
-> Just out of curiosity: why Cc: Marius?  I would have expected Junio, Git's
-> maintainer.
->
-> May I suggest the commit subject to say "as for git log"?  I mistook "a la
-> git log" for a change in the way git-blame works...
->
-> On Fri, 20 Feb 2009, eletuchy@gmail.com wrote:
->
->> From: Eugene Letuchy<eugene@facebook.com>
->>
->> Adds the following:
->
-> We try to use the imperative form; from my experience it makes for an
-> easier read: "Add the following:"
->
->>   - git config value blame.date that expects one of the git log date
->>     formats ({relative,local,default,iso,rfc,short})
->>   - git blame command line option --date-format expects one of the git
->>     log date formats ({relative,local,default,iso,rfc,short})
->>   - documentation in blame-options.txt
->>   - git blame uses the appropriate date.c functions and enums to
->>     make sense of the date format and provide appropriate data
->>
->> The tests pass. The mailmap test needed to be modified to expect iso
->> formatted blames rather than the new "default".
->
-> IMHO the "The tests pass." should be removed.
->
-> Other than that, nicely done!
->
-> Ciao,
-> Dscho
->
+-Peff
