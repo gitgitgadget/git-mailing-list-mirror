@@ -1,74 +1,85 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Wierd git over http behaviour
-Date: Fri, 20 Feb 2009 07:39:36 +0100
-Message-ID: <bd6139dc0902192239i3c5f196qf890c8b0a6f9ff46@mail.gmail.com>
-References: <1d3f23370902192213g560020b3h7a2459c1439e5e5c@mail.gmail.com>
-	 <bd6139dc0902192219m21c6b4e6ne9bcd2ca4ef6a9b5@mail.gmail.com>
-	 <1d3f23370902192224g71270880p84e150af9640dec6@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/4] remote: minor code cleanups in preparation for
+ changing "show" output
+Date: Thu, 19 Feb 2009 23:19:45 -0800
+Message-ID: <7vbpsxh8xa.fsf@gitster.siamese.dyndns.org>
+References: <1235020471-59982-1-git-send-email-jaysoffian@gmail.com>
+ <1235020471-59982-2-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailinglist <git@vger.kernel.org>
-To: John Williams <john.williams@petalogix.com>
-X-From: git-owner@vger.kernel.org Fri Feb 20 07:41:37 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Marc Branchaud <marcnarc@xiplink.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 20 08:21:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaP4q-0002ha-JM
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 07:41:37 +0100
+	id 1LaPhO-0002n1-JB
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 08:21:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751995AbZBTGjj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2009 01:39:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751626AbZBTGji
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 01:39:38 -0500
-Received: from fg-out-1718.google.com ([72.14.220.158]:37590 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751125AbZBTGji (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2009 01:39:38 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so1665128fgg.17
-        for <git@vger.kernel.org>; Thu, 19 Feb 2009 22:39:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=Ys1MrF9XeBx6PCrXyKfdVbWa8775s8tZu7+G2ucVzQk=;
-        b=X/KfnmgCkpa8qLrG6gwTue7gLuhOmXta1+j34bkCAzwaQzXNc5bnEOswTb4LygRcdy
-         qcbOWt6B4M9ahBepLCKVKuEOpcZcZhE48G2t4W1eA3qD7xwxalaC97ofitxbEp/36Hor
-         hx28AMaoHxODcuuyJz1FdfgF35iybOAFnlAss=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=RPlg0XlkBGkthnEd0XgItIlzxYA/72AwVhyRtawB1ZqliBVnmoIZ7mg5PaowUD/PHp
-         4+dWasVQyz8SiuTQIPZbEqGVHqsfgdKM1Y473bCqUvymVT5zOrxq3v9Uu2zwyG/RT72F
-         LLGF6l50uYqq7dujxAt9bCucu9lKoFiXBpp9Q=
-Received: by 10.86.94.11 with SMTP id r11mr852233fgb.53.1235111976515; Thu, 19 
-	Feb 2009 22:39:36 -0800 (PST)
-In-Reply-To: <1d3f23370902192224g71270880p84e150af9640dec6@mail.gmail.com>
-X-Google-Sender-Auth: e4f581d5ace870d5
+	id S1752323AbZBTHT6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 02:19:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752081AbZBTHT6
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 02:19:58 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63957 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751412AbZBTHT5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2009 02:19:57 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2AB269B078;
+	Fri, 20 Feb 2009 02:19:55 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 460E99B077; Fri,
+ 20 Feb 2009 02:19:47 -0500 (EST)
+In-Reply-To: <1235020471-59982-2-git-send-email-jaysoffian@gmail.com> (Jay
+ Soffian's message of "Thu, 19 Feb 2009 00:14:28 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: DF4DF710-FF1E-11DD-866B-B26E209B64D9-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110806>
 
-Heya,
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-On Fri, Feb 20, 2009 at 07:24, John Williams
-<john.williams@petalogix.com> wrote:
-> On Fri, Feb 20, 2009 at 4:19 PM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
->> This url seems to be broken/dead?
+> * Rename char *remote to remote_name to distinguish it clearly from the
+>   struct remote pointer, also named remote.
 >
-> bah - append .git :(
+> * There is no need to call sort_string_list() on branch_list, as its
+>   items are added to it via string_list_insert() which maintains its
+>   order.
 >
-> http://developer.petalogix.com/git2/linux-2.6-microblaze.git
+> * Sort states->new and states->tracked so that we can use binary search
+>   string_list_has_string() on them instead of less efficient linear
+>   unsorted_string_list_has_string. This alters the output of "remote
+>   show" slightly, so update the tests to match.
+>
+> * Simplify get_ref_states(); nothing is using the pointer to states that
+>   is being copied into util.
+>
+> * Have get_remote_ref_states() populate states->tracked even when it is
+>   not querying the remote so that this need not be done by the caller.
 
-Ok, that works :).
+This does too many things in a single patch.
 
--- 
-Cheers,
+Ideally this would have been four patches for reviewability:
 
-Sverre Rabbelier
+ - one "trivial and obviously correct bits" (s/remote/remote_name/ and
+   removal of sort_string_list(&branch_list)) patch;
+
+ - the change for states->{new,tracked}, should stand on its own; I think
+   the reordering of the output should be described much better and
+   defended independently.  "Earlier it was sorted by this order, which
+   did not make sense for such and such reasons; this fixes the logic to
+   sort the list by the name of the tracked branch, which makes it easier
+   to read", or something like that.
+
+ - change to the states->tracked population rule; and
+
+ - get_ref_states() to lose the util bit.
+
+It probably is Ok to squash the last two, though.
