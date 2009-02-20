@@ -1,39 +1,40 @@
 From: Marius Storm-Olsen <marius@trolltech.com>
 Subject: Re: [PATCH] Add bare repository indicator for __git_ps1
-Date: Fri, 20 Feb 2009 23:00:25 +0100
-Message-ID: <499F27F9.8090506@trolltech.com>
-References: <499EC48B.9070004@trolltech.com> <499EE324.4050305@tedpavlic.com>
+Date: Fri, 20 Feb 2009 23:04:47 +0100
+Message-ID: <499F28FF.30905@trolltech.com>
+References: <499EC48B.9070004@trolltech.com> <alpine.DEB.1.00.0902201734450.6302@intel-tinevez-2-302> <200902201746.15242.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: spearce@spearce.org, Git Mailing List <git@vger.kernel.org>
-To: Ted Pavlic <ted@tedpavlic.com>
-X-From: git-owner@vger.kernel.org Fri Feb 20 23:01:57 2009
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	spearce@spearce.org, Git Mailing List <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Feb 20 23:06:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LadRQ-0004EL-8X
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 23:01:52 +0100
+	id 1LadVf-0005YG-IB
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 23:06:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753983AbZBTWAZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2009 17:00:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753857AbZBTWAZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 17:00:25 -0500
-Received: from hoat.troll.no ([62.70.27.150]:35819 "EHLO hoat.troll.no"
+	id S1753971AbZBTWEs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 17:04:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753911AbZBTWEr
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 17:04:47 -0500
+Received: from hoat.troll.no ([62.70.27.150]:35743 "EHLO hoat.troll.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751247AbZBTWAY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2009 17:00:24 -0500
+	id S1753792AbZBTWEq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2009 17:04:46 -0500
 Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id 1CA9A211E5;
-	Fri, 20 Feb 2009 23:00:23 +0100 (CET)
+	by hoat.troll.no (Postfix) with SMTP id 0418E20FAA;
+	Fri, 20 Feb 2009 23:04:45 +0100 (CET)
 Received: from [172.20.1.78] (unknown [172.20.1.78])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by hoat.troll.no (Postfix) with ESMTP id D3ECA211E3;
-	Fri, 20 Feb 2009 23:00:22 +0100 (CET)
+	by hoat.troll.no (Postfix) with ESMTP id C034920EDF;
+	Fri, 20 Feb 2009 23:04:44 +0100 (CET)
 User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.8.1.19) Gecko/20081209 Thunderbird/2.0.0.19 ThunderGit/0.1a Mnenhy/0.7.5.666
-In-Reply-To: <499EE324.4050305@tedpavlic.com>
+In-Reply-To: <200902201746.15242.trast@student.ethz.ch>
 X-Enigmail-Version: 0.95.7
 Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
  hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
@@ -51,19 +52,33 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110896>
 
-Ted Pavlic said the following on 20.02.2009 18:06:
->> +		if test "$(git config --bool core.bare)" == "true"; then
+Thomas Rast said the following on 20.02.2009 17:46:
+> Johannes Schindelin wrote:
+>> On Fri, 20 Feb 2009, Marius Storm-Olsen wrote:
+>>> +		local c
+>>> +		+		if test "$(git config --bool core.bare)" ==
+>>> "true"; then
+>> Indeed, it seems that this got mangled, unfortunately.
 > 
-> As discussed in another thread, to be consistent with local coding
->  convention, "test" should be replaced with "[ ... ]".
-> 
-> Additionally, double equality (==) should be replaced with single 
-> equality (=).
+> Actually it seems the patch itself is fine, but the mail is still 
+> flagged format=flowed, so f=f-aware readers will mangle it on
+> display.
 
-Ok, I think I was based off of master at the time. I'll take a closer 
-look. Thanks!
+Hmm, it looks ok for me as well, though I do see the incorrect 
+format=flowed for this unflowed mail. I think it's one of my other 
+extensions causing this, but I'm not sure. I need to disable them to 
+check.
+
+
+> It conflicts with e5dd864 (completion: Better __git_ps1 support
+> when not in working directory, 2009-02-11) however, which is on
+> next.
+
+Ok, I think I was based on master. I'll rebase and do fixups on Monday.
+
+Thanks!
 
 --
 .marius
