@@ -1,66 +1,81 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH 1/4] remote: minor code cleanups in preparation for 
-	changing "show" output
-Date: Fri, 20 Feb 2009 05:50:01 -0500
-Message-ID: <76718490902200250t1ba185e3nd71376ef9e13abd3@mail.gmail.com>
-References: <1235020471-59982-1-git-send-email-jaysoffian@gmail.com>
-	 <1235020471-59982-2-git-send-email-jaysoffian@gmail.com>
-	 <7vbpsxh8xa.fsf@gitster.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git rebase -i
+Date: Fri, 20 Feb 2009 12:02:17 +0100
+Message-ID: <499E8DB9.5030505@drmicha.warpmail.net>
+References: <43d8ce650902190121v2e18aac1rfaa64a4ce6e799a3@mail.gmail.com>	 <76718490902191255w24b30bd8jacaed8aa919d6526@mail.gmail.com>	 <7vzlgij7cb.fsf@gitster.siamese.dyndns.org> <76718490902191626u2202ed38xf63111b6a2758206@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Marc Branchaud <marcnarc@xiplink.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 20 11:51:36 2009
+Cc: Junio C Hamano <gitster@pobox.com>,
+	John Tapsell <johnflux@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 20 12:03:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaSyk-0005sm-21
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 11:51:34 +0100
+	id 1LaTAi-0001Dw-Bd
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 12:03:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754039AbZBTKuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2009 05:50:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751536AbZBTKuE
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 05:50:04 -0500
-Received: from rv-out-0506.google.com ([209.85.198.239]:20357 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751163AbZBTKuC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2009 05:50:02 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so884926rvb.1
-        for <git@vger.kernel.org>; Fri, 20 Feb 2009 02:50:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=MiRHZvKbrZ7fWtNPNFMmZuEOAMq+DkYNaHivgR5J6qs=;
-        b=QjXHacgOc/eGrv+g39FjTEz7kUJ6UcTZbXjBfnEC7lKC4wnXKZcYMFbF51Pxg4nv5z
-         Qc70GjOibBHlHNf9EGM8o3y3w4LBE7IPeS5TcE3TAv4Q8EfvtqRSeJm++mJByumRI3hh
-         Dl4fLEHxIfTqgi6aIEWQGjYDP7M+b8bpaHacQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=HnNEQZBPT9kBlwvCfM/njmgY7CLCvpQf1x7u6Ria5EbUSj1/O4Oy0yDglpJscGn64q
-         /y+WlRHJmW2h7tUq4QPvTjruXfnCvbNfZhK4sIx2cVjyzYZ6k729uSkBK5RcW12mEg+Z
-         B7p6GrqWcIE07Jr3a+0xwO6gbXO8Mmmh8f+mw=
-Received: by 10.141.63.11 with SMTP id q11mr368153rvk.60.1235127001903; Fri, 
-	20 Feb 2009 02:50:01 -0800 (PST)
-In-Reply-To: <7vbpsxh8xa.fsf@gitster.siamese.dyndns.org>
+	id S1751781AbZBTLC1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 06:02:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751483AbZBTLC1
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 06:02:27 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:54398 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751320AbZBTLC0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Feb 2009 06:02:26 -0500
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 6A9BD2A26BC;
+	Fri, 20 Feb 2009 06:02:25 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Fri, 20 Feb 2009 06:02:25 -0500
+X-Sasl-enc: d9k628g+MQCUxqQ0u3FCr7T07GmkYT1EGZ/0vvfrhnFd 1235127744
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 70E97E8DC;
+	Fri, 20 Feb 2009 06:02:24 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090219 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <76718490902191626u2202ed38xf63111b6a2758206@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110836>
 
-On Fri, Feb 20, 2009 at 2:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> This does too many things in a single patch.
->
-> Ideally this would have been four patches for reviewability:
+Jay Soffian venit, vidit, dixit 20.02.2009 01:26:
+> On Thu, Feb 19, 2009 at 7:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> 
+>>> $ git rebase -i -10
+>>> $ git rebase -i -n -10
+>> The syntax would certainly imply a different semantics from giving
+>> HEAD~10.  How would you compute the set of commits to rebase sanely when
+>> you have merges after your 10th direct parent commit?
+> 
+> I didn't mean to suggest that -10 and HEAD~10 are the same thing.
+> 
+> I would expect -10 to act the same when given to rebase as it does
+> when given to format-patch. In both cases, you are asking the command
+> for a set of commits.
+> 
+> But as I said, I don't exactly know what -10 means to format-patch if
+> there are merge commits because I've never tried to use it in such a
+> context.
+> 
+> j.
 
-Okay. I'm re-doing 4/4 anyway, so I'll just re-do the series.
+I guess it means exactly what
 
-j.
+git rev-list -10 HEAD
+
+means. And that would also be the easy way to implement it.
+
+BUT: The fact that it's not obvious what "-10" is in non-linear
+situations is the reason why it's probably not a good idea for r-b-i. If
+you want to rebase you need a clear picture of the revision graph. If
+you have one you know where to rebase from, and how to say so using
+HEAD~5 and such. If you don't have one then using an option like -10
+could be dangerous. And in a linear situation, -10 is equivalent to
+HEAD~10 (+-1 ...).
+
+Michael
