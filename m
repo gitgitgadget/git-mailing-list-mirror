@@ -1,128 +1,84 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: [PATCH] git-tag: don't use gpg's stdin, stdout when signing tags
-Date: Fri, 20 Feb 2009 11:38:56 +0000
-Message-ID: <20090220113856.6612.qmail@0bbdb5719a4668.315fe32.mid.smarden.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH RFC 2/2] gitweb: Hyperlink multiple git hashes on the same commit message line
+Date: Fri, 20 Feb 2009 12:46:57 +0100
+Message-ID: <200902201247.00670.jnareb@gmail.com>
+References: <1234926043-7471-1-git-send-email-marcel@oak.homeunix.org> <200902182255.13983.jnareb@gmail.com> <7v4oypfqua.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 20 12:43:12 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Marcel M. Cary" <marcel@oak.homeunix.org>, git@vger.kernel.org,
+	fg@one2team.net, giuseppe.bilotta@gmail.com, pasky@suse.cz
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 20 12:47:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaTmh-0006bY-0a
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 12:43:11 +0100
+	id 1LaTqh-00089z-Ob
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 12:47:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751389AbZBTLjE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Feb 2009 06:39:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751250AbZBTLjC
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 06:39:02 -0500
-Received: from a.ns.smarden.org ([212.42.242.37]:3685 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750951AbZBTLjA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2009 06:39:00 -0500
-Received: (qmail 6613 invoked by uid 1000); 20 Feb 2009 11:38:56 -0000
+	id S1751832AbZBTLpw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 06:45:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752383AbZBTLpv
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 06:45:51 -0500
+Received: from mail-bw0-f161.google.com ([209.85.218.161]:63783 "EHLO
+	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751389AbZBTLpu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2009 06:45:50 -0500
+Received: by bwz5 with SMTP id 5so2408545bwz.13
+        for <git@vger.kernel.org>; Fri, 20 Feb 2009 03:45:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=8cvWelRDfM06fduwaxKamXNy1xCBu8acssdey+EFafE=;
+        b=KoiRUsHDlgetYFjm05P7KHQ+jSYFrwa0MYARqmHi2D+Oz+NDfH+r5nw3He2jHorDsS
+         /9zzGv/2dPW2HFN0H5Gl9RohvmcSo5aebl0M5fOfLJiKcUt5B0MijGnWJVVW+zQ1qnfw
+         TBDdfFDo6pDyTTW7VPKcasuK9IRcDKLoxs2CY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=IER5+oqeKgrJS7EFSFnCh8Kk34sOfqIrtmNXZ/SqYaAGyKJFE8OCxNaev6xbLffaiE
+         daVYWM2msXuO797EVT2ODYRGV7KcNb7HlJWFaIieTUsGhHQeI6p1v0RDSPAb45QpI/Hw
+         e5fg8nwjKCSO+L6zhqUOmVtfTGl9/HHMvpLkM=
+Received: by 10.103.165.18 with SMTP id s18mr1509849muo.124.1235130348787;
+        Fri, 20 Feb 2009 03:45:48 -0800 (PST)
+Received: from ?192.168.1.13? (abvl165.neoplus.adsl.tpnet.pl [83.8.209.165])
+        by mx.google.com with ESMTPS id u9sm637699muf.55.2009.02.20.03.45.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 20 Feb 2009 03:45:47 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7v4oypfqua.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110839>
 
-When using gpg with some console based gpg-agent, acquiring the
-passphrase through the agent fails if stdin and stdout of gpg are
-redirected.  With this commit, git-tag uses temporary files instead
-of standard input/output when signing a tag to support such gpg-agent
-usage.
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> >> +	$line =~ s{\b([0-9a-fA-F]{8,40})\b}{
+> >> +		return $cgi->a({-href => href(action=>"object", hash=>$1),
+> >> +					   -class => "text"}, $1);
+> >> +	}eg;
+> >> +
+> >
+> > Almost correct... but for this unnecessary 'return' statement.
+> > Without it: ACK.
+> 
+> I've applied this directly on 'master' without the return from inside s///e
+> with your Ack.  Please check the result.
 
-The problem was reported by Lo=EFc Minier through
- http://bugs.debian.org/507642
+I did quick test by installing newest gitweb (with above commit applied),
+doing in gitweb searching commit message for '[a-f0-9]{8,40}' with regexp
+search; everything looks all right.  But I didn't do extensive tests.
 
-Signed-off-by: Gerrit Pape <pape@smarden.org>
----
- builtin-tag.c |   51 ++++++++++++++++++++++++++++++++++---------------=
---
- 1 files changed, 34 insertions(+), 17 deletions(-)
-
-diff --git a/builtin-tag.c b/builtin-tag.c
-index 01e7374..e350352 100644
---- a/builtin-tag.c
-+++ b/builtin-tag.c
-@@ -159,10 +159,15 @@ static int verify_tag(const char *name, const cha=
-r *ref,
- static int do_sign(struct strbuf *buffer)
- {
- 	struct child_process gpg;
--	const char *args[4];
-+	const char *args[7];
- 	char *bracket;
- 	int len;
- 	int i, j;
-+	int fd;
-+	char *unsignpath, *signpath;
-+
-+	unsignpath =3D git_pathdup("TAG_UNSIGNEDMSG");
-+	signpath =3D git_pathdup("TAG_SIGNEDMSG");
-=20
- 	if (!*signingkey) {
- 		if (strlcpy(signingkey, git_committer_info(IDENT_ERROR_ON_NO_NAME),
-@@ -179,27 +184,39 @@ static int do_sign(struct strbuf *buffer)
-=20
- 	memset(&gpg, 0, sizeof(gpg));
- 	gpg.argv =3D args;
--	gpg.in =3D -1;
--	gpg.out =3D -1;
-+	gpg.in =3D 0;
-+	gpg.out =3D 1;
- 	args[0] =3D "gpg";
- 	args[1] =3D "-bsau";
- 	args[2] =3D signingkey;
--	args[3] =3D NULL;
--
--	if (start_command(&gpg))
--		return error("could not run gpg.");
--
--	if (write_in_full(gpg.in, buffer->buf, buffer->len) !=3D buffer->len)=
- {
--		close(gpg.in);
--		close(gpg.out);
--		finish_command(&gpg);
--		return error("gpg did not accept the tag data");
-+	args[3] =3D "-o";
-+	args[4] =3D signpath;
-+	args[5] =3D unsignpath;
-+	args[6] =3D NULL;
-+
-+	fd =3D open(unsignpath, O_CREAT | O_TRUNC | O_WRONLY, 0600);
-+	if (fd < 0)
-+		die("could not create file '%s': %s",
-+					unsignpath, strerror(errno));
-+	write_or_die(fd, buffer->buf, buffer->len);
-+	close(fd);
-+
-+	if (run_command(&gpg)) {
-+		unlink(unsignpath);
-+		unlink(signpath);
-+		return error("gpg failed.");
- 	}
--	close(gpg.in);
--	len =3D strbuf_read(buffer, gpg.out, 1024);
--	close(gpg.out);
-+	unlink(unsignpath);
-+
-+	fd =3D open(signpath, O_RDONLY);
-+	if (fd < 0)
-+		die ("could not open file '%s': %s",
-+					signpath, strerror(errno));
-+	len =3D strbuf_read(buffer, fd, 1024);
-+	close(fd);
-+	unlink(signpath);
-=20
--	if (finish_command(&gpg) || !len || len < 0)
-+	if (!len || len < 0)
- 		return error("gpg failed to sign the tag");
-=20
- 	/* Strip CR from the line endings, in case we are on Windows. */
---=20
-1.6.1.3
+-- 
+Jakub Narebski
+Poland
