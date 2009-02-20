@@ -1,130 +1,90 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 2/4] Use CVS's -f option if available (ignore user's ~/.cvsrc file)
-Date: Fri, 20 Feb 2009 06:18:11 +0100
-Message-ID: <c202fb4c8c1eb0121cc15df6ad4a600dc3074f21.1235106222.git.mhagger@alum.mit.edu>
-References: <1235107093-32605-1-git-send-email-mhagger@alum.mit.edu>
- <c3466ee438cd4a5e9d08479ef127468981d4c293.1235106222.git.mhagger@alum.mit.edu>
-Cc: gitster@pobox.com, peff@peff.net,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 20 06:20:34 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git merge --abort
+Date: Thu, 19 Feb 2009 21:24:49 -0800
+Message-ID: <7v7i3lk7dp.fsf@gitster.siamese.dyndns.org>
+References: <43d8ce650902190205yc2274c5gb8e658c8608267ff@mail.gmail.com>
+ <7v63j6n16s.fsf@gitster.siamese.dyndns.org>
+ <43d8ce650902190534j49e24f86k9b716190ae3d134b@mail.gmail.com>
+ <76718490902191226k7b87f478p9a79b9b2372b464d@mail.gmail.com>
+ <43d8ce650902192047g383a5cc1re6697e8009ad72fc@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 20 06:26:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaNoP-0003D5-60
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 06:20:33 +0100
+	id 1LaNuO-0004gs-Dc
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 06:26:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751150AbZBTFSn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2009 00:18:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751430AbZBTFSl
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 00:18:41 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:49834 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751289AbZBTFSi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2009 00:18:38 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from localhost.localdomain (77-21-84-251-dynip.superkabel.de [77.21.84.251])
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id n1K5IEtW005509;
-	Fri, 20 Feb 2009 06:18:15 +0100
-X-Mailer: git-send-email 1.6.1.3
-In-Reply-To: <c3466ee438cd4a5e9d08479ef127468981d4c293.1235106222.git.mhagger@alum.mit.edu>
-In-Reply-To: <c3466ee438cd4a5e9d08479ef127468981d4c293.1235106222.git.mhagger@alum.mit.edu>
-References: <c3466ee438cd4a5e9d08479ef127468981d4c293.1235106222.git.mhagger@alum.mit.edu>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1751219AbZBTFZL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 00:25:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751178AbZBTFZK
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 00:25:10 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51823 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751150AbZBTFZI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2009 00:25:08 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id D7C152B865;
+	Fri, 20 Feb 2009 00:25:04 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id F348B2B854; Fri,
+ 20 Feb 2009 00:24:52 -0500 (EST)
+In-Reply-To: <43d8ce650902192047g383a5cc1re6697e8009ad72fc@mail.gmail.com>
+ (John Tapsell's message of "Fri, 20 Feb 2009 04:47:39 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: D434832C-FF0E-11DD-A01B-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110797>
 
-A user's ~/.cvsrc file can change the basic behavior of CVS commands.
-Therefore we should ignore it in order to ensure consistent results
-from the test suite.
+John Tapsell <johnflux@gmail.com> writes:
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- t/t9600-cvsimport.sh |   16 ++++++++--------
- t/t96xx/cvs-lib.sh   |    3 +++
- 2 files changed, 11 insertions(+), 8 deletions(-)
+> 2009/2/19 Jay Soffian <jaysoffian@gmail.com>:
+>> On Thu, Feb 19, 2009 at 8:34 AM, John Tapsell <johnflux@gmail.com> wrote:
+>>> There's no reliable way of getting back to the state before the merge?
+>>
+>> Sure there is. Commit or stash before you merge, so that your index
+>> and working copy are clean.
+>
+> Could a stash be done automatically by the merge command, for just a case?
 
-diff --git a/t/t9600-cvsimport.sh b/t/t9600-cvsimport.sh
-index b4b9896..66393ae 100755
---- a/t/t9600-cvsimport.sh
-+++ b/t/t9600-cvsimport.sh
-@@ -6,12 +6,12 @@ test_description='git cvsimport basic tests'
- CVSROOT=$(pwd)/cvsroot
- export CVSROOT
- 
--test_expect_success 'setup cvsroot' 'cvs init'
-+test_expect_success 'setup cvsroot' '$CVS init'
- 
- test_expect_success 'setup a cvs module' '
- 
- 	mkdir "$CVSROOT/module" &&
--	cvs co -d module-cvs module &&
-+	$CVS co -d module-cvs module &&
- 	cd module-cvs &&
- 	cat <<EOF >o_fortuna &&
- O Fortuna
-@@ -30,13 +30,13 @@ egestatem,
- potestatem
- dissolvit ut glaciem.
- EOF
--	cvs add o_fortuna &&
-+	$CVS add o_fortuna &&
- 	cat <<EOF >message &&
- add "O Fortuna" lyrics
- 
- These public domain lyrics make an excellent sample text.
- EOF
--	cvs commit -F message &&
-+	$CVS commit -F message &&
- 	cd ..
- '
- 
-@@ -74,7 +74,7 @@ translate to English
- 
- My Latin is terrible.
- EOF
--	cvs commit -F message &&
-+	$CVS commit -F message &&
- 	cd ..
- '
- 
-@@ -92,8 +92,8 @@ test_expect_success 'update cvs module' '
- 
- 	cd module-cvs &&
- 		echo 1 >tick &&
--		cvs add tick &&
--		cvs commit -m 1
-+		$CVS add tick &&
-+		$CVS commit -m 1
- 	cd ..
- 
- '
-@@ -111,7 +111,7 @@ test_expect_success 'cvsimport.module config works' '
- 
- test_expect_success 'import from a CVS working tree' '
- 
--	cvs co -d import-from-wt module &&
-+	$CVS co -d import-from-wt module &&
- 	cd import-from-wt &&
- 		git cvsimport -a -z0 &&
- 		echo 1 >expect &&
-diff --git a/t/t96xx/cvs-lib.sh b/t/t96xx/cvs-lib.sh
-index bfc1c12..6738901 100644
---- a/t/t96xx/cvs-lib.sh
-+++ b/t/t96xx/cvs-lib.sh
-@@ -14,6 +14,9 @@ then
- 	exit
- fi
- 
-+CVS="cvs -f"
-+export CVS
-+
- cvsps_version=`cvsps -h 2>&1 | sed -ne 's/cvsps version //p'`
- case "$cvsps_version" in
- 2.1 | 2.2*)
--- 
-1.6.1.3
+It cuts both ways.  For people who work on a well organized project
+(i.e. highly modularized) and tend to keep local changes in the work tree
+while doing a lot of merges, running "stash" every time would (1) remove
+the local change from the work tree, which he has to remember to manually
+unstash after resolving conflicts in the merge (which would not have
+conflicted with the local change anyway), which is an additional work for
+no real gain, and (2) clutter his stash.  My gut feeling is that it is a
+change that affects the way the end user has to work that is sufficiently
+different and disruptive for no real gain.
+
+If you read the original message more carefully, you will notice that the
+suggested "git merge --abort" would break down *only* if the user messes
+with the state conflicted merge left.  And an unmanageable conflicts are
+much rare compared to most merges that autoresolve, so you should optimze
+for the common case while giving a way to gain safety only when needed.
+
+Probably a much better workflow, if we add "merge --abort", would be:
+
+    $ edit ;# unrelated local changes are still here
+    $ git pull ;# or merge or whatever
+    ... oops, large conflict ...
+    ... look and see if it can easily be resolved ...
+    ... otherwise
+    $ git merge --abort
+    $ git stash
+    $ git pull ;# or whatever, try again
+    ... the same conflict but this time you only need to worry
+    ... about the merge itself
+    ... resolve, review, test to convince yourself that your
+    ... resolution is good and then...
+    $ git commit
+    $ git stash pop
