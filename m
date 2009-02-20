@@ -1,70 +1,74 @@
-From: John Williams <john.williams@petalogix.com>
-Subject: Wierd git over http behaviour
-Date: Fri, 20 Feb 2009 16:13:20 +1000
-Message-ID: <1d3f23370902192213g560020b3h7a2459c1439e5e5c@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Wierd git over http behaviour
+Date: Thu, 19 Feb 2009 22:23:23 -0800
+Message-ID: <7vab8hiq3o.fsf@gitster.siamese.dyndns.org>
+References: <1d3f23370902192213g560020b3h7a2459c1439e5e5c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 20 07:14:51 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: John Williams <john.williams@petalogix.com>
+X-From: git-owner@vger.kernel.org Fri Feb 20 07:25:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaOew-0005r2-1M
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 07:14:50 +0100
+	id 1LaOol-00086V-3Q
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 07:24:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752444AbZBTGNW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2009 01:13:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752406AbZBTGNV
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 01:13:21 -0500
-Received: from wf-out-1314.google.com ([209.85.200.174]:35293 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752319AbZBTGNV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2009 01:13:21 -0500
-Received: by wf-out-1314.google.com with SMTP id 28so974015wfa.4
-        for <git@vger.kernel.org>; Thu, 19 Feb 2009 22:13:20 -0800 (PST)
-Received: by 10.143.12.11 with SMTP id p11mr239252wfi.19.1235110400591; Thu, 
-	19 Feb 2009 22:13:20 -0800 (PST)
+	id S1752453AbZBTGXa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 01:23:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752074AbZBTGXa
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 01:23:30 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56938 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751927AbZBTGXa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2009 01:23:30 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B42D39BD46;
+	Fri, 20 Feb 2009 01:23:28 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A82019BD41; Fri,
+ 20 Feb 2009 01:23:25 -0500 (EST)
+In-Reply-To: <1d3f23370902192213g560020b3h7a2459c1439e5e5c@mail.gmail.com>
+ (John Williams's message of "Fri, 20 Feb 2009 16:13:20 +1000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: FCD47BB8-FF16-11DD-9BAE-B26E209B64D9-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110803>
 
-Hi,
+John Williams <john.williams@petalogix.com> writes:
 
-We have a git tree that accesses fine via the git protocol, however I have
-also opened up http support for it as some of our users are behind
-git-unfriendly corporate firewalls.
+> Strange thing is, when doing an http fetch of said tree, it gets no updates
+> to the tree later than about Jan 13 this year, even though the tree itself
+> has many, many commits since then (its origin is Linus's tree and we pull
+> regularly).  Heads created later than that date are also not visible (doing
+> git branch -a) in the clone pulled over http.  Clones made using git: are
+> fine.
 
-I know http transport is not encouraged, but not much I can do about that.
+Most likely you would want to run git-update-server-info from
+project.git/hooks/post-update hook.  A sample shipped with git looks like:
 
-Strange thing is, when doing an http fetch of said tree, it gets no updates
-to the tree later than about Jan 13 this year, even though the tree itself
-has many, many commits since then (its origin is Linus's tree and we pull
-regularly).  Heads created later than that date are also not visible (doing
-git branch -a) in the clone pulled over http.  Clones made using git: are
-fine.
+    #!/bin/sh
+    #
+    # An example hook script to prepare a packed repository for use over
+    # dumb transports.
+    #
+    # To enable this hook, rename this file to "post-update".
 
-Anything I can look for in the .git repo on the server, permissions or
-similar that might be relevant?  It's almost like there's a single commit in
-there that somehow is making the http fetch puke.  If you browse the http
-tree with a web browser, it's all there as expected.
+    exec git-update-server-info
 
-For reference here are the URLs:
+make sure it is executable.
 
-git://developer.petalogix.cmo/linux-2.6-microblaze
+    $ cd linux-2.6-microblaze.git/hooks
+    $ ls -l post-update
+    $ chmod +x post-update
 
-http://developer.petalogix.com/git2/linux-2.6-microblaze
-
-Initially the http reference was a symlink on the server to the actual git
-tree, but I also tried just rsync'ing it across to /var/www/html/git2 to
-make sure it wasn't the symlink breaking things - no change.
-
-Am I misunderstanding something or is this just flakey behaviour of the http
-protocol support?
-
-Thanks,
-
-John
+And then run "git update-server-info" just once in the repository.  I see
+it was run on Jan 22nd and not since then, but the latest of your refs
+have Feb 19th timestamp.  Every time somebody pushes into this repository,
+you would need to run the command, and post-update hook is a standard way
+to do so easily.
