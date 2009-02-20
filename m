@@ -1,101 +1,172 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [HALF A PATCH] Teach the '--exclude' option to 'diff --no-index'
-Date: Fri, 20 Feb 2009 10:34:30 -0800 (PST)
-Message-ID: <m3skm9rm6h.fsf@localhost.localdomain>
-References: <499E92FD.8000900@alum.mit.edu>
-	<cf17659db8a4f7fe9d878984effcdd8d6417c862.1235138849u.git.johannes.schindelin@gmx.de>
-	<20090220145331.GA3515@coredump.intra.peff.net>
-	<alpine.DEB.1.00.0902201555490.6302@intel-tinevez-2-302>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, gitster@pobox.com,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Feb 20 19:36:10 2009
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH v3] Test fsck a bit harder
+Date: Fri, 20 Feb 2009 20:40:03 +0100
+Message-ID: <effac809336c1e05613eed315483ec32f3a4c75b.1235158438.git.trast@student.ethz.ch>
+References: <0599d1b4fe0f243b3d86d9afd9c67858861838aa.1235041345.git.trast@student.ethz.ch>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 20 20:41:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaaEK-00076O-1T
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 19:36:08 +0100
+	id 1LabFq-0000A1-Ce
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 20:41:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753325AbZBTSej (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2009 13:34:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753274AbZBTSei
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 13:34:38 -0500
-Received: from ti-out-0910.google.com ([209.85.142.185]:5125 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753253AbZBTSeh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2009 13:34:37 -0500
-Received: by ti-out-0910.google.com with SMTP id d10so735608tib.23
-        for <git@vger.kernel.org>; Fri, 20 Feb 2009 10:34:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=qn/rbfueyRT79r407fAYf6AEvSPkV2l6CwxGrfPx+8k=;
-        b=DwyPnZQaDrOVfgXE1ij7YPjB73rSnOljCiuoy6xgAMPlKjJ+8juQA/tcjTsWCMnMpI
-         KXT8moeNtCm46gA/CNhF0XjlmRY3C7uSiR3u9VFi7M0UTy4rDJqOZKPTK14/1W8XeK53
-         efcc88+nOSV7bcJzzAjDs0KqnZ3W7Aw0xcgus=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=du53f/fBmzrSqn/RpCFRiahQuaM7XhWir8Z0dYu8zVRNb2fzrlFPcDj+m9VtTazFm4
-         fqrdpLxlNaN94u9ulvNr7wHn1wS+8tKq3EkfHFHXVCg/zPIATVPucjrnl4+oaZASf7MV
-         +tFVi3iSXK/R5q1rr5KIS0bo7TcslQUaOp+ig=
-Received: by 10.110.41.20 with SMTP id o20mr1399578tio.53.1235154872599;
-        Fri, 20 Feb 2009 10:34:32 -0800 (PST)
-Received: from localhost.localdomain (abvl165.neoplus.adsl.tpnet.pl [83.8.209.165])
-        by mx.google.com with ESMTPS id a4sm1104537tib.11.2009.02.20.10.34.26
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 20 Feb 2009 10:34:30 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n1KIZgWM012825;
-	Fri, 20 Feb 2009 19:35:43 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n1KIZYVA012821;
-	Fri, 20 Feb 2009 19:35:34 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <alpine.DEB.1.00.0902201555490.6302@intel-tinevez-2-302>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751800AbZBTTkR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 14:40:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750939AbZBTTkR
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 14:40:17 -0500
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:26312 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750784AbZBTTkQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2009 14:40:16 -0500
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 20 Feb 2009 20:40:15 +0100
+Received: from localhost.localdomain ([77.56.223.244]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 20 Feb 2009 20:40:14 +0100
+X-Mailer: git-send-email 1.6.2.rc1.310.g364d6
+In-Reply-To: <0599d1b4fe0f243b3d86d9afd9c67858861838aa.1235041345.git.trast@student.ethz.ch>
+X-OriginalArrivalTime: 20 Feb 2009 19:40:14.0563 (UTC) FILETIME=[0D138B30:01C99393]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110878>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> On Fri, 20 Feb 2009, Jeff King wrote:
-> 
-> > But more seriously, how would a user expect this to interact with 
-> > .gitignore? I know gitignore is about ignoring untracked files, but I 
-> > can't help but feel the two have something in common. But maybe not. I'm 
-> > sick today and my brain is not working very well.
-> 
-> I think that the -x option with regular (not --no-index) diff would be 
-> a little different.  .gitignore is for "git add" time, while "git diff" 
-> happily ignores .gitignore.
-> 
-> Besides, the -x option only works on the basenames (as I implemented it; 
-> no idea if GNU diff works the same way, but from Michael's patch it looks 
-> like it does).
+git-fsck, of all tools, has very few tests.  This adds some more:
+* a corrupted object;
+* a branch pointing to a non-commit;
+* a tag pointing to a nonexistent object;
+* and a tag pointing to an object of a type other than what the tag
+  itself claims.
 
-Info: (diff.info.gz)diff Options
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
 
-`-x PATTERN'
-`--exclude=PATTERN'
-     When comparing directories, ignore files and subdirectories whose
-     basenames match PATTERN.  *Note Comparing Directories::.
+I investigated the test failures with v2, and it turns out the problem
+was in my use of hash-object.  When correctly passing '-t tag' for the
+tags, fsck does detect the breakage.  So here's an updated version of
+this test.  Interdiff:
 
-`-X FILE'
-`--exclude-from=FILE'
-     When comparing directories, ignore files and subdirectories whose
-     basenames match any pattern contained in FILE.  *Note Comparing
-     Directories::.
+  diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+  index 628db19..a22632f 100755
+  --- a/t/t1450-fsck.sh
+  +++ b/t/t1450-fsck.sh
+  @@ -66,13 +66,13 @@ tagger T A Gger <tagger@example.com> 1234567890 -0000
+   This is an invalid tag.
+   EOF
 
+  -test_expect_success 'tag pointing to nonexistent' '
+  -       tag=$(git hash-object -t tag -w --stdin < invalid-tag) &&
+  +test_expect_failure 'tag pointing to nonexistent' '
+  +       tag=$(git hash-object -w --stdin < invalid-tag) &&
+          echo $tag > .git/refs/tags/invalid &&
+  -       git fsck 2>&1 | tee out &&
+  -       grep "missing commit ffffffffffffffffffffffffffffffffffffffff" out &&
+  -       rm .git/refs/tags/invalid &&
+  -       rm -f .git/objects/$(echo $tag | sed "s#^..#&/#")
+  +       git fsck --tags 2>out &&
+  +       cat out &&
+  +       grep "could not load tagged object" out &&
+  +       rm .git/refs/tags/invalid
+   '
+
+   cat > wrong-tag <<EOF
+  @@ -84,11 +84,12 @@ tagger T A Gger <tagger@example.com> 1234567890 -0000
+   This is an invalid tag.
+   EOF
+
+  -test_expect_success 'tag pointing to something else than its type' '
+  -       tag=$(git hash-object -t tag -w --stdin < wrong-tag) &&
+  +test_expect_failure 'tag pointing to something else than its type' '
+  +       tag=$(git hash-object -w --stdin < wrong-tag) &&
+          echo $tag > .git/refs/tags/wrong &&
+  -       git fsck 2>&1 | tee out &&
+  -       grep "Object.*is a blob, not a commit" out &&
+  +       git fsck --tags 2>out &&
+  +       cat out &&
+  +       grep "some sane error message" out &&
+          rm .git/refs/tags/wrong
+   '
+
+ t/t1450-fsck.sh |   66 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 66 insertions(+), 0 deletions(-)
+
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 4597af0..628db19 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -28,4 +28,70 @@ test_expect_success 'loose objects borrowed from alternate are not missing' '
+ 	)
+ '
+ 
++# Corruption tests follow.  Make sure to remove all traces of the
++# specific corruption you test afterwards, lest a later test trip over
++# it.
++
++test_expect_success 'object with bad sha1' '
++	sha=$(echo blob | git hash-object -w --stdin) &&
++	echo $sha &&
++	old=$(echo $sha | sed "s+^..+&/+") &&
++	new=$(dirname $old)/ffffffffffffffffffffffffffffffffffffff &&
++	sha="$(dirname $new)$(basename $new)"
++	mv .git/objects/$old .git/objects/$new &&
++	git update-index --add --cacheinfo 100644 $sha foo &&
++	tree=$(git write-tree) &&
++	cmt=$(echo bogus | git commit-tree $tree) &&
++	git update-ref refs/heads/bogus $cmt &&
++	(git fsck 2>out; true) &&
++	grep "$sha.*corrupt" out &&
++	rm -f .git/objects/$new &&
++	git update-ref -d refs/heads/bogus &&
++	git read-tree -u --reset HEAD
++'
++
++test_expect_success 'branch pointing to non-commit' '
++	git rev-parse HEAD^{tree} > .git/refs/heads/invalid &&
++	git fsck 2>out &&
++	grep "not a commit" out &&
++	git update-ref -d refs/heads/invalid
++'
++
++cat > invalid-tag <<EOF
++object ffffffffffffffffffffffffffffffffffffffff
++type commit
++tag invalid
++tagger T A Gger <tagger@example.com> 1234567890 -0000
++
++This is an invalid tag.
++EOF
++
++test_expect_success 'tag pointing to nonexistent' '
++	tag=$(git hash-object -t tag -w --stdin < invalid-tag) &&
++	echo $tag > .git/refs/tags/invalid &&
++	git fsck 2>&1 | tee out &&
++	grep "missing commit ffffffffffffffffffffffffffffffffffffffff" out &&
++	rm .git/refs/tags/invalid &&
++	rm -f .git/objects/$(echo $tag | sed "s#^..#&/#")
++'
++
++cat > wrong-tag <<EOF
++object $(echo blob | git hash-object -w --stdin)
++type commit
++tag wrong
++tagger T A Gger <tagger@example.com> 1234567890 -0000
++
++This is an invalid tag.
++EOF
++
++test_expect_success 'tag pointing to something else than its type' '
++	tag=$(git hash-object -t tag -w --stdin < wrong-tag) &&
++	echo $tag > .git/refs/tags/wrong &&
++	git fsck 2>&1 | tee out &&
++	grep "Object.*is a blob, not a commit" out &&
++	rm .git/refs/tags/wrong
++'
++
++
++
+ test_done
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.6.2.rc1.310.g364d6
