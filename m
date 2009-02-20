@@ -1,108 +1,72 @@
-From: Kjetil Barvik <barvik@broadpark.no>
-Subject: Re: [PATCH/RFC v2 2/3] make USE_NSEC work as expected
-Date: Fri, 20 Feb 2009 11:07:16 +0100
-Organization: private
-Message-ID: <86mychifqj.fsf@broadpark.no>
-References: <cover.1235071656.git.barvik@broadpark.no>
- <24cefa55a62e2c898f9bd75ff7a6fe8e70836cf0.1235071656.git.barvik@broadpark.no>
- <7vab8hfqug.fsf@gitster.siamese.dyndns.org>
+From: Jean-Baptiste Quenot <jbq@caraldi.com>
+Subject: Re: Best CI Server for Git?
+Date: Fri, 20 Feb 2009 11:15:28 +0100
+Message-ID: <ae63f8b50902200215k5aeac468n1300597ef1830736@mail.gmail.com>
+References: <c115fd3c0902021258i61a04f74u481ba66c645fe8f5@mail.gmail.com>
+	 <1c5969370902021642v4e8d93djd22d5caa4aa9d1a9@mail.gmail.com>
+	 <c115fd3c0902041123j4a16d666r6d1fbb9917184b2a@mail.gmail.com>
+	 <c115fd3c0902180847p8addb28p485618322d0e5806@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 20 11:08:55 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 20 11:18:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaSJM-00015o-Ds
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 11:08:48 +0100
+	id 1LaSSR-0003zr-4Q
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 11:18:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754504AbZBTKHV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2009 05:07:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754365AbZBTKHU
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 05:07:20 -0500
-Received: from osl1smout1.broadpark.no ([80.202.4.58]:38042 "EHLO
-	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753782AbZBTKHT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2009 05:07:19 -0500
-Received: from osl1sminn1.broadpark.no ([80.202.4.59])
- by osl1smout1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KFD001SO045D670@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Fri, 20 Feb 2009 11:07:17 +0100 (CET)
-Received: from localhost ([84.48.79.78]) by osl1sminn1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KFD00L66044CY70@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Fri, 20 Feb 2009 11:07:17 +0100 (CET)
-In-reply-to: <7vab8hfqug.fsf@gitster.siamese.dyndns.org>
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
+	id S1753782AbZBTKPc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 05:15:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753346AbZBTKPb
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 05:15:31 -0500
+Received: from fg-out-1718.google.com ([72.14.220.154]:16855 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752214AbZBTKPa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2009 05:15:30 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so1789638fgg.17
+        for <git@vger.kernel.org>; Fri, 20 Feb 2009 02:15:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=WijDw0i5sSbNtHtbuNe3YPNvdCQMcGpOCoxZf5//0gc=;
+        b=D1gftrTIkbVaPe+eTkBOM8OSrd47h+oaTXGKanJcFYCxUt8KjLVEE52Ukmnr8+mqxw
+         Oo9bhHIj4zmPIz7FuleLVwXYjiDwuEshzB/UhF+YuR5Qcj54uqt9aiFrdDdSs4Yvd/lP
+         LOhqve7N4hM2UueSBC8sVLMXd48iIpHzdo8rg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=mVj7k2i5NVdeB0xOUpDMYBCkE6PK47Eo+dhjCKDwxrFHwhVkX3rl20tdZD9p/aFgpy
+         hAOTC7DjgO7Sr+ygHQLLuA4eLxus86qp8SIhRVjgIUSdOvPxfuvzYkEXBrCS7lSVhINY
+         yXVUGbXpmc9UxEIijDjb9hfHxQImhsr7oNM2k=
+Received: by 10.86.65.9 with SMTP id n9mr953485fga.55.1235124928354; Fri, 20 
+	Feb 2009 02:15:28 -0800 (PST)
+In-Reply-To: <c115fd3c0902180847p8addb28p485618322d0e5806@mail.gmail.com>
+X-Google-Sender-Auth: 1943591b075ebc6d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110832>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Dear Tim,
 
-> Kjetil Barvik <barvik@broadpark.no> writes:
->
->> diff --git a/read-cache.c b/read-cache.c
->> index 940ec76..ca4bec2 100644
->> --- a/read-cache.c
->> +++ b/read-cache.c
->> @@ -67,8 +67,15 @@ void rename_index_entry_at(struct index_state *istate, int nr, const char *new_n
->>   */
->>  void fill_stat_cache_info(struct cache_entry *ce, struct stat *st)
->>  {
->> -	ce->ce_ctime = st->st_ctime;
->> -	ce->ce_mtime = st->st_mtime;
->> +	ce->ce_ctime.sec = (unsigned int)st->st_ctime;
->> +	ce->ce_mtime.sec = (unsigned int)st->st_mtime;
->> +#ifdef USE_NSEC
->> +	ce->ce_ctime.nsec = (unsigned int)st->st_ctim.tv_nsec;
->> +	ce->ce_mtime.nsec = (unsigned int)st->st_mtim.tv_nsec;
->> +#else
->> +	ce->ce_ctime.nsec = 0;
->> +	ce->ce_mtime.nsec = 0;
->> +#endif
->
-> How does this affect a use case where the same index file used with two 
-> instances of git (one compiled with and another without USE_NSEC)?
+Did you consider joining the Hudson users mailing list?
 
-  OK, I admit that I was thinking safe here, so the one using the git
-  compiled with USE_NSEC will see a slow down.
+Would you be interested in testing the upcoming 0.6 version of the Git
+plugin?  We could work together to iron out the remaining issues and
+polish the user experience, and you could give us your sound opinion
+if it meets your expectations.  If you are yet undecided, maybe
+getting your feet wet with us on this might help you to make an
+educated decision?
 
-  If we for the use case can assume that both is using an git program
-  compiled from the same source, and the index file is placed on a
-  filesystem which supports nanoseconds timestamp, I guess that the use
-  case for the one using USE_NSEC could be better.
-
-  I will make a new patch to this one (since it is already placed in
-  next), and then you can see if you like the updated one.
-
-
->> diff --git a/unpack-trees.c b/unpack-trees.c
->> index e547282..44714cc 100644
->> --- a/unpack-trees.c
->> +++ b/unpack-trees.c
->> @@ -380,8 +380,12 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
->>  
->>  	memset(&o->result, 0, sizeof(o->result));
->>  	o->result.initialized = 1;
->> -	if (o->src_index)
->> -		o->result.timestamp = o->src_index->timestamp;
->> +	if (o->src_index) {
->> +		o->result.timestamp.sec = o->src_index->timestamp.sec;
->> +#ifdef USE_NSEC
->> +		o->result.timestamp.nsec = o->src_index->timestamp.nsec;
->> +#endif
->> +	}
->
-> Do we need this hunk?
-
-  Since timestamp is now a 'struct cache_time' member, I converted the
-  usage of this if-test to be in line with the USE_NSEC usage.
-
-  -- kjetil
+Cheers!
+-- 
+Jean-Baptiste Quenot
+http://jbq.caraldi.com/
