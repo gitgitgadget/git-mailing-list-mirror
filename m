@@ -1,76 +1,104 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: git rebase -i
-Date: Thu, 19 Feb 2009 19:26:23 -0500
-Message-ID: <76718490902191626u2202ed38xf63111b6a2758206@mail.gmail.com>
-References: <43d8ce650902190121v2e18aac1rfaa64a4ce6e799a3@mail.gmail.com>
-	 <76718490902191255w24b30bd8jacaed8aa919d6526@mail.gmail.com>
-	 <7vzlgij7cb.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Recovering from missing objects?
+Date: Thu, 19 Feb 2009 16:29:12 -0800
+Message-ID: <7vvdr6j6hz.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LRH.2.00.0902191447040.16988@vixen.sonytel.be>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: John Tapsell <johnflux@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 20 01:28:00 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>
+X-From: git-owner@vger.kernel.org Fri Feb 20 01:30:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaJFH-0006nq-Fj
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 01:27:59 +0100
+	id 1LaJI1-0007TP-Dp
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 01:30:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758523AbZBTA00 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2009 19:26:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758498AbZBTA00
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 19:26:26 -0500
-Received: from rv-out-0506.google.com ([209.85.198.236]:33004 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758447AbZBTA0Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2009 19:26:24 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so661798rvb.1
-        for <git@vger.kernel.org>; Thu, 19 Feb 2009 16:26:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=f7Jb05694vdLD2d+g6LBkIDpkW/SnUc4ZupkA2xH/wc=;
-        b=cf0MNP1R2LWcSxXKMSly+w+Vc9EiWntoDlCwkwRpW+E6oZFcF3lM5shMbx1RJQwwvF
-         3oNM+v+UkcG6POrKCP/f840qXICAoHYTa1YYBzz/VjbJeFe6cXqRR6nzDukg+IaI3B9p
-         z5LXMZvr1T6t86E3RotNlDbPR8OyejY9Ak/js=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=RZyAKwbF8v62rBJHpCmPJIHhpvsmEcDgku4szMQrXE1yvrZ3otKhmMuSmzgFG2IUzq
-         zhueQcjA/Vd7wLU8zbprVHBOqZX06pr6qUZ7PsKhrHRqYm0i2QIt0XJRjT/c/QodCIik
-         /Uprwkn6ZexCmkZPvtWUJ+NO3KCUk+9Wv1r44=
-Received: by 10.140.172.21 with SMTP id u21mr73649rve.177.1235089583894; Thu, 
-	19 Feb 2009 16:26:23 -0800 (PST)
-In-Reply-To: <7vzlgij7cb.fsf@gitster.siamese.dyndns.org>
+	id S1753669AbZBTA3V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2009 19:29:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753261AbZBTA3V
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 19:29:21 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33181 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751846AbZBTA3U (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Feb 2009 19:29:20 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A859C2B80E;
+	Thu, 19 Feb 2009 19:29:18 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D41292B800; Thu,
+ 19 Feb 2009 19:29:14 -0500 (EST)
+In-Reply-To: <alpine.LRH.2.00.0902191447040.16988@vixen.sonytel.be> (Geert
+ Uytterhoeven's message of "Thu, 19 Feb 2009 15:08:23 +0100 (CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 82D1C3C4-FEE5-11DD-BF8A-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110772>
 
-On Thu, Feb 19, 2009 at 7:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
+Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com> writes:
 
->> $ git rebase -i -10
->> $ git rebase -i -n -10
+> 	Hi all,
 >
-> The syntax would certainly imply a different semantics from giving
-> HEAD~10.  How would you compute the set of commits to rebase sanely when
-> you have merges after your 10th direct parent commit?
+> I start to see suspicious messages about missing objects in one of my working
+> repositories:
+>
+> | vixen$ git gc
+> | error: Could not read c406ab0be69c912ea59233595a071478103cdad8
+> | fatal: bad tree object c406ab0be69c912ea59233595a071478103cdad8
+> | error: failed to run repack
+> | vixen$ 
+>
+> My setup:
+>   - I have one reference repository (cloned from Linus' linux-2.6.git)
+>   - I have several working repositories, cloned using --reference to my
+>     reference repository. A working repository has several remotes (cloned from
+>     other Linux kernel repositories).
+>
+> I always do a `git pull' in the reference repository, before doing a `git
+> remote update' in a working repository. When I do `git gc' in a working
+> repository, it cleans up all objects that are not in the reference repository.
+> Hence I only need to care about backup of the .git directories in the working
+> repositories (the stuff I'm working on), and not about the reference
+> repository (its objects are publicly available and replicated all over the
+> world).
+>
+> I identified the missing object listed above to be part of a remote repository.
+> Doing a `git remote update' doesn't fetch it again, as git is too smart and
+> thinks I already have everything.
+>
+> If I clone the remote repository, I have the object in the new clone.
+> However, how do I get the missing object back into the .git directory of my
+> working repository?
 
-I didn't mean to suggest that -10 and HEAD~10 are the same thing.
+In the new clone:
 
-I would expect -10 to act the same when given to rebase as it does
-when given to format-patch. In both cases, you are asking the command
-for a set of commits.
+	$ IT=c406ab0be69c912ea59233595a071478103cdad8
+	$ TYPE=$(git cat-file -t $IT)
+        $ git cat-file $TYPE $IT >/var/tmp/$IT.raw
 
-But as I said, I don't exactly know what -10 means to format-patch if
-there are merge commits because I've never tried to use it in such a
-context.
+Go to the repository that lacks the object and then
 
-j.
+	$ git hash-object -t $TYPE -w --stdin </var/tmp/$IT.raw
+
+After that you may find objects that $IT needs to reference.  You can
+obviously repeat the above procedure until you have nothing missing.
+
+
+I also suspect you could do this instead; I haven't thought things through
+and that is why I say "suspect" but this is safe (i.e. not destructive)
+and may worth a try.
+
+In the new clone:
+
+	$ IT=c406ab0be69c912ea59233595a071478103cdad8
+	$ H=$(git rev-list --objects $IT | git pack-objects mine)
+        $ mv mine-$H.pack /var/tmp
+
+Go to the repository that lacks the object and then
+
+	$ git unpack-objects </var/tmp/mine-$H.pack
