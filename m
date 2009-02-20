@@ -1,102 +1,185 @@
-From: Kevin Menard <nirvdrum@gmail.com>
-Subject: Re: git svn dcommit difficulties/feature request
-Date: Fri, 20 Feb 2009 07:59:44 -0500
-Message-ID: <7e3605160902200459x50e56c92x462d9a072eaa84d0@mail.gmail.com>
-References: <200902191930.10139.kumbayo84@arcor.de>
-	 <200902191947.22622.kumbayo84@arcor.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Peter Oberndorfer <kumbayo84@arcor.de>
-X-From: git-owner@vger.kernel.org Fri Feb 20 14:01:30 2009
+From: eletuchy@gmail.com
+Subject: [PATCH] Make git blame date output format configurable, a la git log
+Date: Fri, 20 Feb 2009 05:24:12 -0800
+Message-ID: <1235136252-29649-1-git-send-email-eletuchy@gmail.com>
+Cc: marius@trolltech.com, Eugene Letuchy <eugene@facebook.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 20 14:30:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaV0O-00013z-11
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 14:01:24 +0100
+	id 1LaVSr-0003E6-Bk
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 14:30:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755064AbZBTM7t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2009 07:59:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754736AbZBTM7s
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 07:59:48 -0500
-Received: from mail-qy0-f11.google.com ([209.85.221.11]:45951 "EHLO
-	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754353AbZBTM7q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2009 07:59:46 -0500
-Received: by qyk4 with SMTP id 4so1401819qyk.13
-        for <git@vger.kernel.org>; Fri, 20 Feb 2009 04:59:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Swjnn7pqA0IMlJTEDoq7VlpZbZJeOhAzEbDvSBGBldQ=;
-        b=B71Afnv3atNaZsAssvCG4tz+jYKNg9Qm6czeRKdFCXdQS9lvzojXj+RVVuwHEUdnUh
-         +mJ8UcX//kXJEnIglZb1fGt6DLWp7DHqHfT49SSXgfv0Ev9Fq88xRo26sB7pyUemEWua
-         zM3snqi42rW4wLWE9stuzxiSTlLpHo13N3XAE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=WJWh+8PrQQf+c4ymmlTn0lwiYOff/Q2gb7W7YArimU/8PDfMmbBdp8GVlXCyZ28xFJ
-         ODQPfu8qg2f18UP5omFsEOpxUsBrKzPO3+vg7SGyjlpsDzdevwbHKS6aVcGC55IszVG7
-         cS6DYFvQWzGKb0JGUewksQXqcl+xPxn9+fhTA=
-Received: by 10.229.96.9 with SMTP id f9mr111187qcn.78.1235134784842; Fri, 20 
-	Feb 2009 04:59:44 -0800 (PST)
-In-Reply-To: <200902191947.22622.kumbayo84@arcor.de>
+	id S1754193AbZBTN3V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 08:29:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753862AbZBTN3U
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 08:29:20 -0500
+Received: from outmail006.snc1.tfbnw.net ([69.63.178.165]:55795 "EHLO
+	mx-out.facebook.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753795AbZBTN3T (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2009 08:29:19 -0500
+X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Fri, 20 Feb 2009 08:29:18 EST
+Received: from [10.18.255.178] ([10.18.255.178:58527] helo=facebook.com)
+	by mta001.snc1.facebook.com (envelope-from <eletuchy@facebook.com>)
+	(ecelerity 2.2.2.37 r(28805/28844)) with ESMTP
+	id 85/D4-24018-DFEAE994; Fri, 20 Feb 2009 05:24:13 -0800
+Received: by dev051.snc1.facebook.com (Postfix, from userid 1200)
+	id 0C6AC11C211; Fri, 20 Feb 2009 05:24:13 -0800 (PST)
+X-Mailer: git-send-email 1.6.2.rc1.14.g397c24.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110842>
 
-We've run into the same issue with the experimental git support at the
-ASF.  We dcommit to an EU mirror which lags behind the primary one for
-a couple minutes.  While annoying, I don't think there's much that can
-be done other than to commit and read from the master SVN server.
-Otherwise, plan on getting good at "git svn dcommit; git svn rebase".
-I tolerate this step because I think using git on top of SVN, even
-with this lag, makes me more productive than SVN alone.
+From: Eugene Letuchy <eugene@facebook.com>
 
+Adds the following:
+ - git config value blame.date that expects one of the git log date
+   formats ({relative,local,default,iso,rfc,short})
+ - git blame command line option --date-format expects one of the git
+   log date formats ({relative,local,default,iso,rfc,short})
+ - documentation in blame-options.txt
+ - git blame uses the appropriate date.c functions and enums to
+   make sense of the date format and provide appropriate data
+
+The tests pass. The mailmap test needed to be modified to expect iso
+formatted blames rather than the new "default".
+
+Signed-off-by: Eugene Letuchy <eugene@facebook.com>
+---
+ Documentation/blame-options.txt |    6 ++++++
+ builtin-blame.c                 |   31 ++++++++++++++++++-------------
+ t/t4203-mailmap.sh              |    2 +-
+ 3 files changed, 25 insertions(+), 14 deletions(-)
+
+diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
+index 1ab1b96..75663ec 100644
+--- a/Documentation/blame-options.txt
++++ b/Documentation/blame-options.txt
+@@ -63,6 +63,12 @@ of lines before or after the line given by <start>.
+ 	tree copy has the contents of the named file (specify
+ 	`-` to make the command read from the standard input).
+ 
++--date-format <format>::
++	The value is one of the following alternatives:
++	{relative,local,default,iso,rfc,short}.  The default format
++	can be set using the blame.date config variable. See the
++	discussion of the --date option at linkgit:git-log[1].
++
+ -M|<num>|::
+ 	Detect moving lines in the file as well.  When a commit
+ 	moves a block of lines in a file (e.g. the original file
+diff --git a/builtin-blame.c b/builtin-blame.c
+index 114a214..9ebab43 100644
+--- a/builtin-blame.c
++++ b/builtin-blame.c
+@@ -1,5 +1,5 @@
+ /*
+- * Pickaxe
++ * Blame / Pickaxe
+  *
+  * Copyright (c) 2006, Junio C Hamano
+  */
+@@ -40,6 +40,9 @@ static int reverse;
+ static int blank_boundary;
+ static int incremental;
+ static int xdl_opts = XDF_NEED_MINIMAL;
++
++static enum date_mode date_mode;
++
+ static struct string_list mailmap;
+ 
+ #ifndef DEBUG
+@@ -1507,9 +1510,7 @@ static const char *format_time(unsigned long time, const char *tz_str,
+ 			       int show_raw_time)
+ {
+ 	static char time_buf[128];
+-	time_t t = time;
+-	int minutes, tz;
+-	struct tm *tm;
++	int tz;
+ 
+ 	if (show_raw_time) {
+ 		sprintf(time_buf, "%lu %s", time, tz_str);
+@@ -1517,15 +1518,7 @@ static const char *format_time(unsigned long time, const char *tz_str,
+ 	}
+ 
+ 	tz = atoi(tz_str);
+-	minutes = tz < 0 ? -tz : tz;
+-	minutes = (minutes / 100)*60 + (minutes % 100);
+-	minutes = tz < 0 ? -minutes : minutes;
+-	t = time + minutes * 60;
+-	tm = gmtime(&t);
+-
+-	strftime(time_buf, sizeof(time_buf), "%Y-%m-%d %H:%M:%S ", tm);
+-	strcat(time_buf, tz_str);
+-	return time_buf;
++	return show_date(time, tz, date_mode);
+ }
+ 
+ #define OUTPUT_ANNOTATE_COMPAT	001
+@@ -1967,6 +1960,8 @@ static void prepare_blame_range(struct scoreboard *sb,
+ 
+ static int git_blame_config(const char *var, const char *value, void *cb)
+ {
++	const char *default_date_mode;
++
+ 	if (!strcmp(var, "blame.showroot")) {
+ 		show_root = git_config_bool(var, value);
+ 		return 0;
+@@ -1975,6 +1970,11 @@ static int git_blame_config(const char *var, const char *value, void *cb)
+ 		blank_boundary = git_config_bool(var, value);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "blame.date")) {
++		git_config_string(&default_date_mode, var, value);
++		date_mode = parse_date_format(default_date_mode);
++		return 0;
++	}
+ 	return git_default_config(var, value, cb);
+ }
+ 
+@@ -2212,6 +2212,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 	static int show_stats = 0;
+ 	static const char *revs_file = NULL;
+ 	static const char *contents_from = NULL;
++	static const char *date_format = NULL;
+ 	static const struct option options[] = {
+ 		OPT_BOOLEAN(0, "incremental", &incremental, "Show blame entries as we find them, incrementally"),
+ 		OPT_BOOLEAN('b', NULL, &blank_boundary, "Show blank SHA-1 for boundary commits (Default: off)"),
+@@ -2228,6 +2229,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 		OPT_BIT('w', NULL, &xdl_opts, "Ignore whitespace differences", XDF_IGNORE_WHITESPACE),
+ 		OPT_STRING('S', NULL, &revs_file, "file", "Use revisions from <file> instead of calling git-rev-list"),
+ 		OPT_STRING(0, "contents", &contents_from, "file", "Use <file>'s contents as the final image"),
++		OPT_STRING(0, "date-format", &date_format, "date mode", "Specify date formatting: relative,local,default,iso,rfc,short. ."),
+ 		{ OPTION_CALLBACK, 'C', NULL, &opt, "score", "Find line copies within and across files", PARSE_OPT_OPTARG, blame_copy_callback },
+ 		{ OPTION_CALLBACK, 'M', NULL, &opt, "score", "Find line movements within and across files", PARSE_OPT_OPTARG, blame_move_callback },
+ 		OPT_CALLBACK('L', NULL, &bottomtop, "n,m", "Process only line range n,m, counting from 1", blame_bottomtop_callback),
+@@ -2266,6 +2268,9 @@ parse_done:
+ 	if (cmd_is_annotate)
+ 		output_option |= OUTPUT_ANNOTATE_COMPAT;
+ 
++	if (date_format)
++		date_mode = parse_date_format(date_format);
++
+ 	if (DIFF_OPT_TST(&revs.diffopt, FIND_COPIES_HARDER))
+ 		opt |= (PICKAXE_BLAME_COPY | PICKAXE_BLAME_MOVE |
+ 			PICKAXE_BLAME_COPY_HARDER);
+diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+index 9a7d1b4..13b64dc 100755
+--- a/t/t4203-mailmap.sh
++++ b/t/t4203-mailmap.sh
+@@ -208,7 +208,7 @@ ff859d96 (Other Author 2005-04-07 15:15:13 -0700 4) four
+ EOF
+ 
+ test_expect_success 'Blame output (complex mapping)' '
+-	git blame one >actual &&
++	git blame --date-format=iso one >actual &&
+ 	test_cmp expect actual
+ '
+ 
 -- 
-Kevin
-
-
-
-On Thu, Feb 19, 2009 at 1:47 PM, Peter Oberndorfer <kumbayo84@arcor.de> wrote:
-> Hi,
->
-> With the patch i am replying to git-svn got a bit more comfortable for me but
-> there is still a problem left.
->
-> I fetch via svn://anonsvn.kde.org/home/kde/trunk/KDE/kdelibs
-> and push to svn+ssh://YOUR_LOGIN@svn.kde.org/home/kde/trunk/KDE/kdelibs
->
-> Pushing multiple changes at once to KDE servers with different fetch/commit
-> url is not possible for me.
->
-> Here is what it think what happens during a push:
-> git svn dcommit pushes the first commit to svn.kde.org,
-> then tries to fetch what it just pushed from anonsvn.kde.org
-> (which lags behind authenticated svn by a few minutes).
->
-> git svn does not see the just committed changes, gets confused
-> and stops pushing the rest of the commits.
->
-> My idea would be to temporarily fetch from the authenticated server, but not
-> update the current head and revdb., so nothing is affected beside the push.
-> But this seems quite complicated.
-> Or do not care about difference between fetch/dcommit url, and just fetch from
-> the dcommit url during dcommit.
->
-> Anybody have a good idea if this is possible or a better way to solve this
-> problem?
->
-> Greetings Peter
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+1.6.2.rc1.14.g397c24.dirty
