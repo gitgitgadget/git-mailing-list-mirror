@@ -1,104 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Recovering from missing objects?
-Date: Thu, 19 Feb 2009 16:29:12 -0800
-Message-ID: <7vvdr6j6hz.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LRH.2.00.0902191447040.16988@vixen.sonytel.be>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCHv2 2/2] git-gui: handle bare repos correctly
+Date: Fri, 20 Feb 2009 01:34:30 +0100
+Message-ID: <cb7bb73a0902191634n30f97c24t4d1840f5660c3eb3@mail.gmail.com>
+References: <1235006145-16760-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <1235006145-16760-3-git-send-email-giuseppe.bilotta@gmail.com>
+	 <alpine.DEB.1.00.0902190322470.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>
-X-From: git-owner@vger.kernel.org Fri Feb 20 01:30:53 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 20 01:36:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaJI1-0007TP-Dp
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 01:30:49 +0100
+	id 1LaJN4-0000Oj-IL
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 01:36:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753669AbZBTA3V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2009 19:29:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753261AbZBTA3V
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 19:29:21 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33181 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751846AbZBTA3U (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2009 19:29:20 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A859C2B80E;
-	Thu, 19 Feb 2009 19:29:18 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D41292B800; Thu,
- 19 Feb 2009 19:29:14 -0500 (EST)
-In-Reply-To: <alpine.LRH.2.00.0902191447040.16988@vixen.sonytel.be> (Geert
- Uytterhoeven's message of "Thu, 19 Feb 2009 15:08:23 +0100 (CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 82D1C3C4-FEE5-11DD-BF8A-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1756565AbZBTAee (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Feb 2009 19:34:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755437AbZBTAed
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 19:34:33 -0500
+Received: from mail-ew0-f21.google.com ([209.85.219.21]:48428 "EHLO
+	mail-ew0-f21.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751170AbZBTAec (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Feb 2009 19:34:32 -0500
+Received: by ewy14 with SMTP id 14so640991ewy.13
+        for <git@vger.kernel.org>; Thu, 19 Feb 2009 16:34:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=xk7IiwfNnGW6x97HECf/iG9Vm9AZC7EMnT4OUN12ZqY=;
+        b=EvPsofPn2XHtbzP/c1mBPKOoeIrSD0rNmmO4xHjxt4bNFppWS+jxeb57ojLX+ISi8j
+         og+EtkGFsFzi7rWHGLIhd3B99kva68l7bAWxgokQpVynea8FE9uNe9ABoDd+ky4o0Zs3
+         lAvWMzCWohW7MHSUUE2Upay0FMrJglGtXvkWA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=SjB6GyR5AGz2WL/mu/0biHECbUeG5k4Ru8qEkQ3wPQlbN/3VmsRFbcrF+rRnk/aA3y
+         fffk9s+eyP1CwxCdk3Gp156pFI03eZZwtuLItt49OQZ+OiOFM1EbSegFOq6g6/ei8RDw
+         WndoKX+N4CcA9BI0tDVElsWK2Et+Fu0rILQYk=
+Received: by 10.210.81.10 with SMTP id e10mr114171ebb.194.1235090070795; Thu, 
+	19 Feb 2009 16:34:30 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0902190322470.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110773>
 
-Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com> writes:
-
-> 	Hi all,
+On Thu, Feb 19, 2009 at 3:25 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
 >
-> I start to see suspicious messages about missing objects in one of my working
-> repositories:
+>>
+>> +proc is_bare {} {
+>> +     global _isbare
+>> +     global _gitdir
+>> +     global _gitworktree
+>> +
+>> +     if {$_isbare eq {}} {
+>> +             if {[is_config_true core.bare]
+>> +                     || ($_gitworktree eq {}
+>> +                             && [lindex [file split $_gitdir] end] ne {.git})} {
+>> +                     set _isbare 1
+>> +             } else {
+>> +                     set _isbare 0
+>> +             }
+>> +     }
+>> +     return $_isbare
+>> +}
 >
-> | vixen$ git gc
-> | error: Could not read c406ab0be69c912ea59233595a071478103cdad8
-> | fatal: bad tree object c406ab0be69c912ea59233595a071478103cdad8
-> | error: failed to run repack
-> | vixen$ 
+> git rev-parse --is-bare-repository anyone?
+
+As mentioned elsewhere, git-gui is supposed to be backwards compatible
+with git 1.5.0; --is-bare-repository was introduced in 1.5.2. What I
+can do is try that and fall back to this other implementation
+otherwise.
+
+>> @@ -1913,7 +1931,7 @@ proc do_gitk {revs} {
+>>               }
+>>
+>>               set pwd [pwd]
+>> -             if { $_gitworktree ne {} } {
+>> +             if { ![is_bare] } {
 >
-> My setup:
->   - I have one reference repository (cloned from Linus' linux-2.6.git)
->   - I have several working repositories, cloned using --reference to my
->     reference repository. A working repository has several remotes (cloned from
->     other Linux kernel repositories).
+> Why is this change needed at all?
+
+Because the worktree being undefined in non-bare repositories is an
+error and should raise consequently.
+
+>> @@ -2317,10 +2335,12 @@ if {[is_enabled multicommit] || [is_enabled singlecommit]} {
+>>  #
+>>  menu .mbar.repository
+>>
+>> -.mbar.repository add command \
+>> -     -label [mc "Explore Working Copy"] \
+>> -     -command {do_explore}
+>> -.mbar.repository add separator
+>> +if {![is_bare]} {
+>> +     .mbar.repository add command \
+>> +             -label [mc "Explore Working Copy"] \
+>> +             -command {do_explore}
+>> +     .mbar.repository add separator
+>> +}
 >
-> I always do a `git pull' in the reference repository, before doing a `git
-> remote update' in a working repository. When I do `git gc' in a working
-> repository, it cleans up all objects that are not in the reference repository.
-> Hence I only need to care about backup of the .git directories in the working
-> repositories (the stuff I'm working on), and not about the reference
-> repository (its objects are publicly available and replicated all over the
-> world).
->
-> I identified the missing object listed above to be part of a remote repository.
-> Doing a `git remote update' doesn't fetch it again, as git is too smart and
-> thinks I already have everything.
->
-> If I clone the remote repository, I have the object in the new clone.
-> However, how do I get the missing object back into the .git directory of my
-> working repository?
+> How did you make sure that there are no more places?
 
-In the new clone:
+I looked at the code and tested it.
 
-	$ IT=c406ab0be69c912ea59233595a071478103cdad8
-	$ TYPE=$(git cat-file -t $IT)
-        $ git cat-file $TYPE $IT >/var/tmp/$IT.raw
+> (I, for one, would expect the standard mode of staging to fail in a bare
+> repository.)
 
-Go to the repository that lacks the object and then
+That's the reason why the only thing you can do in bare repositories
+is git gui blame.
 
-	$ git hash-object -t $TYPE -w --stdin </var/tmp/$IT.raw
-
-After that you may find objects that $IT needs to reference.  You can
-obviously repeat the above procedure until you have nothing missing.
-
-
-I also suspect you could do this instead; I haven't thought things through
-and that is why I say "suspect" but this is safe (i.e. not destructive)
-and may worth a try.
-
-In the new clone:
-
-	$ IT=c406ab0be69c912ea59233595a071478103cdad8
-	$ H=$(git rev-list --objects $IT | git pack-objects mine)
-        $ mv mine-$H.pack /var/tmp
-
-Go to the repository that lacks the object and then
-
-	$ git unpack-objects </var/tmp/mine-$H.pack
+-- 
+Giuseppe "Oblomov" Bilotta
