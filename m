@@ -1,92 +1,71 @@
-From: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
-Subject: Re: autocrlf=input and safecrlf (was Re: CVS import [SOLVED])
-Date: Sat, 21 Feb 2009 00:24:11 +0100
-Message-ID: <499F3B9B.3020709@pelagic.nl>
-References: <19651.77.61.241.211.1234775877.squirrel@hupie.xs4all.nl> <7291.77.61.241.211.1234790434.squirrel@hupie.xs4all.nl> <60044.192.168.0.51.1234816333.squirrel@hupie.xs4all.nl> <alpine.DEB.1.00.0902162157080.6289@intel-tinevez-2-302> <20090220152849.GA3826@coredump.intra.peff.net> <32886.77.61.241.211.1235147143.squirrel@hupie.xs4all.nl> <20090220172918.GB4636@coredump.intra.peff.net>
+From: Dan Fabulich <dan@fabulich.com>
+Subject: git-svn and branches with spaces
+Date: Fri, 20 Feb 2009 15:26:04 -0800 (PST)
+Message-ID: <alpine.OSX.1.10.0902201515470.1576@sfimac.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Feb 21 00:26:11 2009
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 21 00:27:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Laekx-0007iE-1n
-	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 00:26:07 +0100
+	id 1LaemP-0008Dl-Hl
+	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 00:27:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754326AbZBTXYS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2009 18:24:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754243AbZBTXYR
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 18:24:17 -0500
-Received: from hupie.xs4all.nl ([82.95.241.251]:50550 "EHLO
-	Lighthouse.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1754049AbZBTXYR (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Feb 2009 18:24:17 -0500
-Received: from [192.168.0.51] (unknown [192.168.0.51])
-	by Lighthouse.internal.Hupie.com (Postfix) with ESMTP id 70BDA58BD88;
-	Sat, 21 Feb 2009 00:24:15 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
-In-Reply-To: <20090220172918.GB4636@coredump.intra.peff.net>
+	id S1754289AbZBTX0J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 18:26:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754090AbZBTX0I
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 18:26:08 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:60749 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754071AbZBTX0H (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Feb 2009 18:26:07 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 5036A252CBC
+	for <git@vger.kernel.org>; Fri, 20 Feb 2009 18:26:06 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Fri, 20 Feb 2009 18:26:06 -0500
+X-Sasl-enc: h8BFIDIxXjuAlU+0cDQ0kZ0EF5UQJl9K3dZUymRhF3d7 1235172365
+Received: from [10.5.5.148] (206-15-64-254.static.twtelecom.net [206.15.64.254])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id CDBE73A9B0
+	for <git@vger.kernel.org>; Fri, 20 Feb 2009 18:26:05 -0500 (EST)
+X-X-Sender: danfabulich@sfimac.local
+User-Agent: Alpine 1.10 (OSX 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110904>
 
-Jeff King wrote:
-> On Fri, Feb 20, 2009 at 05:25:43PM +0100, Ferry Huberts (Pelagic) wrote:
->
->   
->> I replied in the thread with something comparable:
->> http://article.gmane.org/gmane.comp.version-control.git/110358
->>
->> My suggestion is make sure that safecrlf is set to false (see the end
->> part of the mail)
->>     
->
-> Oh, sorry, I missed that bit. You said:
->
->   
->> Back to the issue:
->> I think requiring autocrlf = false is too strict.  Requiring autocrlf
->> = false should be enough. That combined with a bit of text in the
->> manual page about these settings: autocrlf = false is strongly
->> recommended. Also, safecrlf is required to be set to false.
->>     
->
-> Assuming there is a typo and you meant to say "Requiring safecrlf =
-> false should be enough", then yes, I agree. But if you are recommending
->   
-yes that was a typo.
-> to put that into the "git cvsimport" manpage, I'm not sure that makes
-> sense. Setting autocrlf to input and turning on safecrlf breaks much
-> more than that; you can't add any file that has a CRLF in it.  So such a
-> warning should probably go in the config description for those options.
->
->   
-I meant that I would add a patch that makes sure that a new repository 
-is created with that option set to 'off' and that an existing repository 
-would be checked for that option set to 'off'. I suggested to _also_ add 
-remarks about this in the man page of cvsimport. Johannes already 
-suggested a patch but that was for the autocrlf option (trivially 
-converted to the safecrlf option)
-> I still think safecrlf could probably be made more useful in this case
-> to differentiate between "this will corrupt your data if you do a
-> checkout with your current config settings" and "this will corrupt your
-> data forever".  But I am not a user of either config variable, so maybe
-> there is some subtlety I'm missing.
->
-> -Peff
->   
-I'm a user of these options myself. I maintain several large 
-repositories that contain data that is used both on Unix and Windows 
-platforms and that have the autocrlf=input and safecrlf=true. This makes 
-sure that everything is in Unix format.
-Your remark about corrupting your data is a bit strong for my taste. 
-Corruption from one point of view, making sure that everybody handles 
-the same content from another :-)
 
-Ferry
+As others have noticed, git-svn can't handle branches with spaces.
+
+http://markmail.org/message/r56iyw3vubwbycgt
+
+Turns out that there is a possible workaround: thiago's 
+svn-all-fast-export tool is super super configurable, allowing you to work 
+around evil branch names by modifying your matching rules.
+
+http://repo.or.cz/w/svn-all-fast-export.git
+
+I made rules like this:
+
+match /branches/crazy branch with spaces/
+   repository myproject
+   branch crazy_branch_with_spaces
+end match
+
+match /branches/([^/]+)/
+   repository myproject
+   branch \1
+end match
+
+Since the rules apply in order, the evil branch name matched before the 
+catch-all matcher, fixing my problem.
+
+And it doesn't hurt that svn-all-fast-export is at least an order of 
+magnitude faster than git-svn clone...  If you find that git-svn is too 
+slow, I strongly recommend svn-all-fast-export.git for performance alone!
+
+-Dan
