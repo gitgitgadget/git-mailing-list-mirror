@@ -1,67 +1,98 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: git merge --abort
-Date: Fri, 20 Feb 2009 04:47:39 +0000
-Message-ID: <43d8ce650902192047g383a5cc1re6697e8009ad72fc@mail.gmail.com>
-References: <43d8ce650902190205yc2274c5gb8e658c8608267ff@mail.gmail.com>
-	 <7v63j6n16s.fsf@gitster.siamese.dyndns.org>
-	 <43d8ce650902190534j49e24f86k9b716190ae3d134b@mail.gmail.com>
-	 <76718490902191226k7b87f478p9a79b9b2372b464d@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Expand explanation of the use of + in git push refspecs.
+Date: Thu, 19 Feb 2009 21:04:11 -0800
+Message-ID: <7viqn5k8c4.fsf@gitster.siamese.dyndns.org>
+References: <20090219180258.2C7983360A6@rincewind>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 20 05:49:38 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, srabbelier@gmail.com
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Fri Feb 20 06:05:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaNKR-0005s7-TP
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 05:49:36 +0100
+	id 1LaNaF-0000Vk-Bo
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 06:05:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752925AbZBTErm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Feb 2009 23:47:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751697AbZBTErm
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Feb 2009 23:47:42 -0500
-Received: from mail-gx0-f174.google.com ([209.85.217.174]:54796 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751379AbZBTErl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Feb 2009 23:47:41 -0500
-Received: by gxk22 with SMTP id 22so2096924gxk.13
-        for <git@vger.kernel.org>; Thu, 19 Feb 2009 20:47:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Q86y3JuW1n2ocAekWUK9DKdOzRJGA9bUrt/REo0ttn4=;
-        b=STZPQNuxAyjnUsCqLRgvhHjnMsDwlejhKg472P5dzh3HiaItRUzh3IEP6eNOKifInM
-         KhsRRH3gZL7HdYQpSi29rhWx1sDNoQrOheECeK2zkvdTsu8CNzGH7egyENRI/tiat+hv
-         tC9nH3NSFjskVGue3iE8y4om1xzFMvS9qjuUk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=r+AzOGBrlXF0cAyYQRpHjxLpPRdXkvWKHQS+LFPqbVSwsb/91QwZdFtraXZq9gAJfJ
-         ZZn0FOSFkLsMGcyCuB/mj0h53ip/wD9MdvyD9ai1qe4dZD8JQKlqCvKZe01Aea6tazGK
-         2BwJSM8Y2I+C/9WnO5d9rY32HHL4BLozIORr4=
-Received: by 10.151.51.13 with SMTP id d13mr369037ybk.120.1235105260001; Thu, 
-	19 Feb 2009 20:47:40 -0800 (PST)
-In-Reply-To: <76718490902191226k7b87f478p9a79b9b2372b464d@mail.gmail.com>
+	id S1751094AbZBTFE0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 00:04:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751086AbZBTFE0
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 00:04:26 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39188 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751044AbZBTFEZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2009 00:04:25 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6B6D09B8D4;
+	Fri, 20 Feb 2009 00:04:22 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DD4719B8D1; Fri,
+ 20 Feb 2009 00:04:13 -0500 (EST)
+In-Reply-To: <20090219180258.2C7983360A6@rincewind> (Marc Branchaud's message
+ of "Thu, 19 Feb 2009 12:39:47 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: EFCC0A54-FF0B-11DD-94AA-B26E209B64D9-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110790>
 
-2009/2/19 Jay Soffian <jaysoffian@gmail.com>:
-> On Thu, Feb 19, 2009 at 8:34 AM, John Tapsell <johnflux@gmail.com> wrote:
->> There's no reliable way of getting back to the state before the merge?
+Marc Branchaud <marcnarc@xiplink.com> writes:
+
+> Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
+> ---
+>  Documentation/git-push.txt |   40 ++++++++++++++++++++++++++++++++--------
+>  1 files changed, 32 insertions(+), 8 deletions(-)
 >
-> Sure there is. Commit or stash before you merge, so that your index
-> and working copy are clean.
+> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+> index 7d1eced..4cb13a1 100644
+> --- a/Documentation/git-push.txt
+> +++ b/Documentation/git-push.txt
+> @@ -50,20 +50,21 @@ updated.
+>  +
+>  The object referenced by <src> is used to fast forward the ref <dst>
+>  on the remote side. If the optional leading plus `{plus}` is used, the
+> -remote ref is updated even if it does not result in a fast forward
+> -update.
+> +remote ref is *overwritten* with the local ref.  (The use of `{plus}`
+> +is recommended only for private, unshared repositories.)  See EXAMPLES
+> +below for details.
 
-Could a stash be done automatically by the merge command, for just a case?
+I am of two minds with this.  The understanding of the concept of
+fast-forwardness is necessary not just to understand push but also to
+understand merge, and if glossary is missing the definition, we should add
+one there.  What exactly happens when the <dst> is updated is the same
+regardless of ff or non-ff in that the old 40 hexdecimal object name is
+gone and replaced with the new one, and it does not feel right to say "if
+ff, we update if non-ff you can force to overwrite."  Either way, you
+overwrite and there is no trace of the old one.  So we would want to say
+something like:
 
-John
+    The name of the object referenced by <src> is used to update the ref
+    <dst> on the remote side, but by default this is only allowed if the
+    update is fast-forward.  By having the optional leading plus, you can
+    tell git to update the ref <dst> even when the update is not a
+    fast-forward.
+
+> -The special refspec `:` (or `+:` to allow non-fast forward updates)
+> -directs git to push "matching" branches: for every branch that exists on
+> -the local side, the remote side is updated if a branch of the same name
+> -already exists on the remote side.  This is the default operation mode
+> -if no explicit refspec is found (that is neither on the command line
+> -nor in any Push line of the corresponding remotes file---see below).
+> +The special refspec `:` (or `{plus}:` to allow overwriting) directs git to
+> +push "matching" branches: for every branch that exists on the local
+> +side, the remote side is updated if a branch of the same name already
+> +exists on the remote side.  This is the default operation mode if no
+> +explicit refspec is found (that is neither on the command line nor in
+> +any Push line of the corresponding remotes file---see below).
+
+I think {plus} change is a good one, but rewording non-ff to overwrite is
+not.
+
+Please don't wrap a full paragraph, only to change a few sentences.
+AsciiDoc wraps lines for output just fine; it took me a few extra minutes
+to make sure there is no other changes.
