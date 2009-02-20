@@ -1,84 +1,85 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH RFC 2/2] gitweb: Hyperlink multiple git hashes on the same commit message line
-Date: Fri, 20 Feb 2009 12:46:57 +0100
-Message-ID: <200902201247.00670.jnareb@gmail.com>
-References: <1234926043-7471-1-git-send-email-marcel@oak.homeunix.org> <200902182255.13983.jnareb@gmail.com> <7v4oypfqua.fsf@gitster.siamese.dyndns.org>
+From: Nayfe <nefethael@hotmail.com>
+Subject: How to deliver dependant patches separatly ?
+Date: Fri, 20 Feb 2009 04:58:50 -0800 (PST)
+Message-ID: <22120045.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: "Marcel M. Cary" <marcel@oak.homeunix.org>, git@vger.kernel.org,
-	fg@one2team.net, giuseppe.bilotta@gmail.com, pasky@suse.cz
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 20 12:47:21 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 20 14:00:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaTqh-00089z-Ob
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 12:47:20 +0100
+	id 1LaUzM-0000hm-S8
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 14:00:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751832AbZBTLpw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2009 06:45:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752383AbZBTLpv
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 06:45:51 -0500
-Received: from mail-bw0-f161.google.com ([209.85.218.161]:63783 "EHLO
-	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751389AbZBTLpu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2009 06:45:50 -0500
-Received: by bwz5 with SMTP id 5so2408545bwz.13
-        for <git@vger.kernel.org>; Fri, 20 Feb 2009 03:45:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=8cvWelRDfM06fduwaxKamXNy1xCBu8acssdey+EFafE=;
-        b=KoiRUsHDlgetYFjm05P7KHQ+jSYFrwa0MYARqmHi2D+Oz+NDfH+r5nw3He2jHorDsS
-         /9zzGv/2dPW2HFN0H5Gl9RohvmcSo5aebl0M5fOfLJiKcUt5B0MijGnWJVVW+zQ1qnfw
-         TBDdfFDo6pDyTTW7VPKcasuK9IRcDKLoxs2CY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=IER5+oqeKgrJS7EFSFnCh8Kk34sOfqIrtmNXZ/SqYaAGyKJFE8OCxNaev6xbLffaiE
-         daVYWM2msXuO797EVT2ODYRGV7KcNb7HlJWFaIieTUsGhHQeI6p1v0RDSPAb45QpI/Hw
-         e5fg8nwjKCSO+L6zhqUOmVtfTGl9/HHMvpLkM=
-Received: by 10.103.165.18 with SMTP id s18mr1509849muo.124.1235130348787;
-        Fri, 20 Feb 2009 03:45:48 -0800 (PST)
-Received: from ?192.168.1.13? (abvl165.neoplus.adsl.tpnet.pl [83.8.209.165])
-        by mx.google.com with ESMTPS id u9sm637699muf.55.2009.02.20.03.45.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 20 Feb 2009 03:45:47 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7v4oypfqua.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1754306AbZBTM6v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 07:58:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752807AbZBTM6v
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 07:58:51 -0500
+Received: from kuber.nabble.com ([216.139.236.158]:46790 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752700AbZBTM6u (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2009 07:58:50 -0500
+Received: from isper.nabble.com ([192.168.236.156])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists@nabble.com>)
+	id 1LaUxu-0008Ln-1a
+	for git@vger.kernel.org; Fri, 20 Feb 2009 04:58:50 -0800
+X-Nabble-From: nefethael@hotmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110840>
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
-> >> +	$line =~ s{\b([0-9a-fA-F]{8,40})\b}{
-> >> +		return $cgi->a({-href => href(action=>"object", hash=>$1),
-> >> +					   -class => "text"}, $1);
-> >> +	}eg;
-> >> +
-> >
-> > Almost correct... but for this unnecessary 'return' statement.
-> > Without it: ACK.
-> 
-> I've applied this directly on 'master' without the return from inside s///e
-> with your Ack.  Please check the result.
 
-I did quick test by installing newest gitweb (with above commit applied),
-doing in gitweb searching commit message for '[a-f0-9]{8,40}' with regexp
-search; everything looks all right.  But I didn't do extensive tests.
+Hi, 
+Let me explain my problem : 
 
+I work for companyC. We work for companyB that works for companyA.
+	CA ==> CB ==> CC
+
+CA gives CB somes features to implement (fix, evolutions).
+CB gives CC these features.
+CC do the work then delivers to CB the patches.
+Then CB decides to deliver or NOT the patches.
+
+CA has a very long term integration workflow and want to select 
+the patches they pay and not every patches made. 
+
+CA --featX--> CB --featX--> CC
+CA --featY--> CB --featY--> CC
+              CB <--featX-- CC
+              CB <--featY-- CC
+CA <--featY-- CB
+(featX not delivered)
+
+The problem is when featX and featY are two dependant patches
+and one patch is not delivered. 
+
+In that case, we need to develop two independant patches in order 
+to allow CA to switch between featX and featY.
+
+But, CB is responsible for integration of patches for CA, and the person in
+charge 
+is not enough close to code to understand how to resolve merge conflicts.
+
+CA and CB workflows can't be modified and they want us (CC) 
+to give patches without merge conflicts problems.
+
+The only solution we found is to create a branch for each feature (normal :)
+) 
+and a branch for every combinaisons : ( featX, featY, featZ, featXY, featXZ,
+featYZ, featXYZ )
+and the integrator just have to select the combinaison he wants.
+
+I personnaly found that solution quite annoying, but can't find another
+solution.
+If you understood my problem, do you have a better solution (other than
+leaving CC) ? ;)
+thanks.
 -- 
-Jakub Narebski
-Poland
+View this message in context: http://www.nabble.com/How-to-deliver-dependant-patches-separatly---tp22120045p22120045.html
+Sent from the git mailing list archive at Nabble.com.
