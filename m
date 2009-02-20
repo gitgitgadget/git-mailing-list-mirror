@@ -1,92 +1,115 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [HALF A PATCH] Teach the '--exclude' option to 'diff
- --no-index'
-Date: Fri, 20 Feb 2009 16:03:25 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902201555490.6302@intel-tinevez-2-302>
-References: <499E92FD.8000900@alum.mit.edu> <cf17659db8a4f7fe9d878984effcdd8d6417c862.1235138849u.git.johannes.schindelin@gmx.de> <20090220145331.GA3515@coredump.intra.peff.net>
+From: Eugene Letuchy <eletuchy@facebook.com>
+Subject: Re: [PATCH] Make git blame date output format configurable, a la
+ git log
+Date: Fri, 20 Feb 2009 05:55:19 -0800
+Organization: Facebook
+Message-ID: <499EB647.30606@facebook.com>
+References: <1235136252-29649-1-git-send-email-eletuchy@gmail.com> <alpine.DEB.1.00.0902201434460.6302@intel-tinevez-2-302>
+Reply-To: "eletuchy@gmail.com" <eletuchy@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 20 16:05:01 2009
+Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	"marius@trolltech.com" <marius@trolltech.com>, <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 20 16:29:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaWvy-0007PK-9x
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 16:04:58 +0100
+	id 1LaXJS-0001Wr-3M
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 16:29:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752346AbZBTPDa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2009 10:03:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751905AbZBTPD3
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 10:03:29 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59877 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752029AbZBTPD3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2009 10:03:29 -0500
-Received: (qmail invoked by alias); 20 Feb 2009 15:03:27 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp056) with SMTP; 20 Feb 2009 16:03:27 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+fbrxLapafmtfMtrmYH7mlXoYqbH2be4aKbKAc+P
-	wTRozG2WFsXSzd
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <20090220145331.GA3515@coredump.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1752773AbZBTP1P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 10:27:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752444AbZBTP1O
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 10:27:14 -0500
+Received: from cm.out.snc1.tfbnw.net ([69.63.179.25]:38045 "EHLO
+	mailout-snc1.facebook.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752147AbZBTP1O (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2009 10:27:14 -0500
+X-Greylist: delayed 5504 seconds by postgrey-1.27 at vger.kernel.org; Fri, 20 Feb 2009 10:27:14 EST
+Received: from mail.thefacebook.com (intlb01.snat.snc1.facebook.com [10.128.203.17] (may be forged))
+	by pp01.snc1.tfbnw.net (8.14.1/8.14.1) with ESMTP id n1KDtKv6031982
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT);
+	Fri, 20 Feb 2009 05:55:20 -0800
+Received: from eletuchy.local (192.168.18.252) by mail.TheFacebook.com
+ (192.168.18.104) with Microsoft SMTP Server (TLS) id 8.1.340.0; Fri, 20 Feb
+ 2009 05:55:19 -0800
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.1b3pre) Gecko/20090219 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <alpine.DEB.1.00.0902201434460.6302@intel-tinevez-2-302>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=1.12.7400:2.4.4,1.2.40,4.0.166 definitions=2009-02-20_04:2009-02-10,2009-02-20,2009-02-20 signatures=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110854>
 
-Hi,
+Hi Johannes,
 
-On Fri, 20 Feb 2009, Jeff King wrote:
+Thanks for your feedback. Any comments on the .c changes?
 
-> On Fri, Feb 20, 2009 at 03:12:28PM +0100, Johannes Schindelin wrote:
-> 
-> > 	Michael wrote:
-> > 
-> > 	> I can't think offhand of a more portable tool that could replace 
-> > 	> "diff -r -x" here (suggestions, anyone?).
-> > 
-> > 	Maybe something like this?
-> 
-> Great. Using "git diff" was my first thought, too.
+I'll modify the commit message to read as follows:
+"""
 
-Heh :-)
+Add the following:
+  - git config value blame.date that expects one of the git log date
+    formats ({relative,local,default,iso,rfc,short})
+  - git blame command line option --date-format expects one of the git
+    log date formats ({relative,local,default,iso,rfc,short})
+  - documentation in blame-options.txt
+  - git blame uses the appropriate date.c functions and enums to
+    make sense of the date format and provide appropriate data
 
-I have to admit that I had something pretty ugly involving find and grep 
-in mind at first, then something equally appalling using GIT_WORKTREE and 
-GIT_INDEX_FILE.
+The tests pass. The mailmap test needed to be modified to expect iso
+formatted blames rather than the new "default".
 
-> > 	Note: before it can be included in git.git, documentation and 
-> > 	tests have to be added; also, it might be a good idea to extend it 
-> > 	to the "non-no-index" case (maybe I can beat Peff in the number of 
-> > 	double negations one day...)
-> 
-> Maybe a config option "diff.denyNonIndexExclude = false"? *ducks*
+Signed-off-by: Eugene Letuchy <eugene@facebook.com>
+"""
 
-How about diffNoIndex.denyNonIndexNonExclude = !true?  *swans*
+-Eugene
 
-> But more seriously, how would a user expect this to interact with 
-> .gitignore? I know gitignore is about ignoring untracked files, but I 
-> can't help but feel the two have something in common. But maybe not. I'm 
-> sick today and my brain is not working very well.
++ cc: junio
 
-I think that the -x option with regular (not --no-index) diff would be 
-a little different.  .gitignore is for "git add" time, while "git diff" 
-happily ignores .gitignore.
-
-Besides, the -x option only works on the basenames (as I implemented it; 
-no idea if GNU diff works the same way, but from Michael's patch it looks 
-like it does).
-
-BTW I just realized that I forgot to add a die() when !no_index && 
-basename_excludes.
-
-Ciao,
-Dscho
+On 2/20/09 5:40 AM, Johannes Schindelin wrote:
+> Hi,
+>
+> Disclaimer: if you are offended by constructive criticism, or likely to
+> answer with insults to the comments I offer, please stop reading this mail
+> now (and please to not answer my mail, either). :-)
+>
+> Still with me?  Good.  Nice to meet you.
+>
+> Just out of curiosity: why Cc: Marius?  I would have expected Junio, Git's
+> maintainer.
+>
+> May I suggest the commit subject to say "as for git log"?  I mistook "a la
+> git log" for a change in the way git-blame works...
+>
+> On Fri, 20 Feb 2009, eletuchy@gmail.com wrote:
+>
+>> From: Eugene Letuchy<eugene@facebook.com>
+>>
+>> Adds the following:
+>
+> We try to use the imperative form; from my experience it makes for an
+> easier read: "Add the following:"
+>
+>>   - git config value blame.date that expects one of the git log date
+>>     formats ({relative,local,default,iso,rfc,short})
+>>   - git blame command line option --date-format expects one of the git
+>>     log date formats ({relative,local,default,iso,rfc,short})
+>>   - documentation in blame-options.txt
+>>   - git blame uses the appropriate date.c functions and enums to
+>>     make sense of the date format and provide appropriate data
+>>
+>> The tests pass. The mailmap test needed to be modified to expect iso
+>> formatted blames rather than the new "default".
+>
+> IMHO the "The tests pass." should be removed.
+>
+> Other than that, nicely done!
+>
+> Ciao,
+> Dscho
+>
