@@ -1,65 +1,128 @@
-From: Kjetil Barvik <barvik@broadpark.no>
-Subject: Re: [PATCH] check_updates(): effective removal of cache entries marked
- CE_REMOVE
-Date: Fri, 20 Feb 2009 11:15:27 +0100
-Organization: private
-Message-ID: <86iqn5ifcw.fsf@broadpark.no>
-References: <1234995483-933-1-git-send-email-barvik@broadpark.no>
- <7vskm9ftcq.fsf@gitster.siamese.dyndns.org> <86vdr5iis0.fsf@broadpark.no>
- <alpine.DEB.1.00.0902201014180.10279@pacific.mpi-cbg.de>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 0/4] Add more tests of cvsimport
+Date: Fri, 20 Feb 2009 11:21:38 +0100
+Message-ID: <499E8432.9010806@alum.mit.edu>
+References: <1235107093-32605-1-git-send-email-mhagger@alum.mit.edu> <20090220062543.GA27837@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Feb 20 11:18:15 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 20 11:23:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaSSR-0003zr-RZ
-	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 11:18:12 +0100
+	id 1LaSXW-0005Xu-CP
+	for gcvg-git-2@gmane.org; Fri, 20 Feb 2009 11:23:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754051AbZBTKPe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2009 05:15:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752985AbZBTKPc
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 05:15:32 -0500
-Received: from osl1smout1.broadpark.no ([80.202.4.58]:38497 "EHLO
-	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752614AbZBTKPa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2009 05:15:30 -0500
-Received: from osl1sminn1.broadpark.no ([80.202.4.59])
- by osl1smout1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KFD001CK0HSD680@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Fri, 20 Feb 2009 11:15:28 +0100 (CET)
-Received: from localhost ([84.48.79.78]) by osl1sminn1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KFD009L50HRTM00@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Fri, 20 Feb 2009 11:15:28 +0100 (CET)
-In-reply-to: <alpine.DEB.1.00.0902201014180.10279@pacific.mpi-cbg.de>
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
+	id S1754737AbZBTKVu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 05:21:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754612AbZBTKVu
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 05:21:50 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:51064 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754241AbZBTKVs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2009 05:21:48 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id n1KALeA5024872
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 20 Feb 2009 11:21:41 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.19) Gecko/20090105 Thunderbird/2.0.0.19 Mnenhy/0.7.5.666
+In-Reply-To: <20090220062543.GA27837@coredump.intra.peff.net>
+X-Enigmail-Version: 0.95.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110834>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Jeff King wrote:
+> On Fri, Feb 20, 2009 at 06:18:09AM +0100, Michael Haggerty wrote:
+> [...]
+> I do wonder, though, whether it would be simpler to make a "cvs import
+> test suite" that could pluggably test cvs2svn, git-cvsimport, or other
+> converters. Then you could test each on the exact same set of test
+> repos. And abstracting "OK, now make a repository from this cvsroot"
+> wouldn't be that hard for each command (I wouldn't think, but obviously
+> I haven't tried it :) ).
 
-> Hi,
->
-> On Fri, 20 Feb 2009, Kjetil Barvik wrote:
->
->>   I guess that 77 milliseconds compared to 15 seconds is not noticable
->
-> I guess you meant 15 milliseconds?  ;-)
+Many tests only need to compare the contents of branches/tags checked
+out of CVS with those checked out of the converted repository.  Such
+tests could pretty easily be made agnostic about what conversion tool
+they are testing and also, for that matter, the type of the target VCS
+(git, SVN, hg, ...).  Testing incremental conversions at that level of
+detail would not be much harder.
 
-  Ok, I guess I was thinkning abouth the 77 milliseconds reduction of
-  the total time this git chekcout' test take, and the total time is 15
-  seconds.
+But other tests would be harder to write in a neutral fashion.  For
+example, the cvs2svn test suite has tests of log messages, character-set
+conversions of metadata, correct commit ordering, branching topology, etc.
 
-  -- kjetil, :-)
+In fact, one of the many things I haven't gotten around to yet is
+writing a nontrivial test suite for cvs2git.  I'd like to share as much
+as possible with the cvs2svn test suite, but there is a lot there that
+is SVN-specific.
 
+>> Patch 1 splits out some code into a library usable by multiple
+>> CVS-related tests.
+> 
+> That is definitely a good first step, though the usual naming convention
+> is t/lib-cvs.sh. See t/lib-{git-svn,httpd,rebase}.sh, for example.
 
- 
+Thanks, I hadn't noticed that.  I'll change it the v2 of the patch.
+
+>> Patch 2 changes the library to add the -f option when invoking cvs (to
+>> make it ignore the user's ~/.cvsrc file).
+> 
+> The code in t9600 (which gets moved to lib-cvs in your patch 1) sets
+> HOME explicitly. So is this really a problem?
+
+That's a good question.  I just checked, and empirically cvs uses .cvsrc
+from my true home directory even if HOME is set differently.  So I think
+that the -f option is indeed necessary.
+
+>> Patch 4 adds a new test script t9601 that tests "git cvsimport"'s
+>> handling of CVS vendor branches.  One of these tests fails due to an
+>> actual bug.
+> 
+> Cool. Are you volunteering to fix git-cvsimport, too? :)
+
+Not unless you call cvs2git the fixed version :-)
+
+>> Finally, the *,v files comprising the CVS repository have blank
+>> trailing lines, triggering a warning from "git diff --check".  I don't
+>> think that CVS strictly requires the blank lines, but they are always
+>> generated by CVS, so I left them in.  But if the "git diff --check"
+>> warnings are considered a serious problem, the blank lines could
+>> probably be removed.
+> 
+> It's best to leave them in, I think, to create as realistic a test as
+> possible. But you should mark the paths as "we don't care about
+> whitespace" using gitattributes. I.e.,:
+> 
+> diff --git a/t/t9601/.gitattributes b/t/t9601/.gitattributes
+> new file mode 100644
+> index 0000000..562b12e
+> --- /dev/null
+> +++ b/t/t9601/.gitattributes
+> @@ -0,0 +1 @@
+> +* -whitespace
+
+Cool, I didn't know about that feature.  I'll include that in v2 as well.
+
+Thanks for the feedback!
+
+BTW, I don't want to trash "git cvsimport".  I'm not brave enough even
+to try to implement incremental conversions in cvs2git.  So the fact
+that cvsimport sometimes works is already impressive :-)  I also
+understand that its limitations come from those of cvsps, another
+impressive but flawed tool (which in turn is being used outside of its
+design limits).  But I hope to raise awareness that cvsps-based tools
+are not the best choice for "one-shot" conversions, and maybe work
+against people's tendency to use the "default" tool unless it obviously
+blows up.
+
+Michael
