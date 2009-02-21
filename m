@@ -1,66 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2.1 resend] rev-list: estimate number of bisection step
- left
-Date: Sat, 21 Feb 2009 01:27:00 -0800
-Message-ID: <7vy6w0qgwr.fsf@gitster.siamese.dyndns.org>
-References: <20090221092601.45691c3e.chriscool@tuxfamily.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: git push usage
+Date: Sat, 21 Feb 2009 04:32:35 -0500
+Message-ID: <76718490902210132w2577c093tf8c2a5e7da8bc0e8@mail.gmail.com>
+References: <76718490902200116n73e00b62sbe7bb774bcc058c5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ingo Molnar <mingo@elte.hu>,
-	John Tapsell <johnflux@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sat Feb 21 10:28:45 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Feb 21 10:34:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaoA8-0006rr-Nk
-	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 10:28:45 +0100
+	id 1LaoFJ-0007t0-Cq
+	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 10:34:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751885AbZBUJ1R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Feb 2009 04:27:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751547AbZBUJ1Q
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Feb 2009 04:27:16 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50068 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751247AbZBUJ1P (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Feb 2009 04:27:15 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 058112B9B0;
-	Sat, 21 Feb 2009 04:27:12 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A52ED2B9A3; Sat,
- 21 Feb 2009 04:27:01 -0500 (EST)
-In-Reply-To: <20090221092601.45691c3e.chriscool@tuxfamily.org> (Christian
- Couder's message of "Sat, 21 Feb 2009 09:26:01 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: D19B80CA-FFF9-11DD-B4C4-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1752962AbZBUJch (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Feb 2009 04:32:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752203AbZBUJcg
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Feb 2009 04:32:36 -0500
+Received: from rv-out-0506.google.com ([209.85.198.224]:55808 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752769AbZBUJcf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Feb 2009 04:32:35 -0500
+Received: by rv-out-0506.google.com with SMTP id g37so1280890rvb.1
+        for <git@vger.kernel.org>; Sat, 21 Feb 2009 01:32:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=tajtBVuRz5CHJ7xonQhAXutBoqB/RHWAdWBsYMnv3JU=;
+        b=hHu0nUarIanrbcivdqpyYVyIa6INOs4i/t/j46wCEW8AmSxDHDovl2u4aU9GbVLcAX
+         rXEWq4fj1/e0QJXbGhvJP1TiUQqpv3ixwWsmXscSnx4aJQzknEJb2WyDgTwv7PEE16jm
+         5nANIBpV+sO/nmjD7mVSQJ2pSPt6hzsJT++kw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=gPJ7y2u+hExMD0WDDnIv0QO7l2QkdCEs2C6pbqQkWyULBOUvDOIcdJdczG6iUqV2QW
+         5KiSZ/DTIgqKyxlUqgo1QF051NZv4Qu/qstwDd8ia2WCpHzwBrB9Zw9gW0mhdBHNnCCt
+         dmbDYurhWxG4IFQ2ukyLhfaA485S/C+QIPyT4=
+Received: by 10.141.146.4 with SMTP id y4mr898951rvn.88.1235208755158; Sat, 21 
+	Feb 2009 01:32:35 -0800 (PST)
+In-Reply-To: <76718490902200116n73e00b62sbe7bb774bcc058c5@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110935>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Tap...tap...tap... is this thing on? :-)
 
-> Here is a table to help analyse what should be the best estimate for
-> the number of bisect steps left.
-> ...
-> So the algorithm used in this patch calculates 2^n and x, and then
-> choose between returning n - 1 and n.
-
-Two dumb questions about the math (because I suck at math).
-
- - Do you mean by "best estimate" the best case scenario, or something
-   else (perhaps "the most accurate")?
-
- - Is computing based on linear history a good enough approximation?
-
-I am not advocating to make things more precise nor saying your math is
-flawed.  I'd prefer simpler code for things like this --- after all, my
-understanding of this whole exercise is to give "this is more or less the
-number you should expect" ballpack figure and nothing more (correct me if
-that is not what you are aiming for).
+On Fri, Feb 20, 2009 at 4:16 AM, Jay Soffian <jaysoffian@gmail.com> wrote:
+> The man page for git push claims:
+>
+>  --repo=<repository>
+>     This option is only relevant if no <repository> argument is passed
+>     in the invocation. In this case, git-push derives the remote name
+>     from the current branch: If it tracks a remote branch, then that
+>     remote repository is pushed to. Otherwise, the name "origin" is
+>     used. For this latter case, this option can be used to override the
+>     name "origin". In other words, the difference between these two
+>     commands
+>
+>         git push public         #1
+>         git push --repo=public  #2
+>
+>     is that #1 always pushes to "public" whereas #2 pushes to "public"
+>     only if the current branch does not track a remote branch. This is
+>     useful if you write an alias or script around git-push.
+>
+> However, I'm sitting here looking at the code and I don't see how this
+> is possible. I've also done some testing. So I think the man page lies
+> and that forms (1) and (2) are equivalent as shown.
+>
+> cmd_push() is:
+>
+>  const char *repo = NULL; /* default repository */
+>  struct option options[] = {
+>    ...
+>    OPT_STRING( 0 , "repo", &repo, "repository", "repository"),
+>    ...
+>  }
+>
+>  argc = parse_options(argc, argv, options, push_usage, 0);
+>
+>  if (argc > 0) {
+>    repo = argv[0];
+>    set_refspecs(argv + 1, argc - 1);
+>  }
+>
+>  rc = do_push(repo, flags);
+>
+> So if the user specifies --repo, then its value is assigned to *repo by
+> parse_options. If the user otherwise specifies a repository w/o --repo, that
+> will be argv[0] after parse_options, so it will get assigned to *repo. Assuming
+> no other arguments, set_refspecs gets called with argc = 0 and returns w/o doing
+> anything.
+>
+> So the only difference I can see is that form #1 allows the user to specify a
+> refspec on the command line. Form #2 does not since the first
+> non-dashed argument gets assigned to *repo, so:
+>
+> $ git push --repo src:dst
+>
+> would assign src:dst to *repo, which would choke.
+>
+> So, what's the point of the --repo dashed-option then?
+>
+> j.
+>
