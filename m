@@ -1,88 +1,61 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [tig PATCH] Predefined external command: git commit
-Date: Sat, 21 Feb 2009 19:52:00 +0100
-Message-ID: <cb7bb73a0902211052s554e20d7pa412613f56cbf86d@mail.gmail.com>
-References: <1235176121-17483-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <2c6b72b30902210819q43cbf184x77d7587a6aa1630a@mail.gmail.com>
-	 <cb7bb73a0902210919n45ffb74fp6d4fa0dc9cb7ac1@mail.gmail.com>
-	 <2c6b72b30902210951m619c7cf9qa505883f43128e44@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v4] Test fsck a bit harder
+Date: Sat, 21 Feb 2009 20:21:37 +0100
+Message-ID: <200902212021.37807.j6t@kdbg.org>
+References: <499F12BF.4080405@kdbg.org> <5d214c5180b20fa90d76cf0c2f064a14be1fb195.1235213803.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-15"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jonas Fonseca <jonas.fonseca@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 21 19:55:14 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Sat Feb 21 20:23:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lax0L-0003V2-DH
-	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 19:55:13 +0100
+	id 1LaxRm-0004Jm-Pw
+	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 20:23:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753431AbZBUSwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Feb 2009 13:52:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753166AbZBUSwE
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Feb 2009 13:52:04 -0500
-Received: from mail-ew0-f164.google.com ([209.85.219.164]:51738 "EHLO
-	mail-ew0-f164.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752890AbZBUSwC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Feb 2009 13:52:02 -0500
-Received: by ewy8 with SMTP id 8so13394ewy.13
-        for <git@vger.kernel.org>; Sat, 21 Feb 2009 10:52:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=fngVKJSpuGfwjEJkCmWQtlPjOJ+U4FdRzJ0ggSp/6xk=;
-        b=FcDrHtWuZsmoYU3wFgJgNRwIirVQ9YcykJiTPp/6Mhc8J7BhstfbmCgULo+U45YlWO
-         GgR/45+8OygVKJOuK70wlL1h8s8RQLPHiRh2c5sl5WIztKzIocW/lqDoPf/obm2z5jrr
-         t9EPerhoqnIJz9eAqC0jH6HmTJxkMrM3ze1xg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=tveyI4DszaBmUU4wWKCXg7JTTnSRqcV/UEG88tBiY/oieMFJE1cvqpoxGL/7Jq8jPn
-         4NnyWHE8l6de0giiQ9VItUPFYWMNy5Z67oOvERfxyNY++sL+jPYUnXbbHzs2TYU7wfxD
-         tkibCvxacCdeweJYf43IPawiEHQ1pRGiHhHtY=
-Received: by 10.210.105.20 with SMTP id d20mr1800844ebc.99.1235242320250; Sat, 
-	21 Feb 2009 10:52:00 -0800 (PST)
-In-Reply-To: <2c6b72b30902210951m619c7cf9qa505883f43128e44@mail.gmail.com>
+	id S1755030AbZBUTVo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Feb 2009 14:21:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753813AbZBUTVo
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Feb 2009 14:21:44 -0500
+Received: from bsmtp.bon.at ([213.33.87.14]:42693 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753758AbZBUTVn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Feb 2009 14:21:43 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 3E363CDF8B;
+	Sat, 21 Feb 2009 20:21:39 +0100 (CET)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id AE2D51D163;
+	Sat, 21 Feb 2009 20:21:38 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <5d214c5180b20fa90d76cf0c2f064a14be1fb195.1235213803.git.trast@student.ethz.ch>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110973>
 
-On Sat, Feb 21, 2009 at 6:51 PM, Jonas Fonseca <jonas.fonseca@gmail.com> wrote:
-> On Sat, Feb 21, 2009 at 18:19, Giuseppe Bilotta
-> <giuseppe.bilotta@gmail.com> wrote:
->> Thank you for this excellent piece of software. I have some more minor
->> patches up at git://git.oblomov.eu/tig (gitweb at same address with
->> http) which I'm going to submit soon.
+On Samstag, 21. Februar 2009, Thomas Rast wrote:
+> I changed the tests
+> to use
 >
-> Don't bother sending the `tig log` patch. ;)
+> 	test_must_fail git fsck 2>&1 | tee out
 >
-> I deprecated this subcommand a long time ago, and would prefer if it
-> wasn't added again. Having a lot of subcommands makes it more likely
-> that doing `tig $BRANCH` will not do the expected thing. Also, I don't
-> find it particularly useful myself and might actually remove it in the
-> future, if I ever get to implementing support for defining "custom
-> views".
+> instead, which both checks the exit status and makes the tests more
+> verbose with -v.
 
-You actually plan on removing the log view altogether?
+This is wrong: It does not test the exist status. In a pipeline, the shell 
+looks only at the exit status of the last command. You really want this as
 
-The problem of conflicting with tig $BRANCH could maybe be solved by
-prefixing commands with something (a dot or something easy to type, if
-not the traditional - or --)
+ 	test_must_fail git fsck >out 2>&1 &&
 
->> I honestly wish I could contribute with some more important feature
->> such as bundle support or automatic color inversion on light
->> backgrounds.
->
-> /me too. :)
+If you want to have it more verbose, add 'cat out &&'. But IMHO that is 
+overengineered. If the test detects a regression in the future, it is easy to 
+inspect the file out if necessary.
 
-I'll do my best 8-)
-
--- 
-Giuseppe "Oblomov" Bilotta
+-- Hannes
