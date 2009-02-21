@@ -1,84 +1,69 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [RFC PATCH] hooks: add some defaults to support sane workflow to pre-commit
-Date: Sat, 21 Feb 2009 12:16:35 +0100
-Message-ID: <200902211216.43964.trast@student.ethz.ch>
-References: <499EF2B6.7060103@hvoigt.net> <C95EAEB9-D520-497F-BA42-0CDCC1348340@wincent.com> <499FDDC2.90502@hvoigt.net>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: whitespace checking in git-add?
+Date: Sat, 21 Feb 2009 12:21:38 +0100
+Message-ID: <fabb9a1e0902210321k6bdd8726jea7c930a5a61cce5@mail.gmail.com>
+References: <20090220230454.GA10112@foursquare.net>
+	 <alpine.LFD.2.00.0902202109010.5511@xanadu.home>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart7822706.yyhTV9nlo3";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org
-To: Heiko Voigt <git-list@hvoigt.net>
-X-From: git-owner@vger.kernel.org Sat Feb 21 12:27:16 2009
+Cc: Chris Frey <cdfrey@foursquare.net>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Sat Feb 21 12:27:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Laq0i-0004iy-Mb
+	id 1Laq0j-0004iy-Ey
 	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 12:27:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751358AbZBULQ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Feb 2009 06:16:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751347AbZBULQ6
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Feb 2009 06:16:58 -0500
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:9057 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751307AbZBULQ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Feb 2009 06:16:57 -0500
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 21 Feb 2009 12:16:55 +0100
-Received: from thomas.localnet ([77.56.223.244]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 21 Feb 2009 12:16:55 +0100
-User-Agent: KMail/1.11.0 (Linux/2.6.27.7-9-default; KDE/4.2.0; x86_64; ; )
-In-Reply-To: <499FDDC2.90502@hvoigt.net>
-X-OriginalArrivalTime: 21 Feb 2009 11:16:56.0111 (UTC) FILETIME=[E7CF33F0:01C99415]
+	id S1751420AbZBULVm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Feb 2009 06:21:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751389AbZBULVl
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Feb 2009 06:21:41 -0500
+Received: from mail-bw0-f161.google.com ([209.85.218.161]:60451 "EHLO
+	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751388AbZBULVk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Feb 2009 06:21:40 -0500
+Received: by bwz5 with SMTP id 5so3406120bwz.13
+        for <git@vger.kernel.org>; Sat, 21 Feb 2009 03:21:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=AGyfQo3IGM/zhPPtA0s04IZ3ZIYWU/V1VJGb3qi1+ME=;
+        b=fnZXzf+/SORAuddBnWxVK1LPZAwaDzMx38entGptcTHQkCcoZShZQMlgHovlB8nhOy
+         T1BGsX5IP47UG3592rAIKwFRN2XRzELcBb4d+NIDGg4TxYj5bSYHLUvaQqBWNpEdFx6U
+         LcQ+hbQ05tnWVODGxnfoY/kbJrXMn2kJ5qdlg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=BwllLLteWblbSHDiNEScibOYCrtouhmL/foNoyWygMkUzFvDew/sPpD8/zvBXXSz/6
+         vCoAkiqKSAmEENWvI1hEbRZo6npKFXyRygqiGqWGX70e6KC3D3LNUKHGcDVsfGq+lVgg
+         Dfd2J/cAps2FkpzYlC3qMCzC9/k/SjHCS9VRI=
+Received: by 10.103.91.2 with SMTP id t2mr2320124mul.47.1235215298805; Sat, 21 
+	Feb 2009 03:21:38 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.00.0902202109010.5511@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110940>
 
---nextPart7822706.yyhTV9nlo3
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Heya,
 
-Heiko Voigt wrote:
-> This leads me to a completely different solution to the same problem.
-> How about teaching git to inherit its hooks from the parental project
-> (e.g. the one it was cloned from)? That way we are not limited to
-> one default behaviour but many that would match the one from the
-> upstream project.
-[...]
-> What do you think about that?
+On Sat, Feb 21, 2009 at 03:14, Nicolas Pitre <nico@cam.org> wrote:
+>  2) run 'git rebase -f --whitespace=fix HEAD~'
 
-Three words: huge security hole.
+Thanks for the plug ;), but you should note that that only works on a
+very recent git. It's not even in master yet, according to [0] it's
+been in next for only 7 days.
 
-Especially on cloning, where the checkout immediately afterwards
-would already run the post-checkout hook, without any chance for the
-user to inspect its contents.
+[0] http://repo.or.cz/w/git.git?a=search&h=refs/heads/next&st=commit&s=srabbelier
 
-The usual advice is to track the hooks in the repository, e.g., under
-hooks/, and instruct the users to copy them to .git/hooks/ if they
-want them.
+-- 
+Cheers,
 
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
-
---nextPart7822706.yyhTV9nlo3
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkmf4psACgkQqUud07tmzP1reQCfZfjON15vWdFg/J3gi2vVjyPV
-8+AAn1JizHaz8PXeIWCKXvEP1axdDRqZ
-=JGHJ
------END PGP SIGNATURE-----
-
---nextPart7822706.yyhTV9nlo3--
+Sverre Rabbelier
