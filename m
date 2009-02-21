@@ -1,72 +1,71 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git svn dcommit difficulties/feature request
-Date: Sat, 21 Feb 2009 04:12:53 -0800
-Message-ID: <20090221121253.GB8145@dcvr.yhbt.net>
-References: <200902191930.10139.kumbayo84@arcor.de> <200902191947.22622.kumbayo84@arcor.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Peter Oberndorfer <kumbayo84@arcor.de>
-X-From: git-owner@vger.kernel.org Sat Feb 21 13:14:29 2009
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v2 0/4] Add more tests of cvsimport
+Date: Sat, 21 Feb 2009 14:04:35 +0100
+Message-ID: <1235221480-31473-1-git-send-email-mhagger@alum.mit.edu>
+Cc: gitster@pobox.com, peff@peff.net, Johannes.Schindelin@gmx.de,
+	jnareb@gmail.com, Michael Haggerty <mhagger@alum.mit.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 21 14:06:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaqkW-0007r3-2R
-	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 13:14:28 +0100
+	id 1LarYt-00041j-Ov
+	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 14:06:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752141AbZBUMMz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Feb 2009 07:12:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752116AbZBUMMz
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Feb 2009 07:12:55 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:60572 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752060AbZBUMMy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Feb 2009 07:12:54 -0500
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 09B751F5FD;
-	Sat, 21 Feb 2009 12:12:54 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <200902191947.22622.kumbayo84@arcor.de>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752230AbZBUNFA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Feb 2009 08:05:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752203AbZBUNFA
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Feb 2009 08:05:00 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:57471 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752190AbZBUNE7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Feb 2009 08:04:59 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from localhost.localdomain (77-21-84-251-dynip.superkabel.de [77.21.84.251])
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id n1LD4fLC022313;
+	Sat, 21 Feb 2009 14:04:41 +0100
+X-Mailer: git-send-email 1.6.1.3
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110945>
 
-Peter Oberndorfer <kumbayo84@arcor.de> wrote:
-> Hi,
-> 
-> With the patch i am replying to git-svn got a bit more comfortable for me but 
-> there is still a problem left.
-> 
-> I fetch via svn://anonsvn.kde.org/home/kde/trunk/KDE/kdelibs
-> and push to svn+ssh://YOUR_LOGIN@svn.kde.org/home/kde/trunk/KDE/kdelibs
-> 
-> Pushing multiple changes at once to KDE servers with different fetch/commit 
-> url is not possible for me.
-> 
-> Here is what it think what happens during a push:
-> git svn dcommit pushes the first commit to svn.kde.org,
-> then tries to fetch what it just pushed from anonsvn.kde.org
-> (which lags behind authenticated svn by a few minutes).
-> 
-> git svn does not see the just committed changes, gets confused
-> and stops pushing the rest of the commits.
-> 
-> My idea would be to temporarily fetch from the authenticated server, but not 
-> update the current head and revdb., so nothing is affected beside the push.
-> But this seems quite complicated.
-> Or do not care about difference between fetch/dcommit url, and just fetch from 
-> the dcommit url during dcommit.
-> 
-> Anybody have a good idea if this is possible or a better way to solve this 
-> problem?
+Thanks for all the feedback.  I think I have incorporated it all:
 
-You could probably look into how rewriteRoot works and set that on a
-temporary basis in memory.  In fact, that should probably be a default
-when using --commit-url iny any form...
+- Renamed the library from t/t96xx/cvs-lib.sh to t/lib-cvs.sh.
 
--- 
-Eric Wong
+- Added t/t9601/cvsroot/.gitattributes to avoid whitespace warnings.
+
+- Fixed the "cvs co" command for when checking out a branch/tag.
+
+- Implemented a recursive diff in test_cmp_branch_tree rather than
+  relying on GNU diff features.  It is only a dozen lines of code, but
+  please review this carefully as I'm not such a shell jockey.
+
+  I tried using "git diff" but it didn't seem to work for this
+  purpose, even if I deleted the CVS directories manually to avoid the
+  need for "-x" functionality:
+
+  - If I used --no-index, it insisted on showing differences within
+    the .git directory.
+
+  - It didn't seem to find any differences (even when there were some)
+    when I didn't use --no-index.
+
+  - I couldn't see any documentation that the return value is nonzero
+    iff differences are found.  In my tests the return value was
+    always zero.
+
+  The library can always be changed later to use "git diff", but I
+  don't see this as urgent.  It would also have the disadvantage of
+  making "git cvsimport" tests fail if there are bugs in "git diff".
+
+I also added another test script, t9602, in the (new) 5th patch in the
+series.  It tests "git cvsimport"'s handling of branches and tags.
+Only 5/11 of the tests in this script pass.
+
+Cheers,
+Michael
