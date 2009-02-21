@@ -1,34 +1,36 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 2/5] Use CVS's -f option if available (ignore user's ~/.cvsrc file)
-Date: Sat, 21 Feb 2009 14:04:37 +0100
-Message-ID: <7d834a5a7542df6bfa8963bb6440cc4b4531ead7.1235220105.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 4/5] Add some tests of git-cvsimport's handling of vendor branches
+Date: Sat, 21 Feb 2009 14:04:39 +0100
+Message-ID: <62960fa97012833859a8f4f8d68a625f8851f8be.1235220105.git.mhagger@alum.mit.edu>
 References: <1235221480-31473-1-git-send-email-mhagger@alum.mit.edu>
  <ee46eff8fc1cb2d0ad3d8dfac2fbe4d79f225e3a.1235220105.git.mhagger@alum.mit.edu>
+ <7d834a5a7542df6bfa8963bb6440cc4b4531ead7.1235220105.git.mhagger@alum.mit.edu>
+ <cda1b6751447f990ca0e45e2e54f62ae9c53e6c1.1235220105.git.mhagger@alum.mit.edu>
 Cc: gitster@pobox.com, peff@peff.net, Johannes.Schindelin@gmx.de,
 	jnareb@gmail.com, Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 21 14:07:15 2009
+X-From: git-owner@vger.kernel.org Sat Feb 21 14:07:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LarZa-0004DE-QD
-	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 14:07:15 +0100
+	id 1LarZa-0004DE-2l
+	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 14:07:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752410AbZBUNFV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Feb 2009 08:05:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752444AbZBUNFT
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Feb 2009 08:05:19 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:57480 "EHLO
+	id S1752486AbZBUNFT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Feb 2009 08:05:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752456AbZBUNFR
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Feb 2009 08:05:17 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:57479 "EHLO
 	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752410AbZBUNFO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Feb 2009 08:05:14 -0500
+	with ESMTP id S1752406AbZBUNFM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Feb 2009 08:05:12 -0500
 X-Envelope-From: mhagger@alum.mit.edu
 Received: from localhost.localdomain (77-21-84-251-dynip.superkabel.de [77.21.84.251])
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id n1LD4fLE022313;
-	Sat, 21 Feb 2009 14:04:42 +0100
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id n1LD4fLG022313;
+	Sat, 21 Feb 2009 14:04:44 +0100
 X-Mailer: git-send-email 1.6.1.3
-In-Reply-To: <ee46eff8fc1cb2d0ad3d8dfac2fbe4d79f225e3a.1235220105.git.mhagger@alum.mit.edu>
+In-Reply-To: <cda1b6751447f990ca0e45e2e54f62ae9c53e6c1.1235220105.git.mhagger@alum.mit.edu>
 In-Reply-To: <ee46eff8fc1cb2d0ad3d8dfac2fbe4d79f225e3a.1235220105.git.mhagger@alum.mit.edu>
 References: <ee46eff8fc1cb2d0ad3d8dfac2fbe4d79f225e3a.1235220105.git.mhagger@alum.mit.edu>
 X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
@@ -36,95 +38,524 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110948>
 
-A user's ~/.cvsrc file can change the basic behavior of CVS commands.
-Therefore we should ignore it in order to ensure consistent results
-from the test suite.
+CVS's handling of vendor branches is tricky; add some tests to check
+whether revisions added via "cvs imports" then imported to git via
+"git cvsimport" are reflected correctly on master.
+
+One of these tests fail and is therefore marked "test_expect_failure".
+Cvsimport doesn't realize that subsequent changes on a vendor branch
+affect master as long as the vendor branch is the default branch.
+
+The test CVS repository used for these tests is derived from cvs2svn's
+test suite.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- t/lib-cvs.sh         |    3 +++
- t/t9600-cvsimport.sh |   16 ++++++++--------
- 2 files changed, 11 insertions(+), 8 deletions(-)
+ t/lib-cvs.sh                                       |    6 ++
+ t/t9601-cvsimport-vendor-branch.sh                 |   86 ++++++++++++++++++++
+ t/t9601/cvsroot/.gitattributes                     |    1 +
+ t/t9601/cvsroot/CVSROOT/.gitignore                 |    1 +
+ t/t9601/cvsroot/module/added-imported.txt,v        |   44 ++++++++++
+ t/t9601/cvsroot/module/imported-anonymously.txt,v  |   42 ++++++++++
+ .../module/imported-modified-imported.txt,v        |   76 +++++++++++++++++
+ t/t9601/cvsroot/module/imported-modified.txt,v     |   59 +++++++++++++
+ t/t9601/cvsroot/module/imported-once.txt,v         |   43 ++++++++++
+ t/t9601/cvsroot/module/imported-twice.txt,v        |   60 ++++++++++++++
+ 10 files changed, 418 insertions(+), 0 deletions(-)
+ create mode 100755 t/t9601-cvsimport-vendor-branch.sh
+ create mode 100644 t/t9601/cvsroot/.gitattributes
+ create mode 100644 t/t9601/cvsroot/CVSROOT/.gitignore
+ create mode 100644 t/t9601/cvsroot/module/added-imported.txt,v
+ create mode 100644 t/t9601/cvsroot/module/imported-anonymously.txt,v
+ create mode 100644 t/t9601/cvsroot/module/imported-modified-imported.txt,v
+ create mode 100644 t/t9601/cvsroot/module/imported-modified.txt,v
+ create mode 100644 t/t9601/cvsroot/module/imported-once.txt,v
+ create mode 100644 t/t9601/cvsroot/module/imported-twice.txt,v
 
 diff --git a/t/lib-cvs.sh b/t/lib-cvs.sh
-index bfc1c12..6738901 100644
+index 47f0e55..5c74f8d 100644
 --- a/t/lib-cvs.sh
 +++ b/t/lib-cvs.sh
-@@ -14,6 +14,9 @@ then
- 	exit
- fi
+@@ -52,6 +52,12 @@ test_git_co_branch () {
+ 	(cd module-git && git checkout "$1")
+ }
  
-+CVS="cvs -f"
-+export CVS
++test_cmp_branch_file () {
++	# Usage: test_cmp_branch_file BRANCH_NAME PATH
++	# The branch must already be checked out of CVS and git.
++	test_cmp module-cvs-"$1"/"$2" module-git/"$2"
++}
 +
- cvsps_version=`cvsps -h 2>&1 | sed -ne 's/cvsps version //p'`
- case "$cvsps_version" in
- 2.1 | 2.2*)
-diff --git a/t/t9600-cvsimport.sh b/t/t9600-cvsimport.sh
-index 98077ab..3110a8c 100755
---- a/t/t9600-cvsimport.sh
-+++ b/t/t9600-cvsimport.sh
-@@ -6,12 +6,12 @@ test_description='git cvsimport basic tests'
- CVSROOT=$(pwd)/cvsroot
- export CVSROOT
- 
--test_expect_success 'setup cvsroot' 'cvs init'
-+test_expect_success 'setup cvsroot' '$CVS init'
- 
- test_expect_success 'setup a cvs module' '
- 
- 	mkdir "$CVSROOT/module" &&
--	cvs co -d module-cvs module &&
-+	$CVS co -d module-cvs module &&
- 	cd module-cvs &&
- 	cat <<EOF >o_fortuna &&
- O Fortuna
-@@ -30,13 +30,13 @@ egestatem,
- potestatem
- dissolvit ut glaciem.
- EOF
--	cvs add o_fortuna &&
-+	$CVS add o_fortuna &&
- 	cat <<EOF >message &&
- add "O Fortuna" lyrics
- 
- These public domain lyrics make an excellent sample text.
- EOF
--	cvs commit -F message &&
-+	$CVS commit -F message &&
- 	cd ..
- '
- 
-@@ -74,7 +74,7 @@ translate to English
- 
- My Latin is terrible.
- EOF
--	cvs commit -F message &&
-+	$CVS commit -F message &&
- 	cd ..
- '
- 
-@@ -92,8 +92,8 @@ test_expect_success 'update cvs module' '
- 
- 	cd module-cvs &&
- 		echo 1 >tick &&
--		cvs add tick &&
--		cvs commit -m 1
-+		$CVS add tick &&
-+		$CVS commit -m 1
- 	cd ..
- 
- '
-@@ -111,7 +111,7 @@ test_expect_success 'cvsimport.module config works' '
- 
- test_expect_success 'import from a CVS working tree' '
- 
--	cvs co -d import-from-wt module &&
-+	$CVS co -d import-from-wt module &&
- 	cd import-from-wt &&
- 		git cvsimport -a -z0 &&
- 		echo 1 >expect &&
+ test_cmp_branch_tree () {
+ 	# Usage: test_cmp_branch_tree BRANCH_NAME
+ 	# Check BRANCH_NAME out of CVS and git and make sure that all
+diff --git a/t/t9601-cvsimport-vendor-branch.sh b/t/t9601-cvsimport-vendor-branch.sh
+new file mode 100755
+index 0000000..9ee6843
+--- /dev/null
++++ b/t/t9601-cvsimport-vendor-branch.sh
+@@ -0,0 +1,86 @@
++#!/bin/sh
++
++# Description of the files in the repository:
++#
++#    imported-once.txt:
++#
++#       Imported once.  1.1 and 1.1.1.1 should be identical.
++#
++#    imported-twice.txt:
++#
++#       Imported twice.  HEAD should reflect the contents of the
++#       second import (i.e., have the same contents as 1.1.1.2).
++#
++#    imported-modified.txt:
++#
++#       Imported, then modified on HEAD.  HEAD should reflect the
++#       modification.
++#
++#    imported-modified-imported.txt:
++#
++#       Imported, then modified on HEAD, then imported again.
++#
++#    added-imported.txt,v:
++#
++#       Added with 'cvs add' to create 1.1, then imported with
++#       completely different contents to create 1.1.1.1, therefore the
++#       vendor branch was never the default branch.
++#
++#    imported-anonymously.txt:
++#
++#       Like imported-twice.txt, but with a vendor branch whose branch
++#       tag has been removed.
++
++test_description='git cvsimport handling of vendor branches'
++. ./lib-cvs.sh
++
++CVSROOT="$TEST_DIRECTORY"/t9601/cvsroot
++export CVSROOT
++
++test_expect_success 'import a module with a vendor branch' '
++
++	git cvsimport -C module-git module
++
++'
++
++test_expect_success 'check HEAD out of cvs repository' 'test_cvs_co master'
++
++test_expect_success 'check master out of git repository' 'test_git_co_branch master'
++
++test_expect_success 'check a file that was imported once' '
++
++	test_cmp_branch_file master imported-once.txt
++
++'
++
++test_expect_failure 'check a file that was imported twice' '
++
++	test_cmp_branch_file master imported-twice.txt
++
++'
++
++test_expect_success 'check a file that was imported then modified on HEAD' '
++
++	test_cmp_branch_file master imported-modified.txt
++
++'
++
++test_expect_success 'check a file that was imported, modified, then imported again' '
++
++	test_cmp_branch_file master imported-modified-imported.txt
++
++'
++
++test_expect_success 'check a file that was added to HEAD then imported' '
++
++	test_cmp_branch_file master added-imported.txt
++
++'
++
++test_expect_success 'a vendor branch whose tag has been removed' '
++
++	test_cmp_branch_file master imported-anonymously.txt
++
++'
++
++test_done
+diff --git a/t/t9601/cvsroot/.gitattributes b/t/t9601/cvsroot/.gitattributes
+new file mode 100644
+index 0000000..562b12e
+--- /dev/null
++++ b/t/t9601/cvsroot/.gitattributes
+@@ -0,0 +1 @@
++* -whitespace
+diff --git a/t/t9601/cvsroot/CVSROOT/.gitignore b/t/t9601/cvsroot/CVSROOT/.gitignore
+new file mode 100644
+index 0000000..c375d5b
+--- /dev/null
++++ b/t/t9601/cvsroot/CVSROOT/.gitignore
+@@ -0,0 +1 @@
++history
+diff --git a/t/t9601/cvsroot/module/added-imported.txt,v b/t/t9601/cvsroot/module/added-imported.txt,v
+new file mode 100644
+index 0000000..5f83072
+--- /dev/null
++++ b/t/t9601/cvsroot/module/added-imported.txt,v
+@@ -0,0 +1,44 @@
++head	1.1;
++access;
++symbols
++	vtag-4:1.1.1.1
++	vbranchA:1.1.1;
++locks; strict;
++comment	@# @;
++
++
++1.1
++date	2004.02.09.15.43.15;	author kfogel;	state Exp;
++branches
++	1.1.1.1;
++next	;
++
++1.1.1.1
++date	2004.02.09.15.43.16;	author kfogel;	state Exp;
++branches;
++next	;
++
++
++desc
++@@
++
++
++1.1
++log
++@Add a file to the working copy.
++@
++text
++@Adding this file, before importing it with different contents.
++@
++
++
++1.1.1.1
++log
++@Import (vbranchA, vtag-4).
++@
++text
++@d1 1
++a1 1
++This is vtag-4 (on vbranchA) of added-then-imported.txt.
++@
++
+diff --git a/t/t9601/cvsroot/module/imported-anonymously.txt,v b/t/t9601/cvsroot/module/imported-anonymously.txt,v
+new file mode 100644
+index 0000000..55e1b0c
+--- /dev/null
++++ b/t/t9601/cvsroot/module/imported-anonymously.txt,v
+@@ -0,0 +1,42 @@
++head	1.1;
++branch	1.1.1;
++access;
++symbols
++	vtag-1:1.1.1.1;
++locks; strict;
++comment	@# @;
++
++
++1.1
++date	2004.02.09.15.43.13;	author kfogel;	state Exp;
++branches
++	1.1.1.1;
++next	;
++
++1.1.1.1
++date	2004.02.09.15.43.13;	author kfogel;	state Exp;
++branches;
++next	;
++
++
++desc
++@@
++
++
++1.1
++log
++@Initial revision
++@
++text
++@This is vtag-1 (on vbranchA) of imported-anonymously.txt.
++@
++
++
++1.1.1.1
++log
++@Import (vbranchA, vtag-1).
++@
++text
++@@
++
++
+diff --git a/t/t9601/cvsroot/module/imported-modified-imported.txt,v b/t/t9601/cvsroot/module/imported-modified-imported.txt,v
+new file mode 100644
+index 0000000..e5830ae
+--- /dev/null
++++ b/t/t9601/cvsroot/module/imported-modified-imported.txt,v
+@@ -0,0 +1,76 @@
++head	1.2;
++access;
++symbols
++	vtag-2:1.1.1.2
++	vtag-1:1.1.1.1
++	vbranchA:1.1.1;
++locks; strict;
++comment	@# @;
++
++
++1.2
++date	2004.02.09.15.43.14;	author kfogel;	state Exp;
++branches;
++next	1.1;
++
++1.1
++date	2004.02.09.15.43.13;	author kfogel;	state Exp;
++branches
++	1.1.1.1;
++next	;
++
++1.1.1.1
++date	2004.02.09.15.43.13;	author kfogel;	state Exp;
++branches;
++next	1.1.1.2;
++
++1.1.1.2
++date	2004.02.09.15.43.13;	author kfogel;	state Exp;
++branches;
++next	;
++
++
++desc
++@@
++
++
++1.2
++log
++@First regular commit, to imported-modified-imported.txt, on HEAD.
++@
++text
++@This is a modification of imported-modified-imported.txt on HEAD.
++It should supersede the version from the vendor branch.
++@
++
++
++1.1
++log
++@Initial revision
++@
++text
++@d1 2
++a2 1
++This is vtag-1 (on vbranchA) of imported-modified-imported.txt.
++@
++
++
++1.1.1.1
++log
++@Import (vbranchA, vtag-1).
++@
++text
++@@
++
++
++1.1.1.2
++log
++@Import (vbranchA, vtag-2).
++@
++text
++@d1 1
++a1 1
++This is vtag-2 (on vbranchA) of imported-modified-imported.txt.
++@
++
++
+diff --git a/t/t9601/cvsroot/module/imported-modified.txt,v b/t/t9601/cvsroot/module/imported-modified.txt,v
+new file mode 100644
+index 0000000..bbcfe44
+--- /dev/null
++++ b/t/t9601/cvsroot/module/imported-modified.txt,v
+@@ -0,0 +1,59 @@
++head	1.2;
++access;
++symbols
++	vtag-1:1.1.1.1
++	vbranchA:1.1.1;
++locks; strict;
++comment	@# @;
++
++
++1.2
++date	2004.02.09.15.43.14;	author kfogel;	state Exp;
++branches;
++next	1.1;
++
++1.1
++date	2004.02.09.15.43.13;	author kfogel;	state Exp;
++branches
++	1.1.1.1;
++next	;
++
++1.1.1.1
++date	2004.02.09.15.43.13;	author kfogel;	state Exp;
++branches;
++next	;
++
++
++desc
++@@
++
++
++1.2
++log
++@Commit on HEAD.
++@
++text
++@This is a modification of imported-modified.txt on HEAD.
++It should supersede the version from the vendor branch.
++@
++
++
++1.1
++log
++@Initial revision
++@
++text
++@d1 2
++a2 1
++This is vtag-1 (on vbranchA) of imported-modified.txt.
++@
++
++
++1.1.1.1
++log
++@Import (vbranchA, vtag-1).
++@
++text
++@@
++
++
+diff --git a/t/t9601/cvsroot/module/imported-once.txt,v b/t/t9601/cvsroot/module/imported-once.txt,v
+new file mode 100644
+index 0000000..c5dd82b
+--- /dev/null
++++ b/t/t9601/cvsroot/module/imported-once.txt,v
+@@ -0,0 +1,43 @@
++head	1.1;
++branch	1.1.1;
++access;
++symbols
++	vtag-1:1.1.1.1
++	vbranchA:1.1.1;
++locks; strict;
++comment	@# @;
++
++
++1.1
++date	2004.02.09.15.43.13;	author kfogel;	state Exp;
++branches
++	1.1.1.1;
++next	;
++
++1.1.1.1
++date	2004.02.09.15.43.13;	author kfogel;	state Exp;
++branches;
++next	;
++
++
++desc
++@@
++
++
++1.1
++log
++@Initial revision
++@
++text
++@This is vtag-1 (on vbranchA) of imported-once.txt.
++@
++
++
++1.1.1.1
++log
++@Import (vbranchA, vtag-1).
++@
++text
++@@
++
++
+diff --git a/t/t9601/cvsroot/module/imported-twice.txt,v b/t/t9601/cvsroot/module/imported-twice.txt,v
+new file mode 100644
+index 0000000..d1f3f1b
+--- /dev/null
++++ b/t/t9601/cvsroot/module/imported-twice.txt,v
+@@ -0,0 +1,60 @@
++head	1.1;
++branch	1.1.1;
++access;
++symbols
++	vtag-2:1.1.1.2
++	vtag-1:1.1.1.1
++	vbranchA:1.1.1;
++locks; strict;
++comment	@# @;
++
++
++1.1
++date	2004.02.09.15.43.13;	author kfogel;	state Exp;
++branches
++	1.1.1.1;
++next	;
++
++1.1.1.1
++date	2004.02.09.15.43.13;	author kfogel;	state Exp;
++branches;
++next	1.1.1.2;
++
++1.1.1.2
++date	2004.02.09.15.43.13;	author kfogel;	state Exp;
++branches;
++next	;
++
++
++desc
++@@
++
++
++1.1
++log
++@Initial revision
++@
++text
++@This is vtag-1 (on vbranchA) of imported-twice.txt.
++@
++
++
++1.1.1.1
++log
++@Import (vbranchA, vtag-1).
++@
++text
++@@
++
++
++1.1.1.2
++log
++@Import (vbranchA, vtag-2).
++@
++text
++@d1 1
++a1 1
++This is vtag-2 (on vbranchA) of imported-twice.txt.
++@
++
++
 -- 
 1.6.1.3
