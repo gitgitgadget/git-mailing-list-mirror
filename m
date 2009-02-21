@@ -1,72 +1,55 @@
-From: Marius Storm-Olsen <git@storm-olsen.com>
-Subject: [PATCH] Add bare repository indicator for __git_ps1
-Date: Sat, 21 Feb 2009 15:48:43 +0100
-Message-ID: <1235227723-11471-1-git-send-email-git@storm-olsen.com>
-Cc: git@vger.kernel.org, Marius Storm-Olsen <git@storm-olsen.com>
+From: Marius Storm-Olsen <marius@storm-olsen.com>
+Subject: Re: [PATCH] Add bare repository indicator for __git_ps1
+Date: Sat, 21 Feb 2009 15:53:07 +0100
+Message-ID: <49A01553.9020608@storm-olsen.com>
+References: <1235227723-11471-1-git-send-email-git@storm-olsen.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Sat Feb 21 15:53:06 2009
+X-From: git-owner@vger.kernel.org Sat Feb 21 15:54:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LatDX-0002Qo-47
-	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 15:52:35 +0100
+	id 1LatFa-0003MB-EP
+	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 15:54:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752967AbZBUOvF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Feb 2009 09:51:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752219AbZBUOvE
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Feb 2009 09:51:04 -0500
-Received: from hoat.troll.no ([62.70.27.150]:57430 "EHLO hoat.troll.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752260AbZBUOvD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Feb 2009 09:51:03 -0500
-Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id 8C22E211B4;
-	Sat, 21 Feb 2009 15:50:56 +0100 (CET)
-Received: from localhost.localdomain (unknown [172.24.90.96])
-	by hoat.troll.no (Postfix) with ESMTP id 75FD421040;
-	Sat, 21 Feb 2009 15:50:56 +0100 (CET)
-X-Mailer: git-send-email 1.6.2.rc0.5.gf970
+	id S1753728AbZBUOxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Feb 2009 09:53:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753657AbZBUOxK
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Feb 2009 09:53:10 -0500
+Received: from fk-out-0910.google.com ([209.85.128.185]:41462 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753532AbZBUOxI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Feb 2009 09:53:08 -0500
+Received: by fk-out-0910.google.com with SMTP id f33so1156511fkf.5
+        for <git@vger.kernel.org>; Sat, 21 Feb 2009 06:53:06 -0800 (PST)
+Received: by 10.223.126.66 with SMTP id b2mr3083332fas.18.1235227986347;
+        Sat, 21 Feb 2009 06:53:06 -0800 (PST)
+Received: from ?192.168.0.196? (cm-84.215.55.206.getinternet.no [84.215.55.206])
+        by mx.google.com with ESMTPS id f3sm3519910nfh.5.2009.02.21.06.53.05
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 21 Feb 2009 06:53:05 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.8.1.19) Gecko/20081209 Thunderbird/2.0.0.19 ThunderGit/0.1a Mnenhy/0.7.5.666
+In-Reply-To: <1235227723-11471-1-git-send-email-git@storm-olsen.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110958>
 
-Prefixes the branch name with "BARE:" if you're in a
-bare repository.
+Marius Storm-Olsen said the following on 21.02.2009 15:48:
+> Prefixes the branch name with "BARE:" if you're in a
+> bare repository.
+> 
+> Signed-off-by: Marius Storm-Olsen <git@storm-olsen.com>
+> ---
+>  Ok, had some free cycles, so here's fixed up version.
+>  Based on next this time
 
-Signed-off-by: Marius Storm-Olsen <git@storm-olsen.com>
----
- Ok, had some free cycles, so here's fixed up version.
- Based on next this time
+*grmbl* This is v2 of the patch, of course.
 
- contrib/completion/git-completion.bash |   10 ++++++++--
- 1 files changed, 8 insertions(+), 2 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index ec587d2..e585d40 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -135,11 +135,17 @@ __git_ps1 ()
- 			fi
- 		fi
- 
-+		local c
-+
-+		if [ "true" = "$(git config --bool core.bare 2>/dev/null)" ]; then
-+			c="BARE:"
-+		fi
-+
- 		if [ -n "$b" ]; then
- 			if [ -n "${1-}" ]; then
--				printf "$1" "${b##refs/heads/}$w$i$r"
-+				printf "$1" "$c${b##refs/heads/}$w$i$r"
- 			else
--				printf " (%s)" "${b##refs/heads/}$w$i$r"
-+				printf " (%s)" "$c${b##refs/heads/}$w$i$r"
- 			fi
- 		fi
- 	fi
--- 
-1.6.2.rc1.20.g8c5b
+--
+.marius
