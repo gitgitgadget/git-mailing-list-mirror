@@ -1,64 +1,71 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH B v4 0/5] git config: reorganization
-Date: Sat, 21 Feb 2009 02:53:16 +0200
-Message-ID: <94a0d4530902201653p694bcad6wd79579536f285571@mail.gmail.com>
-References: <1235177369-2727-1-git-send-email-felipe.contreras@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Subject: [PATCH A v4 0/5] git config: cleanups
+Date: Sat, 21 Feb 2009 02:48:52 +0200
+Message-ID: <1235177337-2532-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Junio C Hamano <gitster@pobox.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 21 01:54:53 2009
+X-From: git-owner@vger.kernel.org Sat Feb 21 01:57:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lag8m-00087K-0w
-	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 01:54:48 +0100
+	id 1LagBO-0000O7-JY
+	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 01:57:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753578AbZBUAxU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2009 19:53:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753780AbZBUAxT
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 19:53:19 -0500
-Received: from fg-out-1718.google.com ([72.14.220.153]:52763 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753573AbZBUAxS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2009 19:53:18 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so2131969fgg.17
-        for <git@vger.kernel.org>; Fri, 20 Feb 2009 16:53:16 -0800 (PST)
+	id S1754513AbZBUA4H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 19:56:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754528AbZBUA4E
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 19:56:04 -0500
+Received: from mail-bw0-f161.google.com ([209.85.218.161]:44761 "EHLO
+	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754414AbZBUA4D (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2009 19:56:03 -0500
+Received: by bwz5 with SMTP id 5so3163722bwz.13
+        for <git@vger.kernel.org>; Fri, 20 Feb 2009 16:56:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=4426o57AXpf2DO2pISvfTX+qIEKbJd2cJceerT0jlZI=;
-        b=RUrWwyqA+fD7fclMS55RK1D84GzmASDVLQzsOOW3b+Bxn9pPUOMaR2X6Ck9MOplG1u
-         8ctDclOgpjDw1qg/iQ3jv26H/9M3I2NgdobKs5wNzCJ4DJoGVI89WmrKlz9Zz6T13oUJ
-         ccqo9d1tZPLVjHAuwgYKdE6yqzw5ghVnYjgYc=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=yzC/DdoYS9nepTLLrUifS0k7wV3YwnbDcx7Rpkr0Q7U=;
+        b=G3RRGdyVjOCBZvPC3puhzSyf3jxXW+5HnMrK2FTlOBxw5RRiGGLUwOEe6uRdpOnPms
+         T3ik5OLjywwJjwEfVjAocnEB2myGVnPhY9CmnIOEyfHFQP9mXHImHxq9Ulka4wbVsAFN
+         Jt/37zCVtvTsSwGYMbAgpMgJmkNUR6Fidqo0A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=H/Xo/q7mJWJHnNulPiOvrQevPbWWw+Du0O+ypgNRaN2xst7m9t7RHL3Mh+9YKkUwhc
-         rfHqe1M/sySO/0SaGf6vOqVoFnCgYnCTPV5AXw9F3Nh8u9Qc5t1Ttnuo8nYUxt8c4FMo
-         kGQnGwQU6AteESwXZ9lrJWDFnluHigp7HDuyY=
-Received: by 10.86.70.3 with SMTP id s3mr1394892fga.78.1235177596739; Fri, 20 
-	Feb 2009 16:53:16 -0800 (PST)
-In-Reply-To: <1235177369-2727-1-git-send-email-felipe.contreras@gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=iu3s4yqyLCA3o8rcnbrDGnSzgmdHp8mgxVMT9wTbCk1dyxmrguZ9/uajDEpGObzS/T
+         4GKuxF3qxXTsP9l9dQXPcJqomKNQUE3u0QMBnk+qISCoO4AS+hKoChpJrw9QvluhMGQZ
+         PBCT0j72hhA1ggO/1xUT0/h0S9F/bbXe48bh0=
+Received: by 10.181.154.16 with SMTP id g16mr470538bko.179.1235177340545;
+        Fri, 20 Feb 2009 16:49:00 -0800 (PST)
+Received: from localhost (a91-153-251-222.elisa-laajakaista.fi [91.153.251.222])
+        by mx.google.com with ESMTPS id e17sm5768714fke.28.2009.02.20.16.48.59
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 20 Feb 2009 16:49:00 -0800 (PST)
+X-Mailer: git-send-email 1.6.1.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110919>
 
-On Sat, Feb 21, 2009 at 2:49 AM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> This patch series is the first of a two parts reorganization for more
-> maintainability and user friendliness.
+This patch series is the first of a two parts reorganization for more
+maintainability and user friendliness. Nonetheless stands on its own can be
+applied without the second part.
 
-Err, the second.
+There are essentially no functional changes.
 
--- 
-Felipe Contreras
+Felipe Contreras (4):
+  git config: codestyle cleanups
+  git_config(): not having a per-repo config file is not an error
+  git config: trivial rename in preparation for parseopt
+  git config: reorganize get_color*
+
+Johannes Schindelin (1):
+  git config: trivial cleanup for editor action
+
+ builtin-config.c |  108 ++++++++++++++++++++---------------------------------
+ config.c         |   17 ++++++--
+ 2 files changed, 54 insertions(+), 71 deletions(-)
