@@ -1,79 +1,65 @@
-From: bill lam <cbill.lam@gmail.com>
-Subject: Re: pre-commit hook
-Date: Sat, 21 Feb 2009 11:57:48 +0800
-Message-ID: <20090221035748.GC7409@b2j>
-References: <20090220091127.GA7415@b2j> <7v63j5t6r3.fsf@gitster.siamese.dyndns.org>
+From: Kris Shannon <kris@shannon.id.au>
+Subject: Re: merge smart enough to adapt to renames?
+Date: Sat, 21 Feb 2009 15:48:01 +1100
+Message-ID: <e51f4f550902202048g9a210f0t8fefaee4d8376f6c@mail.gmail.com>
+References: <81bfc67a0902182212h578e677ck6029c56cb86f7bce@mail.gmail.com>
+	 <slrngpqquq.j03.sitaramc@sitaramc.homelinux.net>
+	 <81bfc67a0902191158x5f0f92d1p7e4af2f9cda50a12@mail.gmail.com>
+	 <slrngprunn.hbo.sitaramc@sitaramc.homelinux.net>
+	 <81bfc67a0902191817u11361d0bw1f2215a53e284f8f@mail.gmail.com>
+	 <499E5A9C.6090900@dawes.za.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 21 05:00:08 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Caleb Cushing <xenoterracide@gmail.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>, git@vger.kernel.org
+To: Rogan Dawes <lists@dawes.za.net>
+X-From: git-owner@vger.kernel.org Sat Feb 21 05:49:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Laj24-0006T2-3A
-	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 05:00:04 +0100
+	id 1Lajnx-0007Uc-T4
+	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 05:49:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752803AbZBUD55 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Feb 2009 22:57:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752726AbZBUD55
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 22:57:57 -0500
-Received: from ti-out-0910.google.com ([209.85.142.185]:48741 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752201AbZBUD54 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2009 22:57:56 -0500
-Received: by ti-out-0910.google.com with SMTP id d10so820770tib.23
-        for <git@vger.kernel.org>; Fri, 20 Feb 2009 19:57:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mail-followup-to:references:mime-version:content-type
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=cZi4n74qrxqa74/ZXzG7XUrpfkl54t8DFgDBc19bqK8=;
-        b=l1d5V+vRyipD64T5e1DduCf1jnza4F4t2I2/WYHhh4p2lu9CAPUqcc+UUu1a/gBQST
-         aBoEHOydgO6iMUXez3QdP566V7L2bfC8BIp8q8fIt1HAFt7US30Qz7bm3cxTlxXU8FS8
-         HL8tROX+jw8SlMIThXJa/2TzVQFFkp2rSDKqQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        b=ROgOhkG5tRZvrXmww7mWNY2TBJJ4I4Cgd+0WnbeF/WcPlWqY58xMEo2wXgVRUqCBkd
-         Cy4XAV4qKG6sKDEd+tO/Uj7KcuJE8fw8Kr2xxfApwYRIfnDuDJhFnjF2kReEBV3ViJJR
-         vEXt5z4RcOFNe8kN5A03OmhS2+SecF8fK5U2Y=
-Received: by 10.110.84.3 with SMTP id h3mr2121830tib.5.1235188674586;
-        Fri, 20 Feb 2009 19:57:54 -0800 (PST)
-Received: from localhost (pcd431208.netvigator.com [203.218.221.208])
-        by mx.google.com with ESMTPS id a14sm2541917tia.7.2009.02.20.19.57.51
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 20 Feb 2009 19:57:53 -0800 (PST)
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7v63j5t6r3.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.19 (2009-01-27)
+	id S1752003AbZBUEsG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 23:48:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751214AbZBUEsF
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 23:48:05 -0500
+Received: from wf-out-1314.google.com ([209.85.200.173]:50361 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751032AbZBUEsD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2009 23:48:03 -0500
+Received: by wf-out-1314.google.com with SMTP id 28so1530965wfa.4
+        for <git@vger.kernel.org>; Fri, 20 Feb 2009 20:48:01 -0800 (PST)
+Received: by 10.142.223.4 with SMTP id v4mr773190wfg.11.1235191681597; Fri, 20 
+	Feb 2009 20:48:01 -0800 (PST)
+In-Reply-To: <499E5A9C.6090900@dawes.za.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110925>
 
-On Fri, 20 Feb 2009, Junio C Hamano wrote:
->     if git-rev-parse --verify HEAD 2>/dev/null
+Rogan Dawes wrote:
+> It seems to me that git is smart enough to figure out where contents get
+> moved to, once. Of course, if you have conflicting moves in the same
+> repo, git's automation falls down. So, if you need to move the "same"
+> file in different repositories to different places, you need to do it
+> via an intermediate repo that will be able to "remember" which movement
+> you chose.
 
-Isn't git-rev-parse (and all git-??? ) was deprecated in 1.6.2 ?
+You don't need a whole different repo,  branches are good enough.
 
---=20
-regards,
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
-GPG key 1024D/4434BAB3 2008-08-24
-gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
-=E5=94=90=E8=A9=A9311 =E7=84=A1=E5=90=8D=E6=B0=8F  =E9=9B=9C=E8=A9=A9
-    =E7=9B=A1=E5=AF=92=E9=A3=9F=E9=9B=A8=E8=8D=89=E8=90=8B=E8=90=8B  =E8=
-=91=97=E9=BA=A5=E8=8B=97=E9=A2=A8=E6=9F=B3=E6=98=A0=E5=A0=A4  =E7=AD=89=
-=E6=98=AF=E6=9C=89=E5=AE=B6=E6=AD=B8=E6=9C=AA=E5=BE=97  =E6=9D=9C=E9=B5=
-=91=E4=BC=91=E5=90=91=E8=80=B3=E9=82=8A=E5=95=BC
+git checkout gentoo-integration
+git pull gentoo
+
+git checkout sunrise-integration
+git pull sunrise
+
+git checkout master
+git merge gentoo
+git merge sunrise
+
+The integration branches can remember your local changes to
+the remotes (like the move of packages.mask)
