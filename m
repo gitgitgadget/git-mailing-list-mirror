@@ -1,55 +1,50 @@
-From: Marius Storm-Olsen <marius@storm-olsen.com>
-Subject: Re: [PATCH] Add bare repository indicator for __git_ps1
-Date: Sat, 21 Feb 2009 15:53:07 +0100
-Message-ID: <49A01553.9020608@storm-olsen.com>
-References: <1235227723-11471-1-git-send-email-git@storm-olsen.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Sat Feb 21 15:54:50 2009
+From: ferry.huberts@pelagic.nl
+Subject: [EGIT] [PATCH 0/2] Make sure to setup a clone the same as git-clone does
+Date: Sat, 21 Feb 2009 16:17:46 +0100
+Message-ID: <cover.1235228532.git.ferry.huberts@pelagic.nl>
+Cc: Ferry Huberts <ferry.huberts@pelagic.nl>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 21 16:20:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LatFa-0003MB-EP
-	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 15:54:42 +0100
+	id 1Latdv-0002Vg-LH
+	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 16:19:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753728AbZBUOxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Feb 2009 09:53:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753657AbZBUOxK
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Feb 2009 09:53:10 -0500
-Received: from fk-out-0910.google.com ([209.85.128.185]:41462 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753532AbZBUOxI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Feb 2009 09:53:08 -0500
-Received: by fk-out-0910.google.com with SMTP id f33so1156511fkf.5
-        for <git@vger.kernel.org>; Sat, 21 Feb 2009 06:53:06 -0800 (PST)
-Received: by 10.223.126.66 with SMTP id b2mr3083332fas.18.1235227986347;
-        Sat, 21 Feb 2009 06:53:06 -0800 (PST)
-Received: from ?192.168.0.196? (cm-84.215.55.206.getinternet.no [84.215.55.206])
-        by mx.google.com with ESMTPS id f3sm3519910nfh.5.2009.02.21.06.53.05
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 21 Feb 2009 06:53:05 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.8.1.19) Gecko/20081209 Thunderbird/2.0.0.19 ThunderGit/0.1a Mnenhy/0.7.5.666
-In-Reply-To: <1235227723-11471-1-git-send-email-git@storm-olsen.com>
+	id S1753196AbZBUPR7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Feb 2009 10:17:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753205AbZBUPR5
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Feb 2009 10:17:57 -0500
+Received: from hupie.xs4all.nl ([82.95.241.251]:55607 "EHLO
+	Lighthouse.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752183AbZBUPRz (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Feb 2009 10:17:55 -0500
+Received: from localhost.localdomain (unknown [192.168.0.51])
+	by Lighthouse.internal.Hupie.com (Postfix) with ESMTP id 1F85758BDBA;
+	Sat, 21 Feb 2009 16:17:53 +0100 (CET)
+X-Mailer: git-send-email 1.6.0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110959>
 
-Marius Storm-Olsen said the following on 21.02.2009 15:48:
-> Prefixes the branch name with "BARE:" if you're in a
-> bare repository.
-> 
-> Signed-off-by: Marius Storm-Olsen <git@storm-olsen.com>
-> ---
->  Ok, had some free cycles, so here's fixed up version.
->  Based on next this time
+From: Ferry Huberts <ferry.huberts@pelagic.nl>
 
-*grmbl* This is v2 of the patch, of course.
+Currently the plugin does not setup core.bare=false and also does not setup
+the default (pull) remote branch for master, two things that git-clone does
+do.
 
---
-.marius
+The first ommision is not a problem, but seconds is. When using git-clone
+it by default sets up the master to pull from the remote master.
+
+This patch series fixes both issues and makes the plugin setup a cloned
+repository exactly the same as git-clone.
+
+Ferry Huberts (2):
+  Make sure to set core.bare to false when cloning
+  Make sure to set up the default (pull) remote branch for master
+
+ .../org/spearce/egit/core/op/CloneOperation.java   |    9 +++++++++
+ 1 files changed, 9 insertions(+), 0 deletions(-)
