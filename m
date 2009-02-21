@@ -1,63 +1,110 @@
-From: walt <w41ter@gmail.com>
-Subject: Is this a git-bisect bug?
-Date: Sat, 21 Feb 2009 09:07:28 -0800
-Message-ID: <gnpccl$l69$1@ger.gmane.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2.1 resend] rev-list: estimate number of bisection step left
+Date: Sat, 21 Feb 2009 18:12:55 +0100
+Message-ID: <200902211812.56593.chriscool@tuxfamily.org>
+References: <20090221092601.45691c3e.chriscool@tuxfamily.org> <7vy6w0qgwr.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 21 18:09:17 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Ingo Molnar <mingo@elte.hu>,
+	John Tapsell <johnflux@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 21 18:15:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LavLn-00044I-Aw
-	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 18:09:15 +0100
+	id 1LavRZ-0005os-3A
+	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 18:15:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752021AbZBURHq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Feb 2009 12:07:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751828AbZBURHq
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Feb 2009 12:07:46 -0500
-Received: from main.gmane.org ([80.91.229.2]:49803 "EHLO ciao.gmane.org"
+	id S1752845AbZBURNo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Feb 2009 12:13:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752614AbZBURNo
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Feb 2009 12:13:44 -0500
+Received: from smtp4-g21.free.fr ([212.27.42.4]:57538 "EHLO smtp4-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751571AbZBURHp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Feb 2009 12:07:45 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LavKH-0003vJ-Kv
-	for git@vger.kernel.org; Sat, 21 Feb 2009 17:07:41 +0000
-Received: from adsl-69-234-214-52.dsl.irvnca.pacbell.net ([69.234.214.52])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 21 Feb 2009 17:07:41 +0000
-Received: from w41ter by adsl-69-234-214-52.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 21 Feb 2009 17:07:41 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: adsl-69-234-214-52.dsl.irvnca.pacbell.net
-User-Agent: Thunderbird/3.0a2pre (X11; 2009022105)
+	id S1752479AbZBURNn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Feb 2009 12:13:43 -0500
+Received: from smtp4-g21.free.fr (localhost [127.0.0.1])
+	by smtp4-g21.free.fr (Postfix) with ESMTP id C0F864C81E4;
+	Sat, 21 Feb 2009 18:13:34 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp4-g21.free.fr (Postfix) with ESMTP id 899884C81C3;
+	Sat, 21 Feb 2009 18:13:31 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vy6w0qgwr.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110966>
 
-I'm using the current git.git to bisect a bug in Linus.git.
+Le samedi 21 f=E9vrier 2009, Junio C Hamano a =E9crit :
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> > Here is a table to help analyse what should be the best estimate fo=
+r
+> > the number of bisect steps left.
+> > ...
+> > So the algorithm used in this patch calculates 2^n and x, and then
+> > choose between returning n - 1 and n.
+>
+> Two dumb questions about the math (because I suck at math).
+>
+>  - Do you mean by "best estimate" the best case scenario, or somethin=
+g
+>    else (perhaps "the most accurate")?
 
-I got this far and then ran into trouble:
-good 2.6.29-rc5-00094-gc951aa6
-bad  2.6.29-rc5-00112-g3501033
+I mean the number of steps that has the highest frequency of occurrence=
+, if=20
+we suppose that:
 
-A glance at git log will show that those two commits were
-both from Feb 17 with only one other commit between them.
+1) we are in the linear case, and that
+2) the first bad revision has an equal chance of being any of the unkno=
+wn=20
+(Ux) and the bad (B) revisions.
 
-So, why does this happen?:
+>  - Is computing based on linear history a good enough approximation?
 
-$git bisect start 3501033 c951aa6
-Bisecting: 8 revisions left to test after this
-be716615fe596ee117292dc615e95f707fb67fd1] x86, vm86: fix preemption bug
+I think so. Before I sent patch v1, I tested it on some non linear case=
+s and=20
+it worked quite well in those cases as well. I think the bisect algorit=
+hm=20
+tries as best as possible to remove half the revisions from the set of =
+the=20
+possible first bad revisions and this means that all the algorithms bas=
+ed=20
+on log2(all) should be quite good in any case.
 
-git log shows that commit is from Jan 13, way back in 2.6.29-rc3.
-Can anyone reproduce/explain this?
+> I am not advocating to make things more precise nor saying your math =
+is
+> flawed.  I'd prefer simpler code for things like this --- after all, =
+my
+> understanding of this whole exercise is to give "this is more or less=
+ the
+> number you should expect" ballpack figure and nothing more (correct m=
+e if
+> that is not what you are aiming for).
 
-Thanks!
+Yes, that's what I am aiming for. And I thought that my first patch was=
+=20
+quite good at doing that, so when you said that "at the very low end th=
+e=20
+estimate is a bit too optimistic", I had another look and found out tha=
+t=20
+for "all =3D=3D 3" indeed the algorithm gave 0 when 1 was better, becau=
+se 1=20
+should happen on average 2 times out of 3.
+
+So I came up with the algorithm in v2 which is better because it should=
+=20
+always give the best estimate (supposing 1) and 2)). It's also not much=
+=20
+more complex compared to v1 or anything based on log2(all), so I don't =
+see=20
+any reason to use something else.
+
+Regards,
+Christian.
