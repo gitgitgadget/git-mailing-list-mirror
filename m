@@ -1,109 +1,121 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [tig PATCH] Predefined external command: git commit
-Date: Sat, 21 Feb 2009 01:28:41 +0100
-Message-ID: <1235176121-17483-1-git-send-email-giuseppe.bilotta@gmail.com>
-Cc: git@vger.kernel.org, Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Sat Feb 21 01:37:54 2009
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH A v4 3/5] git_config(): not having a per-repo config file is not an error
+Date: Sat, 21 Feb 2009 02:48:55 +0200
+Message-ID: <1235177337-2532-4-git-send-email-felipe.contreras@gmail.com>
+References: <1235177337-2532-1-git-send-email-felipe.contreras@gmail.com>
+ <1235177337-2532-2-git-send-email-felipe.contreras@gmail.com>
+ <1235177337-2532-3-git-send-email-felipe.contreras@gmail.com>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 21 01:50:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LafsB-0003ez-LZ
-	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 01:37:40 +0100
+	id 1Lag4m-000784-BZ
+	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 01:50:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753782AbZBUAgM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2009 19:36:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753944AbZBUAgK
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 19:36:10 -0500
-Received: from mail-bw0-f161.google.com ([209.85.218.161]:39085 "EHLO
+	id S1754119AbZBUAtK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 19:49:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753241AbZBUAtJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 19:49:09 -0500
+Received: from mail-bw0-f161.google.com ([209.85.218.161]:42984 "EHLO
 	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753531AbZBUAgJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2009 19:36:09 -0500
-Received: by bwz5 with SMTP id 5so3155178bwz.13
-        for <git@vger.kernel.org>; Fri, 20 Feb 2009 16:36:07 -0800 (PST)
+	with ESMTP id S1752851AbZBUAtH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2009 19:49:07 -0500
+Received: by mail-bw0-f161.google.com with SMTP id 5so3160824bwz.13
+        for <git@vger.kernel.org>; Fri, 20 Feb 2009 16:49:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=+zqUJpoPLW5HIjndjnHFtkAfn8jzNzCgGnkBolun3d8=;
-        b=TJH7s8k7NQMBpXBU16rPv3CMC/Bqmv7QWh17z09GBm7Yp4Mcy6SPb7+DVjjmXjvt1q
-         gLaMrknrp6MEELYjG2oRnBh7Ut4Qa0q+4x2nlYgpKhSh5VksWHGDA0tvQAzaB9uhncnH
-         XoJbiAn+YMsF31RDLg7wHdQ7e0pNst1tHmxjw=
+         :message-id:x-mailer:in-reply-to:references;
+        bh=4/ENwKB1luX8WguMVw/j6Z+LVmBgqtvchdQV0HX6P5c=;
+        b=f1F2/7nLdmkohuAYEOHHkV/3F0DO4C+8wgG0hCWZOwZ8JmKhYoQxXTTQa/80QlBs5w
+         6OMs3gyi3mrx5kmROtruaji2U3iihAYQArDwba+UPXNYMQRNfHxMepPBXxBCq//o4q42
+         ffXxK0AnlZaTa7wHWuDVhPuKqFHPwyU6PgarU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=qiTUfmZRxC7x7jzNf8KwP3Et7Z98fpf9oWcgPAM2X0fffSlGAcW2p2wDRp+k8Ue9QH
-         r7Oh8OBeniUvbd9NNAdJdeM2PH4pJLKSwFjfx0uIXkKCHbtTcK2zKzSD4jU60+dejgtU
-         C2CwQK90GPDF/x3hDtAjgK3uPfWxZseoW3zGc=
-Received: by 10.103.238.4 with SMTP id p4mr2125457mur.68.1235176125396;
-        Fri, 20 Feb 2009 16:28:45 -0800 (PST)
-Received: from localhost (host-78-13-59-64.cust-adsl.tiscali.it [78.13.59.64])
-        by mx.google.com with ESMTPS id e10sm4668877muf.11.2009.02.20.16.28.43
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=tLfZuQPXNWL0KCvnCocuTKzo0iCIt1SJvbkkmJ2qH4LlnvDyCgFo5d2Mo7HNb996mM
+         Byqbk4zcR2P9qseENz48oMzfNQ3FIMOLa+WfYgIHkJwfvAIu8GPTMvOYOVosLcRb7FxV
+         qQnnr4DXfnI7QWG4RErzpBZT4VaY4GhwmBpZw=
+Received: by 10.180.235.10 with SMTP id i10mr478900bkh.58.1235177346680;
+        Fri, 20 Feb 2009 16:49:06 -0800 (PST)
+Received: from localhost (a91-153-251-222.elisa-laajakaista.fi [91.153.251.222])
+        by mx.google.com with ESMTPS id h2sm5720719fkh.29.2009.02.20.16.49.05
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 20 Feb 2009 16:28:44 -0800 (PST)
-X-Mailer: git-send-email 1.6.2.rc1.258.g1d592.dirty
+        Fri, 20 Feb 2009 16:49:06 -0800 (PST)
+X-Mailer: git-send-email 1.6.1.3
+In-Reply-To: <1235177337-2532-3-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110909>
 
-Status view allows management of the stage area, and the user is likely
-to issue a commit as soon as (s)he's satisfied with the result. Mapping
-'git commit' to the 'C' key in status view makes this straightforward
-and allows a very streamlined workflow from within git.
+Currently git_config() returns an error if there is no repo config file
+available (cwd is not a git repo); it will correctly parse the system
+and global config files, but still return an error.
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+It doesn't affect anything else since almost nobody is checking for the
+return code (with the exception of 'git remote update').
+
+A reorganization in 'git config' would benefit from being able to
+properly detect errors in git_config() without the noise generated when
+cwd is not a git repo.
+
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
+ config.c |   17 +++++++++++++----
+ 1 files changed, 13 insertions(+), 4 deletions(-)
 
-It might make sense to map 'A' to 'git commit --amend', too, even though
-that key is currently taken by author display toggle.
-
- manual.txt |    9 +++++----
- tig.c      |    2 ++
- 2 files changed, 7 insertions(+), 4 deletions(-)
-
-diff --git a/manual.txt b/manual.txt
-index 74fa3f8..104989f 100644
---- a/manual.txt
-+++ b/manual.txt
-@@ -449,11 +449,12 @@ a script or program. They are bound to keys and use information from the
- current browsing state, such as the current commit ID. Tig comes with
- the following built-in external commands:
+diff --git a/config.c b/config.c
+index 7dc1b0f..68ce519 100644
+--- a/config.c
++++ b/config.c
+@@ -649,28 +649,37 @@ int git_config_global(void)
  
--`-------`--------------------------------------------------------------------
--Key	Action
-+`-------`-------`------------------------------------------------------------
-+Keymap	Key	Action
- -----------------------------------------------------------------------------
--C	git cherry-pick %(commit)
--G	git gc
-+MAIN	C	git cherry-pick %(commit)
-+STATUS	C	git commit
-+GENERIC	G	git gc
- -----------------------------------------------------------------------------
- 
- [[refspec]]
-diff --git a/tig.c b/tig.c
-index 9349f69..c22f271 100644
---- a/tig.c
-+++ b/tig.c
-@@ -1365,6 +1365,7 @@ static void
- add_builtin_run_requests(void)
+ int git_config(config_fn_t fn, void *data)
  {
- 	const char *cherry_pick[] = { "git", "cherry-pick", "%(commit)", NULL };
-+	const char *commit[] = { "git", "commit", NULL };
- 	const char *gc[] = { "git", "gc", NULL };
- 	struct {
- 		enum keymap keymap;
-@@ -1373,6 +1374,7 @@ add_builtin_run_requests(void)
- 		const char **argv;
- 	} reqs[] = {
- 		{ KEYMAP_MAIN,	  'C', ARRAY_SIZE(cherry_pick) - 1, cherry_pick },
-+		{ KEYMAP_STATUS,  'C', ARRAY_SIZE(commit) - 1, commit },
- 		{ KEYMAP_GENERIC, 'G', ARRAY_SIZE(gc) - 1, gc },
- 	};
- 	int i;
+-	int ret = 0;
++	int ret = 0, found = 0;
+ 	char *repo_config = NULL;
+ 	const char *home = NULL;
+ 
+ 	/* Setting $GIT_CONFIG makes git read _only_ the given config file. */
+ 	if (config_exclusive_filename)
+ 		return git_config_from_file(fn, config_exclusive_filename, data);
+-	if (git_config_system() && !access(git_etc_gitconfig(), R_OK))
++	if (git_config_system() && !access(git_etc_gitconfig(), R_OK)) {
+ 		ret += git_config_from_file(fn, git_etc_gitconfig(),
+ 					    data);
++		found += 1;
++	}
+ 
+ 	home = getenv("HOME");
+ 	if (git_config_global() && home) {
+ 		char *user_config = xstrdup(mkpath("%s/.gitconfig", home));
+-		if (!access(user_config, R_OK))
++		if (!access(user_config, R_OK)) {
+ 			ret += git_config_from_file(fn, user_config, data);
++			found += 1;
++		}
+ 		free(user_config);
+ 	}
+ 
+ 	repo_config = git_pathdup("config");
+-	ret += git_config_from_file(fn, repo_config, data);
++	if (!access(repo_config, R_OK)) {
++		ret += git_config_from_file(fn, repo_config, data);
++		found += 1;
++	}
+ 	free(repo_config);
++	if (found == 0)
++		return -1;
+ 	return ret;
+ }
+ 
 -- 
-1.6.2.rc1.258.g1d592.dirty
+1.6.1.3
