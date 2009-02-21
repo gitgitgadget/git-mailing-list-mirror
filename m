@@ -1,65 +1,79 @@
-From: Kris Shannon <kris@shannon.id.au>
-Subject: Re: merge smart enough to adapt to renames?
-Date: Sat, 21 Feb 2009 15:48:01 +1100
-Message-ID: <e51f4f550902202048g9a210f0t8fefaee4d8376f6c@mail.gmail.com>
-References: <81bfc67a0902182212h578e677ck6029c56cb86f7bce@mail.gmail.com>
-	 <slrngpqquq.j03.sitaramc@sitaramc.homelinux.net>
-	 <81bfc67a0902191158x5f0f92d1p7e4af2f9cda50a12@mail.gmail.com>
-	 <slrngprunn.hbo.sitaramc@sitaramc.homelinux.net>
-	 <81bfc67a0902191817u11361d0bw1f2215a53e284f8f@mail.gmail.com>
-	 <499E5A9C.6090900@dawes.za.net>
+From: Tim Visher <tim.visher@gmail.com>
+Subject: Re: Best CI Server for Git?
+Date: Fri, 20 Feb 2009 23:59:19 -0500
+Message-ID: <c115fd3c0902202059j3dfa3061w1c99626a35c69ca5@mail.gmail.com>
+References: <c115fd3c0902021258i61a04f74u481ba66c645fe8f5@mail.gmail.com>
+	 <1c5969370902021642v4e8d93djd22d5caa4aa9d1a9@mail.gmail.com>
+	 <c115fd3c0902041123j4a16d666r6d1fbb9917184b2a@mail.gmail.com>
+	 <c115fd3c0902180847p8addb28p485618322d0e5806@mail.gmail.com>
+	 <ae63f8b50902200215k5aeac468n1300597ef1830736@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Caleb Cushing <xenoterracide@gmail.com>,
-	Sitaram Chamarty <sitaramc@gmail.com>, git@vger.kernel.org
-To: Rogan Dawes <lists@dawes.za.net>
-X-From: git-owner@vger.kernel.org Sat Feb 21 05:49:35 2009
+Cc: git@vger.kernel.org
+To: Jean-Baptiste Quenot <jbq@caraldi.com>
+X-From: git-owner@vger.kernel.org Sat Feb 21 06:01:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lajnx-0007Uc-T4
-	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 05:49:34 +0100
+	id 1LajzD-0000w8-Te
+	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 06:01:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752003AbZBUEsG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Feb 2009 23:48:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751214AbZBUEsF
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 23:48:05 -0500
-Received: from wf-out-1314.google.com ([209.85.200.173]:50361 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751032AbZBUEsD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Feb 2009 23:48:03 -0500
-Received: by wf-out-1314.google.com with SMTP id 28so1530965wfa.4
-        for <git@vger.kernel.org>; Fri, 20 Feb 2009 20:48:01 -0800 (PST)
-Received: by 10.142.223.4 with SMTP id v4mr773190wfg.11.1235191681597; Fri, 20 
-	Feb 2009 20:48:01 -0800 (PST)
-In-Reply-To: <499E5A9C.6090900@dawes.za.net>
+	id S1752872AbZBUE7X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Feb 2009 23:59:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751197AbZBUE7X
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Feb 2009 23:59:23 -0500
+Received: from mail-bw0-f161.google.com ([209.85.218.161]:43427 "EHLO
+	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751194AbZBUE7W (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Feb 2009 23:59:22 -0500
+Received: by bwz5 with SMTP id 5so3244526bwz.13
+        for <git@vger.kernel.org>; Fri, 20 Feb 2009 20:59:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Y5h1Mpe6Ne+cY37N0a1N8Vz5sYY6YQBWxGGk4kd7nYs=;
+        b=SZ2XgvEax8z7lzd7TnoH4iLL3ISYGUNMx0WHlWeNF18YdHt/sNLrGnq1DmXLzDHdxv
+         LpGhwlfKVIgdr7kc9HndgGqYKxT6xEzLKC/EYFEVbH8XqtTf4SDx7RvlNWxWygSNLwBV
+         HoP0z0HPSPpAzjFbIBqWKUUbYXV0HP1DEk3f4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Si0QyGfKrHui/i6t0zcLDp6gjYZVi1vXdsutt3fT7/Jtygzhbw2VgL9R6gjgesL834
+         3BSGRLtjrgRqq7SZACsUVw9gwBudPyVY9KzQzuRebAMcFeDjEHA3qhHF/UKpBTwAEZ26
+         Aqw2AudwXODF0mKB4biX6WcrubPYkhnENo850=
+Received: by 10.181.192.11 with SMTP id u11mr554284bkp.50.1235192359875; Fri, 
+	20 Feb 2009 20:59:19 -0800 (PST)
+In-Reply-To: <ae63f8b50902200215k5aeac468n1300597ef1830736@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110926>
 
-Rogan Dawes wrote:
-> It seems to me that git is smart enough to figure out where contents get
-> moved to, once. Of course, if you have conflicting moves in the same
-> repo, git's automation falls down. So, if you need to move the "same"
-> file in different repositories to different places, you need to do it
-> via an intermediate repo that will be able to "remember" which movement
-> you chose.
+On Fri, Feb 20, 2009 at 5:15 AM, Jean-Baptiste Quenot <jbq@caraldi.com> wrote:
 
-You don't need a whole different repo,  branches are good enough.
+> Did you consider joining the Hudson users mailing list?
 
-git checkout gentoo-integration
-git pull gentoo
+I'm actually on it.
 
-git checkout sunrise-integration
-git pull sunrise
+> Would you be interested in testing the upcoming 0.6 version of the Git
+> plugin?
 
-git checkout master
-git merge gentoo
-git merge sunrise
+I'd be happy to.  The way I see it a CI server is nothing but icing on
+the cake so if something goes wrong with the CI server the shop
+doesn't stop.  If 0.6 solves the issues I'm encountering then I'm all
+for it.  Is it best to discuss that on the Hudson list or here?
 
-The integration branches can remember your local changes to
-the remotes (like the move of packages.mask)
+-- 
+
+In Christ,
+
+Timmy V.
+
+http://burningones.com/
+http://five.sentenc.es/ - Spend less time on e-mail
