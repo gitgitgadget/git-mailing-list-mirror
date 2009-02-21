@@ -1,86 +1,73 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git merge --abort
-Date: Sat, 21 Feb 2009 11:18:30 +0100
-Message-ID: <200902211118.32185.jnareb@gmail.com>
-References: <43d8ce650902190205yc2274c5gb8e658c8608267ff@mail.gmail.com> <m3ocwwrxtg.fsf@localhost.localdomain> <7v3ae8rvvd.fsf@gitster.siamese.dyndns.org>
+From: Heiko Voigt <git-list@hvoigt.net>
+Subject: Re: [RFC PATCH] hooks: add some defaults to support sane workflow
+ to pre-commit
+Date: Sat, 21 Feb 2009 11:56:02 +0100
+Message-ID: <499FDDC2.90502@hvoigt.net>
+References: <499EF2B6.7060103@hvoigt.net> <C95EAEB9-D520-497F-BA42-0CDCC1348340@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: Bryan Donlan <bdonlan@gmail.com>,
-	John Tapsell <johnflux@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Nanako Shiraishi <nanako3@lavabit.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 21 11:19:46 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Sat Feb 21 11:57:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LaoxV-0002k1-GH
-	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 11:19:45 +0100
+	id 1LapYB-0005I2-4U
+	for gcvg-git-2@gmane.org; Sat, 21 Feb 2009 11:57:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752523AbZBUKRF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Feb 2009 05:17:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752128AbZBUKRD
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Feb 2009 05:17:03 -0500
-Received: from fg-out-1718.google.com ([72.14.220.158]:49558 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751350AbZBUKRB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Feb 2009 05:17:01 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so2187509fgg.17
-        for <git@vger.kernel.org>; Sat, 21 Feb 2009 02:16:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=ANmldFxhIE3CUDbMfAn0wi5kQvTCw4jBr8XTgJKpz4g=;
-        b=ibNxQtE/LCTIKQP95RMZy7ElxVON8a2mr+jMVu8Q11Vq0E6mv617Ulb1bvozpVm7WT
-         NZg4ABDYqgWZnO0SQu10nbaCkSiqYH59DgQv9LNFruC1PSweJsAoHKZihU3d7BAmiTZc
-         NDZI3oAUo2P8Kk1LZu+xNM9pFpAFgMPZosZO0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=dBJgFjf7L4gzVsCrY7oCkiDCjYw8m8CxJM0+ZcQnPus4V0DYZoEho4O/ZYZ8ETjVtH
-         D6tJuE3uP6/6BUMJy21MeGNzSPb3hvQ5cIzVb95LQa021lXgI8qdGuyVfpQdzt8TFgUt
-         ODqHsUghRlMh8HFG+DGo58PfQWMDTbrXCMVgg=
-Received: by 10.86.98.18 with SMTP id v18mr1606959fgb.46.1235211419272;
-        Sat, 21 Feb 2009 02:16:59 -0800 (PST)
-Received: from ?192.168.1.13? (abwx73.neoplus.adsl.tpnet.pl [83.8.247.73])
-        by mx.google.com with ESMTPS id e11sm1472781fga.50.2009.02.21.02.16.58
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 21 Feb 2009 02:16:58 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7v3ae8rvvd.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1751131AbZBUK4K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Feb 2009 05:56:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750984AbZBUK4I
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Feb 2009 05:56:08 -0500
+Received: from darksea.de ([83.133.111.250]:58437 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750963AbZBUK4H (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Feb 2009 05:56:07 -0500
+Received: (qmail 5610 invoked from network); 21 Feb 2009 11:55:55 +0100
+Received: from unknown (HELO macbook.lan) (127.0.0.1)
+  by localhost with SMTP; 21 Feb 2009 11:55:55 +0100
+User-Agent: Thunderbird 2.0.0.19 (Macintosh/20081209)
+In-Reply-To: <C95EAEB9-D520-497F-BA42-0CDCC1348340@wincent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110937>
 
-On Sat, 21 Feb 2009, Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
-> > Perhaps this is the case fo "feature that waits for a user", namely
-> > 'git stash --no-reset', which would save a state just in case, perhaps
-> > in a separate area and not refs/stash (ORIG_STASH perhaps?).
-> 
-> Isn't that Nana's "git stash --keep" patch posted a few weeks ago sitting
-> in "pu"?
+Wincent Colaiuta schrieb:
+> El 20/2/2009, a las 19:13, Heiko Voigt escribi=F3:
+>=20
+>> As far as I know all "sane" workflows involve topic branches, so
+>> normally a developer will never commit directly on master but use to=
+pic
+>> branch instead and merge them into master once finished.
+>=20
+> (Shudder... by that definition there must be a lot of insane people o=
+ut
+> there!)
+>=20
+> I think what constitutes a "sane" workflow depends very much on the
+> project in question, the number of developers, the collaboration mode=
+l etc.
 
-Almost exactly.
+You are right I was thinking to specific. My goal with this RFC is to
+add some default behaviour to git in terms of workflows and prevent som=
+e
+common pitfalls.=20
 
-When using it as a safety measure (perhaps enabled via configuration
-variable, similarly to core.safecrlf or diff.autoRefreshIndex) we would
-probably want to not save it in 'refs/stash' stack, but in single-use
-ORIG_STATE (similar to HEAD reflog vs. ORIG_HEAD). And of course have
-"git merge --abort" (or even "git pull --abort") as a porcelain.
+This leads me to a completely different solution to the same problem.
+How about teaching git to inherit its hooks from the parental project
+(e.g. the one it was cloned from)? That way we are not limited to
+one default behaviour but many that would match the one from the
+upstream project.
 
--- 
-Jakub Narebski
-Poland
+The simplest implementation would just copy the hooks directory when
+cloning and leave customizations to the user. This should probably be
+disabled by default and enabled with a config option on the server side=
+=2E
+
+What do you think about that?
+
+cheers Heiko
