@@ -1,68 +1,64 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH] Popup menu
-Date: Sun, 22 Feb 2009 14:00:50 +0100
-Message-ID: <cb7bb73a0902220500x51aa4345hee7e6805989a065b@mail.gmail.com>
-References: <1235302820-32526-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <94a0d4530902220426p3fae124cl2210fbfc04968033@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jonas Fonseca <jonas.fonseca@gmail.com>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 22 14:02:23 2009
+Subject: [tig PATCH v2 0/2] popup menu
+Date: Sun, 22 Feb 2009 15:09:36 +0100
+Message-ID: <1235311778-11112-1-git-send-email-giuseppe.bilotta@gmail.com>
+Cc: git@vger.kernel.org, Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: Jonas Fonseca <jonas.fonseca@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 22 15:13:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbDyP-0007T8-8Y
-	for gcvg-git-2@gmane.org; Sun, 22 Feb 2009 14:02:21 +0100
+	id 1LbF5V-0000yv-Lj
+	for gcvg-git-2@gmane.org; Sun, 22 Feb 2009 15:13:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751629AbZBVNAx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Feb 2009 08:00:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751158AbZBVNAw
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Feb 2009 08:00:52 -0500
-Received: from ey-out-2122.google.com ([74.125.78.24]:27483 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751247AbZBVNAw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Feb 2009 08:00:52 -0500
-Received: by ey-out-2122.google.com with SMTP id 25so332374eya.37
-        for <git@vger.kernel.org>; Sun, 22 Feb 2009 05:00:50 -0800 (PST)
+	id S1752469AbZBVOJq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Feb 2009 09:09:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752298AbZBVOJp
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Feb 2009 09:09:45 -0500
+Received: from fg-out-1718.google.com ([72.14.220.159]:58998 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752071AbZBVOJp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Feb 2009 09:09:45 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so2423942fgg.17
+        for <git@vger.kernel.org>; Sun, 22 Feb 2009 06:09:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=+wyywleH/A7ypqjFgDBkPQGhaH0LGhYocATn5VVLsk0=;
-        b=F7+qNfxsEoTo0SGcGc+D0o0wDosyshw+qXg9WgNYKGGHxhYavoQSbVwNUD57KTb1f9
-         h3Fx21FSER25iNwst1m0x4dJPAbYGTxvDBI7yP0WrlkP4LC3wNryHTfU4W+VZSACZV7O
-         ntPp5v0ml0w4+ip4i06KBtwbWo26pBzkgMU78=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=l6ElOx+5zLmyupQSnEh2ja9mWog6kHflgeY7owZF5i8=;
+        b=vpqBD42sV7BkcQOrvam6SQVAc0I4ar3V+4nmeRqUFd5OwYFqGC1s4Pgjqqn8Jibwzj
+         kp7Dd4yj3KsoD0h/ya4IHI8dLRLhVEJWdZyTyS5xtjSu8E47Lq2O/tdq5m0Wp5IbI8vt
+         NAYBjTR2aS9naKI/3PjkIZg9Ohgk6Ap+g0r80=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=e6/CF8iTrE0WQETVU3fCokwuHW+1Vt/E1CPBjkU+UWhAGmqfkthFtBbjuUK9LNIWo8
-         M3AU/8PaYfJjkOV6NVjWSg0zXsHbCu7/z89Dzw0bviba2sUSTmx8yHWofj0PTuelF1aO
-         pB24HvHzihPpIaKvAIPaM07zSpCKSHI2xFsQY=
-Received: by 10.210.120.7 with SMTP id s7mr2491401ebc.187.1235307650425; Sun, 
-	22 Feb 2009 05:00:50 -0800 (PST)
-In-Reply-To: <94a0d4530902220426p3fae124cl2210fbfc04968033@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=V+Pz7AdC3+b2+5mYIbRN2d7jgPC6A+RplLS872FV18jQhbF3TmGftRXaGOVnmpKRkZ
+         QzWeTrMdsSPnQK3k5ael5UjFICM/tDPYbHMQUbA5rMjxQ8Dw3klYefufUhE8jO2l/4a7
+         cv615pgahd2J47U74Q+6bmzDZ2ky7eueSZFWE=
+Received: by 10.86.87.13 with SMTP id k13mr780398fgb.35.1235311783435;
+        Sun, 22 Feb 2009 06:09:43 -0800 (PST)
+Received: from localhost (host-78-15-3-150.cust-adsl.tiscali.it [78.15.3.150])
+        by mx.google.com with ESMTPS id l19sm4705785fgb.47.2009.02.22.06.09.42
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 22 Feb 2009 06:09:43 -0800 (PST)
+X-Mailer: git-send-email 1.6.2.rc1.258.g1d592.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111005>
 
-On Sun, Feb 22, 2009 at 1:26 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> On Sun, Feb 22, 2009 at 1:40 PM, Giuseppe Bilotta
-> <giuseppe.bilotta@gmail.com> wrote:
->> Make the menu into a popup window that complements the status prompt.
->
-> Popup menu of what? Please prefix "tig: " in your subject.
+Second version, in two patches. The first one is just the same as
+previous one, minus a couple of leftovers.
 
-Awfully sorry, I forgot the "[tig " part in the subject prefix, I'd
-better set it in the git config. Thanks for the reminder.
+The second one reimplements the menu drawing routine so that it can be
+called when necessary to redraw the menu entirely, e.g. after a resize
+or when background loading finishes.
 
+Giuseppe Bilotta (2):
+  Popup menu
+  Popup menu: redraw as needed
 
--- 
-Giuseppe "Oblomov" Bilotta
+ tig.c |  149 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 147 insertions(+), 2 deletions(-)
