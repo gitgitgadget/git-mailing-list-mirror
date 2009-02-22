@@ -1,90 +1,76 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: How do I undo a fast-forward merge safely?
-Date: Sun, 22 Feb 2009 11:54:47 -0800 (PST)
-Message-ID: <m3fxi6s0vu.fsf@localhost.localdomain>
-References: <e38bce640902221115o2dd1c63dv6f7acc374b48d418@mail.gmail.com>
+From: Rohan Dhruva <rohandhruva@gmail.com>
+Subject: GSoC 2009 Prospective student
+Date: Mon, 23 Feb 2009 01:28:33 +0530
+Message-ID: <a149495b0902221158h16d499f7w8bd18abaf1321e46@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Brent Goodrick <bgoodr@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 22 20:56:22 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 22 21:00:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbKR1-00038x-Oc
-	for gcvg-git-2@gmane.org; Sun, 22 Feb 2009 20:56:20 +0100
+	id 1LbKUc-0004Fw-RA
+	for gcvg-git-2@gmane.org; Sun, 22 Feb 2009 21:00:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752368AbZBVTyu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Feb 2009 14:54:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752321AbZBVTyu
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Feb 2009 14:54:50 -0500
-Received: from fg-out-1718.google.com ([72.14.220.156]:60464 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752141AbZBVTyt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Feb 2009 14:54:49 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so2568667fgg.17
-        for <git@vger.kernel.org>; Sun, 22 Feb 2009 11:54:47 -0800 (PST)
+	id S1751767AbZBVT6f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Feb 2009 14:58:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751682AbZBVT6f
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Feb 2009 14:58:35 -0500
+Received: from wf-out-1314.google.com ([209.85.200.172]:63537 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751586AbZBVT6e (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Feb 2009 14:58:34 -0500
+Received: by wf-out-1314.google.com with SMTP id 28so2138867wfa.4
+        for <git@vger.kernel.org>; Sun, 22 Feb 2009 11:58:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=3c/isyaRgFShssANenPPxTMTnVdgSdXdoj+ximHffM4=;
-        b=Y+ZXcuxHxaxtCgZMwvwlO/8WRwIFF3V4xBSciOSOJoIIQvW3dM5rNMs0IgCFMeM9PN
-         WddmKcVTTx6wjorExEsFR5dfaCiyZyyNlu4S1wlxP3gaRKztxKd8YyowuV3c72g1yVh4
-         11GFU8riTN0kUcvOaQWmVyC4cM1aGxqVNA0Mw=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=OFZ/n5hRa0gN5yF9VVwPlXxHaueTGuVmSTL0oJVTsK8=;
+        b=aHRfIHLaFQPG85y6RkcCfN48FpjDrtB9QV8t7+IcYrd7SkKtyHIm2DqJFeW8xCvqjy
+         aAuUModouTuQJmTjj1AjrGsThQC8+cAY02sAamcKiE0N3bQn1JhO4HCle1K70arfR8hd
+         qmgyno/+MgdthNKBGM/lxWx8ubDBms7GxLmA8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=OXHdZBZvRF3253f9pElLwEhifQgYIXRTS9Os9xyCX5JUvY9MhRROZ7uYKTPOdIuvC3
-         Kz9R0ji4TiTiWbJQofd+mkc/bp85prkFuvLtlPhVyu7Iv4P4lhBpXYxvQ0SEn5Xe0CQr
-         O/Vg8rcGLBoQRcuA95tv5CetyU1ygWckqj5Dw=
-Received: by 10.86.83.1 with SMTP id g1mr938000fgb.20.1235332487729;
-        Sun, 22 Feb 2009 11:54:47 -0800 (PST)
-Received: from localhost.localdomain (abvl123.neoplus.adsl.tpnet.pl [83.8.209.123])
-        by mx.google.com with ESMTPS id 12sm10551270fgg.53.2009.02.22.11.54.46
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 22 Feb 2009 11:54:47 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n1MJsk5U031051;
-	Sun, 22 Feb 2009 20:54:47 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n1MJsjHM031047;
-	Sun, 22 Feb 2009 20:54:45 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <e38bce640902221115o2dd1c63dv6f7acc374b48d418@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=OIsyLSMPKjvF4okXt4DGIhuphzO1DfNx9pPN6uR43E39w8gf2DXVw8zo3DqnTM5QxE
+         kgwYo6Gs/oZIzwt6uvZ2tx6it1jnqvRArvkVckaubmUeY+XcLSOI7KbM8ELQbfaLz3tP
+         4yaz3GmWPRy0Qkh6iTt+3RKHah4s/N4hqETQM=
+Received: by 10.142.144.9 with SMTP id r9mr1584544wfd.294.1235332713141; Sun, 
+	22 Feb 2009 11:58:33 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111055>
 
-Brent Goodrick <bgoodr@gmail.com> writes:
+Hi,
 
-> I had done a git merge --no-commit <source_branch> operation, but that
-> bit me because I mistakingly concluded that --no-commit would prevent
-> any type of automatic operation, but apparently a fast-forward
-> occurred.  I should have used the --no-ff option? How do I get my
-> target branch back to where it was before the bad merge?
+I am a student from India. I am very interested in taking part in GSoC
+2009, working under git project mentors. However, I am completely new
+to git, I have never used it in the past. I have used svn, but only
+for downloading source code, never to manage my own code. I am very
+interested in open source in general, and I have been using Linux from
+5-6 years.
 
-[...]
-> So, what operations, rebase, reset, etc, do I need to do to get this
-> repo back to where it was right before the fast-forward?
+That being said, I have knowledge of C/C++ what was taught to me in
+school and college. I realize that my qualifications as such are not
+very impressive, and hence I wish to start with a smaller project. I
+read on the http://git.or.cz/gitwiki/SoC2009Ideas page that a
+"jump-in" project might be the "Restartable Clones" proposal. Seeing
+my capabilities, I would like to know whether I am "fit" to undertake
+work on that project? I promise to put in a lot of hard work to learn
+git, and it's source code. However, I would also require a bit of
+hand-holding, at least initially, to get me through.
 
-Each 'large' operation sets ORIG_HEAD
-
-  $ git reset --hard ORIG_HEAD
-
-If you want to be more careful, examine reflog for HEAD, using either
-"git reflog" or "git log -g", and you can reset to previous version of
-HEAD (i.e. where current branch pointed to before 'git fetch') with
-
-  $ git reset --hard HEAD@{1}
+I am very interested to know the opinion of all prospective mentors on
+this issue. Thank you very much, and I do hope I am useful to the git
+community.
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Rohan Dhruva
+
+PS: Please CC me, as I am not subscribed to the list. Thanks.
