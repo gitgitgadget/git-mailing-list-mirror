@@ -1,86 +1,95 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: How to list files that are pending for commit from a merge,
- including  hand modified files
-Date: Sat, 21 Feb 2009 15:29:23 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.0902211523280.3111@localhost.localdomain>
-References: <e38bce640902211520j3f3c2787y28640b0ebcba5e27@mail.gmail.com>
+From: Caleb Cushing <xenoterracide@gmail.com>
+Subject: Re: merge smart enough to adapt to renames?
+Date: Sat, 21 Feb 2009 20:00:06 -0500
+Message-ID: <81bfc67a0902211700m7a0d0ae8jd17a871ba102fd9f@mail.gmail.com>
+References: <81bfc67a0902182212h578e677ck6029c56cb86f7bce@mail.gmail.com>
+	 <slrngpqquq.j03.sitaramc@sitaramc.homelinux.net>
+	 <81bfc67a0902191158x5f0f92d1p7e4af2f9cda50a12@mail.gmail.com>
+	 <slrngprunn.hbo.sitaramc@sitaramc.homelinux.net>
+	 <81bfc67a0902191817u11361d0bw1f2215a53e284f8f@mail.gmail.com>
+	 <499E5A9C.6090900@dawes.za.net>
+	 <e51f4f550902202048g9a210f0t8fefaee4d8376f6c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Brent Goodrick <bgoodr@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 22 00:31:27 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Rogan Dawes <lists@dawes.za.net>,
+	Sitaram Chamarty <sitaramc@gmail.com>, git@vger.kernel.org
+To: Kris Shannon <kris@shannon.id.au>
+X-From: git-owner@vger.kernel.org Sun Feb 22 02:04:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lb1Je-0001IS-Ia
-	for gcvg-git-2@gmane.org; Sun, 22 Feb 2009 00:31:27 +0100
+	id 1Lb2lY-0005BH-E6
+	for gcvg-git-2@gmane.org; Sun, 22 Feb 2009 02:04:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754518AbZBUX35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Feb 2009 18:29:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754503AbZBUX35
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Feb 2009 18:29:57 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:52424 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754490AbZBUX34 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Feb 2009 18:29:56 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n1LNTN1J014357
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 21 Feb 2009 15:29:24 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n1LNTN8q012953;
-	Sat, 21 Feb 2009 15:29:23 -0800
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <e38bce640902211520j3f3c2787y28640b0ebcba5e27@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.456 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1754747AbZBVBAK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Feb 2009 20:00:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754714AbZBVBAK
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Feb 2009 20:00:10 -0500
+Received: from mail-qy0-f11.google.com ([209.85.221.11]:60751 "EHLO
+	mail-qy0-f11.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754628AbZBVBAJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Feb 2009 20:00:09 -0500
+Received: by qyk4 with SMTP id 4so2241487qyk.13
+        for <git@vger.kernel.org>; Sat, 21 Feb 2009 17:00:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Od/R5CL9Ve1trx0LxxNgSOksF5LA6jzEY1gtBd6jBao=;
+        b=X6BkA2u9RGQv+vlhmxzmd6zagdgm1Lvi2m0eyjKNrpYPz5KDDlTLrnJ74q/AXz1cwg
+         BJYDnqlKStwGJNaWjgyiCYOl6ye7ceXafXyH30FTQ20WimuEOQYhg+tien7CL8QYAp2c
+         epMOAu4ygdE6p2a7Pzg5siLuTDKijq7ZayMJk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=xagoPuqNXoA3tgx9PBAoxX18AlH7/zo2HIC72tXoRIWeRMCojR1ykipRg/mFaWjx6z
+         BxeuH4v8YPQA33acj9LSE6UgUURWlk3JbHZHQBF3fEAkP4N6MHFWseJZ7xywnKwd3rjx
+         QLWv0GTm/xvEFLHZgCIJAJpk3TSagU7iN7taY=
+Received: by 10.229.109.194 with SMTP id k2mr1055963qcp.6.1235264406960; Sat, 
+	21 Feb 2009 17:00:06 -0800 (PST)
+In-Reply-To: <e51f4f550902202048g9a210f0t8fefaee4d8376f6c@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110987>
 
+On Fri, Feb 20, 2009 at 11:48 PM, Kris Shannon <kris@shannon.id.au> wrote:
+> Rogan Dawes wrote:
+>> It seems to me that git is smart enough to figure out where contents get
+>> moved to, once. Of course, if you have conflicting moves in the same
+>> repo, git's automation falls down. So, if you need to move the "same"
+>> file in different repositories to different places, you need to do it
+>> via an intermediate repo that will be able to "remember" which movement
+>> you chose.
+>
+> You don't need a whole different repo,  branches are good enough.
+>
+> git checkout gentoo-integration
+> git pull gentoo
+>
+> git checkout sunrise-integration
+> git pull sunrise
+>
+> git checkout master
+> git merge gentoo
+> git merge sunrise
+>
+> The integration branches can remember your local changes to
+> the remotes (like the move of packages.mask)
+>
 
+it sounds like a decent plan on paper... but when you realize each
+checkout is 100,000+ files...to where as if I create a repo just for
+it... it ends up being like 5 files... and I'm not entirely sure that
+has much of a negative side effect... other than... yet another
+remote...
 
-On Sat, 21 Feb 2009, Brent Goodrick wrote:
-> 
-> Is there some way in which to get a listing of the files that git-status 
-> shows in its "changes to be committed" section, but not the "Untracked 
-> files" section, short of postprocessing the git-status output with 
-> sed/awk gymnastics?
+-- 
+Caleb Cushing
 
-Just do variations on
-
-	git diff --name-only HEAD
-
-and the reason I say "variations on" is that depending on exactly what you 
-want you may want to use slightly different diffs.
-
-For example, the command line above will list all files that are changed 
-in the working tree wrt HEAD. But if you want to see only the files that 
-you have actually updated in the index (ie the ones that would be 
-committed without using "-a"), you should add "--cached" to the command 
-line, so that it does the diff from HEAD to index, not HEAD to working 
-tree.
-
-And if you want to see what files are different in the working tree from 
-the index, then drop the "HEAD" part, since that's the default behavior 
-for "git diff".
-
-Finally, use "--name-status" if you want to see if they are new, modified, 
-or deleted - rather than just the name.
-
-And if you care about renames, and want to see them as such, use -C or -M, 
-of course.
-
-So "git ls-files" is not at all what you want. That will give you 
-information about the current index, but doesn't talk at all about how it 
-differs from the previous commit or from the working tree. It can be 
-useful for another thing, though: if you're in the middle of a merge, then 
-you can ask for which files are marked as being unmerged in the index.
-
-		Linus
+http://xenoterracide.blogspot.com
