@@ -1,128 +1,111 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [tig PATCH v2 1/2] Popup menu
-Date: Sun, 22 Feb 2009 15:09:37 +0100
-Message-ID: <1235311778-11112-2-git-send-email-giuseppe.bilotta@gmail.com>
+Subject: [tig PATCH v2 2/2] Popup menu: redraw as needed
+Date: Sun, 22 Feb 2009 15:09:38 +0100
+Message-ID: <1235311778-11112-3-git-send-email-giuseppe.bilotta@gmail.com>
 References: <1235311778-11112-1-git-send-email-giuseppe.bilotta@gmail.com>
 Cc: git@vger.kernel.org, Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 To: Jonas Fonseca <jonas.fonseca@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 22 15:13:54 2009
+X-From: git-owner@vger.kernel.org Sun Feb 22 15:13:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbF5W-0000yv-Ei
-	for gcvg-git-2@gmane.org; Sun, 22 Feb 2009 15:13:46 +0100
+	id 1LbF5Y-0000yv-Cy
+	for gcvg-git-2@gmane.org; Sun, 22 Feb 2009 15:13:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752634AbZBVOJs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Feb 2009 09:09:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752298AbZBVOJs
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Feb 2009 09:09:48 -0500
+	id S1752071AbZBVOJz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Feb 2009 09:09:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752647AbZBVOJw
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Feb 2009 09:09:52 -0500
 Received: from fg-out-1718.google.com ([72.14.220.159]:58998 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752367AbZBVOJq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Feb 2009 09:09:46 -0500
+	with ESMTP id S1752614AbZBVOJt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Feb 2009 09:09:49 -0500
 Received: by fg-out-1718.google.com with SMTP id 16so2423942fgg.17
-        for <git@vger.kernel.org>; Sun, 22 Feb 2009 06:09:45 -0800 (PST)
+        for <git@vger.kernel.org>; Sun, 22 Feb 2009 06:09:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=koXJQitE0ZjVvHgdAb3WmvBhZGiBeGdvW9vjm4J4b9Y=;
-        b=a00ofqyxKtSyLxjzPN+vntR5C1RuXIg8p5842JJ1APVaLeqLdNjy41eQqCuMPAO3S5
-         Uru4Hwy5vRsKql80wlT8eL4Nt+oku+pRX+IipI7WXrhoIoqMisVNm9UYTe0dYG9829XH
-         /OSZlXK+cdtAUKX4FZLZqARF1ebLiOcBj+Ybw=
+        bh=GiFf/bFOBS4yQS0a6UbK/MWO1keCA/cQJiZlLfY5vho=;
+        b=DRXlkm2Qq2LmCbYetjfBBO3+j6bplWd841964Vd0G8uGxJ5vttCiv1zGdUneu9AIy0
+         wFOvzO1s52Eucm4JZQ/eSMB/BLkTjWg/uIwzfDHxY3lvAN0SADj1QZTRLYtWtFhgNCZs
+         pB/808v+CzBMsGQiQ+rPkVs89ds0jttnskzFs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=hKkVTxdkVUv4psySm4sxi1Nk4P91OUlAeg3bZ8gar2LcBeUWFyZfRRaFoK5qxpItrl
-         D7d9h2c8H0gqI8iW97PMTqQJ13Jr9Ym8DgUi0tkd5GZhLjhhk1EyW3PvoF7lcgDYsd6J
-         lDO/eHks1owrRk/jxujMOIqc3JjcvccVAy6v8=
-Received: by 10.86.89.20 with SMTP id m20mr2273964fgb.71.1235311785625;
-        Sun, 22 Feb 2009 06:09:45 -0800 (PST)
+        b=NNpj1JweUMGNimBRZUHPWaIP5tHkAWCxiyBhL+BPwRXphDE5dfb/1LrzakQh6IfU1F
+         hwSxFUU+ICoQshOyiUXUSZynm4MNBGtYj79VMLNRdnDeDthHLAMulz1COjaPAqRz+mM5
+         GXZKGri4svFUH9UGJoPwouppoPr6sdPyLWECM=
+Received: by 10.86.95.20 with SMTP id s20mr2287100fgb.40.1235311788172;
+        Sun, 22 Feb 2009 06:09:48 -0800 (PST)
 Received: from localhost (host-78-15-3-150.cust-adsl.tiscali.it [78.15.3.150])
-        by mx.google.com with ESMTPS id l12sm5338449fgb.31.2009.02.22.06.09.44
+        by mx.google.com with ESMTPS id 4sm5227585fge.34.2009.02.22.06.09.47
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 22 Feb 2009 06:09:45 -0800 (PST)
+        Sun, 22 Feb 2009 06:09:47 -0800 (PST)
 X-Mailer: git-send-email 1.6.2.rc1.258.g1d592.dirty
 In-Reply-To: <1235311778-11112-1-git-send-email-giuseppe.bilotta@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111008>
 
-Make the menu into a popup window that complements the status prompt.
+Redraw the popup menu after a resize or an update during background
+loading.
 
 Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 ---
- tig.c |  115 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 113 insertions(+), 2 deletions(-)
+ tig.c |  132 ++++++++++++++++++++++++++++++++++++++++++----------------------
+ 1 files changed, 86 insertions(+), 46 deletions(-)
 
 diff --git a/tig.c b/tig.c
-index 20a40b9..9b9c34b 100644
+index 9b9c34b..96ab26d 100644
 --- a/tig.c
 +++ b/tig.c
-@@ -6542,6 +6542,98 @@ utf8_length(const char **start, size_t skip, int *width, size_t max_width, int *
- 	return string - *start;
+@@ -2274,6 +2274,8 @@ resize_display(void)
+ 	}
  }
  
-+/*
-+ * Popup management
-+ */
++static void menu_redraw(void);
 +
-+struct popup {
-+	WINDOW *win;
-+	int width;
-+	bool hotkeys;
-+	int selected;
-+};
+ static void
+ redraw_display(bool clear)
+ {
+@@ -2286,6 +2288,8 @@ redraw_display(bool clear)
+ 		redraw_view(view);
+ 		update_view_title(view);
+ 	}
 +
-+static struct popup menu;
++	menu_redraw();
+ }
+ 
+ static void
+@@ -2952,6 +2956,10 @@ update_view(struct view *view)
+ 	/* Update the title _after_ the redraw so that if the redraw picks up a
+ 	 * commit reference in view->ref it'll be available here. */
+ 	update_view_title(view);
 +
++	/* Redraw menu if needed */
++	menu_redraw();
 +
-+static void
-+menu_popup(void)
-+{
-+	wnoutrefresh(menu.win);
-+}
-+
-+static void
-+menu_popdown(void)
-+{
-+	delwin(menu.win);
-+	menu.win = NULL;
-+	redraw_display(FALSE);
-+}
-+
-+static void
-+menu_create(int height, int width, const char* title, bool hotkeys)
-+{
-+	WINDOW *win;
-+	int ymax, xmax, top, left;
-+	enum line_type type = LINE_TITLE_FOCUS;
-+
-+	getmaxyx(stdscr, ymax, xmax);
-+	top = (ymax - height)/2;
-+	left = (xmax - width)/2;
-+	if (top < 0)
-+		top = 0;
-+	if (left < 0)
-+		left = 0;
-+
-+	win = newwin(height, width, top, left);
-+	wbkgd(win, COLOR_PAIR(type));
-+
-+	box(win, 0, 0);
-+	wattrset(win, get_line_attr(type));
-+	mvwprintw(win, 0, (width-strlen(title))/2, " %s ", title);
-+
-+	menu.win = win;
-+	menu.width = width;
-+	menu.hotkeys = hotkeys;
-+	menu.selected = -1;
-+}
-+
-+static void
+ 	return TRUE;
+ }
+ 
+@@ -6549,6 +6557,9 @@ utf8_length(const char **start, size_t skip, int *width, size_t max_width, int *
+ struct popup {
+ 	WINDOW *win;
+ 	int width;
++	int height;
++	const char *title;
++	const struct menu_item *items;
+ 	bool hotkeys;
+ 	int selected;
+ };
+@@ -6557,6 +6568,32 @@ static struct popup menu;
+ 
+ 
+ static void
 +menu_set_line_attr(int index, enum line_type type)
 +{
 +	WINDOW *win = menu.win;
@@ -132,7 +115,7 @@ index 20a40b9..9b9c34b 100644
 +}
 +
 +static void
-+menu_putline(int index, const struct menu_item *item)
++menu_putline(int index, const struct menu_item *item, bool selected)
 +{
 +	WINDOW *win = menu.win;
 +	bool hotkeys = menu.hotkeys;
@@ -144,72 +127,130 @@ index 20a40b9..9b9c34b 100644
 +	} else {
 +		mvwprintw(win, index+1, 2, "%s", item->text);
 +	}
++	if (selected)
++		menu_set_line_attr(index, LINE_CURSOR);
 +}
 +
 +static void
-+menu_select(int index)
-+{
-+	if (menu.selected >= 0) {
-+		menu_set_line_attr(menu.selected, LINE_TITLE_FOCUS);
-+	}
-+	if (index >= 0) {
-+		menu_set_line_attr(index, LINE_CURSOR);
-+	}
-+	menu.selected = index;
-+	menu_popup();
-+}
- 
- /*
-  * Status management
-@@ -6836,14 +6928,30 @@ static bool prompt_menu(const char *prompt, const struct menu_item *items, int *
+ menu_popup(void)
  {
- 	enum input_status status = INPUT_OK;
- 	int size = 0;
-+	int width = strlen(prompt+2);
-+	bool hotkeys = false;
-+	int i;
+ 	wnoutrefresh(menu.win);
+@@ -6571,55 +6608,62 @@ menu_popdown(void)
+ }
  
--	while (items[size].text)
-+	while (items[size].text) {
-+		int w = strlen(items[size].text);
-+		if (w > width)
-+			width = w;
-+		if (items[size].hotkey)
-+			hotkeys = true;
- 		size++;
+ static void
+-menu_create(int height, int width, const char* title, bool hotkeys)
++menu_redraw(void)
+ {
+-	WINDOW *win;
+-	int ymax, xmax, top, left;
+-	enum line_type type = LINE_TITLE_FOCUS;
+-
+-	getmaxyx(stdscr, ymax, xmax);
+-	top = (ymax - height)/2;
+-	left = (xmax - width)/2;
+-	if (top < 0)
+-		top = 0;
+-	if (left < 0)
+-		left = 0;
+-
+-	win = newwin(height, width, top, left);
+-	wbkgd(win, COLOR_PAIR(type));
++	WINDOW *win = menu.win;
++	if (win)
++	{
++		int width = menu.width;
++		int height = menu.height;
++		const char *title = menu.title;
++		const struct menu_item *items = menu.items;
+ 
+-	box(win, 0, 0);
+-	wattrset(win, get_line_attr(type));
+-	mvwprintw(win, 0, (width-strlen(title))/2, " %s ", title);
++		int ymax, xmax, top, left;
++		enum line_type type = LINE_TITLE_FOCUS;
++		int i;
+ 
+-	menu.win = win;
+-	menu.width = width;
+-	menu.hotkeys = hotkeys;
+-	menu.selected = -1;
++		getmaxyx(stdscr, ymax, xmax);
++		top = (ymax - height)/2;
++		left = (xmax - width)/2;
++		if (top < 0)
++			top = 0;
++		if (left < 0)
++			left = 0;
++
++		mvwin(win, top, left);
++		wbkgd(win, COLOR_PAIR(type));
++
++		box(win, 0, 0);
++		wattrset(win, get_line_attr(type));
++		mvwprintw(win, 0, (width-strlen(title))/2, " %s ", title);
++
++		for (i=0; items[i].text; ++i) {
++			menu_putline(i, &items[i], i==menu.selected);
++			if (items[i].hotkey)
++				menu.hotkeys = true;
++		}
++		menu_popup();
 +	}
-+	/* padding */
-+	width += hotkeys ? 8 : 4;
-+
-+	menu_create(size+2, width, prompt, hotkeys);
-+	for (i=0; i < size; ++i)
-+		menu_putline(i, &items[i]);
-+	menu_popup();
-+
+ }
+ 
+ static void
+-menu_set_line_attr(int index, enum line_type type)
++menu_create(int height, int width, const char *title, const struct menu_item *items)
+ {
+-	WINDOW *win = menu.win;
+-	int width = menu.width-2;
+-	mvwchgat(win, index+1, 1, width,
+-			get_line_attr(type), type, NULL);
+-}
++	int i=0;
++	menu.win = newwin(height, width, 0, 0);
++	menu.width = width;
++	menu.height = height;
++	menu.title = title;
++	menu.items = items;
++	menu.hotkeys = false;
++	for(;items[i].text;++i)
++		if (items[i].hotkey) {
++			menu.hotkeys=true;
++			break;
++		}
++	menu.selected = -1;
+ 
+-static void
+-menu_putline(int index, const struct menu_item *item)
+-{
+-	WINDOW *win = menu.win;
+-	bool hotkeys = menu.hotkeys;
+-	if (hotkeys) {
+-		if (item->hotkey)
+-			mvwprintw(win, index+1, 2, "[%c] %s", (char) item->hotkey, item->text);
+-		else
+-			mvwprintw(win, index+1, 6, "%s", item->text);
+-	} else {
+-		mvwprintw(win, index+1, 2, "%s", item->text);
+-	}
++	menu_redraw();
+ }
+ 
+ static void
+@@ -6943,11 +6987,7 @@ static bool prompt_menu(const char *prompt, const struct menu_item *items, int *
+ 	/* padding */
+ 	width += hotkeys ? 8 : 4;
+ 
+-	menu_create(size+2, width, prompt, hotkeys);
+-	for (i=0; i < size; ++i)
+-		menu_putline(i, &items[i]);
+-	menu_popup();
+-
++	menu_create(size+2, width, prompt, items);
  
  	while (status == INPUT_OK) {
  		const struct menu_item *item = &items[*selected];
- 		int key;
--		int i;
- 
- 		mvwprintw(status_win, 0, 0, "%s (%d of %d) ",
- 			  prompt, *selected + 1, size);
-@@ -6851,6 +6959,7 @@ static bool prompt_menu(const char *prompt, const struct menu_item *items, int *
- 			wprintw(status_win, "[%c] ", (char) item->hotkey);
- 		wprintw(status_win, "%s", item->text);
- 		wclrtoeol(status_win);
-+		menu_select(*selected);
- 
- 		key = get_input(COLS - 1);
- 		switch (key) {
-@@ -6886,6 +6995,8 @@ static bool prompt_menu(const char *prompt, const struct menu_item *items, int *
- 		}
- 	}
- 
-+	menu_popdown();
-+
- 	/* Clear the status window */
- 	status_empty = FALSE;
- 	report("");
 -- 
 1.6.2.rc1.258.g1d592.dirty
