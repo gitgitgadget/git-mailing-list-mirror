@@ -1,121 +1,103 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH B v4 5/5] git config: don't allow --get-color* and 
- variable type
-Date: Sun, 22 Feb 2009 09:35:01 -0800
-Message-ID: <7vmycez86y.fsf@gitster.siamese.dyndns.org>
-References: <1235177369-2727-1-git-send-email-felipe.contreras@gmail.com>
- <1235177369-2727-2-git-send-email-felipe.contreras@gmail.com>
- <1235177369-2727-3-git-send-email-felipe.contreras@gmail.com>
- <1235177369-2727-4-git-send-email-felipe.contreras@gmail.com>
- <1235177369-2727-5-git-send-email-felipe.contreras@gmail.com>
- <1235177369-2727-6-git-send-email-felipe.contreras@gmail.com>
- <7vmyce2z9q.fsf@gitster.siamese.dyndns.org>
- <94a0d4530902220912r94e00d6ha7592bc397baa57c@mail.gmail.com>
+Subject: Re: [RFC/PATCH] revision.c: add --format option for 'git log'
+Date: Sun, 22 Feb 2009 09:53:54 -0800
+Message-ID: <7v63j2z7bh.fsf@gitster.siamese.dyndns.org>
+References: <1235230015-17641-1-git-send-email-felipe.contreras@gmail.com>
+ <7vtz6m1knv.fsf@gitster.siamese.dyndns.org>
+ <94a0d4530902220918oc6f8ab9vc1fd0b55cad014a2@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: git@vger.kernel.org
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 22 18:36:48 2009
+X-From: git-owner@vger.kernel.org Sun Feb 22 18:55:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbIFt-0002zH-I3
-	for gcvg-git-2@gmane.org; Sun, 22 Feb 2009 18:36:42 +0100
+	id 1LbIY7-0008En-DN
+	for gcvg-git-2@gmane.org; Sun, 22 Feb 2009 18:55:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751279AbZBVRfK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Feb 2009 12:35:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751198AbZBVRfK
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Feb 2009 12:35:10 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63857 "EHLO
+	id S1751472AbZBVRyB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Feb 2009 12:54:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751344AbZBVRyB
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Feb 2009 12:54:01 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64662 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751197AbZBVRfI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 Feb 2009 12:35:08 -0500
+	with ESMTP id S1750755AbZBVRyA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Feb 2009 12:54:00 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id CE2E32BB06;
-	Sun, 22 Feb 2009 12:35:07 -0500 (EST)
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 973CA2BB2F;
+	Sun, 22 Feb 2009 12:53:59 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 807E12BB29; Sun,
- 22 Feb 2009 12:35:03 -0500 (EST)
-In-Reply-To: <94a0d4530902220912r94e00d6ha7592bc397baa57c@mail.gmail.com>
- (Felipe Contreras's message of "Sun, 22 Feb 2009 19:12:07 +0200")
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id CA43B2BB22; Sun,
+ 22 Feb 2009 12:53:56 -0500 (EST)
+In-Reply-To: <94a0d4530902220918oc6f8ab9vc1fd0b55cad014a2@mail.gmail.com>
+ (Felipe Contreras's message of "Sun, 22 Feb 2009 19:18:12 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 25CA64AA-0107-11DE-B5A5-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C8642230-0109-11DE-B217-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111030>
 
 =46elipe Contreras <felipe.contreras@gmail.com> writes:
 
->>> diff --git a/builtin-config.c b/builtin-config.c
->>> index 8045926..9930568 100644
->>> --- a/builtin-config.c
->>> +++ b/builtin-config.c
->>> @@ -359,6 +359,11 @@ int cmd_config(int argc, const char **argv, co=
-nst char *unused_prefix)
->>> =C2=A0 =C2=A0 =C2=A0 if (get_colorbool_slot)
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 actions |=3D ACTION_GET_COLORBOO=
-L;
->>>
->>> + =C2=A0 =C2=A0 if ((get_color_slot || get_colorbool_slot) && types=
-) {
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error("--get-color and =
-variable type are incoherent");
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 usage_with_options(buil=
-tin_config_usage, builtin_config_options);
->>> + =C2=A0 =C2=A0 }
->>> +
+> On Sun, Feb 22, 2009 at 6:49 PM, Junio C Hamano <gitster@pobox.com> w=
+rote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >>
->> I do not think I suggested anything like this, so I'd decline to tak=
-e
->> credit for this patch.
+>>> --format=3D:foo is a shorthand for --pretty=3Dtformat:foo, otherwis=
+e this
+>>> new option acts just like --pretty=3Dfoo, except it's more intuitiv=
+e for
+>>> users of 'git log'.
 >>
->> Strictly speaking, "--bool --get-colorbool diff.color 1" shouldn't e=
-rror
->> out, don't you think? =C2=A0And it certainly shouldn't say "--get-co=
-lor".
+>> It's been quite a long time since the earlier discussion, but I wond=
+er why
+>> you need the colon before "foo" for this new shorthand. =C2=A0I *thi=
+nk* you are
+>> also introducing "--format=3Dshort" as a synonym to "--pretty=3Dshor=
+t", but
+>> I do not think it is necessary.
 >
-> Huh? I misinterpreted:
-> I see "git config --bool --get-color diff.color.whitespace" is still
-> allowed, which you might want to tighten further.
+> Well, my hope was to replace --pretty=3Dshort with --format=3Dshort, =
+but
+> you said that would break other scripts.
 
-"--get-color" gets, escape sequence to throw at the terminal to get the
-color configured.  It does not make sense to ask for bool (or int) for
-that action.
+It is not just scripts you break.  You also break people's trained
+fingers.
 
-"--get-colorbool" asks if it is appropriate to use such escape sequence
-(e.g. when the output is tty and config says "auto", you would get "ple=
-ase
-use color").  In other words, its type is always bool, so using it as
---int does not make sense but we cannot really say using it with --bool=
- is
-nonsense.
+You can specify the kind of canned pretty printing with --pretty=3Dshor=
+t,
+and it is not any longer to type than --format.  For use in scripts tha=
+t
+you write once and forget, there is no need to even apply this patch.
 
-The two use formats with and without is_tty are meant to be used in
-scripts this way:
+The only reason why new --format=3D<fmt> could be an useful addition is
+because --pretty=3Dformat:<fmt> may be too long to type interactively.
 
-	# without $is_tty
-	if git config --get-colorbool color.diff
-        then
-        	use_color=3Dtrue
-	else
-        	use_color=3Dfalse
-	fi
+>>> As discussed in the mailing list, this is implemented as an undocum=
+ented
+>>> option.
+>>
+>> Maybe somebody wants to document it.
+>
+> Ah, I would gladly add the documentation, shall I write that it's an
+> 'alternative' option similar to --pretty?
 
-        # with $is_tty
-        if test -t 1
-        then
-        	is_tty=3D1
-	else
-        	is_tty=3D0
-	fi
-        use_color=3D$(git config --get-colorbool color.diff $is_tty)
+I do not think we want to introduce a new way to say the same thing for
+the canned short options; "alternative" is not a good word for it.
 
-In the latter form, output from the command is captured by $() and does
-not see if the stdout of the calling script is a tty, hence the script
-feeds that information to the command as an extra parameter.
+Putting it in another way...
+
+The output format is controlled by --pretty, which knows a set of canne=
+d
+output formats.  You can specify --format=3D<fmt> if you want something
+different from any of the canned format.  If your git does not support
+this new notation, you can say --pretty=3Dtformat:<fmt> to get the same
+effect.  The old --pretty=3Dtformat:<fmt> (and --pretty=3Dformat:<fmt>)=
+ is not
+deprecated in any way.
