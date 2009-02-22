@@ -1,292 +1,103 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: empty symlink detection breakage
-Date: Sun, 22 Feb 2009 02:56:11 +0100
-Message-ID: <20090222015611.GA14378@atjola.homenet>
+From: Brent Goodrick <bgoodr@gmail.com>
+Subject: Re: How to list files that are pending for commit from a merge, 
+	including hand modified files
+Date: Sat, 21 Feb 2009 18:09:59 -0800
+Message-ID: <e38bce640902211809u70c0de2el96a2df0238bc671@mail.gmail.com>
+References: <e38bce640902211520j3f3c2787y28640b0ebcba5e27@mail.gmail.com>
+	 <alpine.LFD.2.00.0902211523280.3111@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sun Feb 22 02:57:49 2009
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Feb 22 03:11:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lb3bI-0006zv-OB
-	for gcvg-git-2@gmane.org; Sun, 22 Feb 2009 02:57:49 +0100
+	id 1Lb3og-000195-WE
+	for gcvg-git-2@gmane.org; Sun, 22 Feb 2009 03:11:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753640AbZBVB4S convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Feb 2009 20:56:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753507AbZBVB4R
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Feb 2009 20:56:17 -0500
-Received: from mail.gmx.net ([213.165.64.20]:37296 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753016AbZBVB4Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Feb 2009 20:56:16 -0500
-Received: (qmail invoked by alias); 22 Feb 2009 01:56:13 -0000
-Received: from i577BAFDE.versanet.de (EHLO atjola.local) [87.123.175.222]
-  by mail.gmx.net (mp025) with SMTP; 22 Feb 2009 02:56:13 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1+0wzpngOm0gyugfBVbH0U9a4vz9byZSy16aJYbtH
-	DiPpQkAK0g5kJH
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1753865AbZBVCKC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Feb 2009 21:10:02 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752184AbZBVCKB
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Feb 2009 21:10:01 -0500
+Received: from mail-gx0-f174.google.com ([209.85.217.174]:50263 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751925AbZBVCKA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Feb 2009 21:10:00 -0500
+Received: by gxk22 with SMTP id 22so3970195gxk.13
+        for <git@vger.kernel.org>; Sat, 21 Feb 2009 18:09:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=e/BGL0nJlAh+qTnq+bKYoXNOlaXUu7TL4GuxMi9bcDk=;
+        b=r81h5wZ4TX9g6AVlFckXa7r1L823gTS7xJjhWjBfuvSWtYXYN9a0TlxHIBWNC9HZHQ
+         v0j8u8eTwtbtWgrnfqUFdjXxdpcdPuIkOVyhnpAxd6VQoB34494P/hcigTdhDIufQ7Zs
+         g3vAtntU4XtstIeJ1W0z2WLU1m4doankVJdno=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=cYOkz5/xQsKBKZDw75b7/SqtU2EBKf5i2S4vq4yfGIIWuWmE6EiUtq4W2tIWU3qL+1
+         wDQUxo0M6f0dmfeBDF7wIbw5uOUOz31sr3Ps5xlT3AhZT1QUKql+W8INCrglibHOJFq0
+         9ar8GG9FBqMem+yJ1gXvsyjefUGJ1zxgbBqBY=
+Received: by 10.90.90.4 with SMTP id n4mr699997agb.65.1235268599355; Sat, 21 
+	Feb 2009 18:09:59 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.00.0902211523280.3111@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110991>
 
-Hi Eric,=20
+Thanks very much!  I'll have to play around with those variations a
+bit to get a feel for what will work in my context.
 
-seems that the empty symlink stuff gets confused about which revision t=
-o
-use when looking for the parent's file.
+bg
 
-r3 =3D f1a6fcf6b0a1c4a373d0b2b65a3d70700084f361 (tags/1.0.1)
-=46ound possible branch point: file:///home/doener/h/svn/tags/1.0 =3D> =
-file:///home/doener/h/svn/branches/1.0, 4
-=46ound branch parent: (1.0) 63ae640ba01014ecbb3df590999ed1fa5914545b
-=46ollowing parent with do_switch
-Successfully followed parent
-r5 =3D 26fcfef5bcced97ab74faf1af7341a2ae0d272aa (1.0)
-=46ound possible branch point: file:///home/doener/h/svn/branches/1.0 =3D=
-> file:///home/doener/h/svn/tags/1.0.1, 5
-=46ound branch parent: (tags/1.0.1) 26fcfef5bcced97ab74faf1af7341a2ae0d=
-272aa
-=46ollowing parent with do_switch
-Scanning for empty symlinks, this may take a while if you have many emp=
-ty files
-You may disable this with `git config svn.brokenSymlinkWorkaround false=
-'.
-This may be done in a different terminal without restarting git svn
-=46ilesystem has no item: File not found: revision 3, path '/branches/1=
-=2E0/file' at /usr/local/libexec/git-core/git-svn line 3318
-
-
-Note how it tries to look at revision 3 instead of revision 5 (which it
-correctly detected as the parent). The import succeeds when
-svn.brokenSymlinkWorkaround is set to false. Testcase below.
-
-Bj=F6rn
---
-diff --git a/t/t9136-git-svn-recreated-branch-empty-file.sh b/t/t9136-g=
-it-svn-recreated-branch-empty-file.sh
-new file mode 100755
-index 0000000..733d16e
---- /dev/null
-+++ b/t/t9136-git-svn-recreated-branch-empty-file.sh
-@@ -0,0 +1,12 @@
-+#!/bin/sh
-+
-+test_description=3D'test recreated svn branch with empty files'
-+
-+. ./lib-git-svn.sh
-+test_expect_success 'load svn dumpfile'  '
-+	svnadmin load "$rawsvnrepo" < "${TEST_DIRECTORY}/t9136/svn.dump"
-+	'
-+
-+test_expect_success 'clone using git svn' 'git svn clone -s "$svnrepo"=
- x'
-+
-+test_done
-diff --git a/t/t9136/svn.dump b/t/t9136/svn.dump
-new file mode 100644
-index 0000000..6b1ce0b
---- /dev/null
-+++ b/t/t9136/svn.dump
-@@ -0,0 +1,192 @@
-+SVN-fs-dump-format-version: 2
-+
-+UUID: eecae021-8f16-48da-969d-79beb8ae6ea5
-+
-+Revision-number: 0
-+Prop-content-length: 56
-+Content-length: 56
-+
-+K 8
-+svn:date
-+V 27
-+2009-02-22T00:50:56.292890Z
-+PROPS-END
-+
-+Revision-number: 1
-+Prop-content-length: 106
-+Content-length: 106
-+
-+K 7
-+svn:log
-+V 4
-+init
-+K 10
-+svn:author
-+V 8
-+john.doe
-+K 8
-+svn:date
-+V 27
-+2009-02-22T00:50:57.192384Z
-+PROPS-END
-+
-+Node-path: branches
-+Node-kind: dir
-+Node-action: add
-+Prop-content-length: 10
-+Content-length: 10
-+
-+PROPS-END
-+
-+
-+Node-path: tags
-+Node-kind: dir
-+Node-action: add
-+Prop-content-length: 10
-+Content-length: 10
-+
-+PROPS-END
-+
-+
-+Node-path: trunk
-+Node-kind: dir
-+Node-action: add
-+Prop-content-length: 10
-+Content-length: 10
-+
-+PROPS-END
-+
-+
-+Node-path: trunk/file
-+Node-kind: file
-+Node-action: add
-+Prop-content-length: 10
-+Text-content-length: 0
-+Text-content-md5: d41d8cd98f00b204e9800998ecf8427e
-+Content-length: 10
-+
-+PROPS-END
-+
-+
-+Revision-number: 2
-+Prop-content-length: 105
-+Content-length: 105
-+
-+K 7
-+svn:log
-+V 3
-+1.0
-+K 10
-+svn:author
-+V 8
-+john.doe
-+K 8
-+svn:date
-+V 27
-+2009-02-22T00:50:58.124724Z
-+PROPS-END
-+
-+Node-path: tags/1.0
-+Node-kind: dir
-+Node-action: add
-+Node-copyfrom-rev: 1
-+Node-copyfrom-path: trunk
-+
-+
-+Revision-number: 3
-+Prop-content-length: 111
-+Content-length: 111
-+
-+K 7
-+svn:log
-+V 9
-+1.0.1-bad
-+K 10
-+svn:author
-+V 8
-+john.doe
-+K 8
-+svn:date
-+V 27
-+2009-02-22T00:50:58.151727Z
-+PROPS-END
-+
-+Node-path: tags/1.0.1
-+Node-kind: dir
-+Node-action: add
-+Node-copyfrom-rev: 2
-+Node-copyfrom-path: tags/1.0
-+
-+
-+Revision-number: 4
-+Prop-content-length: 111
-+Content-length: 111
-+
-+K 7
-+svn:log
-+V 9
-+Wrong tag
-+K 10
-+svn:author
-+V 8
-+john.doe
-+K 8
-+svn:date
-+V 27
-+2009-02-22T00:50:58.167427Z
-+PROPS-END
-+
-+Node-path: tags/1.0.1
-+Node-action: delete
-+
-+
-+Revision-number: 5
-+Prop-content-length: 113
-+Content-length: 113
-+
-+K 7
-+svn:log
-+V 10
-+1.0-branch
-+K 10
-+svn:author
-+V 8
-+john.doe
-+K 8
-+svn:date
-+V 27
-+2009-02-22T00:50:58.184498Z
-+PROPS-END
-+
-+Node-path: branches/1.0
-+Node-kind: dir
-+Node-action: add
-+Node-copyfrom-rev: 4
-+Node-copyfrom-path: tags/1.0
-+
-+
-+Revision-number: 6
-+Prop-content-length: 113
-+Content-length: 113
-+
-+K 7
-+svn:log
-+V 10
-+1.0.1-good
-+K 10
-+svn:author
-+V 8
-+john.doe
-+K 8
-+svn:date
-+V 27
-+2009-02-22T00:50:58.200695Z
-+PROPS-END
-+
-+Node-path: tags/1.0.1
-+Node-kind: dir
-+Node-action: add
-+Node-copyfrom-rev: 5
-+Node-copyfrom-path: branches/1.0
-+
-+
+On Sat, Feb 21, 2009 at 3:29 PM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+>
+>
+> On Sat, 21 Feb 2009, Brent Goodrick wrote:
+>>
+>> Is there some way in which to get a listing of the files that git-status
+>> shows in its "changes to be committed" section, but not the "Untracked
+>> files" section, short of postprocessing the git-status output with
+>> sed/awk gymnastics?
+>
+> Just do variations on
+>
+>        git diff --name-only HEAD
+>
+> and the reason I say "variations on" is that depending on exactly what you
+> want you may want to use slightly different diffs.
+>
+> For example, the command line above will list all files that are changed
+> in the working tree wrt HEAD. But if you want to see only the files that
+> you have actually updated in the index (ie the ones that would be
+> committed without using "-a"), you should add "--cached" to the command
+> line, so that it does the diff from HEAD to index, not HEAD to working
+> tree.
+>
+> And if you want to see what files are different in the working tree from
+> the index, then drop the "HEAD" part, since that's the default behavior
+> for "git diff".
+>
+> Finally, use "--name-status" if you want to see if they are new, modified,
+> or deleted - rather than just the name.
+>
+> And if you care about renames, and want to see them as such, use -C or -M,
+> of course.
+>
+> So "git ls-files" is not at all what you want. That will give you
+> information about the current index, but doesn't talk at all about how it
+> differs from the previous commit or from the working tree. It can be
+> useful for another thing, though: if you're in the middle of a merge, then
+> you can ask for which files are marked as being unmerged in the index.
+>
+>                Linus
+>
