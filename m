@@ -1,55 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 next 0/4] format-patch --cover-letter --in-reply-to
-Date: Sun, 22 Feb 2009 08:49:45 -0800
-Message-ID: <7vocwu1knq.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LNX.1.00.0902191734110.19665@iabervon.org>
- <cover.1235158956.git.trast@student.ethz.ch>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH JGIT] Add "compare with index" action.
+Date: Sun, 22 Feb 2009 17:38:39 +0100
+Message-ID: <200902221738.40753.robin.rosenberg.lists@dewire.com>
+References: <499E67CD.9020501@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sun Feb 22 17:51:31 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git <git@vger.kernel.org>
+To: Yann Simon <yann.simon.fr@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 22 18:04:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbHY9-0004zQ-HR
-	for gcvg-git-2@gmane.org; Sun, 22 Feb 2009 17:51:30 +0100
+	id 1LbHks-0000K3-6I
+	for gcvg-git-2@gmane.org; Sun, 22 Feb 2009 18:04:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754223AbZBVQt4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Feb 2009 11:49:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754152AbZBVQt4
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Feb 2009 11:49:56 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61815 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754185AbZBVQtz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Feb 2009 11:49:55 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 459392BB15;
-	Sun, 22 Feb 2009 11:49:55 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 460922BB12; Sun,
- 22 Feb 2009 11:49:47 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: D4FD4B88-0100-11DE-BBF0-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1754417AbZBVRDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Feb 2009 12:03:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753085AbZBVRDI
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Feb 2009 12:03:08 -0500
+Received: from mail.dewire.com ([83.140.172.130]:25552 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754059AbZBVRDH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Feb 2009 12:03:07 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id F22EB147E871;
+	Sun, 22 Feb 2009 18:02:59 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id OyUIGODpZ2Zi; Sun, 22 Feb 2009 18:02:59 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 552AAA149A4;
+	Sun, 22 Feb 2009 18:02:59 +0100 (CET)
+User-Agent: KMail/1.11.0 (Linux/2.6.27-12-generic; KDE/4.2.0; i686; ; )
+In-Reply-To: <499E67CD.9020501@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111021>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+fredag 20 februari 2009 09:20:29 skrev Yann Simon <yann.simon.fr@gmail.com>:
+> In the Compare With... menu, the "compare with index" action opens
+> a diff editor that compares the workspace version of a file and its
+> index version.
 
-> I also noticed that there is a textual conflict with 0db5260 (Enable
-> setting attach as the default in .gitconfig for git-format-patch.,
-> 2009-02-12), which is already in 'next'.  So I rebased the series to
-> 'next'.
+The appearance in the menu is a bit odd. "Compare with" is already in the menu 
+context as that is the name of the menu that hold the Compare with index. So the 
+menu name should be really be just "Git Index".
 
-In general I'd rather not to see a series based on 'next' merely for a
-textual dependency like this (it is a different matter if your patch
-semantically depends on somebody else's work in 'next').  Your own topic
-will fork from 'master' and it will not want to be taken hostage of
-"attach as default" series.
+> The local file can be modified and saved.
+>
+> The staged version can be modified and saved. This updates the index.
+> For this, add methods into GitIndex to allow to specify a content
+> different from the file.
+
+One would expect this feature to work at any level of the project, not just files. That
+won't be a showstopper though.
+
+-- robin
