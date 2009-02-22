@@ -1,103 +1,91 @@
-From: Brent Goodrick <bgoodr@gmail.com>
-Subject: Re: How to list files that are pending for commit from a merge, 
-	including hand modified files
-Date: Sat, 21 Feb 2009 18:09:59 -0800
-Message-ID: <e38bce640902211809u70c0de2el96a2df0238bc671@mail.gmail.com>
-References: <e38bce640902211520j3f3c2787y28640b0ebcba5e27@mail.gmail.com>
-	 <alpine.LFD.2.00.0902211523280.3111@localhost.localdomain>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: Is this a git-bisect bug?
+Date: Sun, 22 Feb 2009 07:47:29 +0100
+Message-ID: <200902220747.29932.chriscool@tuxfamily.org>
+References: <gnpccl$l69$1@ger.gmane.org> <87skm7em72.fsf@iki.fi> <gnppph$r8r$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Feb 22 03:11:42 2009
+To: walt <w41ter@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 22 07:49:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lb3og-000195-WE
-	for gcvg-git-2@gmane.org; Sun, 22 Feb 2009 03:11:39 +0100
+	id 1Lb89u-0002z4-4T
+	for gcvg-git-2@gmane.org; Sun, 22 Feb 2009 07:49:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753865AbZBVCKC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Feb 2009 21:10:02 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752184AbZBVCKB
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Feb 2009 21:10:01 -0500
-Received: from mail-gx0-f174.google.com ([209.85.217.174]:50263 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751925AbZBVCKA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Feb 2009 21:10:00 -0500
-Received: by gxk22 with SMTP id 22so3970195gxk.13
-        for <git@vger.kernel.org>; Sat, 21 Feb 2009 18:09:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=e/BGL0nJlAh+qTnq+bKYoXNOlaXUu7TL4GuxMi9bcDk=;
-        b=r81h5wZ4TX9g6AVlFckXa7r1L823gTS7xJjhWjBfuvSWtYXYN9a0TlxHIBWNC9HZHQ
-         v0j8u8eTwtbtWgrnfqUFdjXxdpcdPuIkOVyhnpAxd6VQoB34494P/hcigTdhDIufQ7Zs
-         g3vAtntU4XtstIeJ1W0z2WLU1m4doankVJdno=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=cYOkz5/xQsKBKZDw75b7/SqtU2EBKf5i2S4vq4yfGIIWuWmE6EiUtq4W2tIWU3qL+1
-         wDQUxo0M6f0dmfeBDF7wIbw5uOUOz31sr3Ps5xlT3AhZT1QUKql+W8INCrglibHOJFq0
-         9ar8GG9FBqMem+yJ1gXvsyjefUGJ1zxgbBqBY=
-Received: by 10.90.90.4 with SMTP id n4mr699997agb.65.1235268599355; Sat, 21 
-	Feb 2009 18:09:59 -0800 (PST)
-In-Reply-To: <alpine.LFD.2.00.0902211523280.3111@localhost.localdomain>
+	id S1752028AbZBVGsP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Feb 2009 01:48:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752026AbZBVGsP
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Feb 2009 01:48:15 -0500
+Received: from smtp5-g21.free.fr ([212.27.42.5]:44910 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751987AbZBVGsO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Feb 2009 01:48:14 -0500
+Received: from smtp5-g21.free.fr (localhost [127.0.0.1])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 1C7DBD480B9;
+	Sun, 22 Feb 2009 07:48:07 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id E5B28D4808C;
+	Sun, 22 Feb 2009 07:48:04 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <gnppph$r8r$1@ger.gmane.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/110992>
 
-Thanks very much!  I'll have to play around with those variations a
-bit to get a feel for what will work in my context.
+Le samedi 21 f=E9vrier 2009, walt a =E9crit :
+> Teemu Likonen wrote:
+> > On 2009-02-21 09:07 (-0800), walt wrote:
+> >> I'm using the current git.git to bisect a bug in Linus.git.
+> >>
+> >> I got this far and then ran into trouble:
+> >> good 2.6.29-rc5-00094-gc951aa6
+> >> bad  2.6.29-rc5-00112-g3501033
+> >>
+> >> A glance at git log will show that those two commits were
+> >> both from Feb 17 with only one other commit between them.
+> >>
+> >> So, why does this happen?:
+> >>
+> >> $git bisect start 3501033 c951aa6
+> >> Bisecting: 8 revisions left to test after this
+> >> be716615fe596ee117292dc615e95f707fb67fd1] x86, vm86: fix preemptio=
+n
+> >> bug
+> >
+> > Someone will probably give real explanation but non-linear developm=
+ent
+> > is part of it:
+> >
+> > $ git log --graph --pretty=3Doneline --abbrev-commit c951aa6..35010=
+33
+> >
+> > *   3501033 Merge branch 'x86-fixes-for-linus' of git:// [...]
+> >
+> > |\
+> > | * be71661 x86, vm86: fix preemption bug
+>  >
+>  > ...
+>
+> I see now that git bisect actually found the guilty commit for me,
+> but completely confused me by turning out five kernels in a row
+> with the names 2.6.29-rc3-00nnn while I was bisecting an rc5 kernel.
+> I stopped because of those tag names when I should have just forged
+> ahead.
+>
+> I would be interested to hear opinions on whether that rc3 tag is
+> the correct one to use for the bisected kernels.
 
-bg
+Please have a look at this:
 
-On Sat, Feb 21, 2009 at 3:29 PM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
->
->
-> On Sat, 21 Feb 2009, Brent Goodrick wrote:
->>
->> Is there some way in which to get a listing of the files that git-status
->> shows in its "changes to be committed" section, but not the "Untracked
->> files" section, short of postprocessing the git-status output with
->> sed/awk gymnastics?
->
-> Just do variations on
->
->        git diff --name-only HEAD
->
-> and the reason I say "variations on" is that depending on exactly what you
-> want you may want to use slightly different diffs.
->
-> For example, the command line above will list all files that are changed
-> in the working tree wrt HEAD. But if you want to see only the files that
-> you have actually updated in the index (ie the ones that would be
-> committed without using "-a"), you should add "--cached" to the command
-> line, so that it does the diff from HEAD to index, not HEAD to working
-> tree.
->
-> And if you want to see what files are different in the working tree from
-> the index, then drop the "HEAD" part, since that's the default behavior
-> for "git diff".
->
-> Finally, use "--name-status" if you want to see if they are new, modified,
-> or deleted - rather than just the name.
->
-> And if you care about renames, and want to see them as such, use -C or -M,
-> of course.
->
-> So "git ls-files" is not at all what you want. That will give you
-> information about the current index, but doesn't talk at all about how it
-> differs from the previous commit or from the working tree. It can be
-> useful for another thing, though: if you're in the middle of a merge, then
-> you can ask for which files are marked as being unmerged in the index.
->
->                Linus
->
+http://thread.gmane.org/gmane.comp.version-control.git/99967/focus=3D99=
+977
+
+Regards,
+Christian.
