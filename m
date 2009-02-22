@@ -1,73 +1,123 @@
 From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: Rebase v.s. fast forward
-Date: Sun, 22 Feb 2009 20:00:36 +0100
-Message-ID: <20090222190036.GB6504@efreet.light.src>
-References: <1234914604.3334.7.camel@rottwang.fnordora.org>
+Subject: Re: Blamming a diff between two commits?
+Date: Sun, 22 Feb 2009 20:11:38 +0100
+Message-ID: <20090222191138.GC6504@efreet.light.src>
+References: <499AB8A1.7090909@datacom.ind.br> <20090222123248.GA6504@efreet.light.src> <vpqtz6mpas3.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alan <alan@clueserver.org>
-X-From: git-owner@vger.kernel.org Sun Feb 22 20:02:15 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="VS++wcV0S1rZb1Fb"
+Cc: Samuel Lucas Vaz de Mello <samuellucas@datacom.ind.br>,
+	git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Sun Feb 22 20:13:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbJaa-00047m-M2
-	for gcvg-git-2@gmane.org; Sun, 22 Feb 2009 20:02:09 +0100
+	id 1LbJlH-0007Vo-UF
+	for gcvg-git-2@gmane.org; Sun, 22 Feb 2009 20:13:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752018AbZBVTAk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Feb 2009 14:00:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752060AbZBVTAj
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Feb 2009 14:00:39 -0500
-Received: from cuda1.bluetone.cz ([212.158.128.5]:34668 "EHLO mail.bluetone.cz"
+	id S1752060AbZBVTLn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Feb 2009 14:11:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751975AbZBVTLn
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Feb 2009 14:11:43 -0500
+Received: from cuda1.bluetone.cz ([212.158.128.5]:36213 "EHLO mail.bluetone.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752071AbZBVTAj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Feb 2009 14:00:39 -0500
+	id S1751856AbZBVTLn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Feb 2009 14:11:43 -0500
 Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
 	by mail.bluetone.cz (Spam Firewall) with ESMTP
-	id 1720D32B55F; Sun, 22 Feb 2009 20:00:36 +0100 (CET)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145]) by mail.bluetone.cz with ESMTP id QcWejv03HsJKBDnT; Sun, 22 Feb 2009 20:00:36 +0100 (CET)
+	id B431B329967; Sun, 22 Feb 2009 20:11:40 +0100 (CET)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145]) by mail.bluetone.cz with ESMTP id FxosvcpQveO9XnaH; Sun, 22 Feb 2009 20:11:40 +0100 (CET)
 Received: from bulb by efreet.light.src with local (Exim 4.69)
 	(envelope-from <bulb@ucw.cz>)
-	id 1LbJZ6-0004iF-Oh; Sun, 22 Feb 2009 20:00:36 +0100
+	id 1LbJjm-0004jc-UV; Sun, 22 Feb 2009 20:11:38 +0100
 Content-Disposition: inline
-In-Reply-To: <1234914604.3334.7.camel@rottwang.fnordora.org>
+In-Reply-To: <vpqtz6mpas3.fsf@bauges.imag.fr>
 User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111051>
 
-On Tue, Feb 17, 2009 at 15:50:04 -0800, Alan wrote:
-> I am dealing with a kernel branch of a branch that undergoes frequent
-> rebases and I want to know the easiest way of handling things.
-> 
-> The tree is pulled from kernel.org. Patches are applied to the tree by a
-> developer here on a branch.  I take that branch, make my own branch, add
-> drivers and other modifications and publish to a different repo.
-> 
-> Now that 2.6.29 is occurring, every time there is a new RC candidate, he
-> rebases the tree and tells everyone to rebuild.  Since the developers on
-> my projects have their own branches off of my tree, rebuilding
-> everything is starting to look like a big pain.
-> 
-> Is there a way to take a rebased repository and apply the changes in a
-> manner that does not require reconstructing everything from patches?
 
-No, there is not. When you have some changes on top of rebased branch, you
-have to rebase them.
+--VS++wcV0S1rZb1Fb
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Can you fast forward on a rebased repo or are you just hosed?  (Or would
-> that be considered "frebasing"?)
+On Sun, Feb 22, 2009 at 19:49:16 +0100, Matthieu Moy wrote:
+> Jan Hudec <bulb@ucw.cz> writes:
+> > On Tue, Feb 17, 2009 at 10:16:17 -0300, Samuel Lucas Vaz de Mello wrote:
+> >> Hi,
+> >>=20
+> >> Is there any way to git blame (or annotate) a diff between two commits?
+> >> [...]
+> >
+> > What about doing a diff of the blames? It should do the same thing (exc=
+ept
+> > the +/- would be at the begining of the lines). Well, not exactly, beca=
+use if
+> > there was a change, that was reverted again, blames would change, so it=
+ would
+> > appear here, but that's probably rare enough to ignore (if you don't ev=
+en
+> > want to see it rather than not).
+>=20
+> I don't think that would do it.
+>=20
+> Suppose I have the following history (in a one-line file) :
+>=20
+> revision: R1 -> R2 -> R3 -> R4 -> R5 -> R6
+> content:  A  -> B  -> B  -> C  -> D  -> E=20
+>=20
+> If I do a blame at revision R3, I'll get
+>=20
+> R2 B
+>=20
+> Then, at revision R6, I'd get
+>=20
+> R6 E
+>=20
+> so the diff will be
+>=20
+> - R2 B
+> + R6 E
+>=20
+> while the original poster actually wanted
+>=20
+> - R3 B
+> + R6 E
+>=20
+> In the first case, the annotation for - lines tell where the removed
+> line had been introduced before, while the second case tells up to
+> which revision the line has been existing (or, it could show the
+> revision which removed it, R4 here).
 
-Well, fast-forward condition is when you pull and you have no local changes.
-Which I guess is not your case.
+You are right, it is something different.
 
-I am not sure whether pull properly detects the case, where the pulled branch
-got rebased (so strictly-speaking it's not a fast-forward), but there are no
-local changes, but since you probably do have some local changes, it would
-not help you.
+Both are probably useful, though -- knowing where the deleted line was
+introduced would be useful so you can look up rationale for the old code in
+the respective commit message and check whether the new version does not mi=
+ss
+any points mentioned there. Provided you have good descriptions in the
+comments, of course.
 
--- 
+--=20
 						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--VS++wcV0S1rZb1Fb
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkmho2oACgkQRel1vVwhjGV7fQCeP90ioDa9p2KhiZ/xF1FZPUCb
+9g0AnR446HRt3jyBqDszWvOgNEhmoId8
+=DXEZ
+-----END PGP SIGNATURE-----
+
+--VS++wcV0S1rZb1Fb--
