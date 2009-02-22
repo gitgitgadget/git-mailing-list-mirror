@@ -1,107 +1,254 @@
-From: =?ISO-8859-1?Q?Marc=2DAndr=E9_Lureau?= <marcandre.lureau@gmail.com>
-Subject: Re: [PATCH/RFC 4/6] object: add one bit to let creation of private 
-	types (OBJ_MAX + n)
-Date: Sun, 22 Feb 2009 20:35:05 +0200
-Message-ID: <e29894ca0902221035s54e005adg586409754966cfcc@mail.gmail.com>
-References: <e29894ca0902221006u77fdaa89s9cc01fb27bffce0b@mail.gmail.com>
-	 <7vocwuxrgb.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 22 19:36:50 2009
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: [tig PATCH v2bis 2/2] Popup menu: redraw as needed
+Date: Sun, 22 Feb 2009 19:36:32 +0100
+Message-ID: <1235327792-12338-1-git-send-email-giuseppe.bilotta@gmail.com>
+References: <1235311778-11112-3-git-send-email-giuseppe.bilotta@gmail.com>
+Cc: git@vger.kernel.org, Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: Jonas Fonseca <jonas.fonseca@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 22 19:38:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbJBu-0004gb-DW
-	for gcvg-git-2@gmane.org; Sun, 22 Feb 2009 19:36:38 +0100
+	id 1LbJDN-000598-M1
+	for gcvg-git-2@gmane.org; Sun, 22 Feb 2009 19:38:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751797AbZBVSfL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Feb 2009 13:35:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751779AbZBVSfK
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Feb 2009 13:35:10 -0500
-Received: from nf-out-0910.google.com ([64.233.182.189]:63722 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751472AbZBVSfI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 Feb 2009 13:35:08 -0500
-Received: by nf-out-0910.google.com with SMTP id d21so370570nfb.21
-        for <git@vger.kernel.org>; Sun, 22 Feb 2009 10:35:06 -0800 (PST)
+	id S1751856AbZBVSgk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Feb 2009 13:36:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751844AbZBVSgk
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Feb 2009 13:36:40 -0500
+Received: from mail-fx0-f167.google.com ([209.85.220.167]:51412 "EHLO
+	mail-fx0-f167.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751800AbZBVSgj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Feb 2009 13:36:39 -0500
+Received: by fxm11 with SMTP id 11so1123346fxm.13
+        for <git@vger.kernel.org>; Sun, 22 Feb 2009 10:36:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=7Rj8qvaS2AePfcD1uVSt7aUwozfPvfvjbNNC4CyDvLI=;
-        b=C7e23urm8v5gleVYe27pfAfZsg5mkf33MB3zgTC/L2husoOQoMiMyrs8hyHhb5PDNq
-         7QlSrfA2PUFj0CiwRwdN+NAqrn3Y5wPlL9+deV0/lUOMnryqcHSk4lz7wQWm/d0AqX7K
-         gqM+ohPYFSzuZ4w7oXQHRiaU/7Ji406Z2sYL8=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=MHgMHKTSPMETp7WEFCbIAPtcIET9V0weHQ5sVtJSvg0=;
+        b=arW4nlltHSOVcqLy43JMT5Gz0SH0+eMTZq9NnYmACuWtzED9JjmjQAdrXhqz0p4l5a
+         rVpVIhWle2EQLt1sd5D78ds6OcUE4HDUYG5Fls817EMSAU7HyZvecymfTOQq44gum5iD
+         HoBtuyvoepJT1NuO3rm7XNPap+KvGcLNeOjDs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=XsRIhyIpbEueuHoJ/J+PuoiqrzM2ScFn8a1gHzKCnp9RGaOwWc+fxoos+2rCOR1c0B
-         DaFkrl88wNPevunHh54CX3WgOqGp3eu0dSafMzd2UJKQL/E3ErD2pNx79KGBn0xUTeM8
-         KUOKEThox3Wmn+3u6k21qJKWS7pVIJwlIIn5o=
-Received: by 10.210.119.5 with SMTP id r5mr2728824ebc.64.1235327705916; Sun, 
-	22 Feb 2009 10:35:05 -0800 (PST)
-In-Reply-To: <7vocwuxrgb.fsf@gitster.siamese.dyndns.org>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=sbMLtat0yd02g7Z26Go/y9UlASiDi6HR98Mkh3yY0rPLd1Qg6EU9hAYNS8wNzuOIWz
+         5qHEhxJ5emJiqRFxhSQ3goq5Ev5akp0q0WP8LA5bT6wtoikF0fHdaxoYb2wCcbNeYW90
+         1ZrzzBPIQ3kEh4EA0EoU7tAr5/7hiNW8J7yBY=
+Received: by 10.103.198.20 with SMTP id a20mr2889203muq.63.1235327797187;
+        Sun, 22 Feb 2009 10:36:37 -0800 (PST)
+Received: from localhost (host-78-15-3-150.cust-adsl.tiscali.it [78.15.3.150])
+        by mx.google.com with ESMTPS id i7sm1776534mue.44.2009.02.22.10.36.35
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 22 Feb 2009 10:36:36 -0800 (PST)
+X-Mailer: git-send-email 1.6.2.rc1.258.g1d592.dirty
+In-Reply-To: <1235311778-11112-3-git-send-email-giuseppe.bilotta@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111045>
 
-Hi
+Redraw the popup menu after a resize or an update during background
+loading.
 
-On Sun, Feb 22, 2009 at 8:21 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Marc-Andr=E9 Lureau <marcandre.lureau@gmail.com> writes:
->
->> ---
->>  object.h |    2 +-
->>  1 files changed, 1 insertions(+), 1 deletions(-)
->>
->> diff --git a/object.h b/object.h
->> index 89dd0c4..83d3644 100644
->> --- a/object.h
->> +++ b/object.h
->> @@ -21,7 +21,7 @@ struct object_array {
->>       } *objects;
->>  };
->>
->> -#define TYPE_BITS   3
->> +#define TYPE_BITS   4
->>  #define FLAG_BITS  27
->
-> This would increase the value of (TYPE_BITS+FLAG_BITS).  We spent a l=
-ot of
-> effect to keep sizeof(struct object) to absolute minimum, and you nee=
-d to
-> have a very good reason if you are breaking it.
->
->
+Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+---
+Of course, I forgot some leftovers here too. Here's the cleaned up patch for this.
 
-Ooops. Ok, I should try to think harder how to have my own tag_list. I
-only store a struct tag or a struct light_tag currently.
+ tig.c |  126 ++++++++++++++++++++++++++++++++++++++++++-----------------------
+ 1 files changed, 82 insertions(+), 44 deletions(-)
 
-One option is to reuse the struct tag, by adding a "light" flag, but I
-am not fond of this idea.
-
-Second option is to create a custom tag list in builtin-tag.c, not
-reusing object_list. I guess this is better then.  What do you think?
-
-=46or example:
-
-struct tag_list {
- struct object *item;
- int light; /* item is a struct light_tag */
- struct object_list *next;
-}
-
-thanks,
-
---=20
-Marc-Andr=E9 Lureau
-Sent from: Helsinki Southern Finland Finland.
+diff --git a/tig.c b/tig.c
+index 9b9c34b..1d7dcce 100644
+--- a/tig.c
++++ b/tig.c
+@@ -2274,6 +2274,8 @@ resize_display(void)
+ 	}
+ }
+ 
++static void menu_redraw(void);
++
+ static void
+ redraw_display(bool clear)
+ {
+@@ -2286,6 +2288,8 @@ redraw_display(bool clear)
+ 		redraw_view(view);
+ 		update_view_title(view);
+ 	}
++
++	menu_redraw();
+ }
+ 
+ static void
+@@ -2952,6 +2956,10 @@ update_view(struct view *view)
+ 	/* Update the title _after_ the redraw so that if the redraw picks up a
+ 	 * commit reference in view->ref it'll be available here. */
+ 	update_view_title(view);
++
++	/* Redraw menu if needed */
++	menu_redraw();
++
+ 	return TRUE;
+ }
+ 
+@@ -6549,6 +6557,9 @@ utf8_length(const char **start, size_t skip, int *width, size_t max_width, int *
+ struct popup {
+ 	WINDOW *win;
+ 	int width;
++	int height;
++	const char *title;
++	const struct menu_item *items;
+ 	bool hotkeys;
+ 	int selected;
+ };
+@@ -6557,6 +6568,32 @@ static struct popup menu;
+ 
+ 
+ static void
++menu_set_line_attr(int index, enum line_type type)
++{
++	WINDOW *win = menu.win;
++	int width = menu.width-2;
++	mvwchgat(win, index+1, 1, width,
++			get_line_attr(type), type, NULL);
++}
++
++static void
++menu_putline(int index, const struct menu_item *item, bool selected)
++{
++	WINDOW *win = menu.win;
++	bool hotkeys = menu.hotkeys;
++	if (hotkeys) {
++		if (item->hotkey)
++			mvwprintw(win, index+1, 2, "[%c] %s", (char) item->hotkey, item->text);
++		else
++			mvwprintw(win, index+1, 6, "%s", item->text);
++	} else {
++		mvwprintw(win, index+1, 2, "%s", item->text);
++	}
++	if (selected)
++		menu_set_line_attr(index, LINE_CURSOR);
++}
++
++static void
+ menu_popup(void)
+ {
+ 	wnoutrefresh(menu.win);
+@@ -6571,55 +6608,60 @@ menu_popdown(void)
+ }
+ 
+ static void
+-menu_create(int height, int width, const char* title, bool hotkeys)
++menu_redraw(void)
+ {
+-	WINDOW *win;
+-	int ymax, xmax, top, left;
+-	enum line_type type = LINE_TITLE_FOCUS;
++	WINDOW *win = menu.win;
++	if (win)
++	{
++		int width = menu.width;
++		int height = menu.height;
++		const char *title = menu.title;
++		const struct menu_item *items = menu.items;
+ 
+-	getmaxyx(stdscr, ymax, xmax);
+-	top = (ymax - height)/2;
+-	left = (xmax - width)/2;
+-	if (top < 0)
+-		top = 0;
+-	if (left < 0)
+-		left = 0;
++		int ymax, xmax, top, left;
++		enum line_type type = LINE_TITLE_FOCUS;
++		int i;
+ 
+-	win = newwin(height, width, top, left);
+-	wbkgd(win, COLOR_PAIR(type));
++		getmaxyx(stdscr, ymax, xmax);
++		top = (ymax - height)/2;
++		left = (xmax - width)/2;
++		if (top < 0)
++			top = 0;
++		if (left < 0)
++			left = 0;
+ 
+-	box(win, 0, 0);
+-	wattrset(win, get_line_attr(type));
+-	mvwprintw(win, 0, (width-strlen(title))/2, " %s ", title);
++		mvwin(win, top, left);
++		wbkgd(win, COLOR_PAIR(type));
+ 
+-	menu.win = win;
+-	menu.width = width;
+-	menu.hotkeys = hotkeys;
+-	menu.selected = -1;
+-}
++		box(win, 0, 0);
++		wattrset(win, get_line_attr(type));
++		mvwprintw(win, 0, (width-strlen(title))/2, " %s ", title);
+ 
+-static void
+-menu_set_line_attr(int index, enum line_type type)
+-{
+-	WINDOW *win = menu.win;
+-	int width = menu.width-2;
+-	mvwchgat(win, index+1, 1, width,
+-			get_line_attr(type), type, NULL);
++		for (i=0; items[i].text; ++i)
++			menu_putline(i, &items[i], i==menu.selected);
++
++		menu_popup();
++	}
+ }
+ 
+ static void
+-menu_putline(int index, const struct menu_item *item)
++menu_create(int height, int width, const char *title, const struct menu_item *items)
+ {
+-	WINDOW *win = menu.win;
+-	bool hotkeys = menu.hotkeys;
+-	if (hotkeys) {
+-		if (item->hotkey)
+-			mvwprintw(win, index+1, 2, "[%c] %s", (char) item->hotkey, item->text);
+-		else
+-			mvwprintw(win, index+1, 6, "%s", item->text);
+-	} else {
+-		mvwprintw(win, index+1, 2, "%s", item->text);
+-	}
++	int i=0;
++	menu.win = newwin(height, width, 0, 0);
++	menu.width = width;
++	menu.height = height;
++	menu.title = title;
++	menu.items = items;
++	menu.hotkeys = false;
++	for(;items[i].text;++i)
++		if (items[i].hotkey) {
++			menu.hotkeys=true;
++			break;
++		}
++	menu.selected = -1;
++
++	menu_redraw();
+ }
+ 
+ static void
+@@ -6943,11 +6985,7 @@ static bool prompt_menu(const char *prompt, const struct menu_item *items, int *
+ 	/* padding */
+ 	width += hotkeys ? 8 : 4;
+ 
+-	menu_create(size+2, width, prompt, hotkeys);
+-	for (i=0; i < size; ++i)
+-		menu_putline(i, &items[i]);
+-	menu_popup();
+-
++	menu_create(size+2, width, prompt, items);
+ 
+ 	while (status == INPUT_OK) {
+ 		const struct menu_item *item = &items[*selected];
+-- 
+1.6.2.rc1.258.g1d592.dirty
