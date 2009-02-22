@@ -1,114 +1,82 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH B v4 5/5] git config: don't allow --get-color* and 
-	variable type
-Date: Sun, 22 Feb 2009 19:12:07 +0200
-Message-ID: <94a0d4530902220912r94e00d6ha7592bc397baa57c@mail.gmail.com>
-References: <1235177369-2727-1-git-send-email-felipe.contreras@gmail.com>
-	 <1235177369-2727-2-git-send-email-felipe.contreras@gmail.com>
-	 <1235177369-2727-3-git-send-email-felipe.contreras@gmail.com>
-	 <1235177369-2727-4-git-send-email-felipe.contreras@gmail.com>
-	 <1235177369-2727-5-git-send-email-felipe.contreras@gmail.com>
-	 <1235177369-2727-6-git-send-email-felipe.contreras@gmail.com>
-	 <7vmyce2z9q.fsf@gitster.siamese.dyndns.org>
+From: Rogan Dawes <lists@dawes.za.net>
+Subject: Re: merge smart enough to adapt to renames?
+Date: Sun, 22 Feb 2009 19:13:49 +0200
+Message-ID: <49A187CD.2020403@dawes.za.net>
+References: <81bfc67a0902182212h578e677ck6029c56cb86f7bce@mail.gmail.com>	 <slrngpqquq.j03.sitaramc@sitaramc.homelinux.net>	 <81bfc67a0902191158x5f0f92d1p7e4af2f9cda50a12@mail.gmail.com>	 <slrngprunn.hbo.sitaramc@sitaramc.homelinux.net>	 <81bfc67a0902191817u11361d0bw1f2215a53e284f8f@mail.gmail.com>	 <499E5A9C.6090900@dawes.za.net>	 <e51f4f550902202048g9a210f0t8fefaee4d8376f6c@mail.gmail.com> <81bfc67a0902211700m7a0d0ae8jd17a871ba102fd9f@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 22 18:13:40 2009
+Content-Transfer-Encoding: 7bit
+Cc: Kris Shannon <kris@shannon.id.au>,
+	Sitaram Chamarty <sitaramc@gmail.com>, git@vger.kernel.org
+To: Caleb Cushing <xenoterracide@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 22 18:15:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbHtc-0003CR-AS
-	for gcvg-git-2@gmane.org; Sun, 22 Feb 2009 18:13:40 +0100
+	id 1LbHvJ-0003nN-Lr
+	for gcvg-git-2@gmane.org; Sun, 22 Feb 2009 18:15:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751855AbZBVRMN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Feb 2009 12:12:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751416AbZBVRML
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Feb 2009 12:12:11 -0500
-Received: from fg-out-1718.google.com ([72.14.220.154]:36913 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751204AbZBVRMK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 Feb 2009 12:12:10 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so2538320fgg.17
-        for <git@vger.kernel.org>; Sun, 22 Feb 2009 09:12:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=wgZI6ImM2ww9vQLCPgXibR9MwQJ70w35YxBklFS9kug=;
-        b=lHWBWza52/VcQXNRDPlBxXhJpfdz0qvU5Jz4EVNwsuI6x4c2CkjVWbswo3uksgCF5y
-         B3/FWZ+k2qXL31kK/46AnVwxSnk72tsiIKINGxV4eOtQwsfek8Fvg7dqQxrbJFhiq/ZS
-         a4iU4sbau5idgjFcIHnzuL+KaRucdiX0UqJ78=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=dVJQs/rBrljKqNZK2vd+FG8PCwP/JH/WlT4oeb6Gkw5D8Jx/+0q2XyvzUcKqC3+39W
-         9dgKxn3Mr0x50pih6mOgQKlMU+KE7qaz2sqIMl0RgV8/TXu59t8jkaq+hdnkx1KuDSE9
-         iLAKC8fjPAjPpx6fMvzGN7BwFYfD/porp7ub4=
-Received: by 10.86.53.11 with SMTP id b11mr2375801fga.23.1235322727805; Sun, 
-	22 Feb 2009 09:12:07 -0800 (PST)
-In-Reply-To: <7vmyce2z9q.fsf@gitster.siamese.dyndns.org>
+	id S1752169AbZBVRN6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Feb 2009 12:13:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752407AbZBVRN5
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Feb 2009 12:13:57 -0500
+Received: from sd-green-bigip-177.dreamhost.com ([208.97.132.177]:38044 "EHLO
+	spunkymail-a3.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751891AbZBVRN4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Feb 2009 12:13:56 -0500
+Received: from [192.168.201.113] (unknown [41.246.15.173])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by spunkymail-a3.g.dreamhost.com (Postfix) with ESMTP id 0F81C15D4EA;
+	Sun, 22 Feb 2009 09:13:53 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.19 (Macintosh/20081209)
+In-Reply-To: <81bfc67a0902211700m7a0d0ae8jd17a871ba102fd9f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111023>
 
-On Sun, Feb 22, 2009 at 6:48 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> Doing so would be incoherent since --get-color would pick a color sl=
-ot
->> and ignore the variable type option (e.g. --bool), and the type woul=
-d
->> require a variable name.
+Caleb Cushing wrote:
+> On Fri, Feb 20, 2009 at 11:48 PM, Kris Shannon <kris@shannon.id.au> wrote:
+>> Rogan Dawes wrote:
+>>> It seems to me that git is smart enough to figure out where contents get
+>>> moved to, once. Of course, if you have conflicting moves in the same
+>>> repo, git's automation falls down. So, if you need to move the "same"
+>>> file in different repositories to different places, you need to do it
+>>> via an intermediate repo that will be able to "remember" which movement
+>>> you chose.
+>> You don't need a whole different repo,  branches are good enough.
 >>
->> Suggested by Junio C Hamano.
+>> git checkout gentoo-integration
+>> git pull gentoo
 >>
->> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->> ---
->> =C2=A0builtin-config.c | =C2=A0 =C2=A05 +++++
->> =C2=A01 files changed, 5 insertions(+), 0 deletions(-)
+>> git checkout sunrise-integration
+>> git pull sunrise
 >>
->> diff --git a/builtin-config.c b/builtin-config.c
->> index 8045926..9930568 100644
->> --- a/builtin-config.c
->> +++ b/builtin-config.c
->> @@ -359,6 +359,11 @@ int cmd_config(int argc, const char **argv, con=
-st char *unused_prefix)
->> =C2=A0 =C2=A0 =C2=A0 if (get_colorbool_slot)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 actions |=3D ACTION_GET_COLORBOOL=
-;
+>> git checkout master
+>> git merge gentoo
+>> git merge sunrise
 >>
->> + =C2=A0 =C2=A0 if ((get_color_slot || get_colorbool_slot) && types)=
- {
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error("--get-color and v=
-ariable type are incoherent");
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 usage_with_options(built=
-in_config_usage, builtin_config_options);
->> + =C2=A0 =C2=A0 }
->> +
->
-> I do not think I suggested anything like this, so I'd decline to take
-> credit for this patch.
->
-> Strictly speaking, "--bool --get-colorbool diff.color 1" shouldn't er=
-ror
-> out, don't you think? =C2=A0And it certainly shouldn't say "--get-col=
-or".
+>> The integration branches can remember your local changes to
+>> the remotes (like the move of packages.mask)
+>>
+> 
+> it sounds like a decent plan on paper... but when you realize each
+> checkout is 100,000+ files...to where as if I create a repo just for
+> it... it ends up being like 5 files... and I'm not entirely sure that
+> has much of a negative side effect... other than... yet another
+> remote...
+> 
 
-Huh? I misinterpreted:
-I see "git config --bool --get-color diff.color.whitespace" is still
-allowed, which you might want to tighten further.
+Well, if you use an "integration branch", rather than a whole separate
+repository, that should simplify things, I think.
 
-I don't really understand the --get-color* options, so please drop the =
-patch.
+And, if the differences between the branches are limited to those 5
+files, a checkout (if you even really need to check it out) will only
+update those files that are different between the branches. It may even
+be possible to do an "in index" merge, without even having a checkout,
+if there are no conflicts.
 
---=20
-=46elipe Contreras
+Rogan
