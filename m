@@ -1,123 +1,77 @@
-From: Eugene Letuchy <eletuchy@gmail.com>
-Subject: Re: [PATCH 1/2] Make git blame's date output format configurable, 
-	like git log
-Date: Mon, 23 Feb 2009 01:09:13 -0800
-Message-ID: <fbb390660902230109k15ed55b7le2ab08bb7dc274b6@mail.gmail.com>
-References: <1235170271-10694-1-git-send-email-eletuchy@gmail.com>
-	 <20090222230358.GA19011@coredump.intra.peff.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH/RFC 0/6] sort tags by date (git tag -l -D)
+Date: Mon, 23 Feb 2009 10:11:51 +0100
+Message-ID: <200902231011.54574.trast@student.ethz.ch>
+References: <e29894ca0902221006s1c1af9f9o8c13ff9e06670d95@mail.gmail.com> <200902231004.25784.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/signed;
+  boundary="nextPart308866485.jO7IGpsXAk";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org,
-	Eugene Letuchy <eugene@facebook.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 23 10:10:52 2009
+Cc: git@vger.kernel.org
+To: "=?utf-8?q?Marc-Andr=C3=A9?= Lureau" <marcandre.lureau@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 23 10:13:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbWpv-0000Lx-2x
-	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 10:10:51 +0100
+	id 1LbWsb-0001Bg-9Z
+	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 10:13:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752032AbZBWJJT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Feb 2009 04:09:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751949AbZBWJJS
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 04:09:18 -0500
-Received: from mail-bw0-f161.google.com ([209.85.218.161]:58781 "EHLO
-	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752014AbZBWJJQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2009 04:09:16 -0500
-Received: by bwz5 with SMTP id 5so4490883bwz.13
-        for <git@vger.kernel.org>; Mon, 23 Feb 2009 01:09:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=7mr9kafsp/qnmHyenIQIlAApX80klfyjAAA2YNm/IEY=;
-        b=XZhgZ97C1AWWKwzCBLcj/uAnXFXAbP2PmyVZq/Uw7R1VSBVFJwdnjTmeR6a8ZkoQfM
-         tuC7vWG2rusXwa2gm82BozttAlqJNoeZkit8r9lrPLL8Ooc672ElLHGIrNY8IyMLWx3t
-         xy3ijnRS2EcHfbfuIWBH7mKrAKloke44Hf3IE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=WTjB2eHEO2xfQXPzw/0tmGFiSt1sEbsIX18oRA9hq79NXn1wpaneMhZgPT/1NoEkxa
-         v+hLXa9yzl1FUjCV1Ub9sdbc9NbKsfjgSNxUJzToNQwhfwnOe0TwseXWD+gYBXA2t9wZ
-         uDL0nre71UCwELJj4sWADGjZr2X3RXNYwmiUQ=
-Received: by 10.181.134.11 with SMTP id l11mr1457943bkn.73.1235380153624; Mon, 
-	23 Feb 2009 01:09:13 -0800 (PST)
-In-Reply-To: <20090222230358.GA19011@coredump.intra.peff.net>
+	id S1752070AbZBWJMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2009 04:12:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751892AbZBWJMI
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 04:12:08 -0500
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:38140 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751891AbZBWJMH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2009 04:12:07 -0500
+Received: from xfe1.d.ethz.ch ([82.130.124.41]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 23 Feb 2009 10:12:05 +0100
+Received: from thomas.localnet ([129.132.153.233]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 23 Feb 2009 10:12:05 +0100
+User-Agent: KMail/1.11.0 (Linux/2.6.27.7-9-default; KDE/4.2.0; x86_64; ; )
+In-Reply-To: <200902231004.25784.trast@student.ethz.ch>
+X-OriginalArrivalTime: 23 Feb 2009 09:12:05.0079 (UTC) FILETIME=[CBA1EE70:01C99596]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111125>
 
-On Sun, Feb 22, 2009 at 3:03 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Feb 20, 2009 at 02:51:11PM -0800, eletuchy@gmail.com wrote:
->
->> @@ -1975,6 +1975,9 @@ static int git_blame_config(const char *var, const char *value, void *cb)
->>               blank_boundary = git_config_bool(var, value);
->>               return 0;
->>       }
->> +     if (!strcmp(var, "blame.date") && value[0]) {
->> +             blame_date_mode = parse_date_format(value);
->> +     }
->>       return git_default_config(var, value, cb);
->>  }
->
-> When there is a config value we are expecting to have a value rather
-> than a boolean, we usually print an error rather than silently
-> discarding. IOW, something like this:
->
->  if (!strcmp(var, "blame.date")) {
->          if (!value)
->                  return config_error_nonbool(var);
->          blame_date_mode = parse_date_format(value);
->  }
->
+--nextPart308866485.jO7IGpsXAk
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-I'll make that change to the patch.
+Thomas Rast wrote:
+> Marc-Andr=E9 Lureau wrote:
+> > I needed to sort my tags by date, and not only the annotated tags.
+>=20
+> As others have pointed out, there's no sane way to sort
+=2E.. lightweight tags of blobs or trees.
 
->> +     switch (blame_date_mode) {
->> +     case DATE_RFC2822:
->> +             blame_date_width = sizeof("Thu, 19 Oct 2006 16:00:04 -0700");
->> +             break;
->> +     case DATE_ISO8601:
->> +             blame_date_width = sizeof("2006-10-19 16:00:04 -0700");
->> +             break;
->> +     case DATE_SHORT:
->> +             blame_date_width = sizeof("2006-10-19");
->> +             break;
->> +     case DATE_RELATIVE:
->> +             /* unfortunately "normal" is the fallback for "relative" */
->> +             /* blame_date_width = sizeof("14 minutes ago"); */
->> +             /* break; */
->> +     case DATE_LOCAL:
->> +     case DATE_NORMAL:
->> +             blame_date_width = sizeof("Thu Oct 19 16:00:04 2006 -0700");
->> +             break;
->> +     }
->> +     blame_date_width -= 1; /* strip the null */
->
-> Maybe this should be a date_format_width() library function?
->
+*sigh*
 
-I think that's a possible change, but unfortunately my next two
-patches would not apply cleanly with a date_format_width change.
+Also, do not take my shell command to mean that I don't like this
+series.  It would be nice to have a porcelain feature for it.
 
-I'm a n00b with respect to git contribution, but is there a procedure
-for pushing my blame_date branch remotely so that it's possible to
-track a series of patches?
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
 
->
-> Other than that, the patch looks reasonable to me.
->
-> -Peff
->
+--nextPart308866485.jO7IGpsXAk
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
+iEYEABECAAYFAkmiaFoACgkQqUud07tmzP1rNACgnW3pimAUxT7b7+7HSGs4k4d0
+Vz4Anjnba+4Km6QMZ1veYQA7NMT3cXH6
+=9w6F
+-----END PGP SIGNATURE-----
 
--- 
-Eugene
+--nextPart308866485.jO7IGpsXAk--
