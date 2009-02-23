@@ -1,138 +1,84 @@
-From: eletuchy@gmail.com
-Subject: [PATCH] adds --date=raw support to git blame and related documentation
-Date: Mon, 23 Feb 2009 00:57:09 -0800
-Message-ID: <1235379429-20934-1-git-send-email-eletuchy@gmail.com>
-Cc: eletuchy@facebook.com, Eugene Letuchy <eugene@facebook.com>
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 23 09:58:44 2009
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH/RFC 0/6] sort tags by date (git tag -l -D)
+Date: Mon, 23 Feb 2009 10:04:23 +0100
+Message-ID: <200902231004.25784.trast@student.ethz.ch>
+References: <e29894ca0902221006s1c1af9f9o8c13ff9e06670d95@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+  boundary="nextPart3602218.sc872Qqi63";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "=?utf-8?q?Marc-Andr=C3=A9?= Lureau" <marcandre.lureau@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 23 10:07:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbWe9-0004LG-NF
-	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 09:58:42 +0100
+	id 1LbWlN-0006hu-GX
+	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 10:06:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751758AbZBWI5N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Feb 2009 03:57:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751557AbZBWI5N
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 03:57:13 -0500
-Received: from outmail001.ash1.tfbnw.net ([69.63.184.101]:34937 "EHLO
-	mx-out.facebook.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750971AbZBWI5M (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2009 03:57:12 -0500
-Received: from [10.18.255.178] ([10.18.255.178:44880] helo=facebook.com)
-	by mta004.ash1.facebook.com (envelope-from <eletuchy@facebook.com>)
-	(ecelerity 2.2.2.37 r(28805/28844)) with ESMTP
-	id 7A/AB-17105-6E462A94; Mon, 23 Feb 2009 00:57:10 -0800
-Received: by dev051.snc1.facebook.com (Postfix, from userid 1200)
-	id A4E7411C217; Mon, 23 Feb 2009 00:57:09 -0800 (PST)
-X-Mailer: git-send-email 1.6.2.rc1.14.g07c3.dirty
+	id S1751828AbZBWJEl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2009 04:04:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751571AbZBWJEk
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 04:04:40 -0500
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:35807 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750963AbZBWJEj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2009 04:04:39 -0500
+Received: from xfe1.d.ethz.ch ([82.130.124.41]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 23 Feb 2009 10:04:37 +0100
+Received: from thomas.localnet ([129.132.153.233]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 23 Feb 2009 10:04:36 +0100
+User-Agent: KMail/1.11.0 (Linux/2.6.27.7-9-default; KDE/4.2.0; x86_64; ; )
+In-Reply-To: <e29894ca0902221006s1c1af9f9o8c13ff9e06670d95@mail.gmail.com>
+X-OriginalArrivalTime: 23 Feb 2009 09:04:36.0814 (UTC) FILETIME=[C0721EE0:01C99595]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111123>
 
-From: Eugene Letuchy <eugene@facebook.com>
+--nextPart3602218.sc872Qqi63
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-In the wake of Linus' 7dff9b3, git blame --date support needs to
-incorporate --date=raw in addition to the previously supported
-date formats.
+Marc-Andr=E9 Lureau wrote:
+> I needed to sort my tags by date, and not only the annotated tags.
 
-Test: > git grep relative | grep iso | grep -v raw
-      > git blame --date=raw builtin-blame.c
+As others have pointed out, there's no sane way to sort=20
 
-Signed-off-by: Eugene Letuchy <eugene@facebook.com>
----
- Documentation/blame-options.txt        |    4 ++--
- Documentation/config.txt               |    2 +-
- Documentation/git-rev-list.txt         |    2 +-
- builtin-blame.c                        |    6 +++++-
- contrib/completion/git-completion.bash |    2 +-
- 5 files changed, 10 insertions(+), 6 deletions(-)
+> I was surprised that git tag didn't know how to do that. May be it
+> could be handled simply by some shell script. Please tell me :)
 
-diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
-index e6717af..1316d4e 100644
---- a/Documentation/blame-options.txt
-+++ b/Documentation/blame-options.txt
-@@ -36,7 +36,7 @@ of lines before or after the line given by <start>.
- 	Show long rev (Default: off).
- 
- -t::
--	Show raw timestamp (Default: off).
-+	Synomym for --date=raw (Default: off).
- 
- -S <revs-file>::
- 	Use revs from revs-file instead of calling linkgit:git-rev-list[1].
-@@ -72,7 +72,7 @@ of lines before or after the line given by <start>.
- 
- --date <format>::
- 	The value is one of the following alternatives:
--	{relative,local,default,iso,rfc,short}. If --date is not
-+	{relative,local,default,iso,rfc,short,raw}. If --date is not
- 	provided, the value of the blame.date config variable is
- 	used. If the blame.date config variable is also not set, the
- 	iso format is used. For more information, See the discussion
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index f5152c5..f73d569 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1010,7 +1010,7 @@ interactive.singlekey::
- log.date::
- 	Set default date-time mode for the log command. Setting log.date
- 	value is similar to using 'git-log'\'s --date option. The value is one of the
--	following alternatives: {relative,local,default,iso,rfc,short}.
-+	following alternatives: {relative,local,default,iso,rfc,short,raw}.
- 	See linkgit:git-log[1].
- 
- log.showroot::
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
-index 1c9cc28..c226601 100644
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -35,7 +35,7 @@ SYNOPSIS
- 	     [ \--regexp-ignore-case | -i ]
- 	     [ \--extended-regexp | -E ]
- 	     [ \--fixed-strings | -F ]
--	     [ \--date={local|relative|default|iso|rfc|short} ]
-+	     [ \--date={local|relative|default|iso|rfc|short|raw} ]
- 	     [ [\--objects | \--objects-edge] [ \--unpacked ] ]
- 	     [ \--pretty | \--header ]
- 	     [ \--bisect ]
-diff --git a/builtin-blame.c b/builtin-blame.c
-index 48cedfd..bb0d20b 100644
---- a/builtin-blame.c
-+++ b/builtin-blame.c
-@@ -2288,12 +2288,16 @@ parse_done:
- 	case DATE_RELATIVE:
- 		blame_date_width = sizeof("14 minutes ago");
- 		break;
-+	case DATE_RAW:
-+		blame_date_width = sizeof("1235155266 -0800");
-+		output_option |= OUTPUT_RAW_TIMESTAMP;
-+		break;
- 	case DATE_LOCAL:
- 	case DATE_NORMAL:
- 		blame_date_width = sizeof("Thu Oct 19 16:00:04 2006 -0700");
- 		break;
- 	}
--	blame_date_width -= 1; /* strip the null */
-+	blame_date_width -= 1; /* strip the terminating null */
- 
- 	if (DIFF_OPT_TST(&revs.diffopt, FIND_COPIES_HARDER))
- 		opt |= (PICKAXE_BLAME_COPY | PICKAXE_BLAME_MOVE |
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 0a3092f..3454c1b 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1016,7 +1016,7 @@ _git_log ()
- 		;;
- 	--date=*)
- 		__gitcomp "
--			relative iso8601 rfc2822 short local default
-+			relative iso8601 rfc2822 short local default raw
- 		" "" "${cur##--date=}"
- 		return
- 		;;
--- 
-1.6.2.rc1.14.g07c3.dirty
+Modulo timezone differences
+
+  git for-each-ref --format=3D"%(taggerdate:raw)%(committerdate:raw) %(refn=
+ame:short)" refs/tags | sort -n | cut -d\  -f3
+
+=46or some neat reason only one of the dates is displayed, depending on
+the type of object.
+
+(Interestingly, the v0.99 tag in git.git doesn't have a date or
+tagger...)
+
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
+
+--nextPart3602218.sc872Qqi63
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkmiZpkACgkQqUud07tmzP00oQCgiLGIkX9FNFkTIxDLAYnbuf63
+idAAoI23uRTHYM7TPuvEmneMuE+CAsN0
+=IRL4
+-----END PGP SIGNATURE-----
+
+--nextPart3602218.sc872Qqi63--
