@@ -1,7 +1,7 @@
 From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH 06/13] string-list: new for_each_string_list() function
-Date: Mon, 23 Feb 2009 01:28:54 -0500
-Message-ID: <a9a03697661905ebaa836d19eb03762c046e4a7a.1235368324.git.jaysoffian@gmail.com>
+Subject: [PATCH 04/13] remote: make get_remote_ref_states() always populate states.tracked
+Date: Mon, 23 Feb 2009 01:28:52 -0500
+Message-ID: <2185ca69c518d60276ba1bc613b7699a6bca7c68.1235368324.git.jaysoffian@gmail.com>
 References: <cover.1235368324.git.jaysoffian@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -15,94 +15,130 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbULM-00072Y-Jh
-	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 07:31:09 +0100
+	id 1LbULL-00072Y-Sq
+	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 07:31:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752127AbZBWG3Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Feb 2009 01:29:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752065AbZBWG3X
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 01:29:23 -0500
-Received: from yw-out-2324.google.com ([74.125.46.29]:65371 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751762AbZBWG3S (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2009 01:29:18 -0500
-Received: by yw-out-2324.google.com with SMTP id 5so749063ywh.1
-        for <git@vger.kernel.org>; Sun, 22 Feb 2009 22:29:18 -0800 (PST)
+	id S1752043AbZBWG3V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2009 01:29:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751847AbZBWG3S
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 01:29:18 -0500
+Received: from yx-out-2324.google.com ([74.125.44.29]:12887 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751984AbZBWG3P (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2009 01:29:15 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so746768yxm.1
+        for <git@vger.kernel.org>; Sun, 22 Feb 2009 22:29:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=KyiIr7WhLzPxz9wThFosb8ubGQj4NC5WrSSwYSAZNRs=;
-        b=Kxbo4o1PcKnFcpISSwYOUL5wdcIyIberJHmGxsXa3dskNKPvjFq/jfFqpHNr+vJYE2
-         5eO6epXMKkAIf8UWv/JamRX0cFICO7Q+oQuQtajHcu5GCJDO5hmQS3tNqUZOystrD8nS
-         eEBw/BhY4UJtsJ4IxgZMs+Im7iV6ajzJPMfu4=
+        bh=pdwQ2QcvV5cViFU03/opxFBjl6nXdM7BFKZkrEnXb1Y=;
+        b=N+SddTrNW1+cnaWztEXxTwdlp2uADqlcSQxUHcFMvot9aRyiXVGQeM3DKTfb0czpYq
+         ZaDFjNYpWm45+TGqbBCnYJpYbcjFjWgkKMoMbshBx9dicVsEmJNzLzosKytOeO4E+aRv
+         M9L6tDKXjX9g1yG78LFwhGuiM+lthzcBj+ZoI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=CFvVMup1LJSqsGhIN0skm1zVrH2xF5swabjoGIZIkF2Kc26NTq2sIRdbWxkGqcJ12u
-         rRqBOjltrATm6zWnIQd0UtPhZ5ukT1qvticeZpKbBYGQcv9jkD/Ba8O3uC/1qdZkZ/uL
-         DjFzy7ETsqQ3nKUU30gjxw8peP6+fosp2yCck=
-Received: by 10.100.45.5 with SMTP id s5mr1484733ans.14.1235370558350;
-        Sun, 22 Feb 2009 22:29:18 -0800 (PST)
+        b=iZoHKMHXmTP2nZG24EiOciXAy462o7kc8+KiB6AQn4SdD1yk4GJC6DkIG9l/msoil+
+         J+RlOw9760OEm9eELwjdTJ7HapVGH0maH+jj6pMlCbjLdmUAcWErOTfkOUhLAAoSDZY2
+         7w0PUKVnXaO2+LNolgF3VKWYxp0xhnDRxyd3s=
+Received: by 10.100.135.16 with SMTP id i16mr143571and.99.1235370554030;
+        Sun, 22 Feb 2009 22:29:14 -0800 (PST)
 Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
-        by mx.google.com with ESMTPS id c40sm7787940anc.48.2009.02.22.22.29.17
+        by mx.google.com with ESMTPS id d35sm12280548and.58.2009.02.22.22.29.12
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 22 Feb 2009 22:29:17 -0800 (PST)
+        Sun, 22 Feb 2009 22:29:13 -0800 (PST)
 X-Mailer: git-send-email 1.6.2.rc1.223.gfed32
 In-Reply-To: <cover.1235368324.git.jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111094>
 
-Add a convenience function for iterating over a string_list's items via
-a callback.
+When not querying the remote, show() was having to populate
+states.tracked itself. It makes more sense for get_remote_ref_states()
+to do this consistently. Since show() is the only caller of
+get_remote_ref_states() with query=0, this change does not affect the
+other call sites.
 
 Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
 ---
- string-list.c |   10 ++++++++++
- string-list.h |    5 +++++
- 2 files changed, 15 insertions(+), 0 deletions(-)
+ builtin-remote.c |   41 ++++++++++++++++++++---------------------
+ 1 files changed, 20 insertions(+), 21 deletions(-)
 
-diff --git a/string-list.c b/string-list.c
-index 15e14cf..1ac536e 100644
---- a/string-list.c
-+++ b/string-list.c
-@@ -92,6 +92,16 @@ struct string_list_item *string_list_lookup(const char *string, struct string_li
- 	return list->items + i;
+diff --git a/builtin-remote.c b/builtin-remote.c
+index 31fbd1e..b61f754 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -656,6 +656,23 @@ static void free_remote_ref_states(struct ref_states *states)
+ 	string_list_clear(&states->heads, 0);
  }
  
-+int for_each_string_list(string_list_each_func_t fn,
-+			 struct string_list *list, void *cb_data)
++static int append_ref_to_tracked_list(const char *refname,
++	const unsigned char *sha1, int flags, void *cb_data)
 +{
-+	int i, ret = 0;
-+	for (i = 0; i < list->nr; i++)
-+		if ((ret = fn(&list->items[i], cb_data)))
-+			break;
-+	return ret;
++	struct ref_states *states = cb_data;
++	struct refspec refspec;
++
++	if (flags & REF_ISSYMREF)
++		return 0;
++
++	memset(&refspec, 0, sizeof(refspec));
++	refspec.dst = (char *)refname;
++	if (!remote_find_tracking(states->remote, &refspec))
++		string_list_append(abbrev_branch(refspec.src), &states->tracked);
++
++	return 0;
 +}
 +
- void string_list_clear(struct string_list *list, int free_util)
- {
- 	if (list->items) {
-diff --git a/string-list.h b/string-list.h
-index d32ba05..14bbc47 100644
---- a/string-list.h
-+++ b/string-list.h
-@@ -20,6 +20,11 @@ void string_list_clear(struct string_list *list, int free_util);
- typedef void (*string_list_clear_func_t)(void *p, const char *str);
- void string_list_clear_func(struct string_list *list, string_list_clear_func_t clearfunc);
+ static int get_remote_ref_states(const char *name,
+ 				 struct ref_states *states,
+ 				 int query)
+@@ -677,28 +694,14 @@ static int get_remote_ref_states(const char *name,
  
-+/* Use this function to iterate over each item */
-+typedef int (*string_list_each_func_t)(struct string_list_item *, void *);
-+int for_each_string_list(string_list_each_func_t,
-+			 struct string_list *list, void *cb_data);
-+
- /* Use these functions only on sorted lists: */
- int string_list_has_string(const struct string_list *list, const char *string);
- int string_list_find_insert_index(const struct string_list *list, const char *string,
+ 		get_head_names(ref, name, states);
+ 		get_ref_states(ref, states);
++	} else {
++		for_each_ref(append_ref_to_tracked_list, states);
++		sort_string_list(&states->tracked);
+ 	}
+ 
+ 	return 0;
+ }
+ 
+-static int append_ref_to_tracked_list(const char *refname,
+-	const unsigned char *sha1, int flags, void *cb_data)
+-{
+-	struct ref_states *states = cb_data;
+-	struct refspec refspec;
+-
+-	if (flags & REF_ISSYMREF)
+-		return 0;
+-
+-	memset(&refspec, 0, sizeof(refspec));
+-	refspec.dst = (char *)refname;
+-	if (!remote_find_tracking(states->remote, &refspec))
+-		string_list_append(abbrev_branch(refspec.src), &states->tracked);
+-
+-	return 0;
+-}
+-
+ static int show(int argc, const char **argv)
+ {
+ 	int no_query = 0, result = 0;
+@@ -757,10 +760,6 @@ static int show(int argc, const char **argv)
+ 				"prune')", &states.stale, "");
+ 		}
+ 
+-		if (no_query) {
+-			for_each_ref(append_ref_to_tracked_list, &states);
+-			sort_string_list(&states.tracked);
+-		}
+ 		show_list("  Tracked remote branch%s", &states.tracked, "");
+ 
+ 		if (states.remote->push_refspec_nr) {
 -- 
 1.6.2.rc1.223.gfed32
