@@ -1,82 +1,137 @@
-From: Yann Simon <yann.simon.fr@gmail.com>
-Subject: Re: [PATCH JGIT] Add "compare with index" action.
-Date: Mon, 23 Feb 2009 10:32:47 +0100
-Message-ID: <551f769b0902230132l6fd70f20xa3d59a5df6768395@mail.gmail.com>
-References: <499E67CD.9020501@gmail.com>
-	 <200902221738.40753.robin.rosenberg.lists@dewire.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: Git rebase aggravation
+Date: Mon, 23 Feb 2009 10:34:04 +0100
+Message-ID: <200902231034.08736.trast@student.ethz.ch>
+References: <22155203.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: multipart/signed;
+  boundary="nextPart3012645.1comeWTEIY";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git <git@vger.kernel.org>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Mon Feb 23 10:34:25 2009
+Cc: git@vger.kernel.org
+To: Myxz Ptlk <Adrian.Klingel@illumaware.com>
+X-From: git-owner@vger.kernel.org Mon Feb 23 10:35:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbXCc-000755-TH
-	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 10:34:19 +0100
+	id 1LbXE6-0007XE-21
+	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 10:35:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752042AbZBWJcu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Feb 2009 04:32:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751265AbZBWJcu
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 04:32:50 -0500
-Received: from mail-fx0-f167.google.com ([209.85.220.167]:56324 "EHLO
-	mail-fx0-f167.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751180AbZBWJct (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2009 04:32:49 -0500
-Received: by fxm11 with SMTP id 11so1516742fxm.13
-        for <git@vger.kernel.org>; Mon, 23 Feb 2009 01:32:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=VWEpHoecpWJ1QEKzHybj5MQeAG+IE+RVP4g1m2nj2WU=;
-        b=gSMJgkHRvZGDkRa3VjFvmXCgDrbGTw+JXf54NwiOLY9RQsxqTcYYUbEh/34KNNZshr
-         JN7kx/yWdcpFoo+ui9f1vUdPsZFpFiaIOcoHqenHgEYT8XihZ1YYFvh1rBRmQX0DCpMN
-         whFwjPdb5jpogs2pdcuhpjrKnC/HRCbqKDiVo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=k5vEbxZPv3yVkOz4mTn+Y/yQTpHub4Qd586woDYf25Hw/l/sgTXPqfmBlwfwUwED9K
-         c8MIL7rFYvCVvFG5JnXLrRzBKdmw1oV0wbvr6CYN3u3rX6d2u1/P53CUiQLRkRvqS6KT
-         lR3Z0pKPfuLBMUgOiyfsGL6k+TPu6iyguFftI=
-Received: by 10.181.2.2 with SMTP id e2mr1459804bki.74.1235381567306; Mon, 23 
-	Feb 2009 01:32:47 -0800 (PST)
-In-Reply-To: <200902221738.40753.robin.rosenberg.lists@dewire.com>
+	id S1752675AbZBWJeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2009 04:34:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752720AbZBWJeW
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 04:34:22 -0500
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:16371 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752080AbZBWJeV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2009 04:34:21 -0500
+Received: from xfe1.d.ethz.ch ([82.130.124.41]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 23 Feb 2009 10:34:19 +0100
+Received: from thomas.localnet ([129.132.153.233]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 23 Feb 2009 10:34:19 +0100
+User-Agent: KMail/1.11.0 (Linux/2.6.27.7-9-default; KDE/4.2.0; x86_64; ; )
+In-Reply-To: <22155203.post@talk.nabble.com>
+X-OriginalArrivalTime: 23 Feb 2009 09:34:19.0283 (UTC) FILETIME=[E6E14E30:01C99599]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111127>
 
-2009/2/22 Robin Rosenberg <robin.rosenberg.lists@dewire.com>:
-> fredag 20 februari 2009 09:20:29 skrev Yann Simon <yann.simon.fr@gmail.com>:
->> In the Compare With... menu, the "compare with index" action opens
->> a diff editor that compares the workspace version of a file and its
->> index version.
->
-> The appearance in the menu is a bit odd. "Compare with" is already in the menu
-> context as that is the name of the menu that hold the Compare with index. So the
-> menu name should be really be just "Git Index".
+--nextPart3012645.1comeWTEIY
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Yes, you're right.
-I can change the labels to:
-CompareWithIndexAction_label=Git Index
-CompareWithIndexAction_tooltip=Compare with Git's index version
+Myxz Ptlk wrote:
+> 1)  Rebase master into zoo.
+>=20
+> 2) Merge zoo into master.
 
->> The local file can be modified and saved.
->>
->> The staged version can be modified and saved. This updates the index.
->> For this, add methods into GitIndex to allow to specify a content
->> different from the file.
->
-> One would expect this feature to work at any level of the project, not just files. That
-> won't be a showstopper though.
+You may want to consider a merge and topic branch based workflow.  man
+gitworkflows has some pointers.
 
-Yes of course. In that case, we would need to display a tree of modifications.
-That could be done in a second step.
+=46or the rest of the discussion let's assume that your history looks
+like
 
--- yann
+  *---*---*---*  (master)
+   \
+    \
+     o---o---o   (zoo =3D origin/zoo)
+
+Since you have tracking branches, origin/zoo should be the same as
+zoo.  (origin/master should exist too but isn't important for now.)
+
+> But here is what happens.  I spend 3 hours inside "zoo" doing "git rebase
+> master".  I go through all the hell of reconciling 6 months of developmen=
+t.=20
+> Then at the end, it just says that the commits now differ between local
+> "zoo" and "origin/zoo".
+
+Indeed, since you rewrote every commit on zoo, it now looks like
+
+  *---*---*---*   (master)
+  |            \                =20
+  |             \               =20
+  \              o'--o'--o'   (zoo)
+   \
+    o---o---o  (origin/zoo)
+
+> So I figure, I will pull from "origin/zoo".  Naturally, that results in a
+> conflicted merge, which I then clear up.  I commit the merge, then push
+> everything back to the remote branch.
+
+You're merging like this:
+
+  *---*---*---*   (master)
+  |            \                =20
+  |             \               =20
+  \              o'--o'--o'---M   (zoo)
+   \                         /
+    o---o---o---------------'
+              (origin/zoo)
+
+
+I think you can already see that you made a mess of history :-)
+
+You should have forced the push instead.  But see "recovering from
+upstream rebase" in man git-rebase for information on what happens to
+everyone else's work that was based on zoo.
+
+> My thinking is that if I were to attempt a new rebase of master, the
+> beginning of what would be rebased would start from RIGHT NOW, instead of
+> all the commits over the past 6 months.  To check this, I type:
+>=20
+> git rebase master
+>=20
+> from "zoo".  Lo and behold, it starts the whole process over again.  I "g=
+it
+> rebase --abort", but I am very, very confused.
+
+Actually it's even worse: it should attempt to rebase _every_ commit
+in master..zoo.  If master has progressed since your original
+rebase+merge, this will be both the "o" and "o'" commits above.
+
+(Except the ones that did not conflict at all, since they'll still be
+the same.)
+
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
+
+--nextPart3012645.1comeWTEIY
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkmibZAACgkQqUud07tmzP3YbwCfeAiw9Ao/UBkuQkGFFBVk7Pvt
+wpQAoKJ43slZhqn7vaAz3fp07otGOOvw
+=kGWD
+-----END PGP SIGNATURE-----
+
+--nextPart3012645.1comeWTEIY--
