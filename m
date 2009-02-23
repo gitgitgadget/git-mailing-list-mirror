@@ -1,96 +1,138 @@
-From: bill lam <cbill.lam@gmail.com>
-Subject: [tig] typo in man tig
-Date: Mon, 23 Feb 2009 13:41:18 +0800
-Message-ID: <20090223054118.GB7435@b2j>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: [PATCH 03/13] remote: fix two inconsistencies in the output of "show <remote>"
+Date: Mon, 23 Feb 2009 01:28:51 -0500
+Message-ID: <30b0e9a2ad91f17f9ebbfe9954522dcbf3b24f5e.1235368324.git.jaysoffian@gmail.com>
+References: <cover.1235368324.git.jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 23 06:42:57 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 23 07:31:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbTai-0007Hl-En
-	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 06:42:56 +0100
+	id 1LbULL-00072Y-5Z
+	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 07:31:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752009AbZBWFl2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Feb 2009 00:41:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751941AbZBWFl1
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 00:41:27 -0500
-Received: from ti-out-0910.google.com ([209.85.142.187]:35697 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751583AbZBWFlZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2009 00:41:25 -0500
-Received: by ti-out-0910.google.com with SMTP id d10so1322754tib.23
-        for <git@vger.kernel.org>; Sun, 22 Feb 2009 21:41:23 -0800 (PST)
+	id S1751984AbZBWG3U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2009 01:29:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751583AbZBWG3R
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 01:29:17 -0500
+Received: from yx-out-2324.google.com ([74.125.44.29]:12876 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751886AbZBWG3N (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2009 01:29:13 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so746765yxm.1
+        for <git@vger.kernel.org>; Sun, 22 Feb 2009 22:29:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:mail-followup-to:mime-version:content-type
-         :content-disposition:content-transfer-encoding:user-agent;
-        bh=KwYgX5BIJq08ERjqc66r4DfukOqBXj6pJrym1JN5Izw=;
-        b=HnTEsx++GkfiWZifhMYpk0bRcAV0TVlmkFk65KwQbcK02eVEyUjdawCpkepX6gjx+D
-         JdX54kNhvjOLyQ+fbIqy7wEV7KjiIurKZTOO7BGe8lAg21O+7Sgbh6bOH13YK9TvnKYB
-         PruDuwjzQ5zpcNNVboLbgRFe4eZuZN1Xfu0Ws=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=Ko72vWWs4svEhsm6NgZ4GNwNqaB3QUQiHRZ4IdjR9N8=;
+        b=oEDT7NH+a+BFACZeKTA3Bd6Etq5+CkZaD9olz46qZ3MonZFdOoW/EwGajoXUYj1CgT
+         JYHkYwDAbnOr2NPR1CeqvG2hxmTV/NOxSxaFVUPmINwatIHUDKJ5u6m44HXw/dMdkGQV
+         05iIuML6IU7soAta1a9+ml6bdFlg2w3zy3HTg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:mail-followup-to:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :user-agent;
-        b=T++hxzKRnoDCWl6NsFcHddFEl0Kto+makmbctU6emhMPxivUXPjNtbwzRq4jd+GbLv
-         3aez1fvcFUWzsUJRqFsoqM3sgM3D1qUCFN/C1VeJAKKMelTF5PcsxO3/vKqaNXAPt9r8
-         m2QNz2J5PozoWEPxb+vuvpedTfWfWR2E6Bu04=
-Received: by 10.110.84.3 with SMTP id h3mr5328254tib.5.1235367683512;
-        Sun, 22 Feb 2009 21:41:23 -0800 (PST)
-Received: from localhost (n219078081066.netvigator.com [219.78.81.66])
-        by mx.google.com with ESMTPS id y3sm102752tia.23.2009.02.22.21.41.20
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=jDjoUpWpg8U/BRR+aqt47xg7NKAHE3WE7bHQ05nTg+BZcMd1MOZkSUIpWN4Nb4FB0X
+         oDdljp94QZo2adPb3KUbo0i0JD8iTncooe/VWTtYkHDJXOEuyo7q6+vwT5T+YnfF+474
+         NrTP5zDGFvJ8qJX7sODkUPphHIUW8I2Qa/dvs=
+Received: by 10.100.3.13 with SMTP id 13mr3567061anc.74.1235370551917;
+        Sun, 22 Feb 2009 22:29:11 -0800 (PST)
+Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
+        by mx.google.com with ESMTPS id d12sm11276968and.44.2009.02.22.22.29.10
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 22 Feb 2009 21:41:22 -0800 (PST)
-Mail-Followup-To: git <git@vger.kernel.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.19 (2009-01-27)
+        Sun, 22 Feb 2009 22:29:11 -0800 (PST)
+X-Mailer: git-send-email 1.6.2.rc1.223.gfed32
+In-Reply-To: <cover.1235368324.git.jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111089>
 
-In man tig example section,
+Remote and stale branches are emitted in alphabetical order, but new and
+tracked branches are not. So sort the latter to be consistent with the
+former. This also lets us use more efficient string_list_has_string()
+instead of unsorted_string_list_has_string().
 
-       Examples:
+"show <remote>" prunes symrefs, but "show <remote> -n" does not. Fix the
+latter to match the former.
 
+Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+---
+ builtin-remote.c  |   15 ++++++++++-----
+ t/t5505-remote.sh |    2 +-
+ 2 files changed, 11 insertions(+), 6 deletions(-)
 
-           set show-author =3D yes           # Show author?
-           set show-date =3D yes             # Show commit date?
-           set show-rev-graph =3D yes        # Show revision graph?
-           set show-refs =3D yes             # Show references?
-           set show-line-numbers =3D no      # Show line numbers?
-           set author-width =3D 10           # Set width of the author =
-column
-           set line-graphics =3D no          # Disable graphics charact=
-ers
-           set line-number-interval =3D 5    # Interval between line nu=
-mbers
-           set tab-size =3D 8                # Number of spaces per tab
-           set encoding =3D "UTF-8"          # Commit encoding =20
-
-the last variable should be commit-encoding
-
---=20
-regards,
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
-GPG key 1024D/4434BAB3 2008-08-24
-gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
-=E5=94=90=E8=A9=A9173 =E6=9D=8E=E9=A0=8E  =E9=80=81=E9=AD=8F=E8=90=AC=E4=
-=B9=8B=E4=BA=AC
-    =E6=9C=9D=E8=81=9E=E9=81=8A=E5=AD=90=E5=94=B1=E9=A9=AA=E6=AD=8C  =E6=
-=98=A8=E5=A4=9C=E5=BE=AE=E9=9C=9C=E5=88=9D=E5=BA=A6=E6=B2=B3  =E9=B4=BB=
-=E9=9B=81=E4=B8=8D=E5=A0=AA=E6=84=81=E8=A3=A1=E8=81=BD  =E9=9B=B2=E5=B1=
-=B1=E6=B3=81=E6=98=AF=E5=AE=A2=E4=B8=AD=E9=81=8E
-    =E9=97=9C=E5=9F=8E=E6=A8=B9=E8=89=B2=E5=82=AC=E5=AF=92=E8=BF=91  =E5=
-=BE=A1=E8=8B=91=E7=A0=A7=E8=81=B2=E5=90=91=E6=99=9A=E5=A4=9A  =E8=8E=AB=
-=E8=A6=8B=E9=95=B7=E5=AE=89=E8=A1=8C=E6=A8=82=E8=99=95  =E7=A9=BA=E4=BB=
-=A4=E6=AD=B2=E6=9C=88=E6=98=93=E8=B9=89=E8=B7=8E
+diff --git a/builtin-remote.c b/builtin-remote.c
+index f2ef08a..31fbd1e 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -227,10 +227,8 @@ static int handle_one_branch(const char *refname,
+ 		const char *name = abbrev_branch(refspec.src);
+ 		/* symbolic refs pointing nowhere were handled already */
+ 		if ((flags & REF_ISSYMREF) ||
+-				unsorted_string_list_has_string(&states->tracked,
+-					name) ||
+-				unsorted_string_list_has_string(&states->new,
+-					name))
++		    string_list_has_string(&states->tracked, name) ||
++		    string_list_has_string(&states->new, name))
+ 			return 0;
+ 		item = string_list_append(name, &states->stale);
+ 		item->util = xstrdup(refname);
+@@ -258,6 +256,8 @@ static int get_ref_states(const struct ref *ref, struct ref_states *states)
+ 	}
+ 	free_refs(fetch_map);
+ 
++	sort_string_list(&states->new);
++	sort_string_list(&states->tracked);
+ 	for_each_ref(handle_one_branch, states);
+ 	sort_string_list(&states->stale);
+ 
+@@ -688,6 +688,9 @@ static int append_ref_to_tracked_list(const char *refname,
+ 	struct ref_states *states = cb_data;
+ 	struct refspec refspec;
+ 
++	if (flags & REF_ISSYMREF)
++		return 0;
++
+ 	memset(&refspec, 0, sizeof(refspec));
+ 	refspec.dst = (char *)refname;
+ 	if (!remote_find_tracking(states->remote, &refspec))
+@@ -754,8 +757,10 @@ static int show(int argc, const char **argv)
+ 				"prune')", &states.stale, "");
+ 		}
+ 
+-		if (no_query)
++		if (no_query) {
+ 			for_each_ref(append_ref_to_tracked_list, &states);
++			sort_string_list(&states.tracked);
++		}
+ 		show_list("  Tracked remote branch%s", &states.tracked, "");
+ 
+ 		if (states.remote->push_refspec_nr) {
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 104433d..fdc4a29 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -142,8 +142,8 @@ cat > test/expect << EOF
+   New remote branch (next fetch will store in remotes/origin)
+     master
+   Tracked remote branches
+-    side
+     master
++    side
+   Local branches pushed with 'git push'
+     master:upstream
+     +refs/tags/lastbackup
+-- 
+1.6.2.rc1.223.gfed32
