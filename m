@@ -1,142 +1,218 @@
-From: <carlos.duclos@nokia.com>
-Subject: [PATCH v5] git-archive: Add new option "--output" to write archive
- to a file instead of stdout.
-Date: Mon, 23 Feb 2009 09:25:14 +0100
-Message-ID: <599636D7828020419E3AB2DE5CCC8130036BF8B1E4@NOK-EUMSG-02.mgdnok.nokia.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH 12/13] remote.c: refactor get_remote_ref_states()
+Date: Mon, 23 Feb 2009 03:31:32 -0500
+Message-ID: <1235377892-96089-1-git-send-email-jaysoffian@gmail.com>
+References: <76718490902222355v7510d2f9p51ade61d1f257146@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
-	boundary="_002_599636D7828020419E3AB2DE5CCC8130036BF8B1E4NOKEUMSG02mgd_"
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 23 09:29:00 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Jay Soffian <jaysoffian@gmail.com>, Jeff King <peff@peff.net>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 23 09:33:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbWBP-0004jR-OT
-	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 09:29:00 +0100
+	id 1LbWFN-0005kf-65
+	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 09:33:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751403AbZBWI12 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Feb 2009 03:27:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751363AbZBWI12
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 03:27:28 -0500
-Received: from smtp.nokia.com ([192.100.122.230]:31330 "EHLO
-	mgw-mx03.nokia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750884AbZBWI11 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2009 03:27:27 -0500
-Received: from esebh106.NOE.Nokia.com (esebh106.ntc.nokia.com [172.21.138.213])
-	by mgw-mx03.nokia.com (Switch-3.2.6/Switch-3.2.6) with ESMTP id n1N8R5p5015238
-	for <git@vger.kernel.org>; Mon, 23 Feb 2009 10:27:24 +0200
-Received: from vaebh102.NOE.Nokia.com ([10.160.244.23]) by esebh106.NOE.Nokia.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 23 Feb 2009 10:27:17 +0200
-Received: from smtp.mgd.nokia.com ([65.54.30.6]) by vaebh102.NOE.Nokia.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 23 Feb 2009 10:27:08 +0200
-Received: from nok-am1mhub-07.mgdnok.nokia.com (65.54.30.14) by
- NOK-am1MHUB-02.mgdnok.nokia.com (65.54.30.6) with Microsoft SMTP Server (TLS)
- id 8.1.291.1; Mon, 23 Feb 2009 09:27:00 +0100
-Received: from NOK-EUMSG-02.mgdnok.nokia.com ([65.54.30.107]) by
- nok-am1mhub-07.mgdnok.nokia.com ([65.54.30.14]) with mapi; Mon, 23 Feb 2009
- 09:27:00 +0100
-Thread-Topic: [PATCH v5] git-archive: Add new option "--output" to write
- archive to a file instead of stdout.
-Thread-Index: AQHJlZBuXAfnBcagzk647m9BCZMiGQ==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-X-OriginalArrivalTime: 23 Feb 2009 08:27:08.0982 (UTC) FILETIME=[84A22D60:01C99590]
-X-Nokia-AV: Clean
+	id S1751445AbZBWIbh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2009 03:31:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751287AbZBWIbg
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 03:31:36 -0500
+Received: from mail-gx0-f174.google.com ([209.85.217.174]:36140 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751037AbZBWIbg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2009 03:31:36 -0500
+Received: by gxk22 with SMTP id 22so4891112gxk.13
+        for <git@vger.kernel.org>; Mon, 23 Feb 2009 00:31:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=TDmcVpUnlzKsqvgjCnOhcHIkusDU8llsP1pBbTSc4S8=;
+        b=aLsq6g1TynCeoLRspjHjxGnQIWZ29zPvVKbEA8SOhpXgsbSxX3kvZIIH73vgvwT2W+
+         qLjtVr+lO+X0nTlZ0mTECbauhWZoy+PTYgtueJ6qQtCu5Xd0f0zlJtvFrY2JjKGUawiu
+         wnZC8AHeTG6qR0V+N3E3lZHqTJEyNC3M42EFI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=aFlpymVqgiOO6M4yOK6hvEbHhHrNkgm5REjWHyzgFj+gxQtc1kRSEw5wo7usrgvKOt
+         nlCv1r77cP8MpeM42PKGx2RBjOoMKL0zJU/27O1SR0dL5MxxtMCsiFNrSgVWmFHZxJAe
+         uxrrlfu1z03BIPjmuZTnoUHpB87B1OkwfNDiI=
+Received: by 10.100.14.2 with SMTP id 2mr3478642ann.79.1235377894641;
+        Mon, 23 Feb 2009 00:31:34 -0800 (PST)
+Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
+        by mx.google.com with ESMTPS id c28sm12523492anc.45.2009.02.23.00.31.33
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 23 Feb 2009 00:31:34 -0800 (PST)
+X-Mailer: git-send-email 1.6.2.rc1.223.gfed32
+In-Reply-To: <76718490902222355v7510d2f9p51ade61d1f257146@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111120>
 
---_002_599636D7828020419E3AB2DE5CCC8130036BF8B1E4NOKEUMSG02mgd_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+---
+So here's the inter-diff doing it the way you suggest. I'm surprised it
+didn't add any LOC. If you really think this is better I'll re-do the
+end of the series to do it this way.
 
-Patch attached as MIME.
+ builtin-remote.c |   81 ++++++++++++++++++++++++++---------------------------
+ 1 files changed, 40 insertions(+), 41 deletions(-)
 
-Highlights:
-1. Closing output_fd. Notice this is not needed since dup2 will close newfd=
-.
-2. Moved tests from t0024 to t5000.
-
-Cheers!
-
---_002_599636D7828020419E3AB2DE5CCC8130036BF8B1E4NOKEUMSG02mgd_
-Content-Type: text/x-diff;
-	name="0001-git-archive-add-output-file-to-send-output-to-a.patch"
-Content-Description: 0001-git-archive-add-output-file-to-send-output-to-a.patch
-Content-Disposition: attachment;
-	filename="0001-git-archive-add-output-file-to-send-output-to-a.patch";
-	size=3590; creation-date="Mon, 23 Feb 2009 09:26:44 GMT";
-	modification-date="Mon, 23 Feb 2009 09:26:44 GMT"
-Content-Transfer-Encoding: base64
-
-RnJvbSA4YmNiMWYxOGI5YmY5NGFkOWIyYWM1MTc1MDk1Mzk0ZTdkYjQ0YTFhIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBDYXJsb3MgTWFudWVsIER1Y2xvcyBWZXJnYXJhIDxjYXJsb3Mu
-ZHVjbG9zQG5va2lhLmNvbT4KRGF0ZTogTW9uLCAxNiBGZWIgMjAwOSAxODoyMDoyNSArMDEwMApT
-dWJqZWN0OiBbUEFUQ0hdIGdpdC1hcmNoaXZlOiBhZGQgLS1vdXRwdXQ9PGZpbGU+IHRvIHNlbmQg
-b3V0cHV0IHRvIGEgZmlsZSBpbnN0ZWFkIG9mIHN0ZG91dC4KIFdoZW4gYXJjaGl2aW5nIGEgcmVw
-b3NpdG9yeSB0aGVyZSBpcyBubyB3YXkgdG8gc3BlY2lmeSBhIGZpbGUgYXMgb3V0cHV0LgogVGhp
-cyBwYXRjaCBhZGRzIGEgbmV3IG9wdGlvbiAiLS1vdXRwdXQiIHRoYXQgcmVkaXJlY3RzIHRoZSBv
-dXRwdXQgdG8gYSBmaWxlCiBpbnN0ZWFkIG9mIHN0ZG91dC4KClNpZ25lZC1vZmYtYnk6IENhcmxv
-cyBNYW51ZWwgRHVjbG9zIFZlcmdhcmEgPGNhcmxvcy5kdWNsb3NAbm9raWEuY29tPgotLS0KIERv
-Y3VtZW50YXRpb24vZ2l0LWFyY2hpdmUudHh0IHwgICAgMyArKysKIGFyY2hpdmUuYyAgICAgICAg
-ICAgICAgICAgICAgIHwgICAxOCArKysrKysrKysrKysrKysrKysKIHQvdDUwMDAtdGFyLXRyZWUu
-c2ggICAgICAgICAgIHwgICAgOCArKysrKysrKwogMyBmaWxlcyBjaGFuZ2VkLCAyOSBpbnNlcnRp
-b25zKCspLCAwIGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vZ2l0LWFy
-Y2hpdmUudHh0IGIvRG9jdW1lbnRhdGlvbi9naXQtYXJjaGl2ZS50eHQKaW5kZXggNDFjYmY5Yy4u
-NWJkZTE5NyAxMDA2NDQKLS0tIGEvRG9jdW1lbnRhdGlvbi9naXQtYXJjaGl2ZS50eHQKKysrIGIv
-RG9jdW1lbnRhdGlvbi9naXQtYXJjaGl2ZS50eHQKQEAgLTQ3LDYgKzQ3LDkgQEAgT1BUSU9OUwog
-LS1wcmVmaXg9PHByZWZpeD4vOjoKIAlQcmVwZW5kIDxwcmVmaXg+LyB0byBlYWNoIGZpbGVuYW1l
-IGluIHRoZSBhcmNoaXZlLgogCistLW91dHB1dD08ZmlsZT46OgorCVdyaXRlIHRoZSBhcmNoaXZl
-IHRvIDxmaWxlPiBpbnN0ZWFkIG9mIHN0ZG91dC4KKwogPGV4dHJhPjo6CiAJVGhpcyBjYW4gYmUg
-YW55IG9wdGlvbnMgdGhhdCB0aGUgYXJjaGl2ZXIgYmFja2VuZCB1bmRlcnN0YW5kLgogCVNlZSBu
-ZXh0IHNlY3Rpb24uCmRpZmYgLS1naXQgYS9hcmNoaXZlLmMgYi9hcmNoaXZlLmMKaW5kZXggZTZk
-ZTAzOS4uM2JmNGE3MyAxMDA2NDQKLS0tIGEvYXJjaGl2ZS5jCisrKyBiL2FyY2hpdmUuYwpAQCAt
-MjM5LDYgKzIzOSwxOCBAQCBzdGF0aWMgdm9pZCBwYXJzZV90cmVlaXNoX2FyZyhjb25zdCBjaGFy
-ICoqYXJndiwKIAlhcl9hcmdzLT50aW1lID0gYXJjaGl2ZV90aW1lOwogfQogCitzdGF0aWMgdm9p
-ZCBjcmVhdGVfb3V0cHV0X2ZpbGUoY29uc3QgY2hhciAqb3V0cHV0X2ZpbGUpCit7CisJaW50IG91
-dHB1dF9mZCA9IG9wZW4ob3V0cHV0X2ZpbGUsIE9fQ1JFQVQgfCBPX1dST05MWSB8IE9fVFJVTkMs
-IDA2NjYpOworCWlmIChvdXRwdXRfZmQgPCAwKQorCQlkaWUoImNvdWxkIG5vdCBjcmVhdGUgYXJj
-aGl2ZSBmaWxlOiAlcyAiLCBvdXRwdXRfZmlsZSk7CisJaWYgKG91dHB1dF9mZCAhPSAxKQorCQlp
-ZiAoZHVwMihvdXRwdXRfZmQsIDEpIDwgMCkKKwkJCWRpZSgiY291bGQgbm90IHJlZGlyZWN0IG91
-dHB1dCIpOworCQllbHNlCisJCQljbG9zZShvdXRwdXRfZmQpOworfQorCiAjZGVmaW5lIE9QVF9f
-Q09NUFIocywgdiwgaCwgcCkgXAogCXsgT1BUSU9OX1NFVF9JTlQsIChzKSwgTlVMTCwgKHYpLCBO
-VUxMLCAoaCksIFwKIAkgIFBBUlNFX09QVF9OT0FSRyB8IFBBUlNFX09QVF9OT05FRywgTlVMTCwg
-KHApIH0KQEAgLTI1Myw2ICsyNjUsNyBAQCBzdGF0aWMgaW50IHBhcnNlX2FyY2hpdmVfYXJncyhp
-bnQgYXJnYywgY29uc3QgY2hhciAqKmFyZ3YsCiAJY29uc3QgY2hhciAqYmFzZSA9IE5VTEw7CiAJ
-Y29uc3QgY2hhciAqcmVtb3RlID0gTlVMTDsKIAljb25zdCBjaGFyICpleGVjID0gTlVMTDsKKwlj
-b25zdCBjaGFyICpvdXRwdXQgPSBOVUxMOwogCWludCBjb21wcmVzc2lvbl9sZXZlbCA9IC0xOwog
-CWludCB2ZXJib3NlID0gMDsKIAlpbnQgaTsKQEAgLTI2Miw2ICsyNzUsOCBAQCBzdGF0aWMgaW50
-IHBhcnNlX2FyY2hpdmVfYXJncyhpbnQgYXJnYywgY29uc3QgY2hhciAqKmFyZ3YsCiAJCU9QVF9T
-VFJJTkcoMCwgImZvcm1hdCIsICZmb3JtYXQsICJmbXQiLCAiYXJjaGl2ZSBmb3JtYXQiKSwKIAkJ
-T1BUX1NUUklORygwLCAicHJlZml4IiwgJmJhc2UsICJwcmVmaXgiLAogCQkJInByZXBlbmQgcHJl
-Zml4IHRvIGVhY2ggcGF0aG5hbWUgaW4gdGhlIGFyY2hpdmUiKSwKKwkJT1BUX1NUUklORygwLCAi
-b3V0cHV0IiwgJm91dHB1dCwgImZpbGUiLAorCQkJIndyaXRlIHRoZSBhcmNoaXZlIHRvIHRoaXMg
-ZmlsZSIpLAogCQlPUFRfX1ZFUkJPU0UoJnZlcmJvc2UpLAogCQlPUFRfX0NPTVBSKCcwJywgJmNv
-bXByZXNzaW9uX2xldmVsLCAic3RvcmUgb25seSIsIDApLAogCQlPUFRfX0NPTVBSKCcxJywgJmNv
-bXByZXNzaW9uX2xldmVsLCAiY29tcHJlc3MgZmFzdGVyIiwgMSksCkBAIC0yOTQsNiArMzA5LDkg
-QEAgc3RhdGljIGludCBwYXJzZV9hcmNoaXZlX2FyZ3MoaW50IGFyZ2MsIGNvbnN0IGNoYXIgKiph
-cmd2LAogCWlmICghYmFzZSkKIAkJYmFzZSA9ICIiOwogCisJaWYgKG91dHB1dCkKKwkJY3JlYXRl
-X291dHB1dF9maWxlKG91dHB1dCk7CisKIAlpZiAobGlzdCkgewogCQlmb3IgKGkgPSAwOyBpIDwg
-QVJSQVlfU0laRShhcmNoaXZlcnMpOyBpKyspCiAJCQlwcmludGYoIiVzXG4iLCBhcmNoaXZlcnNb
-aV0ubmFtZSk7CmRpZmYgLS1naXQgYS90L3Q1MDAwLXRhci10cmVlLnNoIGIvdC90NTAwMC10YXIt
-dHJlZS5zaAppbmRleCBjOTQyYzhiLi4wZDYwZTBlIDEwMDc1NQotLS0gYS90L3Q1MDAwLXRhci10
-cmVlLnNoCisrKyBiL3QvdDUwMDAtdGFyLXRyZWUuc2gKQEAgLTc5LDYgKzc5LDEwIEBAIHRlc3Rf
-ZXhwZWN0X3N1Y2Nlc3MgXAogICAgICdkaWZmIGIudGFyIGIyLnRhcicKIAogdGVzdF9leHBlY3Rf
-c3VjY2VzcyBcCisgICAgJ2dpdCBhcmNoaXZlJyBcCisgICAgJ2dpdCBhcmNoaXZlIC0tb3V0cHV0
-PXoudGFyIEhFQUQnCisKK3Rlc3RfZXhwZWN0X3N1Y2Nlc3MgXAogICAgICdnaXQgYXJjaGl2ZSBp
-biBhIGJhcmUgcmVwbycgXAogICAgICcoY2QgYmFyZS5naXQgJiYgZ2l0IGFyY2hpdmUgSEVBRCkg
-PmIzLnRhcicKIApAQCAtMTcyLDYgKzE3NiwxMCBAQCB0ZXN0X2V4cGVjdF9zdWNjZXNzIFwKICAg
-ICAnZ2l0IGFyY2hpdmUgLS1mb3JtYXQ9emlwIHZzLiB0aGUgc2FtZSBpbiBhIGJhcmUgcmVwbycg
-XAogICAgICd0ZXN0X2NtcCBkLnppcCBkMS56aXAnCiAKK3Rlc3RfZXhwZWN0X3N1Y2Nlc3MgXAor
-ICAgICdnaXQgYXJjaGl2ZSAtLWZvcm1hdD16aXAnIFwKKyAgICAnZ2l0IGFyY2hpdmUgLS1mb3Jt
-YXQ9emlwIC0tb3V0cHV0PXouemlwIEhFQUQnCisKICRVTlpJUCAtdiA+L2Rldi9udWxsIDI+JjEK
-IGlmIFsgJD8gLWVxIDEyNyBdOyB0aGVuCiAJZWNobyAiU2tpcHBpbmcgWklQIHRlc3RzLCBiZWNh
-dXNlIHVuemlwIHdhcyBub3QgZm91bmQiCi0tIAoxLjYuMi5yYzAuNjMuZzdjYmQwLmRpcnR5Cgo=
-
---_002_599636D7828020419E3AB2DE5CCC8130036BF8B1E4NOKEUMSG02mgd_--
+diff --git a/builtin-remote.c b/builtin-remote.c
+index ac49219..5651b41 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -19,10 +19,6 @@ static const char * const builtin_remote_usage[] = {
+ 	NULL
+ };
+ 
+-#define GET_REF_STATES (1<<0)
+-#define GET_HEAD_NAMES (1<<1)
+-#define GET_PUSH_REF_STATES (1<<2)
+-
+ static int verbose;
+ 
+ static int show_all(void);
+@@ -383,7 +379,7 @@ static int get_push_ref_states_noquery(struct ref_states *states)
+ }
+ 
+ static int get_head_names(const struct ref *remote_refs,
+-	const char *remote_name, struct ref_states *states)
++			  struct ref_states *states)
+ {
+ 	struct ref *ref, *matches;
+ 	struct ref *fetch_map = NULL, **fetch_map_tail = &fetch_map;
+@@ -785,37 +781,15 @@ static int append_ref_to_tracked_list(const char *refname,
+ 	return 0;
+ }
+ 
+-static int get_remote_ref_states(const char *name,
+-				 struct ref_states *states,
+-				 int query)
++static const struct ref *get_remote_refs(struct ref_states *states)
+ {
+ 	struct transport *transport;
+ 	const struct ref *remote_refs;
+-
+-	states->remote = remote_get(name);
+-	if (!states->remote)
+-		return error("No such remote: %s", name);
+-
+-	read_branches();
+-
+-	if (query) {
+-		transport = transport_get(NULL, states->remote->url_nr > 0 ?
+-			states->remote->url[0] : NULL);
+-		remote_refs = transport_get_remote_refs(transport);
+-		transport_disconnect(transport);
+-		states->queried = 1;
+-		if (query & GET_REF_STATES)
+-			get_ref_states(remote_refs, states);
+-		if (query & GET_HEAD_NAMES)
+-			get_head_names(remote_refs, name, states);
+-		if (query & GET_PUSH_REF_STATES)
+-			get_push_ref_states(remote_refs, states);
+-	} else {
+-		for_each_ref(append_ref_to_tracked_list, states);
+-		sort_string_list(&states->tracked);
+-		get_push_ref_states_noquery(states);
+-	}
+-	return 0;
++	transport = transport_get(NULL, states->remote->url_nr > 0 ?
++				  states->remote->url[0] : NULL);
++	remote_refs = transport_get_remote_refs(transport);
++	transport_disconnect(transport);
++	return remote_refs;
+ }
+ 
+ struct show_info {
+@@ -970,7 +944,7 @@ int show_push_info_item(struct string_list_item *item, void *cb_data)
+ 
+ static int show(int argc, const char **argv)
+ {
+-	int no_query = 0, result = 0, query_flag = 0;
++	int no_query = 0, result = 0;
+ 	struct option options[] = {
+ 		OPT_GROUP("show specific options"),
+ 		OPT_BOOLEAN('n', NULL, &no_query, "do not query remotes"),
+@@ -985,17 +959,31 @@ static int show(int argc, const char **argv)
+ 	if (argc < 1)
+ 		return show_all();
+ 
+-	if (!no_query)
+-		query_flag = (GET_REF_STATES | GET_HEAD_NAMES | GET_PUSH_REF_STATES);
+-
++	read_branches();
+ 	memset(&states, 0, sizeof(states));
+ 	memset(&info, 0, sizeof(info));
++	states.queried = !no_query;
+ 	info.states = &states;
+ 	info.list = &info_list;
++
+ 	for (; argc; argc--, argv++) {
+ 		int i;
+ 
+-		get_remote_ref_states(*argv, &states, query_flag);
++		if (!(states.remote = remote_get(*argv))) {
++			error("No such remote: %s", *argv);
++			continue;
++		}
++		if (no_query) {
++			for_each_ref(append_ref_to_tracked_list, &states);
++			sort_string_list(&states.tracked);
++			get_push_ref_states_noquery(&states);
++		} else {
++			const struct ref *remote_refs;
++			remote_refs = get_remote_refs(&states);
++			get_ref_states(remote_refs, &states);
++			get_head_names(remote_refs, &states);
++			get_push_ref_states(remote_refs, &states);
++		}
+ 
+ 		printf("* remote %s\n  URL: %s\n", *argv,
+ 			states.remote->url_nr > 0 ?
+@@ -1077,8 +1065,13 @@ static int set_head(int argc, const char **argv)
+ 		head_name = xstrdup(argv[1]);
+ 	} else if (opt_a && !opt_d && argc == 1) {
+ 		struct ref_states states;
++		const struct ref *remote_refs;
+ 		memset(&states, 0, sizeof(states));
+-		get_remote_ref_states(argv[0], &states, GET_HEAD_NAMES);
++		read_branches();
++		if (!(states.remote = remote_get(argv[0])))
++			return error("No such remote: %s", argv[0]);
++		remote_refs = get_remote_refs(&states);
++		get_head_names(remote_refs, &states);
+ 		if (!states.heads.nr)
+ 			result |= error("Cannot determine remote HEAD");
+ 		else if (states.heads.nr > 1) {
+@@ -1134,11 +1127,17 @@ static int prune(int argc, const char **argv)
+ 			? " %s will become dangling!\n"
+ 			: " %s has become dangling!\n");
+ 
++	read_branches();
+ 	memset(&states, 0, sizeof(states));
+ 	for (; argc; argc--, argv++) {
+ 		int i;
+-
+-		get_remote_ref_states(*argv, &states, GET_REF_STATES);
++		const struct ref *remote_refs;
++		if (!(states.remote = remote_get(*argv))) {
++			error("No such remote: %s", *argv);
++			continue;
++		}
++		remote_refs = get_remote_refs(&states);
++		get_ref_states(remote_refs, &states);
+ 
+ 		if (states.stale.nr) {
+ 			printf("Pruning %s\n", *argv);
+-- 
+1.6.2.rc1.223.gfed32
