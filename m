@@ -1,81 +1,234 @@
 From: Heiko Voigt <git-list@hvoigt.net>
-Subject: Re: [RFC PATCH] hooks: add some defaults to support sane workflow
- to pre-commit
-Date: Mon, 23 Feb 2009 19:41:23 +0100
-Message-ID: <49A2EDD3.5080307@hvoigt.net>
-References: <499EF2B6.7060103@hvoigt.net> <C95EAEB9-D520-497F-BA42-0CDCC1348340@wincent.com> <499FDDC2.90502@hvoigt.net> <200902211216.43964.trast@student.ethz.ch> <49A00215.9070106@hvoigt.net>
+Subject: [PATCH] cvsimport: add test illustrating a bug in cvsps
+Date: Mon, 23 Feb 2009 19:49:42 +0100
+Message-ID: <49A2EFC6.5000104@hvoigt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Feb 23 19:43:09 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 23 19:51:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lbfla-0003bO-6f
-	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 19:42:58 +0100
+	id 1Lbftb-0006sV-CL
+	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 19:51:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754041AbZBWSl3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Feb 2009 13:41:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753996AbZBWSl3
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 13:41:29 -0500
-Received: from darksea.de ([83.133.111.250]:39677 "HELO darksea.de"
+	id S1754172AbZBWSts (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2009 13:49:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754094AbZBWStq
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 13:49:46 -0500
+Received: from darksea.de ([83.133.111.250]:57253 "HELO darksea.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753901AbZBWSl2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2009 13:41:28 -0500
-Received: (qmail 9689 invoked from network); 23 Feb 2009 19:41:13 +0100
+	id S1753996AbZBWStq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2009 13:49:46 -0500
+Received: (qmail 9706 invoked from network); 23 Feb 2009 19:49:31 +0100
 Received: from unknown (HELO macbook.lan) (127.0.0.1)
-  by localhost with SMTP; 23 Feb 2009 19:41:13 +0100
+  by localhost with SMTP; 23 Feb 2009 19:49:31 +0100
 User-Agent: Thunderbird 2.0.0.19 (Macintosh/20081209)
-In-Reply-To: <49A00215.9070106@hvoigt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Heiko Voigt schrieb:
-> How about combining my first approach with the second idea? Teach git
-> different default sets of hooks. So something like:
-> 
->    git init --workflow="topic-branches"
-> 
-> would initialize and install a certain set of hooks.
-> 
-> Implement the possibility to propagate this setting to the server, by
-> using a config variable or similar. This way only secure hooks will
-> automatically be inherited and the user has the benefit of a more
-> specific workflow support.
+Some cvs repositories may have time deviations in their recorded commits. This
+is a test for one of such cases. These kind of repositories can happen if the
+system time of cvs clients is not fully synchronised.
 
-So I have been thinking about an actual implementation lately and here are
-some more specifics of a possible implementation:
+Consider the following sequence of events:
 
-Add a new configuration file .gitconfig tracked in the working copy next to
-.gitignore and such. The order would then be: 
+ * client A commits file a r1.1
+ * client A commits file a r1.2, b r1.1
+ * client B commits file b r1.2 using the same timestamp as a r1.1
 
-/etc/gitconfig
-~/.gitconfig
-$project/.gitconfig
-$project/.git/config 
+This can be resolved but due to cvsps grouping its patchsets solely based
+on the timestamp and never breaking these groups it outputs the wrong
+order which then leads to a broken import.
 
-Do not allow all options in such a file but use a specific namespace for
-whitelisting them e.g.: project.workflow
+I hit this bug when importing from a real repository which was originally
+converted from another rcs based scm. Other import tools can handle this
+correctly, e.g. parsecvs.
+---
 
-Add hooks that are activated by default and use these configuration
-variables to tune their behaviour. Example: 
-
-[ "$(git config project.workflow)" = "topic-branches" ] && topic_branches=1
-
-# if we are in topic mode work should always be done on a feature branch
-if topic_branches && git branch | grep "^* master" > /dev/null; then
-    echo "No commits on master, please !"
-    exit 1
-fi
-
-Such distributable options could also transport other values like the
-description for gitweb.
-
-What do you think?
+As this is my first real patch, please let me know if I added anything
+to the wrong place. There is actually another bug depending on timings
+which I haven't written a testcase for yet. It is not such a showstopper
+but cvsps skips revisions from a file if they have the same commit
+message and fit into the same time window.
 
 cheers Heiko
+
+ t/t9603-cvsimport-time.sh      |   60 ++++++++++++++++++++++++++++++++++++++++
+ t/t9603/cvsroot/time/a,v       |   41 +++++++++++++++++++++++++++
+ t/t9603/cvsroot/time/b,v       |   41 +++++++++++++++++++++++++++
+ 3 files changed, 142 insertions(+), 0 deletions(-)
+ create mode 100755 t/t9603-cvsimport-time.sh
+ create mode 100644 t/t9603/cvsroot/CVSROOT/.empty
+ create mode 100644 t/t9603/cvsroot/time/a,v
+ create mode 100644 t/t9603/cvsroot/time/b,v
+
+diff --git a/t/t9603-cvsimport-time.sh b/t/t9603-cvsimport-time.sh
+new file mode 100755
+index 0000000..d6de242
+--- /dev/null
++++ b/t/t9603-cvsimport-time.sh
+@@ -0,0 +1,60 @@
++#!/bin/sh
++
++test_description='git cvsimport basic tests'
++. ./test-lib.sh
++
++CVSROOT="$TEST_DIRECTORY"/t9603/cvsroot
++export CVSROOT
++unset CVS_SERVER
++# for clean cvsps cache
++HOME=$(pwd)
++export HOME
++
++if ! type cvs >/dev/null 2>&1
++then
++	say 'skipping cvsimport tests, cvs not found'
++	test_done
++	exit
++fi
++
++cvsps_version=`cvsps -h 2>&1 | sed -ne 's/cvsps version //p'`
++case "$cvsps_version" in
++2.1 | 2.2*)
++	;;
++'')
++	say 'skipping cvsimport tests, cvsps not found'
++	test_done
++	exit
++	;;
++*)
++	say 'skipping cvsimport tests, unsupported cvsps version'
++	test_done
++	exit
++	;;
++esac
++
++# Structure of the test cvs repository
++#
++# Message   File:Content         Commit Time
++# Rev 1     a: 1.1               2009-02-21 19:11:43 +0100
++# Rev 2     a: 1.2    b: 1.1     2009-02-21 19:11:14 +0100
++# Rev 3               b: 1.2     2009-02-21 19:11:43 +0100
++#
++# As you can see the commit of Rev 3 has the same time as
++# Rev 1 this leads to a broken import because of a cvsps
++# bug.
++
++test_expect_success 'import with criss cross times on revisions' '
++
++    git cvsimport -p"-x" -C import time && 
++    cd import &&
++        git log --pretty=format:%s > ../actual &&
++        echo "" >> ../actual &&
++    cd .. &&
++    echo "Rev 3
++Rev 2
++Rev 1" > expect &&
++    test_cmp actual expect 
++'
++
++test_done
+diff --git a/t/t9603/cvsroot/CVSROOT/.empty b/t/t9603/cvsroot/CVSROOT/.empty
+new file mode 100644
+index 0000000..e69de29
+diff --git a/t/t9603/cvsroot/time/a,v b/t/t9603/cvsroot/time/a,v
+new file mode 100644
+index 0000000..66a96aa
+--- /dev/null
++++ b/t/t9603/cvsroot/time/a,v
+@@ -0,0 +1,41 @@
++head	1.2;
++access;
++symbols;
++locks; strict;
++comment	@# @;
++
++
++1.2
++date	2009.02.21.18.11.14;	author hvoigt;	state Exp;
++branches;
++next	1.1;
++
++1.1
++date	2009.02.21.18.11.43;	author hvoigt;	state Exp;
++branches;
++next	;
++
++
++desc
++@@
++
++
++1.2
++log
++@Rev 2
++@
++text
++@1.2
++@
++
++
++1.1
++log
++@Rev 1
++@
++text
++@d1 1
++a1 1
++1.1
++@
++
+diff --git a/t/t9603/cvsroot/time/b,v b/t/t9603/cvsroot/time/b,v
+new file mode 100644
+index 0000000..b5da856
+--- /dev/null
++++ b/t/t9603/cvsroot/time/b,v
+@@ -0,0 +1,41 @@
++head	1.2;
++access;
++symbols;
++locks; strict;
++comment	@# @;
++
++
++1.2
++date	2009.02.21.18.11.43;	author hvoigt;	state Exp;
++branches;
++next	1.1;
++
++1.1
++date	2009.02.21.18.11.14;	author hvoigt;	state Exp;
++branches;
++next	;
++
++
++desc
++@@
++
++
++1.2
++log
++@Rev 3
++@
++text
++@1.2
++@
++
++
++1.1
++log
++@Rev 2
++@
++text
++@d1 1
++a1 1
++1.1
++@
++
+-- 
+1.6.1.2.390.gba743
