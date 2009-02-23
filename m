@@ -1,130 +1,119 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: GSoC 2009 Prospective student
-Date: Mon, 23 Feb 2009 07:58:36 -0800
-Message-ID: <20090223155836.GI22848@spearce.org>
-References: <a149495b0902221158h16d499f7w8bd18abaf1321e46@mail.gmail.com> <20090222204334.GY4371@genesis.frugalware.org> <alpine.LFD.2.00.0902221709460.5511@xanadu.home> <m3y6vxupvf.fsf@localhost.localdomain>
+From: Marius Storm-Olsen <marius@trolltech.com>
+Subject: Re: [PATCH] Add bare repository indicator for __git_ps1
+Date: Mon, 23 Feb 2009 17:03:29 +0100
+Message-ID: <49A2C8D1.3080104@trolltech.com>
+References: <1235227723-11471-1-git-send-email-git@storm-olsen.com> <7v8wnzr3k9.fsf@gitster.siamese.dyndns.org> <49A05958.7050703@trolltech.com> <20090223154237.GH22848@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	Rohan Dhruva <rohandhruva@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 23 17:00:16 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigC4E8FE25A8ACA985A6986DDB"
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Marius Storm-Olsen <git@storm-olsen.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Feb 23 17:06:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbdE7-0007tH-OR
-	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 17:00:16 +0100
+	id 1LbdJe-0000xB-8b
+	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 17:05:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754350AbZBWP6l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Feb 2009 10:58:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754286AbZBWP6l
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 10:58:41 -0500
-Received: from george.spearce.org ([209.20.77.23]:40873 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754070AbZBWP6k (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2009 10:58:40 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 396FD38210; Mon, 23 Feb 2009 15:58:36 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <m3y6vxupvf.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1755538AbZBWQDk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2009 11:03:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754703AbZBWQDk
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 11:03:40 -0500
+Received: from hoat.troll.no ([62.70.27.150]:50613 "EHLO hoat.troll.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754709AbZBWQDj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2009 11:03:39 -0500
+Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
+	by hoat.troll.no (Postfix) with SMTP id D77F120ED6;
+	Mon, 23 Feb 2009 17:03:29 +0100 (CET)
+Received: from [172.24.90.95] (unknown [172.24.90.95])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hoat.troll.no (Postfix) with ESMTP id C1CAD20E4D;
+	Mon, 23 Feb 2009 17:03:29 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.19) Gecko/20081209 Lightning/0.9 Thunderbird/2.0.0.19 ThunderGit/0.1a Mnenhy/0.7.6.666
+In-Reply-To: <20090223154237.GH22848@spearce.org>
+X-Enigmail-Version: 0.95.7
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
+ hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
+ 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
+ 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
+ ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
+ oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
+ tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
+ Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
+ 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
+ nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
+ KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
+ 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111147>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Nicolas Pitre <nico@cam.org> writes:
-> > On Sun, 22 Feb 2009, Miklos Vajna wrote: 
-> > > 
-> > > http://thread.gmane.org/gmane.comp.version-control.git/55254/focus=55298
-> > > 
-> > > Especially Shawn's message, which can be a base for your proposal, if
-> > > you want to work in this.
-> > 
-> > I don't particularly agree with Shawn's proposal.  Reliance on a stable 
-> > sorting on the server side is too fragile, restrictive and cumbersome.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigC4E8FE25A8ACA985A6986DDB
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-We already rely on a stable sort in the tree format.  Asking that
-a stable sort be applied when a clone is started so that we can
-later resume it isn't unreasonable.  Hell, that tree format sort
-is a B***H anyway, its not a simple sort by memcmp().  Almost every
-Git re-implementation gets it wrong the first time out.
- 
-> > Restartable clone is _hard_.  Even I who has quite a bit of knowledge in 
-> > the affected area didn't find a satisfactory solution yet.
+Shawn O. Pearce said the following on 23.02.2009 16:42:
+> Marius Storm-Olsen <marius@trolltech.com> wrote:
+>> Anyways, I just thought it would fairly "low cost" to add, and
+>> nice to have.
+>=20
+> Its not that low of a cost, its an extra fork+exec per prompt when
+> in a .git/ or a bare repository.  Neither is very common when
+> compared to a workdir, Junio's right about that.  But its YAFE.  ;)
+>=20
+>> Consider it, as Linus coined the term, a throw-away patch. I can
+>> easily put it in my .bashrc instead. :)
+>=20
+> Like Junio, I'm not very compelled to include this patch.  I just=20
+> don't see enough to make including it worthwhile.
 
-Sure, its difficult, but nobody has put effort into it either.
-I think it could be done by enforcing a stable sort during clone
-(and perhaps only during clone).  That's the basis of that message
-Miklos points to.  Though I don't think I ever said anything about
-the stable sort only being used during clone.
+If so, then I'd like to argue to remove setting the fake "GIT_DIR!"=20
+branch in the ps, since it hinders me from constructing this, IMO=20
+useful prompt, "(BARE:master)" in my own .bashrc.
 
-> I think it is possible for dumb protocols (using commit walkers) and
-> for (deprecated) rsync.
+     ~/source/some_repo (GIT_DIR!)$
+simply isn't useful to me, and neither is
+     ~/source/some_repo (BARE:GIT_DIR!)$
+of course. Now, if we remove setting the fake branch
+     ~/source/some_repo (BARE:some/funky/branch)$
+is doable for me in my own .bashrc, and by your argument, it would=20
+also make it more light weight, since you'd remove one extra fork+exec=20
+for *every single prompt* (and not just one extra when inside GIT_DIR).
 
-Yes, it is possible for the commit walkers to implement a restart,
-as they are actually beginning at the current root and walking back
-in history.  Resuming a large file like a pack is easy to do on HTTP
-if the remote server supports byte range serving.  Its also easy
-to validate on the client that the pack wasn't repacked during the
-idle period (between initial fetch and restart), just validate the
-SHA-1 footer.  If the pack was repacked and came up with the same
-name you'll have a mismatch on the footer.  Discard and try again.
+^shrug^ at this point you and Junio can discuss what to do, as Junio=20
+already said
 
-And if you want to save bandwidth, always grab the last 20 bytes
-of the file before getting any other parts, save it somewhere,
-and revalidate that last 20 before resuming.  If its changed,
-you should discard what you have and start over from the beginning.
+   | "I do not understand the need for GIT_DIR! thing even
+   |  less, but since we have that there already, I do not
+   |  see a reason not to add this to the queue."
 
-> > I think restartable clone is a really bad suggestion for SOC students.  
-> > After all we want successful SOC projects, not ones that even core git 
-> > developers did not yet find a good solution for.
-> > 
-> > IMHO of course.
-> 
-> But I agree that within current limits (as far as I know there are no
-> way to ask for SHA-1; you can only ask for refs for security reasons)
-> it would be difficult to very difficult to add restartable clone
-> support to native (smart) protocols.
-> 
-> If not for this limitation it would be, I think, possible to do a kind
-> of fsck, checking which commits in packfile are complete (i.e. have
-> all objects), and based on that ask for subset of objects.  This would
-> require support only from a client... alas, this is not possible.
+And I have to agree with him. At this point, __git_ps1() is actually=20
+removing useful information from the prompt; at least it does for me.
 
-I think the current "must want advertised ref" restriction is
-too strict.  If you make the server check the reachability of the
-wanted object, (assuming it can be resolved to a commit) then you
-can pick up in the middle of history.  We already (to some extent)
-support that with the deepen thing in a shallow clone.  Sure, it
-may cause more server load when clients ask for this partial fetch.
+--=20
+=2Emarius [@trolltech.com]
+'if you know what you're doing, it's not research'
 
-But clients can already abuse a server far more by repeatedly doing
-a clone, and then break the network connection as soon as the PACK
-header comes down the wire.  The server just spent a lot of CPU
-and IO time building the complete list of the objects to transmit.
-Its really a non-trivial load on the server side.  And by having
-the client break the pipe at the 'PACK' header, the client doesn't
-have to absorb the large data transfer either.  Making it fairly
-easy to DOS a Git daemon with a small botnet.
 
-So, IMHO, the restriction that a commit must be advertised, and not
-merely reachable, is overly strict and doesn't buy us a whole lot.
- 
-> I think that unless 'restartable clone' is limited to commit wakers
-> (HTP protocol etc.) it should be moved up the diffuculty from "New to
-> Git?" section. I guess that mirror-sync, formerly GitTorrent, could be
-> easier to implement.
+--------------enigC4E8FE25A8ACA985A6986DDB
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-Maybe.  But a simple stable sort on the objects makes it easier,
-perhaps within reach of "new to git".
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (MingW32)
 
-That ideas page is a wiki for a reason.  If folks feel differently
-from me, please edit it to improve things!  :-)
+iD8DBQFJosjRKzzXl/njVP8RAvJYAKDSP7vMyfWtfJGHbxYnwRnogVDXIACgwlE2
+nZl2U9QA/rvfosuFve25guo=
+=6B0X
+-----END PGP SIGNATURE-----
 
--- 
-Shawn.
+--------------enigC4E8FE25A8ACA985A6986DDB--
