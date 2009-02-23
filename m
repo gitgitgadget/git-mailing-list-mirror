@@ -1,109 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] adds --date=raw support to git blame and related
- documentation
-Date: Mon, 23 Feb 2009 09:10:54 -0800
-Message-ID: <7vprh9t6xt.fsf@gitster.siamese.dyndns.org>
-References: <1235379429-20934-1-git-send-email-eletuchy@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, eletuchy@facebook.com,
-	Eugene Letuchy <eugene@facebook.com>
-To: eletuchy@gmail.com
-X-From: git-owner@vger.kernel.org Mon Feb 23 18:13:27 2009
+From: Ferry Huberts <ferry.huberts@pelagic.nl>
+Subject: [EGIT] [PATCH v2 1/1] Make sure to set up the default remote branch correctly
+Date: Mon, 23 Feb 2009 18:45:23 +0100
+Message-ID: <885442b0ed51a782b743aaef32e259ccd24429f4.1235410609.git.ferry.huberts@pelagic.nl>
+References: <cover.1235410609.git.ferry.huberts@pelagic.nl>
+Cc: Ferry Huberts <ferry.huberts@pelagic.nl>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 23 18:47:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbeMR-00030m-6m
-	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 18:12:55 +0100
+	id 1LbetV-0007tZ-Iq
+	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 18:47:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755652AbZBWRLH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Feb 2009 12:11:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755649AbZBWRLH
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 12:11:07 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33860 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755549AbZBWRLG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2009 12:11:06 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5623E9C03F;
-	Mon, 23 Feb 2009 12:11:02 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9E8F39C038; Mon,
- 23 Feb 2009 12:10:56 -0500 (EST)
-In-Reply-To: <1235379429-20934-1-git-send-email-eletuchy@gmail.com>
- (eletuchy@gmail.com's message of "Mon, 23 Feb 2009 00:57:09 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F2A0D106-01CC-11DE-8AEB-B26E209B64D9-77302942!a-sasl-fastnet.pobox.com
+	id S1752133AbZBWRpi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2009 12:45:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752482AbZBWRpg
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 12:45:36 -0500
+Received: from hupie.xs4all.nl ([82.95.241.251]:40494 "EHLO
+	Lighthouse.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752225AbZBWRpe (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Feb 2009 12:45:34 -0500
+Received: from localhost.localdomain (unknown [192.168.0.101])
+	by Lighthouse.internal.Hupie.com (Postfix) with ESMTP id 5A40058BDBB;
+	Mon, 23 Feb 2009 18:45:31 +0100 (CET)
+X-Mailer: git-send-email 1.6.0.6
+In-Reply-To: <cover.1235410609.git.ferry.huberts@pelagic.nl>
+In-Reply-To: <cover.1235410609.git.ferry.huberts@pelagic.nl>
+References: <cover.1235410609.git.ferry.huberts@pelagic.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111160>
 
-eletuchy@gmail.com writes:
+This is to make sure that the plugin sets up a clone
+in the same fashion as git-clone.
 
-> From: Eugene Letuchy <eugene@facebook.com>
->
-> In the wake of Linus' 7dff9b3, git blame --date support needs to
-> incorporate --date=raw in addition to the previously supported
-> date formats.
+Signed-off-by: Ferry Huberts <ferry.huberts@pelagic.nl>
+---
+ .../org/spearce/egit/core/op/CloneOperation.java   |   18 ++++++++++++++++++
+ 1 files changed, 18 insertions(+), 0 deletions(-)
 
-Thanks, but I do not understand what you meant by the following two lines:
-
-> Test: > git grep relative | grep iso | grep -v raw
->       > git blame --date=raw builtin-blame.c
-
-With the patch to add --date=raw format already on 'master', I'd prefer a
-reroll of the original patch (it needs a fix for the config "don't ignore
-a misconfiguration" bug Peff pointed out anyway) with this documentation
-update patch squashed in.
-
-> diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
-> index e6717af..1316d4e 100644
-> --- a/Documentation/blame-options.txt
-> +++ b/Documentation/blame-options.txt
-> @@ -36,7 +36,7 @@ of lines before or after the line given by <start>.
->  	Show long rev (Default: off).
->  
->  -t::
-> -	Show raw timestamp (Default: off).
-> +	Synomym for --date=raw (Default: off).
-
-This is interesting.  It suggests that we should internally get rid of
-show_raw_time variable (and need to error out when --date= and -t options
-are given at the same time, as they are mutually incompatible).
-
-But do -t and --date=raw really behave identically?  I think they should
-but I didn't check.
-
-> diff --git a/builtin-blame.c b/builtin-blame.c
-> index 48cedfd..bb0d20b 100644
-> --- a/builtin-blame.c
-> +++ b/builtin-blame.c
-> @@ -2288,12 +2288,16 @@ parse_done:
->  	case DATE_RELATIVE:
->  		blame_date_width = sizeof("14 minutes ago");
->  		break;
-> +	case DATE_RAW:
-> +		blame_date_width = sizeof("1235155266 -0800");
-> +		output_option |= OUTPUT_RAW_TIMESTAMP;
-> +		break;
-
-I'd prefer it to see a same timestamp used consistently here.  You seem to
-have used "Thu, 19 Oct 2006 16:00:04 -0700" for other case arms (I do not
-know what significant things happened at that time) and what I queued in
-'pu' has sizeof("1161298804 -0700") there instead.
-
->  	case DATE_LOCAL:
->  	case DATE_NORMAL:
->  		blame_date_width = sizeof("Thu Oct 19 16:00:04 2006 -0700");
->  		break;
->  	}
-> -	blame_date_width -= 1; /* strip the null */
-> +	blame_date_width -= 1; /* strip the terminating null */
-
-The character with byte value 0 is called NUL.
-
-Thanks.
+diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/op/CloneOperation.java b/org.spearce.egit.core/src/org/spearce/egit/core/op/CloneOperation.java
+index 777894c..b66c870 100644
+--- a/org.spearce.egit.core/src/org/spearce/egit/core/op/CloneOperation.java
++++ b/org.spearce.egit.core/src/org/spearce/egit/core/op/CloneOperation.java
+@@ -32,6 +32,7 @@
+ import org.spearce.jgit.lib.Ref;
+ import org.spearce.jgit.lib.RefUpdate;
+ import org.spearce.jgit.lib.Repository;
++import org.spearce.jgit.lib.RepositoryConfig;
+ import org.spearce.jgit.lib.Tree;
+ import org.spearce.jgit.lib.WorkDirCheckout;
+ import org.spearce.jgit.transport.FetchResult;
+@@ -158,6 +159,23 @@ private void doInit(final IProgressMonitor monitor)
+ 		local.getConfig().setBoolean("core", null, "bare", false);
+ 
+ 		remoteConfig.update(local.getConfig());
++
++		// branch is like 'Constants.R_HEADS + branchName',
++		// we need the 'branchName' part only
++		String[] branchSplit = branch.split(Constants.R_HEADS);
++		
++		// setup the default remote branch for branchName
++		local.getConfig().setString(
++				RepositoryConfig.BRANCH_SECTION,
++				branchSplit[branchSplit.length - 1],
++				"remote",
++				remoteName);
++		local.getConfig().setString(
++				RepositoryConfig.BRANCH_SECTION,
++				branchSplit[branchSplit.length - 1],
++				"merge",
++				branch);
++
+ 		local.getConfig().save();
+ 	}
+ 
+-- 
+1.6.0.6
