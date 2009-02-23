@@ -1,117 +1,125 @@
-From: Marius Storm-Olsen <marius@trolltech.com>
-Subject: Re: [PATCH] Add bare repository indicator for __git_ps1
-Date: Mon, 23 Feb 2009 08:52:31 +0100
-Message-ID: <49A255BF.5040905@trolltech.com>
-References: <1235227723-11471-1-git-send-email-git@storm-olsen.com> <7v8wnzr3k9.fsf@gitster.siamese.dyndns.org> <49A05958.7050703@trolltech.com> <7v63j22z92.fsf@gitster.siamese.dyndns.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH 12/13] remote.c: refactor get_remote_ref_states()
+Date: Mon, 23 Feb 2009 02:55:32 -0500
+Message-ID: <76718490902222355v7510d2f9p51ade61d1f257146@mail.gmail.com>
+References: <cover.1235368324.git.jaysoffian@gmail.com>
+	 <885507eaf920f6b60727db7e712da3560a7fd4c5.1235368324.git.jaysoffian@gmail.com>
+	 <20090223065048.GC24517@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig039DCF2C6D0FAB426E842394"
-Cc: Marius Storm-Olsen <git@storm-olsen.com>, spearce@spearce.org,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 23 08:54:08 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Marc Branchaud <marcnarc@xiplink.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 23 08:57:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbVdd-0005oD-DO
-	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 08:54:05 +0100
+	id 1LbVgU-0006No-0k
+	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 08:57:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752773AbZBWHwg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Feb 2009 02:52:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751664AbZBWHwg
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 02:52:36 -0500
-Received: from hoat.troll.no ([62.70.27.150]:47471 "EHLO hoat.troll.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751350AbZBWHwf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2009 02:52:35 -0500
-Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id D478B20F8E;
-	Mon, 23 Feb 2009 08:52:31 +0100 (CET)
-Received: from [172.24.90.95] (unknown [172.24.90.95])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hoat.troll.no (Postfix) with ESMTP id C4C6C20F7E;
-	Mon, 23 Feb 2009 08:52:31 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.19) Gecko/20081209 Lightning/0.9 Thunderbird/2.0.0.19 ThunderGit/0.1a Mnenhy/0.7.6.666
-In-Reply-To: <7v63j22z92.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.7
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
- hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
- 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
- 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
- ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
- oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
- tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
- Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
- 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
- nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
- KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
- 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
+	id S1753090AbZBWHzf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2009 02:55:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752845AbZBWHze
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 02:55:34 -0500
+Received: from rv-out-0506.google.com ([209.85.198.229]:48083 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752457AbZBWHzd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2009 02:55:33 -0500
+Received: by rv-out-0506.google.com with SMTP id g37so1834593rvb.1
+        for <git@vger.kernel.org>; Sun, 22 Feb 2009 23:55:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Ja0tRkEUiLlFpmnM5LHu2fEw0JHsgwWb4WygSK4YNrI=;
+        b=cxW+1/yh44Dja5ff4KePhlUvgYCd5dljpe6eNmpXEY4HmirVA7C6ZoYxeODOeT/fXK
+         V3/ynGFiEgFGwkFh9GOVt4MhM/z24J/gP/PRWXeOJHrqYkaANE9glMOvj/tT8QVGYnpp
+         HmbAGQWDMMrlwBDTCvsMVGm5bcDMDxyTRGQBA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=BbrApAHmwbLzsoultGSUMU+cceDBJyPdQJ9AjTOyedlbCGle9EhipaxuW9quLbcMYU
+         0HmGSMbglptT0TKupcnF4GFc53mhp8wqSTtECkr3JDCk4V5RevNG/e+g1fUiRq8SXRTE
+         jER7kQlDlIsLTrL4nm5NwAPIlabkQnFIV5eko=
+Received: by 10.141.210.21 with SMTP id m21mr1908514rvq.204.1235375732736; 
+	Sun, 22 Feb 2009 23:55:32 -0800 (PST)
+In-Reply-To: <20090223065048.GC24517@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111116>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig039DCF2C6D0FAB426E842394
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: quoted-printable
+On Mon, Feb 23, 2009 at 1:50 AM, Jeff King <peff@peff.net> wrote:
+> On Mon, Feb 23, 2009 at 01:29:00AM -0500, Jay Soffian wrote:
+>
+>> get_remote_ref_states() has three callers, but each is interested in
+>> slightly different information. Give it a bit-field flag so that callers
+>> can specify which pieces of information they need.
+>
+> Hmph. I think this is probably an indication that
+> get_remote_ref_states() should really be 3 functions:
+>
+>  common_stuff();
+>  query_one();
+>  query_two();
+>
+> and then callers can choose the subset they are interested in.
+>
+> Which is really more or less equivalent; it just seems like extra
+> obfuscation to have a single function with a bit-field.
 
-Junio C Hamano said the following on 22.02.2009 17:49:
-> Marius Storm-Olsen <marius@trolltech.com> writes:
->>> There may be a different workflow where you would stay in a
->>> bare repository for an extended period of time and you would
->>> benefit from such a reminder like this patch adds, but I do not
->>> think of one.
->>>=20
->>> Care to enlighten?
->> Right, I have quite a few repos on my machine which are just
->> bare, as I use them gather branches and push out again.
->> (http://repo.or.cz/w/git/platforms.git is one of them) However,=20
->> it's probably just me, since I could just as easily put them in a
->> proper directory structure to indicate their bareness.
->=20
-> Ah, so "gather branches and push out again" would look something
-> like this?
->=20
->     $ cd /pub/some/where/platforms.git
->     $ git fetch platform1 ;# perhaps with master:one/master mapping
->     $ git fetch platform2 ;# perhaps with master:two/master
->     $ git push public
->=20
-> Then it is very understandable that you would spend time inside a
-> bare repository.  I do not understand the need for GIT_DIR! thing
-> even less, but since we have that there already, I do not see a
-> reason not to add this to the queue.
+I see your hmph and raise you a hmph. :-)
 
-Indeed that's somewhat how I work.
-Also, given the new GIT_DIR! "feature", I cannot simply keep my=20
-"BARE:" in my own .bash_rc anymore, since then I'd just get
-     (BARE:GIT_DIR!)
-which is less than useful. So, given that the overhead and impact to=20
-the current logic is minimal, I would appreciate the patch being queued.
+Well, I _had_ tried as you suggested first, and thought it yuckier. It
+would actually be more like:
 
-Thanks!
+caller1() {
+  setup_for_get();
+  get_thing_one();
+}
 
---=20
-=2Emarius [@trolltech.com]
-'if you know what you're doing, it's not research'
+caller2() {
+  setup_for_get();
+  get_thing_two();
+}
 
+caller3() {
+  if (query) {
+     setup_for_get();
+     get_thing_one();
+     get_thing_two();
+     get_thing_three();
+} else {
+     get_thing_one_noquery()
+     get_thing_two_noquery();
+}
 
---------------enig039DCF2C6D0FAB426E842394
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+As opposed to:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (MingW32)
+caller1() {
+  get_things(ONE)
+}
 
-iD8DBQFJolW/KzzXl/njVP8RAi7cAJ9xta6XdB41Xu2eYNJCrl3nEys7CQCfSb0o
-Ta6OJO8jAi3HkZV7K+OrrPM=
-=QM8G
------END PGP SIGNATURE-----
+caller2() {
+  get_things(TWO)
+}
 
---------------enig039DCF2C6D0FAB426E842394--
+caller3() {
+  things = 0;
+  if (query)
+     things = (ONE|TWO|THREE)
+  get_things(things)
+}
+
+I'm not sure why passing a flag saying what you want is obfuscating.
+Also, I did find other places in git that do this sort of thing (e.g.,
+get_remote_heads).
+
+(Awaiting Junio's lucid reply explaining why my justification is bogus.) :-)
+
+j.
