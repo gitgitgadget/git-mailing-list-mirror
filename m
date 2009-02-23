@@ -1,81 +1,81 @@
-From: Dilip M <dilipm79@gmail.com>
-Subject: Re: how to reset to remote repo
-Date: Mon, 23 Feb 2009 17:44:58 +0530
-Message-ID: <c94f8e120902230414v33d36acelc3dc39861646539a@mail.gmail.com>
-References: <20090223105546.GA7425@b2j>
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: git merge --abort
+Date: Mon, 23 Feb 2009 12:41:03 +0000
+Message-ID: <43d8ce650902230441n51c9e5a8h722682cda778aa7a@mail.gmail.com>
+References: <43d8ce650902190205yc2274c5gb8e658c8608267ff@mail.gmail.com>
+	 <m3ocwwrxtg.fsf@localhost.localdomain>
+	 <7v3ae8rvvd.fsf@gitster.siamese.dyndns.org>
+	 <200902211118.32185.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=Big5
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 23 13:16:32 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Bryan Donlan <bdonlan@gmail.com>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Nanako Shiraishi <nanako3@lavabit.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 23 13:42:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbZja-0006EJ-Dj
-	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 13:16:30 +0100
+	id 1Lba8q-0005yX-7S
+	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 13:42:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753537AbZBWMPA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Feb 2009 07:15:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753413AbZBWMO7
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 07:14:59 -0500
-Received: from yx-out-2324.google.com ([74.125.44.28]:13255 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753321AbZBWMO7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Feb 2009 07:14:59 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so768791yxm.1
-        for <git@vger.kernel.org>; Mon, 23 Feb 2009 04:14:58 -0800 (PST)
+	id S1753917AbZBWMlI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2009 07:41:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753725AbZBWMlG
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 07:41:06 -0500
+Received: from mail-gx0-f174.google.com ([209.85.217.174]:56365 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753542AbZBWMlE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2009 07:41:04 -0500
+Received: by gxk22 with SMTP id 22so5013252gxk.13
+        for <git@vger.kernel.org>; Mon, 23 Feb 2009 04:41:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
+         :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=kHJPFPHy9Vd6fAJdvnXfUTq5VWHc6Y6gBLKcv1+HRYA=;
-        b=AgHXKy7JMYIKzsHQBq7ZBZa7v/UI04MJHrhsF80VT0jc/uKhkq9RdpcbnNKfvxLHfP
-         Y0pLj9gE60qGaNP7tahbQTqBVl30zALltiYbL2u9OpK5WUi+rY9I0Gg88zkmepbmg/IZ
-         IccB6PR33RT4QpC4jXHUUlBbq4FuKjkWuzrRM=
+        bh=90+rjB8J1QSNeMTSlBi0kW/pUwiDwt/86MTfwSmpGZE=;
+        b=vsOrc9Dj22yvX4kIK8aYgWg8UMm0/noztnYXddeU1RUYkdmHPMZgaHucurx9djgcg4
+         eNrAI3RX3mbZdc9aG8Y2FvfSZM1rWEjJsyNK3G/ARX4nz70jGD1hCx8AVhhirk8dDTBN
+         LunsRSv9n6cSuhRd46cXf0qWMFCZTb+n7XalQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=fEJWBLXzDEToZDeVEXia3qH9/13ilcV52kcHS/y8eMXe+2Oru3SbwLK/nqNQjiDq6Z
-         9rCxDbsF1E5Wpto7d7EQTARalPmimGt0JJCyaWJ9ZbrIzYdgOAp999ynkQaeLdH+NOf0
-         XE1FvXWMLCJpw73DX4liv8sU0rQMd+5En6SQo=
-Received: by 10.100.6.16 with SMTP id 16mr1500872anf.151.1235391298078; Mon, 
-	23 Feb 2009 04:14:58 -0800 (PST)
-In-Reply-To: <20090223105546.GA7425@b2j>
+         :cc:content-type:content-transfer-encoding;
+        b=xL9Anad7WjVJSZK4cdmN8/niqCJsrZSOSNFCgs7ve0W7ACxf5nsWla5dFG+DXqelyQ
+         Knbah8f0XN9Dt6GMlmiJsbmWCefbCoVxew86SZq+ra+CBkMpECNepDmByMC/7p0Pk7hb
+         QX+dnD/zdbHdGVjqf2PQK7G3txbVJLnIWXLRw=
+Received: by 10.150.146.14 with SMTP id t14mr1739232ybd.106.1235392863550; 
+	Mon, 23 Feb 2009 04:41:03 -0800 (PST)
+In-Reply-To: <200902211118.32185.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111133>
 
-git reset --hard HEAD
-
--- BR, Dilip
-
-
-
-
-On Mon, Feb 23, 2009 at 4:25 PM, bill lam <cbill.lam@gmail.com> wrote:
-> I cloned some public git repos and made some local patches. Later I
-> pulled updates again and that merged with my patches. Now I want to
-> throw away my patches, how do I get a clean working repo that is a
-> 100% clone of the remote repo?
+2009/2/21 Jakub Narebski <jnareb@gmail.com>:
+> On Sat, 21 Feb 2009, Junio C Hamano wrote:
+>> Jakub Narebski <jnareb@gmail.com> writes:
+>>
+>> > Perhaps this is the case fo "feature that waits for a user", namely
+>> > 'git stash --no-reset', which would save a state just in case, perhaps
+>> > in a separate area and not refs/stash (ORIG_STASH perhaps?).
+>>
+>> Isn't that Nana's "git stash --keep" patch posted a few weeks ago sitting
+>> in "pu"?
 >
-> --
-> regards,
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D
-> GPG key 1024D/4434BAB3 2008-08-24
-> gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
-> =AD=F0=B8=D6285 =B1i=D2=E9  =B6=B0=C6F=BBO=A4G=AD=BA=A4=A7=A4G
->    =E7~=B0=EA=A4=D2=A4H=A9=D3=A5D=AE=A6  =A5=AD=A9=FA=C3M=B0=A8=A4J=AE=
-c=AA=F9  =ABo=B6=FB=AF=D7=AF=BB=A6=C3=C3C=A6=E2  =B2H=B1=BD=B8=BF=AC=DC=
-=B4=C2=A6=DC=B4L
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> Almost exactly.
 >
+> When using it as a safety measure (perhaps enabled via configuration
+> variable, similarly to core.safecrlf or diff.autoRefreshIndex) we would
+> probably want to not save it in 'refs/stash' stack, but in single-use
+> ORIG_STATE (similar to HEAD reflog vs. ORIG_HEAD). And of course have
+> "git merge --abort" (or even "git pull --abort") as a porcelain.
+
+It sounds like we have some sort of plan then.  Will Nana's patch be
+committed into mainline git?  Then we can add the --abort porcelain
