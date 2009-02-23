@@ -1,78 +1,72 @@
-From: Myxz Ptlk <Adrian.Klingel@illumaware.com>
-Subject: Git rebase aggravation
-Date: Sun, 22 Feb 2009 20:20:10 -0800 (PST)
-Message-ID: <22155203.post@talk.nabble.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: empty symlink detection breakage
+Date: Sun, 22 Feb 2009 20:33:47 -0800
+Message-ID: <20090223043347.GA21136@dcvr.yhbt.net>
+References: <20090222015611.GA14378@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 23 05:21:42 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 23 05:35:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbSK5-0001TO-W9
-	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 05:21:42 +0100
+	id 1LbSXF-0003gl-QI
+	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 05:35:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752476AbZBWEUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Feb 2009 23:20:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752318AbZBWEUM
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Feb 2009 23:20:12 -0500
-Received: from kuber.nabble.com ([216.139.236.158]:43890 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751577AbZBWEUL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Feb 2009 23:20:11 -0500
-Received: from isper.nabble.com ([192.168.236.156])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists@nabble.com>)
-	id 1LbSIc-0004J4-KS
-	for git@vger.kernel.org; Sun, 22 Feb 2009 20:20:10 -0800
-X-Nabble-From: Adrian.Klingel@illumaware.com
+	id S1752601AbZBWEdt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Feb 2009 23:33:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752523AbZBWEdt
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Feb 2009 23:33:49 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:50893 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752453AbZBWEds (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Feb 2009 23:33:48 -0500
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2977E1F5FC;
+	Mon, 23 Feb 2009 04:33:48 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20090222015611.GA14378@atjola.homenet>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111078>
 
+Bj=F6rn Steinbrink <B.Steinbrink@gmx.de> wrote:
+> Hi Eric,=20
+>=20
+> seems that the empty symlink stuff gets confused about which revision=
+ to
+> use when looking for the parent's file.
 
-I have two branches that diverged a long time ago, master and zoo.  I work
-locally and check changes into a remote repository.  The remote repository
-is also set up the same, and the local branches are set up to track the
-remote branches.  Major development has gone on in both sides unfortunately. 
-"master" is the production version.  My strategy to get the two together
-was:
+<snip>
 
-1)  Rebase master into zoo.
+> Note how it tries to look at revision 3 instead of revision 5 (which =
+it
+> correctly detected as the parent). The import succeeds when
+> svn.brokenSymlinkWorkaround is set to false. Testcase below.
 
-2) Merge zoo into master.
+Thanks Bj=F6rn,
 
-But here is what happens.  I spend 3 hours inside "zoo" doing "git rebase
-master".  I go through all the hell of reconciling 6 months of development. 
-Then at the end, it just says that the commits now differ between local
-"zoo" and "origin/zoo".
+I've pushed out a one line bugfix to git://git.bogomips.org/git-svn
 
-So I figure, I will pull from "origin/zoo".  Naturally, that results in a
-conflicted merge, which I then clear up.  I commit the merge, then push
-everything back to the remote branch.
+diff --git a/git-svn.perl b/git-svn.perl
+index ef01fb9..bce24a8 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -2421,6 +2421,7 @@ sub find_parent_branch {
+ 			# do_switch works with svn/trunk >=3D r22312, but that
+ 			# is not included with SVN 1.4.3 (the latest version
+ 			# at the moment), so we can't rely on it
++			$self->{last_rev} =3D $r0;
+ 			$self->{last_commit} =3D $parent;
+ 			$ed =3D SVN::Git::Fetcher->new($self, $gs->{path});
+ 			$gs->ra->gs_do_switch($r0, $rev, $gs,
 
-Now I would guess that my "zoo" branch has everything in it from "master",
-and it is also in sync with the  "origin/zoo" branch.  I push and pull and
-verify that this is so.
-
-My thinking is that if I were to attempt a new rebase of master, the
-beginning of what would be rebased would start from RIGHT NOW, instead of
-all the commits over the past 6 months.  To check this, I type:
-
-git rebase master
-
-from "zoo".  Lo and behold, it starts the whole process over again.  I "git
-rebase --abort", but I am very, very confused.
-
-Why does the rebase not remember all the freaking work I just did?  Why
-would I have to rebase the same commits all over again?  How do people keep
-downstream branches up to date if this doesn't work?  What am I missing
-here?  I will be extremely grateful for any help and understanding anybody
-can offer.
--- 
-View this message in context: http://www.nabble.com/Git-rebase-aggravation-tp22155203p22155203.html
-Sent from the git mailing list archive at Nabble.com.
+--=20
+Eric Wong
