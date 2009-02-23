@@ -1,101 +1,75 @@
-From: Stephan Beyer <s-beyer@gmx.net>
-Subject: Re: git rebase -i
-Date: Mon, 23 Feb 2009 01:32:45 +0100
-Message-ID: <20090223003245.GC21616@leksak.fem-net>
-References: <43d8ce650902190121v2e18aac1rfaa64a4ce6e799a3@mail.gmail.com> <871vtudabm.fsf@iki.fi> <43d8ce650902190152t6162593x8d0920be0e6d7a6d@mail.gmail.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: GSoC 2009 Prospective student
+Date: Mon, 23 Feb 2009 00:46:29 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngq3sf4.fl1.sitaramc@sitaramc.homelinux.net>
+References: <a149495b0902221158h16d499f7w8bd18abaf1321e46@mail.gmail.com>
+ <20090222204334.GY4371@genesis.frugalware.org>
+ <alpine.LFD.2.00.0902221709460.5511@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Teemu Likonen <tlikonen@iki.fi>,
-	Git Mailing List <git@vger.kernel.org>
-To: John Tapsell <johnflux@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 23 01:34:40 2009
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 23 01:48:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbOmO-00005N-6l
-	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 01:34:40 +0100
+	id 1LbOzQ-0002xO-QT
+	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 01:48:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754869AbZBWAcx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Feb 2009 19:32:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754768AbZBWAcx
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Feb 2009 19:32:53 -0500
-Received: from mail.gmx.net ([213.165.64.20]:54741 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754747AbZBWAcw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Feb 2009 19:32:52 -0500
-Received: (qmail invoked by alias); 23 Feb 2009 00:32:50 -0000
-Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
-  by mail.gmx.net (mp008) with SMTP; 23 Feb 2009 01:32:50 +0100
-X-Authenticated: #1499303
-X-Provags-ID: V01U2FsdGVkX1+2CpYFuaO2LjtQ1KM0BBxUQLTDL7x9/s2bHXRZHC
-	lNKZiZs596EPRz
-Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
-	(envelope-from <s-beyer@gmx.net>)
-	id 1LbOkX-0006Q4-A6; Mon, 23 Feb 2009 01:32:45 +0100
-Content-Disposition: inline
-In-Reply-To: <43d8ce650902190152t6162593x8d0920be0e6d7a6d@mail.gmail.com>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.62
+	id S1754862AbZBWAqj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Feb 2009 19:46:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754747AbZBWAqj
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Feb 2009 19:46:39 -0500
+Received: from main.gmane.org ([80.91.229.2]:48465 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753577AbZBWAqj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Feb 2009 19:46:39 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LbOxy-0002V3-1e
+	for git@vger.kernel.org; Mon, 23 Feb 2009 00:46:38 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 23 Feb 2009 00:46:38 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 23 Feb 2009 00:46:38 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111069>
 
-Hi,
+On 2009-02-22, Nicolas Pitre <nico@cam.org> wrote:
+> Restartable clone is _hard_.  Even I who has quite a bit of knowledge in 
+> the affected area didn't find a satisfactory solution yet.
 
-> > I think it's better to use aliases for this kind of personal things:
-> >
-> >    git config --global alias.my-rebase "rebase -i HEAD~10"
-> >
-> > Now you can do:
-> >
-> >    git my-rebase
-> >
-> 
-> I'm trying to make git more obvious and easier to use, rather than
-> find any solution :-)
+I'm sorry I have not followed the earlier discussion.  I
+have a question.  I know the rsync transport is not much
+used, and I myself have never used it.  But can there not be
+a 'sorry, this repo is not yet open' flag that prevents
+local git operations while the clone is going on, and then
+the actual clone itself merely does an rsync of the
+corresponding files?  Because rsync is quite restartable.
 
-As Wincent pointed out, git rebase -i without arguments isn't that
-obvious or intuitive.
+I can see that this would be a problem if the remote were to
+'git repack' in between 2 attempts by the client, because
+the actual tree inside .git/objects would change, but that
+is hardly a common occurrence I would think.
 
-If you was looking for a solution, I'd be telling you that I use a
-simple script "git-tickle-last" for this purpose:
+I'm sorry if I'm being naive and missing a lot of important
+nuances -- but I was looking at it from a "if I had to do it
+in shell how would I do it' mindset.
 
---- 8< ---
-#!/bin/sh
-default=10
+Or perhaps by 'restartable clone' you also mean 'restartable
+fetch', etc, in which case of course you can't lock out the
+repo if a fetch dies partway.
 
-get_safe_num () {
-	n=0
-	git rev-list --parents "HEAD~$default.." | while read line
-	do
-		i=0
-		for p in $line
-		do
-			i=$((i+1))
-		done
-		if test "$i" -gt 2
-		then
-			echo $n
-			return 1
-		fi
-		n=$((n+1))
-	done && echo $default
-}
-
-git rebase -i "HEAD~$(get_safe_num)"
---- >8---
-
-It makes sure (I hope) that no merges get into the list, but it doesn't
-care about published changes (i.e. tracking branch behavior).
-
-I use it because I often reorder or squash commits before I push or
-merge.
-
-Regards,
-  Stephan
-
--- 
-Stephan Beyer <s-beyer@gmx.net>, PGP 0x6EDDD207FCC5040F
+It is not necessary to reply in detail; even a gmane or
+other link will do if this was already shot down :-)
