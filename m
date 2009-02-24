@@ -1,132 +1,95 @@
-From: Penny Leach <penny@mjollnir.org>
-Subject: git-svn starting with an empty svn repository
-Date: Tue, 24 Feb 2009 14:43:25 +0100
-Message-ID: <20090224134325.GA10719@mjollnir.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: Issues building docs on an offline box again.
+Date: Tue, 24 Feb 2009 15:07:47 +0100
+Message-ID: <20090224140747.GS4371@genesis.frugalware.org>
+References: <c115fd3c0902231507k46da3294yf2726a92cb0fbc1a@mail.gmail.com> <20090224022856.GN4371@genesis.frugalware.org> <c115fd3c0902240504y9fe6ce4m65ba73ce2937cb9e@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="M9NhX3UHpAaciwkO"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 24 15:04:49 2009
+	protocol="application/pgp-signature"; boundary="/YLrkxBeBoBPjrwx"
+Cc: git@vger.kernel.org
+To: Tim Visher <tim.visher@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 24 15:09:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lbxtm-0000wm-CI
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 15:04:38 +0100
+	id 1LbxyH-0002ty-Qg
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 15:09:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755310AbZBXODM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2009 09:03:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754950AbZBXODK
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 09:03:10 -0500
-Received: from mjollnir.org ([202.78.240.81]:45080 "EHLO mjollnir.org"
+	id S1754393AbZBXOHu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2009 09:07:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754313AbZBXOHu
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 09:07:50 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:54700 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755221AbZBXODJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2009 09:03:09 -0500
-X-Greylist: delayed 1172 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Feb 2009 09:03:09 EST
-Received: from localhost (localhost [127.0.0.1])
-	by mjollnir.org (Postfix) with ESMTP id 4077528A558
-	for <git@vger.kernel.org>; Tue, 24 Feb 2009 14:43:01 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at mjollnir.org
-Received: from mjollnir.org ([127.0.0.1])
-	by localhost (mjollnir.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id b3zX4DYC9Hqg for <git@vger.kernel.org>;
-	Tue, 24 Feb 2009 14:42:57 +0100 (CET)
-Received: from hermia.mjollnir.org (114-123.104-92.cust.bluewin.ch [92.104.123.114])
-	(Authenticated sender: penny)
-	by mjollnir.org (Postfix) with ESMTP id 6E96728A557
-	for <git@vger.kernel.org>; Tue, 24 Feb 2009 14:42:57 +0100 (CET)
-Received: by hermia.mjollnir.org (Postfix, from userid 1000)
-	id 19ABD22104; Tue, 24 Feb 2009 14:43:26 +0100 (CET)
+	id S1753752AbZBXOHu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2009 09:07:50 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id A2458581B5;
+	Tue, 24 Feb 2009 15:07:48 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 402C5446D6;
+	Tue, 24 Feb 2009 15:07:47 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 49FB611B877C; Tue, 24 Feb 2009 15:07:47 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <c115fd3c0902240504y9fe6ce4m65ba73ce2937cb9e@mail.gmail.com>
 User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111288>
 
 
---M9NhX3UHpAaciwkO
+--/YLrkxBeBoBPjrwx
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Dear list,
+On Tue, Feb 24, 2009 at 08:04:47AM -0500, Tim Visher <tim.visher@gmail.com>=
+ wrote:
+> How would I do that?  Unfortunately I have no experience whatsoever
+> with configuring docbook.  I've always just used a package manager to
+> install it.  Anyway, there's a `catalog` file in /etc/xml with the
+> following:
+>=20
+> $ cat /etc/xml/catalog
+> <?xml version=3D"1.0"?>
+> <!DOCTYPE catalog PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog
+> V1.0//EN" "http://www.oasis-open.org/committees/entity/release/1.0/catalo=
+g.dtd">
+> <catalog xmlns=3D"urn:oasis:names:tc:entity:xmlns:xml:catalog">
+>   <public publicId=3D"-//OASIS//DTD DocBook XML V4.2//EN"
+> uri=3D"http://www.oasis-open.org/docbook/xml/4.2/"/>
+>   <rewriteSystem
+> systemIdStartString=3D"http://www.oasis-open.org/docbook/xml/4.2/"
+> rewritePrefix=3D"/usr/share/xml/docbook/4.2/"/>
+> </catalog>
+>=20
+> To my untrained eye there seems to be a local path in there but I have no=
+ idea.
 
-This is maybe an abuse of what git-svn is designed to do, but nevertheless
-I need to do it.
+I'm not a docbook expert, either - but It seems the url your config
+rewrites is http://www.oasis-open.org/docbook/xml/4.2, while the url you
+try to access during the build is
+http://docbook.sourceforge.net/release/xsl/current. So I *think* you
+need to add two other entries as well for the xsl urls, but I'm just
+guessing.
 
-I'm working with a project (Moodle) that still uses CVS for its upstream
-VCS.  The friendly folk at Catalyst in NZ run a git import of this, that a
-lot of the community uses as their (read only) upstream instead of CVS.
+If it does not work, probably it worth asking on a docbook list, where
+people have more clue about docbook. :)
 
-So far so good.
-
-However, now for various political reasons, I must (at least) publish
-changes to SVN.  I'm going to be patch trading a lot between my work
-branches, and Moodle's CVS directly and I don't want to lose the power that
-git gives me while doing that.  So I want to keep git as the tool I use for
-development, that acts as a go-between for me between CVS and SVN.
-
-So what I'd really like to do is something like this:
-
-- clone from Catalyst's git mirror
-- push that to SVN using git-svn
-- keep working, committing patches to Moodle CVS, and pulling from Catalyst
-  regularly, while pushing both my local changes and new pulled upstream
-  patches, to SVN, using git-svn
-
-The problem seems to be that I'm starting out with an *empty* SVN
-repository.  Almost all of the documentation I've found on this topic is
-for going from an existing SVN repository to git.
-
-Theoretically at least, the opposite direction should also be possible, but
-I'm having a hard time figuring it out.  I followed the steps outlined in
-the comments here:
-http://quirkygba.blogspot.com/2007/10/using-git-with-google-code-hosting.ht=
-ml
-
-But I didn't have much luck, it seems as though the rebased trunk branch
-doesn't share any ancestry with the original Catalyst sources, so regularly
-updating is going to be hard (unless I create graft entries for each time I
-do it I guess?).
-
-Not to mention the fact that it's 8 years of history that takes a while to
-import and after about 5 tries I didn't even manage to get git svn to
-dcommit it and got impatient and cross and stopped trying.
-
-So really I want to know is - is this even possible? Is using the above
-steps along with the graft approach the best|only way to do it?  How
-brittle is this to maintain, if I even manage to get it imported?
-
-Any ideas or advice?
-
-For reference, the CVS/Git import can be cloned here:
-http://git.catalyst.net.nz/git/moodle-r2.git but will take a long time to
-come down.
-
-Cheers for any help.
-
-Penny
-
-
---=20
-/* ---------------------------------------------------
-Penny Leach | http://mjollnir.org | http://she.geek.nz
-GPG: 8347 00FC B5BF 6CC0 0FC9 AB90 1875 120A A30E C22B
---------------------------------------------------- */
-
---M9NhX3UHpAaciwkO
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+--/YLrkxBeBoBPjrwx
+Content-Type: application/pgp-signature
 Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.9 (GNU/Linux)
 
-iEYEARECAAYFAkmj+X0ACgkQGHUSCqMOwita1gCgrqZy+X6dN9QWAkXL3YFFl9XY
-AVcAoJZrPCsHhvlF7t9x8XswZOWRd/4/
-=zZdt
+iEYEARECAAYFAkmj/zMACgkQe81tAgORUJY70gCfbZnm4F2v7toTMwFjfqbcZhgz
+vuwAnA3CzVzze0BZalaBvuv5XNw7kvI2
+=aVV5
 -----END PGP SIGNATURE-----
 
---M9NhX3UHpAaciwkO--
+--/YLrkxBeBoBPjrwx--
