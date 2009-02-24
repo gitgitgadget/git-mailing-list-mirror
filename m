@@ -1,161 +1,135 @@
-From: Rafael Darder Calvo <rdarder@spiralti.com>
-Subject: Re: git-push error: Cannot write keep file
-Date: Tue, 24 Feb 2009 19:21:42 -0200
-Organization: Spiralti
-Message-ID: <49A464E6.3080802@spiralti.com>
-References: <49A428B7.4000003@spiralti.com> <7v7i3fivx2.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------070908050509080907020101"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 24 22:23:21 2009
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [RFC/PATCH] Add a new commit-raw command.
+Date: Tue, 24 Feb 2009 23:28:34 +0200
+Message-ID: <1235510914-23319-1-git-send-email-felipe.contreras@gmail.com>
+Cc: "Rene Stadler" <renestadler84@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 24 22:30:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lc4kK-0006O4-QU
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 22:23:21 +0100
+	id 1Lc4qz-0000OF-Ad
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 22:30:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752098AbZBXVVx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2009 16:21:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752000AbZBXVVx
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 16:21:53 -0500
-Received: from el-out-1112.google.com ([209.85.162.178]:2789 "EHLO
-	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751540AbZBXVVw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2009 16:21:52 -0500
-Received: by el-out-1112.google.com with SMTP id b25so1418924elf.1
-        for <git@vger.kernel.org>; Tue, 24 Feb 2009 13:21:50 -0800 (PST)
-Received: by 10.151.112.12 with SMTP id p12mr199133ybm.147.1235510510353;
-        Tue, 24 Feb 2009 13:21:50 -0800 (PST)
-Received: from shiny.spiralti.com ([200.68.99.9])
-        by mx.google.com with ESMTPS id n26sm19241396ele.2.2009.02.24.13.21.47
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 24 Feb 2009 13:21:49 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
-In-Reply-To: <7v7i3fivx2.fsf@gitster.siamese.dyndns.org>
+	id S1759506AbZBXV2m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2009 16:28:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758781AbZBXV2l
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 16:28:41 -0500
+Received: from mail-bw0-f161.google.com ([209.85.218.161]:53924 "EHLO
+	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759609AbZBXV2k (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2009 16:28:40 -0500
+Received: by bwz5 with SMTP id 5so6183356bwz.13
+        for <git@vger.kernel.org>; Tue, 24 Feb 2009 13:28:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=akpo1nWqfUs5ocxoAHgAmQC5ZGQkO+HXtqO5zLeNIzM=;
+        b=DtfU4rsDLE42gkDWZ5DdLf8fLgmLZnOUpAFJBkYvz6Z6ZoGI9NLXgRhRPj4AV2TOSS
+         Hz1NgMbUf7qGOTujCcIZftZQh2K6+TKBJyiRf3giKClMFaqsrHe0KHKbjRFyfjj+JfGz
+         ci1k+v5nRnEDfS/G8TU5zOmCsvV0ZFxl9nrIE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=gMiLPPEhK8EEwzAwCnNTtiOHlYhToGSbp5WVXdyswOcCuH9+LF2XBDMjElJ5p8yfit
+         1H4IahIGQwHYDXG1YgvLqahhQTSK3x7ElUZ+t7WLfMpEHYxsHz+xGX9SL/p2Vpcf4itH
+         Fy7c2B3BoUeYjOyUj2lH0s/BC7FGO5ZUQJ89M=
+Received: by 10.181.30.10 with SMTP id h10mr62057bkj.200.1235510917370;
+        Tue, 24 Feb 2009 13:28:37 -0800 (PST)
+Received: from localhost (a91-153-251-222.elisa-laajakaista.fi [91.153.251.222])
+        by mx.google.com with ESMTPS id 12sm6409282fks.25.2009.02.24.13.28.35
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 24 Feb 2009 13:28:35 -0800 (PST)
+X-Mailer: git-send-email 1.6.1.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111344>
 
-This is a multi-part message in MIME format.
---------------070908050509080907020101
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+This command receives as input a raw commit object, and outputs the
+generated sha1. This is very useful when doing some serious repo
+reconstructions.
 
-Junio C Hamano wrote:
-> Rafael Darder Calvo <rdarder@spiralti.com> writes:
-> 
->> Hello,
->> 	I am having the following error when I try to git push.
->>
->>
->> rdarder@shiny:~/Sources/promotoras$ git push origin ranto:ranto
->> Counting objects: 256, done.
->> Compressing objects: 100% (199/199), done.
->> Writing objects: 100% (213/213), 216.94 KiB, done.
->> Total 213 (delta 60), reused 1 (delta 0)
->>
->> fatal: cannot write keep file
->>
->> error: unpack failed: index-pack abnormal exit
->> To ssh://fherrero@10.7.1.20:2222/var/www/promotoras.git
->>  ! [remote rejected] ranto -> ranto (n/a (unpacker error))
->> error: failed to push some refs to
->> 'ssh://fherrero@10.7.1.20:2222/var/www/promotoras.git'
->>
->>
->> I couldn't find any significant description on the error "cannot write
->> keep file". git-fsck passes without errors in both repositories, and I
->> find no permission problems. Can anyone give me some directions on how
->> to diagnose this?
-> 
-> If you have access to the receiving side of the repository and the machine
-> that hosts it, the debug patch attached may help.
-> 
-> One possibility is the receiving repository was initialized long time ago
-> with an ancient git (ealier than f49fb35 (git-init-db: create "pack"
-> subdirectory under objects, 2005-06-27), and never had a packfile in it
-> since then.  We started creating '.git/objects/pack/' subdirectory in
-> git-init only after that commit.  It was Ok for a long time because we
-> lazily create "pack" subdirectory as needed, but a recent change 8b4eb6b
-> (Do not perform cross-directory renames when creating packs, 2008-09-22)
-> carelessly assumed that .git/objects/pack/ directory would always exist
-> and tries to create files in there without making sure the leading
-> directories exist.  See $gmane/110621
+For example: git cat-file -p 343ee25 | git write-raw
+343ee2589d1b94772f513cc699765622351acb19
 
-The receiving repository was indeed lacking a .git/objects/pack/ 
-directory, but it was created with a recent (1.5.4.3) git version. I 
-suspect the repo owner has deleted de dir by mistake or something.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ Makefile             |    1 +
+ builtin-commit-raw.c |   23 +++++++++++++++++++++++
+ builtin.h            |    1 +
+ git.c                |    1 +
+ 4 files changed, 26 insertions(+), 0 deletions(-)
+ create mode 100644 builtin-commit-raw.c
 
-Thank you very much for your help.
-
-> 
->     Subject: [PATCH] Make sure objects/pack exists before creating a new pack
->     To: git@vger.kernel.org
->     Date: Wed, 18 Feb 2009 20:48:07 -0800
->     Message-ID: <7vr61vnibc.fsf@gitster.siamese.dyndns.org>
-> 
-> for details.
-> 
-> And the debug patch...
-> 
->  index-pack.c |    8 ++++++--
->  1 files changed, 6 insertions(+), 2 deletions(-)
-> 
-> diff --git a/index-pack.c b/index-pack.c
-> index f7a3807..acdc85f 100644
-> --- a/index-pack.c
-> +++ b/index-pack.c
-> @@ -802,14 +802,18 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
->  		keep_fd = open(keep_name, O_RDWR|O_CREAT|O_EXCL, 0600);
->  		if (keep_fd < 0) {
->  			if (errno != EEXIST)
-> -				die("cannot write keep file");
-> +				die("cannot write keep file '%s' (%s)",
-> +				    keep_name,
-> +				    strerror(errno));
->  		} else {
->  			if (keep_msg_len > 0) {
->  				write_or_die(keep_fd, keep_msg, keep_msg_len);
->  				write_or_die(keep_fd, "\n", 1);
->  			}
->  			if (close(keep_fd) != 0)
-> -				die("cannot write keep file");
-> +				die("cannot close the written keep file '%s' (%s)",
-> +				    keep_name,
-> +				    strerror(errno));
->  			report = "keep";
->  		}
->  	}
-> 
-> 
-> 
-> 
-> 
-
-
---------------070908050509080907020101
-Content-Type: text/x-vcard; charset=utf-8;
- name="rdarder.vcf"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="rdarder.vcf"
-
-begin:vcard
-fn:Rafael Darder Calvo
-n:Darder Calvo;Rafael
-org:;Infraestructura
-adr:;;Mitre 1017 Piso 5;Rosario;Santa Fe;S2000COU;Argentina
-email;internet:rdarder@spiralti.com
-title:Spiralti Rosario
-tel;work:+54 341 5302041
-url:www.spiralti.com
-version:2.1
-end:vcard
-
-
---------------070908050509080907020101--
+diff --git a/Makefile b/Makefile
+index b040a96..94212b3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -524,6 +524,7 @@ BUILTIN_OBJS += builtin-checkout-index.o
+ BUILTIN_OBJS += builtin-checkout.o
+ BUILTIN_OBJS += builtin-clean.o
+ BUILTIN_OBJS += builtin-clone.o
++BUILTIN_OBJS += builtin-commit-raw.o
+ BUILTIN_OBJS += builtin-commit-tree.o
+ BUILTIN_OBJS += builtin-commit.o
+ BUILTIN_OBJS += builtin-config.o
+diff --git a/builtin-commit-raw.c b/builtin-commit-raw.c
+new file mode 100644
+index 0000000..66c41f4
+--- /dev/null
++++ b/builtin-commit-raw.c
+@@ -0,0 +1,23 @@
++/*
++ * Writes a raw commit object
++ */
++
++#include "cache.h"
++#include "commit.h"
++
++int cmd_commit_raw(int argc, const char **argv, const char *unused_prefix)
++{
++	unsigned char commit_sha1[20];
++	struct strbuf buffer;
++
++	strbuf_init(&buffer, 8192);
++
++	strbuf_read(&buffer, 0, 0);
++
++	if (!write_sha1_file(buffer.buf, buffer.len, "commit", commit_sha1)) {
++		printf("%s\n", sha1_to_hex(commit_sha1));
++		return 0;
++	}
++	else
++		return 1;
++}
+diff --git a/builtin.h b/builtin.h
+index 1495cf6..5c33e69 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -38,6 +38,7 @@ extern int cmd_cherry_pick(int argc, const char **argv, const char *prefix);
+ extern int cmd_clone(int argc, const char **argv, const char *prefix);
+ extern int cmd_clean(int argc, const char **argv, const char *prefix);
+ extern int cmd_commit(int argc, const char **argv, const char *prefix);
++extern int cmd_commit_raw(int argc, const char **argv, const char *prefix);
+ extern int cmd_commit_tree(int argc, const char **argv, const char *prefix);
+ extern int cmd_count_objects(int argc, const char **argv, const char *prefix);
+ extern int cmd_describe(int argc, const char **argv, const char *prefix);
+diff --git a/git.c b/git.c
+index c2b181e..b033365 100644
+--- a/git.c
++++ b/git.c
+@@ -285,6 +285,7 @@ static void handle_internal_command(int argc, const char **argv)
+ 		{ "clone", cmd_clone },
+ 		{ "clean", cmd_clean, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "commit", cmd_commit, RUN_SETUP | NEED_WORK_TREE },
++		{ "commit-raw", cmd_commit_raw, RUN_SETUP },
+ 		{ "commit-tree", cmd_commit_tree, RUN_SETUP },
+ 		{ "config", cmd_config },
+ 		{ "count-objects", cmd_count_objects, RUN_SETUP },
+-- 
+1.6.1.3
