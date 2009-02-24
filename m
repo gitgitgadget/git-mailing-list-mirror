@@ -1,157 +1,115 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: [PATCH] git.el: Only show completions from refs/heads
-Date: Tue, 24 Feb 2009 21:39:10 +0100
-Message-ID: <87vdqztvrl.fsf_-_@krank.kagedal.org>
-References: <1235464350-23383-1-git-send-email-davidk@lysator.liu.se>
-	<87fxi4ut2p.fsf@krank.kagedal.org> <87ocwrx527.fsf@wine.dyndns.org>
-	<871vtnvo55.fsf@krank.kagedal.org> <87fxi3x2es.fsf@wine.dyndns.org>
-	<87y6vvu8sa.fsf@krank.kagedal.org> <87bpsrx1j1.fsf@wine.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Alexandre Julliard <julliard@winehq.org>
-X-From: git-owner@vger.kernel.org Tue Feb 24 21:40:51 2009
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH] Add tests for git log --pretty, --format and --oneline.
+Date: Tue, 24 Feb 2009 23:06:37 +0200
+Message-ID: <1235509597-18336-1-git-send-email-felipe.contreras@gmail.com>
+References: <7vljrvhh13.fsf@gitster.siamese.dyndns.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 24 22:08:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lc455-00041t-9o
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 21:40:43 +0100
+	id 1Lc4Vg-0008UO-S9
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 22:08:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755515AbZBXUjP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Feb 2009 15:39:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754764AbZBXUjO
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 15:39:14 -0500
-Received: from mail.lysator.liu.se ([130.236.254.3]:46302 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753734AbZBXUjO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2009 15:39:14 -0500
-Received: from mail.lysator.liu.se (localhost [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id 31FE640022;
-	Tue, 24 Feb 2009 21:39:04 +0100 (CET)
-Received: by mail.lysator.liu.se (Postfix, from userid 1674)
-	id 23B7940029; Tue, 24 Feb 2009 21:39:04 +0100 (CET)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb3 (2006-10-05) on 
-	bernadotte.lysator.liu.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.7 required=5.0 tests=AWL autolearn=disabled 
-	version=3.1.7-deb3
-Received: from krank (unknown [87.96.142.66])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id D7EB340022;
-	Tue, 24 Feb 2009 21:39:03 +0100 (CET)
-Received: by krank (Postfix, from userid 1000)
-	id AEB52DC2B0; Tue, 24 Feb 2009 21:39:10 +0100 (CET)
-In-Reply-To: <87bpsrx1j1.fsf@wine.dyndns.org> (Alexandre Julliard's message of "Tue\, 24 Feb 2009 17\:06\:26 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1756932AbZBXVGp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2009 16:06:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756612AbZBXVGp
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 16:06:45 -0500
+Received: from mail-bw0-f161.google.com ([209.85.218.161]:39896 "EHLO
+	mail-bw0-f161.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756781AbZBXVGo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2009 16:06:44 -0500
+Received: by bwz5 with SMTP id 5so6166634bwz.13
+        for <git@vger.kernel.org>; Tue, 24 Feb 2009 13:06:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=b/OYHxIzaJsJ6mBYhLxcEHR3ybBe1nSHO3twtmpsQMg=;
+        b=ceMCeqDwgHgeLgXmjCSGRdSO1DcGO06HTUUYREi+X7mq1+qwZ93BZdnGu4DSik2Py8
+         jr9QdenEZn6jaV0eLpsiF/ju17m5UM1ynhJM5zl1FdL6fn8qKtl2MfbF7TkObCT+3Chl
+         r7dKO2eR3Xfl/1D+a/pMHyTLVnlVBMsg5879Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=uvzJQE1RBQfETVHDapT+hr3WxvnBinZH+Iz1r/v8rXwPz6JOS1emcWoNKbDftBGQxO
+         V6ou4dYU9lnFqT5kzEdtSvB5VVffNFV5JjVohS518Ca0t/cmV8ZvqDdYPJ0lnxqJhq8o
+         4VW4pNOnAlYQj3gDsW1kiYa0za2dbxkEfyg60=
+Received: by 10.223.113.136 with SMTP id a8mr96208faq.76.1235509600425;
+        Tue, 24 Feb 2009 13:06:40 -0800 (PST)
+Received: from localhost (a91-153-251-222.elisa-laajakaista.fi [91.153.251.222])
+        by mx.google.com with ESMTPS id 22sm11227644fkr.34.2009.02.24.13.06.39
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 24 Feb 2009 13:06:39 -0800 (PST)
+X-Mailer: git-send-email 1.6.1.3
+In-Reply-To: <7vljrvhh13.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111339>
 
-Signed-off-by: David K=C3=A5gedal <davidk@lysator.liu.se>
+More specifically; --pretty=format, tformat and new %foo shortcut.
+
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
+ t/t4202-log.sh |   40 ++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 40 insertions(+), 0 deletions(-)
 
-Here is a version that can to both commit name lookup and branch name
-lookup, and with a configuration parameter that determines how to find
-branch names to complete on.
-
-contrib/emacs/git.el |   34 +++++++++++++++++++++++++---------
- 1 files changed, 25 insertions(+), 9 deletions(-)
-
-diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
-index feb229c..a5138d7 100644
---- a/contrib/emacs/git.el
-+++ b/contrib/emacs/git.el
-@@ -118,6 +118,12 @@ if there is already one that displays the same dir=
-ectory."
-   :group 'git
-   :type 'boolean)
-=20
-+(defcustom git-complete-branch-patterns
-+  '("refs/heads" "refs/tags" "refs/remotes")
-+  "Which patterns to use when completing branch names."
-+  :group 'git
-+  :type '(repeat string))
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 7b976ee..f1287fe 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -37,6 +37,46 @@ test_expect_success setup '
+ 
+ '
+ 
++echo -ne "sixth\nfifth\nfourth\nthird\nsecond\ninitial" > expect
++test_expect_success 'pretty' '
 +
-=20
- (defface git-status-face
-   '((((class color) (background light)) (:foreground "purple"))
-@@ -1385,17 +1391,27 @@ With a prefix arg, diff the marked files instea=
-d."
-         (push (match-string 1) files)))
-     files))
-=20
--(defun git-read-commit-name (prompt &optional default)
--  "Ask for a commit name, with completion for local branch, remote bra=
-nch and tag."
--  (completing-read prompt
--                   (list* "HEAD" "ORIG_HEAD" "FETCH_HEAD" (mapcar #'ca=
-r (git-for-each-ref)))
--		   nil nil nil nil default))
-+(defun git-read-commit-name (prompt specials &optional ref-patterns)
-+  "Ask for a commit name, with completion.
-+If SPECIALS is non-nil, add HEAD and similar names to the list of poss=
-ible
-+completions. The patterns in REF-PATTERNS are passed to `git-for-each-=
-ref'
-+to get a list of completions."
-+  (let ((refs (apply #'git-for-each-ref ref-patterns)))
-+    (completing-read prompt (if specials (list* '("HEAD" . nil)
-+                                                '("FETCH_HEAD" . nil)
-+                                                '("ORIG_HEAD" . nil)
-+                                                refs)
-+                              refs))))
++	git log --pretty="format:%s" > actual &&
++	test_cmp expect actual
++'
 +
-+(defun git-read-branch-name (prompt)
-+  "Ask for a branch name, with completion."
-+  (git-read-commit-name prompt nil git-complete-branch-patterns))
-=20
- (defun git-checkout (branch &optional merge)
-   "Checkout a branch, tag, or any commit.
- Use a prefix arg if git should merge while checking out."
-   (interactive
--   (list (git-read-commit-name "Checkout: ")
-+   (list (git-read-branch-name "Checkout: ")
-          current-prefix-arg))
-   (unless git-status (error "Not in git-status buffer."))
-   (let ((args (list branch "--")))
-@@ -1405,7 +1421,7 @@ Use a prefix arg if git should merge while checki=
-ng out."
-=20
- (defun git-branch (branch)
-   "Create a branch from the current HEAD and switch to it."
--  (interactive (list (git-read-commit-name "Branch: ")))
-+  (interactive (list (git-read-branch-name "Branch: ")))
-   (unless git-status (error "Not in git-status buffer."))
-   (if (git-rev-parse (concat "refs/heads/" branch))
-       (if (yes-or-no-p (format "Branch %s already exists, replace it? =
-" branch))
-@@ -1433,7 +1449,7 @@ amended version of it."
-=20
- (defun git-cherry-pick-commit (arg)
-   "Cherry-pick a commit."
--  (interactive (list (git-read-commit-name "Cherry-pick commit: ")))
-+  (interactive (list (git-read-commit-name "Cherry-pick commit: " t)))
-   (unless git-status (error "Not in git-status buffer."))
-   (let ((commit (git-rev-parse (concat arg "^0"))))
-     (unless commit (error "Not a valid commit '%s'." arg))
-@@ -1452,7 +1468,7 @@ amended version of it."
-=20
- (defun git-revert-commit (arg)
-   "Revert a commit."
--  (interactive (list (git-read-commit-name "Revert commit: ")))
-+  (interactive (list (git-read-commit-name "Revert commit: " t)))
-   (unless git-status (error "Not in git-status buffer."))
-   (let ((commit (git-rev-parse (concat arg "^0"))))
-     (unless commit (error "Not a valid commit '%s'." arg))
---=20
-1.6.2.rc1.21.gda6d
-
-
---=20
-David K=C3=A5gedal
++echo -ne "sixth\nfifth\nfourth\nthird\nsecond\ninitial\n" > expect
++test_expect_success 'pretty (tformat)' '
++
++	git log --pretty="tformat:%s" > actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'pretty (shortcut)' '
++
++	git log --pretty="%s" > actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'format' '
++
++	git log --format="%s" > actual &&
++	test_cmp expect actual
++'
++
++cat > expect << EOF
++804a787 sixth
++394ef78 fifth
++5d31159 fourth
++2fbe8c0 third
++f7dab8e second
++3a2fdcb initial
++EOF
++test_expect_success 'oneline' '
++
++	git log --oneline > actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'diff-filter=A' '
+ 
+ 	actual=$(git log --pretty="format:%s" --diff-filter=A HEAD) &&
+-- 
+1.6.1.3
