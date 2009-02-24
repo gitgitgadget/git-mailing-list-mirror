@@ -1,80 +1,101 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: how do I resolve this merge manually + mergetool bug
-Date: Tue, 24 Feb 2009 09:13:30 +0000
-Message-ID: <20090224091330.GB23927@hashpling.org>
-References: <81bfc67a0902232204y7a1e9a91x6cbf751319664734@mail.gmail.com> <20090224074727.GA23927@hashpling.org> <81bfc67a0902240032t783abcabgaf8fa13b2a43e48@mail.gmail.com>
+From: =?ISO-8859-1?Q?Tor_Arne_Vestb=F8?= <torarnv@gmail.com>
+Subject: Re: [EGIT] [PATCH v1 1/1] Add an ignored icon
+Date: Tue, 24 Feb 2009 10:23:47 +0100
+Message-ID: <49A3BCA3.8010201@gmail.com>
+References: <cover.1235415747.git.ferry.huberts@pelagic.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Caleb Cushing <xenoterracide@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 24 10:15:07 2009
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
+X-From: git-owner@vger.kernel.org Tue Feb 24 10:15:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbtNX-0006vA-53
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 10:15:03 +0100
+	id 1LbtOO-0007DW-4k
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 10:15:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754070AbZBXJNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2009 04:13:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753765AbZBXJNe
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 04:13:34 -0500
-Received: from relay.ptn-ipout02.plus.net ([212.159.7.36]:31536 "EHLO
-	relay.ptn-ipout02.plus.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752980AbZBXJNd (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Feb 2009 04:13:33 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApoEAPZIo0nUnw4T/2dsb2JhbADWWIQRBg
-Received: from pih-relay06.plus.net ([212.159.14.19])
-  by relay.ptn-ipout02.plus.net with ESMTP; 24 Feb 2009 09:13:31 +0000
-Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by pih-relay06.plus.net with esmtp (Exim) id 1LbtM2-0005FZ-HE; Tue, 24 Feb 2009 09:13:30 +0000
-Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
-	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id n1O9DUlI025046
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 24 Feb 2009 09:13:30 GMT
-Received: (from charles@localhost)
-	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id n1O9DU9n025045;
-	Tue, 24 Feb 2009 09:13:30 GMT
+	id S1754079AbZBXJOa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Feb 2009 04:14:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753765AbZBXJO3
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 04:14:29 -0500
+Received: from hoat.troll.no ([62.70.27.150]:58373 "EHLO hoat.troll.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753579AbZBXJO2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2009 04:14:28 -0500
+Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
+	by hoat.troll.no (Postfix) with SMTP id 5BB8920F8D;
+	Tue, 24 Feb 2009 10:14:21 +0100 (CET)
+Received: from sx01.troll.no (sx01.troll.no [62.70.27.21])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hoat.troll.no (Postfix) with ESMTP id 4799920B59;
+	Tue, 24 Feb 2009 10:14:21 +0100 (CET)
+Received: from sx01.troll.no (localhost.localdomain [127.0.0.1])
+	by sx01.troll.no (8.13.8/8.13.8) with ESMTP id n1O9EKqK012071;
+	Tue, 24 Feb 2009 10:14:20 +0100
+Received: from [172.24.90.10] ( [172.24.90.10])
+    by sx01.troll.no (Scalix SMTP Relay 11.4.1.11929)
+    via ESMTP; Tue, 24 Feb 2009 10:14:20 +0100 (CET)
+In-Reply-To: <42268.77.61.241.211.1235455860.squirrel@hupie.xs4all.nl>
+References: <ec97c536d418f465befba2a7f30f82f0d75004f8.1235415747.git.ferry.huberts@pelagic.nl>
+References: <49A33862.90507@gmail.com>
+References: <49A38282.8020308@pelagic.nl>
+References: <42268.77.61.241.211.1235455860.squirrel@hupie.xs4all.nl>
+x-scalix-Hops: 1
+User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
 Content-Disposition: inline
-In-Reply-To: <81bfc67a0902240032t783abcabgaf8fa13b2a43e48@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Plusnet-Relay: 631c99262412c28da376a175c0c0496a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111246>
 
-On Tue, Feb 24, 2009 at 03:32:50AM -0500, Caleb Cushing wrote:
-> On Tue, Feb 24, 2009 at 2:47 AM, Charles Bailey <charles@hashpling.org> wrote:
-> > I'll look at adding
-> > a test case to mergetool and see how easy it is to get it to handle
-> > this case better.
-> 
-> few weeks back I created a patch for mergetool, it was rejected
-> ultimately on the basis that it had to cleanup temporary files and in
-> reality this was a problem with a lot of mergetool, the suggestion was
-> made that mergetool needs refactoring. I believe this problem is a
-> similar symptom. basically mergetool should touch my files before I
-> tell it what to do. if it has to move and back up my files before
-> deciding then at the very least it should copy them back into place if
-> I delete the remote. preferably in this case though it would just
-> delete the remote or backup my local files and copy the remote in
-> after I told it what to do (or maybe even delete my local files).
+=46erry Huberts (Pelagic) wrote:
+> On Tue, February 24, 2009 06:15, Ferry Huberts (Pelagic) wrote:
+>> Tor Arne Vestb=F8 wrote:
+>>> Ferry Huberts wrote:
+>>>> Add an ignored icon to the label decorations page and make
+>>>> sure that it is actually decorated: from now on do not ignore
+>>>> ignored resources during decoration.
+>>> The reason this was not added in the original series was because th=
+at's
+>>> kind of the point of ignoring a resource -- you don't want any
+>>> information about it. Also, none of the other team plugins provide
+>>> decorations for ignored resources-
+>>>
+>> I could also argue that I want everything to be explicit, even the
+>> status of ignored files :-)
 
-Coincidentally, last night I started looking at a mergetool
-refactoring but more with unifying the handling of temporaries and
-actions between the different types of merge (symlink, deleted file
-and 'normal').
+That's a reasonable argument :) I'm not really opposed to the feature -=
+-=20
+I was just trying to think of reasons why it might not be such as good=20
+idea, just to be safe and have that discussion. But you are right.
 
-I'm more of the opinion that in any non-trivial case (i.e. not a
-regular file/file merge), it *shouldn't* do anything until you tell it
-what you want it to do. Clearly, between a tree and a blob, mergetool
-is not going to be able to invoke a mergetool on set of three blobs,
-but it should work out what it can do before prompting for a choice
-from the user of what they want it to do.
+Acked-by: Tor Arne Vestb=F8 <torarnv@gmail.com>
 
--- 
-Charles Bailey
-http://ccgi.hashpling.plus.com/blog/
+>> If you look at (for example) TortoiseSVN then you'll see that it doe=
+s
+>> provide an ignore icon. My icon was sort of 'inspired' by that one.
+>> Don't know if it's on by default though, will have to check that.
+>=20
+> I just checked, TortoiseSVN has the overlay for ignored items on by d=
+efault
+
+The difference is TortoiseSVN does not come with a set of global defaul=
+t=20
+ignored files (as far as I know). Eclipse does, see Team->Ignored...
+
+So, a globally ignored file such as foobar.BAK would show up as=20
+non-decorated if shared using the CVS or SVN plugins, but with an icon=20
+if shared with Git. That might be confusing to users, especially since=20
+the minus-sign icon does not have any history in Eclipse as something=20
+being "ignored" (it actually breaks the convention of using=20
+non-decoration -- meaning no "untracked"-icon -- to signal ignored).
+
+So, I would still argue that we should leave it off by default.
+
+Tor Arne
