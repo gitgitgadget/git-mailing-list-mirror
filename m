@@ -1,88 +1,75 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: Issues building docs on an offline box again.
-Date: Tue, 24 Feb 2009 03:28:56 +0100
-Message-ID: <20090224022856.GN4371@genesis.frugalware.org>
-References: <c115fd3c0902231507k46da3294yf2726a92cb0fbc1a@mail.gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH 10/13] remote.c: make match_refs() copy src ref before 
+	assigning to peer_ref
+Date: Mon, 23 Feb 2009 22:06:42 -0500
+Message-ID: <76718490902231906n620aac40x5c0663fd420c7f39@mail.gmail.com>
+References: <cover.1235368324.git.jaysoffian@gmail.com>
+	 <75e083170cea799499bf66792a1c3950b29d6021.1235368324.git.jaysoffian@gmail.com>
+	 <7vocwspqhc.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="DvkZXeeOEg7hUvqr"
-Cc: git@vger.kernel.org
-To: Tim Visher <tim.visher@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 24 03:30:30 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Marc Branchaud <marcnarc@xiplink.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 24 04:08:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lbn41-0006lc-5F
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 03:30:29 +0100
+	id 1LbneV-0006vG-En
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 04:08:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754629AbZBXC3A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Feb 2009 21:29:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754513AbZBXC27
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 21:28:59 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:37852 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751388AbZBXC26 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2009 21:28:58 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id B4956580DA;
-	Tue, 24 Feb 2009 03:28:57 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 7F871446D6;
-	Tue, 24 Feb 2009 03:28:56 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id B65F511B877C; Tue, 24 Feb 2009 03:28:56 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <c115fd3c0902231507k46da3294yf2726a92cb0fbc1a@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751991AbZBXDGp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2009 22:06:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751639AbZBXDGo
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 22:06:44 -0500
+Received: from rv-out-0506.google.com ([209.85.198.239]:9426 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751501AbZBXDGo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2009 22:06:44 -0500
+Received: by rv-out-0506.google.com with SMTP id g37so2245385rvb.1
+        for <git@vger.kernel.org>; Mon, 23 Feb 2009 19:06:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=6U/aaX2vH/1TmrJ4i/mqGEV95aL5Du0CECCFGQD4HE8=;
+        b=rcdR8BseKBZevy2L2b0RgP9vOk+WT73sARUtH8qbYBpyJeIyy0nrZGVfWMTO8/PeqF
+         3xjzquhaEEZ8Z3GLrLRk7VSAXQ8hAafgF19hsmRbmB+ihl1/b5zxeYO7ojZ7dGOGGV7s
+         H7k3/YQc8mLu3vRhFpzfmpQfi2DD9Syh/KtvY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=dclYHpWvOrkXfUdRLp+/o2SCgmeCWkyY+LqIPk4L3pTRBw4NIDSPRYudEpBkk0x/6r
+         BL48AvdOyyeq7/rlK/v10JQia/pCI5fd4aKduTTg3RdLYQFjY253uvrFu25PGrV3zFlc
+         Iu+ZaQytA5cWz3J/AZUxQiDrBAfiCSjt0gOVw=
+Received: by 10.141.155.15 with SMTP id h15mr2317518rvo.158.1235444802309; 
+	Mon, 23 Feb 2009 19:06:42 -0800 (PST)
+In-Reply-To: <7vocwspqhc.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111199>
 
+On Mon, Feb 23, 2009 at 8:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> If this issue was present before you started touching the affected code,
+> it should come much earlier in the series than [10/13].  If on the other
+> hand this was introduced by earlier one in the series, the patch that
+> introduced the bug should be corrected in place in the sequence without
+> this patch.
 
---DvkZXeeOEg7hUvqr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This issue existed before, but the other callers of match_heads() only
+call it once before the process terminates, and don't bother to free
+what it returns. So those callers didn't notice. This topic introduces
+the first caller that calls match_heads() repeatedly, so it frees the
+returned ref list after it has copied out what it needs.
 
-On Mon, Feb 23, 2009 at 06:07:54PM -0500, Tim Visher <tim.visher@gmail.com>=
- wrote:
-> xmlto -m callouts.xsl man git-add.xml
-> I/O error : Attempt to load network entity
-> http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl
-> warning: failed to load external entity
-> "http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl"
-> compilation error: file /tmp/xmlto-xsl.f254nC line 4 element import
-> xsl:import : unable to load
-> http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl
-> make: *** [git-add.1] Error 1
->=20
-> Strange thing is that I thought I had gotten these to build offline
-> before with the exact same configuration.  Any thoughts?
+The change is independent and can be moved anywhere in the series, or
+even introduced as a patch independent of the series itself. Which
+would you prefer? (Actually, would you mind just applying it how you
+see fit?)
 
-Probably you somehow broke your docbook toolchain.
-
-> My current solution is to build them on the online box and then copy
-> them over the sneaker net to the offline box.  But, this is kludgey,
-> so not cool. :)
-
-That's just a workaround. The solution is to have the correct mappings
-under /etc/xml, so that it maps the doctype to
-/usr/share/xml/docbook/manpages/docbook.xsl, or a similar path. After
-all, ideally your distro does this for you automatically. :)
-
---DvkZXeeOEg7hUvqr
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkmjW2gACgkQe81tAgORUJZK0QCcC/o3NVOLhhCBsI2cSfj7PxEF
-v1kAn0apS3N8ggdQ87TVib1DJmS0CfiI
-=WvZb
------END PGP SIGNATURE-----
-
---DvkZXeeOEg7hUvqr--
+j.
