@@ -1,98 +1,94 @@
-From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: Re: Issues building docs on an offline box again.
-Date: Tue, 24 Feb 2009 09:51:55 -0500
-Message-ID: <1235486982-sup-7798@ntdws12.chass.utoronto.ca>
-References: <c115fd3c0902231507k46da3294yf2726a92cb0fbc1a@mail.gmail.com> <20090224022856.GN4371@genesis.frugalware.org> <c115fd3c0902240504y9fe6ce4m65ba73ce2937cb9e@mail.gmail.com> <20090224140747.GS4371@genesis.frugalware.org>
+From: Penny Leach <penny@mjollnir.org>
+Subject: Re: git-svn starting with an empty svn repository
+Date: Tue, 24 Feb 2009 16:03:58 +0100
+Message-ID: <20090224150358.GA18138@mjollnir.org>
+References: <20090224134325.GA10719@mjollnir.org> <a2633edd0902240619v633eacq4ff7ffd20f66da04@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; boundary="=-1235487115-895246-26579-1259-28-="; micalg="pgp-sha1"
-To: Tim Visher <tim.visher@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Feb 24 15:53:49 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="rwEMma7ioTxnRzrJ"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 24 16:05:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lbyf3-0004E0-7W
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 15:53:29 +0100
+	id 1Lbyr0-0008Rv-K9
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 16:05:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756812AbZBXOv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2009 09:51:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756678AbZBXOv6
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 09:51:58 -0500
-Received: from www.cquest.utoronto.ca ([192.82.128.5]:56494 "EHLO
-	www.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756634AbZBXOv6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2009 09:51:58 -0500
-Received: from ntdws12.chass.utoronto.ca ([128.100.160.253] ident=93)
-	by www.cquest.utoronto.ca with esmtp (Exim 4.43)
-	id 1LbydY-0000dI-23; Tue, 24 Feb 2009 09:51:56 -0500
-Received: from localhost
-	([127.0.0.1] helo=ntdws12.chass.utoronto.ca ident=505)
-	by ntdws12.chass.utoronto.ca with esmtp (Exim 4.63)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1LbydX-000444-Uj; Tue, 24 Feb 2009 09:51:55 -0500
-Received: (from bwalton@localhost)
-	by ntdws12.chass.utoronto.ca (8.13.8/8.13.8/Submit) id n1OEptvh015624;
-	Tue, 24 Feb 2009 09:51:55 -0500
-In-Reply-To: <20090224140747.GS4371@genesis.frugalware.org>
-User-Agent: Sup/git
+	id S1757953AbZBXPEL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2009 10:04:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753860AbZBXPEJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 10:04:09 -0500
+Received: from mjollnir.org ([202.78.240.81]:36040 "EHLO mjollnir.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753528AbZBXPEI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2009 10:04:08 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mjollnir.org (Postfix) with ESMTP id 7A01F28A559
+	for <git@vger.kernel.org>; Tue, 24 Feb 2009 16:03:30 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at mjollnir.org
+Received: from mjollnir.org ([127.0.0.1])
+	by localhost (mjollnir.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id AUPp+115XG9N for <git@vger.kernel.org>;
+	Tue, 24 Feb 2009 16:03:29 +0100 (CET)
+Received: from hermia.mjollnir.org (84-73-174-204.dclient.hispeed.ch [84.73.174.204])
+	(Authenticated sender: penny)
+	by mjollnir.org (Postfix) with ESMTP id CBC1928A557
+	for <git@vger.kernel.org>; Tue, 24 Feb 2009 16:03:28 +0100 (CET)
+Received: by hermia.mjollnir.org (Postfix, from userid 1000)
+	id 3C6EC22104; Tue, 24 Feb 2009 16:03:58 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <a2633edd0902240619v633eacq4ff7ffd20f66da04@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111294>
 
 
---=-1235487115-895246-26579-1259-28-=
-Content-Type: text/plain; charset=UTF-8
+--rwEMma7ioTxnRzrJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Excerpts from Miklos Vajna's message of Tue Feb 24 09:07:47 -0500 2009:
-> I'm not a docbook expert, either - but It seems the url your config
-> rewrites is http://www.oasis-open.org/docbook/xml/4.2, while the url you
-> try to access during the build is
-> http://docbook.sourceforge.net/release/xsl/current. So I *think* you
-> need to add two other entries as well for the xsl urls, but I'm just
-> guessing.
+Thanks for the reply!  I'm glad I'm not the only person crazy enough to
+attempt this :)
 
-I'm no expert either, but I just became more familiar after packaging
-it for OpenCSW (just to build the git docs!).  It's likely that your
-docbook dtds are fine but the xsl stylesheets are either missing or
-broken.
+On Tue, Feb 24, 2009 at 03:19:13PM +0100, Pascal Obry wrote:
+> - I have created an empty repository using svnadmin
+> - I have imported the svn trunk into Git
+> - I'm cherry-picking any new commits from my cvs-imported branch
+> (master) into the git-svn one (named svn-trunk)
 
-Try looking at the docbook stylesheets (xsl in particular) packages in
-your cygwin setup.  There should be lines like:
+Right - and you used this method to import the original history into the
+svn-trunk branch, as well as any new patches? Or did you do a once off
+import of the history using a different method?
 
-<rewriteSystem systemIdStartString="http://docbook.sourceforge.net/release/xsl
-/current" rewritePrefix="file:///usr/share/sgml/docbook/xsl-stylesheets-1.69.1-5
-.1"/>
-<rewriteURI uriStartString="http://docbook.sourceforge.net/release/xsl/current "rewritePrefix="file:///usr/share/sgml/docbook/xsl-stylesheets-1.69.1-5.1"/>
+Out of interest - how long is the history you're importing?  Mine is about
+32,000 commits and it takes forever to import into SVN (only to get to a
+broken point and have to start again...)
 
-to handle the remapping you require.  This was from the
-/etc/xml/catalog file on rhel5, but it should be _similar_ on a cygwin
-setup (my cygwin boxes aren't outfitted with the docbook toolchain so
-I can't verify for you).
 
-HTH.
--Ben
--- 
-Ben Walton
-Systems Programmer - CHASS
-University of Toronto
-C:416.407.5610 | W:416.978.4302
+Penny
 
-GPG Key Id: 8E89F6D2; Key Server: pgp.mit.edu
-Contact me to arrange for a CAcert assurance meeting.
+--=20
+/* ---------------------------------------------------
+Penny Leach | http://mjollnir.org | http://she.geek.nz
+GPG: 8347 00FC B5BF 6CC0 0FC9 AB90 1875 120A A30E C22B
+--------------------------------------------------- */
 
---=-1235487115-895246-26579-1259-28-=
-Content-Disposition: attachment; filename="signature.asc"
+--rwEMma7ioTxnRzrJ
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-iD8DBQFJpAmL8vuMHY6J9tIRAgzOAKCra4MfQQbrNpxkN160BFK9tR67VQCfZclC
-hYdOvqa4rCpoDbe5hnVY1gk=
-=JQRf
+iEYEARECAAYFAkmkDF4ACgkQGHUSCqMOwivHLgCdHs4c213hRMBcxo2nFNmhGdKs
+Zi8AnRmFJ21dSMtntA07h6hTEByrITA+
+=moye
 -----END PGP SIGNATURE-----
 
---=-1235487115-895246-26579-1259-28-=--
+--rwEMma7ioTxnRzrJ--
