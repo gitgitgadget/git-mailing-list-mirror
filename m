@@ -1,81 +1,59 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [HALF A PATCH] Teach the '--exclude' option to 'diff
- --no-index'
-Date: Tue, 24 Feb 2009 17:15:13 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902241713520.10279@pacific.mpi-cbg.de>
-References: <499E92FD.8000900@alum.mit.edu> <cf17659db8a4f7fe9d878984effcdd8d6417c862.1235138849u.git.johannes.schindelin@gmx.de> <7v1vttt6d4.fsf@gitster.siamese.dyndns.org>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: [PATCH v2] bash completion: add --format= and --oneline options for "git log"
+Date: Tue, 24 Feb 2009 18:14:30 +0200
+Message-ID: <874oyjbymx.fsf@iki.fi>
+References: <7v3ae4r53f.fsf@gitster.siamese.dyndns.org>
+	<20090224130626.6117@nanako3.lavabit.com>
+	<20090224045041.GA4615@coredump.intra.peff.net>
+	<7vprh8mm9k.fsf@gitster.siamese.dyndns.org>
+	<20090224054524.GE4615@coredump.intra.peff.net>
+	<20090224185913.6117@nanako3.lavabit.com> <871vtonlmv.fsf_-_@iki.fi>
+	<87zlgcq7rq.fsf_-_@iki.fi> <20090224153913.GT22848@spearce.org>
+	<878wnvbzvd.fsf@iki.fi> <20090224155724.GV22848@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 24 17:17:01 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	felipe.contreras@gmail.com
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Feb 24 17:17:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbzxA-0003zE-CY
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 17:16:16 +0100
+	id 1LbzxC-0003zE-L9
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 17:16:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756943AbZBXQOH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2009 11:14:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758077AbZBXQOF
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 11:14:05 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41953 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757582AbZBXQOE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2009 11:14:04 -0500
-Received: (qmail invoked by alias); 24 Feb 2009 16:14:00 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp028) with SMTP; 24 Feb 2009 17:14:00 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/XMlBlR2HXSm56OwmMtEbXG8nJ00jR2eEgQAJhKy
-	16ziMgqrj0BZmq
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7v1vttt6d4.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1754701AbZBXQOl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2009 11:14:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755806AbZBXQOk
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 11:14:40 -0500
+Received: from mta-out.inet.fi ([195.156.147.13]:43540 "EHLO jenni2.inet.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754528AbZBXQOj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2009 11:14:39 -0500
+Received: from mithlond.arda.local (80.220.180.181) by jenni2.inet.fi (8.5.014)
+        id 48FC5A88057A9C94; Tue, 24 Feb 2009 18:14:35 +0200
+Received: from dtw by mithlond.arda.local with local (Exim 4.69)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1LbzvS-0001QS-Tu; Tue, 24 Feb 2009 18:14:30 +0200
+In-Reply-To: <20090224155724.GV22848@spearce.org> (Shawn O. Pearce's message of "Tue\, 24 Feb 2009 07\:57\:24 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111310>
 
-Hi,
+On 2009-02-24 07:57 (-0800), Shawn O. Pearce wrote:
 
-On Fri, 20 Feb 2009, Junio C Hamano wrote:
+> Teemu Likonen <tlikonen@iki.fi> wrote:
+>> This is meant to be a part of Nanako's patch series:
+>> 
+>>     http://thread.gmane.org/gmane.comp.version-control.git/111278
+>
+> Oh, sorry.  I don't use a threaded client so I missed the
+> fact this was attached to her series.
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > With this patch, it is possible to exclude files based on basename
-> > patterns.  Example:
-> >
-> > 	$ git diff --no-index -x Makefile -x Makefile.in a/ b/
-> >
-> > In this example, the recursive diff between a/ and b/ will be shown
-> > modulo changes in files named 'Makefile' or 'Makefile.in'.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >
-> > 	Michael wrote:
-> >
-> > 	> I can't think offhand of a more portable tool that could replace 
-> > 	> "diff -r -x" here (suggestions, anyone?).
-> >
-> > 	Maybe something like this?
-> 
-> I agree that diff_options is the logical way to hook this information and
-> diff_opt_parse() is the right place to add this, but why isn't this done
-> at diff_{addremove,change,unmerge}() layer?  That way you should be able
-> to cover both no-index special case and the normal diffs, no?
-
-The principal aim of this patch was to support git diff --no-index -x, 
-that is why (and in addition, avoiding unnecessary work when we can 
-exclude stuff already early in the code path).
-
-It is unlikely that I will work on this before next week.
-
-Thanks,
-Dscho
+I'm sorry too. That was a good lesson why I should provide enough
+context (Gmane link for example) when adding CCs.
