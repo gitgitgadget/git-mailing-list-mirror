@@ -1,101 +1,94 @@
-From: Jay Soffian <jaysoffian@gmail.com>
+From: Marius Storm-Olsen <marius@trolltech.com>
 Subject: Re: [PATCH 00/23] builtin-remote improvments
-Date: Tue, 24 Feb 2009 05:53:36 -0500
-Message-ID: <1235472816-52420-1-git-send-email-jaysoffian@gmail.com>
-References: <cover.1235461736.git.jaysoffian@gmail.com>
+Date: Tue, 24 Feb 2009 12:01:52 +0100
+Message-ID: <49A3D3A0.4060205@trolltech.com>
+References: <cover.1235461736.git.jaysoffian@gmail.com> <1235472816-52420-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jay Soffian <jaysoffian@gmail.com>, Jeff King <peff@peff.net>,
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigF476FB3A453FB222A70CB135"
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 24 11:55:14 2009
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 24 12:03:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbuwR-0005BV-Tv
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 11:55:12 +0100
+	id 1Lbv4U-0007Op-Bz
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 12:03:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752027AbZBXKxm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2009 05:53:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751743AbZBXKxm
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 05:53:42 -0500
-Received: from mail-gx0-f174.google.com ([209.85.217.174]:51801 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751412AbZBXKxl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2009 05:53:41 -0500
-Received: by gxk22 with SMTP id 22so6502028gxk.13
-        for <git@vger.kernel.org>; Tue, 24 Feb 2009 02:53:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=sb0QUXz4PsxyvAQ3OuUshsWe4u4jJlU3bILyADE4yg8=;
-        b=Xt3xlEl37X06s/p5KS6njivS2AqRB29y+VzcU4yw2hFAat4EQKc1Pg6QGdKXMQVNig
-         gdImh2R17q1RNKdL70TPCP9cKuFKjAR9B1t4wH08c2KFYr/1/SDGrRkVKA8soYsCtPg0
-         DmqmHMYZLKS1s5FLNbRQOiT0mY5jeEMa9V7mc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=ByJIVONQVI1oMVzLFs86K3CNLUXWgSZ5Drkknn2PAWoOQuik0RuoN6oo3hqpW8xZwX
-         YROufXZFM9GpkI11w2eG3Efn4Hhq224xqvWtqzD1xqDHeQwWExnS5XGC55J9LMQzs7YK
-         Wbf8SNKhmnD3/ULrHtsy22jnCOOYbcqyZ0AXw=
-Received: by 10.100.140.20 with SMTP id n20mr1958015and.12.1235472819273;
-        Tue, 24 Feb 2009 02:53:39 -0800 (PST)
-Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
-        by mx.google.com with ESMTPS id c40sm9830856anc.48.2009.02.24.02.53.37
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 24 Feb 2009 02:53:38 -0800 (PST)
-X-Mailer: git-send-email 1.6.2.rc1.291.g83eb
-In-Reply-To: <cover.1235461736.git.jaysoffian@gmail.com>
+	id S1752360AbZBXLCA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2009 06:02:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752027AbZBXLCA
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 06:02:00 -0500
+Received: from hoat.troll.no ([62.70.27.150]:49966 "EHLO hoat.troll.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751852AbZBXLB7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2009 06:01:59 -0500
+Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
+	by hoat.troll.no (Postfix) with SMTP id F185320F0B;
+	Tue, 24 Feb 2009 12:01:52 +0100 (CET)
+Received: from [172.24.90.95] (unknown [172.24.90.95])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hoat.troll.no (Postfix) with ESMTP id E247120EE1;
+	Tue, 24 Feb 2009 12:01:52 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.19) Gecko/20081209 Lightning/0.9 Thunderbird/2.0.0.19 ThunderGit/0.1a Mnenhy/0.7.6.666
+In-Reply-To: <1235472816-52420-1-git-send-email-jaysoffian@gmail.com>
+X-Enigmail-Version: 0.95.7
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
+ hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
+ 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
+ 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
+ ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
+ oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
+ tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
+ Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
+ 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
+ nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
+ KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
+ 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111282>
 
-On Tue, Feb 24, 2009 at 4:50 AM, Jay Soffian <jaysoffian@gmail.com> wrote:
-> Jay Soffian (18):
->  builtin-clone: move locate_head() to remote.c so it can be re-used
->  builtin-remote: move duplicated cleanup code its own function
->  builtin-remote: teach show to display remote HEAD
->  builtin-remote: add set-head subcommand
->  builtin-remote: better handling of multiple remote HEADs
->
->  remote.c: make match_refs() copy src ref before assigning to peer_ref
->  remote.c: don't short-circuit match_refs() when error in match_explicit_refs()
->  refactor duplicated get_local_heads() to remote.c
->  refactor duplicated ref_newer() to remote.c
->  string-list: new for_each_string_list() function
->  builtin-remote: rename variable and eliminate redundant function call
->  builtin-remote: name remote_refs consistently
->  builtin-remote: remove unused code in get_ref_states
->  builtin-remote: fix two inconsistencies in the output of "show <remote>"
->  builtin-remote: make get_remote_ref_states() always populate states.tracked
->  builtin-remote: refactor get_remote_ref_states()
->  builtin-remote: new show output style
->  builtin-remote: new show output style for push refspecs
->
-> Jeff King (5):
->  test scripts: refactor start_httpd helper
->  add basic http clone/fetch tests
->  refactor find_refs_by_name to accept const list
->  remote: refactor guess_remote_head
->  remote: use exact HEAD lookup if it is available
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigF476FB3A453FB222A70CB135
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-Argh. Looking at this again, it seems clear to me now that I should've put Jeff's series at the beginning, followed by my refactoring (6-10), followed by the rest of my patches, so that all the refactoring is early.
+> All of this is my way of saying ignore what I've emailed tonight
+> till I can clean it up a bit more.
+>=20
+> I apologize to the list for the spam.
+>=20
+> When I have the series really ready, would you prefer I setup a
+> repo for you to pull from? I'm loath to spam the list with another
+> 24 messages.
 
-And I forgot that I'd done patch #5 (better handling of multiple remote HEADs) a few days after 1-4. As part of this re-roll I should've redone 1-4 to include #5's functionality.
+It would at least be great if you could include --thread in your=20
+options to git format-patch, so your patches are threaded underneath=20
+your cover letter ;-)
 
-I also noticed I'm passing an argument to get_head_names() that it never uses. But fixing that touches at least 3 of the patches.
+--=20
+=2Emarius [@trolltech.com]
+'if you know what you're doing, it's not research'
 
-All of this is my way of saying ignore what I've emailed tonight till I can clean it up a bit more.
 
-I apologize to the list for the spam.
+--------------enigF476FB3A453FB222A70CB135
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-When I have the series really ready, would you prefer I setup a repo for you to pull from? I'm loath to spam the list with another 24 messages.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (MingW32)
 
-j.
+iD8DBQFJo9OhKzzXl/njVP8RAsT/AKDym6LSN0l/QJO9/PrHUKDdAvKwlQCfcykg
+8ohPS70LYKz/BznJUXVpha8=
+=5+Tb
+-----END PGP SIGNATURE-----
+
+--------------enigF476FB3A453FB222A70CB135--
