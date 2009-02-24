@@ -1,7 +1,7 @@
 From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH 20/23] add basic http clone/fetch tests
-Date: Tue, 24 Feb 2009 04:51:08 -0500
-Message-ID: <0e92666b696fa7044bb44108015de6b9325ca57e.1235467368.git.jaysoffian@gmail.com>
+Subject: [PATCH 11/23] builtin-remote: rename variable and eliminate redundant function call
+Date: Tue, 24 Feb 2009 04:50:59 -0500
+Message-ID: <c2de944b2fc5315c2d0f88cb16ad8b17033329a7.1235467368.git.jaysoffian@gmail.com>
 References: <cover.1235467368.git.jaysoffian@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -14,150 +14,119 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lbu07-0002Ej-Or
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 10:54:56 +0100
+	id 1Lbtzx-0002Ej-RK
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 10:54:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755093AbZBXJw3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2009 04:52:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756084AbZBXJwL
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 04:52:11 -0500
+	id S1754671AbZBXJvt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2009 04:51:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753917AbZBXJvr
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 04:51:47 -0500
 Received: from yx-out-2324.google.com ([74.125.44.28]:15777 "EHLO
 	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755389AbZBXJwH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2009 04:52:07 -0500
+	with ESMTP id S1754541AbZBXJvm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2009 04:51:42 -0500
 Received: by yx-out-2324.google.com with SMTP id 8so1005621yxm.1
-        for <git@vger.kernel.org>; Tue, 24 Feb 2009 01:52:05 -0800 (PST)
+        for <git@vger.kernel.org>; Tue, 24 Feb 2009 01:51:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=jlEWqjWhRrvJMQoGSMTumWTxkXx9u5nnjwQRdS2ZrwA=;
-        b=nC29N2W8zCVKlfLxGZnAMuFbBt3hzASqJpf8EIwycLCg3bcUifY8FMaZ0iF/JjFZIm
-         gX3ZoUNH1+XylAiD9O6HA6Ov6VRQm1x4cvFxwRSem1XuVGbwa+Pt8NhdNcNywOGdDNEo
-         CMH2S0r5AtMVJ5/Fux4KYzZom/NwQgVDNn9kg=
+        bh=IeZ7wmYBX15Fdu+qALeRG+PLCO4sngup21tcJWnDyso=;
+        b=xk3/uT4bKUSEQpZq1pBbzeu6gHjFqKDu+/MmHaUeAXpBrdlxPw0FVGfMvSKYadCQZ+
+         0eKoGEVhSRgRah2MfFy97zz6ScwhWWLVzshFxsB8i5Les1zBEpnnxjIsLGR71N83+nCX
+         NJnd2U9B6lvGdbVWlcNH+jkjSuqFtguqyfuNU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=WCwBz3epurfydvRgYN+mMwqUNuHtaoocp6nhPMRtHVrX8ayAS6aM/8b5jPu26MUZ7L
-         Q6mHEqB+F3IPFQqRetAfn3kQ9ykNnu5+uQoTZklV9WXurtznpaAIIedCUJPZVczJtmDF
-         tD+V+lrukw2LEnBA1eIWZEuMfY5qAibxWXc/M=
-Received: by 10.100.135.16 with SMTP id i16mr2066357and.99.1235469125464;
-        Tue, 24 Feb 2009 01:52:05 -0800 (PST)
+        b=JNbnQmPGQgiyqgdO6+LMY4Z9VPq/9jDs+ilXRiNaNqQpxIvUfJeXpQ6Iif/HLTVvYc
+         b8o+qBOtg064JZ5S/RqT+feop+OnPcUJm1cps3o+iZ1SpOoKUnJBZFa9C/0fCnGEC0Ut
+         VQ/cjlYNFGsl7Tl6EuOKCzwkqg84JF64Ev4HI=
+Received: by 10.100.140.15 with SMTP id n15mr5519484and.17.1235469101153;
+        Tue, 24 Feb 2009 01:51:41 -0800 (PST)
 Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
-        by mx.google.com with ESMTPS id d35sm2235242and.58.2009.02.24.01.52.04
+        by mx.google.com with ESMTPS id b29sm6390719ana.11.2009.02.24.01.51.40
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 24 Feb 2009 01:52:04 -0800 (PST)
+        Tue, 24 Feb 2009 01:51:40 -0800 (PST)
 X-Mailer: git-send-email 1.6.2.rc1.291.g83eb
 In-Reply-To: <cover.1235467368.git.jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111267>
 
-From: Jeff King <peff@peff.net>
+The variable name "remote" is used as both a "char *" and as a "struct
+remote *"; this is confusing, so rename the former to remote_name.
 
-This was mostly being tested implicitly by the "http push"
-tests. But making a separate test script means that:
+There is no need to call "sort_string_list(&branch_list)" as branch_list
+is populated via string_list_insert(), which maintains its order.
 
-  - we will run fetch tests even when http pushing support
-    is not built
-
-  - when there are failures on fetching, they are easier to
-    see and isolate, as they are not in the middle of push
-    tests
-
-This script defaults to running the webserver on port 5550,
-and puts the original t5540 on port 5540, so that the two
-can be run simultaneously without conflict (but both still
-respect an externally set LIB_HTTPD_PORT).
-
-Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
 ---
- Makefile              |    1 +
- t/t5540-http-push.sh  |    1 +
- t/t5550-http-fetch.sh |   46 ++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 48 insertions(+), 0 deletions(-)
- create mode 100755 t/t5550-http-fetch.sh
+ builtin-remote.c |   13 ++++++-------
+ 1 files changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index b040a96..5e54c9c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1363,6 +1363,7 @@ GIT-CFLAGS: .FORCE-GIT-CFLAGS
- GIT-BUILD-OPTIONS: .FORCE-GIT-BUILD-OPTIONS
- 	@echo SHELL_PATH=\''$(subst ','\'',$(SHELL_PATH_SQ))'\' >$@
- 	@echo TAR=\''$(subst ','\'',$(subst ','\'',$(TAR)))'\' >>$@
-+	@echo NO_CURL=\''$(subst ','\'',$(subst ','\'',$(NO_CURL)))'\' >>$@
+diff --git a/builtin-remote.c b/builtin-remote.c
+index 608c0f3..48d668e 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -144,7 +144,7 @@ static int add(int argc, const char **argv)
+ }
  
- ### Detect Tck/Tk interpreter path changes
- ifndef NO_TCLTK
-diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
-index 57a4411..cefab45 100755
---- a/t/t5540-http-push.sh
-+++ b/t/t5540-http-push.sh
-@@ -11,6 +11,7 @@ This test runs various sanity checks on http-push.'
+ struct branch_info {
+-	char *remote;
++	char *remote_name;
+ 	struct string_list merge;
+ };
  
- ROOT_PATH="$PWD"
- LIB_HTTPD_DAV=t
-+LIB_HTTPD_PORT=${LIB_HTTPD_PORT-'5540'}
+@@ -183,9 +183,9 @@ static int config_read_branches(const char *key, const char *value, void *cb)
+ 			item->util = xcalloc(sizeof(struct branch_info), 1);
+ 		info = item->util;
+ 		if (type == REMOTE) {
+-			if (info->remote)
++			if (info->remote_name)
+ 				warning("more than one branch.%s", key);
+-			info->remote = xstrdup(value);
++			info->remote_name = xstrdup(value);
+ 		} else {
+ 			char *space = strchr(value, ' ');
+ 			value = abbrev_branch(value);
+@@ -207,7 +207,6 @@ static void read_branches(void)
+ 	if (branch_list.nr)
+ 		return;
+ 	git_config(config_read_branches, NULL);
+-	sort_string_list(&branch_list);
+ }
  
- if git http-push > /dev/null 2>&1 || [ $? -eq 128 ]
- then
-diff --git a/t/t5550-http-fetch.sh b/t/t5550-http-fetch.sh
-new file mode 100755
-index 0000000..b6e6ec9
---- /dev/null
-+++ b/t/t5550-http-fetch.sh
-@@ -0,0 +1,46 @@
-+#!/bin/sh
-+
-+test_description='test fetching over http'
-+. ./test-lib.sh
-+
-+if test -n "$NO_CURL"; then
-+	say 'skipping test, git built without http support'
-+	test_done
-+fi
-+
-+. "$TEST_DIRECTORY"/lib-httpd.sh
-+LIB_HTTPD_PORT=${LIB_HTTPD_PORT-'5550'}
-+start_httpd
-+
-+test_expect_success 'setup repository' '
-+	echo content >file &&
-+	git add file &&
-+	git commit -m one
-+'
-+
-+test_expect_success 'create http-accessible bare repository' '
-+	mkdir "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
-+	(cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
-+	 git --bare init &&
-+	 echo "exec git update-server-info" >hooks/post-update &&
-+	 chmod +x hooks/post-update
-+	) &&
-+	git remote add public "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
-+	git push public master:master
-+'
-+
-+test_expect_success 'clone http repository' '
-+	git clone $HTTPD_URL/repo.git clone &&
-+	test_cmp file clone/file
-+'
-+
-+test_expect_success 'fetch changes via http' '
-+	echo content >>file &&
-+	git commit -a -m two &&
-+	git push public
-+	(cd clone && git pull) &&
-+	test_cmp file clone/file
-+'
-+
-+stop_httpd
-+test_done
+ struct ref_states {
+@@ -489,7 +488,7 @@ static int mv(int argc, const char **argv)
+ 	for (i = 0; i < branch_list.nr; i++) {
+ 		struct string_list_item *item = branch_list.items + i;
+ 		struct branch_info *info = item->util;
+-		if (info->remote && !strcmp(info->remote, rename.old)) {
++		if (info->remote_name && !strcmp(info->remote_name, rename.old)) {
+ 			strbuf_reset(&buf);
+ 			strbuf_addf(&buf, "branch.%s.remote", item->string);
+ 			if (git_config_set(buf.buf, rename.new)) {
+@@ -599,7 +598,7 @@ static int rm(int argc, const char **argv)
+ 	for (i = 0; i < branch_list.nr; i++) {
+ 		struct string_list_item *item = branch_list.items + i;
+ 		struct branch_info *info = item->util;
+-		if (info->remote && !strcmp(info->remote, remote->name)) {
++		if (info->remote_name && !strcmp(info->remote_name, remote->name)) {
+ 			const char *keys[] = { "remote", "merge", NULL }, **k;
+ 			for (k = keys; *k; k++) {
+ 				strbuf_reset(&buf);
+@@ -742,7 +741,7 @@ static int show(int argc, const char **argv)
+ 			struct branch_info *info = branch->util;
+ 			int j;
+ 
+-			if (!info->merge.nr || strcmp(*argv, info->remote))
++			if (!info->merge.nr || strcmp(*argv, info->remote_name))
+ 				continue;
+ 			printf("  Remote branch%s merged with 'git pull' "
+ 				"while on branch %s\n   ",
 -- 
 1.6.2.rc1.291.g83eb
