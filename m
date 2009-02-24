@@ -1,67 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Add --format that is a synonym to --pretty
-Date: Tue, 24 Feb 2009 00:45:24 -0500
-Message-ID: <20090224054524.GE4615@coredump.intra.peff.net>
-References: <94a0d4530902221014i46e52542j2380386405b559e2@mail.gmail.com> <7vbpsuxqpo.fsf@gitster.siamese.dyndns.org> <94a0d4530902221055g4e815a78oc0aa094304588ab7@mail.gmail.com> <7vljrxveqa.fsf@gitster.siamese.dyndns.org> <94a0d4530902231656l71ee0e45nbdd1c20035d3dd4@mail.gmail.com> <94a0d4530902231703n701a17dbkd20c0e14d759dddf@mail.gmail.com> <7v3ae4r53f.fsf@gitster.siamese.dyndns.org> <20090224130626.6117@nanako3.lavabit.com> <20090224045041.GA4615@coredump.intra.peff.net> <7vprh8mm9k.fsf@gitster.siamese.dyndns.org>
+From: Caleb Cushing <xenoterracide@gmail.com>
+Subject: how do I resolve this merge manually + mergetool bug
+Date: Tue, 24 Feb 2009 01:04:23 -0500
+Message-ID: <81bfc67a0902232204y7a1e9a91x6cbf751319664734@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, felipe.contreras@gmail.com,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 24 06:47:01 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 24 07:06:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lbq87-0004Fx-6g
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 06:46:55 +0100
+	id 1LbqQU-0007hw-Dt
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 07:05:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753126AbZBXFp2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2009 00:45:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752918AbZBXFp2
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 00:45:28 -0500
-Received: from peff.net ([208.65.91.99]:56113 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752175AbZBXFp2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2009 00:45:28 -0500
-Received: (qmail 11353 invoked by uid 107); 24 Feb 2009 05:45:51 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 24 Feb 2009 00:45:51 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Feb 2009 00:45:24 -0500
-Content-Disposition: inline
-In-Reply-To: <7vprh8mm9k.fsf@gitster.siamese.dyndns.org>
+	id S1752910AbZBXGE1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2009 01:04:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752732AbZBXGE0
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 01:04:26 -0500
+Received: from qw-out-2122.google.com ([74.125.92.24]:17544 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752718AbZBXGE0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2009 01:04:26 -0500
+Received: by qw-out-2122.google.com with SMTP id 5so1647892qwi.37
+        for <git@vger.kernel.org>; Mon, 23 Feb 2009 22:04:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=sB65gLk5Pk8Kt4ETYJY5GuKtqTAlREDcDP6VhteBOgk=;
+        b=A7xVnXlqZTVSoxMW1Roep5NVYY3j/tPfab9nVUCdUb/+k0r8Sts5E9bPSph3+hgWmg
+         pbJbJjkqjdNQgPiOrvDe1vrKEY4J7gKcWOIa9mch6+guHbTHlhzQgBJ22k3b4c8LzkpI
+         vp4woZO4i/U/TOSc/Oh3yM6dx5ITgQe0HQtU4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=vLSVN59IiMmk3XaMAsUIURgx54sUss06rONaoyzNmpyqRVS+gO+bXduBbqqOl+ec+Z
+         be1HOuxYCKHignxwBApUg4G5kWQCN0paOtyNhLH9Jv50JceHC45BRFC0HlyAJC2m7r/g
+         De4snpfW7Bg4IkgfrtDEAx/Oz7D2WDZCHiaGI=
+Received: by 10.229.86.196 with SMTP id t4mr1767797qcl.39.1235455463811; Mon, 
+	23 Feb 2009 22:04:23 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111216>
 
-On Mon, Feb 23, 2009 at 09:33:59PM -0800, Junio C Hamano wrote:
+#       unmerged:   profiles/package.mask
 
-> I think the patch suffers from the same problem Felipe's patch had, by
-> conflating two issues.  Because it had the ":some string with %" shorthand
+on the remote package.mask is a file locally it is a directory.
 
-Yes, I totally agree they are two separate issues, and it should be two
-patches.
+I need to know how I can resolve this merge without mergetool as
+currently mergetool doesn't handle it well.
 
-> If we split this round into two patches, one that makes --format a synonym
-> to --pretty, and then another one that allows --{format,pretty}='%h %s',
-> and *stop there*, then we wouldn't have difficulties.
+I want to delete the remote version of package.mask
 
-Right, and I am OK with that. I just wanted to make sure we were not
-painting ourselves into a corner for a "patch 3/2" that has been
-discussed.
+tried:
 
-> I do not think --oneline is a bad idea, but I do not think we should
-> explain it as "You can write anything that you can write after '--pretty='
-> without 'pretty=' and they mean the same thing".  That's where your
-> concern arises from.  You just say "'--pretty=oneline --abbrev-commit' is
-> so often used, so we have a shorthand for the whole thing: --oneline",
-> without implying anything about other things such as --short or --tformat.
+git rm :3:profiles/package.mask
+fatal: pathspec ':3:profiles/package.mask' did not match any files
 
-OK. I think that is reasonable. Personally, I would really only care
-about --oneline, anyway (and I do think a --pretty=%h shorthand should
-use "tformat"; the extra typing is probably not a big deal if you are
-doing a big multi-line format).
+mergetool will move my directory to a backup directory if I tell it to
+delete package.mask it doesn't move the directory back into place, if
+I tell it to use the remote version it obviously copies it into
+place... I'd be ok if when I told it to delete it, it restored the
+directory from backup.
 
--Peff
+regardless of mergetools problems I'd like to know how to fix this
+merge without mergetool.
+-- 
+Caleb Cushing
+
+http://xenoterracide.blogspot.com
