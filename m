@@ -1,81 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: how do I resolve this merge manually + mergetool bug
-Date: Mon, 23 Feb 2009 22:31:10 -0800
-Message-ID: <7vbpssmjm9.fsf@gitster.siamese.dyndns.org>
-References: <81bfc67a0902232204y7a1e9a91x6cbf751319664734@mail.gmail.com>
+From: Marius Storm-Olsen <marius@trolltech.com>
+Subject: Re: [PATCH 2/2] --date=relative falls back to "short" format for
+ commits older than a year
+Date: Tue, 24 Feb 2009 07:35:05 +0100
+Message-ID: <49A39519.3030308@trolltech.com>
+References: <1235165034-20299-1-git-send-email-eletuchy@gmail.com> <20090222230620.GB19011@coredump.intra.peff.net> <7v7i3ix6yi.fsf@gitster.siamese.dyndns.org> <20090223031631.GC22348@coredump.intra.peff.net> <49A2599E.2030406@trolltech.com> <20090224050400.GC4615@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Caleb Cushing <xenoterracide@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 24 07:32:47 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigEF37A57ACDCF861D54260075"
+Cc: Junio C Hamano <gitster@pobox.com>, eletuchy@gmail.com,
+	git@vger.kernel.org, eletuchy@facebook.com,
+	Eugene Letuchy <eugene@facebook.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 24 07:36:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbqqU-0005NY-Kz
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 07:32:47 +0100
+	id 1LbquJ-00066m-3i
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 07:36:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753366AbZBXGbS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2009 01:31:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752855AbZBXGbS
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 01:31:18 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63256 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751779AbZBXGbS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2009 01:31:18 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 8FA1B2BCFE;
-	Tue, 24 Feb 2009 01:31:14 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id CA71F2BCFB; Tue,
- 24 Feb 2009 01:31:11 -0500 (EST)
-In-Reply-To: <81bfc67a0902232204y7a1e9a91x6cbf751319664734@mail.gmail.com>
- (Caleb Cushing's message of "Tue, 24 Feb 2009 01:04:23 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: BC27F01C-023C-11DE-83F4-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1753439AbZBXGfR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2009 01:35:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753141AbZBXGfP
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 01:35:15 -0500
+Received: from hoat.troll.no ([62.70.27.150]:48053 "EHLO hoat.troll.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751779AbZBXGfO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2009 01:35:14 -0500
+Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
+	by hoat.troll.no (Postfix) with SMTP id AE60321016;
+	Tue, 24 Feb 2009 07:35:05 +0100 (CET)
+Received: from [172.24.90.95] (unknown [172.24.90.95])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hoat.troll.no (Postfix) with ESMTP id 99AE621015;
+	Tue, 24 Feb 2009 07:35:05 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.19) Gecko/20081209 Lightning/0.9 Thunderbird/2.0.0.19 ThunderGit/0.1a Mnenhy/0.7.6.666
+In-Reply-To: <20090224050400.GC4615@coredump.intra.peff.net>
+X-Enigmail-Version: 0.95.7
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
+ hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
+ 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
+ 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
+ ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
+ oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
+ tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
+ Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
+ 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
+ nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
+ KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
+ 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111221>
 
-Caleb Cushing <xenoterracide@gmail.com> writes:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigEF37A57ACDCF861D54260075
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-> #       unmerged:   profiles/package.mask
->
-> on the remote package.mask is a file locally it is a directory.
-> ...
-> git rm :3:profiles/package.mask
-> fatal: pathspec ':3:profiles/package.mask' did not match any files
+Jeff King said the following on 24.02.2009 06:04:
+> On Mon, Feb 23, 2009 at 09:09:02AM +0100, Marius Storm-Olsen wrote:
+>>> Another option would to give higher resolution in number of
+>>> years, like "3.5 years" or even "3.1 years".
+>> And using shorter names for the units would be a no-go?
+>>=20
+>> "3y 2m ago"    <--
+>=20
+> Personally I think that looks terrible. But I recognize that it is=20
+> very subjective. The only objective thing I can say is that "m" is
+> not a unique prefix of a time unit, due to "minutes". Yes, it is
+> obvious if you see the "y" first, but I actually parse the relative
+> time backwards in my head and think "2 minutes ago, oh wait, 3
+> years, that must be months".
 
-The answer most likely is this but don't do this just yet:
+Ok, the standard abbreviation for month is "mo.", so
 
-    $ git rm profiles/package.mask
+   "3y 2mo. ago"
 
-With this, you are saying "For the path profiles/package.mask, the correct
-resolution is not to have it".  There is no room for the stage number to
-get into the picture when you are talking about the final result.
+then? ;-)
 
-But I am suspecting that this is because you moved it to somewhere
-(perhaps to profiles/package.mask/frotz) while the remote side kept it
-intact or modified it in place.  If that is the case, and if the remote
-side made an in-place change, you would want to port the change over to
-the path you moved the contents to before you actually remove it, so
-before running the above "git rm", I would do something like.
+--=20
+=2Emarius [@trolltech.com]
+'if you know what you're doing, it's not research'
 
-    $ git cat-file blob :1:profiles/package.mask >original
-    $ git cat-file blob :3:profiles/package.mask >theirs
-    $ git cat-file blob profiles/package.mask/frotz >mine
-    $ git merge-file mine original theirs
-    $ diff -u profiles/package.mask/frotz mine ;# eyeball the merge result
-    $ cat mine >profiles/package.mask/frotz
 
-and then finally conclude the merge with:
+--------------enigEF37A57ACDCF861D54260075
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-    $ git rm profiles/package.mask
-    $ git add profiles/package.mask/frotz
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (MingW32)
 
-But if the remote side did not change anything (i.e. original == theirs),
-then you do not have to do the file-level merge to update the contents you
-moved to a different path.
+iD8DBQFJo5UZKzzXl/njVP8RAsvJAKDWnn4O3h24foEi9uyLWCgde/2QKwCgmsI9
+Tjz2Q7sGYdMIg4PQ3GR+i8M=
+=qbBW
+-----END PGP SIGNATURE-----
+
+--------------enigEF37A57ACDCF861D54260075--
