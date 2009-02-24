@@ -1,63 +1,81 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: Re: [PATCH] git.el: Only show completions from refs/heads, refs/remotes and refs/tags
-Date: Tue, 24 Feb 2009 17:06:26 +0100
-Message-ID: <87bpsrx1j1.fsf@wine.dyndns.org>
-References: <1235464350-23383-1-git-send-email-davidk@lysator.liu.se>
-	<87fxi4ut2p.fsf@krank.kagedal.org> <87ocwrx527.fsf@wine.dyndns.org>
-	<871vtnvo55.fsf@krank.kagedal.org> <87fxi3x2es.fsf@wine.dyndns.org>
-	<87y6vvu8sa.fsf@krank.kagedal.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [HALF A PATCH] Teach the '--exclude' option to 'diff
+ --no-index'
+Date: Tue, 24 Feb 2009 17:15:13 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902241713520.10279@pacific.mpi-cbg.de>
+References: <499E92FD.8000900@alum.mit.edu> <cf17659db8a4f7fe9d878984effcdd8d6417c862.1235138849u.git.johannes.schindelin@gmx.de> <7v1vttt6d4.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Tue Feb 24 17:08:21 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 24 17:17:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbzpH-00089C-7w
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 17:08:07 +0100
+	id 1LbzxA-0003zE-CY
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 17:16:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754422AbZBXQGi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Feb 2009 11:06:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754156AbZBXQGh
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 11:06:37 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:37518 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752903AbZBXQGh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Feb 2009 11:06:37 -0500
-Received: from adsl-84-227-31-184.adslplus.ch ([84.227.31.184] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <julliard@winehq.org>)
-	id 1Lbznh-0001Bl-BO; Tue, 24 Feb 2009 10:06:35 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id E686C1E7203; Tue, 24 Feb 2009 17:06:26 +0100 (CET)
-In-Reply-To: <87y6vvu8sa.fsf@krank.kagedal.org> ("David =?utf-8?Q?K=C3=A5g?=
- =?utf-8?Q?edal=22's?= message of
-	"Tue, 24 Feb 2009 16:57:57 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.90 (gnu/linux)
-X-Spam-Score: -3.2
+	id S1756943AbZBXQOH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2009 11:14:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758077AbZBXQOF
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 11:14:05 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41953 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757582AbZBXQOE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2009 11:14:04 -0500
+Received: (qmail invoked by alias); 24 Feb 2009 16:14:00 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp028) with SMTP; 24 Feb 2009 17:14:00 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/XMlBlR2HXSm56OwmMtEbXG8nJ00jR2eEgQAJhKy
+	16ziMgqrj0BZmq
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7v1vttt6d4.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111309>
 
-David K=C3=A5gedal <davidk@lysator.liu.se> writes:
+Hi,
 
-> Cherry-pick, yes. And checkout, sometimes. My problem is that I have =
-a
-> truckload of remote (svn) branches and that means I can't see the
-> obvious checkout candidates for all the noise.
->
-> But add "refs/remotes" and "refs/tags" to the last patch, and maybe w=
-e
-> have a good compromise.
+On Fri, 20 Feb 2009, Junio C Hamano wrote:
 
-We could of course make it customizable...
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > With this patch, it is possible to exclude files based on basename
+> > patterns.  Example:
+> >
+> > 	$ git diff --no-index -x Makefile -x Makefile.in a/ b/
+> >
+> > In this example, the recursive diff between a/ and b/ will be shown
+> > modulo changes in files named 'Makefile' or 'Makefile.in'.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >
+> > 	Michael wrote:
+> >
+> > 	> I can't think offhand of a more portable tool that could replace 
+> > 	> "diff -r -x" here (suggestions, anyone?).
+> >
+> > 	Maybe something like this?
+> 
+> I agree that diff_options is the logical way to hook this information and
+> diff_opt_parse() is the right place to add this, but why isn't this done
+> at diff_{addremove,change,unmerge}() layer?  That way you should be able
+> to cover both no-index special case and the normal diffs, no?
 
---=20
-Alexandre Julliard
-julliard@winehq.org
+The principal aim of this patch was to support git diff --no-index -x, 
+that is why (and in addition, avoiding unnecessary work when we can 
+exclude stuff already early in the code path).
+
+It is unlikely that I will work on this before next week.
+
+Thanks,
+Dscho
