@@ -1,126 +1,132 @@
-From: Teemu Likonen <tlikonen@iki.fi>
-Subject: [PATCH v2] bash completion: add --format= and --oneline options for "git log"
-Date: Tue, 24 Feb 2009 15:33:29 +0200
-Message-ID: <87zlgcq7rq.fsf_-_@iki.fi>
-References: <94a0d4530902221014i46e52542j2380386405b559e2@mail.gmail.com>
-	<7vbpsuxqpo.fsf@gitster.siamese.dyndns.org>
-	<94a0d4530902221055g4e815a78oc0aa094304588ab7@mail.gmail.com>
-	<7vljrxveqa.fsf@gitster.siamese.dyndns.org>
-	<94a0d4530902231656l71ee0e45nbdd1c20035d3dd4@mail.gmail.com>
-	<94a0d4530902231703n701a17dbkd20c0e14d759dddf@mail.gmail.com>
-	<7v3ae4r53f.fsf@gitster.siamese.dyndns.org>
-	<20090224130626.6117@nanako3.lavabit.com>
-	<20090224045041.GA4615@coredump.intra.peff.net>
-	<7vprh8mm9k.fsf@gitster.siamese.dyndns.org>
-	<20090224054524.GE4615@coredump.intra.peff.net>
-	<20090224185913.6117@nanako3.lavabit.com> <871vtonlmv.fsf_-_@iki.fi>
+From: Penny Leach <penny@mjollnir.org>
+Subject: git-svn starting with an empty svn repository
+Date: Tue, 24 Feb 2009 14:43:25 +0100
+Message-ID: <20090224134325.GA10719@mjollnir.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	felipe.contreras@gmail.com, "Shawn O. Pearce" <spearce@spearce.org>
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Tue Feb 24 14:35:28 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="M9NhX3UHpAaciwkO"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 24 15:04:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbxRO-00072L-Ri
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 14:35:19 +0100
+	id 1Lbxtm-0000wm-CI
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 15:04:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755503AbZBXNdi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2009 08:33:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754565AbZBXNdi
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 08:33:38 -0500
-Received: from mta-out.inet.fi ([195.156.147.13]:49383 "EHLO kirsi1.inet.fi"
+	id S1755310AbZBXODM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2009 09:03:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754950AbZBXODK
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 09:03:10 -0500
+Received: from mjollnir.org ([202.78.240.81]:45080 "EHLO mjollnir.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752803AbZBXNdh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2009 08:33:37 -0500
-Received: from mithlond.arda.local (80.220.180.181) by kirsi1.inet.fi (8.5.014)
-        id 48FC5AC905770494; Tue, 24 Feb 2009 15:33:33 +0200
-Received: from dtw by mithlond.arda.local with local (Exim 4.69)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1LbxPd-0000xm-3w; Tue, 24 Feb 2009 15:33:29 +0200
-In-Reply-To: <871vtonlmv.fsf_-_@iki.fi> (Teemu Likonen's message of "Tue\, 24 Feb 2009 13\:02\:16 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1755221AbZBXODJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2009 09:03:09 -0500
+X-Greylist: delayed 1172 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Feb 2009 09:03:09 EST
+Received: from localhost (localhost [127.0.0.1])
+	by mjollnir.org (Postfix) with ESMTP id 4077528A558
+	for <git@vger.kernel.org>; Tue, 24 Feb 2009 14:43:01 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at mjollnir.org
+Received: from mjollnir.org ([127.0.0.1])
+	by localhost (mjollnir.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id b3zX4DYC9Hqg for <git@vger.kernel.org>;
+	Tue, 24 Feb 2009 14:42:57 +0100 (CET)
+Received: from hermia.mjollnir.org (114-123.104-92.cust.bluewin.ch [92.104.123.114])
+	(Authenticated sender: penny)
+	by mjollnir.org (Postfix) with ESMTP id 6E96728A557
+	for <git@vger.kernel.org>; Tue, 24 Feb 2009 14:42:57 +0100 (CET)
+Received: by hermia.mjollnir.org (Postfix, from userid 1000)
+	id 19ABD22104; Tue, 24 Feb 2009 14:43:26 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111286>
-
-We also add --format= completion for "git show".
-
-Signed-off-by: Teemu Likonen <tlikonen@iki.fi>
----
-
-On 2009-02-24 13:02 (+0200), Teemu Likonen wrote:
-
-> I like this change and would immediately switch to using --format= and
-> --oneline instead of --pretty=. I think we should add these bash
-> completions too.
-
-And let's add --format= completion for "git show" too. I think --oneline
-completion is not needed with "git show" even though it works.
-
-This patch replaces my previous one.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111287>
 
 
+--M9NhX3UHpAaciwkO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- contrib/completion/git-completion.bash |   14 ++++++++++++--
- 1 files changed, 12 insertions(+), 2 deletions(-)
+Dear list,
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 0a3092f..31608cb 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1012,10 +1012,15 @@ _git_log ()
- 	--pretty=*)
- 		__gitcomp "$__git_log_pretty_formats
- 			" "" "${cur##--pretty=}"
- 		return
- 		;;
-+	--format=*)
-+		__gitcomp "$__git_log_pretty_formats
-+			" "" "${cur##--format=}"
-+		return
-+		;;
- 	--date=*)
- 		__gitcomp "
- 			relative iso8601 rfc2822 short local default
- 		" "" "${cur##--date=}"
- 		return
-@@ -1027,11 +1032,11 @@ _git_log ()
- 			$__git_log_gitk_options
- 			--root --topo-order --date-order --reverse
- 			--follow
- 			--abbrev-commit --abbrev=
- 			--relative-date --date=
--			--pretty=
-+			--pretty= --format= --oneline
- 			--cherry-pick
- 			--graph
- 			--decorate
- 			--walk-reflogs
- 			--parents --children
-@@ -1539,12 +1544,17 @@ _git_show ()
- 	--pretty=*)
- 		__gitcomp "$__git_log_pretty_formats
- 			" "" "${cur##--pretty=}"
- 		return
- 		;;
-+	--format=*)
-+		__gitcomp "$__git_log_pretty_formats
-+			" "" "${cur##--format=}"
-+		return
-+		;;
- 	--*)
--		__gitcomp "--pretty=
-+		__gitcomp "--pretty= --format=
- 			$__git_diff_common_options
- 			"
- 		return
- 		;;
- 	esac
--- 
-1.6.2.rc1.29.g79ccf
+This is maybe an abuse of what git-svn is designed to do, but nevertheless
+I need to do it.
+
+I'm working with a project (Moodle) that still uses CVS for its upstream
+VCS.  The friendly folk at Catalyst in NZ run a git import of this, that a
+lot of the community uses as their (read only) upstream instead of CVS.
+
+So far so good.
+
+However, now for various political reasons, I must (at least) publish
+changes to SVN.  I'm going to be patch trading a lot between my work
+branches, and Moodle's CVS directly and I don't want to lose the power that
+git gives me while doing that.  So I want to keep git as the tool I use for
+development, that acts as a go-between for me between CVS and SVN.
+
+So what I'd really like to do is something like this:
+
+- clone from Catalyst's git mirror
+- push that to SVN using git-svn
+- keep working, committing patches to Moodle CVS, and pulling from Catalyst
+  regularly, while pushing both my local changes and new pulled upstream
+  patches, to SVN, using git-svn
+
+The problem seems to be that I'm starting out with an *empty* SVN
+repository.  Almost all of the documentation I've found on this topic is
+for going from an existing SVN repository to git.
+
+Theoretically at least, the opposite direction should also be possible, but
+I'm having a hard time figuring it out.  I followed the steps outlined in
+the comments here:
+http://quirkygba.blogspot.com/2007/10/using-git-with-google-code-hosting.ht=
+ml
+
+But I didn't have much luck, it seems as though the rebased trunk branch
+doesn't share any ancestry with the original Catalyst sources, so regularly
+updating is going to be hard (unless I create graft entries for each time I
+do it I guess?).
+
+Not to mention the fact that it's 8 years of history that takes a while to
+import and after about 5 tries I didn't even manage to get git svn to
+dcommit it and got impatient and cross and stopped trying.
+
+So really I want to know is - is this even possible? Is using the above
+steps along with the graft approach the best|only way to do it?  How
+brittle is this to maintain, if I even manage to get it imported?
+
+Any ideas or advice?
+
+For reference, the CVS/Git import can be cloned here:
+http://git.catalyst.net.nz/git/moodle-r2.git but will take a long time to
+come down.
+
+Cheers for any help.
+
+Penny
+
+
+--=20
+/* ---------------------------------------------------
+Penny Leach | http://mjollnir.org | http://she.geek.nz
+GPG: 8347 00FC B5BF 6CC0 0FC9 AB90 1875 120A A30E C22B
+--------------------------------------------------- */
+
+--M9NhX3UHpAaciwkO
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkmj+X0ACgkQGHUSCqMOwita1gCgrqZy+X6dN9QWAkXL3YFFl9XY
+AVcAoJZrPCsHhvlF7t9x8XswZOWRd/4/
+=zZdt
+-----END PGP SIGNATURE-----
+
+--M9NhX3UHpAaciwkO--
