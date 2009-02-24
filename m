@@ -1,79 +1,70 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Re: git-svn starting with an empty svn repository
-Date: Tue, 24 Feb 2009 15:19:13 +0100
-Message-ID: <a2633edd0902240619v633eacq4ff7ffd20f66da04@mail.gmail.com>
-References: <20090224134325.GA10719@mjollnir.org>
+From: Ted Pavlic <ted@tedpavlic.com>
+Subject: Re: [PATCH] Add bare repository indicator for __git_ps1
+Date: Tue, 24 Feb 2009 09:25:54 -0500
+Message-ID: <49A40372.2060600@tedpavlic.com>
+References: <1235227723-11471-1-git-send-email-git@storm-olsen.com> <7v8wnzr3k9.fsf@gitster.siamese.dyndns.org> <49A05958.7050703@trolltech.com> <20090223154237.GH22848@spearce.org> <49A2C8D1.3080104@trolltech.com> <20090223161657.GL22848@spearce.org> <7vab8cpqgl.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Penny Leach <penny@mjollnir.org>
-X-From: git-owner@vger.kernel.org Tue Feb 24 15:20:50 2009
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Marius Storm-Olsen <marius@trolltech.com>,
+	Marius Storm-Olsen <git@storm-olsen.com>,
+	git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 24 15:27:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lby9M-0007g7-Gy
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 15:20:45 +0100
+	id 1LbyG5-0001iS-FI
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 15:27:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756423AbZBXOTR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2009 09:19:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756392AbZBXOTQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 09:19:16 -0500
-Received: from ey-out-2122.google.com ([74.125.78.24]:55062 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756371AbZBXOTQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2009 09:19:16 -0500
-Received: by ey-out-2122.google.com with SMTP id 25so573595eya.37
-        for <git@vger.kernel.org>; Tue, 24 Feb 2009 06:19:13 -0800 (PST)
-Received: by 10.210.29.17 with SMTP id c17mr4406612ebc.188.1235485153301; Tue, 
-	24 Feb 2009 06:19:13 -0800 (PST)
-In-Reply-To: <20090224134325.GA10719@mjollnir.org>
+	id S1756435AbZBXO0L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2009 09:26:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756430AbZBXO0J
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 09:26:09 -0500
+Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:32788 "EHLO
+	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753840AbZBXO0I (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Feb 2009 09:26:08 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 0898F80D8017;
+	Tue, 24 Feb 2009 09:19:13 -0500 (EST)
+X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
+Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
+	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id YzWyfZmRSE2u; Tue, 24 Feb 2009 09:19:12 -0500 (EST)
+Received: from TedBook.local (tedpc.ece.ohio-state.edu [164.107.164.122])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id E45E180D8014;
+	Tue, 24 Feb 2009 09:19:12 -0500 (EST)
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8) Gecko/20051201 Thunderbird/1.5 Mnenhy/0.7.3.0
+In-Reply-To: <7vab8cpqgl.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111290>
 
-Penny,
+> Reverting GIT_DIR! ugliness is certainly a possibility.  As long as people
+> who chdir into there are the only ones who suffer from the ugliness I do
+> not particularly care that much, though ;-)
+>
+> Will apply anyway.
 
-I've been trying to do the exact same things. I'm using Git to import
-from CVS and export into a Subversion repository.
+I only added the "GIT_DIR!" on the advice of Junio, who suggested a 
+"danger" flag. I asked for suggestions on replacement text.
 
-What I have done:
+Keep in mind that "BARE:master" doesn't make much sense. If you're in a 
+git dir, you don't have a working directory. "BARE" alone makes sense. 
+Personally, I think it makes more sense to submit a patch that changes 
+"GIT_DIR!" to "BARE" in the bare case (and doesn't print any branch).
 
-- I have used cvsimport for the CVS repository (no problem)
+--Ted
 
-- I have created an empty repository using svnadmin
-
-- I have imported the svn trunk into Git
-
-- I'm cherry-picking any new commits from my cvs-imported branch
-(master) into the git-svn one (named svn-trunk)
-
-For this last point, I'm using this code sniped:
-
-<<
-for i in $(git cherry svn-trunk master | sed -n 's/^+ //p'); do
-   echo Applying $i;
-   (git cherry-pick --no-commit $i &&
-    git log --pretty=format:"Author: %an <%ae>%nDate  :
-%ad%n%n%s%n%b" -1 $i > /tmp/cm &&
-    git commit --file=/tmp/cm) || (echo Cannot commit $i; exit 1)
-done
->>
-
-I'm editing the log to properly record original author and date.
-
-There is maybe better solutions...
 
 -- 
+Ted Pavlic <ted@tedpavlic.com>
 
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|              http://www.obry.net
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
+   Please visit my ALS association page:
+         http://web.alsa.org/goto/tedpavlic
+   My family appreciates your support in the fight to defeat ALS.
