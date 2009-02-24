@@ -1,71 +1,64 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH 04/13] remote: make get_remote_ref_states() always 
-	populate states.tracked
-Date: Mon, 23 Feb 2009 22:13:53 -0500
-Message-ID: <76718490902231913x63ca33cp8dd08b63f337bc7f@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 10/13] remote.c: make match_refs() copy src ref before 
+ assigning to peer_ref
+Date: Mon, 23 Feb 2009 19:23:44 -0800
+Message-ID: <7vzlgcmsan.fsf@gitster.siamese.dyndns.org>
 References: <cover.1235368324.git.jaysoffian@gmail.com>
-	 <2185ca69c518d60276ba1bc613b7699a6bca7c68.1235368324.git.jaysoffian@gmail.com>
-	 <7vvdr0pqhp.fsf@gitster.siamese.dyndns.org>
-	 <76718490902231909n44b4ddebl1ce974090f90daff@mail.gmail.com>
+ <75e083170cea799499bf66792a1c3950b29d6021.1235368324.git.jaysoffian@gmail.com> <7vocwspqhc.fsf@gitster.siamese.dyndns.org> <76718490902231906n620aac40x5c0663fd420c7f39@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 24 04:16:09 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Marc Branchaud <marcnarc@xiplink.com>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 24 04:25:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbnmC-0000Mn-9B
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 04:16:08 +0100
+	id 1Lbnvd-0002Xh-Hc
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 04:25:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758170AbZBXDN4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Feb 2009 22:13:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758163AbZBXDN4
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 22:13:56 -0500
-Received: from rv-out-0506.google.com ([209.85.198.238]:7619 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758150AbZBXDNz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2009 22:13:55 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so2248334rvb.1
-        for <git@vger.kernel.org>; Mon, 23 Feb 2009 19:13:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Buz0AdFfZHQnAlDqEG3nvAN0EnVpGpsZORcJ7E7tbGU=;
-        b=Bkpqlsrf+rkKFmtSyxjKAGHmNpXq/nDqnVCh2XG0LC05aHmw3MrkuK+N3nNRnoveYp
-         UzNqE5d4cmCV8jLprkiRmYLtU1dWhW3Fm3vGqQkHJW/w/HEJZ+oGZkKWs5lB1nEqJj+F
-         28gwjak6fUQ3nussu/I7gL2QT3WVCsNoxVRx4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=OddkENgcV09SjvG9eFkeggWxR3QU52eEj/iTCE4aGJjHm9jbjrQc8eDUX5g6fVqjcv
-         FZyX0W3j1KJsQq+LwvxoXuDBkLIy4dKr7FNP3LNmfQH5WxlSbsIXgb4i0/UknniJXtN6
-         6zk8E67oHaHbctMNwEGKCCHJoKMNyPu3wkoI8=
-Received: by 10.141.180.16 with SMTP id h16mr2308963rvp.295.1235445233333; 
-	Mon, 23 Feb 2009 19:13:53 -0800 (PST)
-In-Reply-To: <76718490902231909n44b4ddebl1ce974090f90daff@mail.gmail.com>
+	id S1751583AbZBXDXz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2009 22:23:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751333AbZBXDXy
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 22:23:54 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40029 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751307AbZBXDXy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2009 22:23:54 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 49A839C5E0;
+	Mon, 23 Feb 2009 22:23:51 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id F37139C5DC; Mon,
+ 23 Feb 2009 22:23:46 -0500 (EST)
+In-Reply-To: <76718490902231906n620aac40x5c0663fd420c7f39@mail.gmail.com>
+ (Jay Soffian's message of "Mon, 23 Feb 2009 22:06:42 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 8EA176E6-0222-11DE-AD7F-B26E209B64D9-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111203>
 
-On Mon, Feb 23, 2009 at 10:09 PM, Jay Soffian <jaysoffian@gmail.com> wrote:
-> No, but I wanted Jeff's changes. I have checked that I can apply the
-> "set HEAD" series, then Jeff's changes, then this latest series all to
-> next w/o conflict.
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-Put another way, IMO, the set HEAD series, Jeff's changes, and this
-series might very well be a single topic.
+> This issue existed before, but the other callers of match_heads() only
+> call it once before the process terminates, and don't bother to free
+> what it returns. So those callers didn't notice. This topic introduces
+> the first caller that calls match_heads() repeatedly, so it frees the
+> returned ref list after it has copied out what it needs.
+>
+> The change is independent and can be moved anywhere in the series, or
+> even introduced as a patch independent of the series itself.
 
->> In other words, you make your series unworkable with if you introduce too
->> many dependencies.
+Thanks for explanation.
 
-For future reference, should I build on top of master or next?
+If I am reading the above correctly, a sequence that does not have 10/13
+before the patch that makes match_heads() called repeatedly would break
+bisection, so it cannot be "can be moved anywhere".
 
-j.
+And it sounds like keeping this as a separate patch would make more
+sense.  Your proposed commit log message for the patch would contain the
+first paragraph I quoted above, I'd think.
