@@ -1,75 +1,66 @@
-From: "Marcel M. Cary" <marcel@oak.homeunix.org>
-Subject: Addresses with full names in patch emails
-Date: Tue, 24 Feb 2009 07:38:44 -0800
-Message-ID: <49A41484.1010501@oak.homeunix.org>
-References: <1234926043-7471-1-git-send-email-marcel@oak.homeunix.org> <1234926043-7471-2-git-send-email-marcel@oak.homeunix.org> <200902182255.13983.jnareb@gmail.com>
+From: Ted Pavlic <ted@tedpavlic.com>
+Subject: Re: [PATCH] Add bare repository indicator for __git_ps1
+Date: Tue, 24 Feb 2009 10:39:36 -0500
+Message-ID: <49A414B8.8010906@tedpavlic.com>
+References: <1235227723-11471-1-git-send-email-git@storm-olsen.com> <7v8wnzr3k9.fsf@gitster.siamese.dyndns.org> <49A05958.7050703@trolltech.com> <20090223154237.GH22848@spearce.org> <49A2C8D1.3080104@trolltech.com> <20090223161657.GL22848@spearce.org> <7vab8cpqgl.fsf@gitster.siamese.dyndns.org> <49A40372.2060600@tedpavlic.com> <49A40858.6010108@trolltech.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Marcel M. Cary" <marcel@oak.homeunix.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	"fg@one2team.net" <fg@one2team.net>,
-	"giuseppe.bilotta@gmail.com" <giuseppe.bilotta@gmail.com>,
-	"pasky@suse.cz" <pasky@suse.cz>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 24 16:41:03 2009
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Marius Storm-Olsen <git@storm-olsen.com>,
+	git <git@vger.kernel.org>
+To: Marius Storm-Olsen <marius@trolltech.com>
+X-From: git-owner@vger.kernel.org Tue Feb 24 16:41:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbzOW-0004xk-B3
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 16:40:28 +0100
+	id 1LbzPI-0005Qv-IC
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 16:41:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755477AbZBXPjA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2009 10:39:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755381AbZBXPjA
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 10:39:00 -0500
-Received: from smtp126.sbc.mail.sp1.yahoo.com ([69.147.65.185]:28226 "HELO
-	smtp126.sbc.mail.sp1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1755241AbZBXPi7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Feb 2009 10:38:59 -0500
-Received: (qmail 55430 invoked from network); 24 Feb 2009 15:38:57 -0000
-Received: from unknown (HELO ordinateur.home.org) (marcel@75.61.103.6 with plain)
-  by smtp126.sbc.mail.sp1.yahoo.com with SMTP; 24 Feb 2009 15:38:57 -0000
-X-YMail-OSG: XamrwnsVM1msu5g_OolHJGkha5dOMexFZQbLfJfx8oyGbPlM_EEc8ivXrB0vjkq6qKMmlov3IIPtbuyATLgkYBYOv6NoqrunqK98wCqtJVOQ1_J99Tt8qUQ7Pg6hE32pkhIWgCwvIn_X2Oll.jtiiKoQTecqHcMmlMnJfsHukcbCohrg09VtxJg-
-X-Yahoo-Newman-Property: ymail-3
-Received: from polliwog.home.org ([192.168.0.18])
-	by ordinateur.home.org with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <marcel@oak.homeunix.org>)
-	id 1LbzN1-0000Ue-Af; Tue, 24 Feb 2009 07:38:55 -0800
-User-Agent: Thunderbird 2.0.0.6 (X11/20070801)
-In-Reply-To: <200902182255.13983.jnareb@gmail.com>
+	id S1755909AbZBXPjt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2009 10:39:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755816AbZBXPjt
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 10:39:49 -0500
+Received: from gallifrey.ece.ohio-state.edu ([164.107.167.66]:58578 "EHLO
+	gallifrey.ece.ohio-state.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755756AbZBXPjs (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Feb 2009 10:39:48 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 840AF80D8017;
+	Tue, 24 Feb 2009 10:32:55 -0500 (EST)
+X-Virus-Scanned: amavisd-new at gallifrey.ece.ohio-state.edu
+Received: from gallifrey.ece.ohio-state.edu ([127.0.0.1])
+	by localhost (gallifrey.ece.ohio-state.edu [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id mb85AqCvtHQI; Tue, 24 Feb 2009 10:32:55 -0500 (EST)
+Received: from TedBook.local (tedpc.ece.ohio-state.edu [164.107.164.122])
+	by gallifrey.ece.ohio-state.edu (Postfix) with ESMTP id 6ABA080D8014;
+	Tue, 24 Feb 2009 10:32:55 -0500 (EST)
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8) Gecko/20051201 Thunderbird/1.5 Mnenhy/0.7.3.0
+In-Reply-To: <49A40858.6010108@trolltech.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111299>
 
-Thanks for the two patch tweaks.
+>> Keep in mind that "BARE:master" doesn't make much sense. If you're
+>
+> It reflects what HEAD points to in the bare repository.
 
-Jakub Narebski wrote:
-> P.S. Why bare emails (without user names), e.g. "pasky@suse.cz"
-> and not "Petr Baudis <pasky@suse.cz>"? Just curious...
+Obviously, but that seems disingenuous when you're inside the git dir. 
+"HEAD" is supposed to reflect the name of the currently checked-out 
+branch, and so it is tied to a working directory. I'm not sure why it's 
+useful to show $GIT_DIR/HEAD in PS1 while inside .git as it invites 
+operations that probably should not be done while within the bare repo.
 
-I've been using "git send-email" for patches, and have Thunderbird as my
-MUA otherwise.  (I'd use (al)pine if I could make it work with
-Exchange/NTLM at work, but that's another story...)  I've been
-transfering recipients (--to and --cc) from Thunderbird to the
-commandline with copy/paste.
+--Ted
 
-In Thurderbird, copying an email address from a message only gets you
-the user@domain part, not the "Full Name" <user@domain>.  To get the
-"Full Name" <user@domain> I would have to View Message Source and
-pickout the CC line, which is marginally harder.
 
-And on the commandline, instead of just pasting an email as a shell
-word, I'd have to add single quotes (I think) to keep the whole "Full
-Name" <user@domain> as one word and quote the shell meta characters.
+-- 
+Ted Pavlic <ted@tedpavlic.com>
 
-Neither piece is all that onerous, I guess.  Sounds like you would see
-some value in the full names.  Maybe I'll try including them on my next
-patch.  Looks like --cc-cmd or sendemail.aliasesfile might make it
-easier, but I'd have to set them up.
-
-Marcel
+   Please visit my ALS association page:
+         http://web.alsa.org/goto/tedpavlic
+   My family appreciates your support in the fight to defeat ALS.
