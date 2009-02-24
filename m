@@ -1,141 +1,123 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH 16/23] builtin-remote: refactor get_remote_ref_states()
-Date: Tue, 24 Feb 2009 04:51:04 -0500
-Message-ID: <29438718de2df87754786279cd138b0d1fe0ca0e.1235467368.git.jaysoffian@gmail.com>
-References: <cover.1235467368.git.jaysoffian@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git merge --abort
+Date: Tue, 24 Feb 2009 10:51:41 +0100
+Message-ID: <200902241051.42800.jnareb@gmail.com>
+References: <43d8ce650902190205yc2274c5gb8e658c8608267ff@mail.gmail.com> <200902240253.35470.jnareb@gmail.com> <7vk57goanf.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jay Soffian <jaysoffian@gmail.com>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 24 10:55:10 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: John Tapsell <johnflux@gmail.com>,
+	Bryan Donlan <bdonlan@gmail.com>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Nanako Shiraishi <nanako3@lavabit.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 24 10:55:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lbu01-0002Ej-Gz
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 10:54:49 +0100
+	id 1Lbu09-0002Ej-Ei
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 10:54:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756033AbZBXJwA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2009 04:52:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755990AbZBXJv5
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 04:51:57 -0500
-Received: from yx-out-2324.google.com ([74.125.44.28]:15777 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755947AbZBXJv4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2009 04:51:56 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so1005621yxm.1
-        for <git@vger.kernel.org>; Tue, 24 Feb 2009 01:51:54 -0800 (PST)
+	id S1755902AbZBXJwm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2009 04:52:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755318AbZBXJwl
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 04:52:41 -0500
+Received: from fg-out-1718.google.com ([72.14.220.152]:12460 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754691AbZBXJvy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2009 04:51:54 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so74092fgg.17
+        for <git@vger.kernel.org>; Tue, 24 Feb 2009 01:51:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=58NsK17mAsimpJeEF9inplOtK6RgWPmkUNTUKrkM/PY=;
-        b=GiT6EzolIYejF06OacCAC/CTcnwWQR5lD8OyyNDiwIvycF5Dgp23/PgDsJeTI3NJEq
-         RWZPmAJXl+/+hqSwX3PDIVj42wlY2CpMoy9r3sgjHcvyykExQ1pxZlFcfebbkMvCjizl
-         aUDbIXgJOd50JASuFWIm5mB+hx4h40DoSyTWs=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=QZaq4gaKdWY9/b0WkrrCYbYQaKbAnJyo5bKBhzNtorI=;
+        b=XBsgn4HsJKdkXgsTNPCY66l2O6rBVPO3b7NlVYgnVlDb2eCwB8moqZdf/+VznvDsSV
+         C4f95WZobAyeAG645q+X2g7kXpVLtY8qyZ8J+WGViaZShniQZzoRd41eJumqrmn2WqcV
+         zWCFfQ2yH6C2d+T/MT1czbpJVt4kpvGxjOj6E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=pEQk6OxYuBbq/wHLFmWTCrmOva2m2sA/uEUe3xJdH01+/rxkMIhHPKKJ6A5Rzfo9c/
-         vJgIz3XFrQTzmgOA8ZWWsdQtqznt6YFIXE6WZX1/bPDHgX2b+c/Bl/eQQ1HJaBTUmMjs
-         TWBniDGYm9+2AwqbUae8bMpOAUOrGCrInc7Qg=
-Received: by 10.100.58.19 with SMTP id g19mr5461800ana.82.1235469114575;
-        Tue, 24 Feb 2009 01:51:54 -0800 (PST)
-Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
-        by mx.google.com with ESMTPS id c37sm7604205ana.2.2009.02.24.01.51.53
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=FeLnAPDO/N9Rjdt427qrL1Ina/VeFH6FdOt/RfV4K924wtHLeYJ6hwh1XivsPd+MKe
+         G0jVuu31y/rv/z0g2cI/wwXDUBTKV2G9t1lJia6LP7BGWvykrvbd7UZknhcN+m696eQT
+         wm8HjxIncEI2Y1B5L/RlGA4l83Yt32C9jbYRY=
+Received: by 10.86.94.11 with SMTP id r11mr3582132fgb.53.1235469110700;
+        Tue, 24 Feb 2009 01:51:50 -0800 (PST)
+Received: from ?192.168.1.15? (abvk114.neoplus.adsl.tpnet.pl [83.8.208.114])
+        by mx.google.com with ESMTPS id 3sm1171281fge.52.2009.02.24.01.51.45
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 24 Feb 2009 01:51:54 -0800 (PST)
-X-Mailer: git-send-email 1.6.2.rc1.291.g83eb
-In-Reply-To: <cover.1235467368.git.jaysoffian@gmail.com>
+        Tue, 24 Feb 2009 01:51:47 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vk57goanf.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111276>
 
-get_remote_ref_states() has three callers, but each is interested in
-slightly different information. Give it a bit-field flag so that callers
-can specify which pieces of information they need.
+Junio C Hamano wrote::
+> Jakub Narebski <jnareb@gmail.com> writes:
+>> Junio C Hamano wrote:
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
- builtin-remote.c |   21 ++++++++++++++-------
- 1 files changed, 14 insertions(+), 7 deletions(-)
+>>> I personally did not think "--keep" would need to be be part of a
+>>> reasonable "merge --abort" implementation, but I may have missed some
+>>> description of a viable design discussed on the list.
 
-diff --git a/builtin-remote.c b/builtin-remote.c
-index 5ef8163..a822bd5 100644
---- a/builtin-remote.c
-+++ b/builtin-remote.c
-@@ -19,6 +19,9 @@ static const char * const builtin_remote_usage[] = {
- 	NULL
- };
- 
-+#define GET_REF_STATES (1<<0)
-+#define GET_HEAD_NAMES (1<<1)
-+
- static int verbose;
- 
- static int show_all(void);
-@@ -691,9 +694,10 @@ static int get_remote_ref_states(const char *name,
- 			states->remote->url[0] : NULL);
- 		remote_refs = transport_get_remote_refs(transport);
- 		transport_disconnect(transport);
--
--		get_head_names(remote_refs, name, states);
--		get_ref_states(remote_refs, states);
-+		if (query & GET_REF_STATES)
-+			get_ref_states(remote_refs, states);
-+		if (query & GET_HEAD_NAMES)
-+			get_head_names(remote_refs, name, states);
- 	} else {
- 		for_each_ref(append_ref_to_tracked_list, states);
- 		sort_string_list(&states->tracked);
-@@ -704,7 +708,7 @@ static int get_remote_ref_states(const char *name,
- 
- static int show(int argc, const char **argv)
- {
--	int no_query = 0, result = 0;
-+	int no_query = 0, result = 0, query_flag = 0;
- 	struct option options[] = {
- 		OPT_GROUP("show specific options"),
- 		OPT_BOOLEAN('n', NULL, &no_query, "do not query remotes"),
-@@ -717,11 +721,14 @@ static int show(int argc, const char **argv)
- 	if (argc < 1)
- 		return show_all();
- 
-+	if (!no_query)
-+		query_flag = (GET_REF_STATES | GET_HEAD_NAMES);
-+
- 	memset(&states, 0, sizeof(states));
- 	for (; argc; argc--, argv++) {
- 		int i;
- 
--		get_remote_ref_states(*argv, &states, !no_query);
-+		get_remote_ref_states(*argv, &states, query_flag);
- 
- 		printf("* remote %s\n  URL: %s\n", *argv,
- 			states.remote->url_nr > 0 ?
-@@ -805,7 +812,7 @@ static int set_head(int argc, const char **argv)
- 	} else if (opt_a && !opt_d && argc == 1) {
- 		struct ref_states states;
- 		memset(&states, 0, sizeof(states));
--		get_remote_ref_states(argv[0], &states, 1);
-+		get_remote_ref_states(argv[0], &states, GET_HEAD_NAMES);
- 		if (!states.heads.nr)
- 			result |= error("Cannot determine remote HEAD");
- 		else if (states.heads.nr > 1) {
-@@ -865,7 +872,7 @@ static int prune(int argc, const char **argv)
- 	for (; argc; argc--, argv++) {
- 		int i;
- 
--		get_remote_ref_states(*argv, &states, 1);
-+		get_remote_ref_states(*argv, &states, GET_REF_STATES);
- 
- 		if (states.stale.nr) {
- 			printf("Pruning %s\n", *argv);
+First, a description of state: here we assume that you have changes to
+tracked files in working area that are neither in HEAD, nor in index,
+and that you can have changes in index which are neither in HEAD nor
+in working area.
+
+If HEAD == index == working area then stashing is not necessary.
+
+>> My idea was that merge would do the following:
+>>
+>>   $ <save stash into MERGE_STASH or similar, no reset>
+>>   $ <do a merge>
+>>
+>> Then we have two possibilities:
+>>
+>>   # merge failed with conflicts
+>>   $ git merge --abort (would unstash MERGE_STASH and delete it)
+> 
+> Here "would unstash" needs to follow something else, namely, make your
+> work tree free of local changes.  How?  "reset --hard"?
+
+Yes. "git merge --abort" would be equivalent to
+
+  $ git reset --hard ORIG_HEAD
+  $ git stash pop --ref=MERGE_STASH
+  $ rm $GIT_DIR/MERGE_STASH
+
+> 
+>>   # we created merge conflict
+>>   $ <MERGE_STASH is removed together with MERGE_HEAD>
+> 
+> You mean "created a merge without conflict", right?  That part is easy to
+> guess and understand.
+
+Yes. I meant here: "created merge _commit_" (not "conflict").
+
+> 
+> In fact, when you run more than one strategies, something similar to this
+> already happens internally.  The C version may be harder to follow, but
+> you can check the last scripted version contrib/examples/git-merge.sh and
+> find two functions, savestate/restorestate pair, that does exactly that.
+> 
+> It way predates --keep patch, by the way.
+
+Well, we have "git reset --merge ORIG_HEAD" which from what I understand
+does at least part of "git merge --abort", but I am not sure if it
+covers all cases (like dirty index in addition to dirty tree).
+
 -- 
-1.6.2.rc1.291.g83eb
+Jakub Narebski
+Poland
