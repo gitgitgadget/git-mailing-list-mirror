@@ -1,61 +1,62 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] --date=relative falls back to "short" format for
-	commits older than a year
-Date: Tue, 24 Feb 2009 02:07:22 -0500
-Message-ID: <20090224070722.GA16566@coredump.intra.peff.net>
-References: <1235165034-20299-1-git-send-email-eletuchy@gmail.com> <20090222230620.GB19011@coredump.intra.peff.net> <7v7i3ix6yi.fsf@gitster.siamese.dyndns.org> <20090223031631.GC22348@coredump.intra.peff.net> <7v8wnxun8e.fsf@gitster.siamese.dyndns.org> <20090224054216.GD4615@coredump.intra.peff.net> <7v63j0mib5.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] remote.c: make match_refs() copy src ref before
+ assigning  to peer_ref
+Date: Mon, 23 Feb 2009 23:12:19 -0800
+Message-ID: <7vvdr0l358.fsf@gitster.siamese.dyndns.org>
+References: <7vzlgcmsan.fsf@gitster.siamese.dyndns.org>
+ <1235448334-36310-1-git-send-email-jaysoffian@gmail.com>
+ <7vfxi4mk8n.fsf@gitster.siamese.dyndns.org>
+ <76718490902232253o4c7667d9h43f06d81794cef60@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: eletuchy@gmail.com, git@vger.kernel.org, eletuchy@facebook.com,
-	Eugene Letuchy <eugene@facebook.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 24 08:08:56 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 24 08:14:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbrPR-0005HR-Lj
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 08:08:54 +0100
+	id 1LbrUJ-0006QU-Bj
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 08:13:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754199AbZBXHH1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2009 02:07:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754144AbZBXHH0
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 02:07:26 -0500
-Received: from peff.net ([208.65.91.99]:37777 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753439AbZBXHHZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2009 02:07:25 -0500
-Received: (qmail 11911 invoked by uid 107); 24 Feb 2009 07:07:48 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 24 Feb 2009 02:07:48 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Feb 2009 02:07:22 -0500
-Content-Disposition: inline
-In-Reply-To: <7v63j0mib5.fsf@gitster.siamese.dyndns.org>
+	id S1752119AbZBXHM2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2009 02:12:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752032AbZBXHM2
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 02:12:28 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64699 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751037AbZBXHM1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2009 02:12:27 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 57D1B2BD02;
+	Tue, 24 Feb 2009 02:12:24 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9631E2BD00; Tue,
+ 24 Feb 2009 02:12:21 -0500 (EST)
+In-Reply-To: <76718490902232253o4c7667d9h43f06d81794cef60@mail.gmail.com>
+ (Jay Soffian's message of "Tue, 24 Feb 2009 01:53:48 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 7C413764-0242-11DE-AAEE-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111230>
 
-On Mon, Feb 23, 2009 at 10:59:26PM -0800, Junio C Hamano wrote:
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-> That was what I thought.  There may be some very convincing reasoning I am
-> not seeing in the proposals to make it ultra-short like "Y yr M mo" or
-> "Y.x years" (i.e. "we _have_ to keep it under N characters"threshold), but
-> I doubt there is a particular place "Y years, M months" would make the
-> output too long to be acceptable.
+> So there is no sane way to free the result.
 
-Yeah, anything like blame that deals with arbitrary date formats has to
-know how to handle at least
+Yeah, I am not disagreeing that this is a good change to make the function
+easier to use.  There is no question about it.
 
-  strlen("Sun Feb 22 15:08:25 2009 -0500") = 30
+I just found your description a bit unfair to the original author of the
+codepath who was probably fully aware of this.
 
-anyway.  Even the default blame format is:
+> I sent you a message off-list you may not have read yet.
 
-  strlen("2009-02-24 02:03:25 -0500") = 25
-
-So "Y years, M months ago" is at least that short for the next ten
-thousand years. I can live with setting the cutoff to just "years"
-somewhere lower than 10,000. :)
-
--Peff
+Yes I have, but I was deep into tonight's integration cycle (I earlier
+asked you to check the rebased result when I push it out --- that is what
+I've been preparing).  I am almost done, and it will be pushed out
+shortly, but it won't have your re-roll.  That will be after 1.6.2-rc2.
