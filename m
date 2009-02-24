@@ -1,68 +1,81 @@
-From: Jan Kara <jack@suse.cz>
-Subject: Re: git bisect goes wild?
-Date: Tue, 24 Feb 2009 20:28:10 +0100
-Message-ID: <20090224192809.GG22108@duck.suse.cz>
-References: <20090224184414.GE22108@duck.suse.cz> <eaa105840902241059y70143c43s7d12b10fe35127e6@mail.gmail.com> <20090224191002.GF22108@duck.suse.cz> <87prh7abqz.fsf@iki.fi>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Peter Harris <git@peter.is-a-geek.org>, git@vger.kernel.org
-To: Teemu Likonen <tlikonen@iki.fi>
-X-From: git-owner@vger.kernel.org Tue Feb 24 20:31:05 2009
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Subject: [PATCH] git-svn fix to avoid using strftime %z
+Date: Tue, 24 Feb 2009 14:44:49 -0500
+Message-ID: <1235504689-17420-1-git-send-email-bwalton@artsci.utoronto.ca>
+Cc: git@vger.kernel.org, Ben Walton <bwalton@artsci.utoronto.ca>
+To: normalperson@yhbt.net
+X-From: git-owner@vger.kernel.org Tue Feb 24 20:46:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lc2zf-0002fo-EB
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 20:31:03 +0100
+	id 1Lc3Ee-0000Ol-3v
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 20:46:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753592AbZBXT2P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2009 14:28:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753402AbZBXT2O
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 14:28:14 -0500
-Received: from cantor.suse.de ([195.135.220.2]:50050 "EHLO mx1.suse.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751557AbZBXT2O (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2009 14:28:14 -0500
-Received: from Relay1.suse.de (mail2.suse.de [195.135.221.8])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mx1.suse.de (Postfix) with ESMTP id 2431945657;
-	Tue, 24 Feb 2009 20:28:11 +0100 (CET)
-Received: from duck.suse.cz (duck.suse.cz [10.20.1.74])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.suse.cz (Postfix) with ESMTP id 9714862807F;
-	Tue, 24 Feb 2009 20:28:10 +0100 (CET)
-Received: by duck.suse.cz (Postfix, from userid 10005)
-	id 486081F1E2F; Tue, 24 Feb 2009 20:28:10 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <87prh7abqz.fsf@iki.fi>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1757897AbZBXToy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2009 14:44:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755221AbZBXTox
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 14:44:53 -0500
+Received: from www.cquest.utoronto.ca ([192.82.128.5]:57264 "EHLO
+	www.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757310AbZBXTox (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2009 14:44:53 -0500
+Received: from ntdws12.chass.utoronto.ca ([128.100.160.253] ident=93)
+	by www.cquest.utoronto.ca with esmtp (Exim 4.43)
+	id 1Lc3Cz-0001O9-Nr; Tue, 24 Feb 2009 14:44:49 -0500
+Received: from localhost
+	([127.0.0.1] helo=ntdws12.chass.utoronto.ca ident=505)
+	by ntdws12.chass.utoronto.ca with esmtp (Exim 4.63)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1Lc3Cz-0004XO-LL; Tue, 24 Feb 2009 14:44:49 -0500
+Received: (from bwalton@localhost)
+	by ntdws12.chass.utoronto.ca (8.13.8/8.13.8/Submit) id n1OJinCN017442;
+	Tue, 24 Feb 2009 14:44:49 -0500
+X-Mailer: git-send-email 1.5.5.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111333>
 
-On Tue 24-02-09 21:14:12, Teemu Likonen wrote:
-> On 2009-02-24 20:10 (+0100), Jan Kara wrote:
-> 
-> >   Ho, hum, right. But if I do:
-> > git describe 9ec76fbf7d6da3e98070a7059699d0ca019b0c9b
-> >   I get v2.6.23-rc3-215-g9ec76fb which is a bit strange for bisecting
-> > between 2.6.23 and 2.6.24. Also the kernel gets named 2.6.23-rc3 and
-> > kernel config options get also to some pre 2.6.23 state. That's what
-> > is confusing me. It seems like the kernel checked out is some old one.
-> > I'm not a git expert so it might be fine but it just seems really
-> > strange.
-> 
-> Maybe this explanation helps:
-> 
-> http://thread.gmane.org/gmane.comp.version-control.git/99967/focus=99977
-  OK, thanks for the pointer. I'll trust that the result will be sensible
-:).
+%z isn't available on all platforms in the date formatting
+routines.  Provide a workalike capability that should be
+more portable.
 
-									Honza
+Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
+---
+This is the reworked version that was requested.  It drops %z completely
+from the strftime call in favour of the hand rolled version.  All tests
+still pass on Linux and Solaris.
+
+ git-svn.perl |    8 +++++++-
+ 1 files changed, 7 insertions(+), 1 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index cbc5211..24180eb 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -4615,6 +4615,7 @@ package Git::SVN::Log;
+ use strict;
+ use warnings;
+ use POSIX qw/strftime/;
++use Time::Local;
+ use constant commit_log_separator => ('-' x 72) . "\n";
+ use vars qw/$TZ $limit $color $pager $non_recursive $verbose $oneline
+             %rusers $show_commit $incremental/;
+@@ -4721,7 +4722,12 @@ sub run_pager {
+ }
+ 
+ sub format_svn_date {
+-	return strftime("%Y-%m-%d %H:%M:%S %z (%a, %d %b %Y)", localtime(shift));
++	# some systmes don't handle or mishandle %z, so be creative.
++	my $t = shift;
++	my $gm = timelocal(gmtime($t));
++	my $sign = qw( + + - )[ $t <=> $gm ];
++	my $gmoff = sprintf("%s%02d%02d", $sign, (gmtime(abs($t - $gm)))[2,1]);
++	return strftime("%Y-%m-%d %H:%M:%S $gmoff (%a, %d %b %Y)", localtime($t));
+ }
+ 
+ sub parse_git_date {
 -- 
-Jan Kara <jack@suse.cz>
-SUSE Labs, CR
+1.6.0.4
