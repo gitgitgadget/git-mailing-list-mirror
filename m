@@ -1,89 +1,93 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: [RFC/PATCH] revision.c: add --format option for 'git log'
-Date: Tue, 24 Feb 2009 10:55:28 +0900
-Message-ID: <20090224105528.6117@nanako3.lavabit.com>
-References: <1235230015-17641-1-git-send-email-felipe.contreras@gmail.com>
- <7vtz6m1knv.fsf@gitster.siamese.dyndns.org>
- <94a0d4530902220918oc6f8ab9vc1fd0b55cad014a2@mail.gmail.com>
- <7v63j2z7bh.fsf@gitster.siamese.dyndns.org>
- <94a0d4530902221014i46e52542j2380386405b559e2@mail.gmail.com>
- <7vbpsuxqpo.fsf@gitster.siamese.dyndns.org>
- <94a0d4530902221055g4e815a78oc0aa094304588ab7@mail.gmail.com>
- <7vljrxveqa.fsf@gitster.siamese.dyndns.org>
- <94a0d4530902231656l71ee0e45nbdd1c20035d3dd4@mail.gmail.com>
- <94a0d4530902231703n701a17dbkd20c0e14d759dddf@mail.gmail.com>
- <7v3ae4r53f.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git merge --abort
+Date: Mon, 23 Feb 2009 18:01:56 -0800
+Message-ID: <7vk57goanf.fsf@gitster.siamese.dyndns.org>
+References: <43d8ce650902190205yc2274c5gb8e658c8608267ff@mail.gmail.com>
+ <43d8ce650902230441n51c9e5a8h722682cda778aa7a@mail.gmail.com>
+ <7vvdr0obuj.fsf@gitster.siamese.dyndns.org>
+ <200902240253.35470.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: felipe.contreras@gmail.com, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 24 02:57:41 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: John Tapsell <johnflux@gmail.com>,
+	Bryan Donlan <bdonlan@gmail.com>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Nanako Shiraishi <nanako3@lavabit.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 24 03:03:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbmY9-0007qZ-AA
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 02:57:33 +0100
+	id 1Lbme0-0000nq-4z
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 03:03:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753753AbZBXB4G convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Feb 2009 20:56:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753592AbZBXB4F
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 20:56:05 -0500
-Received: from karen.lavabit.com ([72.249.41.33]:45524 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753513AbZBXB4E (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2009 20:56:04 -0500
-Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
-	by karen.lavabit.com (Postfix) with ESMTP id AC37411B943;
-	Mon, 23 Feb 2009 19:55:58 -0600 (CST)
-Received: from 4016.lavabit.com (212.62.97.21)
-	by lavabit.com with ESMTP id K8ZIP9JYCMDW; Mon, 23 Feb 2009 19:55:58 -0600
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=v0UKFrtM4j7tJ8EQ04AO3CczWv1O8uPqER8n02Qsue/oIAMbsIIrCaZpw4EtjXLyLMJ8u0RR8mB3h4R9hlKZNpbaref1kEYY9cJMjvqXcj2rGL9UgZgNJ0yGpkjWiyUzGqjGI95A0RlFz2gQSXzR5fTMuVMvuX4GGYNXFK/ELyk=;
-  h=From:To:Cc:Subject:In-Reply-To:References:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <7v3ae4r53f.fsf@gitster.siamese.dyndns.org>
+	id S1753753AbZBXCCK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Feb 2009 21:02:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753092AbZBXCCI
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 21:02:08 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45797 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752695AbZBXCCI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2009 21:02:08 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 954F32BCB4;
+	Mon, 23 Feb 2009 21:02:05 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id EB6552BCAB; Mon,
+ 23 Feb 2009 21:01:57 -0500 (EST)
+In-Reply-To: <200902240253.35470.jnareb@gmail.com> (Jakub Narebski's message
+ of "Tue, 24 Feb 2009 02:53:34 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 229D9EEE-0217-11DE-A26B-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111197>
 
-Quoting Junio C Hamano <gitster@pobox.com>:
+Jakub Narebski <jnareb@gmail.com> writes:
 
+> Junio C Hamano wrote:
+>> John Tapsell <johnflux@gmail.com> writes:
+>> 
+>> > It sounds like we have some sort of plan then.  Will Nana's patch be
+>> > committed into mainline git?  Then we can add the --abort porcelain
+>> 
+>> I do not know what plan you are talking about, but that's not how the
+>> development works.  If something is merged to 'pu', and you have a cool
+>> feature you would want to take advantage of it, you can build your cool
+>> feature on top of that particular topic.  If the result looks reasonable
+>> they would cook for a while in 'next' for further polishing and then
+>> finally go to 'mainline'.
+>> 
+>> I personally did not think "--keep" would need to be be part of a
+>> reasonable "merge --abort" implementation, but I may have missed some
+>> description of a viable design discussed on the list.
 >
->>>> People already are used to finding the shed in the scenery by look=
-ing for
->>>> that original color, however ugly the color might be. =C2=A0The an=
-swer to your
->>>> question has to become quite different when you take that into acc=
-ount;
->>>> otherwise you are being irresponsible to your users.
->>
->> People somehow got used to the ugly color, they'll get used to the
->> pretty one, in fact, they would probably like it better, and maybe
->> even thought more than once on changing it.
->>
->> If they're the kind of people that don't like new things they'll
->> probably not be using git anyway.
+> My idea was that merge would do the following:
 >
-> You do not have to send two messages in a row to reaffirm that you ar=
-e of
-> irresponsible kind.  I heard you enough already.
+>   $ <save stash into MERGE_STASH or similar, no reset>
+>   $ <do a merge>
 >
-> Go away.
+> Then we have two possibilities:
+>
+>   # merge failed with conflicts
+>   $ git merge --abort (would unstash MERGE_STASH and delete it)
 
-Junio, what got into you?
+Here "would unstash" needs to follow something else, namely, make your
+work tree free of local changes.  How?  "reset --hard"?
 
-I've always admired your calm and reasoned way to deal with even the mo=
-st obnoxious people, and unlike more abrasive people on this list I've =
-never seen you say "Go away" to anybody here.
+>   # we created merge conflict
+>   $ <MERGE_STASH is removed together with MERGE_HEAD>
 
-Especially because I agree with you that calling pretty-printing as "pr=
-etty" isn't so broken to make such a big deal out of, it would be bette=
-r not to chase a potentially useful contributor away on such a minor is=
-sue.
+You mean "created a merge without conflict", right?  That part is easy to
+guess and understand.
 
---=20
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+In fact, when you run more than one strategies, something similar to this
+already happens internally.  The C version may be harder to follow, but
+you can check the last scripted version contrib/examples/git-merge.sh and
+find two functions, savestate/restorestate pair, that does exactly that.
+
+It way predates --keep patch, by the way.
