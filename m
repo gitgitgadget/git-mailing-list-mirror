@@ -1,82 +1,63 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Addresses with full names in patch emails
-Date: Tue, 24 Feb 2009 16:58:51 +0100
-Message-ID: <200902241658.52498.jnareb@gmail.com>
-References: <1234926043-7471-1-git-send-email-marcel@oak.homeunix.org> <200902182255.13983.jnareb@gmail.com> <49A41484.1010501@oak.homeunix.org>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: Re: [PATCH] git.el: Only show completions from refs/heads, refs/remotes and refs/tags
+Date: Tue, 24 Feb 2009 17:06:26 +0100
+Message-ID: <87bpsrx1j1.fsf@wine.dyndns.org>
+References: <1235464350-23383-1-git-send-email-davidk@lysator.liu.se>
+	<87fxi4ut2p.fsf@krank.kagedal.org> <87ocwrx527.fsf@wine.dyndns.org>
+	<871vtnvo55.fsf@krank.kagedal.org> <87fxi3x2es.fsf@wine.dyndns.org>
+	<87y6vvu8sa.fsf@krank.kagedal.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, fg@one2team.net, giuseppe.bilotta@gmail.com,
-	pasky@suse.cz
-To: "Marcel M. Cary" <marcel@oak.homeunix.org>
-X-From: git-owner@vger.kernel.org Tue Feb 24 17:01:03 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Tue Feb 24 17:08:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbziG-0005DU-M1
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 17:00:53 +0100
+	id 1LbzpH-00089C-7w
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 17:08:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757789AbZBXP7G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2009 10:59:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757165AbZBXP7E
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 10:59:04 -0500
-Received: from mail-fx0-f167.google.com ([209.85.220.167]:65215 "EHLO
-	mail-fx0-f167.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756871AbZBXP7C (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2009 10:59:02 -0500
-Received: by fxm11 with SMTP id 11so2897606fxm.13
-        for <git@vger.kernel.org>; Tue, 24 Feb 2009 07:58:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=HX8BDDBzOKRYYjwYQy3NmO45QJgOdnr/DmK7iO60FwE=;
-        b=ht4gMIYWtmqyv+9JqlCwOtyzd8W9PM1+7llcPZJrpVbHX4gfp0NLvtgQD2ITsDGfK3
-         Mz4RAkZIrKptsE+z6xS0wGtD2TuMgdo/rtsyqu23hHu5iWSfdusZk8XoNk3GO96niIem
-         uraOM0b+CnvDCbEsn/e/JLFcCmusqGcJV/iUA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=OtzCqbDC/7m5YYUlh0dtTPya0TlhjCSZGosV7Z6eXTPzSOac/Cc9ocoqILXQZzL4JQ
-         oro9AsQVeRwhcpXsHbJtP85e7EgipZC/QFm37k2WYKqeBXGXRre/7Yj8fSut5WpKJrQk
-         cEWeqO4GJiSpGaJDK0trvdvM/Wk3DPQUDGIuQ=
-Received: by 10.103.192.2 with SMTP id u2mr4554554mup.95.1235491139411;
-        Tue, 24 Feb 2009 07:58:59 -0800 (PST)
-Received: from ?192.168.1.15? (abvk114.neoplus.adsl.tpnet.pl [83.8.208.114])
-        by mx.google.com with ESMTPS id e8sm2139011muf.59.2009.02.24.07.58.57
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 24 Feb 2009 07:58:58 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <49A41484.1010501@oak.homeunix.org>
-Content-Disposition: inline
+	id S1754422AbZBXQGi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Feb 2009 11:06:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754156AbZBXQGh
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 11:06:37 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:37518 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752903AbZBXQGh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Feb 2009 11:06:37 -0500
+Received: from adsl-84-227-31-184.adslplus.ch ([84.227.31.184] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <julliard@winehq.org>)
+	id 1Lbznh-0001Bl-BO; Tue, 24 Feb 2009 10:06:35 -0600
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id E686C1E7203; Tue, 24 Feb 2009 17:06:26 +0100 (CET)
+In-Reply-To: <87y6vvu8sa.fsf@krank.kagedal.org> ("David =?utf-8?Q?K=C3=A5g?=
+ =?utf-8?Q?edal=22's?= message of
+	"Tue, 24 Feb 2009 16:57:57 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.90 (gnu/linux)
+X-Spam-Score: -3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111308>
 
-On Tue, 24 Feb 2009, Marcel M. Cary wrote:
-> Thanks for the two patch tweaks.
-> 
-> Jakub Narebski wrote:
-> > P.S. Why bare emails (without user names), e.g. "pasky@suse.cz"
-> > and not "Petr Baudis <pasky@suse.cz>"? Just curious...
-> 
-> I've been using "git send-email" for patches, and have Thunderbird as my
-> MUA otherwise.  (I'd use (al)pine if I could make it work with
-> Exchange/NTLM at work, but that's another story...)  I've been
-> transfering recipients (--to and --cc) from Thunderbird to the
-> commandline with copy/paste.
-[...]
+David K=C3=A5gedal <davidk@lysator.liu.se> writes:
 
-Well, 'technical reasons with copy'n'paste' would be enough for me.
+> Cherry-pick, yes. And checkout, sometimes. My problem is that I have =
+a
+> truckload of remote (svn) branches and that means I can't see the
+> obvious checkout candidates for all the noise.
+>
+> But add "refs/remotes" and "refs/tags" to the last patch, and maybe w=
+e
+> have a good compromise.
 
-P.S. But '"pasky@suse.cz" <pasky@suse.cz>' looks very silly...
--- 
-Jakub Narebski
-Poland
+We could of course make it customizable...
+
+--=20
+Alexandre Julliard
+julliard@winehq.org
