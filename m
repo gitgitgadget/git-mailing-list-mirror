@@ -1,86 +1,74 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: A couple of minor branching questions
-Date: Mon, 23 Feb 2009 17:29:10 -0800 (PST)
-Message-ID: <m3tz6kvd0b.fsf@localhost.localdomain>
-References: <1235435927.12677.2.camel@rottwang.fnordora.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] revision.c: add --format option for 'git log'
+Date: Mon, 23 Feb 2009 17:33:40 -0800
+Message-ID: <7v3ae4r53f.fsf@gitster.siamese.dyndns.org>
+References: <1235230015-17641-1-git-send-email-felipe.contreras@gmail.com>
+ <7vtz6m1knv.fsf@gitster.siamese.dyndns.org>
+ <94a0d4530902220918oc6f8ab9vc1fd0b55cad014a2@mail.gmail.com>
+ <7v63j2z7bh.fsf@gitster.siamese.dyndns.org>
+ <94a0d4530902221014i46e52542j2380386405b559e2@mail.gmail.com>
+ <7vbpsuxqpo.fsf@gitster.siamese.dyndns.org>
+ <94a0d4530902221055g4e815a78oc0aa094304588ab7@mail.gmail.com>
+ <7vljrxveqa.fsf@gitster.siamese.dyndns.org>
+ <94a0d4530902231656l71ee0e45nbdd1c20035d3dd4@mail.gmail.com>
+ <94a0d4530902231703n701a17dbkd20c0e14d759dddf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Alan <alan@clueserver.org>
-X-From: git-owner@vger.kernel.org Tue Feb 24 02:30:46 2009
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 24 02:35:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lbm8B-0000aK-8D
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 02:30:43 +0100
+	id 1LbmCa-0001Sj-52
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 02:35:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751975AbZBXB3P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Feb 2009 20:29:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751824AbZBXB3P
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 20:29:15 -0500
-Received: from fg-out-1718.google.com ([72.14.220.159]:43099 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751538AbZBXB3P (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2009 20:29:15 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so36637fgg.17
-        for <git@vger.kernel.org>; Mon, 23 Feb 2009 17:29:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=b5KT7IyOmuCRdG1DbdkVQpqkElJ8j1zlXMTFRyau/SA=;
-        b=eg087PsncOhQtzR6A0xdf6h+m17AHm0BWDgzAUDlu3RT41h9CW8QRFb+w3sMVxVBOj
-         fV7HEs3+O4lsYNCRREmvKbFNVs6JeWR3eDQhmMT+yqvBtTuygBYJSoM+ZOd0SPBY0hp8
-         0wQTdyeNasK16ulBdf7+nyUmpNccYjNdU1Erc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=e/astFbRDgnkUTj0jUZAfHmNEx6pL7ZS7B09EjyGOiRepJmEnpeHLy6bZy9fw6NU/1
-         CnNVnVEXnyV5WDFAKnXJu290iUlpzzVQd6rzwYUZ1C+0nuv0sc6qirhUHH0qQPYEGlaw
-         oqM8uxwNzVNJQFtdVs1gU6UNyJVxRZ7uta0lo=
-Received: by 10.86.31.18 with SMTP id e18mr3320191fge.72.1235438951936;
-        Mon, 23 Feb 2009 17:29:11 -0800 (PST)
-Received: from localhost.localdomain (abve227.neoplus.adsl.tpnet.pl [83.8.202.227])
-        by mx.google.com with ESMTPS id 4sm685673fgg.55.2009.02.23.17.29.10
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 23 Feb 2009 17:29:10 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n1O1TBwl024867;
-	Tue, 24 Feb 2009 02:29:12 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n1O1T8Q0024864;
-	Tue, 24 Feb 2009 02:29:08 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1235435927.12677.2.camel@rottwang.fnordora.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1757279AbZBXBdt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Feb 2009 20:33:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757162AbZBXBds
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 20:33:48 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:43987 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757055AbZBXBdr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Feb 2009 20:33:47 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 9DEED2BCB1;
+	Mon, 23 Feb 2009 20:33:45 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id BAC5C2BCAE; Mon,
+ 23 Feb 2009 20:33:42 -0500 (EST)
+In-Reply-To: <94a0d4530902231703n701a17dbkd20c0e14d759dddf@mail.gmail.com>
+ (Felipe Contreras's message of "Tue, 24 Feb 2009 03:03:48 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 2D5BA942-0213-11DE-AEA9-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111188>
 
-Alan <alan@clueserver.org> writes:
+=46elipe Contreras <felipe.contreras@gmail.com> writes:
 
-> Is there an easy way to tell what commit a branch is branched off from?
-> Also, it there a way to tell what branch the branch is branched off
-> from? 
-> 
-> I know I can use gitk to give a visual diagram, but I want something I
-> can feed into a program.
+>>> People already are used to finding the shed in the scenery by looki=
+ng for
+>>> that original color, however ugly the color might be. =C2=A0The ans=
+wer to your
+>>> question has to become quite different when you take that into acco=
+unt;
+>>> otherwise you are being irresponsible to your users.
+>
+> People somehow got used to the ugly color, they'll get used to the
+> pretty one, in fact, they would probably like it better, and maybe
+> even thought more than once on changing it.
+>
+> If they're the kind of people that don't like new things they'll
+> probably not be using git anyway.
 
-First you can check branch.<branchname>.merge configuration option
-(with git-config) to check what branch (by _remote_ name) given branch
-is based on.
+You do not have to send two messages in a row to reaffirm that you are =
+of
+irresponsible kind.  I heard you enough already.
 
-Second, you can use "git merge-base <branchname> <second branch>" to
-find common ancestor, i.e. branching point of two branches. By the
-way, there is shortcut a..b and a...b for revision ranges: see
-documentation in git-rev-parse (or was it git-rev-list?).
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Go away.
