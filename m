@@ -1,118 +1,101 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: [PATCH 2/3] Give short-hands to --pretty=tformat:%formatstring
-Date: Tue, 24 Feb 2009 18:59:15 +0900
-Message-ID: <20090224185915.6117@nanako3.lavabit.com>
-References: <20090224185913.6117@nanako3.lavabit.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH 00/23] builtin-remote improvments
+Date: Tue, 24 Feb 2009 05:53:36 -0500
+Message-ID: <1235472816-52420-1-git-send-email-jaysoffian@gmail.com>
+References: <cover.1235461736.git.jaysoffian@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+Cc: Jay Soffian <jaysoffian@gmail.com>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 24 11:06:18 2009
+X-From: git-owner@vger.kernel.org Tue Feb 24 11:55:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbuAn-0005UU-Jg
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 11:05:58 +0100
+	id 1LbuwR-0005BV-Tv
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 11:55:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754258AbZBXKDx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2009 05:03:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754199AbZBXKDw
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 05:03:52 -0500
-Received: from karen.lavabit.com ([72.249.41.33]:58800 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754007AbZBXKDv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2009 05:03:51 -0500
-Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
-	by karen.lavabit.com (Postfix) with ESMTP id 7120C11B900
-	for <git@vger.kernel.org>; Tue, 24 Feb 2009 04:03:49 -0600 (CST)
-Received: from 2293.lavabit.com (212.62.97.20)
-	by lavabit.com with ESMTP id 0ET7OS7B92CA
-	for <git@vger.kernel.org>; Tue, 24 Feb 2009 04:03:49 -0600
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=D8/4L9/ytYLakvl6sHR93g1JI2c5wS7bXVcp+DvSzlf/uTX6cQjbJbmgcglXoBCic/fy2EoTuX3SEMHAx+z7KbdgTQBWKVxT1RBsE3o/yjIpVWEAZeSXoUCa2cqBjhlCWqNKa3O7ieSF73QwesOgiQ6zoT6T+jha7zguKCS0yBg=;
-  h=From:To:In-Reply-To:References:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <20090224185913.6117@nanako3.lavabit.com>
+	id S1752027AbZBXKxm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2009 05:53:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751743AbZBXKxm
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 05:53:42 -0500
+Received: from mail-gx0-f174.google.com ([209.85.217.174]:51801 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751412AbZBXKxl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2009 05:53:41 -0500
+Received: by gxk22 with SMTP id 22so6502028gxk.13
+        for <git@vger.kernel.org>; Tue, 24 Feb 2009 02:53:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=sb0QUXz4PsxyvAQ3OuUshsWe4u4jJlU3bILyADE4yg8=;
+        b=Xt3xlEl37X06s/p5KS6njivS2AqRB29y+VzcU4yw2hFAat4EQKc1Pg6QGdKXMQVNig
+         gdImh2R17q1RNKdL70TPCP9cKuFKjAR9B1t4wH08c2KFYr/1/SDGrRkVKA8soYsCtPg0
+         DmqmHMYZLKS1s5FLNbRQOiT0mY5jeEMa9V7mc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=ByJIVONQVI1oMVzLFs86K3CNLUXWgSZ5Drkknn2PAWoOQuik0RuoN6oo3hqpW8xZwX
+         YROufXZFM9GpkI11w2eG3Efn4Hhq224xqvWtqzD1xqDHeQwWExnS5XGC55J9LMQzs7YK
+         Wbf8SNKhmnD3/ULrHtsy22jnCOOYbcqyZ0AXw=
+Received: by 10.100.140.20 with SMTP id n20mr1958015and.12.1235472819273;
+        Tue, 24 Feb 2009 02:53:39 -0800 (PST)
+Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
+        by mx.google.com with ESMTPS id c40sm9830856anc.48.2009.02.24.02.53.37
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 24 Feb 2009 02:53:38 -0800 (PST)
+X-Mailer: git-send-email 1.6.2.rc1.291.g83eb
+In-Reply-To: <cover.1235461736.git.jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111281>
 
-Allow --pretty="%h %s" (and --format="%h %s") as shorthand for an often
-used option --pretty=tformat:"%h %s".
+On Tue, Feb 24, 2009 at 4:50 AM, Jay Soffian <jaysoffian@gmail.com> wrote:
+> Jay Soffian (18):
+>  builtin-clone: move locate_head() to remote.c so it can be re-used
+>  builtin-remote: move duplicated cleanup code its own function
+>  builtin-remote: teach show to display remote HEAD
+>  builtin-remote: add set-head subcommand
+>  builtin-remote: better handling of multiple remote HEADs
+>
+>  remote.c: make match_refs() copy src ref before assigning to peer_ref
+>  remote.c: don't short-circuit match_refs() when error in match_explicit_refs()
+>  refactor duplicated get_local_heads() to remote.c
+>  refactor duplicated ref_newer() to remote.c
+>  string-list: new for_each_string_list() function
+>  builtin-remote: rename variable and eliminate redundant function call
+>  builtin-remote: name remote_refs consistently
+>  builtin-remote: remove unused code in get_ref_states
+>  builtin-remote: fix two inconsistencies in the output of "show <remote>"
+>  builtin-remote: make get_remote_ref_states() always populate states.tracked
+>  builtin-remote: refactor get_remote_ref_states()
+>  builtin-remote: new show output style
+>  builtin-remote: new show output style for push refspecs
+>
+> Jeff King (5):
+>  test scripts: refactor start_httpd helper
+>  add basic http clone/fetch tests
+>  refactor find_refs_by_name to accept const list
+>  remote: refactor guess_remote_head
+>  remote: use exact HEAD lookup if it is available
 
-Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
----
- Documentation/pretty-formats.txt |    9 +++++++++
- pretty.c                         |   20 ++++++++++++++------
- 2 files changed, 23 insertions(+), 6 deletions(-)
+Argh. Looking at this again, it seems clear to me now that I should've put Jeff's series at the beginning, followed by my refactoring (6-10), followed by the rest of my patches, so that all the refactoring is early.
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 159390c..5c6e678 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -152,3 +152,12 @@ $ git log -2 --pretty=tformat:%h 4da45bef \
- 4da45be
- 7134973
- ---------------------
-++
-+In addition, any unrecognized string that has a `%` in it is interpreted
-+as if it has `tformat:` in front of it.  For example, these two are
-+equivalent:
-++
-+---------------------
-+$ git log -2 --pretty=tformat:%h 4da45bef
-+$ git log -2 --pretty=%h 4da45bef
-+---------------------
-diff --git a/pretty.c b/pretty.c
-index 6cd9149..d739f6d 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -10,6 +10,15 @@
- 
- static char *user_format;
- 
-+static void save_user_format(struct rev_info *rev, const char *cp, int is_tformat)
-+{
-+	free(user_format);
-+	user_format = xstrdup(cp);
-+	if (is_tformat)
-+		rev->use_terminator = 1;
-+	rev->commit_format = CMIT_FMT_USERFORMAT;
-+}
-+
- void get_commit_format(const char *arg, struct rev_info *rev)
- {
- 	int i;
-@@ -33,12 +42,7 @@ void get_commit_format(const char *arg, struct rev_info *rev)
- 		return;
- 	}
- 	if (!prefixcmp(arg, "format:") || !prefixcmp(arg, "tformat:")) {
--		const char *cp = strchr(arg, ':') + 1;
--		free(user_format);
--		user_format = xstrdup(cp);
--		if (arg[0] == 't')
--			rev->use_terminator = 1;
--		rev->commit_format = CMIT_FMT_USERFORMAT;
-+		save_user_format(rev, strchr(arg, ':') + 1, arg[0] == 't');
- 		return;
- 	}
- 	for (i = 0; i < ARRAY_SIZE(cmt_fmts); i++) {
-@@ -50,6 +54,10 @@ void get_commit_format(const char *arg, struct rev_info *rev)
- 			return;
- 		}
- 	}
-+	if (strchr(arg, '%')) {
-+		save_user_format(rev, arg, 1);
-+		return;
-+	}
- 
- 	die("invalid --pretty format: %s", arg);
- }
--- 
-1.6.2.rc1
+And I forgot that I'd done patch #5 (better handling of multiple remote HEADs) a few days after 1-4. As part of this re-roll I should've redone 1-4 to include #5's functionality.
 
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+I also noticed I'm passing an argument to get_head_names() that it never uses. But fixing that touches at least 3 of the patches.
+
+All of this is my way of saying ignore what I've emailed tonight till I can clean it up a bit more.
+
+I apologize to the list for the spam.
+
+When I have the series really ready, would you prefer I setup a repo for you to pull from? I'm loath to spam the list with another 24 messages.
+
+j.
