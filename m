@@ -1,87 +1,60 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] cvsimport: add test illustrating a bug in cvsps
-Date: Tue, 24 Feb 2009 06:00:01 +0100
-Message-ID: <49A37ED1.5090506@alum.mit.edu>
-References: <49A2EFC6.5000104@hvoigt.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] Make git blame's date output format configurable,
+	like git log
+Date: Tue, 24 Feb 2009 00:00:28 -0500
+Message-ID: <20090224050028.GB4615@coredump.intra.peff.net>
+References: <1235170271-10694-1-git-send-email-eletuchy@gmail.com> <20090222230358.GA19011@coredump.intra.peff.net> <fbb390660902230109k15ed55b7le2ab08bb7dc274b6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Heiko Voigt <git-list@hvoigt.net>
-X-From: git-owner@vger.kernel.org Tue Feb 24 06:01:43 2009
+Content-Type: text/plain; charset=utf-8
+Cc: gitster@pobox.com, git@vger.kernel.org,
+	Eugene Letuchy <eugene@facebook.com>
+To: Eugene Letuchy <eletuchy@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 24 06:01:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbpQG-00046v-Eh
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 06:01:36 +0100
+	id 1LbpQc-0004Cw-MC
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 06:01:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750885AbZBXFAJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2009 00:00:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750716AbZBXFAJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 00:00:09 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:43257 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750707AbZBXFAH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2009 00:00:07 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.69.129] (77-21-84-251-dynip.superkabel.de [77.21.84.251])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id n1O503qO006093
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 24 Feb 2009 06:00:04 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.19) Gecko/20090105 Thunderbird/2.0.0.19 Mnenhy/0.7.5.666
-In-Reply-To: <49A2EFC6.5000104@hvoigt.net>
-X-Enigmail-Version: 0.95.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1751349AbZBXFAc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2009 00:00:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751129AbZBXFAb
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 00:00:31 -0500
+Received: from peff.net ([208.65.91.99]:58449 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751117AbZBXFAb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2009 00:00:31 -0500
+Received: (qmail 11104 invoked by uid 107); 24 Feb 2009 05:00:54 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 24 Feb 2009 00:00:54 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Feb 2009 00:00:28 -0500
+Content-Disposition: inline
+In-Reply-To: <fbb390660902230109k15ed55b7le2ab08bb7dc274b6@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111208>
 
-Heiko Voigt wrote:
-> Some cvs repositories may have time deviations in their recorded commits. This
-> is a test for one of such cases. [...]
+On Mon, Feb 23, 2009 at 01:09:13AM -0800, Eugene Letuchy wrote:
 
-Based on the numbering of your test, it looks like you've seen my
-proposed patch [1].  If my patch is accepted, it would make sense for
-yours to use the lib-cvs.sh library that I started.  But I guess that
-can be changed if and when my patch is accepted.
+> > Maybe this should be a date_format_width() library function?
+> 
+> I think that's a possible change, but unfortunately my next two
+> patches would not apply cleanly with a date_format_width change.
+> 
+> I'm a n00b with respect to git contribution, but is there a procedure
+> for pushing my blame_date branch remotely so that it's possible to
+> track a series of patches?
 
-To share the most test code, it would help to choose the same CVS module
-name for each test when possible.  I imitated t9600 and named the CVS
-modules in my tests "module", and for now the library assumes that name.
- Unless there is a special reason to use the module name "time", you
-might think of renaming it, and similarly renaming your conversion
-directory "module-git".
+Updating previous work depends on whether it has been picked up in
+'next' by Junio; once patches are there, they cannot be rewritten. In
+that case, you can send a follow-up patch.
 
-> +test_expect_success 'import with criss cross times on revisions' '
+In your case, though, the patch is still in 'pu', so you can repost. So
+I think it makes sense to use "rebase -i" (or the tool of your choice)
+to make a cleaned up series, and then repost the whole thing as a
+series.
 
-Since this test is known to fail, I think it should be
-"test_expect_failure".
-
-> diff --git a/t/t9603/cvsroot/CVSROOT/.empty b/t/t9603/cvsroot/CVSROOT/.empty
-> new file mode 100644
-> index 0000000..e69de29
-
-I suggest adding a .gitignore file instead of .empty to keep the CVSROOT
-directory around, and in it to list the filenames "history" and
-"val-tags" (which are created by some cvs commands).  This will preserve
-a clean "git status" even after running the test.
-
-> diff --git a/t/t9603/cvsroot/time/a,v b/t/t9603/cvsroot/time/a,v
-> new file mode 100644
-> index 0000000..66a96aa
-> --- /dev/null
-> +++ b/t/t9603/cvsroot/time/a,v
-> [...]
-
-To avoid complaints from "git diff --check" about trailing whitespace in
-the *,v files, you can add a file .gitattributes in your cvsroot
-directory, containing the line "* -whitespace".  There is also trailing
-whitespace in t9603-cvsimport-time.sh that can simply be deleted.
-
-Michael
-
-[1] http://www.spinics.net/lists/git/msg95366.html
+-Peff
