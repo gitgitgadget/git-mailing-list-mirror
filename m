@@ -1,106 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How do I qualify paths in the .gitignore file w.r.t. the repo
- root  directory?
-Date: Mon, 23 Feb 2009 23:06:42 -0800
-Message-ID: <7v1vtomhz1.fsf@gitster.siamese.dyndns.org>
-References: <e38bce640902232247t63a37f63x9f403fbda0744cfd@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] --date=relative falls back to "short" format for
+	commits older than a year
+Date: Tue, 24 Feb 2009 02:07:22 -0500
+Message-ID: <20090224070722.GA16566@coredump.intra.peff.net>
+References: <1235165034-20299-1-git-send-email-eletuchy@gmail.com> <20090222230620.GB19011@coredump.intra.peff.net> <7v7i3ix6yi.fsf@gitster.siamese.dyndns.org> <20090223031631.GC22348@coredump.intra.peff.net> <7v8wnxun8e.fsf@gitster.siamese.dyndns.org> <20090224054216.GD4615@coredump.intra.peff.net> <7v63j0mib5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Brent Goodrick <bgoodr@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 24 08:08:19 2009
+Content-Type: text/plain; charset=utf-8
+Cc: eletuchy@gmail.com, git@vger.kernel.org, eletuchy@facebook.com,
+	Eugene Letuchy <eugene@facebook.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 24 08:08:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbrOq-00058w-GF
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 08:08:16 +0100
+	id 1LbrPR-0005HR-Lj
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 08:08:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754190AbZBXHGv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2009 02:06:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754183AbZBXHGu
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 02:06:50 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64509 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753883AbZBXHGt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2009 02:06:49 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2BAC52BCF9;
-	Tue, 24 Feb 2009 02:06:47 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- b-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5CD182BCF4; Tue,
- 24 Feb 2009 02:06:44 -0500 (EST)
-In-Reply-To: <e38bce640902232247t63a37f63x9f403fbda0744cfd@mail.gmail.com>
- (Brent Goodrick's message of "Mon, 23 Feb 2009 22:47:13 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B3476B58-0241-11DE-80EA-6F7C8D1D4FD0-77302942!a-sasl-quonix.pobox.com
+	id S1754199AbZBXHH1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2009 02:07:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754144AbZBXHH0
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 02:07:26 -0500
+Received: from peff.net ([208.65.91.99]:37777 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753439AbZBXHHZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2009 02:07:25 -0500
+Received: (qmail 11911 invoked by uid 107); 24 Feb 2009 07:07:48 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 24 Feb 2009 02:07:48 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Feb 2009 02:07:22 -0500
+Content-Disposition: inline
+In-Reply-To: <7v63j0mib5.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111229>
 
-Brent Goodrick <bgoodr@gmail.com> writes:
+On Mon, Feb 23, 2009 at 10:59:26PM -0800, Junio C Hamano wrote:
 
-> Say I have these files and directories [2]:
->
->   /home/smart_tator/misc_files/.gitignore
->   /home/smart_tator/misc_files/foo/
->   /home/smart_tator/misc_files/bar/
->   /home/smart_tator/misc_files/bar/baz/foo/
->   /home/smart_tator/misc_files/bar/baz/real/
->
-> then I do:
->
->   cd /home/smart_tator/misc_files/; git init
->
-> and say I have this line in that .gitignore file:
->
->   foo/
->
-> And then I naively execute:
->
->   git add bar/
->
-> then the bar/baz/real/ is added, but these are dutifully ignored:
->
->   /home/smart_tator/misc_files/foo/
->   /home/smart_tator/misc_files/bar/baz/foo/
+> That was what I thought.  There may be some very convincing reasoning I am
+> not seeing in the proposals to make it ultra-short like "Y yr M mo" or
+> "Y.x years" (i.e. "we _have_ to keep it under N characters"threshold), but
+> I doubt there is a particular place "Y years, M months" would make the
+> output too long to be acceptable.
 
-I think you are looking for "/foo/".  From Documentation/gitignore.txt:
+Yeah, anything like blame that deals with arbitrary date formats has to
+know how to handle at least
 
- - If the pattern ends with a slash, it is removed for the
-   purpose of the following description, but it would only find
-   a match with a directory.  In other words, `foo/` will match a
-   directory `foo` and paths underneath it, but will not match a
-   regular file or a symbolic link `foo` (this is consistent
-   with the way how pathspec works in general in git).
+  strlen("Sun Feb 22 15:08:25 2009 -0500") = 30
 
-With this rule, (1) the trailing slash in your "foo/" tells git to match
-only with directories, but (2) it behaves as if you said "foo" for all the
-other rules.
+anyway.  Even the default blame format is:
 
-With "/foo/", you tell git to match only with a directory, and it is as if
-you said "/foo".
+  strlen("2009-02-24 02:03:25 -0500") = 25
 
- - If the pattern does not contain a slash '/', git treats it as
-   a shell glob pattern and checks for a match against the
-   pathname without leading directories.
+So "Y years, M months ago" is at least that short for the next ten
+thousand years. I can live with setting the cutoff to just "years"
+somewhere lower than 10,000. :)
 
-Your "foo/" now behaves the same way as "foo" behaves.  You are telling
-git to match directory foo anywhere in the tree.  "/foo/" (now behaving
-the same way as "/foo") does not satisfy this criteria so we would skip
-this rule.
-
- - Otherwise, git treats the pattern as a shell glob suitable
-   for consumption by fnmatch(3) with the FNM_PATHNAME flag:
-   wildcards in the pattern will not match a / in the pathname.
-   For example, "Documentation/\*.html" matches
-   "Documentation/git.html" but not
-   "Documentation/ppc/ppc.html".  A leading slash matches the
-   beginning of the pathname; for example, "/*.c" matches
-   "cat-file.c" but not "mozilla-sha1/sha1.c".
-
-Your "foo/" does not survive to this rule, but "/foo/" does.  It now
-behaves as "/foo" and its leading slash makes it match the beginning.
+-Peff
