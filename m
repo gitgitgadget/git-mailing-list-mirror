@@ -1,98 +1,126 @@
-From: Tim Visher <tim.visher@gmail.com>
-Subject: Re: Issues building docs on an offline box again.
-Date: Tue, 24 Feb 2009 08:04:47 -0500
-Message-ID: <c115fd3c0902240504y9fe6ce4m65ba73ce2937cb9e@mail.gmail.com>
-References: <c115fd3c0902231507k46da3294yf2726a92cb0fbc1a@mail.gmail.com>
-	 <20090224022856.GN4371@genesis.frugalware.org>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: [PATCH v2] bash completion: add --format= and --oneline options for "git log"
+Date: Tue, 24 Feb 2009 15:33:29 +0200
+Message-ID: <87zlgcq7rq.fsf_-_@iki.fi>
+References: <94a0d4530902221014i46e52542j2380386405b559e2@mail.gmail.com>
+	<7vbpsuxqpo.fsf@gitster.siamese.dyndns.org>
+	<94a0d4530902221055g4e815a78oc0aa094304588ab7@mail.gmail.com>
+	<7vljrxveqa.fsf@gitster.siamese.dyndns.org>
+	<94a0d4530902231656l71ee0e45nbdd1c20035d3dd4@mail.gmail.com>
+	<94a0d4530902231703n701a17dbkd20c0e14d759dddf@mail.gmail.com>
+	<7v3ae4r53f.fsf@gitster.siamese.dyndns.org>
+	<20090224130626.6117@nanako3.lavabit.com>
+	<20090224045041.GA4615@coredump.intra.peff.net>
+	<7vprh8mm9k.fsf@gitster.siamese.dyndns.org>
+	<20090224054524.GE4615@coredump.intra.peff.net>
+	<20090224185913.6117@nanako3.lavabit.com> <871vtonlmv.fsf_-_@iki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Tue Feb 24 14:07:10 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	felipe.contreras@gmail.com, "Shawn O. Pearce" <spearce@spearce.org>
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Tue Feb 24 14:35:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbwzK-0004Yx-L0
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 14:06:19 +0100
+	id 1LbxRO-00072L-Ri
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 14:35:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754433AbZBXNEv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2009 08:04:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754611AbZBXNEv
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 08:04:51 -0500
-Received: from mail-gx0-f174.google.com ([209.85.217.174]:33308 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754232AbZBXNEu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2009 08:04:50 -0500
-Received: by gxk22 with SMTP id 22so6593123gxk.13
-        for <git@vger.kernel.org>; Tue, 24 Feb 2009 05:04:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=6ClyBI82F2QIRlKWUW7dPn5xGaCzDCc7WD1dgZbzr2Q=;
-        b=qBY+bghRlCfuFN7uvwfRJeCoMSKVMd6qiLVSq3L9jwnyb5KBkHVvu6XiV0QCXUkYmh
-         NiA9OO+dGtdK2nQyIgWmxBQZl26C+LKp4Rz/5+xHjfJXQvsxA4684myXPPz8GltyhAdD
-         jES/WbzmykJweBoGm0+AyByt64KZZf+4jQXLY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=bOuqSOUJKTCtLFfGL8q6bQX2zd8Q0exNSLGKXWbNEyE3RLVYR0p91NN4Tp2k5Y2sf4
-         R+mcpLGJkmKBRCcILj2JQRY+T0FuY4eObpE9Dzma7bfpjltPFQOBVEJ4Qyni8pJ6TduB
-         ZYKBHOv2kJ+JQYoN33WbHlnxRlfwNS37/cr1Q=
-Received: by 10.100.124.6 with SMTP id w6mr2672366anc.140.1235480687923; Tue, 
-	24 Feb 2009 05:04:47 -0800 (PST)
-In-Reply-To: <20090224022856.GN4371@genesis.frugalware.org>
+	id S1755503AbZBXNdi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2009 08:33:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754565AbZBXNdi
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 08:33:38 -0500
+Received: from mta-out.inet.fi ([195.156.147.13]:49383 "EHLO kirsi1.inet.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752803AbZBXNdh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2009 08:33:37 -0500
+Received: from mithlond.arda.local (80.220.180.181) by kirsi1.inet.fi (8.5.014)
+        id 48FC5AC905770494; Tue, 24 Feb 2009 15:33:33 +0200
+Received: from dtw by mithlond.arda.local with local (Exim 4.69)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1LbxPd-0000xm-3w; Tue, 24 Feb 2009 15:33:29 +0200
+In-Reply-To: <871vtonlmv.fsf_-_@iki.fi> (Teemu Likonen's message of "Tue\, 24 Feb 2009 13\:02\:16 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111286>
 
-On Mon, Feb 23, 2009 at 9:28 PM, Miklos Vajna <vmiklos@frugalware.org> wrote:
+We also add --format= completion for "git show".
 
->> My current solution is to build them on the online box and then copy
->> them over the sneaker net to the offline box.  But, this is kludgey,
->> so not cool. :)
->
-> That's just a workaround.
+Signed-off-by: Teemu Likonen <tlikonen@iki.fi>
+---
 
-Certainly agree with you there.
+On 2009-02-24 13:02 (+0200), Teemu Likonen wrote:
 
-> The solution is to have the correct mappings under /etc/xml, so that
-> it maps the doctype to /usr/share/xml/docbook/manpages/docbook.xsl,
-> or a similar path. After all, ideally your distro does this for you
-> automatically. :)
+> I like this change and would immediately switch to using --format= and
+> --oneline instead of --pretty=. I think we should add these bash
+> completions too.
 
-How would I do that?  Unfortunately I have no experience whatsoever
-with configuring docbook.  I've always just used a package manager to
-install it.  Anyway, there's a `catalog` file in /etc/xml with the
-following:
+And let's add --format= completion for "git show" too. I think --oneline
+completion is not needed with "git show" even though it works.
 
-$ cat /etc/xml/catalog
-<?xml version="1.0"?>
-<!DOCTYPE catalog PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog
-V1.0//EN" "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
-<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
-  <public publicId="-//OASIS//DTD DocBook XML V4.2//EN"
-uri="http://www.oasis-open.org/docbook/xml/4.2/"/>
-  <rewriteSystem
-systemIdStartString="http://www.oasis-open.org/docbook/xml/4.2/"
-rewritePrefix="/usr/share/xml/docbook/4.2/"/>
-</catalog>
+This patch replaces my previous one.
 
-To my untrained eye there seems to be a local path in there but I have no idea.
 
-Thanks for the help!
 
+ contrib/completion/git-completion.bash |   14 ++++++++++++--
+ 1 files changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 0a3092f..31608cb 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1012,10 +1012,15 @@ _git_log ()
+ 	--pretty=*)
+ 		__gitcomp "$__git_log_pretty_formats
+ 			" "" "${cur##--pretty=}"
+ 		return
+ 		;;
++	--format=*)
++		__gitcomp "$__git_log_pretty_formats
++			" "" "${cur##--format=}"
++		return
++		;;
+ 	--date=*)
+ 		__gitcomp "
+ 			relative iso8601 rfc2822 short local default
+ 		" "" "${cur##--date=}"
+ 		return
+@@ -1027,11 +1032,11 @@ _git_log ()
+ 			$__git_log_gitk_options
+ 			--root --topo-order --date-order --reverse
+ 			--follow
+ 			--abbrev-commit --abbrev=
+ 			--relative-date --date=
+-			--pretty=
++			--pretty= --format= --oneline
+ 			--cherry-pick
+ 			--graph
+ 			--decorate
+ 			--walk-reflogs
+ 			--parents --children
+@@ -1539,12 +1544,17 @@ _git_show ()
+ 	--pretty=*)
+ 		__gitcomp "$__git_log_pretty_formats
+ 			" "" "${cur##--pretty=}"
+ 		return
+ 		;;
++	--format=*)
++		__gitcomp "$__git_log_pretty_formats
++			" "" "${cur##--format=}"
++		return
++		;;
+ 	--*)
+-		__gitcomp "--pretty=
++		__gitcomp "--pretty= --format=
+ 			$__git_diff_common_options
+ 			"
+ 		return
+ 		;;
+ 	esac
 -- 
-
-In Christ,
-
-Timmy V.
-
-http://burningones.com/
-http://five.sentenc.es/ - Spend less time on e-mail
+1.6.2.rc1.29.g79ccf
