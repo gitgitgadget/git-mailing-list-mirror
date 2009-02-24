@@ -1,96 +1,80 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [PATCH] git.el: Only show completions from refs/heads, refs/remotes and refs/tags
-Date: Tue, 24 Feb 2009 09:42:18 +0100
-Message-ID: <87d4d8usyd.fsf@krank.kagedal.org>
-References: <1235464350-23383-1-git-send-email-davidk@lysator.liu.se>
-	<87fxi4ut2p.fsf@krank.kagedal.org>
+From: Charles Bailey <charles@hashpling.org>
+Subject: Re: how do I resolve this merge manually + mergetool bug
+Date: Tue, 24 Feb 2009 09:13:30 +0000
+Message-ID: <20090224091330.GB23927@hashpling.org>
+References: <81bfc67a0902232204y7a1e9a91x6cbf751319664734@mail.gmail.com> <20090224074727.GA23927@hashpling.org> <81bfc67a0902240032t783abcabgaf8fa13b2a43e48@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Alexandre Julliard <julliard@winehq.org>
-X-From: git-owner@vger.kernel.org Tue Feb 24 10:10:02 2009
+To: Caleb Cushing <xenoterracide@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 24 10:15:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbtIc-0005UH-GG
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 10:09:59 +0100
+	id 1LbtNX-0006vA-53
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 10:15:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753941AbZBXJIb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Feb 2009 04:08:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753711AbZBXJI3
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 04:08:29 -0500
-Received: from mail.lysator.liu.se ([130.236.254.3]:50256 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753429AbZBXJI2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2009 04:08:28 -0500
-X-Greylist: delayed 1723 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Feb 2009 04:08:28 EST
-Received: from mail.lysator.liu.se (localhost [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id 7387D4000E;
-	Tue, 24 Feb 2009 09:42:11 +0100 (CET)
-Received: by mail.lysator.liu.se (Postfix, from userid 1674)
-	id 673DF4000F; Tue, 24 Feb 2009 09:42:11 +0100 (CET)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb3 (2006-10-05) on 
-	bernadotte.lysator.liu.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=5.0 tests=AWL autolearn=disabled 
-	version=3.1.7-deb3
-Received: from krank (unknown [87.96.142.66])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id 25E974000E;
-	Tue, 24 Feb 2009 09:42:11 +0100 (CET)
-Received: by krank (Postfix, from userid 1000)
-	id 3B880DC488; Tue, 24 Feb 2009 09:42:18 +0100 (CET)
-In-Reply-To: <87fxi4ut2p.fsf@krank.kagedal.org> ("David =?utf-8?Q?K=C3=A5g?=
- =?utf-8?Q?edal=22's?= message of "Tue\, 24 Feb 2009 09\:39\:42 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1754070AbZBXJNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2009 04:13:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753765AbZBXJNe
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 04:13:34 -0500
+Received: from relay.ptn-ipout02.plus.net ([212.159.7.36]:31536 "EHLO
+	relay.ptn-ipout02.plus.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752980AbZBXJNd (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Feb 2009 04:13:33 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ApoEAPZIo0nUnw4T/2dsb2JhbADWWIQRBg
+Received: from pih-relay06.plus.net ([212.159.14.19])
+  by relay.ptn-ipout02.plus.net with ESMTP; 24 Feb 2009 09:13:31 +0000
+Received: from [212.159.69.125] (helo=hashpling.plus.com)
+	 by pih-relay06.plus.net with esmtp (Exim) id 1LbtM2-0005FZ-HE; Tue, 24 Feb 2009 09:13:30 +0000
+Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
+	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id n1O9DUlI025046
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 24 Feb 2009 09:13:30 GMT
+Received: (from charles@localhost)
+	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id n1O9DU9n025045;
+	Tue, 24 Feb 2009 09:13:30 GMT
+Content-Disposition: inline
+In-Reply-To: <81bfc67a0902240032t783abcabgaf8fa13b2a43e48@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Plusnet-Relay: 631c99262412c28da376a175c0c0496a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111245>
 
-David K=C3=A5gedal <davidk@lysator.liu.se> writes:
+On Tue, Feb 24, 2009 at 03:32:50AM -0500, Caleb Cushing wrote:
+> On Tue, Feb 24, 2009 at 2:47 AM, Charles Bailey <charles@hashpling.org> wrote:
+> > I'll look at adding
+> > a test case to mergetool and see how easy it is to get it to handle
+> > this case better.
+> 
+> few weeks back I created a patch for mergetool, it was rejected
+> ultimately on the basis that it had to cleanup temporary files and in
+> reality this was a problem with a lot of mergetool, the suggestion was
+> made that mergetool needs refactoring. I believe this problem is a
+> similar symptom. basically mergetool should touch my files before I
+> tell it what to do. if it has to move and back up my files before
+> deciding then at the very least it should copy them back into place if
+> I delete the remote. preferably in this case though it would just
+> delete the remote or backup my local files and copy the remote in
+> after I told it what to do (or maybe even delete my local files).
 
-> David K=C3=A5gedal <davidk@lysator.liu.se> writes:
->
->> Otherwise it will pick up e.g. lots of irrelevant stuff from
->> refs/bisect, refs/stash or refs/patches (for StGit users).
->>
->> Signed-off-by: David K=C3=A5gedal <davidk@lysator.liu.se>
->> ---
->>  contrib/emacs/git.el |    5 ++++-
->>  1 files changed, 4 insertions(+), 1 deletions(-)
->>
->> diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
->> index feb229c..125e684 100644
->> --- a/contrib/emacs/git.el
->> +++ b/contrib/emacs/git.el
->> @@ -1388,7 +1388,10 @@ With a prefix arg, diff the marked files inst=
-ead."
->>  (defun git-read-commit-name (prompt &optional default)
->>    "Ask for a commit name, with completion for local branch, remote =
-branch and tag."
->>    (completing-read prompt
->> -                   (list* "HEAD" "ORIG_HEAD" "FETCH_HEAD" (mapcar #=
-'car (git-for-each-ref)))
->> +                   (list* "HEAD" "ORIG_HEAD" "FETCH_HEAD"
->
-> Sorry, I didn't check this properly. I thought I was fixing inside th=
-e
-> git-checkout function, but this is git-read-commit-name which is used
-> in more than one place.
->
-> But for git-checkout, I would like to see a much shorter list of name=
-d
-> commits, namely those that can be called "branches".
+Coincidentally, last night I started looking at a mergetool
+refactoring but more with unifying the handling of temporaries and
+actions between the different types of merge (symlink, deleted file
+and 'normal').
 
-=2E.. which means that I would like git-read-commit-name to actually
-work as its documentation string says it does: "Ask for a commit name,
-with completion for local branch, remote branch and tag."
+I'm more of the opinion that in any non-trivial case (i.e. not a
+regular file/file merge), it *shouldn't* do anything until you tell it
+what you want it to do. Clearly, between a tree and a blob, mergetool
+is not going to be able to invoke a mergetool on set of three blobs,
+but it should work out what it can do before prompting for a choice
+from the user of what they want it to do.
 
---=20
-David K=C3=A5gedal
+-- 
+Charles Bailey
+http://ccgi.hashpling.plus.com/blog/
