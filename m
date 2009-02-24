@@ -1,98 +1,89 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git merge --abort
-Date: Tue, 24 Feb 2009 02:53:34 +0100
-Message-ID: <200902240253.35470.jnareb@gmail.com>
-References: <43d8ce650902190205yc2274c5gb8e658c8608267ff@mail.gmail.com> <43d8ce650902230441n51c9e5a8h722682cda778aa7a@mail.gmail.com> <7vvdr0obuj.fsf@gitster.siamese.dyndns.org>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: [RFC/PATCH] revision.c: add --format option for 'git log'
+Date: Tue, 24 Feb 2009 10:55:28 +0900
+Message-ID: <20090224105528.6117@nanako3.lavabit.com>
+References: <1235230015-17641-1-git-send-email-felipe.contreras@gmail.com>
+ <7vtz6m1knv.fsf@gitster.siamese.dyndns.org>
+ <94a0d4530902220918oc6f8ab9vc1fd0b55cad014a2@mail.gmail.com>
+ <7v63j2z7bh.fsf@gitster.siamese.dyndns.org>
+ <94a0d4530902221014i46e52542j2380386405b559e2@mail.gmail.com>
+ <7vbpsuxqpo.fsf@gitster.siamese.dyndns.org>
+ <94a0d4530902221055g4e815a78oc0aa094304588ab7@mail.gmail.com>
+ <7vljrxveqa.fsf@gitster.siamese.dyndns.org>
+ <94a0d4530902231656l71ee0e45nbdd1c20035d3dd4@mail.gmail.com>
+ <94a0d4530902231703n701a17dbkd20c0e14d759dddf@mail.gmail.com>
+ <7v3ae4r53f.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: John Tapsell <johnflux@gmail.com>,
-	Bryan Donlan <bdonlan@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Nanako Shiraishi <nanako3@lavabit.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: felipe.contreras@gmail.com, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 24 02:55:16 2009
+X-From: git-owner@vger.kernel.org Tue Feb 24 02:57:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LbmVv-000727-3j
-	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 02:55:15 +0100
+	id 1LbmY9-0007qZ-AA
+	for gcvg-git-2@gmane.org; Tue, 24 Feb 2009 02:57:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753337AbZBXBxr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Feb 2009 20:53:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753043AbZBXBxr
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 20:53:47 -0500
-Received: from fg-out-1718.google.com ([72.14.220.154]:54586 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752855AbZBXBxq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2009 20:53:46 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so37880fgg.17
-        for <git@vger.kernel.org>; Mon, 23 Feb 2009 17:53:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=VuMd6li+4OtSQMtmvIiaCl460q+ZB+4airRwzRlkjRA=;
-        b=F37EVBTeIP0XQ2n+c61DYzZsnGOxZIXq0h9ZeylEN/MfI9cIBBNDGTFdVTTqgTjiD6
-         ob0/qMzWrccG6dk6stkAWeVSmOUT1imPpASBYk4uMOpYRqWBQul4X7GAcprd8UmY1/uS
-         474WJy+31mWXBZ4eJblykj3Qr0J6u7rAIWZKI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=hYafnglxt4sfcLk0LBEP8xdPff0nSGnLbFcpdIiIFfmEuMec5rF3JwMsKozFQ8ehjL
-         bSw/5lLrBU4zcyrSxoXFyhqQN45on0fTh6RUlSP9HFJDoIW/0L53oKtzxPoml8NERBHf
-         zzH9VQQn63nrZfhYrlDNvmzPkWjTrgwTCrzsE=
-Received: by 10.86.92.7 with SMTP id p7mr3297084fgb.74.1235440423390;
-        Mon, 23 Feb 2009 17:53:43 -0800 (PST)
-Received: from ?192.168.1.15? (abve227.neoplus.adsl.tpnet.pl [83.8.202.227])
-        by mx.google.com with ESMTPS id d6sm723801fga.59.2009.02.23.17.53.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 23 Feb 2009 17:53:42 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vvdr0obuj.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1753753AbZBXB4G convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Feb 2009 20:56:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753592AbZBXB4F
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 20:56:05 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:45524 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753513AbZBXB4E (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Feb 2009 20:56:04 -0500
+Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
+	by karen.lavabit.com (Postfix) with ESMTP id AC37411B943;
+	Mon, 23 Feb 2009 19:55:58 -0600 (CST)
+Received: from 4016.lavabit.com (212.62.97.21)
+	by lavabit.com with ESMTP id K8ZIP9JYCMDW; Mon, 23 Feb 2009 19:55:58 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=v0UKFrtM4j7tJ8EQ04AO3CczWv1O8uPqER8n02Qsue/oIAMbsIIrCaZpw4EtjXLyLMJ8u0RR8mB3h4R9hlKZNpbaref1kEYY9cJMjvqXcj2rGL9UgZgNJ0yGpkjWiyUzGqjGI95A0RlFz2gQSXzR5fTMuVMvuX4GGYNXFK/ELyk=;
+  h=From:To:Cc:Subject:In-Reply-To:References:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <7v3ae4r53f.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111196>
 
-Junio C Hamano wrote:
-> John Tapsell <johnflux@gmail.com> writes:
-> 
-> > It sounds like we have some sort of plan then.  Will Nana's patch be
-> > committed into mainline git?  Then we can add the --abort porcelain
-> 
-> I do not know what plan you are talking about, but that's not how the
-> development works.  If something is merged to 'pu', and you have a cool
-> feature you would want to take advantage of it, you can build your cool
-> feature on top of that particular topic.  If the result looks reasonable
-> they would cook for a while in 'next' for further polishing and then
-> finally go to 'mainline'.
-> 
-> I personally did not think "--keep" would need to be be part of a
-> reasonable "merge --abort" implementation, but I may have missed some
-> description of a viable design discussed on the list.
+Quoting Junio C Hamano <gitster@pobox.com>:
 
-My idea was that merge would do the following:
+>
+>>>> People already are used to finding the shed in the scenery by look=
+ing for
+>>>> that original color, however ugly the color might be. =C2=A0The an=
+swer to your
+>>>> question has to become quite different when you take that into acc=
+ount;
+>>>> otherwise you are being irresponsible to your users.
+>>
+>> People somehow got used to the ugly color, they'll get used to the
+>> pretty one, in fact, they would probably like it better, and maybe
+>> even thought more than once on changing it.
+>>
+>> If they're the kind of people that don't like new things they'll
+>> probably not be using git anyway.
+>
+> You do not have to send two messages in a row to reaffirm that you ar=
+e of
+> irresponsible kind.  I heard you enough already.
+>
+> Go away.
 
-  $ <save stash into MERGE_STASH or similar, no reset>
-  $ <do a merge>
+Junio, what got into you?
 
-Then we have two possibilities:
+I've always admired your calm and reasoned way to deal with even the mo=
+st obnoxious people, and unlike more abrasive people on this list I've =
+never seen you say "Go away" to anybody here.
 
-  # merge failed with conflicts
-  $ git merge --abort (would unstash MERGE_STASH and delete it)
+Especially because I agree with you that calling pretty-printing as "pr=
+etty" isn't so broken to make such a big deal out of, it would be bette=
+r not to chase a potentially useful contributor away on such a minor is=
+sue.
 
-  # we created merge conflict
-  $ <MERGE_STASH is removed together with MERGE_HEAD>
-
--- 
-Jakub Narebski
-Poland
+--=20
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
