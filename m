@@ -1,62 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: Files different for me
-Date: Wed, 25 Feb 2009 12:06:12 -0800
-Message-ID: <7vk57e1du3.fsf@gitster.siamese.dyndns.org>
-References: <450196A1AAAE4B42A00A8B27A59278E709E047DE@EXCHANGE.trad.tradestation.com>
- <alpine.LFD.2.00.0902250957260.3111@localhost.localdomain>
- <7v4oyi2vvf.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.2.00.0902251106070.3111@localhost.localdomain>
+Date: Wed, 25 Feb 2009 12:14:36 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0902251213350.3111@localhost.localdomain>
+References: <450196A1AAAE4B42A00A8B27A59278E709E047DE@EXCHANGE.trad.tradestation.com> <alpine.LFD.2.00.0902250957260.3111@localhost.localdomain> <7v4oyi2vvf.fsf@gitster.siamese.dyndns.org> <alpine.LFD.2.00.0902251106070.3111@localhost.localdomain>
+ <7vk57e1du3.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: John Dlugosz <JDlugosz@TradeStation.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Feb 25 21:08:07 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 25 21:17:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcQ2o-0000Yh-Mp
-	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 21:07:51 +0100
+	id 1LcQBo-0004ej-U8
+	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 21:17:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757454AbZBYUGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2009 15:06:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756912AbZBYUGX
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 15:06:23 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63177 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754893AbZBYUGX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2009 15:06:23 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B3A2C9C713;
-	Wed, 25 Feb 2009 15:06:19 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id F38EB9C711; Wed,
- 25 Feb 2009 15:06:14 -0500 (EST)
-In-Reply-To: <alpine.LFD.2.00.0902251106070.3111@localhost.localdomain>
- (Linus Torvalds's message of "Wed, 25 Feb 2009 11:12:47 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: C44DE990-0377-11DE-A205-B26E209B64D9-77302942!a-sasl-fastnet.pobox.com
+	id S1757249AbZBYUPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2009 15:15:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756673AbZBYUPh
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 15:15:37 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:33717 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754893AbZBYUPh (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Feb 2009 15:15:37 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n1PKEcCe016046
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 25 Feb 2009 12:14:39 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n1PKEaTN005584;
+	Wed, 25 Feb 2009 12:14:37 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <7vk57e1du3.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.451 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111494>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
 
->> You, I and experienced users know what to do.  Deal *only* with the last
->> kind, mark them with "git add" after you are done with each of them, and
->> make sure you do not say "-a" when committing the result, to exclude the
->> first kind from the merge result.
->> 
->> I've been wondering if we can make this safer for others.
->
-> You're right. We could decide to have a mode (maybe default to it, so that 
-> people like me can just use a config option to enable "expert" mode) that
-> simply refuses to do the merge if it doesn't succeed cleanly if there were 
-> dirty files in the tree.
 
-"git merge" has always had this "stash away local changes before starting,
-and unstash once done" safety when we try to run multiple strategies.
-A patch to trigger it even for a single strategy case may be trivial.
+On Wed, 25 Feb 2009, Junio C Hamano wrote:
+> 
+> "git merge" has always had this "stash away local changes before starting,
+> and unstash once done" safety when we try to run multiple strategies.
+> A patch to trigger it even for a single strategy case may be trivial.
+
+Well, I'd feel better if it was actually in the low-level merge code, the 
+way the current "I refuse to merge if the file is dirty" logic is.
+
+			Linus
