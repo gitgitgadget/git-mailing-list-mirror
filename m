@@ -1,97 +1,73 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
 Subject: Re: Files different for me
-Date: Wed, 25 Feb 2009 13:38:23 -0500
-Message-ID: <013B8F55-FBCC-4D3B-9EA4-13C05FFE986B@silverinsanity.com>
-References: <450196A1AAAE4B42A00A8B27A59278E709E047DE@EXCHANGE.trad.tradestation.com> <7E43550E-68B7-4B22-A83C-F840A7037CA9@silverinsanity.com> <450196A1AAAE4B42A00A8B27A59278E709E0486D@EXCHANGE.trad.tradestation.com>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: John Dlugosz <JDlugosz@TradeStation.com>
-X-From: git-owner@vger.kernel.org Wed Feb 25 19:40:23 2009
+Date: Wed, 25 Feb 2009 19:44:22 +0100
+Message-ID: <vpqbpsq9x15.fsf@bauges.imag.fr>
+References: <450196A1AAAE4B42A00A8B27A59278E709E047DE@EXCHANGE.trad.tradestation.com>
+	<7E43550E-68B7-4B22-A83C-F840A7037CA9@silverinsanity.com>
+	<450196A1AAAE4B42A00A8B27A59278E709E0486D@EXCHANGE.trad.tradestation.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "Brian Gernhardt" <benji@silverinsanity.com>, <git@vger.kernel.org>
+To: "John Dlugosz" <JDlugosz@TradeStation.com>
+X-From: git-owner@vger.kernel.org Wed Feb 25 19:50:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcOfs-00059w-LO
-	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 19:40:05 +0100
+	id 1LcOqH-0001kk-55
+	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 19:50:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756403AbZBYSig (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2009 13:38:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756015AbZBYSig
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 13:38:36 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:45123 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755715AbZBYSif (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2009 13:38:35 -0500
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id 5E7ED1FFC3A0; Wed, 25 Feb 2009 18:38:28 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb3 (2006-10-05) on 
-	silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=4.0 tests=AWL,BAYES_00,RCVD_IN_PBL,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.1.7-deb3
-Received: from [192.168.1.115] (cpe-74-74-137-205.rochester.res.rr.com [74.74.137.205])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id DCCFA1FFC3A0;
-	Wed, 25 Feb 2009 18:38:21 +0000 (UTC)
-In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E709E0486D@EXCHANGE.trad.tradestation.com>
-X-Mailer: Apple Mail (2.930.3)
+	id S1754946AbZBYStW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2009 13:49:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754867AbZBYStW
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 13:49:22 -0500
+Received: from imag.imag.fr ([129.88.30.1]:62130 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754772AbZBYStV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2009 13:49:21 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n1PIjCsS017359
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 25 Feb 2009 19:45:12 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1LcOk2-0001Y4-Eo; Wed, 25 Feb 2009 19:44:22 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1LcOk2-0005Vz-CS; Wed, 25 Feb 2009 19:44:22 +0100
+In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E709E0486D@EXCHANGE.trad.tradestation.com> (John Dlugosz's message of "Wed\, 25 Feb 2009 13\:02\:12 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.90 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 25 Feb 2009 19:45:13 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111477>
 
+"John Dlugosz" <JDlugosz@TradeStation.com> writes:
 
-On Feb 25, 2009, at 1:02 PM, John Dlugosz wrote:
-
->> Generally when I keep changes like this, I make a commit called  
->> "Local
->> Changes" or similar and have branch.master.rebase set to true so that
->> my changes get rebased on top of origin when I pull.
+> 	Oldstuff--A--B--C  remote
+> 	       \
+> 	        LC--X--Y  mine
 >
-> That sounds ideal.  However, I don't understand the specific steps you
-> mention.  Looking in the help for git-config,
+> LC is "Local Changes", X and Y are changes I made, and A, B, C are
+> changes from other developers.
+>
+> After a fetch, I have:
+>
+> 	Oldstuff--LC--X--Y--A'--B'--C'  mine
 
-As Junio and Linus have pointed out, most pulls will ignore local  
-changes,
-so this is likely overkill unless your changes are in commonly changed  
-files.
+No, your changes get rebased:
 
-> So, assuming you are working on the "master" branch, this will rebase
-> the pulled content on top of the existing "master" rather than  
-> merging.
-> If my local changes are committed to "master" first, then this will  
-> take
-> all the commits from other developers that I don't already have in my
-> local copy and apply them on top of my existing (including Local
-> Changes).  But since those will now be different commits, what happens
-> next time?  Ah, "...which introduce the same textual changes..." so
-> that's covered in how rebase works.
+ 	Oldstuff--A--B--C--LC'--X'--Y'   mine
 
-You can set branch.master.rebase with
+You should just be carrefull not to push in this state, since you'd
+push LC too. But you can throw away LC later with "git rebase -i".
 
-   git config branch.master.rebase true
-
-It actually works the other way.  Your changes will be rebased on top of
-the work from other developers.
-
-A--B--E--F  origin/master
-     \
-      C--D master
-
-will become
-
-A--B--E--F  origin/master
-           \
-            C'--D' master
-
-I share most of my changes using format-patch and e-mail instead of
-pushes, so I just don't generate patches for my unimportant changes.
-For pushing, I'd suggest either working on new features in a different
-branch ("topic" and "local" for example), or using "rebase -i" to move
-your local changes to the top and using "push HEAD^".
-
-~~ Brian
+-- 
+Matthieu
