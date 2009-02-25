@@ -1,7 +1,7 @@
 From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH 12/21] builtin-remote: refactor duplicated cleanup code
-Date: Wed, 25 Feb 2009 03:32:19 -0500
-Message-ID: <3feb0316f93ae0959fd321e40bcf64fd050a9e7d.1235546708.git.jaysoffian@gmail.com>
+Subject: [PATCH 16/21] builtin-remote: fix two inconsistencies in the output of "show <remote>"
+Date: Wed, 25 Feb 2009 03:32:23 -0500
+Message-ID: <e4b8a7a0deac2b6ebdf05b0e664189d304358a57.1235546708.git.jaysoffian@gmail.com>
 References: <cover.1235546707.git.jaysoffian@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -9,110 +9,129 @@ Content-Transfer-Encoding: 8bit
 Cc: Jay Soffian <jaysoffian@gmail.com>, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 25 09:35:51 2009
+X-From: git-owner@vger.kernel.org Wed Feb 25 09:35:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcFF7-0000Xo-Qz
-	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 09:35:50 +0100
+	id 1LcFFA-0000Xo-OY
+	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 09:35:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759872AbZBYIdK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2009 03:33:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759883AbZBYIdI
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 03:33:08 -0500
-Received: from yx-out-2324.google.com ([74.125.44.29]:53623 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758793AbZBYIdA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2009 03:33:00 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so1285047yxm.1
-        for <git@vger.kernel.org>; Wed, 25 Feb 2009 00:32:58 -0800 (PST)
+	id S1760093AbZBYIdX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2009 03:33:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759609AbZBYIdV
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 03:33:21 -0500
+Received: from an-out-0708.google.com ([209.85.132.242]:52135 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759920AbZBYIdI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2009 03:33:08 -0500
+Received: by an-out-0708.google.com with SMTP id c2so1348060anc.1
+        for <git@vger.kernel.org>; Wed, 25 Feb 2009 00:33:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=picXgcdqvVJC2h9rQ/i49CUlncOKfRF8XLLjVypD4ts=;
-        b=S9Q2Etya5SiQ3xMfGl949fM2/W3UYCkfGysjFlnH5/GPk3sU5vyhRUOBh3/ogBTeHb
-         7mVGCVJTOJvJsRVq1JEWNYBQE5kay72y6p65kfh54C+pK/1QDsq35wl7J5MMHWzU/1RU
-         qgBgKyJ4LyfRG11l1cgyqiR/9nv05a6DCepKI=
+        bh=PIhlW4J0P6JqOf/wtS5cnztmjQQk8iFlPVgSPU+EnC4=;
+        b=tLR554GyEP1MPZuuF5ng6SFGid1IktuIOPGBeSew+n4WD9U2TsmzndROiW3Jm7cn6f
+         /qvbJndr3BpsF3c1bKxd36UwREjnvk+aVT5fkPFRhsXLT+EnAF6tsdgqu1jBezsWi11j
+         V+yRU7uqdPWMirFxW+zJGPUpP4I7wMxHvazlc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=SuK3rMXUJE2BQaG8bUFcbinH7DdgRpb7CTY/lJ1lnewbsw4pkQiTJS1oAMMY/AHNeL
-         YmMxWEo51yamVAofA4R1yjhLhXdaJ+PWpwUm2PqzzQpzsjbsBJIFYjMBfillstz+oHtT
-         XBMSKDR0jjNmlAkeavCEHFyySHaQIhfFzj3Ok=
-Received: by 10.100.33.4 with SMTP id g4mr816317ang.133.1235550778415;
-        Wed, 25 Feb 2009 00:32:58 -0800 (PST)
+        b=xhO08Li2NajXuGZwxTeAkH3OameablqZtWl7XbscimvFiRVo0rJ8ouOy9htiZ+7Rxx
+         +cGP4nvP4R6gjR3MQemxvGnv6Yb4nRXbVq42YBmlfyfE+Piv7EXmv74Fkda5Vld+jq8C
+         0oHx96fU8n5SRSQ/TDW1NGUL9npiv+2u54Y74=
+Received: by 10.100.32.6 with SMTP id f6mr834162anf.90.1235550787188;
+        Wed, 25 Feb 2009 00:33:07 -0800 (PST)
 Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
-        by mx.google.com with ESMTPS id d35sm2145383and.38.2009.02.25.00.32.57
+        by mx.google.com with ESMTPS id b7sm12901557ana.39.2009.02.25.00.33.06
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 25 Feb 2009 00:32:57 -0800 (PST)
+        Wed, 25 Feb 2009 00:33:06 -0800 (PST)
 X-Mailer: git-send-email 1.6.2.rc1.291.g83eb
 In-Reply-To: <cover.1235546707.git.jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111401>
 
-This patch moves identical lines of code into a cleanup function. The
-function has two callers and is about to gain a third.
+Remote and stale branches are emitted in alphabetical order, but new and
+tracked branches are not. So sort the latter to be consistent with the
+former. This also lets us use more efficient string_list_has_string()
+instead of unsorted_string_list_has_string().
 
-Also removed a bogus NEEDSWORK comment per Daniel Barkalow:
-
-  Actually, the comment is wrong; "remote" comes from remote_get(),
-  which returns things from a cache in remote.c; there could be a
-  remote_put() to let the code know that the caller is done with the
-  object, but it wouldn't presently do anything.
+"show <remote>" prunes symrefs, but "show <remote> -n" does not. Fix the
+latter to match the former.
 
 Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
 ---
- builtin-remote.c |   17 +++++++++--------
- 1 files changed, 9 insertions(+), 8 deletions(-)
+ builtin-remote.c  |   15 ++++++++++-----
+ t/t5505-remote.sh |    2 +-
+ 2 files changed, 11 insertions(+), 6 deletions(-)
 
 diff --git a/builtin-remote.c b/builtin-remote.c
-index ac69d37..b89a353 100644
+index 1b5e8b6..963be6d 100644
 --- a/builtin-remote.c
 +++ b/builtin-remote.c
-@@ -632,6 +632,13 @@ static void show_list(const char *title, struct string_list *list,
- 		printf("    %s\n", list->items[i].string);
- }
+@@ -226,10 +226,8 @@ static int handle_one_branch(const char *refname,
+ 		const char *name = abbrev_branch(refspec.src);
+ 		/* symbolic refs pointing nowhere were handled already */
+ 		if ((flags & REF_ISSYMREF) ||
+-				unsorted_string_list_has_string(&states->tracked,
+-					name) ||
+-				unsorted_string_list_has_string(&states->new,
+-					name))
++		    string_list_has_string(&states->tracked, name) ||
++		    string_list_has_string(&states->new, name))
+ 			return 0;
+ 		item = string_list_append(name, &states->stale);
+ 		item->util = xstrdup(refname);
+@@ -258,6 +256,8 @@ static int get_ref_states(const struct ref *remote_refs, struct ref_states *stat
+ 	}
+ 	free_refs(fetch_map);
  
-+static void free_remote_ref_states(struct ref_states *states)
-+{
-+	string_list_clear(&states->new, 0);
-+	string_list_clear(&states->stale, 0);
-+	string_list_clear(&states->tracked, 0);
-+}
++	sort_string_list(&states->new);
++	sort_string_list(&states->tracked);
+ 	for_each_ref(handle_one_branch, states);
+ 	sort_string_list(&states->stale);
+ 
+@@ -638,6 +638,9 @@ static int append_ref_to_tracked_list(const char *refname,
+ 	struct ref_states *states = cb_data;
+ 	struct refspec refspec;
+ 
++	if (flags & REF_ISSYMREF)
++		return 0;
 +
- static int get_remote_ref_states(const char *name,
- 				 struct ref_states *states,
- 				 int query)
-@@ -738,10 +745,7 @@ static int show(int argc, const char **argv)
- 			}
- 		}
+ 	memset(&refspec, 0, sizeof(refspec));
+ 	refspec.dst = (char *)refname;
+ 	if (!remote_find_tracking(states->remote, &refspec))
+@@ -666,8 +669,10 @@ static int get_remote_ref_states(const char *name,
+ 		transport_disconnect(transport);
  
--		/* NEEDSWORK: free remote */
--		string_list_clear(&states.new, 0);
--		string_list_clear(&states.stale, 0);
--		string_list_clear(&states.tracked, 0);
-+		free_remote_ref_states(&states);
- 	}
+ 		get_ref_states(remote_refs, states);
+-	} else
++	} else {
+ 		for_each_ref(append_ref_to_tracked_list, states);
++		sort_string_list(&states->tracked);
++	}
  
- 	return result;
-@@ -792,10 +796,7 @@ static int prune(int argc, const char **argv)
- 			warn_dangling_symref(dangling_msg, refname);
- 		}
- 
--		/* NEEDSWORK: free remote */
--		string_list_clear(&states.new, 0);
--		string_list_clear(&states.stale, 0);
--		string_list_clear(&states.tracked, 0);
-+		free_remote_ref_states(&states);
- 	}
- 
- 	return result;
+ 	return 0;
+ }
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index eb63718..a13d4b6 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -141,8 +141,8 @@ cat > test/expect << EOF
+   New remote branch (next fetch will store in remotes/origin)
+     master
+   Tracked remote branches
+-    side
+     master
++    side
+   Local branches pushed with 'git push'
+     master:upstream
+     +refs/tags/lastbackup
 -- 
 1.6.2.rc1.291.g83eb
