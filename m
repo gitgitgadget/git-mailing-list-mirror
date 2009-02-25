@@ -1,125 +1,133 @@
-From: P Baker <me@retrodict.com>
-Subject: Fwd: git & Google SOC 2009
-Date: Tue, 24 Feb 2009 20:13:52 -0500
-Message-ID: <526944450902241713w141169bbgfc1aef4097c2c269@mail.gmail.com>
-References: <526944450902190720o253b2f26gd1422bdd6963ad79@mail.gmail.com>
-	 <20090219164046.GR22848@spearce.org>
+From: Brent Goodrick <bgoodr@gmail.com>
+Subject: Re: How do I qualify paths in the .gitignore file w.r.t. the repo 
+	root directory?
+Date: Tue, 24 Feb 2009 17:14:42 -0800
+Message-ID: <e38bce640902241714s720a4e23v49e0a4ab22da9bde@mail.gmail.com>
+References: <e38bce640902232247t63a37f63x9f403fbda0744cfd@mail.gmail.com>
+	 <7v1vtomhz1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 25 02:15:28 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	James Pickens <jepicken@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 25 02:16:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lc8Mw-000300-Go
-	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 02:15:26 +0100
+	id 1Lc8Nu-0003LM-Eo
+	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 02:16:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756490AbZBYBN5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Feb 2009 20:13:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758687AbZBYBN4
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 20:13:56 -0500
-Received: from yx-out-2324.google.com ([74.125.44.28]:24951 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756761AbZBYBNy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Feb 2009 20:13:54 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so1222178yxm.1
-        for <git@vger.kernel.org>; Tue, 24 Feb 2009 17:13:52 -0800 (PST)
+	id S1754221AbZBYBOr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2009 20:14:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752233AbZBYBOp
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 20:14:45 -0500
+Received: from mail-gx0-f174.google.com ([209.85.217.174]:60331 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753895AbZBYBOo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2009 20:14:44 -0500
+Received: by gxk22 with SMTP id 22so7881842gxk.13
+        for <git@vger.kernel.org>; Tue, 24 Feb 2009 17:14:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=D8bANXRpZIe6IZv6fQAcL1aExDKaqZ3YoS6pnLHzQgM=;
-        b=vvONthoLSJzBc9QAO9M2PtC/GQvTE08tvp+1tt4VzfQEPoTSxRvHRnhp0nFEhsiIxe
-         NzSfZmu2Fz64vZLBxHZllevv935Z0Kp0LsZOOhGWnSAdCi9O+AgPLZsCPlx3XlPnyD6h
-         IzRAwRGW4F0Rdq8ZYXCmBD1S5DULjC5zomNxc=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=xNS2r7a3d+qTjAt7P/hswyuftRh2fC51lf7iyJjE4ZY=;
+        b=rq/zpUWFabsR1CV/puC69b6whPQAoCe8o7UB5bF8pA4f8xACNlOmnmofHHjY2MYIMq
+         vLjokjdQWuzygI2x79Xy/UF04NuuyzrVwY0m9zjbGcHuaQp9Q6OBaGt3g7gLcu6kgnyE
+         a1Zj526kluEHiBJwb6Hb8l/shcq1iatuowDcg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=boCaLUSfc/rv4yA6IGTJs/jC23O5QZW5/o2W/iiNRw1XyOUvR7UYDXaCrf46t/7NFn
-         mt3noqNQyBzU/+/1BaFRU4ftNduITj19YmzgDnlvbawm3pe6seH5qMBEwsLQ2fJNlvjJ
-         Ck8RZxlKDD+shIhe56FplzlsmPGLZeWW/6AAU=
-Received: by 10.220.83.149 with SMTP id f21mr8494vcl.34.1235524432475; Tue, 24 
-	Feb 2009 17:13:52 -0800 (PST)
-In-Reply-To: <20090219164046.GR22848@spearce.org>
-X-Google-Sender-Auth: f6892e10ae676ce5
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=x8Kn/Pj5hO3Wx8HwQLE01N2RskJZRcadIIWKZud+JS5mfx8LOBJ6vcszQwu9oqwASt
+         DcI5km+mJ+yK48sE17lSZBe67lWviLpVTone+gDkLgKa8y3tdA7mbqFMeZBjfpXVNC72
+         suU80w46or9sxvYZMXyuleY/MpmYB+NlT9Ykw=
+Received: by 10.90.35.15 with SMTP id i15mr2533735agi.101.1235524482467; Tue, 
+	24 Feb 2009 17:14:42 -0800 (PST)
+In-Reply-To: <7v1vtomhz1.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111365>
 
-As per Shawn's suggestion, I'd like to start talking about git and
-submodules. To answer some questions that came up in the other recent
-GSoC thread, please see my e-mail and Shawn's initial replies below.
+Thanks James and Junio.  I'll try the leading slash. I assumed that
+the beginning slash means what it means for other tools (meaning a
+fully-qualified path to some file somewhere on the file system), but
+apparently such is not the case with git (and I conclude from this
+that it is actually not possible to store fully qualified paths
+_unless_ the $GIT_DIR is right under the root filesystem).  This isn't
+a problem for me, and probably not for most folks, but it was
+confusing to me the way it was written in the man page.
 
-Any further comments would be welcome.
-
-Phillip Baker
-
----------- Forwarded message ----------
-=46rom: Shawn O. Pearce <spearce@spearce.org>
-Date: Feb 19, 2009 11:40 AM
-Subject: Re: git & Google SOC 2009
-To: P Baker <me@retrodict.com>
-Cc: jnareb@gmail.com, Junio C Hamano <gitster@pobox.com>
-
-P Baker <me@retrodict.com> wrote:
- > I'm not quite sure who to address this to, but all three of you were
- > involved in git's 2008 SOC effort.
+Brent
 
 
-Actually, Junio is Git's maintainer and tries to stay out of GSoC.
- Its a lot of extra work that he usually doesn't have time for.
-
- This sort of email is better discussed right on the Git mailing list,
- git@vger.kernel.org, as the potential pool of mentors can also then
- respond and be involved, and Junio doesn't have to deal with it.
-
-
- > Is git apply as a mentoring organization
- > again this year?
-
-
-Yes.=C2=A0=C2=A0No assurances we will be accepted, but we do plan on ap=
-plying
- again.
-
-
- > If so, I'd like to start talking about projects I could be
- > involved in, and any prerequisites I might need to get done before a=
-pplying.
- > I'm a sophomore in EE at UPenn, and much more interested in playing =
-with
- > y'all over the summer than circuits.
- >
- > In looking at the '08 list of ideas, the git-submodules task (
- > http://git.or.cz/gitwiki/SoC2008Ideas#head-9215572f23513542a23d3555a=
-a72775bc4b91038)
- > did not appear to have been taken on last summer and a quick search =
-of the
- > mailing list did not turn up any patches, so it seems like its still=
- open.
-
-
-Yup, that's still an open issue.=C2=A0=C2=A0That should get ported over=
- the
- '09 ideas list again.=C2=A0=C2=A0Maybe.=C2=A0=C2=A0I still think its w=
-orthwhile to be
- done, but I can't bring myself to do it.
-
-
- > Please let me know who I can bug to help make this happen!
-
-
-Start talking about it on git@vger.kernel.org.=C2=A0=C2=A0Really.=C2=A0=
-=C2=A0Its the
- best way to get those interested talking about it.
-
- --
-
-Shawn.
+On Mon, Feb 23, 2009 at 11:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Brent Goodrick <bgoodr@gmail.com> writes:
+>
+> > Say I have these files and directories [2]:
+> >
+> >   /home/smart_tator/misc_files/.gitignore
+> >   /home/smart_tator/misc_files/foo/
+> >   /home/smart_tator/misc_files/bar/
+> >   /home/smart_tator/misc_files/bar/baz/foo/
+> >   /home/smart_tator/misc_files/bar/baz/real/
+> >
+> > then I do:
+> >
+> >   cd /home/smart_tator/misc_files/; git init
+> >
+> > and say I have this line in that .gitignore file:
+> >
+> >   foo/
+> >
+> > And then I naively execute:
+> >
+> >   git add bar/
+> >
+> > then the bar/baz/real/ is added, but these are dutifully ignored:
+> >
+> >   /home/smart_tator/misc_files/foo/
+> >   /home/smart_tator/misc_files/bar/baz/foo/
+>
+> I think you are looking for "/foo/".  From Documentation/gitignore.txt:
+>
+>  - If the pattern ends with a slash, it is removed for the
+>   purpose of the following description, but it would only find
+>   a match with a directory.  In other words, `foo/` will match a
+>   directory `foo` and paths underneath it, but will not match a
+>   regular file or a symbolic link `foo` (this is consistent
+>   with the way how pathspec works in general in git).
+>
+> With this rule, (1) the trailing slash in your "foo/" tells git to match
+> only with directories, but (2) it behaves as if you said "foo" for all the
+> other rules.
+>
+> With "/foo/", you tell git to match only with a directory, and it is as if
+> you said "/foo".
+>
+>  - If the pattern does not contain a slash '/', git treats it as
+>   a shell glob pattern and checks for a match against the
+>   pathname without leading directories.
+>
+> Your "foo/" now behaves the same way as "foo" behaves.  You are telling
+> git to match directory foo anywhere in the tree.  "/foo/" (now behaving
+> the same way as "/foo") does not satisfy this criteria so we would skip
+> this rule.
+>
+>  - Otherwise, git treats the pattern as a shell glob suitable
+>   for consumption by fnmatch(3) with the FNM_PATHNAME flag:
+>   wildcards in the pattern will not match a / in the pathname.
+>   For example, "Documentation/\*.html" matches
+>   "Documentation/git.html" but not
+>   "Documentation/ppc/ppc.html".  A leading slash matches the
+>   beginning of the pathname; for example, "/*.c" matches
+>   "cat-file.c" but not "mozilla-sha1/sha1.c".
+>
+> Your "foo/" does not survive to this rule, but "/foo/" does.  It now
+> behaves as "/foo" and its leading slash makes it match the beginning.
