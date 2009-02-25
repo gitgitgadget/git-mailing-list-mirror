@@ -1,73 +1,92 @@
-From: "Lasse Kliemann" <lasse-gmane-git-2009@mail.plastictree.net>
-Subject: gitosis: how to create absolutely empty repos
-Date: Wed, 25 Feb 2009 19:54:50 +0000 (UTC)
-Message-ID: <go47ma$5n8$1@ger.gmane.org>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: topgit patches
+Date: Wed, 25 Feb 2009 20:58:56 +0100
+Message-ID: <20090225195856.GA12372@pengutronix.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Petr Baudis <pasky@ucw.cz>, "martin f. krafft" <madduck@debian.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 25 21:03:28 2009
+X-From: git-owner@vger.kernel.org Wed Feb 25 21:05:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcPyG-00075O-Fw
-	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 21:03:08 +0100
+	id 1LcPzs-0007gn-28
+	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 21:04:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757292AbZBYUAI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2009 15:00:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756733AbZBYUAI
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 15:00:08 -0500
-Received: from main.gmane.org ([80.91.229.2]:49025 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756673AbZBYUAH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2009 15:00:07 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1LcPvG-0006El-No
-	for git@vger.kernel.org; Wed, 25 Feb 2009 20:00:02 +0000
-Received: from h1283867.stratoserver.net ([85.214.127.6])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 25 Feb 2009 20:00:02 +0000
-Received: from lasse-gmane-git-2009 by h1283867.stratoserver.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 25 Feb 2009 20:00:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: h1283867.stratoserver.net
+	id S1757977AbZBYUDS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Feb 2009 15:03:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757947AbZBYUDR
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 15:03:17 -0500
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:45145 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757790AbZBYUDR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2009 15:03:17 -0500
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1LcPyM-0002lK-WC
+	for git@vger.kernel.org; Wed, 25 Feb 2009 21:03:15 +0100
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1LcPyM-0003HJ-SC
+	for git@vger.kernel.org; Wed, 25 Feb 2009 21:03:14 +0100
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111486>
 
-$ mkdir test
-$ cd test
-$ git init
-Initialized empty Git repository in /home/foo/new-repos/test/.git/
-$ git remote add origin ext:test.git
+Hello,
 
-('ext' is configured in ~/.ssh/config to be my git user and host.)
+The following changes since commit 8c77c342166ddc6ecb3840628d89ddc5bb6b=
+043b:
+  Kirill Smelkov (1):
+        tg-completion: complete options for `tg remote`
 
-Here the docs say to add some files and to do a commit. However, 
-I want an absolutely empty repos created, so I skip this step.
+are available in the git repository at:
 
-$ git push origin master:refs/heads/master
-Initialized empty Git repository in /home/git/repositories/test.git/
-error: src refspec master does not match any.
-fatal: The remote end hung up unexpectedly
-error: failed to push some refs to 'ext:test.git'
+  git://git.pengutronix.de/git/ukl/topgit.git pu
 
-So, this did not work. It will work, however, if I do at least 
-one commit. A way to do this without adding files is the 
-following:
+Uwe Kleine-K=F6nig (5):
+      [TOPGIT] limit rev-list in branch_contains to a single rev
+      [TOPGIT] allow working with annihilated branches
+      [TOPGIT] make tg remote idempotent
+      [TOPGIT] make creating a commit from a topgit branch a function
+      [TOPGIT] implement linearize export method
 
-$ git commit --allow-empty
+ tg-export.sh  |   94 +++++++++++++++++++++++++++++++++++++++++++++++++=
++-------
+ tg-remote.sh  |    6 ++--
+ tg-summary.sh |   11 ++++++-
+ tg.sh         |   19 ++++++++++-
+ 4 files changed, 113 insertions(+), 17 deletions(-)
 
-Then the push will work:
+I consider the first three as ready to pull (they form my master branch
+at the repo above).  The fourth commit is just preparing the fifth.  Th=
+e
+fifth commit implements a new export method that I use often.  The erro=
+r
+handling isn't well tested, just because I don't usually run into merge
+conflicts in my series :-)
 
-$ git push origin master:refs/heads/master
-Counting objects: 2, done.
-Writing objects: 100% (2/2), 168 bytes, done.
-Total 2 (delta 0), reused 0 (delta 0)
-To ext:test.git
- * [new branch]      master -> master
+I look forward to comments, especially for the last commit.
 
-Is there a better way to do it?
+=46or review purposes I send the patches as a reply to this mail.
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
+       |
+Industrial Linux Solutions                    | http://www.pengutronix.=
+de/  |
