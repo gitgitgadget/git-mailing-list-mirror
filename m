@@ -1,93 +1,84 @@
-From: Andrei Thorp <garoth@gmail.com>
-Subject: Fwd: Git Submodule Misbehaviour With ./
-Date: Tue, 24 Feb 2009 15:56:20 -0800
-Message-ID: <80055d7c0902241556s4d24285bqd171275f58bdb37d@mail.gmail.com>
-References: <80055d7c0902241541o5c8fad50ra4eace5919bcf6df@mail.gmail.com>
+From: Jon Smirl <jonsmirl@gmail.com>
+Subject: STGIT: stg import -s with a patch option
+Date: Tue, 24 Feb 2009 19:28:13 -0500
+Message-ID: <9e4733910902241628u5a2db3bhca37e9214668eb02@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 25 00:59:55 2009
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 25 01:29:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lc7Bq-0006lh-33
-	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 00:59:54 +0100
+	id 1Lc7ei-0007Tp-3b
+	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 01:29:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755665AbZBXX4X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2009 18:56:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754330AbZBXX4W
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 18:56:22 -0500
-Received: from mail-gx0-f174.google.com ([209.85.217.174]:47408 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752100AbZBXX4W (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2009 18:56:22 -0500
-Received: by gxk22 with SMTP id 22so7782162gxk.13
-        for <git@vger.kernel.org>; Tue, 24 Feb 2009 15:56:20 -0800 (PST)
+	id S1752907AbZBYA2Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2009 19:28:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752858AbZBYA2Q
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 19:28:16 -0500
+Received: from yx-out-2324.google.com ([74.125.44.28]:13648 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752021AbZBYA2P (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2009 19:28:15 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so1213425yxm.1
+        for <git@vger.kernel.org>; Tue, 24 Feb 2009 16:28:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=/M3psmSDQEt5eEsus/uU4gi9+EdPhgKwiMyRHUoiUwE=;
-        b=HBbHE1qbQMOtl+sy6Id2MJwX/bbSgG1Yc2zvvnonZ58oCtFxrxaqPIGxQM6K+TUTZX
-         JZYiVd5oOlNVW7cnI4qEIYoJRwXiaqF4R4DbGA0GOMrPR80JY5R3tYrmihQncpI545Ar
-         h4QbAI8b/fGy8HUEp6uQgqomBpmVMi84EP3Ig=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=DUdDtxKnMfUwo3Ao85CmCjsEEg7NA7ed+UIk1iA4JpM=;
+        b=B88LTNJJWj0wN+8usg4Uh2tJIsqQ9VrRdn0ZqSn66Ynf1pNMXSFonD8s5w0aRSb1az
+         hOAnhQar/sofwQHtAPWSxZVote2j0uNoZrbbdo5YuDHH+H21/N+yL1VqUjdTu/ZGebtv
+         Z14oLKceCQM6nb+dRaj9GVn2vxTQVO7K7gBmc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=ZEUGsBqIbPP0j3ItyPkgm7AswxLw003t+ud7HH7pOyAx/BTc5nKBamOlGfJuCKkGmA
-         Nw4u7kVD6IM6ALG6oybR38u78tQgKdKfnqbqB79tkeQbUYuFel5Hj4/fEXsLwP1pXB/C
-         toKaUNWmhm/Z1uAG0ouBBLieWiwGRY6c2ceCA=
-Received: by 10.150.156.20 with SMTP id d20mr303594ybe.102.1235519780080; Tue, 
-	24 Feb 2009 15:56:20 -0800 (PST)
-In-Reply-To: <80055d7c0902241541o5c8fad50ra4eace5919bcf6df@mail.gmail.com>
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=ie/zZuRLItLbh0eSHhgqTrrbK8h070g5s7AFq0dEF/gYDvcX7CcAHQ6rOMH4xnW2fY
+         M7sWyRBGPAciEva3tZmAJePwALTQbIXcXY0ngvPr/V6HBeydcpVZgV/JetGyk5ET8JXm
+         Vmdpy9RHFQnYKeV3R1btYTo08eEO/pVvjn4sQ=
+Received: by 10.220.99.17 with SMTP id s17mr1247158vcn.0.1235521693367; Tue, 
+	24 Feb 2009 16:28:13 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111363>
 
-Hello,
+I picked up a patch with a series file that looks like this:
 
-Git (I have version 1.6.1.3) seems to misbehave when it comes to git
-submodule add and ./. Here is an example.
+u-boot-our-toolchains.diff -p0
+u-boot-no-tftp-in-flash.diff -p0
+u-boot-do-not-repeat-erase.diff -p0
+u-boot-do-not-repeat-cp.diff -p0
+dhcp_no_autoload.diff -p0
+cfi_bank_base_no_static.diff -p0
+mpc52xx_i2c_do_not_printf.diff -p0
+mpc5xxx_fec_init_phy.diff -p0
+mpc5xxx_i2c_fix_speed.diff -p0
+u-boot-phycore-mpc5200b-tiny.diff -p0
+u-boot-phycore-mpc5200b-tiny-flash-EEPROM.diff -p0
+u-boot-phycore-mpc5200b-tiny-ATA.diff -p0
+u-boot-phycore-mpc5200b-printstack.diff -p0
+u-boot-version.diff -p0
 
-================================================
-$ cd Configs
-$ git submodule add git@git.mercenariesguild.net:obvious.git ./awesome/obvious
-Initialized empty Git repository in /home/garoth/Configs/awesome/obvious/.git/
-stdin: is not a tty
-remote: Counting objects: 32, done.
-remote: Compressing objects: 100% (29/29), done.
-Receiving objects: 100% (32/32), 5.10 KiB, done.
-remote: Total 32 (delta 8), reused 0 (delta 0)
-Resolving deltas: 100% (8/8), done.
-$ git submodule init
-No submodule mapping found in .gitmodules for path 'awesome/obvious'
-$ git commit -m "Added obvious submodule"
-$ cd ~/Desktop
-$ git clone ~/Configs
-$ git submodule init
-No submodule mapping found in .gitmodules for path 'awesome/obvious'
-================================================
+stg doesn't know how to pick up the -p0 and then run patch with -p0.
 
-Note how when I did git submodule add, I used ./awesome/obvious. The behaviour
-of "No submodule mapping found in .gitmodules for path 'awesome/obvious'" only
-occurs when you use ./. If I were to use:
+jonsmirl@terra:/home/apps/u-boot$ stg import -s patches/series
+Checking for changes in the working directory ... done
+stg import: [Errno 2] No such file or directory: '/home/apps/u-boot/patches/u
+            -boot-our-toolchains.diff -p0'
+jonsmirl@terra:/home/apps/u-boot$ stg -v
+Stacked GIT 0.14.3.343.g0584
+git version 1.6.1.3
+Python version 2.5.2 (r252:60911, Oct  5 2008, 19:29:17)
+[GCC 4.3.2]
+jonsmirl@terra:/home/apps/u-boot$
 
-$ git submodule add git@git.mercenariesguild.net:obvious.git awesome/obvious
 
-instead, then git handles everything just fine. Thanks to dsal in #git
-for helping me
-figure this out. Perhaps there is an error with regards to how the
-.gitmodules file
-is parsed or encoded. I'm not really a git developer, but I wanted to
-have this issue
-documented at least somewhere.
 
-Thanks,
-
--Andrei Thorp
+-- 
+Jon Smirl
+jonsmirl@gmail.com
