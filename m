@@ -1,7 +1,7 @@
 From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH 05/21] move duplicated ref_newer() to remote.c
-Date: Wed, 25 Feb 2009 03:32:12 -0500
-Message-ID: <dbbbee22dfc7337f5b0f1be94434035d5ec22467.1235546708.git.jaysoffian@gmail.com>
+Subject: [PATCH 07/21] remote: simplify guess_remote_head()
+Date: Wed, 25 Feb 2009 03:32:14 -0500
+Message-ID: <7a4c3693fd5f1e53a63182a2da9ed9e46fb99441.1235546708.git.jaysoffian@gmail.com>
 References: <cover.1235546707.git.jaysoffian@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -14,270 +14,161 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcFF2-0000Xo-Q1
-	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 09:35:45 +0100
+	id 1LcFF4-0000Xo-7z
+	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 09:35:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759379AbZBYIcu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2009 03:32:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759317AbZBYIcs
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 03:32:48 -0500
+	id S1759606AbZBYIc5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2009 03:32:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759396AbZBYIc4
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 03:32:56 -0500
 Received: from an-out-0708.google.com ([209.85.132.242]:52135 "EHLO
 	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759184AbZBYIcp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2009 03:32:45 -0500
+	with ESMTP id S1758947AbZBYIct (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2009 03:32:49 -0500
 Received: by an-out-0708.google.com with SMTP id c2so1348060anc.1
-        for <git@vger.kernel.org>; Wed, 25 Feb 2009 00:32:42 -0800 (PST)
+        for <git@vger.kernel.org>; Wed, 25 Feb 2009 00:32:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=Y3aAkLc+cZ+ZOjp/frQNbQL0pHb8Y0AnROD5m/hB8Tk=;
-        b=ZYPrwI04oVLjzg8vhgYl+YeCJNwnX2FgAxObthAUhD2oc5TM5kFPZu9a0RfNzKIaCu
-         XcOsknapy1POemAo8ZTE/kZ+QKrHn1Y8a1z9x/zkFaYrf0dIk0aPmqpC98qrAQrXveuI
-         Fp7BuUs0wiORpM3TZWXlhFzM3EyNppf6tLlBw=
+        bh=Z/G8LO/SY2xk54fevfny0bucYjAILpIvzxQG6gSqMMM=;
+        b=s4aSujK7adj9wJL3aX8Ik56kMUp0p41ZEibz3J6axUtCHPiRMW47rSbjXkB1c2J7IU
+         qA0o4PjLGJ0M6W/6iHz9aD0CPdjUzxwQ2O4I/xIjY9BGhQfilhhH1Qt0jeYGcBK9Ws+v
+         6s1WAEoQRZ46p225MgG1jx6kRC5O3VVZiMktc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=NAMpmrEImwrRM9rK0sNWRVwb63UXmgdXy6H4IiAqR7/uk7J89Ae5By8hCm4JYZGTQW
-         bsnW/st56IuZXqPEf8G8r6pfEPaogn4Cr9OH/KYmmeuiX5oqkso3Wzra2maemou/Z23G
-         kgyJOSZivilt7wUA+PpNfx/ZYEJcNvwjmWXy8=
-Received: by 10.100.131.16 with SMTP id e16mr806965and.67.1235550762036;
-        Wed, 25 Feb 2009 00:32:42 -0800 (PST)
+        b=K6Vam/NWiv7A7SPz1Q90US/KmVMRC5oU7LlkKd/Lea3E+z19HlDhQ4sFbqn+YArsYH
+         76R2ElnWvvxngsr19OD7TKvG4n2xMGtI2h+VqRUNE1H8d8t4RkD/EqnaSyvLgGBKScFg
+         cosR7RilBG07UZ8YdbrAbQq2gEwb9cC0vuFx0=
+Received: by 10.100.105.9 with SMTP id d9mr810766anc.142.1235550767389;
+        Wed, 25 Feb 2009 00:32:47 -0800 (PST)
 Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
-        by mx.google.com with ESMTPS id b37sm7713144ana.17.2009.02.25.00.32.40
+        by mx.google.com with ESMTPS id d21sm12052756and.46.2009.02.25.00.32.46
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 25 Feb 2009 00:32:40 -0800 (PST)
+        Wed, 25 Feb 2009 00:32:46 -0800 (PST)
 X-Mailer: git-send-email 1.6.2.rc1.291.g83eb
 In-Reply-To: <cover.1235546707.git.jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111405>
 
-ref_newer() appears to have been copied from builtin-send-pack.c to
-http-push.c via cut and paste. This patch moves the function and its
-helper unmark_and_free() to remote.c. There was a slight difference
-between the two implementations, one used TMP_MARK for the mark, the
-other used 1. Per Jeff King, I went with TMP_MARK as more correct.
+This function had complications which made it hard to extend.
 
-This is in preparation for being able to call it from builtin-remote.c
+- It used to do two things: find the HEAD ref, and then find a
+  matching ref, optionally returning the former via assignment to a
+  passed-in pointer. Since finding HEAD is a one-liner, just have a
+  caller do it themselves and pass it as an argument.
+
+- It used to manually search through the ref list for
+  refs/heads/master; this can be a one-line call to
+  find_ref_by_name.
+
+Originally contributed by Jeff King along with the next commit as a
+single patch.
 
 Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
 ---
- builtin-send-pack.c |   50 --------------------------------------------------
- http-push.c         |   49 -------------------------------------------------
- remote.c            |   49 +++++++++++++++++++++++++++++++++++++++++++++++++
- remote.h            |    1 +
- 4 files changed, 50 insertions(+), 99 deletions(-)
+I split Jeff's patch into two as it makes the diff a littler easier on
+the eyes and the history is clearer this way.
 
-diff --git a/builtin-send-pack.c b/builtin-send-pack.c
-index 2fbfc29..9072905 100644
---- a/builtin-send-pack.c
-+++ b/builtin-send-pack.c
-@@ -1,6 +1,5 @@
- #include "cache.h"
- #include "commit.h"
--#include "tag.h"
- #include "refs.h"
- #include "pkt-line.h"
- #include "run-command.h"
-@@ -84,55 +83,6 @@ static int pack_objects(int fd, struct ref *refs, struct extra_have_objects *ext
- 	return 0;
- }
+ builtin-clone.c |    4 ++--
+ remote.c        |   31 ++++++++-----------------------
+ remote.h        |   13 ++++++-------
+ 3 files changed, 16 insertions(+), 32 deletions(-)
+
+diff --git a/builtin-clone.c b/builtin-clone.c
+index d179d1c..f9ce4fb 100644
+--- a/builtin-clone.c
++++ b/builtin-clone.c
+@@ -509,8 +509,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
  
--static void unmark_and_free(struct commit_list *list, unsigned int mark)
--{
--	while (list) {
--		struct commit_list *temp = list;
--		temp->item->object.flags &= ~mark;
--		list = temp->next;
--		free(temp);
--	}
--}
--
--static int ref_newer(const unsigned char *new_sha1,
--		     const unsigned char *old_sha1)
--{
--	struct object *o;
--	struct commit *old, *new;
--	struct commit_list *list, *used;
--	int found = 0;
--
--	/* Both new and old must be commit-ish and new is descendant of
--	 * old.  Otherwise we require --force.
--	 */
--	o = deref_tag(parse_object(old_sha1), NULL, 0);
--	if (!o || o->type != OBJ_COMMIT)
--		return 0;
--	old = (struct commit *) o;
--
--	o = deref_tag(parse_object(new_sha1), NULL, 0);
--	if (!o || o->type != OBJ_COMMIT)
--		return 0;
--	new = (struct commit *) o;
--
--	if (parse_commit(new) < 0)
--		return 0;
--
--	used = list = NULL;
--	commit_list_insert(new, &list);
--	while (list) {
--		new = pop_most_recent_commit(&list, 1);
--		commit_list_insert(new, &used);
--		if (new == old) {
--			found = 1;
--			break;
--		}
--	}
--	unmark_and_free(list, 1);
--	unmark_and_free(used, 1);
--	return found;
--}
--
- static struct ref *remote_refs, **remote_tail;
+ 		mapped_refs = write_remote_refs(refs, &refspec, reflog_msg.buf);
  
- static int receive_status(int in, struct ref *refs)
-diff --git a/http-push.c b/http-push.c
-index cfeed81..392533a 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1843,55 +1843,6 @@ static int is_zero_sha1(const unsigned char *sha1)
- 	return 1;
- }
- 
--static void unmark_and_free(struct commit_list *list, unsigned int mark)
--{
--	while (list) {
--		struct commit_list *temp = list;
--		temp->item->object.flags &= ~mark;
--		list = temp->next;
--		free(temp);
--	}
--}
--
--static int ref_newer(const unsigned char *new_sha1,
--		     const unsigned char *old_sha1)
--{
--	struct object *o;
--	struct commit *old, *new;
--	struct commit_list *list, *used;
--	int found = 0;
--
--	/* Both new and old must be commit-ish and new is descendant of
--	 * old.  Otherwise we require --force.
--	 */
--	o = deref_tag(parse_object(old_sha1), NULL, 0);
--	if (!o || o->type != OBJ_COMMIT)
--		return 0;
--	old = (struct commit *) o;
--
--	o = deref_tag(parse_object(new_sha1), NULL, 0);
--	if (!o || o->type != OBJ_COMMIT)
--		return 0;
--	new = (struct commit *) o;
--
--	if (parse_commit(new) < 0)
--		return 0;
--
--	used = list = NULL;
--	commit_list_insert(new, &list);
--	while (list) {
--		new = pop_most_recent_commit(&list, TMP_MARK);
--		commit_list_insert(new, &used);
--		if (new == old) {
--			found = 1;
--			break;
--		}
--	}
--	unmark_and_free(list, TMP_MARK);
--	unmark_and_free(used, TMP_MARK);
--	return found;
--}
--
- static void add_remote_info_ref(struct remote_ls_ctx *ls)
- {
- 	struct strbuf *buf = (struct strbuf *)ls->userData;
+-		head_points_at = guess_remote_head(refs, mapped_refs,
+-						   &remote_head);
++		remote_head = find_ref_by_name(refs, "HEAD");
++		head_points_at = guess_remote_head(remote_head, mapped_refs);
+ 	}
+ 	else {
+ 		warning("You appear to have cloned an empty repository.");
 diff --git a/remote.c b/remote.c
-index 01aae77..c8b7ea4 100644
+index 49a183e..aed760e 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -5,6 +5,7 @@
- #include "diff.h"
- #include "revision.h"
- #include "dir.h"
-+#include "tag.h"
- 
- static struct refspec s_tag_refspec = {
- 	0,
-@@ -1269,6 +1270,54 @@ int resolve_remote_symref(struct ref *ref, struct ref *list)
- 	return 1;
+@@ -1452,37 +1452,22 @@ struct ref *get_local_heads(void)
+ 	return local_refs;
  }
  
-+static void unmark_and_free(struct commit_list *list, unsigned int mark)
-+{
-+	while (list) {
-+		struct commit_list *temp = list;
-+		temp->item->object.flags &= ~mark;
-+		list = temp->next;
-+		free(temp);
-+	}
-+}
-+
-+int ref_newer(const unsigned char *new_sha1, const unsigned char *old_sha1)
-+{
-+	struct object *o;
-+	struct commit *old, *new;
-+	struct commit_list *list, *used;
-+	int found = 0;
-+
-+	/* Both new and old must be commit-ish and new is descendant of
-+	 * old.  Otherwise we require --force.
-+	 */
-+	o = deref_tag(parse_object(old_sha1), NULL, 0);
-+	if (!o || o->type != OBJ_COMMIT)
-+		return 0;
-+	old = (struct commit *) o;
-+
-+	o = deref_tag(parse_object(new_sha1), NULL, 0);
-+	if (!o || o->type != OBJ_COMMIT)
-+		return 0;
-+	new = (struct commit *) o;
-+
-+	if (parse_commit(new) < 0)
-+		return 0;
-+
-+	used = list = NULL;
-+	commit_list_insert(new, &list);
-+	while (list) {
-+		new = pop_most_recent_commit(&list, TMP_MARK);
-+		commit_list_insert(new, &used);
-+		if (new == old) {
-+			found = 1;
-+			break;
-+		}
-+	}
-+	unmark_and_free(list, TMP_MARK);
-+	unmark_and_free(used, TMP_MARK);
-+	return found;
-+}
-+
- /*
-  * Return true if there is anything to report, otherwise false.
-  */
+-const struct ref *guess_remote_head(const struct ref *refs,
+-				    const struct ref *mapped_refs,
+-				    const struct ref **remote_head_p)
++const struct ref *guess_remote_head(const struct ref *head,
++				    const struct ref *refs)
+ {
+-	const struct ref *remote_head = NULL;
+-	const struct ref *remote_master = NULL;
+ 	const struct ref *r;
+-	for (r = refs; r; r = r->next)
+-		if (!strcmp(r->name, "HEAD"))
+-			remote_head = r;
+ 
+-	for (r = mapped_refs; r; r = r->next)
+-		if (!strcmp(r->name, "refs/heads/master"))
+-			remote_master = r;
+-
+-	if (remote_head_p)
+-		*remote_head_p = remote_head;
+-
+-	/* If there's no HEAD value at all, never mind. */
+-	if (!remote_head)
++	if (!head)
+ 		return NULL;
+ 
+ 	/* If refs/heads/master could be right, it is. */
+-	if (remote_master && !hashcmp(remote_master->old_sha1,
+-				      remote_head->old_sha1))
+-		return remote_master;
++	r = find_ref_by_name(refs, "refs/heads/master");
++	if (r && !hashcmp(r->old_sha1, head->old_sha1))
++		return r;
+ 
+ 	/* Look for another ref that points there */
+-	for (r = mapped_refs; r; r = r->next)
+-		if (r != remote_head &&
+-		    !hashcmp(r->old_sha1, remote_head->old_sha1))
++	for (r = refs; r; r = r->next)
++		if (r != head && !hashcmp(r->old_sha1, head->old_sha1))
+ 			return r;
+ 
+ 	/* Nothing is the same */
 diff --git a/remote.h b/remote.h
-index 56ca8b1..c0666a0 100644
+index 9605da9..db49ce0 100644
 --- a/remote.h
 +++ b/remote.h
-@@ -74,6 +74,7 @@ int check_ref_type(const struct ref *ref, int flags);
- void free_refs(struct ref *ref);
+@@ -139,13 +139,12 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs);
+ int format_tracking_info(struct branch *branch, struct strbuf *sb);
  
- int resolve_remote_symref(struct ref *ref, struct ref *list);
-+int ref_newer(const unsigned char *new_sha1, const unsigned char *old_sha1);
- 
+ struct ref *get_local_heads(void);
++
  /*
-  * Removes and frees any duplicate refs in the map.
+- * Look in refs for HEAD. Then look for a matching SHA1 in mapped_refs,
+- * first checking if refs/heads/master matches. Return NULL if nothing matches
+- * or if there is no HEAD in refs. remote_head_p is assigned HEAD if not NULL.
++ * Look for a ref in refs whose SHA1 matches head, first checking if
++ * refs/heads/master matches. Return NULL if nothing matches or if head
++ * is NULL.
+  */
+-const struct ref *guess_remote_head(const struct ref *refs,
+-				    const struct ref *mapped_refs,
+-				    const struct ref **remote_head_p);
+-
++const struct ref *guess_remote_head(const struct ref *head,
++				    const struct ref *refs);
+ #endif
 -- 
 1.6.2.rc1.291.g83eb
