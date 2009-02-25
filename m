@@ -1,93 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Files different for me
-Date: Wed, 25 Feb 2009 10:51:16 -0800
-Message-ID: <7v4oyi2vvf.fsf@gitster.siamese.dyndns.org>
-References: <450196A1AAAE4B42A00A8B27A59278E709E047DE@EXCHANGE.trad.tradestation.com>
- <alpine.LFD.2.00.0902250957260.3111@localhost.localdomain>
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: RE: Files different for me
+Date: Wed, 25 Feb 2009 14:01:09 -0500
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E709E048A8@EXCHANGE.trad.tradestation.com>
+References: <450196A1AAAE4B42A00A8B27A59278E709E047DE@EXCHANGE.trad.tradestation.com> <7E43550E-68B7-4B22-A83C-F840A7037CA9@silverinsanity.com> <450196A1AAAE4B42A00A8B27A59278E709E0486D@EXCHANGE.trad.tradestation.com> <013B8F55-FBCC-4D3B-9EA4-13C05FFE986B@silverinsanity.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: John Dlugosz <JDlugosz@TradeStation.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Feb 25 19:53:11 2009
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "Brian Gernhardt" <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Wed Feb 25 20:02:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcOsH-0002bV-Bd
-	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 19:52:53 +0100
+	id 1LcP1l-0006W7-D5
+	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 20:02:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754988AbZBYSvZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2009 13:51:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754864AbZBYSvZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 13:51:25 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50991 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751316AbZBYSvZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2009 13:51:25 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 298BF9DF3B;
-	Wed, 25 Feb 2009 13:51:23 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 77F2E9DF38; Wed,
- 25 Feb 2009 13:51:18 -0500 (EST)
-In-Reply-To: <alpine.LFD.2.00.0902250957260.3111@localhost.localdomain>
- (Linus Torvalds's message of "Wed, 25 Feb 2009 10:04:22 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4C11CF32-036D-11DE-B0CE-B26E209B64D9-77302942!a-sasl-fastnet.pobox.com
+	id S1755402AbZBYTBO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2009 14:01:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754158AbZBYTBN
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 14:01:13 -0500
+Received: from mail5.tradestation.com ([63.99.207.76]:59808 "EHLO
+	mail5.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752442AbZBYTBN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Feb 2009 14:01:13 -0500
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 25 Feb 2009 14:01:10 -0500
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <013B8F55-FBCC-4D3B-9EA4-13C05FFE986B@silverinsanity.com>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Files different for me
+thread-index: AcmXeER7LkQrZHOMQ/6o4jKXS/aUJQAAX7aw
+X-OriginalArrivalTime: 25 Feb 2009 19:01:10.0887 (UTC) FILETIME=[6C33B770:01C9977B]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111479>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Thanks for the clarification, and thanks all on the thread for
+explaining things to me.
+It appears that fetching with my local changes is not a problem.  For
+going the other way, you suggest:
 
-> If your changes do not touch any of the files that the "git pull" updates, 
-> then everything is fine. The pull will just work, and your changes will 
-> still exists in your tree. This is not an accident - git was very much 
-> designed to work that way, because it's a common usage case for me.
->
-> I often have some trivial small changes in my tree (like a pending change 
-> to the top-level Makefile for the next version number that I just haven't 
-> committed yet - just a reminder to myself that I'm soon about to release 
-> another -rc). And I still want to continue to do "git pull" to fetch 
-> stuff, or even "git am -s" to apply patches.
->
-> HOWEVER. If the pull actually wants to modify a file that you have changed 
-> (ie that same file was changed in the remote), then "git pull" will fail 
-> gracefully after having done the fetch, saying something like
->
-> 	Entry 'file-name' not uptodate. Cannot merge.
->
-> and at that point you have to decide whethe you want to commit the change, 
-> "stash" it, or just undo it. Or whether you don't want to do the merge 
-> yet because you're still working on your own changes, and don't want the 
-> distraction.
+	For pushing, I'd suggest either working on new features in a
+different
+	branch ("topic" and "local" for example), or using "rebase -i"
+to move
+	your local changes to the top and using "push HEAD^".
 
-I've been repeating the above to new people to save you time, but recently
-I noticed one thing.
+I get the idea of floating "that" change to the top and using "push
+HEAD^", though I've never tried --interactive so I'll have to play
+around with that on a backup first.
 
-The handling of a case where a pull decides to go ahead (because it does
-not have to touch the Makefile you have your codename updates in) but does
-not complete with real conflicts, is not as graceful as the other two
-cases (merge refusing to run at all without touching anything, or merge
-completes cleanly and makes a commit).
+I think if those changes are not committed, it won't be an issue.  
 
-You will be left with:
+So, my plan at this point is to "stash" my Local Change, and then apply
+it.  Then just keep it out of the index.  If I do get a conflict, I can
+re-apply my change from the stashed copy.  
 
- - Paths that have local changes (index matches HEAD but work tree does
-   not match the index --- like your Makefile);
 
- - Paths cleanly merged (index and HEAD are different but work tree
-   already matches the index);
+Ordinarily, I'll all about working on a feature on a branch, exposing a
+"task based" system to other developers.  But, this particular change is
+not isolated, and I'm adding parameter to functions and such (I'm
+changing the way configuration works and making more things
+configurable) all over the place.  I want to push stable work frequently
+so other changes don't get too far away making a merge nightmare.
 
- - Unmerged paths (index has higher stage entries with <<</===/>>> files
-   in the work tree);
+<rant>
+Last time, I was careful to publish stable code frequently to the
+official "dev" branch, but when another major feature was finished, they
+just declared that branch to be the new main-line official branch.
+</rant>
 
-You, I and experienced users know what to do.  Deal *only* with the last
-kind, mark them with "git add" after you are done with each of them, and
-make sure you do not say "-a" when committing the result, to exclude the
-first kind from the merge result.
 
-I've been wondering if we can make this safer for others.
+-----Original Message-----
+From: Brian Gernhardt [mailto:benji@silverinsanity.com] 
+
+You can set branch.master.rebase with
+
+   git config branch.master.rebase true
+
+It actually works the other way.  Your changes will be rebased on top of
+the work from other developers.
+
+A--B--E--F  origin/master
+     \
+      C--D master
+
+will become
+
+A--B--E--F  origin/master
+           \
+            C'--D' master
+
+I share most of my changes using format-patch and e-mail instead of
+pushes, so I just don't generate patches for my unimportant changes.
+For pushing, I'd suggest either working on new features in a different
+branch ("topic" and "local" for example), or using "rebase -i" to move
+your local changes to the top and using "push HEAD^".
+
+~~ Brian
