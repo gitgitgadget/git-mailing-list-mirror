@@ -1,121 +1,120 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH 19/21] remote: make guess_remote_head() use exact HEAD lookup if it is available
-Date: Wed, 25 Feb 2009 03:32:26 -0500
-Message-ID: <19a72f943581d6e91ccc260ca933b95dba4f0473.1235546708.git.jaysoffian@gmail.com>
-References: <cover.1235546707.git.jaysoffian@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: How do I qualify paths in the .gitignore file w.r.t. the repo
+ root  directory?
+Date: Wed, 25 Feb 2009 00:36:10 -0800
+Message-ID: <7vab8aap6t.fsf@gitster.siamese.dyndns.org>
+References: <e38bce640902232247t63a37f63x9f403fbda0744cfd@mail.gmail.com>
+ <7v1vtomhz1.fsf@gitster.siamese.dyndns.org>
+ <slrngq7e6c.iti.sitaramc@sitaramc.homelinux.net>
+ <7vzlgbhh95.fsf@gitster.siamese.dyndns.org>
+ <slrngq9es5.ik0.sitaramc@sitaramc.homelinux.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jay Soffian <jaysoffian@gmail.com>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 25 09:36:06 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 25 09:37:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcFFC-0000Xo-TO
-	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 09:35:55 +0100
+	id 1LcFH4-0001H5-9M
+	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 09:37:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760101AbZBYIdd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2009 03:33:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759905AbZBYId3
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 03:33:29 -0500
-Received: from mail-gx0-f174.google.com ([209.85.217.174]:35129 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760015AbZBYIdQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2009 03:33:16 -0500
-Received: by gxk22 with SMTP id 22so8310869gxk.13
-        for <git@vger.kernel.org>; Wed, 25 Feb 2009 00:33:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=b80BN8qcWpY4WELFLjO6YZpKRXvLKNSm7jlUqQAPckI=;
-        b=YSQ3+pIa6l8oGI3BHIY5j0yL3SBRylLvAMbXc3FRwWzWfcmJ0JkP5aSaGfO5Fj7jsR
-         hk3Op/WTEJqiZ5PFfUy93byE/US6Ki0RiiknDmcnMW09Ybt7QWu3WVQT+HMF2U+QUE/3
-         YTP21xR3Ptq6Yu4YQVqoXPJDZkA/NQAh2LNSw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=KySytmfEoQO3uKiGfQi27rHq1mPIerGiuaYJDjT9t4I5Y+PpcpoHv+DB58yEUcTH3J
-         TMH9AT9GuXD8nHsDvzfimf7YS3bsNT05IZNj1hqArM20CPG05662/IrU5hyHZnCiZ4n6
-         JgLyhPEeGzYIibVg1RokP2ChgzLtOwk7z7yOw=
-Received: by 10.100.133.2 with SMTP id g2mr898946and.134.1235550794502;
-        Wed, 25 Feb 2009 00:33:14 -0800 (PST)
-Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
-        by mx.google.com with ESMTPS id b37sm3997930ana.57.2009.02.25.00.33.13
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 25 Feb 2009 00:33:13 -0800 (PST)
-X-Mailer: git-send-email 1.6.2.rc1.291.g83eb
-In-Reply-To: <cover.1235546707.git.jaysoffian@gmail.com>
+	id S1758260AbZBYIgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2009 03:36:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757543AbZBYIgV
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 03:36:21 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49972 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753290AbZBYIgU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2009 03:36:20 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 48A539D3FA;
+	Wed, 25 Feb 2009 03:36:16 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9488B9D3F9; Wed,
+ 25 Feb 2009 03:36:12 -0500 (EST)
+In-Reply-To: <slrngq9es5.ik0.sitaramc@sitaramc.homelinux.net> (Sitaram
+ Chamarty's message of "Wed, 25 Feb 2009 03:31:17 +0000 (UTC)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 5DEE87BE-0317-11DE-A6A8-B26E209B64D9-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111414>
 
-From: Jeff King <peff@peff.net>
+Sitaram Chamarty <sitaramc@gmail.com> writes:
 
-Our usual method for determining the ref pointed to by HEAD
-is to compare HEAD's sha1 to the sha1 of all refs, trying to
-find a unique match.
+> Please tell me what you think.  If you like it, I'll send in
+> this patch.  If you prefer the previous one, I'll send that
+> in.
+> ...
+> The files containing the patterns have the following format:
+>
+>  - A blank line matches no files, so it can serve as a
+>    separator for readability.
+>
+>  - A line starting with # serves as a comment.
+>
+> This is _how_ the patterns match:
+>
+>  - The wildcards (`*` and `?`) do not match slashes, but
+>    otherwise the patterns are normal shell globs as defined
+>    by fnmatch(3) with the FNM_PATHNAME flag set.
 
-However, some transports actually get to look at HEAD
-directly; we should make use of that information when it is
-available.  Currently, only http remotes support this
-feature.
+I had to read this twice and run "man 3 fnmatch" to clear my head.
 
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
- remote.c              |   10 ++++++++++
- t/t5550-http-fetch.sh |   11 +++++++++++
- 2 files changed, 21 insertions(+), 0 deletions(-)
+ - In normal shell globs, wildcards '*' and '?' do not match slashes;
 
-diff --git a/remote.c b/remote.c
-index 926f842..1c09cf0 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1475,6 +1475,16 @@ struct ref *guess_remote_head(const struct ref *head,
- 	if (!head)
- 		return NULL;
- 
-+	/*
-+	 * Some transports support directly peeking at
-+	 * where HEAD points; if that is the case, then
-+	 * we don't have to guess.
-+	 */
-+	if (head->symref) {
-+		r = find_ref_by_name(refs, head->symref);
-+		return r ? copy_ref_with_peer(r) : NULL;
-+	}
-+
- 	/* If refs/heads/master could be right, it is. */
- 	if (!all) {
- 		r = find_ref_by_name(refs, "refs/heads/master");
-diff --git a/t/t5550-http-fetch.sh b/t/t5550-http-fetch.sh
-index b6e6ec9..05b1b62 100755
---- a/t/t5550-http-fetch.sh
-+++ b/t/t5550-http-fetch.sh
-@@ -42,5 +42,16 @@ test_expect_success 'fetch changes via http' '
- 	test_cmp file clone/file
- '
- 
-+test_expect_success 'http remote detects correct HEAD' '
-+	git push public master:other &&
-+	(cd clone &&
-+	 git remote set-head origin -d &&
-+	 git remote set-head origin -a &&
-+	 git symbolic-ref refs/remotes/origin/HEAD > output &&
-+	 echo refs/remotes/origin/master > expect &&
-+	 test_cmp expect output
-+	)
-+'
-+
- stop_httpd
- test_done
--- 
-1.6.2.rc1.291.g83eb
+ - fnmatch(3) with FNM_PATHNAME implements the normal shell globs;
+
+ - wildcards do not match slashes in gitignore either.
+
+Given these three, I am very confused why you say "but otherwise".  I
+would understand it if it were:
+
+    The patterns are treated as normal shell globs defined by fnmatch(3) with
+    FNM_PATHNAME; in other words, the wildcards (`*` and `?`) do not match
+    slashes.
+
+>  - An optional prefix '!' negates the pattern; any matching
+>    file excluded by a previous pattern will become included
+>    again.  If a negated pattern matches, this will override
+>    lower precedence patterns sources.
+
+'!' is not part of _how_ the patterns match.  It is _what happens_ when a
+pattern marked as such matches (meaning, the syntax for a line in
+gitignore file is "an optional '!' followed by a pattern").
+
+    An optional prefix '!' is not a part of the pattern and it does not
+    affect the match.  When a path matches such a pattern, instead of
+    being ignored, it is unignored.
+
+It would be good to clarify that '!' is not part of the pattern, as I'd
+like to take J6t's patch that says gitattributes uses the same pattern as
+gitignore uses.
+
+> This is _what_ the patterns match:
+>
+>  - If the pattern ends with a slash, it matches only
+>    directories (and their contents), otherwise it matches
+>    regular files and symlinks also.
+
+Do we want "(and their contents)" here?  Once a directory is ignored like
+this, none of its contents, including .gitignore file in it, is examined
+because we do not even descend into it.
+
+> This is _where_ the patterns match (a trailing slash is
+> ignored for these rules):
+>
+>  - If there is a slash at the start or within the pattern,
+>    it matches paths relative to the .gitignore file in which
+>    the pattern is found, or to the root of the working tree
+>    if the pattern is from one of the other pattern sources
+>    (i.e., `.git/info/exclude`, `core.excludesfile`)
+
+"at the start or within but not at the end of the pattern"?
+
+>  - Otherwise, it matches a path at any depth in the tree
