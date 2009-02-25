@@ -1,69 +1,62 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 2/2] git submodule: Fix adding of submodules at paths
- with ./
-Date: Wed, 25 Feb 2009 14:04:19 +0100
-Message-ID: <49A541D3.4030001@viscovery.net>
-References: <80055d7c0902241556s4d24285bqd171275f58bdb37d@mail.gmail.com> <1235559820-3096-1-git-send-email-git@drmicha.warpmail.net> <1235559820-3096-2-git-send-email-git@drmicha.warpmail.net> <1235559820-3096-3-git-send-email-git@drmicha.warpmail.net> <49A529AB.8010700@viscovery.net> <49A53B15.4060608@drmicha.warpmail.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Andrei Thorp <garoth@gmail.com>,
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCHv2 0/4] Fix git submodule add for funky paths
+Date: Wed, 25 Feb 2009 14:26:28 +0100
+Message-ID: <1235568392-19705-1-git-send-email-git@drmicha.warpmail.net>
+References: <49A541D3.4030001@viscovery.net>
+Cc: Andrei Thorp <garoth@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
 	Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Feb 25 14:06:26 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 25 14:28:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcJSX-0001Ff-6t
-	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 14:05:57 +0100
+	id 1LcJo5-0001ls-FS
+	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 14:28:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753152AbZBYNE3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2009 08:04:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752722AbZBYNE3
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 08:04:29 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:25958 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752665AbZBYNE2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2009 08:04:28 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1LcJQx-0007J2-ST; Wed, 25 Feb 2009 14:04:20 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 944F0A865; Wed, 25 Feb 2009 14:04:19 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <49A53B15.4060608@drmicha.warpmail.net>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1755530AbZBYN0o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2009 08:26:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756046AbZBYN0n
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 08:26:43 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:56336 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755793AbZBYN0n (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Feb 2009 08:26:43 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 290982A62E6;
+	Wed, 25 Feb 2009 08:26:41 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Wed, 25 Feb 2009 08:26:41 -0500
+X-Sasl-enc: LTN5iHN6TIz+sE1LzP0oZm/RmOEVZDZEryD7Clx0YbyE 1235568400
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 7E46012B06;
+	Wed, 25 Feb 2009 08:26:40 -0500 (EST)
+X-Mailer: git-send-email 1.6.2.rc1.30.gd43c
+In-Reply-To: <49A541D3.4030001@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111452>
 
-Michael J Gruber schrieb:
-> Johannes Sixt venit, vidit, dixit 25.02.2009 12:21:
->> Michael J Gruber schrieb:
->>> +	# strip superfluous ./ from path
->>> +	path=$(echo "$path" | sed -e 's|^\(\./\)*||' -e's|/\./|/|g')
->> At a minimum:
->>
->> 	path=$(echo "$path" | sed -e 's|^/\(\./\)*|/|g' -e's|^\./||')
->>
->> Otherwise you would turn "foo./bar" into "foobar", right?
-> 
-> Wrong.
+As reported by Andrei Thorp <garoth@gmail.com>, git submodule add does
+not work with paths containing './'. This series exposes the problem
+with tests and fixes it. (For details see the commit messages.)
 
-Ouch! Point taken. I didn't notice the ^ in the first expression, and I
-even copy-pasted and edited it!
+On a side note: There were no tests at all so far for git submodule add.
+Now there are at least two, but there should be more, especially for
+adding repos in place and such.
 
-> Now, the /// are in fact a valid concern[1], although probably not that
-> common an isue.
+v2 adds 2 more tests for paths with // and /.. and helps g sm add pass the tests.
 
-I'm fine if only common use cases are taken care of. If you say that ./ is
-common and /// is not, then I'll believe it because I'm not a git
-submodule user (yet) and can't argue about this with my own experience.
+Michael J Gruber (4):
+  git submodule: Add test cases for git submodule add
+  git submodule: Fix adding of submodules at paths with ./
+  git submodule: Add more tests for add with funky paths
+  git submodule: Fix handling of // and /.. in paths for added
+    submodules
 
--- Hannes
+ git-submodule.sh           |    9 +++++++++
+ t/t7400-submodule-basic.sh |   29 +++++++++++++++++++++++++++++
+ 2 files changed, 38 insertions(+), 0 deletions(-)
