@@ -1,82 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH RESEND] Fix a bunch of pointer declarations (codestyle)
-Date: Wed, 25 Feb 2009 00:02:04 -0800
-Message-ID: <7veixnaqrn.fsf@gitster.siamese.dyndns.org>
-References: <1235512745-26814-1-git-send-email-felipe.contreras@gmail.com>
+From: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
+Subject: Re: autocrlf=input and safecrlf (was Re: CVS import [SOLVED])
+Date: Wed, 25 Feb 2009 09:03:00 +0100 (CET)
+Message-ID: <45197.77.61.241.211.1235548980.squirrel@hupie.xs4all.nl>
+References: <20090220172918.GB4636@coredump.intra.peff.net>
+    <499F3B9B.3020709@pelagic.nl>
+    <20090223000840.GA20392@coredump.intra.peff.net>
+    <2944.77.61.241.211.1235371848.squirrel@hupie.xs4all.nl>
+    <20090223065615.GA24807@coredump.intra.peff.net>
+    <1570.77.61.241.211.1235372943.squirrel@hupie.xs4all.nl>
+    <20090223071056.GA29241@coredump.intra.peff.net>
+    <59288.77.61.241.211.1235374197.squirrel@hupie.xs4all.nl>
+    <20090224061134.GF4615@coredump.intra.peff.net>
+    <14283.77.61.241.211.1235467512.squirrel@hupie.xs4all.nl>
+    <20090225065624.GA1678@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 25 09:03:42 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Ferry Huberts" <ferry.huberts@pelagic.nl>,
+	"Johannes Schindelin" <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 25 09:04:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcEk1-0007si-5a
-	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 09:03:41 +0100
+	id 1LcEkr-00080v-TZ
+	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 09:04:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757913AbZBYICN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2009 03:02:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757618AbZBYICN
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 03:02:13 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45399 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757585AbZBYICM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2009 03:02:12 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D31929D2E1;
-	Wed, 25 Feb 2009 03:02:09 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B20669D2E0; Wed,
- 25 Feb 2009 03:02:06 -0500 (EST)
-In-Reply-To: <1235512745-26814-1-git-send-email-felipe.contreras@gmail.com>
- (Felipe Contreras's message of "Tue, 24 Feb 2009 23:59:02 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 9A29A3C6-0312-11DE-8384-B26E209B64D9-77302942!a-sasl-fastnet.pobox.com
+	id S1752834AbZBYIDH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2009 03:03:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750999AbZBYIDG
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 03:03:06 -0500
+Received: from hupie.xs4all.nl ([82.95.241.251]:59620 "EHLO
+	Lighthouse.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750874AbZBYIDF (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Feb 2009 03:03:05 -0500
+Received: by Lighthouse.internal.Hupie.com (Postfix, from userid 48)
+	id C6D8758BDBB; Wed, 25 Feb 2009 09:03:00 +0100 (CET)
+Received: from 77.61.241.211
+        (SquirrelMail authenticated user ferry.huberts@pelagic.nl)
+        by hupie.xs4all.nl with HTTP;
+        Wed, 25 Feb 2009 09:03:00 +0100 (CET)
+In-Reply-To: <20090225065624.GA1678@sigill.intra.peff.net>
+User-Agent: SquirrelMail/1.4.8-5.el5.centos.3
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111387>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> This applies on top of the 'next' branch.
+
+On Wed, February 25, 2009 07:56, Jeff King wrote:
+> On Tue, Feb 24, 2009 at 10:25:12AM +0100, Ferry Huberts (Pelagic) wrote:
 >
->  alias.c                                   |    4 +-
->  alloc.c                                   |    2 +-
->  attr.c                                    |    4 +-
->  builtin-blame.c                           |    8 +++---
->  builtin-checkout-index.c                  |    4 +-
->  builtin-describe.c                        |    4 +-
->  builtin-fetch-pack.c                      |    2 +-
->  builtin-help.c                            |    6 ++--
->  builtin-update-index.c                    |    6 ++--
->  cache.h                                   |    2 +-
->  combine-diff.c                            |    4 +-
->  compat/mingw.c                            |    2 +-
->  config.c                                  |   30 ++++++++++++++--------------
->  contrib/convert-objects/convert-objects.c |    6 ++--
->  diff-no-index.c                           |    2 +-
->  diff.c                                    |    6 ++--
->  dir.c                                     |    2 +-
->  fast-import.c                             |   14 ++++++------
->  git.c                                     |    8 +++---
->  http.c                                    |    4 +-
->  lockfile.c                                |    2 +-
->  reflog-walk.c                             |    2 +-
->  run-command.c                             |    2 +-
->  server-info.c                             |    4 +-
->  sha1_file.c                               |    2 +-
->  wt-status.c                               |    2 +-
+>> > So yes, in some sense it is safecrlf that is broken. I'm just concerned
+>> > about tweaking the user's options behind their back. The import can
+>> > happen differently than they expected no matter which of safecrlf or
+>> > autocrlf you tweak. So I think you are better off to complain and die.
+>>
+>> The plan was:
+>> - when creating a new git repo for cvs import: setup safecrlf=false
+>> - when importing into an existing repo: check whether the safecrlf
+>>   setting is set to false and crash and burn when not :-)
+>>   (complain before going up in flames)
+>
+> Why is it OK to silently change the settings in the first case, but not
+> the second? Don't both have the potential to screw up the user's import?
+>
 
-Sorry, but I cannot take this as is.
+the option would be setup for the import repository only, not global nor system
 
-These trivial clean-ups are welcome either as part of a preparatory
-clean-up before starting to work in the area of code you are touching, or
-as a standalone patch to files that nobody is currently working on.
+> Also, are settings going to be unset after the first import? If so, then
+> further incremental imports will fail as described in your second case.
+> But if not, then safecrlf is turned off for that repo, even for
+> non-cvsimport commands, overriding anything in the user's ~/.gitconfig.
+> For somebody doing a one-shot import, they are paying that price without
+> any benefit.
+>
+this actually makes sense to me. I was only thinking about the continuous
+import use-case. In that light it would be better to just complain and die
+in the script. I guess I'll just implement that in the patch then.
 
-There is a huge overlap between "git diff --name-only master..pu" and the
-above list, so it is impossible for me to take the patch and I cannot
-afford the time to sift through gems out of stones.
+Ferry
