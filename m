@@ -1,103 +1,69 @@
-From: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>
-Subject: Commits with empty commit messages
-Date: Wed, 25 Feb 2009 13:50:03 +0100 (CET)
-Message-ID: <alpine.LRH.2.00.0902251338230.21065@vixen.sonytel.be>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 2/2] git submodule: Fix adding of submodules at paths
+ with ./
+Date: Wed, 25 Feb 2009 14:04:19 +0100
+Message-ID: <49A541D3.4030001@viscovery.net>
+References: <80055d7c0902241556s4d24285bqd171275f58bdb37d@mail.gmail.com> <1235559820-3096-1-git-send-email-git@drmicha.warpmail.net> <1235559820-3096-2-git-send-email-git@drmicha.warpmail.net> <1235559820-3096-3-git-send-email-git@drmicha.warpmail.net> <49A529AB.8010700@viscovery.net> <49A53B15.4060608@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 25 13:51:48 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Andrei Thorp <garoth@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Feb 25 14:06:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcJEd-0004Si-R3
-	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 13:51:36 +0100
+	id 1LcJSX-0001Ff-6t
+	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 14:05:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752654AbZBYMuH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Feb 2009 07:50:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752301AbZBYMuH
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 07:50:07 -0500
-Received: from vervifontaine.sonytel.be ([80.88.33.193]:62477 "EHLO
-	vervifontaine.sonycom.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751183AbZBYMuG (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Feb 2009 07:50:06 -0500
-Received: from vixen.sonytel.be (piraat.sonytel.be [43.221.60.197])
-	by vervifontaine.sonycom.com (Postfix) with ESMTP id ADD3158ABD;
-	Wed, 25 Feb 2009 13:50:03 +0100 (MET)
-User-Agent: Alpine 2.00 (LRH 1167 2008-08-23)
+	id S1753152AbZBYNE3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2009 08:04:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752722AbZBYNE3
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 08:04:29 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:25958 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752665AbZBYNE2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2009 08:04:28 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LcJQx-0007J2-ST; Wed, 25 Feb 2009 14:04:20 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 944F0A865; Wed, 25 Feb 2009 14:04:19 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <49A53B15.4060608@drmicha.warpmail.net>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111451>
 
-I accidentally managed to create a commit with an empty commit message =
-using
-`git am' with a patch that didn't have a subject line. It didn't matter=
- much,
-as I just wanted to squash it during a rebase anyway.
+Michael J Gruber schrieb:
+> Johannes Sixt venit, vidit, dixit 25.02.2009 12:21:
+>> Michael J Gruber schrieb:
+>>> +	# strip superfluous ./ from path
+>>> +	path=$(echo "$path" | sed -e 's|^\(\./\)*||' -e's|/\./|/|g')
+>> At a minimum:
+>>
+>> 	path=$(echo "$path" | sed -e 's|^/\(\./\)*|/|g' -e's|^\./||')
+>>
+>> Otherwise you would turn "foo./bar" into "foobar", right?
+> 
+> Wrong.
 
-However, during `git rebase -i', I got a corrupt list of commits. Inste=
-ad of
-the usual:
+Ouch! Point taken. I didn't notice the ^ in the first expression, and I
+even copy-pasted and edited it!
 
-| pick sha1 desc1
-| pick sha2 desc2
+> Now, the /// are in fact a valid concern[1], although probably not that
+> common an isue.
 
-I saw:
+I'm fine if only common use cases are taken care of. If you say that ./ is
+common and /// is not, then I'll believe it because I'm not a git
+submodule user (yet) and can't argue about this with my own experience.
 
-| pick sha1 >sha2 desc2
-
-If you have a commit with an empty commit message, you can also not fix=
- this
-using amend:
-
-| $ git commit --amend
-| fatal: commit has empty message
-| $
-
-If you use `git rebase -i' to rebase one or more commits, _all_ of them=
- with
-empty commit messages, you don't see any of the familiar `pick' lines, =
-but just
-
-| noop
-
-and you `loose' all those commits as soon as you quit your editor.
-
-Probably the real offender is `git am', which allows empty commit messa=
-ges,
-unlike `git commit'.
-
-
-While trying to create a clean test case, I also noticed you cannot use
-`git am' to create the first commit in a freshly initialized empty git
-repository. It fails with:
-
-| $ git am patch
-| fatal: HEAD: not a valid SHA1
-| fatal: bad revision 'HEAD'
-| $
-
-I'm using 1.6.0.4, but I could reproduce the issues with 1.6.2.rc1.41.g=
-3f74c.
-
-With kind regards,
-
-Geert Uytterhoeven
-Software Architect
-
-Sony Techsoft Centre Europe
-The Corporate Village =B7 Da Vincilaan 7-D1 =B7 B-1935 Zaventem =B7 Bel=
-gium
-
-Phone:    +32 (0)2 700 8453
-=46ax:      +32 (0)2 700 8622
-E-mail:   Geert.Uytterhoeven@sonycom.com
-Internet: http://www.sony-europe.com/
-
-A division of Sony Europe (Belgium) N.V.
-VAT BE 0413.825.160 =B7 RPR Brussels
-=46ortis =B7 BIC GEBABEBB =B7 IBAN BE41293037680010
+-- Hannes
