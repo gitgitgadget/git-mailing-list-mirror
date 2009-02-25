@@ -1,101 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] add test cases for the --repo option to git push
-Date: Wed, 25 Feb 2009 13:58:17 -0800
-Message-ID: <7vhc2iyy9y.fsf@gitster.siamese.dyndns.org>
-References: <76718490902210132w2577c093tf8c2a5e7da8bc0e8@mail.gmail.com>
- <1235497240-20677-1-git-send-email-git@drmicha.warpmail.net>
+From: Werner LEMBERG <wl@gnu.org>
+Subject: serious problem with `git format-patch' & `git am'
+Date: Wed, 25 Feb 2009 23:03:52 +0100 (CET)
+Message-ID: <20090225.230352.177616203.wl@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Feb 25 23:00:01 2009
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: keithp@keithp.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 25 23:06:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcRnF-0007yH-5C
-	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 22:59:53 +0100
+	id 1LcRsl-0001c2-9f
+	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 23:05:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758960AbZBYV60 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2009 16:58:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757454AbZBYV6Z
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 16:58:25 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46971 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756699AbZBYV6Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2009 16:58:24 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id EBFA71381;
-	Thu, 26 Feb 2009 16:58:20 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 34E8F137D; Thu,
- 26 Feb 2009 16:58:18 -0500 (EST)
-In-Reply-To: <1235497240-20677-1-git-send-email-git@drmicha.warpmail.net>
- (Michael J. Gruber's message of "Tue, 24 Feb 2009 18:40:40 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 94E439D2-0450-11DE-BB05-8D02133F2F75-77302942!a-sasl-quonix.pobox.com
+	id S1759360AbZBYWEH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2009 17:04:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758766AbZBYWEG
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 17:04:06 -0500
+Received: from moutng.kundenserver.de ([212.227.126.186]:56126 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758643AbZBYWEF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2009 17:04:05 -0500
+Received: from localhost (77.118.133.164.wireless.dyn.drei.com [77.118.133.164])
+	by mrelayeu.kundenserver.de (node=mrelayeu4) with ESMTP (Nemesis)
+	id 0ML21M-1LcRrC0K6J-0005iZ; Wed, 25 Feb 2009 23:04:01 +0100
+X-Mailer: Mew version 6.2.50 on Emacs 22.3.1 / Mule 5.0 (SAKAKI)
+X-Provags-ID: V01U2FsdGVkX1/SzgTreTco9spjY6S3xrBwNII8E1kfuiAUqzL
+ 95UVAJUsv3KiHnKdJYYiGXzu+nKD/Y4qElQtwE0LluriOBqxDU
+ YJaRemwr05Y4sNJ7q7eMg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111504>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-> @@ -419,6 +419,41 @@ test_expect_success 'push with config remote.*.push = HEAD' '
->  git config --remove-section remote.there
->  git config --remove-section branch.master
->  
-> +test_expect_success 'push with --repo=repourl from non-tracking branch' '
-> +
-> +	mk_test heads/master &&
-> +	git push --repo=testrepo &&
-> +	check_push_result $the_commit heads/master
-> +'
-> +
-> +# set up fake remote config
-> +test_expect_success 'push with --repo=remoterepo from non-tracking branch' '
-> +
-> +	mk_test heads/master &&
-> +	git config remote.testremote.url testrepo &&
-> +	git push --repo=testremote &&
-> +	check_push_result $the_commit heads/master
-> +'
-> +
-> +# set up fake tracking info; testrepo exists, origin does not.
-> +test_expect_failure 'push with --repo=repo from tracking branch with bad config' '
-> +
-> +	mk_test heads/master &&
-> +	git config branch.master.remote origin &&
-> +	test_must_fail git push --repo=testrepo
-> +'
+[both version 1.6.0.2 and git from 2009-01-24]
 
-At this point, you have:
+Folks,
 
-	branch.master.remote = origin
-        remote.testremote.url = testrepo
 
-and nothing else related to push.  And you are asking a "git push but
-instead of origin please default to testrepo".
+I'm going to convert the FreeType CVS repository to git, using Keith
+Packard's `parsecvs'.  It sometimes happens that there are git entries
+titled
 
-In response to that request, in order to figure out what refs to push by
-default, remote.testremote.push instead of remote.origin.push will be
-consulted, and we won't even have to notice nor complain the missing
-remote.origin.  remote.testremote.push is missing, so the push defaults to
-the "matching ref" behaviour.
+  *** empty log message ***
 
-I do not understand why you expect the above to fail.
+I want to massage the git repository before publishing it, replacing
+those entries with something more meaningful.
 
-> +test_expect_failure 'push with --repo=repo from tracking branch with good config' '
-> +
-> +	mk_test heads/master &&
-> +	git config branch.master.remote testrepo &&
-> +	git push --repo=origin &&
-> +	check_push_result $the_commit heads/master
-> +'
+The last time I tested this (using git 1.5.something, I no longer
+remember the exact version) I did the following:
 
-Likewise.
+  . git format-patch <start>..HEAD
+    git reset --hard <start>
 
-I think the "good/bad config" labels given to your two test scripts are
-swapped and there is no bug or misfeature here.
+  . Edit the `Subject:' field in the created *.patch files where
+    necessary.
+
+  . git am --whitespace=nowarn *.patch
+
+Unfortunately, this no longer works as before, and since I can't find
+a hint in the docs about this change I wonder whether it is a bug.
+
+With git 1.5.something, if the first paragraph of the commit message
+(as output by parsecvs) looks like this
+
+   foo foo foo foo
+   bar bar bar bar
+   baz baz baz baz
+
+it is emitted exactly as-is (after `git format-patch' & `git am');
+gitk shows `foo foo foo foo' as the first line.  However, git version
+1.6.0.2 and the current git both convert newlines to spaces in the
+first paragraph!  I now get
+
+  foo foo foo foo bar bar bar bar baz baz baz baz
+
+as the beginning of the commit message which is VERY bad since
+CVS-style entries often have a long first paragraph, causing
+ugly-looking, overlong lines.
+
+In case this is an intended change I ask you urgently to provide an
+option to get back the old behaviour of `git format-patch' & `git am'.
+
+
+    Werner
