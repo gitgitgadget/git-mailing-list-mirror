@@ -1,61 +1,69 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: Files different for me
-Date: Wed, 25 Feb 2009 12:05:54 -0500
-Message-ID: <7E43550E-68B7-4B22-A83C-F840A7037CA9@silverinsanity.com>
-References: <450196A1AAAE4B42A00A8B27A59278E709E047DE@EXCHANGE.trad.tradestation.com>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: John Dlugosz <JDlugosz@TradeStation.com>
-X-From: git-owner@vger.kernel.org Wed Feb 25 18:07:50 2009
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: remote tracking branches
+Date: Wed, 25 Feb 2009 12:41:01 -0500
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E709E0485C@EXCHANGE.trad.tradestation.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 25 18:42:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcNEE-0004wP-9E
-	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 18:07:26 +0100
+	id 1LcNmP-0004JX-3I
+	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 18:42:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752227AbZBYRF6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2009 12:05:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751893AbZBYRF6
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 12:05:58 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:41770 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751274AbZBYRF6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2009 12:05:58 -0500
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id F1CE71FFC3A2; Wed, 25 Feb 2009 17:05:51 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb3 (2006-10-05) on 
-	silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=4.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.1.7-deb3
-Received: from [192.168.5.44] (nmd.sbx07360.rocheny.wayport.net [98.98.50.102])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 2BC891FFC3A0;
-	Wed, 25 Feb 2009 17:05:51 +0000 (UTC)
-In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E709E047DE@EXCHANGE.trad.tradestation.com>
-X-Mailer: Apple Mail (2.930.3)
+	id S1754225AbZBYRlQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2009 12:41:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751697AbZBYRlQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 12:41:16 -0500
+Received: from mail5.tradestation.com ([63.99.207.76]:51674 "EHLO
+	mail5.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751384AbZBYRlQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Feb 2009 12:41:16 -0500
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 25 Feb 2009 12:41:14 -0500
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: remote tracking branches
+thread-index: AcmXcDnbZYAuRPqgQMafC0DuAyZ03A==
+X-OriginalArrivalTime: 25 Feb 2009 17:41:14.0056 (UTC) FILETIME=[41116480:01C99770]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111470>
 
+The repository on my machine was apparently originally a simple file
+copy from another development machine, or set up manually.  That is, was
+not done by using the "git clone" command.  I have a [remote "pub"] in
+the config file with only a url in it, so I can use "pub" when I push
+and pull.
 
-On Feb 25, 2009, at 11:11 AM, John Dlugosz wrote:
+The command "git branch -r" shows nothing.
 
-> I'm working with a group, and using git for source code.  I need to  
-> change a couple files temporarily and just for me.  I thought,  
-> "that's easy", just don't stage them when I check in changes.  But,  
-> what do I do when I pull changes from others?  I think it will  
-> complain that I have unsaved changes.
-> What's the best way to do this?
+So, there are no remote tracking branches.  So what?  At first, I think
+that this is nothing more than the defaults to use when pulling, to get
+everything.  But, the example at the very end of Chapter 1 of the user
+manual shows:
+	fetch = +refs/heads/*:refs/remotes/linux-nfs/*
 
-Generally when I keep changes like this, I make a commit called "Local  
-Changes" or similar and have branch.master.rebase set to true so that  
-my changes get rebased on top of origin when I pull.
+I don't have a refs/remotes directory now.  So what does
+	git pull pub xx
+do?  The _result_ is just fine, as expected.  But if pull calls fetch,
+it needs to fetch it to some temporary place first and then merge that,
+right?
 
-~~ Brian
+If I add a suitable line to my config file (changing linux-nfs in the
+example to pub to match the remote name), what does that buy me?  But
+first, is that all I need to do to enable this feature?
+
+I'm guessing that it means I will be able to examine, e.g. using gitk,
+what is in pub, to see if there are changes I need and keep apprised of
+other's work.
+
+--John
