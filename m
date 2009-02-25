@@ -1,96 +1,72 @@
-From: <4jxDQ6FQee2H@dyweni.com>
-Subject: Re: Bug in Git-Gui - Creates corrupt patch
-Date: Wed, 25 Feb 2009 10:24:53 -0600
-Message-ID: <20090225102453.38d993ce@family.dyweni.com>
-References: <20090225090322.301cdb77@family.dyweni.com>
-	<49A567C9.5050203@viscovery.net>
-	<20090225101037.104b48a1@family.dyweni.com>
-Reply-To: 4jxDQ6FQee2H@dyweni.com
+From: Feanil Patel <feanil@gmail.com>
+Subject: Re: Files different for me
+Date: Wed, 25 Feb 2009 10:42:52 -0600
+Message-ID: <16946e800902250842h3973efdoc902de38ac35562f@mail.gmail.com>
+References: <450196A1AAAE4B42A00A8B27A59278E709E047DE@EXCHANGE.trad.tradestation.com>
+	 <16946e800902250840o677f8708x7c0bf8980e004b91@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>, spearce@spearce.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 25 17:26:40 2009
+X-From: git-owner@vger.kernel.org Wed Feb 25 17:44:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcMaZ-0003LU-Pg
-	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 17:26:28 +0100
+	id 1LcMrv-0002vQ-4S
+	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 17:44:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757205AbZBYQY5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2009 11:24:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756651AbZBYQY5
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 11:24:57 -0500
-Received: from pl1.haspere.com ([208.111.35.220]:35301 "EHLO pl1.haspere.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755475AbZBYQY5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2009 11:24:57 -0500
-Received: from family.dyweni.com (173-23-155-27.client.mchsi.com [173.23.155.27])
-	by pl1.haspere.com (Postfix) with ESMTPSA id 31C15C9FB7;
-	Wed, 25 Feb 2009 10:24:55 -0600 (CST)
-In-Reply-To: <20090225101037.104b48a1@family.dyweni.com>
-X-Mailer: Claws Mail 3.4.0 (GTK+ 2.12.11; i686-pc-linux-gnu)
+	id S1754170AbZBYQm4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Feb 2009 11:42:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753249AbZBYQmz
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 11:42:55 -0500
+Received: from qw-out-2122.google.com ([74.125.92.26]:4418 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751677AbZBYQmy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Feb 2009 11:42:54 -0500
+Received: by qw-out-2122.google.com with SMTP id 5so166825qwi.37
+        for <git@vger.kernel.org>; Wed, 25 Feb 2009 08:42:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=8h8cD/ok9tHuyjL3yNlutRPBhpg4Lii8d52JmwQZ1uk=;
+        b=yB8NEFyqJ4+NxcKZ4j9u3XebBbXRSn2iJg8SRjWlwjyeGqgfJuXeR1BlnG7zMiO9gG
+         J5XkHewuuuAxZVpfoCwcmJnUyzmccIy1n87M6iW9euRRfax/N9WQMjL1O8E+R0Ef/2iA
+         lCkrhB6Pm+KaoS7gi7LwFtP4Eu+04ykh3BttE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=MEgevQXZpBqSsoFHPeZEPNJaap+HLHPUMnJtWg3wtTTsJtU9mhMQucL2lLcQYwBlNI
+         fhV7f1gqBqdQsSyBcKC8fViM2pRe/HeYzdGVxaBSLXXkuTlquiDgQBALBIUUoUvhUSzG
+         o6+G4RTVp6EdNwaOR63U6MFDmP0BL++DwnR8Q=
+Received: by 10.224.21.169 with SMTP id j41mr627717qab.60.1235580172424; Wed, 
+	25 Feb 2009 08:42:52 -0800 (PST)
+In-Reply-To: <16946e800902250840o677f8708x7c0bf8980e004b91@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111468>
 
-In case anyone else is facing this same situation, a simple script like
-this did the trick for me:
+You could use 'git stash' to stash the changes away for later use.
+Then when you want them you can 'git stash apply' them later.
 
-------------------------------------------------
-#!/bin/bash
+-Feanil
 
-find ./ -type f | grep -v .git | while read filename
-do
-	last=$(
-		tail -c 1 "$filename" | 
-		od -x | 
-		head -n 1 | 
-		awk '{ print $2 }'
-	)
-	
-	if [ "x$last" != "x000a" ]
-	then
-		echo >> "$filename"
-	fi
-done
-------------------------------------------------
-
-
-> <4jxDQ6FQee2H@dyweni.com> wrote:
-> 
-> Hannes / List,
-> 
-> Thank you for the advise on "\ No newline at end of file".
-> 
-> I have almost 4,000 files that are formatted with "\ No newline at end
-> of file".  Does anyone know of an easy way to re-format my files so
-> that they have a newline at the end?
-> 
-> The files in question are PHP files that are dynamically included, so
-> I want to prevent arbitrary spaces from showing up in the rendered
-> pages.
-> 
-> I'm running Linux.  A bash or perl script would be preferable, but
-> anything will suffice.
-> 
-> Thanks!
-> 
-> 
-> > Johannes Sixt <j.sixt@viscovery.net> wrote:
-> >
-> > 4jxDQ6FQee2H@dyweni.com schrieb:  
-> > > 3. Using git-gui, try to stage *only* the last line marked for
-> > > removal (should be '-	}').
-> > > 
-> > > I get 'fatal: corrupt patch at line 22'.    
-> > 
-> > "Stage/Unstage line" does not work for files that have
-> > 
-> > \ No newline at end of file
-> > 
-> > -- Hannes
+On Wed, Feb 25, 2009 at 10:11 AM, John Dlugosz
+<JDlugosz@tradestation.com> wrote:
+>
+> I'm working with a group, and using git for source code.=C2=A0 I need=
+ to change a couple files temporarily and just for me.=C2=A0 I thought,=
+ "that's easy", just don't stage them when I check in changes.=C2=A0 Bu=
+t, what do I do when I pull changes from others?=C2=A0 I think it will =
+complain that I have unsaved changes.
+> What's the best way to do this?
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
+ml
