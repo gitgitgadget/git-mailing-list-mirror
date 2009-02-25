@@ -1,47 +1,82 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 1/2] gitattributes.txt: Path matching rules are explained
- in gitignore.txt
-Date: Wed, 25 Feb 2009 09:00:55 +0100
-Message-ID: <49A4FAB7.5050607@viscovery.net>
-References: <1235462493-8761-1-git-send-email-j6t@kdbg.org> <7vskm4jkbk.fsf@gitster.siamese.dyndns.org> <49A3BD25.3000706@viscovery.net> <7vskm3hh8n.fsf@gitster.siamese.dyndns.org> <49A4F942.1090907@viscovery.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH RESEND] Fix a bunch of pointer declarations (codestyle)
+Date: Wed, 25 Feb 2009 00:02:04 -0800
+Message-ID: <7veixnaqrn.fsf@gitster.siamese.dyndns.org>
+References: <1235512745-26814-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 25 09:02:58 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 25 09:03:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcEjB-0007aT-LN
-	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 09:02:50 +0100
+	id 1LcEk1-0007si-5a
+	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 09:03:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760003AbZBYIBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2009 03:01:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759998AbZBYIBA
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 03:01:00 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:15820 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755384AbZBYIA7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2009 03:00:59 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1LcEhM-0005Vf-2M; Wed, 25 Feb 2009 09:00:56 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id C5C05A865; Wed, 25 Feb 2009 09:00:55 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <49A4F942.1090907@viscovery.net>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.0 (-)
+	id S1757913AbZBYICN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2009 03:02:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757618AbZBYICN
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 03:02:13 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45399 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757585AbZBYICM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2009 03:02:12 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D31929D2E1;
+	Wed, 25 Feb 2009 03:02:09 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B20669D2E0; Wed,
+ 25 Feb 2009 03:02:06 -0500 (EST)
+In-Reply-To: <1235512745-26814-1-git-send-email-felipe.contreras@gmail.com>
+ (Felipe Contreras's message of "Tue, 24 Feb 2009 23:59:02 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 9A29A3C6-0312-11DE-8384-B26E209B64D9-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111386>
 
-There is no [PATCH 2/2]. Sorry for that :-(
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
--- Hannes
+> This applies on top of the 'next' branch.
+>
+>  alias.c                                   |    4 +-
+>  alloc.c                                   |    2 +-
+>  attr.c                                    |    4 +-
+>  builtin-blame.c                           |    8 +++---
+>  builtin-checkout-index.c                  |    4 +-
+>  builtin-describe.c                        |    4 +-
+>  builtin-fetch-pack.c                      |    2 +-
+>  builtin-help.c                            |    6 ++--
+>  builtin-update-index.c                    |    6 ++--
+>  cache.h                                   |    2 +-
+>  combine-diff.c                            |    4 +-
+>  compat/mingw.c                            |    2 +-
+>  config.c                                  |   30 ++++++++++++++--------------
+>  contrib/convert-objects/convert-objects.c |    6 ++--
+>  diff-no-index.c                           |    2 +-
+>  diff.c                                    |    6 ++--
+>  dir.c                                     |    2 +-
+>  fast-import.c                             |   14 ++++++------
+>  git.c                                     |    8 +++---
+>  http.c                                    |    4 +-
+>  lockfile.c                                |    2 +-
+>  reflog-walk.c                             |    2 +-
+>  run-command.c                             |    2 +-
+>  server-info.c                             |    4 +-
+>  sha1_file.c                               |    2 +-
+>  wt-status.c                               |    2 +-
+
+Sorry, but I cannot take this as is.
+
+These trivial clean-ups are welcome either as part of a preparatory
+clean-up before starting to work in the area of code you are touching, or
+as a standalone patch to files that nobody is currently working on.
+
+There is a huge overlap between "git diff --name-only master..pu" and the
+above list, so it is impossible for me to take the patch and I cannot
+afford the time to sift through gems out of stones.
