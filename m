@@ -1,120 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How do I qualify paths in the .gitignore file w.r.t. the repo
- root  directory?
-Date: Wed, 25 Feb 2009 00:36:10 -0800
-Message-ID: <7vab8aap6t.fsf@gitster.siamese.dyndns.org>
-References: <e38bce640902232247t63a37f63x9f403fbda0744cfd@mail.gmail.com>
- <7v1vtomhz1.fsf@gitster.siamese.dyndns.org>
- <slrngq7e6c.iti.sitaramc@sitaramc.homelinux.net>
- <7vzlgbhh95.fsf@gitster.siamese.dyndns.org>
- <slrngq9es5.ik0.sitaramc@sitaramc.homelinux.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: git push
+Date: Wed, 25 Feb 2009 04:02:31 -0500
+Message-ID: <20090225090230.GA15919@coredump.intra.peff.net>
+References: <43d8ce650902242238s7ab4c851p9c820c96b67aa62b@mail.gmail.com> <7vskm3c84t.fsf@gitster.siamese.dyndns.org> <43d8ce650902242309nef12bd9j9088170b18cc8d4e@mail.gmail.com> <7v4oyjc64z.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 25 09:37:51 2009
+Content-Type: text/plain; charset=utf-8
+Cc: John Tapsell <johnflux@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 25 10:04:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcFH4-0001H5-9M
-	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 09:37:50 +0100
+	id 1LcFgp-00014d-3A
+	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 10:04:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758260AbZBYIgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2009 03:36:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757543AbZBYIgV
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 03:36:21 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49972 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753290AbZBYIgU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2009 03:36:20 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 48A539D3FA;
-	Wed, 25 Feb 2009 03:36:16 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9488B9D3F9; Wed,
- 25 Feb 2009 03:36:12 -0500 (EST)
-In-Reply-To: <slrngq9es5.ik0.sitaramc@sitaramc.homelinux.net> (Sitaram
- Chamarty's message of "Wed, 25 Feb 2009 03:31:17 +0000 (UTC)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 5DEE87BE-0317-11DE-A6A8-B26E209B64D9-77302942!a-sasl-fastnet.pobox.com
+	id S1757472AbZBYJCl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2009 04:02:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757379AbZBYJCl
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 04:02:41 -0500
+Received: from peff.net ([208.65.91.99]:41894 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757106AbZBYJCk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2009 04:02:40 -0500
+Received: (qmail 24830 invoked by uid 107); 25 Feb 2009 09:03:01 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 25 Feb 2009 04:03:01 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Feb 2009 04:02:31 -0500
+Content-Disposition: inline
+In-Reply-To: <7v4oyjc64z.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111415>
 
-Sitaram Chamarty <sitaramc@gmail.com> writes:
+On Tue, Feb 24, 2009 at 11:44:44PM -0800, Junio C Hamano wrote:
 
-> Please tell me what you think.  If you like it, I'll send in
-> this patch.  If you prefer the previous one, I'll send that
-> in.
-> ...
-> The files containing the patterns have the following format:
->
->  - A blank line matches no files, so it can serve as a
->    separator for readability.
->
->  - A line starting with # serves as a comment.
->
-> This is _how_ the patterns match:
->
->  - The wildcards (`*` and `?`) do not match slashes, but
->    otherwise the patterns are normal shell globs as defined
->    by fnmatch(3) with the FNM_PATHNAME flag set.
+> > Presumably the obvious is that it might be confusing to existing
+> > users?  Perhaps, but it doesn't cause any damage.  It's moving to a
+> > 'safer' default.
+> 
+> No, it is not merely confusing but is outright dangerous to people who
+> expect the "matching refs" behaviour.  It is not safer at all.
 
-I had to read this twice and run "man 3 fnmatch" to clear my head.
+I think this is a very good reason not to change the default "push"
+behavior.
 
- - In normal shell globs, wildcards '*' and '?' do not match slashes;
+> And this is not about punishing.  It is about getting into a different
+> mindset.  Unlike CVS/SVN, committing and publishing can be made into
+> different phases with git, and not pushing too early allows you produce a
+> lot better results.  "I want to push only this branch" is often (not
+> always, but "often" stands with strong correlation) a sign that other
+> things are not ready, and by definition you couldn't have thought through
+> interactions between what you _think_ is ready (i.e. the current branch)
+> and the other ones that are not ready.  In other words, it is about
+> encouraging people to think things through before publishing.
 
- - fnmatch(3) with FNM_PATHNAME implements the normal shell globs;
+But I don't buy this at all. It is totally dependent on workflow and how
+you use branches. That is, the "readiness" of two branches may be
+totally unrelated. One may be a short-term branch for today's work, and
+the other may be a long-running branch that you have made a WIP commit
+on. You may even have that WIP commit sitting there for days.
 
- - wildcards do not match slashes in gitignore either.
+When you think about "is my current branch ready to push?" there is no
+reason for you to think of that other long-running branch that you
+haven't seen for days.
 
-Given these three, I am very confused why you say "but otherwise".  I
-would understand it if it were:
-
-    The patterns are treated as normal shell globs defined by fnmatch(3) with
-    FNM_PATHNAME; in other words, the wildcards (`*` and `?`) do not match
-    slashes.
-
->  - An optional prefix '!' negates the pattern; any matching
->    file excluded by a previous pattern will become included
->    again.  If a negated pattern matches, this will override
->    lower precedence patterns sources.
-
-'!' is not part of _how_ the patterns match.  It is _what happens_ when a
-pattern marked as such matches (meaning, the syntax for a line in
-gitignore file is "an optional '!' followed by a pattern").
-
-    An optional prefix '!' is not a part of the pattern and it does not
-    affect the match.  When a path matches such a pattern, instead of
-    being ignored, it is unignored.
-
-It would be good to clarify that '!' is not part of the pattern, as I'd
-like to take J6t's patch that says gitattributes uses the same pattern as
-gitignore uses.
-
-> This is _what_ the patterns match:
->
->  - If the pattern ends with a slash, it matches only
->    directories (and their contents), otherwise it matches
->    regular files and symlinks also.
-
-Do we want "(and their contents)" here?  Once a directory is ignored like
-this, none of its contents, including .gitignore file in it, is examined
-because we do not even descend into it.
-
-> This is _where_ the patterns match (a trailing slash is
-> ignored for these rules):
->
->  - If there is a slash at the start or within the pattern,
->    it matches paths relative to the .gitignore file in which
->    the pattern is found, or to the root of the working tree
->    if the pattern is from one of the other pattern sources
->    (i.e., `.git/info/exclude`, `core.excludesfile`)
-
-"at the start or within but not at the end of the pattern"?
-
->  - Otherwise, it matches a path at any depth in the tree
+-Peff
