@@ -1,69 +1,58 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: How do I qualify paths in the .gitignore file w.r.t. the repo
-  root directory?
-Date: Wed, 25 Feb 2009 04:01:58 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrngq9glm.l8b.sitaramc@sitaramc.homelinux.net>
-References: <e38bce640902232247t63a37f63x9f403fbda0744cfd@mail.gmail.com>
- <7v1vtomhz1.fsf@gitster.siamese.dyndns.org>
- <e38bce640902241714s720a4e23v49e0a4ab22da9bde@mail.gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Using grafts file to rewrite history
+Date: Wed, 25 Feb 2009 06:29:46 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.64.0902250626300.9572@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 25 05:03:58 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 25 06:31:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcAzv-0002Uq-LV
-	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 05:03:52 +0100
+	id 1LcCMY-00067w-VV
+	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 06:31:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753512AbZBYECL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Feb 2009 23:02:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753453AbZBYECL
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 23:02:11 -0500
-Received: from main.gmane.org ([80.91.229.2]:35751 "EHLO ciao.gmane.org"
+	id S1751657AbZBYF3v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2009 00:29:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751316AbZBYF3v
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 00:29:51 -0500
+Received: from ds9.cixit.se ([193.15.169.228]:56929 "EHLO ds9.cixit.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753449AbZBYECK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2009 23:02:10 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LcAyF-0007EP-Rl
-	for git@vger.kernel.org; Wed, 25 Feb 2009 04:02:07 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 25 Feb 2009 04:02:07 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 25 Feb 2009 04:02:07 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1751083AbZBYF3u (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2009 00:29:50 -0500
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id n1P5Tl0i009881
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 25 Feb 2009 06:29:47 +0100
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id n1P5TkaJ009874;
+	Wed, 25 Feb 2009 06:29:46 +0100
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Wed, 25 Feb 2009 06:29:47 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111371>
 
-On 2009-02-25, Brent Goodrick <bgoodr@gmail.com> wrote:
-> apparently such is not the case with git (and I conclude from this
-> that it is actually not possible to store fully qualified paths
-> _unless_ the $GIT_DIR is right under the root filesystem).  This isn't
-> a problem for me, and probably not for most folks, but it was
+Hi!
 
-I suspect it's not _useful_ also, because it would prevent
-you from relocating your git work tree to some other path
-while getting predictable results.  I'm unable to think of a
-use-case where that would be desirable, but I admit I
-haven't thought about it too much.
+My googling powers have yet eluded to find me an answer to this:
 
-> confusing to me the way it was written in the man page.
+Given an (unpublished) Git repository and a "grafts" file that slightly
+re-orders commits, how do I reprocess this repository (using
+git-filter-branch, probably) to have a true history according to the
+"grafts" file?
 
-If you could look at either of my two submissions in this
-thread, and comment on whether they would have helped you in
-this regard, I'd appreciate it very much.
+I am trying to use git-import-tars to import non-linear development
+history, and then use a grafts file to find the "proper" history. I
+would like to re-order the history before i publish it in a public Git
+repository.
 
-I prefer the second one that I sent, but don't let that
-prejudice you ;-)
+-- 
+\\// Peter - http://www.softwolves.pp.se/
