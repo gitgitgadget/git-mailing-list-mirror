@@ -1,63 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: autocrlf=input and safecrlf (was Re: CVS import [SOLVED])
-Date: Wed, 25 Feb 2009 01:56:24 -0500
-Message-ID: <20090225065624.GA1678@sigill.intra.peff.net>
-References: <20090220172918.GB4636@coredump.intra.peff.net> <499F3B9B.3020709@pelagic.nl> <20090223000840.GA20392@coredump.intra.peff.net> <2944.77.61.241.211.1235371848.squirrel@hupie.xs4all.nl> <20090223065615.GA24807@coredump.intra.peff.net> <1570.77.61.241.211.1235372943.squirrel@hupie.xs4all.nl> <20090223071056.GA29241@coredump.intra.peff.net> <59288.77.61.241.211.1235374197.squirrel@hupie.xs4all.nl> <20090224061134.GF4615@coredump.intra.peff.net> <14283.77.61.241.211.1235467512.squirrel@hupie.xs4all.nl>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git push
+Date: Tue, 24 Feb 2009 23:01:38 -0800
+Message-ID: <7vskm3c84t.fsf@gitster.siamese.dyndns.org>
+References: <43d8ce650902242238s7ab4c851p9c820c96b67aa62b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
-X-From: git-owner@vger.kernel.org Wed Feb 25 07:57:55 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 25 08:03:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcDiM-0006v5-OG
-	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 07:57:55 +0100
+	id 1LcDnc-0000Cu-84
+	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 08:03:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753289AbZBYG41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2009 01:56:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752291AbZBYG41
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 01:56:27 -0500
-Received: from peff.net ([208.65.91.99]:34436 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752084AbZBYG41 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2009 01:56:27 -0500
-Received: (qmail 23308 invoked by uid 107); 25 Feb 2009 06:56:50 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 25 Feb 2009 01:56:50 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Feb 2009 01:56:24 -0500
-Content-Disposition: inline
-In-Reply-To: <14283.77.61.241.211.1235467512.squirrel@hupie.xs4all.nl>
+	id S1754167AbZBYHBx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2009 02:01:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752933AbZBYHBw
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 02:01:52 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34554 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752431AbZBYHBw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2009 02:01:52 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 67E739D0BF;
+	Wed, 25 Feb 2009 02:01:45 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 646049D0BE; Wed,
+ 25 Feb 2009 02:01:42 -0500 (EST)
+In-Reply-To: <43d8ce650902242238s7ab4c851p9c820c96b67aa62b@mail.gmail.com>
+ (John Tapsell's message of "Wed, 25 Feb 2009 06:38:41 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 29D41668-030A-11DE-9A19-B26E209B64D9-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111379>
 
-On Tue, Feb 24, 2009 at 10:25:12AM +0100, Ferry Huberts (Pelagic) wrote:
+John Tapsell <johnflux@gmail.com> writes:
 
-> > So yes, in some sense it is safecrlf that is broken. I'm just concerned
-> > about tweaking the user's options behind their back. The import can
-> > happen differently than they expected no matter which of safecrlf or
-> > autocrlf you tweak. So I think you are better off to complain and die.
-> 
-> The plan was:
-> - when creating a new git repo for cvs import: setup safecrlf=false
-> - when importing into an existing repo: check whether the safecrlf
->   setting is set to false and crash and burn when not :-)
->   (complain before going up in flames)
+>   Following the idea of 'least damage', what do people think of making
+> "git push" only push the branch you are currently on?
 
-Why is it OK to silently change the settings in the first case, but not
-the second? Don't both have the potential to screw up the user's import?
+Having an easy way to ask to push only one branch (typically the currently
+checked-out one) is a good thing.  You can obviously say "git push origin
+master" (or whatever branch you are on).  We also added "git push origin
+HEAD".  I thought we even added "git push HEAD" or "git push --current",
+but I may be mistaken.
 
-Also, are settings going to be unset after the first import? If so, then
-further incremental imports will fail as described in your second case.
-But if not, then safecrlf is turned off for that repo, even for
-non-cvsimport commands, overriding anything in the user's ~/.gitconfig.
-For somebody doing a one-shot import, they are paying that price without
-any benefit.
+But if you are talking about changing the default when "git push" is run
+without any parameter, I have to say it is a terrible idea, for two
+reasons, and one is too obvious to state so I wouldn't repeat it and talk
+only about the other one.
 
--Peff
+I've noticed that people who ask for such a default tend to push too often
+and worse they tend to push before they have their act together.  Surely
+their other branches may not be ready, but it is likely their current
+branch isn't either ;-)
+
+If you shoot for the least damage for such people, the sanest default for
+"git push" would be to do nothing.  You *always* say what to push where,
+then there is no risk of pushing something you did not intend to.  Perhaps
+"push.default = never" configuration may not be such a bad idea?
