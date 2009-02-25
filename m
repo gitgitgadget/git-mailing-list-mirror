@@ -1,109 +1,103 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 2/2] git submodule: Fix adding of submodules at paths
- with ./
-Date: Wed, 25 Feb 2009 13:35:33 +0100
-Message-ID: <49A53B15.4060608@drmicha.warpmail.net>
-References: <80055d7c0902241556s4d24285bqd171275f58bdb37d@mail.gmail.com> <1235559820-3096-1-git-send-email-git@drmicha.warpmail.net> <1235559820-3096-2-git-send-email-git@drmicha.warpmail.net> <1235559820-3096-3-git-send-email-git@drmicha.warpmail.net> <49A529AB.8010700@viscovery.net>
+From: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>
+Subject: Commits with empty commit messages
+Date: Wed, 25 Feb 2009 13:50:03 +0100 (CET)
+Message-ID: <alpine.LRH.2.00.0902251338230.21065@vixen.sonytel.be>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Andrei Thorp <garoth@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Feb 25 13:37:15 2009
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 25 13:51:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcJ0k-00088h-Jz
-	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 13:37:15 +0100
+	id 1LcJEd-0004Si-R3
+	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 13:51:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751976AbZBYMfp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2009 07:35:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751803AbZBYMfp
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 07:35:45 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:36406 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751799AbZBYMfo (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Feb 2009 07:35:44 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 288772A6146;
-	Wed, 25 Feb 2009 07:35:42 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Wed, 25 Feb 2009 07:35:42 -0500
-X-Sasl-enc: zi+R2GsC2IGbNE0ZN6ZlVzAFQ9N9cqIhG757+8PCJV6v 1235565341
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 4D5962DD85;
-	Wed, 25 Feb 2009 07:35:41 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090223 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <49A529AB.8010700@viscovery.net>
+	id S1752654AbZBYMuH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Feb 2009 07:50:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752301AbZBYMuH
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 07:50:07 -0500
+Received: from vervifontaine.sonytel.be ([80.88.33.193]:62477 "EHLO
+	vervifontaine.sonycom.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751183AbZBYMuG (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Feb 2009 07:50:06 -0500
+Received: from vixen.sonytel.be (piraat.sonytel.be [43.221.60.197])
+	by vervifontaine.sonycom.com (Postfix) with ESMTP id ADD3158ABD;
+	Wed, 25 Feb 2009 13:50:03 +0100 (MET)
+User-Agent: Alpine 2.00 (LRH 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111450>
 
-Johannes Sixt venit, vidit, dixit 25.02.2009 12:21:
-> Michael J Gruber schrieb:
->> +	# strip superfluous ./ from path
->> +	path=$(echo "$path" | sed -e 's|^\(\./\)*||' -e's|/\./|/|g')
-> 
-> At a minimum:
-> 
-> 	path=$(echo "$path" | sed -e 's|^/\(\./\)*|/|g' -e's|^\./||')
-> 
-> Otherwise you would turn "foo./bar" into "foobar", right?
+I accidentally managed to create a commit with an empty commit message =
+using
+`git am' with a patch that didn't have a subject line. It didn't matter=
+ much,
+as I just wanted to squash it during a rebase anyway.
 
-Wrong.
+However, during `git rebase -i', I got a corrupt list of commits. Inste=
+ad of
+the usual:
 
-My regexp:
-echo "foo./bar"  | sed -e 's|^\(\./\)*||' -e's|/\./|/|g'
-foo./bar
+| pick sha1 desc1
+| pick sha2 desc2
 
-echo "foo/./bar" | sed -e 's|^\(\./\)*||' -e's|/\./|/|g'
-foo/bar
+I saw:
+
+| pick sha1 >sha2 desc2
+
+If you have a commit with an empty commit message, you can also not fix=
+ this
+using amend:
+
+| $ git commit --amend
+| fatal: commit has empty message
+| $
+
+If you use `git rebase -i' to rebase one or more commits, _all_ of them=
+ with
+empty commit messages, you don't see any of the familiar `pick' lines, =
+but just
+
+| noop
+
+and you `loose' all those commits as soon as you quit your editor.
+
+Probably the real offender is `git am', which allows empty commit messa=
+ges,
+unlike `git commit'.
 
 
-Your regexp:
-echo "foo./bar"  | sed -e 's|^/\(\./\)*|/|g' -e's|^\./||'
-foo./bar
+While trying to create a clean test case, I also noticed you cannot use
+`git am' to create the first commit in a freshly initialized empty git
+repository. It fails with:
 
-echo "foo/./bar" | sed -e 's|^/\(\./\)*|/|g' -e's|^\./||'
-foo/./bar
+| $ git am patch
+| fatal: HEAD: not a valid SHA1
+| fatal: bad revision 'HEAD'
+| $
 
-Testing your claim isn't that hard to do before hand...
+I'm using 1.6.0.4, but I could reproduce the issues with 1.6.2.rc1.41.g=
+3f74c.
 
-> But why only care about ./ but not ../ or /// or trailing / as well?
+With kind regards,
 
-You really haven't even looked at the included context of the patch
-(which you stripped), have you? I mean, I'm open for suggestions and
-criticism, but please don't shoot blindly.
+Geert Uytterhoeven
+Software Architect
 
-./ have been reported and are a common use case.
+Sony Techsoft Centre Europe
+The Corporate Village =B7 Da Vincilaan 7-D1 =B7 B-1935 Zaventem =B7 Bel=
+gium
 
-Trailing / are dealt with by the code (see context).
+Phone:    +32 (0)2 700 8453
+=46ax:      +32 (0)2 700 8622
+E-mail:   Geert.Uytterhoeven@sonycom.com
+Internet: http://www.sony-europe.com/
 
-Now, the /// are in fact a valid concern[1], although probably not that
-common an isue. If we really want to cater for that (and more) we need
-to implement normalize_path_copy() (from path.c). There it says:
-
-* Performs the following normalizations on src, storing the result in dst:
- * - Ensures that components are separated by '/' (Windows only)
- * - Squashes sequences of '/'.
- * - Removes "." components.
- * - Removes ".." components, and the components the precede them.
- * Returns failure (non-zero) if a ".." component appears as first path
- * component anytime during the normalization. Otherwise, returns
-success (0).
-
-OK, two more regexps for sed. Thanks, I don't need suggestions for the
-regexps ;)
-
-I can add /// and .. testing and handling in a v2, but I'll definitely
-leave the Windoze paths to someone who can actually test on Win.
-
-Michael
-
-[1] git sm init uses git ls-files, which in turn,..., which calls
-normalize_path_copy. git sm add can't use git ls-files because it has to
-deal with an as yet unknown path.
+A division of Sony Europe (Belgium) N.V.
+VAT BE 0413.825.160 =B7 RPR Brussels
+=46ortis =B7 BIC GEBABEBB =B7 IBAN BE41293037680010
