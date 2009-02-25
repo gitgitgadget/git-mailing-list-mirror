@@ -1,162 +1,204 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: How do I qualify paths in the .gitignore file w.r.t. the repo
- root  directory?
-Date: Wed, 25 Feb 2009 03:31:17 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrngq9es5.ik0.sitaramc@sitaramc.homelinux.net>
-References: <e38bce640902232247t63a37f63x9f403fbda0744cfd@mail.gmail.com>
- <7v1vtomhz1.fsf@gitster.siamese.dyndns.org>
- <slrngq7e6c.iti.sitaramc@sitaramc.homelinux.net>
- <7vzlgbhh95.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Abhijit Menon-Sen <ams@toroid.org>
+Subject: [PATCH] Convert git-* invocations to "git *" in the svnimport example.
+Date: Wed, 25 Feb 2009 08:33:14 +0530
+Message-ID: <1235530994-30880-1-git-send-email-ams@toroid.org>
+Cc: gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 25 04:32:57 2009
+X-From: git-owner@vger.kernel.org Wed Feb 25 04:38:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcAW0-0004Br-UP
-	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 04:32:57 +0100
+	id 1LcAbD-0005Ow-2J
+	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 04:38:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755096AbZBYDba convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Feb 2009 22:31:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753011AbZBYDba
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 22:31:30 -0500
-Received: from main.gmane.org ([80.91.229.2]:33583 "EHLO ciao.gmane.org"
+	id S1753911AbZBYDgw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Feb 2009 22:36:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753821AbZBYDgv
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Feb 2009 22:36:51 -0500
+Received: from fugue.toroid.org ([85.10.196.113]:44047 "EHLO fugue.toroid.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752910AbZBYDb3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Feb 2009 22:31:29 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LcAUZ-00069T-2w
-	for git@vger.kernel.org; Wed, 25 Feb 2009 03:31:27 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 25 Feb 2009 03:31:27 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 25 Feb 2009 03:31:27 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1753011AbZBYDgv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Feb 2009 22:36:51 -0500
+X-Greylist: delayed 2026 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Feb 2009 22:36:50 EST
+Received: from penne.toroid.org (penne-vpn [10.8.0.6])
+	by fugue.toroid.org (Postfix) with ESMTP id 6E9865584DF;
+	Wed, 25 Feb 2009 04:03:00 +0100 (CET)
+Received: by penne.toroid.org (Postfix, from userid 1000)
+	id 54D1D3880CB; Wed, 25 Feb 2009 08:33:14 +0530 (IST)
+X-Mailer: git-send-email 1.6.1.2.253.ga34a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111369>
 
-On 2009-02-24, Junio C Hamano <gitster@pobox.com> wrote:
-> Sitaram Chamarty <sitaramc@gmail.com> writes:
+After these changes, git-svnimport worked fine for me.
 
->> A few days ago, 'doener' (Bj=C3=B6rn Steinbrink) came up with
->> some much simpler rules that said the same thing, and --
->> building on the insight that his rules gave me -- I came up
->> with these:
->>
->> ----->8-----
->>
->> Note that rule 1 merely *modifies* rules 2 and 3, it does not
->> supercede or preclude them.
->>
->> 1.  If you pattern ends with a slash, it matches only
->>     directories (and their contents)
->> 2.  If there is no slash otherwise, it matches that name, at
->>     any depth in the tree
->> 3.  If there is a slash anywhere else, it matches that name,
->>     relative to the .gitignore (or $GIT_WORK_TREE if the
->>     pattern is from one of the other pattern sources like
->>     `.git/info/exclude` etc)
->>
->> The wildcards (`*` and `?`) do not match slashes, but otherwise
->> the patterns are normal shell globs as defined by fnmatch(3) with
->> the FNM_PATHNAME flag set.
->>
->> ----->8-----
->
-> Nicely written, except that as a non-native speaker I fear "otherwise=
-" and
-> "anywhere else" _might_ leave ambiguity for a pattern that has slash =
-only
-> at the end [*1*], but I dunno.  It certainly is much better than what=
- I
-> wrote in the current documentation.
->
-> Please send it in a patch form (possibly addressing my ambiguity conc=
-ern
-> if it is real for other people) with a one-liner log message that say=
-s
-> "The existing documentation is unreadable even though it may be preci=
-se",
-> and I'll apply.
+Signed-off-by: Abhijit Menon-Sen <ams@toroid.org>
+---
+ contrib/examples/git-svnimport.perl |   36 +++++++++++++++++-----------------
+ 1 files changed, 18 insertions(+), 18 deletions(-)
 
-I couldn't think of an easy way to clear that up without
-making it far more verbose.
-
-The ambiguity is partly because we're overloading the slash
-to control both "what matches" (only a directory, versus
-directory / file / symlink) and "where it matches" (anchored
-at the directory in which the current .gitignore is found or
-work tree, versus at any depth underneath).
-
-So I came up with this (see below).  It keeps the "what" and
-the "where" clearly separate, so now the "otherwise" applies
-to only one preceding clause, and there is no "anywhere
-else".
-
-It's a somewhat larger change, replacing all 6 bullets and
-the line preceding them.  I think it looks nicer but since I
-wrote it, I can't vote ;-)
-
-Please tell me what you think.  If you like it, I'll send in
-this patch.  If you prefer the previous one, I'll send that
-in.
-
-[I've also changed $GIT_WORK_TREE in my previous attempt to
-'root of the working tree' because that variable is not
-normally set, and I don't want to imply that it does]
-
------>8-----
-
-The files containing the patterns have the following format:
-
- - A blank line matches no files, so it can serve as a
-   separator for readability.
-
- - A line starting with # serves as a comment.
-
-This is _how_ the patterns match:
-
- - The wildcards (`*` and `?`) do not match slashes, but
-   otherwise the patterns are normal shell globs as defined
-   by fnmatch(3) with the FNM_PATHNAME flag set.
-
- - An optional prefix '!' negates the pattern; any matching
-   file excluded by a previous pattern will become included
-   again.  If a negated pattern matches, this will override
-   lower precedence patterns sources.
-
-This is _what_ the patterns match:
-
- - If the pattern ends with a slash, it matches only
-   directories (and their contents), otherwise it matches
-   regular files and symlinks also.
-
-This is _where_ the patterns match (a trailing slash is
-ignored for these rules):
-
- - If there is a slash at the start or within the pattern,
-   it matches paths relative to the .gitignore file in which
-   the pattern is found, or to the root of the working tree
-   if the pattern is from one of the other pattern sources
-   (i.e., `.git/info/exclude`, `core.excludesfile`)
-
- - Otherwise, it matches a path at any depth in the tree
-
------>8-----
-
-Regards,
-
-Sitaram
+diff --git a/contrib/examples/git-svnimport.perl b/contrib/examples/git-svnimport.perl
+index a13bb6a..4576c4a 100755
+--- a/contrib/examples/git-svnimport.perl
++++ b/contrib/examples/git-svnimport.perl
+@@ -287,9 +287,9 @@ my $last_rev = "";
+ my $last_branch;
+ my $current_rev = $opt_s || 1;
+ unless(-d $git_dir) {
+-	system("git-init");
++	system("git init");
+ 	die "Cannot init the GIT db at $git_tree: $?\n" if $?;
+-	system("git-read-tree");
++	system("git read-tree");
+ 	die "Cannot init an empty tree: $?\n" if $?;
+ 
+ 	$last_branch = $opt_o;
+@@ -303,7 +303,7 @@ unless(-d $git_dir) {
+ 	-f "$git_dir/svn2git"
+ 		or die "'$git_dir/svn2git' does not exist.\n".
+ 		       "You need that file for incremental imports.\n";
+-	open(F, "git-symbolic-ref HEAD |") or
++	open(F, "git symbolic-ref HEAD |") or
+ 		die "Cannot run git-symbolic-ref: $!\n";
+ 	chomp ($last_branch = <F>);
+ 	$last_branch = basename($last_branch);
+@@ -331,7 +331,7 @@ EOM
+ 				"$git_dir/refs/heads/$opt_o") == 0;
+ 
+ 	# populate index
+-	system('git-read-tree', $last_rev);
++	system('git', 'read-tree', $last_rev);
+ 	die "read-tree failed: $?\n" if $?;
+ 
+ 	# Get the last import timestamps
+@@ -399,7 +399,7 @@ sub get_file($$$) {
+ 	my $pid = open(my $F, '-|');
+ 	die $! unless defined $pid;
+ 	if (!$pid) {
+-	    exec("git-hash-object", "-w", $name)
++	    exec("git", "hash-object", "-w", $name)
+ 		or die "Cannot create object: $!\n";
+ 	}
+ 	my $sha = <$F>;
+@@ -423,7 +423,7 @@ sub get_ignore($$$$$) {
+ 		my $pid = open(my $F, '-|');
+ 		die $! unless defined $pid;
+ 		if (!$pid) {
+-			exec("git-hash-object", "-w", $name)
++			exec("git", "hash-object", "-w", $name)
+ 			    or die "Cannot create object: $!\n";
+ 		}
+ 		my $sha = <$F>;
+@@ -547,7 +547,7 @@ sub copy_path($$$$$$$$) {
+ 	my $pid = open my $f,'-|';
+ 	die $! unless defined $pid;
+ 	if (!$pid) {
+-		exec("git-ls-tree","-r","-z",$gitrev,$srcpath)
++		exec("git","ls-tree","-r","-z",$gitrev,$srcpath)
+ 			or die $!;
+ 	}
+ 	local $/ = "\0";
+@@ -634,7 +634,7 @@ sub commit {
+ 
+ 	my $rev;
+ 	if($revision > $opt_s and defined $parent) {
+-		open(H,'-|',"git-rev-parse","--verify",$parent);
++		open(H,'-|',"git","rev-parse","--verify",$parent);
+ 		$rev = <H>;
+ 		close(H) or do {
+ 			print STDERR "$revision: cannot find commit '$parent'!\n";
+@@ -671,7 +671,7 @@ sub commit {
+ 		unlink($git_index);
+ 	} elsif ($rev ne $last_rev) {
+ 		print "Switching from $last_rev to $rev ($branch)\n" if $opt_v;
+-		system("git-read-tree", $rev);
++		system("git", "read-tree", $rev);
+ 		die "read-tree failed for $rev: $?\n" if $?;
+ 		$last_rev = $rev;
+ 	}
+@@ -740,7 +740,7 @@ sub commit {
+ 			my $pid = open my $F, "-|";
+ 			die "$!" unless defined $pid;
+ 			if (!$pid) {
+-				exec("git-ls-files", "-z", @o1) or die $!;
++				exec("git", "ls-files", "-z", @o1) or die $!;
+ 			}
+ 			@o1 = ();
+ 			local $/ = "\0";
+@@ -758,7 +758,7 @@ sub commit {
+ 					@o2 = @o1;
+ 					@o1 = ();
+ 				}
+-				system("git-update-index","--force-remove","--",@o2);
++				system("git","update-index","--force-remove","--",@o2);
+ 				die "Cannot remove files: $?\n" if $?;
+ 			}
+ 		}
+@@ -770,7 +770,7 @@ sub commit {
+ 				@n2 = @new;
+ 				@new = ();
+ 			}
+-			system("git-update-index","--add",
++			system("git","update-index","--add",
+ 				(map { ('--cacheinfo', @$_) } @n2));
+ 			die "Cannot add files: $?\n" if $?;
+ 		}
+@@ -778,7 +778,7 @@ sub commit {
+ 		my $pid = open(C,"-|");
+ 		die "Cannot fork: $!" unless defined $pid;
+ 		unless($pid) {
+-			exec("git-write-tree");
++			exec("git","write-tree");
+ 			die "Cannot exec git-write-tree: $!\n";
+ 		}
+ 		chomp(my $tree = <C>);
+@@ -830,7 +830,7 @@ sub commit {
+ 				"GIT_COMMITTER_NAME=$committer_name",
+ 				"GIT_COMMITTER_EMAIL=$committer_email",
+ 				"GIT_COMMITTER_DATE=".strftime("+0000 %Y-%m-%d %H:%M:%S",gmtime($date)),
+-				"git-commit-tree", $tree,@par);
++				"git", "commit-tree", $tree,@par);
+ 			die "Cannot exec git-commit-tree: $!\n";
+ 		}
+ 		$pw->writer();
+@@ -874,7 +874,7 @@ sub commit {
+ 
+ 		$dest =~ tr/_/\./ if $opt_u;
+ 
+-		system('git-tag', '-f', $dest, $cid) == 0
++		system('git', 'tag', '-f', $dest, $cid) == 0
+ 			or die "Cannot create tag $dest: $!\n";
+ 
+ 		print "Created tag '$dest' on '$branch'\n" if $opt_v;
+@@ -937,7 +937,7 @@ while ($to_rev < $opt_l) {
+ 	my $pid = fork();
+ 	die "Fork: $!\n" unless defined $pid;
+ 	unless($pid) {
+-		exec("git-repack", "-d")
++		exec("git", "repack", "-d")
+ 			or die "Cannot repack: $!\n";
+ 	}
+ 	waitpid($pid, 0);
+@@ -958,7 +958,7 @@ if($orig_branch) {
+ 	system("cp","$git_dir/refs/heads/$opt_o","$git_dir/refs/heads/master")
+ 		if $forward_master;
+ 	unless ($opt_i) {
+-		system('git-read-tree', '-m', '-u', 'SVN2GIT_HEAD', 'HEAD');
++		system('git', 'read-tree', '-m', '-u', 'SVN2GIT_HEAD', 'HEAD');
+ 		die "read-tree failed: $?\n" if $?;
+ 	}
+ } else {
+@@ -966,7 +966,7 @@ if($orig_branch) {
+ 	print "DONE; creating $orig_branch branch\n" if $opt_v and (not defined $opt_l or $opt_l > 0);
+ 	system("cp","$git_dir/refs/heads/$opt_o","$git_dir/refs/heads/master")
+ 		unless -f "$git_dir/refs/heads/master";
+-	system('git-update-ref', 'HEAD', "$orig_branch");
++	system('git', 'update-ref', 'HEAD', "$orig_branch");
+ 	unless ($opt_i) {
+ 		system('git checkout');
+ 		die "checkout failed: $?\n" if $?;
+-- 
+1.6.1.2.253.ga34a
