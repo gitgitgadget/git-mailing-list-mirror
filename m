@@ -1,103 +1,94 @@
-From: Finn Arne Gangstad <finnag@pvv.org>
-Subject: Re: git push
-Date: Wed, 25 Feb 2009 23:58:26 +0100
-Message-ID: <20090225225826.GA13510@pvv.org>
-References: <43d8ce650902242238s7ab4c851p9c820c96b67aa62b@mail.gmail.com> <7vskm3c84t.fsf@gitster.siamese.dyndns.org>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: Re: topgit patches
+Date: Thu, 26 Feb 2009 00:15:50 +0100
+Message-ID: <20090225231550.GA19741@pengutronix.de>
+References: <20090225195856.GA12372@pengutronix.de> <20090225212309.GM12275@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: John Tapsell <johnflux@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 26 00:00:38 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "martin f. krafft" <madduck@debian.org>
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Feb 26 00:17:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcSjs-0006G3-OB
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 00:00:29 +0100
+	id 1LcT0F-0004QE-5H
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 00:17:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758905AbZBYW6g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2009 17:58:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758591AbZBYW6f
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 17:58:35 -0500
-Received: from decibel.pvv.ntnu.no ([129.241.210.179]:47674 "EHLO
-	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755879AbZBYW6e (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2009 17:58:34 -0500
-Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
-	(envelope-from <finnag@pvv.ntnu.no>)
-	id 1LcShu-0000zb-AH; Wed, 25 Feb 2009 23:58:26 +0100
+	id S1759790AbZBYXPy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Feb 2009 18:15:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756957AbZBYXPy
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 18:15:54 -0500
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:39288 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756618AbZBYXPx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2009 18:15:53 -0500
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1LcSyl-00056n-Em; Thu, 26 Feb 2009 00:15:51 +0100
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1LcSyk-00058b-Ib; Thu, 26 Feb 2009 00:15:50 +0100
 Content-Disposition: inline
-In-Reply-To: <7vskm3c84t.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <20090225212309.GM12275@machine.or.cz>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111510>
 
-Sorry to people receiving this mail twice, the list ate my first reply
-since it managed to hit the spam-filter (maybe I should take a hint... :)
+Hi Petr,
 
-On Tue, Feb 24, 2009 at 11:01:38PM -0800, Junio C Hamano wrote:
-> [...]
->
-> But if you are talking about changing the default when "git push" is run
-> without any parameter, I have to say it is a terrible idea, for two
-> reasons, and one is too obvious to state so I wouldn't repeat it and talk
-> only about the other one.
+On Wed, Feb 25, 2009 at 10:23:09PM +0100, Petr Baudis wrote:
+> On Wed, Feb 25, 2009 at 08:58:56PM +0100, Uwe Kleine-K=F6nig wrote:
+> > The following changes since commit 8c77c342166ddc6ecb3840628d89ddc5=
+bb6b043b:
+> >   Kirill Smelkov (1):
+> >         tg-completion: complete options for `tg remote`
+> >=20
+> > are available in the git repository at:
+> >=20
+> >   git://git.pengutronix.de/git/ukl/topgit.git pu
+> >=20
+> > Uwe Kleine-K=F6nig (5):
+> >       [TOPGIT] limit rev-list in branch_contains to a single rev
+> >       [TOPGIT] allow working with annihilated branches
+> >       [TOPGIT] make tg remote idempotent
+> >       [TOPGIT] make creating a commit from a topgit branch a functi=
+on
+> >       [TOPGIT] implement linearize export method
+> >=20
+>   I'm unfortunately not actively using topgit right now and I have no
+> time to maintain it or review patches. :-( Martin seems to be in simi=
+lar
+> situation. So, would you like push access to the main repository? ;-)
+Well, I already wondered if there is someone using topgit apart from me=
+=2E
+:-)
 
-The current default behaviour of git push is very annoying for us at
-least. The current behaviour is _dangerous_ and leads to serious
-problems. It is too easy for someone to write "git push". They hit
-enter too soon, or they write it expecting to get usage
-information. They do not necessarily expect to overwrite random
-branches in a remote repository.
+If you give me push access I'd only push the first three patches to
+master and maybe create a pu branch for the linearize method.
 
-Most git commands are not destructive with no arguments at all, and
-push is the _only_ command that really can screw things up for others,
-so this command in particular should refrain from destructive default
-behaviour.
+Given this situation it probably doesn't make sense to describe some
+problems I currently see using topgit :-|.
 
-An example of random branch overwriting:
-$ mkdir a
-$ cd a
-$ git init
-$ echo contents > file
-$ git add file
-$ git commit -m message
-$ cd ..
-$ git clone a b
-$ cd b
-$ git checkout -b gif-support
-$ echo foo > somefile
-$ git add somefile
-$ git commit -m message
-$ ( cd ../a && git branch gif-support) # Assume done by someone else
-$ git checkout master
-$ # <hack away, maybe commit a bit>
-$ git push  # <-- OOOPS! pushes gif-support!
+Best regards
+Uwe
 
-Notice that what branches git push ends up pushing is out of your
-control, since new branches can appear in the remote repository at any
-time. This is very unfriendly in our setup with a shared incoming repo.
-
-If developer A creates "gif-support", shares it with developer B, who
-does an additional commit on it to make it print more debug info (but
-has no intent of pushing it anywhere), and A pushes it to the "incoming"
-repo, developer B risks overwriting that with his debug version.
-
-It is not realistic to believe that in a big project with many
-developers, no one will ever do the mistake of typing "git push".  It
-is also not realistic to believe that everyone will know how to (or
-remember to) configure this away.
-
-> If you shoot for the least damage for such people, the sanest default for
-> "git push" would be to do nothing.  You *always* say what to push where,
-> then there is no risk of pushing something you did not intend to.  Perhaps
-> "push.default = never" configuration may not be such a bad idea?
-
-If "git push" could do nothing at all without configuring anything, that
-would be a big improvement to us.
-
-- Finn Arne
+--=20
+Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
+       |
+Industrial Linux Solutions                    | http://www.pengutronix.=
+de/  |
+Peiner Strasse 6-8, 31137 Hildesheim, Germany | Phone: +49-5121-206917-=
+0    |
+Amtsgericht Hildesheim, HRA 2686              | Fax:   +49-5121-206917-=
+5555 |
