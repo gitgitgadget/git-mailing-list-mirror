@@ -1,71 +1,67 @@
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-Subject: [PATCH 1/1] Typo in contrib/examples/git-svnimport.txt
-Date: Wed, 25 Feb 2009 10:04:25 -0300
-Message-ID: <1235567065-7639-1-git-send-email-vonbrand@inf.utfsm.cl>
-Cc: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] Fix typo in contrib/examples/git-svnimport.txt
+Date: Wed, 25 Feb 2009 15:05:17 +0100
+Message-ID: <1235570717-19924-1-git-send-email-git@drmicha.warpmail.net>
+References: <1235567065-7639-1-git-send-email-vonbrand@inf.utfsm.cl>
+Cc: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>,
+	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 25 14:56:29 2009
+X-From: git-owner@vger.kernel.org Wed Feb 25 15:07:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcKFD-0004Q7-La
-	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 14:56:16 +0100
+	id 1LcKPX-0008CS-S8
+	for gcvg-git-2@gmane.org; Wed, 25 Feb 2009 15:06:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753285AbZBYNys (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2009 08:54:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752835AbZBYNyr
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 08:54:47 -0500
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:55724 "EHLO inti.inf.utfsm.cl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751825AbZBYNyr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2009 08:54:47 -0500
-X-Greylist: delayed 3015 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Feb 2009 08:54:46 EST
-Received: from quelen.inf.utfsm.cl (quelen.inf.utfsm.cl [200.1.19.54])
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id n1PD4QqV019616
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 25 Feb 2009 10:04:26 -0300
-Received: from laptop14.inf.utfsm.cl (cautin.dcsc.utfsm.cl [200.1.21.41])
-	by quelen.inf.utfsm.cl (8.14.3/8.14.3) with ESMTP id n1PD4Plb017720
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 25 Feb 2009 10:04:26 -0300
-Received: from laptop14.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by laptop14.inf.utfsm.cl (8.14.3/8.14.2) with ESMTP id n1PD4PT1007672
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 25 Feb 2009 10:04:25 -0300
-Received: (from vonbrand@localhost)
-	by laptop14.inf.utfsm.cl (8.14.3/8.14.3/Submit) id n1PD4PWU007671;
-	Wed, 25 Feb 2009 10:04:25 -0300
-X-Mailer: git-send-email 1.6.2.rc1.41.g3f74c
-X-Greylist: Sender e-mail whitelisted, not delayed by milter-greylist-3.0rc6 (inti.inf.utfsm.cl [0.0.0.0]); Wed, 25 Feb 2009 10:04:26 -0300 (CLST)
-X-Virus-Scanned: ClamAV 0.94/9047/Wed Feb 25 07:59:41 2009 on inti.inf.utfsm.cl
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-102.6 required=5.0 tests=AWL,BAYES_00,
-	UNPARSEABLE_RELAY,USER_IN_WHITELIST autolearn=ham version=3.2.4
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on inti.inf.utfsm.cl
+	id S1752431AbZBYOF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2009 09:05:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752654AbZBYOF1
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 09:05:27 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:56803 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751629AbZBYOF1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Feb 2009 09:05:27 -0500
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 2C1562A5CC8;
+	Wed, 25 Feb 2009 09:05:25 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Wed, 25 Feb 2009 09:05:25 -0500
+X-Sasl-enc: OAVAOXiCT6D+bXy/j6W9EzwMZi1GyfRaP6svT/EysHv+ 1235570724
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 8E5F422C1D;
+	Wed, 25 Feb 2009 09:05:24 -0500 (EST)
+X-Mailer: git-send-email 1.6.2.rc1.30.gd43c
+In-Reply-To: <1235567065-7639-1-git-send-email-vonbrand@inf.utfsm.cl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111458>
 
-Signed-off-by: Horst H. von Brand <vonbrand@inf.utfsm.cl>
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
- contrib/examples/git-svnimport.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+If we fix it then why not do it right ;)
+
+ contrib/examples/git-svnimport.txt |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/contrib/examples/git-svnimport.txt b/contrib/examples/git-svnimport.txt
-index 71aad8b..450a4a3 100644
+index 71aad8b..3bb871e 100644
 --- a/contrib/examples/git-svnimport.txt
 +++ b/contrib/examples/git-svnimport.txt
-@@ -116,7 +116,7 @@ due to SVN memory leaks. (These have been worked around.)
+@@ -114,9 +114,9 @@ due to SVN memory leaks. (These have been worked around.)
+ -R <repack_each_revs>::
+ 	Specify how often git repository should be repacked.
  +
- The default value is 1000. git-svnimport will do import in chunks of 1000
- revisions, after each chunk git repository will be repacked. To disable
+-The default value is 1000. git-svnimport will do import in chunks of 1000
+-revisions, after each chunk git repository will be repacked. To disable
 -this behavior specify some big value here which is mote than number of
-+this behavior specify some big value here which is more than number of
++The default value is 1000. git-svnimport will do imports in chunks of 1000
++revisions, after each chunk the git repository will be repacked. To disable
++this behavior specify some large value here which is greater than the number of
  revisions to import.
  
  -P <path_from_trunk>::
 -- 
-1.6.2.rc1.41.g3f74c
+1.6.2.rc1.30.gd43c
