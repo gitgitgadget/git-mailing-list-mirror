@@ -1,70 +1,106 @@
 From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] t5540-http-push.sh: avoid non-portable grep -P
-Date: Thu, 26 Feb 2009 17:40:25 -0500
-Message-ID: <76718490902261440p4c9981fbncbdd58ad12e38349@mail.gmail.com>
-References: <1235677745-939-1-git-send-email-jaysoffian@gmail.com>
-	 <7vwsbdq6u4.fsf@gitster.siamese.dyndns.org>
-	 <76718490902261243gaebdd8an2bd75bf625556f7b@mail.gmail.com>
-	 <7vmyc8rhry.fsf@gitster.siamese.dyndns.org>
-	 <76718490902261419r314f6ea4r5eb02e9b5b0c40d0@mail.gmail.com>
-	 <7veixkrfif.fsf@gitster.siamese.dyndns.org>
+Subject: [PATCH v3] t5540-http-push.sh: avoid non-portable grep -P
+Date: Thu, 26 Feb 2009 17:45:07 -0500
+Message-ID: <1235688307-8464-1-git-send-email-jaysoffian@gmail.com>
+References: <76718490902261440p4c9981fbncbdd58ad12e38349@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Tay Ray Chuan <rctay89@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 26 23:42:03 2009
+Content-Transfer-Encoding: 8bit
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Tay Ray Chuan <rctay89@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 26 23:46:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcovT-0006qr-VR
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 23:41:56 +0100
+	id 1Lcp06-0000Gy-U0
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 23:46:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758370AbZBZWka (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2009 17:40:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755053AbZBZWk3
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 17:40:29 -0500
-Received: from rv-out-0506.google.com ([209.85.198.225]:7324 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758045AbZBZWk1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2009 17:40:27 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so743396rvb.1
-        for <git@vger.kernel.org>; Thu, 26 Feb 2009 14:40:25 -0800 (PST)
+	id S1758902AbZBZWpP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2009 17:45:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751891AbZBZWpO
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 17:45:14 -0500
+Received: from qw-out-2122.google.com ([74.125.92.27]:60860 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758885AbZBZWpN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2009 17:45:13 -0500
+Received: by qw-out-2122.google.com with SMTP id 5so1355274qwi.37
+        for <git@vger.kernel.org>; Thu, 26 Feb 2009 14:45:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=RobdrwvA++sOiW0uvDkAYLutTc1tMRzYMCXzy/GlMC0=;
-        b=dSgZFAmXGx1dBMEjL8MGo8EXG6L0Ymq4Foqgtm+asbR3DqEzCxNmKfpMKXKGYYkOff
-         rM4B+yplMN/II4REA9cjdJTbFEleTqb10cb8p/oXFPbfVQZBOIJGx3B4zAvFW3bT9/o9
-         /C6KbO1kNY/RxkfXxnE81nThIF5+AVbEu7NQI=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=vV942+wKsoV8FVaEPN6Qx5AJMJQI/6ZRFcX+2zkPZgA=;
+        b=npZCDinV9Ft0n1fPboVAKUUS5E0EXrQXZRKkDiImZsvdkBfSc+2hsf5gVegii4L6L7
+         jJHQwIVfYd4QdtxAoPszVydkMfHzHTbrfso9h3ozsssQQHPDxN6Op6HMBWQOu7KzVzjD
+         Cm4KmTQN+jebVSREa6/y7/qEGpvG55Hfhlr8I=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=MD35GMCIWLk4rCHIkydlWhe9EUiTOxT6g3X5/+IP/bPA6azE8S+bY5gHVyyZ98PM47
-         O5mZoFuieErL8D3ro+Zz3ZDfBBT2qkMJCAp/G2vuP9M6y8eeIyEj5VUUkCswXJO3ofHT
-         DOCcUjnQiM7STSKkDuC7vuU/mAW/NNZlPKkyg=
-Received: by 10.141.53.18 with SMTP id f18mr846192rvk.188.1235688025125; Thu, 
-	26 Feb 2009 14:40:25 -0800 (PST)
-In-Reply-To: <7veixkrfif.fsf@gitster.siamese.dyndns.org>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=Kh94zrxfG/igd6z17hj69hnHLerWIhgzMcmJZjla5BC8gc776PX8N7PcJoJpeshFfp
+         iqeJq1ZdW5DNUCCXmUKZogZBrO0os8rF6ychFUBPlIj12CTn+EMtXJ3cy8B0KVIEtkZs
+         abGYpl84XTQvm8xwNILOvx4squqFGhxO/yycY=
+Received: by 10.224.67.82 with SMTP id q18mr3074748qai.312.1235688310302;
+        Thu, 26 Feb 2009 14:45:10 -0800 (PST)
+Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
+        by mx.google.com with ESMTPS id 5sm308946qwh.59.2009.02.26.14.45.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 26 Feb 2009 14:45:09 -0800 (PST)
+X-Mailer: git-send-email 1.6.2.rc1.309.g5f417
+In-Reply-To: <76718490902261440p4c9981fbncbdd58ad12e38349@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111607>
 
-On Thu, Feb 26, 2009 at 5:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> I don't mind Perl as we already depend on it; the looseness of the regexp
-> stil bothers me somewhat, though...
+OS X's GNU grep does not support -P/--perl-regexp.
 
-I think you're letting the perfect be the enemy of the good. The point
-of the test is merely to check for the SHA-1 has suffix in PUT/MOVE
-operations. Any of my suggestions so far are better than what is there
-now. Why so much fuss?
+We use a basic RE instead, and simplify the pattern slightly by
+replacing '+' with '*' so it can be more easily expressed using a basic
+RE. The important part of pattern, checking for a SHA-1 has suffix in
+the successful PUT/MOVE operations, remains the same. Here are samples
+of what we want to match:
 
-I'll send one more iteration, and if that's not good enough, I give up.
+127.0.0.1 - - [26/Feb/2009:22:38:13 +0000] "PUT /test_repo.git/objects/3e/a4fbb9e18a401a6463c595d08118fcb9fb7426_fab55116904c665a95438bcc78521444a7db6096 HTTP/1.1" 201 277
+127.0.0.1 - - [26/Feb/2009:22:38:13 +0000] "MOVE /test_repo.git/objects/3e/a4fbb9e18a401a6463c595d08118fcb9fb7426_fab55116904c665a95438bcc78521444a7db6096 HTTP/1.1" 201 277
 
-j.
+Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+---
+Junio,
+
+This is the best I can do. If it's not good enough, and you'd rather
+have the existing non-portable grep -P, so be it.
+
+ t/t5540-http-push.sh |   11 ++++++++---
+ 1 files changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
+index 11b3432..470bca3 100755
+--- a/t/t5540-http-push.sh
++++ b/t/t5540-http-push.sh
+@@ -94,10 +94,15 @@ test_expect_success 'MKCOL sends directory names with trailing slashes' '
+ 
+ '
+ 
+-test_expect_success 'PUT and MOVE sends object to URLs with SHA-1 hash suffix' '
++x1="[0-9a-z]"
++x2="$x1$x1"
++x5="$x1$x1$x1$x1$x1"
++x38="$x5$x5$x5$x5$x5$x5$x5$x1$x1$x1"
++x40="$x38$x2"
+ 
+-	grep -P "\"(?:PUT|MOVE) .+objects/[\da-z]{2}/[\da-z]{38}_[\da-z\-]{40} HTTP/[0-9.]+\" 20\d" \
+-		< "$HTTPD_ROOT_PATH"/access.log
++test_expect_success 'PUT and MOVE sends object to URLs with SHA-1 hash suffix' '
++	sed -e "s/PUT/OP/" -e "s/MOVE/OP/" < "$HTTPD_ROOT_PATH"/access.log \
++	| grep "\"OP .*/objects/$x2/${x38}_$x40 HTTP/[.0-9]*\" 20[0-9]"
+ 
+ '
+ 
+-- 
+1.6.2.rc1.309.g5f417
