@@ -1,124 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/4] diffcore-pickaxe: further refactor count_match()
-Date: Wed, 25 Feb 2009 22:52:05 -0800
-Message-ID: <cd73512d11e63554396983ed4e9556b2d18b3e4a.1235629933.git.gitster@pobox.com>
-References: <cover.1235629933.git.gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 26 07:54:04 2009
+From: martin f krafft <madduck@debian.org>
+Subject: Re: topgit patches
+Date: Thu, 26 Feb 2009 07:06:52 +0100
+Organization: The Debian project
+Message-ID: <20090226060652.GA16251@lapse.rw.madduck.net>
+References: <20090225195856.GA12372@pengutronix.de> <20090225212309.GM12275@machine.or.cz> <20090225231550.GA19741@pengutronix.de>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="SUOF0GtieIMvvwua"
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>, Petr Baudis <pasky@suse.cz>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 26 08:00:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lca84-0006C2-KO
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 07:53:57 +0100
+	id 1LcaE0-0007ZS-DB
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 08:00:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751652AbZBZGwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2009 01:52:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751574AbZBZGwX
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 01:52:23 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55571 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751407AbZBZGwW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2009 01:52:22 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2EB7C9D5BB
-	for <git@vger.kernel.org>; Thu, 26 Feb 2009 01:52:19 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 40E6E9D5BA for
- <git@vger.kernel.org>; Thu, 26 Feb 2009 01:52:17 -0500 (EST)
-X-Mailer: git-send-email 1.6.2.rc2.91.gf9a36
-In-Reply-To: <cover.1235629933.git.gitster@pobox.com>
-X-Pobox-Relay-ID: 02BD6A5C-03D2-11DE-81BA-B26E209B64D9-77302942!a-sasl-fastnet.pobox.com
+	id S1751476AbZBZG6g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2009 01:58:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751363AbZBZG6g
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 01:58:36 -0500
+Received: from clegg.madduck.net ([193.242.105.96]:60938 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750836AbZBZG6f (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2009 01:58:35 -0500
+Received: from lapse.rw.madduck.net (lapse.rw.madduck.net [IPv6:2001:41e0:ff3a::1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id DB4E01D40A7;
+	Thu, 26 Feb 2009 07:58:22 +0100 (CET)
+Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
+	id B1DE58081; Thu, 26 Feb 2009 07:06:52 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20090225231550.GA19741@pengutronix.de>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux 5.0 kernel 2.6.28-1-686 i686
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94.2/9048/Wed Feb 25 22:08:29 2009 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111533>
 
-We separate out the part that prepares the blob data to be inspected and
-the part that does the actual counting in the data.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- diffcore-pickaxe.c |   46 +++++++++++++++++++++++++---------------------
- 1 files changed, 25 insertions(+), 21 deletions(-)
+--SUOF0GtieIMvvwua
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-index 007b39c..4a0dca1 100644
---- a/diffcore-pickaxe.c
-+++ b/diffcore-pickaxe.c
-@@ -5,22 +5,13 @@
- #include "diff.h"
- #include "diffcore.h"
- 
--static unsigned int count_match(int one_or_more,
--				struct diff_filespec *one,
--				const char *needle, unsigned long len,
--				regex_t *regexp)
-+static unsigned int count_match_internal(int one_or_more,
-+					 const char *data, unsigned long sz,
-+					 const char *needle, unsigned long len,
-+					 regex_t *regexp)
- {
--	unsigned int cnt;
--	unsigned long offset, sz;
--	const char *data;
--	if (diff_populate_filespec(one, 0))
--		return 0;
--	if (!len)
--		return 0;
--
--	sz = one->size;
--	data = one->data;
--	cnt = 0;
-+	unsigned int cnt = 0;
-+	unsigned long offset;
- 
- 	if (regexp) {
- 		regmatch_t regmatch;
-@@ -29,16 +20,14 @@ static unsigned int count_match(int one_or_more,
- 		while (*data && !regexec(regexp, data, 1, &regmatch, flags)) {
- 			flags |= REG_NOTBOL;
- 			data += regmatch.rm_so;
--			if (*data) data++;
-+			if (*data)
-+				data++;
- 			cnt++;
- 			if (one_or_more)
- 				break;
- 		}
--
--	} else { /* Classic exact string match */
--		/* Yes, I've heard of strstr(), but the thing is *data may
--		 * not be NUL terminated.  Sue me.
--		 */
-+	} else {
-+		/* data many not be NUL terminated; we cannot use strstr() */
- 		for (offset = 0; offset + len <= sz; offset++) {
- 			/* we count non-overlapping occurrences of needle */
- 			if (!memcmp(needle, data + offset, len)) {
-@@ -49,6 +38,21 @@ static unsigned int count_match(int one_or_more,
- 			}
- 		}
- 	}
-+	return cnt;
-+}
-+
-+static unsigned int count_match(int one_or_more,
-+				struct diff_filespec *one,
-+				const char *needle, unsigned long len,
-+				regex_t *regexp)
-+{
-+	unsigned int cnt;
-+	if (diff_populate_filespec(one, 0))
-+		return 0;
-+	if (!len)
-+		return 0;
-+	cnt = count_match_internal(one_or_more, one->data, one->size,
-+				   needle, len, regexp);
- 	diff_free_filespec_data(one);
- 	return cnt;
- }
--- 
-1.6.2.rc2.91.gf9a36
+also sprach Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de> [2009.02.26=
+=2E0015 +0100]:
+> Well, I already wondered if there is someone using topgit apart
+> from me. :-)
+
+I use it and would like to actively maintain it, but time is short
+and I wanted to push out a new option parser with 0.6, but it's just
+not finished yet. As soon as I find a few hours, I'll try to revisit
+it. But if someone else has the time, maybe we can prepare a 0.6
+without a new option parser?
+
+> Given this situation it probably doesn't make sense to describe
+> some problems I currently see using topgit :-|.
+
+Please do, I am interested.
+
+--=20
+ .''`.   martin f. krafft <madduck@d.o>      Related projects:
+: :'  :  proud Debian developer               http://debiansystem.info
+`. `'`   http://people.debian.org/~madduck    http://vcs-pkg.org
+  `-  Debian - when you have better things to do than fixing systems
+=20
+"auch der mutigste von uns hat nur selten den mut zu dem,
+ was er eigentlich wei=DF."
+                                                 - friedrich nietzsche
+
+--SUOF0GtieIMvvwua
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkmmMWsACgkQIgvIgzMMSnXxoQCfU0pxJ1mW3aFLQBPxC8dIJJmA
+FCQAoMlB4Dvq5yTwlS/z+6Al1C2oaElr
+=8Sno
+-----END PGP SIGNATURE-----
+
+--SUOF0GtieIMvvwua--
