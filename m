@@ -1,101 +1,61 @@
-From: Roy Lee <roylee17@gmail.com>
-Subject: Re: Does cloning a shallow repo require special setting in the cloned 
-	one?
-Date: Thu, 26 Feb 2009 21:01:34 +0800
-Message-ID: <6eac7f470902260501v6d826af7rbc5afd1df7b214a3@mail.gmail.com>
-References: <1235620146513-2387799.post@n2.nabble.com> <87tz6hn1tg.fsf@iki.fi>
-	 <20090226104657.GB4226@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-push: creating branch on remote, refspec format
+Date: Thu, 26 Feb 2009 08:18:26 -0500
+Message-ID: <20090226131826.GB7911@coredump.intra.peff.net>
+References: <go609m$3dj$2@ger.gmane.org> <49A6863D.9000900@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 26 14:03:22 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Lasse Kliemann <lasse-gmane-git-2009@mail.plastictree.net>,
+	git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Feb 26 14:20:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcftN-0007nX-LC
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 14:03:10 +0100
+	id 1Lcg9e-000660-NZ
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 14:19:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752858AbZBZNBj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Feb 2009 08:01:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752758AbZBZNBi
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 08:01:38 -0500
-Received: from rv-out-0506.google.com ([209.85.198.225]:25947 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751363AbZBZNBi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Feb 2009 08:01:38 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so535856rvb.1
-        for <git@vger.kernel.org>; Thu, 26 Feb 2009 05:01:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=StW1wO+mSVADkW081U7ULw8NX5IRtrm6Rra0y6f4vts=;
-        b=wchRdB7zVrT4mtiCBrc6OdWVbLhWh+67oO5dyPMVnxa3cXfXk61qMrI4cNV1+fuAx/
-         /ApndPZH7k6vRwD7zqX05oJKhszt6OPaPXZiKFf8wg1pI2oUS9ftzC146JAtenrCcqcT
-         gxXS3p48ssVEXpndhXRXvw9gkeVjaSHox2+oE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Zi2u6qv1MrELo7hgAHcE4qpstvGLaCMAUli2STAlLacsvPHINo2jsRFFQCrwd7iysD
-         tLNIc8kOqHfC0aO0sQxCYZeac+bxECcTVaUaSNmXDJmCQ0bQzHgbSQ8+Hc60awSJIuoC
-         D3Q5RpfaCgFpFn51It5EO+Pza0vc3ySXNm6XE=
-Received: by 10.141.175.5 with SMTP id c5mr634721rvp.176.1235653294959; Thu, 
-	26 Feb 2009 05:01:34 -0800 (PST)
-In-Reply-To: <20090226104657.GB4226@coredump.intra.peff.net>
+	id S1753199AbZBZNSb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2009 08:18:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753295AbZBZNSb
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 08:18:31 -0500
+Received: from peff.net ([208.65.91.99]:40574 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753012AbZBZNSa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2009 08:18:30 -0500
+Received: (qmail 4793 invoked by uid 107); 26 Feb 2009 13:18:54 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 26 Feb 2009 08:18:54 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Feb 2009 08:18:26 -0500
+Content-Disposition: inline
+In-Reply-To: <49A6863D.9000900@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111559>
 
-On Thu, Feb 26, 2009 at 6:46 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Feb 26, 2009 at 08:34:51AM +0200, Teemu Likonen wrote:
->
->> On 2009-02-25 19:49 (-0800), roylee17 wrote:
->>
->> > $ git clone --depth 1 git-full git-shallow2
->> > 'git log' still gives a full history
->> >
->> > Why can't I clone a shallow repo from the git-full?
->> > Does it requires some settings in the git-full repo?
->>
->> I don't know the "why" part but using file:// URL should work:
->>
->> =A0 =A0 git clone --depth 1 file:///path/to/git-full git-shallow2
->
-> I don't think the behavior is intentional, but a side effect of the
-> fact that git takes some shortcuts when cloning locally. In particula=
-r,
-> it will try to copy or hardlink the object database rather than
-> transmitting over the git protocol locally. Using file:// has always
-> been the way to suppress that shortcut.
->
-> Perhaps to avoid surprise, that optimization should be turned off for
-> options which cause it to behave differently (like --depth). But I ha=
-ve
-> to wonder what the point of --depth is locally; if you are worried ab=
-out
-> space, hardlinks (the default) or alternates ("clone -s") are a bette=
-r
-> solution.
->
-> -Peff
->
+On Thu, Feb 26, 2009 at 01:08:29PM +0100, Michael J Gruber wrote:
 
-Actully, the original intention was to find a quick way to checkout and
-build several projects regularly. The first thing came to me was clonin=
-g
-shallow repos for saving some time. So I tried it with my local repo fi=
-rst.
+> > $ git push /tmp/a master:foo
+> [...]
+> 
+> You're using the very same form as the doc. "This form" in the doc
+> refers to "repo refspec", i.e. something like "a b:c", which is what you
+> use. The "refs/heads/" part is just there to disambiguate between
+> possible different matches on the remote side (refs/heads/foo,
+> refs/tags/foo, refs/remotes/bar/foo, ...).
 
-Later, one of my co-works suggested me to try git archive, and that did
-reallly fit my needs.
+Actually, it used to be that case that git would complain unless "foo"
+was properly qualified; this was fixed in f8aae12 (push: allow
+unqualified dest refspecs to DWIM, 2008-04-23), which is in v1.5.5.2.
 
-Thanks for clarifying my confusion.
+The doc in question was added around v1.5.3. So I think it is simply
+that it was never updated to match the new behavior. That paragraph
+could probably even just be deleted, since there is no syntactic
+difference between pushing to an existing branch and creating a new
+branch (alternatively, it can say explicitly that creating a new branch
+is the same as pushing to one).
 
-Roy
+-Peff
