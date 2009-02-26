@@ -1,234 +1,67 @@
-From: Heiko Voigt <git-list@hvoigt.net>
-Subject: [PATCH] cvsimport: add test illustrating a bug in cvsps
-Date: Mon, 23 Feb 2009 19:49:42 +0100
-Message-ID: <49A2EFC6.5000104@hvoigt.net>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: `./configure --XXdir=` ignored?
+Date: Thu, 26 Feb 2009 18:33:48 +0100
+Message-ID: <vpq4oyht85f.fsf@bauges.imag.fr>
+References: <c115fd3c0902260648g3cc9bfeap58823e53a9dc72e6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 23 19:51:27 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Tim Visher <tim.visher@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 26 19:12:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lbftb-0006sV-CL
-	for gcvg-git-2@gmane.org; Mon, 23 Feb 2009 19:51:15 +0100
+	id 1LckiD-00065P-Ee
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 19:11:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754172AbZBWSts (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Feb 2009 13:49:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754094AbZBWStq
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Feb 2009 13:49:46 -0500
-Received: from darksea.de ([83.133.111.250]:57253 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753996AbZBWStq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Feb 2009 13:49:46 -0500
-Received: (qmail 9706 invoked from network); 23 Feb 2009 19:49:31 +0100
-Received: from unknown (HELO macbook.lan) (127.0.0.1)
-  by localhost with SMTP; 23 Feb 2009 19:49:31 +0100
-User-Agent: Thunderbird 2.0.0.19 (Macintosh/20081209)
+	id S1751828AbZBZSKa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2009 13:10:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751451AbZBZSK3
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 13:10:29 -0500
+Received: from imag.imag.fr ([129.88.30.1]:44338 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751236AbZBZSK2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2009 13:10:28 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n1QI4iCG024071
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 26 Feb 2009 19:04:44 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Lck7I-0002AE-Tf; Thu, 26 Feb 2009 18:33:48 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Lck7I-0000fs-RH; Thu, 26 Feb 2009 18:33:48 +0100
+In-Reply-To: <c115fd3c0902260648g3cc9bfeap58823e53a9dc72e6@mail.gmail.com> (Tim Visher's message of "Thu\, 26 Feb 2009 09\:48\:29 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.90 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 26 Feb 2009 19:04:44 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some cvs repositories may have time deviations in their recorded commits. This
-is a test for one of such cases. These kind of repositories can happen if the
-system time of cvs clients is not fully synchronised.
+Tim Visher <tim.visher@gmail.com> writes:
 
-Consider the following sequence of events:
+> Hello Everyone,
+>
+> I'm working on getting git 1.6.2-rc2 built.  I have a bin, man, info,
+> and html directory in my home folder that I'd like to use as the
+> defaults for git.  I attempted to do this through
+>
+>     make configure
+>     ./configure --XXdir=/full/path/to/dir
 
- * client A commits file a r1.1
- * client A commits file a r1.2, b r1.1
- * client B commits file b r1.2 using the same timestamp as a r1.1
+Did you actually type --XXdir, or is this XX just a way to mean
+something else? I don't see --XXdir mentionned anywhere.
 
-This can be resolved but due to cvsps grouping its patchsets solely based
-on the timestamp and never breaking these groups it outputs the wrong
-order which then leads to a broken import.
+I use "./configure --prefix=$HOME/some/dir" and it works fine (make
+install-html installs to $prefix/share/doc/).
 
-I hit this bug when importing from a real repository which was originally
-converted from another rcs based scm. Other import tools can handle this
-correctly, e.g. parsecvs.
----
-
-As this is my first real patch, please let me know if I added anything
-to the wrong place. There is actually another bug depending on timings
-which I haven't written a testcase for yet. It is not such a showstopper
-but cvsps skips revisions from a file if they have the same commit
-message and fit into the same time window.
-
-cheers Heiko
-
- t/t9603-cvsimport-time.sh      |   60 ++++++++++++++++++++++++++++++++++++++++
- t/t9603/cvsroot/time/a,v       |   41 +++++++++++++++++++++++++++
- t/t9603/cvsroot/time/b,v       |   41 +++++++++++++++++++++++++++
- 3 files changed, 142 insertions(+), 0 deletions(-)
- create mode 100755 t/t9603-cvsimport-time.sh
- create mode 100644 t/t9603/cvsroot/CVSROOT/.empty
- create mode 100644 t/t9603/cvsroot/time/a,v
- create mode 100644 t/t9603/cvsroot/time/b,v
-
-diff --git a/t/t9603-cvsimport-time.sh b/t/t9603-cvsimport-time.sh
-new file mode 100755
-index 0000000..d6de242
---- /dev/null
-+++ b/t/t9603-cvsimport-time.sh
-@@ -0,0 +1,60 @@
-+#!/bin/sh
-+
-+test_description='git cvsimport basic tests'
-+. ./test-lib.sh
-+
-+CVSROOT="$TEST_DIRECTORY"/t9603/cvsroot
-+export CVSROOT
-+unset CVS_SERVER
-+# for clean cvsps cache
-+HOME=$(pwd)
-+export HOME
-+
-+if ! type cvs >/dev/null 2>&1
-+then
-+	say 'skipping cvsimport tests, cvs not found'
-+	test_done
-+	exit
-+fi
-+
-+cvsps_version=`cvsps -h 2>&1 | sed -ne 's/cvsps version //p'`
-+case "$cvsps_version" in
-+2.1 | 2.2*)
-+	;;
-+'')
-+	say 'skipping cvsimport tests, cvsps not found'
-+	test_done
-+	exit
-+	;;
-+*)
-+	say 'skipping cvsimport tests, unsupported cvsps version'
-+	test_done
-+	exit
-+	;;
-+esac
-+
-+# Structure of the test cvs repository
-+#
-+# Message   File:Content         Commit Time
-+# Rev 1     a: 1.1               2009-02-21 19:11:43 +0100
-+# Rev 2     a: 1.2    b: 1.1     2009-02-21 19:11:14 +0100
-+# Rev 3               b: 1.2     2009-02-21 19:11:43 +0100
-+#
-+# As you can see the commit of Rev 3 has the same time as
-+# Rev 1 this leads to a broken import because of a cvsps
-+# bug.
-+
-+test_expect_success 'import with criss cross times on revisions' '
-+
-+    git cvsimport -p"-x" -C import time && 
-+    cd import &&
-+        git log --pretty=format:%s > ../actual &&
-+        echo "" >> ../actual &&
-+    cd .. &&
-+    echo "Rev 3
-+Rev 2
-+Rev 1" > expect &&
-+    test_cmp actual expect 
-+'
-+
-+test_done
-diff --git a/t/t9603/cvsroot/CVSROOT/.empty b/t/t9603/cvsroot/CVSROOT/.empty
-new file mode 100644
-index 0000000..e69de29
-diff --git a/t/t9603/cvsroot/time/a,v b/t/t9603/cvsroot/time/a,v
-new file mode 100644
-index 0000000..66a96aa
---- /dev/null
-+++ b/t/t9603/cvsroot/time/a,v
-@@ -0,0 +1,41 @@
-+head	1.2;
-+access;
-+symbols;
-+locks; strict;
-+comment	@# @;
-+
-+
-+1.2
-+date	2009.02.21.18.11.14;	author hvoigt;	state Exp;
-+branches;
-+next	1.1;
-+
-+1.1
-+date	2009.02.21.18.11.43;	author hvoigt;	state Exp;
-+branches;
-+next	;
-+
-+
-+desc
-+@@
-+
-+
-+1.2
-+log
-+@Rev 2
-+@
-+text
-+@1.2
-+@
-+
-+
-+1.1
-+log
-+@Rev 1
-+@
-+text
-+@d1 1
-+a1 1
-+1.1
-+@
-+
-diff --git a/t/t9603/cvsroot/time/b,v b/t/t9603/cvsroot/time/b,v
-new file mode 100644
-index 0000000..b5da856
---- /dev/null
-+++ b/t/t9603/cvsroot/time/b,v
-@@ -0,0 +1,41 @@
-+head	1.2;
-+access;
-+symbols;
-+locks; strict;
-+comment	@# @;
-+
-+
-+1.2
-+date	2009.02.21.18.11.43;	author hvoigt;	state Exp;
-+branches;
-+next	1.1;
-+
-+1.1
-+date	2009.02.21.18.11.14;	author hvoigt;	state Exp;
-+branches;
-+next	;
-+
-+
-+desc
-+@@
-+
-+
-+1.2
-+log
-+@Rev 3
-+@
-+text
-+@1.2
-+@
-+
-+
-+1.1
-+log
-+@Rev 2
-+@
-+text
-+@d1 1
-+a1 1
-+1.1
-+@
-+
 -- 
-1.6.1.2.390.gba743
+Matthieu
