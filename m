@@ -1,63 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] diffcore-pickaxe: optimize by trimming common
- initial and trailing parts
-Date: Thu, 26 Feb 2009 01:05:18 -0800
-Message-ID: <7vy6vtva9d.fsf@gitster.siamese.dyndns.org>
-References: <cover.1235629933.git.gitster@pobox.com>
- <30c0d4d9b64924679c9af00796f7e0b562020ddf.1235629933.git.gitster@pobox.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCHv2 4/4] git submodule: Fix handling of // and /.. in paths
+ for added submodules
+Date: Thu, 26 Feb 2009 10:05:16 +0100
+Message-ID: <49A65B4C.305@drmicha.warpmail.net>
+References: <49A541D3.4030001@viscovery.net> <1235568392-19705-1-git-send-email-git@drmicha.warpmail.net> <1235568392-19705-2-git-send-email-git@drmicha.warpmail.net> <1235568392-19705-3-git-send-email-git@drmicha.warpmail.net> <1235568392-19705-4-git-send-email-git@drmicha.warpmail.net> <1235568392-19705-5-git-send-email-git@drmicha.warpmail.net> <49A55056.8020504@viscovery.net> <49A556D5.7020806@drmicha.warpmail.net> <49A55DAD.2000309@viscovery.net> <7v1vtm1a6b.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 26 10:07:10 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+	Andrei Thorp <garoth@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 26 10:07:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LccCn-0005lf-3p
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 10:06:57 +0100
+	id 1LccCn-0005lf-R6
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 10:06:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753054AbZBZJFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2009 04:05:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752910AbZBZJF2
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 04:05:28 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53618 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752381AbZBZJFY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2009 04:05:24 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 8D47F1789;
-	Fri, 27 Feb 2009 04:05:21 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0ADAA1788; Fri,
- 27 Feb 2009 04:05:19 -0500 (EST)
-In-Reply-To: <30c0d4d9b64924679c9af00796f7e0b562020ddf.1235629933.git.gitster@pobox.com>
- (Junio C. Hamano's message of "Wed, 25 Feb 2009 22:52:06 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: C308FF34-04AD-11DE-AB9D-8D02133F2F75-77302942!a-sasl-quonix.pobox.com
+	id S1753141AbZBZJFd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2009 04:05:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752922AbZBZJFd
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 04:05:33 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:33773 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752720AbZBZJF0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Feb 2009 04:05:26 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 6B0DE2A5B16;
+	Thu, 26 Feb 2009 04:05:24 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Thu, 26 Feb 2009 04:05:24 -0500
+X-Sasl-enc: gdizg3G1+pfUgEoFrhvMChJzU4c9grB5MwTbFWU5E4Tl 1235639124
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 88902126A0;
+	Thu, 26 Feb 2009 04:05:23 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090226 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <7v1vtm1a6b.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111541>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Junio C Hamano venit, vidit, dixit 25.02.2009 22:25:
+> Johannes Sixt <j.sixt@viscovery.net> writes:
+> 
+>> Michael J Gruber schrieb:
+>>> Johannes Sixt venit, vidit, dixit 25.02.2009 15:06:
+>>>> I think we have so far avoided \+ in sed expressions for portability reasons.
+>>> Hmmpf. Is it that new, or gnu specific? I'm always afraid of portability
+>>> issues with bash but wasn't aware of sed being an issue as well.
+>>>
+>>> In any case, would 's|\\*|/|g' be better (more portable) then?
+>> You mean 's|//*|/|g'; yes, that is definitly portable.
+>>
+>>> Well, how is
+>>>
+>>> echo a/b/c/../../d | sed -e ':start;s|\([^/]*\)/\.\./||g;tstart'
+>>> a/d
+>>>
+>>> I meant: how portable is...
+>> I don't know... Let's see: My AIX 4.3.3 sed understands it if it is not
+>> all on a single line, and that says a lot. Specifically, I tried this:
+>>
+>> echo a/b/c/../../d | sed -e ':start
+>>              s|\([^/]*\)/\.\./||
+>>              tstart
+>> '
+>>
+>> and got the desired result:
+>>
+>> a/d
+>>
+>> Note that the 'g' flag is not necessary in this case.
+>>
+>> OTOH, this sed doesn't understand #comments :-/
+> 
+> Historically, sed was much worse than the shell when it came to the
+> portability issues, especially before people started to use bash, which
+> tipped the balance a bit by worsening the situation for the shell side.
+> 
+> The sed scripts in the more important parts of scripted Porcelains avoid
+> multiple commands on a single line concatenated with ";" mostly by inertia
+> on my side, but it was acquired exactly from this kind of portability
+> mess.  IIRC, AIX's was the worst offender. It also got "/A/../B/ { ... }"
+> wrong in earlier versions.
 
-> With this optimization in place, the following query in the Linux kernel
-> repository on my machine becomes about 40% faster:
->
-> $ STRING='Ensure that the real time constraints are schedulable.'
-> $ git log -S"$STRING" HEAD -- kernel/sched.c >/dev/null
->
-> (Before the patch, best of 5 runs)
-> 5.59user 0.15system 0:05.74elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-> 0inputs+0outputs (0major+39956minor)pagefaults 0swaps
->
-> (After the patch, best of 5 runs)
-> 3.04user 0.17system 0:03.23elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-> 0inputs+0outputs (0major+49697minor)pagefaults 0swaps
-    
-The file "kernel/sched.c" has roughly 900 changes applied to it, and over
-its lifetime, it has grown from 5kB to 9kB in size.
+I'm a bit confused now. Are you saying that "git-submodule.sh" should
+avoid the multiple lines in sed (which work in AIX 4.3.3)? I don't know
+how to simplify a/b/c/../../ easily then. Of course one could loop
+around in shell rather than using sed's "goto", but that looks ugly.
 
-I suspect a larger file might see a bigger performance boost.
+I think that's my only question before doing a v3 which will be a good
+"cd citizen" in tests and test for more idiosyncracies.
+
+Oh wait: Would it be worthwhile to have that shell version of
+normalize_path_copy() in git-sh-setup instead?
+
+Michael
