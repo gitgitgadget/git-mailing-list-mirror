@@ -1,74 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFH] rebase -i optimization
-Date: Thu, 26 Feb 2009 15:59:47 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902261557300.6258@intel-tinevez-2-302>
-References: <fabb9a1e0902260655g53fa1e1fg7e4aa76b0f3a80fc@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: `./configure --XXdir=` ignored?
+Date: Thu, 26 Feb 2009 10:00:13 -0500
+Message-ID: <20090226150013.GA9785@coredump.intra.peff.net>
+References: <c115fd3c0902260648g3cc9bfeap58823e53a9dc72e6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Stephen Haberman <stephen@exigencecorp.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Git Mailing List <git@vger.kernel.org>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 26 16:01:22 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Tim Visher <tim.visher@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 26 16:02:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lchjl-0007zu-FU
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 16:01:21 +0100
+	id 1Lchk9-00089r-Ul
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 16:01:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753960AbZBZO7y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2009 09:59:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753061AbZBZO7x
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 09:59:53 -0500
-Received: from mail.gmx.net ([213.165.64.20]:47555 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753113AbZBZO7x (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2009 09:59:53 -0500
-Received: (qmail invoked by alias); 26 Feb 2009 14:59:49 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp008) with SMTP; 26 Feb 2009 15:59:49 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19AMZBDSKFAyc5lyI1sddqZGh0kfehvSreiccvJaw
-	+4kORmj2juZqV0
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <fabb9a1e0902260655g53fa1e1fg7e4aa76b0f3a80fc@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59
+	id S1754186AbZBZPAT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2009 10:00:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754045AbZBZPAS
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 10:00:18 -0500
+Received: from peff.net ([208.65.91.99]:39859 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753061AbZBZPAR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2009 10:00:17 -0500
+Received: (qmail 5350 invoked by uid 107); 26 Feb 2009 15:00:41 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 26 Feb 2009 10:00:41 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Feb 2009 10:00:13 -0500
+Content-Disposition: inline
+In-Reply-To: <c115fd3c0902260648g3cc9bfeap58823e53a9dc72e6@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111570>
 
-Hi,
+On Thu, Feb 26, 2009 at 09:48:29AM -0500, Tim Visher wrote:
 
-On Thu, 26 Feb 2009, Sverre Rabbelier wrote:
+> I'm working on getting git 1.6.2-rc2 built.  I have a bin, man, info,
+> and html directory in my home folder that I'd like to use as the
+> defaults for git.  I attempted to do this through
+> 
+>     make configure
+>     ./configure --XXdir=/full/path/to/dir
+>     make all man info html
+>     make install install-man install-info install-html
+> 
+> But other than the binaries (and I'm not even totally convinced they
+> got in correctly) and the man pages, everything else seems to be
+> attempting to go to the typical places in /usr/local.
+> 
+> What am I doing wrong?
 
-> I am currently working on a large set of patches for Melange, and as
-> such I'm using rebase -i a lot to polish things a bit. I do this
-> mainly by 'git rebase -i master' from my topic branch, then change on
-> of the 'pick' lines into an 'edit', and then fix up the commit and
-> 'git rebase --continue'. Now I notice I'm waiting a lot for 'rebase
-> -i' to finish picking the first bunch of commits that I didn't change.
-> Now obviously I couldof done 'git rebase -i <foo>', but then I have
-> first figure out what the last commit I want to change is.
-> Would there be a reason to not reset to the last 'pick' commit instead
-> of to the 'based on' branch (as long as there history is linear)? If
-> so, what would be the best way to go around and implement this?
+The configure support is notoriously incomplete (AFAIK, very few of the
+active developers use it regularly). Probably you need something like
+this (but I didn't test it):
 
-This code is supposed to do exactly what you want:
-
-http://repo.or.cz/w/git/dscho.git?a=blob;f=git-rebase--interactive.sh;h=532f161c1ddce351cf623b096899e0eb057180ca;hb=8394eb1ecee00c2aba9212f3445c42078b41614b#l198
-
-Unfortunately, it seems to be quite broken by all the different directions 
-rebase -i was pulled to, but maybe you see the bug right away.  Otherwise, 
-I'll try to reschedule my Git time budget later tonight.
-
-Ciao,
-Dscho
+diff --git a/config.mak.in b/config.mak.in
+index 7cce0c1..505d5c7 100644
+--- a/config.mak.in
++++ b/config.mak.in
+@@ -18,6 +18,8 @@ datarootdir = @datarootdir@
+ template_dir = @datadir@/git-core/templates
+ 
+ mandir=@mandir@
++htmldir=@htmldir@
++infodir=@infodir@
+ 
+ srcdir = @srcdir@
+ VPATH = @srcdir@
