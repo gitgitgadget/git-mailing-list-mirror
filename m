@@ -1,98 +1,118 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Does cloning a shallow repo require special setting in the cloned
- one?
-Date: Thu, 26 Feb 2009 12:17:36 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902261216110.6258@intel-tinevez-2-302>
-References: <1235620146513-2387799.post@n2.nabble.com> <87tz6hn1tg.fsf@iki.fi> <20090226104657.GB4226@coredump.intra.peff.net>
+From: Mike Ralphson <mike.ralphson@gmail.com>
+Subject: Re: [PATCH v2] Make sure objects/pack exists before creating a new 
+	pack
+Date: Thu, 26 Feb 2009 11:19:02 +0000
+Message-ID: <e2b179460902260319je8ce6c6qc028d260b9d35b7c@mail.gmail.com>
+References: <49A428B7.4000003@spiralti.com>
+	 <7v7i3fivx2.fsf@gitster.siamese.dyndns.org>
+	 <7vocwrc7oe.fsf_-_@gitster.siamese.dyndns.org>
+	 <49A65EBF.10307@viscovery.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Teemu Likonen <tlikonen@iki.fi>, roylee17 <roylee17@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 26 12:19:10 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Todd Zullinger <tmz@pobox.com>,
+	Rafael Darder Calvo <rdarder@spiralti.com>
+To: Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 26 12:20:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LceGj-0003c1-1U
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 12:19:09 +0100
+	id 1LceI7-00048u-Jm
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 12:20:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753659AbZBZLRl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2009 06:17:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753600AbZBZLRl
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 06:17:41 -0500
-Received: from mail.gmx.net ([213.165.64.20]:51194 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751484AbZBZLRk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2009 06:17:40 -0500
-Received: (qmail invoked by alias); 26 Feb 2009 11:17:37 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp004) with SMTP; 26 Feb 2009 12:17:37 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18Z6c8MJB8ZNa0MoxAyVUOkkcYHFcTBHXaejxrGif
-	OnzmG2Nld7NJu5
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <20090226104657.GB4226@coredump.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.49
+	id S1754209AbZBZLTH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Feb 2009 06:19:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754013AbZBZLTH
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 06:19:07 -0500
+Received: from qw-out-2122.google.com ([74.125.92.24]:32184 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753622AbZBZLTF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Feb 2009 06:19:05 -0500
+Received: by qw-out-2122.google.com with SMTP id 5so882629qwi.37
+        for <git@vger.kernel.org>; Thu, 26 Feb 2009 03:19:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=RQyqSBQFD4b4xKdJiVJjbwsPh8Txdh7zk0FhmFE7B4Q=;
+        b=uHvJjt5J8rfPpkH/jSQA7kWdXPVfDtGMDfcnsRl4mBbN/qJJuy3S/KIgbU8Z7YgT4w
+         OEHVS/PTUk0+/Z5JeHZty3BmxrjrHejOVcoT8WCaAOz118EpvHHVjRLKB20JanVDZuGg
+         7ugWLnFF5eYxx7WfBwvY8Bx6xWCQmTOi47IIE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=IxtO5VkePN7xy9L1ocnKOHZ+aGP/GmK+ft2TZd3BJb+OwU3slhGauh4IunpPXLs6rF
+         Fl+tk74P8Dnx/elgVzISMXBEkd6JujHHCxvc4rsQDPTC/yS8XopbziH4h02MbAsn7zS1
+         64kZHrWT/x6XLN3syWL6yOdLP92ZvmEPjxvhY=
+Received: by 10.224.67.66 with SMTP id q2mr1916256qai.261.1235647142364; Thu, 
+	26 Feb 2009 03:19:02 -0800 (PST)
+In-Reply-To: <49A65EBF.10307@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111554>
 
-Hi,
+2009/2/26 Johannes Sixt <j.sixt@viscovery.net>
+>
+> Junio C Hamano schrieb:
+> > @@ -795,22 +794,24 @@ static void final(const char *final_pack_name=
+, const char *curr_pack_name,
+> >
+> > =C2=A0 =C2=A0 =C2=A0 if (keep_msg) {
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int keep_fd, keep_=
+msg_len =3D strlen(keep_msg);
+> > - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!keep_name) {
+> > - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 snprintf(name, sizeof(name), "%s/pack/pack-%s.keep",
+> > - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0get_object_directory(), sha1_to_h=
+ex(sha1));
+> > - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 keep_name =3D name;
+>
+> You should not have removed this line...
 
-On Thu, 26 Feb 2009, Jeff King wrote:
+Even with j6t's patch, I'm seeing failures in t5300--pack-object.sh on =
+AIX 5.3
 
-> On Thu, Feb 26, 2009 at 08:34:51AM +0200, Teemu Likonen wrote:
-> 
-> > On 2009-02-25 19:49 (-0800), roylee17 wrote:
-> > 
-> > > $ git clone --depth 1 git-full git-shallow2
-> > > 'git log' still gives a full history
-> > >
-> > > Why can't I clone a shallow repo from the git-full?
-> > > Does it requires some settings in the git-full repo?
-> > 
-> > I don't know the "why" part but using file:// URL should work:
-> > 
-> >     git clone --depth 1 file:///path/to/git-full git-shallow2
-> 
-> I don't think the behavior is intentional, but a side effect of the
-> fact that git takes some shortcuts when cloning locally. In particular,
-> it will try to copy or hardlink the object database rather than
-> transmitting over the git protocol locally. Using file:// has always
-> been the way to suppress that shortcut.
-> 
-> Perhaps to avoid surprise, that optimization should be turned off for
-> options which cause it to behave differently (like --depth). But I have
-> to wonder what the point of --depth is locally; if you are worried about
-> space, hardlinks (the default) or alternates ("clone -s") are a better
-> solution.
+* FAIL 15: survive missing objects/pack directory
+fatal: Unable to create temporary file (): No such file or directory
 
-I think it is way better to warn, since "--depth" is usually passed out of 
-concerns about disk space.  And --shared should shut that concern up 
-rather nicely.
+=46rom a bit of instrumenting (no working gdb here), I see that in
+wrapper.c/odb_mkstemp, template is empty on entry, empty before the
+call to safe_create_leading_directories, but contains
+=2Egit/objects/pack/tmp_pack_XXXXXX after the second snprintf. TMPDIR i=
+s
+not set here, which I thought might be the root cause, but it doesn't
+seem to be that.
 
-diff --git a/builtin-clone.c b/builtin-clone.c
-index c338910..5831034 100644
---- a/builtin-clone.c
-+++ b/builtin-clone.c
-@@ -511,8 +511,11 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	refspec.src = src_ref_prefix;
- 	refspec.dst = branch_top.buf;
- 
--	if (path && !is_bundle)
-+	if (path && !is_bundle) {
-+		if (option_depth)
-+			warning("Ignoring --depth for local clone");
- 		refs = clone_local(path, git_dir);
-+	}
- 	else {
- 		struct remote *remote = remote_get(argv[0]);
- 		transport = transport_get(remote, remote->url[0]);
+My naive solution is to:
 
-Lacks tests,
-Dscho
+index b07cdf2..80fee48 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -268,9 +268,9 @@ int odb_mkstemp(char *template, size_t limit,
+const char *pattern)
+                return fd;
+
+        /* slow path */
+-       safe_create_leading_directories(template);
+        snprintf(template, limit, "%s/%s",
+                 get_object_directory(), pattern);
++       safe_create_leading_directories(template);
+        return xmkstemp(template);
+ }
+
+Which then passes all tests.
+
+Bearing in mind that for me, fiddling with C is like trying to order
+room service in Latin, if this is in any way the correct thing to do,
+I'll post a proper patch with s-o-b if required, or you can just
+squash into j6t's.
+
+Mike
