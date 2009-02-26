@@ -1,78 +1,106 @@
-From: Peter Harris <git@peter.is-a-geek.org>
-Subject: Re: git-svn and repository hierarchy?
-Date: Wed, 25 Feb 2009 20:02:45 -0500
-Message-ID: <eaa105840902251702l68bc35f3ia15b1c804a6825f3@mail.gmail.com>
-References: <20090224223412.GA4573@raven.wolf.lan>
-	 <49A50EB2.80300@drmicha.warpmail.net>
-	 <20090225232442.GC4573@raven.wolf.lan>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: How do I qualify paths in the .gitignore file w.r.t. the repo
+ root  directory?
+Date: Thu, 26 Feb 2009 01:23:58 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngqbrpd.t1k.sitaramc@sitaramc.homelinux.net>
+References: <e38bce640902232247t63a37f63x9f403fbda0744cfd@mail.gmail.com>
+ <7v1vtomhz1.fsf@gitster.siamese.dyndns.org>
+ <slrngq7e6c.iti.sitaramc@sitaramc.homelinux.net>
+ <7vzlgbhh95.fsf@gitster.siamese.dyndns.org>
+ <slrngq9es5.ik0.sitaramc@sitaramc.homelinux.net>
+ <7vab8aap6t.fsf@gitster.siamese.dyndns.org>
+ <slrngqaa5n.mp1.sitaramc@sitaramc.homelinux.net>
+ <7vvdqyyzsr.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 26 02:04:59 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 26 02:26:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcUfx-0005fv-I6
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 02:04:34 +0100
+	id 1LcV0x-0003OM-JN
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 02:26:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753158AbZBZBCu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Feb 2009 20:02:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752964AbZBZBCt
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 20:02:49 -0500
-Received: from an-out-0708.google.com ([209.85.132.250]:62841 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753136AbZBZBCs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Feb 2009 20:02:48 -0500
-Received: by an-out-0708.google.com with SMTP id c2so241004anc.1
-        for <git@vger.kernel.org>; Wed, 25 Feb 2009 17:02:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=H8cH/TbBHSkCoBoJxDaAdlV0T/ulYfHpBkLa70BRI00=;
-        b=I7u5K4pquAKlvw76m0n4ZE4/ikpNgEt1UiRVAGiOWHYNisZHQdn2VdVtrL2+nN3zJq
-         87L+EPfYAvIZBpIpaoP7MZ8HYTueCrBObpntJuCGR0pQRQx0gVs1RoJtAZuerVrEIlyO
-         EPtMpNiPnbCz3aRy4tRixi9Mf62klfnWXu1YI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=GZbVCGo5DZfqLt175t4I3McwcVxGylj3Fwq4bx/OgTQYUdokLPxv+wiVaXulpto1gu
-         Ku1zbXzBDFfuaE48sqvNe5gIUqjn5YMaahDaPMBDQnP8yR2QbylUTkyfn9SxkfAyNo5V
-         ir+a21SJp8eo/89ieURQyy/pWooAEdfYZ5iT0=
-Received: by 10.229.74.68 with SMTP id t4mr899625qcj.102.1235610165985; Wed, 
-	25 Feb 2009 17:02:45 -0800 (PST)
-In-Reply-To: <20090225232442.GC4573@raven.wolf.lan>
-X-Google-Sender-Auth: 66df341ead3934b1
+	id S1751662AbZBZBYS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Feb 2009 20:24:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751529AbZBZBYS
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 20:24:18 -0500
+Received: from main.gmane.org ([80.91.229.2]:41193 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751050AbZBZBYR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2009 20:24:17 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LcUyy-0003sp-PA
+	for git@vger.kernel.org; Thu, 26 Feb 2009 01:24:12 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 26 Feb 2009 01:24:12 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 26 Feb 2009 01:24:12 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111517>
 
-On Wed, Feb 25, 2009 at 6:24 PM, Josef Wolf wrote:
-> And IMHO, there's one catch: to synchronize, I need to tightly
-> coordinate the work on git-svn-repos with the work on its clones. =A0=
-The
-> clones are not reachable most of the time, so tightly coordinating
-> would slow down the flow of changesets extremely.
+On 2009-02-25, Junio C Hamano <gitster@pobox.com> wrote:
+> Sitaram Chamarty <sitaramc@gmail.com> writes:
 
-Not sure if it helps, but for what it's worth, I use a circular setup:
-git-svn-repos is updated from subversion-repos (by cron), but is
-otherwise read-only. cloneN can pull from git-svn-repos (since
-git-pull is a whole lot faster than git svn fetch, especially for the
-initial clone), but has to "git svn dcommit" to push changes back
-upstream.
+>> I can use this.  Can we keep it in the same section, despite
+>> being technically not a '_how_'?  It fits the other sections
+>> even less, and the sectioning is the main thing in all this.
+>
+> I thought making the text easier to follow was the main thing.
 
-This configuration puts any potential rebase conflicts back into the
-hands of cloneN. No need to coordinate clones, aside from each clone
-needing to know how to work in a "commits will be rebased by upstream"
-type of environment (which isn't unique to git-svn). Oh, and make sure
-you're using a recent git; older git-svn didn't have the incremental
-index rebuild.
+I meant the sectioning was the main change to make the text
+easier to follow, since the words are mostly the same
+otherwise.
 
-Peter Harris
+> Sectioning could be part of the solution, but if we find that the boundary
+> between sections are blurry, or if there are too many sections compared to
+> the number of rules, perhaps dividing them into sections and giving each a
+> separate section header may make them even harder to follow.
+
+I'm ambivalent on this, so I appreciate the tie-breaker.
+
+> I am actually very tempted to say that the correct description of the
+> gitignore language is:
+
+I see you've used 'pattern' and 'sign' to break the
+overloading of '/'.
+
+>     - an optional ! sign whose meaning is "unignore paths that matches
+>       this pattern, instead of ignoring them"; followed by
+>
+>     - an optional / sign whose meaning is "a match with this pattern must
+>       be made at this directory and not in its subdirectories"; followed
+>       by
+>
+>     - a pattern that never begins nor ends with a slash whose meaning is
+>       "this is a shell glob pattern to test paths against"; followed by
+
+I wish[1].  But in reality, a slash 'inside' anchors the
+match the same as a leading slash does.
+
+Boy this is tough :-) and I'm almost tempted to relook at my
+first attempt, where your only concerns were the words
+'otherwise' and 'anywhere else' for non-native speakers.
+
+I'll think about this some more and get back to you.
+
+Regards,
+
+Sitaram
+
+[1] Would have been much simpler, plus you'd be able to
+specify a non-anchored pattern that contains a slash, which
+you currently cannot.
