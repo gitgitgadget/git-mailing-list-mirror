@@ -1,69 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] added -C option to chdir() into another directory first
-Date: Thu, 26 Feb 2009 13:50:37 -0800
-Message-ID: <7viqmwrhoy.fsf@gitster.siamese.dyndns.org>
-References: <1235679099-33994-1-git-send-email-kbrint@rufus.net>
- <7vr61lq6ky.fsf@gitster.siamese.dyndns.org>
- <20090226204423.GA34377@rufus.net>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [RFC] add test cases for the --repo option to git push
+Date: Thu, 26 Feb 2009 17:11:37 -0500
+Message-ID: <76718490902261411pc8b97wdb43baf02eebe0c3@mail.gmail.com>
+References: <76718490902210132w2577c093tf8c2a5e7da8bc0e8@mail.gmail.com>
+	 <1235497240-20677-1-git-send-email-git@drmicha.warpmail.net>
+	 <7vhc2iyy9y.fsf@gitster.siamese.dyndns.org>
+	 <49A66057.1050501@drmicha.warpmail.net>
+	 <7vfxi1t99u.fsf@gitster.siamese.dyndns.org>
+	 <49A6D5E5.8000007@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: kevin brintnall <kbrint@rufus.net>
-X-From: git-owner@vger.kernel.org Thu Feb 26 22:52:52 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Feb 26 23:13:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lco9f-0003WZ-CU
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 22:52:31 +0100
+	id 1LcoTz-0003im-Aw
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 23:13:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757162AbZBZVur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2009 16:50:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759466AbZBZVup
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 16:50:45 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54074 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759460AbZBZVuo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2009 16:50:44 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 724489D592;
-	Thu, 26 Feb 2009 16:50:42 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 696309D591; Thu,
- 26 Feb 2009 16:50:39 -0500 (EST)
-In-Reply-To: <20090226204423.GA34377@rufus.net> (kevin brintnall's message of
- "Thu, 26 Feb 2009 14:44:23 -0600")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 83988486-044F-11DE-B795-B26E209B64D9-77302942!a-sasl-fastnet.pobox.com
+	id S1759987AbZBZWLm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2009 17:11:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759979AbZBZWLl
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 17:11:41 -0500
+Received: from rv-out-0506.google.com ([209.85.198.238]:1985 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759972AbZBZWLk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2009 17:11:40 -0500
+Received: by rv-out-0506.google.com with SMTP id g37so732377rvb.1
+        for <git@vger.kernel.org>; Thu, 26 Feb 2009 14:11:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=5U0NAuKzgeDIwlY5na9dIDQma0wIXYWJ22LXjUuvj08=;
+        b=hD32j577bkq6GpXTld9gup94lkz+Q8zCMpIscaoRBox0wDeKY4F4x40qNilz8XzaXS
+         cxlvkfIVFqsEEXjkUh8nSTwZgQ7eGVnipjgjKgW69eK3ASvyuytY9fTI59kv6tPsRAHD
+         Vp+u42smlupQQ5Kn4A/jVKj6fLNMIV9qqOMOc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=LPkKWmkNi3+UUToL3TKbeRC353h7cS4cFi31BYtWIqSbkPxllC4tgOkv6u7GF86W+x
+         q6eKsH/Kc0/U/pADTxAJ/E5V83GF+e5Cu7JpY156GmaSAULR41DjO7sSCHAVrw/cAto3
+         Yw2DVly8mNp7YcnXgGifq6+uIBtcvPXaksmj8=
+Received: by 10.141.180.16 with SMTP id h16mr826624rvp.295.1235686297788; Thu, 
+	26 Feb 2009 14:11:37 -0800 (PST)
+In-Reply-To: <49A6D5E5.8000007@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111603>
 
-kevin brintnall <kbrint@rufus.net> writes:
+On Thu, Feb 26, 2009 at 12:48 PM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
 
-> On Thu, Feb 26, 2009 at 12:35:57PM -0800, Junio C Hamano wrote:
->> kevin brintnall <kbrint@rufus.net> writes:
->> 
->> > This allows things like 'git -C /somewhere pull' without specifying both
->> > --work-tree and --git-dir.
->> 
->> Where should "git -C sub/dir apply this.patch" find the file "this.patch"?
->
-> Good question..  It should probably come from the original $PWD.  Maybe we
-> should have "-C $DIR" simulate "--work-tree=$DIR --git=dir=$DIR/.git" ?
->
->> More generally, when "git -C there cmd arg1 arg2 arg3..." is run, how
->> should the implementation of cmd learn what to prefix arg$N with?
->
-> I envisioned these two as equivalent:
->
-> 	git -C $DIR something
-> 	cd $DIR ; git something
+> Of course. I ursurpated someone else's itch here, but now it's mine ;)
 
-If that is the case then I really do not see the point, other than "there
-are _some_ tools like 'tar' that do it".
+Well then, I owe you one. In the mean time, thank you. :-)
 
-Sure, there are some tools that do many other things.  So what?
+j.
