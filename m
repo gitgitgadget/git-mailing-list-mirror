@@ -1,92 +1,98 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH v2] t5540-http-push.sh: avoid non-portable grep -P
-Date: Thu, 26 Feb 2009 16:41:10 -0500
-Message-ID: <1235684470-6184-1-git-send-email-jaysoffian@gmail.com>
-References: <7vwsbdq6u4.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t5540-http-push.sh: avoid non-portable grep -P
+Date: Thu, 26 Feb 2009 13:48:49 -0800
+Message-ID: <7vmyc8rhry.fsf@gitster.siamese.dyndns.org>
+References: <1235677745-939-1-git-send-email-jaysoffian@gmail.com>
+ <7vwsbdq6u4.fsf@gitster.siamese.dyndns.org>
+ <76718490902261243gaebdd8an2bd75bf625556f7b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Tay Ray Chuan <rctay89@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 26 22:42:53 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Tay Ray Chuan <rctay89@gmail.com>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 26 22:50:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lco0D-0007rt-UW
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 22:42:46 +0100
+	id 1Lco7r-0002hY-Ke
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 22:50:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753825AbZBZVlR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2009 16:41:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751586AbZBZVlR
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 16:41:17 -0500
-Received: from qw-out-2122.google.com ([74.125.92.26]:51082 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751491AbZBZVlQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2009 16:41:16 -0500
-Received: by qw-out-2122.google.com with SMTP id 5so1308212qwi.37
-        for <git@vger.kernel.org>; Thu, 26 Feb 2009 13:41:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=FkjYyiNUXQhdwSliq3O96qWTOv2Y4LFzmiRidAjiTIk=;
-        b=jb/5Ok2RsXgWRUkNOdZHTJe+80xvNfxdfy1dxI3yE6C0CxHlZ4F3gzU2iwvltWT+LY
-         BiCFhn1jVVJsBwYwkSLWVnXMXJR0xneYDL39/kN5JX+Yh9MAC14lehYydRv0eOklYEva
-         cCP9UEfNDnEOi8uBiVWgLGrBjgOaBp0LOxw7c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=KLxValjaT6FScm4iZCtBppX1deM+w19r9Y2UjVg6ena2wG4z+pHSxudAx977RvKdr2
-         rkHF7qmkfay/jV+NzZYVE5lr0ZRQX39CLu6YiFfL6Hsb/Qw2i1sBtIkLINAz2kqXpKLB
-         ivhU1cM1NLm+jDCiMif2Rz8S3orU3A+M44vJw=
-Received: by 10.224.74.68 with SMTP id t4mr3030706qaj.59.1235684473324;
-        Thu, 26 Feb 2009 13:41:13 -0800 (PST)
-Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
-        by mx.google.com with ESMTPS id 5sm392436qwg.54.2009.02.26.13.41.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 26 Feb 2009 13:41:12 -0800 (PST)
-X-Mailer: git-send-email 1.6.2.rc1.309.g5f417
-In-Reply-To: <7vwsbdq6u4.fsf@gitster.siamese.dyndns.org>
+	id S1752256AbZBZVtB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2009 16:49:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751827AbZBZVtB
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 16:49:01 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53753 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751067AbZBZVs7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2009 16:48:59 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 801759D57F;
+	Thu, 26 Feb 2009 16:48:55 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 1F07A9D57C; Thu,
+ 26 Feb 2009 16:48:50 -0500 (EST)
+In-Reply-To: <76718490902261243gaebdd8an2bd75bf625556f7b@mail.gmail.com> (Jay
+ Soffian's message of "Thu, 26 Feb 2009 15:43:52 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 43DA7962-044F-11DE-B795-B26E209B64D9-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111601>
 
-OS X's GNU grep does not support -P/--perl-regexp; use basic REs instead.
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
- t/t5540-http-push.sh |   11 ++++++++---
- 1 files changed, 8 insertions(+), 3 deletions(-)
+>>> +x1="[a-z0-9]"
+>>
+>> Why [a-z0-9] not [0-9a-f]?
+>
+> No reason. It's just what popped out of my head.
+>
+>> I'd rather see the basic BRE grep used if you are shooting for
+>> portability.
+>>
+>> There are some oddballs in the source (git-submodule.sh is a notable
+>> offender) but none of the core-ish scripts uses egrep nor "grep -E".
+>
+> Sigh, I just wanted the test to pass. I did a check to see if any
+> other tests were already using egrep, and when I found that they were,
+> I thought that would be good enough.
+>
+> Originally I had switched to perl. Would you prefer:
 
-diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
-index 11b3432..a2e9384 100755
---- a/t/t5540-http-push.sh
-+++ b/t/t5540-http-push.sh
-@@ -94,10 +94,15 @@ test_expect_success 'MKCOL sends directory names with trailing slashes' '
- 
- '
- 
--test_expect_success 'PUT and MOVE sends object to URLs with SHA-1 hash suffix' '
-+x1="[0-9a-z]"
-+x2="$x1$x1"
-+x5="$x1$x1$x1$x1$x1"
-+x38="$x5$x5$x5$x5$x5$x5$x5$x1$x1$x1"
-+x40="$x38$x2"
- 
--	grep -P "\"(?:PUT|MOVE) .+objects/[\da-z]{2}/[\da-z]{38}_[\da-z\-]{40} HTTP/[0-9.]+\" 20\d" \
--		< "$HTTPD_ROOT_PATH"/access.log
-+test_expect_success 'PUT and MOVE sends object to URLs with SHA-1 hash suffix' '
-+	sed -e "s/PUT/OP/" -e "s/MOVE/OP/" < "$HTTPD_ROOT_PATH"/access.log \
-+	| grep "\"OP .\{1,\}objects/$x2/${x38}_$x40 HTTP/[0-9.]\{1,\}\" 20[0-9]"
- 
- '
- 
--- 
-1.6.2.rc1.309.g5f417
+Not really.  
+
+If we are fixing it we should do it right.  The regexp you inherited seem
+somewhat suboptimal, too.
+
+"(?:PUT|MOVE) .+objects/[\da-z]{2}/[\da-z]{38}_[\da-z\-]{40} HTTP/[0-9.]+" 20\d"
+
+ - It has a double-quote. can it be anywhere or only at the beginning (if
+   so "^" is missing at the beginning -- I didn't check)?
+
+ - We then expect PUT or MOVE; Ok (that's "\(PUT\|MOVE\)").
+
+ - We then expect one space and one or more garbage before we see
+   "objects/"; do we really care if it is one-or-more garbage, or is it
+   zero-or-more garbage?  Don't we want to see slash before "objects/" (I
+   think we do)?
+
+ - Then we expect objects/ and two hexdigits that should be spelled as
+   [0-9a-f]{2} or [0-9a-f][0-9a-f] (or $x2).
+
+ - Then we expect / and thiry-eight hexdigits, underscore and then 40
+   hexdigits (I think your $x38 and $x40 are fine);
+
+ - Then we expect exactly one SP followed by HTTP/ (Ok);
+
+ - And version can be one-or-more of [0-9.]; do we really allow
+   HTTP/..999?, or we don't care?  I think we shouldn't care, and in that
+   case I think [.0-9]* is good enough here;
+
+So perhaps define a variable:
+
+good="\"\(PUT\|MOVE\) .*/objects/$x2/${x38}_$x40 HTTP/[.0-9]*" 20[0-9]\""
+
+and grep for it?
