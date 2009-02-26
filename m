@@ -1,90 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [WARNING] Proposed future changes that are backward incompatible
-Date: Wed, 25 Feb 2009 17:28:20 -0800
-Message-ID: <7vy6vux9zf.fsf@gitster.siamese.dyndns.org>
-Reply-To: git@vger.kernel.org
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: How do I qualify paths in the .gitignore file w.r.t. the repo
+ root  directory?
+Date: Thu, 26 Feb 2009 03:48:07 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngqc47n.t1k.sitaramc@sitaramc.homelinux.net>
+References: <e38bce640902232247t63a37f63x9f403fbda0744cfd@mail.gmail.com>
+ <7v1vtomhz1.fsf@gitster.siamese.dyndns.org>
+ <slrngq7e6c.iti.sitaramc@sitaramc.homelinux.net>
+ <7vzlgbhh95.fsf@gitster.siamese.dyndns.org>
+ <slrngq9es5.ik0.sitaramc@sitaramc.homelinux.net>
+ <7vab8aap6t.fsf@gitster.siamese.dyndns.org>
+ <slrngqaa5n.mp1.sitaramc@sitaramc.homelinux.net>
+ <7vvdqyyzsr.fsf@gitster.siamese.dyndns.org>
+ <slrngqbrpd.t1k.sitaramc@sitaramc.homelinux.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 26 02:30:01 2009
+X-From: git-owner@vger.kernel.org Thu Feb 26 04:49:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcV4X-0004NJ-HR
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 02:29:58 +0100
+	id 1LcXFv-0004Jk-CU
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 04:49:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756595AbZBZB2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Feb 2009 20:28:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756500AbZBZB2d
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 20:28:33 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42377 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754915AbZBZB2c (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Feb 2009 20:28:32 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 770A59D29C;
-	Wed, 25 Feb 2009 20:28:29 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 240969D295; Wed,
- 25 Feb 2009 20:28:21 -0500 (EST)
-Mail-Followup-To: git@vger.kernel.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: C5BBF218-03A4-11DE-969B-B26E209B64D9-77302942!a-sasl-fastnet.pobox.com
+	id S1753923AbZBZDsY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Feb 2009 22:48:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753601AbZBZDsX
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Feb 2009 22:48:23 -0500
+Received: from main.gmane.org ([80.91.229.2]:38869 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752250AbZBZDsW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Feb 2009 22:48:22 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LcXEO-0000gR-9D
+	for git@vger.kernel.org; Thu, 26 Feb 2009 03:48:16 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 26 Feb 2009 03:48:16 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 26 Feb 2009 03:48:16 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111520>
 
-Here is a list of possible future changes to git that are backward
-incompatible that are under discussion on the git mailing list.
+On 2009-02-26, Sitaram Chamarty <sitaramc@gmail.com> wrote:
 
-None of them will be in the upcoming 1.6.2 release, but some of them are
-likely to appear in future versions.  If you think we should not introduce
-some of the listed changes, here is a chance to voice your opinions and
-make a convincing argument against them, so please do so.  Many people
-complained about the removal of many git-foo commands from user's PATH,
-which was done in 1.6.0 based on user input, after it happened.  You do
-not want to see such a mess happen again.
+> On 2009-02-25, Junio C Hamano <gitster@pobox.com> wrote:
 
-Thanks.
+> I see you've used 'pattern' and 'sign' to break the
+> overloading of '/'.
+>
+>>     - an optional ! sign whose meaning is "unignore paths that match=
+es
+>>       this pattern, instead of ignoring them"; followed by
+>>
+>>     - an optional / sign whose meaning is "a match with this pattern=
+ must
+>>       be made at this directory and not in its subdirectories"; foll=
+owed
+>>       by
+>>
+>>     - a pattern that never begins nor ends with a slash whose meanin=
+g is
+>>       "this is a shell glob pattern to test paths against"; followed=
+ by
+>
+> I wish[1].  But in reality, a slash 'inside' anchors the
+> match the same as a leading slash does.
+>
+> Boy this is tough :-) and I'm almost tempted to relook at my
+> first attempt, where your only concerns were the words
+> 'otherwise' and 'anywhere else' for non-native speakers.
+>
+> I'll think about this some more and get back to you.
 
-* refuse push to update the checked out branch in a non-bare repo by default
+How about this:
 
-  Make "git push" into a repository to update the branch that is checked
-  out fail by default.  You can countermand this default by setting a
-  configuration variable in the receiving repository.
+----8<----
 
-  http://thread.gmane.org/gmane.comp.version-control.git/107758/focus=108007
+    - an optional leading ! symbol meaning "unignore paths
+      that match this pattern, instead of ignoring them"
 
-* git-push to delete the current branch will be refused by default
+    - an optional trailing / symbol meaning "this pattern
+      matches only with a directory (i.e., files and
+      symlinks won't match)"
 
-  Make "git push $there :$killed" to delete the branch that is pointed at
-  by its HEAD fail by default.  You can countermand this default by
-  setting a configuration variable in the receiving repository.
+    - the above two symbols (if present) are then removed.
+      What remains is treated as a normal shell glob
+      pattern, with the additional restriction that if the
+      pattern still contains a slash, it matches only at the
+      current directory and not in its subdirectories
 
-  http://thread.gmane.org/gmane.comp.version-control.git/108862/focus=108936
+----8<----
 
-* git-send-email won't make deep threads by default
-
-  Many people said that by default when sending more than 2 patches the
-  threading git-send-email makes by default is hard to read, and they
-  prefer the default be one cover letter and each patch as a direct
-  follow-up to the cover letter.  You can countermand this by setting a
-  configuration variable.
-
-  http://article.gmane.org/gmane.comp.version-control.git/109790
-
-* make core.quotepath=false the default
-
-  By default, "git diff" output quotes bytes in pathnames with high bit
-  set, primarily to avoid corruption during e-mail based transfer.  This
-  however is inconvenient for human readers, and also makes some poorly
-  written user scripts that do not unquote them fail.  Change the default
-  so that they are not quoted (note that control characters such as HT are
-  always quoted).  You can countermand this by setting a configuration
-  variable.
-
-  http://thread.gmane.org/gmane.comp.version-control.git/110033
+I'm not going into the 'descend' thing; based on how the
+email from Bj=C3=B6rn Steinbrink plays out, we can describe that
+later.  Same for 'current directory', which stands for the
+root of the work-tree if the pattern came from
+=2Egit/info/exclude or a core.excludesfile; this also can be
+added as a footnote.
