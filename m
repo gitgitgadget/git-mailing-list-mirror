@@ -1,89 +1,93 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH] t5540-http-push.sh: avoid non-portable grep -P
-Date: Thu, 26 Feb 2009 14:49:05 -0500
-Message-ID: <1235677745-939-1-git-send-email-jaysoffian@gmail.com>
+From: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
+Subject: Git on MSys broken
+Date: Thu, 26 Feb 2009 20:56:39 +0100
+Message-ID: <20090226195639.GB19384@denkbrett.schottelius.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Tay Ray Chuan <rctay89@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="8GpibOaaTibBMecb"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 26 20:50:49 2009
+X-From: git-owner@vger.kernel.org Thu Feb 26 20:58:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcmFr-0001Ob-Kq
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 20:50:48 +0100
+	id 1LcmN2-0004Rd-QU
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 20:58:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754214AbZBZTtP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2009 14:49:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754079AbZBZTtO
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 14:49:14 -0500
-Received: from qw-out-2122.google.com ([74.125.92.26]:23935 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753659AbZBZTtM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2009 14:49:12 -0500
-Received: by qw-out-2122.google.com with SMTP id 5so1228071qwi.37
-        for <git@vger.kernel.org>; Thu, 26 Feb 2009 11:49:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=c1MofQPtrhEhqLuFguzw/Lw7TlaWC0WiMz9xBGN1n9I=;
-        b=gEfblZRRJu4MlVQWNIVZe3FgX/jvD33zjdaKvm1kBXOLRfN9khv2hGEnHwP480tDZu
-         su8B/Pu4V6l5jQ04Mdn+mR68aqwGq4DF4viZneS/XmJXX0qe2pjjqw3DF8nv4G7It37b
-         2l6h7JmB1qIB/a+Ngq5Bwqw1LEMs40tySGCz0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=uDEibsPr3oMAO1uBsKYAXXh1CdCXhbbkt+Nsphp5LBX3mTflnDBEP6svgfe8Vhj12q
-         Av3EmV71hUVEt5RqM58EfiBI8BXx1crKNZ9wuvdOK9LxIyeQoMvf9LGFQNjQb3MuVNxq
-         hYU66LSMYDq0GE5WIs4pfk/+DFhjwpJbHC6aA=
-Received: by 10.224.54.76 with SMTP id p12mr2791486qag.207.1235677749163;
-        Thu, 26 Feb 2009 11:49:09 -0800 (PST)
-Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
-        by mx.google.com with ESMTPS id 2sm1329221qwi.48.2009.02.26.11.49.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 26 Feb 2009 11:49:08 -0800 (PST)
-X-Mailer: git-send-email 1.6.2.rc1.309.g5f417
+	id S1753528AbZBZT4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2009 14:56:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753451AbZBZT4o
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 14:56:44 -0500
+Received: from mx3.schottelius.org ([77.109.138.221]:49981 "EHLO
+	mx3.schottelius.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753297AbZBZT4n (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2009 14:56:43 -0500
+Received: from ikn.ethz.ch (217-162-227-168.dclient.hispeed.ch [217.162.227.168])
+	by mx3.schottelius.org (Postfix) with ESMTPSA id BC08B197A056
+	for <git@vger.kernel.org>; Thu, 26 Feb 2009 20:56:36 +0100 (CET)
+Received: by ikn.ethz.ch (Postfix, from userid 1000)
+	id 9758C2E052; Thu, 26 Feb 2009 20:56:39 +0100 (CET)
+Content-Disposition: inline
+User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
+X-Unix-Info: http://unix.schottelius.org/
+X-Netzseite: http://nico.schottelius.org/
+X-System-Info: ikn (Linux 2.6.29-rc4-ikn-00001-gd5b5623 x86_64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111591>
 
-OS X's GNU grep does not support -P/--perl-regexp; use egrep instead,
-avoiding non-portable braces ({}) as well.
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
- t/t5540-http-push.sh |    8 +++++++-
- 1 files changed, 7 insertions(+), 1 deletions(-)
+--8GpibOaaTibBMecb
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
-index 11b3432..6a255a6 100755
---- a/t/t5540-http-push.sh
-+++ b/t/t5540-http-push.sh
-@@ -94,9 +94,15 @@ test_expect_success 'MKCOL sends directory names with trailing slashes' '
- 
- '
- 
-+x1="[a-z0-9]"
-+x2="$x1$x1"
-+x5="$x1$x1$x1$x1$x1"
-+x38="$x5$x5$x5$x5$x5$x5$x5$x1$x1$x1"
-+x40="$x38$x2"
-+
- test_expect_success 'PUT and MOVE sends object to URLs with SHA-1 hash suffix' '
- 
--	grep -P "\"(?:PUT|MOVE) .+objects/[\da-z]{2}/[\da-z]{38}_[\da-z\-]{40} HTTP/[0-9.]+\" 20\d" \
-+	egrep "\"(PUT|MOVE) .+objects/$x2/${x38}_$x40 HTTP/[0-9.]+\" 20[0-9]" \
- 		< "$HTTPD_ROOT_PATH"/access.log
- 
- '
--- 
-1.6.2.rc1.309.g5f417
+Hello!
+
+I just wanted to show my father how well git works, but the experience
+is rather bad:
+
+All files have a "beta" label, which makes not a really stable impression.
+And indeed, when trying to start git bash, we get this error:
+
+c:\Programme\Git\bin>bash
+0 [main] us 0 init_cheap: VirtualAlloc pointer is null, Win32 error 487
+AllocationBase 0x0, BaseAddress 0x71540000, RegionSize 0x1C0000, State
+0x10000
+c:\Programme\Git\bin\bash.exe: *** Couldn't reserve space for cygwin's
+heap, Win
+32 error 6
+
+Well, it's already known, but the the hint from
+http://code.google.com/p/msysgit/issues/detail?id=3D133
+(found only from
+http://code.google.com/p/msysgit/issues/detail?id=3D176)
+
+to install a differnt dll can just be considered a dirty hack.
+
+Sorry msys-guys, the only thing left now is a bad impression.
+
+Nico
+
+--=20
+Think about Free and Open Source Software (FOSS).
+http://nico.schottelius.org/documentations/foss/the-term-foss/
+
+PGP: BFE4 C736 ABE5 406F 8F42  F7CF B8BE F92A 9885 188C
+
+--8GpibOaaTibBMecb
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkmm8/cACgkQuL75KpiFGIwyeACeLO16/ocVfgruW7VXRlUqG7/p
+VrQAoKewtdKJO6O/ywKEg/35lAiQFf5V
+=hkau
+-----END PGP SIGNATURE-----
+
+--8GpibOaaTibBMecb--
