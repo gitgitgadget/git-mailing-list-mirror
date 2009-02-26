@@ -1,90 +1,115 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: serious problem with `git format-patch' & `git am'
-Date: Thu, 26 Feb 2009 12:00:16 -0600
-Message-ID: <6HVVE8kW9V0CsNfW21a_Tqpt2s-IrJbt2_qdAvQ8r1tetEhb6jr18g@cipher.nrlssc.navy.mil>
-References: <20090225.230352.177616203.wl@gnu.org>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH] clone: ignore --depth when cloning locally (implicitly
+ --local)
+Date: Thu, 26 Feb 2009 19:20:19 +0100 (CET)
+Message-ID: <1f63785d96d243ff19a063f684abbbe46cafc075.1235672273u.git.johannes.schindelin@gmx.de>
+References: <cover.1235672273u.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, keithp@keithp.com
-To: Werner LEMBERG <wl@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Feb 26 19:04:27 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Feb 26 19:22:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LckYi-0001Nw-5p
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 19:02:08 +0100
+	id 1Lckro-0001tz-KV
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 19:21:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751828AbZBZSAg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2009 13:00:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751704AbZBZSAg
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 13:00:36 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:47424 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751316AbZBZSAf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2009 13:00:35 -0500
-Received: by mail.nrlssc.navy.mil id n1QI0H4T014374; Thu, 26 Feb 2009 12:00:17 -0600
-In-Reply-To: <20090225.230352.177616203.wl@gnu.org>
-X-OriginalArrivalTime: 26 Feb 2009 18:00:17.0180 (UTC) FILETIME=[14D605C0:01C9983C]
+	id S1751819AbZBZSUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2009 13:20:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751451AbZBZSUZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 13:20:25 -0500
+Received: from mail.gmx.net ([213.165.64.20]:40041 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751408AbZBZSUY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2009 13:20:24 -0500
+Received: (qmail invoked by alias); 26 Feb 2009 18:20:20 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp034) with SMTP; 26 Feb 2009 19:20:20 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19oDo8tkx9oXoz//y9zqDp3zJZIAP4JD/Efn0valC
+	AnIqSRKh/VWOmC
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <cover.1235672273u.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.52
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111585>
 
-Werner LEMBERG wrote:
-> [both version 1.6.0.2 and git from 2009-01-24]
-> 
-> Folks,
-> 
-> 
-> I'm going to convert the FreeType CVS repository to git, using Keith
-> Packard's `parsecvs'.  It sometimes happens that there are git entries
-> titled
-> 
->   *** empty log message ***
-> 
-> I want to massage the git repository before publishing it, replacing
-> those entries with something more meaningful.
-> 
-> The last time I tested this (using git 1.5.something, I no longer
-> remember the exact version) I did the following:
-> 
->   . git format-patch <start>..HEAD
->     git reset --hard <start>
-> 
->   . Edit the `Subject:' field in the created *.patch files where
->     necessary.
-> 
->   . git am --whitespace=nowarn *.patch
-> 
-> Unfortunately, this no longer works as before, and since I can't find
-> a hint in the docs about this change I wonder whether it is a bug.
-> 
-> With git 1.5.something, if the first paragraph of the commit message
-> (as output by parsecvs) looks like this
-> 
->    foo foo foo foo
->    bar bar bar bar
->    baz baz baz baz
-> 
-> it is emitted exactly as-is (after `git format-patch' & `git am');
-> gitk shows `foo foo foo foo' as the first line.  However, git version
-> 1.6.0.2 and the current git both convert newlines to spaces in the
-> first paragraph!  I now get
-> 
->   foo foo foo foo bar bar bar bar baz baz baz baz
-> 
-> as the beginning of the commit message which is VERY bad since
-> CVS-style entries often have a long first paragraph, causing
-> ugly-looking, overlong lines.
-> 
-> In case this is an intended change I ask you urgently to provide an
-> option to get back the old behaviour of `git format-patch' & `git am'.
+When cloning locally, we default to --local, as it makes the whole
+operation fast and efficient.
 
-I was not aware of this behavior, but it looks like the '-k' option for
-both format-patch and git-am is what you want to use.  It will prevent
-mailinfo from munging the commit message.
+As the most common intent of cloning with a --depth parameter is to
+save space, and --local saves space more than --depth ever can,
+warn the user and ignore the --depth parameter when cloning locally.
 
--brandon
+Should --depth be desired, the user can always force proper cloning
+by using a file:// URL.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+
+	Before making git-clone a builtin, we had code to force a clone 
+	when a --depth parameter was passed.  However, it is dubitable 
+	that a user wants --depth rather than --local, and as in the 
+	--local case, we should cater for the common case.
+
+ Documentation/git-clone.txt |    4 ++++
+ builtin-clone.c             |    5 ++++-
+ t/t5701-clone-local.sh      |    7 +++++++
+ 3 files changed, 15 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 95f08b9..9b8b389 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -138,6 +138,10 @@ then the cloned repository will become corrupt.
+ 	are only interested in the recent history of a large project
+ 	with a long history, and would want to send in fixes
+ 	as patches.
+++
++This option is ignored when cloning locally; to force a shallow
++clone even locally, use the `--no-hardlinks` option, or a
++'file://' location.
+ 
+ <repository>::
+ 	The (possibly remote) repository to clone from.  See the
+diff --git a/builtin-clone.c b/builtin-clone.c
+index c338910..5831034 100644
+--- a/builtin-clone.c
++++ b/builtin-clone.c
+@@ -511,8 +511,11 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	refspec.src = src_ref_prefix;
+ 	refspec.dst = branch_top.buf;
+ 
+-	if (path && !is_bundle)
++	if (path && !is_bundle) {
++		if (option_depth)
++			warning("Ignoring --depth for local clone");
+ 		refs = clone_local(path, git_dir);
++	}
+ 	else {
+ 		struct remote *remote = remote_get(argv[0]);
+ 		transport = transport_get(remote, remote->url[0]);
+diff --git a/t/t5701-clone-local.sh b/t/t5701-clone-local.sh
+index 3559d17..2938c02 100755
+--- a/t/t5701-clone-local.sh
++++ b/t/t5701-clone-local.sh
+@@ -132,4 +132,11 @@ test_expect_success 'clone empty repository' '
+ 	 test $actual = $expected)
+ '
+ 
++test_expect_success 'clone --depth locally ignores --depth' '
++	test_commit meredith chivers &&
++	git clone --depth 1 . depth 2> out.err &&
++	grep "warning: Ignoring --depth for local clone" out.err &&
++	test 1 -lt $(cd depth && git rev-list master | wc -l)
++'
++
+ test_done
+-- 
+1.6.2.rc1.350.g6caf6
