@@ -1,69 +1,60 @@
-From: Tim Visher <tim.visher@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: `./configure --XXdir=` ignored?
-Date: Thu, 26 Feb 2009 10:09:57 -0500
-Message-ID: <c115fd3c0902260709i21efa98am1e8b55462e1a5d66@mail.gmail.com>
-References: <c115fd3c0902260648g3cc9bfeap58823e53a9dc72e6@mail.gmail.com>
-	 <20090226150013.GA9785@coredump.intra.peff.net>
+Date: Thu, 26 Feb 2009 10:15:35 -0500
+Message-ID: <20090226151535.GA17402@coredump.intra.peff.net>
+References: <c115fd3c0902260648g3cc9bfeap58823e53a9dc72e6@mail.gmail.com> <20090226150013.GA9785@coredump.intra.peff.net> <c115fd3c0902260709i21efa98am1e8b55462e1a5d66@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 26 16:12:20 2009
+To: Tim Visher <tim.visher@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 26 16:17:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lchtb-00046g-Fn
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 16:11:31 +0100
+	id 1Lchz0-0006hs-RD
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 16:17:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754073AbZBZPKB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2009 10:10:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753852AbZBZPKA
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 10:10:00 -0500
-Received: from yx-out-2324.google.com ([74.125.44.28]:59506 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752322AbZBZPKA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2009 10:10:00 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so444992yxm.1
-        for <git@vger.kernel.org>; Thu, 26 Feb 2009 07:09:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=+uF2uHC+nUbRQ22cWZwjBV5DIwpEN7j/5BejSD5+A9M=;
-        b=SnSu3L6WAK1lVFJQmwniRGLek2s750b+DoVne2aMJYR1QBW+s7A2nlev9s/PDu1PmA
-         +wTp85S7gu9eJuyn24A4FUcR5Zq/LhnLy1GJzFN6w6ITnMNuA2LkBlHEIy/JW0c+p1Y1
-         IT6U6Ws+JMY7pngjgD9xoGocRo0cvZ2sFMMNg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ikMyhCHgsiOARpEIzL2OM/76godrxBxxtGYPq8YYuRvWe8sIyXcQhInrILcM0390a9
-         i6wNLSBYjTmYEa0qpyc67WcCJSg8xwUVukZJ8OOYDZ1py9+ey2YTqK3TE6W0agIq7tOx
-         ZIqVyx0NpR8E6VYPSCWKp0H23R54zWvh4ylfM=
-Received: by 10.100.142.19 with SMTP id p19mr1610334and.3.1235660998066; Thu, 
-	26 Feb 2009 07:09:58 -0800 (PST)
-In-Reply-To: <20090226150013.GA9785@coredump.intra.peff.net>
+	id S1754348AbZBZPPj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2009 10:15:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754230AbZBZPPj
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 10:15:39 -0500
+Received: from peff.net ([208.65.91.99]:56706 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752322AbZBZPPi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2009 10:15:38 -0500
+Received: (qmail 5538 invoked by uid 107); 26 Feb 2009 15:16:03 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 26 Feb 2009 10:16:03 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Feb 2009 10:15:35 -0500
+Content-Disposition: inline
+In-Reply-To: <c115fd3c0902260709i21efa98am1e8b55462e1a5d66@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111572>
 
-On Thu, Feb 26, 2009 at 10:00 AM, Jeff King <peff@peff.net> wrote:
+On Thu, Feb 26, 2009 at 10:09:57AM -0500, Tim Visher wrote:
 
-> The configure support is notoriously incomplete
+> On Thu, Feb 26, 2009 at 10:00 AM, Jeff King <peff@peff.net> wrote:
+> 
+> > The configure support is notoriously incomplete
+> 
+> Would it be easier for me to just build the documentation and then
+> install it by hand then?  Is that even possible?
 
-Would it be easier for me to just build the documentation and then
-install it by hand then?  Is that even possible?
+No, there's Makefile support:
 
--- 
+  make htmldir=/path/to/wherever install-html
 
-In Christ,
+but the autoconf stuff wasn't hooking into it properly (which is what
+the patch I sent should do).
 
-Timmy V.
+What I meant by "incomplete" is that most people just use the Makefile
+directly without autoconf, so we never notice when bugs like this are
+hiding. Thus the bugs tend to hang around for a while until somebody
+submits a patch (which I was hoping you would do after getting it to
+work).
 
-http://burningones.com/
-http://five.sentenc.es/ - Spend less time on e-mail
+-Peff
