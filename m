@@ -1,105 +1,61 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: topgit patches
-Date: Thu, 26 Feb 2009 15:15:48 +0100
-Message-ID: <20090226141548.GA32439@pengutronix.de>
-References: <20090225195856.GA12372@pengutronix.de> <20090225212309.GM12275@machine.or.cz> <20090225231550.GA19741@pengutronix.de> <20090226060652.GA16251@lapse.rw.madduck.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 08/21] remote: let guess_remote_head() optionally
+	return all matches
+Date: Thu, 26 Feb 2009 09:37:29 -0500
+Message-ID: <20090226143729.GA9693@coredump.intra.peff.net>
+References: <cover.1235546707.git.jaysoffian@gmail.com> <ad3c408c208c8a829b1e4a0c0818e808b19e1dfc.1235546708.git.jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: martin f krafft <madduck@debian.org>
-X-From: git-owner@vger.kernel.org Thu Feb 26 15:19:34 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 26 15:39:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lch4o-0005UD-Un
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 15:19:03 +0100
+	id 1LchOB-0005vW-Tk
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 15:39:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757254AbZBZOQu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Feb 2009 09:16:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757323AbZBZOQs
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 09:16:48 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:56464 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753990AbZBZOPv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2009 09:15:51 -0500
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Lch1g-0000F4-FZ; Thu, 26 Feb 2009 15:15:48 +0100
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Lch1g-0005EA-5F; Thu, 26 Feb 2009 15:15:48 +0100
+	id S1752969AbZBZOhe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2009 09:37:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752610AbZBZOhe
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 09:37:34 -0500
+Received: from peff.net ([208.65.91.99]:41410 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751720AbZBZOhd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2009 09:37:33 -0500
+Received: (qmail 5161 invoked by uid 107); 26 Feb 2009 14:37:57 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 26 Feb 2009 09:37:57 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Feb 2009 09:37:29 -0500
 Content-Disposition: inline
-In-Reply-To: <20090226060652.GA16251@lapse.rw.madduck.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+In-Reply-To: <ad3c408c208c8a829b1e4a0c0818e808b19e1dfc.1235546708.git.jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111564>
 
-Hi Martin,
+On Wed, Feb 25, 2009 at 03:32:15AM -0500, Jay Soffian wrote:
 
-On Thu, Feb 26, 2009 at 07:06:52AM +0100, martin f krafft wrote:
-> also sprach Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de> [2009=
-=2E02.26.0015 +0100]:
-> > Well, I already wondered if there is someone using topgit apart
-> > from me. :-)
->=20
-> I use it and would like to actively maintain it, but time is short
-> and I wanted to push out a new option parser with 0.6, but it's just
-> not finished yet. As soon as I find a few hours, I'll try to revisit
-> it. But if someone else has the time, maybe we can prepare a 0.6
-> without a new option parser?
-If you need help, I'm also interested to co-maintain the debian package=
-=2E
-Just an offer ...  (I don't know the exact way to become a maintainer,
-if I need to meet a Debian developer, that's no problem, I know one.)
-=20
-> > Given this situation it probably doesn't make sense to describe
-> > some problems I currently see using topgit :-|.
->=20
-> Please do, I am interested.
-Sometimes I get an error about being unable to delete a temp file, will
-try to track that down when it happens next.
+> +struct ref *copy_ref_with_peer(const struct ref *src)
+> +{
+> +	struct ref *dst = copy_ref(src);
+> +	dst->peer_ref = copy_ref(src->peer_ref);
+> +	return dst;
+> +}
 
-Having many topgit controlled patches it's hard to get the overview.
-Updating patches with many interdependencies is hard and doing a merge
-wrong is hard to detect and fix.  I don't have a good idea for that yet=
-,
-but I will investigate some thought here.
+Hmm. This should probably be:
 
-=46urther ideas and plans of mine in no particular order:
- 1 move all or most topgit-topic-branches to a private namespace, say
-   refs/top-heads because the patch branches pollute the output of git
-   branch.
+  dst->peer_ref = src->peer_ref ? copy_ref(src->peer_ref) : NULL;
 
- 2 export method that works like the existing linearize but creates
-   branches for topgit branches living in refs/heads and merges these
-   properly without linearisation.
-   (obviously depends on 1)
+(or copy_ref should return NULL when given NULL). I also wonder if the
+copied ref's peer_ref should be explicitly NULL'd.
 
- 3 address topgit bugs on bugs.debian.org
+I don't think it matters for the current code, since we always feed it
+"matched refs" which have a peer, but I think it is good to be a little
+more defensive in such a generically-named function.
 
- 4 factor out some code to helper functions in tg.sh
+And yes, this bug was in my original patch. :)
 
- 5 convice my colleagues that topgit is the right tool to gain world
-   domination :)
-
- 6 I'm sure I will find some more while doing 1 to 5. :)
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
-       |
-Industrial Linux Solutions                    | http://www.pengutronix.=
-de/  |
+-Peff
