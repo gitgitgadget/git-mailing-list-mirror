@@ -1,74 +1,105 @@
-From: Mike Ralphson <mike.ralphson@gmail.com>
-Subject: Re: [PATCH] Remove useless if-before-free tests.
-Date: Thu, 26 Feb 2009 13:48:25 +0000
-Message-ID: <e2b179460902260548g32e5be97p138a9d8fb5d5ef78@mail.gmail.com>
-References: <871w7bz1ly.fsf@rho.meyering.net> <47B995CC.2000809@gmx.ch>
-	 <87skznhqk6.fsf@rho.meyering.net>
-	 <7vzlts9ag8.fsf@gitster.siamese.dyndns.org>
-	 <87ir0gx5bn.fsf@rho.meyering.net>
-	 <7vskzk99fd.fsf@gitster.siamese.dyndns.org>
-	 <87tzk0tzjz.fsf@rho.meyering.net>
-	 <7vd4qo7fsc.fsf@gitster.siamese.dyndns.org>
-	 <877igup6fl.fsf@rho.meyering.net>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: Re: topgit patches
+Date: Thu, 26 Feb 2009 15:15:48 +0100
+Message-ID: <20090226141548.GA32439@pengutronix.de>
+References: <20090225195856.GA12372@pengutronix.de> <20090225212309.GM12275@machine.or.cz> <20090225231550.GA19741@pengutronix.de> <20090226060652.GA16251@lapse.rw.madduck.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git list <git@vger.kernel.org>
-To: Jim Meyering <jim@meyering.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 26 14:50:13 2009
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: martin f krafft <madduck@debian.org>
+X-From: git-owner@vger.kernel.org Thu Feb 26 15:19:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lcgcd-0001y9-TI
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 14:49:56 +0100
+	id 1Lch4o-0005UD-Un
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 15:19:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753870AbZBZNs3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Feb 2009 08:48:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753295AbZBZNs2
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 08:48:28 -0500
-Received: from qw-out-2122.google.com ([74.125.92.24]:63216 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753211AbZBZNs2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Feb 2009 08:48:28 -0500
-Received: by qw-out-2122.google.com with SMTP id 5so980243qwi.37
-        for <git@vger.kernel.org>; Thu, 26 Feb 2009 05:48:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=kC+gApBjAHbpyTJRmzT9tlHDtF34EbG9Jfnc7zW9Jiw=;
-        b=q2GpBtrudIY0Wj5bvfJAAEj5RF36WDA9X3gAt3xevVyfM2TkYpxX9FBUd31ED+uK6c
-         l1IbK1SZjU5/UNxqFPypAl4BhzAqD5Lu7mOTpdskOUJCFCQ56grIkRZz5oR4+QnialIf
-         QRLOZxBlML/Q7Opu/vTvNTunNm2lEZqsYOWEU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=SpQhQSZbXbgTyhCqRzyFpAxpq47wyhWOwFvaR4eLB1xkGaABJlz05Vw9AXcUE8uj/6
-         +kEyVctbPibuc7Fj93xVjCDl4Zor579BHzw9yAM3y8Lj9pPjJMnKOV5sxLDi8u5GyiUH
-         +Lv1G1CAq+BunPUMuCgkJoAHWXLv6xf1GQ//g=
-Received: by 10.224.36.194 with SMTP id u2mr2173678qad.83.1235656105575; Thu, 
-	26 Feb 2009 05:48:25 -0800 (PST)
-In-Reply-To: <877igup6fl.fsf@rho.meyering.net>
+	id S1757254AbZBZOQu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Feb 2009 09:16:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757323AbZBZOQs
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 09:16:48 -0500
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:56464 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753990AbZBZOPv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2009 09:15:51 -0500
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1Lch1g-0000F4-FZ; Thu, 26 Feb 2009 15:15:48 +0100
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1Lch1g-0005EA-5F; Thu, 26 Feb 2009 15:15:48 +0100
+Content-Disposition: inline
+In-Reply-To: <20090226060652.GA16251@lapse.rw.madduck.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111563>
 
-2008/2/24 Jim Meyering <jim@meyering.net>:
-> Too bad coverity is closed-source. =C2=A0I'll bet it could do this ea=
-sily.
+Hi Martin,
 
-http://scan.coverity.com/
+On Thu, Feb 26, 2009 at 07:06:52AM +0100, martin f krafft wrote:
+> also sprach Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de> [2009=
+=2E02.26.0015 +0100]:
+> > Well, I already wondered if there is someone using topgit apart
+> > from me. :-)
+>=20
+> I use it and would like to actively maintain it, but time is short
+> and I wanted to push out a new option parser with 0.6, but it's just
+> not finished yet. As soon as I find a few hours, I'll try to revisit
+> it. But if someone else has the time, maybe we can prepare a 0.6
+> without a new option parser?
+If you need help, I'm also interested to co-maintain the debian package=
+=2E
+Just an offer ...  (I don't know the exact way to become a maintainer,
+if I need to meet a Debian developer, that's no problem, I know one.)
+=20
+> > Given this situation it probably doesn't make sense to describe
+> > some problems I currently see using topgit :-|.
+>=20
+> Please do, I am interested.
+Sometimes I get an error about being unable to delete a temp file, will
+try to track that down when it happens next.
 
-Courtesy of announcement on LWN.
+Having many topgit controlled patches it's hard to get the overview.
+Updating patches with many interdependencies is hard and doing a merge
+wrong is hard to detect and fix.  I don't have a good idea for that yet=
+,
+but I will investigate some thought here.
 
-git currently isn't on the ladder, but could be submitted by our
-gentle leader, if the license terms[1] were acceptable.
+=46urther ideas and plans of mine in no particular order:
+ 1 move all or most topgit-topic-branches to a private namespace, say
+   refs/top-heads because the patch branches pollute the output of git
+   branch.
 
-Mike
+ 2 export method that works like the existing linearize but creates
+   branches for topgit branches living in refs/heads and merges these
+   properly without linearisation.
+   (obviously depends on 1)
 
-[1] http://scan.coverity.com/policy.html#license
+ 3 address topgit bugs on bugs.debian.org
+
+ 4 factor out some code to helper functions in tg.sh
+
+ 5 convice my colleagues that topgit is the right tool to gain world
+   domination :)
+
+ 6 I'm sure I will find some more while doing 1 to 5. :)
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
+       |
+Industrial Linux Solutions                    | http://www.pengutronix.=
+de/  |
