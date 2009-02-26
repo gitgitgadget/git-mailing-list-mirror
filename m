@@ -1,94 +1,99 @@
-From: Tim Visher <tim.visher@gmail.com>
-Subject: Building 1.6.2-rc2 in Cygwin
-Date: Thu, 26 Feb 2009 10:23:54 -0500
-Message-ID: <c115fd3c0902260723o4d475df5yecc9ff23c55c7af4@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v2] Make sure objects/pack exists before creating a new
+ 	pack
+Date: Thu, 26 Feb 2009 16:31:52 +0100
+Message-ID: <49A6B5E8.8040306@viscovery.net>
+References: <49A428B7.4000003@spiralti.com>	 <7v7i3fivx2.fsf@gitster.siamese.dyndns.org>	 <7vocwrc7oe.fsf_-_@gitster.siamese.dyndns.org>	 <49A65EBF.10307@viscovery.net> <e2b179460902260319je8ce6c6qc028d260b9d35b7c@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 26 16:25:25 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Todd Zullinger <tmz@pobox.com>,
+	Rafael Darder Calvo <rdarder@spiralti.com>
+To: Mike Ralphson <mike.ralphson@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 26 16:33:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lci72-00022D-Jj
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 16:25:25 +0100
+	id 1LciF2-0005Wy-QB
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 16:33:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754431AbZBZPX4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2009 10:23:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754295AbZBZPX4
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 10:23:56 -0500
-Received: from yx-out-2324.google.com ([74.125.44.29]:63539 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754271AbZBZPX4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2009 10:23:56 -0500
-Received: by yx-out-2324.google.com with SMTP id 8so449371yxm.1
-        for <git@vger.kernel.org>; Thu, 26 Feb 2009 07:23:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=ptSkzOnPPbBAQd137N5+tjadpB0ibJAJnFwy0U8zmpU=;
-        b=LrhNymqk32e+FCQpHi5X/Zd6t7nV6I7GiB3DN6PJ0gABjghdyUmJeyamdG5VxoQohm
-         /J7z9H6wmHdXTWhjBx0RPnGmXcytyxXNt1mXRo/tQw/v7inp1NrwXfKK2EUkqLR4suJk
-         PljKeB/+Oil6Bmnspe3qRROxTT0CEfqRYHuiI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=lEUtu3xERK5qnScOoq8eswPuO7ZsrTp1ysNCpYCx61qjf8ed4eWclUSRuHnlecNyOk
-         G/Ue2sGAZ63MfT6e+T5YNDG5WCua3fZ3NUJZrzkF9MuOEOFUTVr97Ps6VNS+obPRb3NV
-         Gcg3Q2N4XB5fiJ3IZnHJOZpTE8CTt5WgjJhS0=
-Received: by 10.100.142.19 with SMTP id p19mr1632218and.3.1235661834390; Thu, 
-	26 Feb 2009 07:23:54 -0800 (PST)
+	id S1754643AbZBZPcN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2009 10:32:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754336AbZBZPcM
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 10:32:12 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:62786 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754290AbZBZPcL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2009 10:32:11 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LciDJ-0003os-At; Thu, 26 Feb 2009 16:32:00 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 1625D4FB; Thu, 26 Feb 2009 16:31:53 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <e2b179460902260319je8ce6c6qc028d260b9d35b7c@mail.gmail.com>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111574>
 
-Hello Everyone,
+Mike Ralphson schrieb:
+> 2009/2/26 Johannes Sixt <j.sixt@viscovery.net>
+>> Junio C Hamano schrieb:
+>>> @@ -795,22 +794,24 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+>>>
+>>>       if (keep_msg) {
+>>>               int keep_fd, keep_msg_len = strlen(keep_msg);
+>>> -             if (!keep_name) {
+>>> -                     snprintf(name, sizeof(name), "%s/pack/pack-%s.keep",
+>>> -                              get_object_directory(), sha1_to_hex(sha1));
+>>> -                     keep_name = name;
+>> You should not have removed this line...
+> 
+> Even with j6t's patch, I'm seeing failures in t5300--pack-object.sh on AIX 5.3
+> 
+> * FAIL 15: survive missing objects/pack directory
+> fatal: Unable to create temporary file (): No such file or directory
 
-This is somewhat related to my previous question about `configure`
-ignoring `--XXdir=` options but it's different enough that I think it
-warrants a new thread.
+I can confirm this. Your patch is good. I wrapped it up:
 
-The reason I'm using `configure` at all is that when I simply do a
-`make` without a `make configure; ./configure` first, it fails with a
-message like:
+-- snip --
+From: Mike Ralphson <mike.ralphson@gmail.com>
+Subject: [PATCH] Fix odb_mkstemp() on AIX
 
-    $ make
-        CC fast-import.o
-    In file included from builtin.h:4,
-                     from fast-import.c:142:
-    git-compat-util.h:100:19: iconv.h: No such file or directory
-    make: *** [fast-import.o] Error 1
+The AIX mkstemp() modifies its template parameter to an empty string if
+the call fails.  The existing code had already recomputed the template,
+but too late to be good.
 
-Once I configure, even without any options, it builds fine and I can
-get my man pages (although I have to install them by hand).  I assume
-this has something to do with cygwin's locations for header files and
-such, but I have no real idea.  The first part of my question, then
-would be what the issue is that I'm encountering when attempting to
-build git in Cygwin?
+See also 6ff6af62, which fixed this problem in a different spot.
 
-My eventual goal is to have git installed with man, info, and html
-pages, into my (and my fellow developers') personal bin, man, info,
-and html directories at ~/x.  It appeared that I could do that with
-./configure but per the response I got earlier, this doesn't seem to
-be the case.
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ wrapper.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-Second, I built and installed 1.6.2-rc2 and it still is claiming a
---version rc1.  I'm not sure if this is systemic or not, and obviously
-it would be bad if it was just me as it means I'm doing something
-wrong.
+diff --git a/wrapper.c b/wrapper.c
+index b07cdf2..d8efb13 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -268,9 +268,10 @@ int odb_mkstemp(char *template, size_t limit,
+ 		return fd;
 
-Thoughts?
+ 	/* slow path */
+-	safe_create_leading_directories(template);
++	/* some mkstemp implementations erase template on failure */
+ 	snprintf(template, limit, "%s/%s",
+ 		 get_object_directory(), pattern);
++	safe_create_leading_directories(template);
+ 	return xmkstemp(template);
+ }
 
 -- 
-
-In Christ,
-
-Timmy V.
-
-http://burningones.com/
-http://five.sentenc.es/ - Spend less time on e-mail
+1.6.1.rc1.5.gf691f
