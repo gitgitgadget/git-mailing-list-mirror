@@ -1,72 +1,69 @@
-From: kevin brintnall <kbrint@rufus.net>
-Subject: [PATCH] added -C option to chdir() into another directory first
-Date: Thu, 26 Feb 2009 14:11:39 -0600
-Message-ID: <1235679099-33994-1-git-send-email-kbrint@rufus.net>
-Cc: kevin brintnall <kbrint@rufus.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 26 21:23:26 2009
+From: Tim Visher <tim.visher@gmail.com>
+Subject: Re: Git on MSys broken
+Date: Thu, 26 Feb 2009 15:20:22 -0500
+Message-ID: <c115fd3c0902261220i4f0d2ba6t7e5e877444fcc850@mail.gmail.com>
+References: <20090226195639.GB19384@denkbrett.schottelius.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
+X-From: git-owner@vger.kernel.org Thu Feb 26 21:23:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcmlK-0007yG-K7
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 21:23:19 +0100
+	id 1LcmlB-0007yG-QC
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 21:23:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757165AbZBZUVL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2009 15:21:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756006AbZBZUVK
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 15:21:10 -0500
-Received: from hamachi.rufus.net ([209.181.236.65]:52175 "EHLO
-	hamachi.rufus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755518AbZBZUU7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2009 15:20:59 -0500
-X-Greylist: delayed 556 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Feb 2009 15:20:59 EST
-Received: by hamachi.rufus.net (Postfix, from userid 100)
-	id EB7D0272D55; Thu, 26 Feb 2009 14:11:39 -0600 (CST)
-X-Mailer: git-send-email 1.6.1.3
+	id S1754482AbZBZUUo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2009 15:20:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754431AbZBZUUm
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 15:20:42 -0500
+Received: from mail-gx0-f174.google.com ([209.85.217.174]:42429 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755911AbZBZUUY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2009 15:20:24 -0500
+Received: by mail-gx0-f174.google.com with SMTP id 22so1726714gxk.13
+        for <git@vger.kernel.org>; Thu, 26 Feb 2009 12:20:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=yBPhAszqD8PJOuFsw21IQdEQP/TcOYRsAG4lcygfz7I=;
+        b=P7Fx2S82O07J4KaxL755gi6PV/9m3XttITcT0MguxScIq/Bjftdo2eH0LQGR/FQCJX
+         YKWJHcJZ8jiSXbxVTVz6ZJr7LpE2b6z6UeU3m7W09Edy66wyVNONTTKTxbDylZ2qO6D+
+         U1tZjiAqM7mMKrIQXXzH41GigWXL/lMCrQs3U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=SUdbZoQkY4/BlP4FVik/y4zAXtR05pgoDyrAnvRHI4lFkQ5/6uShDknQmTjA4yvgSr
+         LqV9EXEbtUIp+RHHDsMFEruM3d97Lt01aFL657TXmVi71OEzbCO4Cx4sFtLGhdYaIbb6
+         ITNw19K/lbxZwMkjqLejs/53xLTshDu3kWZIk=
+Received: by 10.100.136.15 with SMTP id j15mr1896281and.129.1235679622569; 
+	Thu, 26 Feb 2009 12:20:22 -0800 (PST)
+In-Reply-To: <20090226195639.GB19384@denkbrett.schottelius.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111593>
 
-This allows things like 'git -C /somewhere pull' without specifying both
---work-tree and --git-dir.
+On Thu, Feb 26, 2009 at 2:56 PM, Nico -telmich- Schottelius
+<nico-linux-git@schottelius.org> wrote:
 
-Signed-off-by: kevin brintnall <kbrint@rufus.net>
----
- git.c |   12 +++++++++++-
- 1 files changed, 11 insertions(+), 1 deletions(-)
+> Sorry msys-guys, the only thing left now is a bad impression.
 
-diff --git a/git.c b/git.c
-index c2b181e..b218bfe 100644
---- a/git.c
-+++ b/git.c
-@@ -5,7 +5,7 @@
- #include "run-command.h"
- 
- const char git_usage_string[] =
--	"git [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate|--no-pager] [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE] [--help] COMMAND [ARGS]";
-+	"git [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate|--no-pager] [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE] [-C BASE_DIR] [--help] COMMAND [ARGS]";
- 
- const char git_more_info_string[] =
- 	"See 'git help COMMAND' for more information on a specific command.";
-@@ -116,6 +116,16 @@ static int handle_options(const char*** argv, int* argc, int* envchanged)
- 			setenv(GIT_DIR_ENVIRONMENT, getcwd(git_dir, sizeof(git_dir)), 0);
- 			if (envchanged)
- 				*envchanged = 1;
-+		} else if (!strcmp(cmd, "-C")) {
-+			char *dir = (*argv)[1];
-+			if (*argc < 2) {
-+				fprintf(stderr, "No directory given for -C");
-+				usage(git_usage_string);
-+			}
-+			if (chdir(dir))
-+				die("Cannot change to %s: %s", dir, strerror(errno));
-+			(*argv)++;
-+			(*argc)--;
- 		} else {
- 			fprintf(stderr, "Unknown option: %s\n", cmd);
- 			usage(git_usage_string);
+That's strange.  I installed Git through MSysGit on a server here at
+work and it works great.
+
 -- 
-1.6.1.3
+
+In Christ,
+
+Timmy V.
+
+http://burningones.com/
+http://five.sentenc.es/ - Spend less time on e-mail
