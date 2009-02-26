@@ -1,58 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 08/21] remote: let guess_remote_head() optionally
-	return all matches
-Date: Thu, 26 Feb 2009 09:40:52 -0500
-Message-ID: <20090226144052.GB9693@coredump.intra.peff.net>
-References: <cover.1235546707.git.jaysoffian@gmail.com> <ad3c408c208c8a829b1e4a0c0818e808b19e1dfc.1235546708.git.jaysoffian@gmail.com> <20090226143729.GA9693@coredump.intra.peff.net>
+From: Tim Visher <tim.visher@gmail.com>
+Subject: `./configure --XXdir=` ignored?
+Date: Thu, 26 Feb 2009 09:48:29 -0500
+Message-ID: <c115fd3c0902260648g3cc9bfeap58823e53a9dc72e6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 26 15:42:56 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 26 15:50:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LchRQ-0007Yd-Tj
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 15:42:25 +0100
+	id 1LchYw-0002kq-3G
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 15:50:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754429AbZBZOk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2009 09:40:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754378AbZBZOk4
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 09:40:56 -0500
-Received: from peff.net ([208.65.91.99]:41422 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754301AbZBZOkz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2009 09:40:55 -0500
-Received: (qmail 5193 invoked by uid 107); 26 Feb 2009 14:41:19 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 26 Feb 2009 09:41:19 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Feb 2009 09:40:52 -0500
-Content-Disposition: inline
-In-Reply-To: <20090226143729.GA9693@coredump.intra.peff.net>
+	id S1753602AbZBZOse (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2009 09:48:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752969AbZBZOsd
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 09:48:33 -0500
+Received: from yw-out-2324.google.com ([74.125.46.28]:37406 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752274AbZBZOsc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2009 09:48:32 -0500
+Received: by yw-out-2324.google.com with SMTP id 5so438383ywh.1
+        for <git@vger.kernel.org>; Thu, 26 Feb 2009 06:48:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=LJT4t5ivbk6B9qYH5i9SxyWMPb1LYV27oAtA22TL82s=;
+        b=UnQsK5zrw/LyCYvtJXY4HOgIMeLO4cEry05wqS8GlAc8Ocn/HSSf/MpQAhDURRrVnE
+         q5+XAT1EZ7oSnBo+0HZB9StBf+lUyA0FPnq6l/FI4vKeyWatQlQfJmptfORKCXDfTp3t
+         bAdy59x7yKSEH4Z6fpO7S1tr7Mj/jkY/2nn8Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=viP0289o3B8w9ip4i6cFnWeV3narxpzi9U5wlmcJojNHoua4RZYNkFDasTuX3M2Ft/
+         xKVdt1CJFclIctsfocijWPkPx7ZPBijKBzIoJxLRbfNZ75iTBsIxtG8OjD8gU8u5Ij+U
+         Kqvw1G4BQcEN6tURYkfVqCE5yFYAe231N1VtQ=
+Received: by 10.100.11.14 with SMTP id 14mr1527980ank.89.1235659709971; Thu, 
+	26 Feb 2009 06:48:29 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111566>
 
-On Thu, Feb 26, 2009 at 09:37:29AM -0500, Jeff King wrote:
+Hello Everyone,
 
-> Hmm. This should probably be:
-> 
->   dst->peer_ref = src->peer_ref ? copy_ref(src->peer_ref) : NULL;
-> 
-> (or copy_ref should return NULL when given NULL). I also wonder if the
-> copied ref's peer_ref should be explicitly NULL'd.
+I'm working on getting git 1.6.2-rc2 built.  I have a bin, man, info,
+and html directory in my home folder that I'd like to use as the
+defaults for git.  I attempted to do this through
 
-BTW, all of my "probably" and "I wonder" here are because I think the
-"peer ref" pointer is a little vague as a concept. E.g., I think in most
-cases src->peer_ref->peer_ref != src.
+    make configure
+    ./configure --XXdir=/full/path/to/dir
+    make all man info html
+    make install install-man install-info install-html
 
-Rather than having ref structs with "next" and "peer" pointers, I think
-a more natural data structure would be a list (or array) of "ref pairs".
+But other than the binaries (and I'm not even totally convinced they
+got in correctly) and the man pages, everything else seems to be
+attempting to go to the typical places in /usr/local.
 
-But you didn't create that with this series, and I don't think it is
-worth the major surgery to change it now.
+What am I doing wrong?
 
--Peff
+-- 
+
+In Christ,
+
+Timmy V.
+
+http://burningones.com/
+http://five.sentenc.es/ - Spend less time on e-mail
