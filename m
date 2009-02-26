@@ -1,84 +1,81 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/21] git remote: set-head and new show output
-Date: Thu, 26 Feb 2009 09:04:19 -0800
-Message-ID: <7v8wntuo30.fsf@gitster.siamese.dyndns.org>
-References: <cover.1235546707.git.jaysoffian@gmail.com>
+Subject: Re: [PATCHv2 4/4] git submodule: Fix handling of // and /.. in paths
+ for added submodules
+Date: Thu, 26 Feb 2009 09:04:51 -0800
+Message-ID: <7vtz6ht9ho.fsf@gitster.siamese.dyndns.org>
+References: <49A541D3.4030001@viscovery.net>
+ <1235568392-19705-1-git-send-email-git@drmicha.warpmail.net>
+ <1235568392-19705-2-git-send-email-git@drmicha.warpmail.net>
+ <1235568392-19705-3-git-send-email-git@drmicha.warpmail.net>
+ <1235568392-19705-4-git-send-email-git@drmicha.warpmail.net>
+ <1235568392-19705-5-git-send-email-git@drmicha.warpmail.net>
+ <49A55056.8020504@viscovery.net> <49A556D5.7020806@drmicha.warpmail.net>
+ <49A55DAD.2000309@viscovery.net> <7v1vtm1a6b.fsf@gitster.siamese.dyndns.org>
+ <49A65B4C.305@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 26 18:06:34 2009
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+	Andrei Thorp <garoth@gmail.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Feb 26 18:07:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcjgP-0007Tb-Ml
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 18:06:02 +0100
+	id 1LcjhP-0008Ji-Kb
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 18:07:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756151AbZBZREe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2009 12:04:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756112AbZBZREd
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 12:04:33 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50860 "EHLO
+	id S1756029AbZBZRFB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2009 12:05:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755717AbZBZRFA
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 12:05:00 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50122 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755702AbZBZREd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2009 12:04:33 -0500
+	with ESMTP id S1755478AbZBZRFA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2009 12:05:00 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8D7829DB25;
-	Thu, 26 Feb 2009 12:04:30 -0500 (EST)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 6144D14F7;
+	Fri, 27 Feb 2009 12:04:57 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2594F9DB22; Thu,
- 26 Feb 2009 12:04:25 -0500 (EST)
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 95E9414F5; Fri,
+ 27 Feb 2009 12:04:52 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 885A5B0C-0427-11DE-A079-B26E209B64D9-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: C2C2A2C6-04F0-11DE-AA03-8D02133F2F75-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111579>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-> This series replaces three related topics from pu:
+> Junio C Hamano venit, vidit, dixit 25.02.2009 22:25:
 >
->   js/remote-set-head
->   jk/head-lookup
->   js/remote-display
-> ...
-> So I think this series is clean, and doesn't need an extensive
-> re-review, but a quick look-over would be appreciated.
+>> The sed scripts in the more important parts of scripted Porcelains avoid
+>> multiple commands on a single line concatenated with ";" mostly by inertia
+>> on my side, but it was acquired exactly from this kind of portability
+>> mess.  IIRC, AIX's was the worst offender. It also got "/A/../B/ { ... }"
+>> wrong in earlier versions.
+>
+> I'm a bit confused now. Are you saying that "git-submodule.sh" should
+> avoid the multiple lines in sed (which work in AIX 4.3.3)?
 
-I have looked at the diff between:
+No, I understand J6t's comment:
 
- (1) the above three topics merged to 'next'; and
+>>> I don't know... Let's see: My AIX 4.3.3 sed understands it if it is not
+>>> all on a single line, and that says a lot. Specifically, I tried this:
 
- (2) this 21-patch series applied to 'master' then merged to 'next'.
+to mean that this is bad:
 
-There indeed does not seem major changes, but there are some:
+	sed -e 'a;b;c;d;e'
 
- - get_head_names() lost "const char *remote_name" parameter that was
-   unused (good);
+while this works
 
- - guess_remote_head() uses a local variable "r" instead of using an
-   additional variable "m" (does not matter);
-
- - "builtin-send-pack.c" lost otherwise unused inclusion of "tag.h"
-   (good);
-
- - one_local_ref() and get_local_heads() are moved around (does not
-   matter);
-
- - t5505-remote.sh has one more test (ok).
-
- - The old series had distracting removal of a few blank lines in
-   cmd_clone() and get_remote_ref_states(), but with this round these are
-   gone (good).
-
-Overall, the new series certainly looks cleaner.
-
-> I signed off on Jeff's patches; please remove my SoB from those if it is
-> inappropriate for me to have done so.
-
-That is perfectly fine.
-
-Thanks.
+	sed -e '
+        	a
+                b
+                c
+                d
+                e
+	'
