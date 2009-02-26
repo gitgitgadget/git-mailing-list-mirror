@@ -1,98 +1,69 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t5540-http-push.sh: avoid non-portable grep -P
-Date: Thu, 26 Feb 2009 13:48:49 -0800
-Message-ID: <7vmyc8rhry.fsf@gitster.siamese.dyndns.org>
-References: <1235677745-939-1-git-send-email-jaysoffian@gmail.com>
- <7vwsbdq6u4.fsf@gitster.siamese.dyndns.org>
- <76718490902261243gaebdd8an2bd75bf625556f7b@mail.gmail.com>
+Subject: Re: [PATCH] added -C option to chdir() into another directory first
+Date: Thu, 26 Feb 2009 13:50:37 -0800
+Message-ID: <7viqmwrhoy.fsf@gitster.siamese.dyndns.org>
+References: <1235679099-33994-1-git-send-email-kbrint@rufus.net>
+ <7vr61lq6ky.fsf@gitster.siamese.dyndns.org>
+ <20090226204423.GA34377@rufus.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Tay Ray Chuan <rctay89@gmail.com>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 26 22:50:58 2009
+Cc: git@vger.kernel.org
+To: kevin brintnall <kbrint@rufus.net>
+X-From: git-owner@vger.kernel.org Thu Feb 26 22:52:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lco7r-0002hY-Ke
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 22:50:40 +0100
+	id 1Lco9f-0003WZ-CU
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 22:52:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752256AbZBZVtB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2009 16:49:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751827AbZBZVtB
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 16:49:01 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53753 "EHLO
+	id S1757162AbZBZVur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2009 16:50:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759466AbZBZVup
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 16:50:45 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54074 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751067AbZBZVs7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2009 16:48:59 -0500
+	with ESMTP id S1759460AbZBZVuo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2009 16:50:44 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 801759D57F;
-	Thu, 26 Feb 2009 16:48:55 -0500 (EST)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 724489D592;
+	Thu, 26 Feb 2009 16:50:42 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 1F07A9D57C; Thu,
- 26 Feb 2009 16:48:50 -0500 (EST)
-In-Reply-To: <76718490902261243gaebdd8an2bd75bf625556f7b@mail.gmail.com> (Jay
- Soffian's message of "Thu, 26 Feb 2009 15:43:52 -0500")
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 696309D591; Thu,
+ 26 Feb 2009 16:50:39 -0500 (EST)
+In-Reply-To: <20090226204423.GA34377@rufus.net> (kevin brintnall's message of
+ "Thu, 26 Feb 2009 14:44:23 -0600")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 43DA7962-044F-11DE-B795-B26E209B64D9-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 83988486-044F-11DE-B795-B26E209B64D9-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111602>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+kevin brintnall <kbrint@rufus.net> writes:
 
->>> +x1="[a-z0-9]"
->>
->> Why [a-z0-9] not [0-9a-f]?
+> On Thu, Feb 26, 2009 at 12:35:57PM -0800, Junio C Hamano wrote:
+>> kevin brintnall <kbrint@rufus.net> writes:
+>> 
+>> > This allows things like 'git -C /somewhere pull' without specifying both
+>> > --work-tree and --git-dir.
+>> 
+>> Where should "git -C sub/dir apply this.patch" find the file "this.patch"?
 >
-> No reason. It's just what popped out of my head.
+> Good question..  It should probably come from the original $PWD.  Maybe we
+> should have "-C $DIR" simulate "--work-tree=$DIR --git=dir=$DIR/.git" ?
 >
->> I'd rather see the basic BRE grep used if you are shooting for
->> portability.
->>
->> There are some oddballs in the source (git-submodule.sh is a notable
->> offender) but none of the core-ish scripts uses egrep nor "grep -E".
+>> More generally, when "git -C there cmd arg1 arg2 arg3..." is run, how
+>> should the implementation of cmd learn what to prefix arg$N with?
 >
-> Sigh, I just wanted the test to pass. I did a check to see if any
-> other tests were already using egrep, and when I found that they were,
-> I thought that would be good enough.
+> I envisioned these two as equivalent:
 >
-> Originally I had switched to perl. Would you prefer:
+> 	git -C $DIR something
+> 	cd $DIR ; git something
 
-Not really.  
+If that is the case then I really do not see the point, other than "there
+are _some_ tools like 'tar' that do it".
 
-If we are fixing it we should do it right.  The regexp you inherited seem
-somewhat suboptimal, too.
-
-"(?:PUT|MOVE) .+objects/[\da-z]{2}/[\da-z]{38}_[\da-z\-]{40} HTTP/[0-9.]+" 20\d"
-
- - It has a double-quote. can it be anywhere or only at the beginning (if
-   so "^" is missing at the beginning -- I didn't check)?
-
- - We then expect PUT or MOVE; Ok (that's "\(PUT\|MOVE\)").
-
- - We then expect one space and one or more garbage before we see
-   "objects/"; do we really care if it is one-or-more garbage, or is it
-   zero-or-more garbage?  Don't we want to see slash before "objects/" (I
-   think we do)?
-
- - Then we expect objects/ and two hexdigits that should be spelled as
-   [0-9a-f]{2} or [0-9a-f][0-9a-f] (or $x2).
-
- - Then we expect / and thiry-eight hexdigits, underscore and then 40
-   hexdigits (I think your $x38 and $x40 are fine);
-
- - Then we expect exactly one SP followed by HTTP/ (Ok);
-
- - And version can be one-or-more of [0-9.]; do we really allow
-   HTTP/..999?, or we don't care?  I think we shouldn't care, and in that
-   case I think [.0-9]* is good enough here;
-
-So perhaps define a variable:
-
-good="\"\(PUT\|MOVE\) .*/objects/$x2/${x38}_$x40 HTTP/[.0-9]*" 20[0-9]\""
-
-and grep for it?
+Sure, there are some tools that do many other things.  So what?
