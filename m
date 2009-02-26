@@ -1,99 +1,88 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2] Make sure objects/pack exists before creating a new
- 	pack
-Date: Thu, 26 Feb 2009 16:31:52 +0100
-Message-ID: <49A6B5E8.8040306@viscovery.net>
-References: <49A428B7.4000003@spiralti.com>	 <7v7i3fivx2.fsf@gitster.siamese.dyndns.org>	 <7vocwrc7oe.fsf_-_@gitster.siamese.dyndns.org>	 <49A65EBF.10307@viscovery.net> <e2b179460902260319je8ce6c6qc028d260b9d35b7c@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [RFH] rebase -i optimization
+Date: Thu, 26 Feb 2009 16:33:32 +0100
+Message-ID: <fabb9a1e0902260733k26e5c02i75a7866f9a67530b@mail.gmail.com>
+References: <fabb9a1e0902260655g53fa1e1fg7e4aa76b0f3a80fc@mail.gmail.com>
+	 <alpine.DEB.1.00.0902261557300.6258@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Todd Zullinger <tmz@pobox.com>,
-	Rafael Darder Calvo <rdarder@spiralti.com>
-To: Mike Ralphson <mike.ralphson@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 26 16:33:41 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stephen Haberman <stephen@exigencecorp.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Git Mailing List <git@vger.kernel.org>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Feb 26 16:35:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LciF2-0005Wy-QB
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 16:33:41 +0100
+	id 1LciGP-00068d-AO
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 16:35:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754643AbZBZPcN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2009 10:32:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754336AbZBZPcM
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 10:32:12 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:62786 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754290AbZBZPcL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2009 10:32:11 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1LciDJ-0003os-At; Thu, 26 Feb 2009 16:32:00 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 1625D4FB; Thu, 26 Feb 2009 16:31:53 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <e2b179460902260319je8ce6c6qc028d260b9d35b7c@mail.gmail.com>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1754986AbZBZPdi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Feb 2009 10:33:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754969AbZBZPdh
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 10:33:37 -0500
+Received: from mu-out-0910.google.com ([209.85.134.184]:50309 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754336AbZBZPdg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Feb 2009 10:33:36 -0500
+Received: by mu-out-0910.google.com with SMTP id i10so228859mue.1
+        for <git@vger.kernel.org>; Thu, 26 Feb 2009 07:33:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=zlGse/KZEDocLyjCI0VYyyq6omsqA3ozW2WYSFbu93s=;
+        b=WF+kjXzYGagTp6HWD8i/4bHG+Qa0OICEsI+xRy2TvOLrDGAT8D6hHtb24FpVd+2e33
+         qqCodNLD5EtO76d8ssgBZMqFseYArJgSAX1s9jwYEcv+6E2SKACQI0rzoaYrSi88IJ0f
+         U7oAFBu8qrIqFYilFz05ZuaB6vpam/TPW2mDc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=iGj94FkVTdGYOZcSCjeeBm3ih/TNwlQe+bGJmhhFTuXFdGSgl0dbej1EOgP28InY/j
+         KDvc38em+AdhGLKVUibzBlmda12NNxaFlEVRuJJ/2UEHNoVtDWN1I8OIVFb3fCjsK/mp
+         KkE909kvymAGYkgAMNXvide9YoJBSD6oSW/X0=
+Received: by 10.103.161.16 with SMTP id n16mr725404muo.79.1235662412579; Thu, 
+	26 Feb 2009 07:33:32 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0902261557300.6258@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111575>
 
-Mike Ralphson schrieb:
-> 2009/2/26 Johannes Sixt <j.sixt@viscovery.net>
->> Junio C Hamano schrieb:
->>> @@ -795,22 +794,24 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
->>>
->>>       if (keep_msg) {
->>>               int keep_fd, keep_msg_len = strlen(keep_msg);
->>> -             if (!keep_name) {
->>> -                     snprintf(name, sizeof(name), "%s/pack/pack-%s.keep",
->>> -                              get_object_directory(), sha1_to_hex(sha1));
->>> -                     keep_name = name;
->> You should not have removed this line...
-> 
-> Even with j6t's patch, I'm seeing failures in t5300--pack-object.sh on AIX 5.3
-> 
-> * FAIL 15: survive missing objects/pack directory
-> fatal: Unable to create temporary file (): No such file or directory
+Heya,
 
-I can confirm this. Your patch is good. I wrapped it up:
+On Thu, Feb 26, 2009 at 15:59, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> This code is supposed to do exactly what you want:
 
--- snip --
-From: Mike Ralphson <mike.ralphson@gmail.com>
-Subject: [PATCH] Fix odb_mkstemp() on AIX
+Hmmm, I can't say I understand it 100%, but what I can see from
+reading the code and looking at the output of 'rebase -i -v' is that
+it does a 'git reset --hard' on each commit if it was already applied,
+instead of figuring out beforehand what to reset to? If that is the
+case, it might still take a long time to do the rebase if it takes
+long to do the 'reset --hard' between the patches (say, if a big
+change is made).
 
-The AIX mkstemp() modifies its template parameter to an empty string if
-the call fails.  The existing code had already recomputed the template,
-but too late to be good.
+> Unfortunately, it seems to be quite broken by all the different direc=
+tions
+> rebase -i was pulled to, but maybe you see the bug right away. =A0Oth=
+erwise,
+> I'll try to reschedule my Git time budget later tonight.
 
-See also 6ff6af62, which fixed this problem in a different spot.
+After reading the code and trying with -v, I don't think the current
+code is broken, just that it might be optimized to be even faster?
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- wrapper.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+--=20
+Cheers,
 
-diff --git a/wrapper.c b/wrapper.c
-index b07cdf2..d8efb13 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -268,9 +268,10 @@ int odb_mkstemp(char *template, size_t limit,
- 		return fd;
-
- 	/* slow path */
--	safe_create_leading_directories(template);
-+	/* some mkstemp implementations erase template on failure */
- 	snprintf(template, limit, "%s/%s",
- 		 get_object_directory(), pattern);
-+	safe_create_leading_directories(template);
- 	return xmkstemp(template);
- }
-
--- 
-1.6.1.rc1.5.gf691f
+Sverre Rabbelier
