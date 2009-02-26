@@ -1,101 +1,78 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCHv2 4/4] git submodule: Fix handling of // and /.. in paths
- for added submodules
-Date: Thu, 26 Feb 2009 10:05:16 +0100
-Message-ID: <49A65B4C.305@drmicha.warpmail.net>
-References: <49A541D3.4030001@viscovery.net> <1235568392-19705-1-git-send-email-git@drmicha.warpmail.net> <1235568392-19705-2-git-send-email-git@drmicha.warpmail.net> <1235568392-19705-3-git-send-email-git@drmicha.warpmail.net> <1235568392-19705-4-git-send-email-git@drmicha.warpmail.net> <1235568392-19705-5-git-send-email-git@drmicha.warpmail.net> <49A55056.8020504@viscovery.net> <49A556D5.7020806@drmicha.warpmail.net> <49A55DAD.2000309@viscovery.net> <7v1vtm1a6b.fsf@gitster.siamese.dyndns.org>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: checkout vs reset
+Date: Thu, 26 Feb 2009 09:15:20 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngqcnd8.t1u.sitaramc@sitaramc.homelinux.net>
+References: <76718490902252308r474b193yba21b14e14a3baa@mail.gmail.com>
+ <76718490902252312h6a08f5a6x972523e7c7e4af16@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	Andrei Thorp <garoth@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 26 10:07:15 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 26 10:17:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LccCn-0005lf-R6
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 10:06:58 +0100
+	id 1LccMX-00019b-Pq
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 10:17:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753141AbZBZJFd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2009 04:05:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752922AbZBZJFd
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 04:05:33 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:33773 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752720AbZBZJF0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Feb 2009 04:05:26 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 6B0DE2A5B16;
-	Thu, 26 Feb 2009 04:05:24 -0500 (EST)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Thu, 26 Feb 2009 04:05:24 -0500
-X-Sasl-enc: gdizg3G1+pfUgEoFrhvMChJzU4c9grB5MwTbFWU5E4Tl 1235639124
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 88902126A0;
-	Thu, 26 Feb 2009 04:05:23 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090226 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <7v1vtm1a6b.fsf@gitster.siamese.dyndns.org>
+	id S1752910AbZBZJPe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2009 04:15:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752688AbZBZJPd
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 04:15:33 -0500
+Received: from main.gmane.org ([80.91.229.2]:53625 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752610AbZBZJPc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2009 04:15:32 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LccL2-00052r-UP
+	for git@vger.kernel.org; Thu, 26 Feb 2009 09:15:29 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 26 Feb 2009 09:15:28 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 26 Feb 2009 09:15:28 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111542>
 
-Junio C Hamano venit, vidit, dixit 25.02.2009 22:25:
-> Johannes Sixt <j.sixt@viscovery.net> writes:
-> 
->> Michael J Gruber schrieb:
->>> Johannes Sixt venit, vidit, dixit 25.02.2009 15:06:
->>>> I think we have so far avoided \+ in sed expressions for portability reasons.
->>> Hmmpf. Is it that new, or gnu specific? I'm always afraid of portability
->>> issues with bash but wasn't aware of sed being an issue as well.
->>>
->>> In any case, would 's|\\*|/|g' be better (more portable) then?
->> You mean 's|//*|/|g'; yes, that is definitly portable.
+On 2009-02-26, Jay Soffian <jaysoffian@gmail.com> wrote:
+> On Thu, Feb 26, 2009 at 2:08 AM, Jay Soffian <jaysoffian@gmail.com> wrote:
+>> Is there any different between the following two commands?
 >>
->>> Well, how is
->>>
->>> echo a/b/c/../../d | sed -e ':start;s|\([^/]*\)/\.\./||g;tstart'
->>> a/d
->>>
->>> I meant: how portable is...
->> I don't know... Let's see: My AIX 4.3.3 sed understands it if it is not
->> all on a single line, and that says a lot. Specifically, I tried this:
+>> git reset <commit> -- <paths>...
+>> git checkout <commit> -- <paths>...
 >>
->> echo a/b/c/../../d | sed -e ':start
->>              s|\([^/]*\)/\.\./||
->>              tstart
->> '
->>
->> and got the desired result:
->>
->> a/d
->>
->> Note that the 'g' flag is not necessary in this case.
->>
->> OTOH, this sed doesn't understand #comments :-/
-> 
-> Historically, sed was much worse than the shell when it came to the
-> portability issues, especially before people started to use bash, which
-> tipped the balance a bit by worsening the situation for the shell side.
-> 
-> The sed scripts in the more important parts of scripted Porcelains avoid
-> multiple commands on a single line concatenated with ";" mostly by inertia
-> on my side, but it was acquired exactly from this kind of portability
-> mess.  IIRC, AIX's was the worst offender. It also got "/A/../B/ { ... }"
-> wrong in earlier versions.
+>> As far as I can tell from the man pages, they are equivalent. To wit:
+>> both update the index and working copy for the given paths to the
+>> state that they were in in <commit>.
+>
+> Doh, answering my own question. reset only touches the index, not the
+> working copy. checkout updates both.
 
-I'm a bit confused now. Are you saying that "git-submodule.sh" should
-avoid the multiple lines in sed (which work in AIX 4.3.3)? I don't know
-how to simplify a/b/c/../../ easily then. Of course one could loop
-around in shell rather than using sed's "goto", but that looks ugly.
+However, if the <commit> doesn't even _have_ the <path> in
+question, it leaves the index alone (doesn't remove it, for
+instance):
 
-I think that's my only question before doing a v3 which will be a good
-"cd citizen" in tests and test for more idiosyncracies.
+Using HEAD as the <commit> in question for this example:
 
-Oh wait: Would it be worthwhile to have that shell version of
-normalize_path_copy() in git-sh-setup instead?
+    echo hi > abc       # new file, untracked so far
+    git add abc
+    git status          # it's staged
+    git reset HEAD -- abc
+    git status          # untracked
 
-Michael
+    # now with checkout
+    git add abc
+    git status          # staged
+    git checkout HEAD -- abc
+    git status          # still staged
