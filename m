@@ -1,88 +1,79 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [RFH] rebase -i optimization
-Date: Thu, 26 Feb 2009 16:33:32 +0100
-Message-ID: <fabb9a1e0902260733k26e5c02i75a7866f9a67530b@mail.gmail.com>
-References: <fabb9a1e0902260655g53fa1e1fg7e4aa76b0f3a80fc@mail.gmail.com>
-	 <alpine.DEB.1.00.0902261557300.6258@intel-tinevez-2-302>
+From: Jeff King <peff@peff.net>
+Subject: Re: Building 1.6.2-rc2 in Cygwin
+Date: Thu, 26 Feb 2009 10:44:50 -0500
+Message-ID: <20090226154450.GA20745@coredump.intra.peff.net>
+References: <c115fd3c0902260723o4d475df5yecc9ff23c55c7af4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Stephen Haberman <stephen@exigencecorp.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Git Mailing List <git@vger.kernel.org>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Feb 26 16:35:13 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Tim Visher <tim.visher@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 26 16:46:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LciGP-00068d-AO
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 16:35:05 +0100
+	id 1LciRL-0002jp-FN
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 16:46:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754986AbZBZPdi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Feb 2009 10:33:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754969AbZBZPdh
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 10:33:37 -0500
-Received: from mu-out-0910.google.com ([209.85.134.184]:50309 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754336AbZBZPdg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Feb 2009 10:33:36 -0500
-Received: by mu-out-0910.google.com with SMTP id i10so228859mue.1
-        for <git@vger.kernel.org>; Thu, 26 Feb 2009 07:33:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=zlGse/KZEDocLyjCI0VYyyq6omsqA3ozW2WYSFbu93s=;
-        b=WF+kjXzYGagTp6HWD8i/4bHG+Qa0OICEsI+xRy2TvOLrDGAT8D6hHtb24FpVd+2e33
-         qqCodNLD5EtO76d8ssgBZMqFseYArJgSAX1s9jwYEcv+6E2SKACQI0rzoaYrSi88IJ0f
-         U7oAFBu8qrIqFYilFz05ZuaB6vpam/TPW2mDc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=iGj94FkVTdGYOZcSCjeeBm3ih/TNwlQe+bGJmhhFTuXFdGSgl0dbej1EOgP28InY/j
-         KDvc38em+AdhGLKVUibzBlmda12NNxaFlEVRuJJ/2UEHNoVtDWN1I8OIVFb3fCjsK/mp
-         KkE909kvymAGYkgAMNXvide9YoJBSD6oSW/X0=
-Received: by 10.103.161.16 with SMTP id n16mr725404muo.79.1235662412579; Thu, 
-	26 Feb 2009 07:33:32 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0902261557300.6258@intel-tinevez-2-302>
+	id S1753382AbZBZPoz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2009 10:44:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753151AbZBZPoz
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 10:44:55 -0500
+Received: from peff.net ([208.65.91.99]:55714 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752211AbZBZPoy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2009 10:44:54 -0500
+Received: (qmail 5711 invoked by uid 107); 26 Feb 2009 15:45:18 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 26 Feb 2009 10:45:18 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Feb 2009 10:44:50 -0500
+Content-Disposition: inline
+In-Reply-To: <c115fd3c0902260723o4d475df5yecc9ff23c55c7af4@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111576>
 
-Heya,
+On Thu, Feb 26, 2009 at 10:23:54AM -0500, Tim Visher wrote:
 
-On Thu, Feb 26, 2009 at 15:59, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> This code is supposed to do exactly what you want:
+> The reason I'm using `configure` at all is that when I simply do a
+> `make` without a `make configure; ./configure` first, it fails with a
+> message like:
+> 
+>     $ make
+>         CC fast-import.o
+>     In file included from builtin.h:4,
+>                      from fast-import.c:142:
+>     git-compat-util.h:100:19: iconv.h: No such file or directory
+>     make: *** [fast-import.o] Error 1
+> 
+> Once I configure, even without any options, it builds fine and I can
 
-Hmmm, I can't say I understand it 100%, but what I can see from
-reading the code and looking at the output of 'rebase -i -v' is that
-it does a 'git reset --hard' on each commit if it was already applied,
-instead of figuring out beforehand what to reset to? If that is the
-case, it might still take a long time to do the rebase if it takes
-long to do the 'reset --hard' between the patches (say, if a big
-change is made).
+It sounds like you don't have iconv. You can build with:
 
-> Unfortunately, it seems to be quite broken by all the different direc=
-tions
-> rebase -i was pulled to, but maybe you see the bug right away. =A0Oth=
-erwise,
-> I'll try to reschedule my Git time budget later tonight.
+  make NO_ICONV=1
 
-After reading the code and trying with -v, I don't think the current
-code is broken, just that it might be optimized to be even faster?
+on such a platform, which is more or less what the configure script is
+doing. Try running './configure' and investigating the
+config.mak.autogen it generates; this gets pulled directly into the
+Makefile. You can correlate the variables it is setting with the
+descriptions in the Makefile.
 
---=20
-Cheers,
+> My eventual goal is to have git installed with man, info, and html
+> pages, into my (and my fellow developers') personal bin, man, info,
+> and html directories at ~/x.  It appeared that I could do that with
+> ./configure but per the response I got earlier, this doesn't seem to
+> be the case.
 
-Sverre Rabbelier
+I think the right thing to do is to fix the broken autoconf support, as
+per my other message. But you can workaround it with:
+
+  ./configure
+  make htmldir=~/man bindir=~/bin mandir=~/man infodir=~/info
+
+The latter command is simply overriding what's in the Makefile with
+what you provide on the command line (so any defaults, or anything
+provided by ./configure is ignored).
+
+-Peff
