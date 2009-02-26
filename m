@@ -1,93 +1,72 @@
-From: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
-Subject: Git on MSys broken
-Date: Thu, 26 Feb 2009 20:56:39 +0100
-Message-ID: <20090226195639.GB19384@denkbrett.schottelius.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="8GpibOaaTibBMecb"
+From: kevin brintnall <kbrint@rufus.net>
+Subject: [PATCH] added -C option to chdir() into another directory first
+Date: Thu, 26 Feb 2009 14:11:39 -0600
+Message-ID: <1235679099-33994-1-git-send-email-kbrint@rufus.net>
+Cc: kevin brintnall <kbrint@rufus.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 26 20:58:16 2009
+X-From: git-owner@vger.kernel.org Thu Feb 26 21:23:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcmN2-0004Rd-QU
-	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 20:58:13 +0100
+	id 1LcmlK-0007yG-K7
+	for gcvg-git-2@gmane.org; Thu, 26 Feb 2009 21:23:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753528AbZBZT4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2009 14:56:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753451AbZBZT4o
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 14:56:44 -0500
-Received: from mx3.schottelius.org ([77.109.138.221]:49981 "EHLO
-	mx3.schottelius.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753297AbZBZT4n (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2009 14:56:43 -0500
-Received: from ikn.ethz.ch (217-162-227-168.dclient.hispeed.ch [217.162.227.168])
-	by mx3.schottelius.org (Postfix) with ESMTPSA id BC08B197A056
-	for <git@vger.kernel.org>; Thu, 26 Feb 2009 20:56:36 +0100 (CET)
-Received: by ikn.ethz.ch (Postfix, from userid 1000)
-	id 9758C2E052; Thu, 26 Feb 2009 20:56:39 +0100 (CET)
-Content-Disposition: inline
-User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
-X-Unix-Info: http://unix.schottelius.org/
-X-Netzseite: http://nico.schottelius.org/
-X-System-Info: ikn (Linux 2.6.29-rc4-ikn-00001-gd5b5623 x86_64)
+	id S1757165AbZBZUVL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2009 15:21:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756006AbZBZUVK
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 15:21:10 -0500
+Received: from hamachi.rufus.net ([209.181.236.65]:52175 "EHLO
+	hamachi.rufus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755518AbZBZUU7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2009 15:20:59 -0500
+X-Greylist: delayed 556 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Feb 2009 15:20:59 EST
+Received: by hamachi.rufus.net (Postfix, from userid 100)
+	id EB7D0272D55; Thu, 26 Feb 2009 14:11:39 -0600 (CST)
+X-Mailer: git-send-email 1.6.1.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111592>
 
+This allows things like 'git -C /somewhere pull' without specifying both
+--work-tree and --git-dir.
 
---8GpibOaaTibBMecb
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: kevin brintnall <kbrint@rufus.net>
+---
+ git.c |   12 +++++++++++-
+ 1 files changed, 11 insertions(+), 1 deletions(-)
 
-Hello!
-
-I just wanted to show my father how well git works, but the experience
-is rather bad:
-
-All files have a "beta" label, which makes not a really stable impression.
-And indeed, when trying to start git bash, we get this error:
-
-c:\Programme\Git\bin>bash
-0 [main] us 0 init_cheap: VirtualAlloc pointer is null, Win32 error 487
-AllocationBase 0x0, BaseAddress 0x71540000, RegionSize 0x1C0000, State
-0x10000
-c:\Programme\Git\bin\bash.exe: *** Couldn't reserve space for cygwin's
-heap, Win
-32 error 6
-
-Well, it's already known, but the the hint from
-http://code.google.com/p/msysgit/issues/detail?id=3D133
-(found only from
-http://code.google.com/p/msysgit/issues/detail?id=3D176)
-
-to install a differnt dll can just be considered a dirty hack.
-
-Sorry msys-guys, the only thing left now is a bad impression.
-
-Nico
-
---=20
-Think about Free and Open Source Software (FOSS).
-http://nico.schottelius.org/documentations/foss/the-term-foss/
-
-PGP: BFE4 C736 ABE5 406F 8F42  F7CF B8BE F92A 9885 188C
-
---8GpibOaaTibBMecb
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkmm8/cACgkQuL75KpiFGIwyeACeLO16/ocVfgruW7VXRlUqG7/p
-VrQAoKewtdKJO6O/ywKEg/35lAiQFf5V
-=hkau
------END PGP SIGNATURE-----
-
---8GpibOaaTibBMecb--
+diff --git a/git.c b/git.c
+index c2b181e..b218bfe 100644
+--- a/git.c
++++ b/git.c
+@@ -5,7 +5,7 @@
+ #include "run-command.h"
+ 
+ const char git_usage_string[] =
+-	"git [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate|--no-pager] [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE] [--help] COMMAND [ARGS]";
++	"git [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate|--no-pager] [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE] [-C BASE_DIR] [--help] COMMAND [ARGS]";
+ 
+ const char git_more_info_string[] =
+ 	"See 'git help COMMAND' for more information on a specific command.";
+@@ -116,6 +116,16 @@ static int handle_options(const char*** argv, int* argc, int* envchanged)
+ 			setenv(GIT_DIR_ENVIRONMENT, getcwd(git_dir, sizeof(git_dir)), 0);
+ 			if (envchanged)
+ 				*envchanged = 1;
++		} else if (!strcmp(cmd, "-C")) {
++			char *dir = (*argv)[1];
++			if (*argc < 2) {
++				fprintf(stderr, "No directory given for -C");
++				usage(git_usage_string);
++			}
++			if (chdir(dir))
++				die("Cannot change to %s: %s", dir, strerror(errno));
++			(*argv)++;
++			(*argc)--;
+ 		} else {
+ 			fprintf(stderr, "Unknown option: %s\n", cmd);
+ 			usage(git_usage_string);
+-- 
+1.6.1.3
