@@ -1,115 +1,72 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH v4] t5540-http-push.sh: avoid non-portable grep -P
-Date: Thu, 26 Feb 2009 18:44:40 -0500
-Message-ID: <1235691880-9806-1-git-send-email-jaysoffian@gmail.com>
-References: <7v4oygrd3w.fsf@gitster.siamese.dyndns.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH] t5540-http-push.sh: avoid non-portable grep -P
+Date: Thu, 26 Feb 2009 17:51:21 -0600
+Message-ID: <wRrDhWKagbvPUgIXKKh8JIhASl974j2rrgyuh-WEzRJFcXywywNupg@cipher.nrlssc.navy.mil>
+References: <1235677745-939-1-git-send-email-jaysoffian@gmail.com> <7vwsbdq6u4.fsf@gitster.siamese.dyndns.org> <76718490902261243gaebdd8an2bd75bf625556f7b@mail.gmail.com> <7vmyc8rhry.fsf@gitster.siamese.dyndns.org> <76718490902261419r314f6ea4r5eb02e9b5b0c40d0@mail.gmail.com> <7veixkrfif.fsf@gitster.siamese.dyndns.org> <76718490902261440p4c9981fbncbdd58ad12e38349@mail.gmail.com> <7v4oygrd3w.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Tay Ray Chuan <rctay89@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 27 00:46:21 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
+	Tay Ray Chuan <rctay89@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 27 00:53:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lcpvh-0006Yd-M2
-	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 00:46:14 +0100
+	id 1Lcq2a-0000QN-5r
+	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 00:53:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754232AbZBZXop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Feb 2009 18:44:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753659AbZBZXop
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 18:44:45 -0500
-Received: from qw-out-2122.google.com ([74.125.92.27]:9195 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751734AbZBZXoo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Feb 2009 18:44:44 -0500
-Received: by qw-out-2122.google.com with SMTP id 5so1396346qwi.37
-        for <git@vger.kernel.org>; Thu, 26 Feb 2009 15:44:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=/zx6dBTUA76gE3u6bDEmmLX93ekFEy9mV2TRFP6R45g=;
-        b=UBlLw7MTsrXh3rFrwUMki6FDR7LHr90C3ntfcHRKHC93JH/tOCd+SZkgvtVxNOpX/J
-         c5Sua+fFPeEx1O6n0+bJ3dWVPHWSAFhgFImLfqApXvTo1NlJ0uycKysNqwAMID5G9Qj2
-         ix/2t+po6/j6QFK/YwhAT+z2JwxgdkKYZO8Z8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=kNHTvm90aNgrqlFD7AFwObMeAvKpb/GFloa1RXhBA+pb/Nqksn2HQK+y/XXFLRWo7N
-         934S8oW6bwfeuXTQCAfYE+k3H0PPmyer+AF2iNWCTMslMw0e1asryCzvKhOUksfofJrw
-         uXIVOXz9S6oJgOjOjGW8+jHAUYyGOXP3re5jg=
-Received: by 10.224.73.143 with SMTP id q15mr3184273qaj.189.1235691882642;
-        Thu, 26 Feb 2009 15:44:42 -0800 (PST)
-Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
-        by mx.google.com with ESMTPS id 4sm977454qwe.55.2009.02.26.15.44.41
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 26 Feb 2009 15:44:42 -0800 (PST)
-X-Mailer: git-send-email 1.6.2.rc1.309.g5f417
+	id S1754380AbZBZXva (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2009 18:51:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753375AbZBZXva
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 18:51:30 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:43831 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751163AbZBZXv3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2009 18:51:29 -0500
+Received: by mail.nrlssc.navy.mil id n1QNpMhW019217; Thu, 26 Feb 2009 17:51:22 -0600
 In-Reply-To: <7v4oygrd3w.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 26 Feb 2009 23:51:22.0255 (UTC) FILETIME=[209961F0:01C9986D]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111616>
 
-OS X's GNU grep does not support -P/--perl-regexp.
-
-We use a basic RE instead, and simplify the pattern slightly by
-replacing '+' with '*' so it can be more easily expressed using a basic
-RE. The important part of pattern, checking for a SHA-1 has suffix in
-the successful PUT/MOVE operations, remains the same. Also, a-z instead
-of a-f was an obvious mistake in the original RE. Here are samples of
-what we want to match:
-
-127.0.0.1 - - [26/Feb/2009:22:38:13 +0000] "PUT /test_repo.git/objects/3e/a4fbb9e18a401a6463c595d08118fcb9fb7426_fab55116904c665a95438bcc78521444a7db6096 HTTP/1.1" 201 277
-127.0.0.1 - - [26/Feb/2009:22:38:13 +0000] "MOVE /test_repo.git/objects/3e/a4fbb9e18a401a6463c595d08118fcb9fb7426_fab55116904c665a95438bcc78521444a7db6096 HTTP/1.1" 201 277
-
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
-On Thu, Feb 26, 2009 at 6:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
-
+Junio C Hamano wrote:
+> Jay Soffian <jaysoffian@gmail.com> writes:
+> 
+>> On Thu, Feb 26, 2009 at 5:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> I don't mind Perl as we already depend on it; the looseness of the regexp
+>>> stil bothers me somewhat, though...
+>> I think you're letting the perfect be the enemy of the good. The point
+>> of the test is merely to check for the SHA-1 has suffix in PUT/MOVE
+>> operations. Any of my suggestions so far are better than what is there
+>> now. Why so much fuss?
+>>
+>> I'll send one more iteration, and if that's not good enough, I give up.
+>>
+>> j.
+> 
 > Heh, at least with /a-z/a-f/, I think it is usable.
->
-> Or is there a reason I am missing that we want to allow g-z there?
 
-I can't believe I didn't notice that. This is really really my last
-send. I noticed gmail line wrapped my squash, so I'm resending properly.
-Updated the commit note as well to mention the change from a-z to a-f is
-on purpose.
+Two minor style issues can also be fixed.
 
-j.
+I think the file name can be specified as an argument to sed rather than using
+the shell's redirection mechanism.
 
- t/t5540-http-push.sh |   11 ++++++++---
- 1 files changed, 8 insertions(+), 3 deletions(-)
+   sed -e 'script' input-file
 
-diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
-index 11b3432..bd45203 100755
---- a/t/t5540-http-push.sh
-+++ b/t/t5540-http-push.sh
-@@ -94,10 +94,15 @@ test_expect_success 'MKCOL sends directory names with trailing slashes' '
- 
- '
- 
--test_expect_success 'PUT and MOVE sends object to URLs with SHA-1 hash suffix' '
-+x1="[0-9a-f]"
-+x2="$x1$x1"
-+x5="$x1$x1$x1$x1$x1"
-+x38="$x5$x5$x5$x5$x5$x5$x5$x1$x1$x1"
-+x40="$x38$x2"
- 
--	grep -P "\"(?:PUT|MOVE) .+objects/[\da-z]{2}/[\da-z]{38}_[\da-z\-]{40} HTTP/[0-9.]+\" 20\d" \
--		< "$HTTPD_ROOT_PATH"/access.log
-+test_expect_success 'PUT and MOVE sends object to URLs with SHA-1 hash suffix' '
-+	sed -e "s/PUT/OP/" -e "s/MOVE/OP/" < "$HTTPD_ROOT_PATH"/access.log \
-+	| grep "\"OP .*/objects/$x2/${x38}_$x40 HTTP/[.0-9]*\" 20[0-9]"
- 
- '
- 
--- 
-1.6.2.rc1.309.g5f417
+rather than
+
+   sed -e 'script' < input-file
+
+I think /that/, and moving the pipe character to the end of the sed line so that
+you don't need to escape the newline will conform to git scripting style so it
+becomes:
+
+   sed -e "s/PUT/OP/" -e "s/MOVE/OP/" "$HTTPD_ROOT_PATH"/access.log |
+     grep "\"OP .*/objects/$x2/${x38}_$x40 HTTP/[.0-9]*\" 20[0-9]"
+
+-brandon
