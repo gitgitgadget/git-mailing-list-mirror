@@ -1,68 +1,81 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: [TopGit] aborting tg create leafs deleted .top* files in index
-Date: Fri, 27 Feb 2009 11:59:15 +0100
-Message-ID: <20090227105915.GA20932@pengutronix.de>
-References: <36ca99e90902061103u24d4f38eua52d9259cb8d34d1@mail.gmail.com> <36ca99e90902262247q783f8ce1j20bdc971cfc22948@mail.gmail.com> <20090227083211.GA10326@pengutronix.de> <36ca99e90902270040g6ae29c69t1d958fda3dfce960@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] clone: do not ignore --no-hardlinks
+Date: Fri, 27 Feb 2009 06:35:59 -0500
+Message-ID: <20090227113558.GA19756@coredump.intra.peff.net>
+References: <alpine.DEB.1.00.0902262352380.10279@pacific.mpi-cbg.de> <da2c9173f403c4fb509609fb823b6be0728d94f3.1235690903u.git.johannes.schindelin@gmx.de> <20090227025829.GA22060@coredump.intra.peff.net> <7vy6vsmjeo.fsf@gitster.siamese.dyndns.org> <7vr61kmht9.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Petr Baudis <pasky@suse.cz>,
-	Git Mailing List <git@vger.kernel.org>,
-	martin f krafft <madduck@debian.org>
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 27 12:00:51 2009
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>,
+	Pierre Habouzit <madcoder@debian.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 27 12:37:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ld0SW-00035l-4u
-	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 12:00:48 +0100
+	id 1Ld11x-0007LZ-24
+	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 12:37:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754572AbZB0K7V convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Feb 2009 05:59:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753166AbZB0K7U
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 05:59:20 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:56422 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753161AbZB0K7T (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2009 05:59:19 -0500
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Ld0R3-0000Es-Ad; Fri, 27 Feb 2009 11:59:17 +0100
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Ld0R1-0005SG-SS; Fri, 27 Feb 2009 11:59:15 +0100
+	id S1754672AbZB0Lf4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Feb 2009 06:35:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754654AbZB0Lfz
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 06:35:55 -0500
+Received: from peff.net ([208.65.91.99]:44251 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754649AbZB0Lfz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2009 06:35:55 -0500
+Received: (qmail 12151 invoked by uid 107); 27 Feb 2009 11:36:16 -0000
+Received: from Unknown (HELO coredump.intra.peff.net) (10.0.0.130)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 27 Feb 2009 06:36:16 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 27 Feb 2009 06:35:59 -0500
 Content-Disposition: inline
-In-Reply-To: <36ca99e90902270040g6ae29c69t1d958fda3dfce960@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+In-Reply-To: <7vr61kmht9.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111663>
 
-On Fri, Feb 27, 2009 at 09:40:45AM +0100, Bert Wesarg wrote:
-> On Fri, Feb 27, 2009 at 09:32, Uwe Kleine-K=F6nig
-> <u.kleine-koenig@pengutronix.de> wrote:
-> > What about the patch below? =A0It seems git-checkout from 1.6.x mer=
-ges the
-> > changes done to the newly checked out branch.
-> Thank you very much. It works here as expected.
-After some more thought I don't think this is the right fix.  While
-throwing away changes to .top* looks OK, doing the same for other
-changes seems not right to me.
+On Thu, Feb 26, 2009 at 11:59:14PM -0800, Junio C Hamano wrote:
 
-Best regards
-Uwe
+> Except that it does not work.
+>=20
+> Initializing option_local to -1 and then feeding it to parse_options(=
+) via
+> OPT_BOOLEAN() is a cute idea, but when parse_options() sees a command=
+ line
+> like this:
 
---=20
-Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
-       |
-Industrial Linux Solutions                    | http://www.pengutronix.=
-de/  |
+Ah, sorry. I didn't really test it thoroughly (though I did try
+--no-local, I obviously did not test --local with a hardlink failure).
+
+> Damn it, it is called BOOLEAN, and na=C3=AFvely I would think --optio=
+n would
+> set it to 1, --no-option would set it to 0, and not having --option n=
+or
+> --no-option would leave the associated variable alone, but apparently=
+ that
+> is not what is happening.
+
+That is exactly what I expected as a caller (and it sounds like you did=
+,
+too), which perhaps argues in favor of changing it.
+
+Upon seeing this, I guessed (as you did in the next email) that it was
+about bumping up levels of a boolean for things like verbosity. And I
+agree that sould not be OPT_BOOLEAN, but rather OPT_INCREMENT or
+whatever.
+
+However, I did some grepping and it doesn't look like anybody is
+actually making use of the incrementing behavior (I was just looking fo=
+r
+"verbose", though, so it's possible some unrelated boolean is using it)=
+=2E
+So it may be that the behavior can be changed now while no callers care=
+,
+and we can get away without OPT_INCREMENT until somebody actually needs
+it.
+
+-Peff
