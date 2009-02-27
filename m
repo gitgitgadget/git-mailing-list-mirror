@@ -1,123 +1,99 @@
-From: Deskin Miller <deskinm@gmail.com>
-Subject: Re: git-svn woes
-Date: Fri, 27 Feb 2009 15:53:10 -0500
-Message-ID: <86d4c5e00902271253y50eaef01x8ca837d3a0ed7ef6@mail.gmail.com>
-References: <alpine.LFD.2.00.0902271442270.5511@xanadu.home>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [RFC] add test cases for the --repo option to git push
+Date: Fri, 27 Feb 2009 13:00:21 -0800 (PST)
+Message-ID: <alpine.LFD.2.00.0902271255530.3111@localhost.localdomain>
+References: <76718490902210132w2577c093tf8c2a5e7da8bc0e8@mail.gmail.com>  <1235497240-20677-1-git-send-email-git@drmicha.warpmail.net>  <7vhc2iyy9y.fsf@gitster.siamese.dyndns.org>  <49A66057.1050501@drmicha.warpmail.net>  <7vfxi1t99u.fsf@gitster.siamese.dyndns.org>
+  <49A7C3A7.6060202@drmicha.warpmail.net> <76718490902271248p2de44082ka66645203c9683d4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Feb 27 21:54:42 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 27 22:02:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ld9jG-0007Zh-1X
-	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 21:54:42 +0100
+	id 1Ld9r8-0002e0-QB
+	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 22:02:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755525AbZB0UxO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Feb 2009 15:53:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755507AbZB0UxN
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 15:53:13 -0500
-Received: from mail-gx0-f174.google.com ([209.85.217.174]:63547 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755498AbZB0UxM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Feb 2009 15:53:12 -0500
-Received: by gxk22 with SMTP id 22so3048143gxk.13
-        for <git@vger.kernel.org>; Fri, 27 Feb 2009 12:53:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=yS8PjNZAeqIiJr7bPj78k2yZODwMqqktk5oAblUuK7Y=;
-        b=XPu43J9By2WTckVxmAyeOjb85O7lk9OmF7aeoC8xkgQwOsq7mPipIZoG7hFz6VOl8U
-         cEXpqf96S07TNDB124UT7WGPZCz6tpvxJ5MBfBgUnj8/IiQRWF+hiRmwnX5/d/LuGWwf
-         9iis0THqurzQfGjTv1qvnX8YplSw7fN/76GXE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=KcSz3PT1MHMNIz2SVeRPttp/EHxoP3+NBVaUX+yKlTSFTMUepKkBAU/gtx7/oaKK4n
-         V0dx00LcxhknrCxxuhoZGUxzLG/JC5mn5sFGxBo1pyyh2yxqGldOnsc6XVxL/NqjE+5O
-         a1oslcLtBcGyQtei0hgpZd7hDFljBjCe/nH0w=
-Received: by 10.150.11.6 with SMTP id 6mr4647469ybk.190.1235767990308; Fri, 27 
-	Feb 2009 12:53:10 -0800 (PST)
-In-Reply-To: <alpine.LFD.2.00.0902271442270.5511@xanadu.home>
+	id S1757516AbZB0VBD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2009 16:01:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756332AbZB0VBB
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 16:01:01 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:50244 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755521AbZB0VBA (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Feb 2009 16:01:00 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n1RL0Lm1007630
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 27 Feb 2009 13:00:23 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n1RL0LUP001717;
+	Fri, 27 Feb 2009 13:00:21 -0800
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <76718490902271248p2de44082ka66645203c9683d4@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.948 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111715>
 
-On Fri, Feb 27, 2009 at 15:37, Nicolas Pitre <nico@cam.org> wrote:
->
-> OK... I cannot pretend to be a newbie with git. =C2=A0However it's th=
-e first
-> time I try git-svn and it looks like a couple basic things aren't rig=
-ht.
->
-> I initially cloned svn://svn.berlios.de/openocd using "git svn clone =
--s".
-> So far so good. =C2=A0Now I'm attempting to update using "git svn fet=
-ch" but
-> the operation always fails with the following error:
->
-> |branch_from: /openocd/branches =3D> /openocd/branches/xscale
-> |Found possible branch point:
-> |svn://svn.berlios.de/openocd/openocd/branches/xscale =3D>
-> |svn://svn.berlios.de/openocd/branches/xscale, 1231
-> |Initializing parent: xscale@1231
-> |Found branch parent: (xscale) 657522f3f2d1ab8b679fd5b45ce4e9ca1974af=
-18
-> |Following parent with do_switch
-> |Scanning for empty symlinks, this may take a while if you have many =
-empty files
-> |You may disable this with `git config svn.brokenSymlinkWorkaround fa=
-lse'.
-> |This may be done in a different terminal without restarting git svn
-> |Malformed network data: Malformed network data at /home/nico/libexec=
-/git-core/git-svn line 3333
 
-I experience the same error as you do with 1.6.2-rc2.  This error is
-occurring in the new broken-symlink-workaround code.  I'm not sure
-what is going on and don't have time to examine it closely, but the
-function where the error occurs doesn't run if the config
-svn.brokenSymlinkWorkaround option is set false; doing so makes the
-fetch continue for me.
 
-Any ideas, Eric?
+On Fri, 27 Feb 2009, Jay Soffian wrote:
+> 
+> So I still don't get why Linus introduced the option. I'm looking at
+> bcc785f:builtin-push.c and AFAICT, the following are exactly
+> equivalent:
+> 
+> $ git push [options]... <repo>
+> $ git push [options]... --repo=<repo>
 
-> Thing is... the repository never gets updated and by far. =C2=A0Accor=
-ding to
-> "git svn info", the fetched revision is 1232, while a separate
-> repository using native svn claims to be at revision 1383.
->
-> Furthermore, the "git svn info" command produces yet more errors, suc=
-h
-> as:
->
-> |Use of uninitialized value $lc_author in concatenation (.) or string=
- at /home/nico/libexec/git-core/git-svn line 964.
-> |Use of uninitialized value $lc_rev in concatenation (.) or string at=
- /home/nico/libexec/git-core/git-svn line 965.
-> |Use of uninitialized value $t in gmtime at /home/nico/libexec/git-co=
-re/git-svn line 4743.
-> |Use of uninitialized value $t in numeric comparison (<=3D>) at /home=
-/nico/libexec/git-core/git-svn line 4744.
-> |Use of uninitialized value $t in subtraction (-) at /home/nico/libex=
-ec/git-core/git-svn line 4745.
-> |Use of uninitialized value $t in localtime at /home/nico/libexec/git=
--core/git-svn line 4746.
->
-> This is with git from current "next". I cannot spend time to try fixi=
-ng
-> the issue myself (especially as I'm not familiar at all with the inne=
-r
-> workings of svn), so my only option at the moment is to give up on
-> git-svn altogether. =C2=A0:-(
+Yes. 
 
-Oh, don't give up quite yet :)
+But now do
 
-Deskin Miler
+	[alias]
+		push-all=push all
+
+and then try to add those options AFTERWARDS!
+
+> --repo can be placed anywhere on the command line, but other than
+> that, it's identical in effect to specifying the repo as the first
+> non-dashed argument.
+> 
+> Or am I completely blind?
+
+It's the "placed anywhere on the command line" that is the important part.
+
+Try 
+
+	git push-all --tags
+
+and it didn't use to work without "--repo=all".
+
+Of course, I think it works now, because I think "git push" uses 
+"parse_options" these days, so now "--tags" actually works even after the 
+repository definition. So _these_ days, you can just do
+
+	git push all --tags
+
+but that was not true historically. Back then, if you wanted to use an 
+alias (which mean that the repo was named _before_ the arguments), you 
+needed to do
+
+	git push --repo=all --tags
+
+because putting "--tags" after the repository name wouldn't work.
+
+So _today_, we could remove the use of "--repo". But today, we have 
+another reason to do "--repo" - compatibility.
+
+		Linus
