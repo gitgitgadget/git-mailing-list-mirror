@@ -1,70 +1,86 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Planet git USELESS
-Date: Fri, 27 Feb 2009 11:17:55 +0100
-Message-ID: <fabb9a1e0902270217v48da139oe7a9ddebfebee793@mail.gmail.com>
-References: <20090227160259.6117@qkholland.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: FEATURE suggestion git commit --amend <ref>
+Date: Fri, 27 Feb 2009 11:30:38 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902271121590.6600@intel-tinevez-2-302>
+References: <81bfc67a0902262345i63386076rbcf6d71ed88c29ac@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Quim K Holland <qkholland@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 27 11:19:37 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Caleb Cushing <xenoterracide@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 27 11:33:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LczoU-0004mX-Ua
-	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 11:19:27 +0100
+	id 1Ld01s-0001LN-RB
+	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 11:33:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754381AbZB0KSA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2009 05:18:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754078AbZB0KR7
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 05:17:59 -0500
-Received: from mu-out-0910.google.com ([209.85.134.186]:19041 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753091AbZB0KR6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2009 05:17:58 -0500
-Received: by mu-out-0910.google.com with SMTP id i10so370478mue.1
-        for <git@vger.kernel.org>; Fri, 27 Feb 2009 02:17:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=elOf/Tpg4hVFqBxSS9y43dwdEw3+767OLZjttFM9bTQ=;
-        b=RTjvTz/UImf3Ed1XfZLtXljuIjvCb4h+SPtBOkuX7zrxlGgfIj8XeZCloXQUMyXag7
-         R8wvlyBTGMfC1qj1ytANx+PH7SDjKxbIzclC6m2N6GNqmR2A8E8EnVCDSEi/gL8ATeTz
-         o3xuV1PHA31/Fz3YJEsZcw/jOKaWoR8erqZus=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=VcwKrtVsCv63+2YMgu0N148TNDM1WRueJCfCrjwLpocpY13ffNL8RQlsVQ8iY6pmhh
-         qb0vDAGFL/gwSS0D1CZs1J97mctnMJ6EnwhPmvXaYGQ97zYGTLxYJgKVq1Tb4uMkIThV
-         kG/w7i7+95qBAlJDDP0yI3sjHNCHVh9vgBD0E=
-Received: by 10.103.229.12 with SMTP id g12mr1223731mur.16.1235729875754; Fri, 
-	27 Feb 2009 02:17:55 -0800 (PST)
-In-Reply-To: <20090227160259.6117@qkholland.gmail.com>
+	id S1757689AbZB0Kan (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2009 05:30:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757709AbZB0Kan
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 05:30:43 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54547 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759240AbZB0Kal (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2009 05:30:41 -0500
+Received: (qmail invoked by alias); 27 Feb 2009 10:30:38 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp011) with SMTP; 27 Feb 2009 11:30:38 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/MCAhohcHMEL/sHc9CBNawJPP8/SV8fNaz9Aa0je
+	bK0ZsQfGim7L9g
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <81bfc67a0902262345i63386076rbcf6d71ed88c29ac@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111657>
 
-Heya,
+Hi,
 
-On Fri, Feb 27, 2009 at 11:02, Quim K Holland <qkholland@gmail.com> wrote:
-> If you keep a planet site, make it useful for the rest of us to read, REALLY!!!!
+On Fri, 27 Feb 2009, Caleb Cushing wrote:
 
-If you write a message to a mailinglist make sure you add some value.
-Your remark, I would say, is equally useless. Even so, I am not forced
-to read planet git, whereas your message pops up in my inbox. You
-should instead have either contacted the owner of planetgit directly,
-or in some way added some value to your message (such as offering to
-add more contributors, or perhaps include the urls of the feeds of
-more git related blogs).
+> git rebase -i seems a little more tedious/unfriendly than I'd like if 
+> all I want to do is edit HEAD~2 (assuming no merges) it's a bit of a 
+> pain to do a rebase -i and then pick which patches to edit. might be 
+> nice to be able to do stuff like git commit --amend <ref> and have that 
+> call rebase (as I think not rebasing is impossible?) with edit only on 
+> the ref I picked.
+> 
+> hopefully I've explained well enough.
 
--- 
-Cheers,
+Yes, but IMHO you did not consider the undesired side effects well enough.
 
-Sverre Rabbelier
+For example: What about merges?
+
+To be clear: amending a merge is not just a matter of "rebase -i 
+<commit>^" with a custom script, and even worse, there could be merges 
+between the commit you want to amend and the current HEAD.  That is a 
+complete Pandora box right there.
+
+Also, your amended changes could break reapplication of the later commits.  
+So "git commit --amend <ref-other-than-HEAD>" is _semantically_ different 
+from "git commit --amend".
+
+Of course, there is also the problem that <ref> might not be an ancestor 
+of HEAD to begin with.
+
+And that the specified commit could be part of more than one branch, 
+adding to user's confusion when it is only rewritten in the current 
+branch.
+
+But more fundamental: is this operation something we want to make _that_ 
+easy?  After all, it is _not_ the common case, and it bears such a bunch 
+of problems that the user should be made well aware of what she is doing.
+
+All in all, as with many feature requests, I have to say that I see what 
+you want, but the side effects are too horrible -- and you did not 
+consider them, obviously, otherwise you would have put forward arguments 
+as to why the side effects would not matter that much.
+
+Ciao,
+Dscho
