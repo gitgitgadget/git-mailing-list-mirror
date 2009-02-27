@@ -1,66 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: serious problem with `git format-patch' & `git am'
-Date: Fri, 27 Feb 2009 09:53:50 -0800
-Message-ID: <7vr61jkbpt.fsf@gitster.siamese.dyndns.org>
-References: <20090225.230352.177616203.wl@gnu.org>
- <6HVVE8kW9V0CsNfW21a_Tqpt2s-IrJbt2_qdAvQ8r1tetEhb6jr18g@cipher.nrlssc.navy.mil> <m3ljrsvg0e.fsf@localhost.localdomain> <7viqmwpr2x.fsf@gitster.siamese.dyndns.org> <zE3C931NyNaTaadZOgAI_rGf6gmkKr-3ZHRVXh87mHpCMs-0hfnhYg@cipher.nrlssc.navy.mil>
+From: Boyd Lynn Gerber <gerberb@zenez.com>
+Subject: git-1.6.2-rc2 problems on t4034-diff-words.sh
+Date: Fri, 27 Feb 2009 11:06:29 -0700
+Message-ID: <alpine.LNX.2.00.0902271103450.19082@suse104.zenez.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, Werner LEMBERG <wl@gnu.org>,
-	git@vger.kernel.org, keithp@keithp.com
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Fri Feb 27 18:55:46 2009
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Feb 27 19:08:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ld6w3-0002u7-VB
-	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 18:55:44 +0100
+	id 1Ld780-0007uL-Uj
+	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 19:08:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755619AbZB0RyH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2009 12:54:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755192AbZB0RyH
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 12:54:07 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41923 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754936AbZB0RyE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2009 12:54:04 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 804522BDE;
-	Fri, 27 Feb 2009 12:54:01 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 96EA52BDC; Fri,
- 27 Feb 2009 12:53:52 -0500 (EST)
-In-Reply-To: <zE3C931NyNaTaadZOgAI_rGf6gmkKr-3ZHRVXh87mHpCMs-0hfnhYg@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Fri, 27 Feb 2009 09:47:49 -0600")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 9D98BE98-04F7-11DE-BCF3-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
+	id S1752956AbZB0SGc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2009 13:06:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752539AbZB0SGc
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 13:06:32 -0500
+Received: from suse104.zenez.com ([198.60.105.164]:40049 "EHLO
+	suse104.zenez.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752196AbZB0SGb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2009 13:06:31 -0500
+Received: by suse104.zenez.com (Postfix, from userid 1000)
+	id 508A26C1A7B; Fri, 27 Feb 2009 11:06:29 -0700 (MST)
+Received: from localhost (localhost [127.0.0.1])
+	by suse104.zenez.com (Postfix) with ESMTP id 38468938174
+	for <git@vger.kernel.org>; Fri, 27 Feb 2009 11:06:29 -0700 (MST)
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111690>
 
-Brandon Casey <casey@nrlssc.navy.mil> writes:
+Hello,
 
-> What does this line do?
->
-> git-am.sh line 375:
->
->     case "$keep_subject" in -k)  SUBJECT="[PATCH] $SUBJECT" ;; esac
->
-> It appears to do nothing.  It has existed since the beginning of git-am.sh,
-> and there has never been another reference to $keep_subject in this script.
-> Is it possible that $keep_subject is supposed to be $keep?
+I just download and started to test this on SCO OpenServer 6.0.mp4
 
-I do not think it is doing anything, and I do not think it makes sense to
-"fix" it to allow adding "[PATCH] " in front either.  I'd vote for
-removing the entire thing.
+They just released a new Maintianence Patch for the OS.  This is what I 
+get while running gmake test.
 
-The $keep_subject variable and "add [PATCH] only to later strip" logic was
-borrowed from git-applymbox and git-applypatch pair, see 6bff6a6 (Teach
-applymbox to keep the Subject: line., 2005-08-16) especially for the
-change that affects tools/git-applypatch in the commit.  I think there was
-a reason that -k refrained from adding the prefix in git-applypatch but
-the option to git-am needed to add the prefix which seems inconsistent but
-I do not recall the details.  Maybe the list archive may know.
+*** t4034-diff-words.sh ***
+*   ok 1: setup
+*   ok 2: word diff with runs of whitespace
+*   ok 3: word diff with a regular expression
+*   ok 4: set a diff driver
+*   ok 5: option overrides .gitattributes
+* FAIL 6: use regex supplied by driver
+
+
+                 word_diff --color-words
+
+
+*   ok 7: set diff.wordRegex option
+*   ok 8: command-line overrides config
+* FAIL 9: .gitattributes override config
+
+                 word_diff --color-words
+
+*   ok 10: remove diff driver regex
+*   ok 11: use configured regex
+* FAIL 12: test parsing words for newline
+
+
+                 word_diff --color-words="a+"
+
+
+
+* FAIL 13: test when words are only removed at the end
+
+
+                 word_diff --color-words=.
+
+
+* failed 4 among 13 test(s)
+gmake[2]: *** [t4034-diff-words.sh] Error 1
+
+
+-- 
+Boyd Gerber <gerberb@zenez.com> 801 849-0213
+ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
