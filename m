@@ -1,84 +1,54 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] bisect: string commands emited by "filter_skipped"
- together with "&&"
-Date: Thu, 26 Feb 2009 23:01:18 -0800
-Message-ID: <7v4oygnz29.fsf@gitster.siamese.dyndns.org>
-References: <20090227073146.6699964f.chriscool@tuxfamily.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: help with reflog
+Date: Fri, 27 Feb 2009 08:24:57 +0100
+Message-ID: <49A79549.1020802@viscovery.net>
+References: <450196A1AAAE4B42A00A8B27A59278E709E04E87@EXCHANGE.trad.tradestation.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Feb 27 08:02:53 2009
+To: John Dlugosz <JDlugosz@TradeStation.com>
+X-From: git-owner@vger.kernel.org Fri Feb 27 08:26:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcwkG-0000aJ-6o
-	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 08:02:52 +0100
+	id 1Lcx77-0006As-T4
+	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 08:26:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753451AbZB0HBZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2009 02:01:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753281AbZB0HBZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 02:01:25 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40837 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752366AbZB0HBY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2009 02:01:24 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3B7AC22ED;
-	Fri, 27 Feb 2009 02:01:22 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 995E122EC; Fri,
- 27 Feb 2009 02:01:19 -0500 (EST)
-In-Reply-To: <20090227073146.6699964f.chriscool@tuxfamily.org> (Christian
- Couder's message of "Fri, 27 Feb 2009 07:31:46 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 70D88E3E-049C-11DE-8B14-8D02133F2F75-77302942!a-sasl-quonix.pobox.com
+	id S1754276AbZB0HZG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2009 02:25:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754132AbZB0HZE
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 02:25:04 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:43252 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753833AbZB0HZD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2009 02:25:03 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Lcx5d-00011v-MD; Fri, 27 Feb 2009 08:24:58 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 709BB6C4; Fri, 27 Feb 2009 08:24:57 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E709E04E87@EXCHANGE.trad.tradestation.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111640>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+John Dlugosz schrieb:
+> My Log for 'HEAD' only has 14 entries.  Shouldn't it go back for 90 days?
 
-> diff --git a/git-bisect.sh b/git-bisect.sh
-> index a9324b2..08e31d6 100755
-> --- a/git-bisect.sh
-> +++ b/git-bisect.sh
-> @@ -296,14 +296,14 @@ filter_skipped() {
->  	do
-> ...
->  	done
-> +	echo ':'
+Did you initialize or clone *this*particular*repository* more than 90 days
+ago?
 
-Is there a particular reason you moved this echo ':' out of the downstream
-of the pipe as I wrote in my response?
+> I see nothing in the 'config' file.
 
-It logically belongs to the downstream in this pattern:
+Are you saying that the .git/config file is empty?
+What does 'git config core.logallrefupdates' report?
 
-        producer of the list of items | {
-                preparatory steps
-                while read one item
-                do
-                        process one item
-                        echo "something &&"
-                done
-                echo ":" ;# to conclude the && chain
-        }
-
-But you changed it to:
-
-        preparatory step that does not concern producer
-
-        producer of the list of items |
-                while read one item
-                do
-                        process one item
-                        echo "something &&"
-                done
-
-        echo ":"
-
-which looks to me a lot less logical code structure.
+-- Hannes
