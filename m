@@ -1,67 +1,66 @@
-From: "John Dlugosz" <JDlugosz@TradeStation.com>
-Subject: help with reflog
-Date: Thu, 26 Feb 2009 19:07:35 -0500
-Message-ID: <450196A1AAAE4B42A00A8B27A59278E709E04E87@EXCHANGE.trad.tradestation.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH] t5540-http-push.sh: avoid non-portable grep -P
+Date: Thu, 26 Feb 2009 18:12:26 -0600
+Message-ID: <4WGE1cq9SGp9DuzqT2ZuVN0RzLGmBe1mAX4n1O4-TNyRqiZqxDP62A@cipher.nrlssc.navy.mil>
+References: <1235677745-939-1-git-send-email-jaysoffian@gmail.com> <7vwsbdq6u4.fsf@gitster.siamese.dyndns.org> <76718490902261243gaebdd8an2bd75bf625556f7b@mail.gmail.com> <7vmyc8rhry.fsf@gitster.siamese.dyndns.org> <76718490902261419r314f6ea4r5eb02e9b5b0c40d0@mail.gmail.com> <7veixkrfif.fsf@gitster.siamese.dyndns.org> <76718490902261440p4c9981fbncbdd58ad12e38349@mail.gmail.com> <7v4oygrd3w.fsf@gitster.siamese.dyndns.org> <wRrDhWKagbvPUgIXKKh8JIhASl974j2rrgyuh-WEzRJFcXywywNupg@cipher.nrlssc.navy.mil> <alpine.DEB.1.00.0902270056270.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 27 01:09:46 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
+	Tay Ray Chuan <rctay89@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 27 01:14:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcqHt-00066H-SG
-	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 01:09:10 +0100
+	id 1LcqMu-0007va-HP
+	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 01:14:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755195AbZB0AHm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Feb 2009 19:07:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755029AbZB0AHm
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 19:07:42 -0500
-Received: from mail2.tradestation.com ([63.99.207.80]:54673 "EHLO
-	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754935AbZB0AHl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Feb 2009 19:07:41 -0500
-X-ASG-Debug-ID: 1235693259-100f00d00000-QuoKaX
-X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
-Received: from mail5.tradestation.com (localhost [127.0.0.1])
-	by mail2.tradestation.com (Spam Firewall) with ESMTP id 4058C1C7EDE
-	for <git@vger.kernel.org>; Thu, 26 Feb 2009 19:07:39 -0500 (EST)
-Received: from mail5.tradestation.com ([192.168.51.76]) by mail2.tradestation.com with ESMTP id 6A5fu6c4veop2A5V for <git@vger.kernel.org>; Thu, 26 Feb 2009 19:07:39 -0500 (EST)
-X-ASG-Whitelist: Client
-Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 26 Feb 2009 19:07:38 -0500
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-ASG-Orig-Subj: help with reflog
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: help with reflog
-thread-index: AcmYbzgAvsZPUdIcSa+1izEzHdZncw==
-X-OriginalArrivalTime: 27 Feb 2009 00:07:38.0821 (UTC) FILETIME=[66AD8750:01C9986F]
-X-Barracuda-Connect: UNKNOWN[192.168.51.76]
-X-Barracuda-Start-Time: 1235693259
-X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
+	id S1759682AbZB0AMg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Feb 2009 19:12:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759684AbZB0AMg
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Feb 2009 19:12:36 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:60429 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755489AbZB0AMf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Feb 2009 19:12:35 -0500
+Received: by mail.nrlssc.navy.mil id n1R0CQbi008311; Thu, 26 Feb 2009 18:12:27 -0600
+In-Reply-To: <alpine.DEB.1.00.0902270056270.10279@pacific.mpi-cbg.de>
+X-OriginalArrivalTime: 27 Feb 2009 00:12:26.0694 (UTC) FILETIME=[12437660:01C99870]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111619>
 
-My Log for 'HEAD' only has 14 entries.=A0 Shouldn't it go back for 90 d=
-ays?=A0 I see nothing in the 'config' file.
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Thu, 26 Feb 2009, Brandon Casey wrote:
+> 
+>>    sed -e 'script' input-file
+>>
+>> rather than
+>>
+>>    sed -e 'script' < input-file
+> 
+> What should make the former more preferable to the latter?
 
+It's less complex, but as you describe in the next paragraph, if the
+file name is not desired in the result then the latter is preferable.
+I initially viewed the latter form as a useless use of cat, equivalent
+to:
 
-TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ G=
-S: TRAD) of three operating subsidiaries, TradeStation Securities, Inc.=
- (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a=
- trading software and subscription company, and TradeStation Europe Lim=
-ited, a United Kingdom, FSA-authorized introducing brokerage firm. None=
- of these companies provides trading or investment advice, recommendati=
-ons or endorsements of any kind. The information transmitted is intende=
-d only for the person or entity to which it is addressed and may contai=
-n confidential and/or privileged material. Any review, retransmission, =
-dissemination or other use of, or taking of any action in reliance upon=
-, this information by persons or entities other than the intended recip=
-ient is prohibited. If you received this in error, please contact the s=
-ender and delete the material from any computer.
+   cat input-file | sed -e 'script'
+
+> Especially given that the latter way is preferable with other commands (at 
+> least as far as our test suite is concerned), such as grep, because you do 
+> not get the file name as part of the result?
+> 
+> And especially given that sed means _stream_ editor, not file editor?
+
+especially? Your first argument is valid, but this last sentence means nothing.
+
+-brandon
