@@ -1,61 +1,59 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Planet git USELESS
-Date: Fri, 27 Feb 2009 15:59:12 +0100
-Message-ID: <49A7FFC0.8000000@drmicha.warpmail.net>
-References: <20090227160259.6117@qkholland.gmail.com> <alpine.DEB.1.00.0902271132000.6600@intel-tinevez-2-302>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: git.exe diff-index --cached --raw HEAD can not show unmerged
+ file at    delete conflict case.
+Date: Fri, 27 Feb 2009 16:28:46 +0100
+Message-ID: <49A806AE.7010402@viscovery.net>
+References: <1976ea660902270653p3b144231h86b98244173d09@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Quim K Holland <qkholland@gmail.com>, gitster@pobox.com,
-	"gi[t] mailing list" <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Feb 27 16:00:53 2009
+Cc: git@vger.kernel.org
+To: Frank Li <lznuaa@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 27 16:30:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ld4Cp-0002vP-Cu
-	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 16:00:51 +0100
+	id 1Ld4fM-00071r-Qu
+	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 16:30:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754695AbZB0O7W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2009 09:59:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754550AbZB0O7W
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 09:59:22 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:37090 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754672AbZB0O7V (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Feb 2009 09:59:21 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id E90912A5618;
-	Fri, 27 Feb 2009 09:59:19 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Fri, 27 Feb 2009 09:59:19 -0500
-X-Sasl-enc: wKlZr5753MVDCqsj8dGv/rIhNYIz/wGijjXHndHR4ZZK 1235746759
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id F22153041C;
-	Fri, 27 Feb 2009 09:59:18 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090227 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <alpine.DEB.1.00.0902271132000.6600@intel-tinevez-2-302>
+	id S1755141AbZB0P2v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2009 10:28:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755224AbZB0P2u
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 10:28:50 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:58069 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754928AbZB0P2u (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2009 10:28:50 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Ld4dq-00065H-K5; Fri, 27 Feb 2009 16:28:46 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 505786C4; Fri, 27 Feb 2009 16:28:46 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <1976ea660902270653p3b144231h86b98244173d09@mail.gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111677>
 
-Johannes Schindelin venit, vidit, dixit 27.02.2009 11:33:
-> Hi,
+Frank Li schrieb:
+> $ git ls-files -u
+> 100644 658b87c67a68f0b17a835c66ab735e4bbcc5b3ab 1       rb1.txt
+> 100644 e776c70dbc6ea929021515cf4d45a207a2f56517  3       rb1.txt
 > 
-> On Fri, 27 Feb 2009, Quim K Holland wrote:
 > 
->> Hey, I looked at http://planetgit.org/ site and
-> 
-> Maybe you wanted to look at planetgi.org (judging from your To: header)?
+> but use git.exe diff-index  --cached --raw HEAD
+> show nothing.
 
-;)
+That's correct, AFAICS. You have a delete/modify conflict. You deleted
+rb1.txt locally, yet the branch that you merged in modified it.
 
-I think his Gi was not strong today, and he may be lacking some Fu in
-general. At least he's got plenty of CAPS...
+HEAD does not have the file, nor is it in the index in stage 0 nor stage 2
+("ours"). There is nothing to compare.
 
-Or is he asking the GIs to get after us?
-
-Michael
+-- Hannes
