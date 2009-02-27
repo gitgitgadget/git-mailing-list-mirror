@@ -1,135 +1,82 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFC] add test cases for the --repo option to git push
-Date: Fri, 27 Feb 2009 11:42:47 +0100
-Message-ID: <49A7C3A7.6060202@drmicha.warpmail.net>
-References: <76718490902210132w2577c093tf8c2a5e7da8bc0e8@mail.gmail.com> <1235497240-20677-1-git-send-email-git@drmicha.warpmail.net> <7vhc2iyy9y.fsf@gitster.siamese.dyndns.org> <49A66057.1050501@drmicha.warpmail.net> <7vfxi1t99u.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFH] rebase -i optimization
+Date: Fri, 27 Feb 2009 11:50:44 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902271146460.6600@intel-tinevez-2-302>
+References: <fabb9a1e0902260655g53fa1e1fg7e4aa76b0f3a80fc@mail.gmail.com>  <alpine.DEB.1.00.0902261557300.6258@intel-tinevez-2-302> <fabb9a1e0902260733k26e5c02i75a7866f9a67530b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 27 11:44:33 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stephen Haberman <stephen@exigencecorp.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Git Mailing List <git@vger.kernel.org>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 27 11:52:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ld0Cl-00059z-Ld
-	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 11:44:32 +0100
+	id 1Ld0Kp-0000PY-6H
+	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 11:52:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758148AbZB0KnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2009 05:43:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757062AbZB0KnA
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 05:43:00 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:47807 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756230AbZB0Km6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Feb 2009 05:42:58 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 948FE2A408C;
-	Fri, 27 Feb 2009 05:42:55 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Fri, 27 Feb 2009 05:42:55 -0500
-X-Sasl-enc: 6/1764Go2iGIG3uq/OzwV2bS85C53ou9o270SlsA2KFB 1235731375
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 8A5B04F265;
-	Fri, 27 Feb 2009 05:42:54 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090227 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <7vfxi1t99u.fsf@gitster.siamese.dyndns.org>
+	id S1760246AbZB0Kuv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2009 05:50:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760268AbZB0Kuu
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 05:50:50 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42305 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1760249AbZB0Kus (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2009 05:50:48 -0500
+Received: (qmail invoked by alias); 27 Feb 2009 10:50:45 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp006) with SMTP; 27 Feb 2009 11:50:45 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+hobpH6Hqh4RK/4FUOVWX03oFBTWI9wWNqvxlZP7
+	7q93R2WNilvC6z
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <fabb9a1e0902260733k26e5c02i75a7866f9a67530b@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111660>
 
-Junio C Hamano venit, vidit, dixit 26.02.2009 18:09:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
+Hi,
+
+On Thu, 26 Feb 2009, Sverre Rabbelier wrote:
+
+> On Thu, Feb 26, 2009 at 15:59, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > This code is supposed to do exactly what you want:
 > 
->> First of all: I define good/bad as matching the documentation.
-> 
-> Ok, I was primarily working from this:
-> 
-> commit bcc785f611dc6084be75999a3b6bafcc950e21d6
-> Author: Linus Torvalds <torvalds@osdl.org>
-> Date:   Mon Oct 30 08:28:59 2006 -0800
+> Hmmm, I can't say I understand it 100%, but what I can see from
+> reading the code and looking at the output of 'rebase -i -v' is that
+> it does a 'git reset --hard' on each commit if it was already applied,
+> instead of figuring out beforehand what to reset to? If that is the
+> case, it might still take a long time to do the rebase if it takes
+> long to do the 'reset --hard' between the patches (say, if a big
+> change is made).
 
+Right.
 
-[snip]
-> You will see that:
-> 
->  (1) bf07cc5 (i.e. J6t's documentation) passes your tests;
+I am of two minds here:
 
-Hmm, I don't see that, we must be doing something differently, see below.
+On one hand, I could imagine that it is just a question of skipping those 
+'pick' commands that do not contribute anything.  That would be a pretty 
+simple function that would be called at the very beginning.
 
->  (2) somewhere between that and v1.6.2-rc2, there is a regression to make
->      your test fail.
-> 
-> if the above conjecture is true, and we may want to fix that regression to
-> match the documentation.
-> 
-> On the other hand, if bf07cc5 does not pass your tests, it means that the
-> documentation update was the cause of the confusion, and it is not the
-> behaviour that needs to be fixed.
-> 
-> Sorry, but I do not have time today to look into this.  Could you help?
+On the other hand, this very simple strategy would fail pretty quickly 
+(and badly) with -i -p.  And that is the stuff I am mostly spending my Git 
+time budget on these days.
 
-I'll try and provide the necessary info below, but I think there is a
-decision to be made about the desired order of priorities for "repo
-argument", "repo option (--repo=)" and "tracking info config
-(branch.$branch.remote=)".
+Having said that, I think yours might be such a common case that it is 
+worth optimizing for.
 
-Current code: argument > option > track config > 'origin'
-Current doc: argument > track config > option > 'origin'
-
-I'd say the documented version is more natural, meaning --repo=$repo is
-fully equivalent to changing "origin" to "$repo".
-
-Now, here's if you want to know the details:
-
-When Linus introduced "--repo" there was no heeding of the tracking info
-at all:
-
-bcc785f (git push: add verbose flag and allow overriding of default
-target repository, 2006-10-30) Linus introduces --repo.
-
-5751f49 (Move remote parsing into a library file out of builtin-push.,
-2007-05-12) Daniel Barkalow introduces the use of branch.$branch.remote
-info for the repo if git push has no other repo arguments nor --repo
-options.
-
-378c483 (Use parseopts in builtin-push, 2007-11-04) Daniel switches
-git-push to parseopts, without changing the behaviour.
-
-bf07cc5 (git-push.txt: Describe --repo option in more detail,
-2008-10-07) J6t writes the current version of the doc.
-
-Using a trimmed down ./t5516-fetch-push.sh from my patch (and a copy of
-current test-lib), all 4 of them give the same results:
-
-*   ok 1: setup
-*   ok 2: push with --repo=repourl from non-tracking branch
-*   ok 3: push with --repo=remoterepo from non-tracking branch
-* FAIL 4: push with --repo=repo from tracking branch with bad config
-
-
-                mk_test heads/master &&
-                git config branch.master.remote origin &&
-                test_must_fail git push --repo=testrepo
-
-* FAIL 5: push with --repo=repo from tracking branch with good config
-
-
-                mk_test heads/master &&
-                git config branch.master.remote testrepo &&
-                git push --repo=origin &&
-                check_push_result $the_commit heads/master
-
-[testrepo exists, origin does not]
-
-Note that bcc785f was not even supposed to heed the value of
-branch.master.remote, so it's clear they fail 4&5. 2&3 only test whether
---repo is considered if there's no other info, so it's clear they pass
-(versions without bcc785f would fail).
-
-Cheers,
-Michael
+Ciao,
+Dscho
