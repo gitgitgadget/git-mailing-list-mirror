@@ -1,127 +1,186 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH 19/21] remote: make guess_remote_head() use exact HEAD lookup if it is available
-Date: Fri, 27 Feb 2009 14:10:06 -0500
-Message-ID: <710d1a0d6059e6dee31732c2762aed7e909daad7.1235759631.git.jaysoffian@gmail.com>
-References: <cover.1235759631.git.jaysoffian@gmail.com>
- <45e13cde37f6da8e6c379b5deea81b00148b4355.1235759631.git.jaysoffian@gmail.com>
- <9d146489b82f3f8108903dcb9acbe569a4b690a1.1235759631.git.jaysoffian@gmail.com>
+From: Boyd Lynn Gerber <gerberb@zenez.com>
+Subject: Re: git-1.6.2-rc2 problems on t4034-diff-words.sh
+Date: Fri, 27 Feb 2009 12:24:49 -0700
+Message-ID: <alpine.LNX.2.00.0902271216090.19082@suse104.zenez.com>
+References: <alpine.LNX.2.00.0902271103450.19082@suse104.zenez.com> <alpine.DEB.1.00.0902271936090.6600@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jay Soffian <jaysoffian@gmail.com>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 27 20:19:20 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Git List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 27 20:26:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ld8EY-000320-6I
-	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 20:18:54 +0100
+	id 1Ld8Ll-0005sJ-Td
+	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 20:26:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755807AbZB0TR1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2009 14:17:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755619AbZB0TR0
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 14:17:26 -0500
-Received: from qw-out-2122.google.com ([74.125.92.26]:49457 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754646AbZB0TRZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2009 14:17:25 -0500
-Received: by qw-out-2122.google.com with SMTP id 5so2095494qwi.37
-        for <git@vger.kernel.org>; Fri, 27 Feb 2009 11:17:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:in-reply-to:references
-         :references:mime-version:content-type:content-transfer-encoding;
-        bh=OsSNQVQRCeygLhUp74nSAHi+xSGECkXWANYjFEmPr7Y=;
-        b=dnWNA6g6tvrz169tjgkFdWkg7T8Iipqllhcm9oJuU0PGcsPyVWzYQ8XluVrnIQjJA3
-         hOzV1c1ysVX/FjTJkSUDZeIzFi40DmZH7E/M/hBkC42zk1EpYNWb2+Gly5zDO3FP6Kk8
-         AsIXIpdQlzzU/oXPSTFk5jxVDZeNbSVsZZbMM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=vVTOoRVqQ2e4it3bHpQyQQUa+Hf+nAUU6VLUxWxhF1uEuK9BBwDsWWPHc3ZiamQSFM
-         9Pb4Nn0eLeVpT/RqH8lhLi+eM8UMPfhndbuO1Pf/lOjsutg08xIXfIV1tj8zWs/ZAfX2
-         gbhp9Rs/QWId58jukmPjL+3xTvcYtK3R01eOc=
-Received: by 10.224.73.212 with SMTP id r20mr4614216qaj.318.1235761817414;
-        Fri, 27 Feb 2009 11:10:17 -0800 (PST)
-Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
-        by mx.google.com with ESMTPS id 6sm1720213qwd.13.2009.02.27.11.10.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 27 Feb 2009 11:10:16 -0800 (PST)
-X-Mailer: git-send-email 1.6.2.rc1.309.g5f417
-In-Reply-To: <9d146489b82f3f8108903dcb9acbe569a4b690a1.1235759631.git.jaysoffian@gmail.com>
-In-Reply-To: <cover.1235759631.git.jaysoffian@gmail.com>
-References: <cover.1235759631.git.jaysoffian@gmail.com>
-References: <cover.1235546707.git.jaysoffian@gmail.com>
+	id S1756207AbZB0TYy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2009 14:24:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755503AbZB0TYx
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 14:24:53 -0500
+Received: from suse104.zenez.com ([198.60.105.164]:49418 "EHLO
+	suse104.zenez.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753906AbZB0TYw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2009 14:24:52 -0500
+Received: by suse104.zenez.com (Postfix, from userid 1000)
+	id E81056C1A7A; Fri, 27 Feb 2009 12:24:49 -0700 (MST)
+Received: from localhost (localhost [127.0.0.1])
+	by suse104.zenez.com (Postfix) with ESMTP id D945A93817C;
+	Fri, 27 Feb 2009 12:24:49 -0700 (MST)
+In-Reply-To: <alpine.DEB.1.00.0902271936090.6600@intel-tinevez-2-302>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111699>
 
-From: Jeff King <peff@peff.net>
+Thanks for your assistence.  I try to test each version before release. 
+So I want to make sure no changes have broken things.
 
-Our usual method for determining the ref pointed to by HEAD
-is to compare HEAD's sha1 to the sha1 of all refs, trying to
-find a unique match.
+On Fri, 27 Feb 2009, Johannes Schindelin wrote:
+> On Fri, 27 Feb 2009, Boyd Lynn Gerber wrote:
+>> I just download and started to test this on SCO OpenServer 6.0.mp4
+>
+> Oh wow.  SCO...
 
-However, some transports actually get to look at HEAD
-directly; we should make use of that information when it is
-available.  Currently, only http remotes support this
-feature.
+Yes, I still have to support some SCO OS's.  I use git on all my OS's.  So 
+I want to make sure it works on all of them.
 
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
-This patch replaces 19/21 in the original series
-series - http://article.gmane.org/gmane.comp.version-control.git/111394
+> But as I did not forget your kind words, I'll try to help.
+>
+>> * FAIL 6: use regex supplied by driver
+>>
+>>
+>>                 word_diff --color-words
 
- remote.c              |    8 ++++++++
- t/t5550-http-fetch.sh |   11 +++++++++++
- 2 files changed, 19 insertions(+), 0 deletions(-)
+Does the test suite use bash as it's shell?  I seem to have to use bash 
+now to run the test.  I do not remember having to use bash on earlier 
+1.6.0
 
-diff --git a/remote.c b/remote.c
-index 2123005..9b8522d 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1476,6 +1476,14 @@ struct ref *guess_remote_head(const struct ref *head,
- 	if (!head)
- 		return NULL;
- 
-+	/*
-+	 * Some transports support directly peeking at
-+	 * where HEAD points; if that is the case, then
-+	 * we don't have to guess.
-+	 */
-+	if (head->symref)
-+		return copy_ref(find_ref_by_name(refs, head->symref));
-+
- 	/* If refs/heads/master could be right, it is. */
- 	if (!all) {
- 		r = find_ref_by_name(refs, "refs/heads/master");
-diff --git a/t/t5550-http-fetch.sh b/t/t5550-http-fetch.sh
-index b6e6ec9..05b1b62 100755
---- a/t/t5550-http-fetch.sh
-+++ b/t/t5550-http-fetch.sh
-@@ -42,5 +42,16 @@ test_expect_success 'fetch changes via http' '
- 	test_cmp file clone/file
- '
- 
-+test_expect_success 'http remote detects correct HEAD' '
-+	git push public master:other &&
-+	(cd clone &&
-+	 git remote set-head origin -d &&
-+	 git remote set-head origin -a &&
-+	 git symbolic-ref refs/remotes/origin/HEAD > output &&
-+	 echo refs/remotes/origin/master > expect &&
-+	 test_cmp expect output
-+	)
-+'
-+
- stop_httpd
- test_done
+> It might be a regex related issue.  Could you
+>
+> - run the test with -i -v (and if that does not help, "sh -x t...")?
+
+I have to use bash to run the test or I get
+
+$ ./t4034-diff-words.sh
+./t4034-diff-words.sh: syntax error at line 52: `(' unexpected
+
+But if I run
+
+$ bash ./t4034-diff-words.sh
+*   ok 1: setup
+*   ok 2: word diff with runs of whitespace
+*   ok 3: word diff with a regular expression
+*   ok 4: set a diff driver
+*   ok 5: option overrides .gitattributes
+* FAIL 6: use regex supplied by driver
+
+
+                 word_diff --color-words
+
+
+*   ok 7: set diff.wordRegex option
+*   ok 8: command-line overrides config
+* FAIL 9: .gitattributes override config
+
+                 word_diff --color-words
+
+*   ok 10: remove diff driver regex
+*   ok 11: use configured regex
+* FAIL 12: test parsing words for newline
+
+
+                 word_diff --color-words="a+"
+
+
+
+* FAIL 13: test when words are only removed at the end
+
+
+                 word_diff --color-words=.
+
+
+* failed 4 among 13 test(s)
+$ bash ./t4034-diff-words.sh -i -v
+Initialized empty Git repository in /tmp/git-1.6.2.rc2/t/trash 
+directory.t4034-diff-words/.git/
+* expecting success:
+
+         git config diff.color.old red
+         git config diff.color.new green
+
+
+*   ok 1: setup
+
+* expecting success:
+
+         word_diff --color-words
+
+
+*   ok 2: word diff with runs of whitespace
+
+* expecting success:
+
+         word_diff --color-words="[a-z]+"
+
+
+*   ok 3: word diff with a regular expression
+
+* expecting success:
+         git config diff.testdriver.wordRegex "[^[:space:]]" &&
+         cat <<EOF > .gitattributes
+pre diff=testdriver
+post diff=testdriver
+EOF
+
+*   ok 4: set a diff driver
+
+* expecting success:
+
+         word_diff --color-words="[a-z]+"
+
+
+*   ok 5: option overrides .gitattributes
+
+* expecting success:
+
+         word_diff --color-words
+
+
+Binary files expect and output.decrypted differ
+* FAIL 6: use regex supplied by driver
+
+
+                 word_diff --color-words
+
+
+
+
+Binary files expect and output.decrypted differ
+* FAIL 6: use regex supplied by driver
+
+
+                 word_diff --color-words
+
+>
+> - try with "make COMPAT_FLAGS=-Icompat/regex COMPAT_OBJS=compat/regex/regex.o"?
+
+$ gmake COMPAT_FLAGS=-Icompat/regex COMPAT_OBJS=compat/regex/regex.o
+     CC compat/regex/regex.o
+     AR libgit.a
+     LINK git-fast-import
+Undefined                       first referenced
+symbol                              in file
+git_fopen                           fast-import.o
+git_vsnprintf                       fast-import.o
+git_snprintf                        fast-import.o
+UX:ld: ERROR: Symbol referencing errors. No output written to 
+git-fast-import
+gmake: *** [git-fast-import] Error 1
+
 -- 
-1.6.2.rc1.309.g5f417
+Boyd Gerber <gerberb@zenez.com> 801 849-0213
+ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
