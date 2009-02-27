@@ -1,82 +1,118 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFH] rebase -i optimization
-Date: Fri, 27 Feb 2009 11:50:44 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902271146460.6600@intel-tinevez-2-302>
-References: <fabb9a1e0902260655g53fa1e1fg7e4aa76b0f3a80fc@mail.gmail.com>  <alpine.DEB.1.00.0902261557300.6258@intel-tinevez-2-302> <fabb9a1e0902260733k26e5c02i75a7866f9a67530b@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Problems rebasing branch after renaming files
+Date: Fri, 27 Feb 2009 02:55:31 -0800 (PST)
+Message-ID: <m3hc2gup2n.fsf@localhost.localdomain>
+References: <c64207c00902270055q57442e2dmd81c197419dda71a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Stephen Haberman <stephen@exigencecorp.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Git Mailing List <git@vger.kernel.org>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 27 11:52:58 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Salvatore Iovene <salvatore.iovene@googlemail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 27 11:57:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ld0Kp-0000PY-6H
-	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 11:52:51 +0100
+	id 1Ld0Ov-0001vb-1B
+	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 11:57:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760246AbZB0Kuv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2009 05:50:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760268AbZB0Kuu
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 05:50:50 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42305 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760249AbZB0Kus (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2009 05:50:48 -0500
-Received: (qmail invoked by alias); 27 Feb 2009 10:50:45 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp006) with SMTP; 27 Feb 2009 11:50:45 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+hobpH6Hqh4RK/4FUOVWX03oFBTWI9wWNqvxlZP7
-	7q93R2WNilvC6z
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <fabb9a1e0902260733k26e5c02i75a7866f9a67530b@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.62
+	id S1755898AbZB0Kzg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2009 05:55:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755368AbZB0Kzf
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 05:55:35 -0500
+Received: from mail-fx0-f176.google.com ([209.85.220.176]:65400 "EHLO
+	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753660AbZB0Kze (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2009 05:55:34 -0500
+Received: by fxm24 with SMTP id 24so982731fxm.37
+        for <git@vger.kernel.org>; Fri, 27 Feb 2009 02:55:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=agJWxgxPtp35q6B+Pin4WrBZaeGrzo8feJD0/lrZMHc=;
+        b=NOo7szMvloBadCXXO23HRaapVzaCjCgKoQuTS8yD4NPbp3ZpEZcsbBbfk4n5cO8oGd
+         IebXmPXb8+yLPiZRqGmSoXy9C3tHjOOIe+CLJ15dlyUyMfrxKjJPHi/vjbGOu19+xX1A
+         hhIX/tL5vT2gxUArfPhCBkVvD7Pdy0+JEYeLs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=eDbRo6/VKDzCY41zV06k2AGnex1cso59qxuN+PZXq2m8NgB72axjaZ6J36baPw01/x
+         0IkH2zJtY0k/2r11BFIaRtWsHgdU3BfKmo/qB3qgo9+VQKFEeyxkUxIDKYiGWMSO3Ume
+         1Ynet7JO3U7Bt6s0JyIqIPZN+heFyCy/zPvjk=
+Received: by 10.103.213.19 with SMTP id p19mr1242434muq.9.1235732131555;
+        Fri, 27 Feb 2009 02:55:31 -0800 (PST)
+Received: from localhost.localdomain (abvt245.neoplus.adsl.tpnet.pl [83.8.217.245])
+        by mx.google.com with ESMTPS id s10sm698096mue.16.2009.02.27.02.55.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 27 Feb 2009 02:55:31 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n1RAtGgO014992;
+	Fri, 27 Feb 2009 11:55:19 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n1RAtD5l014989;
+	Fri, 27 Feb 2009 11:55:13 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <c64207c00902270055q57442e2dmd81c197419dda71a@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111661>
 
-Hi,
+Salvatore Iovene <salvatore.iovene@googlemail.com> writes:
 
-On Thu, 26 Feb 2009, Sverre Rabbelier wrote:
+> Hi list,
+> I ran into a problem, and I'm unsure it's a git bug or a misuse of mine.
 
-> On Thu, Feb 26, 2009 at 15:59, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > This code is supposed to do exactly what you want:
+[...]
+> 3) Create branch B and work on it. In this branch, rename a directory
+> containing source files with git-mv
+> 4) Merge B to master
+> 5) Rebase A to master
+
+[...]
+> I found that, checking out A, my files in the now renamed directories
+> are as the were in B, i.e. not including the changes made in A,
+> because I have rebased A to master and git didn't realize that the
+> files in old_directory_name are the same as in new_directory_name so
+> they should have been merged.
 > 
-> Hmmm, I can't say I understand it 100%, but what I can see from
-> reading the code and looking at the output of 'rebase -i -v' is that
-> it does a 'git reset --hard' on each commit if it was already applied,
-> instead of figuring out beforehand what to reset to? If that is the
-> case, it might still take a long time to do the rebase if it takes
-> long to do the 'reset --hard' between the patches (say, if a big
-> change is made).
+> Either this is a git bug or not, can anyone suggest a way to fix this?
+> All I've thought so far is to git-format-patch the patches that I had
+> in A, use sed to replace the old_directory_name with the new one,
+> create a new branch called A2 at master's head, apply the patches
+> there and git-branch -D A.
 
-Right.
+In short: you have rename in mainline, and want to rebase branch from
+before rename.
 
-I am of two minds here:
+This problem is not bug in git, it is rather limitation of default
+patch based rebase. The git-format-patch | git-am pipeline is fast,
+but it cannot deal with renames in mainline. You have to use
+merge-based rebase, i.e. use
 
-On one hand, I could imagine that it is just a question of skipping those 
-'pick' commands that do not contribute anything.  That would be a pretty 
-simple function that would be called at the very beginning.
+  $ git rebase --merge <upstream>
 
-On the other hand, this very simple strategy would fail pretty quickly 
-(and badly) with -i -p.  And that is the stuff I am mostly spending my Git 
-time budget on these days.
+>From git-rebase(1):
 
-Having said that, I think yours might be such a common case that it is 
-worth optimizing for.
+  -m, --merge
+    Use merging strategies to rebase. When the recursive (default) merge
+    strategy is used, this allows rebase to be aware of renames  on  the
+    upstream side.
 
-Ciao,
-Dscho
+  -s <strategy>, --strategy=<strategy>
+    Use  the  given  merge  strategy;  can be supplied more than once to
+    specify them in the order they should be tried. If there  is  no  -s
+    option, a built-in list of strategies is used instead
+    (git-merge-recursive when merging a single head, git-merge-octopus
+    otherwise). This implies --merge.
+
+Or use "git rebase --interactive".
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
