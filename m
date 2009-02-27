@@ -1,152 +1,71 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] bisect: fix quoting TRIED revs when "bad" commit is also "skip"ped
-Date: Fri, 27 Feb 2009 22:05:10 +0100
-Message-ID: <200902272205.10501.chriscool@tuxfamily.org>
-References: <20090226082918.6adbc565.chriscool@tuxfamily.org> <200902270730.56998.chriscool@tuxfamily.org> <7v3ae0mfob.fsf@gitster.siamese.dyndns.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [RFC] add test cases for the --repo option to git push
+Date: Fri, 27 Feb 2009 16:21:47 -0500
+Message-ID: <76718490902271321i7f6c2b01g8ded98b7ab39f549@mail.gmail.com>
+References: <76718490902210132w2577c093tf8c2a5e7da8bc0e8@mail.gmail.com>
+	 <1235497240-20677-1-git-send-email-git@drmicha.warpmail.net>
+	 <7vhc2iyy9y.fsf@gitster.siamese.dyndns.org>
+	 <49A66057.1050501@drmicha.warpmail.net>
+	 <7vfxi1t99u.fsf@gitster.siamese.dyndns.org>
+	 <49A7C3A7.6060202@drmicha.warpmail.net>
+	 <76718490902271248p2de44082ka66645203c9683d4@mail.gmail.com>
+	 <alpine.LFD.2.00.0902271255530.3111@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 27 22:07:37 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Feb 27 22:23:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ld9vi-0004TV-Gb
-	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 22:07:34 +0100
+	id 1LdAAx-0002Vd-Je
+	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 22:23:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755159AbZB0VGI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Feb 2009 16:06:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751807AbZB0VGG
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 16:06:06 -0500
-Received: from smtp4-g21.free.fr ([212.27.42.4]:34028 "EHLO smtp4-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753873AbZB0VGE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Feb 2009 16:06:04 -0500
-Received: from smtp4-g21.free.fr (localhost [127.0.0.1])
-	by smtp4-g21.free.fr (Postfix) with ESMTP id 7FF1C4C810D;
-	Fri, 27 Feb 2009 22:05:55 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp4-g21.free.fr (Postfix) with ESMTP id 5F9794C8097;
-	Fri, 27 Feb 2009 22:05:53 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <7v3ae0mfob.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1757720AbZB0VVu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2009 16:21:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757620AbZB0VVt
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 16:21:49 -0500
+Received: from rv-out-0506.google.com ([209.85.198.238]:45689 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757364AbZB0VVt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2009 16:21:49 -0500
+Received: by rv-out-0506.google.com with SMTP id g37so1271287rvb.1
+        for <git@vger.kernel.org>; Fri, 27 Feb 2009 13:21:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=HdTpMRrAriWW5X4lmcj5TvYrJrmUAGEKXsZL4BhTEj0=;
+        b=pllnlMa3eBrcavxXiwCSf7jnhcBZj8dywukyhhAFkNWeEH+RORk5xzJ9kg3uw5qqP0
+         IIBcmfVk49/Q3pSiHE/NuMJ+CECqGKtdTiB+/+LzFvQgxJuWElMBlZqKxcKR3fZ6ut2g
+         j6pT6Wz0kuG5rWWyMNropzML3ntlYUaZuCRmI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=yFmO3doHTf7zp43eF/ZBX1PMO4pGBHCHuxRJ6LWQu+lUQW4BsRhLj6zW6g8ivzHwbw
+         5l3MlOn/mzv4EEj/2lItz+sxtB1vRlVkGGw/374DoXpitA8W9RYib/fcX0CrUsAtqTkG
+         cr4cpCGDklUPX1gLe+pOGLVeFdwmiOvlg73YA=
+Received: by 10.141.84.21 with SMTP id m21mr1391602rvl.118.1235769707194; Fri, 
+	27 Feb 2009 13:21:47 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.00.0902271255530.3111@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111719>
 
-Le vendredi 27 f=E9vrier 2009, Junio C Hamano a =E9crit :
-> Christian Couder <chriscool@tuxfamily.org> writes:
-> >> This makes me suspect that we are forgetting
-> >> to check return status after we eval the output from filter_skippe=
-d
-> >> function. Shouldn't the function should string its commands togeth=
-er
-> >> with "&&" to protect it from a breakage like this?
-> >
-> > Right, that would be an improvement. I put it in another patch thou=
-gh,
-> > because it is not really needed to fix a breakage.
+On Fri, Feb 27, 2009 at 4:00 PM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+> So _today_, we could remove the use of "--repo". But today, we have
+> another reason to do "--repo" - compatibility.
 
-Here I wanted to say that I think it fixes a separate breakage or anoth=
-er=20
-kind of breakage rather than not a breakage. Sorry.
+I was not suggesting removing --repo. I just didn't understand why it existed.
 
-> Sorry, but I have to disagree.
->
-> Look at the caller of filter_skipped in bisect_next():
->
-> 	eval=3D"git rev-list --bisect-vars $BISECT_OPT $good $bad --" &&
-> 	eval=3D"$eval $(cat "$GIT_DIR/BISECT_NAMES")" &&
-> 	eval=3D$(filter_skipped "$eval" "$skip") &&
-> 	eval "$eval" || exit
->
-> 	if [ -z "$bisect_rev" ]; then
-> 		echo "$bad was both good and bad"
-> 		exit 1
-> 	fi
->
-> The eval "$eval" in the middle, if failed properly upon seeing the qu=
-ote
-> bug, would have exited there, because "|| exit" there is all about
-> catching a broken eval string.  It was not effective.
+Thanks for the clarification.
 
-Yes, but before I introduced filter_skipped there was:
-
-	eval=3D"git rev-list --bisect-vars $good $bad --" &&
-        eval=3D"$eval $(cat "$GIT_DIR/BISECT_NAMES")" &&
-	eval=3D$(eval "$eval") &&
-        eval "$eval" || exit
-
-so the output of "git rev-list --bisect-vars ..." was evaled, and this=20
-output is something like that:
-
-$ git rev-list --bisect-vars HEAD ^HEAD~3
-bisect_rev=3Dc24505030fad7cc2872e0a0fd0f44e05571a0ad8
-bisect_nr=3D1
-bisect_good=3D0
-bisect_bad=3D1
-bisect_all=3D3
-
-where there is no "&&" at the end of the commands to string them togeth=
-er.
-So this breakage already existed before I introduced "filter_skipped".
-
-> You were lucky in this case that bisect_rev happens to be empty becau=
-se
-> the bug happened to be at the place where bisect_rev was assigned to.=
-=20
-> But with a random other breakage in the filter_skipped, you would not
-> have been so lucky.
-
-Yeah, I should have improved on the existing design instead of blindly=20
-following it. I hope I won't get sued for that ;-)
-
-> I think it is an integral part of the bugfix to string the commands
-> filter_skipped outputs with &&, so that an error while executing an
-> earlier command in the output sequence is not masked by execution of
-> other commands in the output.
-
-So you should perhaps squash the following hunk to the patch:
-
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 08e31d6..980d73c 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -284,7 +284,13 @@ filter_skipped() {
-        _skip=3D"$2"
-
-        if [ -z "$_skip" ]; then
--               eval "$_eval"
-+               eval "$_eval" | {
-+                       while read line
-+                       do
-+                               echo "$line &&"
-+                       done
-+                       echo ':'
-+               }
-                return
-        fi
-
-as this will string the commands together when there are no skipped com=
-mits=20
-too.
-
-> Here is what I am thinking about queueing for 1.6.2; it may be necess=
-ary
-> to apply it to 1.6.1.X (or 1.6.0.X) and merge the fix upwards.
-
-It looks good to me. But frankly I feel always strange when a patch lik=
-e=20
-this one, where you did most of the code change, get attributed to me. =
-I=20
-would have prefered that you added a patch attributed to you on top of =
-mine=20
-if possible.
-
-Best regards,
-Christian.
+j.
