@@ -1,163 +1,94 @@
-From: demerphq <demerphq@gmail.com>
-Subject: Re: Checking for a valid email address
-Date: Fri, 27 Feb 2009 10:25:12 +0100
-Message-ID: <9b18b3110902270125p76ac118ckd21cb2d427940db2@mail.gmail.com>
-References: <799406d60902261928q2c691112yf24d01b92a3dad6c@mail.gmail.com>
-	 <9b18b3110902270120t15babbc0oe2975c086297e1e0@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: FEATURE suggestion git commit --amend <ref>
+Date: Fri, 27 Feb 2009 10:55:57 +0100
+Message-ID: <DE8E2AF9-9BE6-4FB9-84EF-650EDAA9881B@wincent.com>
+References: <81bfc67a0902262345i63386076rbcf6d71ed88c29ac@mail.gmail.com> <fabb9a1e0902270037s3355e8e3m1533f86fd3ce2e8f@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?R0lU77u/77u/77u/77u/?= <git@vger.kernel.org>
-To: Adam Mercer <ramercer@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 27 10:27:04 2009
+Cc: Caleb Cushing <xenoterracide@gmail.com>, git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 27 10:57:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LcyzZ-0002Ea-LZ
-	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 10:26:50 +0100
+	id 1LczTN-0004mC-Dy
+	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 10:57:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754756AbZB0JZT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Feb 2009 04:25:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754334AbZB0JZR
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 04:25:17 -0500
-Received: from an-out-0708.google.com ([209.85.132.242]:12646 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753657AbZB0JZP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Feb 2009 04:25:15 -0500
-Received: by an-out-0708.google.com with SMTP id c2so790585anc.1
-        for <git@vger.kernel.org>; Fri, 27 Feb 2009 01:25:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=sY6qUF5Ln9bD2VYbT7WEoVhPKUE1EbTXZ6JdsFAbZKc=;
-        b=w/teuVqZgxUfL90cufR5wlhh5OEFplvG5h4Bz5fCb2tB9FonKL/tJC/BFMZC1Pz2Dw
-         PbKLm7L2GPZHAyxjsFXzshaRiQT/1nhoOyVLNH+SZQBYZoBUw7DQdwVQ/++YDuxrVfXK
-         9W+yHR2ZlMKTZgSYokfbv8x2B2qi4jY6aw3V4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=xdFSJl5YYtVnwqoTl8+MpHHe9ehZxaN1DQj4JSKQm6+fomTLWvcf0P1kCbD04dAPno
-         J0Irnj4Le8FDbyQvgRK+y+/NtkFh+/qwwpX8PwKnuBfWgQyh/HKSYPG+dKkbZ3QdTbLH
-         ePblyGtBhl2JSqjlE+fpHovbWBKWpz6NIaF0w=
-Received: by 10.231.32.70 with SMTP id b6mr2260371ibd.52.1235726712360; Fri, 
-	27 Feb 2009 01:25:12 -0800 (PST)
-In-Reply-To: <9b18b3110902270120t15babbc0oe2975c086297e1e0@mail.gmail.com>
+	id S1754885AbZB0J4I convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Feb 2009 04:56:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754858AbZB0J4I
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 04:56:08 -0500
+Received: from wincent1.inetu.net ([209.235.192.161]:40367 "EHLO
+	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753573AbZB0J4G convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Feb 2009 04:56:06 -0500
+Received: from cuzco.lan (139.pool85-53-16.dynamic.orange.es [85.53.16.139])
+	(authenticated bits=0)
+	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id n1R9tw70008131
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Fri, 27 Feb 2009 04:56:00 -0500
+In-Reply-To: <fabb9a1e0902270037s3355e8e3m1533f86fd3ce2e8f@mail.gmail.com>
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111654>
 
-2009/2/27 demerphq <demerphq@gmail.com>:
-> 2009/2/27 Adam Mercer <ramercer@gmail.com>:
->> Hi
->>
->> We are in the process of migrating some of our repositories from CVS
->> to Git in a two step process, first to a centralised Git setup then
->> (hopefully) onto a more distributed development model. In the testin=
-g
->> we have been doing so far the only problem we have run into is
->> developers not setting their email addresses correctly so the
->> changelogs are filled with spurious address. Does anyone know of a
->> pre-commit hook that could check for a valid email address prior to
->> allowing a commit? Or another way that this can be acheived?
->
-> If you are using Perl 5.10 or later then you can use the following re=
-gex:
->
-> my $email =3D qr {
-> =A0 =A0(?(DEFINE)
-> =A0 =A0 =A0(?<address> =A0 =A0 =A0 =A0 (?&mailbox) | (?&group))
-> =A0 =A0 =A0(?<mailbox> =A0 =A0 =A0 =A0 (?&name_addr) | (?&addr_spec))
-> =A0 =A0 =A0(?<name_addr> =A0 =A0 =A0 (?&display_name)? (?&angle_addr)=
-)
-> =A0 =A0 =A0(?<angle_addr> =A0 =A0 =A0(?&CFWS)? < (?&addr_spec) > (?&C=
-=46WS)?)
-> =A0 =A0 =A0(?<group> =A0 =A0 =A0 =A0 =A0 (?&display_name) : (?:(?&mai=
-lbox_list) | (?&CFWS))? ;
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
- =A0 =A0 =A0 =A0 (?&CFWS)?)
-> =A0 =A0 =A0(?<display_name> =A0 =A0(?&phrase))
-> =A0 =A0 =A0(?<mailbox_list> =A0 =A0(?&mailbox) (?: , (?&mailbox))*)
->
-> =A0 =A0 =A0(?<addr_spec> =A0 =A0 =A0 (?&local_part) \@ (?&domain))
-> =A0 =A0 =A0(?<local_part> =A0 =A0 =A0(?&dot_atom) | (?&quoted_string)=
-)
-> =A0 =A0 =A0(?<domain> =A0 =A0 =A0 =A0 =A0(?&dot_atom) | (?&domain_lit=
-eral))
-> =A0 =A0 =A0(?<domain_literal> =A0(?&CFWS)? \[ (?: (?&FWS)? (?&dconten=
-t))* (?&FWS)?
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
-\] (?&CFWS)?)
-> =A0 =A0 =A0(?<dcontent> =A0 =A0 =A0 =A0(?&dtext) | (?&quoted_pair))
-> =A0 =A0 =A0(?<dtext> =A0 =A0 =A0 =A0 =A0 (?&NO_WS_CTL) | [\x21-\x5a\x=
-5e-\x7e])
->
-> =A0 =A0 =A0(?<atext> =A0 =A0 =A0 =A0 =A0 (?&ALPHA) | (?&DIGIT) | [!#\=
-$%&'*+-/=3D?^_`{|}~])
-> =A0 =A0 =A0(?<atom> =A0 =A0 =A0 =A0 =A0 =A0(?&CFWS)? (?&atext)+ (?&CF=
-WS)?)
-> =A0 =A0 =A0(?<dot_atom> =A0 =A0 =A0 =A0(?&CFWS)? (?&dot_atom_text) (?=
-&CFWS)?)
-> =A0 =A0 =A0(?<dot_atom_text> =A0 (?&atext)+ (?: \. (?&atext)+)*)
->
-> =A0 =A0 =A0(?<text> =A0 =A0 =A0 =A0 =A0 =A0[\x01-\x09\x0b\x0c\x0e-\x7=
-f])
-> =A0 =A0 =A0(?<quoted_pair> =A0 =A0 \\ (?&text))
->
-> =A0 =A0 =A0(?<qtext> =A0 =A0 =A0 =A0 =A0 (?&NO_WS_CTL) | [\x21\x23-\x=
-5b\x5d-\x7e])
-> =A0 =A0 =A0(?<qcontent> =A0 =A0 =A0 =A0(?&qtext) | (?&quoted_pair))
-> =A0 =A0 =A0(?<quoted_string> =A0 (?&CFWS)? (?&DQUOTE) (?:(?&FWS)? (?&=
-qcontent))*
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 (?&FWS)? (?&DQUOT=
-E) (?&CFWS)?)
->
-> =A0 =A0 =A0(?<word> =A0 =A0 =A0 =A0 =A0 =A0(?&atom) | (?&quoted_strin=
-g))
-> =A0 =A0 =A0(?<phrase> =A0 =A0 =A0 =A0 =A0(?&word)+)
->
-> =A0 =A0 =A0# Folding white space
-> =A0 =A0 =A0(?<FWS> =A0 =A0 =A0 =A0 =A0 =A0 (?: (?&WSP)* (?&CRLF))? (?=
-&WSP)+)
-> =A0 =A0 =A0(?<ctext> =A0 =A0 =A0 =A0 =A0 (?&NO_WS_CTL) | [\x21-\x27\x=
-2a-\x5b\x5d-\x7e])
-> =A0 =A0 =A0(?<ccontent> =A0 =A0 =A0 =A0(?&ctext) | (?&quoted_pair) | =
-(?&comment))
-> =A0 =A0 =A0(?<comment> =A0 =A0 =A0 =A0 \( (?: (?&FWS)? (?&ccontent))*=
- (?&FWS)? \) )
-> =A0 =A0 =A0(?<CFWS> =A0 =A0 =A0 =A0 =A0 =A0(?: (?&FWS)? (?&comment))*
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0(?: (?:(?&FWS)? (?=
-&comment)) | (?&FWS)))
->
-> =A0 =A0 =A0# No whitespace control
-> =A0 =A0 =A0(?<NO_WS_CTL> =A0 =A0 =A0 [\x01-\x08\x0b\x0c\x0e-\x1f\x7f]=
-)
->
-> =A0 =A0 =A0(?<ALPHA> =A0 =A0 =A0 =A0 =A0 [A-Za-z])
-> =A0 =A0 =A0(?<DIGIT> =A0 =A0 =A0 =A0 =A0 [0-9])
-> =A0 =A0 =A0(?<CRLF> =A0 =A0 =A0 =A0 =A0 =A0\x0d \x0a)
-> =A0 =A0 =A0(?<DQUOTE> =A0 =A0 =A0 =A0 =A0")
-> =A0 =A0 =A0(?<WSP> =A0 =A0 =A0 =A0 =A0 =A0 [\x20\x09])
-> =A0 =A0)
->
-> =A0 =A0(?&address)
-> }x;
->
-> which is a fully RFC compliant perl regex for validating any email ad=
-dress.
+El 27/2/2009, a las 9:37, Sverre Rabbelier escribi=F3:
 
-Er, i meant validating whether any email address is well formed of cour=
-se.
+> Heya,
+>
+> On Fri, Feb 27, 2009 at 08:45, Caleb Cushing =20
+> <xenoterracide@gmail.com> wrote:
+>> git rebase -i seems a little more tedious/unfriendly than I'd like i=
+f
+>> all I want to do is edit HEAD~2 (assuming no merges) it's a bit of a
+>> pain to do a rebase -i and then pick which patches to edit. might be
+>> nice to be able to do stuff like git commit --amend <ref> and have
+>> that call rebase  (as I think not rebasing is impossible?) with edit
+>> only on the ref I picked.
+>
+> Ah, yes, I would like this feature as well. But this could probably b=
+e
+> solved with a custom editor script that does a simple sed 's/pick
+> $TARGET/edit $TARGET/'?
+
+I'm not sure if this proposed feature would actually be very convenient=
+=2E
+
+Think about the way "git commit --amend" currently works: it just =20
+takes the current index and uses it to create a new commit, replacing =20
+the current HEAD commit, and of course gives the user the opportunity =20
+to edit the commit message.
+
+If you want to "git commit --amend HEAD~2" then how will you prepare =20
+your index in a convenient fashion?
+
+The way "rebase -i" works is to actually stop on the "edit" commit so =20
+that you have an opportunity to tweak things in the index (or even =20
+create a _series_ of new commits). But giving the user a chance to =20
+edit _after_ doing "git commit --amend HEAD~2" would be a little =20
+surprising seeing as "git commit" generally means "create a commit =20
+object right now". And the user would then have to indicate that he/=20
+she was ready to go ahead and actually create the commit; and so you'd =
+=20
+need an ugly "git commit --continue" or similar to indicate that =20
+you're done tweaking.
+
+Alternatively, you could say you don't care about the index and you =20
+only want to edit the commit message. Then you'd be breaking with the =20
+existing semantics of "git commit --amend" which _does_ pay attention =20
+to the state of the index.
+
+Basically, I think that the easiest workflow for doing what you want =20
+to do is actually just to use "git rebase -i". And if you have a very =20
+specific special-case workflow that you want to automate then you =20
+could indeed make a custom editor script, but it would have such a =20
+narrow, specialized use that I'd question the value of it.
 
 Cheers,
-yves
-
-
-
---=20
-perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
+Wincent
