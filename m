@@ -1,71 +1,67 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: [PATCH] git-p4: remove tabs from usermap file
-Date: Fri, 27 Feb 2009 10:53:59 -0800
-Message-ID: <20090227185359.GA18102@padd.com>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: [PATCH v2] bash completion: add --format= and --oneline options for "git log"
+Date: Fri, 27 Feb 2009 20:53:58 +0200
+Message-ID: <87y6vrvhh5.fsf@iki.fi>
+References: <94a0d4530902221014i46e52542j2380386405b559e2@mail.gmail.com>
+	<7vbpsuxqpo.fsf@gitster.siamese.dyndns.org>
+	<94a0d4530902221055g4e815a78oc0aa094304588ab7@mail.gmail.com>
+	<7vljrxveqa.fsf@gitster.siamese.dyndns.org>
+	<94a0d4530902231656l71ee0e45nbdd1c20035d3dd4@mail.gmail.com>
+	<94a0d4530902231703n701a17dbkd20c0e14d759dddf@mail.gmail.com>
+	<7v3ae4r53f.fsf@gitster.siamese.dyndns.org>
+	<20090224130626.6117@nanako3.lavabit.com>
+	<20090224045041.GA4615@coredump.intra.peff.net>
+	<7vprh8mm9k.fsf@gitster.siamese.dyndns.org>
+	<20090224054524.GE4615@coredump.intra.peff.net>
+	<20090224185913.6117@nanako3.lavabit.com> <871vtonlmv.fsf_-_@iki.fi>
+	<87zlgcq7rq.fsf_-_@iki.fi>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Simon Hausmann <simon@lst.de>
-X-From: git-owner@vger.kernel.org Fri Feb 27 19:55:07 2009
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 27 19:55:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ld7rL-0002Ck-8R
-	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 19:54:55 +0100
+	id 1Ld7s6-0002UP-2l
+	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 19:55:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755673AbZB0Sx1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2009 13:53:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754942AbZB0Sx1
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 13:53:27 -0500
-Received: from marge.padd.com ([99.188.165.110]:43450 "EHLO marge.padd.com"
+	id S1756089AbZB0SyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2009 13:54:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756003AbZB0SyN
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 13:54:13 -0500
+Received: from mta-out.inet.fi ([195.156.147.13]:40610 "EHLO jenni2.inet.fi"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754867AbZB0Sx0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2009 13:53:26 -0500
-Received: from honk.padd.com (honk.padd.com [209.17.171.228])
-	by marge.padd.com (Postfix) with ESMTPSA id DDE1310F81CA;
-	Fri, 27 Feb 2009 10:53:24 -0800 (PST)
-Received: by honk.padd.com (Postfix, from userid 7770)
-	id 1E9AF1C400B7; Fri, 27 Feb 2009 10:53:59 -0800 (PST)
-Content-Disposition: inline
+	id S1755766AbZB0SyM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2009 13:54:12 -0500
+Received: from mithlond.arda.local (80.220.180.181) by jenni2.inet.fi (8.5.014)
+        id 48FC5A8805A0E902; Fri, 27 Feb 2009 20:54:06 +0200
+Received: from dtw by mithlond.arda.local with local (Exim 4.69)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1Ld7qQ-0002Mt-Ui; Fri, 27 Feb 2009 20:53:58 +0200
+In-Reply-To: <87zlgcq7rq.fsf_-_@iki.fi> (Teemu Likonen's message of "Tue\, 24 Feb 2009 15\:33\:29 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111694>
 
-Some users have tabs in their names, oddly enough.  This
-causes problems when loading the usercache from disk,
-as split separates the fields on the wrong tabs.  When
-fast-import's parse_ident() tries to parse the committer
-field, it is unhappy about the unbalanced <..> angle brackets.
+On 2009-02-24 15:33 (+0200), Teemu Likonen wrote:
 
-It is easy enough to convert the tabs to single spaces.
+> We also add --format= completion for "git show".
+>
+> Signed-off-by: Teemu Likonen <tlikonen@iki.fi>
+> ---
 
-Signed-off-by: Pete Wyckoff <pw@padd.com>
----
-Here's another random little fix.  We have a user
-Firstname\tLastname who checked something in recently and
-broke my git-p4 conversion.
+>  contrib/completion/git-completion.bash |   14 ++++++++++++--
+>  1 files changed, 12 insertions(+), 2 deletions(-)
 
-I need to send the other acked patch to Junio; will wait
-and give him two if you ack this one.
+ns/pretty-format topic got merged to "next" (e7a7e8a) but my bash
+completion patch didn't go there. Is there a specific reason for that?
+The patch was acked by Shawn.
 
- contrib/fast-import/git-p4 |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+The thread is here:
 
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index 3832f60..342529d 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -1142,7 +1142,7 @@ class P4Sync(Command):
- 
-         s = ''
-         for (key, val) in self.users.items():
--            s += "%s\t%s\n" % (key, val)
-+	    s += "%s\t%s\n" % (key.expandtabs(1), val.expandtabs(1))
- 
-         open(self.getUserCacheFilename(), "wb").write(s)
-         self.userMapFromPerforceServer = True
--- 
-1.6.0.6
+http://thread.gmane.org/gmane.comp.version-control.git/110962/focus=111286
