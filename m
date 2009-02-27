@@ -1,84 +1,85 @@
-From: Boyd Lynn Gerber <gerberb@zenez.com>
-Subject: Re: git-1.6.2-rc2 problems on t4034-diff-words.sh
-Date: Fri, 27 Feb 2009 13:49:10 -0700
-Message-ID: <alpine.LNX.2.00.0902271348360.19082@suse104.zenez.com>
-References: <alpine.LNX.2.00.0902271103450.19082@suse104.zenez.com> <alpine.DEB.1.00.0902271936090.6600@intel-tinevez-2-302> <alpine.LNX.2.00.0902271216090.19082@suse104.zenez.com> <7vwsbbir1j.fsf@gitster.siamese.dyndns.org>
- <alpine.LNX.2.00.0902271341440.19082@suse104.zenez.com>
+From: Simon Hausmann <simon@lst.de>
+Subject: Re: [PATCH] git-p4: remove tabs from usermap file
+Date: Fri, 27 Feb 2009 21:50:54 +0100
+Message-ID: <200902272150.55132.simon@lst.de>
+References: <20090227185359.GA18102@padd.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 27 21:50:43 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Fri Feb 27 21:52:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ld9fP-00068b-1C
-	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 21:50:43 +0100
+	id 1Ld9hF-0006ob-AP
+	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 21:52:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755811AbZB0UtP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2009 15:49:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755858AbZB0UtN
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 15:49:13 -0500
-Received: from suse104.zenez.com ([198.60.105.164]:39824 "EHLO
-	suse104.zenez.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755498AbZB0UtM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2009 15:49:12 -0500
-Received: by suse104.zenez.com (Postfix, from userid 1000)
-	id B5ABA6C1A7A; Fri, 27 Feb 2009 13:49:10 -0700 (MST)
-Received: from localhost (localhost [127.0.0.1])
-	by suse104.zenez.com (Postfix) with ESMTP id A3BBA938174;
-	Fri, 27 Feb 2009 13:49:10 -0700 (MST)
-In-Reply-To: <alpine.LNX.2.00.0902271341440.19082@suse104.zenez.com>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1756069AbZB0UvF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2009 15:51:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755507AbZB0UvE
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 15:51:04 -0500
+Received: from verein.lst.de ([213.95.11.210]:50014 "EHLO verein.lst.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755650AbZB0UvB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2009 15:51:01 -0500
+Received: from rani.localnet (197.80-202-68.nextgentel.com [80.202.68.197])
+	(authenticated bits=0)
+	by verein.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id n1RKotIF009440
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 27 Feb 2009 21:50:56 +0100
+User-Agent: KMail/1.11.0 (Linux/2.6.28-8-generic; KDE/4.2.0; i686; ; )
+In-Reply-To: <20090227185359.GA18102@padd.com>
+Content-Disposition: inline
+X-Spam-Score: 0 () 
+X-Scanned-By: MIMEDefang 2.39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111713>
 
-On Fri, 27 Feb 2009, Boyd Lynn Gerber wrote:
-> On Fri, 27 Feb 2009, Junio C Hamano wrote:
->> Boyd Lynn Gerber <gerberb@zenez.com> writes:
->>> Does the test suite use bash as it's shell?  I seem to have to use
->>> bash now to run the test.  I do not remember having to use bash on
->>> earlier 1.6.0
->> 
->> If your /bin/sh is not POSIX enough, you may be using a different shell
->> when building the scripted commands in the main Makefile by setting
->> SHELL_PATH.  The tests are supposed to use the same one as that.
->> 
->>> I have to use bash to run the test or I get
->>> 
->>> $ ./t4034-diff-words.sh
->>> ./t4034-diff-words.sh: syntax error at line 52: `(' unexpected
->> 
->> The open parenthesis on line 52 is the one between h and 4 here:
->>
->>    cat > expect <<\EOF
->>    <WHITE>diff --git a/pre b/post<RESET>
->>    <WHITE>index 330b04f..5ed8eff 100644<RESET>
->>    <WHITE>--- a/pre<RESET>
->>    <WHITE>+++ b/post<RESET>
->>    <BROWN>@@ -1,3 +1,7 @@<RESET>
->>    <RED>h(4)<RESET><GREEN>h(4),hh[44]<RESET>
->>    <RESET>
->>    a = b + c<RESET>
->>
->>    <GREEN>aa = a<RESET>
->>
->>    <GREEN>aeff = aeff * ( aaa )<RESET>
->>    EOF
->> 
->> Perhaps your shell has a broken here-text?
+On Friday 27 February 2009 19:53:59 Pete Wyckoff wrote:
+> Some users have tabs in their names, oddly enough.  This
+> causes problems when loading the usercache from disk,
+> as split separates the fields on the wrong tabs.  When
+> fast-import's parse_ident() tries to parse the committer
+> field, it is unhappy about the unbalanced <..> angle brackets.
 >
-> On OpenServer 6.0.6 /u95/bin/sh /u95/bin/ksh /u95/bin/bash are POSIX 
-> compliant shells.  The /bin/ shells are the stand SCO has had finx XENIX. 
-> They use system 5v3.  POSIX is System 5v4.
+> It is easy enough to convert the tabs to single spaces.
+>
+> Signed-off-by: Pete Wyckoff <pw@padd.com>
+> ---
+> Here's another random little fix.  We have a user
+> Firstname\tLastname who checked something in recently and
+> broke my git-p4 conversion.
+>
+> I need to send the other acked patch to Junio; will wait
+> and give him two if you ack this one.
 
-That should have been OpenServer 6.0 MP4.
+Looks good to me :-)
 
--- 
-Boyd Gerber <gerberb@zenez.com> 801 849-0213
-ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
+Acked-by: Simon Hausmann <simon@lst.de>
+
+
+Thanks,
+Simon
+
+>  contrib/fast-import/git-p4 |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+> index 3832f60..342529d 100755
+> --- a/contrib/fast-import/git-p4
+> +++ b/contrib/fast-import/git-p4
+> @@ -1142,7 +1142,7 @@ class P4Sync(Command):
+>
+>          s = ''
+>          for (key, val) in self.users.items():
+> -            s += "%s\t%s\n" % (key, val)
+> +	    s += "%s\t%s\n" % (key.expandtabs(1), val.expandtabs(1))
+>
+>          open(self.getUserCacheFilename(), "wb").write(s)
+>          self.userMapFromPerforceServer = True
