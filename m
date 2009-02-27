@@ -1,52 +1,69 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: serious problem with `git format-patch' & `git am'
-Date: Fri, 27 Feb 2009 09:47:49 -0600
-Message-ID: <zE3C931NyNaTaadZOgAI_rGf6gmkKr-3ZHRVXh87mHpCMs-0hfnhYg@cipher.nrlssc.navy.mil>
-References: <20090225.230352.177616203.wl@gnu.org> <6HVVE8kW9V0CsNfW21a_Tqpt2s-IrJbt2_qdAvQ8r1tetEhb6jr18g@cipher.nrlssc.navy.mil> <m3ljrsvg0e.fsf@localhost.localdomain> <7viqmwpr2x.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Planet git USELESS
+Date: Fri, 27 Feb 2009 16:52:32 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0902271651370.6600@intel-tinevez-2-302>
+References: <20090227160259.6117@qkholland.gmail.com> <alpine.DEB.1.00.0902271132000.6600@intel-tinevez-2-302> <49A7FFC0.8000000@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>, Werner LEMBERG <wl@gnu.org>,
-	git@vger.kernel.org, keithp@keithp.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 27 16:50:04 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Quim K Holland <qkholland@gmail.com>, gitster@pobox.com,
+	"gi[t] mailing list" <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Feb 27 16:54:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ld4yK-0006xh-3s
-	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 16:49:56 +0100
+	id 1Ld52Q-0000R1-5n
+	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 16:54:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755632AbZB0Ps1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2009 10:48:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755610AbZB0Ps1
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 10:48:27 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:50430 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755253AbZB0Ps0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2009 10:48:26 -0500
-Received: by mail.nrlssc.navy.mil id n1RFloH1011370; Fri, 27 Feb 2009 09:47:50 -0600
-In-Reply-To: <7viqmwpr2x.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 27 Feb 2009 15:47:50.0647 (UTC) FILETIME=[BEBF1070:01C998F2]
+	id S1755789AbZB0Pwi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2009 10:52:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755977AbZB0Pwh
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 10:52:37 -0500
+Received: from mail.gmx.net ([213.165.64.20]:35776 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755740AbZB0Pwh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2009 10:52:37 -0500
+Received: (qmail invoked by alias); 27 Feb 2009 15:52:33 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp008) with SMTP; 27 Feb 2009 16:52:33 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+RK/E41I2Rn1KP1EPDcoTRbuaLoG2GzURePK2YuS
+	NcMnaPc5gzW0fd
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <49A7FFC0.8000000@drmicha.warpmail.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111679>
 
+Hi,
 
-Junio,
+On Fri, 27 Feb 2009, Michael J Gruber wrote:
 
-I think you are the author of git-am.sh.
+> Johannes Schindelin venit, vidit, dixit 27.02.2009 11:33:
+> 
+> > On Fri, 27 Feb 2009, Quim K Holland wrote:
+> > 
+> >> Hey, I looked at http://planetgit.org/ site and
+> > 
+> > Maybe you wanted to look at planetgi.org (judging from your To: header)?
+> 
+> ;)
+> 
+> I think his Gi was not strong today, and he may be lacking some Fu in
+> general. At least he's got plenty of CAPS...
+> 
+> Or is he asking the GIs to get after us?
 
-What does this line do?
+I see you got your share of fun during Carneval ;-)
 
-git-am.sh line 375:
+But seriously, I think Quim has gotten his share of replies.  So let's be 
+nice again, and give him another chance.
 
-    case "$keep_subject" in -k)  SUBJECT="[PATCH] $SUBJECT" ;; esac
-
-It appears to do nothing.  It has existed since the beginning of git-am.sh,
-and there has never been another reference to $keep_subject in this script.
-Is it possible that $keep_subject is supposed to be $keep?
-
--brandon
+Ciao,
+Dscho
