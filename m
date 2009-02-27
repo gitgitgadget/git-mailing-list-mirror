@@ -1,80 +1,57 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: Planet git USELESS
-Date: Fri, 27 Feb 2009 09:11:04 -0500
-Message-ID: <20090227141104.GE6791@mit.edu>
-References: <20090227160259.6117@qkholland.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] added -C option to chdir() into another directory first
+Date: Fri, 27 Feb 2009 15:21:15 +0100
+Message-ID: <49A7F6DB.7040403@drmicha.warpmail.net>
+References: <1235679099-33994-1-git-send-email-kbrint@rufus.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git mailing list <git@vger.kernel.org>
-To: Quim K Holland <qkholland@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 27 15:12:47 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: kevin brintnall <kbrint@rufus.net>
+X-From: git-owner@vger.kernel.org Fri Feb 27 15:23:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ld3SB-0007SA-1d
-	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 15:12:39 +0100
+	id 1Ld3c6-0003MN-5d
+	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 15:22:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755345AbZB0OLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2009 09:11:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753939AbZB0OLL
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 09:11:11 -0500
-Received: from thunk.org ([69.25.196.29]:58671 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755335AbZB0OLK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2009 09:11:10 -0500
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
-	id 1Ld3Qf-0005cV-NF; Fri, 27 Feb 2009 09:11:05 -0500
-Received: from tytso by closure.thunk.org with local (Exim 4.69)
-	(envelope-from <tytso@mit.edu>)
-	id 1Ld3Qe-0003k1-63; Fri, 27 Feb 2009 09:11:04 -0500
-Content-Disposition: inline
-In-Reply-To: <20090227160259.6117@qkholland.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@mit.edu
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1755363AbZB0OVZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2009 09:21:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753822AbZB0OVZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 09:21:25 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:55866 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753159AbZB0OVY (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Feb 2009 09:21:24 -0500
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id CF0552A5F5B;
+	Fri, 27 Feb 2009 09:21:22 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Fri, 27 Feb 2009 09:21:22 -0500
+X-Sasl-enc: +mdUFEnxpXcxns9WsxnUcS0gUKGma9YR63N2jcRJeVNx 1235744482
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 39D9C27316;
+	Fri, 27 Feb 2009 09:21:22 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090227 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <1235679099-33994-1-git-send-email-kbrint@rufus.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111672>
 
-On Fri, Feb 27, 2009 at 04:02:59PM +0600, Quim K Holland wrote:
-> Hey, I looked at http://planetgit.org/ site and
-> I hoped to find something useful but there are
-> only two dudes listed there. How strange nobody from
-> this project blogs about what he is doing.
+kevin brintnall venit, vidit, dixit 26.02.2009 21:11:
+> This allows things like 'git -C /somewhere pull' without specifying both
+> --work-tree and --git-dir.
 > 
-> If you keep a planet site, make it useful for
-> the rest of us to read, REALLY!!!!
 
-Your mistake is in assuming that the folks who set up the
-planetgit.org site are talking to the git developers on this list;
-anyone can set up a domain name, "planet<foo>.org", without
-necessarily being officially tied to project <foo>.
+I'm afraid you hit a somewhat reoccurring issue here. chdir'ing looks
+simple, but it has many side effects, such as on relative paths (as
+Junio pointed out) but also on the order of parsing config. Having -C as
+a global git option would require dealing with all of these effects.
 
-The planetgit.org site does say that people who want to be added to
-the site should contact webmaster@planetgit.org; you might want to do
-the same if you're not satisified with the content on that site.
+On the other hand, a shell function can achieve the same very easily.
+The side effects are left to be dealt with by the user then ;)
 
-I also suspect that you might have gotten a more positive reaction if
-you said something along the lines of "hey, there seems to be this
-planetgit.org site which isn't tracking a lot of blogs; could some of
-the git developers consider sending their rss feed to
-webmaster@planetgit.org so they can track your blog entries?"
-
-Instead, you sound like a demanding *sshole, and people generally
-don't respond well to that.
-
-Best regards,
-
-					- Ted
-
-P.S.  Now I have to decide on my own whether or not I should ask
-planetgit.org to add
-http://thunk.org/tytso/blog/category/computers/linux/source-code-management/git/feed
-to planet git.  The question is whether to reward impoliteness or not
-(which is a bad thing), factored against trying to make planetgit.org
-more useful (which is a good thing).
+Michael
