@@ -1,67 +1,74 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [WARNING] Proposed future changes that are backward incompatible
-Date: Fri, 27 Feb 2009 20:51:22 +0100
-Message-ID: <fabb9a1e0902271151qa649d2en6b49e8794f93b889@mail.gmail.com>
+Date: Fri, 27 Feb 2009 11:59:32 -0800
+Message-ID: <7v3adzk5wb.fsf@gitster.siamese.dyndns.org>
 References: <20090227192708.6266.qmail@science.horizon.com>
-	 <alpine.LFD.2.00.0902271439310.5511@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: George Spelvin <linux@horizon.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Feb 27 20:53:00 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "George Spelvin" <linux@horizon.com>
+X-From: git-owner@vger.kernel.org Fri Feb 27 21:01:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ld8lS-0008SV-Qm
-	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 20:52:55 +0100
+	id 1Ld8tg-0003FG-6v
+	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 21:01:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756243AbZB0Tv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2009 14:51:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755843AbZB0Tv1
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 14:51:27 -0500
-Received: from mail-fx0-f176.google.com ([209.85.220.176]:54979 "EHLO
-	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754666AbZB0Tv0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2009 14:51:26 -0500
-Received: by fxm24 with SMTP id 24so1205648fxm.37
-        for <git@vger.kernel.org>; Fri, 27 Feb 2009 11:51:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=sqM6MFaSoLtYp33qMOmHcRE5D4gibbRL68QfU8bvcrw=;
-        b=TP6h38jNupGTnhYrVpX5J9mxdOxWn/WIx1AKTdVd0GoHO0EfbBWPQbv1F70upoJTOj
-         +6JziJAWPZUa3iPpQ5aGcTGRgK/Hf20zYfRmPl+dbVByuWx0xuzV9sGN1OwQugEeYm9K
-         nKpmICs1lq4A/asen6UH+TTDgnhDa3dVSHXow=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=OnCkga/tMfgaG/0q2U6yP/xQaeLaJ26X/nK0ta8GNKW6IwOJCjWiqo6PCa/os3gfxe
-         vGz2VY0fO9nJfV4+Nh/+URKfWETqRoq6KQjSGfghYgxgavSVWgHBrWsvuIs81hAnxvLi
-         ZRvXagQ7kGFiJYoLgrk/JtiTCZoG8hsbquP3U=
-Received: by 10.103.182.3 with SMTP id j3mr1465040mup.113.1235764282947; Fri, 
-	27 Feb 2009 11:51:22 -0800 (PST)
-In-Reply-To: <alpine.LFD.2.00.0902271439310.5511@xanadu.home>
+	id S1755029AbZB0T7p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2009 14:59:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753906AbZB0T7p
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 14:59:45 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54824 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753882AbZB0T7p (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2009 14:59:45 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 35ED89B12F;
+	Fri, 27 Feb 2009 14:59:37 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 19D179B12B; Fri,
+ 27 Feb 2009 14:59:33 -0500 (EST)
+In-Reply-To: <20090227192708.6266.qmail@science.horizon.com> (George
+ Spelvin's message of "Fri, 27 Feb 2009 14:27:08 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 2935C3D6-0509-11DE-A218-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111706>
 
-On Fri, Feb 27, 2009 at 20:42, Nicolas Pitre <nico@cam.org> wrote:
-> [nico@xanadu git]$ git grep Alice
+"George Spelvin" <linux@horizon.com> writes:
 
-Now try again from within a subdir ;).
+> There's one more change that was suggested that I'd like to propose:
+> - Make "git grep" search the whole repository by default; include an
+>   explicit "." path limiter to search only the current directory.
+>
+> In addition to being more consistent with other commands like "git log",
+> this saves a lot of typing working in drivers/net/usb/ if the identifier
+> you're looking for is in include/.  Typing the additional space-dot
+> is pretty trivial if you want the current directory only.
 
-I actually prefer the current behavior, and am a very extensive user
-of it. Config option? ;)
+I do not remember it was ever suggested, let alone coming to anything near
+consensus.
 
--- 
-Cheers,
+The only way you could justify such a default change is to say:
 
-Sverre Rabbelier
+    Almost all the time, everybody wants to use this new behaviour; the
+    old behaviour is almost never useful in any situation other than a
+    narrow corner case; and if somebody wants to do such a useless thing
+    in a corner case, he can always add " ." at the end, so nothing is
+    lost.
+
+I do not think that is true for the change you are proposing here.  'He
+can always add " ." at the end' alone is not a good enough justification.
+
+I however think your use case deserves to be supported, and I would not
+mind at all accepting a new "--full-tree" (or some shorter synonym) option
+if the patch is cleanly done (hint, hint).
+
+I'd rather not add this to "future changes that are backward incompatible"
+list.  It may be a useful new feature, but that is not what the topic of
+this thread is about.
