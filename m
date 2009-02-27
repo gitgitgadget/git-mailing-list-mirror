@@ -1,78 +1,142 @@
-From: "John Dlugosz" <JDlugosz@TradeStation.com>
-Subject: RE: help with reflog
-Date: Fri, 27 Feb 2009 12:39:41 -0500
-Message-ID: <450196A1AAAE4B42A00A8B27A59278E709F06E72@EXCHANGE.trad.tradestation.com>
-References: <450196A1AAAE4B42A00A8B27A59278E709E04E87@EXCHANGE.trad.tradestation.com> <49A79549.1020802@viscovery.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git-svn and repository hierarchy?
+Date: Fri, 27 Feb 2009 18:45:44 +0100
+Message-ID: <49A826C8.1060300@drmicha.warpmail.net>
+References: <20090224223412.GA4573@raven.wolf.lan> <49A50EB2.80300@drmicha.warpmail.net> <20090227171248.GB14187@raven.wolf.lan>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-To: "Johannes Sixt" <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Feb 27 18:41:42 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 27 18:47:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ld6i7-0004xK-TQ
-	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 18:41:20 +0100
+	id 1Ld6o4-0007jf-Pe
+	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 18:47:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755387AbZB0Rju (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2009 12:39:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755368AbZB0Rju
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 12:39:50 -0500
-Received: from mail2.tradestation.com ([63.99.207.80]:38144 "EHLO
-	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754991AbZB0Rjt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Feb 2009 12:39:49 -0500
-X-ASG-Debug-ID: 1235756383-632a00e70002-QuoKaX
-X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
-Received: from mail5.tradestation.com (localhost [127.0.0.1])
-	by mail2.tradestation.com (Spam Firewall) with ESMTP
-	id 8B5981CDB35; Fri, 27 Feb 2009 12:39:45 -0500 (EST)
-Received: from mail5.tradestation.com ([192.168.51.76]) by mail2.tradestation.com with ESMTP id p8Nna10B1oUGNYPK; Fri, 27 Feb 2009 12:39:45 -0500 (EST)
-X-ASG-Whitelist: Client
-Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 27 Feb 2009 12:39:43 -0500
-Content-class: urn:content-classes:message
-X-ASG-Orig-Subj: RE: help with reflog
-In-Reply-To: <49A79549.1020802@viscovery.net>
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: help with reflog
-Thread-Index: AcmYrIJCt4ALlfIvR0umvxI9j7VuXwAU2peQ
-X-OriginalArrivalTime: 27 Feb 2009 17:39:43.0408 (UTC) FILETIME=[5FDD1B00:01C99902]
-X-Barracuda-Connect: UNKNOWN[192.168.51.76]
-X-Barracuda-Start-Time: 1235756386
-X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
+	id S1755240AbZB0Rpz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2009 12:45:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754991AbZB0Rpy
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 12:45:54 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:39741 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752464AbZB0Rpy (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Feb 2009 12:45:54 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 127C82A5FFF;
+	Fri, 27 Feb 2009 12:45:52 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Fri, 27 Feb 2009 12:45:52 -0500
+X-Sasl-enc: F+hxexmEw5+RLd1m72bs8Du6E2oYKvYeQJbiz1chnR2q 1235756751
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 7BB31229DB;
+	Fri, 27 Feb 2009 12:45:51 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090227 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <20090227171248.GB14187@raven.wolf.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111688>
 
->> Did you initialize or clone *this*particular*repository* more than 90
-days
-ago?
+Josef Wolf venit, vidit, dixit 27.02.2009 18:12:
+> On Wed, Feb 25, 2009 at 10:26:10AM +0100, Michael J Gruber wrote:
+>> Josef Wolf venit, vidit, dixit 24.02.2009 23:34:
+> 
+>>> I have set up a repository hierarchy like this:
+>>>
+>>>
+>>>          subversion-repos
+>>>                 |
+>>>            git-svn-repos
+>>>           /     |     \
+>>>       clone1  clone2  clone3
+>> Recent enough git should even warn you against doing that, "that" being
+>> pushing into checked out branches.
+> 
+> I've now tried to synchronize via pull instead of push, but I still
+> get conflicts.
+> 
+>> Your diagram above is missing important info, namely which branches you
+>> are pushing into. But the problem indicates that you are pushing into a
+>> checked out branch.
+> 
+> In order to get a better understanding what's going on, I've written a
+> small script which can be copy-pasted into some terminal window:
+> 
+> (
+>   set -ex
+> 
+>   # create test directory
+>   #
+>   TESTDIR=`mktemp --tmpdir=. git-svn-hierarchy-test-XXXXXXXX`
+>   rm -rf $TESTDIR
+>   mkdir -p $TESTDIR
+>   cd $TESTDIR
+> 
+>   SUBVERSION_REPOS=file://`pwd`/subversion-repos
+> 
+>   # create subversion repos with some history
+>   #
+>   svnadmin create subversion-repos
+>   svn -m "create standard layout" mkdir \
+>       $SUBVERSION_REPOS/trunk \
+>       $SUBVERSION_REPOS/branches \
+>       $SUBVERSION_REPOS/tags
+>   svn co $SUBVERSION_REPOS/trunk subversion-wc
+>   echo change1 >>subversion-wc/test
+>   svn add subversion-wc/test
+>   svn ci -m "commit 1" subversion-wc
+> 
+>   # create git-svn-repos
+>   #
+>   git svn init --stdlayout $SUBVERSION_REPOS git-svn-repos
+>   (cd git-svn-repos; git svn fetch)
+> 
+>   # create a clone and do some work on it
+>   #
+>   git clone git-svn-repos clone1
+>   for i in 2 3 4; do
+>     ( cd clone1; echo change$i >>test ; git commit -a -m "commit $i")
+>   done
+> 
+>   (cd git-svn-repos; git pull ../clone1)
 
-Yes.  I've been working on it since August.
+Gives you 1-2-3-4
 
+>   (cd git-svn-repos; git svn rebase)
 
+Does nothing here (but is good practice)
 
->> Are you saying that the .git/config file is empty?
+>   (cd git-svn-repos; git svn dcommit)
 
-No, that there is nothing related to changing the default of 90 days.
+Creates 2-3-4 on the svn side. *Then rebases* your master, which creates
+1-2'-3'-4' on master. Note that 2 is different from 2' (git-svn id).
 
->> What does 'git config core.logallrefupdates' report?
+>   (cd git-svn-repos; git pull ../clone1)  # if this line is executed,
 
-true.
+That's the problem. This creates a merge after which you 1-2-3-4 and
+1-2'-3'-4' plus the merge of 4 and 4'.
 
-I'm guessing it wasn't on before, and the first time I tried the reflog
-command (or whatever I was reading in the manual) it turned it on
-automatically.
+Instead, use git pull --rebase here. You don't want merges in the branch
+from which you dcommit.
 
---John
+Borrowing from some other vcs:
 
-TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
-  If you received this in error, please contact the sender and delete the material from any computer.
+Repeat the soothing mantra: a merge is no merge is no merge - it it's in
+svn ;)
+
+>   (cd git-svn-repos; git svn rebase)      # this command gives the conflict
+> )
+> 
+> When I comment out the second "git pull ../clone1", the conflict does
+> not happen on the last "git svn rebase", but on some later pull, rebase
+> or dcommit command.
+> 
+> Obviously, I'm doing something wrong.  But I can't figure what.  Any hints?
+
+I guess when we said integrated we should have said rebase. Haven't we?
+
+Cheers,
+Michael
