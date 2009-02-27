@@ -1,100 +1,152 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [WARNING] Proposed future changes that are backward incompatible
-Date: Fri, 27 Feb 2009 13:02:27 -0800
-Message-ID: <7vr61jiof0.fsf@gitster.siamese.dyndns.org>
-References: <20090227192708.6266.qmail@science.horizon.com>
- <7v3adzk5wb.fsf@gitster.siamese.dyndns.org>
- <20090227203108.10186.qmail@science.horizon.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] bisect: fix quoting TRIED revs when "bad" commit is also "skip"ped
+Date: Fri, 27 Feb 2009 22:05:10 +0100
+Message-ID: <200902272205.10501.chriscool@tuxfamily.org>
+References: <20090226082918.6adbc565.chriscool@tuxfamily.org> <200902270730.56998.chriscool@tuxfamily.org> <7v3ae0mfob.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: "George Spelvin" <linux@horizon.com>
-X-From: git-owner@vger.kernel.org Fri Feb 27 22:04:08 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 27 22:07:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ld9sN-00034C-Q4
-	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 22:04:08 +0100
+	id 1Ld9vi-0004TV-Gb
+	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 22:07:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754892AbZB0VCh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2009 16:02:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754297AbZB0VCh
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 16:02:37 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47294 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754325AbZB0VCg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2009 16:02:36 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0E0D19B842;
-	Fri, 27 Feb 2009 16:02:34 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A1D089B841; Fri,
- 27 Feb 2009 16:02:29 -0500 (EST)
-In-Reply-To: <20090227203108.10186.qmail@science.horizon.com> (George
- Spelvin's message of "Fri, 27 Feb 2009 15:31:08 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F461F356-0511-11DE-8865-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1755159AbZB0VGI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Feb 2009 16:06:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751807AbZB0VGG
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 16:06:06 -0500
+Received: from smtp4-g21.free.fr ([212.27.42.4]:34028 "EHLO smtp4-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753873AbZB0VGE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Feb 2009 16:06:04 -0500
+Received: from smtp4-g21.free.fr (localhost [127.0.0.1])
+	by smtp4-g21.free.fr (Postfix) with ESMTP id 7FF1C4C810D;
+	Fri, 27 Feb 2009 22:05:55 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp4-g21.free.fr (Postfix) with ESMTP id 5F9794C8097;
+	Fri, 27 Feb 2009 22:05:53 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7v3ae0mfob.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111718>
 
-"George Spelvin" <linux@horizon.com> writes:
+Le vendredi 27 f=E9vrier 2009, Junio C Hamano a =E9crit :
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> >> This makes me suspect that we are forgetting
+> >> to check return status after we eval the output from filter_skippe=
+d
+> >> function. Shouldn't the function should string its commands togeth=
+er
+> >> with "&&" to protect it from a breakage like this?
+> >
+> > Right, that would be an improvement. I put it in another patch thou=
+gh,
+> > because it is not really needed to fix a breakage.
 
-> The suggestion was in <83vdsefz9j.fsf@kalahari.s2.org>, available as
-> http://marc.info/?l=git&m=123216049508531
-> but I agree that there was no consensus.  I just thought this thread was
-> a good place to elicit discussion, since it would be an incompatible change.
+Here I wanted to say that I think it fixes a separate breakage or anoth=
+er=20
+kind of breakage rather than not a breakage. Sorry.
+
+> Sorry, but I have to disagree.
 >
->> The only way you could justify such a default change is to say:
->>
->>     Almost all the time, everybody wants to use this new behaviour; the
->>     old behaviour is almost never useful in any situation other than a
->>     narrow corner case; and if somebody wants to do such a useless thing
->>     in a corner case, he can always add " ." at the end, so nothing is
->>     lost.
->>
->> I do not think that is true for the change you are proposing here.  'He
->> can always add " ." at the end' alone is not a good enough justification.
+> Look at the caller of filter_skipped in bisect_next():
 >
-> Please forgive me, ...
+> 	eval=3D"git rev-list --bisect-vars $BISECT_OPT $good $bad --" &&
+> 	eval=3D"$eval $(cat "$GIT_DIR/BISECT_NAMES")" &&
+> 	eval=3D$(filter_skipped "$eval" "$skip") &&
+> 	eval "$eval" || exit
+>
+> 	if [ -z "$bisect_rev" ]; then
+> 		echo "$bad was both good and bad"
+> 		exit 1
+> 	fi
+>
+> The eval "$eval" in the middle, if failed properly upon seeing the qu=
+ote
+> bug, would have exited there, because "|| exit" there is all about
+> catching a broken eval string.  It was not effective.
 
-There is nothing that needs forgiveness.  Discussion is a good thing, as
-long as it is not about useless bikeshedding (and I should just learn to
-ignore discussions that are useless, instead of getting upset.  Lucikly we
-haven't had many).
+Yes, but before I introduced filter_skipped there was:
 
-> ... I thought the above *might* be true, and wanted to provoke
-> discussion to see how people felt.
+	eval=3D"git rev-list --bisect-vars $good $bad --" &&
+        eval=3D"$eval $(cat "$GIT_DIR/BISECT_NAMES")" &&
+	eval=3D$(eval "$eval") &&
+        eval "$eval" || exit
 
-If you suspected that the above may be true, that the new behaviour should
-be the default, and that many people may support that view, and wanted to
-confirm it, then your justification should have really spelled it out.
+so the output of "git rev-list --bisect-vars ..." was evaled, and this=20
+output is something like that:
 
-> The "consistent with
-> git-log and all that stuff" argument is quite persuasive to me, but it's
-> a convenience feature, so it depends on how people feel.
+$ git rev-list --bisect-vars HEAD ^HEAD~3
+bisect_rev=3Dc24505030fad7cc2872e0a0fd0f44e05571a0ad8
+bisect_nr=3D1
+bisect_good=3D0
+bisect_bad=3D1
+bisect_all=3D3
 
-Consistency among tools with a similar objective is a good thing to aim
-for.
+where there is no "&&" at the end of the commands to string them togeth=
+er.
+So this breakage already existed before I introduced "filter_skipped".
 
-"log" especially "log -p" is about inspecting _changes_ and to understand
-the change you would more often than not want to view the change in the
-entire context (that is the point of having an atomic while-tree commit).
+> You were lucky in this case that bisect_rev happens to be empty becau=
+se
+> the bug happened to be at the place where bisect_rev was assigned to.=
+=20
+> But with a random other breakage in the filter_skipped, you would not
+> have been so lucky.
 
-On the other hand, "grep" is about narrowing down the _state_ you would
-want to inspect, and unlike the case when you _inspect changes_ where you
-would more often want to have the entire context, you would more often
-want to omit unrelated parts of the tree while you are _narrowing down
-state_ to inspect.  This is especially true when you run it from a
-subdirectory, and by definition when you are already in a subdirectory,
-your attention is already narrowed down to the part of the whole tree you
-are currently in.
+Yeah, I should have improved on the existing design instead of blindly=20
+following it. I hope I won't get sued for that ;-)
 
-So in that sense, I do not see a "similar objective" between what log and
-grep are used for.  They may superficially look similar, but the useful
-mode of operation between them can be different because they are used for
-different purposes.
+> I think it is an integral part of the bugfix to string the commands
+> filter_skipped outputs with &&, so that an error while executing an
+> earlier command in the output sequence is not masked by execution of
+> other commands in the output.
+
+So you should perhaps squash the following hunk to the patch:
+
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 08e31d6..980d73c 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -284,7 +284,13 @@ filter_skipped() {
+        _skip=3D"$2"
+
+        if [ -z "$_skip" ]; then
+-               eval "$_eval"
++               eval "$_eval" | {
++                       while read line
++                       do
++                               echo "$line &&"
++                       done
++                       echo ':'
++               }
+                return
+        fi
+
+as this will string the commands together when there are no skipped com=
+mits=20
+too.
+
+> Here is what I am thinking about queueing for 1.6.2; it may be necess=
+ary
+> to apply it to 1.6.1.X (or 1.6.0.X) and merge the fix upwards.
+
+It looks good to me. But frankly I feel always strange when a patch lik=
+e=20
+this one, where you did most of the code change, get attributed to me. =
+I=20
+would have prefered that you added a patch attributed to you on top of =
+mine=20
+if possible.
+
+Best regards,
+Christian.
