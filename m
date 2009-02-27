@@ -1,99 +1,92 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [RFC] add test cases for the --repo option to git push
-Date: Fri, 27 Feb 2009 13:00:21 -0800 (PST)
-Message-ID: <alpine.LFD.2.00.0902271255530.3111@localhost.localdomain>
-References: <76718490902210132w2577c093tf8c2a5e7da8bc0e8@mail.gmail.com>  <1235497240-20677-1-git-send-email-git@drmicha.warpmail.net>  <7vhc2iyy9y.fsf@gitster.siamese.dyndns.org>  <49A66057.1050501@drmicha.warpmail.net>  <7vfxi1t99u.fsf@gitster.siamese.dyndns.org>
-  <49A7C3A7.6060202@drmicha.warpmail.net> <76718490902271248p2de44082ka66645203c9683d4@mail.gmail.com>
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Subject: Re: git-svn woes
+Date: Fri, 27 Feb 2009 16:02:14 -0500
+Message-ID: <1235768206-sup-2071@ntdws12.chass.utoronto.ca>
+References: <alpine.LFD.2.00.0902271442270.5511@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 27 22:02:51 2009
+Content-Type: multipart/signed; protocol="application/pgp-signature"; boundary="=-1235768536-405280-26579-8860-70-="; micalg="pgp-sha1"
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	normalperson <normalperson@yhbt.net>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Fri Feb 27 22:03:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ld9r8-0002e0-QB
-	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 22:02:51 +0100
+	id 1Ld9s4-0002zw-QJ
+	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 22:03:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757516AbZB0VBD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2009 16:01:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756332AbZB0VBB
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 16:01:01 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:50244 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755521AbZB0VBA (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Feb 2009 16:01:00 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n1RL0Lm1007630
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 27 Feb 2009 13:00:23 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n1RL0LUP001717;
-	Fri, 27 Feb 2009 13:00:21 -0800
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <76718490902271248p2de44082ka66645203c9683d4@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.948 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1754185AbZB0VCW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2009 16:02:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754061AbZB0VCV
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 16:02:21 -0500
+Received: from [192.82.128.5] ([192.82.128.5]:36559 "EHLO
+	www.cquest.utoronto.ca" rhost-flags-FAIL-FAIL-OK-OK)
+	by vger.kernel.org with ESMTP id S1753576AbZB0VCU (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Feb 2009 16:02:20 -0500
+Received: from ntdws12.chass.utoronto.ca ([128.100.160.253] ident=93)
+	by www.cquest.utoronto.ca with esmtp (Exim 4.43)
+	id 1Ld9qb-0003pq-Th; Fri, 27 Feb 2009 16:02:17 -0500
+Received: from localhost
+	([127.0.0.1] helo=ntdws12.chass.utoronto.ca ident=505)
+	by ntdws12.chass.utoronto.ca with esmtp (Exim 4.63)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1Ld9qb-0002lt-R3; Fri, 27 Feb 2009 16:02:17 -0500
+Received: (from bwalton@localhost)
+	by ntdws12.chass.utoronto.ca (8.13.8/8.13.8/Submit) id n1RL2Gos010653;
+	Fri, 27 Feb 2009 16:02:16 -0500
+In-Reply-To: <alpine.LFD.2.00.0902271442270.5511@xanadu.home>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111716>
 
 
+--=-1235768536-405280-26579-8860-70-=
+Content-Type: text/plain; charset=UTF-8
 
-On Fri, 27 Feb 2009, Jay Soffian wrote:
-> 
-> So I still don't get why Linus introduced the option. I'm looking at
-> bcc785f:builtin-push.c and AFAICT, the following are exactly
-> equivalent:
-> 
-> $ git push [options]... <repo>
-> $ git push [options]... --repo=<repo>
+Excerpts from Nicolas Pitre's message of Fri Feb 27 15:37:16 -0500 2009:
+> |Use of uninitialized value $lc_author in concatenation (.) or string at /home/nico/libexec/git-core/git-svn line 964.
+> |Use of uninitialized value $lc_rev in concatenation (.) or string at /home/nico/libexec/git-core/git-svn line 965.
+> |Use of uninitialized value $t in gmtime at /home/nico/libexec/git-core/git-svn line 4743.
+> |Use of uninitialized value $t in numeric comparison (<=>) at /home/nico/libexec/git-core/git-svn line 4744.
+> |Use of uninitialized value $t in subtraction (-) at /home/nico/libexec/git-core/git-svn line 4745.
+> |Use of uninitialized value $t in localtime at /home/nico/libexec/git-core/git-svn line 4746.
 
-Yes. 
+All of the $t references are due to the patch I kicked in a few days
+back.  $t is set to the first function argument, which in this case
+was passed as a null reference.  Should $t default to time() in this
+circumstance?  That would match the previous behaviour when
+localtime(shift) was used, although it may mask errors like this...?
 
-But now do
+If so, I'll submit a small patch for that asap.
 
-	[alias]
-		push-all=push all
+As for why it's getting a null reference if it shouldn't be, I'll
+leave that for the people that know the svn part of this.
 
-and then try to add those options AFTERWARDS!
+HTH.
+-Ben
+-- 
+Ben Walton
+Systems Programmer - CHASS
+University of Toronto
+C:416.407.5610 | W:416.978.4302
 
-> --repo can be placed anywhere on the command line, but other than
-> that, it's identical in effect to specifying the repo as the first
-> non-dashed argument.
-> 
-> Or am I completely blind?
+GPG Key Id: 8E89F6D2; Key Server: pgp.mit.edu
+Contact me to arrange for a CAcert assurance meeting.
 
-It's the "placed anywhere on the command line" that is the important part.
+--=-1235768536-405280-26579-8860-70-=
+Content-Disposition: attachment; filename="signature.asc"
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Try 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
 
-	git push-all --tags
+iD8DBQFJqFTY8vuMHY6J9tIRAkAQAJoC1GE0IrbY84fTBAIIpy9syi+bfwCfXzEn
+W9WMuHVoeMgSH6ju3tSeY68=
+=Mcyb
+-----END PGP SIGNATURE-----
 
-and it didn't use to work without "--repo=all".
-
-Of course, I think it works now, because I think "git push" uses 
-"parse_options" these days, so now "--tags" actually works even after the 
-repository definition. So _these_ days, you can just do
-
-	git push all --tags
-
-but that was not true historically. Back then, if you wanted to use an 
-alias (which mean that the repo was named _before_ the arguments), you 
-needed to do
-
-	git push --repo=all --tags
-
-because putting "--tags" after the repository name wouldn't work.
-
-So _today_, we could remove the use of "--repo". But today, we have 
-another reason to do "--repo" - compatibility.
-
-		Linus
+--=-1235768536-405280-26579-8860-70-=--
