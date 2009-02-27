@@ -1,69 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Planet git USELESS
-Date: Fri, 27 Feb 2009 16:52:32 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0902271651370.6600@intel-tinevez-2-302>
-References: <20090227160259.6117@qkholland.gmail.com> <alpine.DEB.1.00.0902271132000.6600@intel-tinevez-2-302> <49A7FFC0.8000000@drmicha.warpmail.net>
+From: Adam Mercer <ramercer@gmail.com>
+Subject: Re: Checking for a valid email address
+Date: Fri, 27 Feb 2009 10:19:56 -0600
+Message-ID: <799406d60902270819x610704a4qc93a979b2a08c918@mail.gmail.com>
+References: <799406d60902261928q2c691112yf24d01b92a3dad6c@mail.gmail.com>
+	 <20090227090807.GQ4371@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Quim K Holland <qkholland@gmail.com>, gitster@pobox.com,
-	"gi[t] mailing list" <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Feb 27 16:54:20 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Fri Feb 27 17:21:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ld52Q-0000R1-5n
-	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 16:54:10 +0100
+	id 1Ld5Sr-0003lN-4X
+	for gcvg-git-2@gmane.org; Fri, 27 Feb 2009 17:21:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755789AbZB0Pwi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2009 10:52:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755977AbZB0Pwh
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 10:52:37 -0500
-Received: from mail.gmx.net ([213.165.64.20]:35776 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755740AbZB0Pwh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2009 10:52:37 -0500
-Received: (qmail invoked by alias); 27 Feb 2009 15:52:33 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp008) with SMTP; 27 Feb 2009 16:52:33 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+RK/E41I2Rn1KP1EPDcoTRbuaLoG2GzURePK2YuS
-	NcMnaPc5gzW0fd
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <49A7FFC0.8000000@drmicha.warpmail.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.62
+	id S1753601AbZB0QUA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2009 11:20:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753321AbZB0QT7
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 11:19:59 -0500
+Received: from mail-gx0-f174.google.com ([209.85.217.174]:45577 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753174AbZB0QT6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2009 11:19:58 -0500
+Received: by gxk22 with SMTP id 22so2773535gxk.13
+        for <git@vger.kernel.org>; Fri, 27 Feb 2009 08:19:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=UDg6D1EgArxbEjU3NiC4P7L6ETIWCekqghZOdvmIejk=;
+        b=cKoM8yduq4de3SQAlJ+zJ+iqN7QGsiLpLdpVWB8jVcqsxeaTPgHAwFXu0qKymXwIvK
+         7iXucP+EM0+T99vftwEnkACp7j/U+7d/fx0kFrjNBMLa2xPAB80ObxY6NY4NC3eq7rgo
+         hNC5jclQQOsLhN/O06zfDG0+6WNDja6PViqK4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=DOLMiPE/yo3icb2TksfBwFH0DZPT1F4duPzAjBpwTIdC/PjCHvmtzlWgy64QSmMgYs
+         VZ2IyhFpW7t7ENCGlSz1Yr/IZU/MA7GwN4Q91JF+JPkTTqY0X3aY2L/aPKY73WbVkFlI
+         U2rd3E0f4ZmNzJyGZmiPo09zi/fEQ+04VQbKI=
+Received: by 10.90.49.3 with SMTP id w3mr1373827agw.21.1235751596374; Fri, 27 
+	Feb 2009 08:19:56 -0800 (PST)
+In-Reply-To: <20090227090807.GQ4371@genesis.frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111680>
 
-Hi,
+On Fri, Feb 27, 2009 at 03:08, Miklos Vajna <vmiklos@frugalware.org> wrote:
 
-On Fri, 27 Feb 2009, Michael J Gruber wrote:
+> You can use a script like this:
+>
+> http://www.perl.com/CPAN/authors/Tom_Christiansen/scripts/ckaddr.gz
+>
+> Other helpful git commands to get the current email address:
+>
+> git var GIT_AUTHOR_IDENT
+> git config user.name
+> git config user.email
+>
+> You can do the rest, hopefully. :)
 
-> Johannes Schindelin venit, vidit, dixit 27.02.2009 11:33:
-> 
-> > On Fri, 27 Feb 2009, Quim K Holland wrote:
-> > 
-> >> Hey, I looked at http://planetgit.org/ site and
-> > 
-> > Maybe you wanted to look at planetgi.org (judging from your To: header)?
-> 
-> ;)
-> 
-> I think his Gi was not strong today, and he may be lacking some Fu in
-> general. At least he's got plenty of CAPS...
-> 
-> Or is he asking the GIs to get after us?
+Thanks, thats helpful.
 
-I see you got your share of fun during Carneval ;-)
+Cheers
 
-But seriously, I think Quim has gotten his share of replies.  So let's be 
-nice again, and give him another chance.
-
-Ciao,
-Dscho
+Adam
