@@ -1,629 +1,109 @@
-From: =?ISO-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH] import memmem() with linear complexity from Gnulib
-Date: Sat, 28 Feb 2009 20:16:55 +0100
-Message-ID: <1235848615.7043.30.camel@ubuntu.ubuntu-domain>
-References: <cover.1235629933.git.gitster@pobox.com>
-	 <cd73512d11e63554396983ed4e9556b2d18b3e4a.1235629933.git.gitster@pobox.com>
-	 <49A88FA7.1020402@lsrfire.ath.cx>
-	 <7vy6vrgxnn.fsf@gitster.siamese.dyndns.org>
-	 <7v8wnrgkjw.fsf@gitster.siamese.dyndns.org>
-	 <49A937B8.1030205@lsrfire.ath.cx>
-	 <7vmyc6foj3.fsf@gitster.siamese.dyndns.org>
+From: Paul Gortmaker <paul.gortmaker@windriver.com>
+Subject: Changing the defaults for send-email / suppress-cc ?
+Date: Sat, 28 Feb 2009 14:29:39 -0500
+Message-ID: <7d1d9c250902281129t1ea0d9d0k796d97bdd0af046d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 28 20:20:49 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 28 20:31:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LdUjw-000735-JY
-	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 20:20:49 +0100
+	id 1LdUty-00020w-5l
+	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 20:31:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753292AbZB1TRH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Feb 2009 14:17:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753031AbZB1TRG
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Feb 2009 14:17:06 -0500
-Received: from india601.server4you.de ([85.25.151.105]:53914 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752860AbZB1TRE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Feb 2009 14:17:04 -0500
-Received: from [10.0.1.101] (p57B7BF31.dip.t-dialin.net [87.183.191.49])
-	by india601.server4you.de (Postfix) with ESMTPSA id CBA192F8075;
-	Sat, 28 Feb 2009 20:16:59 +0100 (CET)
-In-Reply-To: <7vmyc6foj3.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Evolution 2.24.3 
+	id S1752744AbZB1T3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Feb 2009 14:29:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752574AbZB1T3m
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Feb 2009 14:29:42 -0500
+Received: from wf-out-1314.google.com ([209.85.200.172]:22288 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752544AbZB1T3l (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Feb 2009 14:29:41 -0500
+Received: by wf-out-1314.google.com with SMTP id 28so1966207wfa.4
+        for <git@vger.kernel.org>; Sat, 28 Feb 2009 11:29:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=8QxkRFeAjgI6kjL+FOgy8dYvsTIP5C5r4qJAyOgJz8w=;
+        b=I+1Yr0IAEHSLAI6bP+VhbCvaTd9IAdXrA0GsaN3OxgHO+nbOFPBKRM91HDPLkavrcj
+         6ltkrFNKBkGxYyp/JsCN8J/B71V3cwbr4We76ANfJ3GPlqoDyyrKjfFOYag9O1lKmbvj
+         1obrgU0mXrVC3hdIWUfu/jNbm0/wjKGpe1yLE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        b=Slb7zalf5gk91i56ZUXdX6ot4daFez76Xo1O0l3xo8lx9k5NuHbnytLghop3BuFOa3
+         utCGZH4oWJuodHAfg7DGq5H2A3UxhdUur/i6ntUfZ6mTvnxLcCh8B4/CfyXnlWGJsc6B
+         mzNvuyy0ffo8AXydNlEDOoQOM1Z88ZTdVG5YM=
+Received: by 10.143.163.12 with SMTP id q12mr2004777wfo.224.1235849379874; 
+	Sat, 28 Feb 2009 11:29:39 -0800 (PST)
+X-Google-Sender-Auth: 632222b005ac006e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111787>
 
-Gnulib and glibc have gained a memmem() implementation using the Two-Way
-algorithm, which needs constant space and linear time.  Import it to
-compat/ in order to replace the simple quadratic implementation there.
+I've been involved in helping people who are new git users, and the
+one thing that seems to violate the principle of least surprise for
+them is the default setting for the sendemail.suppresscc -- in that
+the new users don't expect the additional CC lines to be automatically
+added based on what is present in the content of the mbox
+(format-patch output).
 
-memmem.c and str-two-way.h are copied verbatim from the repository at
-git://git.savannah.gnu.org/gnulib.git, with the following changes to
-memmem.c to make it fit into git's build environment:
+The messages from send-email that indicate it is going to add CC lines
+based on SOB etc. come *after* the last input from the user, and so
+they don't have an opportunity to jump in and prevent the extra
+e-mails from going out to whoever happens to be listed in the patch.
+(Lets assume for the moment, that they didn't see "--dry-run", or
+simply figured the process looked fairly straightforward, and didn't
+see the need for it.)
 
-	21,23c21
-	< #ifndef _LIBC
-	< # include <config.h>
-	< #endif
-	---
-	> #include "../git-compat-util.h"
-	40c38
-	< memmem (const void *haystack_start, size_t haystack_len,
-	---
-	> gitmemmem(const void *haystack_start, size_t haystack_len,
+Here is the use case which I suspect is fairly pervasive, and that
+I've already seen several times:
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- Makefile             |    1 +
- compat/memmem.c      |  103 +++++++++----
- compat/str-two-way.h |  429 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 504 insertions(+), 29 deletions(-)
- rewrite compat/memmem.c (91%)
- create mode 100644 compat/str-two-way.h
+1) User is working on something involving kernel version X, which is
+some amount behind the current mainstream HEAD.  (Okay, doesn't have
+to be kernel, could even be git itself.)
 
-diff --git a/Makefile b/Makefile
-index 0675c43..b2b15d9 100644
---- a/Makefile
-+++ b/Makefile
-@@ -359,6 +359,7 @@ LIB_H += cache-tree.h
- LIB_H += commit.h
- LIB_H += compat/cygwin.h
- LIB_H += compat/mingw.h
-+LIB_H += compat/str-two-way.h
- LIB_H += csum-file.h
- LIB_H += decorate.h
- LIB_H += delta.h
-diff --git a/compat/memmem.c b/compat/memmem.c
-dissimilarity index 91%
-index cd0d877..b0b7821 100644
---- a/compat/memmem.c
-+++ b/compat/memmem.c
-@@ -1,29 +1,74 @@
--#include "../git-compat-util.h"
--
--void *gitmemmem(const void *haystack, size_t haystack_len,
--                const void *needle, size_t needle_len)
--{
--	const char *begin = haystack;
--	const char *last_possible = begin + haystack_len - needle_len;
--
--	/*
--	 * The first occurrence of the empty string is deemed to occur at
--	 * the beginning of the string.
--	 */
--	if (needle_len == 0)
--		return (void *)begin;
--
--	/*
--	 * Sanity check, otherwise the loop might search through the whole
--	 * memory.
--	 */
--	if (haystack_len < needle_len)
--		return NULL;
--
--	for (; begin <= last_possible; begin++) {
--		if (!memcmp(begin, needle, needle_len))
--			return (void *)begin;
--	}
--
--	return NULL;
--}
-+/* Copyright (C) 1991,92,93,94,96,97,98,2000,2004,2007,2008 Free Software
-+   Foundation, Inc.
-+   This file is part of the GNU C Library.
-+
-+   This program is free software; you can redistribute it and/or modify
-+   it under the terms of the GNU General Public License as published by
-+   the Free Software Foundation; either version 2, or (at your option)
-+   any later version.
-+
-+   This program is distributed in the hope that it will be useful,
-+   but WITHOUT ANY WARRANTY; without even the implied warranty of
-+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+   GNU General Public License for more details.
-+
-+   You should have received a copy of the GNU General Public License along
-+   with this program; if not, write to the Free Software Foundation,
-+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
-+
-+/* This particular implementation was written by Eric Blake, 2008.  */
-+
-+#include "../git-compat-util.h"
-+
-+/* Specification of memmem.  */
-+#include <string.h>
-+
-+#ifndef _LIBC
-+# define __builtin_expect(expr, val)   (expr)
-+#endif
-+
-+#define RETURN_TYPE void *
-+#define AVAILABLE(h, h_l, j, n_l) ((j) <= (h_l) - (n_l))
-+#include "str-two-way.h"
-+
-+/* Return the first occurrence of NEEDLE in HAYSTACK.  Return HAYSTACK
-+   if NEEDLE_LEN is 0, otherwise NULL if NEEDLE is not found in
-+   HAYSTACK.  */
-+void *
-+gitmemmem(const void *haystack_start, size_t haystack_len,
-+	const void *needle_start, size_t needle_len)
-+{
-+  /* Abstract memory is considered to be an array of 'unsigned char' values,
-+     not an array of 'char' values.  See ISO C 99 section 6.2.6.1.  */
-+  const unsigned char *haystack = (const unsigned char *) haystack_start;
-+  const unsigned char *needle = (const unsigned char *) needle_start;
-+
-+  if (needle_len == 0)
-+    /* The first occurrence of the empty string is deemed to occur at
-+       the beginning of the string.  */
-+    return (void *) haystack;
-+
-+  /* Sanity check, otherwise the loop might search through the whole
-+     memory.  */
-+  if (__builtin_expect (haystack_len < needle_len, 0))
-+    return NULL;
-+
-+  /* Use optimizations in memchr when possible, to reduce the search
-+     size of haystack using a linear algorithm with a smaller
-+     coefficient.  However, avoid memchr for long needles, since we
-+     can often achieve sublinear performance.  */
-+  if (needle_len < LONG_NEEDLE_THRESHOLD)
-+    {
-+      haystack = memchr (haystack, *needle, haystack_len);
-+      if (!haystack || __builtin_expect (needle_len == 1, 0))
-+	return (void *) haystack;
-+      haystack_len -= haystack - (const unsigned char *) haystack_start;
-+      if (haystack_len < needle_len)
-+	return NULL;
-+      return two_way_short_needle (haystack, haystack_len, needle, needle_len);
-+    }
-+  else
-+    return two_way_long_needle (haystack, haystack_len, needle, needle_len);
-+}
-+
-+#undef LONG_NEEDLE_THRESHOLD
-diff --git a/compat/str-two-way.h b/compat/str-two-way.h
-new file mode 100644
-index 0000000..b0338a7
---- /dev/null
-+++ b/compat/str-two-way.h
-@@ -0,0 +1,429 @@
-+/* Byte-wise substring search, using the Two-Way algorithm.
-+   Copyright (C) 2008 Free Software Foundation, Inc.
-+   This file is part of the GNU C Library.
-+   Written by Eric Blake <ebb9@byu.net>, 2008.
-+
-+   This program is free software; you can redistribute it and/or modify
-+   it under the terms of the GNU General Public License as published by
-+   the Free Software Foundation; either version 2, or (at your option)
-+   any later version.
-+
-+   This program is distributed in the hope that it will be useful,
-+   but WITHOUT ANY WARRANTY; without even the implied warranty of
-+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+   GNU General Public License for more details.
-+
-+   You should have received a copy of the GNU General Public License along
-+   with this program; if not, write to the Free Software Foundation,
-+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
-+
-+/* Before including this file, you need to include <config.h> and
-+   <string.h>, and define:
-+     RESULT_TYPE             A macro that expands to the return type.
-+     AVAILABLE(h, h_l, j, n_l)
-+			     A macro that returns nonzero if there are
-+			     at least N_L bytes left starting at H[J].
-+			     H is 'unsigned char *', H_L, J, and N_L
-+			     are 'size_t'; H_L is an lvalue.  For
-+			     NUL-terminated searches, H_L can be
-+			     modified each iteration to avoid having
-+			     to compute the end of H up front.
-+
-+  For case-insensitivity, you may optionally define:
-+     CMP_FUNC(p1, p2, l)     A macro that returns 0 iff the first L
-+			     characters of P1 and P2 are equal.
-+     CANON_ELEMENT(c)        A macro that canonicalizes an element right after
-+			     it has been fetched from one of the two strings.
-+			     The argument is an 'unsigned char'; the result
-+			     must be an 'unsigned char' as well.
-+
-+  This file undefines the macros documented above, and defines
-+  LONG_NEEDLE_THRESHOLD.
-+*/
-+
-+#include <limits.h>
-+#include <stdint.h>
-+
-+/* We use the Two-Way string matching algorithm, which guarantees
-+   linear complexity with constant space.  Additionally, for long
-+   needles, we also use a bad character shift table similar to the
-+   Boyer-Moore algorithm to achieve improved (potentially sub-linear)
-+   performance.
-+
-+   See http://www-igm.univ-mlv.fr/~lecroq/string/node26.html#SECTION00260
-+   and http://en.wikipedia.org/wiki/Boyer-Moore_string_search_algorithm
-+*/
-+
-+/* Point at which computing a bad-byte shift table is likely to be
-+   worthwhile.  Small needles should not compute a table, since it
-+   adds (1 << CHAR_BIT) + NEEDLE_LEN computations of preparation for a
-+   speedup no greater than a factor of NEEDLE_LEN.  The larger the
-+   needle, the better the potential performance gain.  On the other
-+   hand, on non-POSIX systems with CHAR_BIT larger than eight, the
-+   memory required for the table is prohibitive.  */
-+#if CHAR_BIT < 10
-+# define LONG_NEEDLE_THRESHOLD 32U
-+#else
-+# define LONG_NEEDLE_THRESHOLD SIZE_MAX
-+#endif
-+
-+#ifndef MAX
-+# define MAX(a, b) ((a < b) ? (b) : (a))
-+#endif
-+
-+#ifndef CANON_ELEMENT
-+# define CANON_ELEMENT(c) c
-+#endif
-+#ifndef CMP_FUNC
-+# define CMP_FUNC memcmp
-+#endif
-+
-+/* Perform a critical factorization of NEEDLE, of length NEEDLE_LEN.
-+   Return the index of the first byte in the right half, and set
-+   *PERIOD to the global period of the right half.
-+
-+   The global period of a string is the smallest index (possibly its
-+   length) at which all remaining bytes in the string are repetitions
-+   of the prefix (the last repetition may be a subset of the prefix).
-+
-+   When NEEDLE is factored into two halves, a local period is the
-+   length of the smallest word that shares a suffix with the left half
-+   and shares a prefix with the right half.  All factorizations of a
-+   non-empty NEEDLE have a local period of at least 1 and no greater
-+   than NEEDLE_LEN.
-+
-+   A critical factorization has the property that the local period
-+   equals the global period.  All strings have at least one critical
-+   factorization with the left half smaller than the global period.
-+
-+   Given an ordered alphabet, a critical factorization can be computed
-+   in linear time, with 2 * NEEDLE_LEN comparisons, by computing the
-+   larger of two ordered maximal suffixes.  The ordered maximal
-+   suffixes are determined by lexicographic comparison of
-+   periodicity.  */
-+static size_t
-+critical_factorization (const unsigned char *needle, size_t needle_len,
-+			size_t *period)
-+{
-+  /* Index of last byte of left half, or SIZE_MAX.  */
-+  size_t max_suffix, max_suffix_rev;
-+  size_t j; /* Index into NEEDLE for current candidate suffix.  */
-+  size_t k; /* Offset into current period.  */
-+  size_t p; /* Intermediate period.  */
-+  unsigned char a, b; /* Current comparison bytes.  */
-+
-+  /* Invariants:
-+     0 <= j < NEEDLE_LEN - 1
-+     -1 <= max_suffix{,_rev} < j (treating SIZE_MAX as if it were signed)
-+     min(max_suffix, max_suffix_rev) < global period of NEEDLE
-+     1 <= p <= global period of NEEDLE
-+     p == global period of the substring NEEDLE[max_suffix{,_rev}+1...j]
-+     1 <= k <= p
-+  */
-+
-+  /* Perform lexicographic search.  */
-+  max_suffix = SIZE_MAX;
-+  j = 0;
-+  k = p = 1;
-+  while (j + k < needle_len)
-+    {
-+      a = CANON_ELEMENT (needle[j + k]);
-+      b = CANON_ELEMENT (needle[max_suffix + k]);
-+      if (a < b)
-+	{
-+	  /* Suffix is smaller, period is entire prefix so far.  */
-+	  j += k;
-+	  k = 1;
-+	  p = j - max_suffix;
-+	}
-+      else if (a == b)
-+	{
-+	  /* Advance through repetition of the current period.  */
-+	  if (k != p)
-+	    ++k;
-+	  else
-+	    {
-+	      j += p;
-+	      k = 1;
-+	    }
-+	}
-+      else /* b < a */
-+	{
-+	  /* Suffix is larger, start over from current location.  */
-+	  max_suffix = j++;
-+	  k = p = 1;
-+	}
-+    }
-+  *period = p;
-+
-+  /* Perform reverse lexicographic search.  */
-+  max_suffix_rev = SIZE_MAX;
-+  j = 0;
-+  k = p = 1;
-+  while (j + k < needle_len)
-+    {
-+      a = CANON_ELEMENT (needle[j + k]);
-+      b = CANON_ELEMENT (needle[max_suffix_rev + k]);
-+      if (b < a)
-+	{
-+	  /* Suffix is smaller, period is entire prefix so far.  */
-+	  j += k;
-+	  k = 1;
-+	  p = j - max_suffix_rev;
-+	}
-+      else if (a == b)
-+	{
-+	  /* Advance through repetition of the current period.  */
-+	  if (k != p)
-+	    ++k;
-+	  else
-+	    {
-+	      j += p;
-+	      k = 1;
-+	    }
-+	}
-+      else /* a < b */
-+	{
-+	  /* Suffix is larger, start over from current location.  */
-+	  max_suffix_rev = j++;
-+	  k = p = 1;
-+	}
-+    }
-+
-+  /* Choose the longer suffix.  Return the first byte of the right
-+     half, rather than the last byte of the left half.  */
-+  if (max_suffix_rev + 1 < max_suffix + 1)
-+    return max_suffix + 1;
-+  *period = p;
-+  return max_suffix_rev + 1;
-+}
-+
-+/* Return the first location of non-empty NEEDLE within HAYSTACK, or
-+   NULL.  HAYSTACK_LEN is the minimum known length of HAYSTACK.  This
-+   method is optimized for NEEDLE_LEN < LONG_NEEDLE_THRESHOLD.
-+   Performance is guaranteed to be linear, with an initialization cost
-+   of 2 * NEEDLE_LEN comparisons.
-+
-+   If AVAILABLE does not modify HAYSTACK_LEN (as in memmem), then at
-+   most 2 * HAYSTACK_LEN - NEEDLE_LEN comparisons occur in searching.
-+   If AVAILABLE modifies HAYSTACK_LEN (as in strstr), then at most 3 *
-+   HAYSTACK_LEN - NEEDLE_LEN comparisons occur in searching.  */
-+static RETURN_TYPE
-+two_way_short_needle (const unsigned char *haystack, size_t haystack_len,
-+		      const unsigned char *needle, size_t needle_len)
-+{
-+  size_t i; /* Index into current byte of NEEDLE.  */
-+  size_t j; /* Index into current window of HAYSTACK.  */
-+  size_t period; /* The period of the right half of needle.  */
-+  size_t suffix; /* The index of the right half of needle.  */
-+
-+  /* Factor the needle into two halves, such that the left half is
-+     smaller than the global period, and the right half is
-+     periodic (with a period as large as NEEDLE_LEN - suffix).  */
-+  suffix = critical_factorization (needle, needle_len, &period);
-+
-+  /* Perform the search.  Each iteration compares the right half
-+     first.  */
-+  if (CMP_FUNC (needle, needle + period, suffix) == 0)
-+    {
-+      /* Entire needle is periodic; a mismatch can only advance by the
-+	 period, so use memory to avoid rescanning known occurrences
-+	 of the period.  */
-+      size_t memory = 0;
-+      j = 0;
-+      while (AVAILABLE (haystack, haystack_len, j, needle_len))
-+	{
-+	  /* Scan for matches in right half.  */
-+	  i = MAX (suffix, memory);
-+	  while (i < needle_len && (CANON_ELEMENT (needle[i])
-+				    == CANON_ELEMENT (haystack[i + j])))
-+	    ++i;
-+	  if (needle_len <= i)
-+	    {
-+	      /* Scan for matches in left half.  */
-+	      i = suffix - 1;
-+	      while (memory < i + 1 && (CANON_ELEMENT (needle[i])
-+					== CANON_ELEMENT (haystack[i + j])))
-+		--i;
-+	      if (i + 1 < memory + 1)
-+		return (RETURN_TYPE) (haystack + j);
-+	      /* No match, so remember how many repetitions of period
-+		 on the right half were scanned.  */
-+	      j += period;
-+	      memory = needle_len - period;
-+	    }
-+	  else
-+	    {
-+	      j += i - suffix + 1;
-+	      memory = 0;
-+	    }
-+	}
-+    }
-+  else
-+    {
-+      /* The two halves of needle are distinct; no extra memory is
-+	 required, and any mismatch results in a maximal shift.  */
-+      period = MAX (suffix, needle_len - suffix) + 1;
-+      j = 0;
-+      while (AVAILABLE (haystack, haystack_len, j, needle_len))
-+	{
-+	  /* Scan for matches in right half.  */
-+	  i = suffix;
-+	  while (i < needle_len && (CANON_ELEMENT (needle[i])
-+				    == CANON_ELEMENT (haystack[i + j])))
-+	    ++i;
-+	  if (needle_len <= i)
-+	    {
-+	      /* Scan for matches in left half.  */
-+	      i = suffix - 1;
-+	      while (i != SIZE_MAX && (CANON_ELEMENT (needle[i])
-+				       == CANON_ELEMENT (haystack[i + j])))
-+		--i;
-+	      if (i == SIZE_MAX)
-+		return (RETURN_TYPE) (haystack + j);
-+	      j += period;
-+	    }
-+	  else
-+	    j += i - suffix + 1;
-+	}
-+    }
-+  return NULL;
-+}
-+
-+/* Return the first location of non-empty NEEDLE within HAYSTACK, or
-+   NULL.  HAYSTACK_LEN is the minimum known length of HAYSTACK.  This
-+   method is optimized for LONG_NEEDLE_THRESHOLD <= NEEDLE_LEN.
-+   Performance is guaranteed to be linear, with an initialization cost
-+   of 3 * NEEDLE_LEN + (1 << CHAR_BIT) operations.
-+
-+   If AVAILABLE does not modify HAYSTACK_LEN (as in memmem), then at
-+   most 2 * HAYSTACK_LEN - NEEDLE_LEN comparisons occur in searching,
-+   and sublinear performance O(HAYSTACK_LEN / NEEDLE_LEN) is possible.
-+   If AVAILABLE modifies HAYSTACK_LEN (as in strstr), then at most 3 *
-+   HAYSTACK_LEN - NEEDLE_LEN comparisons occur in searching, and
-+   sublinear performance is not possible.  */
-+static RETURN_TYPE
-+two_way_long_needle (const unsigned char *haystack, size_t haystack_len,
-+		     const unsigned char *needle, size_t needle_len)
-+{
-+  size_t i; /* Index into current byte of NEEDLE.  */
-+  size_t j; /* Index into current window of HAYSTACK.  */
-+  size_t period; /* The period of the right half of needle.  */
-+  size_t suffix; /* The index of the right half of needle.  */
-+  size_t shift_table[1U << CHAR_BIT]; /* See below.  */
-+
-+  /* Factor the needle into two halves, such that the left half is
-+     smaller than the global period, and the right half is
-+     periodic (with a period as large as NEEDLE_LEN - suffix).  */
-+  suffix = critical_factorization (needle, needle_len, &period);
-+
-+  /* Populate shift_table.  For each possible byte value c,
-+     shift_table[c] is the distance from the last occurrence of c to
-+     the end of NEEDLE, or NEEDLE_LEN if c is absent from the NEEDLE.
-+     shift_table[NEEDLE[NEEDLE_LEN - 1]] contains the only 0.  */
-+  for (i = 0; i < 1U << CHAR_BIT; i++)
-+    shift_table[i] = needle_len;
-+  for (i = 0; i < needle_len; i++)
-+    shift_table[CANON_ELEMENT (needle[i])] = needle_len - i - 1;
-+
-+  /* Perform the search.  Each iteration compares the right half
-+     first.  */
-+  if (CMP_FUNC (needle, needle + period, suffix) == 0)
-+    {
-+      /* Entire needle is periodic; a mismatch can only advance by the
-+	 period, so use memory to avoid rescanning known occurrences
-+	 of the period.  */
-+      size_t memory = 0;
-+      size_t shift;
-+      j = 0;
-+      while (AVAILABLE (haystack, haystack_len, j, needle_len))
-+	{
-+	  /* Check the last byte first; if it does not match, then
-+	     shift to the next possible match location.  */
-+	  shift = shift_table[CANON_ELEMENT (haystack[j + needle_len - 1])];
-+	  if (0 < shift)
-+	    {
-+	      if (memory && shift < period)
-+		{
-+		  /* Since needle is periodic, but the last period has
-+		     a byte out of place, there can be no match until
-+		     after the mismatch.  */
-+		  shift = needle_len - period;
-+		  memory = 0;
-+		}
-+	      j += shift;
-+	      continue;
-+	    }
-+	  /* Scan for matches in right half.  The last byte has
-+	     already been matched, by virtue of the shift table.  */
-+	  i = MAX (suffix, memory);
-+	  while (i < needle_len - 1 && (CANON_ELEMENT (needle[i])
-+					== CANON_ELEMENT (haystack[i + j])))
-+	    ++i;
-+	  if (needle_len - 1 <= i)
-+	    {
-+	      /* Scan for matches in left half.  */
-+	      i = suffix - 1;
-+	      while (memory < i + 1 && (CANON_ELEMENT (needle[i])
-+					== CANON_ELEMENT (haystack[i + j])))
-+		--i;
-+	      if (i + 1 < memory + 1)
-+		return (RETURN_TYPE) (haystack + j);
-+	      /* No match, so remember how many repetitions of period
-+		 on the right half were scanned.  */
-+	      j += period;
-+	      memory = needle_len - period;
-+	    }
-+	  else
-+	    {
-+	      j += i - suffix + 1;
-+	      memory = 0;
-+	    }
-+	}
-+    }
-+  else
-+    {
-+      /* The two halves of needle are distinct; no extra memory is
-+	 required, and any mismatch results in a maximal shift.  */
-+      size_t shift;
-+      period = MAX (suffix, needle_len - suffix) + 1;
-+      j = 0;
-+      while (AVAILABLE (haystack, haystack_len, j, needle_len))
-+	{
-+	  /* Check the last byte first; if it does not match, then
-+	     shift to the next possible match location.  */
-+	  shift = shift_table[CANON_ELEMENT (haystack[j + needle_len - 1])];
-+	  if (0 < shift)
-+	    {
-+	      j += shift;
-+	      continue;
-+	    }
-+	  /* Scan for matches in right half.  The last byte has
-+	     already been matched, by virtue of the shift table.  */
-+	  i = suffix;
-+	  while (i < needle_len - 1 && (CANON_ELEMENT (needle[i])
-+					== CANON_ELEMENT (haystack[i + j])))
-+	    ++i;
-+	  if (needle_len - 1 <= i)
-+	    {
-+	      /* Scan for matches in left half.  */
-+	      i = suffix - 1;
-+	      while (i != SIZE_MAX && (CANON_ELEMENT (needle[i])
-+				       == CANON_ELEMENT (haystack[i + j])))
-+		--i;
-+	      if (i == SIZE_MAX)
-+		return (RETURN_TYPE) (haystack + j);
-+	      j += period;
-+	    }
-+	  else
-+	    j += i - suffix + 1;
-+	}
-+    }
-+  return NULL;
-+}
-+
-+#undef AVAILABLE
-+#undef CANON_ELEMENT
-+#undef CMP_FUNC
-+#undef MAX
-+#undef RETURN_TYPE
--- 
-1.6.2.rc2
+2) They've created a branch off of X and they've added their own
+commits, and also cherry picked relevant commits from upstream that
+happened between X and HEAD into their branch.   One of the features
+they've cherry picked onto their branch is a 25 patch series that has
+"Signed-off-by: miserable@bofh.com" in it, a miserable person who
+hates extra-emails.
+
+3) They run "git format-patch -n --thread -o foo X..mybranch"
+
+4) They run "git send-email --to coworker@mycompany.com foo"  so their
+buddy within the company can have an mbox patchset.
+
+5) They recoil in horror while smashing ^C as they try to stop
+send-email from spamming miserable@bofh.com with 25 of his own
+patches.
+
+In light of this, I've simply advised new users to run something like:
+
+git config --global sendemail.suppresscc all
+
+...just so that they won't accidentally do what I've described in the above.
+
+Apologies if this has been discussed before; I took a quick scan of my
+archive and didn't see any discussions on it.  With the recent thread
+about warning people of non-back compatible changes that will appear
+post 1.6.2 -- I thought perhaps this was a good time to
+mention/consider it.
+
+I'm not sure what the right thing to do here is -- I suspect if you
+made suppress-cc=all the default, then there would be more experienced
+users that would complain about having to explicitly add a
+suppress-cc=self to get the old behaviour?  Would that be acceptable?
+I don't know...
+
+Thanks,
+Paul.
