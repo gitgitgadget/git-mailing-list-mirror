@@ -1,69 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4] diffcore-pickaxe: further refactor count_match()
-Date: Fri, 27 Feb 2009 17:25:48 -0800
-Message-ID: <7vy6vrgxnn.fsf@gitster.siamese.dyndns.org>
-References: <cover.1235629933.git.gitster@pobox.com>
- <cd73512d11e63554396983ed4e9556b2d18b3e4a.1235629933.git.gitster@pobox.com>
- <49A88FA7.1020402@lsrfire.ath.cx>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: [PATCH] gitk: avoid a crash in Tk if the application is closed early
+Date: 28 Feb 2009 00:19:02 +0000
+Message-ID: <87hc2fe7m1.fsf@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sat Feb 28 02:28:45 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: paulus@samba.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 28 02:29:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LdE0T-0001kS-3x
-	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 02:28:45 +0100
+	id 1LdE1P-0001vo-Ow
+	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 02:29:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753446AbZB1BZ5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Feb 2009 20:25:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753052AbZB1BZ5
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 20:25:57 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:39237 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751032AbZB1BZ4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Feb 2009 20:25:56 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 68A0617D6;
-	Fri, 27 Feb 2009 20:25:53 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C8A7417D0; Fri,
- 27 Feb 2009 20:25:50 -0500 (EST)
-In-Reply-To: <49A88FA7.1020402@lsrfire.ath.cx> (=?utf-8?Q?Ren=C3=A9?=
- Scharfe's message of "Sat, 28 Feb 2009 02:13:11 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: BD8C253E-0536-11DE-A6E1-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
+	id S1754228AbZB1B2O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2009 20:28:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753751AbZB1B2O
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 20:28:14 -0500
+Received: from smtp-out4.blueyonder.co.uk ([195.188.213.7]:44632 "EHLO
+	smtp-out4.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753522AbZB1B2O (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Feb 2009 20:28:14 -0500
+Received: from [172.23.170.144] (helo=anti-virus03-07)
+	by smtp-out4.blueyonder.co.uk with smtp (Exim 4.52)
+	id 1LdCv1-0003Rf-C6; Sat, 28 Feb 2009 00:19:03 +0000
+Received: from [92.238.221.8] (helo=badger.patthoyts.tk)
+	by asmtp-out4.blueyonder.co.uk with esmtp (Exim 4.52)
+	id 1LdCv0-0003vQ-VI; Sat, 28 Feb 2009 00:19:03 +0000
+Received: by badger.patthoyts.tk (Postfix, from userid 1000)
+	id B9F3F51836; Sat, 28 Feb 2009 00:19:02 +0000 (GMT)
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111736>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
->> -
->> -	} else { /* Classic exact string match */
->> -		/* Yes, I've heard of strstr(), but the thing is *data may
->> -		 * not be NUL terminated.  Sue me.
->> -		 */
->> +	} else {
->> +		/* data many not be NUL terminated; we cannot use strstr() */
->
-> That looks fishy to me.  regexec() expects data to be a NUL-terminate=
-d
-> string, so either the comment is wrong or the regexp case needs to ta=
-ke
-> better care to add a NUL at the end of the buffer.
+    This evades Tk bug [2645457] that can lead to a crash in gitk if
+    the application is closed while the commits are still being read
+    from the git subprocess. By calling update to flush all the
+    outstanding geometry events we avoid the chance of trying to map a
+    deleted window.
 
-Probably yes, but regexp side is not my code and I never use it, so... =
-;-)
+Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+---
+ gitk |   17 ++++++++++++-----
+ 1 files changed, 12 insertions(+), 5 deletions(-)
 
-> In any case, there is also memmem(), which uses the same fast algorit=
-hm
-> as strstr() in recent glibc versions.  Like this?
-
-Thanks; it would be nice to bench this change.
+diff --git a/gitk b/gitk
+index 2b5265a..cd7ea2f 100755
+--- a/gitk
++++ b/gitk
+@@ -1795,6 +1795,7 @@ proc make_transient {window origin} {
+ proc show_error {w top msg} {
+     variable use_ttk
+     set ttk [expr {$use_ttk ? "ttk" : ""}]
++    if {[wm state $top] eq "withdrawn"} { wm deiconify $top }
+     message $w.m -text $msg -justify center -aspect 400
+     pack $w.m -side top -fill x -padx 20 -pady 20
+     ${ttk}::button $w.ok -default active -text [mc OK] -command "destroy $top"
+@@ -10998,12 +10999,9 @@ proc init {args} {
+     variable lserial 0
+     variable isworktree [expr {[exec git rev-parse --is-inside-work-tree] == "true"}]
+     setcoords
+-    makewindow
+-    # wait for the window to become visible
+-    wm deiconify .
+-    tkwait visibility .
++    wm withdraw .
+     wm title . "[file tail $argv0]: [file tail [pwd]]"
+-    readrefs
++    makewindow
+ 
+     if {$cmdline_files ne {} || $revtreeargs ne {} || $revtreeargscmd ne {}} {
+         # create a view for the files/dirs specified on the command line
+@@ -11034,11 +11032,20 @@ proc init {args} {
+         }
+     }
+ 
++    # wait for the window to become visible
++    wm deiconify .
++    tkwait visibility .
++
+     if {[tk windowingsystem] eq "win32"} {
+         focus -force .
+         bind . <Control-F2> {console show}
+     }
+ 
++    # flush all geometry events to prevent possible crash if someone exits
++    # during the following reads.
++    update
++
++    readrefs
+     getcommits {}
+ }
+ 
+-- 
+1.6.0.2.1172.ga5ed0
