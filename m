@@ -1,72 +1,123 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn - return original format_svn_date semantics
-Date: Fri, 27 Feb 2009 19:22:19 -0800
-Message-ID: <20090228032219.GA28606@dcvr.yhbt.net>
-References: <1235790705-12903-1-git-send-email-bwalton@artsci.utoronto.ca>
+Subject: Re: git-svn woes
+Date: Fri, 27 Feb 2009 19:31:08 -0800
+Message-ID: <20090228033108.GB28606@dcvr.yhbt.net>
+References: <alpine.LFD.2.00.0902271442270.5511@xanadu.home> <86d4c5e00902271253y50eaef01x8ca837d3a0ed7ef6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ben Walton <bwalton@artsci.utoronto.ca>
-X-From: git-owner@vger.kernel.org Sat Feb 28 04:24:28 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
+	Deskin Miller <deskinm@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 28 04:38:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LdFoR-0001im-VP
-	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 04:24:28 +0100
+	id 1LdG2U-0004Qc-P2
+	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 04:38:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752345AbZB1DWW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2009 22:22:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752080AbZB1DWV
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 22:22:21 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:34975 "EHLO dcvr.yhbt.net"
+	id S1753172AbZB1DbM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Feb 2009 22:31:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753151AbZB1DbL
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 22:31:11 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:40214 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751134AbZB1DWU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2009 22:22:20 -0500
+	id S1752912AbZB1DbK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2009 22:31:10 -0500
 Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 542791F799;
-	Sat, 28 Feb 2009 03:22:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C55C51F799;
+	Sat, 28 Feb 2009 03:31:08 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <1235790705-12903-1-git-send-email-bwalton@artsci.utoronto.ca>
+In-Reply-To: <86d4c5e00902271253y50eaef01x8ca837d3a0ed7ef6@mail.gmail.com>
 User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111744>
 
-Ben Walton <bwalton@artsci.utoronto.ca> wrote:
-> When %z was removed from the strftime call and subsituted with a
-> local gmt offset calculation, time() was no longer the default for
-> all time functions as it was with the previous localtime(shift).
-> This is now corrected so that format_svn_time behaves as it used to.
-> 
-> Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
+Deskin Miller <deskinm@gmail.com> wrote:
+> On Fri, Feb 27, 2009 at 15:37, Nicolas Pitre <nico@cam.org> wrote:
+> >
+> > OK... I cannot pretend to be a newbie with git. =A0However it's the=
+ first
+> > time I try git-svn and it looks like a couple basic things aren't r=
+ight.
+> >
+> > I initially cloned svn://svn.berlios.de/openocd using "git svn clon=
+e -s".
+> > So far so good. =A0Now I'm attempting to update using "git svn fetc=
+h" but
+> > the operation always fails with the following error:
+> >
+> > |branch_from: /openocd/branches =3D> /openocd/branches/xscale
+> > |Found possible branch point:
+> > |svn://svn.berlios.de/openocd/openocd/branches/xscale =3D>
+> > |svn://svn.berlios.de/openocd/branches/xscale, 1231
+> > |Initializing parent: xscale@1231
+> > |Found branch parent: (xscale) 657522f3f2d1ab8b679fd5b45ce4e9ca1974=
+af18
+> > |Following parent with do_switch
+> > |Scanning for empty symlinks, this may take a while if you have man=
+y empty files
+> > |You may disable this with `git config svn.brokenSymlinkWorkaround =
+false'.
+> > |This may be done in a different terminal without restarting git sv=
+n
+> > |Malformed network data: Malformed network data at /home/nico/libex=
+ec/git-core/git-svn line 3333
+>=20
+> I experience the same error as you do with 1.6.2-rc2.  This error is
+> occurring in the new broken-symlink-workaround code.  I'm not sure
+> what is going on and don't have time to examine it closely, but the
+> function where the error occurs doesn't run if the config
+> svn.brokenSymlinkWorkaround option is set false; doing so makes the
+> fetch continue for me.
+>=20
+> Any ideas, Eric?
 
-Thanks Ben,
+I've been poking around at this for a bit, I am pretty confused
+by this, too.  It's been a rough week, so I could be missing
+something obvious...
 
-I'm pretty sure there's another bug lurking in there with the "info"
-command, but this should at least cleanup the output as a stopgap
-measure until somebody has time to properly fix it.
+Junio: since 1.6.2 might be out the door before we have time to resolve
+this, I'm leaning towards disabling the broken-symlink-workaround by
+default for the release. It seems far more people are negatively
+affected by the attempted fix around this rare problem than helped.
 
-Acked-by: Eric Wong <normalperson@yhbt.net>
+> > Thing is... the repository never gets updated and by far. =A0Accord=
+ing to
+> > "git svn info", the fetched revision is 1232, while a separate
+> > repository using native svn claims to be at revision 1383.
+> >
+> > Furthermore, the "git svn info" command produces yet more errors, s=
+uch
+> > as:
+> >
+> > |Use of uninitialized value $lc_author in concatenation (.) or stri=
+ng at /home/nico/libexec/git-core/git-svn line 964.
+> > |Use of uninitialized value $lc_rev in concatenation (.) or string =
+at /home/nico/libexec/git-core/git-svn line 965.
+> > |Use of uninitialized value $t in gmtime at /home/nico/libexec/git-=
+core/git-svn line 4743.
+> > |Use of uninitialized value $t in numeric comparison (<=3D>) at /ho=
+me/nico/libexec/git-core/git-svn line 4744.
+> > |Use of uninitialized value $t in subtraction (-) at /home/nico/lib=
+exec/git-core/git-svn line 4745.
+> > |Use of uninitialized value $t in localtime at /home/nico/libexec/g=
+it-core/git-svn line 4746.
+> >
+> > This is with git from current "next". I cannot spend time to try fi=
+xing
+> > the issue myself (especially as I'm not familiar at all with the in=
+ner
+> > workings of svn), so my only option at the moment is to give up on
+> > git-svn altogether. =A0:-(
+>=20
+> Oh, don't give up quite yet :)
+>=20
+> Deskin Miler
 
-> ---
->  git-svn.perl |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/git-svn.perl b/git-svn.perl
-> index d967594..55702d0 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -4738,7 +4738,7 @@ sub run_pager {
->  
->  sub format_svn_date {
->  	# some systmes don't handle or mishandle %z, so be creative.
-> -	my $t = shift;
-> +	my $t = shift || time;
->  	my $gm = timelocal(gmtime($t));
->  	my $sign = qw( + + - )[ $t <=> $gm ];
->  	my $gmoff = sprintf("%s%02d%02d", $sign, (gmtime(abs($t - $gm)))[2,1]);
-> -- 
-> 1.6.0.4
+--=20
+Eric Wong
