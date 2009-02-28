@@ -1,101 +1,188 @@
-From: Daniel Pittman <daniel@rimspace.net>
-Subject: git-svn, and which branch am I on?
-Date: Sat, 28 Feb 2009 19:50:08 +1100
-Organization: I know I put it down here, somewhere.
-Message-ID: <87ljrr7xof.fsf@rimspace.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 6/6] is_kept_pack(): final clean-up
+Date: Sat, 28 Feb 2009 01:15:11 -0800
+Message-ID: <69e020ae00ebd3f7ae3c2f35acb139361417ef64.1235812035.git.gitster@pobox.com>
+References: <cover.1235812035.git.gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 28 10:06:50 2009
+X-From: git-owner@vger.kernel.org Sat Feb 28 10:17:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LdL9e-0007s3-13
-	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 10:06:42 +0100
+	id 1LdLK7-0001wI-M5
+	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 10:17:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752031AbZB1JFP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Feb 2009 04:05:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751828AbZB1JFM
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Feb 2009 04:05:12 -0500
-Received: from main.gmane.org ([80.91.229.2]:60273 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751592AbZB1JFJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Feb 2009 04:05:09 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1LdL82-0003hc-B0
-	for git@vger.kernel.org; Sat, 28 Feb 2009 09:05:02 +0000
-Received: from ppp59-167-189-244.static.internode.on.net ([59.167.189.244])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 28 Feb 2009 09:05:02 +0000
-Received: from daniel by ppp59-167-189-244.static.internode.on.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 28 Feb 2009 09:05:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: ppp59-167-189-244.static.internode.on.net
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/23.0.60 (gnu/linux)
-Cancel-Lock: sha1:c5PoOCuadr5grc1fblrDj5i9/Tk=
+	id S1754699AbZB1JPm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Feb 2009 04:15:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756117AbZB1JPj
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Feb 2009 04:15:39 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58402 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754396AbZB1JPe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Feb 2009 04:15:34 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2FC4E28CD
+	for <git@vger.kernel.org>; Sat, 28 Feb 2009 04:15:33 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 736B628CC for
+ <git@vger.kernel.org>; Sat, 28 Feb 2009 04:15:32 -0500 (EST)
+X-Mailer: git-send-email 1.6.2.rc2.99.g9f3bb
+In-Reply-To: <cover.1235812035.git.gitster@pobox.com>
+X-Pobox-Relay-ID: 5A001F92-0578-11DE-9242-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111756>
 
-G'day.
+Now is_kept_pack() is just a member lookup into a structure, we can write
+it as such.
 
-I recently got asked a question about git-svn that I had no idea how to
-answer, and which I am actually curious to know how to find out.
+Also rewrite the sole caller of has_sha1_kept_pack() to switch on the
+criteria the callee uses (namely, revs->kept_pack_only) between calling
+has_sha1_kept_pack() and has_sha1_pack(), so that these two callees do not
+have to take a pointer to struct rev_info as an argument.
 
-The general question was: in git, how do I identify where this branch
-came from?
+This removes the header file dependency issue temporarily introduced by
+the earlier commit, so we revert changes associated to that as well.
 
-Specifically, this was about 'git svn', but also generally how to
-identify this information in git.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin-pack-objects.c |    4 ++--
+ cache.h                |    1 +
+ revision.c             |    4 +++-
+ revision.h             |    3 ---
+ sha1_file.c            |   22 +++++++---------------
+ 5 files changed, 13 insertions(+), 21 deletions(-)
 
-So, with a repository branch layout like this:
-
-  master        (local)
-  testing       (local)
-  trunk         (remote)
-  v100          (remote)
-
-How would I find out which remote branch master and trunk came from?
-
-
-To restate that, because I am not sure if that is clear, given this
-layout of branches:
-
-     trunk (remote)
-     |
- o---o---o---o---o  branch master
-  \
-   \
-    o---o---o---o branch testing
-    |
-    v100 (remote)
-
-How can I identify that 'testing' came from the 'v100' branch, and that
-master came from the 'trunk' branch?
-
-
-Ideally, I would like to work this out on the command line, without
-needing to reference gitk or another graphical tool, but even a solution
-that used them would be fine.
-
-Initially I figured there would be some equivalent of the Mercurial
-'glog' output available, showing this; for reference the second and
-third examples here are what I was envisaging:
-http://www.selenic.com/mercurial/wiki/index.cgi/GraphlogExtension
-
-(from that display I could infer where testing and master came from,
- rather than directly getting the answer, but that is just fine.)
-
-
-...and, finally, is the reason that I am finding it hard to explain this
-because I have an expectation of how things work that doesn't match up
-with git?  In other words, is the question actually meaningless?
-
-Regards,
-        Daniel
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 150258b..b2e4626 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -1915,7 +1915,7 @@ static void add_objects_in_unpacked_packs(struct rev_info *revs)
+ 		const unsigned char *sha1;
+ 		struct object *o;
+ 
+-		if (is_kept_pack(p))
++		if (p->pack_keep)
+ 			continue;
+ 		if (open_pack_index(p))
+ 			die("cannot open pack index");
+@@ -1951,7 +1951,7 @@ static void loosen_unused_packed_objects(struct rev_info *revs)
+ 	const unsigned char *sha1;
+ 
+ 	for (p = packed_git; p; p = p->next) {
+-		if (is_kept_pack(p))
++		if (p->pack_keep)
+ 			continue;
+ 
+ 		if (open_pack_index(p))
+diff --git a/cache.h b/cache.h
+index 23c16d0..0a3d523 100644
+--- a/cache.h
++++ b/cache.h
+@@ -566,6 +566,7 @@ extern int check_sha1_signature(const unsigned char *sha1, void *buf, unsigned l
+ extern int move_temp_to_file(const char *tmpfile, const char *filename);
+ 
+ extern int has_sha1_pack(const unsigned char *sha1);
++extern int has_sha1_kept_pack(const unsigned char *sha1);
+ extern int has_sha1_file(const unsigned char *sha1);
+ extern int has_loose_object_nonlocal(const unsigned char *sha1);
+ 
+diff --git a/revision.c b/revision.c
+index 3cfd653..6d8ac46 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1476,7 +1476,9 @@ enum commit_action simplify_commit(struct rev_info *revs, struct commit *commit)
+ 	if (commit->object.flags & SHOWN)
+ 		return commit_ignore;
+ 	if (revs->unpacked &&
+-	    has_sha1_kept_pack(commit->object.sha1, revs))
++	    (revs->kept_pack_only
++	     ? has_sha1_kept_pack(commit->object.sha1)
++	     : has_sha1_pack(commit->object.sha1)))
+ 		return commit_ignore;
+ 	if (revs->show_all)
+ 		return commit_show;
+diff --git a/revision.h b/revision.h
+index f63596f..b9fa9c2 100644
+--- a/revision.h
++++ b/revision.h
+@@ -156,7 +156,4 @@ enum commit_action {
+ 
+ extern enum commit_action simplify_commit(struct rev_info *revs, struct commit *commit);
+ 
+-extern int has_sha1_kept_pack(const unsigned char *sha1, const struct rev_info *);
+-extern int is_kept_pack(const struct packed_git *);
+-
+ #endif
+diff --git a/sha1_file.c b/sha1_file.c
+index e8a9517..7ead56c 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -16,8 +16,6 @@
+ #include "refs.h"
+ #include "pack-revindex.h"
+ #include "sha1-lookup.h"
+-#include "diff.h"
+-#include "revision.h"
+ 
+ #ifndef O_NOATIME
+ #if defined(__linux__) && (defined(__i386__) || defined(__PPC__))
+@@ -1858,13 +1856,8 @@ off_t find_pack_entry_one(const unsigned char *sha1,
+ 	return 0;
+ }
+ 
+-int is_kept_pack(const struct packed_git *p)
+-{
+-	return p->pack_keep;
+-}
+-
+ static int find_pack_ent(const unsigned char *sha1, struct pack_entry *e,
+-			 const struct rev_info *revs)
++			 int kept_pack_only)
+ {
+ 	static struct packed_git *last_found = (void *)1;
+ 	struct packed_git *p;
+@@ -1876,7 +1869,7 @@ static int find_pack_ent(const unsigned char *sha1, struct pack_entry *e,
+ 	p = (last_found == (void *)1) ? packed_git : last_found;
+ 
+ 	do {
+-		if (revs->kept_pack_only && !is_kept_pack(p))
++		if (kept_pack_only && !p->pack_keep)
+ 			goto next;
+ 		if (p->num_bad_objects) {
+ 			unsigned i;
+@@ -1919,13 +1912,12 @@ static int find_pack_ent(const unsigned char *sha1, struct pack_entry *e,
+ 
+ static int find_pack_entry(const unsigned char *sha1, struct pack_entry *e)
+ {
+-	return find_pack_ent(sha1, e, NULL);
++	return find_pack_ent(sha1, e, 0);
+ }
+ 
+-static int find_kept_pack_entry(const unsigned char *sha1, struct pack_entry *e,
+-				const struct rev_info *revs)
++static int find_kept_pack_entry(const unsigned char *sha1, struct pack_entry *e)
+ {
+-	return find_pack_ent(sha1, e, revs);
++	return find_pack_ent(sha1, e, 1);
+ }
+ 
+ struct packed_git *find_sha1_pack(const unsigned char *sha1,
+@@ -2395,10 +2387,10 @@ int has_sha1_pack(const unsigned char *sha1)
+ 	return find_pack_entry(sha1, &e);
+ }
+ 
+-int has_sha1_kept_pack(const unsigned char *sha1, const struct rev_info *revs)
++int has_sha1_kept_pack(const unsigned char *sha1)
+ {
+ 	struct pack_entry e;
+-	return find_kept_pack_entry(sha1, &e, revs);
++	return find_kept_pack_entry(sha1, &e);
+ }
+ 
+ int has_sha1_file(const unsigned char *sha1)
+-- 
+1.6.2.rc2.99.g9f3bb
