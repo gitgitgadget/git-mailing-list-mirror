@@ -1,73 +1,79 @@
-From: Brent Goodrick <bgoodr@gmail.com>
-Subject: Re: How can I force git to recognize a change change in file modes?
-Date: Sat, 28 Feb 2009 09:34:15 -0800
-Message-ID: <e38bce640902280934u3d9da650ke64865d7149b3c66@mail.gmail.com>
-References: <e38bce640902271717s46cf47f9i7c6bf5aac0d5f273@mail.gmail.com>
-	 <20090228045531.14399ebf@perceptron>
-	 <e38bce640902280824x3ae41d95qab1f1a450235e096@mail.gmail.com>
-	 <76718490902280852y2f2657ck7459c138205bb874@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/4] diffcore-pickaxe: further refactor count_match()
+Date: Sat, 28 Feb 2009 09:40:32 -0800
+Message-ID: <7vmyc6foj3.fsf@gitster.siamese.dyndns.org>
+References: <cover.1235629933.git.gitster@pobox.com>
+ <cd73512d11e63554396983ed4e9556b2d18b3e4a.1235629933.git.gitster@pobox.com>
+ <49A88FA7.1020402@lsrfire.ath.cx> <7vy6vrgxnn.fsf@gitster.siamese.dyndns.org>
+ <7v8wnrgkjw.fsf@gitster.siamese.dyndns.org> <49A937B8.1030205@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: =?ISO-8859-1?Q?Jan_Kr=FCger?= <jk@jk.gs>, git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 28 18:35:55 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sat Feb 28 18:42:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LdT6L-00063I-G2
-	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 18:35:49 +0100
+	id 1LdTCS-0000Q4-Ub
+	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 18:42:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753077AbZB1ReS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Feb 2009 12:34:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753065AbZB1ReS
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Feb 2009 12:34:18 -0500
-Received: from el-out-1112.google.com ([209.85.162.176]:55110 "EHLO
-	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752983AbZB1ReS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Feb 2009 12:34:18 -0500
-Received: by el-out-1112.google.com with SMTP id b25so1387462elf.1
-        for <git@vger.kernel.org>; Sat, 28 Feb 2009 09:34:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=RxV2sszKapYkrXTiRtMJ0S0x3KKI3+JKQPy5hSjoXBE=;
-        b=DgDvhTE67fquHhuL4QrWRVM7/GRf87M3OPVuFIPhlBJiE2x/5hK9cipq3lwJYknsLy
-         fWW05m4DxcIQcRsrGYaOn6s/gO4OHtFlZ6dqQHYjYujpETb0FPlfF8Ebv9xCC1SI8YFR
-         tDnXhJygSA61UN8+A/4osjNC8Nh/h6P2xafZk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=v9EbavtlpFO7KPpcH6ti98u3uJV/7nIoUJSqyodY6sHhyCrQjD6FjMErSLzp+T6qqH
-         NC9UKbEsNLjHZsroxzzSjoX0KIfkW5c7/spX6BfZVhz1fVp2rQF6oueCZFmgSxyTs1JZ
-         gbU0USKO79GyBLv7hjAA+p0kbmaLFZ/dZUy78=
-Received: by 10.90.92.14 with SMTP id p14mr150309agb.104.1235842455655; Sat, 
-	28 Feb 2009 09:34:15 -0800 (PST)
-In-Reply-To: <76718490902280852y2f2657ck7459c138205bb874@mail.gmail.com>
+	id S1753077AbZB1Rkk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Feb 2009 12:40:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752980AbZB1Rkk
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Feb 2009 12:40:40 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:52697 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752921AbZB1Rkj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 28 Feb 2009 12:40:39 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 5DE2A2A39;
+	Sat, 28 Feb 2009 12:40:37 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id BF3E82A38; Sat,
+ 28 Feb 2009 12:40:34 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: E8B451E0-05BE-11DE-B83B-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111780>
 
-> The short answer is: because Git was designed to track content. The
-> long answer is more complicated. Here's one of the more useful past
-> discussions:
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+
+> I get this (Ubuntu 8.10 x64, Fedora 10 x64 using the same Linux repo,
+> Windows Vista x64 using a different Linux repo with the same HEAD on
+> NTFS and msysgit, numbers are the elapsed time in seconds, best of fi=
+ve
+> runs):
 >
-> http://thread.gmane.org/gmane.comp.version-control.git/91783
+>                            Ubuntu  Fedora  Windows
+>    v1.6.2-rc2                8.14    8.16    9.236
+>    v1.6.2-rc2+[1-4]          2.43    2.45    2.995
+>    v1.6.2-rc2+[1-4]+memmem   1.31    1.25    2.917
+>    v1.6.2-rc2+[1-3]+memmem   1.51    1.16    8.455
 >
-> I'm sure you can find others by searching the git list for "metadata".
+> Ubuntu has glibc 2.8, while Fedora 10 has glibc 2.9, with a new and m=
+ore
+> efficient memmem() implementation.  On Windows, we use our own naive
+> memmem() implementation.
 
-I read that thread you showed above. Sounds like a big squirmy
-can-o-worms, and I see that thread died on the vine because of it. :)
+Yeah, what does glibc use these days?  Some variant of Boyer-Moore?
 
-All I want to do in my case is just chmod 700 a bunch of scripts after
-they are checked out or updated.  I'll need to re-read the git-hooks
-man page more closely.
+> So using memmem() is worthwhile.  And providing a better fall-back
+> version in compat/ can speed up this particular case to the point whe=
+re
+> the fourth patch becomes moot.
+>
+> Hmm, gnulib (http://git.savannah.gnu.org/gitweb/?p=3Dgnulib.git;a=3Ds=
+ummary)
+> contains all parts ready for copy & paste, licensed under the GPL 2 o=
+r
+> up.  That won't cause problems with the libgit2 relicensing effort, a=
+s
+> memmem()  won't end up in there, right?
 
-Thanks for your help!
-bg
+Correct.
