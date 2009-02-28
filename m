@@ -1,83 +1,85 @@
-From: Kjetil Barvik <barvik@broadpark.no>
-Subject: Re: [PATCH 0/6] "git repack -a -d" improvements
-Date: Sat, 28 Feb 2009 13:29:12 +0100
-Organization: private
-Message-ID: <8663iuwxrb.fsf@broadpark.no>
-References: <alpine.LFD.2.00.0902191318310.21686@localhost.localdomain>
- <cover.1235812035.git.gitster@pobox.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 28 13:36:24 2009
+From: Peng Tao <bergwolf@gmail.com>
+Subject: [PATCH] fix git format-patch --cc=<email> format
+Date: Sat, 28 Feb 2009 20:42:24 +0800
+Message-ID: <1235824944-4967-1-git-send-email-bergwolf@gmail.com>
+Cc: gitster@pobox.com, Peng Tao <bergwolf@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 28 13:44:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LdOQW-0006H2-Hb
-	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 13:36:21 +0100
+	id 1LdOY9-0008BJ-ND
+	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 13:44:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751423AbZB1M3S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Feb 2009 07:29:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751307AbZB1M3S
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Feb 2009 07:29:18 -0500
-Received: from osl1smout1.broadpark.no ([80.202.4.58]:53684 "EHLO
-	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750942AbZB1M3R (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Feb 2009 07:29:17 -0500
-Received: from osl1sminn1.broadpark.no ([80.202.4.59])
- by osl1smout1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KFS00B7X00Q4950@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Sat, 28 Feb 2009 13:29:14 +0100 (CET)
-Received: from localhost ([80.203.106.184]) by osl1sminn1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KFS003AU00PCS10@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Sat, 28 Feb 2009 13:29:14 +0100 (CET)
-In-reply-to: <cover.1235812035.git.gitster@pobox.com>
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
+	id S1751936AbZB1Mmp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Feb 2009 07:42:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751445AbZB1Mmp
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Feb 2009 07:42:45 -0500
+Received: from ti-out-0910.google.com ([209.85.142.190]:9593 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751423AbZB1Mmo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Feb 2009 07:42:44 -0500
+Received: by ti-out-0910.google.com with SMTP id d10so2071411tib.23
+        for <git@vger.kernel.org>; Sat, 28 Feb 2009 04:42:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=kkQmuEXPbfWY/6EBIMcO+pnf6RTyQVjtThE1yDTh3+8=;
+        b=ABO8K4CUwC3wixwDcB3f0r5wpaXEc8UkXy/vFJPEytf88neQjMYdJJx6hkVsM4l13s
+         wEvBYzuViSsd6EB5jzAlclnyuEsqBwEsJ4+PShCGcO8eVqTK+OnKYfpSHBqZbw0goCzG
+         nR5dDpt0CrQpxaDtQquSn8V6mTvg/en+eydRw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=cvO9BhaY+IXWQELQ/LonmoaEeockQEXm0oWRtS0UoeMtc7oFq2q9L+Z3IJh2mahADP
+         fV54ZWFYRZDjClXGZJ4gSfGrBW1yWRx8ueHRZf/8S58VLOkDKrZCxDBxzrNb/eGUKme0
+         3JCaPPo7peiFt7tj/NCVbCVRCYLLFmOu5S/n8=
+Received: by 10.110.90.9 with SMTP id n9mr5481220tib.6.1235824961663;
+        Sat, 28 Feb 2009 04:42:41 -0800 (PST)
+Received: from localhost.localdomain ([118.229.143.3])
+        by mx.google.com with ESMTPS id b7sm4904155tic.35.2009.02.28.04.42.39
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 28 Feb 2009 04:42:40 -0800 (PST)
+X-Mailer: git-send-email 1.6.1.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111765>
 
-* Junio C Hamano <gitster@pobox.com> writes:
-| [2/6] refactors public interface has_sha1_pack() that takes an optional
-| "ignore_packed" list.  Most callers pass NULL, so it introduces a new
-| function has_sha1_kept_pack() and migrate the minority caller to this
-| interface while losing the argument from the original function and callers
-| that currently pass NULL.
-  [...]
-| [4/6] identifies three places that use "ignore_packed" list to tell if a
-| pack is on the list or not, and introduces a helper function to do so.
-| The helper is conveniently called is_kept_pack(), even though at this
-| stage the list does not necessarily mean a list of "unkept" packs yet.
+If there are multiple --cc=<email> arguments, git format-patch will generate
+patches with cc lines like:
+  Cc: <email>,
+      <email>
+which git send-email fails to parse.
+git send-email only accept formats like:
+  Cc: <email>
+  Cc: <email>
+So change git format-patch to generate patches in a proper format.
 
-  OK, patch 2/6 failed for me when I was doing 'git am' to import the
-  patch-series, so sorry if do not see all bits of the patch correctly.
+Signed-off-by: Peng Tao <bergwolf@gmail.com>
+---
+ builtin-log.c |    6 +-----
+ 1 files changed, 1 insertions(+), 5 deletions(-)
 
-  Would it be an improvment to change the signature of the currently
-  find_sha1_pack() function to:
-
-    struct packed_git *
-    find_pack_entry(const unsigned char *sha1, off_t *sha1_pack_offset,
-                    struct packed_git *packs)
-
-    - The currently existing 'struct pack_entry *e' parameter is only
-      used to retrn the offset, so make it more clear.  The struct
-      pack_entry can probably be deleted from the sha1_file.c file.
-
-    - When the 'git repack -a -d' command is used, one has to compute
-      the list of allowed pack-files to look into, and give this list to
-      find_pack_entry().
-
-    - The currently named find_sha1_pack() function can then be deleted.
-
-    - For example, when this function is now used in sha1_object_info()
-      it can be called like this:
-
-          found_pack = find_pack_entry(sha1, &offset, packed_git);
-
-  -- kjetil
+diff --git a/builtin-log.c b/builtin-log.c
+index 60f8dd8..22bb6b6 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -907,13 +907,9 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	if (extra_cc_nr)
+-		strbuf_addstr(&buf, "Cc: ");
+ 	for (i = 0; i < extra_cc_nr; i++) {
+-		if (i)
+-			strbuf_addstr(&buf, "    ");
++		strbuf_addstr(&buf, "Cc: ");
+ 		strbuf_addstr(&buf, extra_cc[i]);
+-		if (i + 1 < extra_cc_nr)
+-			strbuf_addch(&buf, ',');
+ 		strbuf_addch(&buf, '\n');
+ 	}
+ 
