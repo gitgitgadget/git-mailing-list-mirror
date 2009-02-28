@@ -1,71 +1,87 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 3/4] diffcore-pickaxe: further refactor count_match()
-Date: Sat, 28 Feb 2009 19:15:46 +0100
-Message-ID: <49A97F52.4080405@lsrfire.ath.cx>
-References: <cover.1235629933.git.gitster@pobox.com> <cd73512d11e63554396983ed4e9556b2d18b3e4a.1235629933.git.gitster@pobox.com> <49A88FA7.1020402@lsrfire.ath.cx> <7vy6vrgxnn.fsf@gitster.siamese.dyndns.org> <7v8wnrgkjw.fsf@gitster.siamese.dyndns.org> <49A937B8.1030205@lsrfire.ath.cx> <7vmyc6foj3.fsf@gitster.siamese.dyndns.org>
+From: Todd Zullinger <tmz@pobox.com>
+Subject: Re: How can I force git to recognize a change change in file modes?
+Date: Sat, 28 Feb 2009 13:34:27 -0500
+Message-ID: <20090228183427.GN4505@inocybe.teonanacatl.org>
+References: <e38bce640902271717s46cf47f9i7c6bf5aac0d5f273@mail.gmail.com>
+ <20090228045531.14399ebf@perceptron>
+ <e38bce640902280824x3ae41d95qab1f1a450235e096@mail.gmail.com>
+ <76718490902280852y2f2657ck7459c138205bb874@mail.gmail.com>
+ <e38bce640902280934u3d9da650ke64865d7149b3c66@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 28 19:17:24 2009
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="f8uTbadvzI+nQOZu"
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Jan =?iso-8859-1?Q?Kr=FCger?= <jk@jk.gs>, git@vger.kernel.org
+To: Brent Goodrick <bgoodr@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 28 19:36:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LdTka-0004Ix-2X
-	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 19:17:24 +0100
+	id 1LdU2g-0001v0-Sb
+	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 19:36:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753404AbZB1SPv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Feb 2009 13:15:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753353AbZB1SPv
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Feb 2009 13:15:51 -0500
-Received: from india601.server4you.de ([85.25.151.105]:50316 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753312AbZB1SPu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Feb 2009 13:15:50 -0500
-Received: from [10.0.1.101] (p57B7E62B.dip.t-dialin.net [87.183.230.43])
-	by india601.server4you.de (Postfix) with ESMTPSA id 702622F8075;
-	Sat, 28 Feb 2009 19:15:48 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
-In-Reply-To: <7vmyc6foj3.fsf@gitster.siamese.dyndns.org>
+	id S1753487AbZB1Sei (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Feb 2009 13:34:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752720AbZB1Sei
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Feb 2009 13:34:38 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36910 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752574AbZB1Sei (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Feb 2009 13:34:38 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 61C699E23C;
+	Sat, 28 Feb 2009 13:34:33 -0500 (EST)
+Received: from inocybe.teonanacatl.org (unknown [71.173.205.56]) (using TLSv1
+ with cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5B9159E23B; Sat,
+ 28 Feb 2009 13:34:29 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <e38bce640902280934u3d9da650ke64865d7149b3c66@mail.gmail.com>
+X-Listening-To: Stevie Ray Vaughan and Double Trouble - Voodoo Chile (Slight
+ Return)
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Pobox-Relay-ID: 7182FF74-05C6-11DE-9E87-CFA5EBB1AA3C-09356542!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111784>
 
-Junio C Hamano schrieb:
-> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
->=20
->> I get this (Ubuntu 8.10 x64, Fedora 10 x64 using the same Linux repo=
-,
->> Windows Vista x64 using a different Linux repo with the same HEAD on
->> NTFS and msysgit, numbers are the elapsed time in seconds, best of f=
-ive
->> runs):
->>
->>                            Ubuntu  Fedora  Windows
->>    v1.6.2-rc2                8.14    8.16    9.236
->>    v1.6.2-rc2+[1-4]          2.43    2.45    2.995
->>    v1.6.2-rc2+[1-4]+memmem   1.31    1.25    2.917
->>    v1.6.2-rc2+[1-3]+memmem   1.51    1.16    8.455
->>
->> Ubuntu has glibc 2.8, while Fedora 10 has glibc 2.9, with a new and =
-more
->> efficient memmem() implementation.  On Windows, we use our own naive
->> memmem() implementation.
->=20
-> Yeah, what does glibc use these days?  Some variant of Boyer-Moore?
 
-No, the algorithm is called Two Way, which, unlike Boyer-Moore, only
-needs constant space.  The implementation seems to originate from this =
-bug:
+--f8uTbadvzI+nQOZu
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-	http://sourceware.org/bugzilla/show_bug.cgi?id=3D5514
+Brent Goodrick wrote:
+> All I want to do in my case is just chmod 700 a bunch of scripts
+> after they are checked out or updated.  I'll need to re-read the
+> git-hooks man page more closely.
 
-And the algorithm is documented here:
+You may want to check contrib/hooks/setgitperms.perl as well, if you
+haven't seen it already.
 
-	http://www-igm.univ-mlv.fr/~lecroq/string/node26.html
+--=20
+Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Problems are opportunity in work clothes.
 
-Ren=C3=A9
+
+--f8uTbadvzI+nQOZu
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iQFDBAEBAgAtBQJJqYOzJhhodHRwOi8vd3d3LnBvYm94LmNvbS9+dG16L3BncC90
+bXouYXNjAAoJEEMlk4u+rwzj6cAIAKWhqoN0ch8gQwOYalNa3sOWm8533Oyt1Iv6
+pFiL3jfZw+XabEhbl761j7urmVU45OlpW9Z8X51AtANSZajQICCniilDtFMOYtsr
+JsCbGnsGwc11uqHfA311sePV7Yt4/B+jBJe5Sx7E7ktD96vjCEn3ck1NGynwoUFE
+i01ElTGqZBSbups3+AQaghhSfyz95Ge/RRX1hyRXEdCqkvy+YRvinYQKw3Rugkco
+5ZjvdC56hQzB9WixcDrfutvKMhv/l4DWaMIQOl9ZRFy0gcgOThuxcAtGhEZSIxAR
+nFWH76BKlyfyungCXjKTNdWBUKar6u9lUGsOc70L0p5esSV+ng0=
+=F9qH
+-----END PGP SIGNATURE-----
+
+--f8uTbadvzI+nQOZu--
