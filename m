@@ -1,69 +1,65 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
 Subject: Re: [PATCH] gitk: make use of themed widgets where available
-Date: Sat, 28 Feb 2009 01:47:39 +0100
-Message-ID: <fabb9a1e0902271647n36152700p101a92d793dabb41@mail.gmail.com>
-References: <87ljrre7nr.fsf@users.sourceforge.net>
+Date: Sat, 28 Feb 2009 00:59:55 +0000 (UTC)
+Message-ID: <loom.20090228T005845-825@post.gmane.org>
+References: <87ljrre7nr.fsf@users.sourceforge.net> <fabb9a1e0902271647n36152700p101a92d793dabb41@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, paulus@samba.org
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Sat Feb 28 01:49:24 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 28 02:11:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LdDOO-0000PS-4Y
-	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 01:49:24 +0100
+	id 1LdDjy-0006Ei-Bg
+	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 02:11:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754866AbZB1Aro convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Feb 2009 19:47:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754532AbZB1Aro
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 19:47:44 -0500
-Received: from mail-fx0-f176.google.com ([209.85.220.176]:65363 "EHLO
-	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754785AbZB1Arn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Feb 2009 19:47:43 -0500
-Received: by fxm24 with SMTP id 24so1295327fxm.37
-        for <git@vger.kernel.org>; Fri, 27 Feb 2009 16:47:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=5oPyI26ADPmnrAs7wSKpf0l7lNK7gSIg1rendMQ+v88=;
-        b=ZG6YDhqu1+VnUnGccBmwr2PLYU0FB42bRUlxeiBNe1VYVOY2dfR680XUfXoqIWaATO
-         hy4oTv+W9fq5t5hwo/fbcHIhZp9V4zyJ+67C+xfb5nGLjP0gEq7ONqltiHI6gIvc3tfT
-         tOMq64SvwYAtYQedLszxFCPjowNGZnCsonkdA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=SrvXnnBdWgwJJ/dJaokSrmChdFpxQuEZR6b05dL9QLPM6RRO+zn8rftd1c8UsLI+Rn
-         HXO5MUgC9dLD/1nZXOKMVyVVQ32U3cBN97rdflRRFxdoaWDDbhLpnsvASMUvtf67bqB2
-         CPvrgA76WKVlJKpvKuSm3wzQ0l7Ggu188xGuM=
-Received: by 10.103.24.17 with SMTP id b17mr1616880muj.21.1235782060052; Fri, 
-	27 Feb 2009 16:47:40 -0800 (PST)
-In-Reply-To: <87ljrre7nr.fsf@users.sourceforge.net>
+	id S1753262AbZB1BKJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Feb 2009 20:10:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751739AbZB1BKI
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 20:10:08 -0500
+Received: from main.gmane.org ([80.91.229.2]:40247 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751032AbZB1BKH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2009 20:10:07 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1LdDiM-0004pR-Fq
+	for git@vger.kernel.org; Sat, 28 Feb 2009 01:10:02 +0000
+Received: from 92-238-221-8.cable.ubr21.aztw.blueyonder.co.uk ([92.238.221.8])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 28 Feb 2009 01:10:02 +0000
+Received: from patthoyts by 92-238-221-8.cable.ubr21.aztw.blueyonder.co.uk with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 28 Feb 2009 01:10:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 92.238.221.8 (Mozilla/5.0 (Windows; U; Windows NT 6.0; en-GB; rv:1.9.0.1) Gecko/2008070208 Firefox/3.0.1 (.NET CLR 3.5.30729))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111731>
 
-Heya,
+Sverre Rabbelier <srabbelier <at> gmail.com> writes:
 
-On Sat, Feb 28, 2009 at 01:18, Pat Thoyts
-<patthoyts@users.sourceforge.net> wrote:
-> =A0 =A0This patch improves the appearence of gitk on Windows XP and V=
-ista
-> =A0 =A0by making use of the themed widgets that are provided in Tk 8.=
-5
-> =A0 =A0and above. For good Vista support 8.6 will be needed.
+>=20
+> Heya,
+>=20
+> On Sat, Feb 28, 2009 at 01:18, Pat Thoyts
+> <patthoyts <at> users.sourceforge.net> wrote:
+> > =C2=A0 =C2=A0This patch improves the appearence of gitk on Windows =
+XP and Vista
+> > =C2=A0 =C2=A0by making use of the themed widgets that are provided =
+in Tk 8.5
+> > =C2=A0 =C2=A0and above. For good Vista support 8.6 will be needed.
+>=20
+> Screenies with before/after? :D
+>=20
 
-Screenies with before/after? :D
+After (on Vista) http://www.patthoyts.tk/screenshots/gitk-vista.png
 
---=20
-Cheers,
-
-Sverre Rabbelier
+Pat Thoyts
