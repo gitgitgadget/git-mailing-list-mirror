@@ -1,79 +1,101 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] autoconf: Add limited support for --htmldir
-Date: Sat, 28 Feb 2009 08:59:50 +0100
-Message-ID: <200902280859.52004.jnareb@gmail.com>
-References: <9a0027270902272323y44091bfakcb640f168c33a824@mail.gmail.com>
+From: Daniel Pittman <daniel@rimspace.net>
+Subject: git-svn, and which branch am I on?
+Date: Sat, 28 Feb 2009 19:50:08 +1100
+Organization: I know I put it down here, somewhere.
+Message-ID: <87ljrr7xof.fsf@rimspace.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: David Syzdek <david@syzdek.net>
-X-From: git-owner@vger.kernel.org Sat Feb 28 09:01:39 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 28 10:06:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LdK8f-00025m-3I
-	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 09:01:37 +0100
+	id 1LdL9e-0007s3-13
+	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 10:06:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751687AbZB1IAK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Feb 2009 03:00:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751679AbZB1IAJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Feb 2009 03:00:09 -0500
-Received: from mail-fx0-f176.google.com ([209.85.220.176]:37329 "EHLO
-	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751586AbZB1IAI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Feb 2009 03:00:08 -0500
-Received: by fxm24 with SMTP id 24so1357091fxm.37
-        for <git@vger.kernel.org>; Sat, 28 Feb 2009 00:00:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=wUMAaPpJq6aGAc6a4W6F3n7g5C0C1xlhLGdqWp/ztwM=;
-        b=LxczjqUq96MOEETbo0AUWvUxmefWuzK179eYrzymvTj1Qn6CTjHBpjAmFE8UH7ZL3F
-         xrsRv97lBMk5UV8Drazp6q7s0NVBBn9IwWRMgIROsCPuNedP+kXZe58RojCMrjPJOdIb
-         MGkTQQZyeYFi0whDVvDbatSxVyPaFCvBfYacA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=Jmhf1yIRacoglSY/9WT2T3RkiakwzKQxYcsWNlgJ3PfLkVsURJv0GS1v6ANdt5X/bY
-         nQdOl2lzYl8ROf9vxBM8TOEBtXWun15cUgS7ou74+dKV5WP3ecX3yGvtcQwFhmayecI0
-         jdnyoW6qyGvDp12nGY1h0+gmM5VRaksxhxMGw=
-Received: by 10.181.216.14 with SMTP id t14mr974783bkq.201.1235808003353;
-        Sat, 28 Feb 2009 00:00:03 -0800 (PST)
-Received: from ?192.168.1.15? (abwe96.neoplus.adsl.tpnet.pl [83.8.228.96])
-        by mx.google.com with ESMTPS id f31sm11304876fkf.35.2009.02.28.00.00.01
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 28 Feb 2009 00:00:02 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <9a0027270902272323y44091bfakcb640f168c33a824@mail.gmail.com>
-Content-Disposition: inline
+	id S1752031AbZB1JFP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Feb 2009 04:05:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751828AbZB1JFM
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Feb 2009 04:05:12 -0500
+Received: from main.gmane.org ([80.91.229.2]:60273 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751592AbZB1JFJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Feb 2009 04:05:09 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1LdL82-0003hc-B0
+	for git@vger.kernel.org; Sat, 28 Feb 2009 09:05:02 +0000
+Received: from ppp59-167-189-244.static.internode.on.net ([59.167.189.244])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 28 Feb 2009 09:05:02 +0000
+Received: from daniel by ppp59-167-189-244.static.internode.on.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 28 Feb 2009 09:05:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: ppp59-167-189-244.static.internode.on.net
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/23.0.60 (gnu/linux)
+Cancel-Lock: sha1:c5PoOCuadr5grc1fblrDj5i9/Tk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111755>
 
-On Sat, 28 Feb 2009, David Syzdek wrote:
+G'day.
 
-> I tested the below patch using autoconf 2.59 and autoconf 2.62. =C2=A0=
-If
-> the version of autoconf used to create the configure script supports
-> the `--htmldir' option then the htmldir is set by either autoconf or
-> the user defined value. =C2=A0If the version of autoconf does not sup=
-port
-> the `--htmldir' option, then htmldir defaults to [DATADIR/doc/git].
->=20
-> This way a newer version of autoconf is not required for users on
-> distros more than a year or so old, however users on newer distros ar=
-e
-> able to use the '--html' flag.
+I recently got asked a question about git-svn that I had no idea how to
+answer, and which I am actually curious to know how to find out.
 
-Thanks a lot.
---=20
-Jakub Narebski
-Poland
+The general question was: in git, how do I identify where this branch
+came from?
+
+Specifically, this was about 'git svn', but also generally how to
+identify this information in git.
+
+So, with a repository branch layout like this:
+
+  master        (local)
+  testing       (local)
+  trunk         (remote)
+  v100          (remote)
+
+How would I find out which remote branch master and trunk came from?
+
+
+To restate that, because I am not sure if that is clear, given this
+layout of branches:
+
+     trunk (remote)
+     |
+ o---o---o---o---o  branch master
+  \
+   \
+    o---o---o---o branch testing
+    |
+    v100 (remote)
+
+How can I identify that 'testing' came from the 'v100' branch, and that
+master came from the 'trunk' branch?
+
+
+Ideally, I would like to work this out on the command line, without
+needing to reference gitk or another graphical tool, but even a solution
+that used them would be fine.
+
+Initially I figured there would be some equivalent of the Mercurial
+'glog' output available, showing this; for reference the second and
+third examples here are what I was envisaging:
+http://www.selenic.com/mercurial/wiki/index.cgi/GraphlogExtension
+
+(from that display I could infer where testing and master came from,
+ rather than directly getting the answer, but that is just fine.)
+
+
+...and, finally, is the reason that I am finding it hard to explain this
+because I have an expectation of how things work that doesn't match up
+with git?  In other words, is the question actually meaningless?
+
+Regards,
+        Daniel
