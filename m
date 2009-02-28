@@ -1,55 +1,68 @@
-From: Lars Noschinski <lars-2008-2@usenet.noschinski.de>
-Subject: Re: How can I force git to recognize a change change in file modes?
-Date: Sat, 28 Feb 2009 01:25:24 +0000 (UTC)
-Message-ID: <20090228012524.GB17106@lars.home.noschinski.de>
-References: <e38bce640902271717s46cf47f9i7c6bf5aac0d5f273@mail.gmail.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: git-svn, and which branch am I on?
+Date: Sat, 28 Feb 2009 15:54:16 +0100
+Message-ID: <20090228145416.GA6289@atjola.homenet>
+References: <87ljrr7xof.fsf@rimspace.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 28 15:13:17 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Daniel Pittman <daniel@rimspace.net>
+X-From: git-owner@vger.kernel.org Sat Feb 28 15:55:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LdPwJ-0001Rq-Kp
-	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 15:13:16 +0100
+	id 1LdQba-0006FR-3o
+	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 15:55:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752208AbZB1OKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Feb 2009 09:10:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752161AbZB1OKI
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Feb 2009 09:10:08 -0500
-Received: from main.gmane.org ([80.91.229.2]:41496 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751934AbZB1OKH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Feb 2009 09:10:07 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1LdPtC-0006fE-Ih
-	for git@vger.kernel.org; Sat, 28 Feb 2009 14:10:02 +0000
-Received: from xdsl-87-79-132-209.netcologne.de ([87.79.132.209])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 28 Feb 2009 14:10:02 +0000
-Received: from lars-2008-2 by xdsl-87-79-132-209.netcologne.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 28 Feb 2009 14:10:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: xdsl-87-79-132-209.netcologne.de
+	id S1751652AbZB1OyZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Feb 2009 09:54:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751571AbZB1OyZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Feb 2009 09:54:25 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41714 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750966AbZB1OyZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Feb 2009 09:54:25 -0500
+Received: (qmail invoked by alias); 28 Feb 2009 14:54:18 -0000
+Received: from i577B8EA8.versanet.de (EHLO atjola.local) [87.123.142.168]
+  by mail.gmx.net (mp004) with SMTP; 28 Feb 2009 15:54:18 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX18+x7MZQeI+Lyg81GA187TYAUA4RZ4PAoIB9lWX6K
+	tP8pVM+IDP6VjJ
 Content-Disposition: inline
-In-Reply-To: <e38bce640902271717s46cf47f9i7c6bf5aac0d5f273@mail.gmail.com>
-User-Agent: mutt-ng/devel-r804 (Linux)
+In-Reply-To: <87ljrr7xof.fsf@rimspace.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111768>
 
-* Brent Goodrick <bgoodr@gmail.com> [09-02-28 02:17]:
-> I checked in a slew of scripts, only to realize that the file
-> permissions were too open (I want them to be chmod 700, not chmod
-> 755).  Somehow I thought that git was tracking those permission bits,
-> but simply using "chmod 700 <fileset>; git add <fileset>" did not add
-> the change of file modes, well, at least git status output doesn't
-> show it. Is there a way to do this?
+On 2009.02.28 19:50:08 +1100, Daniel Pittman wrote:
+> G'day.
+>=20
+> I recently got asked a question about git-svn that I had no idea how =
+to
+> answer, and which I am actually curious to know how to find out.
+>=20
+> The general question was: in git, how do I identify where this branch
+> came from?
 
-Git does only track the executable bit.
+"git svn info" tells you, besides other things, the URL your checked ou=
+t
+branch is based upon WRT svn. Use it with "--url" to show only the URL.
+
+> ...and, finally, is the reason that I am finding it hard to explain t=
+his
+> because I have an expectation of how things work that doesn't match u=
+p
+> with git?  In other words, is the question actually meaningless?
+
+If you use git-svn, it's actually meaningful, because it controls what
+svn rebase and svn dcommit do. For a pure git repo, it's usually not
+that interesting.
+
+Bj=F6rn
