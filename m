@@ -1,65 +1,118 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: [PATCH] gitk: make use of themed widgets where available
-Date: Sat, 28 Feb 2009 00:59:55 +0000 (UTC)
-Message-ID: <loom.20090228T005845-825@post.gmane.org>
-References: <87ljrre7nr.fsf@users.sourceforge.net> <fabb9a1e0902271647n36152700p101a92d793dabb41@mail.gmail.com>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 3/4] diffcore-pickaxe: further refactor count_match()
+Date: Sat, 28 Feb 2009 02:13:11 +0100
+Message-ID: <49A88FA7.1020402@lsrfire.ath.cx>
+References: <cover.1235629933.git.gitster@pobox.com> <cd73512d11e63554396983ed4e9556b2d18b3e4a.1235629933.git.gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 28 02:11:46 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 28 02:14:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LdDjy-0006Ei-Bg
-	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 02:11:42 +0100
+	id 1LdDmv-0006w3-0k
+	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 02:14:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753262AbZB1BKJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Feb 2009 20:10:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751739AbZB1BKI
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 20:10:08 -0500
-Received: from main.gmane.org ([80.91.229.2]:40247 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751032AbZB1BKH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2009 20:10:07 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1LdDiM-0004pR-Fq
-	for git@vger.kernel.org; Sat, 28 Feb 2009 01:10:02 +0000
-Received: from 92-238-221-8.cable.ubr21.aztw.blueyonder.co.uk ([92.238.221.8])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 28 Feb 2009 01:10:02 +0000
-Received: from patthoyts by 92-238-221-8.cable.ubr21.aztw.blueyonder.co.uk with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 28 Feb 2009 01:10:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 92.238.221.8 (Mozilla/5.0 (Windows; U; Windows NT 6.0; en-GB; rv:1.9.0.1) Gecko/2008070208 Firefox/3.0.1 (.NET CLR 3.5.30729))
+	id S1753560AbZB1BNQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2009 20:13:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753052AbZB1BNQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 20:13:16 -0500
+Received: from india601.server4you.de ([85.25.151.105]:38201 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752578AbZB1BNP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2009 20:13:15 -0500
+Received: from [10.0.1.101] (p57B7E8A9.dip.t-dialin.net [87.183.232.169])
+	by india601.server4you.de (Postfix) with ESMTPSA id 0D8A92F8045;
+	Sat, 28 Feb 2009 02:13:13 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <cd73512d11e63554396983ed4e9556b2d18b3e4a.1235629933.git.gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111732>
 
-Sverre Rabbelier <srabbelier <at> gmail.com> writes:
+Junio C Hamano schrieb:
+> -static unsigned int count_match(int one_or_more,
+> -				struct diff_filespec *one,
+> -				const char *needle, unsigned long len,
+> -				regex_t *regexp)
+> +static unsigned int count_match_internal(int one_or_more,
+> +					 const char *data, unsigned long sz,
+> +					 const char *needle, unsigned long len,
+> +					 regex_t *regexp)
+>  {
 
->=20
-> Heya,
->=20
-> On Sat, Feb 28, 2009 at 01:18, Pat Thoyts
-> <patthoyts <at> users.sourceforge.net> wrote:
-> > =C2=A0 =C2=A0This patch improves the appearence of gitk on Windows =
-XP and Vista
-> > =C2=A0 =C2=A0by making use of the themed widgets that are provided =
-in Tk 8.5
-> > =C2=A0 =C2=A0and above. For good Vista support 8.6 will be needed.
->=20
-> Screenies with before/after? :D
->=20
+I don't especially like flags like one_or_more.  Having two functions
+(which possibly call a common function that does most of the work) is
+nicer.  And it's a bit sad here because there already are two functions
+with nice names: count_match() and has_match().  But, well, since the
+functions are not exported anyway it doesn't matter much.
 
-After (on Vista) http://www.patthoyts.tk/screenshots/gitk-vista.png
+> @@ -29,16 +20,14 @@ static unsigned int count_match(int one_or_more,
+>  		while (*data && !regexec(regexp, data, 1, &regmatch, flags)) {
+>  			flags |= REG_NOTBOL;
+>  			data += regmatch.rm_so;
+> -			if (*data) data++;
+> +			if (*data)
+> +				data++;
+>  			cnt++;
+>  			if (one_or_more)
+>  				break;
+>  		}
+> -
+> -	} else { /* Classic exact string match */
+> -		/* Yes, I've heard of strstr(), but the thing is *data may
+> -		 * not be NUL terminated.  Sue me.
+> -		 */
+> +	} else {
+> +		/* data many not be NUL terminated; we cannot use strstr() */
 
-Pat Thoyts
+That looks fishy to me.  regexec() expects data to be a NUL-terminated
+string, so either the comment is wrong or the regexp case needs to take
+better care to add a NUL at the end of the buffer.
+
+In any case, there is also memmem(), which uses the same fast algorithm
+as strstr() in recent glibc versions.  Like this?
+
+
+diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
+index f4870b4..4c19967 100644
+--- a/diffcore-pickaxe.c
++++ b/diffcore-pickaxe.c
+@@ -11,7 +11,6 @@ static unsigned int count_match_internal(int one_or_more,
+ 					 regex_t *regexp)
+ {
+ 	unsigned int cnt = 0;
+-	unsigned long offset;
+ 
+ 	if (regexp) {
+ 		regmatch_t regmatch;
+@@ -27,15 +26,15 @@ static unsigned int count_match_internal(int one_or_more,
+ 				break;
+ 		}
+ 	} else {
+-		/* data many not be NUL terminated; we cannot use strstr() */
+-		for (offset = 0; offset + len <= sz; offset++) {
+-			/* we count non-overlapping occurrences of needle */
+-			if (!memcmp(needle, data + offset, len)) {
+-				offset += len - 1;
+-				cnt++;
+-				if (one_or_more)
+-					break;
+-			}
++		while (sz) {
++			const char *found = memmem(data, sz, needle, len);
++			if (!found)
++				break;
++			sz -= found - data + len;
++			data = found + len;
++			cnt++;
++			if (one_or_more)
++				break;
+ 		}
+ 	}
+ 	return cnt;
