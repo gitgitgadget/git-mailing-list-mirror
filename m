@@ -1,109 +1,97 @@
-From: Paul Gortmaker <paul.gortmaker@windriver.com>
-Subject: Changing the defaults for send-email / suppress-cc ?
-Date: Sat, 28 Feb 2009 14:29:39 -0500
-Message-ID: <7d1d9c250902281129t1ea0d9d0k796d97bdd0af046d@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+From: newren@gmail.com
+Subject: [PATCH] Ensure proper setup of git_dir for git-hash-object
+Date: Sat, 28 Feb 2009 12:56:49 -0700
+Message-ID: <1235851009-16739-1-git-send-email-newren@gmail.com>
+Cc: gitster@pobox.com, Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 28 20:31:11 2009
+X-From: git-owner@vger.kernel.org Sat Feb 28 20:59:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LdUty-00020w-5l
-	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 20:31:10 +0100
+	id 1LdVL1-0002I4-9l
+	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 20:59:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752744AbZB1T3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Feb 2009 14:29:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752574AbZB1T3m
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Feb 2009 14:29:42 -0500
-Received: from wf-out-1314.google.com ([209.85.200.172]:22288 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752544AbZB1T3l (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Feb 2009 14:29:41 -0500
-Received: by wf-out-1314.google.com with SMTP id 28so1966207wfa.4
-        for <git@vger.kernel.org>; Sat, 28 Feb 2009 11:29:39 -0800 (PST)
+	id S1753645AbZB1T5j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Feb 2009 14:57:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753382AbZB1T5i
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Feb 2009 14:57:38 -0500
+Received: from rv-out-0506.google.com ([209.85.198.227]:12145 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752987AbZB1T5h (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Feb 2009 14:57:37 -0500
+Received: by rv-out-0506.google.com with SMTP id g37so1680740rvb.1
+        for <git@vger.kernel.org>; Sat, 28 Feb 2009 11:57:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=8QxkRFeAjgI6kjL+FOgy8dYvsTIP5C5r4qJAyOgJz8w=;
-        b=I+1Yr0IAEHSLAI6bP+VhbCvaTd9IAdXrA0GsaN3OxgHO+nbOFPBKRM91HDPLkavrcj
-         6ltkrFNKBkGxYyp/JsCN8J/B71V3cwbr4We76ANfJ3GPlqoDyyrKjfFOYag9O1lKmbvj
-         1obrgU0mXrVC3hdIWUfu/jNbm0/wjKGpe1yLE=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=vdlwQIev3oYeEJ3LrG7WdKKevj9IBQFi4iTB6LSzr7E=;
+        b=v+E93KwdpQumd/rsPdv9L1Hc+3qvIsiPmoXW7vTcqYi0uORjkKl6jeuM/+fbG4fvfM
+         PBmVcPcsgkOTTAib+S8+Mf9nHmjTupXUk/cvS9q5VjpEnghfod9jsaONVWCzuEdk2kMG
+         4JiJ2SR9mODXAv5Gmebuoo6jVbqCK7ZuXMvFs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        b=Slb7zalf5gk91i56ZUXdX6ot4daFez76Xo1O0l3xo8lx9k5NuHbnytLghop3BuFOa3
-         utCGZH4oWJuodHAfg7DGq5H2A3UxhdUur/i6ntUfZ6mTvnxLcCh8B4/CfyXnlWGJsc6B
-         mzNvuyy0ffo8AXydNlEDOoQOM1Z88ZTdVG5YM=
-Received: by 10.143.163.12 with SMTP id q12mr2004777wfo.224.1235849379874; 
-	Sat, 28 Feb 2009 11:29:39 -0800 (PST)
-X-Google-Sender-Auth: 632222b005ac006e
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=UfBuN1CUiCAw3j0SdlOHe06emcCjvaE13VDDJEvoQHVn17/9Drto2Nzm6Ir69z9YkC
+         x5Q8MrbYSeTY2S+ik8SIyqsjaI6lc8oDJx4/xGMn9sxPKDJWuE+k1FIPr6SCATBHmVfY
+         NuBI1ev1MyOx+oHkWC+pEJjBMSn2L1TfzXYX0=
+Received: by 10.141.113.3 with SMTP id q3mr1955449rvm.12.1235851053576;
+        Sat, 28 Feb 2009 11:57:33 -0800 (PST)
+Received: from localhost.localdomain (c-69-254-130-124.hsd1.nm.comcast.net [69.254.130.124])
+        by mx.google.com with ESMTPS id l31sm11530489rvb.5.2009.02.28.11.57.31
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 28 Feb 2009 11:57:32 -0800 (PST)
+X-Mailer: git-send-email 1.6.2.rc2.10.g26e3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111788>
 
-I've been involved in helping people who are new git users, and the
-one thing that seems to violate the principle of least surprise for
-them is the default setting for the sendemail.suppresscc -- in that
-the new users don't expect the additional CC lines to be automatically
-added based on what is present in the content of the mbox
-(format-patch output).
+From: Elijah Newren <newren@gmail.com>
 
-The messages from send-email that indicate it is going to add CC lines
-based on SOB etc. come *after* the last input from the user, and so
-they don't have an opportunity to jump in and prevent the extra
-e-mails from going out to whoever happens to be listed in the patch.
-(Lets assume for the moment, that they didn't see "--dry-run", or
-simply figured the process looked fairly straightforward, and didn't
-see the need for it.)
+Call setup_git_directory() before git_config() to make sure git_dir is set
+to the proper value.
 
-Here is the use case which I suspect is fairly pervasive, and that
-I've already seen several times:
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+Without this patch:
+$ mkdir tmp
+$ cd tmp/
+$ git init --bare
+Initialized empty Git repository in /home/newren/floss-development/git/tmp/
+$ echo hi | git hash-object -w --stdin
+error: unable to create temporary sha1 filename .git/objects/45: No such file or directory
 
-1) User is working on something involving kernel version X, which is
-some amount behind the current mainstream HEAD.  (Okay, doesn't have
-to be kernel, could even be git itself.)
+fatal: Unable to add stdin to database
+$ echo hi | git --git-dir=. hash-object -w --stdin
+45b983be36b73c0788dc9cbcb76cbb80fc7bb057
 
-2) They've created a branch off of X and they've added their own
-commits, and also cherry picked relevant commits from upstream that
-happened between X and HEAD into their branch.   One of the features
-they've cherry picked onto their branch is a 25 patch series that has
-"Signed-off-by: miserable@bofh.com" in it, a miserable person who
-hates extra-emails.
+ hash-object.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-3) They run "git format-patch -n --thread -o foo X..mybranch"
-
-4) They run "git send-email --to coworker@mycompany.com foo"  so their
-buddy within the company can have an mbox patchset.
-
-5) They recoil in horror while smashing ^C as they try to stop
-send-email from spamming miserable@bofh.com with 25 of his own
-patches.
-
-In light of this, I've simply advised new users to run something like:
-
-git config --global sendemail.suppresscc all
-
-...just so that they won't accidentally do what I've described in the above.
-
-Apologies if this has been discussed before; I took a quick scan of my
-archive and didn't see any discussions on it.  With the recent thread
-about warning people of non-back compatible changes that will appear
-post 1.6.2 -- I thought perhaps this was a good time to
-mention/consider it.
-
-I'm not sure what the right thing to do here is -- I suspect if you
-made suppress-cc=all the default, then there would be more experienced
-users that would complain about having to explicitly add a
-suppress-cc=self to get the old behaviour?  Would that be acceptable?
-I don't know...
-
-Thanks,
-Paul.
+diff --git a/hash-object.c b/hash-object.c
+index 37e6677..ebb3bed 100644
+--- a/hash-object.c
++++ b/hash-object.c
+@@ -84,8 +84,6 @@ int main(int argc, const char **argv)
+ 
+ 	git_extract_argv0_path(argv[0]);
+ 
+-	git_config(git_default_config, NULL);
+-
+ 	argc = parse_options(argc, argv, hash_object_options, hash_object_usage, 0);
+ 
+ 	if (write_object) {
+@@ -95,6 +93,8 @@ int main(int argc, const char **argv)
+ 			vpath = prefix_filename(prefix, prefix_length, vpath);
+ 	}
+ 
++	git_config(git_default_config, NULL);
++
+ 	if (stdin_paths) {
+ 		if (hashstdin)
+ 			errstr = "Can't use --stdin-paths with --stdin";
+-- 
+1.6.0.6
