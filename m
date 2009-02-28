@@ -1,123 +1,79 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: proper way to merge?
-Date: Sat, 28 Feb 2009 07:58:14 +0000
-Message-ID: <43d8ce650902272358h4219f439qfa60ba7a7e0d222f@mail.gmail.com>
-References: <450196A1AAAE4B42A00A8B27A59278E709F06FDA@EXCHANGE.trad.tradestation.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] autoconf: Add limited support for --htmldir
+Date: Sat, 28 Feb 2009 08:59:50 +0100
+Message-ID: <200902280859.52004.jnareb@gmail.com>
+References: <9a0027270902272323y44091bfakcb640f168c33a824@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: John Dlugosz <JDlugosz@tradestation.com>
-X-From: git-owner@vger.kernel.org Sat Feb 28 08:59:46 2009
+To: David Syzdek <david@syzdek.net>
+X-From: git-owner@vger.kernel.org Sat Feb 28 09:01:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LdK6r-0001hU-3V
-	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 08:59:45 +0100
+	id 1LdK8f-00025m-3I
+	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 09:01:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751634AbZB1H6S convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Feb 2009 02:58:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751586AbZB1H6R
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Feb 2009 02:58:17 -0500
-Received: from wf-out-1314.google.com ([209.85.200.174]:30740 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751540AbZB1H6Q convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 Feb 2009 02:58:16 -0500
-Received: by wf-out-1314.google.com with SMTP id 28so1734271wfa.4
-        for <git@vger.kernel.org>; Fri, 27 Feb 2009 23:58:14 -0800 (PST)
+	id S1751687AbZB1IAK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Feb 2009 03:00:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751679AbZB1IAJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Feb 2009 03:00:09 -0500
+Received: from mail-fx0-f176.google.com ([209.85.220.176]:37329 "EHLO
+	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751586AbZB1IAI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Feb 2009 03:00:08 -0500
+Received: by fxm24 with SMTP id 24so1357091fxm.37
+        for <git@vger.kernel.org>; Sat, 28 Feb 2009 00:00:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=mpMecY9dcLWYxxAMdwrBpqr78f/W3nuRUmA6AW6XdKg=;
-        b=FIED2ZYbXv7c4AJM8mut4WyiEzPhLwIOedLOT1N/Psc6mhUov80cFTj2CoZCD/tMrE
-         LpvQvw02AjeM2Gu3IU5fvrAmsVBL12BGBKy/3P58PDVVJyeAnMXLNW+U89zwiUBIf31a
-         jD5M414qKZtM7b5E+IZ6eJdRMMAV1NmsR3Yus=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=wUMAaPpJq6aGAc6a4W6F3n7g5C0C1xlhLGdqWp/ztwM=;
+        b=LxczjqUq96MOEETbo0AUWvUxmefWuzK179eYrzymvTj1Qn6CTjHBpjAmFE8UH7ZL3F
+         xrsRv97lBMk5UV8Drazp6q7s0NVBBn9IwWRMgIROsCPuNedP+kXZe58RojCMrjPJOdIb
+         MGkTQQZyeYFi0whDVvDbatSxVyPaFCvBfYacA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=FNCzBUt1xNTxLV0WoGzV1B+cVvRRYiy7j9VEqiuTWJ6DsBoooH8ierfVd7CoIBvYeW
-         nMc5L0xsVsw+0ZEaJe20aIStNeyGXL764Pr33RrQ3TFRW8Cvdlu/7ozpDRJmOfGQcr/d
-         H2ixJZJ/ZQCzj9mGgoI55yq7vWn/JTr8D8QwA=
-Received: by 10.142.215.5 with SMTP id n5mr1746965wfg.63.1235807894894; Fri, 
-	27 Feb 2009 23:58:14 -0800 (PST)
-In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E709F06FDA@EXCHANGE.trad.tradestation.com>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=Jmhf1yIRacoglSY/9WT2T3RkiakwzKQxYcsWNlgJ3PfLkVsURJv0GS1v6ANdt5X/bY
+         nQdOl2lzYl8ROf9vxBM8TOEBtXWun15cUgS7ou74+dKV5WP3ecX3yGvtcQwFhmayecI0
+         jdnyoW6qyGvDp12nGY1h0+gmM5VRaksxhxMGw=
+Received: by 10.181.216.14 with SMTP id t14mr974783bkq.201.1235808003353;
+        Sat, 28 Feb 2009 00:00:03 -0800 (PST)
+Received: from ?192.168.1.15? (abwe96.neoplus.adsl.tpnet.pl [83.8.228.96])
+        by mx.google.com with ESMTPS id f31sm11304876fkf.35.2009.02.28.00.00.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 28 Feb 2009 00:00:02 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <9a0027270902272323y44091bfakcb640f168c33a824@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111754>
 
-2009/2/27 John Dlugosz <JDlugosz@tradestation.com>:
-> I'm merging two branches: let's say "dev" is for development of futur=
+On Sat, 28 Feb 2009, David Syzdek wrote:
+
+> I tested the below patch using autoconf 2.59 and autoconf 2.62. =C2=A0=
+If
+> the version of autoconf used to create the configure script supports
+> the `--htmldir' option then the htmldir is set by either autoconf or
+> the user defined value. =C2=A0If the version of autoconf does not sup=
+port
+> the `--htmldir' option, then htmldir defaults to [DATADIR/doc/git].
+>=20
+> This way a newer version of autoconf is not required for users on
+> distros more than a year or so old, however users on newer distros ar=
 e
-> releases, and "rel" is changes made to the current release for immedi=
-ate
-> application. =C2=A0Now I want to bring the changes made in rel back t=
-o dev.
->
-> Rather than trying to merge it all at once, I'm applying the changes =
-a
-> few at a time and making sure it still compiles as I go. =C2=A0Then,
-> git-reset and I have dev as my HEAD and the desired merge result in t=
-he
-> working tree.
->
-> Now, I want to introduce the proper commit node to show that this is =
-the
-> graft. =C2=A0But, I don't want to be presented with all the differenc=
-es that
-> I already resolved; I know what it should look like already. =C2=A0Ho=
-w do I
-> commit the current state of things and have it show up with both dev =
-and
-> rel as parents? (then make that the new dev)
->
-> I'm also interesting in learning how to do it better next time. =C2=A0=
-But I'm
-> doing the incremental merging now and need to know how to conclude it=
-=2E
+> able to use the '--html' flag.
 
-Instead of merge, I prefer to rebase.  so:
-
-git checkout dev
-git rebase origin rel
-
-This replays each commit made in 'dev' on top of release, letting you
-fix each commit separately.  It also means that when I commit to
-release, the changes are a nice tree.
-
-This only works if you have a relatively small number of changes.  I
-tried to rebase 50 patches from 'dev' to 'rel' where the patches
-changed pretty much every file.  It took all day to do.  (But it was
-still better than trying to merge, in my specific case)
-
-JohnFlux
-
-
-
->
-> --John
->
-> TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ=
- GS: TRAD) of three operating subsidiaries, TradeStation Securities, In=
-c. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc.,=
- a trading software and subscription company, and TradeStation Europe L=
-imited, a United Kingdom, FSA-authorized introducing brokerage firm. No=
-ne of these companies provides trading or investment advice, recommenda=
-tions or endorsements of any kind. The information transmitted is inten=
-ded only for the person or entity to which it is addressed and may cont=
-ain confidential and/or privileged material. Any review, retransmission=
-, dissemination or other use of, or taking of any action in reliance up=
-on, this information by persons or entities other than the intended rec=
-ipient is prohibited. If you received this in error, please contact the=
- sender and delete the material from any computer.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
->
+Thanks a lot.
+--=20
+Jakub Narebski
+Poland
