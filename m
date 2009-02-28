@@ -1,86 +1,69 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] autoconf: Add support for --infodir
-Date: Fri, 27 Feb 2009 16:45:06 -0800 (PST)
-Message-ID: <m3d4d3v195.fsf@localhost.localdomain>
-References: <20090228002550.22597.53878.stgit@localhost.localdomain>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH] gitk: make use of themed widgets where available
+Date: Sat, 28 Feb 2009 01:47:39 +0100
+Message-ID: <fabb9a1e0902271647n36152700p101a92d793dabb41@mail.gmail.com>
+References: <87ljrre7nr.fsf@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Tim Visher <tim.visher@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 28 01:46:40 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, paulus@samba.org
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Sat Feb 28 01:49:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LdDLj-00086O-So
-	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 01:46:40 +0100
+	id 1LdDOO-0000PS-4Y
+	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 01:49:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754561AbZB1ApN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2009 19:45:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754543AbZB1ApM
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 19:45:12 -0500
-Received: from mail-fx0-f176.google.com ([209.85.220.176]:39134 "EHLO
+	id S1754866AbZB1Aro convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Feb 2009 19:47:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754532AbZB1Aro
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 19:47:44 -0500
+Received: from mail-fx0-f176.google.com ([209.85.220.176]:65363 "EHLO
 	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754448AbZB1ApK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2009 19:45:10 -0500
-Received: by fxm24 with SMTP id 24so1294842fxm.37
-        for <git@vger.kernel.org>; Fri, 27 Feb 2009 16:45:07 -0800 (PST)
+	with ESMTP id S1754785AbZB1Arn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Feb 2009 19:47:43 -0500
+Received: by fxm24 with SMTP id 24so1295327fxm.37
+        for <git@vger.kernel.org>; Fri, 27 Feb 2009 16:47:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=DFjRMWdoy6Z97wU0oqrt7Ikl0H2HWBHdt29rV/83dF0=;
-        b=PbGKKlWMQ+D+gupvHkrWd5qeNOdX+wUvk6xqBaJIxZMAXCbowAK23rr+MUEzAzmrTS
-         1lmM2vtXaPq/GT3lG+/B7txhqD248vdCTxKyg7Xb61XMylU4prA6N5fEryfZx90hUXGv
-         ERpZaeCnXgAC9rDzaye/Oh0YYKq7WEkLAb3tw=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=5oPyI26ADPmnrAs7wSKpf0l7lNK7gSIg1rendMQ+v88=;
+        b=ZG6YDhqu1+VnUnGccBmwr2PLYU0FB42bRUlxeiBNe1VYVOY2dfR680XUfXoqIWaATO
+         hy4oTv+W9fq5t5hwo/fbcHIhZp9V4zyJ+67C+xfb5nGLjP0gEq7ONqltiHI6gIvc3tfT
+         tOMq64SvwYAtYQedLszxFCPjowNGZnCsonkdA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=Hdh6Vkc4SOAfC0Vf3t4lxxcyh6CT2+5/FTT+1zaTL51i1KDZKwE/ZAOLGDHfbLAeR6
-         Fa6U1pJqFPnsLt7Nvm1gI0lcsheBsq2uHsBWtCoXNfrpYCAfVMf8UnBfjevEKxvbN4GM
-         nEwmZ1/BhjJAzbKa52Ex2sceeXkkGxRoC7QKg=
-Received: by 10.86.60.14 with SMTP id i14mr22323fga.69.1235781907600;
-        Fri, 27 Feb 2009 16:45:07 -0800 (PST)
-Received: from localhost.localdomain (abwe96.neoplus.adsl.tpnet.pl [83.8.228.96])
-        by mx.google.com with ESMTPS id l19sm6155996fgb.37.2009.02.27.16.45.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 27 Feb 2009 16:45:06 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n1S0ichN022780;
-	Sat, 28 Feb 2009 01:44:48 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n1S0iMQp022775;
-	Sat, 28 Feb 2009 01:44:22 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20090228002550.22597.53878.stgit@localhost.localdomain>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=SrvXnnBdWgwJJ/dJaokSrmChdFpxQuEZR6b05dL9QLPM6RRO+zn8rftd1c8UsLI+Rn
+         HXO5MUgC9dLD/1nZXOKMVyVVQ32U3cBN97rdflRRFxdoaWDDbhLpnsvASMUvtf67bqB2
+         CPvrgA76WKVlJKpvKuSm3wzQ0l7Ggu188xGuM=
+Received: by 10.103.24.17 with SMTP id b17mr1616880muj.21.1235782060052; Fri, 
+	27 Feb 2009 16:47:40 -0800 (PST)
+In-Reply-To: <87ljrre7nr.fsf@users.sourceforge.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111730>
 
-Gaah, this was meant to be reply to message by Peff
-Message-ID: <20090226150013.GA9785@coredump.intra.peff.net>
-in the "`./configure --XXdir=` ignored?" thread, but I mis-pasted
-reply-to id.
+Heya,
 
-Jakub Narebski <jnareb@gmail.com> writes:
-> -- >8 --
-> Now that we actually (can) install some info files, and that $infodir
-> is set and used in Makefile(s), let add support for --infodir=DIR
-> [PREFIX/info] ./configure option in config.mak.in.
-> 
-> Half of patch by Jeff King <peff@peff.net>m adding --XXdir support 
+On Sat, Feb 28, 2009 at 01:18, Pat Thoyts
+<patthoyts@users.sourceforge.net> wrote:
+> =A0 =A0This patch improves the appearence of gitk on Windows XP and V=
+ista
+> =A0 =A0by making use of the themed widgets that are provided in Tk 8.=
+5
+> =A0 =A0and above. For good Vista support 8.6 will be needed.
 
-That was of course meant to be s/>m/>,/
+Screenies with before/after? :D
 
-Half of patch by Jeff King <peff@peff.net>, adding --XXdir support 
+--=20
+Cheers,
 
-[...]
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Sverre Rabbelier
