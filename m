@@ -1,58 +1,51 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-svn woes
-Date: Fri, 27 Feb 2009 19:41:29 -0800
-Message-ID: <7vtz6fgrdi.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LFD.2.00.0902271442270.5511@xanadu.home>
- <86d4c5e00902271253y50eaef01x8ca837d3a0ed7ef6@mail.gmail.com>
- <20090228033108.GB28606@dcvr.yhbt.net>
+From: Jan =?UTF-8?B?S3LDvGdlcg==?= <jk@jk.gs>
+Subject: Re: How can I force git to recognize a change change in file modes?
+Date: Sat, 28 Feb 2009 04:55:31 +0100
+Message-ID: <20090228045531.14399ebf@perceptron>
+References: <e38bce640902271717s46cf47f9i7c6bf5aac0d5f273@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
-	Deskin Miller <deskinm@gmail.com>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sat Feb 28 04:43:06 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Brent Goodrick <bgoodr@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 28 04:57:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LdG6T-0005A9-TV
-	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 04:43:06 +0100
+	id 1LdGK2-0007jZ-7T
+	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 04:57:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753151AbZB1Dlk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Feb 2009 22:41:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753172AbZB1Dlj
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 22:41:39 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45058 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752912AbZB1Dli (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Feb 2009 22:41:38 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 63CA51E60;
-	Fri, 27 Feb 2009 22:41:35 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A399D1E5B; Fri,
- 27 Feb 2009 22:41:30 -0500 (EST)
-In-Reply-To: <20090228033108.GB28606@dcvr.yhbt.net> (Eric Wong's message of
- "Fri, 27 Feb 2009 19:31:08 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B28C6D8E-0549-11DE-8E98-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
+	id S1754054AbZB1Dzi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Feb 2009 22:55:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753748AbZB1Dzi
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Feb 2009 22:55:38 -0500
+Received: from zoidberg.org ([88.198.6.61]:59249 "EHLO cthulhu.zoidberg.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753882AbZB1Dzh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Feb 2009 22:55:37 -0500
+Received: from perceptron (xdsl-78-34-136-74.netcologne.de [::ffff:78.34.136.74])
+  (IDENT: unknown, AUTH: LOGIN jast, TLS: TLSv1/SSLv3,256bits,AES256-SHA)
+  by cthulhu.zoidberg.org with esmtp; Sat, 28 Feb 2009 04:55:33 +0100
+  id 004043DB.49A8B5B6.000003B5
+In-Reply-To: <e38bce640902271717s46cf47f9i7c6bf5aac0d5f273@mail.gmail.com>
+X-Mailer: Claws Mail 3.5.0 (GTK+ 2.14.4; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111746>
 
-Eric Wong <normalperson@yhbt.net> writes:
+Hi,
 
-> I've been poking around at this for a bit, I am pretty confused
-> by this, too.  It's been a rough week, so I could be missing
-> something obvious...
->
-> Junio: since 1.6.2 might be out the door before we have time to resolve
-> this, I'm leaning towards disabling the broken-symlink-workaround by
-> default for the release. It seems far more people are negatively
-> affected by the attempted fix around this rare problem than helped.
+> I checked in a slew of scripts, only to realize that the file
+> permissions were too open (I want them to be chmod 700, not chmod
+> 755).  Somehow I thought that git was tracking those permission bits,
+> but simply using "chmod 700 <fileset>; git add <fileset>" did not add
+> the change of file modes, well, at least git status output doesn't
+> show it. Is there a way to do this?
 
-I agree that unfortunately is the message I am getting from the list ever
-since the feature was introduced.
+git doesn't track permissions quite that closely; all it remembers is
+whether the file should be executable or not.
+
+-Jan
