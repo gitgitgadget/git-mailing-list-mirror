@@ -1,105 +1,121 @@
 From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 3/4] diffcore-pickaxe: further refactor count_match()
-Date: Sun, 01 Mar 2009 11:53:47 +0100
-Message-ID: <49AA693B.5060108@lsrfire.ath.cx>
-References: <cover.1235629933.git.gitster@pobox.com> <cd73512d11e63554396983ed4e9556b2d18b3e4a.1235629933.git.gitster@pobox.com> <49A88FA7.1020402@lsrfire.ath.cx> <7vy6vrgxnn.fsf@gitster.siamese.dyndns.org> <7v8wnrgkjw.fsf@gitster.siamese.dyndns.org> <49A937B8.1030205@lsrfire.ath.cx> <7viqmtaec4.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH] import memmem() with linear complexity from Gnulib
+Date: Sun, 01 Mar 2009 12:15:01 +0100
+Message-ID: <49AA6E35.40205@lsrfire.ath.cx>
+References: <cover.1235629933.git.gitster@pobox.com> <cd73512d11e63554396983ed4e9556b2d18b3e4a.1235629933.git.gitster@pobox.com> <49A88FA7.1020402@lsrfire.ath.cx> <7vy6vrgxnn.fsf@gitster.siamese.dyndns.org> <7v8wnrgkjw.fsf@gitster.siamese.dyndns.org> <49A937B8.1030205@lsrfire.ath.cx> <7vmyc6foj3.fsf@gitster.siamese.dyndns.org> <1235848615.7043.30.camel@ubuntu.ubuntu-domain> <20090228224401.GA27262@glandium.org> <20090301034123.GC30384@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 01 11:59:32 2009
+Content-Transfer-Encoding: 7bit
+Cc: Mike Hommey <mh@glandium.org>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Mar 01 12:16:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LdjOM-0002UW-S1
-	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 11:59:31 +0100
+	id 1Ldjez-0006cw-28
+	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 12:16:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753265AbZCAKx6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Mar 2009 05:53:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753023AbZCAKx6
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Mar 2009 05:53:58 -0500
-Received: from india601.server4you.de ([85.25.151.105]:51566 "EHLO
+	id S1752428AbZCALPN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Mar 2009 06:15:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752144AbZCALPM
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Mar 2009 06:15:12 -0500
+Received: from india601.server4you.de ([85.25.151.105]:54622 "EHLO
 	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752836AbZCAKx5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Mar 2009 05:53:57 -0500
+	with ESMTP id S1752034AbZCALPK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Mar 2009 06:15:10 -0500
 Received: from [10.0.1.101] (p57B7F2B0.dip.t-dialin.net [87.183.242.176])
-	by india601.server4you.de (Postfix) with ESMTPSA id D69D92F8037;
-	Sun,  1 Mar 2009 11:53:53 +0100 (CET)
+	by india601.server4you.de (Postfix) with ESMTPSA id EED002F8037;
+	Sun,  1 Mar 2009 12:15:04 +0100 (CET)
 User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
-In-Reply-To: <7viqmtaec4.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <20090301034123.GC30384@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111838>
 
-Junio C Hamano schrieb:
-> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
->=20
->> I get this (Ubuntu 8.10 x64, Fedora 10 x64 using the same Linux repo=
-,
->> Windows Vista x64 using a different Linux repo with the same HEAD on
->> NTFS and msysgit, numbers are the elapsed time in seconds, best of f=
-ive
->> runs):
->>
->>                            Ubuntu  Fedora  Windows
->>    v1.6.2-rc2                8.14    8.16    9.236
->>    v1.6.2-rc2+[1-4]          2.43    2.45    2.995
->>    v1.6.2-rc2+[1-4]+memmem   1.31    1.25    2.917
->>    v1.6.2-rc2+[1-3]+memmem   1.51    1.16    8.455
->>
->> Ubuntu has glibc 2.8, while Fedora 10 has glibc 2.9, with a new and =
-more
->> efficient memmem() implementation.  On Windows, we use our own naive
->> memmem() implementation.
+Jeff King schrieb:
+> On Sat, Feb 28, 2009 at 11:44:01PM +0100, Mike Hommey wrote:
+> 
+>>> ---
+>>>  Makefile             |    1 +
+>>>  compat/memmem.c      |  103 +++++++++----
+>>>  compat/str-two-way.h |  429 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>>>  3 files changed, 504 insertions(+), 29 deletions(-)
+>> Seeing how much memmem is being used in the codebase, is it really worth?
+> 
+> See earlier in the thread, where "git log -Stoken" is substantially
+> faster on Linux versus Windows (but some exact numbers before and after
+> on Windows would be nice to have in the commit message).
 
-Correction: On Windows, we use the previous, quadratic, naive memmem()
-implementation from glibc, not anything we came up with.
+Yes, and also please see the other numbers I just posted.  It's more of
+an update -- we took the current memmem() fall-back from glibc, too, and
+they switched to this shiny new implementation to avoid the quadratic
+complexity of the old one in the meantime.
 
->> So using memmem() is worthwhile.  And providing a better fall-back
->> version in compat/ can speed up this particular case to the point wh=
-ere
->> the fourth patch becomes moot.
->=20
-> Are these numbers telling me that with a good memmem() implementation=
-,
-> patch 4/4 is not just moot but actively detrimental?
->=20
-> With a long enough needle, it entirely is possible that scanning the =
-whole
-> image with sublinear string search algorithm would perform much bette=
-r
-> than the preprocessing patch 4/4 does which has to scan all the bytes=
- in
-> the common parts.
+I was going to say that with a fast memmem() we could convert some
+strstr() calls, especially those where we know the lengths of the
+strings anyway -- intuitively, memmem() should be faster than strstr()
+in that case.  However, the following patch on top of the Gnulib import
+makes "git grep grep v1.6.1" take 10% *more* time for me (on Windows).
+I wonder why.
 
-Yes, patch 4 makes it go slower than using memmem() alone, in this test=
-=2E
 
-Here are a few more numbers, all measured on Windows.  The topmost four
-times in the column "long" should be the same as in the Windows column
-above, yet they are slightly bigger.  Some background process must've
-decided to do some work.
-
-  git log -S"$STRING" HEAD -- kernel/sched.c >/dev/null
-
-  short: STRING=3D'e'
-  long:  STRING=3D'Ensure that the real time constraints are schedulabl=
-e.'
-
-                                  short  long
-  v1.6.2-rc2                      9.120  9.266
-  v1.6.2-rc2+[1-4]                3.037  3.048
-  v1.6.2-rc2+[1-4]+memmem         2.994  2.964
-  v1.6.2-rc2+[1-3]+memmem         8.514  8.528
-  v1.6.2-rc2+[1-4]+memmem+linear  1.939  1.759
-  v1.6.2-rc2+[1-3]+memmem+linear  2.315  1.559
-
-So patch 4 helps significantly with short needles, while it hurts a bit
-with long needles.  Linear memmem() is faster than the quadratic one we
-currently have in compat/ in all cases.
-
-Ren=C3=A9
+diff --git a/grep.c b/grep.c
+index 062b2b6..66ef171 100644
+--- a/grep.c
++++ b/grep.c
+@@ -39,6 +39,8 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
+ {
+ 	int err;
+ 
++	p->pattern_len = strlen(p->pattern);
++
+ 	if (opt->fixed || is_fixed(p->pattern))
+ 		p->fixed = 1;
+ 	if (opt->regflags & REG_ICASE)
+@@ -268,16 +270,17 @@ static void show_name(struct grep_opt *opt, const char *name)
+ 	printf("%s%c", name, opt->null_following_name ? '\0' : '\n');
+ }
+ 
+-static int fixmatch(const char *pattern, char *line, regmatch_t *match)
++static int fixmatch(const char *pattern, size_t pattern_len, const char *bol,
++		    const char *eol, regmatch_t *match)
+ {
+-	char *hit = strstr(line, pattern);
++	char *hit = memmem(bol, eol - bol, pattern, pattern_len);
+ 	if (!hit) {
+ 		match->rm_so = match->rm_eo = -1;
+ 		return REG_NOMATCH;
+ 	}
+ 	else {
+-		match->rm_so = hit - line;
+-		match->rm_eo = match->rm_so + strlen(pattern);
++		match->rm_so = hit - bol;
++		match->rm_eo = match->rm_so + pattern_len;
+ 		return 0;
+ 	}
+ }
+@@ -335,7 +338,7 @@ static int match_one_pattern(struct grep_opt *opt, struct grep_pat *p, char *bol
+ 			       pmatch, 0);
+ 	}
+ 	else {
+-		hit = !fixmatch(p->pattern, bol, pmatch);
++		hit = !fixmatch(p->pattern, p->pattern_len, bol, eol, pmatch);
+ 	}
+ 
+ 	if (hit && opt->word_regexp) {
+diff --git a/grep.h b/grep.h
+index 5102ce3..2e22ab2 100644
+--- a/grep.h
++++ b/grep.h
+@@ -28,6 +28,7 @@ struct grep_pat {
+ 	int no;
+ 	enum grep_pat_token token;
+ 	const char *pattern;
++	size_t pattern_len;
+ 	enum grep_header_field field;
+ 	regex_t regexp;
+ 	unsigned fixed:1;
