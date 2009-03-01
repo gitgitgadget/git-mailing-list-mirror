@@ -1,107 +1,213 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: coding style: #ifdef blocks and real C blocks
-Date: Sun, 1 Mar 2009 16:52:49 +0800
-Message-ID: <be6fef0d0903010052t50551f3w74352b69afdee620@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] send-email: add --confirm option
+Date: Sun, 01 Mar 2009 01:03:11 -0800
+Message-ID: <7vhc2d8vjk.fsf@gitster.siamese.dyndns.org>
+References: <1235895801-80414-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 01 09:54:35 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Nanako Shiraishi <nanako3@lavabit.com>,
+	Paul Gortmaker <paul.gortmaker@windriver.com>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 01 10:04:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LdhRJ-00040l-UO
-	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 09:54:26 +0100
+	id 1LdhbR-0006AB-K9
+	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 10:04:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753024AbZCAIww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Mar 2009 03:52:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752722AbZCAIww
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Mar 2009 03:52:52 -0500
-Received: from rv-out-0506.google.com ([209.85.198.237]:59889 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751915AbZCAIwv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Mar 2009 03:52:51 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so1823514rvb.1
-        for <git@vger.kernel.org>; Sun, 01 Mar 2009 00:52:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=mxxfnZL/ELmYdU17zJW+VzHmQqFal776gEK5tbpNQ+E=;
-        b=UkZUWmuV83jKH2ASWQUn89CWWHr/XG8eVynLl/Rzi7gI+oihCCjfUwcQ+Rn7jQE4ku
-         A9V0jyIsApYmFvddC5dUNSJkzjUZK0o/dnm9oIah2D+pj90bzMlCXfZBuEtvLkJDCi5M
-         KTA0ISQl/9Sm9EdXAnAMV212UNlrWluDUH1B0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=EDnTM+nkqXd0x4XEd/6CP4SChDO/5qUTc+d0Mn0/u9Go0tzNsNLKcpWQHJlG0ZPQe4
-         bBQwt7gR57AGM6RvF+EOLM0KQ2TDL8hnfr29wR+1xsQEbNkh28nTdXDFrdNs/a+augbQ
-         QoMlMhVFwlbBpbBmy892/nvmMvT37VS6fv/xQ=
-Received: by 10.114.88.1 with SMTP id l1mr2055885wab.97.1235897569203; Sun, 01 
-	Mar 2009 00:52:49 -0800 (PST)
+	id S1753250AbZCAJDZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Mar 2009 04:03:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753086AbZCAJDZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Mar 2009 04:03:25 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60510 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751915AbZCAJDW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 Mar 2009 04:03:22 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3A2F72C41;
+	Sun,  1 Mar 2009 04:03:20 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id EE3D12C40; Sun, 
+ 1 Mar 2009 04:03:13 -0500 (EST)
+In-Reply-To: <1235895801-80414-1-git-send-email-jaysoffian@gmail.com> (Jay
+ Soffian's message of "Sun, 1 Mar 2009 03:23:21 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: CF89638C-063F-11DE-8797-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111829>
 
-Hi,
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-I couldn't find any mention of #ifdef usage nor any example of how I'm
-thinking of using #ifdef, so I'm posing this here.
+> send-email violates the principle of least surprise by automatically
+> cc'ing additional recipients without confirming this with the user.
+>
+> This patch teaches send-email a --confirm option. It takes the
+> following values:
+>
+>  --confirm=3Dalways   always confirm before sending
+>  --confirm=3Dnever    never confirm before sending
+>  --confirm=3Dcc       confirm before sending when send-email has
+>                     automatically added addresses from the patch to
+>                     the Cc list
+>  --confirm=3Dcompose  confirm before sending the first message when
+>                     using --compose. (Needed to maintain backwards
+>                     compatibility with existing behavior.)
+>  --confirm=3Dauto     'cc' + 'compose'
+>
+> The option defaults to 'compose' if any suppress Cc related options h=
+ave
+> been used, otherwise it defaults to 'auto'.
 
-Right now here's what I have on my local branch:
+It is hard to judge if this is a good thing to do _at this point_.  Tho=
+se
+who complained may welcome it but that is hardly the point.  You need t=
+o
+convince those who stayed silent (because they thought the default won'=
+t
+change and were not paying attention) that it is a good change.
 
----
-#ifdef USE_CURL_MULTI
-	slot = get_active_multi_slot();
-#else
-	slot = get_active_slot();
-#endif
-	slot->callback_func = process_response;
-	slot->callback_data = request;
-	request->slot = slot;
----
+Especially the changes (not additions) to existing tests worries me; ea=
+ch
+change to the existing one is a demonstration of breaking existing user=
+s.
 
-I want to implement an option that's stored in the variable
-"persistent_connection", which basically makes the code behave as if
-USE_CURL_MULTI isn't defined. (This would make git open/close less
-connections throughout the lifespan of its execution, which would
-remove/minimize the number of credential prompting if authentication
-is required, among other advantages.)
+You cannot retrofit safety by disallowing things once you used to allow=
+,
+without upsetting existing users.
 
-Here's what I thought of:
+> @@ -837,6 +834,25 @@ X-Mailer: git-send-email $gitversion
+>  	unshift (@sendmail_parameters,
+>  			'-f', $raw_from) if(defined $envelope_sender);
+> =20
+> +	if ($needs_confirm && !$dry_run) {
+> +		print "\n$header\n";
+> +		while (1) {
+> +			chomp ($_ =3D $term->readline(
+> +				"Send this email? ([y]es|[n]o|[q]uit|[a]ll): "
+> +			));
+> +			last if /^(?:yes|y|no|n|quit|q|all|a)/i;
+> +			print "\n";
+> +		}
+> +		if (/^n/i) {
+> +			return;
+> +		} elsif (/^q/i) {
+> +			cleanup_compose_files();
+> +			exit(0);
+> +		} elsif (/^a/i) {
+> +			$confirm =3D 'never';
+> +		}
+> +	}
 
----
-#ifdef USE_CURL_MULTI
-	if (!persistent_connection)
-		slot = get_active_multi_slot();
-	else
-		slot = get_active_slot();
-#else
-	slot = get_active_slot();
-#endif
----
+I think "[a]ll" would make it a bit less objectionable to people who ha=
+te
+unsolicited confirmation dialogs.  Nice touch.
 
-I thought of shortening this further to
+> @@ -1094,13 +1119,10 @@ foreach my $t (@files) {
+>  	$message_id =3D undef;
+>  }
+> =20
+> -if ($compose) {
+> -	cleanup_compose_files();
+> -}
+> +cleanup_compose_files();
+> =20
+>  sub cleanup_compose_files() {
+> -	unlink($compose_filename, $compose_filename . ".final");
+> -
+> +	unlink($compose_filename, $compose_filename . ".final") if $compose=
+;
+>  }
 
----
-#ifdef USE_CURL_MULTI
-if (!persistent_connection)
-	slot = get_active_multi_slot();
-else
-#else
-	slot = get_active_slot();
-#endif
-	slot->callback_func = process_response;
-	slot->callback_data = request;
-	request->slot = slot;
----
+Does this hunk have anything to do with this topic, or is it just a chu=
+rn
+that does not change any behaviour?
 
-What would you suggest?
+> @@ -175,15 +180,13 @@ test_set_editor "$(pwd)/fake-editor"
+> =20
+>  test_expect_success '--compose works' '
+>  	clean_fake_sendmail &&
+> -	echo y | \
+> -		GIT_SEND_EMAIL_NOTTY=3D1 \
+> -		git send-email \
+> -		--compose --subject foo \
+> -		--from=3D"Example <nobody@example.com>" \
+> -		--to=3Dnobody@example.com \
+> -		--smtp-server=3D"$(pwd)/fake.sendmail" \
+> -		$patches \
+> -		2>errors
+> +	git send-email \
+> +	--compose --subject foo \
+> +	--from=3D"Example <nobody@example.com>" \
+> +	--to=3Dnobody@example.com \
+> +	--smtp-server=3D"$(pwd)/fake.sendmail" \
+> +	$patches \
+> +	2>errors
+>  '
 
--- 
-Cheers,
-Ray Chuan
+How would test this break without this hunk?  "echo" dies of sigpipe, o=
+r
+something?
+
+I am not objecting to this particular change; just asking why this chan=
+ge
+is here.  "It does not break, but the command shouldn't ask for
+confirmation, and giving 'y' into it is unnecessary" is a perfectly
+acceptable answer, but if that is the case you probably would want to
+verify that the command indeed does go ahead without asking.
+
+> @@ -375,15 +378,56 @@ test_expect_success '--suppress-cc=3Dcc' '
+>  	test_suppression cc
+>  '
+> =20
+> +test_confirm () {
+> +	echo y | \
+> +		GIT_SEND_EMAIL_NOTTY=3D1 \
+> +		git send-email \
+> +		--from=3D"Example <nobody@example.com>" \
+> +		--to=3Dnobody@example.com \
+> +		--smtp-server=3D"$(pwd)/fake.sendmail" \
+> +		$@ \
+> +		$patches | grep "Send this email"
+> +}
+> +
+> +test_expect_success '--confirm=3Dalways' '
+> +	test_confirm --confirm=3Dalways --suppress-cc=3Dall
+> +'
+> + ...
+> +test_expect_success 'confirm by default (due to --compose)' '
+> +	CONFIRM=3D$(git config --get sendemail.confirm) &&
+> +	git config --unset sendemail.confirm &&
+> +	test_confirm --suppress-cc=3Dall --compose
+> +	ret=3D"$?"
+> +	git config sendemail.confirm ${CONFIRM:-never}
+> +	test $ret =3D "0"
+> +'
+
+These all test you would get a prompt when you as the author expect the
+code to give one.  Do you also need tests that verify you do not ask
+needless confirmation when the code shouldn't?
+
+>  test_expect_success '--compose adds MIME for utf8 body' '
+>  	clean_fake_sendmail &&
+>  	(echo "#!$SHELL_PATH" &&
+>  	 echo "echo utf8 body: =C3=A0=C3=A9=C3=AC=C3=B6=C3=BA >>\"\$1\""
+>  	) >fake-editor-utf8 &&
+>  	chmod +x fake-editor-utf8 &&
+> -	echo y | \
+>  	  GIT_EDITOR=3D"\"$(pwd)/fake-editor-utf8\"" \
+> -	  GIT_SEND_EMAIL_NOTTY=3D1 \
+>  	  git send-email \
+>  	  --compose --subject foo \
+>  	  --from=3D"Example <nobody@example.com>" \
+
+If the change you made to git-send-email.perl is later broken and the
+command (incorrectly) starts asking for confirmation with these command
+line options, what does this test do?  Does it get stuck, forbidding th=
+e
+test suite to be run unattended?
