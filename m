@@ -1,84 +1,72 @@
-From: =?ISO-8859-1?Q?Tor_Arne_Vestb=F8?= <torarnv@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: jgit and ignore
-Date: Sun, 01 Mar 2009 18:51:54 +0100
-Message-ID: <49AACB3A.8070809@gmail.com>
-References: <9e4733910902280831j70448ce9h7239f14e13b92b76@mail.gmail.com> <20090228172622.GC26689@spearce.org> <49AA5F64.6070207@pelagic.nl> <9e4733910903010454u662eb5afob45f608321660500@mail.gmail.com> <49AA884D.1050806@pelagic.nl> <49AA8ECD.4090302@gmail.com> <49AA91F0.7050008@pelagic.nl> <49AAA2B3.40808@gmail.com> <20090301171648.GB14365@spearce.org> <49AAC91E.1000401@gmail.com> <20090301174941.GD14365@spearce.org>
+Date: Sun, 1 Mar 2009 09:57:05 -0800
+Message-ID: <20090301175705.GE14365@spearce.org>
+References: <49AA5F64.6070207@pelagic.nl> <9e4733910903010454u662eb5afob45f608321660500@mail.gmail.com> <49AA884D.1050806@pelagic.nl> <49AA8ECD.4090302@gmail.com> <49AA91F0.7050008@pelagic.nl> <49AAA2B3.40808@gmail.com> <20090301171648.GB14365@spearce.org> <49AAC91E.1000401@gmail.com> <20090301174941.GD14365@spearce.org> <49AACB3A.8070809@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>,
 	Jon Smirl <jonsmirl@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Mar 01 18:53:41 2009
+To: Tor Arne =?iso-8859-1?Q?Vestb=F8?= <torarnv@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 01 18:59:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ldpr7-0003CQ-Jh
-	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 18:53:38 +0100
+	id 1Ldpwn-0004xC-EX
+	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 18:59:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756798AbZCARwK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Mar 2009 12:52:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756632AbZCARwI
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Mar 2009 12:52:08 -0500
-Received: from fg-out-1718.google.com ([72.14.220.155]:54356 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753634AbZCARwG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Mar 2009 12:52:06 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so851999fgg.17
-        for <git@vger.kernel.org>; Sun, 01 Mar 2009 09:52:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=lr0TSZv5I1AJ3p9TyptR6TfLdSdKhNRAKG6K033AWjM=;
-        b=BB30Zuh1exphrBYpXzAGzG69P/epOd+CjUPGdRaWN8SDpl2hNr0iq1tHqkSdzVtfJr
-         RrXgbPmcz2vgJBfl8o7+9uM8lDBZxVnMFJ9jalDJzVzk1/R2MODQHM6y0XGHi0IOoZnR
-         vl/R19Tofg1BwjPjy/OaEhXOHjXt9HveJ/E7E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=cwMGlLZXZVY4Ks168k+NVTndaZcDO3ME/CTVgvT8bai9GC2S/QhaWzDXt49if8P4uA
-         XBI3UMKXrJvO1NfQL9fFejjtb3T7gHI4edNnYuB0u8LW70h5O7YCn2ZJh2P/9S4Ri2oO
-         FSvwDrNTTdhDd/eIT9Q3tbEjDloUTZLGEYKvo=
-Received: by 10.86.95.20 with SMTP id s20mr5834142fgb.4.1235929921495;
-        Sun, 01 Mar 2009 09:52:01 -0800 (PST)
-Received: from ?192.168.1.226? (212251244070.customer.cdi.no [212.251.244.70])
-        by mx.google.com with ESMTPS id 4sm5610760fge.34.2009.03.01.09.52.00
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 01 Mar 2009 09:52:01 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
-In-Reply-To: <20090301174941.GD14365@spearce.org>
+	id S1756385AbZCAR5K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Mar 2009 12:57:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756034AbZCAR5I
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Mar 2009 12:57:08 -0500
+Received: from george.spearce.org ([209.20.77.23]:36654 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753589AbZCAR5I (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Mar 2009 12:57:08 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id A62BE38210; Sun,  1 Mar 2009 17:57:05 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <49AACB3A.8070809@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111865>
 
-Shawn O. Pearce wrote:
->> Just to be clear, I noticed you left out the global core.excludesfile
->> (from ~/.gitconfig) here. I guess this intentional?
-> 
-> No, I didn't.  core.excludesfile is read from the config, the config
-> is a union of /etc/gitconfig, ~/.gitconfig, and GIT_DIR/config.  The
-> last setting wins.
+Tor Arne Vestb=F8 <torarnv@gmail.com> wrote:
+> Shawn O. Pearce wrote:
+> >> Just to be clear, I noticed you left out the global core.excludesf=
+ile
+> >> (from ~/.gitconfig) here. I guess this intentional?
+> >=20
+> > No, I didn't.  core.excludesfile is read from the config, the confi=
+g
+> > is a union of /etc/gitconfig, ~/.gitconfig, and GIT_DIR/config.  Th=
+e
+> > last setting wins.
+>=20
+> Ah, I see, I thought each config was read in a separate steps. Thanks
+> for clearing that up.
 
-Ah, I see, I thought each config was read in a separate steps. Thanks
-for clearing that up.
+Well, they are.
 
->> Either way, I full agree that we should honor all repository ignores
->> (whether they are in directory .gitignores, info/exclude, or given by
->> repository-specific core.excludesfile).
-> 
-> Right.  See my reply to Ferry, we union all of them together, but in
-> the case of core.excludesfile we have to honor what the repository
-> is telling us is the correct setting for that one repository,
-> which may differ from other repositories if it has been overridden.
+But in git-core the value is pulled into a single static.  For a
+string its often a single static char*.  So the config handle
+function is called up to 3 times for foo.bar, and the last one to
+be called is the one that finally set the value.  They are read
+in the order I described above, so GIT_DIR/config has a chance to
+override any prior setting.
 
-Yepp, full ack.
+In JGit the RepositoryConfig object parses the other direction.
+Its a more classical "default" pattern, where if GIT_DIR/config
+doesn't have a foo.bar we call to another instance which had parsed
+~/.gitconfig, and so on.
 
+Either way produces the same result.
 
-Tor Arne
+--=20
+Shawn.
