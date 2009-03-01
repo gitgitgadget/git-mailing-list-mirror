@@ -1,61 +1,47 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: jgit and ignore
-Date: Sun, 1 Mar 2009 21:47:25 +0100
-Message-ID: <200903012147.26590.robin.rosenberg.lists@dewire.com>
-References: <9e4733910902280831j70448ce9h7239f14e13b92b76@mail.gmail.com> <49AA9A05.6010404@gmail.com> <9e4733910903010631p51f9d4a7xddf9d823ff848bde@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Yesss! sourceforge.net and Git
+Date: Sun, 1 Mar 2009 22:38:06 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903012237360.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Tor Arne =?iso-8859-1?q?Vestb=F8?= <torarnv@gmail.com>,
-	"Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 01 22:30:18 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 01 22:48:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LdtEm-0005VA-Qw
-	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 22:30:17 +0100
+	id 1LdtVy-0002bw-Ch
+	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 22:48:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754652AbZCAV2u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Mar 2009 16:28:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753706AbZCAV2t
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Mar 2009 16:28:49 -0500
-Received: from mail.dewire.com ([83.140.172.130]:22662 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752956AbZCAV2t (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Mar 2009 16:28:49 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 61E23147EAB2;
-	Sun,  1 Mar 2009 22:28:46 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Jg6dkx1gD2S1; Sun,  1 Mar 2009 22:28:45 +0100 (CET)
-Received: from sleipner.localnet (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id 31632147EA1A;
-	Sun,  1 Mar 2009 22:28:45 +0100 (CET)
-User-Agent: KMail/1.11.0 (Linux/2.6.27-12-generic; KDE/4.2.0; i686; ; )
-In-Reply-To: <9e4733910903010631p51f9d4a7xddf9d823ff848bde@mail.gmail.com>
-Content-Disposition: inline
+	id S1754785AbZCAVgr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Mar 2009 16:36:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753777AbZCAVgq
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Mar 2009 16:36:46 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38083 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752956AbZCAVgp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Mar 2009 16:36:45 -0500
+Received: (qmail invoked by alias); 01 Mar 2009 21:36:42 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp064) with SMTP; 01 Mar 2009 22:36:42 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18cFkwMUfAcRk6MqX136nRFm1X+mnCXPaiytJrWvQ
+	H8SvElJjLwLj3m
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.84
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111878>
 
-Jon Smirl writes:
-> My .git got created in my workspace root. Is there ever a case where
-> you would want .git in your workspace root? If not, remove this choice
-> when the parent directory is the workspace root.
+Hi,
 
-Sure there is. If you create your projects in the workspace, and in particular,
-directly beneath the workspace root, having the .git directory there is a logical 
-choice. I generally try to create the projects outside the workspace, but Eclipse
-seems keen on creating projects in the workspace, but that is just my personal
-preferences and partly for historical reasons.
+check this out:
 
--- robin
+	http://apps.sourceforge.net/trac/sitedocs/wiki/Git
+
+Ciao,
+Dscho
