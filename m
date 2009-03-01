@@ -1,123 +1,91 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH] import memmem() with linear complexity from Gnulib
-Date: Sun, 01 Mar 2009 19:55:05 +0100
-Message-ID: <49AADA09.6020305@lsrfire.ath.cx>
-References: <cover.1235629933.git.gitster@pobox.com> <cd73512d11e63554396983ed4e9556b2d18b3e4a.1235629933.git.gitster@pobox.com> <49A88FA7.1020402@lsrfire.ath.cx> <7vy6vrgxnn.fsf@gitster.siamese.dyndns.org> <7v8wnrgkjw.fsf@gitster.siamese.dyndns.org> <49A937B8.1030205@lsrfire.ath.cx> <7vmyc6foj3.fsf@gitster.siamese.dyndns.org> <1235848615.7043.30.camel@ubuntu.ubuntu-domain> <20090228224401.GA27262@glandium.org> <20090301034123.GC30384@coredump.intra.peff.net> <49AA6E35.40205@lsrfire.ath.cx>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git monthly links: 2009-02
+Date: Sun, 01 Mar 2009 12:10:10 -0800 (PST)
+Message-ID: <m34oyduhs5.fsf@localhost.localdomain>
+References: <94a0d4530903010844u78cc9a2en23124e40467bd8b8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mike Hommey <mh@glandium.org>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Mar 01 19:58:02 2009
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 01 21:11:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LdqqP-0007AK-JU
-	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 19:56:58 +0100
+	id 1Lds0q-0005aB-VM
+	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 21:11:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754292AbZCASzV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Mar 2009 13:55:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754252AbZCASzV
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Mar 2009 13:55:21 -0500
-Received: from india601.server4you.de ([85.25.151.105]:44663 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753634AbZCASzQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Mar 2009 13:55:16 -0500
-Received: from [10.0.1.101] (p57B7E150.dip.t-dialin.net [87.183.225.80])
-	by india601.server4you.de (Postfix) with ESMTPSA id B743A2F8037;
-	Sun,  1 Mar 2009 19:55:12 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
-In-Reply-To: <49AA6E35.40205@lsrfire.ath.cx>
+	id S1753040AbZCAUKS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Mar 2009 15:10:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752918AbZCAUKQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Mar 2009 15:10:16 -0500
+Received: from mail-fx0-f176.google.com ([209.85.220.176]:49024 "EHLO
+	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752416AbZCAUKP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 Mar 2009 15:10:15 -0500
+Received: by fxm24 with SMTP id 24so1731092fxm.37
+        for <git@vger.kernel.org>; Sun, 01 Mar 2009 12:10:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=HWlqbZcuM2HgYJ3nYsUuybbhHYTHoMA40LG5p3bklpw=;
+        b=b9pLbB9iI94617oXmvaNBzOO11Fozzd4uOlR6M3k0l7TN42FmsMvo19rnGJ45NYPdQ
+         BPA+Bw3Mbymd+S83CmHw6UiPSt9Fcqkmcd4a9+qxB+1pNRvk8IXBY4HBZ1kXdmITIR2u
+         ZvhyQo6bvLHS4dblqPl9tJJPNbI2xWpGu5jiI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=T/3F5uLT0Ti4hU8+xyKcUIRbY90294CyhIRQiA+Ma2fOjqczg7D7uoXR34DdSZ1sf1
+         cmC/WRYkKXloLAaAS1YOGEZy2J/oajV/kAe8tb/X4VHmtaKtV2TLVi1v2l0tKphYNVeA
+         nfoUY1ehKLAPIZtBKPueuwndwnwK3ofFFIPJw=
+Received: by 10.180.247.17 with SMTP id u17mr1536382bkh.59.1235938211382;
+        Sun, 01 Mar 2009 12:10:11 -0800 (PST)
+Received: from localhost.localdomain (abvv234.neoplus.adsl.tpnet.pl [83.8.219.234])
+        by mx.google.com with ESMTPS id y15sm3913742fkd.12.2009.03.01.12.10.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 01 Mar 2009 12:10:10 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n21K9fTQ004567;
+	Sun, 1 Mar 2009 21:09:53 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n21K9UnT004563;
+	Sun, 1 Mar 2009 21:09:30 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <94a0d4530903010844u78cc9a2en23124e40467bd8b8@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111869>
 
-Ren=C3=A9 Scharfe schrieb:
-> I was going to say that with a fast memmem() we could convert some
-> strstr() calls, especially those where we know the lengths of the
-> strings anyway -- intuitively, memmem() should be faster than strstr(=
-)
-> in that case.  However, the following patch on top of the Gnulib impo=
-rt
-> makes "git grep grep v1.6.1" take 10% *more* time for me (on Windows)=
-=2E
-> I wonder why.
+=46elipe Contreras <felipe.contreras@gmail.com> writes:
 
-More numbers.  "memmem" is the patch I'm replying to which converts
-grep's fixed string search from strstr() to memmem().  "quadratic" mean=
-s
-the current version of compat/memmem.c was used (NO_MEMMEM=3Dyes),
-"linear" is the same, but with the newer memmem() from Gnulib imported.
- The numbers are elapsed seconds for the following command, run in a
-Linux kernel repo:
+> Git for the real world
+> Twitter developer explains how git should be used in his opinion.
+> http://robey.lag.net/2008/07/13/git-for-the-real-world.html
 
-   git grep grep v2.6.28 >/dev/null
-
-                                   Ubuntu Fedora
-   [1] v1.6.2-rc2                    2.99   3.52
-   [2] v1.6.2-rc2+memmem             3.09   3.28
-   [3] v1.6.2-rc2+memmem+quadratic   8.42   8.50
-   [4] v1.6.2-rc2+memmem+linear      3.17   3.25
-
-So, we should be careful when using memmem() as long as we have the
-current implementation in compat/, as the quadratic complexity can
-result in a significant slowdown ([3]).
-
-The new memmem() indeed is faster than the new strstr(), as expected
-(Fedora [2] and [4] vs. Fedora [1]).  Remember, Fedora 10 already
-includes the glibc version with the linear implementations while Ubuntu
-8.10 doesn't.
-
-I'm not sure if the difference between the old and new memmem() is
-significant or in the noise (Ubuntu [2] and [4]).
-
-In any case, and this surprised me, the fastest of them all is the old
-strstr() (Ubuntu [1]).  This is consistent with the slowdown observed o=
-n
-Windows.
-
-What's even more surprising is the difference between Ubuntu [2] and
-[3], which use basically the same memmem().  Or so I thought.  Wrong.
-The old memmem() in glibc has a small but effective optimization, that
-our version lacks.  I don't remember if I cut it out during the initial
-import for increased simplicity or if the version the import was based
-on didn't have it.  Anyway, with the following patch, case [3] runs as
-fast as case [2] on both Fedora and Ubuntu.
-
-Next step would be to check if pickaxe simply needs this short patch or
-really the full-blown linear reimplementation.  I'm off to an
-appointment, though, so I'll look into this again tomorrow.
-
-Ren=C3=A9
+Grrr... blog without comments is not a blog. How I hate if somebody
+writes critic which simply shows that he/she does not undertsnad git,
+and doesn't have place for correcting misinformation...
 
 
-diff --git a/compat/memmem.c b/compat/memmem.c
-index cd0d877..fed5a77 100644
---- a/compat/memmem.c
-+++ b/compat/memmem.c
-@@ -5,6 +5,7 @@ void *gitmemmem(const void *haystack, size_t haystack_l=
-en,
- {
- 	const char *begin =3D haystack;
- 	const char *last_possible =3D begin + haystack_len - needle_len;
-+	char tip;
-=20
- 	/*
- 	 * The first occurrence of the empty string is deemed to occur at
-@@ -20,8 +21,10 @@ void *gitmemmem(const void *haystack, size_t haystac=
-k_len,
- 	if (haystack_len < needle_len)
- 		return NULL;
-=20
-+	tip =3D *((const char *)needle);
-+
- 	for (; begin <=3D last_possible; begin++) {
--		if (!memcmp(begin, needle, needle_len))
-+		if (*begin =3D=3D tip && !memcmp(begin, needle, needle_len))
- 			return (void *)begin;
- 	}
-=20
+> flashbake =AB Bit Bucket Labs
+> Scripts to automate git for non-technical users.
+> http://bitbucketlabs.net/flashbake/
+
+Cory Doctorow on Lifestreaming Contextual Snapshots Using New Tool Flas=
+hbake
+http://lifestreamblog.com/cory-doctorow-on-lifestreaming-contextual-sna=
+pshots-using-new-tool-flashbake/
+
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
