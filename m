@@ -1,79 +1,190 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH 2/2 RFC] fetch-pack: log(n)-transmission find_common()
-Date: Sun, 1 Mar 2009 22:37:38 +0100
-Message-ID: <200903012237.40891.trast@student.ethz.ch>
+Subject: [PATCH 1/2] fetch-pack: rearrange main loop
+Date: Sun,  1 Mar 2009 22:39:59 +0100
+Message-ID: <1235943599-3739-1-git-send-email-trast@student.ethz.ch>
 References: <1235942640-2370-1-git-send-email-trast@student.ethz.ch>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart7928266.7lp0qcMcPj";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Brent Goodrick <bgoodr@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 01 22:48:03 2009
+X-From: git-owner@vger.kernel.org Sun Mar 01 22:48:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LdtVz-0002bw-3s
-	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 22:48:03 +0100
+	id 1LdtVz-0002bw-Sn
+	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 22:48:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754652AbZCAViG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Mar 2009 16:38:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754993AbZCAViE
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Mar 2009 16:38:04 -0500
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:10796 "EHLO xsmtp1.ethz.ch"
+	id S1755661AbZCAVkW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Mar 2009 16:40:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755488AbZCAVkW
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Mar 2009 16:40:22 -0500
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:11024 "EHLO xsmtp1.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753777AbZCAViD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Mar 2009 16:38:03 -0500
+	id S1754993AbZCAVkV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Mar 2009 16:40:21 -0500
 Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 1 Mar 2009 22:38:00 +0100
-Received: from thomas.localnet ([84.75.148.62]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 1 Mar 2009 22:38:00 +0100
-User-Agent: KMail/1.11.0 (Linux/2.6.27.19-3.2-default; KDE/4.2.0; x86_64; ; )
+	 Sun, 1 Mar 2009 22:40:19 +0100
+Received: from localhost.localdomain ([84.75.148.62]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sun, 1 Mar 2009 22:40:18 +0100
+X-Mailer: git-send-email 1.6.2.rc2.289.g2fa25
 In-Reply-To: <1235942640-2370-1-git-send-email-trast@student.ethz.ch>
-X-OriginalArrivalTime: 01 Mar 2009 21:38:00.0316 (UTC) FILETIME=[FE4FA3C0:01C99AB5]
+X-OriginalArrivalTime: 01 Mar 2009 21:40:18.0882 (UTC) FILETIME=[50E72220:01C99AB6]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111880>
 
---nextPart7928266.7lp0qcMcPj
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+This patch does not change the results (nor any of the semantics
+except for the get_rev return type), but we need the changed layout
+for the exponential-stride feature.
 
-I wrote:
-> Subject: [PATCH 2/2 RFC] fetch-pack: log(n)-transmission find_common()
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 
-Sorry for the out-of-thread reply.  This is almost exactly the same
-patch as
+---
+ builtin-fetch-pack.c |  108 +++++++++++++++++++++++++++++--------------------
+ 1 files changed, 64 insertions(+), 44 deletions(-)
 
-  http://article.gmane.org/gmane.comp.version-control.git/102485
-
-I forget to send along 1/2.  I'll tack it on 2/2 shortly, but that one
-really is unchanged from the above thread IIRC.
-
-But it also turns out, as you can see, that git-send-email happily
-ignores --in-reply-to if threading is disabled. :-(
-
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
-
---nextPart7928266.7lp0qcMcPj
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkmrACQACgkQqUud07tmzP2sFACeMtiFT1iOjDob4wIDxlPs6PZi
-tUQAnjX8E5hBfHwhhSSOwQX+fR6hRwJG
-=x5VR
------END PGP SIGNATURE-----
-
---nextPart7928266.7lp0qcMcPj--
+diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
+index 372bfa2..ae0a67a 100644
+--- a/builtin-fetch-pack.c
++++ b/builtin-fetch-pack.c
+@@ -111,7 +111,7 @@ static void mark_common(struct commit *commit,
+   Get the next rev to send, ignoring the common.
+ */
+ 
+-static const unsigned char* get_rev(void)
++static struct commit* get_rev(void)
+ {
+ 	struct commit *commit = NULL;
+ 
+@@ -153,15 +153,41 @@ static void mark_common(struct commit *commit,
+ 		rev_list = rev_list->next;
+ 	}
+ 
+-	return commit->object.sha1;
++	return commit;
+ }
+ 
++/*
++ * Send 'have' for the next batch of revisions.  Returns 0 if we ran
++ * out of commits to send, 1 otherwise.
++ */
++
++static int send_have_lines(int fd[2], int *flushes, unsigned *in_vain)
++{
++	struct commit *commit;
++	int i;
++
++	for (i = 0; i < 32; i++) {
++		commit = get_rev();
++		if (!commit)
++			return 0;
++		packet_write(fd[1], "have %s\n",
++			     sha1_to_hex(commit->object.sha1));
++		if (args.verbose)
++			fprintf(stderr, "have %s\n",
++				sha1_to_hex(commit->object.sha1));
++	}
++	packet_flush(fd[1]);
++	*flushes += 1;
++	*in_vain += 32;
++	return 1;
++}
++
++
+ static int find_common(int fd[2], unsigned char *result_sha1,
+ 		       struct ref *refs)
+ {
+ 	int fetching;
+ 	int count = 0, flushes = 0, retval;
+-	const unsigned char *sha1;
+ 	unsigned in_vain = 0;
+ 	int got_continue = 0;
+ 
+@@ -243,51 +269,45 @@ static int find_common(int fd[2], unsigned char *result_sha1,
+ 
+ 	flushes = 0;
+ 	retval = -1;
+-	while ((sha1 = get_rev())) {
+-		packet_write(fd[1], "have %s\n", sha1_to_hex(sha1));
+-		if (args.verbose)
+-			fprintf(stderr, "have %s\n", sha1_to_hex(sha1));
+-		in_vain++;
+-		if (!(31 & ++count)) {
+-			int ack;
+ 
+-			packet_flush(fd[1]);
+-			flushes++;
++	/*
++	 * We keep one window "ahead" of the other side, and
++	 * will wait for an ACK only on the next one
++	 */
++	if (!send_have_lines(fd, &flushes, &in_vain))
++		goto done;
+ 
+-			/*
+-			 * We keep one window "ahead" of the other side, and
+-			 * will wait for an ACK only on the next one
+-			 */
+-			if (count == 32)
+-				continue;
++	while (send_have_lines(fd, &flushes, &in_vain)) {
++		int ack;
++		int unwound = 0;
+ 
+-			do {
+-				ack = get_ack(fd[0], result_sha1);
+-				if (args.verbose && ack)
+-					fprintf(stderr, "got ack %d %s\n", ack,
+-							sha1_to_hex(result_sha1));
+-				if (ack == 1) {
+-					flushes = 0;
+-					multi_ack = 0;
+-					retval = 0;
+-					goto done;
+-				} else if (ack == 2) {
+-					struct commit *commit =
+-						lookup_commit(result_sha1);
+-					mark_common(commit, 0, 1);
+-					retval = 0;
+-					in_vain = 0;
+-					got_continue = 1;
+-				}
+-			} while (ack);
+-			flushes--;
+-			if (got_continue && MAX_IN_VAIN < in_vain) {
+-				if (args.verbose)
+-					fprintf(stderr, "giving up\n");
+-				break; /* give up */
++		do {
++			ack = get_ack(fd[0], result_sha1);
++			if (args.verbose && ack)
++				fprintf(stderr, "got ack %d %s\n", ack,
++					sha1_to_hex(result_sha1));
++			if (ack == 1) {
++				flushes = 0;
++				multi_ack = 0;
++				retval = 0;
++				goto done;
++			} else if (ack == 2) {
++				struct commit *commit =
++					lookup_commit(result_sha1);
++				mark_common(commit, 0, 1);
++				retval = 0;
++				in_vain = 0;
++				got_continue = 1;
+ 			}
++		} while (ack);
++		flushes--;
++		if (got_continue && MAX_IN_VAIN < in_vain) {
++			if (args.verbose)
++				fprintf(stderr, "giving up\n");
++			break; /* give up */
+ 		}
+ 	}
++
+ done:
+ 	packet_write(fd[1], "done\n");
+ 	if (args.verbose)
+-- 
+tg: (7f705dc..) t/fp-refactor (depends on: origin/master)
