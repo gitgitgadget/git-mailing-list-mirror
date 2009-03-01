@@ -1,79 +1,105 @@
-From: David Miller <davem@davemloft.net>
-Subject: rogue tree objects, how to diagnose?
-Date: Sat, 28 Feb 2009 19:12:06 -0800 (PST)
-Message-ID: <20090228.191206.75012167.davem@davemloft.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/4] Add init-serve, the remote side of "git init
+	--remote=host:path"
+Date: Sat, 28 Feb 2009 22:16:09 -0500
+Message-ID: <20090301031609.GA30384@coredump.intra.peff.net>
+References: <1235865822-14625-1-git-send-email-gitster@pobox.com> <1235865822-14625-2-git-send-email-gitster@pobox.com> <1235865822-14625-3-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 01 04:13:57 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 01 04:17:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ldc7o-00031N-LZ
-	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 04:13:57 +0100
+	id 1LdcBR-0003iJ-QS
+	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 04:17:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755296AbZCADMZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Feb 2009 22:12:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755276AbZCADMZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Feb 2009 22:12:25 -0500
-Received: from 74-93-104-97-Washington.hfc.comcastbusiness.net ([74.93.104.97]:40764
-	"EHLO sunset.davemloft.net" rhost-flags-OK-FAIL-OK-OK)
-	by vger.kernel.org with ESMTP id S1755280AbZCADMY (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 Feb 2009 22:12:24 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by sunset.davemloft.net (Postfix) with ESMTP id 1582735C009
-	for <git@vger.kernel.org>; Sat, 28 Feb 2009 19:12:06 -0800 (PST)
-X-Mailer: Mew version 6.1 on Emacs 22.1 / Mule 5.0 (SAKAKI)
+	id S1755312AbZCADQP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Feb 2009 22:16:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755276AbZCADQP
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Feb 2009 22:16:15 -0500
+Received: from peff.net ([208.65.91.99]:36034 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755190AbZCADQO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Feb 2009 22:16:14 -0500
+Received: (qmail 28432 invoked by uid 107); 1 Mar 2009 03:16:12 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 28 Feb 2009 22:16:12 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 28 Feb 2009 22:16:09 -0500
+Content-Disposition: inline
+In-Reply-To: <1235865822-14625-3-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111809>
 
+On Sat, Feb 28, 2009 at 04:03:41PM -0800, Junio C Hamano wrote:
 
-I've got this weird problem.
+> +/*
+> + * Notice any command line argument that we may not want to invoke
+> + * "git init" with when we are doing this remotely, and reject the
+> + * request.
+> + */
+> +static int forbidden_arg(const char *arg)
+> +{
+> +	if (!prefixcmp(arg, "--shared=") ||
+> +	    !strcmp(arg, "--shared") ||
+> +	    !strcmp(arg, "--bare"))
+> +		return 0;
+> +	return 1;
+> +}
 
-In my local net-next-2.6 tree I tries to pull from a
-colleague and this resulted in:
+I started this mail to complain that this function was "disallow known
+bad" instead of "allow known good". But then after reading it carefully
+three times, I see that it is in fact "not allow known good". Can we
+make it "allowed_arg" to prevent double negation?
 
-davem@sunset:~/src/GIT/net-next-2.6$ git pull git://git.kernel.org/pub/scm/linux/kernel/git/linville/wireless-next-2.6.git master
- ...
-From git://git.kernel.org/pub/scm/linux/kernel/git/linville/wireless-next-2.6
- * branch            master     -> FETCH_HEAD
-fatal: unable to read tree c9ee57c5c20c3b7a2d7784a4172aef8b34c3a844
-davem@sunset:~/src/GIT/net-next-2.6$ git show c9ee57c5c20c3b7a2d7784a4172aef8b34c3a844
-fatal: bad object c9ee57c5c20c3b7a2d7784a4172aef8b34c3a844
-davem@sunset:~/src/GIT/net-next-2.6$ 
+> +		/*
+> +		 * NEEDSWORK: I do not currently think it is worth it,
+> +		 * but this might want to set up and use the sideband
+> +		 * to capture and send output from the child back to
+> +		 * the requestor.  At least this comment needs to be removed
+> +		 * once we make the decision.
+> +		 */
+> +		child.stdout_to_stderr = 1;
 
-Now, what's funny is that this tree object does exist in my
-tree on master.kernel.org:
+I guess there is a potential information leak to say "directory does not
+exist" versus "permission denied". Stopping such leaks often ends up
+creating more harm (in confused users who don't know why it failed) than
+good, but I think the fetch protocol is intentionally quiet here.
 
-[davem@hera net-next-2.6.git]$ git ls-tree c9ee57c
-100644 blob ffa0efce0aed06aa51be310e14dfe4b5bac8c3b4    Kconfig
-100644 blob be8f287aa398f0a9697f9af30d4cda25b95ea1f0    Makefile
-100644 blob dbb912574569ef49375866a5053e429bf6d38831    cm4000_cs.c
-100644 blob 4f0723b07974615f5177134b49deb671580e8813    cm4040_cs.c
-100644 blob 9a8b805c5095487a8f59ac22475d417d6436ac23    cm4040_cs.h
-040000 tree 1314476b63b18a2c4f6dc84dd00c4ed25b7fccd9    ipwireless
-100644 blob 5608a1e5a3b3416fa44e44e504c9a2817d1c3c2c    synclink_cs.c
-[davem@hera net-next-2.6.git]$ 
+...
 
-And if I do a full clone of my master.kernel.org tree I get the
-tree object.
+Actually, I just checked. Over ssh, you get:
 
-Now, I have done a by-hand revert in this tree a long time ago
-(by just by-hand changing the SHA1 ID in 'master') so that may
-have contributed to this happening.
+  $ git fetch host:/nonexistent
+  fatal: '/foo': unable to chdir or not a git archive
+  fatal: The remote end hung up unexpectedly
 
-But anyways, if I pull into ~/src/GIT/net-next-2.6 locally , I don't
-get that tree object.
+But over git://, you get:
 
-I don't understand how this can happen, and I'd like to be able
-to diagnose this intelligently.
+  $ git fetch git://host/nonexistent
+  fatal: The remote end hung up unexpectedly
 
-So, what is an easy way to figure out what commit references tree
-object X?
+which I think is just because ssh relays stderr but the git daemon does
+not.
 
-Thanks!
+So we are leaking the information to people authenticated via ssh (who
+still might not be trusted or have full shell access, but are more
+likely to be), but not to the whole world.
+
+> +		/*
+> +		 * NEEDSWORK: we might want to distinguish various
+> +		 * error codes from run_command() and return different
+> +		 * messages back.  I am too lazy to be bothered.
+> +		 */
+> +		if (run_command(&child))
+> +			errmsg = "bad";
+
+I think this somewhat falls into the same category as above (though
+perhaps the information is less interesting).
+
+-Peff
