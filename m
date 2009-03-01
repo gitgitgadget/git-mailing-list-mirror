@@ -1,122 +1,102 @@
-From: =?ISO-8859-1?Q?Tor_Arne_Vestb=F8?= <torarnv@gmail.com>
-Subject: Re: jgit and ignore
-Date: Sun, 01 Mar 2009 15:58:59 +0100
-Message-ID: <49AAA2B3.40808@gmail.com>
-References: <9e4733910902280831j70448ce9h7239f14e13b92b76@mail.gmail.com>	 <20090228172622.GC26689@spearce.org> <49AA5F64.6070207@pelagic.nl> <9e4733910903010454u662eb5afob45f608321660500@mail.gmail.com> <49AA884D.1050806@pelagic.nl> <49AA8ECD.4090302@gmail.com> <49AA91F0.7050008@pelagic.nl>
+From: Joi Ellis <gyles19@visi.com>
+Subject: Re: Chicken/egg problem building from a 'git clone'
+Date: Sun, 1 Mar 2009 09:56:46 -0600 (CST)
+Message-ID: <Pine.LNX.4.44.0903010945290.4675-100000@localhost.localdomain>
+References: <7vskmr43le.fsf@gitster.siamese.dyndns.org>
+Reply-To: gyles19@visi.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jon Smirl <jonsmirl@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
-X-From: git-owner@vger.kernel.org Sun Mar 01 16:03:24 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, Miles Bader <miles@gnu.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	<git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 01 16:59:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LdnCN-00089F-2N
-	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 16:03:23 +0100
+	id 1Ldo4K-0000a6-0O
+	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 16:59:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755276AbZCAO7L convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Mar 2009 09:59:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754931AbZCAO7L
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Mar 2009 09:59:11 -0500
-Received: from fg-out-1718.google.com ([72.14.220.155]:20414 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754705AbZCAO7K (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Mar 2009 09:59:10 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so840172fgg.17
-        for <git@vger.kernel.org>; Sun, 01 Mar 2009 06:59:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=xuGRrXHs5S1EGqAWv+6MCp3DwqjIBzxdQ2mIgv3W2Zo=;
-        b=f7CrjLF7b2BrXNy1GfqZlcFFQBe/W0FRfLHUSUrk1y6kOh906yq6GJx8UJ9vTE5jpb
-         SosOi+Lb9I66ylWN4VFrrYZdpTTxNW3jxCvLMvoPQmA684foHeALPxqj8ue+0NrZW69i
-         pyBcUuGIIcLanXhxcY5qdm2zrHuAS7akjSQwA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=m31WYfyhDqh6oCU2qzNG1/ljFcYPXDIudubOYEidswm0xYVGmNIJGfpRqgLbFb0gPD
-         XmmdNTsfM5L/boSs2dEaIKeC5RmYzSZnnTSdfrgzy1H6OagUIPDrjg822AQNaEBSPqoL
-         NoUg+7Gqmvk5aY1sij7hdgIB/IhRP9oONMzeU=
-Received: by 10.86.72.15 with SMTP id u15mr5738309fga.8.1235919546892;
-        Sun, 01 Mar 2009 06:59:06 -0800 (PST)
-Received: from ?192.168.1.226? (212251244070.customer.cdi.no [212.251.244.70])
-        by mx.google.com with ESMTPS id e20sm4761681fga.36.2009.03.01.06.59.06
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 01 Mar 2009 06:59:06 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
-In-Reply-To: <49AA91F0.7050008@pelagic.nl>
+	id S1755513AbZCAP5i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Mar 2009 10:57:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755487AbZCAP5i
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Mar 2009 10:57:38 -0500
+Received: from mailfront2.g2host.com ([208.42.176.213]:42193 "EHLO g2host.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755443AbZCAP5h (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Mar 2009 10:57:37 -0500
+Received: from [209.98.98.8] (account gyles19@visi.com HELO localhost)
+  by mailfront2.g2host.com (CommuniGate Pro SMTP 5.1.16)
+  with ESMTPSA id 90943551; Sun, 01 Mar 2009 09:57:34 -0600
+X-X-Sender: joi@localhost.localdomain
+In-Reply-To: <7vskmr43le.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111850>
 
-=46erry Huberts (Pelagic) wrote:
-> Tor Arne Vestb=F8 wrote:
->> In my opinion, EGit should default to using Eclipse's built in ignor=
-es,
->> but then detect the presence of a global core.excludesfile, in which
->> case it would notify the user ("I see you have a core.excludesfile")=
- and
->> let the user switch to using that one instead.
+On Fri, 6 Feb 2009, Junio C Hamano wrote:
 
-[snip]
+> Jeff King <peff@peff.net> writes:
+> 
+> > Now, in this case, it was only one tweak and other responders have
+> > already pointed him in the right direction. So just making that tweak
+> > manually is probably the sane thing to do in this situation.
+> >
+> > But I wanted to point out that autoconf is not totally without value
+> > here.
+> 
+> I am not saying something that strong, either.  If autoconf generated
+> configure works _for you_ without hassle, great.  Keep using it.
+> 
+> The original message that started this thread was what to do when it does
+> NOT work for you, and my point was in general it is much nicer to point at
+> the knob to tweak from the make invocation command line (or in config.mak)
+> than having you spend time on upgrade autoconf, generate configure and run
+> it.
 
-=46irst of all, I do appreciate you working on the ignore feature :)
+Actually, guys, if you go back and re-read my original message, I was
+pointing out that if you use a 'git clone' to get a build tree, THERE IS
+NO CONFIGURE SCRIPT in the tree.
 
-> I do not agree with your propasal however.
-> We then would have different behaviour between how 'git' behaves with=
-in
-> Eclipse (by means of the plugin) and how 'git' behaves within the
-> command line. That alone can cause much more confusion.
+The problem is not that the configure script does not work.  I pointed
+out in the first paragraph that the configure script in the TARBALL
+works just fine.  What I pointed out is that the build tree DOES NOT
+PROVIDE THE CONFIGURE SCRIPT.  All I asked you to do is to consider
+adding the configure script to the repository so that it gets pushed out 
+in a clone.
 
-I see what you mean, and I agree that in general the command line git
-porcelain and the Eclipse git porcelain should work in similar ways.
+> Fanboys may say that autoconf generated configure is the greatest thing
+> since sliced bread.  But let's face it.  Honestly, the track record of
+> those people in keeping autoconf part in this project up-to-date has not
+> been all that great.  There are things that the generated configure file
+> does not detect nor configure correctly (we had --with-expat patch, and we
+> also saw "the trailing slash in template_dir definition in config.mak.in"
+> discussed fairly recently).  You are much better off tweaking known
+> peculiarity of your platform in config.mak, when configure does not work
+> out of box for you.
 
-But, with that said, I think of EGit as a standalone Eclipse-plugin
-implementation of the git porcelain -- not just a wrapper around the
-command line porcelain.
+I've been building and installing multi-platform *nix software on
+various flavors for two decades now.  "./configure && make && make install" has 
+been the standard build process even before GNU.  The whole point of
+autoconf/configure/make tools is to eliminate the need to manually tweak
+makefiles so that software is easily portable between platforms. 
 
-To me that means that EGit should focus just as much on integrating wit=
-h
-Eclipse properly as it does on keeping command line porcelain
-interoperability.
+I got such a rash of SNOTTY messages from you folks, all directed to me
+privately, that I nearly deleted git from my laptop altogether.  You can be
+sure I will not bother attempting to build git from a clone ever again.
+I took the time to debug and diagnose the build failures I was getting,
+and I tried to politely pass it along in case anyone cares.
 
-The core.excludesfile is one such case, and I think my proposal is a
-good compromise.
+Clearly, you don't.  I shall not waste your or my time any further.
 
-> Your proposal can also be implemented differently by (for example)
-> building a UI that allows the user to edit the global ignore file.
+-- 
+Joi Ellis                    
+gyles19@visi.com
 
-That would be going out of scope of Eclipse as a framework, and also
-does not solve the problem for those users who have a list of global
-team ignores, and expect the Git plugin to just work with those ignores=
-=2E
-
-> The Eclipse global team ignores simply are too broad: think of the
-> situation where I also have non-git project (like svn) in my workspac=
-e.
-
-Not sure I understand? Isn't that exactly why you would have Eclipse's
-global ignores specified in one place -- so that they could be shared
-between version control systems instead of replicated in each repo?
-
-Let' say you have a CVS project, a SVN project, and a Git project in
-your workspace. The CVS and SVN projects would pick up ".bak" as an
-ignore pattern from your team ignores, but the Git project would not.
-
-To make the Git project pick it up, you would have to either add it
-(repatedly for more than one project) to the .gitignore of that project=
-,
-or open an editor outside of Eclipse to edit your ~/.gitconfig.
-
-Either ways seem redundant and awkward to me.
-
-Tor Arne
+No matter what we think of Linux versus FreeBSD, etc., the one thing I
+really like about Linux is that it has Microsoft worried.  Anything
+that kicks a monopoly in the pants has got to be good for something.
+           - Chris Johnson
