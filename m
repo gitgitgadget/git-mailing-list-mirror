@@ -1,79 +1,104 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] import memmem() with linear complexity from Gnulib
-Date: Sat, 28 Feb 2009 23:44:01 +0100
-Message-ID: <20090228224401.GA27262@glandium.org>
-References: <cover.1235629933.git.gitster@pobox.com> <cd73512d11e63554396983ed4e9556b2d18b3e4a.1235629933.git.gitster@pobox.com> <49A88FA7.1020402@lsrfire.ath.cx> <7vy6vrgxnn.fsf@gitster.siamese.dyndns.org> <7v8wnrgkjw.fsf@gitster.siamese.dyndns.org> <49A937B8.1030205@lsrfire.ath.cx> <7vmyc6foj3.fsf@gitster.siamese.dyndns.org> <1235848615.7043.30.camel@ubuntu.ubuntu-domain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?iso-8859-15?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sat Feb 28 23:46:02 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/4] Refactor list of environment variables to be sanitized
+Date: Sat, 28 Feb 2009 16:03:39 -0800
+Message-ID: <1235865822-14625-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 01 01:05:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LdXwW-0002YQ-Lr
-	for gcvg-git-2@gmane.org; Sat, 28 Feb 2009 23:46:01 +0100
+	id 1LdZBp-000803-PZ
+	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 01:05:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755927AbZB1WoN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Feb 2009 17:44:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755868AbZB1WoL
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Feb 2009 17:44:11 -0500
-Received: from vuizook.err.no ([85.19.221.46]:39233 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755487AbZB1WoJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Feb 2009 17:44:09 -0500
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <mh@glandium.org>)
-	id 1LdXuS-0006yl-N7; Sat, 28 Feb 2009 23:43:56 +0100
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1LdXub-0007H0-65; Sat, 28 Feb 2009 23:44:01 +0100
-Content-Disposition: inline
-In-Reply-To: <1235848615.7043.30.camel@ubuntu.ubuntu-domain>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
+	id S1754897AbZCAADs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Feb 2009 19:03:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754279AbZCAADr
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Feb 2009 19:03:47 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36212 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751362AbZCAADr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Feb 2009 19:03:47 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 0B0B1289D
+	for <git@vger.kernel.org>; Sat, 28 Feb 2009 19:03:45 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 6B8EA289C for
+ <git@vger.kernel.org>; Sat, 28 Feb 2009 19:03:44 -0500 (EST)
+X-Mailer: git-send-email 1.6.2.rc2.99.g9f3bb
+X-Pobox-Relay-ID: 6E6AEFEE-05F4-11DE-A1CF-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111799>
 
-On Sat, Feb 28, 2009 at 08:16:55PM +0100, Ren=E9 Scharfe wrote:
-> Gnulib and glibc have gained a memmem() implementation using the Two-=
-Way
-> algorithm, which needs constant space and linear time.  Import it to
-> compat/ in order to replace the simple quadratic implementation there=
-=2E
->=20
-> memmem.c and str-two-way.h are copied verbatim from the repository at
-> git://git.savannah.gnu.org/gnulib.git, with the following changes to
-> memmem.c to make it fit into git's build environment:
->=20
-> 	21,23c21
-> 	< #ifndef _LIBC
-> 	< # include <config.h>
-> 	< #endif
-> 	---
-> 	> #include "../git-compat-util.h"
-> 	40c38
-> 	< memmem (const void *haystack_start, size_t haystack_len,
-> 	---
-> 	> gitmemmem(const void *haystack_start, size_t haystack_len,
->=20
-> Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-> ---
->  Makefile             |    1 +
->  compat/memmem.c      |  103 +++++++++----
->  compat/str-two-way.h |  429 ++++++++++++++++++++++++++++++++++++++++=
-++++++++++
->  3 files changed, 504 insertions(+), 29 deletions(-)
+When local process-to-process pipe transport spawns a subprocess,
+it cleans up various git related variables to give the new process
+a fresh environment.  The list of variables to cleanse is useful
+in other places.
+---
+ cache.h   |    2 ++
+ connect.c |   26 +++++++++++++++-----------
+ 2 files changed, 17 insertions(+), 11 deletions(-)
 
-Seeing how much memmem is being used in the codebase, is it really wort=
-h?
-
-Mike
+diff --git a/cache.h b/cache.h
+index 189151d..b72434f 100644
+--- a/cache.h
++++ b/cache.h
+@@ -389,6 +389,8 @@ extern void set_git_work_tree(const char *tree);
+ 
+ #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
+ 
++extern const char *sanitize_git_env[];
++
+ extern const char **get_pathspec(const char *prefix, const char **pathspec);
+ extern void setup_work_tree(void);
+ extern const char *setup_git_directory_gently(int *);
+diff --git a/connect.c b/connect.c
+index 2f23ab3..b4705ff 100644
+--- a/connect.c
++++ b/connect.c
+@@ -6,6 +6,20 @@
+ #include "run-command.h"
+ #include "remote.h"
+ 
++/*
++ * When spawning a subprocess in a fresh environment,
++ * these variables may need to be cleared
++ */
++const char *sanitize_git_env[] = {
++	ALTERNATE_DB_ENVIRONMENT,
++	DB_ENVIRONMENT,
++	GIT_DIR_ENVIRONMENT,
++	GIT_WORK_TREE_ENVIRONMENT,
++	GRAFT_ENVIRONMENT,
++	INDEX_ENVIRONMENT,
++	NULL
++};
++
+ static char *server_capabilities;
+ 
+ static int check_ref(const char *name, int len, unsigned int flags)
+@@ -625,17 +639,7 @@ struct child_process *git_connect(int fd[2], const char *url_orig,
+ 		*arg++ = host;
+ 	}
+ 	else {
+-		/* remove these from the environment */
+-		const char *env[] = {
+-			ALTERNATE_DB_ENVIRONMENT,
+-			DB_ENVIRONMENT,
+-			GIT_DIR_ENVIRONMENT,
+-			GIT_WORK_TREE_ENVIRONMENT,
+-			GRAFT_ENVIRONMENT,
+-			INDEX_ENVIRONMENT,
+-			NULL
+-		};
+-		conn->env = env;
++		conn->env = sanitize_git_env;
+ 		*arg++ = "sh";
+ 		*arg++ = "-c";
+ 	}
+-- 
+1.6.2.rc2.99.g9f3bb
