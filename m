@@ -1,80 +1,95 @@
-From: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
+From: =?ISO-8859-1?Q?Tor_Arne_Vestb=F8?= <torarnv@gmail.com>
 Subject: Re: jgit and ignore
-Date: Sun, 01 Mar 2009 14:06:21 +0100
-Message-ID: <49AA884D.1050806@pelagic.nl>
-References: <9e4733910902280831j70448ce9h7239f14e13b92b76@mail.gmail.com>	 <20090228172622.GC26689@spearce.org> <49AA5F64.6070207@pelagic.nl> <9e4733910903010454u662eb5afob45f608321660500@mail.gmail.com>
+Date: Sun, 01 Mar 2009 14:34:05 +0100
+Message-ID: <49AA8ECD.4090302@gmail.com>
+References: <9e4733910902280831j70448ce9h7239f14e13b92b76@mail.gmail.com>	 <20090228172622.GC26689@spearce.org> <49AA5F64.6070207@pelagic.nl> <9e4733910903010454u662eb5afob45f608321660500@mail.gmail.com> <49AA884D.1050806@pelagic.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+Cc: Jon Smirl <jonsmirl@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
 	Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 01 14:07:55 2009
+To: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
+X-From: git-owner@vger.kernel.org Sun Mar 01 14:35:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LdlOa-00019c-Md
-	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 14:07:53 +0100
+	id 1LdlpY-0008FW-KY
+	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 14:35:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753165AbZCANGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Mar 2009 08:06:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753065AbZCANGY
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Mar 2009 08:06:24 -0500
-Received: from hupie.xs4all.nl ([82.95.241.251]:32797 "EHLO
-	Lighthouse.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752662AbZCANGY (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 1 Mar 2009 08:06:24 -0500
-Received: from [192.168.0.101] (unknown [192.168.0.101])
-	by Lighthouse.internal.Hupie.com (Postfix) with ESMTP id 68C7758BDBA;
-	Sun,  1 Mar 2009 14:06:21 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
-In-Reply-To: <9e4733910903010454u662eb5afob45f608321660500@mail.gmail.com>
+	id S1754149AbZCANeR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Mar 2009 08:34:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754126AbZCANeR
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Mar 2009 08:34:17 -0500
+Received: from fg-out-1718.google.com ([72.14.220.155]:3222 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753165AbZCANeQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Mar 2009 08:34:16 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so833407fgg.17
+        for <git@vger.kernel.org>; Sun, 01 Mar 2009 05:34:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=xCPIYfn75vchAmGwNPVFFC8m5djVAjhAPJH/RCycaN4=;
+        b=SIGYJn24cg1tOLUxRpN/GzSoU2uJBf9MZLSeQtrNAtAXJopgbuJs6+xhERGepiBYcx
+         iF5m5NqqA2K3mZbpelWAwC/Sc7xWk35q+/NQvG2AaQznjL6Ohl/X5f7/xe5OVnbT9wyp
+         bjSNQctq47LVujcSxrN81hldJc4PtB/WMjuTE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=grnUbb5NIfyps0KJiiaYyocSYvOknMt1+1ddIfNEzbsgX02f7ZVEr9qI+ds1tMZ4Cz
+         jI1GDKtXhaotCqODS53EX1fIZNJATAINeQ3esZvGAY1oppfTFOVlXmMfs2b7M9jFwQUG
+         sZ2ayVQhq0jIDp1UUCFMFgg+JMq+2risqLGoQ=
+Received: by 10.86.65.9 with SMTP id n9mr365907fga.55.1235914453156;
+        Sun, 01 Mar 2009 05:34:13 -0800 (PST)
+Received: from ?192.168.1.226? (212251244070.customer.cdi.no [212.251.244.70])
+        by mx.google.com with ESMTPS id e11sm12280629fga.50.2009.03.01.05.34.12
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 01 Mar 2009 05:34:12 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <49AA884D.1050806@pelagic.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111842>
 
-Jon Smirl wrote:
-> On Sun, Mar 1, 2009 at 5:11 AM, Ferry Huberts (Pelagic)
-> <ferry.huberts@pelagic.nl> wrote:
->> Shawn O. Pearce wrote:
->>> Jon Smirl <jonsmirl@gmail.com> wrote:
->>>> I'm using jgit in eclipse. Works great for me.
->>> Yay!
->>>
->>>> I have a couple of generated files in my working directory. There
->>>> doesn't seem to be any UI for ignoring them. Is it there and I just
->>>> can't find it?
->>> EGit doesn't (yet) honor the .gitignore files like it should. Someone
->>> (Ferry i-forget-the-rest-of-his-name) is working on adding ignore
->>> support and has patches in flight for at least some of it.
->>>
->> Ferry i-do-remember-my-name Huberts is working on it :-)
->>
->> I have most of it working in a basic form already but am currently
->> refactoring things to take care of some nasty little details.
->> Expect something to arrive within (my best guesstimate) about 3 to 4
->> weeks. after next week I'll be skiing for a week, so no coding then :-)
->>
->> For the new functionality:
->> You don't really need a UI: just add a .gitignore file with a pattern
->> and the plugin will pick it up and show you what is ignored by means of
->> a nice little decoration.
-> 
-> I expected it to work by right clicking the file and picking
-> team/ignore. This would add the file name .gitignore and automatically
-> add .gitignore to my commit. It would also alter the eclipse filter to
-> make the file disappear in the eclipse browser.
-> 
+Ferry Huberts (Pelagic) wrote:
+> BTW. the plugin will not look at the eclipse filter for ignore files
+> once I've finished the implementation. that's the only way to make sure
+> that we ignore resources in exactly the same way as git does: git only
+> ignores on the basis of .gitignore files, command line options (we do
+> not have those for the plugin), and the info/exclude file in the repository.
 
-that'll come later, first we need to ignore the same files as git :-)
+You're missing one: the file specified by the configuration variable
+core.excludesfile, which can be though of as a global ignore filter.
 
-which eclipse browser?
+The manual says:
 
-BTW. the plugin will not look at the eclipse filter for ignore files
-once I've finished the implementation. that's the only way to make sure
-that we ignore resources in exactly the same way as git does: git only
-ignores on the basis of .gitignore files, command line options (we do
-not have those for the plugin), and the info/exclude file in the repository.
+"Patterns which a user wants git to ignore in all situations (e.g.,
+backup or temporary files generated by the user's editor of choice)
+generally go into a file specified by core.excludesfile in the user's
+~/.gitconfig."
+
+This is _exactly_ what Eclipse's Team->Ignored Resources is for.
+
+I see two groups of users: a) those with a global ignore specified in
+core.excludesfile b) and those without (they may not even have cgit
+installed, if EGit is bundled with Eclipse in the future).
+
+In my opinion, EGit should default to using Eclipse's built in ignores,
+but then detect the presence of a global core.excludesfile, in which
+case it would notify the user ("I see you have a core.excludesfile") and
+let the user switch to using that one instead.
+
+In other words, whether or not to use core.excludesfile or Eclipse's
+global team ignores should be optional, and we should provide heuristics
+for deciding when to switch.
+
+I think that would cover both groups of users without causing confusion.
+
+Tor Arne
