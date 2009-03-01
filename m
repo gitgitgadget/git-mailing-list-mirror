@@ -1,138 +1,84 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH v2] send-email: add --confirm option
-Date: Sun, 1 Mar 2009 12:49:47 -0500
-Message-ID: <76718490903010949h7b64eb97ob567101fbc7e4cd1@mail.gmail.com>
-References: <7vhc2d8vjk.fsf@gitster.siamese.dyndns.org>
-	 <1235924234-16923-1-git-send-email-jaysoffian@gmail.com>
-	 <7d1d9c250903010909h7d92f165oc703a05e819671a4@mail.gmail.com>
+From: =?ISO-8859-1?Q?Tor_Arne_Vestb=F8?= <torarnv@gmail.com>
+Subject: Re: jgit and ignore
+Date: Sun, 01 Mar 2009 18:51:54 +0100
+Message-ID: <49AACB3A.8070809@gmail.com>
+References: <9e4733910902280831j70448ce9h7239f14e13b92b76@mail.gmail.com> <20090228172622.GC26689@spearce.org> <49AA5F64.6070207@pelagic.nl> <9e4733910903010454u662eb5afob45f608321660500@mail.gmail.com> <49AA884D.1050806@pelagic.nl> <49AA8ECD.4090302@gmail.com> <49AA91F0.7050008@pelagic.nl> <49AAA2B3.40808@gmail.com> <20090301171648.GB14365@spearce.org> <49AAC91E.1000401@gmail.com> <20090301174941.GD14365@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Nanako Shiraishi <nanako3@lavabit.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Paul Gortmaker <paul.gortmaker@windriver.com>
-X-From: git-owner@vger.kernel.org Sun Mar 01 18:51:22 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>,
+	Jon Smirl <jonsmirl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Mar 01 18:53:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ldpov-0002Vc-Gp
-	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 18:51:21 +0100
+	id 1Ldpr7-0003CQ-Jh
+	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 18:53:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756538AbZCARtu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Mar 2009 12:49:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756400AbZCARtu
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Mar 2009 12:49:50 -0500
-Received: from rv-out-0506.google.com ([209.85.198.229]:34289 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756442AbZCARtt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 1 Mar 2009 12:49:49 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so1919704rvb.1
-        for <git@vger.kernel.org>; Sun, 01 Mar 2009 09:49:47 -0800 (PST)
+	id S1756798AbZCARwK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Mar 2009 12:52:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756632AbZCARwI
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Mar 2009 12:52:08 -0500
+Received: from fg-out-1718.google.com ([72.14.220.155]:54356 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753634AbZCARwG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Mar 2009 12:52:06 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so851999fgg.17
+        for <git@vger.kernel.org>; Sun, 01 Mar 2009 09:52:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=JLrSUmqY630mqnMaznEOeqLOTenqxR96CSDlMG/cHzs=;
-        b=NZKkgawBoK8qMchzVXMQyUzVzHxq72DsEQSSoj9r+JCYhZcs4k/GafuRh3M2OL+eXA
-         4tDiZ3gmjOEJmtINj12iGCXgVIbozNLOQ5z9HFI7rWLi3CQSzbKZHPcEIa7qekUl9sQE
-         8MtVo9V0LmoShcwJnXsoDGAfs2WBhCLSkm0jM=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=lr0TSZv5I1AJ3p9TyptR6TfLdSdKhNRAKG6K033AWjM=;
+        b=BB30Zuh1exphrBYpXzAGzG69P/epOd+CjUPGdRaWN8SDpl2hNr0iq1tHqkSdzVtfJr
+         RrXgbPmcz2vgJBfl8o7+9uM8lDBZxVnMFJ9jalDJzVzk1/R2MODQHM6y0XGHi0IOoZnR
+         vl/R19Tofg1BwjPjy/OaEhXOHjXt9HveJ/E7E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=WvWh2MAB+wChaY9tBRVtApqOoEEp1R4D/QbOOVRgkYdduivvbTx/maDhHE5UfLKjJu
-         cltLOn17CqCTcWcVyN6XhsfEwyBNeDZWCEP/x+Id2ZtI/D/pV3x49uKp98ffb95GhYvP
-         UKfQxaNQj1UIgHkQpWJVKBEiOZXgXVV6bt4HI=
-Received: by 10.141.122.1 with SMTP id z1mr2448958rvm.275.1235929787766; Sun, 
-	01 Mar 2009 09:49:47 -0800 (PST)
-In-Reply-To: <7d1d9c250903010909h7d92f165oc703a05e819671a4@mail.gmail.com>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=cwMGlLZXZVY4Ks168k+NVTndaZcDO3ME/CTVgvT8bai9GC2S/QhaWzDXt49if8P4uA
+         XBI3UMKXrJvO1NfQL9fFejjtb3T7gHI4edNnYuB0u8LW70h5O7YCn2ZJh2P/9S4Ri2oO
+         FSvwDrNTTdhDd/eIT9Q3tbEjDloUTZLGEYKvo=
+Received: by 10.86.95.20 with SMTP id s20mr5834142fgb.4.1235929921495;
+        Sun, 01 Mar 2009 09:52:01 -0800 (PST)
+Received: from ?192.168.1.226? (212251244070.customer.cdi.no [212.251.244.70])
+        by mx.google.com with ESMTPS id 4sm5610760fge.34.2009.03.01.09.52.00
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 01 Mar 2009 09:52:01 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <20090301174941.GD14365@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111864>
 
-On Sun, Mar 1, 2009 at 12:09 PM, Paul Gortmaker
-<paul.gortmaker@windriver.com> wrote:
->
-> On Sun, Mar 1, 2009 at 11:17 AM, Jay Soffian <jaysoffian@gmail.com> w=
-rote:
->> =C2=A0* Allowing the user to "git config sendemail.config never"
->
-> I think it should be sendemail.confirm in the above.
+Shawn O. Pearce wrote:
+>> Just to be clear, I noticed you left out the global core.excludesfile
+>> (from ~/.gitconfig) here. I guess this intentional?
+> 
+> No, I didn't.  core.excludesfile is read from the config, the config
+> is a union of /etc/gitconfig, ~/.gitconfig, and GIT_DIR/config.  The
+> last setting wins.
 
-Yep, thanks. Junio, please amend my commit message if v2 is acceptable =
-as is.
+Ah, I see, I thought each config was read in a separate steps. Thanks
+for clearing that up.
 
-> Thanks for
-> taking this seriously -- I think lots of new git users (who probably
-> will never make it to this list) will benefit from it without ever
-> even knowing.
+>> Either way, I full agree that we should honor all repository ignores
+>> (whether they are in directory .gitignores, info/exclude, or given by
+>> repository-specific core.excludesfile).
+> 
+> Right.  See my reply to Ferry, we union all of them together, but in
+> the case of core.excludesfile we have to honor what the repository
+> is telling us is the correct setting for that one repository,
+> which may differ from other repositories if it has been overridden.
 
-Well it's all for naught unless Junio can be convinced that it's an
-acceptable trade-off. On this point I want to elaborate a little more,
-so pardon me while I step up on the soap box.
+Yepp, full ack.
 
-Once upon a time, all git commands were git-something and they were
-installed in PATH. A smattering of users complained about this.
-Eventually git learned "git something" in addition to "git-something".
-Then some folks decided why not just get rid of "git-something"
-entirely. And so it was done. And many other users who were happy with
-the way it was complained.
 
-And rightly so. The change was made w/no escape hatch for those users.
-And to plumbing no less. The users who wanted "git-something" out of
-PATH (which wasn't really hurting anything) got what they wanted, but
-nothing was done to accommodate the existing users. Eventually a
-compromise was reached. The git-something commands moved out of PATH,
-but were still installed, and existing users could relatively easily ge=
-t
-to them by adding "git --exec-path" to their PATH.
-
-(Please correct me if my summary is wrong, but that's how I recall it.)
-
-If the compromise is how it was done in the first place, perhaps Junio
-would not be as hyper-sensitive to any change which affects existing
-users expectations.
-
-But this patch is not like the git-something situation. This patch
-benefits new (all?) users, while bending over backwards to accommodate
-existing users. And it is a porcelain change.
-
-I sympathize with Junio's aversion to accepting patches which affect
-existing users expectations. But I also think there are times when the
-greater good is served by such patches, and it would be nice to have
-some guidelines for how and when such patches can be made. For example:
-
-- No non-backwards compatible changes to plumbing.
-- Non-backwards compatible changes to porcelain IFF:
-  - The change provides a notable (non-trivial) benefit to new users.
-    Some litmus tests for such a change might be:
-    - "in hindsight, this is how it clearly should've been done."
-    - "this is really confusing for new users; existing users users hav=
-e
-      forgotten how confusing it was when they first encountered it."
-    - "the default behavior is potentially dangerous/embarrassing."
-  - Existing users can easily get the prior behavior. i.e. via a config
-    setting
-  - The change, where possible, maintains previous expectations if it
-    appears the command is being used by an experienced user.
-
-(In fairness, there appears to be a framework for non-backwards
-compatible changes; you introduce a warning about the change in the nex=
-t
-minor release that the behavior of X will change and inform the user ho=
-w
-they can keep the existing behavior of X; wait one patch release, then
-make the actual change. But my reading of Junio's message is that he
-doesn't think _this_ patch is even worthy of that step until I can
-demonstrate that there is not a silent-majority who really likes the
-existing behavior of send-email. But as I said, this is not my itch, an=
-d
-while I'm happy to offer up this patch, that's as far as I go.)
-
-Stepping off soapbox.
-
-j.
+Tor Arne
