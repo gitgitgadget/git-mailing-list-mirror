@@ -1,150 +1,72 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v5] Test fsck a bit harder
-Date: Sun,  1 Mar 2009 23:32:43 +0100
-Message-ID: <1235946763-15252-1-git-send-email-trast@student.ethz.ch>
-References: <200902212021.37807.j6t@kdbg.org>
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 01 23:35:00 2009
+Subject: [PATCH] send-email: respect in-reply-to regardless of threading
+Date: Sun,  1 Mar 2009 23:45:41 +0100
+Message-ID: <74fdbb84d14a6d39f1b61e18ab9588ca08926292.1235947339.git.trast@student.ethz.ch>
+References: <200903012237.40891.trast@student.ethz.ch>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 01 23:47:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LduF7-0006pi-5k
-	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 23:34:41 +0100
+	id 1LduRa-00023n-LP
+	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 23:47:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756167AbZCAWdL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Mar 2009 17:33:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756050AbZCAWdJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Mar 2009 17:33:09 -0500
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:6403 "EHLO XSMTP0.ethz.ch"
+	id S1756385AbZCAWqH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Mar 2009 17:46:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755657AbZCAWqF
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Mar 2009 17:46:05 -0500
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:18230 "EHLO xsmtp1.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754393AbZCAWdI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Mar 2009 17:33:08 -0500
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 1 Mar 2009 23:33:03 +0100
+	id S1755255AbZCAWqE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Mar 2009 17:46:04 -0500
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sun, 1 Mar 2009 23:46:01 +0100
 Received: from localhost.localdomain ([84.75.148.62]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 1 Mar 2009 23:33:03 +0100
-X-Mailer: git-send-email 1.6.2.rc2.289.g2fa25
-In-Reply-To: <200902212021.37807.j6t@kdbg.org>
-X-OriginalArrivalTime: 01 Mar 2009 22:33:03.0447 (UTC) FILETIME=[AF216E70:01C99ABD]
+	 Sun, 1 Mar 2009 23:46:01 +0100
+X-Mailer: git-send-email 1.6.2.rc2.341.g74fdbb
+In-Reply-To: <200903012237.40891.trast@student.ethz.ch>
+X-OriginalArrivalTime: 01 Mar 2009 22:46:01.0076 (UTC) FILETIME=[7EA23340:01C99ABF]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111893>
 
-git-fsck, of all tools, has very few tests.  This adds some more:
-* a corrupted object;
-* a branch pointing to a non-commit;
-* a tag pointing to a nonexistent object;
-* and a tag pointing to an object of a type other than what the tag
-  itself claims.
+git-send-email supports the --in-reply-to option even with
+--no-thread.  However, the code that adds the relevant mail headers
+was guarded by a test for --thread.
 
-Some of the involved shell programming is due to Johannes Sixt.
+Remove the test, so that the user's choice is respected.
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
 
-Sorry for taking so long to fix this.
+Thomas Rast wrote:
+> But it also turns out, as you can see, that git-send-email happily
+> ignores --in-reply-to if threading is disabled. :-(
 
-Johannes Sixt wrote:
-> This is wrong: It does not test the exist status. In a pipeline, the shell 
-> looks only at the exit status of the last command. You really want this as
-> 
->  	test_must_fail git fsck >out 2>&1 &&
-
-You're right.
-
-> If you want to have it more verbose, add 'cat out &&'. But IMHO that is 
-> overengineered. If the test detects a regression in the future, it is easy to 
-> inspect the file out if necessary.
-
-I usually try to write the tests such that the cause of failure should
-be reasonably obvious from the verbose output.  But I don't really
-care enough to insert stray cats either...
+This is the minimally intrusive fix.  It would be more consistent to
+ask for the in-reply-to regardless of thread setting, but it would
+also be less of a fix and more of a behaviour change.
 
 
- t/t1450-fsck.sh |   69 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 69 insertions(+), 0 deletions(-)
+ git-send-email.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 4597af0..d4a83a1 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -28,4 +28,73 @@ test_expect_success 'loose objects borrowed from alternate are not missing' '
- 	)
- '
+diff --git a/git-send-email.perl b/git-send-email.perl
+index adf7ecb..09fe3d9 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -821,7 +821,7 @@ sub get_patch_subject($) {
+ Message-Id: $message_id
+ X-Mailer: git-send-email $gitversion
+ ";
+-	if ($thread && $reply_to) {
++	if ($reply_to) {
  
-+# Corruption tests follow.  Make sure to remove all traces of the
-+# specific corruption you test afterwards, lest a later test trip over
-+# it.
-+
-+test_expect_success 'object with bad sha1' '
-+	sha=$(echo blob | git hash-object -w --stdin) &&
-+	echo $sha &&
-+	old=$(echo $sha | sed "s+^..+&/+") &&
-+	new=${old%/*}/ffffffffffffffffffffffffffffffffffffff &&
-+	sha=${new%/*}${new##*/} &&
-+	mv .git/objects/$old .git/objects/$new &&
-+	git update-index --add --cacheinfo 100644 $sha foo &&
-+	tree=$(git write-tree) &&
-+	cmt=$(echo bogus | git commit-tree $tree) &&
-+	git update-ref refs/heads/bogus $cmt &&
-+	test_must_fail git fsck >out 2>&1 &&
-+	grep "$sha.*corrupt" out
-+'
-+
-+rm -f .git/objects/$new
-+git update-ref -d refs/heads/bogus
-+git read-tree -u --reset HEAD
-+
-+test_expect_success 'branch pointing to non-commit' '
-+	git rev-parse HEAD^{tree} > .git/refs/heads/invalid &&
-+	git fsck 2>&1 | tee out &&
-+	grep "not a commit" out
-+'
-+
-+git update-ref -d refs/heads/invalid
-+
-+cat > invalid-tag <<EOF
-+object ffffffffffffffffffffffffffffffffffffffff
-+type commit
-+tag invalid
-+tagger T A Gger <tagger@example.com> 1234567890 -0000
-+
-+This is an invalid tag.
-+EOF
-+
-+test_expect_success 'tag pointing to nonexistent' '
-+	tag=$(git hash-object -t tag -w --stdin < invalid-tag) &&
-+	echo $tag > .git/refs/tags/invalid &&
-+	test_must_fail git fsck >out 2>&1 &&
-+	grep "missing commit ffffffffffffffffffffffffffffffffffffffff" out
-+'
-+
-+rm .git/refs/tags/invalid
-+rm -f .git/objects/$(echo $tag | sed "s#^..#&/#")
-+
-+cat > wrong-tag <<EOF
-+object $(echo blob | git hash-object -w --stdin)
-+type commit
-+tag wrong
-+tagger T A Gger <tagger@example.com> 1234567890 -0000
-+
-+This is an invalid tag.
-+EOF
-+
-+test_expect_success 'tag pointing to something else than its type' '
-+	tag=$(git hash-object -t tag -w --stdin < wrong-tag) &&
-+	echo $tag > .git/refs/tags/wrong &&
-+	test_must_fail git fsck >out 2>&1 &&
-+	grep "Object.*is a blob, not a commit" out
-+'
-+
-+rm .git/refs/tags/wrong
-+
-+
- test_done
+ 		$header .= "In-Reply-To: $reply_to\n";
+ 		$header .= "References: $references\n";
 -- 
-1.6.2.rc2.289.g2fa25
+1.6.2.rc2.340.g83918
