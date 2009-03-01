@@ -1,233 +1,79 @@
-From: =?utf-8?q?Tor=20Arne=20Vestb=C3=B8?= <torarnv@gmail.com>
-Subject: [PATCH v2] git-rebase: Add --stat and --no-stat for producing diffstat on rebase
-Date: Sun,  1 Mar 2009 23:11:38 +0100
-Message-ID: <1235945498-12631-1-git-send-email-torarnv@gmail.com>
-References: <m3zlg4ud9v.fsf@localhost.localdomain>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Yesss! sourceforge.net and Git
+Date: Mon, 2 Mar 2009 00:10:18 +0200
+Message-ID: <94a0d4530903011410u67b20a38nc81d8b00b1c251f8@mail.gmail.com>
+References: <alpine.DEB.1.00.0903012237360.10279@pacific.mpi-cbg.de>
+	 <fabb9a1e0903011344r2a094283ge95e29d674858213@mail.gmail.com>
+	 <alpine.DEB.1.00.0903012259390.10279@pacific.mpi-cbg.de>
+	 <fabb9a1e0903011402y3d2878b1h7e29f720dbfe1c82@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: jnareb@gmail.com, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 01 23:10:59 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 01 23:12:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LdtrQ-0000AO-DJ
-	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 23:10:13 +0100
+	id 1Ldtsz-0000dM-LF
+	for gcvg-git-2@gmane.org; Sun, 01 Mar 2009 23:11:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754393AbZCAWIo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Mar 2009 17:08:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753937AbZCAWIn
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Mar 2009 17:08:43 -0500
-Received: from fg-out-1718.google.com ([72.14.220.157]:29961 "EHLO
+	id S1755258AbZCAWKW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Mar 2009 17:10:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755255AbZCAWKW
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Mar 2009 17:10:22 -0500
+Received: from fg-out-1718.google.com ([72.14.220.154]:35317 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752956AbZCAWIn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Mar 2009 17:08:43 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so871633fgg.17
-        for <git@vger.kernel.org>; Sun, 01 Mar 2009 14:08:39 -0800 (PST)
+	with ESMTP id S1754393AbZCAWKV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Mar 2009 17:10:21 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so871786fgg.17
+        for <git@vger.kernel.org>; Sun, 01 Mar 2009 14:10:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=LqBq7oraFwHjMN2WPR6sDzSQ0aF+hKu1kjTQJ1NwqG8=;
-        b=lYFM0z/7WUuEYRNH0wWZfCAK2LVbH6aE8iPQUThIHjXAIVNzfXAIwi/wwe3NM0XpOD
-         YiW19O1IrsW8lRZFpq1VXVEvFzVkvtHgpuzbhokca6xO5/2x6MNI3XEnXLaqSVa5H0X7
-         zaSmwej00YugZiNCaQvWSFnctyWZBNquQ2cFA=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=WKVqJz9nxJil9J5PG0rtzzcSeidvuVPiy4T0AHFBca4=;
+        b=fTn8CFy1fQm7dPbi2ZIeitSt+Eq9AiZY1gLptIUDuD0coJeWLxbS445z2IKBx9S0Kh
+         HnV6AvC5TGh8tgRkSMbM5ffcMldiKAJKFg5AqxWhDpIwzK0609HcL1QaxAShWapegVeC
+         ndlonYTMGWUAsJzVAd8Q8+u2UUbLyOMCtHaoI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=qLUlpnDMatdobwRbyK/KxHEz6tyzxCCYDgkBze1fpPDky2jROA/P1OIyMC8/SwWhFh
-         2riGmUX5IrspP1uxFX2X7Mp1iaMmzO/jE85n8DxoyHaglv0PdnznwAzhjGvMx34btWz3
-         CVHGqpSuurtVTP1x4LmL2ckS8LP5QTLChkAeo=
-Received: by 10.86.57.9 with SMTP id f9mr1582711fga.38.1235945319269;
-        Sun, 01 Mar 2009 14:08:39 -0800 (PST)
-Received: from monstre.mystifistisk.net (212251244070.customer.cdi.no [212.251.244.70])
-        by mx.google.com with ESMTPS id l19sm9036861fgb.47.2009.03.01.14.08.38
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 01 Mar 2009 14:08:39 -0800 (PST)
-Received: by monstre.mystifistisk.net (Postfix, from userid 1000)
-	id 2E835468001; Sun,  1 Mar 2009 23:11:38 +0100 (CET)
-X-Mailer: git-send-email 1.6.2.rc2.11.g80931
-In-Reply-To: <m3zlg4ud9v.fsf@localhost.localdomain>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=L2HXD7pUMHQgOhqJG7UsNOT8n6AMOgOZMVEMSLidNVXciLOJkv3DFkZc0a59Xxw0wV
+         rG0LH0CkdN2iBVoAiKDeh3xDfkD9zDdDaN997P3HvydcEQrsLzfyd5L1HWagBCM4+wUr
+         4HynTll+ZvGKZZW9ReTHPR/mHXXBCsYXAq62k=
+Received: by 10.86.79.19 with SMTP id c19mr575960fgb.45.1235945418905; Sun, 01 
+	Mar 2009 14:10:18 -0800 (PST)
+In-Reply-To: <fabb9a1e0903011402y3d2878b1h7e29f720dbfe1c82@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111889>
 
-The behavior of --verbose is unchanged, but uses a different state
-variable internally, so that the meaning of verbose output may be
-expanded without affecting the diffstat. This is also reflected in
-the documentation.
+On Mon, Mar 2, 2009 at 12:02 AM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
+> Heya,
+>
+>
+> On Sun, Mar 1, 2009 at 23:01, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+>> On Sun, 1 Mar 2009, Sverre Rabbelier wrote:
+>>> About time! Totally awesome though.
+>>> Now, code.google.com and others have no excuse anymore, right? ;)
+>>
+>> Except that it is run by Subversion people, and therefore it by like
+>> asking git.or.cz to serve Mercurial repositories ;-)
+>
+> Heh, speaking of Hg, I heard they're adding DVCS support to
+> code.google.com soon, if they're already adding a non-svn VCS, why not
+> git? :D
 
-The configuration option rebase.stat works the same was as merg.stat,
-but the default is currently false.
+Well, git has become so freakingly popular that supporting any DVCS
+that is not git would generate lots of complaints.
 
-Signed-off-by: Tor Arne Vestb=C3=B8 <torarnv@gmail.com>
----
-
-Thanks Jakub, I knew there was a reason that git-config.txt was so empt=
-y ;)
-
-And sorry for the double post, --cc to git-send-email seems to override
-what's in the config, not compliment it.
-
- Documentation/config.txt     |    4 ++++
- Documentation/git-rebase.txt |   17 ++++++++++++++++-
- git-rebase.sh                |   25 ++++++++++++++++++-------
- t/t3406-rebase-message.sh    |   23 ++++++++++++++++++++++-
- 4 files changed, 60 insertions(+), 9 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index f5152c5..6be2e99 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1160,6 +1160,10 @@ pull.octopus::
- pull.twohead::
- 	The default merge strategy to use when pulling a single branch.
-=20
-+rebase.stat::
-+	Whether to show a diffstat of what changed upstream since the last
-+	rebase. False by default.
-+
- receive.fsckObjects::
- 	If it is set to true, git-receive-pack will check all received
- 	objects. It will abort in the case of a malformed object or a
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.tx=
-t
-index da3c38c..57bd333 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -192,6 +192,13 @@ Alternatively, you can undo the 'git-rebase' with
-=20
-     git rebase --abort
-=20
-+CONFIGURATION
-+-------------
-+
-+rebase.stat::
-+	Whether to show a diffstat of what changed upstream since the last
-+	rebase. False by default.
-+
- OPTIONS
- -------
- <newbase>::
-@@ -232,7 +239,15 @@ OPTIONS
-=20
- -v::
- --verbose::
--	Display a diffstat of what changed upstream since the last rebase.
-+	Be verbose. Implies --stat.
-+
-+--stat::
-+	Show a diffstat of what changed upstream since the last rebase. The
-+	diffstat is also controlled by the configuration option rebase.stat.
-+
-+-n::
-+--no-stat::
-+	Do not show a diffstat as part of the rebase process.
-=20
- --no-verify::
- 	This option bypasses the pre-rebase hook.  See also linkgit:githooks[=
-5].
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 368c0ef..26d7566 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -46,6 +46,7 @@ do_merge=3D
- dotest=3D"$GIT_DIR"/rebase-merge
- prec=3D4
- verbose=3D
-+diffstat=3D$(git config --bool rebase.stat)
- git_am_opt=3D
- rebase_root=3D
-=20
-@@ -289,8 +290,15 @@ do
- 		esac
- 		do_merge=3Dt
- 		;;
-+	-n|--no-stat)
-+		diffstat=3D
-+		;;
-+	--stat)
-+		diffstat=3Dt
-+		;;
- 	-v|--verbose)
- 		verbose=3Dt
-+		diffstat=3Dt
- 		;;
- 	--whitespace=3D*)
- 		git_am_opt=3D"$git_am_opt $1"
-@@ -426,18 +434,21 @@ then
- 	exit 0
- fi
-=20
--if test -n "$verbose"
--then
--	echo "Changes from $mb to $onto:"
--	# We want color (if set), but no pager
--	GIT_PAGER=3D'' git diff --stat --summary "$mb" "$onto"
--fi
--
- # Detach HEAD and reset the tree
- echo "First, rewinding head to replay your work on top of it..."
- git checkout -q "$onto^0" || die "could not detach HEAD"
- git update-ref ORIG_HEAD $branch
-=20
-+if test -n "$diffstat"
-+then
-+	if test -n "$verbose"
-+	then
-+		echo "Changes from $mb to $onto:"
-+	fi
-+	# We want color (if set), but no pager
-+	GIT_PAGER=3D'' git diff --stat --summary "$mb" "$onto"
-+fi
-+
- # If the $onto is a proper descendant of the tip of the branch, then
- # we just fast forwarded.
- if test "$mb" =3D "$branch"
-diff --git a/t/t3406-rebase-message.sh b/t/t3406-rebase-message.sh
-index 5391080..85fc7c4 100755
---- a/t/t3406-rebase-message.sh
-+++ b/t/t3406-rebase-message.sh
-@@ -22,7 +22,8 @@ test_expect_success setup '
- 	git checkout topic &&
- 	quick_one A &&
- 	quick_one B &&
--	quick_one Z
-+	quick_one Z &&
-+	git tag start
-=20
- '
-=20
-@@ -41,4 +42,24 @@ test_expect_success 'rebase -m' '
-=20
- '
-=20
-+test_expect_success 'rebase --stat' '
-+        git reset --hard start
-+        git rebase --stat master >diffstat.txt &&
-+        grep "^ fileX |  *1 +$" diffstat.txt
-+'
-+
-+test_expect_success 'rebase w/config rebase.stat' '
-+        git reset --hard start
-+        git config rebase.stat true &&
-+        git rebase master >diffstat.txt &&
-+        grep "^ fileX |  *1 +$" diffstat.txt
-+'
-+
-+test_expect_success 'rebase -n overrides config rebase.stat config' '
-+        git reset --hard start
-+        git config rebase.stat true &&
-+        git rebase -n master >diffstat.txt &&
-+        ! grep "^ fileX |  *1 +$" diffstat.txt
-+'
-+
- test_done
---=20
-1.6.2.rc2.11.g80931
+-- 
+Felipe Contreras
