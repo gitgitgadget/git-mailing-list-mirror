@@ -1,68 +1,101 @@
-From: "John Dlugosz" <JDlugosz@TradeStation.com>
-Subject: remote branches, and branch names in general
-Date: Mon, 2 Mar 2009 15:46:39 -0500
-Message-ID: <450196A1AAAE4B42A00A8B27A59278E709F07398@EXCHANGE.trad.tradestation.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [RFC PATCH] Windows: Assume all file names to be UTF-8 encoded.
+Date: Mon, 02 Mar 2009 21:52:41 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.0903022146510.20047@perkele.intern.softwolves.pp.se>
+References: <alpine.DEB.2.00.0903020941120.17877@perkele.intern.softwolves.pp.se>
+ <49ABD24B.5060005@viscovery.net>
+ <alpine.DEB.2.00.0903021404000.17877@perkele.intern.softwolves.pp.se>
+ <200903022058.33392.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 02 21:48:32 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Mar 02 21:55:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeF3f-0004kw-PQ
-	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 21:48:16 +0100
+	id 1LeFAg-0007KG-06
+	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 21:55:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752181AbZCBUqs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Mar 2009 15:46:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751618AbZCBUqr
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 15:46:47 -0500
-Received: from mail2.tradestation.com ([63.99.207.80]:33327 "EHLO
-	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751387AbZCBUqq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Mar 2009 15:46:46 -0500
-X-ASG-Debug-ID: 1236026803-29b000ca0000-QuoKaX
-X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
-Received: from mail5.tradestation.com (localhost [127.0.0.1])
-	by mail2.tradestation.com (Spam Firewall) with ESMTP id 945771DA2F8
-	for <git@vger.kernel.org>; Mon,  2 Mar 2009 15:46:43 -0500 (EST)
-Received: from mail5.tradestation.com ([192.168.51.76]) by mail2.tradestation.com with ESMTP id vrfygA7Fwso7NO4A for <git@vger.kernel.org>; Mon, 02 Mar 2009 15:46:43 -0500 (EST)
-X-ASG-Whitelist: Client
-Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 2 Mar 2009 15:46:42 -0500
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-x-cr-hashedpuzzle: 9jQ= AfL0 ByQD B3rl B6e8 CVnX DVId EEZ9 EoGU FFQz FRhd FbUL HGme Huu6 IUKF JII7;1;ZwBpAHQAQAB2AGcAZQByAC4AawBlAHIAbgBlAGwALgBvAHIAZwA=;Sosha1_v1;7;{64DCFC14-8FAE-4EEE-9C49-A8FC98DB394E};agBkAGwAdQBnAG8AcwB6AEAAdAByAGEAZABlAHMAdABhAHQAaQBvAG4ALgBjAG8AbQA=;Mon, 02 Mar 2009 20:46:39 GMT;cgBlAG0AbwB0AGUAIABiAHIAYQBuAGMAaABlAHMALAAgAGEAbgBkACAAYgByAGEAbgBjAGgAIABuAGEAbQBlAHMAIABpAG4AIABnAGUAbgBlAHIAYQBsAA==
-Content-class: urn:content-classes:message
-X-ASG-Orig-Subj: remote branches, and branch names in general
-x-cr-puzzleid: {64DCFC14-8FAE-4EEE-9C49-A8FC98DB394E}
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: remote branches, and branch names in general
-Thread-Index: Acmbd/xqs4+R1bMMQCalXkts/1063A==
-X-OriginalArrivalTime: 02 Mar 2009 20:46:42.0919 (UTC) FILETIME=[FE73DF70:01C99B77]
-X-Barracuda-Connect: UNKNOWN[192.168.51.76]
-X-Barracuda-Start-Time: 1236026803
-X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
+	id S1752284AbZCBUyB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2009 15:54:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752057AbZCBUyA
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 15:54:00 -0500
+Received: from smtp.getmail.no ([84.208.20.33]:50496 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750820AbZCBUx7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Mar 2009 15:53:59 -0500
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0KFW00621CPX0300@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 02 Mar 2009 21:53:57 +0100 (CET)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0KFW00MI4CNTI930@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 02 Mar 2009 21:52:41 +0100 (CET)
+Received: from perkele ([84.215.142.63]) by no-osl-m323-srv-004-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0KFW001L5CNTMJ90@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Mon, 02 Mar 2009 21:52:41 +0100 (CET)
+Received: by perkele (Postfix, from userid 501)	id 57C772FC03; Mon,
+ 02 Mar 2009 21:52:41 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
+ with ESMTP id 548852FC02; Mon, 02 Mar 2009 21:52:41 +0100 (CET)
+In-reply-to: <200903022058.33392.robin.rosenberg.lists@dewire.com>
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111964>
 
-I see the remote branches with names of the form remotes/pub/name where
-pub is the nickname of the place I pull from.  To specify such branches,
-must I always spell it out with the leading "remotes/", or can that be
-shorted or implied somehow?  
+Robin Rosenberg:
 
-Meanwhile, I see that branch names can be hierarchical, as I found out
-when I accidently created a branch called "pub/xxx".  So I'm wondering
-about the usefulness of using that for organizing topic branches based
-on assigned tasks organization and the person owning that branch.
+> Pipes are just bytes so you have to know what you're piping by convention 
+> or protocol. You can ask for the console output page, which may be set to 
+> a multibyte locale or unicode and maybe trust that.... (just guessing, 
+> really).
 
---John
+You can get cmd.exe to write data to pipes and redirections as UTF-16 
+Unicode (cmd.exe /u), perhaps there is a way to capitalise on that? 
+"Unfortunately", the Git stuff is mostly called from a bash shell inside 
+msys, so it requires a "bit" more work...
 
+> architecture? Like the "architecture" of species? No, it's evolution.
 
-TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
-  If you received this in error, please contact the sender and delete the material from any computer.
+There's still an architecture there, somewhere. Perhaps not intended or 
+specified, but there definitely is one :-)
+
+> http://www.jgit.org/cgi-bin/gitweb/gitweb.cgi?p=GIT.git;a=shortlog;h=i18n
+>
+> The goal is locale neutrality yielding the "expected", in the users eyes, 
+> result regardless of locale as much as possible.
+
+Ah, yes, that looks like an interesting starting point. I already assumed 
+that Git on Linux would use UTF-8 for everything already, since it already 
+does that for the commit messages despite me using an iso8859-1 locale. 
+Apparently I haven't done my homework.
+
+> We let the runtime decide on how to encode file names in the file system 
+> using the user's locale.
+
+That's good. That's what I'm trying to achieve. Or, rather, avoid the user 
+locale altogether (which is easy on Windows since the file names are always 
+stored in Unicode, and the user locale can be bypassed).
+
+> I'd be almost happy with a solution that works when people are interacting 
+> using the subset that is convertible between the character sets in use.
+
+You mean like the "invariant" character set? :-) Using Unicode internally 
+(in whatever encoding) is nice, the problem is when you have to interact 
+with the world around you.
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
