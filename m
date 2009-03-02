@@ -1,79 +1,86 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: "warning: no common commits" triggered due to change of remote's IP address?
-Date: Mon, 2 Mar 2009 09:56:42 +0100
-Message-ID: <200903020956.45975.trast@student.ethz.ch>
-References: <e38bce640903011001p2d705707o9f7145ab5ab68929@mail.gmail.com> <e38bce640903011501t2c7a134dp887f5a96db3db0f4@mail.gmail.com> <200903020940.24813.trast@student.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] send-email: add --confirm option
+Date: Mon, 02 Mar 2009 01:01:03 -0800
+Message-ID: <7v7i385meo.fsf@gitster.siamese.dyndns.org>
+References: <7vhc2d8vjk.fsf@gitster.siamese.dyndns.org>
+ <1235924234-16923-1-git-send-email-jaysoffian@gmail.com>
+ <7d1d9c250903010909h7d92f165oc703a05e819671a4@mail.gmail.com>
+ <76718490903010949h7b64eb97ob567101fbc7e4cd1@mail.gmail.com>
+ <20090302172401.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart29433115.yD11nU1j4F";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Brent Goodrick <bgoodr@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 02 09:58:46 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Paul Gortmaker <paul.gortmaker@windriver.com>,
+	git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Mon Mar 02 10:02:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Le3yx-0007y5-3N
-	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 09:58:39 +0100
+	id 1Le42t-0000ep-9O
+	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 10:02:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756753AbZCBI5K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Mar 2009 03:57:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756605AbZCBI5J
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 03:57:09 -0500
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:22103 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756667AbZCBI5J (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2009 03:57:09 -0500
-Received: from xfe1.d.ethz.ch ([82.130.124.41]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 2 Mar 2009 09:57:07 +0100
-Received: from thomas.localnet ([129.132.153.233]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 2 Mar 2009 09:57:06 +0100
-User-Agent: KMail/1.11.0 (Linux/2.6.27.19-3.2-default; KDE/4.2.0; x86_64; ; )
-In-Reply-To: <200903020940.24813.trast@student.ethz.ch>
-X-OriginalArrivalTime: 02 Mar 2009 08:57:06.0283 (UTC) FILETIME=[DCCCCBB0:01C99B14]
+	id S1756811AbZCBJBQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2009 04:01:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756793AbZCBJBQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 04:01:16 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:62091 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756342AbZCBJBP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Mar 2009 04:01:15 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 448A29E522;
+	Mon,  2 Mar 2009 04:01:12 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 98B2F9E51A; Mon,
+  2 Mar 2009 04:01:05 -0500 (EST)
+In-Reply-To: <20090302172401.6117@nanako3.lavabit.com> (Nanako Shiraishi's
+ message of "Mon, 02 Mar 2009 17:24:01 +0900")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: ADABF35A-0708-11DE-B555-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111920>
 
---nextPart29433115.yD11nU1j4F
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Nanako Shiraishi <nanako3@lavabit.com> writes:
 
-Thomas Rast wrote:
-> If you still have a repo that can reproduce the problem, please keep a
-> copy for future investigation, and then try
->=20
->   git fetch-pack -v $url refs/remotes/origin/home 2>&1 \
->   | git name-rev --stdin
+> The escape hatch was there from the beginning, is still there, and it
+> will remain there. I should also add that it was Junio's veto of
+> Linus'es proposal to stop installing git-foo commands for builtins
+> that enabled this escape hatch.
 
-Actually this should name the remote's idea of the ref, i.e.,
+I think veto is too strong a word to describe what really happened, but in
+retrospect, if we went ahead and removed built-ins from the filesystem as
+Linus and other people advocated, the escape hatch wouldn't have worked at
+all, so in that sense you are correct.  But I do not think I deserve the
+credit for that---I do not see myself making an argument based on that
+"possible escape-hatch" value in that old thread.
 
-  git fetch-pack -v $url refs/heads/home 2>&1 \
-  | git name-rev --stdin
+By the way, how are you researching these old discussions?  Do you have
+a huge list of bookmarks?
 
-Sorry.
+> By the way, I don't think the lesson you should take home is the need
+> for an escape hatch. Read the message by Junio on August 24th,
+> 2008. Being nice and not too loud during the deprecation period kept
+> users complacent about upcoming changes and upset them when the change
+> finally came. Being un-nice and too loud during the deprecation period
+> would have upset them early instead. You cannot avoid upsetting users
+> either way whenever you change the behavior.
 
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Yup.
 
---nextPart29433115.yD11nU1j4F
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+And the most scary part of all is that you cannot try both.  We now know
+that for 1.6.0 transition people _claimed_ that they would have liked
+louder deprecation period than the way 1.6.0 transition was handled, but
+that is not (and cannot be) backed by real world experience. Nobody tried
+versions of git that warned loudly about the upcoming change every time he
+typed "git-commit" to see if the louder deprecation period was really
+preferrable.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkmrn00ACgkQqUud07tmzP06dQCcD424grJ+L0ZHy90Riq5fNN2M
-IvEAnAhrMcNVLD3LElKQJ3huKQkevW/p
-=1+P8
------END PGP SIGNATURE-----
-
---nextPart29433115.yD11nU1j4F--
+We are taking that route for 1.7.0 to warn very loudly about pushing into
+the currently checked-out branch in 1.6.2 and onwards.  We may now find
+out that people hate a loud deprecation period.  Then what?
