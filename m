@@ -1,72 +1,79 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [RFC PATCH] Windows: Assume all file names to be UTF-8 encoded.
-Date: Mon, 2 Mar 2009 22:21:09 +0100
-Message-ID: <200903022221.10254.robin.rosenberg.lists@dewire.com>
-References: <alpine.DEB.2.00.0903020941120.17877@perkele.intern.softwolves.pp.se> <200903022058.33392.robin.rosenberg.lists@dewire.com>  <alpine.DEB.2.00.0903022146510.20047@perkele.intern.softwolves.pp.se>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [RFC] Refspec patterns with * in the middle
+Date: Mon, 2 Mar 2009 17:07:31 -0500
+Message-ID: <76718490903021407u215fb769g656a8fdc20e622e5@mail.gmail.com>
+References: <alpine.LNX.1.00.0903011820590.19665@iabervon.org>
+	 <7viqmrn98i.fsf@gitster.siamese.dyndns.org>
+	 <76718490903021001h16009570p7ac8c66a8e8e1f90@mail.gmail.com>
+	 <alpine.LNX.1.00.0903021323180.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Mon Mar 02 22:26:15 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Mon Mar 02 23:09:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeFeR-0002JS-5a
-	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 22:26:15 +0100
+	id 1LeGJq-00029s-UI
+	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 23:09:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753222AbZCBVYp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Mar 2009 16:24:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752733AbZCBVYo
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 16:24:44 -0500
-Received: from mail.dewire.com ([83.140.172.130]:5234 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752165AbZCBVYo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Mar 2009 16:24:44 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id BF1471484142;
-	Mon,  2 Mar 2009 22:24:40 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0jEn6+I4DPXp; Mon,  2 Mar 2009 22:24:39 +0100 (CET)
-Received: from sleipner.localnet (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id B73C7147EAC1;
-	Mon,  2 Mar 2009 22:24:38 +0100 (CET)
-User-Agent: KMail/1.11.0 (Linux/2.6.27-12-generic; KDE/4.2.0; i686; ; )
-In-Reply-To: <alpine.DEB.2.00.0903022146510.20047@perkele.intern.softwolves.pp.se>
-Content-Disposition: inline
+	id S1754054AbZCBWHe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Mar 2009 17:07:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754002AbZCBWHe
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 17:07:34 -0500
+Received: from rv-out-0506.google.com ([209.85.198.229]:38122 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753724AbZCBWHd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Mar 2009 17:07:33 -0500
+Received: by rv-out-0506.google.com with SMTP id g37so2460297rvb.1
+        for <git@vger.kernel.org>; Mon, 02 Mar 2009 14:07:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=wraMbUQjbzOI3StcawjsbLqlr3FbAoy6h2x56b9rybw=;
+        b=xxTj4iHAd5ik7rh0SDLEosO1L2a7xiMlkGgRZFXptPRksfoYV5yCVfDEpxw77d+3PI
+         D5Yss1l4Vp5eO3wNaoSMTvXT6Pwn2/MjniTu0jqRikzhpyhfiXXQNKuyV/TnPpwmi0xT
+         2cZGXgCpKOfQSHPf7QuStKDCtCRndlH1U70xY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=F4/vq8WKstYh4zdCBLsoksPBdYN1oGPEh+lJm/slYtlMqeJFQ26Hm2DFZ23Oq0VjuL
+         SVUS909s7jjdNKLnGRAhESbqPZUdezg9pxWeb3W7XT3U89qIH+XmYsLyI535JIC6d376
+         GLCcKMPg0Kb2NtQV3khFFY7wjy+WQ7c2ohLIM=
+Received: by 10.141.82.20 with SMTP id j20mr3110811rvl.54.1236031651956; Mon, 
+	02 Mar 2009 14:07:31 -0800 (PST)
+In-Reply-To: <alpine.LNX.1.00.0903021323180.19665@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111966>
 
-m=E5ndag 02 mars 2009 21:52:41 skrev Peter Krefting <peter@softwolves.p=
-p.se>:
-> Robin Rosenberg:
->=20
-> > I'd be almost happy with a solution that works when people are inte=
-racting=20
-> > using the subset that is convertible between the character sets in =
-use.
->=20
-> You mean like the "invariant" character set? :-) Using Unicode intern=
-ally=20
-> (in whatever encoding) is nice, the problem is when you have to inter=
-act=20
-> with the world around you.
+On Mon, Mar 2, 2009 at 1:25 PM, Daniel Barkalow <barkalow@iabervon.org>=
+ wrote:
+>> But the following is not:
+>>
+>> =C2=A0- foo/bar*/baz
+>>
+>> IOW, '*' can only appear as a non-terminating symbol if it is bounde=
+d
+>> by '/' on each side.
+>
+> You have my criterion right, but I want that to be valid, but only ma=
+tch
+> things like "foo/bar-something/baz", not "foo/bar-a/b/baz".
 
-Not sure what that is. I mean that in a local nordic, setting people ca=
-n use iso-8859-1|15/windows-1252/UTF-8 for their needs be means of conv=
-erting the characters as-needed without loss, with very few practial re=
-strictions.=20
+Ah, that makes sense. Perhaps use "**" to mean matching across path
+components which is what rsync does:
 
-=46or a larger setting that won't do, but then the need is typically le=
-ss since people tend to use ASCII only, or you jump to all unicode.
+ o  a '*' matches any non-empty path component (it stops at slashes).
+ o  use '**' to match anything, including slashes.
 
-Just because I use UTF-8 doesn't mean I use start using more characters=
- in practice.
+?
 
--- robin
+j.
