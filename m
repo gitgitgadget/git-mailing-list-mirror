@@ -1,70 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Refspec patterns with * in the middle
-Date: Mon, 02 Mar 2009 09:08:12 -0800
-Message-ID: <7viqmrn98i.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LNX.1.00.0903011820590.19665@iabervon.org>
+From: Chris Velevitch <chris.velevitch@gmail.com>
+Subject: VSS to git
+Date: Tue, 3 Mar 2009 04:15:19 +1100
+Message-ID: <b0a3bf780903020915g60d97b76pfdbbd60017625f0a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Mon Mar 02 18:10:12 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 02 18:16:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeBeH-0004nm-7c
-	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 18:09:49 +0100
+	id 1LeBl4-0007lA-Ci
+	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 18:16:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752878AbZCBRIV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Mar 2009 12:08:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754306AbZCBRIU
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 12:08:20 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58297 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752711AbZCBRIT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2009 12:08:19 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 7B8FE20DD;
-	Mon,  2 Mar 2009 12:08:17 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C573020DC; Mon, 
- 2 Mar 2009 12:08:14 -0500 (EST)
-In-Reply-To: <alpine.LNX.1.00.0903011820590.19665@iabervon.org> (Daniel
- Barkalow's message of "Sun, 1 Mar 2009 18:42:34 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B941CEE4-074C-11DE-91FE-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
+	id S1753248AbZCBRPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2009 12:15:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752711AbZCBRPW
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 12:15:22 -0500
+Received: from rv-out-0506.google.com ([209.85.198.230]:12996 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752559AbZCBRPV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Mar 2009 12:15:21 -0500
+Received: by rv-out-0506.google.com with SMTP id g37so2350708rvb.1
+        for <git@vger.kernel.org>; Mon, 02 Mar 2009 09:15:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=mP+LiEzghPWY6m9CQa2agp/52QKXMp2UYKjBVL3wtLs=;
+        b=jFkJZ7ew9YXl5nPKE20yYvlgcXUQe/s1/Yus/YE3BVJ7IT39cwHmrgnfa/uThZiMDd
+         53BBSttmO1QKAQ2ZauqGOi9YJMmHPBwoY63lyANTsujE0k82y1iK2W5o+fjTjR7FH2k1
+         ZqMqx6ajmm7bG1TLF++w3otqW0xgJ4oMx+1eg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=hWaZNAqEgRXg1kgOPW/Nc66f+6wxedfHq2avGGztWSL4MO8jeD9nsJvt9dDGK67oI4
+         ayEgdKYNgAgKtpgCf9rV6uDfHdcm8sKgWGuR9rmKRjrwpF2W4ICtHB1vJE7l9AUipoOt
+         kOzKYt/UyUGvwQ2vxchaghjClasIwiCJznU8U=
+Received: by 10.141.50.11 with SMTP id c11mr3011811rvk.45.1236014119891; Mon, 
+	02 Mar 2009 09:15:19 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111950>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+I can't seem to find any utilities to convert a vss repository to git.
+In the absence of such a tool, what is the best approach to converting
+an vss repository to git?
 
-> My use case is actually, more precisely:
->
-> some/constant/stuff/$PROJ-$NUMBER/junk/my-proj
->
-> Where $NUMBER is the version number, and $PROJ is usually, but not quite 
-> always "my-proj"; the exception being that it might be effectively a 
-> superproject. So I'd like to have:
->
->  fetch = some/constant/stuff/my-proj-*/junk/my-proj:refs/remotes/origin/*
 
-... and expect "some/constant/stuff/my-proj-2.5/junk/my-proj" to be mapped
-to "refs/remotes/origin/2.5"?  I think it does not look too bad.
+Chris
+--
+Chris Velevitch
+Manager - Adobe Platform Users Group, Sydney
+m: 0415 469 095
+www.apugs.org.au
 
-> But I can live with remote branches like "my-proj-2.4" instead of "2.4".
->
-> I think it would make sense, and limit typo damage, to say that the * can 
-> only expand to something with a '/' in it if the star has a slash or the 
-> end of the string on each side.
-
-I do not understand what you mean by "* can only expand to something with
-a '/' in it if ..." part.  None of the examples in your message have a
-case where the asterisk matches across directory boundaries, and I thought
-you would simply say "* does not match /" and be done with that.
-
-What scenario do you have in mind that wants to match a slash with an
-asterisk?
+Adobe Platform Users Group, Sydney
+Mar meeting: Bzoo, FlashDevelop, Who's Doing What With AIR and Eclipse Tips
+Date: Mon 30th Mar 6pm for 6:30 start
+Details and RSVP on http://groups.adobe.com/posts/db02e98146
