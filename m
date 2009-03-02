@@ -1,158 +1,101 @@
-From: =?utf-8?q?Tor=20Arne=20Vestb=C3=B8?= <torarnv@gmail.com>
-Subject: [PATCH] git-clone: Add option --branch to override initial branch
-Date: Mon,  2 Mar 2009 23:11:22 +0100
-Message-ID: <1236031882-2052-1-git-send-email-torarnv@gmail.com>
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: RE: proper way to merge?
+Date: Mon, 2 Mar 2009 17:19:38 -0500
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E709F07432@EXCHANGE.trad.tradestation.com>
+References: <450196A1AAAE4B42A00A8B27A59278E709F06FDA@EXCHANGE.trad.tradestation.com> <43d8ce650902272358h4219f439qfa60ba7a7e0d222f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 02 23:09:50 2009
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: <git@vger.kernel.org>
+To: "John Tapsell" <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 02 23:21:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeGKb-0002Qg-9Z
-	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 23:09:49 +0100
+	id 1LeGVa-0006g0-K9
+	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 23:21:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754237AbZCBWIS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Mar 2009 17:08:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754144AbZCBWIR
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 17:08:17 -0500
-Received: from mail-fx0-f176.google.com ([209.85.220.176]:65032 "EHLO
-	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754070AbZCBWIQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2009 17:08:16 -0500
-Received: by fxm24 with SMTP id 24so2195654fxm.37
-        for <git@vger.kernel.org>; Mon, 02 Mar 2009 14:08:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=4f1ZMrK8/mu9MVSqaZodqkDyA8hqdhRLQp5r4ebq8EQ=;
-        b=Y2zLN2w8uBC8jmb5ZO9fn0lxpX7mN1i2ubLLobLXJnVt3axdFhZedFHPlBcDIaMxdY
-         0FjaXqcuNelTjowUAxQU4W9GLvs62WqfAjJdK1DjsDqPKSIBn8HUm9NB3KWhSQ5SsDIw
-         mpsbEgyXXPx0Ro9q7nf71q3EbWqR6ekZlcLtA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=Q3bQEorKUroAVRP/Q1yOECHdpRzxuizOyJ+KW2x8D4vgsyuEe+aeIEy34wjtrvqrRP
-         /F3MeIjC7JCJBiEwTqco94+OG45HregJk+tRoFEsyFTKsUCbnUNuohzPi+WzD8Qpjtk2
-         oibmWwhOnU0oeo50BBULuolwT/PTus6dpfb6M=
-Received: by 10.86.72.15 with SMTP id u15mr904049fga.8.1236031693332;
-        Mon, 02 Mar 2009 14:08:13 -0800 (PST)
-Received: from monstre.mystifistisk.net (212251244070.customer.cdi.no [212.251.244.70])
-        by mx.google.com with ESMTPS id e11sm358969fga.50.2009.03.02.14.08.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 02 Mar 2009 14:08:12 -0800 (PST)
-Received: by monstre.mystifistisk.net (Postfix, from userid 1000)
-	id 65A0A468001; Mon,  2 Mar 2009 23:11:22 +0100 (CET)
-X-Mailer: git-send-email 1.6.2.rc2.16.gf474c.dirty
+	id S1753330AbZCBWTo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2009 17:19:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752686AbZCBWTn
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 17:19:43 -0500
+Received: from mail2.tradestation.com ([63.99.207.80]:42402 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752626AbZCBWTm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Mar 2009 17:19:42 -0500
+X-ASG-Debug-ID: 1236032380-29b002cd0000-QuoKaX
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
+Received: from mail5.tradestation.com (localhost [127.0.0.1])
+	by mail2.tradestation.com (Spam Firewall) with ESMTP
+	id 67AA01DA498; Mon,  2 Mar 2009 17:19:40 -0500 (EST)
+Received: from mail5.tradestation.com ([192.168.51.76]) by mail2.tradestation.com with ESMTP id 85HTpSq07nSwH3Gz; Mon, 02 Mar 2009 17:19:40 -0500 (EST)
+X-ASG-Whitelist: Client
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 2 Mar 2009 17:19:39 -0500
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-ASG-Orig-Subj: RE: proper way to merge?
+In-Reply-To: <43d8ce650902272358h4219f439qfa60ba7a7e0d222f@mail.gmail.com>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: proper way to merge?
+Thread-Index: AcmZelMxpBvahqqeSuK6YdB+anWwpQCCbIrg
+X-OriginalArrivalTime: 02 Mar 2009 22:19:39.0569 (UTC) FILETIME=[FA652210:01C99B84]
+X-Barracuda-Connect: UNKNOWN[192.168.51.76]
+X-Barracuda-Start-Time: 1236032380
+X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111968>
 
-The options --branch and -b allow the user to override the initial
-branch created and checked out by git-clone. Normally this is the
-active branch of the remote repository, which is also the fallback
-if the selected branch is not found.
-
-Signed-off-by: Tor Arne Vestb=C3=B8 <torarnv@gmail.com>
----
- Documentation/git-clone.txt |    5 +++++
- builtin-clone.c             |   33 +++++++++++++++++++++++++++++----
- 2 files changed, 34 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 95f08b9..e7feb4d 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -119,6 +119,11 @@ then the cloned repository will become corrupt.
- 	Instead of using the remote name 'origin' to keep track
- 	of the upstream repository, use <name> instead.
-=20
-+--branch <name>::
-+-b <name>::
-+	Instead of using the remote repository's active branch as the
-+	initial branch, use <name> instead.
-+
- --upload-pack <upload-pack>::
- -u <upload-pack>::
- 	When given, and the repository to clone from is accessed
-diff --git a/builtin-clone.c b/builtin-clone.c
-index c338910..601c2c2 100644
---- a/builtin-clone.c
-+++ b/builtin-clone.c
-@@ -38,6 +38,7 @@ static int option_quiet, option_no_checkout, option_b=
-are, option_mirror;
- static int option_local, option_no_hardlinks, option_shared;
- static char *option_template, *option_reference, *option_depth;
- static char *option_origin =3D NULL;
-+static char *option_branch =3D NULL;
- static char *option_upload_pack =3D "git-upload-pack";
- static int option_verbose;
-=20
-@@ -66,6 +67,8 @@ static struct option builtin_clone_options[] =3D {
- 		   "path to git-upload-pack on the remote"),
- 	OPT_STRING(0, "depth", &option_depth, "depth",
- 		    "create a shallow clone of that depth"),
-+	OPT_STRING('b', "branch", &option_branch, "branch",
-+		    "initial remote branch to check out"),
-=20
- 	OPT_END()
- };
-@@ -372,7 +375,9 @@ int cmd_clone(int argc, const char **argv, const ch=
-ar *prefix)
- 	const char *repo_name, *repo, *work_tree, *git_dir;
- 	char *path, *dir;
- 	int dest_exists;
--	const struct ref *refs, *head_points_at, *remote_head, *mapped_refs;
-+	const struct ref *refs, *mapped_refs;
-+	const struct ref *remote_head =3D NULL;
-+	const struct ref *head_points_at =3D NULL;
- 	struct strbuf key =3D STRBUF_INIT, value =3D STRBUF_INIT;
- 	struct strbuf branch_top =3D STRBUF_INIT, reflog_msg =3D STRBUF_INIT;
- 	struct transport *transport =3D NULL;
-@@ -545,12 +550,32 @@ int cmd_clone(int argc, const char **argv, const =
-char *prefix)
-=20
- 		mapped_refs =3D write_remote_refs(refs, &refspec, reflog_msg.buf);
-=20
--		head_points_at =3D locate_head(refs, mapped_refs, &remote_head);
-+		if (option_branch) {
-+		    const int offset =3D 11;
-+		    const char *branch =3D option_branch;
-+		    if (!prefixcmp(branch, "refs/heads/"))
-+			branch +=3D offset;
-+
-+		    const struct ref *r;
-+		    for (r =3D mapped_refs; r; r =3D r->next) {
-+			if (!strcmp(r->name + offset, branch)) {
-+			    /* Override initial branch */
-+			    head_points_at =3D r;
-+			    remote_head =3D r;
-+			    break;
-+			}
-+		    }
-+
-+		    if (!head_points_at)
-+			warning("remote has no branch named '%s', "
-+				"falling back to default.", option_branch);
-+		}
-+
-+		if (!head_points_at)
-+		    head_points_at =3D locate_head(refs, mapped_refs, &remote_head);
- 	}
- 	else {
- 		warning("You appear to have cloned an empty repository.");
--		head_points_at =3D NULL;
--		remote_head =3D NULL;
- 		option_no_checkout =3D 1;
- 		if (!option_bare)
- 			install_branch_config("master", option_origin,
---=20
-1.6.2.rc2.16.gf474c.dirty
+PT09UmU6PT09DQpJbnN0ZWFkIG9mIG1lcmdlLCBJIHByZWZlciB0byByZWJh
+c2UuICBzbzoNCg0KZ2l0IGNoZWNrb3V0IGRldg0KZ2l0IHJlYmFzZSBvcmln
+aW4gcmVsDQoNClRoaXMgcmVwbGF5cyBlYWNoIGNvbW1pdCBtYWRlIGluICdk
+ZXYnIG9uIHRvcCBvZiByZWxlYXNlLCBsZXR0aW5nIHlvdQ0KZml4IGVhY2gg
+Y29tbWl0IHNlcGFyYXRlbHkuICBJdCBhbHNvIG1lYW5zIHRoYXQgd2hlbiBJ
+IGNvbW1pdCB0bw0KcmVsZWFzZSwgdGhlIGNoYW5nZXMgYXJlIGEgbmljZSB0
+cmVlLg0KPT09ZW5kPT09DQoNClRoZSByZWFzb24gSSdtIGRvaW5nIHRoaXMg
+LS0gd2h5IEkgdG9vayBvdmVyIG1haW50ZW5hbmNlIG9mIHRoZSByZXBvc2l0
+b3J5IC0tIGlzIGJlY2F1c2UgSSBzdHJlbnVvdXNseSBvYmplY3RlZCB0byBo
+aXMgcGxhbiB0byAicmViYXNlIi4gIE5PISAgTWVyZ2UsIGRvbid0IHJlYmFz
+ZS4gIEJlc2lkZXMgbmV2ZXIgcmViYXNpbmcgcHVibGlzaGVkIGJyYW5jaGVz
+LCBpbiB0aGlzIGNhc2UgaXQgd29ya3MgbXVjaCBiZXR0ZXIgdGhlIG90aGVy
+IHdheSBhcm91bmQ6ICBkZXYgbWFkZSBzeXN0ZW1pYyBjaGFuZ2VzLCBhbmQg
+cmVsIGlzIG1vc3RseSBwYXRjaGVzIGFuZCBjb21wbGV0ZWx5IG5ldyBwaWVj
+ZXMgb2YgY29kZS4gIEFmdGVyIGxvb2tpbmcgYXQgd2hhdCB3YXMgaW4gZGV2
+Li5yZWwgYW5kIHdoYXQgd2FzIGluIHJlbC4uZGV2LCBJIGNob3NlIHRvIHN0
+YXJ0IHdpdGggZGV2IGFuZCBicmluZyBpbiB0aGUgY29tbWl0cyBmcm9tIHJl
+bCBpbiBhIGNvbnRyb2xsZWQgbWFubmVyLg0KDQpJIHRoaW5rIHlvdSBhcmUg
+aW5kaWNhdGVkIHRoYXQgdGhlIHJlYmFzZSBpcyBlYXNpZXIgYmVjYXVzZSB0
+aGUgbWVyZ2UgaXMgZG9uZSBvbmUgY29tbWl0IGF0IGEgdGltZSByYXRoZXIg
+dGhhbiBpbiBvbmUgaHVnZSBiYW5nLiAgSSB3YW50IHRvIGhhdmUgdGhhdCBh
+ZHZhbnRhZ2UgYW5kIHRoZW4gc29tZSBieSBwaWNraW5nIHJlbGF0ZWQgZ3Jv
+dXBzIG9mIGNvbW1pdHMgYW5kIHZlcmlmeWluZyB0aGF0IGl0IHN0aWxsIGNv
+bXBpbGVzIGJlZm9yZSBnZXR0aW5nIG1vcmUsIG5vdCBldmVuIGxpbWl0ZWQg
+dG8gdGhlIG9yaWdpbmFsIG9yZGVyLg0KDQpJJ2xsIHBvc3Qgd2hhdCBJIGxl
+YXJuZWQgaW4gYSBzZXBhcmF0ZSBub3RlLg0KDQotLUpvaG4NCihleGN1c2Ug
+dGhlIGZvb3RlcjsgaXQncyBub3QgbXkgY2hvaWNlKQ0KDQoKVHJhZGVTdGF0
+aW9uIEdyb3VwLCBJbmMuIGlzIGEgcHVibGljbHktdHJhZGVkIGhvbGRpbmcg
+Y29tcGFueSAoTkFTREFRIEdTOiBUUkFEKSBvZiB0aHJlZSBvcGVyYXRpbmcg
+c3Vic2lkaWFyaWVzLCBUcmFkZVN0YXRpb24gU2VjdXJpdGllcywgSW5jLiAo
+TWVtYmVyIE5ZU0UsIEZJTlJBLCBTSVBDIGFuZCBORkEpLCBUcmFkZVN0YXRp
+b24gVGVjaG5vbG9naWVzLCBJbmMuLCBhIHRyYWRpbmcgc29mdHdhcmUgYW5k
+IHN1YnNjcmlwdGlvbiBjb21wYW55LCBhbmQgVHJhZGVTdGF0aW9uIEV1cm9w
+ZSBMaW1pdGVkLCBhIFVuaXRlZCBLaW5nZG9tLCBGU0EtYXV0aG9yaXplZCBp
+bnRyb2R1Y2luZyBicm9rZXJhZ2UgZmlybS4gTm9uZSBvZiB0aGVzZSBjb21w
+YW5pZXMgcHJvdmlkZXMgdHJhZGluZyBvciBpbnZlc3RtZW50IGFkdmljZSwg
+cmVjb21tZW5kYXRpb25zIG9yIGVuZG9yc2VtZW50cyBvZiBhbnkga2luZC4g
+VGhlIGluZm9ybWF0aW9uIHRyYW5zbWl0dGVkIGlzIGludGVuZGVkIG9ubHkg
+Zm9yIHRoZSBwZXJzb24gb3IgZW50aXR5IHRvIHdoaWNoIGl0IGlzIGFkZHJl
+c3NlZCBhbmQgbWF5IGNvbnRhaW4gY29uZmlkZW50aWFsIGFuZC9vciBwcml2
+aWxlZ2VkIG1hdGVyaWFsLiBBbnkgcmV2aWV3LCByZXRyYW5zbWlzc2lvbiwg
+ZGlzc2VtaW5hdGlvbiBvciBvdGhlciB1c2Ugb2YsIG9yIHRha2luZyBvZiBh
+bnkgYWN0aW9uIGluIHJlbGlhbmNlIHVwb24sIHRoaXMgaW5mb3JtYXRpb24g
+YnkgcGVyc29ucyBvciBlbnRpdGllcyBvdGhlciB0aGFuIHRoZSBpbnRlbmRl
+ZCByZWNpcGllbnQgaXMgcHJvaGliaXRlZC4gSWYgeW91IHJlY2VpdmVkIHRo
+aXMgaW4gZXJyb3IsIHBsZWFzZSBjb250YWN0IHRoZSBzZW5kZXIgYW5kIGRl
+bGV0ZSB0aGUgbWF0ZXJpYWwgZnJvbSBhbnkgY29tcHV0ZXIuCg==
