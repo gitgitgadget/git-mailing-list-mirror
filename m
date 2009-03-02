@@ -1,65 +1,62 @@
-From: Chris Velevitch <chris.velevitch@gmail.com>
-Subject: VSS to git
-Date: Tue, 3 Mar 2009 04:15:19 +1100
-Message-ID: <b0a3bf780903020915g60d97b76pfdbbd60017625f0a@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: VSS to git
+Date: Mon, 02 Mar 2009 18:48:46 +0100
+Message-ID: <49AC1BFE.2040601@drmicha.warpmail.net>
+References: <b0a3bf780903020915g60d97b76pfdbbd60017625f0a@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 02 18:16:52 2009
+Cc: git@vger.kernel.org
+To: Chris Velevitch <chris.velevitch@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 02 18:51:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeBl4-0007lA-Ci
-	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 18:16:50 +0100
+	id 1LeCHf-00053K-SJ
+	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 18:50:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753248AbZCBRPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Mar 2009 12:15:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752711AbZCBRPW
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 12:15:22 -0500
-Received: from rv-out-0506.google.com ([209.85.198.230]:12996 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752559AbZCBRPV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2009 12:15:21 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so2350708rvb.1
-        for <git@vger.kernel.org>; Mon, 02 Mar 2009 09:15:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=mP+LiEzghPWY6m9CQa2agp/52QKXMp2UYKjBVL3wtLs=;
-        b=jFkJZ7ew9YXl5nPKE20yYvlgcXUQe/s1/Yus/YE3BVJ7IT39cwHmrgnfa/uThZiMDd
-         53BBSttmO1QKAQ2ZauqGOi9YJMmHPBwoY63lyANTsujE0k82y1iK2W5o+fjTjR7FH2k1
-         ZqMqx6ajmm7bG1TLF++w3otqW0xgJ4oMx+1eg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=hWaZNAqEgRXg1kgOPW/Nc66f+6wxedfHq2avGGztWSL4MO8jeD9nsJvt9dDGK67oI4
-         ayEgdKYNgAgKtpgCf9rV6uDfHdcm8sKgWGuR9rmKRjrwpF2W4ICtHB1vJE7l9AUipoOt
-         kOzKYt/UyUGvwQ2vxchaghjClasIwiCJznU8U=
-Received: by 10.141.50.11 with SMTP id c11mr3011811rvk.45.1236014119891; Mon, 
-	02 Mar 2009 09:15:19 -0800 (PST)
+	id S1754958AbZCBRs7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2009 12:48:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752401AbZCBRs6
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 12:48:58 -0500
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:44535 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753596AbZCBRs6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Mar 2009 12:48:58 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 77B9C2D0FAD;
+	Mon,  2 Mar 2009 12:48:55 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Mon, 02 Mar 2009 12:48:55 -0500
+X-Sasl-enc: nwZ7eza6ZS4R7N7yL76pYTtvgx00XekPGFZUYHCtjUx3 1236016135
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id CFC691ACAF;
+	Mon,  2 Mar 2009 12:48:54 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090302 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <b0a3bf780903020915g60d97b76pfdbbd60017625f0a@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111951>
 
-I can't seem to find any utilities to convert a vss repository to git.
-In the absence of such a tool, what is the best approach to converting
-an vss repository to git?
+Chris Velevitch venit, vidit, dixit 02.03.2009 18:15:
+> I can't seem to find any utilities to convert a vss repository to git.
+> In the absence of such a tool, what is the best approach to converting
+> an vss repository to git?
 
+Depending on the complexity of your vss repo, going through svn may be
+an option, see
 
-Chris
---
-Chris Velevitch
-Manager - Adobe Platform Users Group, Sydney
-m: 0415 469 095
-www.apugs.org.au
+http://kerneltrap.org/mailarchive/git/2008/5/27/1952124
 
-Adobe Platform Users Group, Sydney
-Mar meeting: Bzoo, FlashDevelop, Who's Doing What With AIR and Eclipse Tips
-Date: Mon 30th Mar 6pm for 6:30 start
-Details and RSVP on http://groups.adobe.com/posts/db02e98146
+which points at
+
+http://www.pumacode.org/projects/vss2svn
+
+Using those pieces you may even be able to produce a fast-exporter for
+vss, whose output you could feed into git-fast-import (vss2svn already
+creates an svn dump file).
+
+Michael
