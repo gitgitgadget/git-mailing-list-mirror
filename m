@@ -1,71 +1,77 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: http: a non-curl_multi interface?
-Date: Mon, 2 Mar 2009 21:14:35 +0800
-Message-ID: <be6fef0d0903020514h28995ec2v2acd9f65131c1515@mail.gmail.com>
+From: Daniel Stenberg <daniel@haxx.se>
+Subject: Re: http: a non-curl_multi interface?
+Date: Mon, 2 Mar 2009 14:26:47 +0100 (CET)
+Message-ID: <alpine.DEB.1.10.0903021412120.15587@yvahk2.pbagnpgbe.fr>
+References: <be6fef0d0903020514h28995ec2v2acd9f65131c1515@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 02 14:16:08 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 02 14:31:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Le806-00021L-81
-	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 14:16:06 +0100
+	id 1Le8Ew-0006de-5R
+	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 14:31:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751362AbZCBNOi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Mar 2009 08:14:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751278AbZCBNOi
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 08:14:38 -0500
-Received: from rv-out-0506.google.com ([209.85.198.232]:57447 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751265AbZCBNOi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2009 08:14:38 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so2263254rvb.1
-        for <git@vger.kernel.org>; Mon, 02 Mar 2009 05:14:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=jxCcLUDq+bV8DmRpcrm7nkoMlYu/w3MpEhRX66YhQHs=;
-        b=W167vRAN9E83gkC+riwdHdtRLcyaUJt3JHK0aWmaVRiQEjZ2aNoHzo0xN0NBDgoeRC
-         P61KCPYaOkXVe4h9DOAOuHJT9ppsSlA/reYCVDWPbE4ztLNrPrlUjp3I3TQ31AWBpTEk
-         KVpGUub1PGc6/KGMUFlKBsdbdAu6co7w5DZfk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=UvjOx5cqL0zlFLvTnOa5oEPGvIbdFSEebOCZUnz1zkLDXVuikTxEktVBeTd9CF1Jot
-         QWp2H5kBptVv3bpJv6tRBAME2fV5jtHjZYwvkCZf3kZWdo4mrrvThtC/4zGvfOMugY12
-         mu3uJ4r95cNGNzPEvp7UyTdGgu5FUHzweb4lk=
-Received: by 10.114.47.12 with SMTP id u12mr2612884wau.147.1235999675348; Mon, 
-	02 Mar 2009 05:14:35 -0800 (PST)
+	id S1751534AbZCBN35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2009 08:29:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751524AbZCBN35
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 08:29:57 -0500
+Received: from kluster1.contactor.se ([91.191.140.11]:35966 "EHLO
+	kluster1.contactor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751513AbZCBN35 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Mar 2009 08:29:57 -0500
+Received: from linux2.contactor.se (linux2.contactor.se [91.191.140.14])
+	by kluster1.contactor.se (8.13.8/8.13.8/Debian-3) with ESMTP id n22DTmN0011971;
+	Mon, 2 Mar 2009 14:29:48 +0100
+X-X-Sender: dast@linux2.contactor.se
+In-Reply-To: <be6fef0d0903020514h28995ec2v2acd9f65131c1515@mail.gmail.com>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+X-fromdanielhimself: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111939>
 
-HI,
+On Mon, 2 Mar 2009, Tay Ray Chuan wrote:
 
-there's been several complaints about how git uses curl, particularly
-how it forces one to use curl's multi interface, so I've tried my hand
-at implementing a curl interface that doesn't need curl_multi.
+I'm replying on this topic as a libcurl guy, I don't know much of git 
+internals.
 
-This would allow git to work without curl_multi.
+> Do you guys think this would bring any benefits, apart from requiring
+> the user to use a curl library with the multi interface?
 
-The non-curl_multi set of functions are done, and I've also taught
-push and http-push --persistent, to force git to behave as though
-USE_CURL_MULTI isn't defined.
+You mean NOT requiring then I guess.
 
-Do you guys think this would bring any benefits, apart from requiring
-the user to use a curl library with the multi interface? Based on what
-I read in the docs, this would mean less open/closed connections,
-minimized credential prompting (if authentication is required), more
-backward compatibility, but it would also mean a possible performance
-degradation in git, since all http requests are sequential.
+What I don't quite grasp (and I must admit I have not followed the critique on 
+this matter) is why using the multi interface of libcurl is a problem to 
+anyone as all libcurl versions in modern times features it. And if you have a 
+libcurl with it working badly, you have a too old libcurl anyway and should 
+rather upgrade...
 
---
-Cheers,
-Ray Chuan
+> Based on what I read in the docs, this would mean less open/closed 
+> connections,
+
+I don't see how that is true. In fact, properly used I would claim that an 
+application using the multi interface would in general use less connections 
+and do more connection re-use than otherwise. But of course it depends on a 
+lot of factors.
+
+Again, this requires a reasonably recent libcurl (since 7.16.0 - october 2006 
+- libcurl keeps the "connection cache" in the multi handle instead of in each 
+individual easy handle.)
+
+> minimized credential prompting (if authentication is required), more 
+> backward compatibility, but it would also mean a possible performance 
+> degradation in git, since all http requests are sequential.
+
+I figure you can test that fairly easy now when you have a patch pending for 
+this change and the existing code base is using the multi interface 
+approach...
+
+-- 
+
+  / daniel.haxx.se
