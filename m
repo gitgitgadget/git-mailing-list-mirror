@@ -1,88 +1,130 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: topgit patches
-Date: Mon, 2 Mar 2009 17:26:41 +0100
-Message-ID: <20090302162641.GB15229@pengutronix.de>
-References: <20090225195856.GA12372@pengutronix.de> <20090225212309.GM12275@machine.or.cz> <20090225231550.GA19741@pengutronix.de> <20090226060652.GA16251@lapse.rw.madduck.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: martin f krafft <madduck@debian.org>
-X-From: git-owner@vger.kernel.org Mon Mar 02 17:28:46 2009
+From: "David J. Mellor" <dmellor@whistlingcat.com>
+Subject: [PATCH 1/3] Documentation: minor grammatical fixes.
+Date: Sun, 1 Mar 2009 22:37:41 -0800
+Message-ID: <20090302163415.563D217A49@sandstone.whistlingcat.com>
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Mar 02 17:36:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeB09-0004hQ-JQ
-	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 17:28:22 +0100
+	id 1LeB7S-0007fs-5R
+	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 17:35:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756484AbZCBQ0q convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Mar 2009 11:26:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756167AbZCBQ0q
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 11:26:46 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:55169 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755684AbZCBQ0p (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2009 11:26:45 -0500
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1LeAyY-0003sC-6q; Mon, 02 Mar 2009 17:26:42 +0100
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1LeAyX-0001GH-Gd; Mon, 02 Mar 2009 17:26:41 +0100
-Content-Disposition: inline
-In-Reply-To: <20090226060652.GA16251@lapse.rw.madduck.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1754738AbZCBQeV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2009 11:34:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758566AbZCBQeV
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 11:34:21 -0500
+Received: from quartz.whistlingcat.com ([67.223.228.111]:55460 "EHLO
+	quartz.whistlingcat.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754591AbZCBQeU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Mar 2009 11:34:20 -0500
+Received: from whistlingcat.com (whistlingcat.com [99.12.234.57])
+	by quartz.whistlingcat.com (Postfix) with ESMTP id 06723488006;
+	Mon,  2 Mar 2009 08:34:16 -0800 (PST)
+Received: from sandstone.whistlingcat.com (sandstone.whistlingcat.com [192.168.0.2])
+	by whistlingcat.com (Postfix) with ESMTP id 95F7538E74F0;
+	Mon,  2 Mar 2009 08:34:15 -0800 (PST)
+Received: by sandstone.whistlingcat.com (Postfix, from userid 500)
+	id 563D217A49; Mon,  2 Mar 2009 08:34:15 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111945>
 
-Hello,
 
-On Thu, Feb 26, 2009 at 07:06:52AM +0100, martin f krafft wrote:
-> also sprach Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de> [2009=
-=2E02.26.0015 +0100]:
-> > Well, I already wondered if there is someone using topgit apart
-> > from me. :-)
->=20
-> I use it and would like to actively maintain it, but time is short
-> and I wanted to push out a new option parser with 0.6, but it's just
-> not finished yet. As soon as I find a few hours, I'll try to revisit
-> it. But if someone else has the time, maybe we can prepare a 0.6
-> without a new option parser?
-I assume you planned to use git rev-parse --parseopt?
+Signed-off-by: David J. Mellor <dmellor@whistlingcat.com>
+---
+ Documentation/git-am.txt |   36 ++++++++++++++++++------------------
+ 1 files changed, 18 insertions(+), 18 deletions(-)
 
-Since topgit-0.5 we have some fixes, a new export method and improved
-bash completion.  Just repackaging the current state into a new Debian
-package closes 4 bugs in the Debian BTS.
-
-Before 0.6 I still need to write some documentation for the new export
-method, but after that I consider releasing the then current state as
-0.6 is a good idea.
-
-martin, Petr, others: any comments?  Should I just tag if I feel ready?
-
-martin: I can try to prepare the Debian package, AFAIK I cannot upload
-it, so here I need your help.  (And maybe you should check the package,
-because up to now I only created Debian packages for my private use.)
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
-       |
-Industrial Linux Solutions                    | http://www.pengutronix.=
-de/  |
-Peiner Strasse 6-8, 31137 Hildesheim, Germany | Phone: +49-5121-206917-=
-0    |
-Amtsgericht Hildesheim, HRA 2686              | Fax:   +49-5121-206917-=
-5555 |
+diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+index ff307eb..1e71dd5 100644
+--- a/Documentation/git-am.txt
++++ b/Documentation/git-am.txt
+@@ -27,8 +27,8 @@ OPTIONS
+ -------
+ <mbox>|<Maildir>...::
+ 	The list of mailbox files to read patches from. If you do not
+-	supply this argument, reads from the standard input. If you supply
+-	directories, they'll be treated as Maildirs.
++	supply this argument, the command reads from the standard input.
++	If you supply directories, they will be treated as Maildirs.
+ 
+ -s::
+ --signoff::
+@@ -48,7 +48,7 @@ OPTIONS
+ 	preferred encoding if it is not UTF-8).
+ +
+ This was optional in prior versions of git, but now it is the
+-default.   You could use `--no-utf8` to override this.
++default.   You can use `--no-utf8` to override this.
+ 
+ --no-utf8::
+ 	Pass `-n` flag to 'git-mailinfo' (see
+@@ -57,8 +57,8 @@ default.   You could use `--no-utf8` to override this.
+ -3::
+ --3way::
+ 	When the patch does not apply cleanly, fall back on
+-	3-way merge, if the patch records the identity of blobs
+-	it is supposed to apply to, and we have those blobs
++	3-way merge if the patch records the identity of blobs
++	it is supposed to apply to and we have those blobs
+ 	available locally.
+ 
+ --whitespace=<option>::
+@@ -121,18 +121,18 @@ the commit, after stripping common prefix "[PATCH <anything>]".
+ It is supposed to describe what the commit is about concisely as
+ a one line text.
+ 
+-The body of the message (iow, after a blank line that terminates
+-RFC2822 headers) can begin with "Subject: " and "From: " lines
+-that are different from those of the mail header, to override
+-the values of these fields.
++The body of the message (the rest of the message after the blank line
++that terminates the RFC2822 headers) can begin with "Subject: " and
++"From: " lines that are different from those of the mail header,
++to override the values of these fields.
+ 
+ The commit message is formed by the title taken from the
+ "Subject: ", a blank line and the body of the message up to
+-where the patch begins.  Excess whitespaces at the end of the
++where the patch begins.  Excess whitespace characters at the end of the
+ lines are automatically stripped.
+ 
+ The patch is expected to be inline, directly following the
+-message.  Any line that is of form:
++message.  Any line that is of the form:
+ 
+ * three-dashes and end-of-line, or
+ * a line that begins with "diff -", or
+@@ -141,18 +141,18 @@ message.  Any line that is of form:
+ is taken as the beginning of a patch, and the commit log message
+ is terminated before the first occurrence of such a line.
+ 
+-When initially invoking it, you give it names of the mailboxes
+-to crunch.  Upon seeing the first patch that does not apply, it
+-aborts in the middle,.  You can recover from this in one of two ways:
++When initially invoking it, you give it the names of the mailboxes
++to process.  Upon seeing the first patch that does not apply, it
++aborts in the middle.  You can recover from this in one of two ways:
+ 
+-. skip the current patch by re-running the command with '--skip'
++. skip the current patch by re-running the command with the '--skip'
+   option.
+ 
+ . hand resolve the conflict in the working directory, and update
+-  the index file to bring it in a state that the patch should
+-  have produced.  Then run the command with '--resolved' option.
++  the index file to bring it into a state that the patch should
++  have produced.  Then run the command with the '--resolved' option.
+ 
+-The command refuses to process new mailboxes while `.git/rebase-apply`
++The command refuses to process new mailboxes while the `.git/rebase-apply`
+ directory exists, so if you decide to start over from scratch,
+ run `rm -f -r .git/rebase-apply` before running the command with mailbox
+ names.
+-- 
+1.6.1.3
