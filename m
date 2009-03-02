@@ -1,89 +1,85 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [RFC PATCH] Windows: Assume all file names to be UTF-8 encoded.
-Date: Mon, 02 Mar 2009 11:30:01 +0100
-Message-ID: <49ABB529.1080500@viscovery.net>
-References: <alpine.DEB.2.00.0903020941120.17877@perkele.intern.softwolves.pp.se>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2] send-email: add --confirm option
+Date: Mon, 2 Mar 2009 12:35:17 +0200
+Message-ID: <94a0d4530903020235n28baf0c8m5a9fdf01edfc85ec@mail.gmail.com>
+References: <7vhc2d8vjk.fsf@gitster.siamese.dyndns.org>
+	 <1235924234-16923-1-git-send-email-jaysoffian@gmail.com>
+	 <7d1d9c250903010909h7d92f165oc703a05e819671a4@mail.gmail.com>
+	 <76718490903010949h7b64eb97ob567101fbc7e4cd1@mail.gmail.com>
+	 <20090302172401.6117@nanako3.lavabit.com>
+	 <7v7i385meo.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Mon Mar 02 11:31:41 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nanako Shiraishi <nanako3@lavabit.com>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Paul Gortmaker <paul.gortmaker@windriver.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 02 11:36:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Le5Qy-0002Ic-Vs
-	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 11:31:41 +0100
+	id 1Le5Vz-0003uE-2o
+	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 11:36:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756350AbZCBKaN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Mar 2009 05:30:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754106AbZCBKaM
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 05:30:12 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:29453 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754022AbZCBKaL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2009 05:30:11 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Le5PN-0003t3-W2; Mon, 02 Mar 2009 11:30:02 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 69E934E4; Mon,  2 Mar 2009 11:30:01 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <alpine.DEB.2.00.0903020941120.17877@perkele.intern.softwolves.pp.se>
-X-Spam-Score: -1.4 (-)
+	id S1757680AbZCBKfW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Mar 2009 05:35:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757624AbZCBKfW
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 05:35:22 -0500
+Received: from mail-fx0-f176.google.com ([209.85.220.176]:51253 "EHLO
+	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757483AbZCBKfU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Mar 2009 05:35:20 -0500
+Received: by fxm24 with SMTP id 24so1906402fxm.37
+        for <git@vger.kernel.org>; Mon, 02 Mar 2009 02:35:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=H1BXoB6mKnWqs0pLE5E58/U4nodTxThJ4NCBNf17DQo=;
+        b=b5iOVSyQAqchp423xmTUTUd1ABXTGZ80xY+ZxlaOdBFIArPW1Ktko8+loG0Kgo1ENV
+         JpqIS9BsYmsZaJQovRq2pyPNUhNIM3SXmEGk6qQo/qiFxzb/WACe7s/8gHC86C8VhgZa
+         Lv7M0293/Ean+Jnvh0oev42XWOmTxkgNrcSl4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=CKNcgRIq8scvk8ep7KXIjjJKZsGPfOoZHRaTSTI20zylPXd+vwXlq37JzF9Yr8K3OV
+         48lXpN3vgfNHWSjpcNmAIRGUUTdSx8GeiCDvcEatoKZCx41by+4HVGRqXFx2Di8jlKPG
+         8qw3Ug256A9ZF49FL9vK3/X4dDw2D421AXZyU=
+Received: by 10.86.95.8 with SMTP id s8mr393026fgb.28.1235990117446; Mon, 02 
+	Mar 2009 02:35:17 -0800 (PST)
+In-Reply-To: <7v7i385meo.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111927>
 
-Peter Krefting schrieb:
-> When opening a file through open() or fopen(), the path passed is
-> UTF-8 encoded.
+On Mon, Mar 2, 2009 at 11:01 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> We are taking that route for 1.7.0 to warn very loudly about pushing =
+into
+> the currently checked-out branch in 1.6.2 and onwards. =C2=A0We may n=
+ow find
+> out that people hate a loud deprecation period. =C2=A0Then what?
 
-I don't think that this assumption is valid. Whenever the Windows API has
-to convert between Unicode strings and char* strings, it uses the current
-"ANSI code page". As far as I know, the UTF-8 codepage (65001) cannot be
-used as the "current ANSI code page". Users will always have some code
-page set that is not UTF-8.
+The problem is not the 'loud deprecation period' it's the deprecation
+itself. You cannot avoid deprecation, so you cannot avoid users
+complaining, but you can avoid surprises, and that's what the 'loud
+deprecation period' is for.
 
-For example, if the user specifies a file name on the command line, than
-it will not enter git in UTF-8, but in the current "ANSI" or "OEM code
-page" encoding. If git prints a file name under the assumption that it is
-UTF-8 encoded, then it will be displayed incorrectly because the system
-uses a different encoding.
+The 'loud deprecation period' allows users to find out *earlier* so
+that they can comment on the issue. If a huge amount of users
+complain, maybe the deprecation should not proceed, or maybe someone
+comes up with a plan B. Sill, some people would not be happy, but at
+least their voice would have been heard.
 
-> Since there is no real file system abstraction beyond using stdio
-> (AFAIK), I need to hack it by replacing fopen (and open). Probably
-> opendir/readdir as well (might be trickier), and possibly even hack
-> around main() to parse the wchar_t command-line instead of the char copy.
+Sure, it doesn't matter how it's handled, some people will still not be=
+ happy...
 
-I think you are grossly underestimating the venture that you want to
-undertake here.
-
-Please come up with a plan how you are going to deal with the various
-issues. File names enter and leave the system through different channels:
-
-- the command line and terminal window
-- object database (tree objects)
-- opendir/readdir; opening files or directories for reading or writing
-
-And there is probably some more... How do you treat encodings in these
-channels? What if the file names are not valid UTF-8? Etc.
-
-The biggest obstacle will be that git does not have a notion of "file name
-encoding" - it simply treats a file name as a stream of bytes. There is no
-place to write an encoding. If the byte streams are regarded as having an
-encoding, then you can have ambiguities, mixed encodings, or invalid
-characters. You would have to deal with this in some way.
-
-> This will lose all chances of Windows 9x compatibility, but I don't know
-> if there are any attempts of supporting it anyway?
-
-Windows 9x is already out of the loop. We use GetFileInformationByHandle()
-that is only available since Windows 2000.
-
--- Hannes
+--=20
+=46elipe Contreras
