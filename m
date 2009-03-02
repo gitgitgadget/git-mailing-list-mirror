@@ -1,101 +1,122 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC] Refspec patterns with * in the middle
-Date: Mon, 2 Mar 2009 18:00:57 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0903021746140.19665@iabervon.org>
-References: <alpine.LNX.1.00.0903011820590.19665@iabervon.org> <7viqmrn98i.fsf@gitster.siamese.dyndns.org> <76718490903021001h16009570p7ac8c66a8e8e1f90@mail.gmail.com> <alpine.LNX.1.00.0903021323180.19665@iabervon.org> <76718490903021407u215fb769g656a8fdc20e622e5@mail.gmail.com>
- <7v1vtfmtwj.fsf@gitster.siamese.dyndns.org>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH 1/2] diffcore-pickaxe: use memmem()
+Date: Tue, 03 Mar 2009 00:00:55 +0100
+Message-ID: <49AC6527.5010808@lsrfire.ath.cx>
+References: <cover.1235629933.git.gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-2022065131-1236034857=:19665"
-Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 03 00:02:37 2009
+X-From: git-owner@vger.kernel.org Tue Mar 03 00:02:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeH9Z-0005zu-CU
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 00:02:29 +0100
+	id 1LeH9o-00065g-CA
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 00:02:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754711AbZCBXBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Mar 2009 18:01:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753601AbZCBXBA
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 18:01:00 -0500
-Received: from iabervon.org ([66.92.72.58]:43381 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752860AbZCBXBA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2009 18:01:00 -0500
-Received: (qmail 26369 invoked by uid 1000); 2 Mar 2009 23:00:57 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 2 Mar 2009 23:00:57 -0000
-In-Reply-To: <7v1vtfmtwj.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1753388AbZCBXBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2009 18:01:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754775AbZCBXBG
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 18:01:06 -0500
+Received: from india601.server4you.de ([85.25.151.105]:54774 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752860AbZCBXBF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Mar 2009 18:01:05 -0500
+Received: from [10.0.1.101] (p57B7FBAD.dip.t-dialin.net [87.183.251.173])
+	by india601.server4you.de (Postfix) with ESMTPSA id 2E1632F8055;
+	Tue,  3 Mar 2009 00:01:02 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <cover.1235629933.git.gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111974>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Use memmem() instead of open-coding it.  The system libraries usually have a
+much faster version than the memcmp()-loop here.  Even our own fall-back in
+compat/, which is used on Windows, is slightly faster.
 
---1547844168-2022065131-1236034857=:19665
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+The following commands were run in a Linux kernel repository and timed, the
+best of five results is shown:
 
-On Mon, 2 Mar 2009, Junio C Hamano wrote:
+  $ STRING='Ensure that the real time constraints are schedulable.'
+  $ git log -S"$STRING" HEAD -- kernel/sched.c >/dev/null
 
-> Jay Soffian <jaysoffian@gmail.com> writes:
-> 
-> > On Mon, Mar 2, 2009 at 1:25 PM, Daniel Barkalow <barkalow@iabervon.org> wrote:
-> >>> But the following is not:
-> >>>
-> >>>  - foo/bar*/baz
-> >>>
-> >>> IOW, '*' can only appear as a non-terminating symbol if it is bounded
-> >>> by '/' on each side.
-> >>
-> >> You have my criterion right, but I want that to be valid, but only match
-> >> things like "foo/bar-something/baz", not "foo/bar-a/b/baz".
-> >
-> > Ah, that makes sense. Perhaps use "**" to mean matching across path
-> > components which is what rsync does:
-> >
-> >  o  a '*' matches any non-empty path component (it stops at slashes).
-> >  o  use '**' to match anything, including slashes.
-> >
-> > ?
-> 
-> I personally do not think that makes much sense (and I find ** ugly, too).
-> 
-> We traditionally supported '*' only at the end, and it always has meant
-> "match through the end, including slashes".
-> 
-> Requiring 'match including slashes' to be spelled as '**' only when it is
-> not at the end is unnecessarily confusing.
-> 
-> Is there a valid use case when * wants to match across directory
-> boundaries when it is not at the end?  I offhand do not think of a sane
-> one.
+On Ubuntu 8.10 x64, before (v1.6.2-rc2):
 
-Maybe:
+  8.09user 0.04system 0:08.14elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+  0inputs+0outputs (0major+30952minor)pagefaults 0swaps
 
-/refs/imported/$GROUP/$USER/project -> $GROUP/$USER
+And with the patch:
 
-or
+  1.50user 0.04system 0:01.54elapsed 100%CPU (0avgtext+0avgdata 0maxresident)k
+  0inputs+0outputs (0major+30645minor)pagefaults 0swaps
 
-/refs/imported/sandbox/$USER/$TOPIC/project -> $USER/$TOPIC
+On Fedora 10 x64, before:
 
-The issue, in my case, is importing from a system where branches contain 
-projects instead of projects containing branches (and everything is a 
-single namespace). So I want to match an insane (for us) LHS with a sane 
-RHS to get stuff into reasonable shape. I don't really care about any 
-patterns where the branch identifier is multiple components, but I 
-wouldn't be surprised if somebody did.
+  8.34user 0.05system 0:08.39elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+  0inputs+0outputs (0major+29268minor)pagefaults 0swaps
 
-Oh, and it looks like "?" is reserved and currently unused, so we could 
-have * match one or more full path components, and ? match partial path 
-components.
+And with the patch:
 
-	-Daniel
-*This .sig left intentionally blank*
---1547844168-2022065131-1236034857=:19665--
+  1.15user 0.05system 0:01.20elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+  0inputs+0outputs (0major+32253minor)pagefaults 0swaps
+
+On Windows Vista x64, before:
+
+  real    0m9.204s
+  user    0m0.000s
+  sys     0m0.000s
+
+And with the patch:
+
+  real    0m8.470s
+  user    0m0.000s
+  sys     0m0.000s
+
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ diffcore-pickaxe.c |   18 ++++++++----------
+ 1 files changed, 8 insertions(+), 10 deletions(-)
+
+diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
+index af9fffe..574b3e8 100644
+--- a/diffcore-pickaxe.c
++++ b/diffcore-pickaxe.c
+@@ -10,7 +10,7 @@ static unsigned int contains(struct diff_filespec *one,
+ 			     regex_t *regexp)
+ {
+ 	unsigned int cnt;
+-	unsigned long offset, sz;
++	unsigned long sz;
+ 	const char *data;
+ 	if (diff_populate_filespec(one, 0))
+ 		return 0;
+@@ -33,15 +33,13 @@ static unsigned int contains(struct diff_filespec *one,
+ 		}
+ 
+ 	} else { /* Classic exact string match */
+-		/* Yes, I've heard of strstr(), but the thing is *data may
+-		 * not be NUL terminated.  Sue me.
+-		 */
+-		for (offset = 0; offset + len <= sz; offset++) {
+-			/* we count non-overlapping occurrences of needle */
+-			if (!memcmp(needle, data + offset, len)) {
+-				offset += len - 1;
+-				cnt++;
+-			}
++		while (sz) {
++			const char *found = memmem(data, sz, needle, len);
++			if (!found)
++				break;
++			sz -= found - data + len;
++			data = found + len;
++			cnt++;
+ 		}
+ 	}
+ 	diff_free_filespec_data(one);
+-- 
+1.6.2.rc2
