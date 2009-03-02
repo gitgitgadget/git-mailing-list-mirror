@@ -1,100 +1,180 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Maintainer for autoconf in git (was: [PATCH] autoconf: Add limited support for --htmldir)
-Date: Mon, 2 Mar 2009 10:30:35 +0100
-Message-ID: <200903021030.37491.jnareb@gmail.com>
-References: <9a0027270902272323y44091bfakcb640f168c33a824@mail.gmail.com> <200902280859.52004.jnareb@gmail.com> <9a0027270902280105hcad47c0r30bdd8379932442e@mail.gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: [RFC PATCH] Windows: Assume all file names to be UTF-8 encoded.
+Date: Mon, 02 Mar 2009 09:47:22 +0100 (CET)
+Message-ID: <alpine.DEB.2.00.0903020941120.17877@perkele.intern.softwolves.pp.se>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: David Syzdek <david@syzdek.net>
-X-From: git-owner@vger.kernel.org Mon Mar 02 10:32:22 2009
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 02 10:49:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Le4VT-0000LZ-6z
-	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 10:32:15 +0100
+	id 1Le4lj-0005d8-Lu
+	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 10:49:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756902AbZCBJas (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Mar 2009 04:30:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756844AbZCBJar
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 04:30:47 -0500
-Received: from mail-fx0-f176.google.com ([209.85.220.176]:59655 "EHLO
-	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753657AbZCBJaq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2009 04:30:46 -0500
-Received: by fxm24 with SMTP id 24so1879540fxm.37
-        for <git@vger.kernel.org>; Mon, 02 Mar 2009 01:30:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=+81sNaLn7MO6hUBixadBxCQTusARsfllKkWmvGi4qAI=;
-        b=fvRWrXUxtDPIJQwK9AVSpJcY83F7Cj3LKILz38uu8YFBCW+OPQFKgNq4rwVBU6vetk
-         HIFQ23RMdMKwynWYkA3g/OeFDY8NDS6+GqmIcs46XbpVxbemwJqtQv+m+0ZmtbC6wtYC
-         /cUxgxDMbAwbMG/u73dE2DNQFav8A1ny3PVYM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=CMjQbIxc/EjpAF+86aM2ZafPjRL0+gcJLhe0fPUTzWWsl7W9CUCf3Be6Xc6lcl6gL+
-         bprOalolTwRaOBAbvUUXoowvzx49fXB+TQuEUmvRSqYdZJtto+9a0f7gBLG0+FVeJ5Ly
-         59GOyY0zX6aJ68v6Lco7CEvRmtPX1CSLXikGQ=
-Received: by 10.86.95.8 with SMTP id s8mr382549fgb.79.1235986243228;
-        Mon, 02 Mar 2009 01:30:43 -0800 (PST)
-Received: from ?192.168.1.15? (abvv234.neoplus.adsl.tpnet.pl [83.8.219.234])
-        by mx.google.com with ESMTPS id l12sm7223180fgb.31.2009.03.02.01.30.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 02 Mar 2009 01:30:42 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <9a0027270902280105hcad47c0r30bdd8379932442e@mail.gmail.com>
-Content-Disposition: inline
+	id S1756451AbZCBJrh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2009 04:47:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756311AbZCBJrg
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 04:47:36 -0500
+Received: from smtp.getmail.no ([84.208.20.33]:58585 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756269AbZCBJrf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Mar 2009 04:47:35 -0500
+X-Greylist: delayed 3602 seconds by postgrey-1.27 at vger.kernel.org; Mon, 02 Mar 2009 04:47:35 EST
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0KFV0070LF37JV00@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 02 Mar 2009 09:47:31 +0100 (CET)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0KFV003KNF2ZUI30@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 02 Mar 2009 09:47:23 +0100 (CET)
+Received: from perkele ([84.215.142.63]) by no-osl-m323-srv-004-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0KFV007VOF2Y0QE0@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Mon, 02 Mar 2009 09:47:22 +0100 (CET)
+Received: by perkele (Postfix, from userid 501)	id AABA62FC03; Mon,
+ 02 Mar 2009 09:47:22 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
+ with ESMTP id A7FFA2FC02	for <git@vger.kernel.org>; Mon,
+ 02 Mar 2009 09:47:22 +0100 (CET)
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111924>
 
-On Sat, 28 Feb 2009, David Syzdek wrote:
+When opening a file through open() or fopen(), the path passed is
+UTF-8 encoded. To handle this on Windows, we need to convert the
+path string to UTF-16 and use the Unicode-based interface.
+---
+Windows does support file names using arbitrary Unicode characters, you just 
+need to use its wchar_t interfaces instead of the char ones (the char ones 
+just gets converted into wchar_t on the API level anyway, for the same 
+reasons). This is the beginnings of support for UTF-8 file names on Git on 
+Windows.
 
-> Are you more or less the maintainer of the configure.ac file?  Or is
-> it more of a "hive" effort?  There are a few things that could be done
-> to make the file a little more readable and maintainable.  For
-> instance, breaking the macro functions into acinclude.m4 instead of
-> keeping them in the configure.ac file.
-> 
-> I'd be willing to help or take the brunt of the work, but I would like
-> to coordinate with someone whom is familiar with the interaction
-> between the Makefile and configure.ac.
-> 
-> I have a decent amount of experience with using the autotools and am
-> comfortable with autoconf.
-> 
-> Let me know if you think this is a good idea or not.
+Since there is no real file system abstraction beyond using stdio (AFAIK), I 
+need to hack it by replacing fopen (and open). Probably opendir/readdir as 
+well (might be trickier), and possibly even hack around main() to parse the 
+wchar_t command-line instead of the char copy.
 
-It is true that I have added [optional] support for autoconf to git,
-and I think the idea of having optional ./configure support in the form
-of generating configuration file for Makefile, overriding the guesswork
-based on uname, and being overridden by user's customization is mine.
+This will lose all chances of Windows 9x compatibility, but I don't know if 
+there are any attempts of supporting it anyway?
 
-But I have next to no experience (except for the work on git) with 
-autotools / autoconf. Additionally keeping up configure.ac and 
-config.mak.in in sync with changes to Makefile (build system) needs
-time which I don't have much of. So I very much would like for someone 
-with better knowledge of autotools to take over maintaining configure 
-for git.
+Please note that MultiByteToWideChar() will reject any invalid UTF-8 
+strings, perhaps it should just fall back to a regular open()/fopen() in 
+that case?
 
-The thing to remember is that ./configure has to be entirely optional...
+No Signed-Off line since this is unfinished, just presenting rough sketches 
+of an idea.
 
+  compat/mingw.c |   60 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+  compat/mingw.h |    3 ++
+  2 files changed, 62 insertions(+), 1 deletions(-)
 
-P.S. On of things that autoconf needs to work better is to have fallback 
-install-sh script in git sources... which I think also would help in 
-the case where we do not use ./configure, but are on some legacy 
-system.
+diff --git a/compat/mingw.c b/compat/mingw.c
+index e25cb4f..8b19b80 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -9,13 +9,30 @@ int mingw_open (const char *filename, int oflags, ...)
+  {
+  	va_list args;
+  	unsigned mode;
++	wchar_t *unicode_filename;
++	int unicode_filename_len;
+  	va_start(args, oflags);
+  	mode = va_arg(args, int);
+  	va_end(args);
+
+  	if (!strcmp(filename, "/dev/null"))
+  		filename = "nul";
+-	int fd = open(filename, oflags, mode);
++
++	unicode_filename_len = MultiByteToWideChar(CP_UTF8, 0, filename, -1, NULL, 0);
++	if (0 == unicode_filename_len) {
++		errno = EINVAL;
++		return -1;
++	};
++
++	unicode_filename = xmalloc(unicode_filename_len * sizeof (wchar_t));
++	if (NULL == unicode_filename) {
++		errno = ENOMEM;
++		return -1;
++	}
++	MultiByteToWideChar(CP_UTF8, 0, filename, -1, unicode_filename, unicode_filename_len);
++	int fd = _wopen(unicode_filename, oflags, mode);
++	free(unicode_filename);
++
+  	if (fd < 0 && (oflags & O_CREAT) && errno == EACCES) {
+  		DWORD attrs = GetFileAttributes(filename);
+  		if (attrs != INVALID_FILE_ATTRIBUTES && (attrs & FILE_ATTRIBUTE_DIRECTORY))
+@@ -24,6 +41,47 @@ int mingw_open (const char *filename, int oflags, ...)
+  	return fd;
+  }
+
++FILE *mingw_fopen (const char *filename, const char *mode)
++{
++	wchar_t *unicode_filename, *unicode_mode;
++	int unicode_filename_len, unicode_mode_len;
++	FILE *fh;
++
++	unicode_filename_len = MultiByteToWideChar(CP_UTF8, 0, filename, -1, NULL, 0);
++	if (0 == unicode_filename_len) {
++		errno = EINVAL;
++		return NULL;
++	};
++
++	unicode_filename = xmalloc(unicode_filename_len * sizeof (wchar_t));
++	if (NULL == unicode_filename) {
++		errno = ENOMEM;
++		return NULL;
++	}
++	MultiByteToWideChar(CP_UTF8, 0, filename, -1, unicode_filename, unicode_filename_len);
++
++	unicode_mode_len = MultiByteToWideChar(CP_UTF8, 0, mode, -1, NULL, 0);
++	if (0 == unicode_mode_len) {
++		free(unicode_filename);
++		errno = EINVAL;
++		return NULL;
++	};
++
++	unicode_mode = xmalloc(unicode_mode_len * sizeof (wchar_t));
++	if (NULL == unicode_mode) {
++		free(unicode_mode);
++		errno = ENOMEM;
++		return NULL;
++	}
++	MultiByteToWideChar(CP_UTF8, 0, mode, -1, unicode_mode, unicode_mode_len);
++
++	fh = _wfopen(unicode_filename, unicode_mode);
++	free(unicode_filename);
++	free(unicode_mode);
++
++	return fh;
++}
++
+  static inline time_t filetime_to_time_t(const FILETIME *ft)
+  {
+  	long long winTime = ((long long)ft->dwHighDateTime << 32) + ft->dwLowDateTime;
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 4f275cb..235df0a 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -142,6 +142,9 @@ int sigaction(int sig, struct sigaction *in, struct sigaction *out);
+  int mingw_open (const char *filename, int oflags, ...);
+  #define open mingw_open
+
++FILE *mingw_fopen (const char *filename, const char *mode);
++#define fopen mingw_fopen
++
+  char *mingw_getcwd(char *pointer, int len);
+  #define getcwd mingw_getcwd
+
 -- 
-Jakub Narebski
-Poland
+1.6.0.2.1172.ga5ed0
