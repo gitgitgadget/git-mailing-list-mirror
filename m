@@ -1,209 +1,107 @@
-From: Heiko Voigt <git-list@hvoigt.net>
-Subject: [PATCH v2 1/1] cvsimport: add test illustrating a bug in cvsps
-Date: Mon, 02 Mar 2009 18:59:36 +0100
-Message-ID: <49AC1E88.1010709@hvoigt.net>
-References: <49A2EFC6.5000104@hvoigt.net> <49A37ED1.5090506@alum.mit.edu>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [RFC] Refspec patterns with * in the middle
+Date: Mon, 2 Mar 2009 13:01:30 -0500
+Message-ID: <76718490903021001h16009570p7ac8c66a8e8e1f90@mail.gmail.com>
+References: <alpine.LNX.1.00.0903011820590.19665@iabervon.org>
+	 <7viqmrn98i.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 02 19:01:09 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 02 19:03:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeCRw-0000h0-Ta
-	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 19:01:09 +0100
+	id 1LeCTh-0001Lw-3O
+	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 19:02:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755178AbZCBR7l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Mar 2009 12:59:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754922AbZCBR7k
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 12:59:40 -0500
-Received: from darksea.de ([83.133.111.250]:38862 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754657AbZCBR7j (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2009 12:59:39 -0500
-Received: (qmail 22189 invoked from network); 2 Mar 2009 18:59:25 +0100
-Received: from unknown (HELO macbook.lan) (127.0.0.1)
-  by localhost with SMTP; 2 Mar 2009 18:59:25 +0100
-User-Agent: Thunderbird 2.0.0.19 (Macintosh/20081209)
-In-Reply-To: <49A37ED1.5090506@alum.mit.edu>
+	id S1756759AbZCBSBd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Mar 2009 13:01:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756203AbZCBSBd
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 13:01:33 -0500
+Received: from rv-out-0506.google.com ([209.85.198.226]:11797 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755888AbZCBSBb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Mar 2009 13:01:31 -0500
+Received: by rv-out-0506.google.com with SMTP id g37so2366568rvb.1
+        for <git@vger.kernel.org>; Mon, 02 Mar 2009 10:01:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=hW8sI+NxSaKyMR8EWQo7U1RzD4J5htY6Cwy9F4jNQuo=;
+        b=FWjZ+Vi0x++3a5D32axdeTS8UvFyNdgaNUEG3XJW3ZNnzuyYMSCoid0sIliifQVT2x
+         97vq0+pSE9+UPe4EYNt+eGAiunWP6ODH3q0VXTxE0wMg7J9/BkuuDKsr/RPsr8e0QmZs
+         3CpZTGPtmSimKjFU6k0gbyc8fJnh4WW0ALPMY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=TQZCnHjt25QebMXAlsVjp7AGN7hixbMADDBdQc9BuKomRDOiBSxnW1DQJNS8j2jeEO
+         icEIBOJGxZUmyC4UP9CS2KfwuGtwW9UVpueK9COFKuBIob7tBKZw7PqqUa939xKhEqWw
+         KD4Vp3olps473pCJ+yd1kXfRUdJVvMbaFp0S4=
+Received: by 10.141.122.1 with SMTP id z1mr3006488rvm.275.1236016890124; Mon, 
+	02 Mar 2009 10:01:30 -0800 (PST)
+In-Reply-To: <7viqmrn98i.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111955>
 
-Some cvs repositories may have time deviations in their recorded commits. This
-is a test for one of such cases. These kind of repositories can happen if the
-system time of cvs clients is not fully synchronised.
+On Mon, Mar 2, 2009 at 12:08 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+>
+>> My use case is actually, more precisely:
+>>
+>> some/constant/stuff/$PROJ-$NUMBER/junk/my-proj
+>>
+>> Where $NUMBER is the version number, and $PROJ is usually, but not q=
+uite
+>> always "my-proj"; the exception being that it might be effectively a
+>> superproject. So I'd like to have:
+>>
+>> =C2=A0fetch =3D some/constant/stuff/my-proj-*/junk/my-proj:refs/remo=
+tes/origin/*
+>
+> ... and expect "some/constant/stuff/my-proj-2.5/junk/my-proj" to be m=
+apped
+> to "refs/remotes/origin/2.5"? =C2=A0I think it does not look too bad.
+>
+>> But I can live with remote branches like "my-proj-2.4" instead of "2=
+=2E4".
+>>
+>> I think it would make sense, and limit typo damage, to say that the =
+* can
+>> only expand to something with a '/' in it if the star has a slash or=
+ the
+>> end of the string on each side.
+>
+> I do not understand what you mean by "* can only expand to something =
+with
+> a '/' in it if ..." part. =C2=A0None of the examples in your message =
+have a
+> case where the asterisk matches across directory boundaries, and I th=
+ought
+> you would simply say "* does not match /" and be done with that.
+>
+> What scenario do you have in mind that wants to match a slash with an
+> asterisk?
 
-Consider the following sequence of events:
+I think he means the following are valid:
 
- * client A commits file a r1.1
- * client A commits file a r1.2, b r1.1
- * client B commits file b r1.2 using the same timestamp as a r1.1
+ - foo/bar/*/baz
+ - foo/bar/baz/*
 
-This can be resolved but due to cvsps grouping its patchsets solely based
-on the timestamp and never breaking these groups it outputs the wrong
-order which then leads to a broken import.
+But the following is not:
 
-I hit this bug when importing from a real repository which was originally
-converted from another rcs based scm. Other import tools can handle this
-correctly, e.g. parsecvs.
+ - foo/bar*/baz
 
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
----
- t/t9603-cvsimport-patchsets.sh     |   33 +++++++++++++++++++++++++++++
- t/t9603/cvsroot/CVSROOT/.gitignore |    2 +
- t/t9603/cvsroot/module/a,v         |   40 ++++++++++++++++++++++++++++++++++++
- t/t9603/cvsroot/module/b,v         |   40 ++++++++++++++++++++++++++++++++++++
- 4 files changed, 115 insertions(+), 0 deletions(-)
- create mode 100755 t/t9603-cvsimport-patchsets.sh
- create mode 100644 t/t9603/cvsroot/CVSROOT/.gitignore
- create mode 100644 t/t9603/cvsroot/module/a,v
- create mode 100644 t/t9603/cvsroot/module/b,v
+IOW, '*' can only appear as a non-terminating symbol if it is bounded
+by '/' on each side.
 
-diff --git a/t/t9603-cvsimport-patchsets.sh b/t/t9603-cvsimport-patchsets.sh
-new file mode 100755
-index 0000000..15a971f
---- /dev/null
-+++ b/t/t9603-cvsimport-patchsets.sh
-@@ -0,0 +1,33 @@
-+#!/bin/sh
-+
-+# Structure of the test cvs repository
-+#
-+# Message   File:Content         Commit Time
-+# Rev 1     a: 1.1               2009-02-21 19:11:43 +0100
-+# Rev 2     a: 1.2    b: 1.1     2009-02-21 19:11:14 +0100
-+# Rev 3               b: 1.2     2009-02-21 19:11:43 +0100
-+#
-+# As you can see the commit of Rev 3 has the same time as
-+# Rev 1 this leads to a broken import because of a cvsps
-+# bug.
-+
-+test_description='git cvsimport testing for correct patchset estimation'
-+. ./lib-cvs.sh
-+
-+CVSROOT="$TEST_DIRECTORY"/t9603/cvsroot
-+export CVSROOT
-+
-+test_expect_failure 'import with criss cross times on revisions' '
-+
-+    git cvsimport -p"-x" -C module-git module &&
-+    cd module-git &&
-+        git log --pretty=format:%s > ../actual &&
-+        echo "" >> ../actual &&
-+    cd .. &&
-+    echo "Rev 3
-+Rev 2
-+Rev 1" > expect &&
-+    test_cmp actual expect
-+'
-+
-+test_done
-diff --git a/t/t9603/cvsroot/CVSROOT/.gitignore b/t/t9603/cvsroot/CVSROOT/.gitignore
-new file mode 100644
-index 0000000..3bb9b34
---- /dev/null
-+++ b/t/t9603/cvsroot/CVSROOT/.gitignore
-@@ -0,0 +1,2 @@
-+history
-+val-tags
-diff --git a/t/t9603/cvsroot/module/a,v b/t/t9603/cvsroot/module/a,v
-new file mode 100644
-index 0000000..e86adfc
---- /dev/null
-+++ b/t/t9603/cvsroot/module/a,v
-@@ -0,0 +1,40 @@
-+head	1.2;
-+access;
-+symbols;
-+locks; strict;
-+comment	@# @;
-+
-+
-+1.2
-+date	2009.02.21.18.11.14;	author tester;	state Exp;
-+branches;
-+next	1.1;
-+
-+1.1
-+date	2009.02.21.18.11.43;	author tester;	state Exp;
-+branches;
-+next	;
-+
-+
-+desc
-+@@
-+
-+
-+1.2
-+log
-+@Rev 2
-+@
-+text
-+@1.2
-+@
-+
-+
-+1.1
-+log
-+@Rev 1
-+@
-+text
-+@d1 1
-+a1 1
-+1.1
-+@
-diff --git a/t/t9603/cvsroot/module/b,v b/t/t9603/cvsroot/module/b,v
-new file mode 100644
-index 0000000..ab3089f
---- /dev/null
-+++ b/t/t9603/cvsroot/module/b,v
-@@ -0,0 +1,40 @@
-+head	1.2;
-+access;
-+symbols;
-+locks; strict;
-+comment	@# @;
-+
-+
-+1.2
-+date	2009.02.21.18.11.43;	author tester;	state Exp;
-+branches;
-+next	1.1;
-+
-+1.1
-+date	2009.02.21.18.11.14;	author tester;	state Exp;
-+branches;
-+next	;
-+
-+
-+desc
-+@@
-+
-+
-+1.2
-+log
-+@Rev 3
-+@
-+text
-+@1.2
-+@
-+
-+
-+1.1
-+log
-+@Rev 2
-+@
-+text
-+@d1 1
-+a1 1
-+1.1
-+@
--- 
-1.6.1.2.390.gba743
+j.
