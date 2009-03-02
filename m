@@ -1,93 +1,86 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC] Refspec patterns with * in the middle
-Date: Mon, 2 Mar 2009 13:25:16 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0903021323180.19665@iabervon.org>
-References: <alpine.LNX.1.00.0903011820590.19665@iabervon.org>  <7viqmrn98i.fsf@gitster.siamese.dyndns.org> <76718490903021001h16009570p7ac8c66a8e8e1f90@mail.gmail.com>
+From: Alexander Gavrilov <angavrilov@gmail.com>
+Subject: Re: VSS to git
+Date: Mon, 2 Mar 2009 21:55:31 +0300
+Organization: HOME
+Message-ID: <200903022155.31771.angavrilov@gmail.com>
+References: <b0a3bf780903020915g60d97b76pfdbbd60017625f0a@mail.gmail.com> <e2b179460903020951h7f1538daya4d3cdb96fc7c65d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-1870365447-1236018316=:19665"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 02 19:27:08 2009
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Chris Velevitch <chris.velevitch@gmail.com>, git@vger.kernel.org
+To: Mike Ralphson <mike.ralphson@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 02 19:54:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeCqq-0001fl-KL
-	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 19:26:53 +0100
+	id 1LeDI0-00040l-JH
+	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 19:54:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752479AbZCBSZW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Mar 2009 13:25:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751960AbZCBSZU
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 13:25:20 -0500
-Received: from iabervon.org ([66.92.72.58]:48224 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751445AbZCBSZS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2009 13:25:18 -0500
-Received: (qmail 10443 invoked by uid 1000); 2 Mar 2009 18:25:16 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 2 Mar 2009 18:25:16 -0000
-In-Reply-To: <76718490903021001h16009570p7ac8c66a8e8e1f90@mail.gmail.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752681AbZCBSx2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2009 13:53:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752578AbZCBSx2
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 13:53:28 -0500
+Received: from ey-out-2122.google.com ([74.125.78.26]:18736 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752417AbZCBSx1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Mar 2009 13:53:27 -0500
+Received: by ey-out-2122.google.com with SMTP id 25so533248eya.37
+        for <git@vger.kernel.org>; Mon, 02 Mar 2009 10:53:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:organization:to:subject
+         :date:user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=p9HwDNSP1Q9BfsQnKXx0XHv7e5xX61LfmUCGUJkN3ts=;
+        b=somKWv5kG4lAMHihICgHwkHQdWsyy5ushcX2J0EuBuUQqo363GHZpG48j9pgrHHyzt
+         TJZE1g5iliebtNFT7lQrzRFmrEthTmfg6a2/NFUVyva7n/8DMY1KsXtaSsrJscS9yNZH
+         3+qoXQe7SWvR+JBVCDM6koMQYTfxfgWq6oAMc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:organization:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=EiMvSBQ59yIFJ23gkSuzwf1u8VQ4kvQtIFzYaKSQl+yzX8GVIBZzNvCbiJ0s0CI7CJ
+         GMEvnZRDj6UaFWiSBmg5y4dmaY4AnjlDuO2GBcsosb01cFa3ZuRbyOvRTKTL5RxuLpa0
+         9/BIEa4DituP0Hdeq+SytwaAbqz4hIeU8cy1Y=
+Received: by 10.210.112.1 with SMTP id k1mr3457546ebc.47.1236020004619;
+        Mon, 02 Mar 2009 10:53:24 -0800 (PST)
+Received: from keydesk.localnet ([92.255.85.78])
+        by mx.google.com with ESMTPS id 7sm221018eyb.38.2009.03.02.10.53.18
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 02 Mar 2009 10:53:19 -0800 (PST)
+User-Agent: KMail/1.11.0 (Linux/2.6.27.12-170.2.5.fc10.i686; KDE/4.2.0; i686; ; )
+In-Reply-To: <e2b179460903020951h7f1538daya4d3cdb96fc7c65d@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111958>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---1547844168-1870365447-1236018316=:19665
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-
-On Mon, 2 Mar 2009, Jay Soffian wrote:
-
-> On Mon, Mar 2, 2009 at 12:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> > Daniel Barkalow <barkalow@iabervon.org> writes:
-> >
-> >> My use case is actually, more precisely:
-> >>
-> >> some/constant/stuff/$PROJ-$NUMBER/junk/my-proj
-> >>
-> >> Where $NUMBER is the version number, and $PROJ is usually, but not quite
-> >> always "my-proj"; the exception being that it might be effectively a
-> >> superproject. So I'd like to have:
-> >>
-> >>  fetch = some/constant/stuff/my-proj-*/junk/my-proj:refs/remotes/origin/*
-> >
-> > ... and expect "some/constant/stuff/my-proj-2.5/junk/my-proj" to be mapped
-> > to "refs/remotes/origin/2.5"?  I think it does not look too bad.
-> >
-> >> But I can live with remote branches like "my-proj-2.4" instead of "2.4".
-> >>
-> >> I think it would make sense, and limit typo damage, to say that the * can
-> >> only expand to something with a '/' in it if the star has a slash or the
-> >> end of the string on each side.
-> >
-> > I do not understand what you mean by "* can only expand to something with
-> > a '/' in it if ..." part.  None of the examples in your message have a
-> > case where the asterisk matches across directory boundaries, and I thought
-> > you would simply say "* does not match /" and be done with that.
-> >
-> > What scenario do you have in mind that wants to match a slash with an
-> > asterisk?
+On Monday 02 March 2009 20:51:12 Mike Ralphson wrote:
+> 2009/3/2 Chris Velevitch <chris.velevitch@gmail.com>:
+> > I can't seem to find any utilities to convert a vss repository to git.
+> > In the absence of such a tool, what is the best approach to converting
+> > an vss repository to git?
 > 
-> I think he means the following are valid:
-> 
->  - foo/bar/*/baz
->  - foo/bar/baz/*
-> 
-> But the following is not:
-> 
->  - foo/bar*/baz
-> 
-> IOW, '*' can only appear as a non-terminating symbol if it is bounded
-> by '/' on each side.
+> You might be able to two-stage through vss2svn[1], and from there to git.
+> Or take the guts of vss2* [2] and rewrite the backend to create git
+> fast-import format?
 
-You have my criterion right, but I want that to be valid, but only match 
-things like "foo/bar-something/baz", not "foo/bar-a/b/baz".
+Last year I experimented with conversion using vss2svn plus a heavily
+patched version of git-svnimport, and it worked quite well. The largest
+problem is that VSS cannot record directory copies, so the resulting
+SVN repository does not have them either. This makes conversion tools
+unable to detect any branching, so I had to implement support for
+completely arbitrary mapping specs.
 
-	-Daniel
-*This .sig left intentionally blank*
---1547844168-1870365447-1236018316=:19665--
+I also made an incremental synchronization script for simple actions
+(requires logging to be enabled in VSS).
+
+Alexander
+
+P.S: I made some fixes to vss2svn too, they are in a separate branch:
+  http://www.pumacode.org/projects/vss2svn/browser/branches/Alexander
