@@ -1,115 +1,68 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: [RFC PATCH] Windows: Assume all file names to be UTF-8 encoded.
-Date: Mon, 02 Mar 2009 21:41:57 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.0903022135360.20047@perkele.intern.softwolves.pp.se>
-References: <alpine.DEB.2.00.0903020941120.17877@perkele.intern.softwolves.pp.se>
- <a2633edd0903020512u5682e9am203f0faccd0acf6a@mail.gmail.com>
- <alpine.DEB.2.00.0903021452010.17877@perkele.intern.softwolves.pp.se>
- <200903021530.01165.trast@student.ethz.ch>
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: remote branches, and branch names in general
+Date: Mon, 2 Mar 2009 15:46:39 -0500
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E709F07398@EXCHANGE.trad.tradestation.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=iso-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Mar 02 21:44:11 2009
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 02 21:48:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeEzd-0003DA-AL
-	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 21:44:05 +0100
+	id 1LeF3f-0004kw-PQ
+	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 21:48:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752198AbZCBUmg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Mar 2009 15:42:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751915AbZCBUmg
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 15:42:36 -0500
-Received: from smtp.getmail.no ([84.208.20.33]:57150 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751474AbZCBUmf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2009 15:42:35 -0500
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0KFW00A1BC6WYX00@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 02 Mar 2009 21:42:32 +0100 (CET)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0KFW00L7MC5X0160@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 02 Mar 2009 21:41:57 +0100 (CET)
-Received: from perkele ([84.215.142.63]) by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0KFW0064NC5XPF70@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Mon, 02 Mar 2009 21:41:57 +0100 (CET)
-Received: by perkele (Postfix, from userid 501)	id 7C66B2FC03; Mon,
- 02 Mar 2009 21:41:57 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
- with ESMTP id 788EB2FC02; Mon, 02 Mar 2009 21:41:57 +0100 (CET)
-In-reply-to: <200903021530.01165.trast@student.ethz.ch>
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+	id S1752181AbZCBUqs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2009 15:46:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751618AbZCBUqr
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 15:46:47 -0500
+Received: from mail2.tradestation.com ([63.99.207.80]:33327 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751387AbZCBUqq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Mar 2009 15:46:46 -0500
+X-ASG-Debug-ID: 1236026803-29b000ca0000-QuoKaX
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
+Received: from mail5.tradestation.com (localhost [127.0.0.1])
+	by mail2.tradestation.com (Spam Firewall) with ESMTP id 945771DA2F8
+	for <git@vger.kernel.org>; Mon,  2 Mar 2009 15:46:43 -0500 (EST)
+Received: from mail5.tradestation.com ([192.168.51.76]) by mail2.tradestation.com with ESMTP id vrfygA7Fwso7NO4A for <git@vger.kernel.org>; Mon, 02 Mar 2009 15:46:43 -0500 (EST)
+X-ASG-Whitelist: Client
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 2 Mar 2009 15:46:42 -0500
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+x-cr-hashedpuzzle: 9jQ= AfL0 ByQD B3rl B6e8 CVnX DVId EEZ9 EoGU FFQz FRhd FbUL HGme Huu6 IUKF JII7;1;ZwBpAHQAQAB2AGcAZQByAC4AawBlAHIAbgBlAGwALgBvAHIAZwA=;Sosha1_v1;7;{64DCFC14-8FAE-4EEE-9C49-A8FC98DB394E};agBkAGwAdQBnAG8AcwB6AEAAdAByAGEAZABlAHMAdABhAHQAaQBvAG4ALgBjAG8AbQA=;Mon, 02 Mar 2009 20:46:39 GMT;cgBlAG0AbwB0AGUAIABiAHIAYQBuAGMAaABlAHMALAAgAGEAbgBkACAAYgByAGEAbgBjAGgAIABuAGEAbQBlAHMAIABpAG4AIABnAGUAbgBlAHIAYQBsAA==
+Content-class: urn:content-classes:message
+X-ASG-Orig-Subj: remote branches, and branch names in general
+x-cr-puzzleid: {64DCFC14-8FAE-4EEE-9C49-A8FC98DB394E}
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: remote branches, and branch names in general
+Thread-Index: Acmbd/xqs4+R1bMMQCalXkts/1063A==
+X-OriginalArrivalTime: 02 Mar 2009 20:46:42.0919 (UTC) FILETIME=[FE73DF70:01C99B77]
+X-Barracuda-Connect: UNKNOWN[192.168.51.76]
+X-Barracuda-Start-Time: 1236026803
+X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111963>
 
-Thomas Rast:
+I see the remote branches with names of the form remotes/pub/name where
+pub is the nickname of the place I pull from.  To specify such branches,
+must I always spell it out with the leading "remotes/", or can that be
+shorted or implied somehow?  
 
-> Have you thought about all the consequences this would have for the *=
-nix=20
-> people here? [*]
+Meanwhile, I see that branch names can be hierarchical, as I found out
+when I accidently created a branch called "pub/xxx".  So I'm wondering
+about the usefulness of using that for organizing topic branches based
+on assigned tasks organization and the person owning that branch.
 
-Yeah. It will fix problems trying to check out a Git repository created=
- by=20
-me in a iso8859-1 locale on a machine using a utf-8 locale, where both =
-ends=20
-would like to have a file named "=DC".
+--John
 
-Or, hopefully, a careful adoption of this on Windows won't affect Unixe=
-s and=20
-other systems with pre-Unicode APIs at all, since the Windows code woul=
-d be=20
-in the "compat" directory.
 
-> you're still in a world of hurt when trying to check out such paths u=
-nder=20
-> a locale (or whatever setting might control this new encoding logic) =
-that=20
-> does not support the whole range of UTF-8.
-
-Yeah. That would be a case similar to the casing problem on Windows.
-
-> With backwards compatibility it's even worse as you're suddenly impos=
-ing=20
-> extra restrictions on what a valid filename in the repository must lo=
-ok=20
-> like.
-
-Indeed. It is unfortunate that this wasn't properly specified to start =
-with.=20
-It's mostly a minor issue since *most* people will not use non-ASCII fi=
-le=20
-names. At least for most of the kind of projects that Git have attracte=
-d so=20
-far, so the problem is not that big. The problem is if Git is to attrac=
-t=20
-"the masses". Especially on Windows, where file names using non-ASCII a=
-re=20
-common, this needs to be addressed eventually.
-
-> [*] I'm _extremely_ tempted to write "people using non-broken OSes", =
-but=20
-> let's pretend to be neutral for a second.
-
-In most cases, I would most definitely agree with you on calling it tha=
-t,=20
-but when it comes to Unicode support, Windows is one of the least broke=
-n=20
-OSes (with Symbian being my favourite).
-
---=20
-\\// Peter - http://www.softwolves.pp.se/
+TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
+  If you received this in error, please contact the sender and delete the material from any computer.
