@@ -1,77 +1,90 @@
-From: Daniel Stenberg <daniel@haxx.se>
-Subject: Re: http: a non-curl_multi interface?
-Date: Mon, 2 Mar 2009 14:26:47 +0100 (CET)
-Message-ID: <alpine.DEB.1.10.0903021412120.15587@yvahk2.pbagnpgbe.fr>
-References: <be6fef0d0903020514h28995ec2v2acd9f65131c1515@mail.gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [RFC PATCH] Windows: Assume all file names to be UTF-8 encoded.
+Date: Mon, 02 Mar 2009 14:57:52 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.0903021452010.17877@perkele.intern.softwolves.pp.se>
+References: <alpine.DEB.2.00.0903020941120.17877@perkele.intern.softwolves.pp.se>
+ <49ABB529.1080500@viscovery.net>
+ <alpine.DEB.2.00.0903021137110.17877@perkele.intern.softwolves.pp.se>
+ <alpine.DEB.1.00.0903021153520.10279@pacific.mpi-cbg.de>
+ <alpine.DEB.2.00.0903021256200.17877@perkele.intern.softwolves.pp.se>
+ <a2633edd0903020512u5682e9am203f0faccd0acf6a@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 02 14:31:31 2009
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 02 15:00:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Le8Ew-0006de-5R
-	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 14:31:26 +0100
+	id 1Le8gW-0007ie-09
+	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 14:59:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751534AbZCBN35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Mar 2009 08:29:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751524AbZCBN35
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 08:29:57 -0500
-Received: from kluster1.contactor.se ([91.191.140.11]:35966 "EHLO
-	kluster1.contactor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751513AbZCBN35 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2009 08:29:57 -0500
-Received: from linux2.contactor.se (linux2.contactor.se [91.191.140.14])
-	by kluster1.contactor.se (8.13.8/8.13.8/Debian-3) with ESMTP id n22DTmN0011971;
-	Mon, 2 Mar 2009 14:29:48 +0100
-X-X-Sender: dast@linux2.contactor.se
-In-Reply-To: <be6fef0d0903020514h28995ec2v2acd9f65131c1515@mail.gmail.com>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
-X-fromdanielhimself: yes
+	id S1751675AbZCBN6A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2009 08:58:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751637AbZCBN57
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 08:57:59 -0500
+Received: from smtp.getmail.no ([84.208.20.33]:58171 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751606AbZCBN56 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Mar 2009 08:57:58 -0500
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0KFV00I6VTGKVX00@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 02 Mar 2009 14:57:56 +0100 (CET)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0KFV00MEVTGHID10@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 02 Mar 2009 14:57:53 +0100 (CET)
+Received: from perkele ([84.215.142.63]) by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0KFV00FUHTGH6990@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Mon, 02 Mar 2009 14:57:53 +0100 (CET)
+Received: by perkele (Postfix, from userid 501)	id 03B4B2FC03; Mon,
+ 02 Mar 2009 14:57:52 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
+ with ESMTP id F3A032FC02	for <git@vger.kernel.org>; Mon,
+ 02 Mar 2009 14:57:52 +0100 (CET)
+In-reply-to: <a2633edd0903020512u5682e9am203f0faccd0acf6a@mail.gmail.com>
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111940>
 
-On Mon, 2 Mar 2009, Tay Ray Chuan wrote:
+Hi!
 
-I'm replying on this topic as a libcurl guy, I don't know much of git 
-internals.
+> Makes sense too. I think the whole API would have to be changed to use 
+> TCHAR*.
 
-> Do you guys think this would bring any benefits, apart from requiring
-> the user to use a curl library with the multi interface?
+I'd rather just say wchar_t explicitely. I'm not particularly fond of macros 
+that change under your feet just because you fail to define a symbol 
+somewhere...
 
-You mean NOT requiring then I guess.
+> Then you need to do the right conversion at the right places, this will be 
+> quite tricky, painful work, but there is probably no way around that.
 
-What I don't quite grasp (and I must admit I have not followed the critique on 
-this matter) is why using the multi interface of libcurl is a problem to 
-anyone as all libcurl versions in modern times features it. And if you have a 
-libcurl with it working badly, you have a too old libcurl anyway and should 
-rather upgrade...
+In the other project I worked on we ended up wrapping all file-related calls 
+in our own porting interface, and then let each platform we compiled for 
+implement their own methods for handling Unicode paths. For Windows it's 
+trivial since all APIs are Unicode. For Unix-like OSes it's tricky as you 
+have to take the locale settings into account, but fortunately the world is 
+slowly moving towards UTF-8 locales, which eases the pain a bit.
 
-> Based on what I read in the docs, this would mean less open/closed 
-> connections,
+> Note that not only conversions will be needed but you'll also need to 
+> adjust all routines handling filenames to use the proper Unicode version. 
+> (strchr -> _tstrchr, open -> _topen, strcpy -> _tstrcpy, strlen -> 
+> _tcslen, ...).
 
-I don't see how that is true. In fact, properly used I would claim that an 
-application using the multi interface would in general use less connections 
-and do more connection re-use than otherwise. But of course it depends on a 
-lot of factors.
-
-Again, this requires a reasonably recent libcurl (since 7.16.0 - october 2006 
-- libcurl keeps the "connection cache" in the multi handle instead of in each 
-individual easy handle.)
-
-> minimized credential prompting (if authentication is required), more 
-> backward compatibility, but it would also mean a possible performance 
-> degradation in git, since all http requests are sequential.
-
-I figure you can test that fairly easy now when you have a patch pending for 
-this change and the existing code base is using the multi interface 
-approach...
+Not necessarily. If the code can be set up to use UTF-8 char* internally, 
+not everything needs to be rewritten (I've done that too, only took a 
+couple of years to move the codebase over to all-Unicode).
 
 -- 
-
-  / daniel.haxx.se
+\\// Peter - http://www.softwolves.pp.se/
