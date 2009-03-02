@@ -1,101 +1,57 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [RFC PATCH] Windows: Assume all file names to be UTF-8 encoded.
-Date: Mon, 2 Mar 2009 15:29:54 +0100
-Message-ID: <200903021530.01165.trast@student.ethz.ch>
-References: <alpine.DEB.2.00.0903020941120.17877@perkele.intern.softwolves.pp.se> <a2633edd0903020512u5682e9am203f0faccd0acf6a@mail.gmail.com> <alpine.DEB.2.00.0903021452010.17877@perkele.intern.softwolves.pp.se>
+From: Grzegorz Kossakowski <grek@tuffmail.com>
+Subject: Re: Bug in Git-Gui - Creates corrupt patch
+Date: Mon, 02 Mar 2009 15:34:20 +0100
+Message-ID: <49ABEE6C.3000500@tuffmail.com>
+References: <20090225090322.301cdb77@family.dyweni.com> <49A567C9.5050203@viscovery.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart123605264.gWjxFB3UOH";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Mon Mar 02 15:32:04 2009
+Cc: 4jxDQ6FQee2H@dyweni.com, spearce@spearce.org, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Mar 02 15:36:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Le9BT-0001eg-GZ
-	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 15:31:56 +0100
+	id 1Le9FZ-0003H2-RK
+	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 15:36:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751791AbZCBOa1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Mar 2009 09:30:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751767AbZCBOa0
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 09:30:26 -0500
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:48168 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751572AbZCBOa0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2009 09:30:26 -0500
-Received: from xfe1.d.ethz.ch ([82.130.124.41]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 2 Mar 2009 15:30:23 +0100
-Received: from thomas.localnet ([129.132.153.233]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 2 Mar 2009 15:30:23 +0100
-User-Agent: KMail/1.11.0 (Linux/2.6.27.19-3.2-default; KDE/4.2.0; x86_64; ; )
-In-Reply-To: <alpine.DEB.2.00.0903021452010.17877@perkele.intern.softwolves.pp.se>
-X-OriginalArrivalTime: 02 Mar 2009 14:30:23.0418 (UTC) FILETIME=[6C0571A0:01C99B43]
+	id S1754711AbZCBOeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2009 09:34:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754809AbZCBOeV
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 09:34:21 -0500
+Received: from mxout-08.mxes.net ([216.86.168.183]:2516 "EHLO
+	mxout-08.mxes.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754308AbZCBOeU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Mar 2009 09:34:20 -0500
+Received: from [192.168.0.125] (unknown [82.210.157.165])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp.mxes.net (Postfix) with ESMTPSA id 92245D051E;
+	Mon,  2 Mar 2009 09:34:16 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.19 (X11/20081227)
+In-Reply-To: <49A567C9.5050203@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111942>
 
---nextPart123605264.gWjxFB3UOH
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Johannes Sixt pisze:
+> 4jxDQ6FQee2H@dyweni.com schrieb:
+>> 3. Using git-gui, try to stage *only* the last line marked for removal
+>> (should be '-	}').
+>>
+>> I get 'fatal: corrupt patch at line 22'.
+> 
+> "Stage/Unstage line" does not work for files that have
+> 
+> \ No newline at end of file
 
-Peter Krefting wrote:
-> In the other project I worked on we ended up wrapping all file-related ca=
-lls=20
-> in our own porting interface, and then let each platform we compiled for=
-=20
-> implement their own methods for handling Unicode paths. For Windows it's=
-=20
-> trivial since all APIs are Unicode. For Unix-like OSes it's tricky as you=
-=20
-> have to take the locale settings into account, but fortunately the world =
-is=20
-> slowly moving towards UTF-8 locales, which eases the pain a bit.
+I've just stumpled across this problem. Does above imply that reported problem is not considered as a bug?
 
-Have you thought about all the consequences this would have for the
-*nix people here? [*]
+If so I believe that git gui should enforce new lines at the end of a file or at least provide more meaningful error msg.
 
-Even if you pretend that Git did always enforce UTF-8 paths in its
-trees, so that there's no backward compatibility to be cared for,
-you're still in a world of hurt when trying to check out such paths
-under a locale (or whatever setting might control this new encoding
-logic) that does not support the whole range of UTF-8.
-
-Like, say, the C locale.
-
-Next you get to see to it that the users can spell all filenames even
-if their locale doesn't let them, since they'll want to do things like
-'git show $rev:$file' with them.
-
-With backwards compatibility it's even worse as you're suddenly
-imposing extra restrictions on what a valid filename in the repository
-must look like.
-
-
-[*] I'm _extremely_ tempted to write "people using non-broken OSes",
-but let's pretend to be neutral for a second.
-
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
-
---nextPart123605264.gWjxFB3UOH
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkmr7WkACgkQqUud07tmzP3sGQCcCje0MX9AGhKyvZVYPTCT2hqU
-h5gAoI57lrJxNmNw/p4zX5yvrnAhjick
-=9wfi
------END PGP SIGNATURE-----
-
---nextPart123605264.gWjxFB3UOH--
+-- 
+Best regards,
+Grzegorz Kossakowski
