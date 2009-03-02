@@ -1,86 +1,125 @@
-From: Alexander Gavrilov <angavrilov@gmail.com>
-Subject: Re: VSS to git
-Date: Mon, 2 Mar 2009 21:55:31 +0300
-Organization: HOME
-Message-ID: <200903022155.31771.angavrilov@gmail.com>
-References: <b0a3bf780903020915g60d97b76pfdbbd60017625f0a@mail.gmail.com> <e2b179460903020951h7f1538daya4d3cdb96fc7c65d@mail.gmail.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [RFC PATCH] Windows: Assume all file names to be UTF-8 encoded.
+Date: Mon, 2 Mar 2009 20:58:33 +0100
+Message-ID: <200903022058.33392.robin.rosenberg.lists@dewire.com>
+References: <alpine.DEB.2.00.0903020941120.17877@perkele.intern.softwolves.pp.se> <49ABD24B.5060005@viscovery.net> <alpine.DEB.2.00.0903021404000.17877@perkele.intern.softwolves.pp.se>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="us-ascii"
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Chris Velevitch <chris.velevitch@gmail.com>, git@vger.kernel.org
-To: Mike Ralphson <mike.ralphson@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 02 19:54:58 2009
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Mon Mar 02 21:01:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeDI0-00040l-JH
-	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 19:54:57 +0100
+	id 1LeEJH-0003UQ-RS
+	for gcvg-git-2@gmane.org; Mon, 02 Mar 2009 21:00:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752681AbZCBSx2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Mar 2009 13:53:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752578AbZCBSx2
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 13:53:28 -0500
-Received: from ey-out-2122.google.com ([74.125.78.26]:18736 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752417AbZCBSx1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2009 13:53:27 -0500
-Received: by ey-out-2122.google.com with SMTP id 25so533248eya.37
-        for <git@vger.kernel.org>; Mon, 02 Mar 2009 10:53:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:organization:to:subject
-         :date:user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=p9HwDNSP1Q9BfsQnKXx0XHv7e5xX61LfmUCGUJkN3ts=;
-        b=somKWv5kG4lAMHihICgHwkHQdWsyy5ushcX2J0EuBuUQqo363GHZpG48j9pgrHHyzt
-         TJZE1g5iliebtNFT7lQrzRFmrEthTmfg6a2/NFUVyva7n/8DMY1KsXtaSsrJscS9yNZH
-         3+qoXQe7SWvR+JBVCDM6koMQYTfxfgWq6oAMc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:organization:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=EiMvSBQ59yIFJ23gkSuzwf1u8VQ4kvQtIFzYaKSQl+yzX8GVIBZzNvCbiJ0s0CI7CJ
-         GMEvnZRDj6UaFWiSBmg5y4dmaY4AnjlDuO2GBcsosb01cFa3ZuRbyOvRTKTL5RxuLpa0
-         9/BIEa4DituP0Hdeq+SytwaAbqz4hIeU8cy1Y=
-Received: by 10.210.112.1 with SMTP id k1mr3457546ebc.47.1236020004619;
-        Mon, 02 Mar 2009 10:53:24 -0800 (PST)
-Received: from keydesk.localnet ([92.255.85.78])
-        by mx.google.com with ESMTPS id 7sm221018eyb.38.2009.03.02.10.53.18
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 02 Mar 2009 10:53:19 -0800 (PST)
-User-Agent: KMail/1.11.0 (Linux/2.6.27.12-170.2.5.fc10.i686; KDE/4.2.0; i686; ; )
-In-Reply-To: <e2b179460903020951h7f1538daya4d3cdb96fc7c65d@mail.gmail.com>
+	id S1755239AbZCBT6t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2009 14:58:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755280AbZCBT6s
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 14:58:48 -0500
+Received: from mail.dewire.com ([83.140.172.130]:4468 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753904AbZCBT6s (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Mar 2009 14:58:48 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 3AD001484140;
+	Mon,  2 Mar 2009 20:58:40 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id bUgMgLsNtnuW; Mon,  2 Mar 2009 20:58:35 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id CFDD0147EA9F;
+	Mon,  2 Mar 2009 20:58:35 +0100 (CET)
+User-Agent: KMail/1.11.0 (Linux/2.6.27-12-generic; KDE/4.2.0; i686; ; )
+In-Reply-To: <alpine.DEB.2.00.0903021404000.17877@perkele.intern.softwolves.pp.se>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111959>
 
-On Monday 02 March 2009 20:51:12 Mike Ralphson wrote:
-> 2009/3/2 Chris Velevitch <chris.velevitch@gmail.com>:
-> > I can't seem to find any utilities to convert a vss repository to git.
-> > In the absence of such a tool, what is the best approach to converting
-> > an vss repository to git?
+> Johannes Sixt:
 > 
-> You might be able to two-stage through vss2svn[1], and from there to git.
-> Or take the guts of vss2* [2] and rewrite the backend to create git
-> fast-import format?
+> > Can you set the local codepage per program? (I don't know.)
+> 
+> The locale is set per thread, and gets reset when the program exits. So 
+> setting the codepage to UTF-8 before outputting should work. That should 
+> also work for displaying the log to the terminal if you have UTF-8 log 
+> messages.
 
-Last year I experimented with conversion using vss2svn plus a heavily
-patched version of git-svnimport, and it worked quite well. The largest
-problem is that VSS cannot record directory copies, so the resulting
-SVN repository does not have them either. This makes conversion tools
-unable to detect any branching, so I had to implement support for
-completely arbitrary mapping specs.
+Messing with locale is probably going to break subtly. An explicit approach
+is better, respecting the user's locale when necessary.
 
-I also made an incremental synchronization script for simple actions
-(requires logging to be enabled in VSS).
+> Converting it to wchar_t and using wprintf and similar should be safer, 
+> though (and I have no idea what happens if you try to pipe the output to 
+> something else).
+> 
+> > - What encoding should 'ls-files' use for its output? Certainly not always 
+> > UTF-8: stdout should use the local code page so that the file names are 
+> > interpreted correctly by the terminal window (it expects the local code 
+> > page).
+> 
+> That is exactly why trying to mix "protocol" data ("plumbing" in Git's case) 
+> and user output will always come back and bite you, one way or another. I 
+> haven't really the faintest how pipes work with Unicode on Windows. 
+> Somewhere along the line there will probably be some conversions, which 
+> would cause interesting issues.
 
-Alexander
+Pipes are just bytes so you have to know what you're piping by convention
+or protocol. You can ask for the console output page, which may be set to
+a multibyte locale or unicode and maybe trust that.... (just guessing, really).
 
-P.S: I made some fixes to vss2svn too, they are in a separate branch:
-  http://www.pumacode.org/projects/vss2svn/browser/branches/Alexander
+> Better not use pipes, then. Heh. I sense that there is a slight problem with 
+> the architecture of Git and trying to get it to behave on Windows... :-)
+
+architecture? Like the "architecture" of species? No, it's evolution.
+If that applies to the linux kernel, it's not so strange it applies to git too.
+
+> > - What encoding should 'update-index' expect from its input? Can you be 
+> > sure that other programs generate UTF-8 output?
+> 
+> Theoretically, if all the internal stuff is hacked around to output Unicode, 
+> and the thread codepage is set up to use UTF-8, it should "just work". And 
+
+msys doesn't seem to understand UTF-8 at all, so depending on that to work
+seems futile. Simply bypassing the locale for any internal work is probably the 
+most sane thing. That also won't depend of the quality of the locale support in 
+the runtime. Start by making the git commands working without msys bash,
+and figure a way to fix msys later, unless someone has a very good idea on
+how to fix msys.
+
+> if run directly from the shell, it should still be converted to whatever the 
+> system is set up to emit. That would mean, however, that a Git program that 
+> internally runs
+> 
+>    git-foo | git-bar | git-gazonk
+> 
+> might behave differently compared to if a user would enter it on the 
+> command-line.
+> 
+
+You might also want to check out my work in the area. See 
+
+http://www.jgit.org/cgi-bin/gitweb/gitweb.cgi?p=GIT.git;a=shortlog;h=i18n
+
+The goal is locale neutrality yielding the "expected", in the users eyes, result regardless
+of locale as much as possible. Junio didn't want to have it for five years, so I
+guess there's still three and half to go. Hopefully he can change his mind. That branch
+is heavily outdated by now, as some of functionality have been introduced by other
+means like logoutputencoding and other parts of git have been rewritten.
+
+Related to this, JGit assumes UTF-8 on reading. If it's not valid UTF-8 we try the user's 
+locale (rougly) and on writing object meta data, including any sort of identifier, 
+we always write UTF-8 when have to be explicit. We let the runtime decide on how
+to encode file names in the file system using the user's locale.
+
+I'd be almost happy with a solution that works when people are interacting using
+the subset that is convertible between the character sets in use.
+
+-- robin
