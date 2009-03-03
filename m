@@ -1,117 +1,64 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: [RFC PATCH] Windows: Assume all file names to be UTF-8 encoded.
-Date: Tue, 03 Mar 2009 12:54:31 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.0903031248040.3702@perkele.intern.softwolves.pp.se>
-References: <alpine.DEB.2.00.0903020941120.17877@perkele.intern.softwolves.pp.se>
- <a2633edd0903020512u5682e9am203f0faccd0acf6a@mail.gmail.com>
- <alpine.DEB.2.00.0903021452010.17877@perkele.intern.softwolves.pp.se>
- <200903021530.01165.trast@student.ethz.ch>
- <alpine.DEB.2.00.0903022135360.20047@perkele.intern.softwolves.pp.se>
- <20090303075655.GB9875@lars.home.noschinski.de>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] git-clone.txt: document that pushing from a shallow clone
+ may work
+Date: Tue, 03 Mar 2009 12:57:22 +0100
+Message-ID: <49AD1B22.6050201@viscovery.net>
+References: <237967ef0902160200r2320687ai71e62047c3ead9ad@mail.gmail.com> <1236080017-13987-1-git-send-email-dato@net.com.org.es>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=iso-8859-1;
-	format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Lars Noschinski <lars-2008-2@usenet.noschinski.de>
-X-From: git-owner@vger.kernel.org Tue Mar 03 12:56:30 2009
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Mikael Magnusson <mikachu@gmail.com>,
+	Joey Hess <joey@kitenet.net>
+To: =?UTF-8?B?QWRlb2RhdG8gU2ltw7M=?= <dato@net.com.org.es>
+X-From: git-owner@vger.kernel.org Tue Mar 03 12:59:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeTEa-0001RM-CA
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 12:56:28 +0100
+	id 1LeTH6-0002Le-2p
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 12:59:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753736AbZCCLyu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2009 06:54:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753582AbZCCLyu
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 06:54:50 -0500
-Received: from smtp.getmail.no ([84.208.20.33]:58279 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751549AbZCCLyt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 06:54:49 -0500
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0KFX00B68IFBU000@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Tue, 03 Mar 2009 12:54:47 +0100 (CET)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0KFX001WRIEVRF30@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Tue, 03 Mar 2009 12:54:31 +0100 (CET)
-Received: from perkele ([84.215.142.63]) by no-osl-m323-srv-004-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0KFX00K2TIEVAIB0@no-osl-m323-srv-004-z1.isp.get.no> for
- git@vger.kernel.org; Tue, 03 Mar 2009 12:54:31 +0100 (CET)
-Received: by perkele (Postfix, from userid 501)	id 27FCE189B20; Tue,
- 03 Mar 2009 12:54:31 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
- with ESMTP id 2462A1A97FE; Tue, 03 Mar 2009 12:54:31 +0100 (CET)
-In-reply-to: <20090303075655.GB9875@lars.home.noschinski.de>
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+	id S1754100AbZCCL5g convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2009 06:57:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754133AbZCCL5f
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 06:57:35 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:8218 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754005AbZCCL5f convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2009 06:57:35 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LeTFY-0004UO-Do; Tue, 03 Mar 2009 12:57:28 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 11E1D6B7; Tue,  3 Mar 2009 12:57:23 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <1236080017-13987-1-git-send-email-dato@net.com.org.es>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112062>
 
-Lars Noschinski:
+Adeodato Sim=C3=B3 schrieb:
+> @@ -133,8 +133,10 @@ then the cloned repository will become corrupt.
+>  --depth <depth>::
+>  	Create a 'shallow' clone with a history truncated to the
+>  	specified number of revisions.  A shallow repository has a
+> -	number of limitations (you cannot clone or fetch from
+> -	it, nor push from nor into it), but is adequate if you
+> +	number of limitations: you cannot clone or fetch from it,
+> +	nor push into it; pushing from it into a regular repository
+> +	may work correctly in some cases, but it is not guaranteed to
+> +	always work.  However, a shallow repository is adequate if you
 
-> Using no encoding for filenames was the obvious (and I would argue)=20
-> correct choice. Unix filenames are specified to be a sequence of byte=
-s,=20
-> excluding '/' and '\0'.
+Consider a reader who wants to decide whether --depth should or can be
+used in a git clone invocation. Is the new wording helpful? If you don'=
+t
+describe those "some cases" in more detail, then we better keep the
+current wording.
 
-I know the Unix way of thinking lends itself to such a design. This is =
-one=20
-of the few cases where I personally think Unix has got it wrong, and Wi=
-ndows=20
-(NT) has got it right. But then again, Unix' design pre-dates the local=
-e=20
-issue by quite some time, so it is not difficult to see where it comes =
-from.
-
-> Changing the filename (on checkout), so that the user sees an =DC reg=
-ardless=20
-> of his or her locale (instead of an \0xDC, which only resolves to an =
-=DC on=20
-> latin-1) would be an absolutely broken concept here.
-
-Why would it? It is my view as a user on my files that define how file =
-names=20
-are looked upon. If I have three machines, one Linux box using a iso885=
-9-1=20
-locale, an OS X box (where, I would believe, file APIs use UTF-8, someo=
-ne=20
-please correct me if I'm wrong), and a Windows box (which uses UTF-16 o=
-n the=20
-file system layer, but does provide compatibility functions that use ch=
-ar=20
-pointers), and create a file on each of these called "=DC.txt" (which w=
-ould be=20
-the sequence "DC 2E 74 78 74" on the Linux box, "C3 9C 2E 74 78 74" (or=
-=20
-probably something else since I believe OS X decomposes the string) on =
-the=20
-OS X box and "00DC 002E 0074 0078 0074" on the Windows box, I see these=
-=20
-three file names as equal.
-
-If I would create a Git repo on each of the three machines and put the =
-file=20
-name in it, and then clone that on one of the other machines. *I* would=
-=20
-assume that the file names were converted to fit the host operating sys=
-tem.
-
-> IMHO having encoding specific open functions is begging for problems.
-
-Indeed. That's why I like Windows' wchar_t APIs, and dislike Unix' and=20
-Linux' char APIs that, in some ways, depend on the user locale.
-
---=20
-\\// Peter - http://www.softwolves.pp.se/
+-- Hannes
