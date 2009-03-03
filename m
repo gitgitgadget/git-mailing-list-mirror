@@ -1,73 +1,82 @@
-From: stoecher@gmx.at
-Subject: parallel dev. with email
-Date: Tue, 03 Mar 2009 16:31:41 +0100
-Message-ID: <20090303153141.246620@gmx.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] grep: add --blame so grep can show blame result at the 
+ same time
+Date: Tue, 03 Mar 2009 07:33:18 -0800
+Message-ID: <7v7i36ei4h.fsf@gitster.siamese.dyndns.org>
+References: <1b29507a0903030425j7723e7f4wb46f5adf5a3c7c91@mail.gmail.com>
+ <1b29507a0903030427y15ad89d7y9f55a945612f0e20@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 03 16:33:16 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: pi.songs@gmail.com
+X-From: git-owner@vger.kernel.org Tue Mar 03 16:34:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeWcM-0007mN-UM
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 16:33:15 +0100
+	id 1LeWe0-0008MZ-FD
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 16:34:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753609AbZCCPbq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2009 10:31:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753051AbZCCPbq
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 10:31:46 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50034 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752858AbZCCPbp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 10:31:45 -0500
-Received: (qmail 32436 invoked by uid 0); 3 Mar 2009 15:31:42 -0000
-Received: from 163.157.254.25 by www179.gmx.net with HTTP;
- Tue, 03 Mar 2009 16:31:41 +0100 (CET)
-X-Authenticated: #18025557
-X-Flags: 0001
-X-Mailer: WWW-Mail 6100 (Global Message Exchange)
-X-Priority: 3
-X-Provags-ID: V01U2FsdGVkX1/FUa10oCbFST98qa0vz5MYyAaTLdaUER39EmbUDU
- gyIz+xaOdZQghL/DQMwMn9/hZ8FeqzWVOmdg== 
-X-GMX-UID: b3SVfGoTbmwoeid+ezZLfhVPUzc4ctFP
-X-FuHaFi: 0.74
+	id S1753348AbZCCPd3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 10:33:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753051AbZCCPd2
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 10:33:28 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55371 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752988AbZCCPd2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 10:33:28 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 144512F7C;
+	Tue,  3 Mar 2009 10:33:24 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 72FF62F7B; Tue, 
+ 3 Mar 2009 10:33:20 -0500 (EST)
+In-Reply-To: <1b29507a0903030427y15ad89d7y9f55a945612f0e20@mail.gmail.com>
+ (pi song's message of "Tue, 3 Mar 2009 23:27:41 +1100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A22432A8-0808-11DE-A7E4-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112087>
 
-Hi,
+pi song <pi.songs@gmail.com> writes:
 
-I am new to git and I am wondering what git commands to use for this sz=
-enario: two developers without the possibility of sharing a server comm=
-unicate their changes via email.
+> My god, this is too big. I cannot attach or paste in email. What should I
+> do?
 
-This is how far I have come reading the online docu:
-* Each developer can create the diff-info of his commits with
-  git format-patch
-* and the other developer can incorporate these changes with
-  git am
+For a starter, try removing hunks that record only unwarranted changes,
+such as the following.  They are all style regressions.
 
-After creating the patches with format-patch one could set a tag:
-  git tag -f patchesDone
-so next time one wants to create patches, this tag can be used as the s=
-tarting point:
-  git format-patch patchesDone..
-
-But what if in the meantime one has incorporated the other developer's =
-changes with git am? Then these changes will also be among the patches =
-created with format-patch. What will happen, if these patches are sent =
-to the other developer, who does not need his own changes again. Will h=
-is own changes be silently ignored by git am? Or how else to effectivel=
-y coordinate the work of two developers with git via email?
-
-thank you,
-
-Wolfgang
---=20
-Computer Bild Tarifsieger! GMX FreeDSL - Telefonanschluss + DSL
-f=FCr nur 17,95 =BF/mtl.!* http://dsl.gmx.de/?ac=3DOM.AD.PD003K11308T45=
-69a
+@@ -517,6 +563,8 @@ static int grep_buffer_1(struct grep_opt *opt, const char *name,
+ 				show_name(opt, name);
+ 				return 1;
+ 			}
++
++                        
+ 			/* Hit at this line.  If we haven't shown the
+ 			 * pre-context lines, we would need to show them.
+ 			 * When asked to do "count", this still show
+@@ -524,7 +572,9 @@ static int grep_buffer_1(struct grep_opt *opt, const char *name,
+ 			 * deserves to get that ;-).
+ 			 */
+ 			if (opt->pre_context) {
++                            
+ 				unsigned from;
++
+ 				if (opt->pre_context < lno)
+ 					from = lno - opt->pre_context;
+ 				else
+@@ -590,8 +664,10 @@ static int grep_buffer_1(struct grep_opt *opt, const char *name,
+ 	 * make it another option?  For now suppress them.
+ 	 */
+ 	if (opt->count && count)
++        {
+ 		printf("%s%c%u\n", name,
+ 		       opt->null_following_name ? '\0' : ':', count);
++        }
+ 	return !!last_hit;
+ }
+ 
