@@ -1,126 +1,60 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv3 2/2] git submodule: Fix adding of submodules at paths with ./, .. and //
-Date: Tue,  3 Mar 2009 13:39:49 +0100
-Message-ID: <1236083989-20526-3-git-send-email-git@drmicha.warpmail.net>
-References: <7vtz6ht9ho.fsf@gitster.siamese.dyndns.org>
- <1236083989-20526-1-git-send-email-git@drmicha.warpmail.net>
- <1236083989-20526-2-git-send-email-git@drmicha.warpmail.net>
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Andrei Thorp <garoth@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
+From: Csaba Henk <csaba-ml@creo.hu>
+Subject: import files w/ history
+Date: Tue, 3 Mar 2009 12:54:54 +0000 (UTC)
+Message-ID: <slrngqqa4l.1t4t.csaba-ml@beastie.creo.hu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 03 13:41:59 2009
+X-From: git-owner@vger.kernel.org Tue Mar 03 13:56:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeTwS-0006TI-14
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 13:41:48 +0100
+	id 1LeUAl-0002bl-1D
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 13:56:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751617AbZCCMkS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2009 07:40:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752203AbZCCMkK
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 07:40:10 -0500
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:59386 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750904AbZCCMkF (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2009 07:40:05 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 8FD292D31FC;
-	Tue,  3 Mar 2009 07:40:03 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Tue, 03 Mar 2009 07:40:03 -0500
-X-Sasl-enc: ojSjTkurERDClogJG2Oa+QSxiXTr6O2V3jQW/nh4r1nP 1236084002
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id CA0C447F23;
-	Tue,  3 Mar 2009 07:40:02 -0500 (EST)
-X-Mailer: git-send-email 1.6.2.rc2
-In-Reply-To: <1236083989-20526-2-git-send-email-git@drmicha.warpmail.net>
+	id S1751937AbZCCMzH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 07:55:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751618AbZCCMzH
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 07:55:07 -0500
+Received: from main.gmane.org ([80.91.229.2]:59601 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751362AbZCCMzF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 07:55:05 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LeU9G-0001NX-Ha
+	for git@vger.kernel.org; Tue, 03 Mar 2009 12:55:02 +0000
+Received: from www.creo.hu ([217.113.62.14])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 03 Mar 2009 12:55:02 +0000
+Received: from csaba-ml by www.creo.hu with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 03 Mar 2009 12:55:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: www.creo.hu
+User-Agent: slrn/0.9.8.1 (FreeBSD)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112068>
 
-Make 'git submodule add' normalize the submodule path in the
-same way as 'git ls-files' does, so that 'git submodule init' looks up
-the information in .gitmodules with the same key under which 'git
-submodule add' stores it.
+Hi,
 
-This fixes 4 known breakages.
----
-Note that sed on AIX does not like comments, which is why they are not
-in the sed expression.
+How could I import some files from an unrelated git repo with history?
+And if I'd like to use different paths? Eg:
 
- git-submodule.sh           |   15 ++++++++++++---
- t/t7400-submodule-basic.sh |    8 ++++----
- 2 files changed, 16 insertions(+), 7 deletions(-)
+Say the other repo has these files:
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 204aab6..7a25f47 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -167,9 +167,18 @@ cmd_add()
- 	;;
- 	esac
- 
--	# strip trailing slashes from path
--	path=$(echo "$path" | sed -e 's|/*$||')
--
-+	# normalize path:
-+	# multiple //; leading ./; /./; /../; trailing /
-+	path=$(printf '%s/\n' "$path" |
-+		sed -e '
-+			s|//*|/|g
-+			s|^\(\./\)*||
-+			s|/\./|/|g
-+			:start
-+			s|\([^/]*\)/\.\./||g
-+			tstart
-+			s|/*$||
-+		')
- 	git ls-files --error-unmatch "$path" > /dev/null 2>&1 &&
- 	die "'$path' already exists in the index"
- 
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 4f42585..1c82f8c 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -64,7 +64,7 @@ test_expect_success 'submodule add' '
- 	)
- '
- 
--test_expect_failure 'submodule add with ./ in path' '
-+test_expect_success 'submodule add with ./ in path' '
- 	(
- 		cd addtest &&
- 		git submodule add "$submodurl" ././dotsubmod/./frotz/./ &&
-@@ -72,7 +72,7 @@ test_expect_failure 'submodule add with ./ in path' '
- 	)
- '
- 
--test_expect_failure 'submodule add with // in path' '
-+test_expect_success 'submodule add with // in path' '
- 	(
- 		cd addtest &&
- 		git submodule add "$submodurl" slashslashsubmod///frotz// &&
-@@ -80,7 +80,7 @@ test_expect_failure 'submodule add with // in path' '
- 	)
- '
- 
--test_expect_failure 'submodule add with /.. in path' '
-+test_expect_success 'submodule add with /.. in path' '
- 	(
- 		cd addtest &&
- 		git submodule add "$submodurl" dotdotsubmod/../realsubmod/frotz/.. &&
-@@ -88,7 +88,7 @@ test_expect_failure 'submodule add with /.. in path' '
- 	)
- '
- 
--test_expect_failure 'submodule add with ./, /.. and // in path' '
-+test_expect_success 'submodule add with ./, /.. and // in path' '
- 	(
- 		cd addtest &&
- 		git submodule add "$submodurl" dot/dotslashsubmod/./../..////realsubmod2/frotz//.. &&
--- 
-1.6.2.rc2
+lib/trees/rb_tree.{c,h}
+
+and I want to import them into my repo as
+
+include/rb_tree.h
+src/rb_tree.c
+
+(In fact I just have a single file to import and I don't want to
+vary paths, yet I'm curious about this extended case, too.)
+
+Thanks,
+Csaba
