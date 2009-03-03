@@ -1,79 +1,67 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [RFC PATCH] Windows: Assume all file names to be UTF-8 encoded.
-Date: Wed, 4 Mar 2009 00:02:40 +0300
-Message-ID: <37fcd2780903031302m5f98fe71u8bdb23f90a8df82a@mail.gmail.com>
-References: <450196A1AAAE4B42A00A8B27A59278E709F077AC@EXCHANGE.trad.tradestation.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Subject: [PATCH] Push to create
+Date: Tue, 3 Mar 2009 16:08:30 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0903031558490.19665@iabervon.org>
+References: <1235865822-14625-1-git-send-email-gitster@pobox.com> <1235865822-14625-2-git-send-email-gitster@pobox.com> <1235865822-14625-3-git-send-email-gitster@pobox.com> <20090301031609.GA30384@coredump.intra.peff.net> <7v63itbxe7.fsf@gitster.siamese.dyndns.org>
+ <20090301100039.GD4146@coredump.intra.peff.net> <20090301170436.GA14365@spearce.org> <7vwsb7gkvt.fsf_-_@gitster.siamese.dyndns.org> <20090303070937.GB30609@coredump.intra.peff.net> <7vy6vnf3aw.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: John Dlugosz <JDlugosz@tradestation.com>
-X-From: git-owner@vger.kernel.org Tue Mar 03 22:04:22 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 03 22:10:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lebmf-00021W-3m
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 22:04:13 +0100
+	id 1LebsI-0004Hj-Iv
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 22:10:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753724AbZCCVCp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2009 16:02:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753839AbZCCVCo
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 16:02:44 -0500
-Received: from fg-out-1718.google.com ([72.14.220.158]:49882 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753795AbZCCVCn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 16:02:43 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so133012fgg.17
-        for <git@vger.kernel.org>; Tue, 03 Mar 2009 13:02:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=JiKeQQprw8nNH3HPtu+kLe4/RVWBlvUFIeaT+WebOMI=;
-        b=ujUDeiB+7iVfDcY5PNYksKFUh5R0m88D57EoWkex1/FKIfD3/mG6mcXBlQgGklVeVn
-         g72130+eWBsMRn5Vw1FwbyNpamLc7wny64vbY28NCpgRemWHOG6mpxSKLnj/r1hydCez
-         OHlUn+ATbDHzFddV3iKyC1gh93vyIFjIezlxQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=TebfTxiwuSie6GNQ9tmPXRaP1NAHzeNAMjvRAe8VzuI6nIwHoGnkG5FES3xhEn/GH5
-         rgVlUF0sXKZ79bGdOk96GzZxsH+R63D8LubbOnl+E54nfTDARlVjCnnIKuMH6cGbfR+Y
-         p+BuqLh1tWNoqNLCrbqvdExl44o7LeE2JBYmc=
-Received: by 10.86.60.14 with SMTP id i14mr3689417fga.69.1236114161078; Tue, 
-	03 Mar 2009 13:02:41 -0800 (PST)
-In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E709F077AC@EXCHANGE.trad.tradestation.com>
+	id S1753267AbZCCVId (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 16:08:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753786AbZCCVId
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 16:08:33 -0500
+Received: from iabervon.org ([66.92.72.58]:48125 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753612AbZCCVIc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 16:08:32 -0500
+Received: (qmail 19340 invoked by uid 1000); 3 Mar 2009 21:08:30 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 3 Mar 2009 21:08:30 -0000
+In-Reply-To: <7vy6vnf3aw.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112168>
 
-On Tue, Mar 3, 2009 at 11:39 PM, John Dlugosz <JDlugosz@tradestation.com> wrote:
->
-> Now, the default when a program starts is to use the "C" locale.  The
-> locale argument to setlocale can take a form ".code_page", so calling
->
->        setlocale (LC_CTYPE, ".65001");
->
-> should do the trick.  Assuming, that is, that you don't hit macros that
-> assume that characters are never multibyte.  So define the preprocessor
-> symbol _MBCS when you compile.
+On Mon, 2 Mar 2009, Junio C Hamano wrote:
 
-If Microsoft fixed the problem with UTF-8 support in C runtime, it is
-a really good
-news, because setlocale did not work not so long time ago:
+> Jeff King <peff@peff.net> writes:
+> 
+> > If you are going to limit it in that way, wouldn't it be better to do it
+> > entirely client-side? As in, "git push --create remote" will literally
+> > do:
+> >
+> >     ssh remote_host "mkdir -p remote_dir && cd remote_dir && git init --bare"
+> >
+> > ? Then you don't have to care about whether the remote side is recent
+> > enough to support this, and there are no potential security issues; git
+> > is merely saving you from typing the commands you could have done
+> > yourself.
+> 
+> As with the previous "git init --remote" patch, my design constraints
+> includes keeping the door open for "git shell" users to optionally allow
+> this mode of operation.
 
-http://blogs.msdn.com/michkap/archive/2006/03/13/550191.aspx
+One possibility would be to allow "git init" to create the directory (and 
+its parents) if it is able. Then the command is "ssh remote_host 
+GIT_DIR=remote_dir git init --bare". The "git shell" users can't use it, 
+but only because "git shell" won't run "git init". But there's no reason 
+it couldn't be configured (per-site or per-user) to allow it. Also, 
+git-init could run the template's "pre-init" hook to do whatever it is 
+that needs to be done for a new repository.
 
-As to Win32 API, it has always worked correctly with UTF-8... In fact, the
-documentation of GetOEMCP function goes as far as recommending
-to use UTF-8 or UTF-16: "For the most consistent results, applications should
-use Unicode, such as UTF-8 or UTF-16, instead of a specific code page.
-
-So it would be great if Git supported UTF-8 on Windows (as an option), but it
-is not my itch right now....
-
-Dmitry
+	-Daniel
+*This .sig left intentionally blank*
