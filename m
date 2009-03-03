@@ -1,87 +1,62 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCHv3 2/2] git submodule: Fix adding of submodules at paths
- with ./, .. and //
-Date: Tue, 03 Mar 2009 16:48:41 +0100
-Message-ID: <49AD5159.8060605@drmicha.warpmail.net>
-References: <7vtz6ht9ho.fsf@gitster.siamese.dyndns.org> <1236083989-20526-1-git-send-email-git@drmicha.warpmail.net> <1236083989-20526-2-git-send-email-git@drmicha.warpmail.net> <1236083989-20526-3-git-send-email-git@drmicha.warpmail.net> <49AD2BE6.1000105@viscovery.net> <7v3aduehz2.fsf@gitster.siamese.dyndns.org>
+From: =?UTF-8?B?IlBldGVyIFZhbGRlbWFyIE3DuHJjaCAoTGlzdHMpIg==?= 
+	<4ux6as402@sneakemail.com>
+Subject: Re: git log -Sfoo ignores indentation (whitespace?) changes...
+Date: Tue, 03 Mar 2009 16:48:52 +0100
+Message-ID: <49AD5164.8090507@sneakemail.com>
+References: <49AD3E78.1050706@sneakemail.com> <20090303152333.GB24593@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	Andrei Thorp <garoth@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 03 16:50:36 2009
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 03 16:51:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeWsx-0006JX-Ka
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 16:50:24 +0100
+	id 1LeWtm-0006gi-Gl
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 16:51:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754871AbZCCPsz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2009 10:48:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757278AbZCCPsz
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 10:48:55 -0500
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:42105 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757212AbZCCPsw (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2009 10:48:52 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 709E42D3AD8;
-	Tue,  3 Mar 2009 10:48:50 -0500 (EST)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Tue, 03 Mar 2009 10:48:50 -0500
-X-Sasl-enc: gq++L/x8UciBfvBss6T/OUUDnuG7YzFHxBE0liH8etVc 1236095330
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 85BC435D0B;
-	Tue,  3 Mar 2009 10:48:49 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090303 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <7v3aduehz2.fsf@gitster.siamese.dyndns.org>
+	id S1757304AbZCCPtB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2009 10:49:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755438AbZCCPtA
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 10:49:00 -0500
+Received: from fep50.mail.dk ([80.160.77.103]:58483 "EHLO fep50.mail.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757302AbZCCPtA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 10:49:00 -0500
+Received: from fep45.mail.dk ([195.41.46.228]) by fep50.mail.dk
+          (InterMail vM.7.09.02.00 201-2219-117-20090203) with ESMTP
+          id <20090303154857.XZHM9250.fep50.mail.dk@fep45.mail.dk>
+          for <git@vger.kernel.org>; Tue, 3 Mar 2009 16:48:57 +0100
+Received: from [172.22.216.222] (really [77.233.248.193]) by fep45.mail.dk
+          (InterMail vG.3.00.04.00 201-2196-133-20080908) with ESMTP
+          id <20090303154856.BWDY25489.fep45.mail.dk@[172.22.216.222]>
+          for <git@vger.kernel.org>; Tue, 3 Mar 2009 16:48:56 +0100
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
+In-Reply-To: <20090303152333.GB24593@coredump.intra.peff.net>
+X-Authentication-Info: Submitted using SMTP AUTH at fep45.mail.dk from [77.233.248.193] at Tue, 3 Mar 2009 16:48:55 +0100
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112093>
 
-Junio C Hamano venit, vidit, dixit 03.03.2009 16:36:
-> Johannes Sixt <j.sixt@viscovery.net> writes:
-> 
->> Michael J Gruber schrieb:
->>> +	# normalize path:
->>> +	# multiple //; leading ./; /./; /../; trailing /
->>> +	path=$(printf '%s/\n' "$path" |
->>> +		sed -e '
->>> +			s|//*|/|g
->>> +			s|^\(\./\)*||
->>> +			s|/\./|/|g
->>> +			:start
->>> +			s|\([^/]*\)/\.\./||g
->> Sorry to say: not yet. This turns "a/b/c/d/../../../d" into "a/b/c/d"
->> instead of "a/d". Drop the 'g'.
->>
->> Once this is fixed, I have to ask what should happen with path names like
->> "../a/b", "../../a/b"? Should there be a warning or error?
->>
->> Other than that, this expression works on AIX 4.3.3! Note in particular
->> that '\n' in the printf format string is essential!
->>
->>> +			tstart
->>> +			s|/*$||
->>> +		')
-> 
-> At some point you should wonder if all of this complication is worth it,
-> or it makes sense to reject when you see // or /\.\./ in the input.
+How sad... From "git log -Sfoo" looking like a really cool feature, it=20
+now for me goes into the "must be plumbing because I have no use for it=
+"=20
+bin, as I can't rely on it:
 
-I surely do wonder now! This started off treating merely leading ./ as
-reported problematic by AT. Then the "do it really right" competition
-started, and I think J6t and I came out as clear winners. There were no
-other contenders.
+If a commit removes mention of foo one place and just accidentally=20
+happens to add foo somewhere completely unrelated then it wouldn't show=
+=20
+up in the output.
 
-Seriously, "git submodule init" does that normalization (by using
-ls-files), so I think it does make sense to have it for add as well. git
-submodule itself may have semi-porc/semi-plumb character, but if someone
-wants to add submodules programmatically there is no simple way around
-using "git submodule add", and paths may very well be constructed
-relatively.
+Would be neat with a feature that does what I thought -S did tho...
 
-Michael
+Thanks, Jeff, for both the answer and the documentation patch.
+
+Peter
+--=20
+Peter Valdemar M=C3=B8rch
+http://www.morch.com
