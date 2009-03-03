@@ -1,93 +1,75 @@
-From: Jonas Smedegaard <dr@jones.dk>
-Subject: [TopGit] Multiple concurrent sets of patches
-Date: Tue, 3 Mar 2009 12:37:41 +0100
-Message-ID: <20090303113741.GO12820@jones.dk>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [RFC PATCH] Windows: Assume all file names to be UTF-8 encoded.
+Date: Tue, 03 Mar 2009 12:48:02 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.0903031246420.3702@perkele.intern.softwolves.pp.se>
+References: <alpine.DEB.2.00.0903020941120.17877@perkele.intern.softwolves.pp.se>
+ <a2633edd0903020512u5682e9am203f0faccd0acf6a@mail.gmail.com>
+ <alpine.DEB.2.00.0903021452010.17877@perkele.intern.softwolves.pp.se>
+ <200903021530.01165.trast@student.ethz.ch>
+ <alpine.DEB.2.00.0903022135360.20047@perkele.intern.softwolves.pp.se>
+ <37fcd2780903030147q7062ee47w7ce524c28a6aa347@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; x-action=pgp-signed
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 03 12:45:44 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 03 12:50:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeT4B-0006iu-Ni
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 12:45:44 +0100
+	id 1LeT8x-0008BO-3x
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 12:50:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752047AbZCCLoL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2009 06:44:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751077AbZCCLoJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 06:44:09 -0500
-Received: from 0x573b188a.cpe.ge-1-2-0-1101.hknqu1.customer.tele.dk ([87.59.24.138]:58767
-	"EHLO xayide.jones.dk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751637AbZCCLoI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 06:44:08 -0500
-X-Greylist: delayed 377 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Mar 2009 06:44:07 EST
-Received: from localhost (localhost [127.0.0.1])
-	by xayide.jones.dk (Postfix) with ESMTP id B976A11B7FA
-	for <git@vger.kernel.org>; Tue,  3 Mar 2009 12:37:50 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at jones.dk
-Received: from xayide.jones.dk ([127.0.0.1])
-	by localhost (xayide.jones.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with SMTP id hr1scyElN-FL for <git@vger.kernel.org>;
-	Tue,  3 Mar 2009 12:37:48 +0100 (CET)
-Received: from auryn.jones.dk (auryn.jones.dk [192.168.222.52])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by xayide.jones.dk (Postfix) with ESMTPS id CDF1F11B7F9
-	for <git@vger.kernel.org>; Tue,  3 Mar 2009 12:37:48 +0100 (CET)
-Received: by auryn.jones.dk (Postfix, from userid 1000)
-	id 7388A356EE; Tue,  3 Mar 2009 12:37:41 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Face: "yShHCQ6@h{]=Se"1&kVc#Yd%l<B\s%RAjk)T'F6yYw3/unDabXtVB2LIg(-J0zo^aE2 U[s (uhG@f$_ZpbxE53gCn:WZ_a.Gz8yI;ko-,iqW@*+8k<F$2G-nyl;^55>b=>9&
+	id S1751598AbZCCLtL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 06:49:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751280AbZCCLtK
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 06:49:10 -0500
+Received: from smtp.getmail.no ([84.208.20.33]:46234 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751183AbZCCLtJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 06:49:09 -0500
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0KFX00201I5VKJ00@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Tue, 03 Mar 2009 12:49:07 +0100 (CET)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0KFX00MWSI42H600@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Tue, 03 Mar 2009 12:48:02 +0100 (CET)
+Received: from perkele ([84.215.142.63]) by no-osl-m323-srv-004-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0KFX00KKLI42AOA0@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Tue, 03 Mar 2009 12:48:02 +0100 (CET)
+Received: by perkele (Postfix, from userid 501)	id 23EBD189B20; Tue,
+ 03 Mar 2009 12:48:02 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
+ with ESMTP id 20F8B1A97FE; Tue, 03 Mar 2009 12:48:02 +0100 (CET)
+In-reply-to: <37fcd2780903030147q7062ee47w7ce524c28a6aa347@mail.gmail.com>
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112059>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Dmitry Potapov:
 
-Hi,
+> The C Standard requires that the type wchar_t is capable of representing 
+> any character in the current locale. If Windows uses UTF-16 as internal 
+> encoding (so, it can work with symbols outside of the BMP), it means you 
+> cannot have 16-bit wchar_t and be compliant with the C standard...
 
-I have run into a challenge that I suspect is a limitation of current 
-TopGit. I am hoping you could help enlighten me, as I otherwise feel 
-that TopGit is not generally usable for my Debian packaging needs:
+No, that's not quite correct. wchar_t is defined to be "an integer type whose 
+range of values can represent distinct codes for all members of 
+the largest extended character set specified among the supported locales". 
+Since Windows defines all local character sets as Unicode-based, having 
+wchar_t defined as Unicode means that it can represent everything.
 
-How to manage patches against multiple source branches using TopGit?
-
-Let's take netatalk as an example. Upstream only quite infrequently 
-release new upstream tarball releases, so I cherry-pick patches from 
-upstream VCS. Recently a security-related bug was discovered which 
-needed fixing not only in the current packaging development (git master 
-branch) but also needed branching off earlier releases of the package 
-(those included in the "stable" and "oldstable" Debian distro releases) 
-and applying same fix for them.
-
-The actual patch needed for the various branches was obviously not 
-identical, as upstream sources were different and my cherry-picked set 
-of patches had evolved.
-
-It seems to me that TopGit is incapable of handling this. That it can 
-only handle patchset against a single branch, and if the need arise for 
-restructuring an additional patchset for e.g. a stable or oldstable 
-branch, then quilt needs to be used manually anyway.
-
-
-   - Jonas
-
-Debian developer
-
-- -- 
-* Jonas Smedegaard - idealist og Internet-arkitekt
-* Tlf.: +45 40843136  Website: http://dr.jones.dk/
-
-   [x] quote me freely  [ ] ask before reusing  [ ] keep private
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkmtFoUACgkQn7DbMsAkQLgvrACdHfy5K0igPa6Yj/LYyhh3Llyn
-jvcAnRfla1QyuUrx8+L4IL9XYY2CB+Su
-=B1Kc
------END PGP SIGNATURE-----
+-- 
+\\// Peter - http://www.softwolves.pp.se/
