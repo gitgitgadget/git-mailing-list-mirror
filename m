@@ -1,71 +1,60 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: Subject: [PATCH] Push to create
-Date: Tue, 3 Mar 2009 02:39:35 -0500
-Message-ID: <76718490903022339j79f41516kd97a96b2515677d@mail.gmail.com>
-References: <1235865822-14625-1-git-send-email-gitster@pobox.com>
-	 <1235865822-14625-2-git-send-email-gitster@pobox.com>
-	 <1235865822-14625-3-git-send-email-gitster@pobox.com>
-	 <20090301031609.GA30384@coredump.intra.peff.net>
-	 <7v63itbxe7.fsf@gitster.siamese.dyndns.org>
-	 <20090301100039.GD4146@coredump.intra.peff.net>
-	 <20090301170436.GA14365@spearce.org>
-	 <7vwsb7gkvt.fsf_-_@gitster.siamese.dyndns.org>
-	 <20090303070937.GB30609@coredump.intra.peff.net>
-	 <76718490903022337n79a0c11cw95e80d99cd598d17@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] git filter-branch: Process commits in --date-order
+Date: Tue, 03 Mar 2009 08:41:46 +0100
+Message-ID: <49ACDF3A.1090309@viscovery.net>
+References: <1236035454-12236-1-git-send-email-peda@lysator.liu.se> <alpine.DEB.1.00.0903030126530.10279@pacific.mpi-cbg.de> <7vbpsjl97d.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 03 08:41:10 2009
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Peter Rosin <peda@lysator.liu.se>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 03 08:43:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LePFS-0004Rd-HP
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 08:41:07 +0100
+	id 1LePHd-0004wc-EN
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 08:43:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752254AbZCCHji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2009 02:39:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751972AbZCCHji
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 02:39:38 -0500
-Received: from rv-out-0506.google.com ([209.85.198.239]:15249 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751599AbZCCHjh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 02:39:37 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so2677310rvb.1
-        for <git@vger.kernel.org>; Mon, 02 Mar 2009 23:39:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Ib0pqX+js28VMe2UtNdgT2VJB1hyM+iPfA1fXklgfSs=;
-        b=BdT6TKhlpbTF4jT1vJt3SZ/AMaUrJY0PkefRcSSOOVG3Dl3ii4myYnYNAQOMg8CPju
-         9ik9ht0EoZRdZuZU8mXNJnm/8YslvNSvlpzp32vPjx6wRGViLjorvkCwljuJUb81f72a
-         10j4wM5pHsl75otaK8s5A/exmY/XnH0xf43tA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=r5hnrvIkNYmg7NA9Rp9GYEkEZOHlBxQoAIxvqhELvzQWj9Yf7lMkxMDjZbSzt7hKUi
-         VhSwuKksAPo8b2y3JV+6iSsCJoqMaUei9rtvL5RpKgNP4in1m5J/6IGHmNdjL1EnDHhg
-         OfjnkRzOSb00R4BFHGTtkAq4cbe1wkyiyeS0o=
-Received: by 10.140.187.10 with SMTP id k10mr3370882rvf.81.1236065975457; Mon, 
-	02 Mar 2009 23:39:35 -0800 (PST)
-In-Reply-To: <76718490903022337n79a0c11cw95e80d99cd598d17@mail.gmail.com>
+	id S1752320AbZCCHly (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 02:41:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751387AbZCCHlx
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 02:41:53 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:5996 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750868AbZCCHlx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 02:41:53 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LePG6-0003Vm-J1; Tue, 03 Mar 2009 08:41:46 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 523DE6B7; Tue,  3 Mar 2009 08:41:46 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <7vbpsjl97d.fsf@gitster.siamese.dyndns.org>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112015>
 
-On Tue, Mar 3, 2009 at 2:37 AM, Jay Soffian <jaysoffian@gmail.com> wrote:
-> I concur w/Jeff and I think git probably should not as well.
+Junio C Hamano schrieb:
+> I am wondering if it even makes sense to allow users to disable
+> topological ordering.
+> 
+> Doesn't filter-branch have the same "child commits build on top of parent
+> commits" dependency as fast-export has?  And didn't you guys fix
+> fast-export recently?
 
-Er, w/o being told to do so explicitly. I'd argue "--init" is a saner
-option name than "--create" though since you say "git init", not "git
-create" to make a repo.
+Doesn't --date-order have the same guarantee as --topo-order with respect
+to parents and children, only that commits that can be rearranged such
+that the guarantee remains are emitted in date order?
 
-j.
+Anyway, the patch is unnecessary: If --date-order is needed, it can be
+passed on the command line; this will override --topo-order.
+
+-- Hannes
