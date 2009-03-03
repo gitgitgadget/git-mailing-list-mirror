@@ -1,94 +1,69 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What's cooking in git.git (Mar 2009, #01; Tue, 03)
-Date: Tue, 03 Mar 2009 01:21:35 -0800 (PST)
-Message-ID: <m3r61ft10q.fsf@localhost.localdomain>
-References: <7vprgzdlom.fsf@gitster.siamese.dyndns.org>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: Subject: [PATCH] Push to create
+Date: Tue, 3 Mar 2009 04:23:01 -0500
+Message-ID: <20090303092301.GE32284@mit.edu>
+References: <7v63itbxe7.fsf@gitster.siamese.dyndns.org> <20090301100039.GD4146@coredump.intra.peff.net> <20090301170436.GA14365@spearce.org> <7vwsb7gkvt.fsf_-_@gitster.siamese.dyndns.org> <20090303070937.GB30609@coredump.intra.peff.net> <7vy6vnf3aw.fsf@gitster.siamese.dyndns.org> <20090303080603.GA3158@coredump.intra.peff.net> <7v63irf21u.fsf@gitster.siamese.dyndns.org> <20090303082706.GC3158@coredump.intra.peff.net> <7v1vtff1op.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 03 10:23:09 2009
+X-From: git-owner@vger.kernel.org Tue Mar 03 10:24:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeQqC-0005zs-JW
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 10:23:09 +0100
+	id 1LeQrg-0006QQ-0N
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 10:24:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752787AbZCCJVm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2009 04:21:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750882AbZCCJVk
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 04:21:40 -0500
-Received: from mail-fx0-f176.google.com ([209.85.220.176]:59938 "EHLO
-	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750810AbZCCJVi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 04:21:38 -0500
-Received: by fxm24 with SMTP id 24so2342897fxm.37
-        for <git@vger.kernel.org>; Tue, 03 Mar 2009 01:21:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=LAH78FLORzHhK+CZc+XuBeJ63WPZQmcNR7e9mTPCYxE=;
-        b=ps2/HEphaCr+wiRkodhXgnYeBs+xLoBMF28IPeQT/uz+PcXqmHVvnYAJc3+KnpVhwX
-         WfNxZBxKrKxmBdal78ow/u60GolpvPfnd/9cWP/LSOnysLrX9NHewRGnuQvYCl/6gwpL
-         4BJm6WPRlNK4rAuc2HNvRdZglKwxzuhu8UON8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=BPrg35fs5LNAwABWYD6UhdN4TcWVKQ7Kcz7Ry1cXOmUgv6QUWcdZ5tXtXsbuvDWaus
-         ayGJNY8JxURiBVU/aeDtipxxoBlXKS5XpgKa75aTI+lceHORAAGNK2VlctVhBRWG1ljh
-         hlgyRf5DjM3Je8T/yE8q5PP7oJ6PbTa/lKNFI=
-Received: by 10.86.71.1 with SMTP id t1mr4793346fga.18.1236072095771;
-        Tue, 03 Mar 2009 01:21:35 -0800 (PST)
-Received: from localhost.localdomain (abwq47.neoplus.adsl.tpnet.pl [83.8.240.47])
-        by mx.google.com with ESMTPS id e11sm363132fga.50.2009.03.03.01.21.34
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 03 Mar 2009 01:21:35 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n239LTYi018594;
-	Tue, 3 Mar 2009 10:21:31 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n239LP8G018591;
-	Tue, 3 Mar 2009 10:21:25 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <7vprgzdlom.fsf@gitster.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1755746AbZCCJXK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 04:23:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750800AbZCCJXJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 04:23:09 -0500
+Received: from thunk.org ([69.25.196.29]:49782 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755516AbZCCJXH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 04:23:07 -0500
+Received: from root (helo=closure.thunk.org)
+	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
+	id 1LeQq6-0007SY-Hz; Tue, 03 Mar 2009 04:23:02 -0500
+Received: from tytso by closure.thunk.org with local (Exim 4.69)
+	(envelope-from <tytso@mit.edu>)
+	id 1LeQq5-0002Mb-DL; Tue, 03 Mar 2009 04:23:01 -0500
+Content-Disposition: inline
+In-Reply-To: <7v1vtff1op.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@mit.edu
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112041>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> ----------------------------------------------------------------
-> [Stalled and may need help and prodding to go forward]
+On Tue, Mar 03, 2009 at 12:30:46AM -0800, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
 > 
-> * gb/gitweb-base (Sun Feb 15 10:18:36 2009 +0100) 1 commit
->  - gitweb: fix wrong base URL when non-root DirectoryIndex
-
-Errrr... isn't this already in 'master' as v1.6.2-rc1-3-g81d3fe9 ?
-
-> * jc/blame (Wed Jun 4 22:58:40 2008 -0700) 2 commits
->  + blame: show "previous" information in --porcelain/--incremental
->    format
->  + git-blame: refactor code to emit "porcelain format" output
+> > But I think that coincides with what I was trying to say in my original
+> > response to the series, which is "this issue is complex, and we need to
+> > hear from the people who would really want this exactly what it is they
+> > want".
 > 
-> This gives Porcelains (like gitweb) the information on the commit _before_
-> the one that the final blame is laid on, which should save them one
-> rev-parse to dig further.  The line number in the "previous" information
-> may need refining, and sanity checking code for reference counting may
-> need to be resurrected before this can move forward.
-> 
-> I thought recent tig discussion may blow new life into it, but is this
-> unneeded?  If so I'd rather revert it (or discard after 1.6.2).
+> And we haven't heard from them at all, unless you and/or Shawn are
+> interested.  After all we may not have to worry about this at all ;-)
 
-This would be nice to have for gitweb.
+Junio, I assume you saw Scott James Remnant blog posts, "Git Sucks"?
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+       http://www.netsplit.com/2009/02/17/git-sucks/
+       http://www.netsplit.com/2009/02/17/git-sucks-2/
+       http://www.netsplit.com/2009/02/17/git-sucks-3/
+       http://www.netsplit.com/2009/02/23/revision-control-systems-suck/
+
+My commentary on his complaint is found here:
+
+http://thunk.org/tytso/blog/2009/02/23/reflections-on-a-complaint-from-a-frustrated-git-user/
+
+Some (but not all) of the comments on my blog are also worth reading.
+
+						- Ted
