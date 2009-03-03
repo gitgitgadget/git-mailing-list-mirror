@@ -1,85 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git log -Sfoo ignores indentation (whitespace?) changes...
-Date: Tue, 3 Mar 2009 10:23:33 -0500
-Message-ID: <20090303152333.GB24593@coredump.intra.peff.net>
-References: <49AD3E78.1050706@sneakemail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCHv4 2/2] git submodule: Fix adding of submodules at paths
+ with ./, .. and //
+Date: Tue, 03 Mar 2009 16:28:23 +0100
+Message-ID: <49AD4C97.6010806@viscovery.net>
+References: <49AD3A29.10404@drmicha.warpmail.net> <1236092901-28500-1-git-send-email-git@drmicha.warpmail.net> <1236092901-28500-2-git-send-email-git@drmicha.warpmail.net> <1236092901-28500-3-git-send-email-git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?=22Peter_Valdemar_M=C3=B8rch_=28Lists=29=22?= 
-	<4ux6as402@sneakemail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 03 16:25:20 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Andrei Thorp <garoth@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Mar 03 16:30:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeWUc-0004nE-V5
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 16:25:15 +0100
+	id 1LeWZG-0006bb-8s
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 16:30:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758605AbZCCPXo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2009 10:23:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756774AbZCCPXo
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 10:23:44 -0500
-Received: from peff.net ([208.65.91.99]:50480 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758573AbZCCPXk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 10:23:40 -0500
-Received: (qmail 17086 invoked by uid 107); 3 Mar 2009 15:23:37 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 03 Mar 2009 10:23:37 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Mar 2009 10:23:33 -0500
-Content-Disposition: inline
-In-Reply-To: <49AD3E78.1050706@sneakemail.com>
+	id S1753801AbZCCP2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 10:28:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754024AbZCCP2d
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 10:28:33 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:53681 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753735AbZCCP2c (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 10:28:32 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LeWXf-0005wa-I4; Tue, 03 Mar 2009 16:28:23 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 30E0F6B7; Tue,  3 Mar 2009 16:28:23 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <1236092901-28500-3-git-send-email-git@drmicha.warpmail.net>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112085>
 
-On Tue, Mar 03, 2009 at 03:28:08PM +0100, "Peter Valdemar M=C3=B8rch (L=
-ists)" wrote:
+Michael J Gruber schrieb:
+> Make 'git submodule add' normalize the submodule path in the
+> same way as 'git ls-files' does, so that 'git submodule init' looks up
+> the information in .gitmodules with the same key under which 'git
+> submodule add' stores it.
+> 
+> This fixes 4 known breakages.
+> ---
 
-> Commits where only the indentation of 'foo' is changed are not shown =
-with=20
-> "git log -Sfoo". Is there any way to force showing them along with ot=
-her=20
-> changes involving foo? (E.g. for python, indentation matters!)
->
-> Why doesn't the second commit show up in the following?
+OK!
 
-Because you misunderstand how "-S" works (but don't worry, it's not you=
-r
-fault -- the documentation is somewhat misleading). The documentation s=
-ays:
+Tested-by: Johannes Sixt <j6t@kdbg.org> (AIX)
 
-  -S<string>
-    Look for differences that contain the change in <string>.
+but really, I ran only: cd t && make *submodule*
 
-but what it actually does is find changes where the string was introduc=
-ed
-or removed. So it literally counts the number of occurences before and
-after the commit, and the commit is interesting if they are not equal.
+You certainly will sign off this patch?
 
-> # Create text containing 'line' without whitespace
-> $ echo 'line' > text
-> $ git add text
-> $ git commit -m "first" text
->
-> # Here, I add one space of indentation in front of 'line'
-> $ echo ' line' > text
-> $ git commit -m "second" text
-
-So "line" wasn't actually changed. It just happens to be on a line whic=
-h
-_did_ change.
-
-> I would like to see both "first" and "second" somehow - can I do that=
-?
-
-I don't think there's an easy way to do this right now; you would need
-to do "git log -p" and search through the output to get what you want (=
-I
-often do this just using the pager's search function).
-
--Peff
+-- Hannes
