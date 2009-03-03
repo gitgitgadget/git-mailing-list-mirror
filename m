@@ -1,100 +1,70 @@
 From: Mike Ralphson <mike@abacus.co.uk>
-Subject: [PATCH] Documentation: Typos / spelling fixes in RelNotes
-Date: Tue,  3 Mar 2009 19:29:20 +0000
-Message-ID: <1236108562-31469-1-git-send-email-mike@abacus.co.uk>
+Subject: [PATCH] Documentation: Expand a couple of abbreviations
+Date: Tue,  3 Mar 2009 19:29:21 +0000
+Message-ID: <1236108562-31469-2-git-send-email-mike@abacus.co.uk>
+References: <1236108562-31469-1-git-send-email-mike@abacus.co.uk>
 Cc: git@vger.kernel.org, Mike Ralphson <mike.ralphson@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 03 20:52:59 2009
+X-From: git-owner@vger.kernel.org Tue Mar 03 20:53:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeafY-0007zo-WA
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 20:52:49 +0100
+	id 1LeafY-0007zo-8f
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 20:52:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754119AbZCCTvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2009 14:51:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752817AbZCCTvP
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 14:51:15 -0500
-Received: from [82.109.193.99] ([82.109.193.99]:21427 "EHLO orson.abacus.co.uk"
+	id S1753754AbZCCTvO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 14:51:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752804AbZCCTvN
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 14:51:13 -0500
+Received: from [82.109.193.99] ([82.109.193.99]:21425 "EHLO orson.abacus.co.uk"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752780AbZCCTvN (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752069AbZCCTvN (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 3 Mar 2009 14:51:13 -0500
+X-Greylist: delayed 2013 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Mar 2009 14:51:13 EST
 Received: by orson.abacus.co.uk (Postfix, from userid 1006)
-	id B122C195DE9; Tue,  3 Mar 2009 19:29:22 +0000 (GMT)
+	id B53EE195DCB; Tue,  3 Mar 2009 19:29:22 +0000 (GMT)
 X-Mailer: git-send-email 1.6.0.2.229.g1293c
+In-Reply-To: <1236108562-31469-1-git-send-email-mike@abacus.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112161>
+
+These may not be obvious to non-native English speakers
 
 Signed-off-by: Mike Ralphson <mike@abacus.co.uk>
 ---
- Documentation/RelNotes-1.5.2.2.txt |    2 +-
- Documentation/RelNotes-1.6.0.2.txt |    2 +-
- Documentation/RelNotes-1.6.1.1.txt |    4 ++--
- Documentation/RelNotes-1.6.1.2.txt |    4 ++--
- 4 files changed, 6 insertions(+), 6 deletions(-)
+ Documentation/git-am.txt |    2 +-
+ Documentation/gitk.txt   |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/RelNotes-1.5.2.2.txt b/Documentation/RelNotes-1.5.2.2.txt
-index f6393f8..7bfa341 100644
---- a/Documentation/RelNotes-1.5.2.2.txt
-+++ b/Documentation/RelNotes-1.5.2.2.txt
-@@ -45,7 +45,7 @@ Fixes since v1.5.2.1
-     correctly when the branch name had slash in it.
+diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+index ff307eb..75081d9 100644
+--- a/Documentation/git-am.txt
++++ b/Documentation/git-am.txt
+@@ -121,7 +121,7 @@ the commit, after stripping common prefix "[PATCH <anything>]".
+ It is supposed to describe what the commit is about concisely as
+ a one line text.
  
-   - The email address of the user specified with user.email
--    configuration was overriden by EMAIL environment variable.
-+    configuration was overridden by EMAIL environment variable.
+-The body of the message (iow, after a blank line that terminates
++The body of the message (in other words, after a blank line that terminates
+ RFC2822 headers) can begin with "Subject: " and "From: " lines
+ that are different from those of the mail header, to override
+ the values of these fields.
+diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
+index bd005bc..cf465cb 100644
+--- a/Documentation/gitk.txt
++++ b/Documentation/gitk.txt
+@@ -74,7 +74,7 @@ frequently used options.
+ <path>...::
  
-   - The tree parser did not warn about tree entries with
-     nonsense file modes, and assumed they must be blobs.
-diff --git a/Documentation/RelNotes-1.6.0.2.txt b/Documentation/RelNotes-1.6.0.2.txt
-index 7a9646f..51b32f5 100644
---- a/Documentation/RelNotes-1.6.0.2.txt
-+++ b/Documentation/RelNotes-1.6.0.2.txt
-@@ -7,7 +7,7 @@ Fixes since v1.6.0.1
- * Installation on platforms that needs .exe suffix to git-* programs were
-   broken in 1.6.0.1.
+ 	Limit commits to the ones touching files in the given paths. Note, to
+-	avoid ambiguity wrt. revision names use "--" to separate the paths
++	avoid ambiguity with respect to revision names use "--" to separate the paths
+ 	from any preceding options.
  
--* Installation on filesystems without symbolic links support did nto
-+* Installation on filesystems without symbolic links support did not
-   work well.
- 
- * In-tree documentations and test scripts now use "git foo" form to set a
-diff --git a/Documentation/RelNotes-1.6.1.1.txt b/Documentation/RelNotes-1.6.1.1.txt
-index 88454c1..8c594ba 100644
---- a/Documentation/RelNotes-1.6.1.1.txt
-+++ b/Documentation/RelNotes-1.6.1.1.txt
-@@ -41,11 +41,11 @@ Fixes since v1.6.1
-   work tree upon delete/modify conflict.
- 
- * "git merge -s recursive" didn't leave the index unmerged for entries with
--  rename/delete conflictd.
-+  rename/delete conflicts.
- 
- * "git merge -s recursive" clobbered untracked files in the work tree.
- 
--* "git mv -k" with more than one errorneous paths misbehaved.
-+* "git mv -k" with more than one erroneous paths misbehaved.
- 
- * "git read-tree -m -u" hence branch switching incorrectly lost a
-   subdirectory in rare cases.
-diff --git a/Documentation/RelNotes-1.6.1.2.txt b/Documentation/RelNotes-1.6.1.2.txt
-index 230aa3d..be37cbb 100644
---- a/Documentation/RelNotes-1.6.1.2.txt
-+++ b/Documentation/RelNotes-1.6.1.2.txt
-@@ -4,8 +4,8 @@ GIT v1.6.1.2 Release Notes
- Fixes since v1.6.1.1
- --------------------
- 
--* The logic for rename detectin in internal diff used by commands like
--  "git diff" and "git blame" have been optimized to avoid loading the same
-+* The logic for rename detection in internal diff used by commands like
-+  "git diff" and "git blame" has been optimized to avoid loading the same
-   blob repeatedly.
- 
- * We did not allow writing out a blob that is larger than 2GB for no good
+ Examples
 -- 
 1.6.0.2.229.g1293c.dirty
