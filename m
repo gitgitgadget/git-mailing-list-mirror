@@ -1,67 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git filter-branch: Process commits in --date-order
-Date: Mon, 02 Mar 2009 16:51:50 -0800
-Message-ID: <7vbpsjl97d.fsf@gitster.siamese.dyndns.org>
-References: <1236035454-12236-1-git-send-email-peda@lysator.liu.se>
- <alpine.DEB.1.00.0903030126530.10279@pacific.mpi-cbg.de>
+Subject: Re: [PATCH] rebase -i: avoid 'git reset' when possible
+Date: Mon, 02 Mar 2009 16:57:45 -0800
+Message-ID: <7v1vtfl8xi.fsf@gitster.siamese.dyndns.org>
+References: <fabb9a1e0902260655g53fa1e1fg7e4aa76b0f3a80fc@mail.gmail.com>
+ <alpine.DEB.1.00.0902261557300.6258@intel-tinevez-2-302>
+ <fabb9a1e0902260733k26e5c02i75a7866f9a67530b@mail.gmail.com>
+ <alpine.DEB.1.00.0902271146460.6600@intel-tinevez-2-302>
+ <alpine.DEB.1.00.0902271354130.6600@intel-tinevez-2-302>
+ <7vvdqt8wob.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0903012242180.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Peter Rosin <peda@lysator.liu.se>, git@vger.kernel.org
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Stephen Haberman <stephen@exigencecorp.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Git Mailing List <git@vger.kernel.org>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 03 01:53:37 2009
+X-From: git-owner@vger.kernel.org Tue Mar 03 02:00:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeIt3-0008Hl-VZ
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 01:53:34 +0100
+	id 1LeIym-0002CB-Qt
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 01:59:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752838AbZCCAwG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Mar 2009 19:52:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752490AbZCCAwF
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 19:52:05 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35062 "EHLO
+	id S1753992AbZCCA6A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2009 19:58:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753764AbZCCA6A
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 19:58:00 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35698 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751698AbZCCAwE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2009 19:52:04 -0500
+	with ESMTP id S1752872AbZCCA57 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Mar 2009 19:57:59 -0500
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 8CD8A2BD3;
-	Mon,  2 Mar 2009 19:52:01 -0500 (EST)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B1EDF2C5F;
+	Mon,  2 Mar 2009 19:57:57 -0500 (EST)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DBA8A2BD2; Mon, 
- 2 Mar 2009 19:51:57 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.0903030126530.10279@pacific.mpi-cbg.de>
- (Johannes Schindelin's message of "Tue, 3 Mar 2009 01:28:10 +0100 (CET)")
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 87CFD2C5D; Mon, 
+ 2 Mar 2009 19:57:47 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 81B6247A-078D-11DE-B503-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 55FE9410-078E-11DE-AEA6-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111986>
 
 Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On Tue, 3 Mar 2009, Peter Rosin wrote:
+> Or even
 >
->> When converting an svn repository to git, I am filtering the commits
->> using --msg-filter. During this conversion I want to use the
->> .git-rewrite/map data to fill in references to other commits. In the
->> svn repo, there is a commit message e.g. "Cherry-pick r207", and I
->> want to append "r207 = <commit>" to the git commit message, as r207
->> no longer means very much. This works fine when the git commit
->> corresponding to r207 has been filtered before the current commit, and
->> is present in the map. When filtering in --topo-order, this is not
->> always the case, making it impossible to look up the git commit.
+> 	current=$ONTO
+> 	fd=3
+> 	while read command sha1 rest
+> 	do
+> 		case "$fd,$command,$current" in
+> 		3,pick,"$sha1"*|t,p,"$sha1"*)
+> 			current=$sha1
+> 			;;
+> 		*)
+> 			fd=1
+> 			;;
+> 		esac
+> 		echo "$command $sha1 $rest" >&$fd
+> 	done < "$TODO" > "$TODO.new" 3>> "$DONE" &&
+> 	mv "$TODO.new" "$TODO"
 >
-> I'd rather have this as an option.  God knows what breaks with time-skewed 
-> repositories if you use date-order instead of topo-order, and I'd rather 
-> not break that not quite uncommon case.
+> Hmm?
 
-I am wondering if it even makes sense to allow users to disable
-topological ordering.
+Certainly.
 
-Doesn't filter-branch have the same "child commits build on top of parent
-commits" dependency as fast-export has?  And didn't you guys fix
-fast-export recently?
+Even though "3 means we haven't found a non-pick yet" feels slightly
+hacky, the logic is contained in this small loop and I do not see it as a
+problem.  As long as you are sure $ONTO and all sha1 can be compared
+without running them through rev-parse, avoiding rev-parse per iteration
+is a very attractive optimization.
