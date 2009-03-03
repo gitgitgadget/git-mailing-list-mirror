@@ -1,53 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Add an option for git-archive to output commit ID in
- alternative ways
-Date: Tue, 03 Mar 2009 07:44:28 -0800
-Message-ID: <7vtz6ad31f.fsf@gitster.siamese.dyndns.org>
-References: <1236078904678-2414580.post@n2.nabble.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCHv3 2/2] git submodule: Fix adding of submodules at paths
+ with ./, .. and //
+Date: Tue, 03 Mar 2009 16:48:41 +0100
+Message-ID: <49AD5159.8060605@drmicha.warpmail.net>
+References: <7vtz6ht9ho.fsf@gitster.siamese.dyndns.org> <1236083989-20526-1-git-send-email-git@drmicha.warpmail.net> <1236083989-20526-2-git-send-email-git@drmicha.warpmail.net> <1236083989-20526-3-git-send-email-git@drmicha.warpmail.net> <49AD2BE6.1000105@viscovery.net> <7v3aduehz2.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: roylee17 <roylee17@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 03 16:46:43 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+	Andrei Thorp <garoth@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 03 16:50:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeWpJ-0004jC-0s
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 16:46:37 +0100
+	id 1LeWsx-0006JX-Ka
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 16:50:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756816AbZCCPoi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2009 10:44:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753613AbZCCPoi
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 10:44:38 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63944 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752421AbZCCPoh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 10:44:37 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 55F709E417;
-	Tue,  3 Mar 2009 10:44:33 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 653019E416; Tue,
-  3 Mar 2009 10:44:30 -0500 (EST)
-In-Reply-To: <1236078904678-2414580.post@n2.nabble.com> (roylee17@gmail.com's
- message of "Tue, 3 Mar 2009 03:15:04 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 310C80A0-080A-11DE-8D61-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1754871AbZCCPsz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 10:48:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757278AbZCCPsz
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 10:48:55 -0500
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:42105 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757212AbZCCPsw (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2009 10:48:52 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 709E42D3AD8;
+	Tue,  3 Mar 2009 10:48:50 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Tue, 03 Mar 2009 10:48:50 -0500
+X-Sasl-enc: gq++L/x8UciBfvBss6T/OUUDnuG7YzFHxBE0liH8etVc 1236095330
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 85BC435D0B;
+	Tue,  3 Mar 2009 10:48:49 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090303 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <7v3aduehz2.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112092>
 
-roylee17 <roylee17@gmail.com> writes:
+Junio C Hamano venit, vidit, dixit 03.03.2009 16:36:
+> Johannes Sixt <j.sixt@viscovery.net> writes:
+> 
+>> Michael J Gruber schrieb:
+>>> +	# normalize path:
+>>> +	# multiple //; leading ./; /./; /../; trailing /
+>>> +	path=$(printf '%s/\n' "$path" |
+>>> +		sed -e '
+>>> +			s|//*|/|g
+>>> +			s|^\(\./\)*||
+>>> +			s|/\./|/|g
+>>> +			:start
+>>> +			s|\([^/]*\)/\.\./||g
+>> Sorry to say: not yet. This turns "a/b/c/d/../../../d" into "a/b/c/d"
+>> instead of "a/d". Drop the 'g'.
+>>
+>> Once this is fixed, I have to ask what should happen with path names like
+>> "../a/b", "../../a/b"? Should there be a warning or error?
+>>
+>> Other than that, this expression works on AIX 4.3.3! Note in particular
+>> that '\n' in the printf format string is essential!
+>>
+>>> +			tstart
+>>> +			s|/*$||
+>>> +		')
+> 
+> At some point you should wonder if all of this complication is worth it,
+> or it makes sense to reject when you see // or /\.\./ in the input.
 
-> Consider the following use case:
->   Regularly building projects which are untar'ed on-the-fly with git-archive
-> without intermediate tar balls.
->
-> How can I track back which commit IDs were those source code git-archive
-> from?
+I surely do wonder now! This started off treating merely leading ./ as
+reported problematic by AT. Then the "do it really right" competition
+started, and I think J6t and I came out as clear winners. There were no
+other contenders.
 
-Run "man gitattributes" and look for export-subst?
+Seriously, "git submodule init" does that normalization (by using
+ls-files), so I think it does make sense to have it for add as well. git
+submodule itself may have semi-porc/semi-plumb character, but if someone
+wants to add submodules programmatically there is no simple way around
+using "git submodule add", and paths may very well be constructed
+relatively.
+
+Michael
