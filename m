@@ -1,82 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git log -Sfoo ignores indentation (whitespace?) changes...
-Date: Tue, 03 Mar 2009 07:58:56 -0800
-Message-ID: <7vprgyd2db.fsf@gitster.siamese.dyndns.org>
-References: <49AD3E78.1050706@sneakemail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: First round of UGFWIINI results
+Date: Tue, 3 Mar 2009 16:59:27 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903031658180.6399@intel-tinevez-2-302>
+References: <alpine.DEB.1.00.0902171745320.6185@intel-tinevez-2-302> <3f4fd2640903030709r6e585d9j57ad3ae08cf38df1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1865421431-1236095967=:6399"
 Cc: git@vger.kernel.org
-To: =?utf-8?Q?Peter_Valdemar_M=C3=B8rch_=28Lists=29?= 
-	<4ux6as402@sneakemail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 03 17:00:46 2009
+To: Reece Dunn <msclrhd@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 03 17:01:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeX2s-00021C-Im
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 17:00:39 +0100
+	id 1LeX3H-0002B9-IF
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 17:01:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754429AbZCCP7G convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2009 10:59:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753902AbZCCP7F
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 10:59:05 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60000 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752995AbZCCP7E convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2009 10:59:04 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 7B92F31DA;
-	Tue,  3 Mar 2009 10:59:01 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D2F2331D9; Tue, 
- 3 Mar 2009 10:58:58 -0500 (EST)
-In-Reply-To: <49AD3E78.1050706@sneakemail.com> (Peter Valdemar =?utf-8?Q?M?=
- =?utf-8?Q?=C3=B8rch's?= message of "Tue, 03 Mar 2009 15:28:08 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 3684589E-080C-11DE-A96F-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
+	id S1754765AbZCCP7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 10:59:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754597AbZCCP7b
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 10:59:31 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42243 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753565AbZCCP7a (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 10:59:30 -0500
+Received: (qmail invoked by alias); 03 Mar 2009 15:59:28 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp006) with SMTP; 03 Mar 2009 16:59:28 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+IoLBZP/WI/IOBr34wmeXvum8fVyIP2m/2/B3vos
+	SabIYyZFIr5VXg
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <3f4fd2640903030709r6e585d9j57ad3ae08cf38df1@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112096>
 
-"Peter Valdemar M=C3=B8rch (Lists)"  <4ux6as402@sneakemail.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Commits where only the indentation of 'foo' is changed are not shown
-> with "git log -Sfoo". Is there any way to force showing them along
-> with other changes involving foo? (E.g. for python, indentation
-> matters!)
+--8323329-1865421431-1236095967=:6399
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 
-No.  You should be running "git log -p" which spawns "less" and then ty=
-pe
-/foo to jump to the occurrences of "foo".
+Hi,
 
-The pickaxe -Sfoo looks for a filepair that contains different number
-of substring "foo".  It was designed as a basic building block for a ve=
-ry
-different kind of Porcelain, whose final shape would look like the tool
-described in http://article.gmane.org/gmane.comp.version-control.git/21=
-7,
-but not yet written by anybody yet.
+On Tue, 3 Mar 2009, Reece Dunn wrote:
 
-And I think it might be the good topic for a SoC project.  From some GU=
-I,
-you let the user grab a block of text, feed it to "log -S<that multi-li=
-ne
-string> -1" to find where that block of text last changed, and inspect =
-the
-commit you have found very carefully using things like "git grep" to fi=
-nd
-other places in the commit that could be related to the change of the
-block of text, present all of them to the user.  From there you let the
-user dig deeper in the history by choosing what to look for next, most
-likely giving the default selection to the block of text that roughly
-corresponds to the original selection.
+> 2009/2/17 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> > Dear fans of Git,
+> >
+> > a while ago I announced the UGFWIINI contest, a glorious battle of ideas
+> > how to
+> >
+> >        Use Git For What It Is Not Indended
+> 
+> Does using Git to track edits when proofreading a html/text document
+> (short story, novel, ...) count?
 
-To make the iteration fast for this use case, the pickaxe cannot afford=
- to
-actually run diff and then grep inside the diff output (which is what y=
-ou
-would be doing with "log -p | less" and looking for your string in it).
+I'll count it, but I want (read-only) access to the repository as a proof 
+that you actually use Git that way ;-)
+
+Ciao,
+Dscho
+--8323329-1865421431-1236095967=:6399--
