@@ -1,69 +1,94 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: Subject: [PATCH] Push to create
-Date: Tue, 3 Mar 2009 04:23:01 -0500
-Message-ID: <20090303092301.GE32284@mit.edu>
-References: <7v63itbxe7.fsf@gitster.siamese.dyndns.org> <20090301100039.GD4146@coredump.intra.peff.net> <20090301170436.GA14365@spearce.org> <7vwsb7gkvt.fsf_-_@gitster.siamese.dyndns.org> <20090303070937.GB30609@coredump.intra.peff.net> <7vy6vnf3aw.fsf@gitster.siamese.dyndns.org> <20090303080603.GA3158@coredump.intra.peff.net> <7v63irf21u.fsf@gitster.siamese.dyndns.org> <20090303082706.GC3158@coredump.intra.peff.net> <7v1vtff1op.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] rebase -i: avoid 'git reset' when possible
+Date: Tue, 3 Mar 2009 10:24:05 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903031008580.6399@intel-tinevez-2-302>
+References: <fabb9a1e0902260655g53fa1e1fg7e4aa76b0f3a80fc@mail.gmail.com> <alpine.DEB.1.00.0902261557300.6258@intel-tinevez-2-302> <fabb9a1e0902260733k26e5c02i75a7866f9a67530b@mail.gmail.com> <alpine.DEB.1.00.0902271146460.6600@intel-tinevez-2-302>
+ <alpine.DEB.1.00.0902271354130.6600@intel-tinevez-2-302> <7vvdqt8wob.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0903012242180.10279@pacific.mpi-cbg.de> <7v1vtfl8xi.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
-	git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Stephen Haberman <stephen@exigencecorp.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Git Mailing List <git@vger.kernel.org>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 03 10:24:43 2009
+X-From: git-owner@vger.kernel.org Tue Mar 03 10:25:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeQrg-0006QQ-0N
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 10:24:40 +0100
+	id 1LeQsk-0006l9-8S
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 10:25:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755746AbZCCJXK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2009 04:23:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750800AbZCCJXJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 04:23:09 -0500
-Received: from thunk.org ([69.25.196.29]:49782 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755516AbZCCJXH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 04:23:07 -0500
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
-	id 1LeQq6-0007SY-Hz; Tue, 03 Mar 2009 04:23:02 -0500
-Received: from tytso by closure.thunk.org with local (Exim 4.69)
-	(envelope-from <tytso@mit.edu>)
-	id 1LeQq5-0002Mb-DL; Tue, 03 Mar 2009 04:23:01 -0500
-Content-Disposition: inline
-In-Reply-To: <7v1vtff1op.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@mit.edu
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1752987AbZCCJYT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 04:24:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751491AbZCCJYS
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 04:24:18 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51817 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751234AbZCCJYQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 04:24:16 -0500
+Received: (qmail invoked by alias); 03 Mar 2009 09:24:13 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp008) with SMTP; 03 Mar 2009 10:24:13 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+oiIwCAMKo/JWic8mPr8uFX+P9Uhmxk2l/FbS5k0
+	JZiLDgvfv50Fgu
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <7v1vtfl8xi.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112042>
 
-On Tue, Mar 03, 2009 at 12:30:46AM -0800, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
+Hi,
+
+On Mon, 2 Mar 2009, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > But I think that coincides with what I was trying to say in my original
-> > response to the series, which is "this issue is complex, and we need to
-> > hear from the people who would really want this exactly what it is they
-> > want".
+> > Or even
+> >
+> > 	current=$ONTO
+> > 	fd=3
+> > 	while read command sha1 rest
+> > 	do
+> > 		case "$fd,$command,$current" in
+> > 		3,pick,"$sha1"*|t,p,"$sha1"*)
+> > 			current=$sha1
+> > 			;;
+> > 		*)
+> > 			fd=1
+> > 			;;
+> > 		esac
+> > 		echo "$command $sha1 $rest" >&$fd
+> > 	done < "$TODO" > "$TODO.new" 3>> "$DONE" &&
+> > 	mv "$TODO.new" "$TODO"
+> >
+> > Hmm?
 > 
-> And we haven't heard from them at all, unless you and/or Shawn are
-> interested.  After all we may not have to worry about this at all ;-)
+> Certainly.
+> 
+> Even though "3 means we haven't found a non-pick yet" feels slightly
+> hacky, the logic is contained in this small loop and I do not see it as a
+> problem.
 
-Junio, I assume you saw Scott James Remnant blog posts, "Git Sucks"?
+I'll add a one line comment.
 
-       http://www.netsplit.com/2009/02/17/git-sucks/
-       http://www.netsplit.com/2009/02/17/git-sucks-2/
-       http://www.netsplit.com/2009/02/17/git-sucks-3/
-       http://www.netsplit.com/2009/02/23/revision-control-systems-suck/
+> As long as you are sure $ONTO and all sha1 can be compared without 
+> running them through rev-parse, avoiding rev-parse per iteration is a 
+> very attractive optimization.
 
-My commentary on his complaint is found here:
+Yes, that is the beauty of abbreviated commit names: they are guaranteed 
+to be unique, unless other objects were added since, which is not the case 
+at this point.
 
-http://thunk.org/tytso/blog/2009/02/23/reflections-on-a-complaint-from-a-frustrated-git-user/
-
-Some (but not all) of the comments on my blog are also worth reading.
-
-						- Ted
+Ciao,
+Dscho
