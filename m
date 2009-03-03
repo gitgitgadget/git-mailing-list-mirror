@@ -1,79 +1,90 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: [RFC PATCH] Windows: Assume all file names to be UTF-8 encoded.
-Date: Tue, 03 Mar 2009 12:56:47 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.0903031254440.3702@perkele.intern.softwolves.pp.se>
-References: <alpine.DEB.2.00.0903020941120.17877@perkele.intern.softwolves.pp.se>
- <37fcd2780903030143t7abe33d5sb7d8163c3c9bf505@mail.gmail.com>
+From: Adeodato =?utf-8?B?U2ltw7M=?= <dato@net.com.org.es>
+Subject: Re: [PATCH] git-clone.txt: document that pushing from a shallow
+	clone may work
+Date: Tue, 3 Mar 2009 13:08:56 +0100
+Message-ID: <20090303120856.GB15003@chistera.yi.org>
+References: <237967ef0902160200r2320687ai71e62047c3ead9ad@mail.gmail.com> <1236080017-13987-1-git-send-email-dato@net.com.org.es> <49AD1B22.6050201@viscovery.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 03 12:59:26 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Mikael Magnusson <mikachu@gmail.com>,
+	Joey Hess <joey@kitenet.net>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Mar 03 13:10:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeTHP-0002S5-1E
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 12:59:23 +0100
+	id 1LeTS9-0005dw-BU
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 13:10:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754245AbZCCL5z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2009 06:57:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754205AbZCCL5y
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 06:57:54 -0500
-Received: from smtp.getmail.no ([84.208.20.33]:61688 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754133AbZCCL5y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 06:57:54 -0500
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0KFX00D0BIKG1Z00@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Tue, 03 Mar 2009 12:57:52 +0100 (CET)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0KFX001ULIINRE30@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Tue, 03 Mar 2009 12:56:47 +0100 (CET)
-Received: from perkele ([84.215.142.63]) by no-osl-m323-srv-004-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0KFX00KG5IINADB0@no-osl-m323-srv-004-z1.isp.get.no> for
- git@vger.kernel.org; Tue, 03 Mar 2009 12:56:47 +0100 (CET)
-Received: by perkele (Postfix, from userid 501)	id 3B516189B20; Tue,
- 03 Mar 2009 12:56:47 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
- with ESMTP id 37E5A1A97FE; Tue, 03 Mar 2009 12:56:47 +0100 (CET)
-In-reply-to: <37fcd2780903030143t7abe33d5sb7d8163c3c9bf505@mail.gmail.com>
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+	id S1753216AbZCCMJA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2009 07:09:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752731AbZCCMI7
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 07:08:59 -0500
+Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:4595
+	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751139AbZCCMI7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 07:08:59 -0500
+Received: from justin (unknown [192.168.254.34])
+	by etc.inittab.org (Postfix) with ESMTP id C2F25801C02E;
+	Tue,  3 Mar 2009 13:08:56 +0100 (CET)
+Received: from userid 1000 by justin with local (Exim 4.69) 
+	  id 1LeTQe-00043j-FE; Tue, 03 Mar 2009 13:08:56 +0100
+Content-Disposition: inline
+In-Reply-To: <49AD1B22.6050201@viscovery.net>
+X-No-CC: Please respect my Mail-Followup-To header
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112064>
 
-Dmitry Potapov:
+* Johannes Sixt [Tue, 03 Mar 2009 12:57:22 +0100]:
 
-> IMHO, you grossly underestimate what is needed to enable UTF-8 encoding in 
-> Windows. AFAIK, Microsoft C runtime library does not support UTF-8, so you 
-> have to wrap all C functions taking 'char*' as an input parameter.
+> Adeodato Sim=C3=B3 schrieb:
+> > @@ -133,8 +133,10 @@ then the cloned repository will become corrupt=
+=2E
+> >  --depth <depth>::
+> >  	Create a 'shallow' clone with a history truncated to the
+> >  	specified number of revisions.  A shallow repository has a
+> > -	number of limitations (you cannot clone or fetch from
+> > -	it, nor push from nor into it), but is adequate if you
+> > +	number of limitations: you cannot clone or fetch from it,
+> > +	nor push into it; pushing from it into a regular repository
+> > +	may work correctly in some cases, but it is not guaranteed to
+> > +	always work.  However, a shallow repository is adequate if you
 
-I have to wrap all file-related functions, at least.
+> Consider a reader who wants to decide whether --depth should or can b=
+e
+> used in a git clone invocation. Is the new wording helpful? If you do=
+n't
+> describe those "some cases" in more detail, then we better keep the
+> current wording.
 
-> For example, think about what is going to happen if Git tries to print a 
-> simple error message: fprintf (stderr, "unable to open %s", path);
+Well, I don't know if the set of cases where it'll work can be defined
+in detail to a point where it is useful. If it is, then sure, let's do
+it.
 
-Yeah. That's a problem. That might be solvable by setting the thread locale 
-to something UTF-8 based and have the console window convert to the output 
-codepage (that is what it does when you use wprintf and friends).
+My point is that if it will work in some cases, then the documentation
+should *acknowledge that fact*, because else people will assume the
+documentation is wrong, and believe it is intended to work, which is no=
+t
+the case.
 
-> And the command-line is not the only source of file names. Some Git 
-> commands read list of files from stdin usually though the pipe. In what 
-> encoding are they going to be?
+I think doing that is very important, and I hope I'm explaining myself
+clearly.
 
-Indeed. Pipes are a problem.
+Thanks,
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
+--=20
+Adeodato Sim=C3=B3                                     dato at net.com.=
+org.es
+Debian Developer                                  adeodato at debian.or=
+g
+=20
+=C2=ABAra que ets la meva dona, te la fotr=C3=A9 fins a la melsa, bacon=
+a!=C2=BB
+                -- Terenci Moix, =E2=80=9CChulas y famosas=E2=80=9D
