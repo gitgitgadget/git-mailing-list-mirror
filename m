@@ -1,115 +1,187 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: Subject: [PATCH] Push to create
-Date: Tue, 3 Mar 2009 14:57:15 -0500
-Message-ID: <76718490903031157o2938d46cl6c33e78cf64ad9d1@mail.gmail.com>
-References: <1235865822-14625-2-git-send-email-gitster@pobox.com>
-	 <20090301031609.GA30384@coredump.intra.peff.net>
-	 <7v63itbxe7.fsf@gitster.siamese.dyndns.org>
-	 <20090301100039.GD4146@coredump.intra.peff.net>
-	 <20090301170436.GA14365@spearce.org>
-	 <7vwsb7gkvt.fsf_-_@gitster.siamese.dyndns.org>
-	 <20090303070937.GB30609@coredump.intra.peff.net>
-	 <76718490903022337n79a0c11cw95e80d99cd598d17@mail.gmail.com>
-	 <7vtz6bf392.fsf@gitster.siamese.dyndns.org>
-	 <20090303082318.GB3158@coredump.intra.peff.net>
+From: pknotz@sandia.gov
+Subject: [PATCHv2] Make git-clone respect branch.autosetuprebase
+Date: Tue, 3 Mar 2009 13:15:07 -0700
+Message-ID: <1236111307-32055-1-git-send-email-pknotz@sandia.gov>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 03 20:58:56 2009
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: "Pat Notz" <pknotz@sandia.gov>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 03 21:16:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LealL-00023v-Tz
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 20:58:48 +0100
+	id 1Leb2n-0000vW-HO
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 21:16:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754311AbZCCT5S convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2009 14:57:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754286AbZCCT5S
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 14:57:18 -0500
-Received: from rv-out-0506.google.com ([209.85.198.225]:15813 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752357AbZCCT5R convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2009 14:57:17 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so2933246rvb.1
-        for <git@vger.kernel.org>; Tue, 03 Mar 2009 11:57:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=VNsQiS74KnYFHt5BksItnI5lYgNaKGGXfj6ou5Vbvr4=;
-        b=PY2nwfue4hvLxZMAZZ+BOx/0wd9npOQqklstIHMBp68/DTGDR7oTMF0TZ8fr3xyd4e
-         0Kp7GKy5UJODF0wOLc3OQkoTVLdDHqPk9l2+f5AUUDhWOWIhOaV5taA8jG7/D6sk+510
-         zqhWrI2tOKICxFhgunZlRhBW2232+PsREaT9o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=F/yI11eHtfxLlqFJu1iLSoQt3odKeXDpxRoUyZuCMGwN6nmaoBRCwAodvJ1sI6GPnE
-         xtEOh84SaKgzFOu/clUCAiq+Ud6ClTWaAs4NePIMkFxmYJ6VPAh/rGYMvLqXXTPJCnFP
-         dAK9tlJVKp7j4wzVW/cnFAT1h8yvnvRZWy1gc=
-Received: by 10.140.158.4 with SMTP id g4mr3698980rve.160.1236110235246; Tue, 
-	03 Mar 2009 11:57:15 -0800 (PST)
-In-Reply-To: <20090303082318.GB3158@coredump.intra.peff.net>
+	id S1752092AbZCCUPT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 15:15:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751788AbZCCUPT
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 15:15:19 -0500
+Received: from sentry-three.sandia.gov ([132.175.109.17]:46142 "EHLO
+	sentry-three.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751468AbZCCUPS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 15:15:18 -0500
+X-WSS-ID: 0KFY5LJ-08-J6N-02
+X-M-MSG: 
+Received: from sentry.sandia.gov (sentry.sandia.gov [132.175.109.21])
+	by sentry-three.sandia.gov (Tumbleweed MailGate 3.6.1) with ESMTP id 2AFA98CBCFE
+	for <git@vger.kernel.org>; Tue,  3 Mar 2009 13:15:19 -0700 (MST)
+Received: from [132.175.109.1] by sentry.sandia.gov with ESMTP (SMTP
+ Relay 01 (Email Firewall v6.3.2)); Tue, 03 Mar 2009 13:15:08 -0700
+X-Server-Uuid: AF72F651-81B1-4134-BA8C-A8E1A4E620FF
+Received: from mail.sandia.gov (cas2.sandia.gov [134.253.165.160]) by
+ mailgate.sandia.gov (8.14.1/8.14.1) with ESMTP id n23KF8o7012023 for
+ <git@vger.kernel.org>; Tue, 3 Mar 2009 13:15:08 -0700
+Received: from localhost.localdomain (134.253.246.168) by
+ cas2.srn.sandia.gov (134.253.165.189) with Microsoft SMTP Server id
+ 8.1.340.0; Tue, 3 Mar 2009 13:15:08 -0700
+X-Mailer: git-send-email 1.6.1.2
+X-TMWD-Spam-Summary: TS=20090303201509; ID=1; SEV=2.3.1;
+ DFV=B2009030315; IFV=NA; AIF=B2009030315; RPD=5.03.0010; ENG=NA;
+ RPDID=7374723D303030312E30413031303230312E34394144384643442E303043343A534346535441543838363133332C73733D312C6667733D30;
+ CAT=NONE; CON=NONE; SIG=AAAAAAAAAAAAAAAAAAAAAAAAfQ==
+X-MMS-Spam-Filter-ID: B2009030315_5.03.0010
+X-WSS-ID: 65B350464LO762011-01-01
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112163>
 
-On Tue, Mar 3, 2009 at 3:23 AM, Jeff King <peff@peff.net> wrote:
->
-> What about the client just calling init-serve on the server as a prog=
-ram
-> which does whatever it wants to create a repo? The shipped default wo=
-uld
-> be:
->
-> =C2=A0#!/bin/sh
-> =C2=A0echo >&2 Sorry, repo creation not allowed.
-> =C2=A0exit 1
->
-> Sites who want to give their users full creation access would do (and
-> obviously the --mkdir option would need to be added):
->
-> =C2=A0#!/bin/sh
-> =C2=A0exec git init --mkdir "$@"
->
-> Sites which want to restrict can do:
->
-> =C2=A0#!/bin/sh
-> =C2=A0for i in "$@"; do
-> =C2=A0 =C2=A0case "$i" in
-> =C2=A0 =C2=A0--bare) ;;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 *) echo >&2 Forbidden argument: $i; exit =
-1 ;;
-> =C2=A0 =C2=A0esac
-> =C2=A0done
-> =C2=A0exec git init --mkdir "$@"
->
-> Sites like GitHub or Gerrit can munge the arguments as appropriate. T=
-hey
-> could even allow site-specific options if they wanted as long as they
-> were syntactically correct (i.e., "git init --gerrit-base=3Dfoo remot=
-e"
-> would pass the argument through to the remote unharmed).
+From: Pat Notz <pknotz@sandia.gov>
 
-=46WIW, I like this proposal. The only issue I have which I think simpl=
-y
-cannot be reconciled is this: it doesn't do anything to help a user
-that expects "git push --init ssh://..." to "just work". (And here I'm
-assuming push --init just calls init --remote under the covers.) The
-reason is that such a user is probably just using the git supplied by
-their vendor, and thus remote creation is likely disabled by default.
-The best I can come up with is a different error message:
+When git-clone creates an initial branch it was not
+checking the branch.autosetuprebase configuration
+option (which may exist in ~/.gitconfig).
 
-"Sorry, remote repo creation not allowed. To enable it, blah blah blah"
+Added function to branch.c to handle autorebase
+configuration setup.
 
-So at least the user has a clue that git can help them here, but there
-are security reasons it does not do so by default.
+Signed-off-by: Pat Notz <pknotz@sandia.gov>
+---
+ branch.c         |   23 ++++++++++++++++-------
+ branch.h         |    9 +++++++++
+ builtin-clone.c  |    3 +++
+ t/t5601-clone.sh |   14 ++++++++++++++
+ 4 files changed, 42 insertions(+), 7 deletions(-)
 
-j.
+diff --git a/branch.c b/branch.c
+index 1f00e44..ee8b69d 100644
+--- a/branch.c
++++ b/branch.c
+@@ -32,21 +32,33 @@ static int find_tracked_branch(struct remote *remote, void *priv)
+ 	return 0;
+ }
+ 
+-static int should_setup_rebase(const struct tracking *tracking)
++static int should_setup_rebase(const char * remote)
+ {
+ 	switch (autorebase) {
+ 	case AUTOREBASE_NEVER:
+ 		return 0;
+ 	case AUTOREBASE_LOCAL:
+-		return tracking->remote == NULL;
++		return remote == NULL;
+ 	case AUTOREBASE_REMOTE:
+-		return tracking->remote != NULL;
++		return remote != NULL;
+ 	case AUTOREBASE_ALWAYS:
+ 		return 1;
+ 	}
+ 	return 0;
+ }
+ 
++int setup_autorebase(const char *local, const char *remote_tracked_branch)
++{
++	if (should_setup_rebase(remote_tracked_branch)) {
++		struct strbuf key = STRBUF_INIT;
++		strbuf_addf(&key, "branch.%s.rebase", local);
++		git_config_set(key.buf, "true");
++		strbuf_release(&key);
++		return 1;
++	}
++	return 0;
++}
++
+ /*
+  * This is called when new_ref is branched off of orig_ref, and tries
+  * to infer the settings for branch.<new_ref>.{remote,merge} from the
+@@ -86,11 +98,8 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
+ 	git_config_set(key, tracking.src ? tracking.src : orig_ref);
+ 	printf("Branch %s set up to track %s branch %s.\n", new_ref,
+ 		tracking.remote ? "remote" : "local", orig_ref);
+-	if (should_setup_rebase(&tracking)) {
+-		sprintf(key, "branch.%s.rebase", new_ref);
+-		git_config_set(key, "true");
++	if (setup_autorebase(new_ref, tracking.remote))
+ 		printf("This branch will rebase on pull.\n");
+-	}
+ 	free(tracking.src);
+ 
+ 	return 0;
+diff --git a/branch.h b/branch.h
+index 9f0c2a2..b332c09 100644
+--- a/branch.h
++++ b/branch.h
+@@ -21,4 +21,13 @@ void create_branch(const char *head, const char *name, const char *start_name,
+  */
+ void remove_branch_state(void);
+ 
++/*
++ * Used when creating a new branch to properly setup the autorebase flag
++ * in the git-config file.  If the new branch ("local") is created from
++ * a remote branch then remote_tracked_branch should be non-NULL.  If
++ * the new branch is being created from another local branch then
++ * remote_tracked_branch should be NULL.
++ */
++int setup_autorebase(const char *local, const char *remote_tracked_branch);
++
+ #endif
+diff --git a/builtin-clone.c b/builtin-clone.c
+index c338910..587c834 100644
+--- a/builtin-clone.c
++++ b/builtin-clone.c
+@@ -17,6 +17,7 @@
+ #include "unpack-trees.h"
+ #include "transport.h"
+ #include "strbuf.h"
++#include "branch.h"
+ #include "dir.h"
+ #include "pack-refs.h"
+ #include "sigchain.h"
+@@ -360,6 +361,8 @@ static void install_branch_config(const char *local,
+ 	strbuf_reset(&key);
+ 	strbuf_addf(&key, "branch.%s.merge", local);
+ 	git_config_set(key.buf, remote);
++	if (setup_autorebase(local, remote))
++		printf("Default branch '%s' will rebase on pull.\n", local);
+ 	strbuf_release(&key);
+ }
+ 
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 44793f2..0f8b43c 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -159,4 +159,18 @@ test_expect_success 'clone a void' '
+ 	test_cmp target-6/.git/config target-7/.git/config
+ '
+ 
++test_expect_success 'clone respects global branch.autosetuprebase' '
++	HOME="`pwd`" &&
++	export HOME &&
++	test_config="$HOME"/.gitconfig &&
++	unset GIT_CONFIG_NOGLOBAL &&
++	git config -f "$test_config" branch.autosetuprebase remote &&
++	rm -fr dst &&
++	git clone src dst &&
++	cd dst &&
++	expected="ztrue" &&
++	actual="z$(git config branch.master.rebase)" &&
++	test $expected = $actual
++'
++
+ test_done
+-- 
+1.6.1.2
