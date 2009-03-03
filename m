@@ -1,72 +1,90 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] rebase -i: avoid 'git reset' when possible
-Date: Tue, 3 Mar 2009 12:21:58 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903031221330.6399@intel-tinevez-2-302>
-References: <fabb9a1e0902260655g53fa1e1fg7e4aa76b0f3a80fc@mail.gmail.com> <alpine.DEB.1.00.0902261557300.6258@intel-tinevez-2-302> <fabb9a1e0902260733k26e5c02i75a7866f9a67530b@mail.gmail.com> <alpine.DEB.1.00.0902271146460.6600@intel-tinevez-2-302>
- <alpine.DEB.1.00.0902271354130.6600@intel-tinevez-2-302> <7vvdqt8wob.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0903012242180.10279@pacific.mpi-cbg.de> <7v1vtfl8xi.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0903031008580.6399@intel-tinevez-2-302>
- <alpine.DEB.1.00.0903031024420.6399@intel-tinevez-2-302> <49AD1250.4080708@viscovery.net>
+From: =?utf-8?q?Adeodato=20Sim=C3=B3?= <dato@net.com.org.es>
+Subject: [PATCH] git-clone.txt: document that pushing from a shallow clone may work
+Date: Tue,  3 Mar 2009 12:33:37 +0100
+Message-ID: <1236080017-13987-1-git-send-email-dato@net.com.org.es>
+References: <237967ef0902160200r2320687ai71e62047c3ead9ad@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Stephen Haberman <stephen@exigencecorp.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Git Mailing List <git@vger.kernel.org>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Mar 03 12:23:36 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Mikael Magnusson <mikachu@gmail.com>, Joey Hess <joey@kitenet.net>,
+	=?utf-8?q?Adeodato=20Sim=C3=B3?= <dato@net.com.org.es>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Mar 03 12:35:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeSik-0000XQ-Nd
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 12:23:35 +0100
+	id 1LeStv-0003mt-7f
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 12:35:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753369AbZCCLWH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2009 06:22:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753528AbZCCLWE
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 06:22:04 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59274 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751637AbZCCLWC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 06:22:02 -0500
-Received: (qmail invoked by alias); 03 Mar 2009 11:21:59 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp049) with SMTP; 03 Mar 2009 12:21:59 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18z84w74l0zi5wW4jxnz+CNNUbwTw8DYlCijG91Cm
-	ImIbiUR7Nixt/r
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <49AD1250.4080708@viscovery.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+	id S1753360AbZCCLdm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2009 06:33:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753204AbZCCLdm
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 06:33:42 -0500
+Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:2618
+	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751814AbZCCLdl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 06:33:41 -0500
+Received: from justin (unknown [192.168.254.34])
+	by etc.inittab.org (Postfix) with ESMTP id E11ED801C02E;
+	Tue,  3 Mar 2009 12:33:37 +0100 (CET)
+Received: from userid 1000 by justin with local (Exim 4.69) 
+	  id 1LeSsT-0003eH-Dx; Tue, 03 Mar 2009 12:33:37 +0100
+X-Mailer: git-send-email 1.6.2.rc2.271.ge939
+In-Reply-To: <237967ef0902160200r2320687ai71e62047c3ead9ad@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112057>
 
-Hi,
+The documentation used to say that pushing from a shallow clone is not
+supported; this is true, though it may work in some simple cases. If a
+user notices this fact, such a mismatch between documentation and reali=
+ty
+may leave them assuming the documentation is wrong and that pushing fro=
+m
+a shallow clone is supported.
 
-On Tue, 3 Mar 2009, Johannes Sixt wrote:
+This commit updates the documentation to say that pushing from a shallo=
+w
+clone may work in some cases, but that it's not guaranteed to always do=
+=2E
 
-> Johannes Schindelin schrieb:
-> > +# skip picking commits whose parents are unchanged
-> > +skip_unnecessary_picks () {
-> > +	fd=3
-> > +	while read command sha1 rest
-> > +	do
-> > +		# fd=3 means we skip the command
-> > +		case "$fd,$command,$(git rev-parse --verify --quiet $sha1^)" in
-> > +		3,pick,"$ONTO"*|t,p,"$ONTO"*)
-> 
-> s/t,/3,/
+Signed-off-by: Adeodato Sim=C3=B3 <dato@net.com.org.es>
+---
+Hello,
 
-Bah!  Of course, I had to insert a typo there!
+this is about http://thread.gmane.org/gmane.comp.version-control.git/11=
+0100,
+which got a single reply from Mikael Magnusson stating:
+
+> AFAIK, it will work in simple cases, but isn't guaranteed to work.
+
+If that's the case, I think it should be documented, for the reasons
+explained in the commit message.
 
 Thanks!
-Dscho
+
+ Documentation/git-clone.txt |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 95f08b9..1b4f864 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -133,8 +133,10 @@ then the cloned repository will become corrupt.
+ --depth <depth>::
+ 	Create a 'shallow' clone with a history truncated to the
+ 	specified number of revisions.  A shallow repository has a
+-	number of limitations (you cannot clone or fetch from
+-	it, nor push from nor into it), but is adequate if you
++	number of limitations: you cannot clone or fetch from it,
++	nor push into it; pushing from it into a regular repository
++	may work correctly in some cases, but it is not guaranteed to
++	always work.  However, a shallow repository is adequate if you
+ 	are only interested in the recent history of a large project
+ 	with a long history, and would want to send in fixes
+ 	as patches.
+--=20
+1.6.2.rc2.271.ge939
