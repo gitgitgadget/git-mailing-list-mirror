@@ -1,88 +1,67 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: remote branches, and branch names in general
-Date: Mon, 02 Mar 2009 16:38:42 -0800 (PST)
-Message-ID: <m3vdqrtp84.fsf@localhost.localdomain>
-References: <450196A1AAAE4B42A00A8B27A59278E709F07398@EXCHANGE.trad.tradestation.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git filter-branch: Process commits in --date-order
+Date: Mon, 02 Mar 2009 16:51:50 -0800
+Message-ID: <7vbpsjl97d.fsf@gitster.siamese.dyndns.org>
+References: <1236035454-12236-1-git-send-email-peda@lysator.liu.se>
+ <alpine.DEB.1.00.0903030126530.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: "John Dlugosz" <JDlugosz@TradeStation.com>
-X-From: git-owner@vger.kernel.org Tue Mar 03 01:40:15 2009
+Cc: Peter Rosin <peda@lysator.liu.se>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 03 01:53:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeIgA-0004Xj-Cs
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 01:40:14 +0100
+	id 1LeIt3-0008Hl-VZ
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 01:53:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754756AbZCCAir (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Mar 2009 19:38:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750817AbZCCAir
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 19:38:47 -0500
-Received: from mail-fx0-f176.google.com ([209.85.220.176]:38665 "EHLO
-	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752171AbZCCAiq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Mar 2009 19:38:46 -0500
-Received: by fxm24 with SMTP id 24so2238507fxm.37
-        for <git@vger.kernel.org>; Mon, 02 Mar 2009 16:38:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=9E5UG5uvU6HvTJvBA4lZzGT+nsoOVXwRewEtqfclnL8=;
-        b=Y/JdSmB+NIdx/81W+HSuoSe1iDiXzyp/CNZ0sqz1R7YxythOgTDJVm3mGbd+SKC1L9
-         H+djI6KLoR+hW2SJ/pUDt46ibm5cl4Xr562ok/FpyvR8z4vXVcgAr/NEk1weV5/dToZJ
-         BrX5xITN8Om6CYruasuBcBUThU2YSSe4IPJVE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=aCTl3JSg3RGhn2KS3O/QsyCalzxm9+u4yIlC3X5EOZXSorhgM8nRU/33YL91SLoEJZ
-         V4c/9fUYMnNU2KJMXpkkI0VFfoxhL5y7BgjgijisfqRAg8xFNReuq0xooztXOzBn786A
-         rDlanXcm1UlM0/KoJp6PbcyWehVm9fokKoygo=
-Received: by 10.86.87.13 with SMTP id k13mr7401262fgb.35.1236040723350;
-        Mon, 02 Mar 2009 16:38:43 -0800 (PST)
-Received: from localhost.localdomain ([83.8.240.47])
-        by mx.google.com with ESMTPS id l12sm60340fgb.31.2009.03.02.16.38.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 02 Mar 2009 16:38:42 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n230cdku015205;
-	Tue, 3 Mar 2009 01:38:39 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n230caW9015202;
-	Tue, 3 Mar 2009 01:38:36 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E709F07398@EXCHANGE.trad.tradestation.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752838AbZCCAwG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Mar 2009 19:52:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752490AbZCCAwF
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Mar 2009 19:52:05 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35062 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751698AbZCCAwE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Mar 2009 19:52:04 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 8CD8A2BD3;
+	Mon,  2 Mar 2009 19:52:01 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DBA8A2BD2; Mon, 
+ 2 Mar 2009 19:51:57 -0500 (EST)
+In-Reply-To: <alpine.DEB.1.00.0903030126530.10279@pacific.mpi-cbg.de>
+ (Johannes Schindelin's message of "Tue, 3 Mar 2009 01:28:10 +0100 (CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 81B6247A-078D-11DE-B503-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111985>
 
-"John Dlugosz" <JDlugosz@TradeStation.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> I see the remote branches with names of the form remotes/pub/name where
-> pub is the nickname of the place I pull from.  To specify such branches,
-> must I always spell it out with the leading "remotes/", or can that be
-> shorted or implied somehow?  
+> On Tue, 3 Mar 2009, Peter Rosin wrote:
+>
+>> When converting an svn repository to git, I am filtering the commits
+>> using --msg-filter. During this conversion I want to use the
+>> .git-rewrite/map data to fill in references to other commits. In the
+>> svn repo, there is a commit message e.g. "Cherry-pick r207", and I
+>> want to append "r207 = <commit>" to the git commit message, as r207
+>> no longer means very much. This works fine when the git commit
+>> corresponding to r207 has been filtered before the current commit, and
+>> is present in the map. When filtering in --topo-order, this is not
+>> always the case, making it impossible to look up the git commit.
+>
+> I'd rather have this as an option.  God knows what breaks with time-skewed 
+> repositories if you use date-order instead of topo-order, and I'd rather 
+> not break that not quite uncommon case.
 
-You usually can omit "remotes/" prefix, and just use
-"<remote>/<branch>" (or even "<remote>" for "<remote>/HEAD"). You need
-it only if there is need for disambiguation.
+I am wondering if it even makes sense to allow users to disable
+topological ordering.
 
-> 
-> Meanwhile, I see that branch names can be hierarchical, as I found out
-> when I accidently created a branch called "pub/xxx".  So I'm wondering
-> about the usefulness of using that for organizing topic branches based
-> on assigned tasks organization and the person owning that branch.
-
-Junio uses branches like 'fc/parseopt-config' (initials + feature)
-in git development...
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Doesn't filter-branch have the same "child commits build on top of parent
+commits" dependency as fast-export has?  And didn't you guys fix
+fast-export recently?
