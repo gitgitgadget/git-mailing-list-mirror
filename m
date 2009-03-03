@@ -1,188 +1,147 @@
-From: "Pat Notz" <pknotz@sandia.gov>
-Subject: [PATCHv3] Make git-clone respect branch.autosetuprebase
-Date: Tue, 3 Mar 2009 13:23:45 -0700
-Message-ID: <1236111825-32159-1-git-send-email-pknotz@sandia.gov>
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: Re: [RFC PATCH] Windows: Assume all file names to be UTF-8 encoded.
+Date: Tue, 3 Mar 2009 15:39:07 -0500
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E709F077AC@EXCHANGE.trad.tradestation.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: "Pat Notz" <pknotz@sandia.gov>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 03 21:25:48 2009
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: <dpotapov@gmail.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 03 21:40:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LebBA-00045H-A9
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 21:25:28 +0100
+	id 1LebQ7-0001Hh-Vy
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 21:40:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752844AbZCCUX7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2009 15:23:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750915AbZCCUX7
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 15:23:59 -0500
-Received: from sentry-three.sandia.gov ([132.175.109.17]:52800 "EHLO
-	sentry-three.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751263AbZCCUX6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 15:23:58 -0500
-X-WSS-ID: 0KFY600-08-KG5-02
-X-M-MSG: 
-Received: from sentry.sandia.gov (sentry.sandia.gov [132.175.109.21])
-	by sentry-three.sandia.gov (Tumbleweed MailGate 3.6.1) with ESMTP id 210D98CBDC6
-	for <git@vger.kernel.org>; Tue,  3 Mar 2009 13:24:00 -0700 (MST)
-Received: from [132.175.109.1] by sentry.sandia.gov with ESMTP (SMTP
- Relay 01 (Email Firewall v6.3.2)); Tue, 03 Mar 2009 13:23:46 -0700
-X-Server-Uuid: 6BFC7783-7E22-49B4-B610-66D6BE496C0E
-Received: from mail.sandia.gov (cas2.sandia.gov [134.253.165.160]) by
- mailgate.sandia.gov (8.14.1/8.14.1) with ESMTP id n23KNkkW014965 for
- <git@vger.kernel.org>; Tue, 3 Mar 2009 13:23:46 -0700
-Received: from localhost.localdomain (134.253.246.168) by
- cas2.srn.sandia.gov (134.253.165.189) with Microsoft SMTP Server id
- 8.1.340.0; Tue, 3 Mar 2009 13:23:45 -0700
-X-Mailer: git-send-email 1.6.1.2
-X-TMWD-Spam-Summary: TS=20090303202346; ID=1; SEV=2.3.1;
- DFV=B2009030316; IFV=NA; AIF=B2009030316; RPD=5.03.0010; ENG=NA;
- RPDID=7374723D303030312E30413031303230312E34394144393144322E303138303A534346535441543838363133332C73733D312C6667733D30;
- CAT=NONE; CON=NONE; SIG=AAAAAAAAAAAAAAAAAAAAAAAAfQ==
-X-MMS-Spam-Filter-ID: B2009030316_5.03.0010
-X-WSS-ID: 65B34E583BW745702-01-01
+	id S1753627AbZCCUj1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 15:39:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753426AbZCCUj1
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 15:39:27 -0500
+Received: from mail2.tradestation.com ([63.99.207.80]:33207 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753420AbZCCUj0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2009 15:39:26 -0500
+X-ASG-Debug-ID: 1236112761-5cdc026e0000-QuoKaX
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
+Received: from mail5.tradestation.com (localhost [127.0.0.1])
+	by mail2.tradestation.com (Spam Firewall) with ESMTP
+	id 317131E3B20; Tue,  3 Mar 2009 15:39:21 -0500 (EST)
+Received: from mail5.tradestation.com ([192.168.51.76]) by mail2.tradestation.com with ESMTP id 2GDHcuUiBlza4UlZ; Tue, 03 Mar 2009 15:39:21 -0500 (EST)
+X-ASG-Whitelist: Client
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 3 Mar 2009 15:39:20 -0500
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-ASG-Orig-Subj: Re: [RFC PATCH] Windows: Assume all file names to be UTF-8 encoded.
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Re: [RFC PATCH] Windows: Assume all file names to be UTF-8 encoded.
+Thread-Index: AcmcQBlR1koy575ZR2aCJCJp8bBi9Q==
+X-OriginalArrivalTime: 03 Mar 2009 20:39:20.0771 (UTC) FILETIME=[21533130:01C99C40]
+X-Barracuda-Connect: UNKNOWN[192.168.51.76]
+X-Barracuda-Start-Time: 1236112762
+X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112165>
 
-When git-clone creates an initial branch it was not
-checking the branch.autosetuprebase configuration
-option (which may exist in ~/.gitconfig).
+Re: AFAIK, Microsoft C runtime library does not support UTF-8,
 
-Added function to branch.c to handle autorebase
-configuration setup.
+Actually, here is a clip from the runtime library source code:
 
-Signed-off-by: Pat Notz <pknotz@sandia.gov>
----
+        tmode = _textmode(fh);
 
-Sorry, the PATCHv2 email had a stray "From:..." line.
+        switch(tmode) {
+            case __IOINFO_TM_UTF8 :
+                /* For a UTF-8 file, we need 2 buffers, because after
+reading we
+                   need to convert it into UNICODE - MultiByteToWideChar
+doesn't do
+                   in-place conversions. */
 
- branch.c         |   23 ++++++++++++++++-------
- branch.h         |    9 +++++++++
- builtin-clone.c  |    3 +++
- t/t5601-clone.sh |   14 ++++++++++++++
- 4 files changed, 42 insertions(+), 7 deletions(-)
+                /* MultiByte To WideChar conversion may double the size
+of the
+                   buffer required & hence we divide cnt by 2 */
 
-diff --git a/branch.c b/branch.c
-index 1f00e44..ee8b69d 100644
---- a/branch.c
-+++ b/branch.c
-@@ -32,21 +32,33 @@ static int find_tracked_branch(struct remote *remote, void *priv)
- 	return 0;
- }
- 
--static int should_setup_rebase(const struct tracking *tracking)
-+static int should_setup_rebase(const char * remote)
- {
- 	switch (autorebase) {
- 	case AUTOREBASE_NEVER:
- 		return 0;
- 	case AUTOREBASE_LOCAL:
--		return tracking->remote == NULL;
-+		return remote == NULL;
- 	case AUTOREBASE_REMOTE:
--		return tracking->remote != NULL;
-+		return remote != NULL;
- 	case AUTOREBASE_ALWAYS:
- 		return 1;
- 	}
- 	return 0;
- }
- 
-+int setup_autorebase(const char *local, const char *remote_tracked_branch)
-+{
-+	if (should_setup_rebase(remote_tracked_branch)) {
-+		struct strbuf key = STRBUF_INIT;
-+		strbuf_addf(&key, "branch.%s.rebase", local);
-+		git_config_set(key.buf, "true");
-+		strbuf_release(&key);
-+		return 1;
-+	}
-+	return 0;
-+}
-+
- /*
-  * This is called when new_ref is branched off of orig_ref, and tries
-  * to infer the settings for branch.<new_ref>.{remote,merge} from the
-@@ -86,11 +98,8 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
- 	git_config_set(key, tracking.src ? tracking.src : orig_ref);
- 	printf("Branch %s set up to track %s branch %s.\n", new_ref,
- 		tracking.remote ? "remote" : "local", orig_ref);
--	if (should_setup_rebase(&tracking)) {
--		sprintf(key, "branch.%s.rebase", new_ref);
--		git_config_set(key, "true");
-+	if (setup_autorebase(new_ref, tracking.remote))
- 		printf("This branch will rebase on pull.\n");
--	}
- 	free(tracking.src);
- 
- 	return 0;
-diff --git a/branch.h b/branch.h
-index 9f0c2a2..b332c09 100644
---- a/branch.h
-+++ b/branch.h
-@@ -21,4 +21,13 @@ void create_branch(const char *head, const char *name, const char *start_name,
-  */
- void remove_branch_state(void);
- 
-+/*
-+ * Used when creating a new branch to properly setup the autorebase flag
-+ * in the git-config file.  If the new branch ("local") is created from
-+ * a remote branch then remote_tracked_branch should be non-NULL.  If
-+ * the new branch is being created from another local branch then
-+ * remote_tracked_branch should be NULL.
-+ */
-+int setup_autorebase(const char *local, const char *remote_tracked_branch);
-+
- #endif
-diff --git a/builtin-clone.c b/builtin-clone.c
-index c338910..587c834 100644
---- a/builtin-clone.c
-+++ b/builtin-clone.c
-@@ -17,6 +17,7 @@
- #include "unpack-trees.h"
- #include "transport.h"
- #include "strbuf.h"
-+#include "branch.h"
- #include "dir.h"
- #include "pack-refs.h"
- #include "sigchain.h"
-@@ -360,6 +361,8 @@ static void install_branch_config(const char *local,
- 	strbuf_reset(&key);
- 	strbuf_addf(&key, "branch.%s.merge", local);
- 	git_config_set(key.buf, remote);
-+	if (setup_autorebase(local, remote))
-+		printf("Default branch '%s' will rebase on pull.\n", local);
- 	strbuf_release(&key);
- }
- 
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 44793f2..0f8b43c 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -159,4 +159,18 @@ test_expect_success 'clone a void' '
- 	test_cmp target-6/.git/config target-7/.git/config
- '
- 
-+test_expect_success 'clone respects global branch.autosetuprebase' '
-+	HOME="`pwd`" &&
-+	export HOME &&
-+	test_config="$HOME"/.gitconfig &&
-+	unset GIT_CONFIG_NOGLOBAL &&
-+	git config -f "$test_config" branch.autosetuprebase remote &&
-+	rm -fr dst &&
-+	git clone src dst &&
-+	cd dst &&
-+	expected="ztrue" &&
-+	actual="z$(git config branch.master.rebase)" &&
-+	test $expected = $actual
-+'
-+
- test_done
--- 
-1.6.1.2
+                /*
+                 * Since we are reading UTF8 stream, cnt bytes read may
+vary
+                 * from cnt wchar_t characters to cnt/4 wchar_t
+characters. For
+                 * this reason if we need to read cnt characters, we
+will
+                 * allocate MBCS buffer of cnt. In case cnt is 0, we
+will
+                 * have 4 as minimum value. This will make sure we don't
+                 * overflow for reading from pipe case.
+                 *
+                 *
+                 * In this case the numbers of wchar_t characters that
+we can
+                 * read is cnt/2. This means that the buffer size that
+we will
+                 * require is cnt/2.
+                 */
+
+                /* For UTF8 we want the count to be an even number */
+
+This is in the _read(fd, buffer, count) function, and shows that it will
+in fact read UTF-8 and automatically transform it to UTF-16LE
+transparently.  The documentation for _open explains this feature.
+
+Meanwhile, a quick look at _mbslen() etc. shows that they are
+implemented, and will handle UTF-8 encoded text as variable-length char*
+just fine as long as suitable tables are loaded in its locale.  An
+internal header shows macros for generating the lead-byte information as
+needed by that table.
+
+Now, the default when a program starts is to use the "C" locale.  The
+locale argument to setlocale can take a form ".code_page", so calling
+
+	setlocale (LC_CTYPE, ".65001");
+
+should do the trick.  Assuming, that is, that you don't hit macros that
+assume that characters are never multibyte.  So define the preprocessor
+symbol _MBCS when you compile.
+
+Older versions might not work right because MBCS (multibyte character
+strings) was only actually implemented to DBCS (double-byte).  That is,
+a single lead byte would be followed by a second byte, and no other
+cases are provided for.  But, GB18030 has up to 4 bytes in a single
+character.  It might still not be completely "clean" though because
+GB18030 has a "double double" nature to it.  Just like assuming 16-bit
+characters period mostly works with surrogate pairs even if you didn't
+code full UTF-16 support, DBCS code will see a 4-byte GB18030 character
+as two double byte characters.  So it gets the len (in characters)
+wrong, and might still break up what is supposed to be a single
+character.  So it really needs some improvement from the historical
+DBCS-only code to work properly.  
+
+Anyway, if UTF-8 really doesn't work with MBCS functions acceptably
+well, and the goal is to allow passage of all characters through the
+program, then set the program to use Chinese.  GB18030 is =fully=
+supported and is just another (albeit strange) encoding for Unicode.
+
+As for what
+	fprintf (stderr, "unable to open %s", path);
+will do, it will have no problem copying the contents of path to the
+output stream no matter how it is encoded.  The result will be sent to
+stderr, which may be autotranslating the local code page to UTF-16 or
+UTF-8, but by default just feeds the stream of bytes to the console
+window's 8-bit API, which has its own code page setting.
+
+Personally, I have printf'ed UTF-8 encoded text to standard output.  It
+looks OK if the console is also set to UTF-8.
+
+--John
+(please excuse the footer; it's not my idea)
+
+
+
+TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
+  If you received this in error, please contact the sender and delete the material from any computer.
