@@ -1,52 +1,48 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: Jeff King <peff@peff.net>
 Subject: Re: post-checkout hook not run on clone
-Date: Mon, 2 Mar 2009 21:04:51 -0800
-Message-ID: <20090303050451.GA26459@spearce.org>
-References: <20273.1236033817@relay.known.net> <20090303042848.GC18136@coredump.intra.peff.net>
+Date: Tue, 3 Mar 2009 00:10:26 -0500
+Message-ID: <20090303051026.GA21101@coredump.intra.peff.net>
+References: <20273.1236033817@relay.known.net> <20090303042848.GC18136@coredump.intra.peff.net> <23978.1236056549@relay.known.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: layer <layer@known.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 03 06:07:39 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: layer <layer@known.net>
+X-From: git-owner@vger.kernel.org Tue Mar 03 06:12:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeMqw-00073J-MS
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 06:07:39 +0100
+	id 1LeMvC-00083e-Ni
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 06:12:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750775AbZCCFEz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2009 00:04:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750771AbZCCFEy
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 00:04:54 -0500
-Received: from george.spearce.org ([209.20.77.23]:45718 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750748AbZCCFEx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 00:04:53 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id D4A0738210; Tue,  3 Mar 2009 05:04:51 +0000 (UTC)
+	id S1750711AbZCCFKg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 00:10:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750775AbZCCFKf
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 00:10:35 -0500
+Received: from peff.net ([208.65.91.99]:35421 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750768AbZCCFKe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 00:10:34 -0500
+Received: (qmail 12434 invoked by uid 107); 3 Mar 2009 05:10:33 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 03 Mar 2009 00:10:33 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Mar 2009 00:10:26 -0500
 Content-Disposition: inline
-In-Reply-To: <20090303042848.GC18136@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <23978.1236056549@relay.known.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/111998>
 
-Jeff King <peff@peff.net> wrote:
-> On Mon, Mar 02, 2009 at 02:43:37PM -0800, layer wrote:
-> 
-> > I realize this might be a feature, but when I switch to the master
-> > branch with "git checkout master" it is, and I would think that a
-> > clone that gets the master branch would also does a sort of "checkout
-> > master" and would run the hook.
-> 
-> Right. Hooks are not cloned with the repo.
+On Mon, Mar 02, 2009 at 09:02:29PM -0800, layer wrote:
 
-I think the original poster was talking about a hook installed via
-their template directory.  In which case the hook is trusted, and is
-coming from a known source, its just not being called during clone.
- 
--- 
-Shawn.
+> The hook in question was in /usr/share/git-core/templates/hooks/, so
+> it would get setup on clone.  That works fine.  If I immediately
+> switch branches, the hook gets called.  It's just the `post-clone'
+> (when I assume something like `checkout' is done), the hook doesn't
+> get called.
+
+Ah, OK. I misunderstood. Then that is a bug, IMHO. Patch in a minute.
+
+-Peff
