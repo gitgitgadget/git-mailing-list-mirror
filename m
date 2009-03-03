@@ -1,73 +1,86 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: remote branches, and branch names in general
-Date: Tue, 3 Mar 2009 14:32:00 -0500
-Message-ID: <76718490903031132v592b8368p6355ea2bd0cda4ae@mail.gmail.com>
-References: <450196A1AAAE4B42A00A8B27A59278E709F07398@EXCHANGE.trad.tradestation.com>
-	 <m3vdqrtp84.fsf@localhost.localdomain>
-	 <20090303041631.GB18136@coredump.intra.peff.net>
-	 <450196A1AAAE4B42A00A8B27A59278E709F075DF@EXCHANGE.trad.tradestation.com>
-	 <20090303161117.GB32079@coredump.intra.peff.net>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: parallel dev. with email
+Date: Tue, 3 Mar 2009 20:35:33 +0100
+Message-ID: <20090303193533.GC9964@m62s10.vlinux.de>
+References: <20090303153141.246620@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: John Dlugosz <JDlugosz@tradestation.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 03 20:33:49 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: stoecher@gmx.at
+X-From: git-owner@vger.kernel.org Tue Mar 03 20:35:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeaMw-0008OZ-1x
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 20:33:34 +0100
+	id 1LeaOk-0000jx-H4
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 20:35:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752912AbZCCTcG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2009 14:32:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750867AbZCCTcE
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 14:32:04 -0500
-Received: from rv-out-0506.google.com ([209.85.198.224]:12759 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751305AbZCCTcC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 14:32:02 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so2925381rvb.1
-        for <git@vger.kernel.org>; Tue, 03 Mar 2009 11:32:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=6lDwpY6BUQI4vsq5OhyHIWHC9CCSSdvNMzv+S3s6jMU=;
-        b=SkANtQvb4kPS2gi8anp9dwnab51bdCI5z8lpRyW+zgJp2rEref6P0NsOgMNTJTrD/0
-         JfwAN63Fqa5WlYUn7Z5pReCvBj4WcwQ0GyZSdzP1SJ8LTIVHIMhG01i76BoFtcEKczGv
-         U+o060FwVHmkI3eh9RWUKI42xTCB0+1HDga0U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=riVcK2LB5YHGMyQqkUFd+uEUVdc42Lwa4lgGMC1ParnXnob0R9iPGrIcdgQUmpxjN9
-         WpY+iFjPu9rztUXrqMWrHfdqVJ7FRQU7TwbjGMEdc2YrWsRzW2ao2reLqOC1NWFbBgye
-         VTFQB21geQ51U3BFf0VYTDJXaKOjFWf7yqMw0=
-Received: by 10.141.180.16 with SMTP id h16mr3698735rvp.68.1236108720138; Tue, 
-	03 Mar 2009 11:32:00 -0800 (PST)
-In-Reply-To: <20090303161117.GB32079@coredump.intra.peff.net>
+	id S1753324AbZCCTd6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 14:33:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752780AbZCCTd6
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 14:33:58 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42248 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750867AbZCCTd5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 14:33:57 -0500
+Received: (qmail invoked by alias); 03 Mar 2009 19:33:39 -0000
+Received: from m62s10.vlinux.de (EHLO m62s10.vlinux.de) [83.151.21.204]
+  by mail.gmx.net (mp026) with SMTP; 03 Mar 2009 20:33:39 +0100
+X-Authenticated: #1252284
+X-Provags-ID: V01U2FsdGVkX19w1OI2TudwJC6OTkwX7eXqgUCJdixDZRb/4eJt19
+	/dxXYmw9NFQmTp
+Received: by m62s10.vlinux.de (Postfix, from userid 1000)
+	id 43B9C199AF; Tue,  3 Mar 2009 20:35:33 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20090303153141.246620@gmx.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112155>
 
-On Tue, Mar 3, 2009 at 11:11 AM, Jeff King <peff@peff.net> wrote:
-> Yes, the "branch" command deals only with creating things in refs/heads,
+On Tue, Mar 03, 2009 at 04:31:41PM +0100, stoecher@gmx.at wrote:
+> Hi,
+> 
+> I am new to git and I am wondering what git commands to use for this szenario: two developers without the possibility of sharing a server communicate their changes via email.
+> 
+> This is how far I have come reading the online docu:
+> * Each developer can create the diff-info of his commits with
+>   git format-patch
+> * and the other developer can incorporate these changes with
+>   git am
+> 
+> After creating the patches with format-patch one could set a tag:
+>   git tag -f patchesDone
+> so next time one wants to create patches, this tag can be used as the starting point:
+>   git format-patch patchesDone..
+> 
+> But what if in the meantime one has incorporated the other developer's changes with git am? Then these changes will also be among the patches created with format-patch. What will happen, if these patches are sent to the other developer, who does not need his own changes again. Will his own changes be silently ignored by git am? Or how else to effectively coordinate the work of two developers with git via email?
+> 
+> thank you,
+> 
+> Wolfgang
 
-Unless given -r, in which case it looks in refs/remotes, or -a, in
-which case it looks in refs/heads and refs/remotes. :-)
+[ Disclaimer: It was a *very* long time since I used this; there might
+  be a better way to use bundles already ]
 
-> which are your local branches (similarly, "git tag" will only deal with
-> stuff in refs/tags). So "git branch origin/foo" will make a ref
-> "refs/heads/origin/foo", and "git branch -d origin/foo" will delete
-> "refs/heads/origin/foo", not "refs/remotes/origin/foo".
+You could also use 'git bundle' to send your changes.  E.g. if you have
+all your already released/send patches in master branch and all your
+locale changes in private
 
-For the latter, use git branch -d -r origin/foo. I'm not sure whether
--r is usable when creating a branch, I haven't tried.
+ $ git bundle create mybundle private ^master  	# not sure if private..master
+						# will work here
 
-j.
+
+and your friend could to
+
+ $ git bundle verify mybundle
+ $ git fetch mybundle master:localRef
+
+to import the changes. (Pls have a look in the manpage of git bundle,
+there are many examples)
+
+-Peter
