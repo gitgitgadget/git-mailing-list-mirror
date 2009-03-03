@@ -1,63 +1,98 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: First round of UGFWIINI results
-Date: Tue, 3 Mar 2009 18:36:46 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903031835420.6399@intel-tinevez-2-302>
-References: <alpine.DEB.1.00.0902171745320.6185@intel-tinevez-2-302>  <3f4fd2640903030709r6e585d9j57ad3ae08cf38df1@mail.gmail.com>  <alpine.DEB.1.00.0903031658180.6399@intel-tinevez-2-302>  <7vljrmd24n.fsf@gitster.siamese.dyndns.org>
- <fabb9a1e0903030826p7caa17e3m45789026d51a2f8e@mail.gmail.com>
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: [PATCH] doc: clarify how -S works
+Date: Tue, 3 Mar 2009 17:39:38 +0000
+Message-ID: <43d8ce650903030939u73f09171uf4041b6d9824b698@mail.gmail.com>
+References: <49AD3E78.1050706@sneakemail.com>
+	 <20090303152333.GB24593@coredump.intra.peff.net>
+	 <20090303154041.GA31265@coredump.intra.peff.net>
+	 <7v1vted0d7.fsf@gitster.siamese.dyndns.org>
+	 <20090303171138.GA454@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Reece Dunn <msclrhd@googlemail.com>, git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 03 18:38:39 2009
+	=?UTF-8?Q?Peter_Valdemar_M=C3=B8rch_=28Lists=29?= 
+	<4ux6as402@sneakemail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 03 18:41:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeYZO-0001qj-QV
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 18:38:19 +0100
+	id 1LeYc8-0003AW-PA
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 18:41:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751891AbZCCRgv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2009 12:36:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751444AbZCCRgv
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 12:36:51 -0500
-Received: from mail.gmx.net ([213.165.64.20]:49262 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751183AbZCCRgu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 12:36:50 -0500
-Received: (qmail invoked by alias); 03 Mar 2009 17:36:47 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp052) with SMTP; 03 Mar 2009 18:36:47 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19soBt7mhlssIsrB6JW+8xIa85N48RULD/WByqS+t
-	Qui8H70rhv/U4A
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <fabb9a1e0903030826p7caa17e3m45789026d51a2f8e@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1752796AbZCCRjl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2009 12:39:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752404AbZCCRjk
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 12:39:40 -0500
+Received: from wf-out-1314.google.com ([209.85.200.169]:52361 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752185AbZCCRjk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2009 12:39:40 -0500
+Received: by wf-out-1314.google.com with SMTP id 28so3414019wfa.4
+        for <git@vger.kernel.org>; Tue, 03 Mar 2009 09:39:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=4ViXsUP5yr6P1YO8taAHi5pUVRVwUw+blEtKPEHDMMk=;
+        b=IHnI97Fle3w022EDA8hKvWXXoe4n7HkkAH+sl6i2D8fh+gscna2SFdSfLGwjfq5S+U
+         /tjV67To5VKwve+Zy/mnZBYfWOqZJfmg2a3JHdhV1G0O1iYaIO1KE9EwBC4Dp5wU4hHE
+         ti3IKwCxBJkPvvQhVRBaX8GMZtodDb22Tgh2Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=igZUrCeJDf8DFqBBINYjHGY5BaGacMbYUdmvO6EKYzKvHML1kfwwdsbwAr+e5wgp8j
+         MSvpvEO1bIdK9gxEbXEHimIVFs1NDU7XA6Umo4wjOLqgTqlnfqOXUrwpOZuoeJNh+WCM
+         QxbaCh5y1sXy4ZCWnXqivppwsmyCA/YNhXHpg=
+Received: by 10.142.238.4 with SMTP id l4mr3715971wfh.98.1236101978161; Tue, 
+	03 Mar 2009 09:39:38 -0800 (PST)
+In-Reply-To: <20090303171138.GA454@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112133>
 
-Hi,
+2009/3/3 Jeff King <peff@peff.net>:
+> On Tue, Mar 03, 2009 at 08:42:12AM -0800, Junio C Hamano wrote:
+>
+>> In retrospect, because --pickaxe was designed primarily for Porcelai=
+n use,
+>> it was a mistake for it to have taken a short-and-sweet -S synonym.
+>
+> Hmm. I actually like the pickaxe behavior and find it useful for
+> searching. IOW, I consider it a porcelain feature, just perhaps not t=
+he
+> one that some people are expecting.
+>
+>> > =C2=A0-S<string>::
+>> > - =C2=A0 Look for differences that contain the change in <string>.
+>> > + =C2=A0 Look for differences that introduce or remove an instance=
+ of
+>> > + =C2=A0 <string>. Note that this is different than the string sim=
+ply
+>> > + =C2=A0 appearing in diff output; see the 'pickaxe' entry in
+>> > + =C2=A0 linkgit:gitdiffcore[7] for more details.
+>>
+>> Look for differences that change the number of occurrences of <strin=
+g>?
+>
+> Yes, that is technically correct. I was trying to find a wording that
+> was a little less "this is literally what it does" and more "this is
+> what you might find it useful for".
 
-On Tue, 3 Mar 2009, Sverre Rabbelier wrote:
+Is there any way to have an option to also match any line containing
+the string?  That might be the best way to document it, as well as
+being very useful:
 
-> Heya,
-> 
-> On Tue, Mar 3, 2009 at 17:04, Junio C Hamano <gitster@pobox.com> wrote:
-> > Are you also in the contest, with your blog as one of the contenders?
-> 
-> I remember Dscho saying anything mentioned in the announcement does
-> not count, but upon later inspection of the original post I cannot
-> find it...?
+-s<string>
+   Look for any additions, removals or changes in any line containing <=
+string>
+-S<string>
+   Look only for any additions or removals of the <string> in any line
 
-I thought so, too, but from the git log it does not seem like it.  Of 
-course, I sneakily rewrote history from time to time (so it should be 
-in git log -g, but that computer is at home) ;-)
-
-Ciao,
-Dscho
+John
