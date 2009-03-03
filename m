@@ -1,70 +1,109 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: First round of UGFWIINI results
-Date: Tue, 3 Mar 2009 16:59:27 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903031658180.6399@intel-tinevez-2-302>
-References: <alpine.DEB.1.00.0902171745320.6185@intel-tinevez-2-302> <3f4fd2640903030709r6e585d9j57ad3ae08cf38df1@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git log -Sfoo ignores indentation (whitespace?) changes...
+Date: Tue, 03 Mar 2009 17:02:06 +0100
+Message-ID: <49AD547E.7030703@drmicha.warpmail.net>
+References: <49AD3E78.1050706@sneakemail.com> <20090303152333.GB24593@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1865421431-1236095967=:6399"
-Cc: git@vger.kernel.org
-To: Reece Dunn <msclrhd@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 03 17:01:13 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?IlBldGVyIFZhbGRlbWFyIE3DuHJjaCAoTGlzdHMpIg==?= 
+	<4ux6as402@sneakemail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 03 17:03:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeX3H-0002B9-IF
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 17:01:04 +0100
+	id 1LeX5u-0003KA-8u
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 17:03:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754765AbZCCP7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2009 10:59:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754597AbZCCP7b
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 10:59:31 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42243 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753565AbZCCP7a (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 10:59:30 -0500
-Received: (qmail invoked by alias); 03 Mar 2009 15:59:28 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp006) with SMTP; 03 Mar 2009 16:59:28 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+IoLBZP/WI/IOBr34wmeXvum8fVyIP2m/2/B3vos
-	SabIYyZFIr5VXg
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <3f4fd2640903030709r6e585d9j57ad3ae08cf38df1@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.65
+	id S1754654AbZCCQCR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2009 11:02:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752622AbZCCQCR
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 11:02:17 -0500
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:39385 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751584AbZCCQCQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2009 11:02:16 -0500
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 94B962D368E;
+	Tue,  3 Mar 2009 11:02:14 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Tue, 03 Mar 2009 11:02:14 -0500
+X-Sasl-enc: oAcu+K3D0Bn+JOzw1rHCJc6RXBDXbfuwaqnL7AH0NE/d 1236096134
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id DC50A27F33;
+	Tue,  3 Mar 2009 11:02:13 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090303 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <20090303152333.GB24593@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112097>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Jeff King venit, vidit, dixit 03.03.2009 16:23:
+> On Tue, Mar 03, 2009 at 03:28:08PM +0100, "Peter Valdemar M=C3=B8rch =
+(Lists)" wrote:
+>=20
+>> Commits where only the indentation of 'foo' is changed are not shown=
+ with=20
+>> "git log -Sfoo". Is there any way to force showing them along with o=
+ther=20
+>> changes involving foo? (E.g. for python, indentation matters!)
+>>
+>> Why doesn't the second commit show up in the following?
+>=20
+> Because you misunderstand how "-S" works (but don't worry, it's not y=
+our
+> fault -- the documentation is somewhat misleading). The documentation=
+ says:
+>=20
+>   -S<string>
+>     Look for differences that contain the change in <string>.
+>=20
+> but what it actually does is find changes where the string was introd=
+uced
+> or removed. So it literally counts the number of occurences before an=
+d
+> after the commit, and the commit is interesting if they are not equal=
+=2E
 
---8323329-1865421431-1236095967=:6399
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+Hmm. The diffcore doc sounds more like if the filepair is picked if
+#before > 0 and #after =3D 0, but not if #after > 0.
 
-Hi,
+In any case, the pickaxe can't detect moving around of strings, right?
 
-On Tue, 3 Mar 2009, Reece Dunn wrote:
+>> # Create text containing 'line' without whitespace
+>> $ echo 'line' > text
+>> $ git add text
+>> $ git commit -m "first" text
+>>
+>> # Here, I add one space of indentation in front of 'line'
+>> $ echo ' line' > text
+>> $ git commit -m "second" text
+>=20
+> So "line" wasn't actually changed. It just happens to be on a line wh=
+ich
+> _did_ change.
+>=20
+>> I would like to see both "first" and "second" somehow - can I do tha=
+t?
+>=20
+> I don't think there's an easy way to do this right now; you would nee=
+d
+> to do "git log -p" and search through the output to get what you want=
+ (I
+> often do this just using the pager's search function).
 
-> 2009/2/17 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> > Dear fans of Git,
-> >
-> > a while ago I announced the UGFWIINI contest, a glorious battle of ideas
-> > how to
-> >
-> >        Use Git For What It Is Not Indended
-> 
-> Does using Git to track edits when proofreading a html/text document
-> (short story, novel, ...) count?
+If you know what your are looking for you can do variations on
 
-I'll count it, but I want (read-only) access to the repository as a proof 
-that you actually use Git that way ;-)
+git log -S'line| line' --pickaxe-regex
 
-Ciao,
-Dscho
---8323329-1865421431-1236095967=:6399--
+which seems to be different from
+
+git log -S'line' -S' line'
+
+which was my first attempt...
+
+Michael
