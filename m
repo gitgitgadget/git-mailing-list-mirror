@@ -1,109 +1,103 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: First round of UGFWIINI results
-Date: Tue, 03 Mar 2009 02:30:36 -0800 (PST)
-Message-ID: <m3myc2ucfb.fsf@localhost.localdomain>
-References: <alpine.DEB.1.00.0902171745320.6185@intel-tinevez-2-302>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Subject: [PATCH] Push to create
+Date: Tue, 3 Mar 2009 11:39:16 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903031118280.6399@intel-tinevez-2-302>
+References: <7v63itbxe7.fsf@gitster.siamese.dyndns.org> <20090301100039.GD4146@coredump.intra.peff.net> <20090301170436.GA14365@spearce.org> <7vwsb7gkvt.fsf_-_@gitster.siamese.dyndns.org> <20090303070937.GB30609@coredump.intra.peff.net>
+ <7vy6vnf3aw.fsf@gitster.siamese.dyndns.org> <20090303080603.GA3158@coredump.intra.peff.net> <7v63irf21u.fsf@gitster.siamese.dyndns.org> <20090303082706.GC3158@coredump.intra.peff.net> <7v1vtff1op.fsf@gitster.siamese.dyndns.org>
+ <20090303092301.GE32284@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 03 11:32:19 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Tue Mar 03 11:40:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeRv7-0001eO-F6
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 11:32:17 +0100
+	id 1LeS3R-000413-8h
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 11:40:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750776AbZCCKal (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2009 05:30:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750734AbZCCKal
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 05:30:41 -0500
-Received: from nf-out-0910.google.com ([64.233.182.191]:55850 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750728AbZCCKak (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 05:30:40 -0500
-Received: by nf-out-0910.google.com with SMTP id d21so550295nfb.21
-        for <git@vger.kernel.org>; Tue, 03 Mar 2009 02:30:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=8ZoGqmJ9VEggIxjFCRtp6oXg4lXXNgvutcYG1aVEFsE=;
-        b=WPYWADgwWEIvyZDgZDdACO25P5JxmG03S40FtMSWI5lWvZZ2CIHi1lOT5DoDputrRg
-         O6G1PGQ2LLDsijpHIoQYObibXB3OEwJn2pTYf3Kaa2yEnsDruClvzD3hjXOMpNDuyPu8
-         f3Rp8u7Ft8ih1JlmmdpAaI2GLxCTcWwK0G3cc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=AouK1SrlYUjhbFTOSIfJryGoL5A2cNey7nVuVcmamm+5p73TKjrG6uDo22RIFMO6dj
-         zKfoC0zUfVBDkCXj7LrJOvwSNIRCNiwgveyQUjlqYlIM++pCWrFLMZMrt35lQgE85eBs
-         oS46Fk+6OWRPecj129n/38AWk6PObF3mBcAAI=
-Received: by 10.216.20.72 with SMTP id o50mr108433weo.187.1236076237405;
-        Tue, 03 Mar 2009 02:30:37 -0800 (PST)
-Received: from localhost.localdomain (abwq47.neoplus.adsl.tpnet.pl [83.8.240.47])
-        by mx.google.com with ESMTPS id p10sm16443673gvf.1.2009.03.03.02.30.36
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 03 Mar 2009 02:30:36 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n23AU2GB019040;
-	Tue, 3 Mar 2009 11:30:13 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n23ATjlL019030;
-	Tue, 3 Mar 2009 11:29:45 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <alpine.DEB.1.00.0902171745320.6185@intel-tinevez-2-302>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753360AbZCCKjZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 05:39:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753193AbZCCKjZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 05:39:25 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33258 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752868AbZCCKjY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 05:39:24 -0500
+Received: (qmail invoked by alias); 03 Mar 2009 10:39:21 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp011) with SMTP; 03 Mar 2009 11:39:21 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/P5lkDTMXPotXJHjCHmMzYAk9S6F96wevfy6qApB
+	s7DcXXr9R/gJBn
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <20090303092301.GE32284@mit.edu>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112050>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> Dear fans of Git,
+On Tue, 3 Mar 2009, Theodore Tso wrote:
+
+> On Tue, Mar 03, 2009 at 12:30:46AM -0800, Junio C Hamano wrote:
+> > Jeff King <peff@peff.net> writes:
+> > 
+> > > But I think that coincides with what I was trying to say in my 
+> > > original response to the series, which is "this issue is complex, 
+> > > and we need to hear from the people who would really want this 
+> > > exactly what it is they want".
+> > 
+> > And we haven't heard from them at all, unless you and/or Shawn are 
+> > interested.  After all we may not have to worry about this at all ;-)
 > 
-> a while ago I announced the UGFWIINI contest, a glorious battle of ideas
-> how to
+> Junio, I assume you saw Scott James Remnant blog posts, "Git Sucks"?
 > 
-> 	Use Git For What It Is Not Indended
-> 
-> As most of you probably did not find my blog yet, this may come as a
-> surprise to you, but it will not be the only surprise in this email.
+>        http://www.netsplit.com/2009/02/17/git-sucks/
+>        http://www.netsplit.com/2009/02/17/git-sucks-2/
+>        http://www.netsplit.com/2009/02/17/git-sucks-3/
+>        http://www.netsplit.com/2009/02/23/revision-control-systems-suck/
 
-Errr... URL (of a blog), please?
+I have to admit that I only skimmed the first two: happily, this guy just 
+wanted to vent, and chose the correct forum.  His personal blog.
 
+Because he would have had to do something completely different if he 
+wanted to change things.  He would have had to:
 
-Another candidate for UGFWIINI contest: Gitorial. Here is explanation
+- write in the public (i.e. this mailing list),
 
-  ...this presentation was captured in the Git revision control
-  system. Every commit has a commit message that explains the 'next
-  slide' of the presentation. People can then view diffs between
-  commits to quickly see what changed.
+- guard his language much more,
 
-Well, it uses GitHub, not only Git, but...
+- actually come up with something useful, constructive instead of 
+  repeating several times that Git is hard to use,
 
-http://github.com/blog/367-clojure-gitorial
-http://larrytheliquid.com/2009/03/02/presenting-clojure-with-a-gitorial
+- defend that the most important purpose of a revision control system is 
+  the initial publication of a branch, as opposed to controlling 
+  revisions.
 
-........................................................................
+It reminds me very much of the question: "Does a universe exist when there 
+is nobody in it to observe it?"
 
-And similar thing: Homoiconic. Here is explanation
+Only in this case, I would rephrase it to: "Is a usability wart really 
+serious when the guy does not even bother to report it where it can be 
+fixed?"
 
-  Homoiconic is an experiment in publishing code and words about code
-  on a small scale.
+Needless to say, I consider the answer to the latter to be "No.  Really, 
+no."
 
-  When I write, I will add files to the homoiconic git repository,
-  organized by date. Code will be included in the posts and also in
-  the folder with the posts that discuss them, so it's easy to
-  download what you like. You can even download the entire thing as an
-  archive if you want.
+I mean, it is easy, really, really easy to say that something sucks.  It 
+is so easy that nobody should even pay attention.  Certainly so easy that 
+I should not even have bothered writing this mail.
 
-http://github.com/raganwald/homoiconic
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+It is much harder work to come up with solutions, and that is what I am 
+interested in.  So I'll try very hard to ignore everything else.
+
+Ciao,
+Dscho
