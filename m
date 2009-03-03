@@ -1,123 +1,71 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv4 2/2] git submodule: Fix adding of submodules at paths with ./, .. and //
-Date: Tue,  3 Mar 2009 16:08:21 +0100
-Message-ID: <1236092901-28500-3-git-send-email-git@drmicha.warpmail.net>
-References: <49AD3A29.10404@drmicha.warpmail.net>
- <1236092901-28500-1-git-send-email-git@drmicha.warpmail.net>
- <1236092901-28500-2-git-send-email-git@drmicha.warpmail.net>
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Andrei Thorp <garoth@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 03 16:10:09 2009
+From: Reece Dunn <msclrhd@googlemail.com>
+Subject: Re: First round of UGFWIINI results
+Date: Tue, 3 Mar 2009 15:09:50 +0000
+Message-ID: <3f4fd2640903030709r6e585d9j57ad3ae08cf38df1@mail.gmail.com>
+References: <alpine.DEB.1.00.0902171745320.6185@intel-tinevez-2-302>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 03 16:11:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeWFw-0007Qn-0R
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 16:10:04 +0100
+	id 1LeWHC-0007wG-Bh
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 16:11:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753218AbZCCPIi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2009 10:08:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753232AbZCCPIi
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 10:08:38 -0500
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:60292 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753069AbZCCPIh (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2009 10:08:37 -0500
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id A0E7F2D23F2;
-	Tue,  3 Mar 2009 10:08:34 -0500 (EST)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Tue, 03 Mar 2009 10:08:34 -0500
-X-Sasl-enc: 1Pxo9G2mDdAb0NoceIxWPoQtMP8ZJyAfF/MGWIAmraKJ 1236092913
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id EEA2535F71;
-	Tue,  3 Mar 2009 10:08:33 -0500 (EST)
-X-Mailer: git-send-email 1.6.2.rc2
-In-Reply-To: <1236092901-28500-2-git-send-email-git@drmicha.warpmail.net>
+	id S1753317AbZCCPJz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2009 10:09:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753292AbZCCPJy
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 10:09:54 -0500
+Received: from mail-ew0-f177.google.com ([209.85.219.177]:35213 "EHLO
+	mail-ew0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753290AbZCCPJx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2009 10:09:53 -0500
+Received: by ewy25 with SMTP id 25so2353347ewy.37
+        for <git@vger.kernel.org>; Tue, 03 Mar 2009 07:09:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=pt7mXta64fGWcpHITYS2x8lW5DOeI3P5waEok094pnE=;
+        b=veKXsGhHw0cMQ64o7UwBaEgriOtnWMGFMpIW5AhtMvtjglD+phb/E3uQLwJB+sH8Uj
+         ELRVgdMVn90QmbeYcqzNaOCEuBL03PntHUa13QxBUgCGNL30Cub5YLucR2Mr/p+qXKOD
+         o5i5U67eKZLiwtx84BuuhQwPhGU6K85uFtqQM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=nE02SkdGJPO4Ce7yB3eK83uMKhJaGD0/lmIq7N5mAq8DCEaoeIlZdF8XMqSy0uavyM
+         Mc4T4pinFo16U8xRYOM3X8rFbmMEcgzx7NRhqFmJk65YjJX1akTnBXyZcspouy/iNb3T
+         F8xaHADbHoxBwhx97EaDjKqI4cMO3jcdhCN8o=
+Received: by 10.210.52.15 with SMTP id z15mr5764820ebz.50.1236092990261; Tue, 
+	03 Mar 2009 07:09:50 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0902171745320.6185@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112083>
 
-Make 'git submodule add' normalize the submodule path in the
-same way as 'git ls-files' does, so that 'git submodule init' looks up
-the information in .gitmodules with the same key under which 'git
-submodule add' stores it.
+2009/2/17 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> Dear fans of Git,
+>
+> a while ago I announced the UGFWIINI contest, a glorious battle of id=
+eas
+> how to
+>
+> =A0 =A0 =A0 =A0Use Git For What It Is Not Indended
 
-This fixes 4 known breakages.
----
- git-submodule.sh           |   15 ++++++++++++---
- t/t7400-submodule-basic.sh |    8 ++++----
- 2 files changed, 16 insertions(+), 7 deletions(-)
+Does using Git to track edits when proofreading a html/text document
+(short story, novel, ...) count?
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 204aab6..0a27232 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -167,9 +167,18 @@ cmd_add()
- 	;;
- 	esac
- 
--	# strip trailing slashes from path
--	path=$(echo "$path" | sed -e 's|/*$||')
--
-+	# normalize path:
-+	# multiple //; leading ./; /./; /../; trailing /
-+	path=$(printf '%s/\n' "$path" |
-+		sed -e '
-+			s|//*|/|g
-+			s|^\(\./\)*||
-+			s|/\./|/|g
-+			:start
-+			s|\([^/]*\)/\.\./||
-+			tstart
-+			s|/*$||
-+		')
- 	git ls-files --error-unmatch "$path" > /dev/null 2>&1 &&
- 	die "'$path' already exists in the index"
- 
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 35a0ede..af690ec 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -64,7 +64,7 @@ test_expect_success 'submodule add' '
- 	)
- '
- 
--test_expect_failure 'submodule add with ./ in path' '
-+test_expect_success 'submodule add with ./ in path' '
- 	(
- 		cd addtest &&
- 		git submodule add "$submodurl" ././dotsubmod/./frotz/./ &&
-@@ -72,7 +72,7 @@ test_expect_failure 'submodule add with ./ in path' '
- 	)
- '
- 
--test_expect_failure 'submodule add with // in path' '
-+test_expect_success 'submodule add with // in path' '
- 	(
- 		cd addtest &&
- 		git submodule add "$submodurl" slashslashsubmod///frotz// &&
-@@ -80,7 +80,7 @@ test_expect_failure 'submodule add with // in path' '
- 	)
- '
- 
--test_expect_failure 'submodule add with /.. in path' '
-+test_expect_success 'submodule add with /.. in path' '
- 	(
- 		cd addtest &&
- 		git submodule add "$submodurl" dotdotsubmod/../realsubmod/frotz/.. &&
-@@ -88,7 +88,7 @@ test_expect_failure 'submodule add with /.. in path' '
- 	)
- '
- 
--test_expect_failure 'submodule add with ./, /.. and // in path' '
-+test_expect_success 'submodule add with ./, /.. and // in path' '
- 	(
- 		cd addtest &&
- 		git submodule add "$submodurl" dot/dotslashsubmod/./../..////realsubmod2/a/b/c/d/../../../../frotz//.. &&
--- 
-1.6.2.rc2
+This is similar to the ODF <-> Git entry. Now all that needs to happen
+is to replace the ZIP format with a git repository and create a plugin
+for an ODF reader that makes git calls when doing the content tracking
+checks.
+
+- Reece
