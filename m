@@ -1,103 +1,84 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH v3] send-email: add --confirm option and configuration 
-	setting
-Date: Tue, 3 Mar 2009 19:05:47 +0100
-Message-ID: <36ca99e90903031005g3d54436cs486133a340c1eec1@mail.gmail.com>
-References: <7v1vtfjpad.fsf@gitster.siamese.dyndns.org>
-	 <1236055938-65407-1-git-send-email-jaysoffian@gmail.com>
-	 <36ca99e90903030354j33de0313n41d8a95ff898798b@mail.gmail.com>
-	 <76718490903030822j690cb97blea292d391c0d0112@mail.gmail.com>
-	 <7vvdqqblij.fsf@gitster.siamese.dyndns.org>
+From: David Copeland <davetron5000@gmail.com>
+Subject: Re: move files between disparate repos and maintain version history
+Date: Tue, 3 Mar 2009 13:08:17 -0500
+Message-ID: <f95d47890903031008s36873f6ex94c7096f79cd6de@mail.gmail.com>
+References: <0d8965bb-e2ed-4f49-b323-c110f605ae2c@33g2000yqm.googlegroups.com>
+	 <20090303041300.GA18136@coredump.intra.peff.net>
+	 <f95d47890903030858xb398b5fy1aeabb19166e6077@mail.gmail.com>
+	 <20090303171835.GB454@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Paul Gortmaker <paul.gortmaker@windriver.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 03 19:07:23 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 03 19:10:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeZ1T-0005bn-U3
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 19:07:20 +0100
+	id 1LeZ3u-0006Xj-3H
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 19:09:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752064AbZCCSFv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2009 13:05:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751416AbZCCSFv
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 13:05:51 -0500
-Received: from ey-out-2122.google.com ([74.125.78.25]:27806 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750868AbZCCSFu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2009 13:05:50 -0500
-Received: by ey-out-2122.google.com with SMTP id 25so624342eya.37
-        for <git@vger.kernel.org>; Tue, 03 Mar 2009 10:05:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=K9rv7fffPqAcQH2vS0mK8J0GGq+8euzvZoNu3UjvEho=;
-        b=hQYuXMziBBpuy6z/DE8ncvo+AfIO9o9mG3hOkcegbx/cCQ3Wid0m3kxFsifIucJuS8
-         u4orOgVzAw+1eH24/ym+GhwbzxACckP8mdPtM8a1ZzK1DuS1dGmMDMVq4oTZKI3LZh5w
-         9o39i7hVnS/zIXf0eEg+C0W5oo000pPImXVkc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ouvSywFnVb8u7hXAR3c9wNbb7SKmibk3D+VWuVfqaDJAO3cbfXCQ8MxTJR8Jb+uHsq
-         Zyo5V42qDBMGaYNaayadNEfCmPipoH8+SOHPfFP9cQWXKfEsXZsbFefnYaWemU0cnsx/
-         4heRzASxB4hkXix6T3qcgz7GUF8EkiuUJDEUg=
-Received: by 10.210.11.17 with SMTP id 17mr5861296ebk.32.1236103547734; Tue, 
-	03 Mar 2009 10:05:47 -0800 (PST)
-In-Reply-To: <7vvdqqblij.fsf@gitster.siamese.dyndns.org>
+	id S1751637AbZCCSIW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2009 13:08:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751128AbZCCSIW
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 13:08:22 -0500
+Received: from fg-out-1718.google.com ([72.14.220.158]:12831 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750810AbZCCSIV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2009 13:08:21 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so111490fgg.17
+        for <git@vger.kernel.org>; Tue, 03 Mar 2009 10:08:19 -0800 (PST)
+Received: by 10.86.82.16 with SMTP id f16mr8237688fgb.32.1236103698877; Tue, 
+	03 Mar 2009 10:08:18 -0800 (PST)
+In-Reply-To: <20090303171835.GB454@coredump.intra.peff.net>
+X-Google-Sender-Auth: f6927e5879f7b921
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112139>
 
-On Tue, Mar 3, 2009 at 17:48, Junio C Hamano <gitster@pobox.com> wrote:
-> Jay Soffian <jaysoffian@gmail.com> writes:
->
->> On Tue, Mar 3, 2009 at 6:54 AM, Bert Wesarg <bert.wesarg@googlemail.=
-com> wrote:
->>> On Tue, Mar 3, 2009 at 05:52, Jay Soffian <jaysoffian@gmail.com> wr=
-ote:
->>>> diff --git a/git-send-email.perl b/git-send-email.perl
->>>> index adf7ecb..57127aa 100755
->>>> --- a/git-send-email.perl
->>>> +++ b/git-send-email.perl
->>>> @@ -837,6 +837,37 @@ X-Mailer: git-send-email $gitversion
->>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0unshift (@sendmail_parameters,
->>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0'-f', $raw_from) if(defined $envelope_sender);
->>>>
->>>> + =C2=A0 =C2=A0 =C2=A0 if ($needs_confirm && !$dry_run) {
->>> So, the output is now differnt with and without --dry-run?
->>
->> There doesn't seem to be any point in having the user confirm before
->> sending the message if the message is not actually going to be sent.
->> Am I missing something?
->
-> I do not think you are missing anything.
->
-> IIRC, the --dry-run mode shows more clearly to whom you would be CC'i=
-ng
-> the messages; in other words, the behaviour would be different, but i=
-t
-> gives an uninteractive way to confirm, and not pausing for confirmati=
-on is
-> a good thing.
->
-Just to clarify: A user who runs a --dry-run before every sending
-(like me) would check the Cc list anyway (like me), so he either would
-have sendmail.confirm=3Dnever in the config, so that he will not
-bothered by send-email while sending or he sees some Cc's that he
-don't want and can remove them in the sending process.
+The patch file looks correct.  I'm wondering if this is a result of
+both repos being connected to svn?
 
-Ok, than I'm fine with this.
+my process was:
 
-Regards,
-Bert
+- format patch
+- go to other repo
+- git svn rebase
+- apply patch
+- git svn dcommit
+
+Could dcommit change the dates since, to svn, they are appear as
+commits right now?
+
+Dave
+
+On Tue, Mar 3, 2009 at 12:18 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Mar 03, 2009 at 11:58:42AM -0500, David Copeland wrote:
+>
+>> The first option worked, insomuch the history of diffs is preserved,
+>> but the dates are all today.
+>
+> That's odd. It works fine here. Can you confirm that the correct date=
+s
+> in the "patches" file (i.e., the output of format-patch)? What are yo=
+u
+> using to look at the patches? Note that gitk will show you both the
+> "committer" and the "author" fields. The "author" field should have t=
+he
+> original author and time of the patch, but the "committer" will be yo=
+u,
+> today.
+>
+>> The second option was a little over my head; is the idea there that
+>> you are setting up a branch that has ONLY the files I care about (wi=
+th
+>> all their history), and then I pull from the other repo as if they a=
+re
+>> related? =A0That seems like it might preserve the dates...
+>
+> Yes, that is exactly what is happening in the second example.
+>
+> -Peff
+>
