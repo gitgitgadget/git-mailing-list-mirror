@@ -1,66 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: First round of UGFWIINI results
-Date: Tue, 03 Mar 2009 08:04:08 -0800
-Message-ID: <7vljrmd24n.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0902171745320.6185@intel-tinevez-2-302>
- <3f4fd2640903030709r6e585d9j57ad3ae08cf38df1@mail.gmail.com>
- <alpine.DEB.1.00.0903031658180.6399@intel-tinevez-2-302>
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: RE: proper way to merge?
+Date: Tue, 3 Mar 2009 11:04:03 -0500
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E709F075F9@EXCHANGE.trad.tradestation.com>
+References: <450196A1AAAE4B42A00A8B27A59278E709F06FDA@EXCHANGE.trad.tradestation.com> <3e8340490903020033l78329c82la186cadaa528bc32@mail.gmail.com> <450196A1AAAE4B42A00A8B27A59278E709F07452@EXCHANGE.trad.tradestation.com> <49ACDD17.2060601@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Reece Dunn <msclrhd@googlemail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 03 17:06:17 2009
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "Bryan Donlan" <bdonlan@gmail.com>, <git@vger.kernel.org>
+To: "Johannes Sixt" <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Mar 03 17:06:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeX7x-0003q9-MV
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 17:05:54 +0100
+	id 1LeX7v-0003q9-Vs
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 17:05:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756125AbZCCQER convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2009 11:04:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756101AbZCCQEQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 11:04:16 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:62305 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755949AbZCCQEQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2009 11:04:16 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id F186B3226;
-	Tue,  3 Mar 2009 11:04:13 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 39CB23225; Tue, 
- 3 Mar 2009 11:04:10 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.0903031658180.6399@intel-tinevez-2-302>
- (Johannes Schindelin's message of "Tue, 3 Mar 2009 16:59:27 +0100 (CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F0C57E7C-080C-11DE-832A-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
+	id S1755274AbZCCQEK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 11:04:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754813AbZCCQEK
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 11:04:10 -0500
+Received: from mail2.tradestation.com ([63.99.207.80]:56474 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754997AbZCCQEI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2009 11:04:08 -0500
+X-ASG-Debug-ID: 1236096244-29a7019b0000-QuoKaX
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
+Received: from mail5.tradestation.com (localhost [127.0.0.1])
+	by mail2.tradestation.com (Spam Firewall) with ESMTP
+	id B91EE1E166B; Tue,  3 Mar 2009 11:04:04 -0500 (EST)
+Received: from mail5.tradestation.com ([192.168.51.76]) by mail2.tradestation.com with ESMTP id cr7Veg5j24ghxq6c; Tue, 03 Mar 2009 11:04:04 -0500 (EST)
+X-ASG-Whitelist: Client
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 3 Mar 2009 11:04:04 -0500
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-ASG-Orig-Subj: RE: proper way to merge?
+In-Reply-To: <49ACDD17.2060601@viscovery.net>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: proper way to merge?
+Thread-Index: Acmb0kAITDrd2Md4QLK2au+5Gz6++AARjTfg
+X-OriginalArrivalTime: 03 Mar 2009 16:04:04.0309 (UTC) FILETIME=[ACBF1850:01C99C19]
+X-Barracuda-Connect: UNKNOWN[192.168.51.76]
+X-Barracuda-Start-Time: 1236096244
+X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112099>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+===Re:===
+Huh? filter-branch *is* in msysgit. Why do you think it is not?
+===end===
 
-> On Tue, 3 Mar 2009, Reece Dunn wrote:
->
->> 2009/2/17 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
->> > Dear fans of Git,
->> >
->> > a while ago I announced the UGFWIINI contest, a glorious battle of=
- ideas
->> > how to
->> >
->> > =C2=A0 =C2=A0 =C2=A0 =C2=A0Use Git For What It Is Not Indended
->>=20
->> Does using Git to track edits when proofreading a html/text document
->> (short story, novel, ...) count?
->
-> I'll count it, but I want (read-only) access to the repository as a p=
-roof=20
-> that you actually use Git that way ;-)
+Because when I tried it I got " git: 'filter-branch' is not a
+git-command. See 'git --help'."
+Then I looked in the Git installation directory and did not find any
+file with that name.  Then I looked at the ReleaseNotes.rtf file in the
+top of the Git installation tree and saw, 
+" *	Some commands are not yet supported on Windows and excluded from
+the installation; namely: git archimport, git cvsexportcommit, git
+cvsimport, git cvsserver, git filter-branch, git instaweb, git
+send-email, git shell, git svn."
 
-Are you also in the contest, with your blog as one of the contenders?
+
+So I wonder why you think it *is* in msysgit?  This is the latest
+version from their site.
+
+--John
+(please excuse the footer; it's not my idea)
+
+TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
+  If you received this in error, please contact the sender and delete the material from any computer.
