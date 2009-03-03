@@ -1,78 +1,76 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [RFC PATCH] Windows: Assume all file names to be UTF-8 encoded.
-Date: Tue, 3 Mar 2009 20:13:58 +0300
-Message-ID: <37fcd2780903030913q4ee0e5d0t45dc3b124285f748@mail.gmail.com>
-References: <alpine.DEB.2.00.0903020941120.17877@perkele.intern.softwolves.pp.se>
-	 <a2633edd0903020512u5682e9am203f0faccd0acf6a@mail.gmail.com>
-	 <alpine.DEB.2.00.0903021452010.17877@perkele.intern.softwolves.pp.se>
-	 <200903021530.01165.trast@student.ethz.ch>
-	 <alpine.DEB.2.00.0903022135360.20047@perkele.intern.softwolves.pp.se>
-	 <37fcd2780903030147q7062ee47w7ce524c28a6aa347@mail.gmail.com>
-	 <alpine.DEB.2.00.0903031246420.3702@perkele.intern.softwolves.pp.se>
+From: Caleb Cushing <xenoterracide@gmail.com>
+Subject: Re: fatal: git write-tree failed to write a tree
+Date: Tue, 3 Mar 2009 12:18:22 -0500
+Message-ID: <81bfc67a0903030918w3ccc88fcudfa8a2986e8e2415@mail.gmail.com>
+References: <81bfc67a0902280825t507e385bvd25c846add2a299c@mail.gmail.com>
+	 <alpine.DEB.1.00.0903012210230.10279@pacific.mpi-cbg.de>
+	 <81bfc67a0903022147m42e8fe38gb93773084614d30@mail.gmail.com>
+	 <alpine.DEB.1.00.0903031103580.6399@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Tue Mar 03 18:15:46 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 03 18:20:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeYDL-0000Hz-KI
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 18:15:32 +0100
+	id 1LeYHZ-0002CX-1D
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 18:19:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753907AbZCCROF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2009 12:14:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753912AbZCCROE
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 12:14:04 -0500
-Received: from mail-fx0-f176.google.com ([209.85.220.176]:38986 "EHLO
-	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753907AbZCCROC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 12:14:02 -0500
-Received: by fxm24 with SMTP id 24so2530142fxm.37
-        for <git@vger.kernel.org>; Tue, 03 Mar 2009 09:13:59 -0800 (PST)
+	id S1752831AbZCCRSZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2009 12:18:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752796AbZCCRSZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 12:18:25 -0500
+Received: from yw-out-2324.google.com ([74.125.46.31]:7189 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751077AbZCCRSY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2009 12:18:24 -0500
+Received: by yw-out-2324.google.com with SMTP id 5so1879810ywh.1
+        for <git@vger.kernel.org>; Tue, 03 Mar 2009 09:18:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=ia0ZaLPe4zK0wGChRadaTYVArup8hDo4gsQoqUyMj94=;
-        b=LDsbAXDftCCshQhqLyO4y1D1QCfAvmTnAz0fSPIgGe0cDtjr7hOa8rE6Vh2gVnTi+E
-         c6FBPqSB9PSzrKhJ7dYqIHB9FJ/EOHCZURPeUVvWkie7IdpUoxEZUwvMQfLR1rJ5p48x
-         LgzxIbkvd5alKlKHdvSA1X5KBgKvk18Jtt1/k=
+        bh=U24HASuaI6xny6As5xNLlcOjd6gZ76jqtwHoORPv+cE=;
+        b=xZ1PzDTaFsMMYfBd9tiP2z6tS02gLfAskmsRu4lsi1/6Sy8yn7zxEaGv3IH/2m91tb
+         NMbX4bZ8gFm0eZQNll8EohlLQMMaY4cuJPDKl5gj2HiHdlsdUaAPuPzHA4kT0qNJYVlr
+         EDw6fvk4Hr5YZ2n1u+RlVLeDPTPHV290NXhcI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=wzRN34q2B9sF+o1ZybWlhoZKRTbZndE8w+Ha81stht3LQpxRxogRRdQaANx5Yzx70l
-         T61gSPEiJ9qDR3w19g8oP6xVPw+Sdu5QpuNqFDAW/FA4tq9qCe65XLZ2XoFKi4S3u67C
-         bnEStzPONpZJOR4vVharCinj2vuvWvOHAQ950=
-Received: by 10.86.33.10 with SMTP id g10mr3893405fgg.47.1236100439020; Tue, 
-	03 Mar 2009 09:13:59 -0800 (PST)
-In-Reply-To: <alpine.DEB.2.00.0903031246420.3702@perkele.intern.softwolves.pp.se>
+        b=qvNazwIFi0Fz10kAxYET8Eh4+UFe1DGzhE+iiQGTM3L6kenZf1qmB858/I0eNQof7v
+         fa2xGe55tSk4wOamKQ0tLwo8QgM7oSzwneBxIYJAe+xx+I0qvvq2W1ykyhnVo987dfHC
+         +KgwAeMxkH5teBJWhsFRh/NYpjQS7Ojx88GC4=
+Received: by 10.100.143.14 with SMTP id q14mr5913856and.47.1236100702632; Tue, 
+	03 Mar 2009 09:18:22 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0903031103580.6399@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112125>
 
-On Tue, Mar 3, 2009 at 2:48 PM, Peter Krefting <peter@softwolves.pp.se> wrote:
-> Dmitry Potapov:
 >
->> The C Standard requires that the type wchar_t is capable of representing
->> any character in the current locale. If Windows uses UTF-16 as internal
->> encoding (so, it can work with symbols outside of the BMP), it means you
->> cannot have 16-bit wchar_t and be compliant with the C standard...
+> You have a tree with unmerged entries. =C2=A0Why don't you look into =
+the issue
+> and solve it? =C2=A0A simple "git status" should show you what are th=
+e unmerged
+> entries. =C2=A0A simple look at those files should show you conflict =
+markers.
 >
-> No, that's not quite correct. wchar_t is defined to be "an integer type
-> whose range of values can represent distinct codes for all members of the
-> largest extended character set specified among the supported locales". Since
-> Windows defines all local character sets as Unicode-based, having wchar_t
-> defined as Unicode means that it can represent everything.
+> Resolve the issue, commit, continue.
 
-No, it does not, if you have wchar_t that is only 16-bit wide, because
-characters
-outside of the BMP have integer values in Unicode greater than 65535...
+no... not so simple... git mergetool comes back with (c)reated
+(d)eleted files. I want the created one. when I choose that and
+commit, no merge is capable of happening. it says (for that file) that
+there is nothing to change, in fact if nothing else has changed the
+branch will simply say nothing to commit once I've resolved it. all
+commits at this point are simply commits.
+--=20
+Caleb Cushing
 
-Dmitry
+http://xenoterracide.blogspot.com
