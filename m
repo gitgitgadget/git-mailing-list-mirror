@@ -1,77 +1,53 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] doc: clarify how -S works
-Date: Tue, 3 Mar 2009 10:40:41 -0500
-Message-ID: <20090303154041.GA31265@coredump.intra.peff.net>
-References: <49AD3E78.1050706@sneakemail.com> <20090303152333.GB24593@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Add an option for git-archive to output commit ID in
+ alternative ways
+Date: Tue, 03 Mar 2009 07:44:28 -0800
+Message-ID: <7vtz6ad31f.fsf@gitster.siamese.dyndns.org>
+References: <1236078904678-2414580.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Peter Valdemar =?utf-8?B?TcO4cmNoIChMaXN0cyk=?= 
-	<4ux6as402@sneakemail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 03 16:42:51 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: roylee17 <roylee17@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 03 16:46:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeWlZ-00038r-Uy
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 16:42:46 +0100
+	id 1LeWpJ-0004jC-0s
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 16:46:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754677AbZCCPkq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2009 10:40:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754151AbZCCPkq
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 10:40:46 -0500
-Received: from peff.net ([208.65.91.99]:53412 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754086AbZCCPkp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 10:40:45 -0500
-Received: (qmail 17263 invoked by uid 107); 3 Mar 2009 15:40:44 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 03 Mar 2009 10:40:44 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Mar 2009 10:40:41 -0500
-Content-Disposition: inline
-In-Reply-To: <20090303152333.GB24593@coredump.intra.peff.net>
+	id S1756816AbZCCPoi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 10:44:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753613AbZCCPoi
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 10:44:38 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63944 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752421AbZCCPoh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 10:44:37 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 55F709E417;
+	Tue,  3 Mar 2009 10:44:33 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 653019E416; Tue,
+  3 Mar 2009 10:44:30 -0500 (EST)
+In-Reply-To: <1236078904678-2414580.post@n2.nabble.com> (roylee17@gmail.com's
+ message of "Tue, 3 Mar 2009 03:15:04 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 310C80A0-080A-11DE-8D61-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112091>
 
-The existing text was very vague about what exactly it means
-for difference to "contain" a change. This seems to cause
-confusion on the mailing list every month or two.
+roylee17 <roylee17@gmail.com> writes:
 
-To fix it we:
+> Consider the following use case:
+>   Regularly building projects which are untar'ed on-the-fly with git-archive
+> without intermediate tar balls.
+>
+> How can I track back which commit IDs were those source code git-archive
+> from?
 
-  1. use "introduce or remove an instance of" instead of
-     "contain"
-
-  2. point the user to gitdiffcore(7), which contains a more
-     complete explanation
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-I wonder if "gitdiffcore" is a little scary for new people who just want
-to use "-S", but hopefully point (1) above will get rid of most of the
-confusion, and those who follow the link want to learn all about diff.
-
- Documentation/diff-options.txt |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 813a7b1..9276fae 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -176,7 +176,10 @@ override configuration settings.
- 	number.
- 
- -S<string>::
--	Look for differences that contain the change in <string>.
-+	Look for differences that introduce or remove an instance of
-+	<string>. Note that this is different than the string simply
-+	appearing in diff output; see the 'pickaxe' entry in
-+	linkgit:gitdiffcore[7] for more details.
- 
- --pickaxe-all::
- 	When -S finds a change, show all the changes in that
--- 
-1.6.2.rc2.330.gba39e
+Run "man gitattributes" and look for export-subst?
