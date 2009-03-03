@@ -1,66 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] doc: clarify how -S works
-Date: Tue, 3 Mar 2009 12:11:38 -0500
-Message-ID: <20090303171138.GA454@coredump.intra.peff.net>
-References: <49AD3E78.1050706@sneakemail.com> <20090303152333.GB24593@coredump.intra.peff.net> <20090303154041.GA31265@coredump.intra.peff.net> <7v1vted0d7.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Peter Valdemar =?utf-8?B?TcO4cmNoIChMaXN0cyk=?= 
-	<4ux6as402@sneakemail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 03 18:13:30 2009
+From: roylee@andestech.com
+Subject: [PATCH] Documentation/git-archive.txt: Note attributes
+Date: Wed,  4 Mar 2009 00:52:48 +0800
+Message-ID: <1236099168-20231-1-git-send-email-roylee@andestech.com>
+Cc: Roy Lee <roylee17@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 03 18:14:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeYB7-0007j9-JB
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 18:13:14 +0100
+	id 1LeYCD-0008F3-EI
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 18:14:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753167AbZCCRLp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2009 12:11:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753015AbZCCRLp
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 12:11:45 -0500
-Received: from peff.net ([208.65.91.99]:57559 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751014AbZCCRLp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 12:11:45 -0500
-Received: (qmail 18166 invoked by uid 107); 3 Mar 2009 17:11:42 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 03 Mar 2009 12:11:42 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Mar 2009 12:11:38 -0500
-Content-Disposition: inline
-In-Reply-To: <7v1vted0d7.fsf@gitster.siamese.dyndns.org>
+	id S1753341AbZCCRMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 12:12:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753294AbZCCRMx
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 12:12:53 -0500
+Received: from 59-124-160-117.HINET-IP.hinet.net ([59.124.160.117]:19971 "EHLO
+	ATCPCS06.andestech.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753062AbZCCRMx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 12:12:53 -0500
+X-Greylist: delayed 915 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Mar 2009 12:12:52 EST
+Received: from andestech.com ([10.0.4.60]) by ATCPCS06.andestech.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 4 Mar 2009 00:57:33 +0800
+X-Mailer: git-send-email 1.6.1.3
+X-OriginalArrivalTime: 03 Mar 2009 16:57:33.0216 (UTC) FILETIME=[25677200:01C99C21]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112123>
 
-On Tue, Mar 03, 2009 at 08:42:12AM -0800, Junio C Hamano wrote:
+From: Roy Lee <roylee17@gmail.com>
 
-> In retrospect, because --pickaxe was designed primarily for Porcelain use,
-> it was a mistake for it to have taken a short-and-sweet -S synonym.
+---
+ Documentation/git-archive.txt |   16 ++++++++++++++++
+ 1 files changed, 16 insertions(+), 0 deletions(-)
 
-Hmm. I actually like the pickaxe behavior and find it useful for
-searching. IOW, I consider it a porcelain feature, just perhaps not the
-one that some people are expecting.
-
-> >  -S<string>::
-> > -	Look for differences that contain the change in <string>.
-> > +	Look for differences that introduce or remove an instance of
-> > +	<string>. Note that this is different than the string simply
-> > +	appearing in diff output; see the 'pickaxe' entry in
-> > +	linkgit:gitdiffcore[7] for more details.
-> 
-> Look for differences that change the number of occurrences of <string>?
-
-Yes, that is technically correct. I was trying to find a wording that
-was a little less "this is literally what it does" and more "this is
-what you might find it useful for".
-
-But I don't care overly much; I just think what was there was quite
-misleading. And I've already provided my paint color, so feel free to
-apply mine, use what you wrote above, or whatever. Just don't leave it
-as-is. ;)
-
--Peff
+diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
+index 41cbf9c..96f5424 100644
+--- a/Documentation/git-archive.txt
++++ b/Documentation/git-archive.txt
+@@ -88,6 +88,17 @@ tar.umask::
+ 	archiving user's umask will be used instead.  See umask(2) for
+ 	details.
+ 
++ATTRIBUTES
++----------------
++
++export-ignore::
++	Files and directories with the attribute export-ignore won't be added to archive files.
++	See linkgit:gitattributes[5] for details.
++
++export-subst::
++	If the attribute export-subst is set for a file then git will expand several placeholders when adding this file
++	to an archive.  See linkgit:gitattributes[5] for details.
++
+ EXAMPLES
+ --------
+ git archive --format=tar --prefix=junk/ HEAD | (cd /var/tmp/ && tar xf -)::
+@@ -110,6 +121,11 @@ git archive --format=zip --prefix=git-docs/ HEAD:Documentation/ > git-1.4.0-docs
+ 	Put everything in the current head's Documentation/ directory
+ 	into 'git-1.4.0-docs.zip', with the prefix 'git-docs/'.
+ 
++
++SEE ALSO
++--------
++linkgit:gitattributes[5]
++
+ Author
+ ------
+ Written by Franck Bui-Huu and Rene Scharfe.
+-- 
+1.6.1.3
