@@ -1,63 +1,70 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Subject: [PATCH] Push to create
-Date: Tue, 3 Mar 2009 10:41:06 -0800
-Message-ID: <20090303184106.GH14365@spearce.org>
-References: <20090301100039.GD4146@coredump.intra.peff.net> <20090301170436.GA14365@spearce.org> <7vwsb7gkvt.fsf_-_@gitster.siamese.dyndns.org> <20090303070937.GB30609@coredump.intra.peff.net> <7vy6vnf3aw.fsf@gitster.siamese.dyndns.org> <20090303080603.GA3158@coredump.intra.peff.net> <7v63irf21u.fsf@gitster.siamese.dyndns.org> <20090303082706.GC3158@coredump.intra.peff.net> <7v1vtff1op.fsf@gitster.siamese.dyndns.org> <20090303092301.GE32284@mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Make git-clone respect branch.autosetuprebase
+Date: Tue, 03 Mar 2009 10:48:19 -0800
+Message-ID: <7v4oyabfyk.fsf@gitster.siamese.dyndns.org>
+References: <1236105352-21335-1-git-send-email-pknotz@sandia.gov>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Tue Mar 03 19:43:30 2009
+Cc: git@vger.kernel.org
+To: pknotz@sandia.gov
+X-From: git-owner@vger.kernel.org Tue Mar 03 19:49:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeZaN-0003Jj-E4
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 19:43:23 +0100
+	id 1LeZgh-0005sl-Su
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 19:49:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753383AbZCCSlK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2009 13:41:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753367AbZCCSlI
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 13:41:08 -0500
-Received: from george.spearce.org ([209.20.77.23]:42453 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753341AbZCCSlI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 13:41:08 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 26C1638211; Tue,  3 Mar 2009 18:41:06 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20090303092301.GE32284@mit.edu>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752915AbZCCSs2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 13:48:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750901AbZCCSs2
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 13:48:28 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63071 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750796AbZCCSs1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 13:48:27 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 20E413F85;
+	Tue,  3 Mar 2009 13:48:24 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 77A053F84; Tue, 
+ 3 Mar 2009 13:48:21 -0500 (EST)
+In-Reply-To: <1236105352-21335-1-git-send-email-pknotz@sandia.gov>
+ (pknotz@sandia.gov's message of "Tue, 3 Mar 2009 11:35:52 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: DFEA5DE0-0823-11DE-BD49-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112146>
 
-Theodore Tso <tytso@mit.edu> wrote:
-> On Tue, Mar 03, 2009 at 12:30:46AM -0800, Junio C Hamano wrote:
-> > Jeff King <peff@peff.net> writes:
-> > 
-> > > But I think that coincides with what I was trying to say in my original
-> > > response to the series, which is "this issue is complex, and we need to
-> > > hear from the people who would really want this exactly what it is they
-> > > want".
-> > 
-> > And we haven't heard from them at all, unless you and/or Shawn are
-> > interested.  After all we may not have to worry about this at all ;-)
-> 
-> Junio, I assume you saw Scott James Remnant blog posts, "Git Sucks"?
-> 
->        http://www.netsplit.com/2009/02/17/git-sucks/
+pknotz@sandia.gov writes:
 
-Funny, this very blog post is talking about why I think remote
-creation should be under git push, not "git init --remote".
+> diff --git a/builtin-clone.c b/builtin-clone.c
+> index c338910..f547267 100644
+> --- a/builtin-clone.c
+> +++ b/builtin-clone.c
+> @@ -360,6 +360,14 @@ static void install_branch_config(const char *local,
+>  	strbuf_reset(&key);
+>  	strbuf_addf(&key, "branch.%s.merge", local);
+>  	git_config_set(key.buf, remote);
+> +	switch (autorebase) {
+> +	case AUTOREBASE_REMOTE:
+> +	case AUTOREBASE_ALWAYS:
+> +		strbuf_reset(&key);
+> +		strbuf_addf(&key, "branch.%s.rebase", local);
+> +		git_config_set(key.buf, "true");
+> +		printf("Default branch '%s' will rebase on pull.\n", local);
+> +	}
+>  	strbuf_release(&key);
+>  }
 
-IMHO, maybe we also should change the error message that receive-pack
-produces when the path its given isn't a Git repository.  Its really
-not very human friendly to say "unable to chdir or not a git archive".
-Hell, we don't even call them archives, we call them repositories.
-
--- 
-Shawn.
+I think this whole function should be moved to to branch.c to be usable
+across "git checkout -b", "git branch" and "git clone", and make the two
+existing callers in builtin-clone.c and setup_tracking() in branch.c call
+it.  "git checkout -b" already shares the same codepath with "git branch",
+and you would allow "git clone" to be in the family.  That would help
+supporting new tracking options without having to maintain more than one
+copy of the code.
