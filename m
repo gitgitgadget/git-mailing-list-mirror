@@ -1,76 +1,57 @@
-From: Caleb Cushing <xenoterracide@gmail.com>
-Subject: Re: fatal: git write-tree failed to write a tree
-Date: Tue, 3 Mar 2009 12:18:22 -0500
-Message-ID: <81bfc67a0903030918w3ccc88fcudfa8a2986e8e2415@mail.gmail.com>
-References: <81bfc67a0902280825t507e385bvd25c846add2a299c@mail.gmail.com>
-	 <alpine.DEB.1.00.0903012210230.10279@pacific.mpi-cbg.de>
-	 <81bfc67a0903022147m42e8fe38gb93773084614d30@mail.gmail.com>
-	 <alpine.DEB.1.00.0903031103580.6399@intel-tinevez-2-302>
+From: Jeff King <peff@peff.net>
+Subject: Re: move files between disparate repos and maintain version history
+Date: Tue, 3 Mar 2009 12:18:35 -0500
+Message-ID: <20090303171835.GB454@coredump.intra.peff.net>
+References: <0d8965bb-e2ed-4f49-b323-c110f605ae2c@33g2000yqm.googlegroups.com> <20090303041300.GA18136@coredump.intra.peff.net> <f95d47890903030858xb398b5fy1aeabb19166e6077@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 03 18:20:19 2009
+To: David Copeland <davetron5000@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 03 18:20:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeYHZ-0002CX-1D
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 18:19:53 +0100
+	id 1LeYHo-0002K8-9X
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 18:20:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752831AbZCCRSZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2009 12:18:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752796AbZCCRSZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 12:18:25 -0500
-Received: from yw-out-2324.google.com ([74.125.46.31]:7189 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751077AbZCCRSY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2009 12:18:24 -0500
-Received: by yw-out-2324.google.com with SMTP id 5so1879810ywh.1
-        for <git@vger.kernel.org>; Tue, 03 Mar 2009 09:18:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=U24HASuaI6xny6As5xNLlcOjd6gZ76jqtwHoORPv+cE=;
-        b=xZ1PzDTaFsMMYfBd9tiP2z6tS02gLfAskmsRu4lsi1/6Sy8yn7zxEaGv3IH/2m91tb
-         NMbX4bZ8gFm0eZQNll8EohlLQMMaY4cuJPDKl5gj2HiHdlsdUaAPuPzHA4kT0qNJYVlr
-         EDw6fvk4Hr5YZ2n1u+RlVLeDPTPHV290NXhcI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=qvNazwIFi0Fz10kAxYET8Eh4+UFe1DGzhE+iiQGTM3L6kenZf1qmB858/I0eNQof7v
-         fa2xGe55tSk4wOamKQ0tLwo8QgM7oSzwneBxIYJAe+xx+I0qvvq2W1ykyhnVo987dfHC
-         +KgwAeMxkH5teBJWhsFRh/NYpjQS7Ojx88GC4=
-Received: by 10.100.143.14 with SMTP id q14mr5913856and.47.1236100702632; Tue, 
-	03 Mar 2009 09:18:22 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0903031103580.6399@intel-tinevez-2-302>
+	id S1753739AbZCCRSk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 12:18:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752995AbZCCRSk
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 12:18:40 -0500
+Received: from peff.net ([208.65.91.99]:57109 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752796AbZCCRSj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 12:18:39 -0500
+Received: (qmail 18283 invoked by uid 107); 3 Mar 2009 17:18:38 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 03 Mar 2009 12:18:38 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Mar 2009 12:18:35 -0500
+Content-Disposition: inline
+In-Reply-To: <f95d47890903030858xb398b5fy1aeabb19166e6077@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112126>
 
->
-> You have a tree with unmerged entries. =C2=A0Why don't you look into =
-the issue
-> and solve it? =C2=A0A simple "git status" should show you what are th=
-e unmerged
-> entries. =C2=A0A simple look at those files should show you conflict =
-markers.
->
-> Resolve the issue, commit, continue.
+On Tue, Mar 03, 2009 at 11:58:42AM -0500, David Copeland wrote:
 
-no... not so simple... git mergetool comes back with (c)reated
-(d)eleted files. I want the created one. when I choose that and
-commit, no merge is capable of happening. it says (for that file) that
-there is nothing to change, in fact if nothing else has changed the
-branch will simply say nothing to commit once I've resolved it. all
-commits at this point are simply commits.
---=20
-Caleb Cushing
+> The first option worked, insomuch the history of diffs is preserved,
+> but the dates are all today.
 
-http://xenoterracide.blogspot.com
+That's odd. It works fine here. Can you confirm that the correct dates
+in the "patches" file (i.e., the output of format-patch)? What are you
+using to look at the patches? Note that gitk will show you both the
+"committer" and the "author" fields. The "author" field should have the
+original author and time of the patch, but the "committer" will be you,
+today.
+
+> The second option was a little over my head; is the idea there that
+> you are setting up a branch that has ONLY the files I care about (with
+> all their history), and then I pull from the other repo as if they are
+> related?  That seems like it might preserve the dates...
+
+Yes, that is exactly what is happening in the second example.
+
+-Peff
