@@ -1,146 +1,91 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: [TopGit] Multiple concurrent sets of patches
-Date: Tue, 3 Mar 2009 20:42:32 +0100
-Message-ID: <20090303194232.GB18423@pengutronix.de>
-References: <20090303113741.GO12820@jones.dk> <20090303130316.GA17702@piper.oerlikon.madduck.net> <20090303192221.GV12820@jones.dk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, pasky@suse.cz,
-	martin f krafft <madduck@madduck.net>
-To: Jonas Smedegaard <dr@jones.dk>
-X-From: git-owner@vger.kernel.org Tue Mar 03 20:44:28 2009
+From: Mike Ralphson <mike@abacus.co.uk>
+Subject: [PATCH] Documentation: Typo / spelling / formatting fixes
+Date: Tue,  3 Mar 2009 19:29:22 +0000
+Message-ID: <1236108562-31469-3-git-send-email-mike@abacus.co.uk>
+References: <1236108562-31469-1-git-send-email-mike@abacus.co.uk>
+ <1236108562-31469-2-git-send-email-mike@abacus.co.uk>
+Cc: git@vger.kernel.org, Mike Ralphson <mike.ralphson@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 03 20:52:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeaXA-0004Sx-AF
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 20:44:08 +0100
+	id 1LeafZ-0007zo-P5
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 20:52:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753897AbZCCTmh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2009 14:42:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753738AbZCCTmg
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 14:42:36 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:41297 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753754AbZCCTmf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 14:42:35 -0500
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1LeaVd-0007sP-PU; Tue, 03 Mar 2009 20:42:33 +0100
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1LeaVc-0004nq-Tg; Tue, 03 Mar 2009 20:42:32 +0100
-Content-Disposition: inline
-In-Reply-To: <20090303192221.GV12820@jones.dk>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1754237AbZCCTvT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 14:51:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752817AbZCCTvR
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 14:51:17 -0500
+Received: from [82.109.193.99] ([82.109.193.99]:21426 "EHLO orson.abacus.co.uk"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752583AbZCCTvN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 14:51:13 -0500
+Received: by orson.abacus.co.uk (Postfix, from userid 1006)
+	id B9AA1195DEB; Tue,  3 Mar 2009 19:29:22 +0000 (GMT)
+X-Mailer: git-send-email 1.6.0.2.229.g1293c
+In-Reply-To: <1236108562-31469-2-git-send-email-mike@abacus.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112159>
 
-On Tue, Mar 03, 2009 at 08:22:21PM +0100, Jonas Smedegaard wrote:
-> On Tue, Mar 03, 2009 at 02:03:16PM +0100, martin f krafft wrote:
-> >also sprach Jonas Smedegaard <dr@jones.dk> [2009.03.03.1237 +0100]:
-> >> It seems to me that TopGit is incapable of handling this. That it =
-can=20
-> >> only handle patchset against a single branch, and if the need aris=
-e=20
-> >> for restructuring an additional patchset for e.g. a stable or=20
-> >> oldstable branch, then quilt needs to be used manually anyway.
-> >
-> >Let me try to understand you: you want TopGit to maintain a single
-> >feature branch against two different source branches? How should
-> >that work? Could you elaborate a bit so that your needs become a bit
-> >more obvious?
->=20
-> Not quite. I want TopGit to maintain multiple feature branches,=20
-> preferrably related.
->=20
-> With "related" I mean that I would like to be able to "fork" a chain =
-of=20
-> interdependent feature branches.
->=20
-> TopGit easily support one chain of branches:
->=20
-> upstream + pristine-tar -> master -> build
->=20
-> I want TopGit to additionally support the following:
->=20
-> upstream + pristine-tar -> stable-master -> stable-build
->=20
-> upstream + pristine-tar -> oldstable-master -> oldstable-build
->=20
->=20
-> E.g. in addition to TopGit branches t/fix_01 and t/feature_01 I would=
-=20
-> want to fork those branches as t_stable/fix_01 and t_stable/feature_0=
-1.
->=20
->=20
-> I know that I can create all those TopGit branches one by one, but I=20
-> would then need to explicitly declare a list of TopGit branches to ap=
-ply=20
-> each time I want to (re)generate a quilt patchlist.
-=46or my kernel development I use topgit topic branches that collect
-topgit patch branches.  Take this dependency graph:
+Signed-off-by: Mike Ralphson <mike@abacus.co.uk>
+---
+ Documentation/howto/revert-a-faulty-merge.txt      |    4 ++--
+ Documentation/howto/setup-git-server-over-http.txt |    2 +-
+ Documentation/technical/api-strbuf.txt             |    2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-	linus/master <- t/armmisc/patch1 <- t/armmisc-master <- t/armmisc-pu
-	         ^ ^----t/armmisc/patch2 <--'                   |
-                 `------t/armmisc/patch3 <----------------------'
-
-So t/armmisc-master collects patches that are ready for upstream, -pu
-patches that need some more work.
-
-With etch <- lenny <- squeeze <- sid you could do the same.  The only
-Consider you have a security fix that is relevant for all
-releases starting at lenny. Then you do
-
-	tg create t/fixes-lenny/CVE-2009-abcd master-lenny
-	... apply patch
-	... fill .topmsg
-	git commit
-
-	git checkout t/fixes-lenny-master
-	tg depend add t/fixes-lenny/CVE-2009-abcd
-
-	tg create t/fixes-squeeze/CVE-2009-abcd master-squeeze t/fixes-etch/CV=
-E-2009-abcd
-	... no need to apply patch
-	... cherry-pick .topmsg from t/fixes-lenny/CVE-2009-abcd
-	git commit
-
-	git checkout t/fixes-squeeze-master
-	tg depend add t/fixes-squeeze/CVE-2009-abcd
-=09
-And if you notice that etch needs the same fix, you can create
-t/fixes-etch/CVE-2009-abcd based on master-etch and then do
-
-	git checkout t/fixes-lenny/CVE-2009-abcd
-	tg depend add t/fixes-etch/CVE-2009-abcd
-
-tatata, I think that's it for packaging.
-
-But this doesn't help me for my kernel problem, because here I don't
-have that ordering on releases.  I want to manage patches on top of
-linux-tip and the ARM tree, but none of these contains the other :-/
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
-       |
-Industrial Linux Solutions                    | http://www.pengutronix.=
-de/  |
-Peiner Strasse 6-8, 31137 Hildesheim, Germany | Phone: +49-5121-206917-=
-0    |
-Amtsgericht Hildesheim, HRA 2686              | Fax:   +49-5121-206917-=
-5555 |
+diff --git a/Documentation/howto/revert-a-faulty-merge.txt b/Documentation/howto/revert-a-faulty-merge.txt
+index 39b1da4..3b4a390 100644
+--- a/Documentation/howto/revert-a-faulty-merge.txt
++++ b/Documentation/howto/revert-a-faulty-merge.txt
+@@ -39,7 +39,7 @@ Such a "revert" of a merge can be made with:
+ 
+     $ git revert -m 1 M
+ 
+-After the develpers of the side branch fixes their mistakes, the history
++After the developers of the side branch fix their mistakes, the history
+ may look like this:
+ 
+  ---o---o---o---M---x---x---W---x
+@@ -116,7 +116,7 @@ If you reverted the revert in such a case as in the previous example:
+ 	       /                 \         /
+        ---A---B                   A'--B'--C'
+ 
+-where Y is the revert of W, A' and B'are rerolled A and B, and there may
++where Y is the revert of W, A' and B' are rerolled A and B, and there may
+ also be a further fix-up C' on the side branch.  "diff Y^..Y" is similar
+ to "diff -R W^..W" (which in turn means it is similar to "diff M^..M"),
+ and "diff A'^..C'" by definition would be similar but different from that,
+diff --git a/Documentation/howto/setup-git-server-over-http.txt b/Documentation/howto/setup-git-server-over-http.txt
+index 4032748..622ee5c 100644
+--- a/Documentation/howto/setup-git-server-over-http.txt
++++ b/Documentation/howto/setup-git-server-over-http.txt
+@@ -143,7 +143,7 @@ Then, add something like this to your httpd.conf
+        Require valid-user
+     </Location>
+ 
+-    Debian automatically reads all files under /etc/apach2/conf.d.
++    Debian automatically reads all files under /etc/apache2/conf.d.
+ 
+ The password file can be somewhere else, but it has to be readable by
+ Apache and preferably not readable by the world.
+diff --git a/Documentation/technical/api-strbuf.txt b/Documentation/technical/api-strbuf.txt
+index ac56d1c..7438149 100644
+--- a/Documentation/technical/api-strbuf.txt
++++ b/Documentation/technical/api-strbuf.txt
+@@ -222,7 +222,7 @@ which can be used by the programmer of the callback as she sees fit.
+ 
+ 	Read a given size of data from a FILE* pointer to the buffer.
+ +
+-NOTE: The buffer is rewinded if the read fails. If -1 is returned,
++NOTE: The buffer is rewound if the read fails. If -1 is returned,
+ `errno` must be consulted, like you would do for `read(3)`.
+ `strbuf_read()`, `strbuf_read_file()` and `strbuf_getline()` has the
+ same behaviour as well.
+-- 
+1.6.0.2.229.g1293c.dirty
