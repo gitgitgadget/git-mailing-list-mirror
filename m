@@ -1,60 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] git-clone: Add option --branch to override initial
- branch
-Date: Tue, 03 Mar 2009 09:07:39 -0800
-Message-ID: <7vmyc2bkmc.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0903030047130.10279@pacific.mpi-cbg.de>
- <49AD6305.8040909@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] doc: clarify how -S works
+Date: Tue, 3 Mar 2009 12:11:38 -0500
+Message-ID: <20090303171138.GA454@coredump.intra.peff.net>
+References: <49AD3E78.1050706@sneakemail.com> <20090303152333.GB24593@coredump.intra.peff.net> <20090303154041.GA31265@coredump.intra.peff.net> <7v1vted0d7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Tor Arne =?utf-8?Q?Vestb=C3=B8?= <torarnv@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 03 18:09:20 2009
+Cc: Peter Valdemar =?utf-8?B?TcO4cmNoIChMaXN0cyk=?= 
+	<4ux6as402@sneakemail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 03 18:13:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeY7K-00062Z-9R
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 18:09:18 +0100
+	id 1LeYB7-0007j9-JB
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 18:13:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752849AbZCCRHv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2009 12:07:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752695AbZCCRHu
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 12:07:50 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44922 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752521AbZCCRHu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2009 12:07:50 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F0E5A9ED57;
-	Tue,  3 Mar 2009 12:07:46 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C303D9ED54; Tue,
-  3 Mar 2009 12:07:42 -0500 (EST)
-In-Reply-To: <49AD6305.8040909@gmail.com> (Tor Arne =?utf-8?Q?Vestb=C3=B8'?=
- =?utf-8?Q?s?= message of "Tue, 3 Mar 2009 18:04:05 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: D17C72B0-0815-11DE-BE71-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1753167AbZCCRLp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 12:11:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753015AbZCCRLp
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 12:11:45 -0500
+Received: from peff.net ([208.65.91.99]:57559 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751014AbZCCRLp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 12:11:45 -0500
+Received: (qmail 18166 invoked by uid 107); 3 Mar 2009 17:11:42 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 03 Mar 2009 12:11:42 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Mar 2009 12:11:38 -0500
+Content-Disposition: inline
+In-Reply-To: <7v1vted0d7.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112122>
 
-Tor Arne Vestb=C3=B8 <torarnv@gmail.com> writes:
+On Tue, Mar 03, 2009 at 08:42:12AM -0800, Junio C Hamano wrote:
 
-> In that case you would either have to ff master all the time
-> (requiring a checkout or rebase magic), or do an explicit "git push
-> origin 1.6".
+> In retrospect, because --pickaxe was designed primarily for Porcelain use,
+> it was a mistake for it to have taken a short-and-sweet -S synonym.
 
-or do something like:
+Hmm. I actually like the pickaxe behavior and find it useful for
+searching. IOW, I consider it a porcelain feature, just perhaps not the
+one that some people are expecting.
 
-$ cat >>.git/config <<\EOF
-[remote "there"]
-    push =3D HEAD
-EOF
+> >  -S<string>::
+> > -	Look for differences that contain the change in <string>.
+> > +	Look for differences that introduce or remove an instance of
+> > +	<string>. Note that this is different than the string simply
+> > +	appearing in diff output; see the 'pickaxe' entry in
+> > +	linkgit:gitdiffcore[7] for more details.
+> 
+> Look for differences that change the number of occurrences of <string>?
 
-just once.
+Yes, that is technically correct. I was trying to find a wording that
+was a little less "this is literally what it does" and more "this is
+what you might find it useful for".
+
+But I don't care overly much; I just think what was there was quite
+misleading. And I've already provided my paint color, so feel free to
+apply mine, use what you wrote above, or whatever. Just don't leave it
+as-is. ;)
+
+-Peff
