@@ -1,127 +1,85 @@
-From: Josef Wolf <jw@raven.inka.de>
-Subject: Re: git-svn and repository hierarchy?
-Date: Tue, 3 Mar 2009 23:36:00 +0100
-Message-ID: <20090303223600.GB11278@raven.wolf.lan>
-References: <20090224223412.GA4573@raven.wolf.lan> <49A50EB2.80300@drmicha.warpmail.net> <20090227171248.GB14187@raven.wolf.lan> <49A826C8.1060300@drmicha.warpmail.net> <20090227220512.GC14187@raven.wolf.lan> <49A97B7A.8010005@drmicha.warpmail.net> <20090303185108.GA11278@raven.wolf.lan> <eaa105840903031135o4cf72ed0oe3fffed69cb7ce03@mail.gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: How does Git know which files no longer needed during upgrade?
+Date: Wed, 4 Mar 2009 00:30:58 +0100
+Message-ID: <20090303233058.GE4371@genesis.frugalware.org>
+References: <22318714.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 03 23:42:21 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="sbic9+IwCnOfztd0"
+Cc: git@vger.kernel.org
+To: dealmaker <vinkhc@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 04 00:32:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LedJV-00068h-9D
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 23:42:13 +0100
+	id 1Lee6H-0007wc-OS
+	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 00:32:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759572AbZCCWkf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2009 17:40:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759529AbZCCWke
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 17:40:34 -0500
-Received: from quechua.inka.de ([193.197.184.2]:46774 "EHLO mail.inka.de"
+	id S1754854AbZCCXbF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 18:31:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754745AbZCCXbD
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 18:31:03 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:58032 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759442AbZCCWkd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 17:40:33 -0500
-Received: from raven.inka.de (uucp@[127.0.0.1])
-	by mail.inka.de with uucp (rmailwrap 0.5) 
-	id 1LedHp-0005yj-VE; Tue, 03 Mar 2009 23:40:29 +0100
-Received: by raven.inka.de (Postfix, from userid 1000)
-	id EE9232C91A; Tue,  3 Mar 2009 23:36:00 +0100 (CET)
-Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
+	id S1754177AbZCCXbB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 18:31:01 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 0653358110;
+	Wed,  4 Mar 2009 00:31:00 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id F1B02446E6;
+	Wed,  4 Mar 2009 00:30:58 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id DFA7511B877E; Wed,  4 Mar 2009 00:30:58 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <eaa105840903031135o4cf72ed0oe3fffed69cb7ce03@mail.gmail.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+In-Reply-To: <22318714.post@talk.nabble.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112173>
 
-Thanks for your answer, Peter!
 
-On Tue, Mar 03, 2009 at 02:35:28PM -0500, Peter Harris wrote:
-> On Tue, Mar 3, 2009 at 1:51 PM, Josef Wolf wrote:
-> > =A0# work on clones, pull work into git-svn-repos when we're done
-> > =A0#
-> > =A0for clone in 1 2 3; do
-> > =A0 =A0(
-> > =A0 =A0 =A0cd clone$clone
-> > =A0 =A0 =A0git pull --rebase
-> > =A0 =A0 =A0for commit in 1 2 3; do
-> > =A0 =A0 =A0 =A0echo change $clone $commit >>test
-> > =A0 =A0 =A0 =A0git commit -a -m "commit $clone $commit"
-> > =A0 =A0 =A0done
-> > =A0 =A0)
-> > =A0 =A0(cd git-svn-repos; git pull --rebase ../clone$clone)
-> > =A0done
->=20
-> Um. This has each clone basing their commits on the work of some othe=
-r
-> clone. This line, specifically:
->=20
-> >    (cd git-svn-repos; git pull --rebase ../clone$clone)
->=20
-> breaks the "git-svn-repos only ever pulls from subversion" model I
-> suggested elsewhere.
+--sbic9+IwCnOfztd0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-I'd rather not let every clone talk to subversion for several reasons.
-One of them is that it is very inconvenient (e.g. the password has to
-be entered several times for every commit).  After all, the whole point
-for having git-svn-repos is for the clone to avoid working directly
-against the subversion repos.  If every clone works against subversion
-anyway, I can get rid of git-svn-repos as well.
+On Tue, Mar 03, 2009 at 01:51:14PM -0800, dealmaker <vinkhc@gmail.com> wrote:
+>   I am going to upgrade software to a newer version in my main trunk, I
+> decide to download the newer version and checkout the main trunk and  copy
+> it over to my main trunk.
 
-> Also, this line says "rebase my changes onto those of ../clone$clone"=
-,
-> which isn't what you want. It will end up rebasing svn commits that
-> the client didn't have on top of the client's commits, and will break
-> git-svn's index. Don't use --rebase here.
+Do you mean the 'master' branch by 'main trunk'? Trunk is not in Git's
+terminology.
 
-Hmm, I must have misunderstood Michael, then.  Wasn't he suggesting
-to rebase here?  Here's the citation:
+> If the older version has some files that are no
+> longer in the newer version, how does git determine whether to keep those
+> files or not?  Does it even notify me that those files are no longer needed?
 
-|>   (cd git-svn-repos; git pull ../clone1)  # if this line is executed=
-,
-|
-|That's the problem. This creates a merge after which you 1-2-3-4 and
-|1-2'-3'-4' plus the merge of 4 and 4'.
-|
-|Instead, use git pull --rebase here. You don't want merges in the bran=
-ch
-|from which you dcommit.
+First, I think storing upstream code (that you will never touch) in
+version control is a horrible idea, but if you really do it, I would do
+something like:
 
-> > =A0# Although we have resolved the conflict, spurious conflicts are
-> > =A0# propagated to the clones
->=20
-> ...and this is because you had clones all merge from each other (via
-> git-svn-repos) *before* the changes were in svn.
+cd /path/to/copy
+rm -rf *
+cp -a /path/to/new/version/* .
+git add -A
+git commit -m 'update foo to 2.0'
 
-Does that mean that the conflicts would disappear if I do
-git-svn-rebase + git-svn-dcommit after every pull from a clone?
+That will add/update/delete files as you would expect.
 
-> Worse, since the git clients don't know that their work has been
-> rebased, they can wind up conflicting with themselves too. Which is
-> why I suggested "git svn dcommit" from each client, not from the
-> central repository.
->=20
-> This can be made work if you do something more like (untested):
->     (cd git-svn-repos; git pull ../clone$clone topic-branch;
->     git svn dcommit)
->     (cd clone$clone; git checkout master; git pull;
->     have a human verify that changes to master are correct;
->     git branch -D topic-branch)
->=20
-> instead of
->=20
-> >    (cd git-svn-repos; git pull --rebase ../clone$clone)
->=20
-> ie. throw away each topic branch as you push it to git-svn-repos, and
-> take the changes that have gone through git-svn back via a pull of
-> master.
->=20
-> But that starts to look to me like more work for each clone than "git
-> svn dcommit" - YMMV, of course.
+--sbic9+IwCnOfztd0
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-It might be more work.  But at least, I have the impression that I
-understand this workflow. ;-)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkmtvbIACgkQe81tAgORUJZKnQCeKkk7m2Zc+LlHCTx1PzKV8grp
+oWIAn30r93KDc+CUHXs7LDd/Ej2nEcH0
+=ifxr
+-----END PGP SIGNATURE-----
+
+--sbic9+IwCnOfztd0--
