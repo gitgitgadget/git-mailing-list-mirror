@@ -1,90 +1,93 @@
-From: =?utf-8?q?Adeodato=20Sim=C3=B3?= <dato@net.com.org.es>
-Subject: [PATCH] git-clone.txt: document that pushing from a shallow clone may work
-Date: Tue,  3 Mar 2009 12:33:37 +0100
-Message-ID: <1236080017-13987-1-git-send-email-dato@net.com.org.es>
-References: <237967ef0902160200r2320687ai71e62047c3ead9ad@mail.gmail.com>
+From: Jonas Smedegaard <dr@jones.dk>
+Subject: [TopGit] Multiple concurrent sets of patches
+Date: Tue, 3 Mar 2009 12:37:41 +0100
+Message-ID: <20090303113741.GO12820@jones.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mikael Magnusson <mikachu@gmail.com>, Joey Hess <joey@kitenet.net>,
-	=?utf-8?q?Adeodato=20Sim=C3=B3?= <dato@net.com.org.es>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Mar 03 12:35:10 2009
+Content-Type: text/plain; charset=us-ascii; x-action=pgp-signed
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 03 12:45:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeStv-0003mt-7f
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 12:35:07 +0100
+	id 1LeT4B-0006iu-Ni
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 12:45:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753360AbZCCLdm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2009 06:33:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753204AbZCCLdm
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 06:33:42 -0500
-Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:2618
-	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751814AbZCCLdl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 06:33:41 -0500
-Received: from justin (unknown [192.168.254.34])
-	by etc.inittab.org (Postfix) with ESMTP id E11ED801C02E;
-	Tue,  3 Mar 2009 12:33:37 +0100 (CET)
-Received: from userid 1000 by justin with local (Exim 4.69) 
-	  id 1LeSsT-0003eH-Dx; Tue, 03 Mar 2009 12:33:37 +0100
-X-Mailer: git-send-email 1.6.2.rc2.271.ge939
-In-Reply-To: <237967ef0902160200r2320687ai71e62047c3ead9ad@mail.gmail.com>
+	id S1752047AbZCCLoL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 06:44:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751077AbZCCLoJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 06:44:09 -0500
+Received: from 0x573b188a.cpe.ge-1-2-0-1101.hknqu1.customer.tele.dk ([87.59.24.138]:58767
+	"EHLO xayide.jones.dk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751637AbZCCLoI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 06:44:08 -0500
+X-Greylist: delayed 377 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Mar 2009 06:44:07 EST
+Received: from localhost (localhost [127.0.0.1])
+	by xayide.jones.dk (Postfix) with ESMTP id B976A11B7FA
+	for <git@vger.kernel.org>; Tue,  3 Mar 2009 12:37:50 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at jones.dk
+Received: from xayide.jones.dk ([127.0.0.1])
+	by localhost (xayide.jones.dk [127.0.0.1]) (amavisd-new, port 10024)
+	with SMTP id hr1scyElN-FL for <git@vger.kernel.org>;
+	Tue,  3 Mar 2009 12:37:48 +0100 (CET)
+Received: from auryn.jones.dk (auryn.jones.dk [192.168.222.52])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by xayide.jones.dk (Postfix) with ESMTPS id CDF1F11B7F9
+	for <git@vger.kernel.org>; Tue,  3 Mar 2009 12:37:48 +0100 (CET)
+Received: by auryn.jones.dk (Postfix, from userid 1000)
+	id 7388A356EE; Tue,  3 Mar 2009 12:37:41 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Face: "yShHCQ6@h{]=Se"1&kVc#Yd%l<B\s%RAjk)T'F6yYw3/unDabXtVB2LIg(-J0zo^aE2 U[s (uhG@f$_ZpbxE53gCn:WZ_a.Gz8yI;ko-,iqW@*+8k<F$2G-nyl;^55>b=>9&
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112058>
 
-The documentation used to say that pushing from a shallow clone is not
-supported; this is true, though it may work in some simple cases. If a
-user notices this fact, such a mismatch between documentation and reali=
-ty
-may leave them assuming the documentation is wrong and that pushing fro=
-m
-a shallow clone is supported.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This commit updates the documentation to say that pushing from a shallo=
-w
-clone may work in some cases, but that it's not guaranteed to always do=
-=2E
+Hi,
 
-Signed-off-by: Adeodato Sim=C3=B3 <dato@net.com.org.es>
----
-Hello,
+I have run into a challenge that I suspect is a limitation of current 
+TopGit. I am hoping you could help enlighten me, as I otherwise feel 
+that TopGit is not generally usable for my Debian packaging needs:
 
-this is about http://thread.gmane.org/gmane.comp.version-control.git/11=
-0100,
-which got a single reply from Mikael Magnusson stating:
+How to manage patches against multiple source branches using TopGit?
 
-> AFAIK, it will work in simple cases, but isn't guaranteed to work.
+Let's take netatalk as an example. Upstream only quite infrequently 
+release new upstream tarball releases, so I cherry-pick patches from 
+upstream VCS. Recently a security-related bug was discovered which 
+needed fixing not only in the current packaging development (git master 
+branch) but also needed branching off earlier releases of the package 
+(those included in the "stable" and "oldstable" Debian distro releases) 
+and applying same fix for them.
 
-If that's the case, I think it should be documented, for the reasons
-explained in the commit message.
+The actual patch needed for the various branches was obviously not 
+identical, as upstream sources were different and my cherry-picked set 
+of patches had evolved.
 
-Thanks!
+It seems to me that TopGit is incapable of handling this. That it can 
+only handle patchset against a single branch, and if the need arise for 
+restructuring an additional patchset for e.g. a stable or oldstable 
+branch, then quilt needs to be used manually anyway.
 
- Documentation/git-clone.txt |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 95f08b9..1b4f864 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -133,8 +133,10 @@ then the cloned repository will become corrupt.
- --depth <depth>::
- 	Create a 'shallow' clone with a history truncated to the
- 	specified number of revisions.  A shallow repository has a
--	number of limitations (you cannot clone or fetch from
--	it, nor push from nor into it), but is adequate if you
-+	number of limitations: you cannot clone or fetch from it,
-+	nor push into it; pushing from it into a regular repository
-+	may work correctly in some cases, but it is not guaranteed to
-+	always work.  However, a shallow repository is adequate if you
- 	are only interested in the recent history of a large project
- 	with a long history, and would want to send in fixes
- 	as patches.
---=20
-1.6.2.rc2.271.ge939
+   - Jonas
+
+Debian developer
+
+- -- 
+* Jonas Smedegaard - idealist og Internet-arkitekt
+* Tlf.: +45 40843136  Website: http://dr.jones.dk/
+
+   [x] quote me freely  [ ] ask before reusing  [ ] keep private
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkmtFoUACgkQn7DbMsAkQLgvrACdHfy5K0igPa6Yj/LYyhh3Llyn
+jvcAnRfla1QyuUrx8+L4IL9XYY2CB+Su
+=B1Kc
+-----END PGP SIGNATURE-----
