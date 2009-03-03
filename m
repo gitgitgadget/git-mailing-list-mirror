@@ -1,53 +1,69 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: First round of UGFWIINI results
-Date: Tue, 3 Mar 2009 11:15:43 -0500
-Message-ID: <20090303161543.GC32079@coredump.intra.peff.net>
-References: <alpine.DEB.1.00.0902171745320.6185@intel-tinevez-2-302> <3f4fd2640903030709r6e585d9j57ad3ae08cf38df1@mail.gmail.com> <alpine.DEB.1.00.0903031658180.6399@intel-tinevez-2-302>
+Subject: Re: [PATCH] doc: clarify how -S works
+Date: Tue, 3 Mar 2009 11:19:34 -0500
+Message-ID: <20090303161934.GD32079@coredump.intra.peff.net>
+References: <49AD3E78.1050706@sneakemail.com> <20090303152333.GB24593@coredump.intra.peff.net> <20090303154041.GA31265@coredump.intra.peff.net> <43d8ce650903030812n6fe857atb773f5068b6f0a17@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Reece Dunn <msclrhd@googlemail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 03 17:17:21 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Peter Valdemar =?utf-8?B?TcO4cmNoIChMaXN0cyk=?= 
+	<4ux6as402@sneakemail.com>, git@vger.kernel.org
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 03 17:21:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeXJ0-0000fR-R5
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 17:17:19 +0100
+	id 1LeXMh-0002O1-Qp
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 17:21:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754498AbZCCQPt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2009 11:15:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750875AbZCCQPs
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 11:15:48 -0500
-Received: from peff.net ([208.65.91.99]:34585 "EHLO peff.net"
+	id S1754380AbZCCQTj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2009 11:19:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753528AbZCCQTj
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 11:19:39 -0500
+Received: from peff.net ([208.65.91.99]:34593 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750785AbZCCQPs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 11:15:48 -0500
-Received: (qmail 17673 invoked by uid 107); 3 Mar 2009 16:15:47 -0000
+	id S1751809AbZCCQTi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 11:19:38 -0500
+Received: (qmail 17711 invoked by uid 107); 3 Mar 2009 16:19:37 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 03 Mar 2009 11:15:47 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Mar 2009 11:15:43 -0500
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 03 Mar 2009 11:19:37 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Mar 2009 11:19:34 -0500
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0903031658180.6399@intel-tinevez-2-302>
+In-Reply-To: <43d8ce650903030812n6fe857atb773f5068b6f0a17@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112105>
 
-On Tue, Mar 03, 2009 at 04:59:27PM +0100, Johannes Schindelin wrote:
+On Tue, Mar 03, 2009 at 04:12:30PM +0000, John Tapsell wrote:
 
-> > Does using Git to track edits when proofreading a html/text document
-> > (short story, novel, ...) count?
-> 
-> I'll count it, but I want (read-only) access to the repository as a proof 
-> that you actually use Git that way ;-)
+> > To fix it we:
+> >
+> > =C2=A01. use "introduce or remove an instance of" instead of
+> > =C2=A0 =C2=A0 "contain"
+>=20
+> I would read this to mean that it doesn't include modifying a line
+> containing that string.  But I also know that underneath the hood, a
+> change is a remove then an addition, so I would be confused :)
+>=20
+> What about saying "modifies" rather than "contain" ?
 
-Is it really that unusual? I've been keeping academic papers in git for
-years (and CVS before that -- blech), and I'm sure I'm not alone. Of
-course I'm writing in LaTeX, which is arguably a programming language. ;)
+I'm confused. It _doesn't_ include modifying a line containing the
+string. In which case it has done its job. But your "but" after that
+is what leaves me confused. You thought it would mean that, but you
+don't due to some other knowledge, which is leading you down the wrong
+path?
 
-BTW, --color-words is indispensable when dealing with things that aren't
-line-oriented.
+I was trying to get away with a short and sweet description. But the
+behavior is basically (with a few optimizations):
+
+  if count(a, string) !=3D count(b, string) then
+    it is interesting
+
+which is unambiguous, but it takes a second to realize the implications=
+=2E
 
 -Peff
