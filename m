@@ -1,69 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: More on "fast foward"
-Date: Tue, 3 Mar 2009 18:53:50 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903031851090.6399@intel-tinevez-2-302>
-References: <450196A1AAAE4B42A00A8B27A59278E709F0769A@EXCHANGE.trad.tradestation.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] doc: clarify how -S works
+Date: Tue, 3 Mar 2009 12:57:19 -0500
+Message-ID: <20090303175719.GC1636@coredump.intra.peff.net>
+References: <49AD3E78.1050706@sneakemail.com> <20090303152333.GB24593@coredump.intra.peff.net> <20090303154041.GA31265@coredump.intra.peff.net> <7v1vted0d7.fsf@gitster.siamese.dyndns.org> <20090303171138.GA454@coredump.intra.peff.net> <43d8ce650903030939u73f09171uf4041b6d9824b698@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: John Dlugosz <JDlugosz@TradeStation.com>
-X-From: git-owner@vger.kernel.org Tue Mar 03 18:55:24 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Peter Valdemar =?utf-8?B?TcO4cmNoIChMaXN0cyk=?= 
+	<4ux6as402@sneakemail.com>, git@vger.kernel.org
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 03 18:59:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeYpv-0000nJ-Df
-	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 18:55:23 +0100
+	id 1LeYtJ-00029P-0y
+	for gcvg-git-2@gmane.org; Tue, 03 Mar 2009 18:58:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752098AbZCCRx4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Mar 2009 12:53:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752185AbZCCRxz
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 12:53:55 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41402 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750968AbZCCRxz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Mar 2009 12:53:55 -0500
-Received: (qmail invoked by alias); 03 Mar 2009 17:53:51 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp033) with SMTP; 03 Mar 2009 18:53:51 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19eR7UOmu1epx2P/EhjkPYjqXeL0UEpQUsDZNanRG
-	iXfmWeijoS8kEi
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E709F0769A@EXCHANGE.trad.tradestation.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.61
+	id S1751500AbZCCR5Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 12:57:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751468AbZCCR5Y
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 12:57:24 -0500
+Received: from peff.net ([208.65.91.99]:34168 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750991AbZCCR5Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 12:57:24 -0500
+Received: (qmail 18726 invoked by uid 107); 3 Mar 2009 17:57:22 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 03 Mar 2009 12:57:22 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Mar 2009 12:57:19 -0500
+Content-Disposition: inline
+In-Reply-To: <43d8ce650903030939u73f09171uf4041b6d9824b698@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112137>
 
-Hi,
+On Tue, Mar 03, 2009 at 05:39:38PM +0000, John Tapsell wrote:
 
-On Tue, 3 Mar 2009, John Dlugosz wrote:
+> > Yes, that is technically correct. I was trying to find a wording that
+> > was a little less "this is literally what it does" and more "this is
+> > what you might find it useful for".
+> 
+> Is there any way to have an option to also match any line containing
+> the string?  That might be the best way to document it, as well as
+> being very useful:
+> 
+> -s<string>
+>    Look for any additions, removals or changes in any line containing <string>
+> -S<string>
+>    Look only for any additions or removals of the <string> in any line
 
-> After I merged the release fixes back into the development branch, I was 
-> surprised that push complained that it was not fast-forward.  I thought 
-> someone must have added something since I looked, but no, my repository 
-> matches exactly.  My new dev branch label is the immediate descendant of 
-> the old one.  My new node has another ancestor as well, but so what? The 
-> same changes, not recorded as a merge, would work without complaint.
+Yes, that would be possible (though it is still not foolproof against
+moves, as I mentioned elsewhere), and I think it would be simple to
+explain the two together.  It just needs somebody to code it.
 
-I can only assume that something went wrong with the merge.  To be 
-absolutely sure that your new tip of the branch is a descendant of the 
-current tip on the remote side, do this:
+Unfortunately "-s" is already taken for "no output".
 
-	$ git show-branch $BRANCH $(git ls-remote $REMOTE $BRANCH)
-
-where $BRANCH and $REMOTE are determined by your push command which should
-look something like this:
-
-	$ git push $REMOTE $BRANCH
-
-The show-branch command should show you what Git assumes happened on both 
-branches (the local and the remote one) since the branch point.
-
-Ciao,
-Dscho
+-Peff
