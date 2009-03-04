@@ -1,142 +1,114 @@
-From: Peter Harris <git@peter.is-a-geek.org>
-Subject: Re: git-svn and repository hierarchy?
-Date: Tue, 3 Mar 2009 19:18:04 -0500
-Message-ID: <eaa105840903031618s5e0b6f24j64aade8d752fb11@mail.gmail.com>
-References: <20090224223412.GA4573@raven.wolf.lan>
-	 <49A50EB2.80300@drmicha.warpmail.net>
-	 <20090227171248.GB14187@raven.wolf.lan>
-	 <49A826C8.1060300@drmicha.warpmail.net>
-	 <20090227220512.GC14187@raven.wolf.lan>
-	 <49A97B7A.8010005@drmicha.warpmail.net>
-	 <20090303185108.GA11278@raven.wolf.lan>
-	 <eaa105840903031135o4cf72ed0oe3fffed69cb7ce03@mail.gmail.com>
-	 <20090303223600.GB11278@raven.wolf.lan>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [Orinoco-users] linux-firmware binary corruption with gitweb
+Date: Tue, 03 Mar 2009 16:26:28 -0800 (PST)
+Message-ID: <m3iqmqt9ox.fsf@localhost.localdomain>
+References: <49A98F6A.50702@gmail.com> <1235886467.3195.15.camel@mj>
+	<49AD7E2B.3010101@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 04 01:19:38 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Pavel Roskin <proski@gnu.org>, git@vger.kernel.org,
+	linux-kernel@vger.kernel.org, orinoco-users@lists.sourceforge.net,
+	dwmw2@infradead.org
+To: Dave <kilroyd@googlemail.com>
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1755359AbZCDA0u@vger.kernel.org Wed Mar 04 01:28:24 2009
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1755359AbZCDA0u@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Leepl-0005YR-0u
-	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 01:19:37 +0100
+	id 1LeeyF-0007nG-W4
+	for glk-linux-kernel-3@gmane.org; Wed, 04 Mar 2009 01:28:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751160AbZCDASK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Mar 2009 19:18:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750958AbZCDASI
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 19:18:08 -0500
-Received: from mail-gx0-f174.google.com ([209.85.217.174]:40819 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750786AbZCDASH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Mar 2009 19:18:07 -0500
-Received: by gxk22 with SMTP id 22so6054374gxk.13
-        for <git@vger.kernel.org>; Tue, 03 Mar 2009 16:18:04 -0800 (PST)
+	id S1755359AbZCDA0u (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Tue, 3 Mar 2009 19:26:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752067AbZCDA0e
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Tue, 3 Mar 2009 19:26:34 -0500
+Received: from fg-out-1718.google.com ([72.14.220.154]:16946 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750915AbZCDA0c (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Tue, 3 Mar 2009 19:26:32 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so151307fgg.17
+        for <multiple recipients>; Tue, 03 Mar 2009 16:26:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=VXfOY31H/fSghIOwwQeCigMXfKXdH+/2xN/NEpBbWfw=;
-        b=nyUMnvdU9PKR5ydpOWZqWEMowIDy8XW0SPP6HbMier8NY77jt7GufObEonEl00f5Vx
-         7mn73OrREitF7/TESKEFzBNf3j0XqC/psq1xsHveFWypUJlNdp9Wf2O2DD+7BIkS2Iha
-         BQ2qoprqqGOa0ZrOcWUKSP5+Q1s6veX3+HbLk=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=EZP56W+8Wh+hIYvXL0AXUCozaBdzbWsMQcMkHG3LTFE=;
+        b=KgDKdSl1/S2CxwY0enzNFmma0pqD3aoTv2CruEwh3jw2YrtCTcOn4cTEFe8S4znnYx
+         ZhmtHJnn66IM9L94YDljRkj1rbZ0CPS5wcR4+92dxBUQiquM2D6wf5OiNzMfaxGelCx8
+         pdodAjCOL47bRyEjt0/HGz4WA22F5dvMtPJdE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=aVyhouq/yoNPHAsTo4ZJJMzLozr4TDIiC7+uyMEDQONEalXFYb4Lsk4IO9ky5215oB
-         Pz4MNlEABif4Jik3C5caUv0w9LylgYoQFZD0+iNUObOufqe+amRT4qvroH7rO/wK571/
-         w0w7xX6ASrlH6uyJ9c/Xk7FwQ4o0dlIKrU564=
-Received: by 10.220.92.80 with SMTP id q16mr2607703vcm.58.1236125884551; Tue, 
-	03 Mar 2009 16:18:04 -0800 (PST)
-In-Reply-To: <20090303223600.GB11278@raven.wolf.lan>
-X-Google-Sender-Auth: ee35b6cf7d5ad86c
-Sender: git-owner@vger.kernel.org
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=txBfnkt+dxdSTLj4ajzQSS5Ca0mauCB7NQ9mnNnrIPPrlf25MqiQSYSAF5O3Xu2oNM
+         ZfupWLfWxEyer0ext7+GcXQTYHqGkE31raNBTtIgJyeevrE2XJvNtnETkhJ7uJsJ9OKl
+         FnL0cugH2bWHqnr5BpyO2ZKpAV5jDpttZhzm8=
+Received: by 10.86.91.3 with SMTP id o3mr2792677fgb.17.1236126389430;
+        Tue, 03 Mar 2009 16:26:29 -0800 (PST)
+Received: from localhost.localdomain (abwt152.neoplus.adsl.tpnet.pl [83.8.243.152])
+        by mx.google.com with ESMTPS id d6sm1348007fga.2.2009.03.03.16.26.28
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 03 Mar 2009 16:26:28 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n240QQAp024068;
+	Wed, 4 Mar 2009 01:26:27 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n240QNwM024064;
+	Wed, 4 Mar 2009 01:26:23 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <49AD7E2B.3010101@gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112175>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112176>
 
-On Tue, Mar 3, 2009 at 5:36 PM, Josef Wolf wrote:
->
-> I'd rather not let every clone talk to subversion for several reasons=
-=2E
-> One of them is that it is very inconvenient (e.g. the password has to
-> be entered several times for every commit).
+Dave <kilroyd@googlemail.com> writes:
 
-Sounds like subversion isn't properly caching your credentials, or
-your admin is paranoid and turned off the svn credential cache. I
-can't remember the last time I had to enter a password.
+> Adding the git mailing list.
+> 
+> Pavel Roskin wrote:
+> > On Sat, 2009-02-28 at 19:24 +0000, Dave wrote:
 
-Of course, git-svn-repo can't cache credentials, since it has to
-impersonate different users. You are impersonating different users so
-that the svn author field is correct, aren't you? But that shouldn't
-be a problem for userN working on cloneN.
+>>> I'm aware of at least a couple users of orinoco who have picked up
+>>> corrupt firmware# from the linux-firmware tree*.
+>>>
+>>> I've verified that the firmware in the repository itself is correct.
+>>>
+>>> It appears that downloading the file using the blob/raw links from
+>>> gitweb causes the corruption (0xc3 everywhere). At least it does with
+>>> firefox.
+>> 
+>> I can confirm the problem with Firefox 3.0.6.  But it's not "0xc3
+>> everywhere".  The corrupted file is a result of recoding from iso-8859-1
+>> to utf-8.  The correct agere_sta_fw.bin is 65046 bytes long.  The
+>> corrupted agere_sta_fw.bin is 89729 bytes long.
 
-> =A0After all, the whole point
-> for having git-svn-repos is for the clone to avoid working directly
-> against the subversion repos. =A0If every clone works against subvers=
-ion
-> anyway, I can get rid of git-svn-repos as well.
+[...]
+>> My strong impression is that the recoding takes place on the server.  I
+>> think the bug should be reported to the gitweb maintainers unless it a
+>> local breakage on the kernel.org site.
+> 
+> Thanks Pavel.
+> 
+> I just did a quick scan of the gitweb README - is this an issue with the
+> $mimetypes_file or $fallback_encoding configurations variables?
 
-=46rom my perspective, the main advantage of git-svn-repos is the inita=
-l
-clone. Subversion is way too slow to clone an entire project's history
-(days, vs minutes for git). Subsequent 'git pull --rebase's are faster
-than 'git svn rebase's, too, although not by the same ratio (except
-for large subtree moves, which really are that much faster).
+First, what version of gitweb do you use? It should be in 'Generator'
+meta header, or (in older gitweb) in comments in HTML source at the
+top of the page.
 
-> On Tue, Mar 03, 2009 at 02:35:28PM -0500, Peter Harris wrote:
->> Also, this line says "rebase my changes onto those of ../clone$clone=
-",
->> which isn't what you want. It will end up rebasing svn commits that
->> the client didn't have on top of the client's commits, and will brea=
-k
->> git-svn's index. Don't use --rebase here.
->
-> Hmm, I must have misunderstood Michael, then. =A0Wasn't he suggesting
-> to rebase here? =A0Here's the citation:
->
-> |> =A0 (cd git-svn-repos; git pull ../clone1) =A0# if this line is ex=
-ecuted,
-> |
-> |That's the problem. This creates a merge after which you 1-2-3-4 and
-> |1-2'-3'-4' plus the merge of 4 and 4'.
-> |
-> |Instead, use git pull --rebase here. You don't want merges in the br=
-anch
-> |from which you dcommit.
+Second, the file is actually sent to browser 'as is', using binmode :raw
+(or at least should be according to my understanding of Perl). And *.bin
+binary file gets application/octet-stream mimetype, and doesn't send any
+charset info. git.kernel.org should have modern enough gitweb to use this.
+Strange...
 
-I think he meant to say "git pull ../cloneN && git rebase trunk".
-
->> > =A0# Although we have resolved the conflict, spurious conflicts ar=
-e
->> > =A0# propagated to the clones
->>
->> ...and this is because you had clones all merge from each other (via
->> git-svn-repos) *before* the changes were in svn.
->
-> Does that mean that the conflicts would disappear if I do
-> git-svn-rebase + git-svn-dcommit after every pull from a clone?
-
-Well, 'disappear' is a strong word. "cloneX" has to be willing to
-reset to your branch if you have resolved any conflicts on behalf of
-cloneX. But the other cloneNs should not see those conflicts, at
-least.
-
-Not to mention that it's not outside the realm of possibility that
-various cloneNs may be working with each other without involving you.
-
-Plus, there is a small window where clones may be pulling from each
-other, and will have to resolve the same conflicts you resolve during
-your "git svn dcommit". I'm sure you've heard the saying "Every
-computer science problem can be solved by adding a level of
-indirection." You could add a git-svn-stage that pulls from cloneN and
-does the dcommit (and then pushes to git-svn-repos, or lets
-git-svn-repos do its own "git svn fetch"), leaving git-svn-repos clean
-for cloneN to pull from...
-
-Peter Harris
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
