@@ -1,284 +1,181 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: A note from the maintainer
-Date: Wed, 04 Mar 2009 11:52:54 -0800
-Message-ID: <7vy6vl3w15.fsf@gitster.siamese.dyndns.org>
+From: Peter Harris <git@peter.is-a-geek.org>
+Subject: Re: git-svn and repository hierarchy?
+Date: Wed, 4 Mar 2009 17:06:06 -0500
+Message-ID: <eaa105840903041406k36088763w5a70fe1d7458dfb1@mail.gmail.com>
+References: <20090224223412.GA4573@raven.wolf.lan>
+	 <20090227171248.GB14187@raven.wolf.lan>
+	 <49A826C8.1060300@drmicha.warpmail.net>
+	 <20090227220512.GC14187@raven.wolf.lan>
+	 <49A97B7A.8010005@drmicha.warpmail.net>
+	 <20090303185108.GA11278@raven.wolf.lan>
+	 <eaa105840903031135o4cf72ed0oe3fffed69cb7ce03@mail.gmail.com>
+	 <20090303223600.GB11278@raven.wolf.lan>
+	 <eaa105840903031618s5e0b6f24j64aade8d752fb11@mail.gmail.com>
+	 <20090304192752.GC11278@raven.wolf.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 04 20:55:06 2009
+To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 04 23:07:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LexB7-0004NU-AH
-	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 20:54:54 +0100
+	id 1LezFd-0000XG-MU
+	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 23:07:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756068AbZCDTxF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Mar 2009 14:53:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756030AbZCDTxF
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 14:53:05 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49952 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756057AbZCDTxC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Mar 2009 14:53:02 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 585F99F83A;
-	Wed,  4 Mar 2009 14:52:59 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E52B19F839; Wed,
-  4 Mar 2009 14:52:56 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 10228212-08F6-11DE-BCBD-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1754599AbZCDWGM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Mar 2009 17:06:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754355AbZCDWGM
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 17:06:12 -0500
+Received: from mail-gx0-f174.google.com ([209.85.217.174]:34982 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753622AbZCDWGK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Mar 2009 17:06:10 -0500
+Received: by gxk22 with SMTP id 22so6926355gxk.13
+        for <git@vger.kernel.org>; Wed, 04 Mar 2009 14:06:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=5h8VNCzYTM+tsbbGKYYM9oic3PiuYpCmzBdabVXBAuI=;
+        b=lkzwb9mhS17qWbc8kqYN5NFzyx6ZWPZTR0gkLP8lRkU4NrZhSr9+UQtPw5qeVw3eue
+         ami88RW1BRFNo2OlIqs8fdMAD2DOIojHeFesr2RRizHUm39lQLt4Zb7ukqeBKNV7jpTs
+         FdAaPSTYBYRrnMB+ylig76T/vqMBbtMEwfnDY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=E96WosW5W7FcEtwIINmrgt+wuqn8YzzS/YzBJ+37GQNXQ2d/elU1BZVHJabjYPaLQa
+         v+zNXnMgsz/0fcrhNZN3O+nimHpBnQuVZm/oYKCVDsAE+aeRpfDQ20PuAAQDmV9qMjfU
+         xa3LX0IES2X3SD4/WCaG/cN4Qrl5J0uPULVUM=
+Received: by 10.220.76.132 with SMTP id c4mr167382vck.94.1236204367505; Wed, 
+	04 Mar 2009 14:06:07 -0800 (PST)
+In-Reply-To: <20090304192752.GC11278@raven.wolf.lan>
+X-Google-Sender-Auth: 94788732f65562db
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112241>
-
-Welcome to git community.
-
-This message talks about how git.git is managed, and how you can work
-with it.
-
-* IRC and Mailing list
-
-Many active members of development community hang around on #git
-IRC channel on Freenode.  Its log is available at:
-
-        http://colabti.org/irclogger/irclogger_log/git
-
-The development however is primarily done on the git mailing list
-(git@vger.kernel.org).  If you have patches, please send them to the
-list, following Documentation/SubmittingPatches.
-
-I usually try to read all patches posted to the list, and follow
-almost all the discussions on the list, unless the topic is about an
-obscure corner that I do not personally use.  But I am obviously not
-perfect.  If you sent a patch that you did not hear from anybody for
-three days, that is a very good indication that it was dropped on the
-floor --- please do not hesitate to remind me.
-
-The list archive is available at a few public sites as well:
-
-        http://news.gmane.org/gmane.comp.version-control.git/
-        http://marc.theaimsgroup.com/?l=3Dgit
-        http://www.spinics.net/lists/git/
-
-and some people seem to prefer to read it over NNTP:
-
-        nntp://news.gmane.org/gmane.comp.version-control.git
-
-When you point at a message in a mailing list archive, using
-gmane is often the easiest to follow by readers, like this:
-
-        http://thread.gmane.org/gmane.comp.version-control.git/27/focus=
-=3D217
-
-as it also allows people who subscribe to the mailing list as
-gmane newsgroup to "jump to" the article.
-
-* Repositories, branches and documentation.
-
-My public git.git repository is at:
-
-        git://git.kernel.org/pub/scm/git/git.git/
-
-Immediately after I publish to the primary repository at kernel.org, I
-also push into an alternate here:
-
-        git://repo.or.cz/alt-git.git/
-
-Impatient people might have better luck with the latter one.
-
-Their gitweb interfaces are found at:
-
-        http://git.kernel.org/?p=3Dgit/git.git
-        http://repo.or.cz/w/alt-git.git
-
-There are three branches in git.git repository that are not about the
-source tree of git: "todo", "html" and "man".  The first one was meant
-to contain TODO list for me, but I am not good at maintaining such a
-list and it is in an abandoned state.  The branch mostly is used to
-keep some helper scripts I use to maintain git and the regular "What's
-in/cooking" messages these days.
-
-The "html" and "man" are autogenerated documentation from the
-tip of the "master" branch; the tip of "html" is extracted to be
-visible at kernel.org at:
-
-        http://www.kernel.org/pub/software/scm/git/docs/
-
-The above URL is the top-level documentation page, and it has
-links to documentation of older releases.
-
-The script to maintain these two documentation branches are
-found in "todo" branch as dodoc.sh, if you are interested.  It
-is a good demonstration of how to use a post-update hook to
-automate a task.
-
-There are four branches in git.git repository that track the
-source tree of git: "master", "maint", "next", and "pu".  I may
-add more maintenance branches (e.g. "maint-1.5.4") if we have
-hugely backward incompatible feature updates in the future to keep
-an older release alive; I may not, but the distributed nature of
-git means any volunteer can run a stable-tree like that herself.
-
-The "master" branch is meant to contain what are very well
-tested and ready to be used in a production setting.  There
-could occasionally be minor breakages or brown paper bag bugs
-but they are not expected to be anything major, and more
-importantly quickly and trivially fixable.  Every now and
-then, a "feature release" is cut from the tip of this branch and
-they typically are named with three dotted decimal digits.  The
-last such release was 1.6.2 done on Mar 3rd 2009.  You
-can expect that the tip of the "master" branch is always more
-stable than any of the released versions.
-
-Whenever a feature release is made, "maint" branch is forked off
-from "master" at that point.  Obvious, safe and urgent fixes
-after a feature release are applied to this branch and
-maintenance releases are cut from it.  The maintenance releases
-are named with four dotted decimal, named after the feature
-release they are updates to; the last such release was 1.6.1.3.
-New features never go to this branch.  This branch is also
-merged into "master" to propagate the fixes forward.
-
-A trivial and safe enhancement goes directly on top of "master".
-A new development, either initiated by myself or more often by
-somebody who found his or her own itch to scratch, does not
-usually happen on "master", however.  Instead, a separate topic
-branch is forked from the tip of "master", and it first is
-tested in isolation; I may make minimum fixups at this point.
-Usually there are a handful such topic branches that are running
-ahead of "master" in git.git repository.  I do not publish the
-tip of these branches in my public repository, however, partly
-to keep the number of branches that downstream developers need
-to worry about low, and primarily because I am lazy.
-
-The quality of topic branches are judged primarily by the mailing list
-discussions.  Some of them start out as "good idea but obviously is
-broken in some areas (e.g. breaks the existing testsuite)" and then
-with some more work (either by the original contributor's effort or
-help from other people on the list) becomes "more or less done and can
-now be tested by wider audience".  Luckily, most of them start out in
-the latter, better shape.
-
-The "next" branch is to merge and test topic branches in the
-latter category.  In general, the branch always contains the tip
-of "master".  It might not be quite rock-solid production ready,
-but is expected to work more or less without major breakage.  I
-usually use "next" version of git for my own work, so it cannot
-be _that_ broken to prevent me from pushing the changes out.
-The "next" branch is where new and exciting things take place.
-
-The two branches "master" and "maint" are never rewound, and
-"next" usually will not be either (this automatically means the
-topics that have been merged into "next" are usually not
-rebased, and you can find the tip of topic branches you are
-interested in from the output of "git log next"). You should be
-able to safely track them.
-
-After a feature release is made from "master", however, "next"
-will be rebuilt from the tip of "master" using the surviving
-topics.  The commit that replaces the tip of the "next" will
-usually have the identical tree, but it will have different ancestry
-from the tip of "master".  An announcement will be made to warn
-people about such a rebasing.
-
-The "pu" (proposed updates) branch bundles all the remainder of
-topic branches.  The "pu" branch, and topic branches that are
-only in "pu", are subject to rebasing in general.  By the above
-definition of how "next" works, you can tell that this branch
-will contain quite experimental and obviously broken stuff.
-
-When a topic that was in "pu" proves to be in testable shape, it
-graduates to "next".  I do this with:
-
-        git checkout next
-        git merge that-topic-branch
-
-Sometimes, an idea that looked promising turns out to be not so
-good and the topic can be dropped from "pu" in such a case.
-
-A topic that is in "next" is expected to be tweaked and fixed to
-perfection before it is merged to "master" (that's why "master"
-can be expected to stay very stable).  Similarly to the above, I
-do it with this:
-
-        git checkout master
-        git merge that-topic-branch
-        git branch -d that-topic-branch
-
-Note that being in "next" is not a guarantee to appear in the
-next release (being in "master" is such a guarantee, unless it
-is later found seriously broken and reverted), nor even in any
-future release.  There even were cases that topics needed
-reverting a few commits in them before graduating to "master",
-or a topic that already was in "next" were entirely reverted
-from "next" because fatal flaws were found in them later.
-
-
-* Other people's trees, trusted lieutenants and credits.
-
-Documentation/SubmittingPatches outlines to whom your proposed
-changes should be sent.  As described in contrib/README, I would
-delegate fixes and enhancements in contrib/ area to the primary
-contributors of them.
-
-Although the following are included in git.git repository, they
-have their own authoritative repository and maintainers:
-
- - git-gui/ comes from Shawn Pearce's git-gui project:
-
-        git://repo.or.cz/git-gui.git
-
- - gitk-git/ comes from Paul Mackerras's gitk project:
-
-        git://git.kernel.org/pub/scm/gitk/gitk.git
-
-I would like to thank everybody who helped to raise git into the
-current shape.  Especially I would like to thank the git list
-regulars whose help I have relied on and expect to continue
-relying on heavily:
-
- - Linus on general design issues.
-
- - Linus, Shawn Pearce, Johannes Schindelin, Nicolas Pitre,
-   Ren=C3=A9 Scharfe, Jeff King and Johannes Sixt on general
-   implementation issues.
-
- - Shawn and Nicolas Pitre on pack issues.
-
- - Martin Langhoff and Frank Lichtenheld on cvsserver and cvsimport.
-
- - Paul Mackerras on gitk.
-
- - Eric Wong on git-svn.
-
- - Simon Hausmann on git-p4.
-
- - Jakub Narebski, Petr Baudis, Luben Tuikov, Giuseppe Bilotta
-   on gitweb.
-
- - J. Bruce Fields on documentation (and countless others for
-   proofreading and fixing).
-
- - Alexandre Julliard on Emacs integration.
-
- - Charles Bailey for git-mergetool (and Theodore Ts'o for creating
-   the tool).
-
- - Johannes Schindelin, Johannes Sixt and others for their effort
-   to move things forward on the Windows front.
-
- - People on non-Linux platforms for keeping their eyes on
-   portability; especially, Randal Schwartz, Theodore Ts'o,
-   Jason Riedy, Thomas Glanzmann, Brandon Casey, but countless
-   others as well.
-
-* This document
-
-The latest copy of this document is found in git.git repository,
-on 'todo' branch, as MaintNotes.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112242>
+
+On Wed, Mar 4, 2009 at 2:27 PM, Josef Wolf wrote:
+> On Tue, Mar 03, 2009 at 07:18:04PM -0500, Peter Harris wrote:
+>>
+>> Sounds like subversion isn't properly caching your credentials, or
+>> your admin is paranoid and turned off the svn credential cache. I
+>> can't remember the last time I had to enter a password.
+>
+> What credential cache are you talking about? =A0I don't know of any
+> worth to be mentioned. =A0If you talk about "store-passwords=3Dyes" i=
+n
+> subversion's config
+
+Yes, that's the one.
+
+> you might be interested to read
+> http://curl.haxx.se/docs/adv_20090303.html
+
+Not really, since I use svn:// :-)
+
+> BTW: The paranoid admin is myself. =A0 ;-)
+> BTW1: I know there's the possibility of client certificates. =A0But A=
+=46AIK,
+> =A0 =A0 =A0there's no equivalent to ssh-agent, so it's pointless.
+
+I thought that this was already a part of svn, but it appears in the
+1.6 (not quite final yet) release notes: "SSL client certificate
+passphrases can be stored in KWallet, GNOME Keyring, Mac OS Keychain,
+a Windows CryptoAPI encrypted form or in plaintext form."
+
+> Within svn, the author field seems to be correct (at least, it is
+> identical to those of the commits that were done directly to svn)
+> But when the commits come back to git, it is set to
+> "jw <jw@041dc122-08ea-11de-a769-bddc3e64b585>" with the host-part bei=
+ng
+> the uuid of the svn-repo.
+>
+> Any ideas how to fix that?
+
+"git help svn" and look for "--authors-file", maybe. I don't use it
+myself, so I'm afraid I can't help with that one. Personally, I don't
+mind user@uuid. Plus, user@uuid is so obviously different from git's
+standard format that it is immediately obvious to me which commits are
+in svn, and which aren't, when running gitk.
+
+> Oh, and what happens if svn's rev-properties (commit log, author, dat=
+e...)
+> are changed?
+
+Too late. git svn will ignore the change to the history, since git
+forces you to rewrite your entire history if any part changes. Cue
+standard "log messages should [not] be mutable" flamewar.
+
+Ah, here it is... <flamebait version>: Nothing happens. git will
+correctly store your *true* log/author/date, ignoring any and all
+attempts by malicious parties to destroy useful historical
+information.
+
+Of course, you're a paranoid admin, so you already have a
+pre-revprop-change hook in your svn server that prevents
+log/author/date changes. Right? ;-)
+
+> In contrast, working directly against an svn repository is _very_
+> tedious.
+
+Tell me about it. Fortunately, we have git-svn to save us from the
+default svn client. ;-)
+(Sorry, couldn't resist pulling that one out of context)
+
+> =A0With a dozen commits pending, you have to enter your password
+> about 30..50 times in "git svn dcommit".
+
+Maybe svn 1.6 will fix that for you?
+
+>> I think he meant to say "git pull ../cloneN && git rebase trunk".
+>
+> Did you mean "git pull ../cloneN && git rebase master"? =A0There's no
+> trunk in git, AFAIK?
+
+If a local branch isn't found, git will automatically look in remotes,
+so it will use remotes/trunk (the svn tracking branch). Modify to suit
+if you renamed remotes/trunk, of course.
+
+"git branch -r" to see the remote branches git-svn has set up for you.
+
+I'm pretty sure I didn't mean to suggest a no-op. Assuming you git
+pull'd into master, "git rebase master" will be a no-op. rebase "all
+commits in (current branch) that aren't in master" -> set operation
+(master - master =3D empty set) -> rebase (empty set) -> done.
+
+> =A0# 2. move commits from clone to subversion
+> =A0#
+> =A0cd git-svn-repos
+> =A0git svn rebase
+> =A0git pull ../clone$clone topic-branch =A0 # need rebase?
+
+Yeah, a "git svn rebase -l" after this line wouldn't hurt, and is
+suggested by "git help svn". Or even reverse those two lines, to save
+adding a third:
+  git pull ../clone$clone topic-branch
+  git svn rebase
+
+Alternatively, you can avoid potential pull conflicts by using a
+temporary branch to avoid the merge you are about to throw away with
+rebase -- remember that 'pull' is short for 'fetch && merge':
+
+git fetch ../clone$clone topic-branch:scratch
+git checkout scratch
+git rebase trunk
+git svn dcommit
+git checkout master
+git svn rebase -l # fast-forward master to where scratch is
+git branch -d scratch
+
+=2E..which should result in seeing only the rebase conflict(s). And
+ought to work if cloneN's topic-branch is on a different svn branch
+from master (although you'd need to -D scratch instead of -d).
+
+Peter Harris
