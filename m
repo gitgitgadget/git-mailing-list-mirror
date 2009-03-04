@@ -1,100 +1,112 @@
-From: thestar@fussycoder.id.au
-Subject: Re: [PATCH] git-p4: improve performance with large files
-Date: Thu, 05 Mar 2009 10:05:27 +1100
-Message-ID: <20090305100527.shmtfbdvk0ggsk4s@webmail.fussycoder.id.au>
-References: <20090304215438.GA12653@zoy.org>
+From: Dave <kilroyd@googlemail.com>
+Subject: Re: [Orinoco-users] linux-firmware binary corruption with gitweb
+Date: Wed, 04 Mar 2009 23:52:09 +0000
+Message-ID: <49AF1429.9080009@gmail.com>
+References: <49A98F6A.50702@gmail.com> <1235886467.3195.15.camel@mj>	<49AD7E2B.3010101@gmail.com> <m3iqmqt9ox.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	DelSp=Yes	format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Sam Hocevar <sam@zoy.org>
-X-From: git-owner@vger.kernel.org Thu Mar 05 00:16:48 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Pavel Roskin <proski@gnu.org>, git@vger.kernel.org,
+	linux-kernel@vger.kernel.org, orinoco-users@lists.sourceforge.net,
+	dwmw2@infradead.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 05 00:53:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lf0KV-0001v9-Kq
-	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 00:16:48 +0100
+	id 1Lf0uR-0005yJ-TC
+	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 00:53:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753668AbZCDXPS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Mar 2009 18:15:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752793AbZCDXPS
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 18:15:18 -0500
-Received: from ironport1-mx.cbr1.mail-filtering.com.au ([203.88.115.241]:50972
-	"EHLO ironport1-mx.cbr1.mail-filtering.com.au" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751137AbZCDXPR convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 4 Mar 2009 18:15:17 -0500
-X-Greylist: delayed 580 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Mar 2009 18:15:16 EST
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Al8DAK+XrknLWHaZ/2dsb2JhbACTWCKBe8JchAgG
-X-IronPort-AV: E=Sophos;i="4.38,304,1233493200"; 
-   d="scan'208";a="370805"
-Received: from cherry.cbr.hosting-server.com.au ([203.88.118.153])
-  by ironport1-mta.cbr1.mail-filtering.com.au with ESMTP; 05 Mar 2009 10:05:34 +1100
-Received: (qmail 21111 invoked by uid 48); 5 Mar 2009 10:05:27 +1100
-Received: from  ( [unknown]) by webmail.fussycoder.id.au (Horde MIME
-	library) with HTTP; Thu, 05 Mar 2009 10:05:27 +1100
-In-Reply-To: <20090304215438.GA12653@zoy.org>
-Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) H3 (4.1.5)
+	id S1753124AbZCDXw1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Mar 2009 18:52:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752827AbZCDXw0
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 18:52:26 -0500
+Received: from ey-out-2122.google.com ([74.125.78.24]:3815 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752694AbZCDXwZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Mar 2009 18:52:25 -0500
+Received: by ey-out-2122.google.com with SMTP id 25so748655eya.37
+        for <multiple recipients>; Wed, 04 Mar 2009 15:52:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=iPw07nS92p+jhbB782ulkvzAmHnynoc/3UFMhVB5ypE=;
+        b=caYz4M/GeTWK32+UGaLYgZ3mr6K+wGEn3XEHKfAbUCrL41nRLIFhA1hIDsv2QaL12+
+         s+xTNcb1Kj6mNzt/xq0zwDqY3FZh7m4Q2lhoWJbw8MdNFDpOy0o0md8sFZm9w451f41O
+         3Wi3FBxeBmrSUp6JMWNxEesT4ZBTXcymOXMxQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=HTQbliLcT7mp5jMsnfm5laxEUNG26FpSFOYUU6Ufl3U4D4KU4w+YodaqRcVXX7DRI3
+         Y2vmztfYpF4PwshhFclpc5yjsOufUpksjOAxqQAZaZcKwaxtrGmfYF1ycgV2kgUQcmtr
+         3B9vPnHer4sL/4Bo0Wk4PTUC/mkNXvKWpPyhs=
+Received: by 10.210.41.14 with SMTP id o14mr5410490ebo.8.1236210741756;
+        Wed, 04 Mar 2009 15:52:21 -0800 (PST)
+Received: from ?192.168.0.4? (5ac998a0.bb.sky.com [90.201.152.160])
+        by mx.google.com with ESMTPS id 7sm674996eyb.48.2009.03.04.15.52.20
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 04 Mar 2009 15:52:21 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.19 (X11/20090104)
+In-Reply-To: <m3iqmqt9ox.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112246>
 
-Quoting Sam Hocevar <sam@zoy.org>:
+Jakub Narebski wrote:
+> Dave <kilroyd@googlemail.com> writes:
+>>> My strong impression is that the recoding takes place on the server.  I
+>>> think the bug should be reported to the gitweb maintainers unless it a
+>>> local breakage on the kernel.org site.
+>> Thanks Pavel.
+>>
+>> I just did a quick scan of the gitweb README - is this an issue with the
+>> $mimetypes_file or $fallback_encoding configurations variables?
+> 
+> First, what version of gitweb do you use? It should be in 'Generator'
+> meta header, or (in older gitweb) in comments in HTML source at the
+> top of the page.
 
->    The current git-p4 way of concatenating strings performs in O(n^2)
-> and is therefore terribly slow with large files because of unnecessary
-> memory copies. The following patch makes the operation O(n).
+Not sure where I'd find the meta header, but at the top of the HTML:
 
-The reason why it uses simple concatenation is to cut down on memory usage.
-  - It is a tradeoff.
+<!-- git web interface version 1.4.5-rc0.GIT-dirty, (C) 2005-2006, Kay
+Sievers <kay.sievers@vrfy.org>, Christian Gierke -->
+<!-- git core binaries version 1.6.1.1 -->
 
-I think the modification you have made below is reasonable, however be  
-aware that memory usage could double, which substantially reduce the  
-size of the changesets that git-p4 would be able to import /at all/,  
-rather than to merely be slow.
+> Second, the file is actually sent to browser 'as is', using binmode :raw
+> (or at least should be according to my understanding of Perl). And *.bin
+> binary file gets application/octet-stream mimetype, and doesn't send any
+> charset info. git.kernel.org should have modern enough gitweb to use this.
+> Strange...
 
-That said, you do need to delete the data temporary array to cut down  
-on memory.
-  -- I would do this immediately after the "".join(data).
+Dug around gitweb.perl in the main git repo. Then looked at the
+git/warthog9/gitweb.git repo (after noting the Git Wiki says kernel.org
+is running John Hawley's branch).
 
->
->    Using this patch, importing a 17GB repository with large files
-> (50 to 500MB) takes 2 hours instead of a week.
->
-> Signed-off-by: Sam Hocevar <sam@zoy.org>
-> ---
->  contrib/fast-import/git-p4 |    5 +++--
->  1 files changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-> index 9fdb0c6..09e9746 100755
-> --- a/contrib/fast-import/git-p4
-> +++ b/contrib/fast-import/git-p4
-> @@ -990,11 +990,12 @@ class P4Sync(Command):
->          while j < len(filedata):
->              stat = filedata[j]
->              j += 1
-> -            text = ''
-> +            data = []
->              while j < len(filedata) and filedata[j]['code'] in   
-> ('text', 'unicode', 'binary'):
-> -                text += filedata[j]['data']
-> +                data.append(filedata[j]['data'])
->                  del filedata[j]['data']
->                  j += 1
-> +            text = "".join(data)
->
->              if not stat.has_key('depotFile'):
->                  sys.stderr.write("p4 print fails with: %s\n" % repr(stat))
-> --
-> 1.6.1.3
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+One notable change to git_blob_plain:
+
+        undef $/;
+        binmode STDOUT, ':raw';
+-        print <$fd>;
++        #print <$fd>;
++        $output .= <$fd>;
+        binmode STDOUT, ':utf8'; # as set at the beginning of gitweb.cgi
+        $/ = "\n";
+
+        close $fd;
++
++        return $output;
+
+If that's the code that's running, doesn't that mean the output mode
+change doesn't impact the concatenation to $output? So the blob gets utf
+encoding when actually printed.
+
+
+Regards,
+
+Dave.
