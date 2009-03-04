@@ -1,114 +1,91 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [Orinoco-users] linux-firmware binary corruption with gitweb
-Date: Tue, 03 Mar 2009 16:26:28 -0800 (PST)
-Message-ID: <m3iqmqt9ox.fsf@localhost.localdomain>
-References: <49A98F6A.50702@gmail.com> <1235886467.3195.15.camel@mj>
-	<49AD7E2B.3010101@gmail.com>
+From: Michael Lai <myllai@gmail.com>
+Subject: git-svn does not support intermediate directories?
+Date: Tue, 3 Mar 2009 17:43:47 -0800
+Message-ID: <21fc26450903031743x4beda8a3i835ecbd428817070@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pavel Roskin <proski@gnu.org>, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org, orinoco-users@lists.sourceforge.net,
-	dwmw2@infradead.org
-To: Dave <kilroyd@googlemail.com>
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1755359AbZCDA0u@vger.kernel.org Wed Mar 04 01:28:24 2009
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1755359AbZCDA0u@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@gmane.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 04 02:45:20 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeeyF-0007nG-W4
-	for glk-linux-kernel-3@gmane.org; Wed, 04 Mar 2009 01:28:24 +0100
+	id 1LegAh-0002hF-69
+	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 02:45:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755359AbZCDA0u (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Tue, 3 Mar 2009 19:26:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752067AbZCDA0e
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Tue, 3 Mar 2009 19:26:34 -0500
-Received: from fg-out-1718.google.com ([72.14.220.154]:16946 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750915AbZCDA0c (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Tue, 3 Mar 2009 19:26:32 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so151307fgg.17
-        for <multiple recipients>; Tue, 03 Mar 2009 16:26:29 -0800 (PST)
+	id S1751598AbZCDBnu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Mar 2009 20:43:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751362AbZCDBnu
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Mar 2009 20:43:50 -0500
+Received: from rv-out-0506.google.com ([209.85.198.225]:42101 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750968AbZCDBnt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Mar 2009 20:43:49 -0500
+Received: by rv-out-0506.google.com with SMTP id g37so3053674rvb.1
+        for <git@vger.kernel.org>; Tue, 03 Mar 2009 17:43:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=EZP56W+8Wh+hIYvXL0AXUCozaBdzbWsMQcMkHG3LTFE=;
-        b=KgDKdSl1/S2CxwY0enzNFmma0pqD3aoTv2CruEwh3jw2YrtCTcOn4cTEFe8S4znnYx
-         ZhmtHJnn66IM9L94YDljRkj1rbZ0CPS5wcR4+92dxBUQiquM2D6wf5OiNzMfaxGelCx8
-         pdodAjCOL47bRyEjt0/HGz4WA22F5dvMtPJdE=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=RLs3fw5gJhwjAsGAo4dwL38mC7aT5s7liv2SuenjwcQ=;
+        b=YHOzGaW1wLe2hmUvpaJL4QgU+vt+fMZq5kesL9L7bEjoAL5hnIxX91qs6qyFw/RXTH
+         kxP1afp+/ifKJylgOUnAXRZHaUMzT0fUmX6qSh/uJSmudKaqeX22ZinB1YL6OYezlfAr
+         6m3NDJ3Ud8q5Yv5235M12D6yUe8Uue/28T9Ek=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=txBfnkt+dxdSTLj4ajzQSS5Ca0mauCB7NQ9mnNnrIPPrlf25MqiQSYSAF5O3Xu2oNM
-         ZfupWLfWxEyer0ext7+GcXQTYHqGkE31raNBTtIgJyeevrE2XJvNtnETkhJ7uJsJ9OKl
-         FnL0cugH2bWHqnr5BpyO2ZKpAV5jDpttZhzm8=
-Received: by 10.86.91.3 with SMTP id o3mr2792677fgb.17.1236126389430;
-        Tue, 03 Mar 2009 16:26:29 -0800 (PST)
-Received: from localhost.localdomain (abwt152.neoplus.adsl.tpnet.pl [83.8.243.152])
-        by mx.google.com with ESMTPS id d6sm1348007fga.2.2009.03.03.16.26.28
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 03 Mar 2009 16:26:28 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n240QQAp024068;
-	Wed, 4 Mar 2009 01:26:27 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n240QNwM024064;
-	Wed, 4 Mar 2009 01:26:23 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <49AD7E2B.3010101@gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
-Sender: linux-kernel-owner@vger.kernel.org
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=QmWteP0gChs6iKyplxGxEEjTy9xVeas0NXdF6T3b5GJPnvWOv2VjRdDo0tnSjT6B9S
+         AleaY1kZwEIOCBvM/Tccbi7of8Cbvc2Oa2IHX+TpRODdVc1uKgH4gWCBYAEgkHU5/Hau
+         OtvkizxH6dKCoB0LJPhN29fvbnhl+teNNtOJM=
+Received: by 10.141.96.19 with SMTP id y19mr3861770rvl.116.1236131027881; Tue, 
+	03 Mar 2009 17:43:47 -0800 (PST)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112176>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112177>
 
-Dave <kilroyd@googlemail.com> writes:
+Hey all,
 
-> Adding the git mailing list.
-> 
-> Pavel Roskin wrote:
-> > On Sat, 2009-02-28 at 19:24 +0000, Dave wrote:
+  After spending some hours struggling with git svn, it would appear
+that it does not support svn projects stored in paths similar to
+"http://foo.com/svn/repos/bar/myproject", where "myproject" uses the
+standard SVN tags/trunk/branches layout.  I'm currently using git
+1.6.1, though I tried this with 1.6.2-rc2 as well.  The resulting
+.git/config looks something like this:
 
->>> I'm aware of at least a couple users of orinoco who have picked up
->>> corrupt firmware# from the linux-firmware tree*.
->>>
->>> I've verified that the firmware in the repository itself is correct.
->>>
->>> It appears that downloading the file using the blob/raw links from
->>> gitweb causes the corruption (0xc3 everywhere). At least it does with
->>> firefox.
->> 
->> I can confirm the problem with Firefox 3.0.6.  But it's not "0xc3
->> everywhere".  The corrupted file is a result of recoding from iso-8859-1
->> to utf-8.  The correct agere_sta_fw.bin is 65046 bytes long.  The
->> corrupted agere_sta_fw.bin is 89729 bytes long.
+[svn-remote "svn"]
+	url = http://foo.com/svn/repos/bar
+	fetch = myproject/trunk:refs/remotes/trunk
+	branches = bar/myproject/branches/*:refs/remotes/*
+	tags = bar/myproject/tags/*:refs/remotes/tags/*
 
-[...]
->> My strong impression is that the recoding takes place on the server.  I
->> think the bug should be reported to the gitweb maintainers unless it a
->> local breakage on the kernel.org site.
-> 
-> Thanks Pavel.
-> 
-> I just did a quick scan of the gitweb README - is this an issue with the
-> $mimetypes_file or $fallback_encoding configurations variables?
+Yes, that's a redundant "bar" directory under "branches =" and "tags
+=".  The issue seems to lie in git-svn doing something intelligent to
+extract the appropriate trunk directory.  For the branches and tags,
+however, it just takes the full URL and removes the repository root
+(http://foo.com/svn/repos/bar) to produce "bar/myproject/{branches,
+tags}/*".  The second effect is that "git svn fetch" will run but exit
+quietly without actually pulling anything from the repository.  I
+tracked down an existing thread on the mailing list from a while ago
+(Feb 4th, title of "git-svn doesn't fetch anything"), but there was no
+resolution.
 
-First, what version of gitweb do you use? It should be in 'Generator'
-meta header, or (in older gitweb) in comments in HTML source at the
-top of the page.
+There is a quick workaround, which was to make this change to match_paths:
+< 	$self->{path_regex} ||= qr/^\/\Q$self->{path}\E\//;
+---
+> 	$self->{path_regex} ||= qr/\/\Q$self->{path}\E\//;
 
-Second, the file is actually sent to browser 'as is', using binmode :raw
-(or at least should be according to my understanding of Perl). And *.bin
-binary file gets application/octet-stream mimetype, and doesn't send any
-charset info. git.kernel.org should have modern enough gitweb to use this.
-Strange...
+The additional "bar" directory gets pulled in when git-svn tries to
+determine what paths to pull down, and tries to match
+"/myproject/trunk" to "/bar/myproject/trunk".  I've merely put a
+band-aid on the situation.  My perl is rudimentary at best, or I'd
+have spent additional time to try to put in a "proper" patch, but was
+wondering if anyone else had run into this problem and would be
+willing to put in a fix (or point me in the right direction, that
+works too).
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Thanks,
+Mike
