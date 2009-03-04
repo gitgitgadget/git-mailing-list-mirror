@@ -1,90 +1,66 @@
-From: Hinko Kocevar <hinko.kocevar@cetrtapot.si>
-Subject: can not clone via git:// anymore
-Date: Wed, 04 Mar 2009 12:24:34 +0100
-Message-ID: <49AE64F2.1090405@cetrtapot.si>
+From: Stefan =?utf-8?b?TsOkd2U=?= <stefan.naewe+git@gmail.com>
+Subject: Re: How does Git know which files no longer needed during upgrade?
+Date: Wed, 4 Mar 2009 12:28:07 +0000 (UTC)
+Message-ID: <loom.20090304T122643-455@post.gmane.org>
+References: <22318714.post@talk.nabble.com> <20090303233058.GE4371@genesis.frugalware.org> <20090304094951.GA32433@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 04 12:27:43 2009
+X-From: git-owner@vger.kernel.org Wed Mar 04 13:29:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LepGF-0006XM-F4
-	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 12:27:39 +0100
+	id 1LeqET-0004kv-Dd
+	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 13:29:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753285AbZCDL0M convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Mar 2009 06:26:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751903AbZCDL0K
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 06:26:10 -0500
-Received: from zimbra-mta.cetrtapot.si ([89.212.80.172]:42559 "EHLO
-	zimbra-mta.cetrtapot.si" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752477AbZCDL0J (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Mar 2009 06:26:09 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by zimbra-mta.cetrtapot.si (Postfix) with ESMTP id 2AE1C19FA5E
-	for <git@vger.kernel.org>; Wed,  4 Mar 2009 12:26:07 +0100 (CET)
-X-Virus-Scanned: amavisd-new at zimbra-mta.cetrtapot.si
-Received: from zimbra-mta.cetrtapot.si ([127.0.0.1])
-	by localhost (zimbra-mta.cetrtapot.si [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id hWdwxmwTjsOW for <git@vger.kernel.org>;
-	Wed,  4 Mar 2009 12:26:06 +0100 (CET)
-Received: from [172.31.65.135] (unknown [192.168.66.2])
-	by zimbra-mta.cetrtapot.si (Postfix) with ESMTP id C53F619FA5D
-	for <git@vger.kernel.org>; Wed,  4 Mar 2009 12:26:06 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.19 (X11/20081209)
+	id S1753164AbZCDM2Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Mar 2009 07:28:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751618AbZCDM2Y
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 07:28:24 -0500
+Received: from main.gmane.org ([80.91.229.2]:33774 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751206AbZCDM2X (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Mar 2009 07:28:23 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LeqCv-0004XQ-HO
+	for git@vger.kernel.org; Wed, 04 Mar 2009 12:28:17 +0000
+Received: from lxsrv96.atlas.de ([194.156.172.86])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 04 Mar 2009 12:28:17 +0000
+Received: from stefan.naewe+git by lxsrv96.atlas.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 04 Mar 2009 12:28:17 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 194.156.172.86 (Mozilla/5.0 (Windows; U; Windows NT 5.1; de-DE) AppleWebKit/528.16 (KHTML, like Gecko) Version/4.0 Safari/528.16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112207>
 
-Hi,
+Jeff King <peff <at> peff.net> writes:
 
-I've recently discovered that my GIT repository is not letting me clone=
- it via git clone git://.
-It works using git clone git@.. (SSH) but with GIT protocol..
+> 
+> > cd /path/to/copy
+> > rm -rf *
+> > cp -a /path/to/new/version/* .
+> > git add -A
+> > git commit -m 'update foo to 2.0'
+> 
+> Nit: "rm -rf *" will miss files starting with '.'. So it is probably
+> simpler to say what you mean: delete all files managed by git:
+> 
+>   git ls-files -z | xargs -0 rm -f
+> 
+> -Peff
 
-Here is the case:
-hinkok@alala /tmp $ git --version
-git version 1.6.0.6
-hinkok@alala /tmp $ git clone git://zidar/sdk.git
-Initialized empty Git repository in /tmp/sdk/.git/
-fatal: The remote end hung up unexpectedly
+But maybe one wants to keep a .gitignore file. 
 
-My earlier clone (few months old) has this in .git/config:
-hinkok@alala /work/git/sdk.git $ cat .git/config=20
-[core]
-	repositoryformatversion =3D 0
-	filemode =3D true
-	bare =3D false
-	logallrefupdates =3D true
-[remote "origin"]
-	url =3D git@zidar:repositories/sdk.git
-	fetch =3D +refs/heads/*:refs/remotes/origin/*
-[branch "master"]
-	remote =3D origin
-	merge =3D refs/heads/master
-
-
-But I remember cloning via SSH that time, because I needed git push to =
-work,
-but now other developer do not need the SSH access, but only GIT read-o=
-nly -
-they can only clone, not push.
-
-I do not administer the server git repos is located on, so I must have =
-some
-information before I attack the admin..
-
-Thank you,
-Hinko
-
---=20
-Hinko Ko=E8evar, OSS developer
-=C8ETRTA POT, d.o.o.
-Planina 3, 4000 Kranj, SI EU
-tel     ++386 (0) 4 280 66 03
-e-mail  hinko.kocevar@cetrtapot.si
-http    www.cetrtapot.si
+Regrads,
+Stefan
