@@ -1,81 +1,57 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [RFC PATCH] Windows: Assume all file names to be UTF-8 encoded.
-Date: Wed, 4 Mar 2009 17:18:41 +0300
-Message-ID: <37fcd2780903040618q24457d96m7a9b181a3e202c7d@mail.gmail.com>
-References: <alpine.DEB.2.00.0903020941120.17877@perkele.intern.softwolves.pp.se>
-	 <a2633edd0903020512u5682e9am203f0faccd0acf6a@mail.gmail.com>
-	 <alpine.DEB.2.00.0903021452010.17877@perkele.intern.softwolves.pp.se>
-	 <200903021530.01165.trast@student.ethz.ch>
-	 <alpine.DEB.2.00.0903022135360.20047@perkele.intern.softwolves.pp.se>
-	 <37fcd2780903030147q7062ee47w7ce524c28a6aa347@mail.gmail.com>
-	 <alpine.DEB.2.00.0903031246420.3702@perkele.intern.softwolves.pp.se>
-	 <37fcd2780903030913q4ee0e5d0t45dc3b124285f748@mail.gmail.com>
-	 <alpine.DEB.2.00.0903041149250.8926@perkele.intern.softwolves.pp.se>
+From: Jeff King <peff@peff.net>
+Subject: Re: can not clone via git:// anymore
+Date: Wed, 4 Mar 2009 09:24:59 -0500
+Message-ID: <20090304142459.GB17874@coredump.intra.peff.net>
+References: <49AE64F2.1090405@cetrtapot.si> <49AE7B23.1070008@drmicha.warpmail.net> <49AE8208.7090204@cetrtapot.si>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Wed Mar 04 15:20:28 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Hinko Kocevar <hinko.kocevar@cetrtapot.si>
+X-From: git-owner@vger.kernel.org Wed Mar 04 15:26:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LerxM-0000xg-Da
-	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 15:20:20 +0100
+	id 1Les3T-0003Wp-Ea
+	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 15:26:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753201AbZCDOSq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Mar 2009 09:18:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753093AbZCDOSq
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 09:18:46 -0500
-Received: from mail-fx0-f176.google.com ([209.85.220.176]:33534 "EHLO
-	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752021AbZCDOSo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Mar 2009 09:18:44 -0500
-Received: by fxm24 with SMTP id 24so2917802fxm.37
-        for <git@vger.kernel.org>; Wed, 04 Mar 2009 06:18:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=KsGakhBC07uzd4u5QTA/DBRELN3pdjnuVIWZ20x1634=;
-        b=hAHhurGQNTsiD4fxPYxA+/mmKv0LxpSRxlKGvFxd+KAYlWao7dfxZ8DNjnpSQXvpPT
-         E2NN+6/0bI5Hsm3pAXAUEjSAiWmTsqaBurqpGHfWMVClBXOM/dIyeXGjDQ3U17WV7NTk
-         RYPPJUikXs2QvHIftI6UxqGguvdWkej+tRYtA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=jOAovVS/Vop8MdywMD8hmXUchNzj733HSgu7Z4uhvwJjB2tRZ9Gb8n7nhkU0NSrj/I
-         XcmBHTqb+r/hGg0ucM3ENGkw2gTqThQvZnlYUt3KPqMNK1V1S3SI0P20q5xJ9xCVr7IL
-         52Z9Ixww0Xhf2ptwsOu6FUM/hOG81eLM/6slk=
-Received: by 10.86.53.11 with SMTP id b11mr95386fga.76.1236176321171; Wed, 04 
-	Mar 2009 06:18:41 -0800 (PST)
-In-Reply-To: <alpine.DEB.2.00.0903041149250.8926@perkele.intern.softwolves.pp.se>
+	id S1751984AbZCDOZJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Mar 2009 09:25:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751873AbZCDOZJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 09:25:09 -0500
+Received: from peff.net ([208.65.91.99]:39177 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751227AbZCDOZI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Mar 2009 09:25:08 -0500
+Received: (qmail 24786 invoked by uid 107); 4 Mar 2009 14:25:06 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 04 Mar 2009 09:25:06 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Mar 2009 09:24:59 -0500
+Content-Disposition: inline
+In-Reply-To: <49AE8208.7090204@cetrtapot.si>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112216>
 
-On Wed, Mar 04, 2009 at 11:51:15AM +0100, Peter Krefting wrote:
+On Wed, Mar 04, 2009 at 02:28:40PM +0100, Hinko Kocevar wrote:
 
-> The problem with changing wchar_t is that_
-> it was defined to use 16-bit values at a time where Unicode was defined_
-> to use 16-bit code points (but they soon figured out that was not_
-> enough).
+> git-daemon was/is running:
+> 
+> CETRTAPOT\zidarhw@zidar:~$ ps -ef | grep git
+> root      3207     1  0 14:15 ?        00:00:00 runsvdir -P /etc/service log: d user: `gitlog:adm'?chown: invalid user: `gitlog:adm'?chown: invalid user: `gitlog:adm'?chown: invalid user: `gitlog:adm'?chown: invalid user: `gitlog:adm'?chown: invalid user: `gitlog:adm'?chown: invalid user: `gitlog:adm'?chown: invalid user: `gitlog:adm'?chown: invalid user: `gitlog:adm'?chown: invalid user: `gitlog:adm'?chown: invalid user: `gitlog:adm'?chown: invalid user: `gitlog:adm'?
+> root      3208  3207  0 14:15 ?        00:00:00 runsv git-daemon
+> root      3373  3208  0 14:16 ?        00:00:00 git-daemon --verbose --base-path=/var/cache /var/cache/git
+> 11418     3399  2762  0 14:16 pts/0    00:00:00 grep git
 
-I do realize that is a problem, and unfortunately there is no easy and
-quick fix to it. But you brought Windows as an example of good Unicode
-support... Well, to my mind, it is not, at least, not for C programs.
-You have two serious problems here:
-1. wchar_t is too small to hold all Unicode characters as it is required
-   by C standard.
-2. UTF-8 support is broken in C runtime library.
+See all the runsvdir errors? That probably means that git-daemon's log
+output is going nowhere, since the log is not running. Which means
+eventually the pipe from git-daemon to the log will get full, and
+git-daemon will block writing out the log. And then stop dealing with
+requests.
 
-In fact, if UTF-8 were supported by C runtime, we would not have this thread
-in the first place... Now, it is possible to wrap all C functions used by Git to
-make them work with UTF-8, but it is a lot of work...
+So even if restarting helps now, it may fill up again unless you fix the
+logging problem (presumably by creating the right "gitlog" user).
 
-Dmitry
+-Peff
