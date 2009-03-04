@@ -1,122 +1,165 @@
 From: Jeff King <peff@peff.net>
-Subject: [RFC/PATCH 1/2] improve missing repository error message
-Date: Wed, 4 Mar 2009 03:32:29 -0500
-Message-ID: <20090304083229.GA31798@coredump.intra.peff.net>
+Subject: [RFC/PATCH 2/2] make remote hangup warnings more friendly
+Date: Wed, 4 Mar 2009 03:42:45 -0500
+Message-ID: <20090304084245.GB31798@coredump.intra.peff.net>
 References: <20090303184106.GH14365@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Theodore Tso <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
 	git@vger.kernel.org
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Mar 04 09:34:35 2009
+X-From: git-owner@vger.kernel.org Wed Mar 04 09:44:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LemYY-0000as-1v
-	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 09:34:22 +0100
+	id 1LemiE-0003py-7d
+	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 09:44:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755949AbZCDIch (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Mar 2009 03:32:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753079AbZCDIch
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 03:32:37 -0500
-Received: from peff.net ([208.65.91.99]:32961 "EHLO peff.net"
+	id S1753004AbZCDImx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Mar 2009 03:42:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751945AbZCDImx
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 03:42:53 -0500
+Received: from peff.net ([208.65.91.99]:37000 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751286AbZCDIcg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Mar 2009 03:32:36 -0500
-Received: (qmail 22723 invoked by uid 107); 4 Mar 2009 08:32:35 -0000
+	id S1751549AbZCDImw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Mar 2009 03:42:52 -0500
+Received: (qmail 22792 invoked by uid 107); 4 Mar 2009 08:42:51 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 04 Mar 2009 03:32:35 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Mar 2009 03:32:29 -0500
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 04 Mar 2009 03:42:51 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Mar 2009 03:42:45 -0500
 Content-Disposition: inline
 In-Reply-To: <20090303184106.GH14365@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112189>
 
-Certain remote commands, when asked to do something in a
-particular directory that was not actually a git repository,
-would say "unable to chdir or not a git archive". The
-"chdir" bit is an unnecessary detail, and the term "git
-archive" is much less common these days than "git repository".
+When a user asks to do a remote operation but the remote
+side thinks the operation is invalid (e.g., because the user
+pointed to a directory which is not actually a repository),
+then we generally end up showing the user two fatal
+messages: one from the remote explaining what went wrong, and
+one from the local side complaining of an unexpected hangup.
 
-So let's switch them all to:
+For example:
 
-  fatal: '%s' does not appear to be a git repository
+  $ git push /nonexistent master
+  fatal: '/nonexistent' does not appear to be a git repository
+  fatal: The remote end hung up unexpectedly
+
+In this case, the second message is useless noise, and the
+user is better off seeing just the first.
+
+This patch tries to suppress the "hung up" message when it
+is redundant (but still exits with an error code, of
+course).
+
+One heuristic would be to suppress it whenever the remote
+has said something on stderr. Unfortunately, in many
+transports we don't actually handle stderr ourselves; it
+is simply a clone of the parent program's stderr and goes
+straight to the terminal.
+
+Instead, we note that the remote end will typically perform
+such an "expected" hangup at the beginning of a packet
+instead of in the middle. Therefore if we are expecting a
+packet and get an end-of-file from the remote, we assume
+they have printed something useful and exit without further
+messages. Any other short read or eof is reported as before.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-On Tue, Mar 03, 2009 at 10:41:06AM -0800, Shawn O. Pearce wrote:
+There are two possible problems with this patch:
 
-> IMHO, maybe we also should change the error message that receive-pack
-> produces when the path its given isn't a Git repository.  Its really
-> not very human friendly to say "unable to chdir or not a git archive".
-> Hell, we don't even call them archives, we call them repositories.
+  1. The "beginning of packet" heuristic may not be the best. I
+     tried a few obvious test cases like pushing and fetching with
+     invalid repos and bogus --receive-pack= settings. All of them have
+     useful output from the remote. You would of course get no message
+     if the remote was cut off randomly at just the right spot.
 
-I agree completely.
+    The "remote said something on stderr" heuristic does seem better.
+    But we would have to start processing stderr for local and ssh
+    connections, which we don't do currently. On the other hand, that
+    might be nicer in the long run, because you can mark the remote
+    errors as remote, which makes it more obvious what is going on.
+    E.g.,:
 
-Perhaps this should match the local "Not a git repository: %s". I prefer
-this text, but maybe there is value in consistency.
+      $ git push host:bogus master
+      remote: fatal: 'bogus' does not appear to be a git repository
 
- builtin-receive-pack.c   |    2 +-
- builtin-upload-archive.c |    2 +-
- daemon.c                 |    2 +-
- upload-pack.c            |    2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+  2. Even "remote said something on stderr" may not be a desirable
+     heuristic. In the case of a bogus --receive-pack, you get:
 
-diff --git a/builtin-receive-pack.c b/builtin-receive-pack.c
-index 849f1fe..a970b39 100644
---- a/builtin-receive-pack.c
-+++ b/builtin-receive-pack.c
-@@ -675,7 +675,7 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 	setup_path();
+       $ git push --receive-pack=bogus host:repo master
+       sh: bogus: command not found
+
+     So you are losing the part where git says "fatal: ". Maybe it
+     is obvious that such an error is fatal. It is to me, but I am not
+     the intended audience.
+
+     I think this would be improved somewhat with stderr processing to:
+
+       remote: sh: bogus: command not found
+
+     Or you could even trigger the suppression only if stderr had a line
+     matching "^fatal:".
+
+     Or it may even be that adding "remote:" is enough to make things
+     less confusing:
+
+       remote: fatal: 'bogus' does not appear to be a git repository
+       fatal: The remote end hung up unexpectedly
+
+     I think I still favor suppression in that case, but it is at least
+     more clear why there are two fatals.
+
+So you can see, the possibilities are endless. The perfect bikeshed. ;)
+
+ pkt-line.c |   11 +++++++----
+ 1 files changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/pkt-line.c b/pkt-line.c
+index f5d0086..f2b387c 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -63,13 +63,16 @@ void packet_write(int fd, const char *fmt, ...)
+ 	safe_write(fd, buffer, n);
+ }
  
- 	if (!enter_repo(dir, 0))
--		die("'%s': unable to chdir or not a git archive", dir);
-+		die("'%s' does not appear to be a git repository", dir);
+-static void safe_read(int fd, void *buffer, unsigned size)
++static void safe_read(int fd, void *buffer, unsigned size, int eof_warn)
+ {
+ 	ssize_t ret = read_in_full(fd, buffer, size);
+ 	if (ret < 0)
+ 		die("read error (%s)", strerror(errno));
+-	else if (ret < size)
++	else if (ret < size) {
++		if (ret == 0 && !eof_warn)
++			exit(128);
+ 		die("The remote end hung up unexpectedly");
++	}
+ }
  
- 	if (is_repository_shallow())
- 		die("attempt to push into a shallow repository");
-diff --git a/builtin-upload-archive.c b/builtin-upload-archive.c
-index a9b02fa..0206b41 100644
---- a/builtin-upload-archive.c
-+++ b/builtin-upload-archive.c
-@@ -35,7 +35,7 @@ static int run_upload_archive(int argc, const char **argv, const char *prefix)
- 	strcpy(buf, argv[1]); /* enter-repo smudges its argument */
+ int packet_read_line(int fd, char *buffer, unsigned size)
+@@ -78,7 +81,7 @@ int packet_read_line(int fd, char *buffer, unsigned size)
+ 	unsigned len;
+ 	char linelen[4];
  
- 	if (!enter_repo(buf, 0))
--		die("not a git archive");
-+		die("'%s' does not appear to be a git repository", buf);
+-	safe_read(fd, linelen, 4);
++	safe_read(fd, linelen, 4, 0);
  
- 	/* put received options in sent_argv[] */
- 	sent_argc = 1;
-diff --git a/daemon.c b/daemon.c
-index d93cf96..13401f1 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -229,7 +229,7 @@ static char *path_ok(char *directory)
- 	}
- 
- 	if (!path) {
--		logerror("'%s': unable to chdir or not a git archive", dir);
-+		logerror("'%s' does not appear to be a git repository", dir);
- 		return NULL;
- 	}
- 
-diff --git a/upload-pack.c b/upload-pack.c
-index 19c24db..e15ebdc 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -645,7 +645,7 @@ int main(int argc, char **argv)
- 	dir = argv[i];
- 
- 	if (!enter_repo(dir, strict))
--		die("'%s': unable to chdir or not a git archive", dir);
-+		die("'%s' does not appear to be a git repository", dir);
- 	if (is_repository_shallow())
- 		die("attempt to fetch/clone from a shallow repository");
- 	if (getenv("GIT_DEBUG_SEND_PACK"))
+ 	len = 0;
+ 	for (n = 0; n < 4; n++) {
+@@ -103,7 +106,7 @@ int packet_read_line(int fd, char *buffer, unsigned size)
+ 	len -= 4;
+ 	if (len >= size)
+ 		die("protocol error: bad line length %d", len);
+-	safe_read(fd, buffer, len);
++	safe_read(fd, buffer, len, 1);
+ 	buffer[len] = 0;
+ 	return len;
+ }
 -- 
 1.6.2.rc2.24.g55bc2
