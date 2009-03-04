@@ -1,81 +1,82 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Why isn't hook file cloned to bared repository ?
-Date: Wed, 4 Mar 2009 11:04:34 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903041103270.8549@intel-tinevez-2-302>
-References: <856bfe0e0903032140w4d8a9415l9f7b9a0678b492cc@mail.gmail.com> <3e8340490903032213u56734301o39c9d00633410fd5@mail.gmail.com>
+From: Adeodato =?utf-8?B?U2ltw7M=?= <dato@net.com.org.es>
+Subject: Re: [PATCH] git-clone.txt: document that pushing from a shallow
+	clone may work
+Date: Wed, 4 Mar 2009 11:19:39 +0100
+Message-ID: <20090304101939.GA7142@chistera.yi.org>
+References: <237967ef0902160200r2320687ai71e62047c3ead9ad@mail.gmail.com> <1236080017-13987-1-git-send-email-dato@net.com.org.es> <49AD1B22.6050201@viscovery.net> <20090303120856.GB15003@chistera.yi.org> <76718490903031127v7fcec124je7292c4c465208b8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1663271175-1236161076=:8549"
-Cc: Emily Ren <lingyan.ren@gmail.com>, git@vger.kernel.org
-To: Bryan Donlan <bdonlan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 04 11:06:57 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+	gitster@pobox.com, Mikael Magnusson <mikachu@gmail.com>,
+	Joey Hess <joey@kitenet.net>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 04 11:21:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LenzO-0004AU-62
-	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 11:06:10 +0100
+	id 1LeoDu-00014B-6f
+	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 11:21:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753722AbZCDKEk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Mar 2009 05:04:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753451AbZCDKEk
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 05:04:40 -0500
-Received: from mail.gmx.net ([213.165.64.20]:49152 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750728AbZCDKEj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Mar 2009 05:04:39 -0500
-Received: (qmail invoked by alias); 04 Mar 2009 10:04:36 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp038) with SMTP; 04 Mar 2009 11:04:36 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18G39pHo3YG5+RsGvWnUZ1a40ulRxQwI/6HIwOcMh
-	AM+2lSYX9in9Z9
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <3e8340490903032213u56734301o39c9d00633410fd5@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.65
+	id S1754742AbZCDKTn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Mar 2009 05:19:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754592AbZCDKTn
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 05:19:43 -0500
+Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:4686
+	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754492AbZCDKTm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Mar 2009 05:19:42 -0500
+Received: from justin (unknown [192.168.254.34])
+	by etc.inittab.org (Postfix) with ESMTP id 87E76801C072;
+	Wed,  4 Mar 2009 11:19:39 +0100 (CET)
+Received: from userid 1000 by justin with local (Exim 4.69) 
+	  id 1LeoCR-0001s3-1n; Wed, 04 Mar 2009 11:19:39 +0100
+Content-Disposition: inline
+In-Reply-To: <76718490903031127v7fcec124je7292c4c465208b8@mail.gmail.com>
+X-No-CC: Please respect my Mail-Followup-To header
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112197>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+* Jay Soffian [Tue, 03 Mar 2009 14:27:29 -0500]:
 
---8323329-1663271175-1236161076=:8549
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+> On Tue, Mar 3, 2009 at 7:08 AM, Adeodato Sim=C3=B3 <dato@net.com.org.=
+es> wrote:
+> > Well, I don't know if the set of cases where it'll work can be defi=
+ned
+> > in detail to a point where it is useful. If it is, then sure, let's=
+ do
+> > it.
 
-Hi,
+> > My point is that if it will work in some cases, then the documentat=
+ion
+> > should *acknowledge that fact*, because else people will assume the
+> > documentation is wrong, and believe it is intended to work, which i=
+s not
+> > the case.
 
-On Wed, 4 Mar 2009, Bryan Donlan wrote:
+> Wy not just say "pushing into a shallow repository is not supported"
+> instead of "pushing into a shallow repository won't work."
 
-> On Wed, Mar 4, 2009 at 12:40 AM, Emily Ren <lingyan.ren@gmail.com> wrote:
->
-> > I added file "update" in my git repository my_repo/.git/hooks/,  then
-> > I run command "git clone --bare my_repo" to generate a bared
-> > repository my_repo.git. But there's no update in my_repo.git/hooks.
-> >
-> > Do you know why ?
-> 
-> Because allowing code from an untrusted third-party repository to be
-> executed automatically without giving a chance to examine it is not a
-> very good idea from a security standpoint. In addition, hooks are
-> often not of interest to the person cloning the repository. Because of
-> these reasons, git clone will not copy hooks from the source
-> repository (for consistency, this is the case even when the source is
-> local).
+I don't think such a wording is enough (adjusted, of course, to be abou=
+t
+pushing from, not to, which is the case at hand).
 
-I might add that hooks are not part of the repository.  They are not 
-versioned, for example.
+But I'll try to stay silent, and see if Junio has an opinion on the
+matter.
 
-Having said that, nothing prevents you from committing a set of example 
-hooks and a script to install them, and tell your users that they may 
-install default hooks using that script.  I do that for one of my 
-projects.
+Thanks,
 
-Ciao,
-Dscho
-
---8323329-1663271175-1236161076=:8549--
+--=20
+Adeodato Sim=C3=B3                                     dato at net.com.=
+org.es
+Debian Developer                                  adeodato at debian.or=
+g
+=20
+- Oh my God, you're pimping me out for a new roof?
+- And windows!
+                -- Andrew and Bree Van De Kamp
