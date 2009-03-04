@@ -1,116 +1,122 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: [TopGit] Multiple concurrent sets of patches
-Date: Wed, 4 Mar 2009 08:16:17 +0100
-Message-ID: <20090304071617.GA23605@piper.oerlikon.madduck.net>
-References: <20090303113741.GO12820@jones.dk> <20090303130316.GA17702@piper.oerlikon.madduck.net> <20090303192221.GV12820@jones.dk>
+From: Jeff King <peff@peff.net>
+Subject: [RFC/PATCH 1/2] improve missing repository error message
+Date: Wed, 4 Mar 2009 03:32:29 -0500
+Message-ID: <20090304083229.GA31798@coredump.intra.peff.net>
+References: <20090303184106.GH14365@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="tKW2IUtsqtDRztdT"
-To: Jonas Smedegaard <dr@jones.dk>, git@vger.kernel.org, pasky@suse.cz,
-	u.kleine-koenig@pengutronix.de
-X-From: git-owner@vger.kernel.org Wed Mar 04 08:20:58 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Theodore Tso <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Mar 04 09:34:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LelMq-0001fs-EL
-	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 08:18:12 +0100
+	id 1LemYY-0000as-1v
+	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 09:34:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751617AbZCDHQp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Mar 2009 02:16:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751598AbZCDHQo
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 02:16:44 -0500
-Received: from clegg.madduck.net ([193.242.105.96]:42191 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751448AbZCDHQo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Mar 2009 02:16:44 -0500
-Received: from wall.oerlikon.madduck.net (wall.oerlikon.madduck.net [IPv6:2001:41e0:ff12::1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTPS id 364981D409B;
-	Wed,  4 Mar 2009 08:16:19 +0100 (CET)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTPS id 199409F16B;
-	Wed,  4 Mar 2009 08:16:18 +0100 (CET)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id B1ECA446D; Wed,  4 Mar 2009 08:16:17 +0100 (CET)
+	id S1755949AbZCDIch (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Mar 2009 03:32:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753079AbZCDIch
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 03:32:37 -0500
+Received: from peff.net ([208.65.91.99]:32961 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751286AbZCDIcg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Mar 2009 03:32:36 -0500
+Received: (qmail 22723 invoked by uid 107); 4 Mar 2009 08:32:35 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 04 Mar 2009 03:32:35 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Mar 2009 03:32:29 -0500
 Content-Disposition: inline
-In-Reply-To: <20090303192221.GV12820@jones.dk>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux squeeze/sid kernel 2.6.26-1-amd64 x86_64
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: ClamAV 0.94.2/9066/Wed Mar  4 07:03:21 2009 on clegg.madduck.net
-X-Virus-Status: Clean
+In-Reply-To: <20090303184106.GH14365@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112188>
 
+Certain remote commands, when asked to do something in a
+particular directory that was not actually a git repository,
+would say "unable to chdir or not a git archive". The
+"chdir" bit is an unnecessary detail, and the term "git
+archive" is much less common these days than "git repository".
 
---tKW2IUtsqtDRztdT
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+So let's switch them all to:
 
-also sprach Jonas Smedegaard <dr@jones.dk> [2009.03.03.2022 +0100]:
-> I know that I can create all those TopGit branches one by one, but
-> I would then need to explicitly declare a list of TopGit branches
-> to apply each time I want to (re)generate a quilt patchlist.
+  fatal: '%s' does not appear to be a git repository
 
-There are two ways to achieve what you want with TopGit. Uwe
-outlined one way:
+Signed-off-by: Jeff King <peff@peff.net>
+---
+On Tue, Mar 03, 2009 at 10:41:06AM -0800, Shawn O. Pearce wrote:
 
-- create a new branch depending on all the patch branches you want
-  to use. This is what I advocated for packaging in Debian's topgit
-  0.3-1 package:
-  http://git.debian.org/?p=3Dcollab-maint/topgit.git;a=3Dblob;f=3Ddebian/RE=
-ADME.source;hb=3Ddebian/topgit-0.3-1
+> IMHO, maybe we also should change the error message that receive-pack
+> produces when the path its given isn't a Git repository.  Its really
+> not very human friendly to say "unable to chdir or not a git archive".
+> Hell, we don't even call them archives, we call them repositories.
 
-- declare the list of patches to use, as you suggest. This is what
-  the current tg2quilt.mk approach of Debian's topgit 0.5-1 package
-  does.
+I agree completely.
 
-In the context where you have a single debian/rules file to prepare
-a quilt series as part of building your package, I think the latter
-makes more sense, as it keeps information in debian/rules and
-alleviates the user of repetetive steps.
+Perhaps this should match the local "Not a git repository: %s". I prefer
+this text, but maybe there is value in consistency.
 
-However, in the special context of a security fix, the suggestion
-illustrated by Uwe probably makes a lot more sense. One reason for
-this is because it is not yet possible to use TopGit patch branches
-of the past, meaning that you can only ever use the tip of each, and
-that tg-update basically destroys the infrastructure needed to go
-back in time. By creating a special depending branch for the
-security fix, however, you are preserving the graph at the time,
-which is the tag you were alluding to.
+ builtin-receive-pack.c   |    2 +-
+ builtin-upload-archive.c |    2 +-
+ daemon.c                 |    2 +-
+ upload-pack.c            |    2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-This is what I can add to this discussion. I don't think I have
-actually fully understood the scope of the problem yet.
-
---=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-"no work of art ever puts forward views.
- views belong to people
- who are not artists."
-                                                        -- oscar wilde
-=20
-spamtraps: madduck.bogus@madduck.net
-
---tKW2IUtsqtDRztdT
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkmuKsEACgkQIgvIgzMMSnU40ACgj/wNXo2BZO1PkqHBI9uFlQzK
-yKkAoLZtdgc2xIFgqYiLyoquF9F8aFek
-=DmKt
------END PGP SIGNATURE-----
-
---tKW2IUtsqtDRztdT--
+diff --git a/builtin-receive-pack.c b/builtin-receive-pack.c
+index 849f1fe..a970b39 100644
+--- a/builtin-receive-pack.c
++++ b/builtin-receive-pack.c
+@@ -675,7 +675,7 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 	setup_path();
+ 
+ 	if (!enter_repo(dir, 0))
+-		die("'%s': unable to chdir or not a git archive", dir);
++		die("'%s' does not appear to be a git repository", dir);
+ 
+ 	if (is_repository_shallow())
+ 		die("attempt to push into a shallow repository");
+diff --git a/builtin-upload-archive.c b/builtin-upload-archive.c
+index a9b02fa..0206b41 100644
+--- a/builtin-upload-archive.c
++++ b/builtin-upload-archive.c
+@@ -35,7 +35,7 @@ static int run_upload_archive(int argc, const char **argv, const char *prefix)
+ 	strcpy(buf, argv[1]); /* enter-repo smudges its argument */
+ 
+ 	if (!enter_repo(buf, 0))
+-		die("not a git archive");
++		die("'%s' does not appear to be a git repository", buf);
+ 
+ 	/* put received options in sent_argv[] */
+ 	sent_argc = 1;
+diff --git a/daemon.c b/daemon.c
+index d93cf96..13401f1 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -229,7 +229,7 @@ static char *path_ok(char *directory)
+ 	}
+ 
+ 	if (!path) {
+-		logerror("'%s': unable to chdir or not a git archive", dir);
++		logerror("'%s' does not appear to be a git repository", dir);
+ 		return NULL;
+ 	}
+ 
+diff --git a/upload-pack.c b/upload-pack.c
+index 19c24db..e15ebdc 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -645,7 +645,7 @@ int main(int argc, char **argv)
+ 	dir = argv[i];
+ 
+ 	if (!enter_repo(dir, strict))
+-		die("'%s': unable to chdir or not a git archive", dir);
++		die("'%s' does not appear to be a git repository", dir);
+ 	if (is_repository_shallow())
+ 		die("attempt to fetch/clone from a shallow repository");
+ 	if (getenv("GIT_DEBUG_SEND_PACK"))
+-- 
+1.6.2.rc2.24.g55bc2
