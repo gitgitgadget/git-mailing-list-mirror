@@ -1,94 +1,72 @@
-From: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
-Subject: Re: jgit and ignore
-Date: Wed, 04 Mar 2009 18:50:42 +0100
-Message-ID: <49AEBF72.3030901@pelagic.nl>
-References: <9e4733910902280831j70448ce9h7239f14e13b92b76@mail.gmail.com> <49AAA2B3.40808@gmail.com> <20090301171648.GB14365@spearce.org> <200903012124.46600.robin.rosenberg.lists@dewire.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Make the 'lock file exists' error more informative
+Date: Wed, 04 Mar 2009 09:55:12 -0800
+Message-ID: <7veixd5g1r.fsf@gitster.siamese.dyndns.org>
+References: <1236179277-12477-1-git-send-email-johnflux@gmail.com>
+ <vpqvdqpb7w6.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	=?ISO-8859-1?Q?Tor_Arne_?= =?ISO-8859-1?Q?Vestb=F8?= 
-	<torarnv@gmail.com>, Git Mailing List <git@vger.kernel.org>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Wed Mar 04 18:53:06 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: John Tapsell <johnflux@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Wed Mar 04 18:57:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LevGT-00022d-N0
-	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 18:52:18 +0100
+	id 1LevL5-0004Pw-80
+	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 18:57:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755353AbZCDRur convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Mar 2009 12:50:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755959AbZCDRur
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 12:50:47 -0500
-Received: from hupie.xs4all.nl ([82.95.241.251]:43453 "EHLO
-	Lighthouse.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1755936AbZCDRuq (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Mar 2009 12:50:46 -0500
-Received: from [192.168.0.50] (Paul.internal.Hupie.com [192.168.0.50])
-	by Lighthouse.internal.Hupie.com (Postfix) with ESMTP id B10D758BDBA;
-	Wed,  4 Mar 2009 18:50:42 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
-In-Reply-To: <200903012124.46600.robin.rosenberg.lists@dewire.com>
+	id S1753335AbZCDRz2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Mar 2009 12:55:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753438AbZCDRz1
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 12:55:27 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55136 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753323AbZCDRz1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Mar 2009 12:55:27 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 03E319FDEC;
+	Wed,  4 Mar 2009 12:55:19 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9ED7E9FDEA; Wed,
+  4 Mar 2009 12:55:14 -0500 (EST)
+In-Reply-To: <vpqvdqpb7w6.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Wed, 04 Mar 2009 16:54:49 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 9FD75A88-08E5-11DE-A393-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112232>
 
-Robin Rosenberg wrote:
-> Shawn writes:
->> Tor Arne Vestb=F8 <torarnv@gmail.com> wrote:
->>> To me that means that EGit should focus just as much on integrating=
- with
->>> Eclipse properly as it does on keeping command line porcelain
->>> interoperability.
->> Yup, I agree completely.  I think Robin would too.
-> 100% (or close).
->=20
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-Hey guys
+> John Tapsell <johnflux@gmail.com> writes:
+>
+>> It looks like someone did 90% of the work, then forgot to actually use
+>> the function
+>
+> someone = me ;-).
+>
+> The message is a bit inacurrate: the function is already used in two
+> places, I just didn't notice this one.
+>
+>> -	if (errno == EEXIST) {
+>> +	if (err == EEXIST) {
+>
+> Oops, right.
+>
+>> -			die("unable to create '%s.lock': %s", path, strerror(errno));
+>> +			unable_to_lock_index_die(path, errno);
+>
+> Actually, _this_ instance is still to be fixed in next. You probably
+> looked at the other one that my original message fixes.
 
-I'm currently refactoring the code to accomodate all of your wishes and=
-=20
-I've already come a long way.
+Not in 'next', but in the maintenance track of v1.6.2.X and merged
+upwards, as v1.6.2~11^2~2 (More friendly message when locking the index
+fails., 2009-02-19) is obviously in v1.6.2 just released.
 
-=3D=3D> The one thing that I still need to do is get to the global=20
-core.excludefile setting. How can I do that?
-
-
-How will it work? Read on... :-)
-
-Suppose we have FILE in DIRECTORY and we want to see whether FILE is=20
-ignored. (FILE can ofcourse also be a DIR)
-
-The way in which ignores will be evaluated is:
-1- See if there is a .gitignore file in DIRECTORY. if so, try to match.=
-=20
-when a match is found: FILE is ignored. if there is no .gitignore file =
-or=20
-when no match is found: go one directory up (towards the checkout=20
-root/workdir) and repeat until a match is found or until the .gitignore=
- in=20
-the checkout root/workdir has been evaluated.
-2- use the patterns from .git/info/exclude (if exists) and try to match=
-=2E=20
-when a match is found: FILE is ignored.
-3- use the patterns from .git/config:core.excludesfile (when set) and t=
-ry=20
-to match. when a match is found: FILE is ignored.
-4- when .git/config:core.excludesfile was not set, use the patterns fro=
-m
-global:core.excludesfile (when set) and try to match. when a match is=20
-found: FILE is ignored.
-5- try to match against the Eclipse global Team ignores. when a match i=
-s=20
-found: FILE is ignored.
-6- FILE is not ignored
-
-
-hope this flow is what you want :-)
-
-=46erry
+John, congratulations for fixing the first bug immediately after a big
+release.  Please make it a habit to sign off your patches.
