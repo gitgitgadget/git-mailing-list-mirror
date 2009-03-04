@@ -1,105 +1,70 @@
 From: John Tapsell <johnflux@gmail.com>
-Subject: Re: [PATCH] Make the 'lock file exists' error more informative
-Date: Wed, 4 Mar 2009 15:18:06 +0000
-Message-ID: <43d8ce650903040718m6fc384ddv695c546276b7d3c3@mail.gmail.com>
-References: <1236179277-12477-1-git-send-email-johnflux@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Subject: [PATCH] Clarify the "cannot lock existing info/refs" error
+Date: Wed,  4 Mar 2009 15:37:06 +0000
+Message-ID: <1236181026-15385-1-git-send-email-johnflux@gmail.com>
+Cc: John Tapsell <johnflux@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 04 16:20:02 2009
+X-From: git-owner@vger.kernel.org Wed Mar 04 16:38:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lesss-0000Kz-BB
-	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 16:19:46 +0100
+	id 1LetBL-0008PQ-Fn
+	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 16:38:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753333AbZCDPSM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Mar 2009 10:18:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752026AbZCDPSK
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 10:18:10 -0500
-Received: from wf-out-1314.google.com ([209.85.200.171]:39267 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751996AbZCDPSJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Mar 2009 10:18:09 -0500
-Received: by wf-out-1314.google.com with SMTP id 28so3959049wfa.4
-        for <git@vger.kernel.org>; Wed, 04 Mar 2009 07:18:07 -0800 (PST)
+	id S1755333AbZCDPhQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Mar 2009 10:37:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755091AbZCDPhP
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 10:37:15 -0500
+Received: from ti-out-0910.google.com ([209.85.142.185]:45106 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753745AbZCDPhM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Mar 2009 10:37:12 -0500
+Received: by ti-out-0910.google.com with SMTP id d10so3495183tib.23
+        for <git@vger.kernel.org>; Wed, 04 Mar 2009 07:37:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=RSXOVTFSnyv1GnY7uBGAPMYnGLcXq09jcaSKLHbgS9Y=;
-        b=pzCGMjuUnR6VqDejzEwEYiRnKqyImXcYIFa6Ptz/bKjYIk3S0wb/gRyb+BBlBuNhiX
-         Nug7uZCX2Y5IM2J0X3LD3df3sLJFAafRy+kGJ4LRpzdiDIE1tx4LnSL5lNGtyAHBNq3L
-         WEWO1d8xwVmgqDUXIpZLEDjIk3Vba/azqwzYU=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=9n5v3Pjv9MdYZpqw6BXHiDTcOsOvaDhIDvIVfczdyyo=;
+        b=MP9L4DpqVtX+p7/ZxJgoawDE3W+yGDiAcfmlaABQMv84jIz00qrEQzT4MNSO4rynL1
+         AL6bAzau0Ty0uKUlqefvGogC4rYDzaTaMZZ6x3KADsY5fHYbNOZwHwcytx3JMMbBC/ax
+         0JfKm52ASNGdC8pqCL7rJDYW40q8lcoGXi3g8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=SAxrl2nAQlSQ1BNilpOE/jw1dT+NRa8gIRllmBaHDTd753ywNEmaLg79y2Y1Efj25Y
-         QFdClGo2LWDH6zvYZi7Xnafpt5da4C8xNbEMeNuhlxFNql97WNRoWMRyVHqx/8XA4U+x
-         ixAjALZ7cA32LUfmULeo5Am39nDwId9HXWzvk=
-Received: by 10.142.14.18 with SMTP id 18mr4234377wfn.304.1236179887143; Wed, 
-	04 Mar 2009 07:18:07 -0800 (PST)
-In-Reply-To: <1236179277-12477-1-git-send-email-johnflux@gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=bzmv3HFsGU46hAZJ83qhqPu4nYULMfFOygl8lR2ExMqr7pgBSAOq+zgqPPE0Sr70qM
+         uoSC/YbCg6HS2FJCR/G2DThjMEAZsOqFOWarha9lrwA40rTOSyy+/ddunskwPGIWePUH
+         0V8waOqIeUTfjGtrQeL8c5s/6XkJ26BV23Bnk=
+Received: by 10.110.90.9 with SMTP id n9mr7431tib.25.1236181029338;
+        Wed, 04 Mar 2009 07:37:09 -0800 (PST)
+Received: from localhost.localdomain (58-190-81-184.eonet.ne.jp [58.190.81.184])
+        by mx.google.com with ESMTPS id j5sm983947tid.21.2009.03.04.07.37.07
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 04 Mar 2009 07:37:08 -0800 (PST)
+X-Mailer: git-send-email 1.6.2.rc2.23.g77740
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112223>
 
-2009/3/4 John Tapsell <johnflux@gmail.com>:
-> It looks like someone did 90% of the work, then forgot to actually us=
-e
-> the function
+---
+ http-push.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-It seems that this was already fixed in the 'next' branch.  (Sorry, I
-didn't know about this branch before).
-
-The first bug fix is still required.  (well, for niceness.  In
-practise it isn't)
-
-John Tapsell
-
-> ---
-> =C2=A0lockfile.c | =C2=A0 =C2=A04 ++--
-> =C2=A01 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/lockfile.c b/lockfile.c
-> index 1db1a2f..3dbb2d1 100644
-> --- a/lockfile.c
-> +++ b/lockfile.c
-> @@ -158,7 +158,7 @@ static int lock_file(struct lock_file *lk, const =
-char *path, int flags)
->
-> =C2=A0NORETURN void unable_to_lock_index_die(const char *path, int er=
-r)
-> =C2=A0{
-> - =C2=A0 =C2=A0 =C2=A0 if (errno =3D=3D EEXIST) {
-> + =C2=A0 =C2=A0 =C2=A0 if (err =3D=3D EEXIST) {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0die("Unable to=
- create '%s.lock': %s.\n\n"
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
-"If no other git process is currently running, this probably means a\n"
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
-"git process crashed in this repository earlier. Make sure no other git=
-\n"
-> @@ -184,7 +184,7 @@ int hold_lock_file_for_append(struct lock_file *l=
-k, const char *path, int flags)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0fd =3D lock_file(lk, path, flags);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (fd < 0) {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (flags & LO=
-CK_DIE_ON_ERROR)
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 die("unable to create '%s.lock': %s", path, strerror(errno));
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 unable_to_lock_index_die(path, errno);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return fd;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
->
-> --
-> 1.6.2.rc2.23.g77740
->
->
+diff --git a/http-push.c b/http-push.c
+index 30d2d34..6666956 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -2293,7 +2293,7 @@ int main(int argc, char **argv)
+ 		if (info_ref_lock)
+ 			remote->can_update_info_refs = 1;
+ 		else {
+-			fprintf(stderr, "Error: cannot lock existing info/refs\n");
++			error("cannot lock existing info/refs on remote server\nPerhaps the server is currently busy, or your ~/.netrc file is not configured correctly.");
+ 			rc = 1;
+ 			goto cleanup;
+ 		}
+-- 
+1.6.2.rc2.23.g77740
