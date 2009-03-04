@@ -1,63 +1,55 @@
-From: =?UTF-8?B?VG9yIEFybmUgVmVzdGLDuA==?= <torarnv@gmail.com>
-Subject: Re: [PATCH v2] git-clone: Add option --branch to override initial branch
-Date: Wed, 4 Mar 2009 11:23:56 +0100
-Message-ID: <49AE56BC.2000809@gmail.com>
-References: <alpine.DEB.1.00.0903030047130.10279@pacific.mpi-cbg.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: remote branches, and branch names in general
+Date: Wed, 4 Mar 2009 05:29:03 -0500
+Message-ID: <20090304102903.GA16123@coredump.intra.peff.net>
+References: <450196A1AAAE4B42A00A8B27A59278E709F07398@EXCHANGE.trad.tradestation.com> <m3vdqrtp84.fsf@localhost.localdomain> <20090303041631.GB18136@coredump.intra.peff.net> <450196A1AAAE4B42A00A8B27A59278E709F075DF@EXCHANGE.trad.tradestation.com> <20090303161117.GB32079@coredump.intra.peff.net> <76718490903031132v592b8368p6355ea2bd0cda4ae@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII";
-	format="flowed"
-Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 04 11:25:24 2009
+Content-Type: text/plain; charset=utf-8
+Cc: John Dlugosz <JDlugosz@tradestation.com>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 04 11:30:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeoHp-0002dp-C1
-	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 11:25:13 +0100
+	id 1LeoN5-0004Ln-T0
+	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 11:30:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752469AbZCDKXp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Mar 2009 05:23:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751892AbZCDKXp
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 05:23:45 -0500
-Received: from hoat.troll.no ([62.70.27.150]:45721 "EHLO hoat.troll.no"
+	id S1753110AbZCDK3M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Mar 2009 05:29:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751991AbZCDK3L
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 05:29:11 -0500
+Received: from peff.net ([208.65.91.99]:44513 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750747AbZCDKXo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Mar 2009 05:23:44 -0500
-Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id 1150920FA0;
-	Wed,  4 Mar 2009 11:23:42 +0100 (CET)
-Received: from sx01.troll.no (sx01.troll.no [62.70.27.21])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hoat.troll.no (Postfix) with ESMTP id EE4E220F9E;
-	Wed,  4 Mar 2009 11:23:41 +0100 (CET)
-Received: from sx01.troll.no (localhost.localdomain [127.0.0.1])
-	by sx01.troll.no (8.13.8/8.13.8) with ESMTP id n24ANfIX012507;
-	Wed, 4 Mar 2009 11:23:41 +0100
-Received: from [172.24.90.10] ( [172.24.90.10])
-    by sx01.troll.no (Scalix SMTP Relay 11.4.1.11929)
-    via ESMTP; Wed, 04 Mar 2009 11:23:41 +0100 (CET)
-In-Reply-To: <7vbpsh93q5.fsf@gitster.siamese.dyndns.org>
-References: <1236040414-19089-1-git-send-email-torarnv@gmail.com>
-References: <7vbpsh93q5.fsf@gitster.siamese.dyndns.org>
-x-scalix-Hops: 1
-User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
+	id S1750768AbZCDK3L (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Mar 2009 05:29:11 -0500
+Received: (qmail 23304 invoked by uid 107); 4 Mar 2009 10:29:10 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 04 Mar 2009 05:29:10 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Mar 2009 05:29:03 -0500
 Content-Disposition: inline
+In-Reply-To: <76718490903031132v592b8368p6355ea2bd0cda4ae@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112199>
 
-Junio C Hamano wrote:
-> I'll let others discuss more about the design issues, and will only talk
-> about code in this message.
+On Tue, Mar 03, 2009 at 02:32:00PM -0500, Jay Soffian wrote:
 
-[...snip...]
+> On Tue, Mar 3, 2009 at 11:11 AM, Jeff King <peff@peff.net> wrote:
+> > Yes, the "branch" command deals only with creating things in refs/heads,
+> 
+> Unless given -r, in which case it looks in refs/remotes, or -a, in
+> which case it looks in refs/heads and refs/remotes. :-)
 
-Great feedback, much appreciated! :) I'll work up a new patch as soon as 
-I have some free cycles. Thanks!
+OK, fair enough. ;P
 
-Tor Arne
+But I think the lesson to be learned is that there is a difference
+between arbitrary ref lookup (which you might use with log, show, diff,
+or even as the branching-off point for branch) and specialized commands
+which assume you are working in some part of the ref hierarchy (heads,
+tags, or even remotes).
+
+-Peff
