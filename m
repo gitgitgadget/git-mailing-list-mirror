@@ -1,173 +1,139 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] git-clone: Add option --branch to override initial
- branch
-Date: Tue, 03 Mar 2009 22:55:30 -0800
-Message-ID: <7vbpsh93q5.fsf@gitster.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0903030047130.10279@pacific.mpi-cbg.de>
- <1236040414-19089-1-git-send-email-torarnv@gmail.com>
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: [PATCH 1/6] Modify description file to say what this file is
+Date: Wed, 4 Mar 2009 07:07:14 +0000
+Message-ID: <43d8ce650903032307i512268f4sa3240c517b51d0b4@mail.gmail.com>
+References: <200902190736.00462.johnflux@gmail.com>
+	 <7vy6w2n3cz.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de
-To: Tor Arne =?utf-8?Q?Vestb=C3=B8?= <torarnv@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 04 07:57:12 2009
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 04 08:09:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lel2U-00048h-GO
-	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 07:57:10 +0100
+	id 1LelDt-0006hH-Px
+	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 08:08:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751896AbZCDGzm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Mar 2009 01:55:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751829AbZCDGzm
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 01:55:42 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55293 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751808AbZCDGzl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Mar 2009 01:55:41 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 86760338B;
-	Wed,  4 Mar 2009 01:55:38 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 72C353389; Wed, 
- 4 Mar 2009 01:55:33 -0500 (EST)
-In-Reply-To: <1236040414-19089-1-git-send-email-torarnv@gmail.com> (Tor Arne
- =?utf-8?Q?Vestb=C3=B8's?= message of "Tue, 3 Mar 2009 01:33:34 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 780DDD1C-0889-11DE-9AC9-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
+	id S1751448AbZCDHHV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Mar 2009 02:07:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750906AbZCDHHU
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 02:07:20 -0500
+Received: from wf-out-1314.google.com ([209.85.200.168]:12908 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750827AbZCDHHS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Mar 2009 02:07:18 -0500
+Received: by wf-out-1314.google.com with SMTP id 28so3761670wfa.4
+        for <git@vger.kernel.org>; Tue, 03 Mar 2009 23:07:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=myO0XBuI8of4Oj58kG31LgZ0GhqRdU1iotqJLr6FxIc=;
+        b=A6Cb7Tj6TexqTqMWNGmlOcMBmfZEL2qDU6YIZfnjoHS4iWiQzA9QRYBA55YaPWaHR3
+         PRTmPVH8mmG8oiCSS1j4P7vjakckxXga/tJGENxyxJyD+aYPjwIOTO6psr+xqiIDhLuD
+         Xu4/U/9MvG8rgO1WBEiTuUxgJVZs88aXT5j44=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=JpuyPAUHkz6ypmPOjiPp3Qt6FkXjdHVFrsCF3uHvEEqCq2WnAjBQyqtbmlqb2qfVsS
+         hb8EnykkpIRgu31noFZ3J+ZwlNSqtn2dGhILl9dAzZ/4V8dD94QxFm8DemEpFM1TgeHd
+         RGTEOqb+zCDs38b1VGCRFFW0z+h+m43J5133w=
+Received: by 10.142.43.7 with SMTP id q7mr4043319wfq.229.1236150435313; Tue, 
+	03 Mar 2009 23:07:15 -0800 (PST)
+In-Reply-To: <7vy6w2n3cz.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112186>
 
-Tor Arne Vestb=C3=B8 <torarnv@gmail.com> writes:
+Hi Junio,
+  Did you commit my patches?  I don't see them yet in git.git ?
 
-> The options --branch and -b allow the user to override the initial
-> branch created and checked out by git-clone (normally this is the
-> active branch of the remote repository).
+John Tapsell
+
+2009/2/19 Junio C Hamano <gitster@pobox.com>:
+> [PATCH 1/6] Modify description file to say what this file is
 >
-> If the selected branch is not found the operation aborts.
+> Looks good.
 >
-> Signed-off-by: Tor Arne Vestb=C3=B8 <torarnv@gmail.com>
-
-The semantics and desirability of the new feature have been already
-discussed, and I am not convinced that it is necessary, in the sense th=
-at
-I do not think I likely ever use this myself, but I am just one of git
-users so that is not a strong basis for rejection.
-
-I'll let others discuss more about the design issues, and will only tal=
-k
-about code in this message.
-
-> diff --git a/builtin-clone.c b/builtin-clone.c
-> index c338910..5fc01ce 100644
-> --- a/builtin-clone.c
-> +++ b/builtin-clone.c
-> @@ -38,6 +38,7 @@ static int option_quiet, option_no_checkout, option=
-_bare, option_mirror;
->  static int option_local, option_no_hardlinks, option_shared;
->  static char *option_template, *option_reference, *option_depth;
->  static char *option_origin =3D NULL;
-> +static char *option_branch =3D NULL;
-
-I see this was copied from the line immediately above, but please do no=
+> [PATCH 2/6] Google has renamed the imap folder
+>
+> Jeff already pointed out an obvious thinko; I could fix-up locally (j=
+ust
+> ask).
+>
+> [PATCH 3/6] Improve error message for branching an existing branch
+>
+> The extra sentence is useless noise to annoy users and make them shou=
 t
-initialize static variables to 0 or NULL.  BSS will take care of it.
-
-> @@ -372,7 +375,9 @@ int cmd_clone(int argc, const char **argv, const =
-char *prefix)
->  	const char *repo_name, *repo, *work_tree, *git_dir;
->  	char *path, *dir;
->  	int dest_exists;
-> -	const struct ref *refs, *head_points_at, *remote_head, *mapped_refs=
-;
-> +	const struct ref *refs, *mapped_refs;
-> +	const struct ref *remote_head =3D NULL;
-> +	const struct ref *head_points_at =3D NULL;
->  	struct strbuf key =3D STRBUF_INIT, value =3D STRBUF_INIT;
->  	struct strbuf branch_top =3D STRBUF_INIT, reflog_msg =3D STRBUF_INI=
-T;
->  	struct transport *transport =3D NULL;
-> @@ -545,12 +550,31 @@ int cmd_clone(int argc, const char **argv, cons=
-t char *prefix)
-> =20
->  		mapped_refs =3D write_remote_refs(refs, &refspec, reflog_msg.buf);
-> =20
-> -		head_points_at =3D locate_head(refs, mapped_refs, &remote_head);
-> +		if (option_branch) {
-> +		    const int offset =3D 11;
-> +		    const char *branch =3D option_branch;
-
-One indent level in git code equals a HT, i.e. 8 places.
-
-> +		    if (!prefixcmp(branch, "refs/heads/"))
-> +			branch +=3D offset;
-
-I suspect that you are trying to protect your code against somebody
-miscounting the length of "refs/heads/" (perhaps when updating this
-codepath in git version 47 that keeps local branches somewhere else, su=
-ch
-as "refs/local-heads/"), but this "const int offset" does not buy you
-anything.  He will likely to leave "offset" to 11 just the same.
-
-It is a different story if it were done like this:
-
-		static const char heads_prefix[] =3D "refs/heads/";
-                if (!prefixcmp(branch, heads_prefix))
-                	branch +=3D strlen(heads_prefix);
-
-to let the compiler notice heads_prefix is a constant and optimize the
-strlen() out, but I personally think it is overkill.
-
-> +		    const struct ref *r;
-
-We do not tolerate decl-after-statement.
-
-> +		    for (r =3D mapped_refs; r; r =3D r->next) {
-> +			if (!strcmp(r->name + offset, branch)) {
-> +			    /* Override initial branch */
-> +			    head_points_at =3D r;
-> +			    remote_head =3D r;
-> +			    break;
-> +			}
-> +		    }
-
-This duplicates major part of what locate_head() does but with a differ=
-ent
-target other than "master", doesn't it?
-
-You would want to refactor this, but I think 'next/pu' already has some
-refactoring of the locate_head() logic, so you may want to look at it a=
-nd
-either build your changes on top of it, or wait until that other topic =
-to
-stabilize.
-
-> +		    if (!head_points_at)
-> +			die("remote has no branch named '%s'.", option_branch);
-> +
-> +		} else {
-> +		    head_points_at =3D locate_head(refs, mapped_refs, &remote_head=
-);
-> +		}
-
-This falls into more personal taste than coding guideline, but it often=
- is
-easier to read to arrange your code:
-
-	if (... condition ...) {
-        	shorter codepath
-	} else {
-        	much
-                longer
-                code
-                path
-	}
-
-=46or one thing, it is much easier to miss a short "else" clause hangin=
-g at
-the end of loooong "if" part.
+> "none of your business!" back to git.
+>
+> I would probably get this error message "already exists." more from
+> forgetting to say "-f" in this sequence:
+>
+> =C2=A0 =C2=A0$ git branch -f pu next
+> =C2=A0 =C2=A0$ git checkout pu
+> =C2=A0 =C2=A0$ sh rebuild-pu-script
+>
+> to rebuild pu on top of updated next, and "did you mean to checkout?"
+> misses the mark by a kilometer.
+>
+> [PATCH 4/6] Improve error message for git-filter-branch
+>
+> Looks good, with Sverre's rewording would be better, which I could lo=
+cally
+> squash in. =C2=A0Needs signoff, which I could locally forge (just ask=
+ to fix-up
+> and forge).
+>
+> [PATCH 5/6] Change output "error: " to "Error: " etc
+>
+> Jeff is right, and the patch is wrong.
+>
+> [PATCH 6/6] Mention to the user that they can reorder commits
+>
+> The placement of the new message does not feel right, as adding anyth=
+ing
+> near "If you remove ... WILL BE LOST" will cloud out that message whi=
+ch is
+> more important.
+>
+> I think it should come near or perhaps even before Commands, if we we=
+re to
+> add anything here.
+>
+> But I am afraid that the proposed new message will hurt the clueless =
+users
+> more than it would help them.
+>
+> The cheat-sheet at the top is not for learning what the command can d=
+o for
+> the first time. =C2=A0It is there to remind people (who already have =
+general
+> idea on what can be done) how exactly the commands are spelled. =C2=A0=
+If
+> somebody does not even know that the purpose of rebase-i is to amend =
+and
+> resequence, he will more likely destroy his history by blindly using =
+the
+> command without knowing what is going on, than making a lucky guess.
+>
+> For that reason, a more appropriate line to add, if we were to add
+> anything, might be:
+>
+> =C2=A0# =C2=A0s, squash =3D use commit, but meld into previous commit
+> =C2=A0#
+> +# If you do not know what is going on, remove everything and exit th=
+e editor!
+> +#
+> =C2=A0# If you remove a line here THAT COMMIT WILL BE LOST.
+> =C2=A0# However, if you remove everything, the rebase will be aborted=
+=2E
+>
+>
