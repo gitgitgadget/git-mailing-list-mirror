@@ -1,165 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: [RFC/PATCH 2/2] make remote hangup warnings more friendly
-Date: Wed, 4 Mar 2009 03:42:45 -0500
-Message-ID: <20090304084245.GB31798@coredump.intra.peff.net>
-References: <20090303184106.GH14365@spearce.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] git-clone: Add option --branch to override initial
+ branch
+Date: Wed, 4 Mar 2009 09:56:03 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903040953080.8549@intel-tinevez-2-302>
+References: <alpine.DEB.1.00.0903030047130.10279@pacific.mpi-cbg.de> <1236040414-19089-1-git-send-email-torarnv@gmail.com> <7vbpsh93q5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Theodore Tso <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-203502791-1236156964=:8549"
+Cc: =?ISO-8859-15?Q?Tor_Arne_Vestb=F8?= <torarnv@gmail.com>,
 	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Mar 04 09:44:23 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 04 09:57:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LemiE-0003py-7d
-	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 09:44:22 +0100
+	id 1Lemv3-0007fJ-BI
+	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 09:57:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753004AbZCDImx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Mar 2009 03:42:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751945AbZCDImx
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 03:42:53 -0500
-Received: from peff.net ([208.65.91.99]:37000 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751549AbZCDImw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Mar 2009 03:42:52 -0500
-Received: (qmail 22792 invoked by uid 107); 4 Mar 2009 08:42:51 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 04 Mar 2009 03:42:51 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Mar 2009 03:42:45 -0500
-Content-Disposition: inline
-In-Reply-To: <20090303184106.GH14365@spearce.org>
+	id S1753004AbZCDI4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Mar 2009 03:56:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752557AbZCDI4J
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 03:56:09 -0500
+Received: from mail.gmx.net ([213.165.64.20]:49387 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752222AbZCDI4I (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Mar 2009 03:56:08 -0500
+Received: (qmail invoked by alias); 04 Mar 2009 08:56:04 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp010) with SMTP; 04 Mar 2009 09:56:04 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19fmxszU1tfA7RtWhWv0WHi1l9u0SXm1zGoZmNyCS
+	TjWnFLUFn7mnPx
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <7vbpsh93q5.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112190>
 
-When a user asks to do a remote operation but the remote
-side thinks the operation is invalid (e.g., because the user
-pointed to a directory which is not actually a repository),
-then we generally end up showing the user two fatal
-messages: one from the remote explaining what went wrong, and
-one from the local side complaining of an unexpected hangup.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-For example:
+--8323329-203502791-1236156964=:8549
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
-  $ git push /nonexistent master
-  fatal: '/nonexistent' does not appear to be a git repository
-  fatal: The remote end hung up unexpectedly
+Hi,
 
-In this case, the second message is useless noise, and the
-user is better off seeing just the first.
+On Tue, 3 Mar 2009, Junio C Hamano wrote:
 
-This patch tries to suppress the "hung up" message when it
-is redundant (but still exits with an error code, of
-course).
+> Tor Arne Vestbø <torarnv@gmail.com> writes:
+> 
+> > +		    if (!prefixcmp(branch, "refs/heads/"))
+> > +			branch += offset;
+> 
+> I suspect that you are trying to protect your code against somebody
+> miscounting the length of "refs/heads/" (perhaps when updating this
+> codepath in git version 47 that keeps local branches somewhere else, such
+> as "refs/local-heads/"), but this "const int offset" does not buy you
+> anything.  He will likely to leave "offset" to 11 just the same.
+> 
+> It is a different story if it were done like this:
+> 
+> 		static const char heads_prefix[] = "refs/heads/";
+>                 if (!prefixcmp(branch, heads_prefix))
+>                 	branch += strlen(heads_prefix);
+> 
+> to let the compiler notice heads_prefix is a constant and optimize the
+> strlen() out, but I personally think it is overkill.
 
-One heuristic would be to suppress it whenever the remote
-has said something on stderr. Unfortunately, in many
-transports we don't actually handle stderr ourselves; it
-is simply a clone of the parent program's stderr and goes
-straight to the terminal.
+Of course you could also do this instead (which I personally think would 
+not be overkill):
 
-Instead, we note that the remote end will typically perform
-such an "expected" hangup at the beginning of a packet
-instead of in the middle. Therefore if we are expecting a
-packet and get an end-of-file from the remote, we assume
-they have printed something useful and exit without further
-messages. Any other short read or eof is reported as before.
+		branch = skip_prefix(branch, "refs/heads/");
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-There are two possible problems with this patch:
-
-  1. The "beginning of packet" heuristic may not be the best. I
-     tried a few obvious test cases like pushing and fetching with
-     invalid repos and bogus --receive-pack= settings. All of them have
-     useful output from the remote. You would of course get no message
-     if the remote was cut off randomly at just the right spot.
-
-    The "remote said something on stderr" heuristic does seem better.
-    But we would have to start processing stderr for local and ssh
-    connections, which we don't do currently. On the other hand, that
-    might be nicer in the long run, because you can mark the remote
-    errors as remote, which makes it more obvious what is going on.
-    E.g.,:
-
-      $ git push host:bogus master
-      remote: fatal: 'bogus' does not appear to be a git repository
-
-  2. Even "remote said something on stderr" may not be a desirable
-     heuristic. In the case of a bogus --receive-pack, you get:
-
-       $ git push --receive-pack=bogus host:repo master
-       sh: bogus: command not found
-
-     So you are losing the part where git says "fatal: ". Maybe it
-     is obvious that such an error is fatal. It is to me, but I am not
-     the intended audience.
-
-     I think this would be improved somewhat with stderr processing to:
-
-       remote: sh: bogus: command not found
-
-     Or you could even trigger the suppression only if stderr had a line
-     matching "^fatal:".
-
-     Or it may even be that adding "remote:" is enough to make things
-     less confusing:
-
-       remote: fatal: 'bogus' does not appear to be a git repository
-       fatal: The remote end hung up unexpectedly
-
-     I think I still favor suppression in that case, but it is at least
-     more clear why there are two fatals.
-
-So you can see, the possibilities are endless. The perfect bikeshed. ;)
-
- pkt-line.c |   11 +++++++----
- 1 files changed, 7 insertions(+), 4 deletions(-)
-
-diff --git a/pkt-line.c b/pkt-line.c
-index f5d0086..f2b387c 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -63,13 +63,16 @@ void packet_write(int fd, const char *fmt, ...)
- 	safe_write(fd, buffer, n);
- }
- 
--static void safe_read(int fd, void *buffer, unsigned size)
-+static void safe_read(int fd, void *buffer, unsigned size, int eof_warn)
- {
- 	ssize_t ret = read_in_full(fd, buffer, size);
- 	if (ret < 0)
- 		die("read error (%s)", strerror(errno));
--	else if (ret < size)
-+	else if (ret < size) {
-+		if (ret == 0 && !eof_warn)
-+			exit(128);
- 		die("The remote end hung up unexpectedly");
-+	}
- }
- 
- int packet_read_line(int fd, char *buffer, unsigned size)
-@@ -78,7 +81,7 @@ int packet_read_line(int fd, char *buffer, unsigned size)
- 	unsigned len;
- 	char linelen[4];
- 
--	safe_read(fd, linelen, 4);
-+	safe_read(fd, linelen, 4, 0);
- 
- 	len = 0;
- 	for (n = 0; n < 4; n++) {
-@@ -103,7 +106,7 @@ int packet_read_line(int fd, char *buffer, unsigned size)
- 	len -= 4;
- 	if (len >= size)
- 		die("protocol error: bad line length %d", len);
--	safe_read(fd, buffer, len);
-+	safe_read(fd, buffer, len, 1);
- 	buffer[len] = 0;
- 	return len;
- }
--- 
-1.6.2.rc2.24.g55bc2
+Ciao,
+Dscho
+--8323329-203502791-1236156964=:8549--
