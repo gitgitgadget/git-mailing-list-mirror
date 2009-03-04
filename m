@@ -1,82 +1,63 @@
-From: Adeodato =?utf-8?B?U2ltw7M=?= <dato@net.com.org.es>
-Subject: Re: [PATCH] git-clone.txt: document that pushing from a shallow
-	clone may work
-Date: Wed, 4 Mar 2009 11:19:39 +0100
-Message-ID: <20090304101939.GA7142@chistera.yi.org>
-References: <237967ef0902160200r2320687ai71e62047c3ead9ad@mail.gmail.com> <1236080017-13987-1-git-send-email-dato@net.com.org.es> <49AD1B22.6050201@viscovery.net> <20090303120856.GB15003@chistera.yi.org> <76718490903031127v7fcec124je7292c4c465208b8@mail.gmail.com>
+From: =?UTF-8?B?VG9yIEFybmUgVmVzdGLDuA==?= <torarnv@gmail.com>
+Subject: Re: [PATCH v2] git-clone: Add option --branch to override initial branch
+Date: Wed, 4 Mar 2009 11:23:56 +0100
+Message-ID: <49AE56BC.2000809@gmail.com>
+References: <alpine.DEB.1.00.0903030047130.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	gitster@pobox.com, Mikael Magnusson <mikachu@gmail.com>,
-	Joey Hess <joey@kitenet.net>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 04 11:21:11 2009
+Content-Type: text/plain;
+	charset="US-ASCII";
+	format="flowed"
+Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 04 11:25:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LeoDu-00014B-6f
-	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 11:21:10 +0100
+	id 1LeoHp-0002dp-C1
+	for gcvg-git-2@gmane.org; Wed, 04 Mar 2009 11:25:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754742AbZCDKTn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Mar 2009 05:19:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754592AbZCDKTn
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 05:19:43 -0500
-Received: from 226.Red-80-25-139.staticIP.rima-tde.net ([80.25.139.226]:4686
-	"EHLO etc.inittab.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754492AbZCDKTm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Mar 2009 05:19:42 -0500
-Received: from justin (unknown [192.168.254.34])
-	by etc.inittab.org (Postfix) with ESMTP id 87E76801C072;
-	Wed,  4 Mar 2009 11:19:39 +0100 (CET)
-Received: from userid 1000 by justin with local (Exim 4.69) 
-	  id 1LeoCR-0001s3-1n; Wed, 04 Mar 2009 11:19:39 +0100
+	id S1752469AbZCDKXp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Mar 2009 05:23:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751892AbZCDKXp
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Mar 2009 05:23:45 -0500
+Received: from hoat.troll.no ([62.70.27.150]:45721 "EHLO hoat.troll.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750747AbZCDKXo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Mar 2009 05:23:44 -0500
+Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
+	by hoat.troll.no (Postfix) with SMTP id 1150920FA0;
+	Wed,  4 Mar 2009 11:23:42 +0100 (CET)
+Received: from sx01.troll.no (sx01.troll.no [62.70.27.21])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hoat.troll.no (Postfix) with ESMTP id EE4E220F9E;
+	Wed,  4 Mar 2009 11:23:41 +0100 (CET)
+Received: from sx01.troll.no (localhost.localdomain [127.0.0.1])
+	by sx01.troll.no (8.13.8/8.13.8) with ESMTP id n24ANfIX012507;
+	Wed, 4 Mar 2009 11:23:41 +0100
+Received: from [172.24.90.10] ( [172.24.90.10])
+    by sx01.troll.no (Scalix SMTP Relay 11.4.1.11929)
+    via ESMTP; Wed, 04 Mar 2009 11:23:41 +0100 (CET)
+In-Reply-To: <7vbpsh93q5.fsf@gitster.siamese.dyndns.org>
+References: <1236040414-19089-1-git-send-email-torarnv@gmail.com>
+References: <7vbpsh93q5.fsf@gitster.siamese.dyndns.org>
+x-scalix-Hops: 1
+User-Agent: Thunderbird 2.0.0.14 (X11/20080421)
 Content-Disposition: inline
-In-Reply-To: <76718490903031127v7fcec124je7292c4c465208b8@mail.gmail.com>
-X-No-CC: Please respect my Mail-Followup-To header
-User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112198>
 
-* Jay Soffian [Tue, 03 Mar 2009 14:27:29 -0500]:
+Junio C Hamano wrote:
+> I'll let others discuss more about the design issues, and will only talk
+> about code in this message.
 
-> On Tue, Mar 3, 2009 at 7:08 AM, Adeodato Sim=C3=B3 <dato@net.com.org.=
-es> wrote:
-> > Well, I don't know if the set of cases where it'll work can be defi=
-ned
-> > in detail to a point where it is useful. If it is, then sure, let's=
- do
-> > it.
+[...snip...]
 
-> > My point is that if it will work in some cases, then the documentat=
-ion
-> > should *acknowledge that fact*, because else people will assume the
-> > documentation is wrong, and believe it is intended to work, which i=
-s not
-> > the case.
+Great feedback, much appreciated! :) I'll work up a new patch as soon as 
+I have some free cycles. Thanks!
 
-> Wy not just say "pushing into a shallow repository is not supported"
-> instead of "pushing into a shallow repository won't work."
-
-I don't think such a wording is enough (adjusted, of course, to be abou=
-t
-pushing from, not to, which is the case at hand).
-
-But I'll try to stay silent, and see if Junio has an opinion on the
-matter.
-
-Thanks,
-
---=20
-Adeodato Sim=C3=B3                                     dato at net.com.=
-org.es
-Debian Developer                                  adeodato at debian.or=
-g
-=20
-- Oh my God, you're pimping me out for a new roof?
-- And windows!
-                -- Andrew and Bree Van De Kamp
+Tor Arne
