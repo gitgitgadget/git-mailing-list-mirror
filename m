@@ -1,72 +1,51 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: More git bisect modes
-Date: Thu, 5 Mar 2009 09:49:26 +0000
-Message-ID: <43d8ce650903050149u4ca98444w28efceb9084efa68@mail.gmail.com>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: More git bisect modes
+Date: Thu, 05 Mar 2009 19:05:42 +0900
+Message-ID: <20090305190542.6117@nanako3.lavabit.com>
+References: <43d8ce650903050149u4ca98444w28efceb9084efa68@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 05 10:50:58 2009
+Content-Transfer-Encoding: 8bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 05 11:08:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfAED-0001Ds-AW
-	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 10:50:57 +0100
+	id 1LfAV7-0006to-2K
+	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 11:08:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752826AbZCEJt3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Mar 2009 04:49:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751825AbZCEJt3
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 04:49:29 -0500
-Received: from wf-out-1314.google.com ([209.85.200.174]:21875 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751698AbZCEJt2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Mar 2009 04:49:28 -0500
-Received: by wf-out-1314.google.com with SMTP id 28so4454013wfa.4
-        for <git@vger.kernel.org>; Thu, 05 Mar 2009 01:49:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=Z/Y0Jlg4iXYvoodFXkYW5cLVKzblPmp2WaAH2YMM0iE=;
-        b=JIRmTs1L9RpKHom8AjWRP5YauYH1Or1hlafDNI8Bka5IDbDdlQ1d7i8obOaJGq+s0B
-         cke36O2f64KGjACQL7ZZBoSdDOC5enOWspSIbUYExYxLQGmgRQ5TAGSuCnNVxH34JvKs
-         FfTBFHE5ceK6qpDpFqg5BLSVQahEcnUquUAFI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=Dc/eMontW1+VYOISbGg7+LQV5HMopynB1QvfVxWCF7qC7lHLib1WBE396fkYnQ7qLB
-         wxEXZZI0m7SEQ0ufY6DBTjdUxMeajvQgr5x+TytxmTYCLSeH/h9vZX4g0jvedW4q7aQn
-         zvUyCU9Ekh/AGHmku9u6/a6ArVG7iGDR8sWYs=
-Received: by 10.143.31.11 with SMTP id i11mr438741wfj.289.1236246566139; Thu, 
-	05 Mar 2009 01:49:26 -0800 (PST)
+	id S1751328AbZCEKGy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2009 05:06:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751263AbZCEKGy
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 05:06:54 -0500
+Received: from karen.lavabit.com ([72.249.41.33]:40083 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750928AbZCEKGx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2009 05:06:53 -0500
+Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
+	by karen.lavabit.com (Postfix) with ESMTP id 9120711B847;
+	Thu,  5 Mar 2009 04:06:51 -0600 (CST)
+Received: from 3885.lavabit.com (212.62.97.21)
+	by lavabit.com with ESMTP id 8VCLGT99EB5C; Thu, 05 Mar 2009 04:06:51 -0600
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=h0k641U5382JqupSD9p6GKZOy3n1C69FGVIkxgY0r1ZVMvFjdHlSatIqXLOe1h+4BPHe8FmsnLkezguu2GGx8IQAdjap+lBVlWvMyKXBm3IWQz+Nr6akukSa48H+bvOn/jIfm437+9ej5xMeJHAnUUgp6yBkJlBOc5Y/j+0jNtY=;
+  h=From:To:Cc:Subject:In-Reply-To:References:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <43d8ce650903050149u4ca98444w28efceb9084efa68@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112281>
 
-Hi,
+Quoting John Tapsell <johnflux@gmail.com>:
 
-  Although "git bisect" is called, well, bisect, it would be nice to
-have other modes.
+> * An exponential back-off.  Typically I know that HEAD is broken, and
+> I don't know when it used to work.
 
-* A completely linear version - check every version.  Particularly
-useful after rebasing to make sure all the commits still compile.
-* An allow-for-mistakes-bisect.  This would use a bisection technique
-that would allow for a minimum of 1 mistake when marking a commit good
-or bad.  This point isn't particularly to help those with fat fingers,
-but for bugs that are subtle and for bugs that are caused by multiple
-commits.  (I can go into the details of how to do such a bisect
-later).
-* An exponential back-off.  Typically I know that HEAD is broken, and
-I don't know when it used to work.  It would be nice to exponentially
-go back through the commits to find the first working commit, then
-bisect from there.
+I thought 'git bisect' already worked with only bad commit(s) without any good commit for a long time?
 
-
-  Before I start working on the code for any of these, do people like
-this?  Would this fit into the 'git bisect' command?
-
-John
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
