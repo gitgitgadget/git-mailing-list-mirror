@@ -1,73 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Mar 2009, #02; Thu, 05)
-Date: Thu, 5 Mar 2009 06:00:51 -0500
-Message-ID: <20090305110051.GA17921@coredump.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: notes, was Re: What's cooking in git.git (Mar 2009, #02; Thu, 05)
+Date: Thu, 5 Mar 2009 12:04:26 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903051204010.6524@intel-tinevez-2-302>
 References: <7vbpsg2sgx.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 05 12:02:47 2009
+X-From: git-owner@vger.kernel.org Thu Mar 05 12:06:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfBLf-0000GB-Dx
-	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 12:02:43 +0100
+	id 1LfBOl-00018V-N2
+	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 12:05:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752977AbZCELBB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Mar 2009 06:01:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752774AbZCELBA
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 06:01:00 -0500
-Received: from peff.net ([208.65.91.99]:36986 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752191AbZCELBA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Mar 2009 06:01:00 -0500
-Received: (qmail 30059 invoked by uid 107); 5 Mar 2009 11:01:00 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 05 Mar 2009 06:01:00 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Mar 2009 06:00:51 -0500
-Content-Disposition: inline
+	id S1755367AbZCELEb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2009 06:04:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754580AbZCELEa
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 06:04:30 -0500
+Received: from mail.gmx.net ([213.165.64.20]:59923 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755287AbZCELE3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2009 06:04:29 -0500
+Received: (qmail invoked by alias); 05 Mar 2009 11:04:27 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp028) with SMTP; 05 Mar 2009 12:04:27 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18Rs3AZFiURD+7U0U0sGBwsHBp9q9BqtUFai0GnC0
+	DUKmvyLUilQpia
+X-X-Sender: schindel@intel-tinevez-2-302
 In-Reply-To: <7vbpsg2sgx.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112297>
 
-On Thu, Mar 05, 2009 at 02:07:26AM -0800, Junio C Hamano wrote:
+Hi,
 
-> * mh/cvsimport-tests (Mon Feb 23 06:08:14 2009 +0100) 5 commits
->  - Add a test of "git cvsimport"'s handling of tags and branches
->  - Add some tests of git-cvsimport's handling of vendor branches
->  - Test contents of entire cvsimported "master" tree contents
->  - Use CVS's -f option if available (ignore user's ~/.cvsrc file)
->  - Start a library for cvsimport-related tests
+On Thu, 5 Mar 2009, Junio C Hamano wrote:
+
+> * js/notes (Wed Feb 18 11:17:27 2009 -0800) 14 commits
+>  - tests: fix "export var=val"
+>  - notes: refuse to edit notes outside refs/notes/
+>  - t3301: use test_must_fail instead of !
+>  - t3301: fix confusing quoting in test for valid notes ref
+>  - notes: use GIT_EDITOR and core.editor over VISUAL/EDITOR
+>  - notes: only clean up message file when editing
+>  - handle empty notes gracefully
+>  - git notes show: test empty notes
+>  - git-notes: fix printing of multi-line notes
+>  - notes: fix core.notesRef documentation
+>  - Add an expensive test for git-notes
+>  - Speed up git notes lookup
+>  - Add a script to edit/inspect notes
+>  - Introduce commit notes
 > 
-> Tests without fixes are of dubious value.  Any takers?
+> Rebased and then kicked back to 'pu' to give the author a chance to
+> rearrange if necessary.  I might do some trivial squashing myself.
 
-At the very least, I think the first 3 are nice infrastructure cleanups
-that will help future tests for cvsimport. So it makes sense to me to
-apply them to help future testers (otherwise, they would have to know
-that these patches existed and dig them out of the list).
+Will do.
 
-The final two introduce the new tests. They look fine as far as fitting
-into the test infrastructure, but I have to admit that I haven't
-actually looked closely at _what_ they are testing. I assumed since they
-are adapted from Michael's cvs2svn tests that they are showing real
-problems that he had faced there. If they are meant to show failings of
-cvsps-based conversion (which is my understanding from Michael's other
-messages), then I'm not even sure they _are_ fixable without a total
-rewrite.
-
-So I don't know whether it makes sense to apply them if we never plan on
-fixing them. Michael said his goal was to document problems with
-cvsps-based importing, and I think he has done that in a way that will
-help anyone who wants to try fixing. We can help people out a little
-more by carrying the tests in the tree (versus making them pull them
-from the list); the downside is that it may take the test suite a little
-longer to run. I don't know how much we care; it might not matter for 2
-tests, but I certainly wouldn't want to 30 minutes of testing for
-something that isn't fixable (and CVS tests tend to be terribly slow).
-
--Peff
+Thanks,
+Dscho
