@@ -1,62 +1,55 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: bug in checkout/status ?
-Date: Thu, 5 Mar 2009 13:13:53 -0800
-Message-ID: <20090305211353.GC16213@spearce.org>
-References: <20090305204801.GA16213@spearce.org> <20090305205126.GA19800@coredump.intra.peff.net> <20090305205313.GB16213@spearce.org> <20090305210757.GA20157@coredump.intra.peff.net>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] Documentation - More examples for git bisect
+Date: Thu, 5 Mar 2009 22:44:35 +0100
+Message-ID: <200903052244.35702.chriscool@tuxfamily.org>
+References: <1236256574-24764-1-git-send-email-johnflux@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 05 22:15:24 2009
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 05 22:47:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfKuZ-0000wH-LT
-	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 22:15:24 +0100
+	id 1LfLP9-0005HM-Ir
+	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 22:47:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752801AbZCEVN4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Mar 2009 16:13:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752612AbZCEVNz
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 16:13:55 -0500
-Received: from george.spearce.org ([209.20.77.23]:45967 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751038AbZCEVNz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Mar 2009 16:13:55 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 63DF638211; Thu,  5 Mar 2009 21:13:53 +0000 (UTC)
+	id S1752612AbZCEVpb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Mar 2009 16:45:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752388AbZCEVpb
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 16:45:31 -0500
+Received: from smtp5-g21.free.fr ([212.27.42.5]:38423 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751263AbZCEVpa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Mar 2009 16:45:30 -0500
+Received: from smtp5-g21.free.fr (localhost [127.0.0.1])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 5FC69D480D5;
+	Thu,  5 Mar 2009 22:45:22 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 78D6FD4808C;
+	Thu,  5 Mar 2009 22:45:20 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <1236256574-24764-1-git-send-email-johnflux@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20090305210757.GA20157@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112348>
 
-Jeff King <peff@peff.net> wrote:
-> On Thu, Mar 05, 2009 at 12:53:13PM -0800, Shawn O. Pearce wrote:
-> 
-> OK. I was just sort of guessing based on the similarity of the names and
-> the fact that sorting is confusing (as evidenced by the fact that I had
-> no idea if it was wrong or not). But that is definitely it:
+Le jeudi 5 mars 2009, John Tapsell a =E9crit :
+> Including passing parameters to the programs, and running more
+> complicated checks without requiring a seperate shell script.
+>
+> Signed-off-by: John Tapsell
 
-I never would have guessed the sorting was wrong.  But once you
-said something, it was immediately obvious to me that JGit f'd up
-the tree.
- 
-> reveal(ed) the difference. But it looks like you have already re-pushed
-> a fixed version.
+That looks good to me, except perhaps that your signed-off-by has no em=
+ail=20
+address, but I don't know if it's a problem or not.
 
-Well, I rewound the repository.  We're rebasing the change onto the
-current tip and pushing a fast-forward instead of letting JGit make
-a merge commit here.
+Acked-by: Christian Couder <chriscool@tuxfamily.org>
 
-But JGit still has a bug that causes it to corrupt the tree sorting
-here.  I have yet to understand why it produced that bad sort for
-this particular merge, let alone propose a patch for it.
-
-Thanks for the help Peff.
-
--- 
-Shawn.
+Thanks,
+Christian.
