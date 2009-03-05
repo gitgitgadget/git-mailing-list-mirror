@@ -1,89 +1,112 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: counting the number of connections?
-Date: Thu, 5 Mar 2009 18:00:18 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903051758440.6524@intel-tinevez-2-302>
-References: <be6fef0d0902272244q468b1fa4sacdc15afa9a65f15@mail.gmail.com> <87ab80j649.fsf@krank.kagedal.org>
+From: Pavel Roskin <proski-mXXj517/zsQ@public.gmane.org>
+Subject: Re: linux-firmware binary corruption with gitweb
+Date: Thu, 05 Mar 2009 12:26:21 -0500
+Message-ID: <1236273981.24072.16.camel@mj>
+References: <49A98F6A.50702@gmail.com> <1235886467.3195.15.camel@mj>
+	<49AD7E2B.3010101@gmail.com> <m3iqmqt9ox.fsf@localhost.localdomain>
+	<49AF1429.9080009@gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1659875432-1236272418=:6524"
-Cc: git@vger.kernel.org, Tay Ray Chuan <rctay89@gmail.com>
-To: =?ISO-8859-15?Q?David_K=E5gedal?= <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Thu Mar 05 18:02:02 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: orinoco-users-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org, linux-kernel-u79uwXL29TY76Z2rM5mHXA@public.gmane.org,
+	John 'Warthog9' Hawley <warthog9-a9bfEDSFcqP30BxdvE/MCQ@public.gmane.org>,
+	dwmw2-wEGCiKHe2LqWVfeAwA7xHQ@public.gmane.org, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, Jakub Narebski <jnareb-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+To: Dave <kilroyd-gM/Ye1E23mwN+BqQ9rBEUg@public.gmane.org>
+X-From: orinoco-users-bounces-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org Thu Mar 05 18:28:06 2009
+Return-path: <orinoco-users-bounces-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org>
+Envelope-to: gldou-orinoco-users@m.gmane.org
+Received: from lists.sourceforge.net ([216.34.181.88])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfGxH-0003bp-CP
-	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 18:01:55 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755259AbZCERAW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Mar 2009 12:00:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755049AbZCERAW
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 12:00:22 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57710 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754672AbZCERAV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Mar 2009 12:00:21 -0500
-Received: (qmail invoked by alias); 05 Mar 2009 17:00:19 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp069) with SMTP; 05 Mar 2009 18:00:19 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19ULllZnn1UBjrXHXojHZBD7TAUx+3Kg2jJGk9ggR
-	HV02xxIAnXJ7kw
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <87ab80j649.fsf@krank.kagedal.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112321>
+	id 1LfHMb-0006Zg-5u
+	for gldou-orinoco-users@m.gmane.org; Thu, 05 Mar 2009 18:28:05 +0100
+Received: from localhost ([127.0.0.1] helo=sfs-ml-2.v29.ch3.sourceforge.com)
+	by 3yr0jf1.ch3.sourceforge.com with esmtp (Exim 4.69)
+	(envelope-from <orinoco-users-bounces-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org>)
+	id 1LfHLB-0000gA-Nb; Thu, 05 Mar 2009 17:26:37 +0000
+Received: from sfi-mx-2.v28.ch3.sourceforge.com ([172.29.28.122]
+	helo=mx.sourceforge.net)
+	by 3yr0jf1.ch3.sourceforge.com with esmtp (Exim 4.69)
+	(envelope-from <proski-mXXj517/zsQ@public.gmane.org>) id 1LfHLA-0000fy-Qk
+	for orinoco-users-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org; Thu, 05 Mar 2009 17:26:36 +0000
+Received-SPF: softfail (72vjzd1.ch3.sourceforge.com: transitioning domain of
+	gnu.org does not designate 216.154.195.49 as permitted sender)
+	client-ip=216.154.195.49; envelope-from=proski-mXXj517/zsQ@public.gmane.org;
+	helo=c60.cesmail.net; 
+Received: from c60.cesmail.net ([216.154.195.49])
+	by 72vjzd1.ch3.sourceforge.com with esmtps (TLSv1:RC4-SHA:128)
+	(Exim 4.69) id 1LfHKy-0008Vq-EP
+	for orinoco-users-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org; Thu, 05 Mar 2009 17:26:36 +0000
+Received: from unknown (HELO smtprelay2.cesmail.net) ([192.168.1.112])
+	by c60.cesmail.net with ESMTP; 05 Mar 2009 12:26:23 -0500
+Received: from [192.168.0.22] (static-72-92-88-10.phlapa.fios.verizon.net
+	[72.92.88.10])
+	by smtprelay2.cesmail.net (Postfix) with ESMTPSA id C4C6A34C6A;
+	Thu,  5 Mar 2009 12:25:46 -0500 (EST)
+In-Reply-To: <49AF1429.9080009-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+X-Mailer: Evolution 2.24.5 (2.24.5-1.fc10) 
+X-Spam-Score: -0.3 (/)
+X-Spam-Report: Spam Filtering performed by mx.sourceforge.net.
+	See http://spamassassin.org/tag/ for more details.
+	-1.0 RCVD_IN_DNSWL_LOW RBL: Sender listed at http://www.dnswl.org/,
+	low trust [216.154.195.49 listed in list.dnswl.org]
+	0.7 SPF_SOFTFAIL SPF: sender does not match SPF record (softfail)
+X-Headers-End: 1LfHKy-0008Vq-EP
+X-BeenThere: orinoco-users-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org
+X-Mailman-Version: 2.1.9
+Precedence: list
+List-Id: <orinoco-users.lists.sourceforge.net>
+List-Unsubscribe: <https://lists.sourceforge.net/lists/listinfo/orinoco-users>, 
+	<mailto:orinoco-users-request-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org?subject=unsubscribe>
+List-Archive: <http://sourceforge.net/mailarchive/forum.php?forum_name=orinoco-users>
+List-Post: <mailto:orinoco-users-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org>
+List-Help: <mailto:orinoco-users-request-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org?subject=help>
+List-Subscribe: <https://lists.sourceforge.net/lists/listinfo/orinoco-users>, 
+	<mailto:orinoco-users-request-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org?subject=subscribe>
+Errors-To: orinoco-users-bounces-5NWGOfrQmneRv+LV9MX5uipxlwaOVQ5f@public.gmane.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112322>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Wed, 2009-03-04 at 23:52 +0000, Dave wrote:
+>         binmode STDOUT, ':raw';
+> -        print <$fd>;
+> +        #print <$fd>;
+> +        $output .= <$fd>;
+>         binmode STDOUT, ':utf8'; # as set at the beginning of
+> gitweb.cgi
 
---8323329-1659875432-1236272418=:6524
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+Nice catch!
 
-Hi,
+Looking at the gitweb repository from kernel.org, two instances of
+circumventing binmode were introduced by this commit:
 
-On Thu, 5 Mar 2009, David Kågedal wrote:
+commit c79ae555fb3c89d91b4cafbfce306e695720507b
+Author: John Hawley <warthog9-v8g9t7APwQevveQcA6InS3zaFgp7qdfK@public.gmane.org>
+Date:   Thu Dec 28 21:59:43 2006 -0800
 
-> Tay Ray Chuan <rctay89@gmail.com> writes:
-> 
-> > some time ago I noticed curl doesn't remember your credentials (apart 
-> > from those it can get from ~/.netrc), and very recently there was an 
-> > thread on repeated prompting for credentials while pushing to https.
-> >
-> > I've written a simple patch series, which allows git to play nice
-> > without curl_multi. That is, git uses a single persistent connection
-> > throughout.
-> >
-> > However, I'm at a loss at how to test for this. How does one count the
-> > number of connections made during the lifespan of a program's
-> > execution? So far, I've been relying on my firewall log (Comodo on
-> > windows). Perhaps there a more operating system/software-agnostic
-> > method to do this?
-> 
-> You could set up a single-use tcp forwarder which will make any second
-> connection fail. Using socat, for instance:
-> 
->   $ socat tcp-listen:2222,bind=localhost tcp:my.server:22 &
->   $ nc localhost 2222
->   SSH-2.0-OpenSSH_5.1p1 Debian-3ubuntu1
->   ^C
->   $ nc localhost 2222
->   localhost [127.0.0.1] 2222 (?) : Connection refused
+    Last of the changes to deal with channeling the text through the caching
+    engine.  Wow is this a total hack.
 
-AFAICT Ray wants to provide tests for Git's test suite, and introducing 
-socat as a dependency for our tests does not really fly all that well.
+The original behavior was restored in git_snapshot() by the recent
+commit c15229acd9bedf165f1eb05d99fa989d3b9f3e32, but git_blob_plain()
+remains broken.
 
-But IIRC somebody convinced Ray that it is better to require a new-enough 
-cURL version so that the patch becomes moot itself.
+I don't see an easy fix.  We cannot manipulate the blob to counteract
+the encoding, as it may not be valid utf-8, and therefore won't be
+output in the utf-8 mode.
 
-Ciao,
-Dscho
+Maybe binmode should be raw everywhere, and adding to $output should
+recode data to utf-8 from other encodings where needed, but it would be
+a massive patch, I'm afraid.  Or it would be a small patch requiring
+massive testing.
 
---8323329-1659875432-1236272418=:6524--
+Adding John Hawley to cc:
+
+-- 
+Regards,
+Pavel Roskin
+
+------------------------------------------------------------------------------
+Open Source Business Conference (OSBC), March 24-25, 2009, San Francisco, CA
+-OSBC tackles the biggest issue in open source: Open Sourcing the Enterprise
+-Strategies to boost innovation and cut costs with open source participation
+-Receive a $600 discount off the registration fee with the source code: SFAD
+http://p.sf.net/sfu/XcvMzF8H
