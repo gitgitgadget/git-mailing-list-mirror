@@ -1,53 +1,58 @@
-From: Mark Wilden <mark@mwilden.com>
-Subject: Re: [ANNOUNCE] TopGit 0.7
-Date: Thu, 5 Mar 2009 12:45:20 -0800
-Message-ID: <3c30da400903051245j2f89a136m95cdae3c64292024@mail.gmail.com>
-References: <20090305202709.GB15486@pengutronix.de>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: How to ignore a modified file?
+Date: Thu, 5 Mar 2009 21:45:08 +0100
+Message-ID: <200903052145.08249.robin.rosenberg.lists@dewire.com>
+References: <1236242659559-2428157.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?Uwe_Kleine=2DK=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Thu Mar 05 21:46:53 2009
+To: dealmaker <vinkhc@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 05 21:46:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfKSv-0006Fl-CF
+	id 1LfKSu-0006Fl-L5
 	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 21:46:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754363AbZCEUpX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Mar 2009 15:45:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754208AbZCEUpX
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 15:45:23 -0500
-Received: from rv-out-0506.google.com ([209.85.198.239]:49646 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754179AbZCEUpW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Mar 2009 15:45:22 -0500
-Received: by rv-out-0506.google.com with SMTP id g9so122406rvb.5
-        for <git@vger.kernel.org>; Thu, 05 Mar 2009 12:45:21 -0800 (PST)
-Received: by 10.115.32.1 with SMTP id k1mr936920waj.66.1236285920838; Thu, 05 
-	Mar 2009 12:45:20 -0800 (PST)
-In-Reply-To: <20090305202709.GB15486@pengutronix.de>
+	id S1754191AbZCEUpS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2009 15:45:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754179AbZCEUpR
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 15:45:17 -0500
+Received: from mail.dewire.com ([83.140.172.130]:12048 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751354AbZCEUpQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2009 15:45:16 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id C3F0F1295E69;
+	Thu,  5 Mar 2009 21:45:09 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id jnBgp3XY0Q73; Thu,  5 Mar 2009 21:45:09 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 3EEE48006AC;
+	Thu,  5 Mar 2009 21:45:09 +0100 (CET)
+User-Agent: KMail/1.11.0 (Linux/2.6.27-12-generic; KDE/4.2.0; i686; ; )
+In-Reply-To: <1236242659559-2428157.post@n2.nabble.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112337>
 
-On Thu, Mar 5, 2009 at 12:27 PM, Uwe Kleine-K=F6nig
-<u.kleine-koenig@pengutronix.de> wrote:
->
-> I'm happy to announce that TopGit 0.7 was released today.
->
-> This release brings you several bug fixes and a few new features.
+torsdag 05 mars 2009 09:44:19 skrev dealmaker <vinkhc@gmail.com>:
+> 
+> Hi, 
+>   I run "git status", and I saw the a modified file in a directory.  I want
+> to ignore all files in that directory.  I put the directory name into
+> .gitignore, but it still shows as modified file.  Why?  How do I ignore the
+> directory?
+> Thanks.
 
-When announcing a release, you might consider including a few words
-about what the project does. There will be people (like me) who were
-not familiar with it before seeing the release announcement, and this
-would help them to quickly find out whether it should be investigated.
+git update-index --assume-unchanged <files...>
 
-Just a suggestion - ignore at will. :)
-
-///ark
+-- robin
