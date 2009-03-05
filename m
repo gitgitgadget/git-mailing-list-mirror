@@ -1,77 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] '%S' option for pretty printing to support --source
-Date: Thu, 5 Mar 2009 11:59:57 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903051157070.6524@intel-tinevez-2-302>
-References: <200903050918.29051.petri.hodju@yumesystems.com> <20090305091758.GC30445@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (Mar 2009, #02; Thu, 05)
+Date: Thu, 5 Mar 2009 06:00:51 -0500
+Message-ID: <20090305110051.GA17921@coredump.intra.peff.net>
+References: <7vbpsg2sgx.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Petri Hodju <petri.hodju@yumesystems.com>,
-	Deskin Miller <deskinm@umich.edu>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 05 12:01:37 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 05 12:02:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfBKb-0008JI-7c
-	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 12:01:37 +0100
+	id 1LfBLf-0000GB-Dx
+	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 12:02:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753082AbZCELAG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Mar 2009 06:00:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752874AbZCELAF
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 06:00:05 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48693 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752214AbZCELAC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Mar 2009 06:00:02 -0500
-Received: (qmail invoked by alias); 05 Mar 2009 10:59:58 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp047) with SMTP; 05 Mar 2009 11:59:58 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/xQn1D5drxCgBs36jKYaVF1rgAiUBtT6nU1A2668
-	rQOPBlEJdr/5Hs
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <20090305091758.GC30445@coredump.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.62
+	id S1752977AbZCELBB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2009 06:01:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752774AbZCELBA
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 06:01:00 -0500
+Received: from peff.net ([208.65.91.99]:36986 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752191AbZCELBA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2009 06:01:00 -0500
+Received: (qmail 30059 invoked by uid 107); 5 Mar 2009 11:01:00 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 05 Mar 2009 06:01:00 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Mar 2009 06:00:51 -0500
+Content-Disposition: inline
+In-Reply-To: <7vbpsg2sgx.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112296>
 
-Hi,
+On Thu, Mar 05, 2009 at 02:07:26AM -0800, Junio C Hamano wrote:
 
-On Thu, 5 Mar 2009, Jeff King wrote:
+> * mh/cvsimport-tests (Mon Feb 23 06:08:14 2009 +0100) 5 commits
+>  - Add a test of "git cvsimport"'s handling of tags and branches
+>  - Add some tests of git-cvsimport's handling of vendor branches
+>  - Test contents of entire cvsimported "master" tree contents
+>  - Use CVS's -f option if available (ignore user's ~/.cvsrc file)
+>  - Start a library for cvsimport-related tests
+> 
+> Tests without fixes are of dubious value.  Any takers?
 
-> On Thu, Mar 05, 2009 at 09:18:28AM +0200, Petri Hodju wrote:
-> 
-> > +static void format_source(struct strbuf *sb, const struct commit *commit)
-> > +{
-> > +    if (commit->util)
-> > +	strbuf_addstr(sb, (char *) commit->util);
-> > +}
-> > +
-> 
-> Hmm. This is the second patch in the last few weeks to use commit->util
-> to carry information for --pretty=format: (I am cc'ing Deskin Miller,
-> who wrote the first).
-> 
-> They cannot both work, obviously. So we need to do one of:
-> 
->   - refactor the information out of commit->util to somewhere else
-> 
->   - allow multiple commit->util users somehow (which I think is a
->     potential performance problem -- the simplistic design is meant to
->     avoid things like allocation overhead)
+At the very least, I think the first 3 are nice infrastructure cleanups
+that will help future tests for cvsimport. So it makes sense to me to
+apply them to help future testers (otherwise, they would have to know
+that these patches existed and dig them out of the list).
 
-The common way to do this is to use struct decoration.  I was under the 
-impression that --source already used that method (IIRC both --source and 
-struct decoration come from Linus, the latter of which having been 
-rejected when I submitted it as a struct object_hash patch, which would 
-have been a better name IMHO).
+The final two introduce the new tests. They look fine as far as fitting
+into the test infrastructure, but I have to admit that I haven't
+actually looked closely at _what_ they are testing. I assumed since they
+are adapted from Michael's cvs2svn tests that they are showing real
+problems that he had faced there. If they are meant to show failings of
+cvsps-based conversion (which is my understanding from Michael's other
+messages), then I'm not even sure they _are_ fixable without a total
+rewrite.
 
-Ciao,
-Dscho
+So I don't know whether it makes sense to apply them if we never plan on
+fixing them. Michael said his goal was to document problems with
+cvsps-based importing, and I think he has done that in a way that will
+help anyone who wants to try fixing. We can help people out a little
+more by carrying the tests in the tree (versus making them pull them
+from the list); the downside is that it may take the test suite a little
+longer to run. I don't know how much we care; it might not matter for 2
+tests, but I certainly wouldn't want to 30 minutes of testing for
+something that isn't fixable (and CVS tests tend to be terribly slow).
+
+-Peff
