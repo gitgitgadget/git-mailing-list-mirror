@@ -1,76 +1,134 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: just curious: what influences a commit hash?
-Date: Thu, 5 Mar 2009 10:02:21 +0100
-Message-ID: <20090305090221.GA28687@pengutronix.de>
-References: <20090305063632.42880@gmx.net> <1236237939.2421.38.camel@virgil>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: git push
+Date: Thu, 05 Mar 2009 09:45:11 +0100
+Message-ID: <49AF9117.1020407@op5.se>
+References: <43d8ce650902242238s7ab4c851p9c820c96b67aa62b@mail.gmail.com> <7vskm3c84t.fsf@gitster.siamese.dyndns.org> <20090225225826.GA13510@pvv.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: stoecher@gmx.at, git@vger.kernel.org
-To: Matt Enright <awickedshimmy@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 05 10:03:57 2009
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	John Tapsell <johnflux@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Finn Arne Gangstad <finnag@pvv.org>
+X-From: git-owner@vger.kernel.org Thu Mar 05 10:06:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lf9Uh-00035F-Rd
-	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 10:03:56 +0100
+	id 1Lf9Xd-000408-JG
+	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 10:06:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752565AbZCEJC2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Mar 2009 04:02:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752277AbZCEJC1
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 04:02:27 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:53819 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751405AbZCEJC0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Mar 2009 04:02:26 -0500
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Lf9TD-0004GU-J6; Thu, 05 Mar 2009 10:02:23 +0100
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Lf9TB-0007WK-Vs; Thu, 05 Mar 2009 10:02:21 +0100
-Content-Disposition: inline
-In-Reply-To: <1236237939.2421.38.camel@virgil>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1751916AbZCEJF3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2009 04:05:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751405AbZCEJF1
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 04:05:27 -0500
+Received: from spsmtp02oc.mail2world.com ([74.202.142.148]:2996 "EHLO
+	spsmtp02oc.mail2world.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750760AbZCEJF0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2009 04:05:26 -0500
+X-Greylist: delayed 1209 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Mar 2009 04:05:26 EST
+Received: from mail pickup service by spsmtp02oc.mail2world.com with Microsoft SMTPSVC;
+	 Thu, 5 Mar 2009 00:43:41 -0800
+auth-sender: exon@home.se
+Received: from 212.112.174.166 unverified ([212.112.174.166]) by spsmtp02oc.mail2world.com with Mail2World SMTP Server; 
+	Thu, 05 Mar 2009 00:43:40 -0800
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
+In-Reply-To: <20090225225826.GA13510@pvv.org>
+X-OriginalArrivalTime: 05 Mar 2009 08:43:41.0792 (UTC) FILETIME=[7C867600:01C99D6E]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112273>
 
-Hi,
+Finn Arne Gangstad wrote:
+> Sorry to people receiving this mail twice, the list ate my first reply
+> since it managed to hit the spam-filter (maybe I should take a hint... :)
+> 
+> On Tue, Feb 24, 2009 at 11:01:38PM -0800, Junio C Hamano wrote:
+>> [...]
+>>
+>> But if you are talking about changing the default when "git push" is run
+>> without any parameter, I have to say it is a terrible idea, for two
+>> reasons, and one is too obvious to state so I wouldn't repeat it and talk
+>> only about the other one.
+> 
+> The current default behaviour of git push is very annoying for us at
+> least. The current behaviour is _dangerous_ and leads to serious
+> problems. It is too easy for someone to write "git push". They hit
+> enter too soon, or they write it expecting to get usage
+> information. They do not necessarily expect to overwrite random
+> branches in a remote repository.
+> 
+> Most git commands are not destructive with no arguments at all, and
+> push is the _only_ command that really can screw things up for others,
+> so this command in particular should refrain from destructive default
+> behaviour.
+> 
+> An example of random branch overwriting:
+> $ mkdir a
+> $ cd a
+> $ git init
+> $ echo contents > file
+> $ git add file
+> $ git commit -m message
+> $ cd ..
+> $ git clone a b
+> $ cd b
+> $ git checkout -b gif-support
+> $ echo foo > somefile
+> $ git add somefile
+> $ git commit -m message
+> $ ( cd ../a && git branch gif-support) # Assume done by someone else
+> $ git checkout master
+> $ # <hack away, maybe commit a bit>
+> $ git push  # <-- OOOPS! pushes gif-support!
+> 
+> Notice that what branches git push ends up pushing is out of your
+> control, since new branches can appear in the remote repository at any
+> time. This is very unfriendly in our setup with a shared incoming repo.
+> 
+> If developer A creates "gif-support", shares it with developer B, who
+> does an additional commit on it to make it print more debug info (but
+> has no intent of pushing it anywhere), and A pushes it to the "incoming"
+> repo, developer B risks overwriting that with his debug version.
+> 
 
-On Thu, Mar 05, 2009 at 02:25:39AM -0500, Matt Enright wrote:
-> On Thu, 2009-03-05 at 07:36 +0100, stoecher@gmx.at wrote:
-> > Hi,
-> >=20
-> > being new to git I did some experiments with commits looking at the=
- hashes. What I observed:
-> > * The same commit (same file, same committer, same message) into di=
-fferent empty repositories (git init) gives different hashes. So I assu=
-me that also the time of the commit influences the hash. Is this intend=
-ed? For what reason?
-Yes, commit time and commit date influence the hash.
+git push will never overwrite changes in the remote repo unless you
+specify --force. If anyone *blindly* uses --force, they really shouldn't
+have write-access to anything so precious as your code repositories.
 
-But the hashes for the corresponding trees should be the same.
-Check the output of git rev-parse $commit^{tree}.
+Worst-case scenario, you commits that were never intended for publication
+enter your public wateringhole and needs a revert later on. Big deal.
 
-If you want to reproduce the exact same commit, you need to set
-the env variables GIT_AUTHOR_DATE and GIT_COMMITTER_DATE.  (Not sure,
-but GIT_AUTHOR_DATE might be handled by git am.)
+> It is not realistic to believe that in a big project with many
+> developers, no one will ever do the mistake of typing "git push".  It
+> is also not realistic to believe that everyone will know how to (or
+> remember to) configure this away.
+> 
 
-Best regards
-Uwe
+But it *is* realistic to not assume that they will also use --force
+while doing so.
 
---=20
-Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
-       |
-Industrial Linux Solutions                    | http://www.pengutronix.=
-de/  |
+>> If you shoot for the least damage for such people, the sanest default for
+>> "git push" would be to do nothing.  You *always* say what to push where,
+>> then there is no risk of pushing something you did not intend to.  Perhaps
+>> "push.default = never" configuration may not be such a bad idea?
+> 
+> If "git push" could do nothing at all without configuring anything, that
+> would be a big improvement to us.
+> 
+
+I can buy this, I guess. I always type the remote-name I want to push to
+anyways. A sane no-op default would probably be to list the pre-configured
+remotes along with a short usage message. I still don't quite see the point
+of it.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
