@@ -1,68 +1,55 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: How to ignore a modified file?
-Date: Thu, 5 Mar 2009 09:50:37 +0100
-Message-ID: <fabb9a1e0903050050r322f1c54q8fd704cecc126115@mail.gmail.com>
-References: <1236242659559-2428157.post@n2.nabble.com>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH] Clarify the "cannot lock existing info/refs" error
+Date: Thu, 5 Mar 2009 09:50:52 +0100
+Message-ID: <20090305085052.GA24669@localhost>
+References: <1236181026-15385-1-git-send-email-johnflux@gmail.com> <20090304192853.GA10567@localhost> <43d8ce650903050000g4466ab2fne5fb8ed009808346@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: dealmaker <vinkhc@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 05 09:52:21 2009
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 05 09:52:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lf9JS-0007lI-RH
-	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 09:52:19 +0100
+	id 1Lf9K2-00080u-PG
+	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 09:52:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754798AbZCEIum (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Mar 2009 03:50:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753521AbZCEIum
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 03:50:42 -0500
-Received: from mail-fx0-f176.google.com ([209.85.220.176]:52169 "EHLO
-	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756144AbZCEIul (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Mar 2009 03:50:41 -0500
-Received: by fxm24 with SMTP id 24so3237382fxm.37
-        for <git@vger.kernel.org>; Thu, 05 Mar 2009 00:50:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=FEMHL7m379bu7MWIEWCMwSpXUb3c2lFW++YyrzhCwPc=;
-        b=W3R9qh9J2OMdqKYRcEQibDK6jOP4YG/niGYsiVGgQqv7HJft10+QrAcybkITJDCP3d
-         fG5PbbtQ+P97QpUxW0mkpl0VlvZe3zsEIRuIEwqyjFtcOKFXCJufsdJxWdlS7Sni1Fbc
-         ozXlOWQS3gDDu33CyUTUlZc+zb9w9ULQWH5Xw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=pvHHLCbjpXYVoiFpW1ZpmcIVUGpEagOqHyc4iRaBLrfGNk/v+RWKQN3wOagHSyI5W6
-         cSqgcPFxJ9sL0NL5QazaLb3Pil21pr5o3woD2zwnqDcHQCxg+u3KmYdqb3/Dsx/pQFZ4
-         ts4JYIb/s1A9DYuulh1goyI8rJEGDZ76srmww=
-Received: by 10.103.117.9 with SMTP id u9mr420773mum.55.1236243037270; Thu, 05 
-	Mar 2009 00:50:37 -0800 (PST)
-In-Reply-To: <1236242659559-2428157.post@n2.nabble.com>
+	id S1753893AbZCEIvJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2009 03:51:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753602AbZCEIvH
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 03:51:07 -0500
+Received: from postman.fh-hagenberg.at ([193.170.124.96]:35012 "EHLO
+	mail.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753521AbZCEIvG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2009 03:51:06 -0500
+Received: from darc.dyndns.org ([84.154.68.174]) by mail.fh-hagenberg.at over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 5 Mar 2009 09:50:58 +0100
+Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
+	(envelope-from <drizzd@aon.at>)
+	id 1Lf9I4-0006Y7-Fw; Thu, 05 Mar 2009 09:50:52 +0100
+Content-Disposition: inline
+In-Reply-To: <43d8ce650903050000g4466ab2fne5fb8ed009808346@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-OriginalArrivalTime: 05 Mar 2009 08:50:58.0622 (UTC) FILETIME=[80E56DE0:01C99D6F]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112269>
 
-Heya,
+On Thu, Mar 05, 2009 at 08:00:37AM +0000, John Tapsell wrote:
+> On google I found that people had been getting that error if they have
+> the wrong password.
 
-On Thu, Mar 5, 2009 at 09:44, dealmaker <vinkhc@gmail.com> wrote:
-> [...] How do I ignore [a tracked] directory?
+That's easy enough to verify. Using the wrong username/password I get
 
-$ git rm -rf --cached dirname && git commit -m "Removed directory from git"
+	error: Cannot access URL $url, return code 22
+	error: failed to push some refs to '$url'
 
-Git will tell you about changes to the contents of the directory until
-you stop tracking it. --cached will prevent the folder from actually
-being removed from your harddisk.
+which is not very helpful, but otherwise unrelated.
 
--- 
-Cheers,
+> -fprintf(stderr, "Error: cannot lock existing info/refs\n");
+> +error("cannot lock existing info/refs on remote server\n");
 
-Sverre Rabbelier
+That's a less ambiguous but equally unhelpful error message.
