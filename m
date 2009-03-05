@@ -1,65 +1,92 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [RFC PATCH] git push: Push nothing if no refspecs are given or  configured
-Date: Thu, 5 Mar 2009 23:22:01 +0100
-Message-ID: <200903052322.02098.markus.heidelberg@web.de>
-References: <20090305221529.GA25871@pvv.org> <fabb9a1e0903051418k3fb6c8baqd0189c772893844e@mail.gmail.com>
-Reply-To: markus.heidelberg@web.de
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: orthogonal cases of log --date option
+Date: Thu, 05 Mar 2009 14:21:27 -0800
+Message-ID: <7vy6vjy5js.fsf@gitster.siamese.dyndns.org>
+References: <buo8wnnrpcf.fsf@dhlpc061.dev.necel.com>
+ <7vtz6bdmfi.fsf@gitster.siamese.dyndns.org>
+ <20090305104304.GA17760@coredump.intra.peff.net>
+ <76718490903051304j6d8138f7qa5492ac15edd6460@mail.gmail.com>
+ <20090305211120.GB20157@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Finn Arne Gangstad <finnag@pvv.org>, git@vger.kernel.org,
-	John Tapsell <johnflux@gmail.com>, Andreas Ericsson <ae@op5.se>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 05 23:23:07 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jay Soffian <jaysoffian@gmail.com>, Miles Bader <miles@gnu.org>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 05 23:23:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfLy6-00031i-Gy
+	id 1LfLy7-00031i-A5
 	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 23:23:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754264AbZCEWVh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1754331AbZCEWVk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2009 17:21:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754286AbZCEWVj
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 17:21:39 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:61028 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754205AbZCEWVh (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 5 Mar 2009 17:21:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754145AbZCEWVh
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 17:21:37 -0500
-Received: from fmmailgate03.web.de ([217.72.192.234]:43346 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754027AbZCEWVg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Mar 2009 17:21:36 -0500
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate03.web.de (Postfix) with ESMTP id B2085F8FA250;
-	Thu,  5 Mar 2009 23:21:34 +0100 (CET)
-Received: from [89.59.104.0] (helo=pluto)
-	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1LfLwc-0007qS-00; Thu, 05 Mar 2009 23:21:34 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <fabb9a1e0903051418k3fb6c8baqd0189c772893844e@mail.gmail.com>
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX1/781OUnzKlvUutMTJQ1uop12AERQey70UJ/+Je
-	CoHiJDVuIVCgghTHOcIVMGMg4U+xeWOqEWmQ0TBzlKyQBfYlBR
-	aKdFYZ8Xzp6grYU5WUQA==
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D2F519FFAC;
+	Thu,  5 Mar 2009 17:21:35 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 37E4D9FFA5; Thu,
+  5 Mar 2009 17:21:29 -0500 (EST)
+In-Reply-To: <20090305211120.GB20157@coredump.intra.peff.net> (Jeff King's
+ message of "Thu, 5 Mar 2009 16:11:20 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: FD329BEA-09D3-11DE-B35D-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112352>
 
-Sverre Rabbelier, 05.03.2009:
-> Heya,
-> 
-> On Thu, Mar 5, 2009 at 23:15, Finn Arne Gangstad <finnag@pvv.org> wrote:
-> > Previously, git push [remote] with no arguments would behave like
-> > "git push <remote> :" if no push refspecs were configured for the remote.
-> > It may be too easy for novice users to write "git push" or
-> > "git push origin" by accident, so git will now push nothing, and give an
-> > error message in such cases.
-> 
-> Config option please, I very much like the current behavior.
+Jeff King <peff@peff.net> writes:
 
-git push --nothing  ? :)
+> Yep, it is more invasive. But I consider it more maintainable in the
+> long run.
 
-Markus
+Why do you think it is more confusing to ask "--date=local --date=iso"
+than asking "--local-time --date=iso"?  If the patch under discussion were
+not mine, I would have said that --date=local that flips the "lie about
+timezone" bit and tells us to use the "default" format is a brilliant and
+elegant solution.
+
+I honestly do not see the point of what you are proposing to make
+"selector" and "format" independent; unless you are shooting for
+"--use-tz=Indian/Christmas --date=iso", that is.
+
+The "--use-tz=zonename" might make some sense.  The required change would
+look more like:
+
+ (1) Introduce:
+
+        const char *force_output_tz;
+
+     that defaults to NULL;
+
+ (2) Option parser for --use-tz=Indian/Christmas would store
+     arg+9 to force_output_tz;
+
+ (3) Option parser for --date=local would set the date format to
+     "default", and store "localtime" to force_output_tz.  We discard
+     DATE_LOCAL enum.
+
+ (4) In show_date(), instead of 
+
+	if (mode == DATE_LOCAL)
+		tz = local_tzoffset(time);
+
+     you'd do:
+
+	if (forced_output_tz)
+		tz = zonename_to_tzoffset(time, force_output_tz);
+
+     zonename_to_tzoffset() would look up the zoneinfo database and
+     compute the offset in our internal (hour*100+min) format.
+
+But I do not think that is what you were proposing.
