@@ -1,91 +1,80 @@
-From: Hinko Kocevar <hinko.kocevar@cetrtapot.si>
-Subject: Re: can not clone via git:// anymore
-Date: Thu, 05 Mar 2009 10:16:54 +0100
-Message-ID: <49AF9886.7090106@cetrtapot.si>
-References: <49AE64F2.1090405@cetrtapot.si> <49AE7B23.1070008@drmicha.warpmail.net> <49AE8208.7090204@cetrtapot.si> <20090304142459.GB17874@coredump.intra.peff.net>
+From: Finn Arne Gangstad <finnag@pvv.org>
+Subject: Re: git push
+Date: Thu, 5 Mar 2009 10:44:10 +0100
+Message-ID: <20090305094410.GA26120@pvv.org>
+References: <43d8ce650902242238s7ab4c851p9c820c96b67aa62b@mail.gmail.com> <7vskm3c84t.fsf@gitster.siamese.dyndns.org> <20090225225826.GA13510@pvv.org> <49AF9117.1020407@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 05 10:20:12 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	John Tapsell <johnflux@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Thu Mar 05 10:45:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lf9kN-0008Na-Pi
-	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 10:20:08 +0100
+	id 1LfA9C-00082u-Qh
+	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 10:45:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753768AbZCEJSl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Mar 2009 04:18:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752789AbZCEJSj
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 04:18:39 -0500
-Received: from zimbra-mta.cetrtapot.si ([89.212.80.172]:55939 "EHLO
-	zimbra-mta.cetrtapot.si" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752679AbZCEJSi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Mar 2009 04:18:38 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by zimbra-mta.cetrtapot.si (Postfix) with ESMTP id 1D82B19FA22;
-	Thu,  5 Mar 2009 10:18:36 +0100 (CET)
-X-Virus-Scanned: amavisd-new at zimbra-mta.cetrtapot.si
-Received: from zimbra-mta.cetrtapot.si ([127.0.0.1])
-	by localhost (zimbra-mta.cetrtapot.si [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id auEHXDtxdlEZ; Thu,  5 Mar 2009 10:18:35 +0100 (CET)
-Received: from [172.31.65.135] (unknown [192.168.66.2])
-	by zimbra-mta.cetrtapot.si (Postfix) with ESMTP id C813319F9D6;
-	Thu,  5 Mar 2009 10:18:35 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.19 (X11/20081209)
-In-Reply-To: <20090304142459.GB17874@coredump.intra.peff.net>
+	id S1752442AbZCEJoS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2009 04:44:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752185AbZCEJoR
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 04:44:17 -0500
+Received: from decibel.pvv.ntnu.no ([129.241.210.179]:38412 "EHLO
+	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751431AbZCEJoR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2009 04:44:17 -0500
+Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
+	(envelope-from <finnag@pvv.ntnu.no>)
+	id 1LfA7e-0005Pk-HM; Thu, 05 Mar 2009 10:44:10 +0100
+Content-Disposition: inline
+In-Reply-To: <49AF9117.1020407@op5.se>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112279>
 
-Jeff King wrote:
-> On Wed, Mar 04, 2009 at 02:28:40PM +0100, Hinko Kocevar wrote:
->=20
->> git-daemon was/is running:
->>
->> CETRTAPOT\zidarhw@zidar:~$ ps -ef | grep git
->> root      3207     1  0 14:15 ?        00:00:00 runsvdir -P /etc/ser=
-vice log: d user: `gitlog:adm'?chown: invalid user: `gitlog:adm'?chown:=
- invalid user: `gitlog:adm'?chown: invalid user: `gitlog:adm'?chown: in=
-valid user: `gitlog:adm'?chown: invalid user: `gitlog:adm'?chown: inval=
-id user: `gitlog:adm'?chown: invalid user: `gitlog:adm'?chown: invalid =
-user: `gitlog:adm'?chown: invalid user: `gitlog:adm'?chown: invalid use=
-r: `gitlog:adm'?chown: invalid user: `gitlog:adm'?
->> root      3208  3207  0 14:15 ?        00:00:00 runsv git-daemon
->> root      3373  3208  0 14:16 ?        00:00:00 git-daemon --verbose=
- --base-path=3D/var/cache /var/cache/git
->> 11418     3399  2762  0 14:16 pts/0    00:00:00 grep git
->=20
-> See all the runsvdir errors? That probably means that git-daemon's lo=
-g
-> output is going nowhere, since the log is not running. Which means
-> eventually the pipe from git-daemon to the log will get full, and
-> git-daemon will block writing out the log. And then stop dealing with
-> requests.
->=20
-> So even if restarting helps now, it may fill up again unless you fix =
-the
-> logging problem (presumably by creating the right "gitlog" user).
+On Thu, Mar 05, 2009 at 09:45:11AM +0100, Andreas Ericsson wrote:
 
-I added the 'gitlog' user yesterday too, when I noticed that unusual ru=
-nsvdir line.
+> Worst-case scenario, you commits that were never intended for publication
+> enter your public wateringhole and needs a revert later on. Big deal.
 
-ps output:
-CETRTAPOT\zidarhw@zidar:~$ ps -ef | grep git
-git       5547     1  0 Mar04 ?        00:00:00 /usr/bin/git-daemon --r=
-euseaddr --verbose --detach --base-path=3D/home/git/repositories/ --exp=
-ort-all
+It could be a very big deal depending on what the contents are. I
+think you can split developers in two groups - those who like to learn
+a lot about version control systems, and those who just see it as a
+necessary evil to get their job done. The latter seems to be the
+majority.
 
-Thank you!
+The first group will know how to undo the damage from a bad push (and
+probably configure their setup so they do not necessarily happen),
+while the second group will not necessarily notice that it happened or
+know how to undo it. So, bad pushes go through, and are not detected
+before 3 other people base their work on it, and we get a lot of
+hassle.
 
---=20
-Hinko Ko=C4=8Devar, OSS developer
-=C4=8CETRTA POT, d.o.o.
-Planina 3, 4000 Kranj, SI EU
-tel     ++386 (0) 4 280 66 03
-e-mail  hinko.kocevar@cetrtapot.si
-http    www.cetrtapot.si
+>> It is not realistic to believe that in a big project with many
+>> developers, no one will ever do the mistake of typing "git push".  It
+>> is also not realistic to believe that everyone will know how to (or
+>> remember to) configure this away.
+>
+> But it *is* realistic to not assume that they will also use --force
+> while doing so.
+
+Our public repos are set up so that only a few chosen people are
+allowed to force pushes, so this is not an issue for us.
+
+>> If "git push" could do nothing at all without configuring anything, that
+>> would be a big improvement to us.
+>
+> I can buy this, I guess. I always type the remote-name I want to push to
+> anyways. A sane no-op default would probably be to list the pre-configured
+> remotes along with a short usage message. I still don't quite see the point
+> of it.
+
+I'll try to whip up a small patch series tonight and see what it ends
+up looking like.
+
+- Finn Arne
