@@ -1,79 +1,83 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 2/2] better introduction of GIT with USE_NSEC defined
-Date: Thu, 05 Mar 2009 12:55:25 +0100
-Message-ID: <49AFBDAD.5040501@viscovery.net>
-References: <cover.1236187259.git.barvik@broadpark.no> <6d937a859ca499f534eea08720fca84f3d4ded2f.1236187259.git.barvik@broadpark.no> <49AF9745.8050207@viscovery.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Chicken/egg problem building from a 'git clone'
+Date: Thu, 5 Mar 2009 07:06:02 -0500
+Message-ID: <20090305120602.GA18717@coredump.intra.peff.net>
+References: <Pine.LNX.4.44.0903010945290.4675-100000@localhost.localdomain> <49AF9601.9060709@op5.se> <43d8ce650903050337n48924fc3l89ef991d578f5849@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Kjetil Barvik <barvik@broadpark.no>
-X-From: git-owner@vger.kernel.org Thu Mar 05 12:57:27 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 05 13:07:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfCCa-0001c0-Vt
-	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 12:57:25 +0100
+	id 1LfCMY-0004oZ-Go
+	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 13:07:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755014AbZCELzf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Mar 2009 06:55:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754947AbZCELze
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 06:55:34 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:30638 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754960AbZCELzd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Mar 2009 06:55:33 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1LfCAg-00034Q-2b; Thu, 05 Mar 2009 12:55:26 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id CA97A6C4; Thu,  5 Mar 2009 12:55:25 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
-In-Reply-To: <49AF9745.8050207@viscovery.net>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1751845AbZCEMGM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2009 07:06:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751774AbZCEMGM
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 07:06:12 -0500
+Received: from peff.net ([208.65.91.99]:41630 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751593AbZCEMGM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2009 07:06:12 -0500
+Received: (qmail 30583 invoked by uid 107); 5 Mar 2009 12:06:11 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 05 Mar 2009 07:06:11 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Mar 2009 07:06:02 -0500
+Content-Disposition: inline
+In-Reply-To: <43d8ce650903050337n48924fc3l89ef991d578f5849@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112303>
 
-Johannes Sixt schrieb:
-> Kjetil Barvik schrieb:
->> -	istate->timestamp.sec = st.st_mtime;
->> -#ifdef USE_NSEC
->> +	istate->timestamp.sec = (unsigned int)st.st_mtime;
->>  	istate->timestamp.nsec = (unsigned int)st.st_mtim.tv_nsec;
->> -#else
->> -	istate->timestamp.nsec = 0;
->> -#endif
+On Thu, Mar 05, 2009 at 11:37:45AM +0000, John Tapsell wrote:
+
+> > ./configure is a generated script. Including it in the repository is not
+> > something many projects do, since one of the things developers will be
+> > working on is to change how that file is generated. Including it in the
+> > release tar-balls is something every project (that uses autoconf) does,
+> > since those are aimed at end-users.
 > 
-> Doesn't this break on systems where st_mtime is time_t and st_mtim does
-> not exist?
+> Reason that it should be included:
+> 
+> * configure scripts usually are included.  git was the first source
+> code in a long time that I've seen without one
 
-Yes, it breaks. You can test this on Linux by commenting out these two
-lines in git-compat-util.h:
+I think you are confusing "checked into version control" with
+"distributed with release tarballs". Most projects do not do the
+former[1], but almost all (including git) do the latter.
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index dcf4127..ab4b615 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -44,8 +44,8 @@
- #define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
- #endif
- #define _ALL_SOURCE 1
--#define _GNU_SOURCE 1
--#define _BSD_SOURCE 1
-+/*#define _GNU_SOURCE 1*/
-+/*#define _BSD_SOURCE 1*/
+This discussion is about things checked into the repository.
 
- #include <unistd.h>
- #include <stdio.h>
+[1] Sorry, I don't have exact numbers, but I have never encountered this
+before.
 
-The result even passes the test suite (as long as I don't merge
-kb/checkout-optim, of course).
+> * we have lots other files in git.git that are autogenerated (the
+> documentation files, for example)
 
--- Hannes
+I'm not aware of any auto-generated files that are checked in. Can you
+give an example?
+
+> * people are used to being able to do "./configure; make; make install"
+
+Right. They do it from the release tarball. Getting the version straight
+from source-control usually means you have to have autoconf if you want
+to run it.
+
+> * It doesn't hurt anyone to do it.
+
+Yes, it does. Having generated files in your source repository means:
+
+  - you generate useless noise commits when those files are
+    re-autogenerated
+
+  - developers must make sure that they are not accidentally committing
+    auto-generated cruft that have nothing to do with their actual
+    changes
+
+-Peff
