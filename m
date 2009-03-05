@@ -1,79 +1,82 @@
-From: Jonas Fonseca <jonas.fonseca@gmail.com>
-Subject: Re: notes, was Re: What's cooking in git.git (Mar 2009, #02; Thu, 05)
-Date: Thu, 5 Mar 2009 13:40:03 +0100
-Message-ID: <2c6b72b30903050440k6f9533bbq605d5f06161dff92@mail.gmail.com>
-References: <7vbpsg2sgx.fsf@gitster.siamese.dyndns.org>
-	 <alpine.DEB.1.00.0903051204010.6524@intel-tinevez-2-302>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Chicken/egg problem building from a 'git clone'
+Date: Thu, 05 Mar 2009 13:38:27 +0100
+Message-ID: <vpq7i34ywjg.fsf@bauges.imag.fr>
+References: <Pine.LNX.4.44.0903010945290.4675-100000@localhost.localdomain>
+	<49AF9601.9060709@op5.se>
+	<43d8ce650903050337n48924fc3l89ef991d578f5849@mail.gmail.com>
+	<20090305120602.GA18717@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Mar 05 13:41:44 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: John Tapsell <johnflux@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 05 13:43:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfCtM-0000Cs-9o
-	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 13:41:36 +0100
+	id 1LfCun-0000jY-4p
+	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 13:43:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753747AbZCEMkI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Mar 2009 07:40:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752592AbZCEMkH
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 07:40:07 -0500
-Received: from mail-fx0-f176.google.com ([209.85.220.176]:59971 "EHLO
-	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751593AbZCEMkG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Mar 2009 07:40:06 -0500
-Received: by fxm24 with SMTP id 24so3328210fxm.37
-        for <git@vger.kernel.org>; Thu, 05 Mar 2009 04:40:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=f/lUfGcSILa+19N8gFEOLzFSmsU1pvy89l+VJn6ejLI=;
-        b=GUPD24S8T+fuFV4tJzUnt6bigm0w67e9SR7PiyZ3rxwaDx5QBf+oIgS9BG6YCrVCiS
-         NZlBBfYqo/5a06BwaqH2r35iG3hyEo8JOTLH0+wtz11S+my7moWn3abz+lRpwYQVLWtL
-         ATfYSgJvHOGkkK/sAQTUS+KYo8R7vsvJ3msdE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=F0Qtn7Yy+X8QQoMODJzCSJHIoHOkKLhU5JPdg8LcEg8q4NxJtKBfVLLtBl+YWitrwP
-         3Yq8S7+Azj/yT/6UhKCjpKRbNPJmCgM7i6+8iXO6/5P1yYNm7qCg0yJZGCmT0nNhfvOt
-         gax6zGpEBMLEwF9KXYMwUuwT8Trqe1ZNaYVbc=
-Received: by 10.181.151.18 with SMTP id d18mr355411bko.183.1236256803704; Thu, 
-	05 Mar 2009 04:40:03 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0903051204010.6524@intel-tinevez-2-302>
+	id S1753834AbZCEMlh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2009 07:41:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753820AbZCEMlh
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 07:41:37 -0500
+Received: from imag.imag.fr ([129.88.30.1]:53057 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753452AbZCEMlg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2009 07:41:36 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n25CcSVQ004747
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 5 Mar 2009 13:38:28 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1LfCqJ-0003Qk-Vd; Thu, 05 Mar 2009 13:38:27 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1LfCqJ-0003xy-T0; Thu, 05 Mar 2009 13:38:27 +0100
+In-Reply-To: <20090305120602.GA18717@coredump.intra.peff.net> (Jeff King's message of "Thu\, 5 Mar 2009 07\:06\:02 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.90 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 05 Mar 2009 13:38:28 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112306>
 
-On Thu, Mar 5, 2009 at 12:04, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> On Thu, 5 Mar 2009, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
+
+>> * we have lots other files in git.git that are autogenerated (the
+>> documentation files, for example)
 >
->> * js/notes (Wed Feb 18 11:17:27 2009 -0800) 14 commits
->>
->> Rebased and then kicked back to 'pu' to give the author a chance to
->> rearrange if necessary. =A0I might do some trivial squashing myself.
+> I'm not aware of any auto-generated files that are checked in. Can you
+> give an example?
+
+man pages and html docs are commited, but in a separate branch. IOW,
+Junio abuses Git as a distribution mechanism, but keeps it totally
+separate from the actual sources.
+
+> Yes, it does. Having generated files in your source repository means:
 >
-> Will do.
+>   - you generate useless noise commits when those files are
+>     re-autogenerated
+>
+>   - developers must make sure that they are not accidentally committing
+>     auto-generated cruft that have nothing to do with their actual
+>     changes
 
-Although laziness should not be rewarded, this might be something that
-you could squash in as well.
+- You almost certainly get irrelevant conflicts when merging.
 
---- a/Documentation/git-notes.txt
-+++ b/Documentation/git-notes.txt
-@@ -43,4 +43,4 @@ Documentation by Johannes Schindelin
+- Different developers using different autoconf versions that generate
+  different code for the same source make even more noise that you'd
+  expect ;-).
 
- GIT
- ---
--Part of the gitlink:git[7] suite
-+Part of the linkgit:git[7] suite
-
---=20
-Jonas Fonseca
+-- 
+Matthieu
