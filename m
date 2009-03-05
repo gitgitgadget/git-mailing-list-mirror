@@ -1,70 +1,63 @@
 From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [RFC PATCH] git push: Push nothing if no refspecs are given or 
-	configured
-Date: Thu, 5 Mar 2009 23:26:21 +0100
-Message-ID: <fabb9a1e0903051426p1222f151s8f466abf319706da@mail.gmail.com>
-References: <20090305221529.GA25871@pvv.org>
-	 <fabb9a1e0903051418k3fb6c8baqd0189c772893844e@mail.gmail.com>
-	 <200903052322.02098.markus.heidelberg@web.de>
-	 <200903052325.44648.markus.heidelberg@web.de>
+Subject: git push bash completion
+Date: Thu, 5 Mar 2009 23:30:29 +0100
+Message-ID: <fabb9a1e0903051430k5628fe26v4749360e026ac7d2@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Finn Arne Gangstad <finnag@pvv.org>, git@vger.kernel.org,
-	John Tapsell <johnflux@gmail.com>, Andreas Ericsson <ae@op5.se>
-To: markus.heidelberg@web.de
-X-From: git-owner@vger.kernel.org Thu Mar 05 23:27:56 2009
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 05 23:32:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfM2k-0004kl-Hc
-	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 23:27:55 +0100
+	id 1LfM6k-0006Ef-2I
+	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 23:32:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754143AbZCEW00 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Mar 2009 17:26:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753603AbZCEW00
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 17:26:26 -0500
-Received: from mail-fx0-f176.google.com ([209.85.220.176]:50835 "EHLO
+	id S1754246AbZCEWad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2009 17:30:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753833AbZCEWad
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 17:30:33 -0500
+Received: from mail-fx0-f176.google.com ([209.85.220.176]:61406 "EHLO
 	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753133AbZCEW0Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Mar 2009 17:26:25 -0500
-Received: by fxm24 with SMTP id 24so147277fxm.37
-        for <git@vger.kernel.org>; Thu, 05 Mar 2009 14:26:22 -0800 (PST)
+	with ESMTP id S1753224AbZCEWac (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2009 17:30:32 -0500
+Received: by fxm24 with SMTP id 24so148548fxm.37
+        for <git@vger.kernel.org>; Thu, 05 Mar 2009 14:30:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=pOBAheyULs/8+skUXNIIaEii301Ohzek7Ge5Q+N5Bps=;
-        b=mA3aXBAxvWohVc/bjzKepmQcn2NYpy1HG83vPrSDpWxkZ9u3owiiPYhvdZKT4llMHv
-         elUd2gLH/4IJxSmCQ7vnLLHGy9LVABVtgolfdlCRloJJGBxYk1l04lmz0O84Bqv1BCWs
-         6WI0Qj8VKVRTnEn7yqCZjQPW0XfacqcHwVvT4=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=BXIDWgaHa8/mRdl0h44kI0oMx9DUvGtWq9l4V6y5LDg=;
+        b=CUYPhsoR9b+V6NSAYPcaBWQbSfHxDtYIgiY/vgTsM9dECAK/5RRdLnLjvRAN+r7pp+
+         wBJooXvGTU4bEm4vehobI9Cu7bRg30izH3aPc/Wj1q4oUNvONHBwIG1T+S0twZA0WTtA
+         AA1VfkOy/Z48SlLuJr13jHQYbEHmp/u5EzHz8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=G+WXt6zDeoHs2OhGb4K/yPfeFbJJKEK3tN9pK+/2W9LEGiliJrK6pqzxt3SyvbAIfF
-         aA37LqfC3LkuaqFFu7TYI2bd7EXzFltkbxNGJyM5aNsWjGEN4szqrQgKRYm2TZKR3ytt
-         o1vRklQpRQSObkVrhk+2z/t02OSefkveLNheg=
-Received: by 10.103.161.16 with SMTP id n16mr774136muo.79.1236291982358; Thu, 
-	05 Mar 2009 14:26:22 -0800 (PST)
-In-Reply-To: <200903052325.44648.markus.heidelberg@web.de>
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=dmgq1bk/HLfqMlwhg+lnl3DUHEM4smNWlBdvzz84IrDxtTi67JIdY/CRkoQXGnyD9a
+         7cQ19TtY5Ac8F8FYkGd0OOyg7N11BOGJIIHAkcWByCzsOEmgOEamOSo1I4qkas5NOeLc
+         t3Ceqxc4bFy+nTPA+X59F8iV/5yYY08QkPQ8A=
+Received: by 10.103.214.8 with SMTP id r8mr770440muq.92.1236292229860; Thu, 05 
+	Mar 2009 14:30:29 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112355>
 
 Heya,
 
-On Thu, Mar 5, 2009 at 23:25, Markus Heidelberg
-<markus.heidelberg@web.de> wrote:
-> Oh, I confused "config option" with "command line argument"...
+Observe:
+$ git push ori<tab>
+  git push origin
 
-Right, I'd like to be able to do:
-$ git config push.iamnotretarded true
-$ git push
+$ git push -f ori<tab>
+  git push -f origin/
+
+Something weird going on there, or is this intentional and am I
+missing something?
 
 -- 
 Cheers,
