@@ -1,51 +1,75 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: More git bisect modes
-Date: Thu, 05 Mar 2009 19:05:42 +0900
-Message-ID: <20090305190542.6117@nanako3.lavabit.com>
-References: <43d8ce650903050149u4ca98444w28efceb9084efa68@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's in git.git (Mar 2009, #02; Thu, 05)
+Date: Thu, 05 Mar 2009 02:07:03 -0800
+Message-ID: <7vfxhs2shk.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: John Tapsell <johnflux@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 05 11:08:27 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 05 11:08:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfAV7-0006to-2K
-	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 11:08:25 +0100
+	id 1LfAVN-0006zA-KP
+	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 11:08:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751328AbZCEKGy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Mar 2009 05:06:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751263AbZCEKGy
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 05:06:54 -0500
-Received: from karen.lavabit.com ([72.249.41.33]:40083 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750928AbZCEKGx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Mar 2009 05:06:53 -0500
-Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
-	by karen.lavabit.com (Postfix) with ESMTP id 9120711B847;
-	Thu,  5 Mar 2009 04:06:51 -0600 (CST)
-Received: from 3885.lavabit.com (212.62.97.21)
-	by lavabit.com with ESMTP id 8VCLGT99EB5C; Thu, 05 Mar 2009 04:06:51 -0600
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=h0k641U5382JqupSD9p6GKZOy3n1C69FGVIkxgY0r1ZVMvFjdHlSatIqXLOe1h+4BPHe8FmsnLkezguu2GGx8IQAdjap+lBVlWvMyKXBm3IWQz+Nr6akukSa48H+bvOn/jIfm437+9ej5xMeJHAnUUgp6yBkJlBOc5Y/j+0jNtY=;
-  h=From:To:Cc:Subject:In-Reply-To:References:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <43d8ce650903050149u4ca98444w28efceb9084efa68@mail.gmail.com>
+	id S1752385AbZCEKHN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2009 05:07:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751692AbZCEKHM
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 05:07:12 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49310 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751227AbZCEKHL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2009 05:07:11 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3CE0A9F326;
+	Thu,  5 Mar 2009 05:07:08 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 287039F325; Thu,
+  5 Mar 2009 05:07:05 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-maint-at: bdfd739dac4c109ce360d38d0572d8717a46e795
+X-master-at: 836769e875ecf47e83137a39de5937652e0e861e
+X-Pobox-Relay-ID: 62CD5524-096D-11DE-A032-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112282>
 
-Quoting John Tapsell <johnflux@gmail.com>:
+The release is out, and immediately after that somebody spots a minor
+bug.
 
-> * An exponential back-off.  Typically I know that HEAD is broken, and
-> I don't know when it used to work.
+If things go as planned, tomorrow we will see a mass graduation to the
+master branch of topics that have been cooking in next during the pre
+release freeze period.
 
-I thought 'git bisect' already worked with only bad commit(s) without any good commit for a long time?
+* The 'maint' branch has these fixes since v1.6.2
 
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+John Tapsell (1):
+  Make the 'lock file' exists error more informative
+
+Junio C Hamano (1):
+  Beginning of 1.6.2 maintenance track
+
+
+* The 'master' branch has these since v1.6.2 in addition to the above.
+
+Carlos Manuel Duclos Vergara (1):
+  git-archive: add --output=<file> to send output to a file
+
+Christian Couder (1):
+  rev-list: estimate number of bisection step left
+
+Jeff King (1):
+  improve missing repository error message
+
+John Tapsell (3):
+  Modify description file to say what this file is
+  Google has renamed the imap folder
+  Improve error message for git-filter-branch
+
+Keith Cascio (2):
+  Use DIFF_XDL_SET/DIFF_OPT_SET instead of raw bit-masking
+  Fix neglect of diff_setup()/diff_setup_done() symmetry.
