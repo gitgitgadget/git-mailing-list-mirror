@@ -1,114 +1,92 @@
-From: Frank Li <lznuaa@gmail.com>
-Subject: [ANNOUNCE] TortoiseGit 0.4.1.0 release
-Date: Thu, 5 Mar 2009 23:10:08 +0800
-Message-ID: <1976ea660903050710s7db3dcf6gf0955d789e2dd521@mail.gmail.com>
+From: Mike Gaffney <mr.gaffo@gmail.com>
+Subject: Re: [PATCH] http authentication via prompts
+Date: Thu, 05 Mar 2009 09:15:29 -0600
+Message-ID: <49AFEC91.10009@gmail.com>
+References: <49AF25BF.5060706@gmail.com> <alpine.DEB.1.00.0903051149280.6524@intel-tinevez-2-302>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: tortoisegit-dev <tortoisegit-dev@googlegroups.com>,
-	tortoisegit-users@googlegroups.com, git@vger.kernel.org,
-	tortoisegit-announce@googlegroups.com
-X-From: git-owner@vger.kernel.org Thu Mar 05 16:11:49 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 05 16:17:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfFEd-0001H1-6h
-	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 16:11:43 +0100
+	id 1LfFJh-0003jT-Tk
+	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 16:16:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751916AbZCEPKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Mar 2009 10:10:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751788AbZCEPKM
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 10:10:12 -0500
-Received: from rv-out-0506.google.com ([209.85.198.224]:21720 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751210AbZCEPKL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Mar 2009 10:10:11 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so3907546rvb.1
-        for <git@vger.kernel.org>; Thu, 05 Mar 2009 07:10:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=HIHHXl5GhZYF1+VPQjCDjgVbMSbOYdHkWbr9eFaKdjQ=;
-        b=RVFWQvSEw2a4XnmCM8uf+EInMfAub3AvOQu98+TsfPKIssk+Fmfow7f3aKZA2nGAov
-         GetlPaEUjonOsqb02lSiP17MAIErDYrgGMX/zDYneqNZbQfjqC+vKFqeVRq3Hv10mXX8
-         liw4DA3Dg40Bvjjs8HOSMn8AGaPQafUpgnBzk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=JEJNq1ExlyUt2jXm9bb4upl7sHNYWswhd59UMb++NPJPO1HsdYP1zTBMtsyC0pQTbW
-         hd/J7rPvwV2vcAXAUWYvqWuirmOjqydiUEDkE3BAe9broKKX9ufl02NktN1RqDCw4d1H
-         bnKd6woffsCAlV0vUPkrSTRwB/JgyFLJ+CYk0=
-Received: by 10.141.176.6 with SMTP id d6mr690661rvp.143.1236265808907; Thu, 
-	05 Mar 2009 07:10:08 -0800 (PST)
+	id S1750760AbZCEPPR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2009 10:15:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752435AbZCEPPR
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 10:15:17 -0500
+Received: from 9a.26.1243.static.theplanet.com ([67.18.38.154]:44713 "EHLO
+	rubble.crucialcrossbar.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752165AbZCEPPQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Mar 2009 10:15:16 -0500
+Received: from adsl-70-130-205-156.dsl.stlsmo.swbell.net ([70.130.205.156] helo=[192.168.1.108])
+	by rubble.crucialcrossbar.com with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(envelope-from <mr.gaffo@gmail.com>)
+	id 1LfFI0-0005PG-PW
+	for git@vger.kernel.org; Thu, 05 Mar 2009 09:15:12 -0600
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <alpine.DEB.1.00.0903051149280.6524@intel-tinevez-2-302>
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - rubble.crucialcrossbar.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - gmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112310>
 
-TortoiseGit 0.3.3 released.
-http://code.google.com/p/tortoisegit/downloads/list
+My thought was that if you had a password you didn't care about you could put it in the config.
+It does ask you for a password with getpass, It compiles under cygwin, I havent tried it under
+windows. However the man page for getpass shows the source so coding up getpass directly isn't a
+big deal.
 
-Features:
-	*Full Overlay Icon Support.
-	 Show "Conflict, ignore file, untracked file, modified, Add, staged"
-icon according to file status.
+Junio, I'm new to this patch game and using Thunderbird. What's the best way
+to wrap the patch?
 
-	*Rebase Support.
-                 Support "Pick" "Sqaush" "Edit" and "Skip" commit when
-rebase branch.
-                 Support abort.
- 	
-	*Combine Multi-commits to one commit.
-	 Combine continous commits to one commit. The limition is the only
-single line(no merge point) above combined commit.
+-Mike
 
-	*Cherry Pick multi commits.
-	 User can use multi commits at log dialog and then choose cherry pick
-these. Cherry Pick dialog guide you finish whole work.
-                 Support "Pick" "Squash" "Edit" and "Skip" commits.
-	
-	*First x64 version.
+Johannes Schindelin wrote:
+> Hi,
+> 
+> Disclaimer: if you are offended by constructive criticism, or likely to 
+> answer with insults to the comments I offer, please stop reading this mail 
+> now (and please do not answer my mail, either). :-)
+> 
+> Still with me?  Good.  Nice to meet you.
+> 
+> Just for the record: responding to a patch is my strongest way of saying 
+> that I appreciate your work.
+> 
+> On Wed, 4 Mar 2009, Mike Gaffney wrote:
+> 
+>> Currently git over http only works with a .netrc file which required 
+>> that you store your password on the file system in plaintext. This 
+>> commit adds to configuration options for http for a username and an 
+>> optional password. If a http.username is set, then the .netrc file is 
+>> ignored and the username is used instead. If a http.password is set, 
+>> then that is used as well, otherwise the user is prompted for their 
+>> password.
+> 
+> From the subject, I would have expected a way to type in the password 
+> instead of storing it.  (Think getpass()... which would pose problems 
+> with Windows support, of course.)
+> 
+> FWIW by having it in .git/config (which is most likely more world-readable 
+> than $HOME/.netrc ever will be) does not provide any security over .netrc.
+> 
+> And I doubt that http.username is a good choice: what if you have multiple 
+> http:// URLs with different usernames/passwords?  So would it not make 
+> more sense to make this remote.<name>.user and ...password?
+> 
+> Ciao,
+> Dscho
 
-	*Support version "browse" at switch, export, new branch/tag and merge dialogs.
-
-	*Add context menu item "Revert" at Commit dialog File List.
-
-	*Show bold font for HEAD at log dialog.
-	
-	*Add "Whole Project" checkbox at commit dialog
-
-	*First Version Help Document.
-
-Bug Fix:
-	*Fix issue 36, Push not working if no remote branch is specified
-	*Default UnCheck untrack file at commit dialog
-	*Issue 40:  Commit from subfolder shows unversioned files in parent
-	*Fix diff problem when filenames have embedded spaces
-	*Fix Issue 24,45, Commit results not in window with scroll bars
-	*Fix for win2k context menu icons
-	*Fix Issue 46, The about window title still displays TortoiseSVN
-	*Fix Issue 37, When the file name contains Chinese char, Diff doesn't work.
-	*Fix Issue 28, "Add" status icon overlay is not correct.
-                *Fixed x64 build of TortoiseProc crashed due to
-received unexpected messages
-	*Fix tag to head when *force* check box checked
-	*Add Git document to help
-
-Known Issue:
-                *Git clone can't support git protocol. SSH need enable
-TortoisePLink
-                 as SSH client. User should use setting dialog network
-page to setup
-                 TortoisePLink as SSH client.
-
-                *Git clone can't capture TortoisePLink output. So there are no
-                 progress info during download from remote repository.
-
-                *64bit setup package can not auto installed MFC 9.0
-and ATL 9.0 Redistribute package.
-                Work around: install MFC 9.0 and ATL 9.0 redistribute
-package before install 64bit tortoisegit.
+-- 
+-Mike Gaffney (http://rdocul.us)
