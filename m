@@ -1,108 +1,212 @@
-From: Matt Enright <awickedshimmy@gmail.com>
-Subject: Re: just curious: what influences a commit hash?
-Date: Thu, 05 Mar 2009 02:25:39 -0500
-Message-ID: <1236237939.2421.38.camel@virgil>
-References: <20090305063632.42880@gmx.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] http authentication via prompts
+Date: Wed, 04 Mar 2009 23:34:39 -0800
+Message-ID: <7vd4cw4e40.fsf@gitster.siamese.dyndns.org>
+References: <49AF25BF.5060706@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-uZDhKV65f2KQ3KCFt166"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: stoecher@gmx.at
-X-From: git-owner@vger.kernel.org Thu Mar 05 08:28:11 2009
+To: Mike Gaffney <mr.gaffo@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 05 08:36:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lf800-0000GT-2o
-	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 08:28:08 +0100
+	id 1Lf87t-0002MF-0M
+	for gcvg-git-2@gmane.org; Thu, 05 Mar 2009 08:36:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755208AbZCEH0e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Mar 2009 02:26:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753478AbZCEH0d
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 02:26:33 -0500
-Received: from mail-bw0-f178.google.com ([209.85.218.178]:47042 "EHLO
-	mail-bw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755319AbZCEH0c (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Mar 2009 02:26:32 -0500
-Received: by bwz26 with SMTP id 26so3119460bwz.37
-        for <git@vger.kernel.org>; Wed, 04 Mar 2009 23:26:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:cc
-         :in-reply-to:references:content-type:date:message-id:mime-version
-         :x-mailer;
-        bh=l7rCEYlnPAQpqiaoYkZQsWq1OPAvFsHRuNlTcd0eyTo=;
-        b=puCBkmzvRm0QBEz8xQhIIPJJo0bcOl4BxwhS07TxLc3sgyuA0wIOVMyn2MWYUmFOS3
-         Z+J6hP+T1hUS6vLpqgIxQKjh72NtCHYjvZ2+j8FeBXOTdHf9r5E8c8MrwPpUBnnzdeeD
-         7l/RQutIccqgs/eTEIW78o3GTVhRgIEDFf0XM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:cc:in-reply-to:references:content-type:date
-         :message-id:mime-version:x-mailer;
-        b=jR8XAhx3uFtJfwUtvnu87rHz4ChZeD9qNNNEvs3Nq8ZvD9hta2PsFCouzV7Z2aUNjQ
-         jF6l175q137AIgiYN6Zkt7nRazU4vqRS40y7OWynypxtcicJFceYXWNyC7LKBfhaRaMn
-         BoNrdcpsA2U3V7G+SlZALmGKzBfrnlvy1zLH8=
-Received: by 10.103.214.8 with SMTP id r8mr400189muq.6.1236237988907;
-        Wed, 04 Mar 2009 23:26:28 -0800 (PST)
-Received: from ?192.168.1.33? (koln-4d0b1f93.pool.mediaWays.net [77.11.31.147])
-        by mx.google.com with ESMTPS id y2sm4397241mug.45.2009.03.04.23.26.28
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 04 Mar 2009 23:26:28 -0800 (PST)
-In-Reply-To: <20090305063632.42880@gmx.net>
-X-Mailer: Evolution 2.24.4 
+	id S1753328AbZCEHet (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2009 02:34:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753077AbZCEHes
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 02:34:48 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:48177 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750896AbZCEHer (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2009 02:34:47 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4A7AB9FC6E;
+	Thu,  5 Mar 2009 02:34:45 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C3E739FC6D; Thu,
+  5 Mar 2009 02:34:41 -0500 (EST)
+In-Reply-To: <49AF25BF.5060706@gmail.com> (Mike Gaffney's message of "Wed, 04
+ Mar 2009 19:07:11 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 1939A3C8-0958-11DE-B9F7-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112261>
 
+Mike Gaffney <mr.gaffo@gmail.com> writes:
 
---=-uZDhKV65f2KQ3KCFt166
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+> Currently git over http only works with a .netrc file which required that you store your password on the file system in plaintext. This commit adds to configuration options for http for a username and an optional password. If a http.username is set, then the .netrc file is ignored and the username is used instead. If a http.password is set, then that is used as well, otherwise the user is prompted for their password.
+>
+> With the old .netrc working, this patch provides backwards compatibility while adding a more secure option for users whose http password may be sensitive (such as if its a domain controller password) and do not wish to have it on the filesystem.
 
-On Thu, 2009-03-05 at 07:36 +0100, stoecher@gmx.at wrote:
-> Hi,
->=20
-> being new to git I did some experiments with commits looking at the hashe=
-s. What I observed:
-> * The same commit (same file, same committer, same message) into differen=
-t empty repositories (git init) gives different hashes. So I assume that al=
-so the time of the commit influences the hash. Is this intended? For what r=
-eason?
-> * Having created two repositories exactly the same way (the history is th=
-e same except for the commit times and hashes) I applied the same patch (us=
-ing git am) and again I got different hashes for these commits. So in some =
-way also the repository/branch influences the hash of a commit!?
+Please wrap lines to readable length, such as under 72 cols.
 
-This should be expected if the initial hashes in the history are
-different. The hash of a commit is based also on the hashes of all
-parent commits - in this way git 'protects' the repository history by
-guaranteeing that if two objects have the same hash, they will come from
-the same history.
-So the second issue is a consequence of the first, though I am not
-certain why the first occurs (if the file contents and size are the
-same, I would expect the hash for the blob/tree to be the same - maybe
-due to git's special handling of initial commits?)
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index f5152c5..821bf48 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -920,6 +920,13 @@ help.autocorrect::
+>  	value is 0 - the command will be just shown but not executed.
+>  	This is the default.
+>  
+> +http.username, http.password:
+> +    The username and password for http authentication. http.username is
+> +    required, http.password is optional. If supplied, the .netrc file will
+> +    be ignored. If a password is not supplied, git will prompt for it.
+> +    Be careful when configuring a password as it will be stored in plain text
+> +    on the filesystem.
+> +
+>  http.proxy::
 
-> From reading the Git user's manual, chapter 10, object storage format, I =
-was not expecting this. Can someone explain or give a link to a more detail=
-ed description?
->=20
-> thank you,
->=20
-> Wolfgang
->=20
+List item ends with double colons; two headline items that are described
+with the same description are listed each on its own line.  I.e.
 
---=-uZDhKV65f2KQ3KCFt166
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
+	http.username::
+        http.password::
+        	The username and ...
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.10 (GNU/Linux)
+> diff --git a/Documentation/howto/setup-git-server-over-http.txt b/Documentation/howto/setup-git-server-over-http.txt
+> index 622ee5c..462a9d4 100644
+> --- a/Documentation/howto/setup-git-server-over-http.txt
+> +++ b/Documentation/howto/setup-git-server-over-http.txt
+> @@ -189,8 +189,19 @@ Make sure that you have HTTP support, i.e. your git was built with
+>  libcurl (version more recent than 7.10). The command 'git http-push' with
+>  no argument should display a usage message.
+>  
+> -Then, add the following to your $HOME/.netrc (you can do without, but will be
+> -asked to input your password a _lot_ of times):
+> +There are 2 ways to authenticate with git http, netrc and via the git config.
+> +The netrc option requires that you put the username and password for the connection
+> +in $HOME/.netrc. The configuration method allows you to specify a username and
+> +optionally a password. If the password is not supplied then git will prompt you
+> +for the password. The downside to the netrc method is that you must have your
+> +username and password in plaintext on the filesystem, albeit in a protected file.
+> +If the username/password combo is a sensitive one, you may wish to use the
+> +git config method. The downside of the config method is that you will be prompted
+> +for your password every time you push or pull to the remote repository.
 
-iEYEABECAAYFAkmvfnMACgkQzHRqhKBz5O/yGQCcDng9NaZFY1T4Ib7psEA2bb9a
-E6sAoJasnk5zokNnUBl8H1FmowEUQyTP
-=8crx
------END PGP SIGNATURE-----
+The contents look readable, but each line is a bit too long.
 
---=-uZDhKV65f2KQ3KCFt166--
+> @@ -204,7 +215,7 @@ instead of the server name.
+>  
+>  To check whether all is OK, do:
+>  
+> -   curl --netrc --location -v http://<username>@<servername>/my-new-repo.git/HEAD
+> +   curl --netrc --location -v http://<servername>/my-new-repo.git/HEAD
+
+Why?
+
+> @@ -213,12 +224,31 @@ Now, add the remote in your existing repository which contains the project
+>  you want to export:
+>  
+>     $ git-config remote.upload.url \
+> -       http://<username>@<servername>/my-new-repo.git/
+> +       http://<servername>/my-new-repo.git/
+
+Why?
+
+> +Using git config:
+
+The bulk of text before this does not have a subtitle like this.  Perhaps
+you would want to add one?  The presense of this subtitle makes it clear
+that you are going to talk about _another_ way, but for first time readers
+it is unclear how that other way is different and what its advantages are.
+
+Perhaps drop this subtitle, and instead give one short paragraph, e.g.
+
+    Instead of storing your password in plaintext $HOME/.netrc file, you
+    can store only the username in the configuration file and have the
+    program prompt for a password.  Here is how.
+
+Alternatively keep the subtitle and explain what the subsection is about
+in a similar way.
+
+But I think this section raises a bigger usability and user perception
+issue.
+
+When "http://user@host/rest" URL is given to your "git push/fetch",
+without .netrc nor http.username configuration, we allow the curl library
+to prompt for a password, and because we do not reuse the password (and
+reinstantiate the curl handle), we end up asking the user million times.
+
+But from the end user's point of view, that's all implementation detail.
+It does not explain why "http://user@host/rest" acts in a silly way, and
+"http://host/rest" with http.username configuration doesn't.
+
+Perhaps you instead inspect the URL and see if you have the "user" part
+(without password), and then:
+
+ (1) transform the URL to http://host/rest" before giving it to libcurl;
+     and
+
+ (2) use your CURLOPT_USERPWD logic with your own getpass() call in
+     init_curl_http_auth()?
+
+That way you do not have (even though you could) to introduce a new
+configuration, nor have a new section in the documentation.  It will be a
+straightforward fix of the "will be asked ... a lot of times" bug you
+removed from the documentation, no?
+
+> diff --git a/http.c b/http.c
+> index ee58799..348b9fb 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -26,6 +26,9 @@ static long curl_low_speed_time = -1;
+>  static int curl_ftp_no_epsv = 0;
+>  static const char *curl_http_proxy = NULL;
+>  
+> +static const char *curl_http_username = NULL;
+> +static const char *curl_http_password = NULL;
+> +
+
+Please do not introduce new initializations of static variables to 0 or
+NULL.  As a clean-up, before your patch, you can send in a patch to fix
+existing such initializations.
+
+> +static void init_curl_http_auth(CURL* result){
+> +#if LIBCURL_VERSION_NUM >= 0x070907
+> +        struct strbuf userpass;
+> +        strbuf_init(&userpass, 0);
+> +        if (curl_http_username != NULL) {
+> +                strbuf_addstr(&userpass, curl_http_username);
+> +		strbuf_addstr(&userpass, ":");
+> +		if (curl_http_password != NULL) {
+> +			strbuf_addstr(&userpass, curl_http_password);
+> +		} else {
+> +			strbuf_addstr(&userpass, getpass("Password: "));
+> +		}
+> +		curl_easy_setopt(result, CURLOPT_USERPWD, userpass.buf);
+> +		curl_easy_setopt(result, CURLOPT_NETRC, CURL_NETRC_IGNORED);
+
+Why NETRC_IGNORED?
+
+On CURLOPT_NETRC, http://curl.haxx.se/libcurl/c/curl_easy_setopt.html says 
+
+	libcurl uses a user name (and supplied or prompted password)
+	supplied with CURLOPT_USERPWD in preference to any of the options
+	controlled by this parameter.
+
+Does it not work as advertised?
+
+In short, I think what you did in init_curl_http_auth() makes a lot of
+sense except for the NETRC_IGNORED bit, but:
+
+ (1) I think http.password configuration has the exact same "plaintext
+     password in a read-protected file" issue as .netrc; it is
+     unnecessary.
+
+ (2) http.username is used by your patch primarily as a way to trigger the
+     new logic to call getpass() and use CURLOPT_USERPWD.  It would be a
+     lot nicer to inspect the URL to notice that there is a username part
+     in it and triggering the same codepath.  That would be a genuine
+     improvement (and you can even claim it is a bugfix).  And if that
+     works, the new configuration variable does not add much value (except
+     that different people involved in the same project can use the same
+     URL but their own (username, password) pair to access it.
