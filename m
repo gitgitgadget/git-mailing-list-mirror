@@ -1,113 +1,164 @@
-From: "John Dlugosz" <JDlugosz@TradeStation.com>
-Subject: RE: fetch and pull
-Date: Fri, 6 Mar 2009 17:11:27 -0500
-Message-ID: <450196A1AAAE4B42A00A8B27A59278E70A115F5D@EXCHANGE.trad.tradestation.com>
-References: <450196A1AAAE4B42A00A8B27A59278E70A115E0D@EXCHANGE.trad.tradestation.com> <m3iqmmidlf.fsf@localhost.localdomain> <7vd4cus7ez.fsf@gitster.siamese.dyndns.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: [PATCH 1/3] config: add git_config_option_string()
+Date: Fri,  6 Mar 2009 17:15:13 -0500
+Message-ID: <12addb53ef5c0e62ee22847591c8e7b884dc0bd2.1236377358.git.jaysoffian@gmail.com>
+References: <cover.1236377358.git.jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>,
-	"Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 06 23:13:07 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	jean-luc malet <jeanluc.malet@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 06 23:17:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfiHy-0005aQ-Bm
-	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 23:13:06 +0100
+	id 1LfiLk-0006q9-6T
+	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 23:17:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755334AbZCFWLi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2009 17:11:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755329AbZCFWLh
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 17:11:37 -0500
-Received: from mail2.tradestation.com ([63.99.207.80]:60151 "EHLO
-	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754960AbZCFWLg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Mar 2009 17:11:36 -0500
-X-ASG-Debug-ID: 1236377494-59e801bf0000-QuoKaX
-X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
-Received: from mail5.tradestation.com (localhost [127.0.0.1])
-	by mail2.tradestation.com (Spam Firewall) with ESMTP
-	id 5F70E1E978D; Fri,  6 Mar 2009 17:11:34 -0500 (EST)
-Received: from mail5.tradestation.com ([192.168.51.76]) by mail2.tradestation.com with ESMTP id 9H8XDLdRqZu4DVZn; Fri, 06 Mar 2009 17:11:34 -0500 (EST)
-X-ASG-Whitelist: Client
-Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 6 Mar 2009 17:11:33 -0500
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-ASG-Orig-Subj: RE: fetch and pull
-In-Reply-To: <7vd4cus7ez.fsf@gitster.siamese.dyndns.org>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: fetch and pull
-Thread-Index: AcmenSEo4FavYh39T4mAnhfszG4FHwACo70g
-X-OriginalArrivalTime: 06 Mar 2009 22:11:33.0584 (UTC) FILETIME=[8260B500:01C99EA8]
-X-Barracuda-Connect: UNKNOWN[192.168.51.76]
-X-Barracuda-Start-Time: 1236377494
-X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
+	id S1755815AbZCFWPd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2009 17:15:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755504AbZCFWPd
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 17:15:33 -0500
+Received: from qw-out-2122.google.com ([74.125.92.26]:2047 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753973AbZCFWPb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2009 17:15:31 -0500
+Received: by qw-out-2122.google.com with SMTP id 5so793684qwi.37
+        for <git@vger.kernel.org>; Fri, 06 Mar 2009 14:15:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=i+KsLfFA53N07H1C4DBJTJITElX6HJbSYdmirqzziDU=;
+        b=mCnyp5/Fy4ESh6x3T3jCxv/Cd7WkQc4Ro74cTLYqIydnWLoGY4m9iEj4QHaRW3KSCp
+         p16xqW/OfCJQfdVl+ipGzryfT+Gk/iUS9HyQLcmzNFdOjf5+f9ofj0MkYY5tDj/Ez0ke
+         DcBedhuugWxhPBHRbAUq95t5cMGVRLkPcQZzw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=FBYhYVGRh2i1uNm4x+cJw2Cus1p+ga5P4zDEaDRIB1InAEaSDDbtNcxHQl+CKBno3N
+         Jr066qBCCx2RSfqcZTuaQM+noid+kR0BMhfk62aNX0N9pVdLaEXH9BUSYvIzBzGfh69x
+         j76mpgt141eKXtuho6g1POIt0GFXhNpkMXkms=
+Received: by 10.224.2.212 with SMTP id 20mr4511730qak.338.1236377730307;
+        Fri, 06 Mar 2009 14:15:30 -0800 (PST)
+Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
+        by mx.google.com with ESMTPS id 5sm1349617qwh.49.2009.03.06.14.15.29
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 06 Mar 2009 14:15:29 -0800 (PST)
+X-Mailer: git-send-email 1.6.2.rc2.332.g5d21b
+In-Reply-To: <cover.1236377358.git.jaysoffian@gmail.com>
+In-Reply-To: <cover.1236377358.git.jaysoffian@gmail.com>
+References: <cover.1236377358.git.jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112482>
 
-===Re:===
-> There was patch series adding support --ff=only, but I think it didn't
-> made into git...  Hmmm...
+This patch teaches config a new function, git_config_option_string(),
+which parses a string using parse-options.
 
-I do not think it has much to do with the main point of what John wants
-to
-do which is to muck with local branch without checking it out, which is
-only possible when it happens to fast forward to the new tip of the
-corresponding branch obtained from the the remote.
-===end===
+This is useful for any command that allows command-line options to
+appear in a config.
 
-It occurs to me that maybe my concept is off, if it is being so
-difficult.
+Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+---
+Originally I had just factored this into its own function in
+builtin-merge, but it seemed that it might be generally useful, so I
+moved it to config.c
 
-Here is what I'm "cooking":
+ cache.h         |    2 ++
+ config.c        |   39 +++++++++++++++++++++++++++++++++++++++
+ parse-options.c |    2 ++
+ 3 files changed, 43 insertions(+), 0 deletions(-)
 
-======excerpt======
-
-To keep apprised of other people's work, including updates to the main
-dev branch, start the day with:
-
-	git fetch
-
-This will update your "remote tracking branches", letting you see what
-everyone else is working on, and letting you see the central
-repository's dev (as remotes/origin/dev) compared to your own local dev,
-so you can see what has been added.
-
-This does not change your local dev, or any other branches you are
-using.  As for your own topic branches, you are the only one who changes
-them.  This is a perfectly safe command and can be performed any time to
-update your view of what's happening throughout the team.
-You will, in particular, see your local dev where you last left it, and
-the current remotes/origin/dev pointing ahead of it.  E.g.
-
-	A <== dev
-	 \
-	  B--C--D <== remotes/origin/dev
-
-In this example, you see plain "dev" still pointing to A, and
-"remotes/origin/dev" pointing to D.  So, you can tell that B, C, D were
-added.  Review the nodes B, C, and D, by reading the comments and seeing
-which files were affected, and look deeper if it seems to affect what
-you are doing.  Finally, issue the command
-
-	??? 
-
-And this will update your local dev to match the origin.
-
-======
-
-Basically, instead of mysterious "can't push" messages, the idea is that
-people can feel good about 'fetch' as refreshing their view of the
-central repo, so gitk can show them how the central dev (and other
-branches) differs from their own.  
-
-TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
-  If you received this in error, please contact the sender and delete the material from any computer.
+diff --git a/cache.h b/cache.h
+index 189151d..c6d3f05 100644
+--- a/cache.h
++++ b/cache.h
+@@ -854,6 +854,8 @@ extern unsigned long git_config_ulong(const char *, const char *);
+ extern int git_config_bool_or_int(const char *, const char *, int *);
+ extern int git_config_bool(const char *, const char *);
+ extern int git_config_string(const char **, const char *, const char *);
++struct option;
++extern int git_config_option_string(const struct option *, int, const char *, const char *);
+ extern int git_config_set(const char *, const char *);
+ extern int git_config_set_multivar(const char *, const char *, const char *, int);
+ extern int git_config_rename_section(const char *, const char *);
+diff --git a/config.c b/config.c
+index 0c8c76f..29cfd5b 100644
+--- a/config.c
++++ b/config.c
+@@ -7,6 +7,7 @@
+  */
+ #include "cache.h"
+ #include "exec_cmd.h"
++#include "parse-options.h"
+ 
+ #define MAXNAME (256)
+ 
+@@ -353,6 +354,44 @@ int git_config_string(const char **dest, const char *var, const char *value)
+ 	return 0;
+ }
+ 
++int git_config_option_string(const struct option *options, int flags,
++			     const char *var, const char *value)
++{
++	int argc, ret;
++	const char **argv;
++	char *buf;
++	struct parse_opt_ctx_t ctx;
++
++	if (!value)
++		return config_error_nonbool(var);
++
++	buf = xstrdup(value);
++	if ((argc = split_cmdline(buf, &argv)) < 0) {
++		free(buf);
++		return error("Malformed value for %s", var);
++	}
++	argv = xrealloc(argv, sizeof(*argv) * (argc + 2));
++	memmove(argv + 1, argv, sizeof(*argv) * (argc + 1));
++	argc++;
++
++	parse_options_start(&ctx, argc, argv, flags);
++	switch (parse_options_step(&ctx, options, NULL)) {
++	case PARSE_OPT_DONE:
++		ret = parse_options_end(&ctx);
++		break;
++	case PARSE_OPT_HELP: /* not supported in a config */
++	default: /* PARSE_OPT_UNKNOWN */
++		if (ctx.argv[0][1] == '-') {
++			ret = error("unknown option `%s'", ctx.argv[0] + 2);
++		} else {
++			ret = error("unknown switch `%c'", *ctx.opt);
++		}
++		break;
++	}
++	free(buf);
++	return ret;
++}
++
+ static int git_default_core_config(const char *var, const char *value)
+ {
+ 	/* This needs a better name */
+diff --git a/parse-options.c b/parse-options.c
+index 4c5d09d..7996b50 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -356,6 +356,8 @@ int parse_options(int argc, const char **argv, const struct option *options,
+ int usage_with_options_internal(const char * const *usagestr,
+ 				const struct option *opts, int full)
+ {
++	if (!usagestr)
++		return PARSE_OPT_HELP;
+ 	fprintf(stderr, "usage: %s\n", *usagestr++);
+ 	while (*usagestr && **usagestr)
+ 		fprintf(stderr, "   or: %s\n", *usagestr++);
+-- 
+1.6.2.rc2.332.g5d21b
