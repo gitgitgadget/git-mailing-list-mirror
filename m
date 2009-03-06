@@ -1,99 +1,123 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [RFC PATCH] git push: Push nothing if no refspecs are given or 
-	configured
-Date: Fri, 6 Mar 2009 12:17:57 +0100
-Message-ID: <fabb9a1e0903060317s6bb4644bvb4dbf0b9432ba58a@mail.gmail.com>
-References: <20090305221529.GA25871@pvv.org>
-	 <fabb9a1e0903051418k3fb6c8baqd0189c772893844e@mail.gmail.com>
-	 <200903052322.02098.markus.heidelberg@web.de>
-	 <200903052325.44648.markus.heidelberg@web.de>
-	 <fabb9a1e0903051426p1222f151s8f466abf319706da@mail.gmail.com>
-	 <alpine.DEB.1.00.0903061124000.10279@pacific.mpi-cbg.de>
-	 <7v4oy7szze.fsf@gitster.siamese.dyndns.org>
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: Chicken/egg problem building from a 'git clone'
+Date: Fri, 6 Mar 2009 11:27:21 +0000
+Message-ID: <43d8ce650903060327l64e76f2al7ec3c2ee76be14eb@mail.gmail.com>
+References: <Pine.LNX.4.44.0903010945290.4675-100000@localhost.localdomain>
+	 <49AF9601.9060709@op5.se>
+	 <43d8ce650903050337n48924fc3l89ef991d578f5849@mail.gmail.com>
+	 <20090305120602.GA18717@coredump.intra.peff.net>
+	 <vpq7i34ywjg.fsf@bauges.imag.fr>
+	 <20090305124512.GA2723@coredump.intra.peff.net>
+	 <m3eixbszkt.fsf@localhost.localdomain>
+	 <alpine.DEB.1.00.0903061203270.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: markus.heidelberg@web.de, Finn Arne Gangstad <finnag@pvv.org>,
-	git@vger.kernel.org, John Tapsell <johnflux@gmail.com>,
-	Andreas Ericsson <ae@op5.se>
-To: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Mar 06 12:19:44 2009
+Cc: Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 06 12:28:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfY5c-0000pD-F5
-	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 12:19:40 +0100
+	id 1LfYEX-0003ef-Fr
+	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 12:28:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753421AbZCFLSG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Mar 2009 06:18:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754016AbZCFLSD
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 06:18:03 -0500
-Received: from mail-fx0-f176.google.com ([209.85.220.176]:59490 "EHLO
-	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752019AbZCFLSA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Mar 2009 06:18:00 -0500
-Received: by fxm24 with SMTP id 24so327916fxm.37
-        for <git@vger.kernel.org>; Fri, 06 Mar 2009 03:17:57 -0800 (PST)
+	id S1751257AbZCFL1Y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Mar 2009 06:27:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750926AbZCFL1Y
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 06:27:24 -0500
+Received: from wf-out-1314.google.com ([209.85.200.175]:12050 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750827AbZCFL1X convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Mar 2009 06:27:23 -0500
+Received: by wf-out-1314.google.com with SMTP id 28so494199wfa.4
+        for <git@vger.kernel.org>; Fri, 06 Mar 2009 03:27:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=pTrebR28A2mA+m5iodMRyrSoZV6PAMt8RGqVLng47VA=;
-        b=pyhMDWfnnPZZ92CxtOPv/lnx6D6Tw+bi4CnBzd1m5rzHnwY1C/Np86daxzzzAoIm+h
-         owh6wvCOBKqsIcAgLXargkomvO8kAzgPPRJxLm2HTChDOiHcSPfqqoJdbbbobQsE7OA/
-         XpH6oIKPdr/yfwDHbCIbjLQiKkXo75R2mpImU=
+        bh=R3WP/qo7T9+EMTw6IkWHvQuPJDvJuh8JoL3QZ7lgtc8=;
+        b=AnaphHAfZShuvP6TR7udM4IyaFqtoImsTyUOsbOwjhYaMbsXjWCUG2jD4EDLzZqgwC
+         hGBjqChdhUDRJrXxse+rzk4r5D607JXEc1CGa1/UoDDPBTbBWvloJIqUBV296GmhD3/w
+         Sssb5hEJT7d4CHlxoFj8FxTUNvUZy2ZSDOyKQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=C2Wk1OTDP5GF1qHO754iDqFX3KmTPg/uLByZL331DpPH7oRIbPz1xKOseCqB/FJQrl
-         Fe5e4nW9Nps2Z5BCPqZrvQQk9q4C8G31o03eyxkHLHjkF+Z/cbBrV/RY3snHVxKXd1h/
-         wBXkcNQOjE8igq+BszCuSQv8541jgN6CGNPck=
-Received: by 10.103.241.15 with SMTP id t15mr998578mur.85.1236338277228; Fri, 
-	06 Mar 2009 03:17:57 -0800 (PST)
-In-Reply-To: <7v4oy7szze.fsf@gitster.siamese.dyndns.org>
+        b=LBfc8WyE7VsliyDcpunaQUyea7GyPD8qHs82bllDWf8OhmFqcny7fmwMg2nxR6p4dH
+         PCYtj3/fqaq/OuJohnipQ2+javacbA7m6KB4GudYqItWj3rWpIHJlubghyRyRJBsdlfG
+         /KrJ7xZd3fcgayFK3jMSAnPUvecgye7NVbvD4=
+Received: by 10.142.252.13 with SMTP id z13mr1051186wfh.252.1236338841706; 
+	Fri, 06 Mar 2009 03:27:21 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.0903061203270.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112425>
 
-Heya,
-
-On Fri, Mar 6, 2009 at 11:32, Junio C Hamano <gitster@pobox.com> wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> On Thu, 5 Mar 2009, Sverre Rabbelier wrote:
->>> Right, I'd like to be able to do:
->>> $ git config push.iamnotretarded true
->>> $ git push
+2009/3/6 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> Hi,
+>
+> On Fri, 6 Mar 2009, Jakub Narebski wrote:
+>
+>> Jeff King <peff@peff.net> writes:
+>> > On Thu, Mar 05, 2009 at 01:38:27PM +0100, Matthieu Moy wrote:
+>> >
+>> >>>> * we have lots other files in git.git that are autogenerated (t=
+he
+>> >>>> documentation files, for example)
+>> >>>
+>> >>> I'm not aware of any auto-generated files that are checked in. C=
+an you
+>> >>> give an example?
+>> >>
+>> >> man pages and html docs are commited, but in a separate branch. I=
+OW,
+>> >> Junio abuses Git as a distribution mechanism, but keeps it totall=
+y
+>> >> separate from the actual sources.
+>> >
+>> > OK, true; but that is a totally different mechanism, unless the pr=
+oposal
+>> > is to autobuild a "this would be the release tarball" branch simil=
+ar to
+>> > html and man branches.
 >>
->> LOL! =A0Sverre, you have a way to crack me up...
-
-Hehe, good, never hurts to add some humor to this list every now and th=
-en ;).
-
-> I found it amusing, too.
-
-I think that humor at times is an effective way to convey your point
-while and at the same time keeping the tone light :).
-
-> It may have some correlation with how well organized your work habit =
-is,
-> but I do not think it has much correlation with being retarded. =A0It=
+>> I thnk the proposal was to have 'configure' branch with configure
+>> script built, similar to how 'html' and 'man' branches have built
+>> documentation in HTML and manpages format.
+>>
+>> However while toolchain needed to produce documentation (asciidoc +
+>> xmlto) isn't, I think, something very common, in my opinion autoconf=
  is
-> more about "'matching refs' is the perfect default for _my_ use patte=
-rn,
-> don't mess with it, please".
+>> something that is present on systems containing other build tools
+>> required to build git from sources. =C2=A0So 'configure' branch is n=
+ot, I
+>> think, as necessary as 'html' and 'man' branches; additionally 'html=
+'
+>> branch (or the repository used to build documentation, or the byprod=
+uct
+>> of building documentation) is used to generate on-line docs for git.
+>
+> Plus, keep in mind that autoconf support is only an afterthought in G=
+it;
+> Just running "make" is supposed to work. =C2=A0If it does not, patche=
+s are
+> certainly welcome, I think.
 
-=46or me the reason 'git push' works well for me is that origin is
-repo.or.cz and I use the repo there just to synch my changes between
-my laptop and my pc (and to keep a backup). I reckon there are other
-workflows for which it makes sense to use 'git push' directly :).
+Well now that you mention it.. :-)
 
---=20
-Cheers,
+It doesn't check for the existance of asciidoc, but blindly assumes it
+exists.  And even if you do have asciidoc, there's a good chance that
+you have the wrong version.   The INSTALL file says that asciidoc
+requires 8.2.7 but most distros (debian, ubuntu.  probably other) have
+8.2.6.
+If you compile the docs with the wrong asciidoc version, there is no
+warning or error at all.  It just builds incorrect man pages.
 
-Sverre Rabbelier
+John
