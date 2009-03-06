@@ -1,96 +1,66 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 0/5] Extend pattern refspecs
-Date: Fri, 6 Mar 2009 02:03:04 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0903060153490.19665@iabervon.org>
-References: <alpine.LNX.1.00.0903052346270.19665@iabervon.org>  <76718490903052119y4d6a7e0ck24bfeb1c0964e413@mail.gmail.com>  <alpine.LNX.1.00.0903060038510.19665@iabervon.org> <76718490903052252y1778aa41g8f3e52329f7bf288@mail.gmail.com>
+From: Tariq Hassanen <tariq.hassanen@gmail.com>
+Subject: Using Git with windows
+Date: Fri, 6 Mar 2009 18:23:45 +1100
+Message-ID: <e878dbad0903052323m56f3d63fi69862e9dae278c00@mail.gmail.com>
+References: <e878dbad0903052321l6c0d310bk2ba568138b409d36@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 06 08:04:38 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 06 08:25:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfU6o-0007Zj-8P
-	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 08:04:38 +0100
+	id 1LfUR6-0004B8-C3
+	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 08:25:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752987AbZCFHDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2009 02:03:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752007AbZCFHDI
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 02:03:08 -0500
-Received: from iabervon.org ([66.92.72.58]:47929 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751912AbZCFHDG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2009 02:03:06 -0500
-Received: (qmail 26143 invoked by uid 1000); 6 Mar 2009 07:03:04 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 6 Mar 2009 07:03:04 -0000
-In-Reply-To: <76718490903052252y1778aa41g8f3e52329f7bf288@mail.gmail.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1753102AbZCFHXs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Mar 2009 02:23:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752322AbZCFHXr
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 02:23:47 -0500
+Received: from wf-out-1314.google.com ([209.85.200.170]:30965 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751918AbZCFHXq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Mar 2009 02:23:46 -0500
+Received: by wf-out-1314.google.com with SMTP id 28so402921wfa.4
+        for <git@vger.kernel.org>; Thu, 05 Mar 2009 23:23:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=/Tjo7ghMegnM8Z1gkeA6lk7Scph5x8zTmZ9QcWOBdbM=;
+        b=kdB2e31K63JiMmBR7v1ss+ktgf/63eOReVA1kXl1c6BO3oiQYMd5rs/DFtNsVXWNol
+         AzjNBTfKzSo55kBMoK0qDfd2Nsw7j/J+c7VnBne/5T37QTcgU297CmbQu7v8fx36pJYb
+         hfkwjT6GfFUuLUdugvLnP1zX+Hpy1j/nMYtCQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=j4s/vG3Gp7nLu1qInQuOdS3Vsi8Nq47ArA9sw6bVqTutzkX/8g1eDQ4TqMfJdfbWbl
+         9PfTd7JrLKnAqsvsfpuPYjqpyefStiukns7Se+BWxvoYrLGvIoZM5yHrBUfAWK1e6kEZ
+         Ei2YgioikUpWtaN0AvgjKy/s5Ee7JLCpshccc=
+Received: by 10.143.3.16 with SMTP id f16mr950515wfi.344.1236324225081; Thu, 
+	05 Mar 2009 23:23:45 -0800 (PST)
+In-Reply-To: <e878dbad0903052321l6c0d310bk2ba568138b409d36@mail.gmail.com>
+X-Google-Sender-Auth: 389fece576cec3f2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112396>
 
-On Fri, 6 Mar 2009, Jay Soffian wrote:
+Hi all,
 
-> On Fri, Mar 6, 2009 at 1:07 AM, Daniel Barkalow <barkalow@iabervon.org> wrote:
-> > On Fri, 6 Mar 2009, Jay Soffian wrote:
-> >
-> > Actually, you should be able to just drop your "buf" and use spec->src and
-> > spec->dst, since it just stores the original strings. So that should be
-> > easy enough, although it might be good to go through a remote.c function
-> > just in case it becomes more complicated later. On the other hand,
-> > get_head_names() should probably get a patch like my 1/5 to have it use
-> > the remote.c parser, or should use a constant "head mirror" refspec like
-> > that tag_refspec already in remote.c
-> 
-> Okay.
-> 
-> > Do you have tests for "git remote show -n"?
-> 
-> Yes. Apparently not enough of them though if nothing is failing.
+I know there are some ports for it on windows such as=A0msysGit and it
+can also be done on Cygwin.
+But is there a way around this if i run a linux VM with Git running
+and mount a windows ntfs partition ?
 
-It only seems to be off by saying:
-
-  Local ref configured for 'git push' (status not queried):
-    refs/heads/** forces to refs/heads/**
-
-so you didn't necessarily miss much, just the one thing I seem to have 
-broken.
-
-> > Merging my series (on top of
-> > origin/master) and e5dcbfd and adding a final '*' to the string in
-> > get_head_names() made everything pass for me, without doing anything about
-> > the extra *s, but the output is clearly not quite right.
-> 
-> Hmm, alright.
-> 
-> > I'm not seeing anything that makes assumptions about the matching
-> > semantics of pattern refspecs, just stuff about how the stored form
-> > relates to the config-file form.
-> 
-> Okay, that sounds right.
-> 
-> I assume your series will end up in pu soon enough, and I think my
-> series is about to hop to next. What's the right way to to have them
-> be happy together?
-
-The only "correctness of outcome" issue is the open-coded refspec 
-initialization, I think, which is probably actually cleaner to have as a 
-constant in remote.c anyway (unlike in builtin-clone, there's no 
-variability at all, so it might as well be a constant.
-
-I can amend my series to avoid adding the extra * in the message when your 
-series graduates, and it should be clean enough to deal with if your 
-series wound up getting dropped later; it'll be the only change in that 
-file for my series, so I'd be able to drop it easily.
-
-It'd be useful to have that message tested by your series, though, so I 
-can verify my series reliably without worrying about whether I 
-accidentally dropped both the fix and the test.
-
-	-Daniel
-*This .sig left intentionally blank*
+Im trying to keep the power of Git running on linux and the ability to
+use Git for .NET apps
+Any ideas? Or am i best sticking with SVN until the ports are mature en=
+ough?
+Tariq
