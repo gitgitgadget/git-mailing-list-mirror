@@ -1,123 +1,75 @@
-From: John Tapsell <johnflux@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
 Subject: Re: Chicken/egg problem building from a 'git clone'
-Date: Fri, 6 Mar 2009 11:27:21 +0000
-Message-ID: <43d8ce650903060327l64e76f2al7ec3c2ee76be14eb@mail.gmail.com>
+Date: Fri, 06 Mar 2009 11:51:37 +0100
+Message-ID: <vpqwsb2ly9y.fsf@bauges.imag.fr>
 References: <Pine.LNX.4.44.0903010945290.4675-100000@localhost.localdomain>
-	 <49AF9601.9060709@op5.se>
-	 <43d8ce650903050337n48924fc3l89ef991d578f5849@mail.gmail.com>
-	 <20090305120602.GA18717@coredump.intra.peff.net>
-	 <vpq7i34ywjg.fsf@bauges.imag.fr>
-	 <20090305124512.GA2723@coredump.intra.peff.net>
-	 <m3eixbszkt.fsf@localhost.localdomain>
-	 <alpine.DEB.1.00.0903061203270.10279@pacific.mpi-cbg.de>
+	<49AF9601.9060709@op5.se>
+	<43d8ce650903050337n48924fc3l89ef991d578f5849@mail.gmail.com>
+	<20090305120602.GA18717@coredump.intra.peff.net>
+	<vpq7i34ywjg.fsf@bauges.imag.fr>
+	<20090305124512.GA2723@coredump.intra.peff.net>
+	<m3eixbszkt.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, John Tapsell <johnflux@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Mar 06 12:28:54 2009
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 06 12:42:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfYEX-0003ef-Fr
-	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 12:28:53 +0100
+	id 1LfYRG-0007MQ-Vy
+	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 12:42:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751257AbZCFL1Y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Mar 2009 06:27:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750926AbZCFL1Y
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 06:27:24 -0500
-Received: from wf-out-1314.google.com ([209.85.200.175]:12050 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750827AbZCFL1X convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Mar 2009 06:27:23 -0500
-Received: by wf-out-1314.google.com with SMTP id 28so494199wfa.4
-        for <git@vger.kernel.org>; Fri, 06 Mar 2009 03:27:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=R3WP/qo7T9+EMTw6IkWHvQuPJDvJuh8JoL3QZ7lgtc8=;
-        b=AnaphHAfZShuvP6TR7udM4IyaFqtoImsTyUOsbOwjhYaMbsXjWCUG2jD4EDLzZqgwC
-         hGBjqChdhUDRJrXxse+rzk4r5D607JXEc1CGa1/UoDDPBTbBWvloJIqUBV296GmhD3/w
-         Sssb5hEJT7d4CHlxoFj8FxTUNvUZy2ZSDOyKQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=LBfc8WyE7VsliyDcpunaQUyea7GyPD8qHs82bllDWf8OhmFqcny7fmwMg2nxR6p4dH
-         PCYtj3/fqaq/OuJohnipQ2+javacbA7m6KB4GudYqItWj3rWpIHJlubghyRyRJBsdlfG
-         /KrJ7xZd3fcgayFK3jMSAnPUvecgye7NVbvD4=
-Received: by 10.142.252.13 with SMTP id z13mr1051186wfh.252.1236338841706; 
-	Fri, 06 Mar 2009 03:27:21 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0903061203270.10279@pacific.mpi-cbg.de>
+	id S1751406AbZCFLkf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2009 06:40:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751401AbZCFLke
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 06:40:34 -0500
+Received: from ebene.inrialpes.fr ([194.199.18.70]:64953 "EHLO
+	ebene.inrialpes.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750849AbZCFLke (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2009 06:40:34 -0500
+X-Greylist: delayed 2758 seconds by postgrey-1.27 at vger.kernel.org; Fri, 06 Mar 2009 06:40:33 EST
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by ebene.inrialpes.fr (8.13.6/8.13.8) with ESMTP id n26Apadk028471;
+	Fri, 6 Mar 2009 11:51:37 +0100 (MET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1LfXeT-0001ok-RB; Fri, 06 Mar 2009 11:51:37 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1LfXeT-0002Nb-Oj; Fri, 06 Mar 2009 11:51:37 +0100
+In-Reply-To: <m3eixbszkt.fsf@localhost.localdomain> (Jakub Narebski's message of "Fri\, 06 Mar 2009 02\:39\:46 -0800 \(PST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.90 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ebene.inrialpes.fr [194.199.18.70]); Fri, 06 Mar 2009 11:51:38 +0100 (MET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112426>
 
-2009/3/6 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> Hi,
->
-> On Fri, 6 Mar 2009, Jakub Narebski wrote:
->
->> Jeff King <peff@peff.net> writes:
->> > On Thu, Mar 05, 2009 at 01:38:27PM +0100, Matthieu Moy wrote:
->> >
->> >>>> * we have lots other files in git.git that are autogenerated (t=
-he
->> >>>> documentation files, for example)
->> >>>
->> >>> I'm not aware of any auto-generated files that are checked in. C=
-an you
->> >>> give an example?
->> >>
->> >> man pages and html docs are commited, but in a separate branch. I=
-OW,
->> >> Junio abuses Git as a distribution mechanism, but keeps it totall=
-y
->> >> separate from the actual sources.
->> >
->> > OK, true; but that is a totally different mechanism, unless the pr=
-oposal
->> > is to autobuild a "this would be the release tarball" branch simil=
-ar to
->> > html and man branches.
->>
->> I thnk the proposal was to have 'configure' branch with configure
->> script built, similar to how 'html' and 'man' branches have built
->> documentation in HTML and manpages format.
->>
->> However while toolchain needed to produce documentation (asciidoc +
->> xmlto) isn't, I think, something very common, in my opinion autoconf=
- is
->> something that is present on systems containing other build tools
->> required to build git from sources. =C2=A0So 'configure' branch is n=
-ot, I
->> think, as necessary as 'html' and 'man' branches; additionally 'html=
-'
->> branch (or the repository used to build documentation, or the byprod=
-uct
->> of building documentation) is used to generate on-line docs for git.
->
-> Plus, keep in mind that autoconf support is only an afterthought in G=
-it;
-> Just running "make" is supposed to work. =C2=A0If it does not, patche=
-s are
-> certainly welcome, I think.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Well now that you mention it.. :-)
+> However while toolchain needed to produce documentation (asciidoc +
+> xmlto) isn't, I think, something very common, in my opinion autoconf
+> is something that is present on systems containing other build tools
+> required to build git from sources.
 
-It doesn't check for the existance of asciidoc, but blindly assumes it
-exists.  And even if you do have asciidoc, there's a good chance that
-you have the wrong version.   The INSTALL file says that asciidoc
-requires 8.2.7 but most distros (debian, ubuntu.  probably other) have
-8.2.6.
-If you compile the docs with the wrong asciidoc version, there is no
-warning or error at all.  It just builds incorrect man pages.
+Plus:
 
-John
+* an old ./configure script (taken from a previous tarball release)
+  has good chance to work on a new Git. Since Makefile is designed to
+  be useable without scripting, Junnio takes great care not to break
+  existing setups.
+
+* ./configure script is not mandatory to build Git from sources.
+
+-- 
+Matthieu
