@@ -1,86 +1,65 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH 3/3] builtin-merge: add support for default merge options
-Date: Fri, 6 Mar 2009 18:16:08 -0500
-Message-ID: <76718490903061516l62869424q4bd4cfa64fe2195e@mail.gmail.com>
-References: <cover.1236377358.git.jaysoffian@gmail.com>
-	 <12addb53ef5c0e62ee22847591c8e7b884dc0bd2.1236377358.git.jaysoffian@gmail.com>
-	 <13f0016028b195541b8b5d9149292150cbb13ab7.1236377358.git.jaysoffian@gmail.com>
-	 <9f755b5bae0b02c5cb3e01680acf71fe7153be04.1236377358.git.jaysoffian@gmail.com>
-	 <7vr61aqngu.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: allowing aliases to override builtins to support default options
+Date: Fri, 06 Mar 2009 15:22:36 -0800
+Message-ID: <7vhc26qls3.fsf@gitster.siamese.dyndns.org>
+References: <76718490903061430s2fbea2dfibe06282fd22b1588@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, jean-luc malet <jeanluc.malet@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 07 00:17:43 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 07 00:24:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfjIT-0001aJ-Lg
-	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 00:17:42 +0100
+	id 1LfjOm-0003aS-KJ
+	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 00:24:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752649AbZCFXQM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Mar 2009 18:16:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750967AbZCFXQM
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 18:16:12 -0500
-Received: from rv-out-0506.google.com ([209.85.198.224]:41103 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750728AbZCFXQL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Mar 2009 18:16:11 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so715522rvb.1
-        for <git@vger.kernel.org>; Fri, 06 Mar 2009 15:16:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=tkzuAL3saBAaaCGv68bZy2oVlqs05PgEJ1cvti4pr1s=;
-        b=wALBJv0fexBSHPtG8WthmLlBWHO+a3ysk+qPWgArjcUL6MSc6RtJCY9fUrsVld6lbK
-         GuQ23roMdOyyxSv5M8ULfZMfcy1iMPQUZhBhfCueM2SknwAhC8RkrWqz/gmQ8VgakSyN
-         9cI4fVSXnbJpPtnbzhfj4mviNADk9D4EOPNcI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=puqr37y7KYIFxg2VfduUrft8sWEpCWsvnh0vxo59iMmSUd2IER5yiDeD5wjMkjfATq
-         2FeoTFg9/gPtkx6qjzkEMjUYaJ4BB2EOBliWbGaEhNl/pZW9Lb966wSI8PcFu97iErTM
-         /+QuUIYmi/SM/mQnFio/Wa7WUXUP0iE1s9rXw=
-Received: by 10.140.250.14 with SMTP id x14mr1536123rvh.79.1236381368045; Fri, 
-	06 Mar 2009 15:16:08 -0800 (PST)
-In-Reply-To: <7vr61aqngu.fsf@gitster.siamese.dyndns.org>
+	id S1754080AbZCFXWo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2009 18:22:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753346AbZCFXWo
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 18:22:44 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56434 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753180AbZCFXWo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2009 18:22:44 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id ABD5A9F761;
+	Fri,  6 Mar 2009 18:22:41 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9F75E9F760; Fri,
+  6 Mar 2009 18:22:38 -0500 (EST)
+In-Reply-To: <76718490903061430s2fbea2dfibe06282fd22b1588@mail.gmail.com>
+ (Jay Soffian's message of "Fri, 6 Mar 2009 17:30:43 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: B09F4D96-0AA5-11DE-88EE-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112493>
 
-On Fri, Mar 6, 2009 at 5:46 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-> When you are on branch "frotz", your config have both merge.options a=
-nd
-> branch.frotz.mergeoptions, and you give some other options from the
-> command line, how should they interact? =C2=A0I'd expect the branch.*=
-=2Eoptions
-> to take effect, ignoring merge.options entirely.
+> Currently git does not allow aliases to override builtins. I
+> understand the reasoning behind this, but I wonder if it's overly
+> conservative.
 
-Really? I didn't think that would be consistent with the fact that the
-the command line options override branch.*.options, but don't replace
-them. So I specifically coded it such that there are three separate
-layers all merged together. (Which is also how I documented it in the
-man page.)
+It is not.
 
-> If for some reason you would want to have cumulative options across
+> Most shells support overriding commands with aliases, and I'm not sure
+> why git needs to be more conservative than the shell.
 
-Which I do, or I wouldn't have coded it that way. :-)
+Because sane shells do not expand aliases when used in a script, and gives
+a handy way to defeat the alias even from the command line.
 
-> branch.*.merge, merge.options and the command line, then you would in=
-stead
-> keep two separate strings, and call git_config_option_string() for bo=
-th of
-> them, before processing the real command line options.
+    $ alias ls='ls -aF'
+    $ echo ls >script
+    $ chmod +x script
 
-Ah, right that would be better.
+and compare:
 
-j.
+    $ ./script
+    $ ls
+    $ /bin/ls
