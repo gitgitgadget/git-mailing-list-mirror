@@ -1,91 +1,66 @@
-From: Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH] git-p4: improve performance with large files
-Date: Thu, 5 Mar 2009 22:25:48 -0300
-Message-ID: <1d48f7010903051725v510f99f0h2a05b9381ff75ac1@mail.gmail.com>
-References: <20090304215438.GA12653@zoy.org>
-	 <20090305100527.shmtfbdvk0ggsk4s@webmail.fussycoder.id.au>
-	 <20090305172332.GF25693@zoy.org>
-	 <7vzlfzwiyn.fsf@gitster.siamese.dyndns.org>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: Subject: [PATCH] Push to create
+Date: Fri, 06 Mar 2009 10:37:17 +0900
+Message-ID: <87sklrfn3m.fsf@catnip.gol.com>
+References: <20090301170436.GA14365@spearce.org>
+	<7vwsb7gkvt.fsf_-_@gitster.siamese.dyndns.org>
+	<20090303070937.GB30609@coredump.intra.peff.net>
+	<7vy6vnf3aw.fsf@gitster.siamese.dyndns.org>
+	<20090303080603.GA3158@coredump.intra.peff.net>
+	<7v63irf21u.fsf@gitster.siamese.dyndns.org>
+	<20090303082706.GC3158@coredump.intra.peff.net>
+	<7v1vtff1op.fsf@gitster.siamese.dyndns.org>
+	<20090303092301.GE32284@mit.edu>
+	<alpine.DEB.1.00.0903031118280.6399@intel-tinevez-2-302>
+	<20090304175830.GA6305@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Simon Hausmann <simon@lst.de>, git@vger.kernel.org,
-	Sam Hocevar <sam@zoy.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 06 02:27:55 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 06 02:41:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfOqw-0005zP-79
-	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 02:27:54 +0100
+	id 1LfP4G-0000gB-4C
+	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 02:41:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751701AbZCFBZz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Mar 2009 20:25:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751210AbZCFBZz
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 20:25:55 -0500
-Received: from smtp-out.google.com ([216.239.45.13]:10003 "EHLO
-	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751126AbZCFBZy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Mar 2009 20:25:54 -0500
-Received: from wpaz1.hot.corp.google.com (wpaz1.hot.corp.google.com [172.24.198.65])
-	by smtp-out.google.com with ESMTP id n261Po6c027192
-	for <git@vger.kernel.org>; Thu, 5 Mar 2009 17:25:51 -0800
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
-	t=1236302751; bh=VP+qJgZkPIvoQ1F80IJ8/sIG4nQ=;
-	h=DomainKey-Signature:MIME-Version:In-Reply-To:References:Date:
-	 Message-ID:Subject:From:To:Cc:Content-Type:
-	 Content-Transfer-Encoding:X-System-Of-Record; b=bdYxyD94iijtCDa+E4
-	cenxU7yIedkwzWG4eM1FvpHJ5FcL6gdQG7keSohidgUXMrP78OEYQwEicu1uAy01t1M
-	A==
-DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
-	h=mime-version:in-reply-to:references:date:message-id:subject:from:to:
-	cc:content-type:content-transfer-encoding:x-system-of-record;
-	b=PJumQPfGaO8CjkK5wbOwpvvGwOp+RGsUH1rHfOa7Qf5ksMGhuw2V7aaALcsDkVxXC
-	ePA84MoZlhV+8pPt+K40g==
-Received: from qw-out-2122.google.com (qwe3.prod.google.com [10.241.194.3])
-	by wpaz1.hot.corp.google.com with ESMTP id n261Pmvc025976
-	for <git@vger.kernel.org>; Thu, 5 Mar 2009 17:25:49 -0800
-Received: by qw-out-2122.google.com with SMTP id 3so192800qwe.23
-        for <git@vger.kernel.org>; Thu, 05 Mar 2009 17:25:48 -0800 (PST)
-Received: by 10.229.86.149 with SMTP id s21mr1537015qcl.94.1236302748277; Thu, 
-	05 Mar 2009 17:25:48 -0800 (PST)
-In-Reply-To: <7vzlfzwiyn.fsf@gitster.siamese.dyndns.org>
-X-System-Of-Record: true
+	id S1752145AbZCFBkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2009 20:40:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751227AbZCFBkG
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 20:40:06 -0500
+Received: from main.gmane.org ([80.91.229.2]:42806 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751871AbZCFBkE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2009 20:40:04 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1LfP2g-0007sM-A3
+	for git@vger.kernel.org; Fri, 06 Mar 2009 01:40:02 +0000
+Received: from 218.231.175.8.eo.eaccess.ne.jp ([218.231.175.8])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 06 Mar 2009 01:40:02 +0000
+Received: from miles by 218.231.175.8.eo.eaccess.ne.jp with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 06 Mar 2009 01:40:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 218.231.175.8.eo.eaccess.ne.jp
+System-Type: x86_64-unknown-linux-gnu
+Cancel-Lock: sha1:wfMcuBaWzs5tVX+C18FW8UVv8SI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112366>
 
-I don't understand the point of trying to save the 32 mb, if people
-are sending you blobs that are that large.
+Theodore Tso <tytso@mit.edu> writes:
+> One of the advantages that bzr has is that it is integrated fairly
+> tightly with Launchpad
 
-The approach to avoid sequences of appends looks sound.
+To be honest, that seems vaguely creepy...
 
+-Miles
 
-On Thu, Mar 5, 2009 at 10:14 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-
->> ... The ideal solution is to use a generator and refactor the commit
->> handling as a stream. I am working on that but it involves deeper
->> changes, so as I am not sure it will be accepted, I'm providing the
->> attached compromise patch first. At least it solves the appaling spe=
-ed
->> issue. I tuned it so that it never uses more than 32 MiB extra memor=
-y.
-
->> + =A0 =A0 =A0 =A0 =A0 =A0text +=3D ''.join(data)
->> + =A0 =A0 =A0 =A0 =A0 =A0del data
-
-i'd say
-
-  data =3D []
-
-add a comment that you're trying to save memory. There is no reason to
-remove data from the namespace.
-
---=20
-Han-Wen Nienhuys
-Google Engineering Belo Horizonte
-hanwen@google.com
+-- 
+Friendship, n. A ship big enough to carry two in fair weather, but only one
+in foul.
