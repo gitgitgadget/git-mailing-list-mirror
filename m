@@ -1,127 +1,92 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] Documentation - More examples for git bisect
-Date: Fri, 6 Mar 2009 08:46:24 +0100
-Message-ID: <200903060846.25151.chriscool@tuxfamily.org>
-References: <1236256574-24764-1-git-send-email-johnflux@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 2/2] better introduction of GIT with USE_NSEC defined
+Date: Fri, 06 Mar 2009 08:56:41 +0100
+Message-ID: <49B0D739.3050105@viscovery.net>
+References: <cover.1236187259.git.barvik@broadpark.no> <6d937a859ca499f534eea08720fca84f3d4ded2f.1236187259.git.barvik@broadpark.no> <49AF9745.8050207@viscovery.net> <49AFBDAD.5040501@viscovery.net> <7v4oy7241g.fsf@gitster.siamese.dyndns.org> <7vd4cvzqkl.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: John Tapsell <johnflux@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 06 08:48:59 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Kjetil Barvik <barvik@broadpark.no>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 06 08:58:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfUng-00015o-6r
-	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 08:48:56 +0100
+	id 1LfUwl-0004TR-Pv
+	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 08:58:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752617AbZCFHrW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Mar 2009 02:47:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751549AbZCFHrW
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 02:47:22 -0500
-Received: from smtp4-g21.free.fr ([212.27.42.4]:37640 "EHLO smtp4-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751857AbZCFHrV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Mar 2009 02:47:21 -0500
-Received: from smtp4-g21.free.fr (localhost [127.0.0.1])
-	by smtp4-g21.free.fr (Postfix) with ESMTP id 0CCAA4C80D9;
-	Fri,  6 Mar 2009 08:47:12 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp4-g21.free.fr (Postfix) with ESMTP id 19B2A4C8118;
-	Fri,  6 Mar 2009 08:47:10 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <1236256574-24764-1-git-send-email-johnflux@gmail.com>
-Content-Disposition: inline
+	id S1751236AbZCFH4v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2009 02:56:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750975AbZCFH4v
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 02:56:51 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:29159 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750849AbZCFH4u (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2009 02:56:50 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LfUvB-0002k2-PD; Fri, 06 Mar 2009 08:56:42 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 7B3F169F; Fri,  6 Mar 2009 08:56:41 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.18 (Windows/20081105)
+In-Reply-To: <7vd4cvzqkl.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112398>
 
-On a second look here are a few nit picks.
-
-=46irst the patch title could be:
-
-"Documentation: More examples for git bisect"
-
-instead of:
-
-"Documentation - More examples for git bisect"
-
-as it would be more consistent with other patches.
-
-Le jeudi 5 mars 2009, John Tapsell a =E9crit :
-> Including passing parameters to the programs, and running more
-> complicated checks without requiring a seperate shell script.
->
-> Signed-off-by: John Tapsell
+Junio C Hamano schrieb:
+> Record ns-timestamps if possible, but do not use it without USE_NSEC
+> 
+> Traditionally, the lack of USE_NSEC meant "do not record nor use the
+> nanosecond resolution part of the file timestamps".  To avoid problems on
+> filesystems that lose the ns part when the metadata is flushed to the disk
+> and then later read back in, disabling USE_NSEC has been a good idea in
+> general.
+> 
+> If you are on a filesystem without such an issue, it does not hurt to read
+> and store them in the cached stat data in the index entries even if your
+> git is compiled without USE_NSEC.  The index left with such a version of
+> git can be read by git compiled with USE_NSEC and it can make use of the
+> nanosecond part to optimize the check to see if the path on the filesystem
+> hsa been modified since we last looked at.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 > ---
->  Documentation/git-bisect.txt |   18 +++++++++++++++++-
->  1 files changed, 17 insertions(+), 1 deletions(-)
->
-> diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.=
-txt
-> index 147ea38..e65c1ca 100644
-> --- a/Documentation/git-bisect.txt
-> +++ b/Documentation/git-bisect.txt
-> @@ -212,7 +212,7 @@ If you have a script that can tell if the current
-> source code is good or bad, you can automatically bisect using:
->
->  ------------
-> -$ git bisect run my_script
-> +$ git bisect run my_script arguments
->  ------------
->
->  Note that the "run" script (`my_script` in the above example) should
-> @@ -252,6 +252,13 @@ $ git bisect start HEAD v1.2 --      # HEAD is b=
-ad,
-> v1.2 is good $ git bisect run make                # "make" builds the=
- app
->  ------------
->
-> +* Automatically bisect a test failure between origin and HEAD:
-> ++
-> +------------
-> +$ git bisect start HEAD origin --    # HEAD is bad, origin is good
-> +$ git bisect run make test           # "make test" builds and tests
-> +------------
+...
+> +# Define NO_NSEC if your "struct stat" does not have "st_ctim.tv_nsec"
+> +# available.  This automatically turns USE_NSEC off.
+> +#
+...
+> @@ -802,6 +805,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+>  	RUNTIME_PREFIX = YesPlease
+>  	NO_POSIX_ONLY_PROGRAMS = YesPlease
+>  	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
+> +	NO_NSEC = YesPlease
+>  	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -DNOGDI -Icompat -Icompat/regex -Icompat/fnmatch
+>  	COMPAT_CFLAGS += -DSNPRINTF_SIZE_CORR=1
+>  	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
 
-Perhaps we should add that the above may not work well if there are som=
-e=20
-commits that don't build. And that it is fixed in the example below thi=
-s=20
-one.
+Thanks, with this the build no longer breaks on Windows. But I need this
+option on AIX as well:
 
->  * Automatically bisect a broken test suite:
->  +
->  ------------
-> @@ -291,6 +298,15 @@ It's safer if both "test.sh" and
-> "check_test_case.sh" scripts are outside the repo to prevent interact=
-ions
-> between the bisect, make and test processes and the scripts.
->
-> +* Automatically bisect a broken test suite:
+diff --git a/Makefile b/Makefile
+index 137a3ff..b974978 100644
+--- a/Makefile
++++ b/Makefile
+@@ -737,6 +737,7 @@ ifeq ($(uname_S),AIX)
+ 	NO_MEMMEM = YesPlease
+ 	NO_MKDTEMP = YesPlease
+ 	NO_STRLCPY = YesPlease
++	NO_NSEC = YesPlease
+ 	FREAD_READS_DIRECTORIES = UnfortunatelyYes
+ 	INTERNAL_QSORT = UnfortunatelyYes
+ 	NEEDS_LIBICONV=YesPlease
 
-The title of the previous example is=20
-
-* Automatically bisect a broken test case:
-
-so if it is the same, then it should perhaps have the same title or per=
-haps:
-
-* Automatically bisect a broken test case simplified:
-
-or something like that.
-
-> ++
-> +------------
-> +$ git bisect start HEAD HEAD~10 --   # culprit is among the last 10
-> +$ git bisect run sh -c "make || exit 125; ~/check_test_case.sh"
-> +------------
-> ++
-> +Does the same as the previous example, but on a single line.
-> +
-
-Thanks,
-Christian.
+-- Hannes
