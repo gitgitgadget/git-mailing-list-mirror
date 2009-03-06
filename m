@@ -1,73 +1,58 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: allowing aliases to override builtins to support default options
-Date: Fri, 6 Mar 2009 18:51:22 -0500
-Message-ID: <76718490903061551m24a95ed8r2e334ff0e6f0fcf3@mail.gmail.com>
-References: <76718490903061430s2fbea2dfibe06282fd22b1588@mail.gmail.com>
-	 <7vhc26qls3.fsf@gitster.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: git-forest on msysgit
+Date: Sat, 07 Mar 2009 00:53:05 +0100
+Message-ID: <vpq63imjjj2.fsf@bauges.imag.fr>
+References: <450196A1AAAE4B42A00A8B27A59278E70A115F15@EXCHANGE.trad.tradestation.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 07 00:52:55 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>
+To: "John Dlugosz" <JDlugosz@TradeStation.com>
+X-From: git-owner@vger.kernel.org Sat Mar 07 00:59:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfjqX-0003IE-Hr
-	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 00:52:54 +0100
+	id 1Lfjwo-00050Y-Jx
+	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 00:59:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755335AbZCFXvZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Mar 2009 18:51:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754735AbZCFXvZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 18:51:25 -0500
-Received: from rv-out-0506.google.com ([209.85.198.230]:47953 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753320AbZCFXvY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Mar 2009 18:51:24 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so726283rvb.1
-        for <git@vger.kernel.org>; Fri, 06 Mar 2009 15:51:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=DFhJqEQ3qM8x86mMJZEUvItzTnvNeFVctbs2DtgajOM=;
-        b=bTq8buDjQeuLZUX5rXdjj3/2P7ROnmxbwPgQOO+SIh0LV7mLavskG81SSt8Zwo3VBJ
-         tMKHnlL81n+UBHrBz4NxWnYaotiOaXnf+gB5cbG6XubgT5HiFexoIQfHvzE2hX7jR+Ve
-         41NGCZBZNWKlVlcHxXNthJ0MgnxGlp+Ie2o1c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Im5aMdZz5Na+pdicJgnqeFmeKllYzUQ6X7izaTaxzk8rpY98fpRNckNSZTBwrtEwJA
-         R45Urooj0Sj0AmC4f2mQnT+CJgLEhj/GB6rsWLdQHz0xW40c2gVTui9cqR15CDe2im6i
-         nAimzKLEs2FjabByiHdacpU3rxX7Uqxpu7D44=
-Received: by 10.141.196.8 with SMTP id y8mr1547482rvp.101.1236383482347; Fri, 
-	06 Mar 2009 15:51:22 -0800 (PST)
-In-Reply-To: <7vhc26qls3.fsf@gitster.siamese.dyndns.org>
+	id S1756059AbZCFX5x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2009 18:57:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755673AbZCFX5x
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 18:57:53 -0500
+Received: from imag.imag.fr ([129.88.30.1]:56000 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753320AbZCFX5w (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2009 18:57:52 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n26Nr5xH027324
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sat, 7 Mar 2009 00:53:05 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Lfjqj-0003dy-9V; Sat, 07 Mar 2009 00:53:05 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Lfjqj-0003tr-79; Sat, 07 Mar 2009 00:53:05 +0100
+In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E70A115F15@EXCHANGE.trad.tradestation.com> (John Dlugosz's message of "Fri\, 6 Mar 2009 16\:08\:38 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.90 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sat, 07 Mar 2009 00:53:06 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112495>
 
-On Fri, Mar 6, 2009 at 6:22 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Because sane shells do not expand aliases when used in a script, and =
-gives
-> a handy way to defeat the alias even from the command line.
->
-> =C2=A0 =C2=A0$ alias ls=3D'ls -aF'
-> =C2=A0 =C2=A0$ echo ls >script
-> =C2=A0 =C2=A0$ chmod +x script
->
-> and compare:
->
-> =C2=A0 =C2=A0$ ./script
-> =C2=A0 =C2=A0$ ls
-> =C2=A0 =C2=A0$ /bin/ls
+"John Dlugosz" <JDlugosz@TradeStation.com> writes:
 
-Understood. And if git could do the same, still no?
+> I downloaded git-forest, and when I run it I get:
 
-j.
+Not answering the question, but did ou know that you get mostly the
+same with git log --graph (without installing anthing)?
+
+-- 
+Matthieu
