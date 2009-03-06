@@ -1,65 +1,83 @@
-From: Aneesh Bhasin <contact.aneesh@gmail.com>
-Subject: Gitk - Seeing just a specific remote ?
-Date: Fri, 6 Mar 2009 11:28:11 +0530
-Message-ID: <f662f0210903052158q77aa0f2fo92c4f4a09c13780e@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 0/5] Extend pattern refspecs
+Date: Fri, 6 Mar 2009 01:07:20 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0903060038510.19665@iabervon.org>
+References: <alpine.LNX.1.00.0903052346270.19665@iabervon.org> <76718490903052119y4d6a7e0ck24bfeb1c0964e413@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 06 06:59:45 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 06 07:09:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfT5y-0003Vb-T3
-	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 06:59:43 +0100
+	id 1LfTEy-0005H8-V8
+	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 07:09:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751353AbZCFF6O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2009 00:58:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750846AbZCFF6O
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 00:58:14 -0500
-Received: from rv-out-0506.google.com ([209.85.198.233]:26030 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750812AbZCFF6N (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2009 00:58:13 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so334978rvb.1
-        for <git@vger.kernel.org>; Thu, 05 Mar 2009 21:58:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=R95t0mJt7k+mJKfsFLiXBRjTh+TVt+rnJH7v6gAVAZU=;
-        b=GkY8KgZKsaAaLWdYMAbTVZ2si7bUkugFNiSXALMz/NYbzLr1LdVAzfUKtD/DC2cSuY
-         2BLihd0L6dgPDBG2OKOqlu7fkephQAFSOfft94LKXlolT98lemzUlmZ1Jr/6wkD76Fyf
-         nzSXDBXja1XE5ixU9Sk3Dm2fLXLIPTYAQLljo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=atlNRq/m+tMc8omAaomGfNTX+zVrfHLs1SGYecHBLDiQD9WEHIIjYL2m3WcYvobRtG
-         RtPYWIJG5/M7CA2qdnwAsdccA9W+XUNrmaHXJrYBw4+iNUOQS3wWhOgrexZauk3EX22l
-         Kr6SkYdKRGGBQx+OkCBjHbK1hh1PS4XKeXgHc=
-Received: by 10.141.52.6 with SMTP id e6mr141036rvk.133.1236319091102; Thu, 05 
-	Mar 2009 21:58:11 -0800 (PST)
+	id S1751222AbZCFGHZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2009 01:07:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751002AbZCFGHY
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 01:07:24 -0500
+Received: from iabervon.org ([66.92.72.58]:60275 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750797AbZCFGHX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2009 01:07:23 -0500
+Received: (qmail 23904 invoked by uid 1000); 6 Mar 2009 06:07:20 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 6 Mar 2009 06:07:20 -0000
+In-Reply-To: <76718490903052119y4d6a7e0ck24bfeb1c0964e413@mail.gmail.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112390>
 
-Hi All,
+On Fri, 6 Mar 2009, Jay Soffian wrote:
 
-I have a git repository (say, new_develop) in which a remote
-repository (say old_develop) is also there of some older work with the
-associated remote branches. Is there a way to see all  the branches of
-only this remote older_develop repository graphically in gitk -
-something that shows me the same thing that doing a 'gitk --all' would
-have shown had I done it from the older_develop repository itself ? If
-I say 'gitk --all' (in new_develop) it shows me all the branches
-(local as well as remote). Specifying 'gitk --remotes' also shows all
-the remote branches (not just from the old_develop remote repo) ? Is
-there some other way that I am missing ? I have seen the man page of
-git-rev-list too but there doesn't sem to be a way to do it.
+> On Thu, Mar 5, 2009 at 11:56 PM, Daniel Barkalow <barkalow@iabervon.org> wrote:
+> > This series only supports the narrowest case of having the * in the middle
+> > of a side of a refspec: having it as a full path component on each side.
+> >
+> > Patches 1-3 centralize all of the parsing and matching rules to a pair of
+> > functions; patch 4 makes the stored representation more convenient (and
+> > serves as a distinguished bisection outcome for anything I missed that was
+> > relying on the contents of struct refspec for patterns); and patch 5
+> > extends the matching implementation and loosens the ref format
+> > requirements to allow the * to be in the middle.
+> >
+> > An easy followup would relax the restrictions further without requiring
+> > any particularly tricky further changes.
+> 
+> This series and js/remote-improvements (e5dcbfd) in pu may not get
+> along completely. "git remote show" tries to show how the refspecs
+> expand out. And actually, that should be fine since builtin-remote now
+> uses the same code as fetch/push to expand the refs.
+> 
+> However, "git remote show -n" (-n means don't query the remote) makes
+> use of a new function, get_push_ref_states_noquery(), which more or
+> less tries to reverse the parsed refspec back into the original
+> string. That function relies on the current (before your patch)
+> refspec semantics and assumes if refspec.pattern is set, then the '*'
+> is at the end. So it will need tweaking.
 
-Regards,
-Aneesh
+Actually, you should be able to just drop your "buf" and use spec->src and 
+spec->dst, since it just stores the original strings. So that should be 
+easy enough, although it might be good to go through a remote.c function 
+just in case it becomes more complicated later. On the other hand, 
+get_head_names() should probably get a patch like my 1/5 to have it use 
+the remote.c parser, or should use a constant "head mirror" refspec like 
+that tag_refspec already in remote.c
+
+Do you have tests for "git remote show -n"? Merging my series (on top of 
+origin/master) and e5dcbfd and adding a final '*' to the string in 
+get_head_names() made everything pass for me, without doing anything about 
+the extra *s, but the output is clearly not quite right.
+
+I'm not seeing anything that makes assumptions about the matching 
+semantics of pattern refspecs, just stuff about how the stored form 
+relates to the config-file form.
+
+	-Daniel
+*This .sig left intentionally blank*
