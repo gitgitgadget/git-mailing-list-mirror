@@ -1,75 +1,95 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Chicken/egg problem building from a 'git clone'
-Date: Fri, 06 Mar 2009 11:51:37 +0100
-Message-ID: <vpqwsb2ly9y.fsf@bauges.imag.fr>
-References: <Pine.LNX.4.44.0903010945290.4675-100000@localhost.localdomain>
-	<49AF9601.9060709@op5.se>
-	<43d8ce650903050337n48924fc3l89ef991d578f5849@mail.gmail.com>
-	<20090305120602.GA18717@coredump.intra.peff.net>
-	<vpq7i34ywjg.fsf@bauges.imag.fr>
-	<20090305124512.GA2723@coredump.intra.peff.net>
-	<m3eixbszkt.fsf@localhost.localdomain>
+From: Finn Arne Gangstad <finnag@pvv.org>
+Subject: Re: [RFC PATCH] git push: Push nothing if no refspecs are given or
+	configured
+Date: Fri, 6 Mar 2009 12:48:12 +0100
+Message-ID: <20090306114812.GA19534@pvv.org>
+References: <20090305221529.GA25871@pvv.org> <fabb9a1e0903051418k3fb6c8baqd0189c772893844e@mail.gmail.com> <200903052322.02098.markus.heidelberg@web.de> <200903052325.44648.markus.heidelberg@web.de> <fabb9a1e0903051426p1222f151s8f466abf319706da@mail.gmail.com> <alpine.DEB.1.00.0903061124000.10279@pacific.mpi-cbg.de> <7v4oy7szze.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, John Tapsell <johnflux@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 06 12:42:04 2009
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	markus.heidelberg@web.de, git@vger.kernel.org,
+	John Tapsell <johnflux@gmail.com>, Andreas Ericsson <ae@op5.se>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 06 12:49:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfYRG-0007MQ-Vy
-	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 12:42:03 +0100
+	id 1LfYYn-0001P0-GE
+	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 12:49:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751406AbZCFLkf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2009 06:40:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751401AbZCFLke
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 06:40:34 -0500
-Received: from ebene.inrialpes.fr ([194.199.18.70]:64953 "EHLO
-	ebene.inrialpes.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750849AbZCFLke (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2009 06:40:34 -0500
-X-Greylist: delayed 2758 seconds by postgrey-1.27 at vger.kernel.org; Fri, 06 Mar 2009 06:40:33 EST
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by ebene.inrialpes.fr (8.13.6/8.13.8) with ESMTP id n26Apadk028471;
-	Fri, 6 Mar 2009 11:51:37 +0100 (MET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1LfXeT-0001ok-RB; Fri, 06 Mar 2009 11:51:37 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1LfXeT-0002Nb-Oj; Fri, 06 Mar 2009 11:51:37 +0100
-In-Reply-To: <m3eixbszkt.fsf@localhost.localdomain> (Jakub Narebski's message of "Fri\, 06 Mar 2009 02\:39\:46 -0800 \(PST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.90 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ebene.inrialpes.fr [194.199.18.70]); Fri, 06 Mar 2009 11:51:38 +0100 (MET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-X-Spam-Status: No
+	id S1751549AbZCFLsV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2009 06:48:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751409AbZCFLsV
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 06:48:21 -0500
+Received: from decibel.pvv.ntnu.no ([129.241.210.179]:59741 "EHLO
+	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751326AbZCFLsU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2009 06:48:20 -0500
+Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
+	(envelope-from <finnag@pvv.ntnu.no>)
+	id 1LfYXE-0000un-6O; Fri, 06 Mar 2009 12:48:12 +0100
+Content-Disposition: inline
+In-Reply-To: <7v4oy7szze.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112427>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Fri, Mar 06, 2009 at 02:32:53AM -0800, Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > On Thu, 5 Mar 2009, Sverre Rabbelier wrote:
+> >
+> >> On Thu, Mar 5, 2009 at 23:25, Markus Heidelberg
+> >> <markus.heidelberg@web.de> wrote:
+> >> > Oh, I confused "config option" with "command line argument"...
+> >> 
+> >> Right, I'd like to be able to do:
+> >> $ git config push.iamnotretarded true
+> >> $ git push
+> >
+> > LOL!  Sverre, you have a way to crack me up...
+> 
+> I found it amusing, too.
+> 
+> It may have some correlation with how well organized your work habit is,
+> but I do not think it has much correlation with being retarded.  It is
+> more about "'matching refs' is the perfect default for _my_ use pattern,
+> don't mess with it, please".
 
-> However while toolchain needed to produce documentation (asciidoc +
-> xmlto) isn't, I think, something very common, in my opinion autoconf
-> is something that is present on systems containing other build tools
-> required to build git from sources.
+So here is my current WIP suggestion for a new "push.default"
+variable, I am not sure if a single entry can express all useful
+choices, or if it is a good idea to introduce more default choices
+other than "nothing" (with the goal of making it the default in a
+later release).
 
-Plus:
+I think all the values here make sense as a --option to git push
+though (except --nothing...)
 
-* an old ./configure script (taken from a previous tarball release)
-  has good chance to work on a new Git. Since Makefile is designed to
-  be useable without scripting, Junnio takes great care not to break
-  existing setups.
+Suggested new entry in config.txt:
 
-* ./configure script is not mandatory to build Git from sources.
+push.default::
+	Defines the action git push should take if no refspec is given
+	on the command line, no refspec is configured in the branch, and
+	no refspec is implied by any of the options given on the command
+	line.
++
+	The term `current remote` means the remote configured for the current
+	branch, or `origin` if no remote is set. `origin` is also used if
+	you are not on a branch at all.
++
+* `nothing` do not push anything
+* `matching` push all matching branches to the current remote.
+  All branches having the same name in both ends are considered to be
+  matching. This is the default value.
+* `same-remote` push all matching branches that are configured to use
+  the current remote. Branches with no remote configuration are not pushed.
+* `tracked` push all branches that are tracking a branch on the current
+  remote to their counterpart.
 
--- 
-Matthieu
+
+- Finn Arne
