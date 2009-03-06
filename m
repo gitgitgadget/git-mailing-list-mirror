@@ -1,65 +1,119 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH 0/5] Extend pattern refspecs
-Date: Fri, 6 Mar 2009 02:59:26 -0500
-Message-ID: <76718490903052359r27153d01m468f61889ee2f196@mail.gmail.com>
-References: <alpine.LNX.1.00.0903052346270.19665@iabervon.org>
-	 <76718490903052119y4d6a7e0ck24bfeb1c0964e413@mail.gmail.com>
-	 <alpine.LNX.1.00.0903060038510.19665@iabervon.org>
-	 <76718490903052252y1778aa41g8f3e52329f7bf288@mail.gmail.com>
-	 <alpine.LNX.1.00.0903060153490.19665@iabervon.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: orthogonal cases of log --date option
+Date: Fri, 06 Mar 2009 00:02:10 -0800
+Message-ID: <7v1vtbw03h.fsf@gitster.siamese.dyndns.org>
+References: <buo8wnnrpcf.fsf@dhlpc061.dev.necel.com>
+ <7vtz6bdmfi.fsf@gitster.siamese.dyndns.org>
+ <20090305104304.GA17760@coredump.intra.peff.net>
+ <76718490903051304j6d8138f7qa5492ac15edd6460@mail.gmail.com>
+ <20090305211120.GB20157@coredump.intra.peff.net>
+ <7vy6vjy5js.fsf@gitster.siamese.dyndns.org>
+ <20090306052318.GB3426@sigill.intra.peff.net>
+ <7vmybzw3el.fsf@gitster.siamese.dyndns.org>
+ <76718490903052258j277fa8e9g963deae1c3264a22@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Fri Mar 06 09:00:58 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Miles Bader <miles@gnu.org>,
+	git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 06 09:03:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfUzJ-00059K-Mw
-	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 09:00:58 +0100
+	id 1LfV27-00060c-9z
+	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 09:03:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751405AbZCFH73 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2009 02:59:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751386AbZCFH73
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 02:59:29 -0500
-Received: from rv-out-0506.google.com ([209.85.198.225]:38218 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751149AbZCFH72 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2009 02:59:28 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so382879rvb.1
-        for <git@vger.kernel.org>; Thu, 05 Mar 2009 23:59:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=JBasPYzDp5qdOFTkCCR4pX+aVdfI5sDYdIlyOr8l60g=;
-        b=RQdBc5eyf8FomEtMFjNMsD/9fAPosoJKTc/zVoAmDHfZGJSPTSYJNIQelXeOwPrXQD
-         KRLM1bbRB6mYnBi+74yImrLMt/+8ZZ3TbQ7mcrW4Lo33HAjjvqgQlWJPAF3eZExhe4b/
-         7xZphnwWnFvMjA2lQpDbNJRLpemDwclk5Mvfo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=RNxLY2NHFLB1hIDYP3yH+xDghKc4EdkijexnZbDC+ndptpTz6yf/SkFVxkeu6xT0KI
-         ZIKLUdvBA3qY3MRaPnu8h4DEfW6+yDAWQGQiQj4oXPuY3HbWeyw19uDadt5n5QwsdKDg
-         GMKpCpD2RRM1X0RhEEC/glkShmbN5VR74H7Vo=
-Received: by 10.140.141.16 with SMTP id o16mr1126261rvd.297.1236326366589; 
-	Thu, 05 Mar 2009 23:59:26 -0800 (PST)
-In-Reply-To: <alpine.LNX.1.00.0903060153490.19665@iabervon.org>
+	id S1751707AbZCFICY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2009 03:02:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751552AbZCFICX
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 03:02:23 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47940 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751386AbZCFICX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2009 03:02:23 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4C0D19F96D;
+	Fri,  6 Mar 2009 03:02:19 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 8B5099F96C; Fri,
+  6 Mar 2009 03:02:13 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 1D82A204-0A25-11DE-A9EB-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112400>
 
-On Fri, Mar 6, 2009 at 2:03 AM, Daniel Barkalow <barkalow@iabervon.org> wrote:
-> It'd be useful to have that message tested by your series, though, so I
-> can verify my series reliably without worrying about whether I
-> accidentally dropped both the fix and the test.
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-I'll send a patch for it in the next day or two.
+> On Fri, Mar 6, 2009 at 1:50 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Jeff King <peff@peff.net> writes:
+>>
+>>> Because from the user's perspective --foo={bar,baz,bleep} is about
+>>> selecting exactly one of {bar,baz,bleep}.
+>>
+>> I do not feel very strongly about this either way, and without any prior
+>> end user "Huh?" input, I would probably have argued like you myself, but
+>> I saw the original message from Miles about giving more than one --date
+>> and getting perplexed to see that it did not work, so...
+>>
+>> I am not likely to use --tz=Indian/Christmas myself; GMT and local might
+>> however be useful in some situations, though.
+>
+> So I don't mind picking this up, but I'd like some guidance. There are
+> two issues:
+>
+> 1) The CLI. You and Jeff don't seem to have an agreement here, but
+> frankly, this is the easy part.
+>
+> 2) The internal implementation. Your implementation (enum -> bitfield)
+> is clever, but Jeff seems to prefer what I suggested (going to a
+> struct). The latter is quite a bit more work.
 
-j.
+Is it?  Isn't it just the matter of doing something like this?
+
+	struct date_mode {
+        	enum {
+                DATE_NORMAL = 0,
+                DATE_RELATIVE,
+                ...
+                DATE_RAW
+                } format;
+                enum {
+                DATE_ORIGINAL = 0,
+                DATE_LOCAL
+                /* perhaps ",DATE_GMT" later... */
+                } tz_offset;
+	};
+
+	/* In revision.c::handle_revision_opt() */
+        ...
+	} else if (!strcmp(arg, "--date=local")) {
+		revs->date_mode.format = DATE_NORMAL;
+        	revs->date_mode.tz_offset = DATE_LOCAL;
+	} else if (!prefixcmp(arg, "--date=")) {
+        	revs->date_mode.format = parse_date_format(arg + 7);
+	} else if (!strcmp(arg, "--tz=local")) {
+        	revs->date_mode.tz_offset = DATE_LOCAL;
+	}
+	...
+
+        /* In date.c::show_date() */
+	...
+        const char *show_date(unsigned long time, int tz, struct date_mode *mode_)
+	{
+        	int mode = mode_->format;
+
+		if (mode_->tz_offset == DATE_LOCAL)
+			tz = local_tzoffset(time);
+
+		...
+		/* and remove the existing
+                if (mode == DATE_LOCAL)
+                	tz = local_tzoffset(time);
+		   that appears later in the code
+		*/
+	...
