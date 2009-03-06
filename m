@@ -1,84 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Chicken/egg problem building from a 'git clone'
-Date: Fri, 6 Mar 2009 12:04:19 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903061203270.10279@pacific.mpi-cbg.de>
-References: <Pine.LNX.4.44.0903010945290.4675-100000@localhost.localdomain> <49AF9601.9060709@op5.se> <43d8ce650903050337n48924fc3l89ef991d578f5849@mail.gmail.com> <20090305120602.GA18717@coredump.intra.peff.net> <vpq7i34ywjg.fsf@bauges.imag.fr>
- <20090305124512.GA2723@coredump.intra.peff.net> <m3eixbszkt.fsf@localhost.localdomain>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: setting up tracking on push
+Date: Fri, 06 Mar 2009 20:15:37 +0900
+Message-ID: <buoy6vi297q.fsf@dhlpc061.dev.necel.com>
+References: <buofxhr2vta.fsf@dhlpc061.dev.necel.com>
+	<76718490903052049k217e9c12gb7881f8904fdd9d@mail.gmail.com>
+	<alpine.DEB.1.00.0903061144480.10279@pacific.mpi-cbg.de>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, Matthieu Moy <Matthieu.Moy@imag.fr>,
-	John Tapsell <johnflux@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 06 12:04:21 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 06 12:17:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfXql-0004Xk-GO
-	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 12:04:19 +0100
+	id 1LfY3W-0000Bb-NB
+	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 12:17:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752521AbZCFLCw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2009 06:02:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752738AbZCFLCv
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 06:02:51 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42565 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752289AbZCFLCu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2009 06:02:50 -0500
-Received: (qmail invoked by alias); 06 Mar 2009 11:02:47 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp012) with SMTP; 06 Mar 2009 12:02:47 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1885lwI4g08oiBh47uZFZSeDRJhscPKwlCRhxAerT
-	OSV9fm33+pHpgG
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <m3eixbszkt.fsf@localhost.localdomain>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59
+	id S1754360AbZCFLPy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Mar 2009 06:15:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753678AbZCFLPx
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 06:15:53 -0500
+Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:36553 "EHLO
+	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753643AbZCFLPx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Mar 2009 06:15:53 -0500
+Received: from relay11.aps.necel.com ([10.29.19.46])
+	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id n26BFcpX004250;
+	Fri, 6 Mar 2009 20:15:38 +0900 (JST)
+Received: from relay31.aps.necel.com ([10.29.19.20] [10.29.19.20]) by relay11.aps.necel.com with ESMTP; Fri, 6 Mar 2009 20:15:38 +0900
+Received: from dhlpc061 ([10.114.112.181] [10.114.112.181]) by relay31.aps.necel.com with ESMTP; Fri, 6 Mar 2009 20:15:37 +0900
+Received: by dhlpc061 (Postfix, from userid 31295)
+	id D5A4952E270; Fri,  6 Mar 2009 20:15:37 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
+In-Reply-To: <alpine.DEB.1.00.0903061144480.10279@pacific.mpi-cbg.de>
+	(Johannes Schindelin's message of "Fri, 6 Mar 2009 11:45:56 +0100
+	(CET)")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112423>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> > I vaguely feel like I should be able to do:
+>> >
+>> > =A0git push --track origin grognul
+>
+> http://search.gmane.org/?query=3Dpush+track&group=3Dgmane.comp.versio=
+n-control.git
+>
+> Summary for the lazy: it needs a lot of work to be implemented proper=
+ly.
 
-On Fri, 6 Mar 2009, Jakub Narebski wrote:
+Alternatively, maybe a "git track [REMOTE [BRANCH]]" command that simpl=
+y
+adds makes adding the appropriate config magic more convenient ?
 
-> Jeff King <peff@peff.net> writes:
-> > On Thu, Mar 05, 2009 at 01:38:27PM +0100, Matthieu Moy wrote:
-> > 
-> >>>> * we have lots other files in git.git that are autogenerated (the
-> >>>> documentation files, for example)
-> >>>
-> >>> I'm not aware of any auto-generated files that are checked in. Can you
-> >>> give an example?
-> >> 
-> >> man pages and html docs are commited, but in a separate branch. IOW,
-> >> Junio abuses Git as a distribution mechanism, but keeps it totally
-> >> separate from the actual sources.
-> > 
-> > OK, true; but that is a totally different mechanism, unless the proposal
-> > is to autobuild a "this would be the release tarball" branch similar to
-> > html and man branches.
-> 
-> I thnk the proposal was to have 'configure' branch with configure
-> script built, similar to how 'html' and 'man' branches have built
-> documentation in HTML and manpages format.
-> 
-> However while toolchain needed to produce documentation (asciidoc + 
-> xmlto) isn't, I think, something very common, in my opinion autoconf is 
-> something that is present on systems containing other build tools 
-> required to build git from sources.  So 'configure' branch is not, I 
-> think, as necessary as 'html' and 'man' branches; additionally 'html' 
-> branch (or the repository used to build documentation, or the byproduct 
-> of building documentation) is used to generate on-line docs for git.
+I dunno what the arg syntax would look like in the general case;
+I almost always want to use the current branch, and track an identicall=
+y
+named branch in the origin remote though...
 
-Plus, keep in mind that autoconf support is only an afterthought in Git; 
-Just running "make" is supposed to work.  If it does not, patches are 
-certainly welcome, I think.
+-Miles
 
-Ciao,
-Dscho
+--=20
+Custard, n. A vile concoction produced by a malevolent conspiracy of th=
+e hen,
+the cow, and the cook.
