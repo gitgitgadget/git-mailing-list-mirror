@@ -1,107 +1,92 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: setting up tracking on push
-Date: Fri, 6 Mar 2009 03:17:58 +0000
-Message-ID: <43d8ce650903051917r2919becckf13171c8e015b652@mail.gmail.com>
-References: <buofxhr2vta.fsf@dhlpc061.dev.necel.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: [PATCH 0/3] improve bash completion of fetch, pull, and push
+Date: Thu,  5 Mar 2009 23:39:30 -0500
+Message-ID: <cover.1236314073.git.jaysoffian@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Fri Mar 06 04:19:31 2009
+Content-Transfer-Encoding: 8bit
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Markus Heidelberg <markus.heidelberg@web.de>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Shawn O . Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 06 05:41:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfQav-0006Gd-MS
-	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 04:19:30 +0100
+	id 1LfRsH-0005Oe-5u
+	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 05:41:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752270AbZCFDSC convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Mar 2009 22:18:02 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752634AbZCFDSB
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 22:18:01 -0500
-Received: from rv-out-0506.google.com ([209.85.198.233]:13582 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752371AbZCFDSA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Mar 2009 22:18:00 -0500
-Received: by rv-out-0506.google.com with SMTP id g37so268896rvb.1
-        for <git@vger.kernel.org>; Thu, 05 Mar 2009 19:17:58 -0800 (PST)
+	id S1753998AbZCFEj4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Mar 2009 23:39:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753892AbZCFEj4
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Mar 2009 23:39:56 -0500
+Received: from yx-out-2324.google.com ([74.125.44.29]:60775 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753794AbZCFEjz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Mar 2009 23:39:55 -0500
+Received: by yx-out-2324.google.com with SMTP id 8so196369yxm.1
+        for <git@vger.kernel.org>; Thu, 05 Mar 2009 20:39:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:mime-version:content-type
          :content-transfer-encoding;
-        bh=7L7tAgfx5amp9gTJ/DT2PAdgyh/XFERICDLFoEHwm6w=;
-        b=XPkbkWbcRj1YxMKeDStncU5VUb2NEQQZWoCn51Y1hlXZ+rbvyWE8ppBJXGCiG+Orz6
-         wtZU1rPDHfxwt2T3yGu6D7vVYqwc7jNWQmTSR5M3CJs6J3t3u1XZC0BUM4XJ+sk6KCu0
-         a/AfwIxVDFdv1HC5ou55sGAgr5AQ9eufLz2Xc=
+        bh=5YExUwgvhP7JMnqqrMdHhmMfzRkC/FJiyc0bKJlP7mQ=;
+        b=N9e2uTwkzE0LtdLrjKXJhNHrTCISmDtQOVEuvJGQZck3pktjmtBZh7zJR9RQTcVnqU
+         90DwEJn+NN5iThHa0S76o4g0vcfZuqSqlithUG9jGDK3hNrjajY6bWgEgnX8iUxPrlbl
+         bq69o7UjPPSQ7kQyvlRF+MelWDzovnDLPZcyM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=PiAkm+WDoolB1d39cjRQFn2GBJ2IsY/lOx544nGBsPVmGczIyrjl7H46LGvVqwPaAY
-         mjW+dj0Il98jFwmOOgtz3XwOED3ag7YG27cu/Xz3tENKrwTdEoM/O5p6Pv2B8gJ1uGZG
-         63+oGeKiuSYf1rCkHf79Q1aNPZgS3m6JdjVfc=
-Received: by 10.142.125.9 with SMTP id x9mr861876wfc.85.1236309478443; Thu, 05 
-	Mar 2009 19:17:58 -0800 (PST)
-In-Reply-To: <buofxhr2vta.fsf@dhlpc061.dev.necel.com>
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=bS8FXU8rJE47aRVNtMY9BQA1xpGLPInNCezH0t5Mg0pFan43fcaPYlxRttxwNLrzPL
+         v/CMbHP8pddLffLh35tOcvHoG7EUqDetwq9RTLXfadFVhHKFC0H3ghfiwO5F776Ivm8H
+         4BVB1jSCNNAFPXUg0PT0/uCFyopTVJFQqMSO0=
+Received: by 10.151.84.1 with SMTP id m1mr2482827ybl.50.1236314393702;
+        Thu, 05 Mar 2009 20:39:53 -0800 (PST)
+Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
+        by mx.google.com with ESMTPS id n29sm1864853elf.10.2009.03.05.20.39.52
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 05 Mar 2009 20:39:53 -0800 (PST)
+X-Mailer: git-send-email 1.6.2.rc2.332.g5d21b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112374>
 
-2009/3/6 Miles Bader <miles@gnu.org>:
-> [...sorry if this is a dup -- my previous attempt didn't seem to take=
-=2E..]
+On Thu, Mar 5, 2009 at 6:15 PM, Markus Heidelberg <markus.heidelberg@web.de> wrote:
+> Sverre Rabbelier, 05.03.2009:
+>> Heya,
+>>
+>> Observe:
+>> $ git push ori<tab>
+>>   git push origin
+>>
+>> $ git push -f ori<tab>
+>>   git push -f origin/
+>>
+>> Something weird going on there, or is this intentional and am I
+>> missing something?
 >
-> Is there an "easy" way to set up tracking for a branch which starts o=
-ut
-> locally, and is eventually pushed to a remote?
+> Something similar happens with fetch and pull. They only complete the
+> remote name, when exactly 2 words are existing on the command line
+> ("git" and the subcommand) by: if [ "$COMP_CWORD" = 2 ]
 >
-> E.g., I create a new local branch "grognul", and then later propagate=
- it
-> to my remote site using:
->
-> =C2=A0git push origin grognul
->
-> That works great (creating origin/grognul), but to set up tracking, I
-> currently edit .git/config (not insanely difficult, but vaguely
-> annoying). =C2=A0This is as opposed to a branch which starts out remo=
-tely,
-> and is pulled, where one can just use "git branch --track" or "git
-> checkout --track" (or use a config option to do so by default).
->
-> I vaguely feel like I should be able to do:
->
-> =C2=A0git push --track origin grognul
->
-> [I do this particular action -- creating a branch locally and then
-> pushing it to origin -- very very often, thus my desire for a handy
-> option.]
->
-> What do other people think?
+> Doesn't seem right.
 
-I got bitten by this too, and there's no clue given how to set up the
-tracking.  I'd like it to even ask the user when pushing:
+This series is intended to fix the original issue, as well as provide
+--option completion for all three commands. And, I made a clean spot, so
+I had to clean up a couple other things.
 
-$ git push origin grognul
-Pushing blah blah...
- Do you want to track this? [Y/N/?]
+Jay Soffian (3):
+  bash completion: fix completion issues with fetch, pull, and push
+  bash completion: refactor --strategy completion
+  bash completion: teach fetch, pull, and push to complete their
+    options
 
-:-)
-
-John
-
->
-> -miles
->
-> --
-> Inhumanity, n. One of the signal and characteristic qualities of huma=
-nity.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
->
+ contrib/completion/git-completion.bash |  197 +++++++++++++++++++++-----------
+ 1 files changed, 130 insertions(+), 67 deletions(-)
