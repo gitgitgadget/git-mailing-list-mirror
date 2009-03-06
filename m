@@ -1,86 +1,64 @@
-From: Sam Hocevar <sam@zoy.org>
-Subject: Re: [PATCH] git-p4: improve performance with large files
-Date: Fri, 6 Mar 2009 09:53:59 +0100
-Message-ID: <20090306085357.GA12880@zoy.org>
-References: <20090304215438.GA12653@zoy.org> <20090305100527.shmtfbdvk0ggsk4s@webmail.fussycoder.id.au> <20090305172332.GF25693@zoy.org> <7vzlfzwiyn.fsf@gitster.siamese.dyndns.org> <1d48f7010903051725v510f99f0h2a05b9381ff75ac1@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: orthogonal cases of log --date option
+Date: Fri, 06 Mar 2009 00:58:33 -0800
+Message-ID: <7vk573t4cm.fsf@gitster.siamese.dyndns.org>
+References: <buo8wnnrpcf.fsf@dhlpc061.dev.necel.com>
+ <7vtz6bdmfi.fsf@gitster.siamese.dyndns.org>
+ <20090305104304.GA17760@coredump.intra.peff.net>
+ <76718490903051304j6d8138f7qa5492ac15edd6460@mail.gmail.com>
+ <20090305211120.GB20157@coredump.intra.peff.net>
+ <7vy6vjy5js.fsf@gitster.siamese.dyndns.org>
+ <20090306052318.GB3426@sigill.intra.peff.net>
+ <7vmybzw3el.fsf@gitster.siamese.dyndns.org>
+ <76718490903052258j277fa8e9g963deae1c3264a22@mail.gmail.com>
+ <7v1vtbw03h.fsf@gitster.siamese.dyndns.org>
+ <76718490903060031u2bbc5c08k6a635dcdb1c8bc32@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 06 09:55:34 2009
+Cc: Jeff King <peff@peff.net>, Miles Bader <miles@gnu.org>,
+	git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 06 10:00:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfVq9-0003Sl-O0
-	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 09:55:34 +0100
+	id 1LfVud-0004vj-Lj
+	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 10:00:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751935AbZCFIyH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2009 03:54:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751258AbZCFIyE
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 03:54:04 -0500
-Received: from poulet.zoy.org ([80.65.228.129]:40100 "EHLO poulet.zoy.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750761AbZCFIyD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2009 03:54:03 -0500
-Received: by poulet.zoy.org (Postfix, from userid 1000)
-	id EA765120467; Fri,  6 Mar 2009 09:53:59 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <1d48f7010903051725v510f99f0h2a05b9381ff75ac1@mail.gmail.com>
-Mail-Copies-To: never
-X-No-CC: I read mailing-lists; do not CC me on replies.
-X-Snort: uid=0(root) gid=0(root)
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752539AbZCFI6n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2009 03:58:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752260AbZCFI6n
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 03:58:43 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:47982 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751662AbZCFI6m (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2009 03:58:42 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 83F5D30D2;
+	Fri,  6 Mar 2009 03:58:39 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B286730D1; Fri, 
+ 6 Mar 2009 03:58:34 -0500 (EST)
+In-Reply-To: <76718490903060031u2bbc5c08k6a635dcdb1c8bc32@mail.gmail.com>
+ (Jay Soffian's message of "Fri, 6 Mar 2009 03:31:55 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: FC4B0826-0A2C-11DE-94D4-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112408>
 
-On Thu, Mar 05, 2009, Han-Wen Nienhuys wrote:
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-> i'd say
-> 
->   data = []
-> 
-> add a comment that you're trying to save memory. There is no reason to
-> remove data from the namespace.
+> Yeah, that part is easy. I wasn't sure the best way to handle places
+> where a constant date_mode is used e.g.:
+>
+> pp_user_info(NULL, CMIT_FMT_EMAIL, &sb, committer, DATE_RFC2822,
+> 		     encoding);
 
-   Okay. Here is an improved version.
-
-Signed-off-by: Sam Hocevar <sam@zoy.org>
----
- contrib/fast-import/git-p4 |   13 ++++++++++++-
- 1 files changed, 12 insertions(+), 1 deletions(-)
-
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index 3832f60..db0ea0a 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -984,11 +984,22 @@ class P4Sync(Command):
-         while j < len(filedata):
-             stat = filedata[j]
-             j += 1
-+            data = []
-             text = ''
-+            # Append data every 8192 chunks to 1) ensure decent performance
-+            # by not making too many string concatenations and 2) avoid
-+            # excessive memory usage by purging "data" often enough. p4
-+            # sends 4k chunks, so we should not use more than 32 MiB of
-+            # additional memory while rebuilding the file data.
-             while j < len(filedata) and filedata[j]['code'] in ('text', 'unicod
-e', 'binary'):
--                text += filedata[j]['data']
-+                data.append(filedata[j]['data'])
-                 del filedata[j]['data']
-+                if len(data) > 8192:
-+                    text += ''.join(data)
-+                    data = []
-                 j += 1
-+            text += ''.join(data)
-+            data = None
-
-             if not stat.has_key('depotFile'):
-                 sys.stderr.write("p4 print fails with: %s\n" % repr(stat))
-
--- 
-Sam.
+One approach that will be hated by libgit2 effort would be to keep the
+date_mode an enum as before (sans DATE_LOCAL) and make the "tz_offset"
+thing as a setting global to the process, defined in environ.c
