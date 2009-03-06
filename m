@@ -1,113 +1,85 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: asciidoc, was Re: Chicken/egg problem building from a 'git clone'
-Date: Fri, 6 Mar 2009 13:02:54 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903061301340.10279@pacific.mpi-cbg.de>
-References: <Pine.LNX.4.44.0903010945290.4675-100000@localhost.localdomain>  <49AF9601.9060709@op5.se>  <43d8ce650903050337n48924fc3l89ef991d578f5849@mail.gmail.com>  <20090305120602.GA18717@coredump.intra.peff.net>  <vpq7i34ywjg.fsf@bauges.imag.fr> 
- <20090305124512.GA2723@coredump.intra.peff.net>  <m3eixbszkt.fsf@localhost.localdomain>  <alpine.DEB.1.00.0903061203270.10279@pacific.mpi-cbg.de> <43d8ce650903060327l64e76f2al7ec3c2ee76be14eb@mail.gmail.com>
+Subject: Re: [RFC PATCH] git push: Push nothing if no refspecs are given or
+ configured
+Date: Fri, 6 Mar 2009 13:07:56 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903061306450.10279@pacific.mpi-cbg.de>
+References: <20090305221529.GA25871@pvv.org> <fabb9a1e0903051418k3fb6c8baqd0189c772893844e@mail.gmail.com> <200903052322.02098.markus.heidelberg@web.de> <200903052325.44648.markus.heidelberg@web.de> <fabb9a1e0903051426p1222f151s8f466abf319706da@mail.gmail.com>
+ <alpine.DEB.1.00.0903061124000.10279@pacific.mpi-cbg.de> <7v4oy7szze.fsf@gitster.siamese.dyndns.org> <20090306114812.GA19534@pvv.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-761290806-1236340974=:10279"
-Cc: Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Git Mailing List <git@vger.kernel.org>
-To: John Tapsell <johnflux@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 06 13:03:11 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	markus.heidelberg@web.de, git@vger.kernel.org,
+	John Tapsell <johnflux@gmail.com>, Andreas Ericsson <ae@op5.se>
+To: Finn Arne Gangstad <finnag@pvv.org>
+X-From: git-owner@vger.kernel.org Fri Mar 06 13:07:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfYlT-0005tZ-RZ
-	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 13:02:56 +0100
+	id 1LfYqK-0007cl-Ri
+	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 13:07:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751607AbZCFMB0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2009 07:01:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751140AbZCFMB0
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 07:01:26 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46159 "HELO mail.gmx.net"
+	id S1752624AbZCFMG3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2009 07:06:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751871AbZCFMG3
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 07:06:29 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50877 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750721AbZCFMBZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2009 07:01:25 -0500
-Received: (qmail invoked by alias); 06 Mar 2009 12:01:22 -0000
+	id S1751756AbZCFMG2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2009 07:06:28 -0500
+Received: (qmail invoked by alias); 06 Mar 2009 12:06:25 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp052) with SMTP; 06 Mar 2009 13:01:22 +0100
+  by mail.gmx.net (mp050) with SMTP; 06 Mar 2009 13:06:25 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+qXMdlGReq4H8x99meQWfpxnXXZuFlhe+23eZ2aU
-	M0UgfO4mnLKMu3
+X-Provags-ID: V01U2FsdGVkX198MTEBVHF89bUetoLdUPOH61vN42su4eK8UCQYB4
+	cLYku/XjNJa/ri
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <43d8ce650903060327l64e76f2al7ec3c2ee76be14eb@mail.gmail.com>
+In-Reply-To: <20090306114812.GA19534@pvv.org>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+X-FuHaFi: 0.5600000000000001
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112428>
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-761290806-1236340974=:10279
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112429>
 
 Hi,
 
-On Fri, 6 Mar 2009, John Tapsell wrote:
+On Fri, 6 Mar 2009, Finn Arne Gangstad wrote:
 
-> 2009/3/6 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
->
-> > On Fri, 6 Mar 2009, Jakub Narebski wrote:
-> >
-> >> Jeff King <peff@peff.net> writes:
-> >> > On Thu, Mar 05, 2009 at 01:38:27PM +0100, Matthieu Moy wrote:
-> >> >
-> >> >>>> * we have lots other files in git.git that are autogenerated (the
-> >> >>>> documentation files, for example)
-> >> >>>
-> >> >>> I'm not aware of any auto-generated files that are checked in. Can you
-> >> >>> give an example?
-> >> >>
-> >> >> man pages and html docs are commited, but in a separate branch. IOW,
-> >> >> Junio abuses Git as a distribution mechanism, but keeps it totally
-> >> >> separate from the actual sources.
-> >> >
-> >> > OK, true; but that is a totally different mechanism, unless the proposal
-> >> > is to autobuild a "this would be the release tarball" branch similar to
-> >> > html and man branches.
-> >>
-> >> I thnk the proposal was to have 'configure' branch with configure
-> >> script built, similar to how 'html' and 'man' branches have built
-> >> documentation in HTML and manpages format.
-> >>
-> >> However while toolchain needed to produce documentation (asciidoc +
-> >> xmlto) isn't, I think, something very common, in my opinion autoconf is
-> >> something that is present on systems containing other build tools
-> >> required to build git from sources.  So 'configure' branch is not, I
-> >> think, as necessary as 'html' and 'man' branches; additionally 'html'
-> >> branch (or the repository used to build documentation, or the byproduct
-> >> of building documentation) is used to generate on-line docs for git.
-> >
-> > Plus, keep in mind that autoconf support is only an afterthought in Git;
-> > Just running "make" is supposed to work.  If it does not, patches are
-> > certainly welcome, I think.
+> On Fri, Mar 06, 2009 at 02:32:53AM -0800, Junio C Hamano wrote:
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > 
+> > > On Thu, 5 Mar 2009, Sverre Rabbelier wrote:
+> > >
+> > >> On Thu, Mar 5, 2009 at 23:25, Markus Heidelberg
+> > >> <markus.heidelberg@web.de> wrote:
+> > >> > Oh, I confused "config option" with "command line argument"...
+> > >> 
+> > >> Right, I'd like to be able to do:
+> > >> $ git config push.iamnotretarded true
+> > >> $ git push
+> > >
+> > > LOL!  Sverre, you have a way to crack me up...
+> > 
+> > I found it amusing, too.
+> > 
+> > It may have some correlation with how well organized your work habit is,
+> > but I do not think it has much correlation with being retarded.  It is
+> > more about "'matching refs' is the perfect default for _my_ use pattern,
+> > don't mess with it, please".
 > 
-> Well now that you mention it.. :-)
-> 
-> It doesn't check for the existance of asciidoc, but blindly assumes it
-> exists.  And even if you do have asciidoc, there's a good chance that
-> you have the wrong version.   The INSTALL file says that asciidoc
-> requires 8.2.7 but most distros (debian, ubuntu.  probably other) have
-> 8.2.6.
-> If you compile the docs with the wrong asciidoc version, there is no
-> warning or error at all.  It just builds incorrect man pages.
+> So here is my current WIP suggestion for a new "push.default"
+> variable, I am not sure if a single entry can express all useful
+> choices, or if it is a good idea to introduce more default choices
+> other than "nothing" (with the goal of making it the default in a
+> later release).
 
-Frankly, I was talking about "make".  I never needed asciidoc there.
-
-Besides, if it is really an itch of yours, maybe you can come up with a 
-patch checking for a correct asciidoc version?  Only if asciidoc would be 
-needed at all, of course.
+Speaking of which, Steffen (who cannot reply right now, since he is AFK 
+for a while) had a patch to install "remote.<branch>.push = HEAD" with 
+clone and remote.  Would that be better?
 
 Ciao,
 Dscho
-
---8323328-761290806-1236340974=:10279--
