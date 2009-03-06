@@ -1,105 +1,70 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Chicken/egg problem building from a 'git clone'
-Date: Fri, 06 Mar 2009 02:39:46 -0800 (PST)
-Message-ID: <m3eixbszkt.fsf@localhost.localdomain>
-References: <Pine.LNX.4.44.0903010945290.4675-100000@localhost.localdomain>
-	<49AF9601.9060709@op5.se>
-	<43d8ce650903050337n48924fc3l89ef991d578f5849@mail.gmail.com>
-	<20090305120602.GA18717@coredump.intra.peff.net>
-	<vpq7i34ywjg.fsf@bauges.imag.fr>
-	<20090305124512.GA2723@coredump.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: setting up tracking on push
+Date: Fri, 6 Mar 2009 11:45:56 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903061144480.10279@pacific.mpi-cbg.de>
+References: <buofxhr2vta.fsf@dhlpc061.dev.necel.com> <76718490903052049k217e9c12gb7881f8904fdd9d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
-	John Tapsell <johnflux@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 06 11:41:43 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-312304581-1236336357=:10279"
+Cc: Miles Bader <miles@gnu.org>, git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 06 11:46:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfXUa-0004fW-2m
-	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 11:41:24 +0100
+	id 1LfXYy-0006Nl-AR
+	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 11:45:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754577AbZCFKjx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2009 05:39:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755477AbZCFKjx
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 05:39:53 -0500
-Received: from fg-out-1718.google.com ([72.14.220.157]:17702 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755637AbZCFKjv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2009 05:39:51 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so513430fgg.17
-        for <git@vger.kernel.org>; Fri, 06 Mar 2009 02:39:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=laEVGIi/1dApm5PVGvSnFfp9PN+x8Zpk02olfPImrJM=;
-        b=S9SaSfAp1NOwzas0UfJwkLL/YBe587rPkyNO1ByAeHkywHbU0rVpSxXm4xoswijFxw
-         qMXyw53MfOkot9UvL2C3gANByvObW4b6OL6nZlJhYSfqQgnRyIg7NdXPnHzujSKnOYcN
-         O3pvbIrmWntVtd/wRXkBaAr3Ww74GGzTnpWA0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=vp/YZFckuJ9WQFBmrltVwNDcSCX7MfDD+FJUXjN9WJKYZlNf2H4gs1R2jZvRDCecYS
-         qrEb/7dkEKS0D4oZetVNrergIvhFt4dRtGcpUpeVJbW3/1ur7ytKLoJngT8ba2Sg8G2H
-         OlRIRuwoPji5462WL84Yai0tZD+vwJpu2aNFw=
-Received: by 10.86.66.19 with SMTP id o19mr1236782fga.60.1236335987428;
-        Fri, 06 Mar 2009 02:39:47 -0800 (PST)
-Received: from localhost.localdomain (abwm219.neoplus.adsl.tpnet.pl [83.8.236.219])
-        by mx.google.com with ESMTPS id 3sm3917998fge.48.2009.03.06.02.39.46
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 06 Mar 2009 02:39:46 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n26Afe50008091;
-	Fri, 6 Mar 2009 11:41:40 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n26Afcej008088;
-	Fri, 6 Mar 2009 11:41:38 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20090305124512.GA2723@coredump.intra.peff.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753760AbZCFKo2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2009 05:44:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752960AbZCFKo2
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 05:44:28 -0500
+Received: from mail.gmx.net ([213.165.64.20]:35905 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750896AbZCFKo2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2009 05:44:28 -0500
+Received: (qmail invoked by alias); 06 Mar 2009 10:44:25 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp024) with SMTP; 06 Mar 2009 11:44:25 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/5EA1OvLr5hAJYYmuXY1iyNproSw9MJQIITJJO/T
+	TJMV6Rn7vt/+V1
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <76718490903052049k217e9c12gb7881f8904fdd9d@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.68
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112419>
 
-Jeff King <peff@peff.net> writes:
-> On Thu, Mar 05, 2009 at 01:38:27PM +0100, Matthieu Moy wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-312304581-1236336357=:10279
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+
+Hi,
+
+On Thu, 5 Mar 2009, Jay Soffian wrote:
+
+> On Thu, Mar 5, 2009 at 10:07 PM, Miles Bader <miles@gnu.org> wrote:
+> > I vaguely feel like I should be able to do:
+> >
+> >  git push --track origin grognul
 > 
->>>> * we have lots other files in git.git that are autogenerated (the
->>>> documentation files, for example)
->>>
->>> I'm not aware of any auto-generated files that are checked in. Can you
->>> give an example?
->> 
->> man pages and html docs are commited, but in a separate branch. IOW,
->> Junio abuses Git as a distribution mechanism, but keeps it totally
->> separate from the actual sources.
-> 
-> OK, true; but that is a totally different mechanism, unless the proposal
-> is to autobuild a "this would be the release tarball" branch similar to
-> html and man branches.
+> Hmm, I vaguely remember seeing a patch come across the list to do this.
 
-I thnk the proposal was to have 'configure' branch with configure
-script built, similar to how 'html' and 'man' branches have built
-documentation in HTML and manpages format.
+Indeed.
 
-However while toolchain needed to produce documentation (asciidoc +
-xmlto) isn't, I think, something very common, in my opinion autoconf
-is something that is present on systems containing other build tools
-required to build git from sources.  So 'configure' branch is not, I
-think, as necessary as 'html' and 'man' branches; additionally 'html'
-branch (or the repository used to build documentation, or the
-byproduct of building documentation) is used to generate on-line docs
-for git.
+http://search.gmane.org/?query=push+track&group=gmane.comp.version-control.git
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Summary for the lazy: it needs a lot of work to be implemented properly.
+
+Hth,
+Dscho
+
+--8323328-312304581-1236336357=:10279--
