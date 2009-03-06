@@ -1,95 +1,86 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC PATCH] git push: Push nothing if no refspecs are given or
- configured
-Date: Sat, 7 Mar 2009 00:00:20 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903062359490.10279@pacific.mpi-cbg.de>
-References: <20090305221529.GA25871@pvv.org> <fabb9a1e0903051418k3fb6c8baqd0189c772893844e@mail.gmail.com> <200903052322.02098.markus.heidelberg@web.de> <200903052325.44648.markus.heidelberg@web.de> <fabb9a1e0903051426p1222f151s8f466abf319706da@mail.gmail.com>
- <alpine.DEB.1.00.0903061124000.10279@pacific.mpi-cbg.de> <7v4oy7szze.fsf@gitster.siamese.dyndns.org> <20090306114812.GA19534@pvv.org> <alpine.DEB.1.00.0903061306450.10279@pacific.mpi-cbg.de> <m3r61aisdo.fsf@localhost.localdomain>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH 3/3] builtin-merge: add support for default merge options
+Date: Fri, 6 Mar 2009 18:16:08 -0500
+Message-ID: <76718490903061516l62869424q4bd4cfa64fe2195e@mail.gmail.com>
+References: <cover.1236377358.git.jaysoffian@gmail.com>
+	 <12addb53ef5c0e62ee22847591c8e7b884dc0bd2.1236377358.git.jaysoffian@gmail.com>
+	 <13f0016028b195541b8b5d9149292150cbb13ab7.1236377358.git.jaysoffian@gmail.com>
+	 <9f755b5bae0b02c5cb3e01680acf71fe7153be04.1236377358.git.jaysoffian@gmail.com>
+	 <7vr61aqngu.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Finn Arne Gangstad <finnag@pvv.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	markus.heidelberg@web.de, git@vger.kernel.org,
-	John Tapsell <johnflux@gmail.com>, Andreas Ericsson <ae@op5.se>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 07 00:00:22 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, jean-luc malet <jeanluc.malet@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 07 00:17:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lfj1f-0004Yz-9y
-	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 00:00:19 +0100
+	id 1LfjIT-0001aJ-Lg
+	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 00:17:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755934AbZCFW6v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2009 17:58:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753070AbZCFW6v
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 17:58:51 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50795 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754522AbZCFW6u (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2009 17:58:50 -0500
-Received: (qmail invoked by alias); 06 Mar 2009 22:58:47 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp045) with SMTP; 06 Mar 2009 23:58:47 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19/Ruhs8nN/DmdppL/gGZg2x+V0QMwT2Zzhz4QnCM
-	pANkTxzASoJtDO
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <m3r61aisdo.fsf@localhost.localdomain>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1752649AbZCFXQM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Mar 2009 18:16:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750967AbZCFXQM
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 18:16:12 -0500
+Received: from rv-out-0506.google.com ([209.85.198.224]:41103 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750728AbZCFXQL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Mar 2009 18:16:11 -0500
+Received: by rv-out-0506.google.com with SMTP id g37so715522rvb.1
+        for <git@vger.kernel.org>; Fri, 06 Mar 2009 15:16:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=tkzuAL3saBAaaCGv68bZy2oVlqs05PgEJ1cvti4pr1s=;
+        b=wALBJv0fexBSHPtG8WthmLlBWHO+a3ysk+qPWgArjcUL6MSc6RtJCY9fUrsVld6lbK
+         GuQ23roMdOyyxSv5M8ULfZMfcy1iMPQUZhBhfCueM2SknwAhC8RkrWqz/gmQ8VgakSyN
+         9cI4fVSXnbJpPtnbzhfj4mviNADk9D4EOPNcI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=puqr37y7KYIFxg2VfduUrft8sWEpCWsvnh0vxo59iMmSUd2IER5yiDeD5wjMkjfATq
+         2FeoTFg9/gPtkx6qjzkEMjUYaJ4BB2EOBliWbGaEhNl/pZW9Lb966wSI8PcFu97iErTM
+         /+QuUIYmi/SM/mQnFio/Wa7WUXUP0iE1s9rXw=
+Received: by 10.140.250.14 with SMTP id x14mr1536123rvh.79.1236381368045; Fri, 
+	06 Mar 2009 15:16:08 -0800 (PST)
+In-Reply-To: <7vr61aqngu.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112492>
 
-Hi,
+On Fri, Mar 6, 2009 at 5:46 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
 
-On Fri, 6 Mar 2009, Jakub Narebski wrote:
+> When you are on branch "frotz", your config have both merge.options a=
+nd
+> branch.frotz.mergeoptions, and you give some other options from the
+> command line, how should they interact? =C2=A0I'd expect the branch.*=
+=2Eoptions
+> to take effect, ignoring merge.options entirely.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> > On Fri, 6 Mar 2009, Finn Arne Gangstad wrote:
-> >> On Fri, Mar 06, 2009 at 02:32:53AM -0800, Junio C Hamano wrote:
-> >>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> >>>> On Thu, 5 Mar 2009, Sverre Rabbelier wrote:
-> >>>>> 
-> >>>>> Right, I'd like to be able to do:
-> >>>>> $ git config push.iamnotretarded true
-> >>>>> $ git push
-> >>>>
-> >>>> LOL!  Sverre, you have a way to crack me up...
-> >>> 
-> >>> I found it amusing, too.
-> >>> 
-> >>> It may have some correlation with how well organized your work habit is,
-> >>> but I do not think it has much correlation with being retarded.  It is
-> >>> more about "'matching refs' is the perfect default for _my_ use pattern,
-> >>> don't mess with it, please".
-> >> 
-> >> So here is my current WIP suggestion for a new "push.default"
-> >> variable, I am not sure if a single entry can express all useful
-> >> choices, or if it is a good idea to introduce more default choices
-> >> other than "nothing" (with the goal of making it the default in a
-> >> later release).
-> > 
-> > Speaking of which, Steffen (who cannot reply right now, since he is AFK 
-> > for a while) had a patch to install "remote.<branch>.push = HEAD" with 
-> > clone and remote.  Would that be better?
-> 
-> Errr... I thought that "remote.<remotename>.push = HEAD" works?
-> 
-> But note that "remote.<name>.push = HEAD" (push current branch only)
-> and "remote.<name>.push = :" (push matching branches, i.e. curent
-> behavior) works only if you have remote configured... "git push <URL>"
-> won't be affected, and people (probably) would want to either have
-> 'nothing' as default, or/and be able to configure it to nothing,
-> current, or matching (at least).
+Really? I didn't think that would be consistent with the fact that the
+the command line options override branch.*.options, but don't replace
+them. So I specifically coded it such that there are three separate
+layers all merged together. (Which is also how I documented it in the
+man page.)
 
-The question was not if remote.<remote>.push = HEAD works, but if it is 
-installed by default.
+> If for some reason you would want to have cumulative options across
 
-Ciao,
-Dscho
+Which I do, or I wouldn't have coded it that way. :-)
+
+> branch.*.merge, merge.options and the command line, then you would in=
+stead
+> keep two separate strings, and call git_config_option_string() for bo=
+th of
+> them, before processing the real command line options.
+
+Ah, right that would be better.
+
+j.
