@@ -1,63 +1,72 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] [JGit] Fix parsing peeled line in packed-ref
-Date: Fri, 6 Mar 2009 07:43:09 -0800
-Message-ID: <20090306154309.GF16213@spearce.org>
-References: <1236353138-1427-1-git-send-email-j16sdiz+freenet@sdiz.net>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: setting up tracking on push
+Date: Fri, 6 Mar 2009 10:43:17 -0500
+Message-ID: <76718490903060743m425c2d55n6e8737c893c936e8@mail.gmail.com>
+References: <buofxhr2vta.fsf@dhlpc061.dev.necel.com>
+	 <76718490903052049k217e9c12gb7881f8904fdd9d@mail.gmail.com>
+	 <alpine.DEB.1.00.0903061144480.10279@pacific.mpi-cbg.de>
+	 <buoy6vi297q.fsf@dhlpc061.dev.necel.com>
+	 <49b12ff7.nCWIz4ABJcgwW3BZ%obrien654j@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	"Daniel Cheng (aka SDiZ)" <j16sdiz+freenet@sdiz.net>
-To: "Daniel Cheng (aka SDiZ)" <j16sdiz+freenet@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 06 16:44:46 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: miles@gnu.org, Johannes.Schindelin@gmx.de, git@vger.kernel.org
+To: "Jeremy O'Brien" <obrien654j@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 06 16:45:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfcE5-0003AE-8Z
-	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 16:44:41 +0100
+	id 1LfcEL-0003Go-RC
+	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 16:44:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753980AbZCFPnM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2009 10:43:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753373AbZCFPnM
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 10:43:12 -0500
-Received: from george.spearce.org ([209.20.77.23]:50355 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751226AbZCFPnL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2009 10:43:11 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 6D9E638211; Fri,  6 Mar 2009 15:43:09 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1236353138-1427-1-git-send-email-j16sdiz+freenet@sdiz.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1754191AbZCFPnV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2009 10:43:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754168AbZCFPnU
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 10:43:20 -0500
+Received: from rv-out-0506.google.com ([209.85.198.231]:3600 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753373AbZCFPnT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2009 10:43:19 -0500
+Received: by rv-out-0506.google.com with SMTP id g37so552397rvb.1
+        for <git@vger.kernel.org>; Fri, 06 Mar 2009 07:43:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=KWIkwVqxv9wRrloieSWi1VVgAvoU7NSnRSAu7UkWp1M=;
+        b=fCIAGL2haP25m1cCeF+q64oO+5avY7XzCpuHvisidbzB2v6hM5ENj2uo7HFC5LDgBj
+         qokbf326qSyavMlErv49y4y4GuZKEtC7XmeX1cGvbZ+bMv5I0zRqXhsnddjGCMIJPY0N
+         HEZy0gUXYLnC0wTqUf8FHCNfCkkqmijQRUceE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=XgMee4yhL+GfMa7ToeMk07g6a3OROYCmvCHu/X42n3QZVq52ER7Pmkiwf9FOsBwkNH
+         RwBY+JJp7NhQttTpGIsu0uQ9JHCXs4FvevQoERJheDRO6Y9z8CnDI2Ga1laiEaNij5hz
+         wnMqKRpWCmNbNYg0FCtEPJ8J6o8Ng2Zq8Ltx4=
+Received: by 10.141.176.6 with SMTP id d6mr1333550rvp.233.1236354197870; Fri, 
+	06 Mar 2009 07:43:17 -0800 (PST)
+In-Reply-To: <49b12ff7.nCWIz4ABJcgwW3BZ%obrien654j@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112452>
 
-"Daniel Cheng (aka SDiZ)" <j16sdiz+freenet@gmail.com> wrote:
-> When doing a WalkTransport with packed-ref, peeled
-> line are not handled correctly. This patch fix the
-> issue.
+On Fri, Mar 6, 2009 at 9:15 AM, Jeremy O'Brien <obrien654j@gmail.com> wrote:
+> Miles Bader <miles@gnu.org> wrote:
+>
+>> Alternatively, maybe a "git track [REMOTE [BRANCH]]" command that simply
+>> adds makes adding the appropriate config magic more convenient ?
+>>
+>> I dunno what the arg syntax would look like in the general case;
+>> I almost always want to use the current branch, and track an identically
+>> named branch in the origin remote though...
 
-Wow.  That old code was really wrong.  :-)
+I don't think we need a new command, but it would probably fit into git remote
 
-Signed-off-by?  (See SUBMITTING_PATCHES, "(5) Sign your work")
+$ git remote track <remote> [<branch>]
 
-> diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/WalkRemoteObjectDatabase.java b/org.spearce.jgit/src/org/spearce/jgit/transport/WalkRemoteObjectDatabase.java
-> index a4f8961..d8e727b 100644
-> --- a/org.spearce.jgit/src/org/spearce/jgit/transport/WalkRemoteObjectDatabase.java
-> +++ b/org.spearce.jgit/src/org/spearce/jgit/transport/WalkRemoteObjectDatabase.java
-> @@ -436,7 +436,7 @@ private void readPackedRefsImpl(final Map<String, Ref> avail,
->  			if (line.charAt(0) == '^') {
->  				if (last == null)
->  					throw new TransportException("Peeled line before ref.");
-> -				final ObjectId id = ObjectId.fromString(line + 1);
-> +				final ObjectId id = ObjectId.fromString(line.substring(1));
->  				last = new Ref(Ref.Storage.PACKED, last.getName(), last
-
-If I'm at fault for that preimage, I should just be put out to
-pasture now... before I do any more harm... *sigh*
-
--- 
-Shawn.
+j.
