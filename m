@@ -1,119 +1,135 @@
-From: Csaba Henk <csaba-ml@creo.hu>
-Subject: Re: import files w/ history
-Date: Fri, 6 Mar 2009 13:29:38 +0000 (UTC)
-Message-ID: <slrngr299k.1t4t.csaba-ml@beastie.creo.hu>
-References: <slrngqqa4l.1t4t.csaba-ml@beastie.creo.hu> <20090303130046.GA7867@coredump.intra.peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 06 14:33:07 2009
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: asciidoc, was Re: Chicken/egg problem building from a 'git clone'
+Date: Fri, 6 Mar 2009 13:39:01 +0000
+Message-ID: <43d8ce650903060539q5a189543g4ef51dac0ba2e6a3@mail.gmail.com>
+References: <Pine.LNX.4.44.0903010945290.4675-100000@localhost.localdomain>
+	 <alpine.DEB.1.00.0903061301340.10279@pacific.mpi-cbg.de>
+	 <43d8ce650903060428h26392348i4e0db5c23ca57da6@mail.gmail.com>
+	 <200903061415.50746.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 06 14:40:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfaAZ-00034B-LN
-	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 14:32:56 +0100
+	id 1LfaHz-0005kC-TZ
+	for gcvg-git-2@gmane.org; Fri, 06 Mar 2009 14:40:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751135AbZCFN35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2009 08:29:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750978AbZCFN34
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 08:29:56 -0500
-Received: from main.gmane.org ([80.91.229.2]:55371 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750897AbZCFN3z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2009 08:29:55 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Lfa7a-0006jq-1S
-	for git@vger.kernel.org; Fri, 06 Mar 2009 13:29:50 +0000
-Received: from www.creo.hu ([217.113.62.14])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 06 Mar 2009 13:29:50 +0000
-Received: from csaba-ml by www.creo.hu with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 06 Mar 2009 13:29:50 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: www.creo.hu
-User-Agent: slrn/0.9.8.1 (FreeBSD)
+	id S1752118AbZCFNjI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Mar 2009 08:39:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752024AbZCFNjF
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 08:39:05 -0500
+Received: from wf-out-1314.google.com ([209.85.200.172]:40817 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751055AbZCFNjD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Mar 2009 08:39:03 -0500
+Received: by wf-out-1314.google.com with SMTP id 28so542376wfa.4
+        for <git@vger.kernel.org>; Fri, 06 Mar 2009 05:39:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=5Da12r5Db1jaAiBaXfCqhPAxRq2SjbE4tncp4OGVhMo=;
+        b=c6CYptUuUY1hvCzqnkFXLTzwkXXsbMm4roSD/ikA3/TmkljLQwrCeTCXnSZwxfo5UD
+         /Y3hDPqCpXnIfrLQpedr8aFSVqUNwn0dZHmNEITMBYt3ucETRdUD7/Oi8tLNM3HA7QrK
+         NkBF7j62OOi6u47pyrV0zkA80h9Q7NhrZlXsc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=WAk4aWjgc3FHqtjYV8taLjmf2fcHiwzWoXkh2+4OeahZgdaASybrzvKF8O7IVH8Kqz
+         qA9gJSkoMPPyEANlf++9wSIJvls8Uo5l0fH19zIpl80coloj22N1a7ZE8JiK0PPd1r+6
+         cs81Aoz2BnZpd7iH9eO8dGucUk9/OFk+HbsTQ=
+Received: by 10.142.230.7 with SMTP id c7mr1110977wfh.97.1236346741125; Fri, 
+	06 Mar 2009 05:39:01 -0800 (PST)
+In-Reply-To: <200903061415.50746.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112437>
 
-On 2009-03-03, Jeff King <peff@peff.net> wrote:
-> On Tue, Mar 03, 2009 at 12:54:54PM +0000, Csaba Henk wrote:
+2009/3/6 Jakub Narebski <jnareb@gmail.com>:
+> On Fri, 6 March 2009, John Tapsell wrote:
+>> 2009/3/6 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+>>> On Fri, 6 Mar 2009, John Tapsell wrote:
+>>>> 2009/3/6 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+>>>>> On Fri, 6 Mar 2009, Jakub Narebski wrote:
 >
->> How could I import some files from an unrelated git repo with history?
+>>>>>> However while toolchain needed to produce documentation (asciido=
+c +
+>>>>>> xmlto) isn't, I think, something very common, in my opinion auto=
+conf is
+>>>>>> something that is present on systems containing other build tool=
+s
+>>>>>> required to build git from sources. =C2=A0So 'configure' branch =
+is not, I
+>>>>>> think, as necessary as 'html' and 'man' branches; additionally '=
+html'
+>>>>>> branch (or the repository used to build documentation, or the by=
+product
+>>>>>> of building documentation) is used to generate on-line docs for =
+git.
+>>>>>
+>>>>> Plus, keep in mind that autoconf support is only an afterthought =
+in Git;
+>>>>> Just running "make" is supposed to work. =C2=A0If it does not, pa=
+tches are
+>>>>> certainly welcome, I think.
+>>>>
+>>>> Well now that you mention it.. :-)
+>>>>
+>>>> It doesn't check for the existance of asciidoc, but blindly assume=
+s it
+>>>> exists. =C2=A0And even if you do have asciidoc, there's a good cha=
+nce that
+>>>> you have the wrong version. =C2=A0 The INSTALL file says that asci=
+idoc
+>>>> requires 8.2.7 but most distros (debian, ubuntu. =C2=A0probably ot=
+her) have
+>>>> 8.2.6.
 >
-> Just "git pull" from the other repo, which will include all of its
-> history. If you want to pretend that the other history contains just a
-> subset of the true history, use "git filter-branch" to rewrite it first.
+> Do you mean here Makefile checks, or do you mean ./configure checking
+> for existing asciidoc toolchain, and for asciidoc version?
 
-Thanks Jeff, but it didn't work well for a large repo. At least not what
-I could carve out myself.
+Well presumably both would have to check, since you can run make
+without configure.  I just figured starting with configure would be
+easiest.
 
-The repo in question is the DragonFlyBSD repository, and I wanted to
-cut out the history of sys/dev/disk/vn/vn.c. After reading
-git-filter-branch(1) I come up with the following: first I wanted to
-select those commits where the file in question was modified. I tried
-to use the following filtration:
+>
+>>>> If you compile the docs with the wrong asciidoc version, there is =
+no
+>>>> warning or error at all. =C2=A0It just builds incorrect man pages.
+>>>
+>>> Frankly, I was talking about "make". =C2=A0I never needed asciidoc =
+there.
+>>>
+>>> Besides, if it is really an itch of yours, maybe you can come up wi=
+th a
+>>> patch checking for a correct asciidoc version? =C2=A0Only if asciid=
+oc would be
+>>> needed at all, of course.
+>>
+>> Yep. =C2=A0I've been looking at it for the last half hour, but confi=
+gure.ac
+>> syntax defeats me :-D =C2=A0 (I figured getting the check into confi=
+gure.ac
+>> would be a good first start)
+>
+> Errr... doesn't configure.ac have checking for asciidoc version? Sear=
+ch
+> for AC_CHECK_PROGS(ASCIIDOC, [asciidoc]). Perhaps tests should be mor=
+e
+> detailed, or something...
 
-$ git filter-branch --commit-filter '
-   if [ $# -lt 3 ] || git diff --stat $3 $1 | grep -q 'sys/dev/disk/vn/vn\.c'
-   then
-     git commit-tree "$@"
-   else
-     skip_commit "$@"
-   fi' HEAD
+Yeah I saw that - it checks if you have version 7.* or 8.*. I just
+don't know how to check if the version is >=3D .8.2.7.
 
-It should select those commits where vn.c differs from the vn.c in the _first_
-parent, so probably it's not exactly what I want, but anyway, I went on
-to give it a try.
-
-I have even tested this filter script on a small repo and it worked
-well. Then I ran it against the Dfly repo, and after 23 hours of
-processing I ended up with:
-
-...
-23575b3e0b087120b0475ae93c505c72a9779fdb
-35ac2f0aa5ac0ca78109781817c524fa354e8691
-23575b3e0b087120b0475ae93c505c72a9779fdb
-35ac2f0aa5ac0ca78109781817c524fa354e8691
-23575b3e0b087120b0475ae93c505c72a9779fdb
-35ac2f0aa5ac0ca78109781817c524fa354e8691
-23575b3e0b087120b0475ae93c505c72a9779fdb
-35ac2f0aa5ac0ca78109781817c524fa354e8691
-23575b3e0b087120b0475ae93c505c72a9779fdb
-35ac2f0aa5ac0ca78109781817c524fa354e8691
-WARNING: Ref 'refs/heads/__rewrite' points to the first one now.
-
-And the result is completely f*cked up.
-Neither those two commits which occur repeatedly at the end of the
-output, nor the commit at the actual position of the __rewrite brach
-has a parent, and the upstream commits from which these were derived
-didn't affect vn.c.
-
-  *  *  *
-
-OK, I then tried to do more RTFM and be more clever and efficient, and
-find a way to specify directly those commits which affect vn.c. As "git
-rev-list" can be invoked like "git rev-list <commit> <path>", and the
-synopsis of "git filter-branch" is like
-
- git filter-branch [options] [--] [<rev-list options>...]
-
-I then gave a try to:
-
-$ git filter-branch --  master sys/dev/disk/vn/vn.c
-
-but no dice -- I got:
-
-  fatal: ambiguous argument 'sys/dev/disk/vn/vn.c': unknown revision or
-  path not in the working tree.
-  Use '--' to separate paths from revisions
-  Could not get the commits
-
-Any idea?
-
-Thanks,
-Csaba
+John
