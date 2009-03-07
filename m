@@ -1,114 +1,87 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH] http: use strbuf API in quote_ref_url
-Date: Sat, 07 Mar 2009 23:40:04 +0800
-Message-ID: <49B29554.30805@gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH] MinGW: fix diff --no-index /dev/null ...
+Date: Sat, 7 Mar 2009 16:51:33 +0100 (CET)
+Message-ID: <dba002b9e521c639847650fbaeb8b87b66b9562e.1236441065u.git.johannes.schindelin@gmx.de>
+References: <cover.1236441065u.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Mar 07 16:41:57 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j6t@kdbg.org>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Mar 07 16:51:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lfyen-0005NB-5B
-	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 16:41:45 +0100
+	id 1LfyoG-0000GV-PP
+	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 16:51:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751715AbZCGPkQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Mar 2009 10:40:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751640AbZCGPkP
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 10:40:15 -0500
-Received: from ti-out-0910.google.com ([209.85.142.191]:31662 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751024AbZCGPkN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Mar 2009 10:40:13 -0500
-Received: by ti-out-0910.google.com with SMTP id d10so569043tib.23
-        for <git@vger.kernel.org>; Sat, 07 Mar 2009 07:40:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:content-type
-         :content-transfer-encoding;
-        bh=Sgk1QhNtNVU7WcjtbsIuNNwLf225/PpusEifC0WhHL0=;
-        b=wXtPAlVl7PjnugKDM+/WHMQJlc3P1Qh938EtGgzo1huQoflk0K0wV3o36wYYAygjbc
-         KV3mdrATQ58i+/wDRehhZ94i/dE67F2dR5PFncOHpE/eVRwlQpGEEcbD9foVTrYVMqOQ
-         jMq8m81eYiwzBFWdX3u1D1ACRL3mY+RpOT38I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=OXAbQ4yhNM69j0fOv5LEW6IN3gIuFUWlfhcHAdBuOcDUmUcK5nJFJxmOp0113fYrIl
-         aT7LJDrJxTn6GLnsnVSm+BTbwNolMX6VV4d3ipaiszCg9fVG4QcujTz4NBaQMby2QkAi
-         gUe72SvMZfBaOrsZzWducZnsUjDYR4wIPEdJQ=
-Received: by 10.110.86.3 with SMTP id j3mr5605604tib.51.1236440410202;
-        Sat, 07 Mar 2009 07:40:10 -0800 (PST)
-Received: from ?116.87.148.213? ([116.87.148.213])
-        by mx.google.com with ESMTPS id u8sm700445tia.30.2009.03.07.07.40.08
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 07 Mar 2009 07:40:09 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+	id S1754632AbZCGPuE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Mar 2009 10:50:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752397AbZCGPuE
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 10:50:04 -0500
+Received: from mail.gmx.net ([213.165.64.20]:57081 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751073AbZCGPuC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Mar 2009 10:50:02 -0500
+Received: (qmail invoked by alias); 07 Mar 2009 15:49:59 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp014) with SMTP; 07 Mar 2009 16:49:59 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18zEpxW8gQzdptQFpaNVLyyI/55LWgawJ+qUlUa/2
+	R7QVZsgbIYO2+j
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <cover.1236441065u.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112543>
 
-In addition, ''quote_ref_url'' inserts a slash between the base URL and
-remote ref path only if needed. Previously, this insertion wasn't
-contingent on the lack of a separating slash.
+When launching "diff --no-index" with a parameter "/dev/null", the MSys
+bash converts the "/dev/null" to a "nul", which usually makes sense.  But
+diff --no-index got confused and tried to access a _file_ called "nul".
 
-Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
-Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+While at it, the comment in t4012, expressed as ":# <text>" was turned
+into ": <text>" so that MSys' path name mangling does not kick in.
+
+With this patch, t4012 passes in msysGit.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- http.c |   29 ++++++++++-------------------
- 1 files changed, 10 insertions(+), 19 deletions(-)
+ diff-no-index.c        |    4 ++++
+ t/t4012-diff-binary.sh |    2 +-
+ 2 files changed, 5 insertions(+), 1 deletions(-)
 
-diff --git a/http.c b/http.c
-index cdedeb6..9de4130 100644
---- a/http.c
-+++ b/http.c
-@@ -577,31 +577,22 @@ static inline int hex(int v)
-
- static char *quote_ref_url(const char *base, const char *ref)
- {
-+	struct strbuf buf = STRBUF_INIT;
- 	const char *cp;
--	char *dp, *qref;
--	int len, baselen, ch;
-+	int ch;
-+
-+	strbuf_addstr(&buf, base);
-+	if (strcmp(base+strlen(base)-1, "/") && strcmp(ref, "/"))
-+		strbuf_addstr(&buf, "/");
-
--	baselen = strlen(base);
--	len = baselen + 2; /* '/' after base and terminating NUL */
--	for (cp = ref; (ch = *cp) != 0; cp++, len++)
--		if (needs_quote(ch))
--			len += 2; /* extra two hex plus replacement % */
--	qref = xmalloc(len);
--	memcpy(qref, base, baselen);
--	dp = qref + baselen;
--	*(dp++) = '/';
- 	for (cp = ref; (ch = *cp) != 0; cp++) {
--		if (needs_quote(ch)) {
--			*dp++ = '%';
--			*dp++ = hex((ch >> 4) & 0xF);
--			*dp++ = hex(ch & 0xF);
--		}
-+		if (needs_quote(ch))
-+			strbuf_addf(&buf, "%%%02x", ch);
- 		else
--			*dp++ = ch;
-+			strbuf_addch(&buf, *cp);
- 	}
--	*dp = 0;
-
--	return qref;
-+	return strbuf_detach(&buf, NULL);
- }
-
- int http_fetch_ref(const char *base, struct ref *ref)
+diff --git a/diff-no-index.c b/diff-no-index.c
+index 0a14268..598687b 100644
+--- a/diff-no-index.c
++++ b/diff-no-index.c
+@@ -38,6 +38,10 @@ static int get_mode(const char *path, int *mode)
+ 
+ 	if (!path || !strcmp(path, "/dev/null"))
+ 		*mode = 0;
++#ifdef _WIN32
++	else if (!strcasecmp(path, "nul"))
++		*mode = 0;
++#endif
+ 	else if (!strcmp(path, "-"))
+ 		*mode = create_ce_mode(0666);
+ 	else if (lstat(path, &st))
+diff --git a/t/t4012-diff-binary.sh b/t/t4012-diff-binary.sh
+index 3cf5b5c..f64aa48 100755
+--- a/t/t4012-diff-binary.sh
++++ b/t/t4012-diff-binary.sh
+@@ -87,7 +87,7 @@ nul_to_q() {
+ 
+ test_expect_success 'diff --no-index with binary creation' '
+ 	echo Q | q_to_nul >binary &&
+-	(:# hide error code from diff, which just indicates differences
++	(: hide error code from diff, which just indicates differences
+ 	 git diff --binary --no-index /dev/null binary >current ||
+ 	 true
+ 	) &&
 -- 
-1.6.2.rc1
+1.6.2.327.g0fa6c
