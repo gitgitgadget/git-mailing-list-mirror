@@ -1,98 +1,88 @@
-From: Chris Johnsen <chris_johnsen@pobox.com>
-Subject: Re: [PATCH/RFD] builtin-revert.c: release index lock when
- cherry-picking an empty commit
-Date: Sat, 7 Mar 2009 16:57:40 -0600
-Message-ID: <EEE56CB5-BBC7-45F4-801B-062349E07730@pobox.com>
-References: <1236418251-16947-1-git-send-email-chris_johnsen@pobox.com>
- <alpine.DEB.1.00.0903071212350.10279@pacific.mpi-cbg.de>
-Mime-Version: 1.0 (Apple Message framework v753.1)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+Subject: Re: Clone a repo and checkout a specifc remote branch
+Date: Sun, 8 Mar 2009 00:25:15 +0100
+Message-ID: <4d8e3fd30903071525g27960764rbc1cee77e4334a6e@mail.gmail.com>
+References: <4d8e3fd30903070342q584315cjcd059dcfe558dcfd@mail.gmail.com>
+	 <1cd1989b0903071053l3f7aa35bu8e8e6b7e56cfc34f@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Miklos Vajna <vmiklos@frugalware.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Mar 07 23:59:18 2009
+Cc: git list <git@vger.kernel.org>
+To: Patrick Notz <patnotz@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 08 00:26:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lg5UC-0002bO-Pd
-	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 23:59:17 +0100
+	id 1Lg5uq-0001Aw-UQ
+	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 00:26:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750783AbZCGW5J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Mar 2009 17:57:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751046AbZCGW5H
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 17:57:07 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44575 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750872AbZCGW5G (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Mar 2009 17:57:06 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DF11A9F8D1;
-	Sat,  7 Mar 2009 17:57:01 -0500 (EST)
-Received: from [192.168.1.241] (unknown [76.201.177.183]) (using TLSv1 with
- cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B87AC9F8D0; Sat,
-  7 Mar 2009 17:56:57 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.0903071212350.10279@pacific.mpi-cbg.de>
-X-Mailer: Apple Mail (2.753.1)
-X-Pobox-Relay-ID: 453FB3A8-0B6B-11DE-A6C7-CFA5EBB1AA3C-07245699!a-sasl-fastnet.pobox.com
+	id S1751464AbZCGXZU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Mar 2009 18:25:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750827AbZCGXZT
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 18:25:19 -0500
+Received: from fg-out-1718.google.com ([72.14.220.157]:60263 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750770AbZCGXZS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Mar 2009 18:25:18 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so676128fgg.17
+        for <git@vger.kernel.org>; Sat, 07 Mar 2009 15:25:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=FA8EnfjHqiJ3s8k8UmDiAQE4PTIdyB0IAjTnPo6EqNk=;
+        b=xqUk+jBJET7ZGdg2YDLCdZs1zAgM15xS0fvifxhcxiLQ/CpBf2FtgBTm0+IWIJLvK2
+         JvDhNAs13XF5wtFIwMkgfm85oIFalvbz+xZ1vWRwtiVpxlQDvRGF7J+/Dd0spDEQpfYE
+         JWhyEd8exFLifyxmHqE4xqpsH4ZEtHGMpRH/s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Bji3lwFSSspji+mJhKY01J+7Q8jrteV9DRHMJkEZewlxY4rP8KmhaDfaaQuRWGhcm8
+         WylY8zydD7xk0qVyiRa9RyeIfkIjFLsuylgZzSmkJF/fE4pLykbinzmX2ZGrC6zvGHRH
+         QSf0mcqSQ174x84gDHFbNlMSZYTzGYM0aa/+A=
+Received: by 10.86.70.3 with SMTP id s3mr2930996fga.48.1236468315562; Sat, 07 
+	Mar 2009 15:25:15 -0800 (PST)
+In-Reply-To: <1cd1989b0903071053l3f7aa35bu8e8e6b7e56cfc34f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112595>
 
-On 2009 Mar 7, Johannes Schindelin wrote:
-> I wonder, though, if the real root of the problem is that there is
-> copied code.
+On 3/7/09, Patrick Notz <patnotz@gmail.com> wrote:
 
-Agreed.
+>> Something like:
+>> $ git clone git://uri_of_the_repo:coolbranch localdir
+>> to get a clone of the whole repository and to check out the
+>> origin/coolbranch remote branch?
+>>
+>
+> Here's a link to a recent thread on this topic (that started with a
+> proposed patch)
+>
+> http://thread.gmane.org/gmane.comp.version-control.git/111967
+>
+> You can read the arguments there.  Johannes Schindelin noted that the
+> normal way to do this is like this:
+>
+> <quote>
+> Besides, the common way to check out something different than the remote's
+> HEAD is like this:
+>
+> $ git clone -n $URL
+> $ cd $DIR
+> $ git checkout -t origin/$BRANCH
+> </quote>
 
-> IOW I think it would be better to introduce a global
-> function that writes the index to a tree.
+Thank you, very appreciated, I missed that discussion.
 
-I am not quite sure I follow your meaning here.
+I'll add my comments to that thread.
 
-We have write_cache_as_tree in cache-tree.c. Is something like that  
-what you had in mind for "write the index to a tree"?
-
-Could you elaborate on how an "index to tree" function could be  
-applied to the problem of the inconsistent lock releasing around  
-commit_locked_index calls? Sorry, for my lack of a clue, I am fairly  
-new to the code base. Or are you seeing a different code duplication  
-problem here?
-
-The general form of the code around calls to commit_locked_index  
-seems to be of the this form:
-
-	if (some_condition) /* not all call sites use this */
-		if (write_cache(...) || commit_locked_index(...))
-			die(...); /* or return error(...) */
-	rollback_lock_file(...); /* sometimes missing or distant */
-
-In most cases some_condition is active_cache_changed, but not always  
-(builtin-apply.c, rerere.c).
-
-The problem with cherry-picking empty commits was that  
-active_cache_changed (used as some_condition in the general pattern  
-shown above) would be false, so the write and commit was skipped, but  
-there was also never any rollback. Later, when cherry-pick exec-ed  
-commit, the lock file still existed and commit dies.
-
-To make sure a commit or a rollback always happens at every call  
-site, each one would have to unconditionally call some global  
-function (write_and_commit_or_rollback_locked_index?, ick) that  
-conditionally did the write and commit, but unconditionally did the  
-rollback (basically a no-op if the commit went OK).
-
-> A quick "git grep commit_locked_index" reveals quite a few code  
-> sites...
-
-Indeed, would such a cleanup be worth the churn? I do not have any  
-modifications for which this cleanup could be considered preparatory.
-
-Thank you for your help!
-
+Regards,
 -- 
-Chris
+Paolo
+http://paolo.ciarrocchi.googlepages.com/
+http://mypage.vodafone.it/
