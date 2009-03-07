@@ -1,113 +1,123 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: What's in git.git (Mar 2009, #02; Thu, 05)
-Date: Sat, 07 Mar 2009 20:14:12 +0100
-Message-ID: <49B2C784.90800@lsrfire.ath.cx>
-References: <7vfxhs2shk.fsf@gitster.siamese.dyndns.org>
+From: jean-luc malet <jeanluc.malet@gmail.com>
+Subject: Re: [PATCH 3/3] builtin-merge: add support for default merge options
+Date: Sat, 7 Mar 2009 20:31:45 +0100
+Message-ID: <1de9d39c0903071131pdb2b125hce7c49642843c9f8@mail.gmail.com>
+References: <cover.1236377358.git.jaysoffian@gmail.com>
+	 <12addb53ef5c0e62ee22847591c8e7b884dc0bd2.1236377358.git.jaysoffian@gmail.com>
+	 <13f0016028b195541b8b5d9149292150cbb13ab7.1236377358.git.jaysoffian@gmail.com>
+	 <9f755b5bae0b02c5cb3e01680acf71fe7153be04.1236377358.git.jaysoffian@gmail.com>
+	 <7vr61aqngu.fsf@gitster.siamese.dyndns.org>
+	 <76718490903061516l62869424q4bd4cfa64fe2195e@mail.gmail.com>
+	 <7v63imqhcz.fsf@gitster.siamese.dyndns.org>
+	 <76718490903061756g4ca88c21h8bf786048d4ad05@mail.gmail.com>
+	 <7vzlfxpzqq.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>, carlos.duclos@nokia.com
-X-From: git-owner@vger.kernel.org Sat Mar 07 20:15:51 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 07 20:33:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lg1zx-0007jA-9c
-	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 20:15:49 +0100
+	id 1Lg2Gq-0004KS-JI
+	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 20:33:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755571AbZCGTOU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Mar 2009 14:14:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753807AbZCGTOU
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 14:14:20 -0500
-Received: from india601.server4you.de ([85.25.151.105]:40855 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752244AbZCGTOT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Mar 2009 14:14:19 -0500
-Received: from [10.0.1.101] (p57B7BF05.dip.t-dialin.net [87.183.191.5])
-	by india601.server4you.de (Postfix) with ESMTPSA id 112E02F8057;
-	Sat,  7 Mar 2009 20:14:16 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
-In-Reply-To: <7vfxhs2shk.fsf@gitster.siamese.dyndns.org>
+	id S1755922AbZCGTbs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Mar 2009 14:31:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754933AbZCGTbs
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 14:31:48 -0500
+Received: from wf-out-1314.google.com ([209.85.200.171]:42704 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755854AbZCGTbr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Mar 2009 14:31:47 -0500
+Received: by wf-out-1314.google.com with SMTP id 28so1154490wfa.4
+        for <git@vger.kernel.org>; Sat, 07 Mar 2009 11:31:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=8E9XcCUHpCxv8d9spW0OcADTOtylFNjYBZ7M7Ba3wUA=;
+        b=khsE8QR/DHSGq6Ud7yPF8tP+218fsIsRgjeC8kZg53s7yXdtuTYzRdRg8siTqmJK7E
+         egCSfsDLX9klDMCrcFJ9NpArR7tsWMrHOvEJzRMG2HGLrzxN26ouVNk8hoNXZ+naWh7z
+         Kh+2xQ8WZvIIyOOhsloyiKt7A4qw67yGUQ3ps=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=RIbvnyAC5C99dtsHTW2SxMVY18Z7d8JtYTnidzrT/Z6La1M7HDHNDYFZEaoiWtp7hy
+         kpd1ay0Nh4g4GY2DM9kaByEDkYAYbi67BqQh3VA/RdBhbOpaaN9MTkOwdstvdhl29CsO
+         ksR3uN6XeUfyQ52hFOKizygyyyG59Zk+mlpY4=
+Received: by 10.142.199.16 with SMTP id w16mr1711353wff.4.1236454305681; Sat, 
+	07 Mar 2009 11:31:45 -0800 (PST)
+In-Reply-To: <7vzlfxpzqq.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112565>
 
-Junio C Hamano schrieb:
-> * The 'master' branch has these since v1.6.2 in addition to the above.
-> 
-> Carlos Manuel Duclos Vergara (1):
->   git-archive: add --output=<file> to send output to a file
+as a user,
+1) I looked how to override defaults, since merge seems to use --ff as
+default, I looked if there was any global config to override that.
+nothing found... so go back to google
+2) I found on the web that we can set it using
+branch.branchname.mergeoptions so I said "what if I use a branch named
+*, the config file was correct and git didn't insult me so.... but not
+the expected result...
 
-It just hit me that this is option can be used for a DoS attack (or
-perhaps worse) when used in connection with --remote.  We need to apply
-it on the client side instead of sending it to the remote end.  And
-git-upload-archive needs to filter it out.  Ugh.
+since the commands have allready defaults builtin, why not storing
+thoses defaults in the config file? like this it's easier to update
+them or change the way git behave....
+JLM
 
-Here's a quick and dirty patch to do the latter.
+On Sat, Mar 7, 2009 at 8:18 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Jay Soffian <jaysoffian@gmail.com> writes:
+>
+>> On Fri, Mar 6, 2009 at 7:58 PM, Junio C Hamano <gitster@pobox.com> w=
+rote:
+>>> I think it would be much better if you did not introduce a new
+>>> configuration merge.options which is not consistent with everything=
+ else
+>>> to begin with.
+>>>
+>>> Instead, if your addition was literally to allow saying things like=
+ this,
+>>> it would be much easier to understand.
+>>>
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0[branch "*"]
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0mergeoptions=
+ =3D ...
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0remote =3D o=
+rigin
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0rebase =3D t=
+rue
+>>
+>> Okay. That's probably a more invasive patch, because a lot more code
+>> paths look at [branch ...], but I'll look into it.
+>
+> Note that you do not have to cover branch.*.remote and other things i=
+n the
+> same patch. =C2=A0The first one could just handle branch.*.mergeoptio=
+ns and you
+> can let later patches to implement the fallbacks for other variables.
+>
+>
 
----
- archive.c |   14 +++++++++-----
- archive.h |    2 +-
- 2 files changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/archive.c b/archive.c
-index c6aea83..c7534d7 100644
---- a/archive.c
-+++ b/archive.c
-@@ -260,7 +260,8 @@ static void create_output_file(const char *output_file)
- 	  PARSE_OPT_NOARG | PARSE_OPT_NONEG | PARSE_OPT_HIDDEN, NULL, (p) }
- 
- static int parse_archive_args(int argc, const char **argv,
--		const struct archiver **ar, struct archiver_args *args)
-+			      const struct archiver **ar,
-+			      struct archiver_args *args, int local)
- {
- 	const char *format = "tar";
- 	const char *base = NULL;
-@@ -310,8 +311,11 @@ static int parse_archive_args(int argc, const char **argv,
- 	if (!base)
- 		base = "";
- 
--	if (output)
-+	if (output) {
-+		if (!local)
-+			die("Unexpected option --output");
- 		create_output_file(output);
-+	}
- 
- 	if (list) {
- 		for (i = 0; i < ARRAY_SIZE(archivers); i++)
-@@ -343,13 +347,13 @@ static int parse_archive_args(int argc, const char **argv,
- }
- 
- int write_archive(int argc, const char **argv, const char *prefix,
--		int setup_prefix)
-+		int local)
- {
- 	const struct archiver *ar = NULL;
- 	struct archiver_args args;
- 
--	argc = parse_archive_args(argc, argv, &ar, &args);
--	if (setup_prefix && prefix == NULL)
-+	argc = parse_archive_args(argc, argv, &ar, &args, local);
-+	if (local && prefix == NULL)
- 		prefix = setup_git_directory();
- 
- 	parse_treeish_arg(argv, &args, prefix);
-diff --git a/archive.h b/archive.h
-index 0b15b35..f6c3c89 100644
---- a/archive.h
-+++ b/archive.h
-@@ -24,6 +24,6 @@ extern int write_tar_archive(struct archiver_args *);
- extern int write_zip_archive(struct archiver_args *);
- 
- extern int write_archive_entries(struct archiver_args *args, write_archive_entry_fn_t write_entry);
--extern int write_archive(int argc, const char **argv, const char *prefix, int setup_prefix);
-+extern int write_archive(int argc, const char **argv, const char *prefix, int local);
- 
- #endif	/* ARCHIVE_H */
--- 
-1.6.2
+
+--=20
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb=C3=A9cile!)
+"mais qu'est-ce que tu m'as pondu comme usine =C3=A0 gaz? fait des chos=
+es
+simples et qui marchent, esp=C3=A8ce d'imb=C3=A9cile!"
+-----------------------------
+"Si vous pensez que vous =C3=AAtes trop petit pour changer quoique ce s=
+oit,
+essayez donc de dormir avec un moustique dans votre chambre." Betty
+Reese
+http://www.grainesdechangement.com/citations.htm
