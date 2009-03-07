@@ -1,146 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] builtin-merge: add support for default merge options
-Date: Fri, 06 Mar 2009 16:58:04 -0800
-Message-ID: <7v63imqhcz.fsf@gitster.siamese.dyndns.org>
-References: <cover.1236377358.git.jaysoffian@gmail.com>
- <12addb53ef5c0e62ee22847591c8e7b884dc0bd2.1236377358.git.jaysoffian@gmail.com> <13f0016028b195541b8b5d9149292150cbb13ab7.1236377358.git.jaysoffian@gmail.com> <9f755b5bae0b02c5cb3e01680acf71fe7153be04.1236377358.git.jaysoffian@gmail.com> <7vr61aqngu.fsf@gitster.siamese.dyndns.org> <76718490903061516l62869424q4bd4cfa64fe2195e@mail.gmail.com>
+From: Jan Janak <jan@ryngle.com>
+Subject: Re: [GSoC] Google Summer of Code 2009 - new ideas
+Date: Sat, 7 Mar 2009 02:09:21 +0100
+Message-ID: <20090307010921.GA6120@x61s.janakj.ryngle.net>
+References: <200903070144.17457.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, jean-luc malet <jeanluc.malet@gmail.com>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 07 01:59:46 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 07 02:11:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfktC-0003B6-Tl
-	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 01:59:43 +0100
+	id 1Lfl46-0006Ph-MC
+	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 02:10:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753043AbZCGA6P convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Mar 2009 19:58:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752151AbZCGA6P
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 19:58:15 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49441 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750753AbZCGA6O convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Mar 2009 19:58:14 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A1C199FEE0;
-	Fri,  6 Mar 2009 19:58:11 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2106E9FEDE; Fri,
-  6 Mar 2009 19:58:06 -0500 (EST)
-In-Reply-To: <76718490903061516l62869424q4bd4cfa64fe2195e@mail.gmail.com>
- (Jay Soffian's message of "Fri, 6 Mar 2009 18:16:08 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 07F1A0D2-0AB3-11DE-84BF-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1755434AbZCGBJ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2009 20:09:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754398AbZCGBJ2
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 20:09:28 -0500
+Received: from mail-fx0-f176.google.com ([209.85.220.176]:33325 "EHLO
+	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751221AbZCGBJ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2009 20:09:28 -0500
+Received: by fxm24 with SMTP id 24so596799fxm.37
+        for <git@vger.kernel.org>; Fri, 06 Mar 2009 17:09:25 -0800 (PST)
+Received: by 10.103.173.15 with SMTP id a15mr1348810mup.59.1236388164553;
+        Fri, 06 Mar 2009 17:09:24 -0800 (PST)
+Received: from x61s.janakj (r9ea97.net.upc.cz [78.102.130.97])
+        by mx.google.com with ESMTPS id e9sm2689166muf.38.2009.03.06.17.09.23
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 06 Mar 2009 17:09:24 -0800 (PST)
+Received: by x61s.janakj (Postfix, from userid 1000)
+	id 22C2E4403F8; Sat,  7 Mar 2009 02:09:22 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <200903070144.17457.jnareb@gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112501>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+On 07-03 01:44, Jakub Narebski wrote:
+> Time to submit application as mentoring organization to
+> Google Summer of Code 2009 is close:  March 9 -- March 13.
+> 
+> I'd like to add a few ideas to SoC2009Ideas wiki page, but before I do 
+> this I'd like to ask for comments.  (The proposals also lacks proposed 
+> mentor).
+> 
+> I am wondering if it would be worth it to make a separate class between 
+> "New to Git?" easy tasks, and "Larger Projects" hard tasks...
+> 
+> BTW. some of ideas didn't make it from SoC2008Ideas wiki page to current 
+> year page, namely: 
+>  * Apply sparse To Fix Errors
+>  * Lazy clone / remote alternates
+>  * Implement git-submodule using .gitlink file
+>  * Teach git-apply the 3-way merge fallback git-am knows
+>  * Better Emacs integration
 
-> On Fri, Mar 6, 2009 at 5:46 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
->
->> When you are on branch "frotz", your config have both merge.options =
-and
->> branch.frotz.mergeoptions, and you give some other options from the
->> command line, how should they interact? =C2=A0I'd expect the branch.=
-*.options
->> to take effect, ignoring merge.options entirely.
->
-> Really? I didn't think that would be consistent with the fact that th=
-e
-> the command line options override branch.*.options, but don't replace
-> them.
+There are already two (IMHO good) emacs modes for git, magit and egg:
 
-I think cumulative option in configuration is bad in practice, but I'll
-explain why after talking about something else.
+http://zagadka.vm.bytemark.co.uk/magit/
+http://github.com/bogolisk/egg/tree/master
 
-I think it would be much better if you did not introduce a new
-configuration merge.options which is not consistent with everything els=
-e
-to begin with.
-
-Instead, if your addition was literally to allow saying things like thi=
-s,
-it would be much easier to understand.
-
-	[branch "*"]
-        	mergeoptions =3D ...
-                remote =3D origin
-                rebase =3D true
-	[branch "frotz"]
-        	mergeoptions =3D ; nothing
-                rebase =3D false
-	[branch "nitfol"]
-        	remote =3D xyzzy
-
-When on branch 'nitfol', because there is an overriding "remote" define=
-d,
-we would not look at branch.*.remote and fetch from xyzzy instead of
-fetching from the default origin.  Because there is no "rebase" defined
-for that branch, we would use branch.*.rebase=3Dtrue from the fall-back
-default.
-
-When on branch 'frotz', because you have an explicit mergeoptions that
-says "I do not want any", it would override whatever is defined for the
-corresponding fall-back default branch.*.mergeoptions.
-
-Having explained that I think branch.*.mergeoptions is syntactically ni=
-cer
-and more extensible as the UI to the end user, let's discuss the
-"cumulative" aspect.  In the following, I'll keep using branch.*.$optio=
-n,
-but you can read it as if I said merge.options and the discussion is th=
-e
-same.
-
-There are two reasons why you as an end user specify a concrete value
-(e.g. "empty") for a concrete branch name (e.g. branch.frotz.mergeoptio=
-ns).
-One is because you know the current value set to the fall-back default
-(e.g. branch.*.mergeoptions) is not suitable for this particular branch=
-=2E
-Another is because you know you may want to change the fall-back defaul=
-t
-sometime in the future, and you do not want that to affect your setting
-you are making for this particular branch today.
-
-=46or the purpose of the first reason above, if you allowed cumulative
-option, the end user needs to inspect branch.*.$option and come up with=
- a
-countermanding set of options to set to branch.frotz.$option.  If there=
- is
-no cumulative option, the end user does not have to worry about what
-branch.*.$option says.  Non-cumulative is simply easier to understand.
-
-=46or the purpose of the second reason above, when the user has to upda=
-te
-branch.frotz.$option because some external situation changed (e.g. the
-user used to be an e-mail contributor, but now gained "push privilege";
-the user became the primary maintainer; etc.), the same argument on
-maintenance burden as above holds.  To update branch.*.$option, you nee=
-d
-to inspect every branch.$specific.$option (or lack thereof) as well in
-either way.
-
-So overall, cumulative configuration tend to be more cumbersome for the
-end user to manage.
-
-You cannot draw a direct analogy with the command line options, which i=
-s
-used as a single-shot override by nature.  The user knows what usually
-happens when he says "git pull" while on branch 'frotz' without options=
-,
-and countermanding specific aspects (but not necessarily others) of the
-operation for this single invocation.  Because the configuration values
-are set so that the user can set-and-forget the exact syntax to invoke
-each feature, cumulativeness between configured default and command lin=
-e
-override makes more sense.
+  Jan.
