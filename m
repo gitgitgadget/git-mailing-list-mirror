@@ -1,72 +1,99 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-forest on msysgit
-Date: Sat, 7 Mar 2009 03:54:46 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903070352580.10279@pacific.mpi-cbg.de>
-References: <450196A1AAAE4B42A00A8B27A59278E70A115F15@EXCHANGE.trad.tradestation.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [GSoC] Google Summer of Code 2009 - new ideas
+Date: Sat, 7 Mar 2009 10:56:39 +0800
+Message-ID: <be6fef0d0903061856s21fdb4c4q9d52957dade96e94@mail.gmail.com>
+References: <200903070144.17457.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: John Dlugosz <JDlugosz@TradeStation.com>
-X-From: git-owner@vger.kernel.org Sat Mar 07 03:55:02 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 07 03:58:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lfmgn-00023W-Fz
-	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 03:55:01 +0100
+	id 1Lfmjr-0002kQ-Bn
+	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 03:58:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753773AbZCGCxS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2009 21:53:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753500AbZCGCxR
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 21:53:17 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50656 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753203AbZCGCxQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2009 21:53:16 -0500
-Received: (qmail invoked by alias); 07 Mar 2009 02:53:13 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp013) with SMTP; 07 Mar 2009 03:53:13 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18qZ/EMDAUqC+J2OWzNJTxsC3EllAJuPsif4Oph8z
-	Z6NSz/QqaIZndW
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E70A115F15@EXCHANGE.trad.tradestation.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59
+	id S1753964AbZCGC4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2009 21:56:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753526AbZCGC4n
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 21:56:43 -0500
+Received: from wa-out-1112.google.com ([209.85.146.183]:10187 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753203AbZCGC4m (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2009 21:56:42 -0500
+Received: by wa-out-1112.google.com with SMTP id v33so436326wah.21
+        for <git@vger.kernel.org>; Fri, 06 Mar 2009 18:56:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=VMFOzMcIMS5BjqgRGoMMhNLoMH4XgCqCe8HtGJR1cPM=;
+        b=Mph5uyRZhhnsQ3aHRciqOn4bp6j1TIP23tNrfAyoR2l8s8FFtDXlIr9OOAv3RGxuiF
+         Obk+aFf0F6rLG1bnHHsMZXYmw4TYs2/IA3Je+9HD2jPT0okKjldGU23ln3QDWn+ne7t0
+         9C1GSzgUFXogFEqiJBBIiz4rhO+x4qtg9ebq8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=n3Gq/AXIDh12rJIxHyqL2ltvtrxvy09W8IVmwfKgSm6ipywgRkWH2VftHwbv8Wg6xk
+         pRqvt9LvmcxAw4A1Gc5OYN6UVuoKIobLTwB1LZ4ejBD3T8Q2zp2fu+VCUAlgLFc6d9FO
+         rukO/dnvL5QRnBg0ahWVB3YelsGR/S7L6RVUo=
+Received: by 10.114.94.12 with SMTP id r12mr1923937wab.229.1236394599273; Fri, 
+	06 Mar 2009 18:56:39 -0800 (PST)
+In-Reply-To: <200903070144.17457.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112509>
 
 Hi,
 
-Note: this is pretty much obviously the wrong mailing list for 
-msysGit-related issues.
+On 3/7/09, Jakub Narebski <jnareb@gmail.com> wrote:
+> == Single credentials ==
+>
+> Currently if you don't save your username and password in plain-text
+> `.netrc` file (for HTTP transport), or avoid need for interactive
+> credentials using public key / private key pair (for SSH), you need to
+> repeat credentials many times during single git-fetch or git-clone
+> command.  The goal is to reuse existing connections if possible, so the
+> whole transaction occurs using single connection and single
+> credentials; if that is not possible cache credentials (in secure way)
+> so user need to provide username and password at most once.
+>
+> '''Goal:''' git-fetch and git-clone over HTTPS and git://
+>             requiring providing username and password at most once
+> '''Language:''' C (perhaps also shell script)
 
-On Fri, 6 Mar 2009, John Dlugosz wrote:
+Perhaps you might want to look at this:
 
-> I downloaded git-forest, and when I run it I get:
-> 
-> Can't locate loadable object for module Encode in @INC (@INC contains:
-> /usr/lib/perl5/5.8.8/msys /usr/lib/perl5/5.8.8 /usr/lib/perl5
-> /site_perl/5.8.8/msys /usr/lib/perl5/site_perl/5.8.8
-> /usr/lib/perl5/site_perl .) at /usr/lib/perl5/5.8.8/msys/encoding.pm
-> line 5
-> 
-> The line 5 in encoding.pm reads "use Encode;" and there is an Encode.pm
-> on the path, and in Encode.pm it uses XSLoader.  However, in the XS
-> subdirectory in the same directory as Encode.pm, I see only 2 files and
-> neither of them has to do with encoding.  So I'm guessing I'm missing a
-> file.
+http://marc.info/?l=git&m=123599968929476&w=4
 
-You can try recompiling git-svn.  Maybe I forgot to commit a file.
+At that time, I was thinking more of removing git's reliance on curl's
+multi interface so that it could use older versions of libcurl. But,
+on this point, Daniel convinced me otherwise. In fact, it doesn't make
+sense if you could have a up-to-date git, but not an up-to-date curl.
 
-> I wonder if I can just copy it from somewhere, like someone's Linux 
-> build?
+I didn't really get a reply on my point of "minimized credential
+prompting", though, and I think this GSoC proposal kinda gives support
+to it.
 
-How do you expect a Linux-specific binary object to be usable on Windows?
+>From a learning standpoint, I don't think this project would be too
+challenging, nor can it sustain for a whole summer -- the basic
+strategy to allow non-curl multi usage (ie. single connections) would
+be to "fork" the current http slot methods and make them
+non-curl_multi, then finding and replacing instances of them
+throughout the code base.
 
-Hth,
-Dscho
+I already have a patch series that does that, plus a --persistent
+option for push. I'm fairly sure that it takes place on a single
+connection (I'm relying on my firewall log though I'm doubting it's
+reliability on this issue).
+
+-- 
+Cheers,
+Ray Chuan
