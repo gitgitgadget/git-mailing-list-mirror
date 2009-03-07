@@ -1,73 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/3] config: set help text for --bool-or-int
-Date: Sat, 7 Mar 2009 17:48:07 -0500
-Message-ID: <20090307224807.GA18548@coredump.intra.peff.net>
-References: <1236446046-18319-1-git-send-email-peff@peff.net> <1236446046-18319-3-git-send-email-peff@peff.net> <94a0d4530903071307p46092810rb1637bfc853ee4d1@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [EGIT PATCH] Evaluate short refnames into full names during
+	push
+Date: Sat, 7 Mar 2009 14:48:31 -0800
+Message-ID: <20090307224831.GS16213@spearce.org>
+References: <20090307211008.GP16213@spearce.org> <1236464299-11491-1-git-send-email-robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 07 23:49:49 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Daniel Cheng <j16sdiz+freenet@gmail.com>
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Sat Mar 07 23:50:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lg5L2-0008Qb-Bo
-	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 23:49:48 +0100
+	id 1Lg5LG-0008T6-2b
+	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 23:50:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750778AbZCGWsU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Mar 2009 17:48:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750769AbZCGWsU
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 17:48:20 -0500
-Received: from peff.net ([208.65.91.99]:36652 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750764AbZCGWsU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Mar 2009 17:48:20 -0500
-Received: (qmail 17751 invoked by uid 107); 7 Mar 2009 22:48:20 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 07 Mar 2009 17:48:20 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 07 Mar 2009 17:48:07 -0500
+	id S1750872AbZCGWsd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Mar 2009 17:48:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750783AbZCGWsd
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 17:48:33 -0500
+Received: from george.spearce.org ([209.20.77.23]:59730 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750769AbZCGWsc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Mar 2009 17:48:32 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 4BFBD38211; Sat,  7 Mar 2009 22:48:31 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <94a0d4530903071307p46092810rb1637bfc853ee4d1@mail.gmail.com>
+In-Reply-To: <1236464299-11491-1-git-send-email-robin.rosenberg@dewire.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112593>
 
-On Sat, Mar 07, 2009 at 11:07:46PM +0200, Felipe Contreras wrote:
+Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
+> @@ -243,10 +244,24 @@ else if (TransportLocal.canHandle(remote))
+>  		final Collection<RefSpec> procRefs = expandPushWildcardsFor(db, specs);
+>  
+>  		for (final RefSpec spec : procRefs) {
+> -			final String srcRef = spec.getSource();
+> +			String srcRef = spec.getSource();
+> +			final Ref src = db.getRef(srcRef);
+> +			if (src != null)
+> +				srcRef = src.getName();
+> +			String remoteName = spec.getDestination();
+>  			// null destination (no-colon in ref-spec) is a special case
+> -			final String remoteName = (spec.getDestination() == null ? spec
+> -					.getSource() : spec.getDestination());
 
-> On Sat, Mar 7, 2009 at 7:14 PM, Jeff King <peff@peff.net> wrote:
-> > The conversion to parse_opt left this as NULL; on glibc
-> > systems, the usage message prints
-> >
-> > =C2=A0 --bool-or-int =C2=A0 (null)
-> >
-> > and on other ones, segfaults.
->=20
-> Shouldn't then OPT_BIT make sure there is no crash?
+Oh, right.  I forgot about the fact that Marek put the code here, as
+then "push = master" in a config file works...
 
-Perhaps, but it doesn't (and I assume you mean usage_with_help, as
-OPT_BIT is just filling in the struct). It's not clear what a NULL help
-parameter should do, though. Hide the option? Show no help description?
-There are already ways to accomplish both of those.
+OK.  I'll apply.
 
-> I was surprised when it didn't complain. I thought on making it "" bu=
-t
-> I wanted to make it visible that there was no documentation for that,
-> which is the reason I left it that way.
-
-OK. I think there are really valid options:
-
-  1. it's there with a description (which is what my patch does)
-
-  2. it's there without a description, because it's obvious what it doe=
-s
-     coming after --bool and --int
-
-  3. it's hidden
-
-I really don't care which. But what is there now is broken.
-
--Peff
+-- 
+Shawn.
