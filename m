@@ -1,101 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] http: use strbuf API in quote_ref_url
-Date: Sat, 7 Mar 2009 16:57:58 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903071654480.10279@pacific.mpi-cbg.de>
-References: <49B29554.30805@gmail.com>
+From: =?ISO-8859-1?Q?Tor_Arne_Vestb=F8?= <torarnv@gmail.com>
+Subject: Re: jGit Eclipse Plugin Feature
+Date: Sat, 07 Mar 2009 16:58:47 +0100
+Message-ID: <49B299B7.80009@gmail.com>
+References: <efe536470903070205w1dbff989je6dd6126d09e4a74@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 07 16:57:56 2009
+To: Robert Navarro <crshman@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 07 17:00:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LfyuR-0002jq-7T
-	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 16:57:55 +0100
+	id 1Lfyx0-0003Zn-3H
+	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 17:00:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754907AbZCGP41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Mar 2009 10:56:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754882AbZCGP41
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 10:56:27 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50046 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754773AbZCGP41 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Mar 2009 10:56:27 -0500
-Received: (qmail invoked by alias); 07 Mar 2009 15:56:24 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp070) with SMTP; 07 Mar 2009 16:56:24 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19LO1YKJ9FLsy9u3T9wvKLNCa8OrWgDz8rdNAEalo
-	khg34slb2RXfXa
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <49B29554.30805@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.46
+	id S1754635AbZCGP7H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Mar 2009 10:59:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752360AbZCGP7F
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 10:59:05 -0500
+Received: from fg-out-1718.google.com ([72.14.220.153]:45056 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752156AbZCGP7C (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Mar 2009 10:59:02 -0500
+Received: by fg-out-1718.google.com with SMTP id 16so651926fgg.17
+        for <git@vger.kernel.org>; Sat, 07 Mar 2009 07:59:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=QP014+eFSKT8BEgA+WerQ/BRAJmDT8pvn8FtnaSgd4Q=;
+        b=bWS5XTmxZtW5MeIguLKHe9vRsPwu/9agBp4oi9D7jrVLFUb8S1jyR0a9ZTe8b3ktAq
+         udDi0K1e7+n0tyG29hLZG2xabNEIpB5UC3mc4GqRckOe7f8tYNB2KgQ5uqtdC/GTZRXH
+         7mHX2OuswPAmX1nkldjlQnRqhBxviOWFprl+w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=KgFi7eERt6W5wjh8/LX8UJtvl+yR+UIIGKQ3SiuffOIgZ8fWJANr5c6lk8UuLL3urb
+         FbMY/2B4+vhAKS/X12i/I+G+ZXSGoPDuqFhz5Ekj7tWjvINUHlwAUs6dJS2/EgrqpOpB
+         3gF4UrDHibSFiQZyU5KgKLMNiNyOBLYfJIwCk=
+Received: by 10.86.91.3 with SMTP id o3mr2749989fgb.3.1236441539955;
+        Sat, 07 Mar 2009 07:58:59 -0800 (PST)
+Received: from ?192.168.1.226? (212251244070.customer.cdi.no [212.251.244.70])
+        by mx.google.com with ESMTPS id l19sm1141013fgb.27.2009.03.07.07.58.58
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 07 Mar 2009 07:58:59 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <efe536470903070205w1dbff989je6dd6126d09e4a74@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112546>
 
-Hi,
-
-On Sat, 7 Mar 2009, Tay Ray Chuan wrote:
-
-> In addition, ''quote_ref_url'' inserts a slash between the base URL and
-> remote ref path only if needed. Previously, this insertion wasn't
-> contingent on the lack of a separating slash.
+Robert Navarro wrote:
+> Hello,
 > 
-> Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
-> Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-
-I would prefer to give my ACK explicitely... :-)
-
->  http.c |   29 ++++++++++-------------------
->  1 files changed, 10 insertions(+), 19 deletions(-)
+> Sorry about my last "subscribe" email, skipped over this part in the
+> wiki...."You don't even need to be subscribed to post, just send an
+> email to: "
 > 
-> diff --git a/http.c b/http.c
-> index cdedeb6..9de4130 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -577,31 +577,22 @@ static inline int hex(int v)
-> 
->  static char *quote_ref_url(const char *base, const char *ref)
->  {
-> +	struct strbuf buf = STRBUF_INIT;
->  	const char *cp;
-> -	char *dp, *qref;
-> -	int len, baselen, ch;
-> +	int ch;
-> +
-> +	strbuf_addstr(&buf, base);
-> +	if (strcmp(base+strlen(base)-1, "/") && strcmp(ref, "/"))
-> +		strbuf_addstr(&buf, "/");
+> Anyways.....I wasn't sure where to post this but I'll give it a shot
+> here.....I know there is an eclipse jGit plugin in the works and I
+> wanted to know if it would be possible to get a remember or recently
+> used servers feature added to the push/pull feature.
 
-I would not have scratched my head that much if it read like this:
+I have done some initial prototyping of a Remotes View. I'll see if I
+can bring that to life somehow.
 
-	if (buf.len && buf.buf[buf.len - 1] != '/' && *ref != '/')
-		strbuf_addch(&buf, '/');
-
->  	for (cp = ref; (ch = *cp) != 0; cp++) {
-> -		if (needs_quote(ch)) {
-> -			*dp++ = '%';
-> -			*dp++ = hex((ch >> 4) & 0xF);
-> -			*dp++ = hex(ch & 0xF);
-> -		}
-> +		if (needs_quote(ch))
-> +			strbuf_addf(&buf, "%%%02x", ch);
->  		else
-> -			*dp++ = ch;
-> +			strbuf_addch(&buf, *cp);
->  	}
-
-Seems as if you could remove even the curly brackets here.
-
-Other than that, it indeed looks like an ACK from me...
-
-Ciao,
-Dscho
+Tor Arne
