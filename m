@@ -1,91 +1,96 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] MinGW: fix diff --no-index /dev/null ...
-Date: Sat, 7 Mar 2009 21:47:18 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903072133270.10279@pacific.mpi-cbg.de>
-References: <cover.1236441065u.git.johannes.schindelin@gmx.de> <dba002b9e521c639847650fbaeb8b87b66b9562e.1236441065u.git.johannes.schindelin@gmx.de> <7v8wnhnl6t.fsf@gitster.siamese.dyndns.org>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH] http: add_fill_function checks if function has been added
+Date: Sun, 8 Mar 2009 04:49:13 +0800
+Message-ID: <be6fef0d0903071249s42ac7f94o82461ca32dcdfcd5@mail.gmail.com>
+References: <49B266B0.4020304@gmail.com>
+	 <7vy6vhm6it.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 07 21:47:20 2009
+X-From: git-owner@vger.kernel.org Sat Mar 07 21:50:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lg3QR-0000NS-6H
-	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 21:47:15 +0100
+	id 1Lg3Tn-0001KP-Go
+	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 21:50:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754142AbZCGUpr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Mar 2009 15:45:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753634AbZCGUpr
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 15:45:47 -0500
-Received: from mail.gmx.net ([213.165.64.20]:47148 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753519AbZCGUpq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Mar 2009 15:45:46 -0500
-Received: (qmail invoked by alias); 07 Mar 2009 20:45:43 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp032) with SMTP; 07 Mar 2009 21:45:43 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19azVVogsZagRLvncBTd8ZmzZkJWLYAt/R6uFQyZI
-	u++8zFAJ7WAokS
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7v8wnhnl6t.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1755198AbZCGUtQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Mar 2009 15:49:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755094AbZCGUtP
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 15:49:15 -0500
+Received: from rv-out-0506.google.com ([209.85.198.234]:51450 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751723AbZCGUtP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Mar 2009 15:49:15 -0500
+Received: by rv-out-0506.google.com with SMTP id g37so1021174rvb.1
+        for <git@vger.kernel.org>; Sat, 07 Mar 2009 12:49:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Y3srIkBHhoWOJc+HhF/htzGkUwXYbBU2EbFS9jjegPM=;
+        b=VFeiGNWOqX+pmCGj2ViOrjCx17gfx/KCep0DsWPDnfaFYFzjClv9hgQ0VoS2YH2yjU
+         UDwHR0IIoIvk5oWuKo8QF3nnSimIA7T+IpJttyDrFhMAAEu7DnfKYsevzUu6dYPz0hCV
+         E9NqdrHuBalEpyHodGE13FyEj+z4VYcLoNgk4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=RoL24x+eAwwbxaoLbkZxN5aim/cZO00XufD1QF8uu2/VxG+mkpnLWIMTB81iJ1xFCx
+         8W8A2lW1nKLQTPdfLJFy8fSfzmC01j9lVe0eehC4FiP7wJcpyXg8DOlk6yOiGPMpBHKW
+         T/qqGWG3qzaIQ0J6jmO3QTONb1yRsaRAs/fIg=
+Received: by 10.115.59.4 with SMTP id m4mr2415280wak.204.1236458953089; Sat, 
+	07 Mar 2009 12:49:13 -0800 (PST)
+In-Reply-To: <7vy6vhm6it.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112580>
 
 Hi,
 
-On Sat, 7 Mar 2009, Junio C Hamano wrote:
+On Sun, Mar 8, 2009 at 4:18 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Could you care to explain the following a bit better?
+>
+> =A0- what "possible issues" you are addressing;
+>
+> =A0- what changes in the behaviour that are not "obvious" we would be
+> =A0 suffering from, if we apply this patch;
+>
+> =A0- in what situation the performance _might_ be affected, in what w=
+ay and
+> =A0 to what extent.
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > diff --git a/diff-no-index.c b/diff-no-index.c
-> > index 0a14268..598687b 100644
-> > --- a/diff-no-index.c
-> > +++ b/diff-no-index.c
-> > @@ -38,6 +38,10 @@ static int get_mode(const char *path, int *mode)
-> >  
-> >  	if (!path || !strcmp(path, "/dev/null"))
-> >  		*mode = 0;
-> > +#ifdef _WIN32
-> > +	else if (!strcasecmp(path, "nul"))
-> > +		*mode = 0;
-> > +#endif
-> >  	else if (!strcmp(path, "-"))
-> >  		*mode = create_ce_mode(0666);
-> >  	else if (lstat(path, &st))
-> 
-> I had a brief "Huh? -- doesn't this call for an is_dev_null() helper"
-> moment, but I think you are right that diff-no-index.c is the right place
-> to special case it.
+(note: "repeatedly" here means looping over it, eg. while(condition)
+fill_function(). )
 
-You're right, it needs to be explained in the commit message.  So how 
-about this:
+Thanks for taking the time to give this clear and detailed example expl=
+anation.
 
--- snip --
-Unlike other places where a string is compared to /dev/null, in this case 
-do not parse a diff, but rather command line parameters that have 
-possibly been transformed from /dev/null to nul, so that the file can be 
-opened.
--- snap --
+However, at this point of time, I couldn't come up with a convincing
+instance of where
 
-If you like it, may I ask you to amend the message?
+ *a fill function is added twice or more, and as a result
 
-> Should this go to 'maint'?
+ *something breaks as a result of invoking the function repeatedly
 
-Technically, yes, as it is a fix.
+that was why I used the word "possible" as in "possible issues",
+because this patch doesn't solve any existing issues (at least none
+that I know of now).
 
-However, it might not be necessary, as literally all Windows work on Git 
-happens in git/mingw.git, git/mingw/j6t.git and git/mingw/4msysgit.git.
+Calling a fill function repeatedly won't break behaviour, because fill
+functions (those that are currently defined in git) are designed to be
+called repeatedly. But it's just useless to call the same fill
+function repeatedly without any reason.
 
-Your call.
+So should I still address the "THIS and THAT breakages"?
 
-Thanks,
-Dscho
+--=20
+Cheers,
+Ray Chuan
