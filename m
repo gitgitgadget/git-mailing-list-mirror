@@ -1,75 +1,91 @@
-From: Sam Hocevar <sam@zoy.org>
-Subject: Git memory usage (1): fast-import
-Date: Sat, 7 Mar 2009 21:19:20 +0100
-Message-ID: <20090307201920.GE12880@zoy.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] MinGW: fix diff --no-index /dev/null ...
+Date: Sat, 7 Mar 2009 21:47:18 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903072133270.10279@pacific.mpi-cbg.de>
+References: <cover.1236441065u.git.johannes.schindelin@gmx.de> <dba002b9e521c639847650fbaeb8b87b66b9562e.1236441065u.git.johannes.schindelin@gmx.de> <7v8wnhnl6t.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 07 21:20:51 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 07 21:47:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lg30s-0001SN-7Z
-	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 21:20:50 +0100
+	id 1Lg3QR-0000NS-6H
+	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 21:47:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756079AbZCGUT0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Mar 2009 15:19:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756077AbZCGUTZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 15:19:25 -0500
-Received: from poulet.zoy.org ([80.65.228.129]:36251 "EHLO poulet.zoy.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756051AbZCGUTY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Mar 2009 15:19:24 -0500
-Received: by poulet.zoy.org (Postfix, from userid 1000)
-	id 5724D1203FA; Sat,  7 Mar 2009 21:19:20 +0100 (CET)
-Content-Disposition: inline
-Mail-Copies-To: never
-X-No-CC: I read mailing-lists; do not CC me on replies.
-X-Snort: uid=0(root) gid=0(root)
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1754142AbZCGUpr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Mar 2009 15:45:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753634AbZCGUpr
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 15:45:47 -0500
+Received: from mail.gmx.net ([213.165.64.20]:47148 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753519AbZCGUpq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Mar 2009 15:45:46 -0500
+Received: (qmail invoked by alias); 07 Mar 2009 20:45:43 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp032) with SMTP; 07 Mar 2009 21:45:43 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19azVVogsZagRLvncBTd8ZmzZkJWLYAt/R6uFQyZI
+	u++8zFAJ7WAokS
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7v8wnhnl6t.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112579>
 
-   I joined a project that uses very large binary files (up to 1 GiB) in
-a p4 repository and as I would like to use Git, I am trying to make it
-more memory-efficient when handling huge files.
+Hi,
 
-   The first problem I am hitting is with fast-import. Currently it
-keeps the last imported file in memory (end of store_object()) in order
-to find interesting deltas with the next file. Since most huge binary
-files are already compressed, it means that fast-importing two large
-X MiB files is going to use at least 3X MiB of memory: once for the
-first file, once for the second file, and once for the deflate data
-that is going to be as large as the file itself.
+On Sat, 7 Mar 2009, Junio C Hamano wrote:
 
-   In practice, it takes even more memory than that. Experiment shows
-that importing six 100 MiB files made of urandom data takes 370 MiB of
-memory (http://zoy.org/~sam/git/git-memory-usage.png) (simple script
-available at http://zoy.org/~sam/git/gencommit.txt). I am unable to plot
-how it behaves with 1 GiB files since I don't have enough memory, but I
-don't see why the trend wouldn't stand.
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > diff --git a/diff-no-index.c b/diff-no-index.c
+> > index 0a14268..598687b 100644
+> > --- a/diff-no-index.c
+> > +++ b/diff-no-index.c
+> > @@ -38,6 +38,10 @@ static int get_mode(const char *path, int *mode)
+> >  
+> >  	if (!path || !strcmp(path, "/dev/null"))
+> >  		*mode = 0;
+> > +#ifdef _WIN32
+> > +	else if (!strcasecmp(path, "nul"))
+> > +		*mode = 0;
+> > +#endif
+> >  	else if (!strcmp(path, "-"))
+> >  		*mode = create_ce_mode(0666);
+> >  	else if (lstat(path, &st))
+> 
+> I had a brief "Huh? -- doesn't this call for an is_dev_null() helper"
+> moment, but I think you are right that diff-no-index.c is the right place
+> to special case it.
 
-   I can understand it not being a priority, but I'm trying to think of
-acceptable ways to fix this that do not mess with Git's performance in
-more usual cases. Here is what I can think of:
+You're right, it needs to be explained in the commit message.  So how 
+about this:
 
-   - stop trying to compute deltas in fast-import and leave that task
-   to other tools (optionally, define a file size threshold beyond
-   which the last file is not kept in memory, and maybe make that a
-   configuration option).
+-- snip --
+Unlike other places where a string is compared to /dev/null, in this case 
+do not parse a diff, but rather command line parameters that have 
+possibly been transformed from /dev/null to nul, so that the file can be 
+opened.
+-- snap --
 
-   - use a temporary file to store the deflate data when it reaches a
-   given size threshold (and maybe make that a configuration option).
+If you like it, may I ask you to amend the message?
 
-   - also, I haven't tracked all strbuf_* uses in fast-import, but I got
-   the feeling that strbuf_release() could be used in a few places
-   instead of strbuf_setlen(0) in order to free some memory.
+> Should this go to 'maint'?
 
-   Any thoughts?
+Technically, yes, as it is a fix.
 
--- 
-Sam.
+However, it might not be necessary, as literally all Windows work on Git 
+happens in git/mingw.git, git/mingw/j6t.git and git/mingw/4msysgit.git.
+
+Your call.
+
+Thanks,
+Dscho
