@@ -1,70 +1,65 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: jGit Eclipse Plugin Feature
-Date: Sat, 7 Mar 2009 18:45:20 +0100
-Message-ID: <200903071845.20855.robin.rosenberg.lists@dewire.com>
-References: <efe536470903070205w1dbff989je6dd6126d09e4a74@mail.gmail.com> <49B299B7.80009@gmail.com>
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: Using Git with windows
+Date: Sat, 07 Mar 2009 18:58:14 +0100
+Organization: Home - http://www.obry.net
+Message-ID: <49B2B5B6.1050209@obry.net>
+References: <e878dbad0903052321l6c0d310bk2ba568138b409d36@mail.gmail.com>	 <e878dbad0903052323m56f3d63fi69862e9dae278c00@mail.gmail.com> <c115fd3c0903060638lfc52073nd40e0d7379d7f593@mail.gmail.com>
+Reply-To: pascal@obry.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Robert Navarro <crshman@gmail.com>, git@vger.kernel.org
-To: Tor Arne =?iso-8859-1?q?Vestb=F8?= <torarnv@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 07 18:55:30 2009
+Cc: Tariq Hassanen <tariq.hassanen@gmail.com>, git@vger.kernel.org
+To: Tim Visher <tim.visher@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 07 18:59:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lg0kB-0007Nz-GN
-	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 18:55:27 +0100
+	id 1Lg0oN-0000J2-Eb
+	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 18:59:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755175AbZCGRuI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Mar 2009 12:50:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753613AbZCGRuI
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 12:50:08 -0500
-Received: from mail.dewire.com ([83.140.172.130]:24368 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751870AbZCGRuH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 Mar 2009 12:50:07 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id E998815E0DF2;
-	Sat,  7 Mar 2009 18:49:58 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id K5BjGZhAj0p8; Sat,  7 Mar 2009 18:49:58 +0100 (CET)
-Received: from sleipner.localnet (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id F221215E0DF1;
-	Sat,  7 Mar 2009 18:49:57 +0100 (CET)
-User-Agent: KMail/1.11.1 (Linux/2.6.27-12-generic; KDE/4.2.1; i686; ; )
-In-Reply-To: <49B299B7.80009@gmail.com>
-Content-Disposition: inline
+	id S1752741AbZCGR6T convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Mar 2009 12:58:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752352AbZCGR6T
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 12:58:19 -0500
+Received: from mu-out-0910.google.com ([209.85.134.185]:15487 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752244AbZCGR6S (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Mar 2009 12:58:18 -0500
+Received: by mu-out-0910.google.com with SMTP id i10so269922mue.1
+        for <git@vger.kernel.org>; Sat, 07 Mar 2009 09:58:16 -0800 (PST)
+Received: by 10.103.212.2 with SMTP id o2mr1670728muq.131.1236448695959;
+        Sat, 07 Mar 2009 09:58:15 -0800 (PST)
+Received: from ?192.168.0.100? (AVelizy-154-1-34-1.w82-124.abo.wanadoo.fr [82.124.16.1])
+        by mx.google.com with ESMTPS id y6sm4028973mug.27.2009.03.07.09.58.15
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 07 Mar 2009 09:58:15 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; fr-FR; rv:1.8.1.19) Gecko/20081209 Thunderbird/2.0.0.19 Mnenhy/0.7.5.0
+In-Reply-To: <c115fd3c0903060638lfc52073nd40e0d7379d7f593@mail.gmail.com>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112558>
 
-l=F6rdag 07 mars 2009 16:58:47 skrev Tor Arne Vestb=F8 <torarnv@gmail.c=
-om>:
-> Robert Navarro wrote:
-> > Hello,
-> >=20
-> > Sorry about my last "subscribe" email, skipped over this part in th=
-e
-> > wiki...."You don't even need to be subscribed to post, just send an
-> > email to: "
-> >=20
-> > Anyways.....I wasn't sure where to post this but I'll give it a sho=
-t
-> > here.....I know there is an eclipse jGit plugin in the works and I
-> > wanted to know if it would be possible to get a remember or recentl=
-y
-> > used servers feature added to the push/pull feature.
->=20
-> I have done some initial prototyping of a Remotes View. I'll see if I
-> can bring that to life somehow.
+Tim Visher a =C3=A9crit :
+> I wouldn't bother waiting.  Git is plenty mature on Windows, either
+> via msys or via Cygwin.  There's no real reason to delay. :)
 
-I assumed the feature is about the push dialog. If we have a remotes
-view it'd be nice to see it there too. Where should it remembered? In
-the workspace or .git/config?
+I second that. I'm using Cygwin's Git for almost 2 years now on more
+than 15 repositories. Some are plain Git, the most of them are git-svn.
+No issue, working perfectly under Cygwin.
 
--- robin
+Pascal.
+
+--=20
+
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|    http://www.obry.net  -  http://v2p.fr.eu.org
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver keys.gnupg.net --recv-key F949BD3B
