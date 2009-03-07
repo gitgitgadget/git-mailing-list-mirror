@@ -1,124 +1,78 @@
-From: =?ISO-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 3/5] grep: add pmatch and eflags arguments to
- match_one_pattern()
-Date: Sat, 07 Mar 2009 13:30:27 +0100
-Message-ID: <1236429027.6486.47.camel@ubuntu.ubuntu-domain>
-References: <1236428699.6486.41.camel@ubuntu.ubuntu-domain>
+From: Sam Hocevar <sam@zoy.org>
+Subject: [PATCH v5] git-p4: improve performance when importing huge files
+	by reducing the number of string concatenations while constraining
+	memory usage.
+Date: Sat, 7 Mar 2009 13:25:17 +0100
+Message-ID: <20090307122517.GA7325@zoy.org>
+References: <20090306155322.GC12880@zoy.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= Duy 
-	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	Thiago Alves <thiago.salves@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 07 13:32:00 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 07 13:32:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lfvh8-0000bR-SW
-	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 13:31:59 +0100
+	id 1Lfvhm-0000mZ-Px
+	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 13:32:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754000AbZCGMac (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Mar 2009 07:30:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752269AbZCGMab
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 07:30:31 -0500
-Received: from india601.server4you.de ([85.25.151.105]:39327 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751964AbZCGMaa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Mar 2009 07:30:30 -0500
-Received: from [10.0.1.101] (p57B7BF05.dip.t-dialin.net [87.183.191.5])
-	by india601.server4you.de (Postfix) with ESMTPSA id 30CEC2F8057;
-	Sat,  7 Mar 2009 13:30:28 +0100 (CET)
-In-Reply-To: <1236428699.6486.41.camel@ubuntu.ubuntu-domain>
-X-Mailer: Evolution 2.24.3 
+	id S1754207AbZCGMbL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Mar 2009 07:31:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753786AbZCGMbL
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 07:31:11 -0500
+Received: from poulet.zoy.org ([80.65.228.129]:56951 "EHLO poulet.zoy.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752269AbZCGMbK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Mar 2009 07:31:10 -0500
+Received: from poukram (localhost [127.0.0.1])
+	by poulet.zoy.org (Postfix) with ESMTP id 43CD01203B7
+	for <git@vger.kernel.org>; Sat,  7 Mar 2009 13:31:03 +0100 (CET)
+Received: by poukram (Postfix, from userid 1000)
+	id A9D67E535F; Sat,  7 Mar 2009 13:25:17 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20090306101339.GB12880@zoy.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112533>
 
-Push pmatch and eflags to the callers of match_one_pattern(), which
-allows them to specify regex execution flags and to get the location
-of a match.
 
-Since we only use the first element of the matches array and aren't
-interested in submatches, no provision is made for callers to
-provide a larger array.
-
-eflags are ignored for fixed patterns, but that's OK, since they
-only have a meaning in connection with regular expressions
-containing ^ or $.
-
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Signed-off-by: Sam Hocevar <sam@zoy.org>
 ---
- grep.c |   21 ++++++++++-----------
- 1 files changed, 10 insertions(+), 11 deletions(-)
+ This is a properly formatted version of the previous patch.
 
-diff --git a/grep.c b/grep.c
-index f455182..bdcff7b 100644
---- a/grep.c
-+++ b/grep.c
-@@ -309,11 +309,11 @@ static struct {
- };
+ contrib/fast-import/git-p4 |   13 ++++++++++++-
+ 1 files changed, 12 insertions(+), 1 deletions(-)
+
+diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+index 3832f60..db0ea0a 100755
+--- a/contrib/fast-import/git-p4
++++ b/contrib/fast-import/git-p4
+@@ -984,11 +984,22 @@ class P4Sync(Command):
+         while j < len(filedata):
+             stat = filedata[j]
+             j += 1
++            data = []
+             text = ''
++            # Append data every 8192 chunks to 1) ensure decent performance
++            # by not making too many string concatenations and 2) avoid
++            # excessive memory usage by purging "data" often enough. p4
++            # sends 4k chunks, so we should not use more than 32 MiB of
++            # additional memory while rebuilding the file data.
+             while j < len(filedata) and filedata[j]['code'] in ('text', 'unicode', 'binary'):
+-                text += filedata[j]['data']
++                data.append(filedata[j]['data'])
+                 del filedata[j]['data']
++                if len(data) > 8192:
++                    text += ''.join(data)
++                    data = []
+                 j += 1
++            text += ''.join(data)
++            data = None
  
- static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
--			     enum grep_context ctx)
-+			     enum grep_context ctx,
-+			     regmatch_t *pmatch, int eflags)
- {
- 	int hit = 0;
- 	int saved_ch = 0;
--	regmatch_t pmatch[10];
- 
- 	if ((p->token != GREP_PATTERN) &&
- 	    ((p->token == GREP_PATTERN_HEAD) != (ctx == GREP_CONTEXT_HEAD)))
-@@ -332,14 +332,10 @@ static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
- 	}
- 
-  again:
--	if (!p->fixed) {
--		regex_t *exp = &p->regexp;
--		hit = !regexec(exp, bol, ARRAY_SIZE(pmatch),
--			       pmatch, 0);
--	}
--	else {
-+	if (p->fixed)
- 		hit = !fixmatch(p->pattern, bol, pmatch);
--	}
-+	else
-+		hit = !regexec(&p->regexp, bol, 1, pmatch, eflags);
- 
- 	if (hit && p->word_regexp) {
- 		if ((pmatch[0].rm_so < 0) ||
-@@ -385,10 +381,11 @@ static int match_expr_eval(struct grep_expr *x, char *bol, char *eol,
- 			   enum grep_context ctx, int collect_hits)
- {
- 	int h = 0;
-+	regmatch_t match;
- 
- 	switch (x->node) {
- 	case GREP_NODE_ATOM:
--		h = match_one_pattern(x->u.atom, bol, eol, ctx);
-+		h = match_one_pattern(x->u.atom, bol, eol, ctx, &match, 0);
- 		break;
- 	case GREP_NODE_NOT:
- 		h = !match_expr_eval(x->u.unary, bol, eol, ctx, 0);
-@@ -427,12 +424,14 @@ static int match_line(struct grep_opt *opt, char *bol, char *eol,
- 		      enum grep_context ctx, int collect_hits)
- {
- 	struct grep_pat *p;
-+	regmatch_t match;
-+
- 	if (opt->extended)
- 		return match_expr(opt, bol, eol, ctx, collect_hits);
- 
- 	/* we do not call with collect_hits without being extended */
- 	for (p = opt->pattern_list; p; p = p->next) {
--		if (match_one_pattern(p, bol, eol, ctx))
-+		if (match_one_pattern(p, bol, eol, ctx, &match, 0))
- 			return 1;
- 	}
- 	return 0;
+             if not stat.has_key('depotFile'):
+                 sys.stderr.write("p4 print fails with: %s\n" % repr(stat))
 -- 
-1.6.2
+1.6.1.3
