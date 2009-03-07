@@ -1,58 +1,60 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: git-forest on msysgit
-Date: Sat, 07 Mar 2009 00:53:05 +0100
-Message-ID: <vpq63imjjj2.fsf@bauges.imag.fr>
-References: <450196A1AAAE4B42A00A8B27A59278E70A115F15@EXCHANGE.trad.tradestation.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH JGIT] Add "compare with Git Index" action.
+Date: Sat, 7 Mar 2009 01:31:47 +0100
+Message-ID: <200903070131.48136.robin.rosenberg.lists@dewire.com>
+References: <49AD38EE.5090509@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: "John Dlugosz" <JDlugosz@TradeStation.com>
-X-From: git-owner@vger.kernel.org Sat Mar 07 00:59:24 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git <git@vger.kernel.org>
+To: Yann Simon <yann.simon.fr@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 07 01:37:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lfjwo-00050Y-Jx
-	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 00:59:23 +0100
+	id 1LfkXG-00065G-Kv
+	for gcvg-git-2@gmane.org; Sat, 07 Mar 2009 01:37:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756059AbZCFX5x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Mar 2009 18:57:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755673AbZCFX5x
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 18:57:53 -0500
-Received: from imag.imag.fr ([129.88.30.1]:56000 "EHLO imag.imag.fr"
+	id S1752579AbZCGAee (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Mar 2009 19:34:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752514AbZCGAee
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Mar 2009 19:34:34 -0500
+Received: from mail.dewire.com ([83.140.172.130]:22429 "EHLO dewire.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753320AbZCFX5w (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Mar 2009 18:57:52 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n26Nr5xH027324
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 7 Mar 2009 00:53:05 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Lfjqj-0003dy-9V; Sat, 07 Mar 2009 00:53:05 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1Lfjqj-0003tr-79; Sat, 07 Mar 2009 00:53:05 +0100
-In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E70A115F15@EXCHANGE.trad.tradestation.com> (John Dlugosz's message of "Fri\, 6 Mar 2009 16\:08\:38 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.90 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sat, 07 Mar 2009 00:53:06 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751621AbZCGAed (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Mar 2009 19:34:33 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 5412C15E0DEF;
+	Sat,  7 Mar 2009 01:34:30 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id AamCq7AoGrUo; Sat,  7 Mar 2009 01:34:29 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.13])
+	by dewire.com (Postfix) with ESMTP id 7D84B8027E7;
+	Sat,  7 Mar 2009 01:34:29 +0100 (CET)
+User-Agent: KMail/1.11.1 (Linux/2.6.27-12-generic; KDE/4.2.1; i686; ; )
+In-Reply-To: <49AD38EE.5090509@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112496>
 
-"John Dlugosz" <JDlugosz@TradeStation.com> writes:
+tisdag 03 mars 2009 15:04:30 skrev Yann Simon <yann.simon.fr@gmail.com>:
+> In the Compare With... menu, the "Git Index" action opens
+> a diff editor that compares the workspace version of a file and its
+> index version.
+> 
+> The local file can be modified and saved.
+> 
+> The staged version can be modified and saved. This updates the index.
+> For this, add methods into GitIndex to allow to specify a content
+> different from the file.
 
-> I downloaded git-forest, and when I run it I get:
+Saving the index version does not work here. No effect whatsoever.
 
-Not answering the question, but did ou know that you get mostly the
-same with git log --graph (without installing anthing)?
-
--- 
-Matthieu
+-- robin
