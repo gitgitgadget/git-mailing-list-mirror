@@ -1,82 +1,82 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH 2/2] ls-files: fix broken --no-empty-directory
-Date: Sun, 8 Mar 2009 22:13:12 +0100
-Message-ID: <20090308211312.GE4371@genesis.frugalware.org>
-References: <20090308012049.GA18616@coredump.intra.peff.net> <20090308012722.GB18714@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="VI7iFJw/I65Bwf78"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Mar 08 22:14:51 2009
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: [PATCH] Create USE_ST_TIMESPEC and turn it on for Darwin
+Date: Sun, 8 Mar 2009 17:21:17 -0400
+Message-ID: <70A401B0-C10D-4B4D-9DCC-D0968CE5EAF7@silverinsanity.com>
+References: <1236542668-83333-1-git-send-email-benji@silverinsanity.com> <7vhc23kaay.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 08 22:22:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgQKc-0000vx-KQ
-	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 22:14:47 +0100
+	id 1LgQST-0003Ak-2D
+	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 22:22:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754448AbZCHVNS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2009 17:13:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754200AbZCHVNS
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 17:13:18 -0400
-Received: from virgo.iok.hu ([212.40.97.103]:41099 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754198AbZCHVNR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2009 17:13:17 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 7C20758140;
-	Sun,  8 Mar 2009 22:13:14 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 4525644777;
-	Sun,  8 Mar 2009 22:13:13 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id F31D811B877E; Sun,  8 Mar 2009 22:13:12 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20090308012722.GB18714@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1754092AbZCHVVZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2009 17:21:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753299AbZCHVVZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 17:21:25 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:37895 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753051AbZCHVVY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2009 17:21:24 -0400
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id AE4D91FFC3FB; Sun,  8 Mar 2009 21:21:15 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.1 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [192.168.1.115] (cpe-74-74-137-205.rochester.res.rr.com [74.74.137.205])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTPSA id 2124B1FFC043;
+	Sun,  8 Mar 2009 21:21:11 +0000 (UTC)
+In-Reply-To: <7vhc23kaay.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112645>
 
 
---VI7iFJw/I65Bwf78
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Mar 8, 2009, at 4:51 PM, Junio C Hamano wrote:
 
-On Sat, Mar 07, 2009 at 08:27:22PM -0500, Jeff King <peff@peff.net> wrote:
-> diff --git a/builtin-ls-files.c b/builtin-ls-files.c
-> index 1742c0f..437c366 100644
-> --- a/builtin-ls-files.c
-> +++ b/builtin-ls-files.c
-> @@ -454,8 +454,8 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
->  		OPT_BIT(0, "directory", &dir.flags,
->  			"show 'other' directories' name only",
->  			DIR_SHOW_OTHER_DIRECTORIES),
-> -		OPT_BIT(0, "empty-directory", &dir.flags,
-> -			"list empty directories",
-> +		OPT_BIT(0, "no-empty-directory", &dir.flags,
-> +			"don't show empty directories",
->  			DIR_HIDE_EMPTY_DIRECTORIES),
->  		OPT_BOOLEAN('u', "unmerged", &show_unmerged,
->  			"show unmerged files in the output"),
+> I think this patch moves things in the right direction, but there are
+> other uses of "st_[cm]tim.tv_nsec" that do not use the  
+> ST_[CM]TIME_NSEC
+> macro.
+>
+> $ git grep -n -e 'st_[cm]tim\.' --cached -- '*.[ch]'
+> builtin-fetch-pack.c:810:				|| st.st_mtim.tv_nsec != mtime.nsec
+> git-compat-util.h:396:#define ST_CTIME_NSEC(st) ((unsigned int) 
+> ((st).st_ctim.tv_nsec))
+> git-compat-util.h:397:#define ST_MTIME_NSEC(st) ((unsigned int) 
+> ((st).st_mtim.tv_nsec))
+> read-cache.c:207:	if (ce->ce_mtime.nsec != (unsigned int)st- 
+> >st_mtim.tv_nsec)
+> read-cache.c:209:	if (trust_ctime && ce->ce_ctime.nsec != (unsigned  
+> int)st->st_ctim.tv_nsec)
 
-Thanks for catching this. But then why not using PARSE_OPT_NONEG?
+Interesting.  I couldn't use git-grep due to other problems, but  
+thought any other tim/timespec issues would have stopped my  
+compilation.  Looking at the code, this is because everything other  
+than the #defines in git-compat-util.h are surrounded by USE_NSEC  
+which is not defined on my machine.
 
-That would avoid --no-no-empty-directory.
+However, I noticed another breakage entirely.  Namely, that USE_NSEC  
+is not defined anywhere.  There's a comment in the Makefile that says  
+"define USE_NSEC below", but there is no code that checks for USE_NSEC  
+and sets the appropriate compiler switch.  Trivial patch to follow.
 
---VI7iFJw/I65Bwf78
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+> Probably we should apply the following patch as a fix, and then  
+> apply your
+> enhancement to support st_[cm]timespec systems?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+Your patch looks sane to me.
 
-iEYEARECAAYFAkm0NOgACgkQe81tAgORUJZOFgCgjiYRxznkaE8s3ou1neFdC5Pt
-/JYAn1kkCe0dgwz8r19Gu6JNuafjabvg
-=nwJj
------END PGP SIGNATURE-----
-
---VI7iFJw/I65Bwf78--
+~~ Brian
