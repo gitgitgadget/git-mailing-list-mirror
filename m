@@ -1,83 +1,92 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [EGIT PATCH] Show diff when double-clicking on file in commit dialog
-Date: Sun, 8 Mar 2009 22:59:35 +0100
-Message-ID: <200903082259.35886.robin.rosenberg.lists@dewire.com>
-References: <49B4260D.6070501@nibor.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Robin Stocker <robin@nibor.org>
-X-From: git-owner@vger.kernel.org Sun Mar 08 23:02:32 2009
+From: Brian Gernhardt <brian@gernhardtsoftware.com>
+Subject: git-grep Bus Error
+Date: Sun, 8 Mar 2009 19:27:01 -0400
+Message-ID: <C36B091A-ABE9-4C74-9E59-4EBD50E3B9F5@gernhardtsoftware.com>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 09 00:37:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgR4p-0005d3-Cc
-	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 23:02:31 +0100
+	id 1LgSYt-0005HP-Q1
+	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 00:37:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754433AbZCHV7r convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Mar 2009 17:59:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754363AbZCHV7q
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 17:59:46 -0400
-Received: from mail.dewire.com ([83.140.172.130]:29384 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754224AbZCHV7p convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 Mar 2009 17:59:45 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 8283815E0DEA;
-	Sun,  8 Mar 2009 22:59:39 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 64ilP0YmhuWg; Sun,  8 Mar 2009 22:59:38 +0100 (CET)
-Received: from sleipner.localnet (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id BF0F315E0DE0;
-	Sun,  8 Mar 2009 22:59:38 +0100 (CET)
-User-Agent: KMail/1.11.1 (Linux/2.6.27-12-generic; KDE/4.2.1; i686; ; )
-In-Reply-To: <49B4260D.6070501@nibor.org>
-Content-Disposition: inline
+	id S1751768AbZCHXgM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2009 19:36:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751647AbZCHXgM
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 19:36:12 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:57453 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751516AbZCHXgM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2009 19:36:12 -0400
+X-Greylist: delayed 544 seconds by postgrey-1.27 at vger.kernel.org; Sun, 08 Mar 2009 19:36:12 EDT
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id A901F1FFC3FB; Sun,  8 Mar 2009 23:26:56 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [192.168.1.115] (cpe-74-74-137-205.rochester.res.rr.com [74.74.137.205])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTPSA id 7EC391FFC043
+	for <git@vger.kernel.org>; Sun,  8 Mar 2009 23:26:54 +0000 (UTC)
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112652>
 
-s=C3=B6ndag 08 mars 2009 21:09:49 skrev Robin Stocker <robin@nibor.org>=
-:
-> It only compares the index version to the working tree version for no=
-w.
-> So if the file was already added to the index, the diff is empty. Wha=
-t
-> it should show is the diff that will be in the commit.
->=20
-> Signed-off-by: Robin Stocker <robin@nibor.org>
-> ---
->=20
-> Hi,
->=20
-> An essential feature I miss in EGit at the moment (apart from the
-> synchronize view [1]) is seeing what changes one is about to commit. =
-In
-> the Subclipse SVN plugin one can double-click a file in the commit
-> dialog and the diff is shown.
-Hi, Robin. I miss that too!
+The --color display code in git-grep is giving me a bus error in  
+show_line at line 492:
 
-> This patch is a first step for adding this to EGit. It only compares =
-the
-> index version to the working tree version as I couldn't figure out an
-> easy way to get the HEAD version.
-You can look at how GitDocument does it.
+>                         printf("%.*s%s%.*s%s",
+>                                match.rm_so, bol,
+>                                opt->color_match,
+>                                match.rm_eo - match.rm_so, bol +  
+> match.rm_so,
+>                                GIT_COLOR_RESET);
 
->=20
-> It's more a proof of concept than a final patch. What do you think?
+The first problem is that %.*s does not appear to do on OS X what the  
+author thinks it does.  A precision of 0 for %s is listed in "man  
+printf" as printing the entire string.
 
-I've started on an version with the diff integrated into the same dialo=
-g, for
-some reasons it's not done yet, but we might takes this meanwhile unles=
-s
-I complete the dialog real quick, as this is really useful, provided we=
- compare
-with HEAD.
+To fix that, I changed it to the following:
 
--- robin
+> 			if( match.rm_so > 0 )
+> 				printf( "%.*s", match.rm_so, bol );
+> 			if( match.rm_eo > match.rm_so )
+> 				printf("%s%.*s%s",
+> 					   opt->color_match,
+> 					   match.rm_eo - match.rm_so, bol + match.rm_so,
+> 					   GIT_COLOR_RESET);
+
+This code does not fail, but instead gives lines like the following  
+(showing the raw color codes):
+
+.gitignore:\033[31m\033[1m(nugit
+
+GIT_COLOR_RESET is apparently being ignored, and I don't know why.
+
+Adding a line to check the values of rm_so, rm_eo, and the difference  
+between the two gives:
+
+> 			printf( "%d %d %d",
+> 				  match.rm_so, match.rm_eo,
+> 				  match.rm_eo - match.rm_so );
+
+.gitignore:0 0 3\033[31m\033[1m(nugit
+.mailmap:23 0 26(null)\033[31m\033[1m(nugit-shortlog to fix a few  
+botched name translations-shortlog to fix a few botched name  
+translations
+
+And now I'm baffled.  Apparently my computer thinks 0 - 0 == 3 and 0 -  
+23 == 26.
+
+Can I get some help?
+
+~~ Brian
