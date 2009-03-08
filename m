@@ -1,89 +1,96 @@
-From: Christian MICHON <christian.michon@gmail.com>
-Subject: Re: Git for Windows 1.6.2-preview20090308
-Date: Sun, 8 Mar 2009 22:39:49 +0100
-Message-ID: <46d6db660903081439j2ee68037td9f9f234c4b56c8c@mail.gmail.com>
-References: <alpine.DEB.1.00.0903080132470.10279@pacific.mpi-cbg.de> <46d6db660903081430m35da0d2eoc97377dfec54b1b5@mail.gmail.com> <9d6091530903081436k20591bdbu69cd73ed2f1c98b5@mail.gmail.com>
-Reply-To: christian.michon@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFD] builtin-revert.c: release index lock when
+ cherry-picking an empty commit
+Date: Sun, 08 Mar 2009 14:53:32 -0700
+Message-ID: <7v7i2zk7fn.fsf@gitster.siamese.dyndns.org>
+References: <1236418251-16947-1-git-send-email-chris_johnsen@pobox.com>
+ <7v63ikmz11.fsf@gitster.siamese.dyndns.org>
+ <B0CBEE84-0F46-4AF2-86B1-C80BADAEF4E5@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Johannes.Schindelin@gmx.de, git@vger.kernel.org, msysgit@googlegroups.com
-To: Janos Laube <janos.dev@gmail.com>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Sun Mar 08 22:41:28 2009
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from wf-out-1516.google.com ([209.85.200.163])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Miklos Vajna <vmiklos@frugalware.org>
+To: Chris Johnsen <chris_johnsen@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 08 22:55:41 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgQkP-0008KK-4F
-	for gcvm-msysgit@m.gmane.org; Sun, 08 Mar 2009 22:41:25 +0100
-Received: by wf-out-1516.google.com with SMTP id r34so385368wfc.33
-        for <gcvm-msysgit@m.gmane.org>; Sun, 08 Mar 2009 14:40:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received-spf:authentication-results:received
-         :dkim-signature:domainkey-signature:mime-version:received
-         :in-reply-to:references:date:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding:reply-to:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        bh=70+Q6ynNn1jurHfMc+1aO/ZA3CYCCaMcYYnPuMYKSx0=;
-        b=toCtJx05Q+kZD7PFHXYhPhmM/P8S0Xg6qM/AgODoZBqf/uZeotVpkVvqA96OFdqBwW
-         oZLsObKMqfoypHsz826sM7zPNHVDd3tO1LEvBsb05Bf7aQGXY25+3e3icu35+UrcfGgN
-         A41gRnbD3XBc2k3aw8w3vtUg+YIp5YQ0tSnBE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :dkim-signature:domainkey-signature:mime-version:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding:reply-to:sender:precedence:x-google-loop
-         :mailing-list:list-id:list-post:list-help:list-unsubscribe
-         :x-beenthere-env:x-beenthere;
-        b=ZCW3XTqZSFMMXIrRosFMcpEZoBNY7+zIodxX0C2D8J27oXt7QwoJyxp1qBDF9MIJWE
-         lgeewQxUV/CdiFrhepK4kkXYLYSQwa36crwjyqk91S+iCKIvuaxB+uko24ZY7O9Q6Cgb
-         iwFkh5DalNQTfclZg2OtgzGuboz3qb6K+W4GE=
-Received: by 10.151.47.7 with SMTP id z7mr866835ybj.8.1236548390910;
-        Sun, 08 Mar 2009 14:39:50 -0700 (PDT)
-Received: by 10.177.37.21 with SMTP id p21gr3890yqj.0;
-	Sun, 08 Mar 2009 14:39:50 -0700 (PDT)
-X-Sender: christian.michon@gmail.com
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.180.232.9 with SMTP id e9mr129134bkh.2.1236548390295; Sun, 08 Mar 2009 14:39:50 -0700 (PDT)
-Received: from mu-out-0910.google.com (mu-out-0910.google.com [209.85.134.185]) by gmr-mx.google.com with ESMTP id 15si276366fxm.5.2009.03.08.14.39.49; Sun, 08 Mar 2009 14:39:49 -0700 (PDT)
-Received-SPF: pass (google.com: domain of christian.michon@gmail.com designates 209.85.134.185 as permitted sender) client-ip=209.85.134.185;
-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of christian.michon@gmail.com designates 209.85.134.185 as permitted sender) smtp.mail=christian.michon@gmail.com; dkim=pass (test mode) header.i=@gmail.com
-Received: by mu-out-0910.google.com with SMTP id i10so382733mue.1 for <msysgit@googlegroups.com>; Sun, 08 Mar 2009 14:39:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:mime-version:received:in-reply-to:references :date:message-id:subject:from:to:cc:content-type :content-transfer-encoding; bh=MCFQNZ4UYubkzZgrzxbOWo6+euSvRZdCHIXAtBBYzFQ=; b=WbbCqZ+edQgbIue5I/6ZIKMxKWJmMECvYSsWF/0oBhm3IVNX7eYumPUm7ZFVhXnRWV sefEzhPt09bAEPuAVA5bgMBXSwIkPsylRKYhDE7mjO7YbaxHZTFo2r0IcxVE1/04tbRQ KiyWecHqjiSSnt4i7HIqggZI3FthFe/EZTrKE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=mime-version:in-reply-to:references:date:message-id:subject:from:to :cc:content-type:content-transfer-encoding; b=L3hielfJiTB0oiQvczScrbMi7TEfk6a7KqTSHhPn0+IDoYoqD5FRBjs0+fq0hq6UZQ zu/9aHkiCHOttMUo7C0zmtYFTF4GEleOFhkDsRcIsRwbCalAQDCtw5meGGgdLnRWOqUL jZUUy4dWW9eWPR1AurX7QYsOALhZ1oQyQStp4=
-Received: by 10.103.213.10 with SMTP id p10mr2290556muq.17.1236548389152; Sun,  08 Mar 2009 14:39:49 -0700 (PDT)
-In-Reply-To: <9d6091530903081436k20591bdbu69cd73ed2f1c98b5@mail.gmail.com>
-Sender: msysgit@googlegroups.com
+	id 1LgQy6-0003to-Jl
+	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 22:55:35 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754436AbZCHVxo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2009 17:53:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754681AbZCHVxo
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 17:53:44 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54292 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754338AbZCHVxn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2009 17:53:43 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id D05514E1F;
+	Sun,  8 Mar 2009 17:53:38 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0FD914E1E; Sun, 
+ 8 Mar 2009 17:53:33 -0400 (EDT)
+In-Reply-To: <B0CBEE84-0F46-4AF2-86B1-C80BADAEF4E5@pobox.com> (Chris
+ Johnsen's message of "Sun, 8 Mar 2009 16:09:50 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 94DE91E8-0C2B-11DE-B1F4-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit+owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit+help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-X-BeenThere-Env: msysgit@googlegroups.com
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112649>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112650>
+
+Chris Johnsen <chris_johnsen@pobox.com> writes:
+
+> My confusion was that I took "usually a mistake" to refer to the case
+> where the user meant to commit content changes but forgot to first
+> stage any changed content. But your clarification shows that "usually
+> a mistake" really means that making any empty commit, intentional or
+> not, is (considered to be) a fundamental misuse of SCM machinery.
+
+The empty commits in your example a few messages ago are used as "piss in
+the snow" marking.  If you did not have tags (and commit notes), it may be
+the only workaround to say "here is an interesting point", but even then
+such a workaround can only be made while the commit is at the tip, and be
+made useful only by forcing all the other commits on the branch be on top
+of that "piss in the snow" commit, so it is a flawed workaround.
+
+Suppose you have this history.
+
+ ---A---B---C
+
+You found that the point C is interesting in some way, so you mark it:
+
+ ---A---B---C---P
+
+But somebody else may have developed on top of C bypassing P
+
+              D---E---F
+             /
+ ---A---B---C---P
+
+What would you do in such a case?  You cannot leave P dangling, as that
+would mean P will not participate in future rebases (and you do not want
+to rebase P on top of F because C is the point that is interesting to you,
+not F).  Do you merge F and P only to make P not dangling?  What does such
+a merge mean?
+
+Worse yet, if you stared from the original history with three commits, how
+would you mark that B is interesting?
+
+          P   D---E---F
+         /   /
+ ---A---B---C
 
 
-On Sun, Mar 8, 2009 at 10:36 PM, Janos Laube <janos.dev@gmail.com> wrote:
->> I'll look at what could be wrong right now.
->
-> as vim says, the syntax files in /share/vim/vim72/syntax are missing,
-> i.e. not included with the installer package :-)
->
+The facility git and other SCM offer you to leave such mark (possibly
+after the fact) is to use tags.
 
-there are a few actually, but somehow it's not working. I need to find
-out what happened, as I actually provided a git repo to vim-7.2 (I
-also need to update this repo).
+So in your particular "piss in the snow" usage, I would agree that such an
+empty commit is a misuse.
 
--- 
-Christian
---
-http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git inside !
+I am not however claiming that all uses of an empty commit are fundamental
+misuses here, though.  Somebody else may have other valid uses.
