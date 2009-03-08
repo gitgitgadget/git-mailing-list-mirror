@@ -1,59 +1,89 @@
-From: Janos Laube <janos.dev@gmail.com>
-Subject: Re: [msysGit] Re: Git for Windows 1.6.2-preview20090308
-Date: Sun, 8 Mar 2009 22:36:06 +0100
-Message-ID: <9d6091530903081436k20591bdbu69cd73ed2f1c98b5@mail.gmail.com>
-References: <alpine.DEB.1.00.0903080132470.10279@pacific.mpi-cbg.de>
-	 <46d6db660903081430m35da0d2eoc97377dfec54b1b5@mail.gmail.com>
+From: Christian MICHON <christian.michon@gmail.com>
+Subject: Re: Git for Windows 1.6.2-preview20090308
+Date: Sun, 8 Mar 2009 22:39:49 +0100
+Message-ID: <46d6db660903081439j2ee68037td9f9f234c4b56c8c@mail.gmail.com>
+References: <alpine.DEB.1.00.0903080132470.10279@pacific.mpi-cbg.de> <46d6db660903081430m35da0d2eoc97377dfec54b1b5@mail.gmail.com> <9d6091530903081436k20591bdbu69cd73ed2f1c98b5@mail.gmail.com>
+Reply-To: christian.michon@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Johannes.Schindelin@gmx.de, git@vger.kernel.org,
-	msysgit@googlegroups.com
-To: christian.michon@gmail.com
-X-From: git-owner@vger.kernel.org Sun Mar 08 22:37:39 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: Johannes.Schindelin@gmx.de, git@vger.kernel.org, msysgit@googlegroups.com
+To: Janos Laube <janos.dev@gmail.com>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Sun Mar 08 22:41:28 2009
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from wf-out-1516.google.com ([209.85.200.163])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgQgl-0007DA-2n
-	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 22:37:39 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754219AbZCHVgM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2009 17:36:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754092AbZCHVgL
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 17:36:11 -0400
-Received: from mail-fx0-f176.google.com ([209.85.220.176]:34350 "EHLO
-	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753051AbZCHVgK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2009 17:36:10 -0400
-Received: by fxm24 with SMTP id 24so1029642fxm.37
-        for <git@vger.kernel.org>; Sun, 08 Mar 2009 14:36:07 -0700 (PDT)
+	id 1LgQkP-0008KK-4F
+	for gcvm-msysgit@m.gmane.org; Sun, 08 Mar 2009 22:41:25 +0100
+Received: by wf-out-1516.google.com with SMTP id r34so385368wfc.33
+        for <gcvm-msysgit@m.gmane.org>; Sun, 08 Mar 2009 14:40:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=991+YX3DlG5FFTnnYMoS2A4uO7cJES1XSqj3ldXFik8=;
-        b=kqJwt6DYo3M7O3dHHl3VehwP85PPT8DJdTCc5/XtQ4A5vAwZkKe1DGRp0NpdbGy71W
-         HJQJkFA8QGJtOsH3S9crk5A50t04amQHwtGSee0kNHTz0FCablasfwYjg+xXc7FMIB/W
-         Q2Tfnkl5/fneZzjfXhgCn3zUaYvoFhTlksgIM=
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received-spf:authentication-results:received
+         :dkim-signature:domainkey-signature:mime-version:received
+         :in-reply-to:references:date:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding:reply-to:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        bh=70+Q6ynNn1jurHfMc+1aO/ZA3CYCCaMcYYnPuMYKSx0=;
+        b=toCtJx05Q+kZD7PFHXYhPhmM/P8S0Xg6qM/AgODoZBqf/uZeotVpkVvqA96OFdqBwW
+         oZLsObKMqfoypHsz826sM7zPNHVDd3tO1LEvBsb05Bf7aQGXY25+3e3icu35+UrcfGgN
+         A41gRnbD3XBc2k3aw8w3vtUg+YIp5YQ0tSnBE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=FqfqOjR7OAq00l/X3tl92OLL0n3ksh0sf5q5awTFmqoInuD2fRArVVEOwZNFofWnXt
-         N05UdtSeW6axhNyhRRjsSf0257593LOKRntmj04Ib3ctK0AVKgFX9a9yWdtGo3SIsPw2
-         hhjj/c1zRzxDEedlh17b0Sb6S4DBGY5nLrZwQ=
-Received: by 10.180.239.8 with SMTP id m8mr1758751bkh.165.1236548166626; Sun, 
-	08 Mar 2009 14:36:06 -0700 (PDT)
-In-Reply-To: <46d6db660903081430m35da0d2eoc97377dfec54b1b5@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :dkim-signature:domainkey-signature:mime-version:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding:reply-to:sender:precedence:x-google-loop
+         :mailing-list:list-id:list-post:list-help:list-unsubscribe
+         :x-beenthere-env:x-beenthere;
+        b=ZCW3XTqZSFMMXIrRosFMcpEZoBNY7+zIodxX0C2D8J27oXt7QwoJyxp1qBDF9MIJWE
+         lgeewQxUV/CdiFrhepK4kkXYLYSQwa36crwjyqk91S+iCKIvuaxB+uko24ZY7O9Q6Cgb
+         iwFkh5DalNQTfclZg2OtgzGuboz3qb6K+W4GE=
+Received: by 10.151.47.7 with SMTP id z7mr866835ybj.8.1236548390910;
+        Sun, 08 Mar 2009 14:39:50 -0700 (PDT)
+Received: by 10.177.37.21 with SMTP id p21gr3890yqj.0;
+	Sun, 08 Mar 2009 14:39:50 -0700 (PDT)
+X-Sender: christian.michon@gmail.com
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.180.232.9 with SMTP id e9mr129134bkh.2.1236548390295; Sun, 08 Mar 2009 14:39:50 -0700 (PDT)
+Received: from mu-out-0910.google.com (mu-out-0910.google.com [209.85.134.185]) by gmr-mx.google.com with ESMTP id 15si276366fxm.5.2009.03.08.14.39.49; Sun, 08 Mar 2009 14:39:49 -0700 (PDT)
+Received-SPF: pass (google.com: domain of christian.michon@gmail.com designates 209.85.134.185 as permitted sender) client-ip=209.85.134.185;
+Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of christian.michon@gmail.com designates 209.85.134.185 as permitted sender) smtp.mail=christian.michon@gmail.com; dkim=pass (test mode) header.i=@gmail.com
+Received: by mu-out-0910.google.com with SMTP id i10so382733mue.1 for <msysgit@googlegroups.com>; Sun, 08 Mar 2009 14:39:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:mime-version:received:in-reply-to:references :date:message-id:subject:from:to:cc:content-type :content-transfer-encoding; bh=MCFQNZ4UYubkzZgrzxbOWo6+euSvRZdCHIXAtBBYzFQ=; b=WbbCqZ+edQgbIue5I/6ZIKMxKWJmMECvYSsWF/0oBhm3IVNX7eYumPUm7ZFVhXnRWV sefEzhPt09bAEPuAVA5bgMBXSwIkPsylRKYhDE7mjO7YbaxHZTFo2r0IcxVE1/04tbRQ KiyWecHqjiSSnt4i7HIqggZI3FthFe/EZTrKE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=mime-version:in-reply-to:references:date:message-id:subject:from:to :cc:content-type:content-transfer-encoding; b=L3hielfJiTB0oiQvczScrbMi7TEfk6a7KqTSHhPn0+IDoYoqD5FRBjs0+fq0hq6UZQ zu/9aHkiCHOttMUo7C0zmtYFTF4GEleOFhkDsRcIsRwbCalAQDCtw5meGGgdLnRWOqUL jZUUy4dWW9eWPR1AurX7QYsOALhZ1oQyQStp4=
+Received: by 10.103.213.10 with SMTP id p10mr2290556muq.17.1236548389152; Sun,  08 Mar 2009 14:39:49 -0700 (PDT)
+In-Reply-To: <9d6091530903081436k20591bdbu69cd73ed2f1c98b5@mail.gmail.com>
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112648>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112649>
 
-> I'll look at what could be wrong right now.
 
-as vim says, the syntax files in /share/vim/vim72/syntax are missing,
-i.e. not included with the installer package :-)
+On Sun, Mar 8, 2009 at 10:36 PM, Janos Laube <janos.dev@gmail.com> wrote:
+>> I'll look at what could be wrong right now.
+>
+> as vim says, the syntax files in /share/vim/vim72/syntax are missing,
+> i.e. not included with the installer package :-)
+>
+
+there are a few actually, but somehow it's not working. I need to find
+out what happened, as I actually provided a git repo to vim-7.2 (I
+also need to update this repo).
+
+-- 
+Christian
+--
+http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git inside !
