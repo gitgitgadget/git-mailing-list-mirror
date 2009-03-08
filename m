@@ -1,100 +1,82 @@
-From: Chris Johnsen <chris_johnsen@pobox.com>
-Subject: Re: [PATCH/RFD] builtin-revert.c: release index lock when
- cherry-picking an empty commit
-Date: Sun, 8 Mar 2009 16:09:50 -0500
-Message-ID: <B0CBEE84-0F46-4AF2-86B1-C80BADAEF4E5@pobox.com>
-References: <1236418251-16947-1-git-send-email-chris_johnsen@pobox.com>
- <7v63ikmz11.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v753.1)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Miklos Vajna <vmiklos@frugalware.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 08 22:11:25 2009
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH 2/2] ls-files: fix broken --no-empty-directory
+Date: Sun, 8 Mar 2009 22:13:12 +0100
+Message-ID: <20090308211312.GE4371@genesis.frugalware.org>
+References: <20090308012049.GA18616@coredump.intra.peff.net> <20090308012722.GB18714@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="VI7iFJw/I65Bwf78"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Mar 08 22:14:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgQHK-0008MG-Bc
-	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 22:11:22 +0100
+	id 1LgQKc-0000vx-KQ
+	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 22:14:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754448AbZCHVJy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2009 17:09:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754308AbZCHVJy
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 17:09:54 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:52027 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754195AbZCHVJx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2009 17:09:53 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 532F74C16;
-	Sun,  8 Mar 2009 17:09:51 -0400 (EDT)
-Received: from [192.168.1.241] (unknown [76.201.177.183]) (using TLSv1 with
- cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A284E4C13; Sun, 
- 8 Mar 2009 17:09:48 -0400 (EDT)
-In-Reply-To: <7v63ikmz11.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.753.1)
-X-Pobox-Relay-ID: 76BBEA4A-0C25-11DE-81CE-CBE7E3B37BAC-07245699!a-sasl-quonix.pobox.com
+	id S1754448AbZCHVNS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2009 17:13:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754200AbZCHVNS
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 17:13:18 -0400
+Received: from virgo.iok.hu ([212.40.97.103]:41099 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754198AbZCHVNR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2009 17:13:17 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 7C20758140;
+	Sun,  8 Mar 2009 22:13:14 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 4525644777;
+	Sun,  8 Mar 2009 22:13:13 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id F31D811B877E; Sun,  8 Mar 2009 22:13:12 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20090308012722.GB18714@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112644>
 
-On 2009 Mar 7, at 22:14, Junio C Hamano wrote:
->> UNEVEN TREATMENT OF EMPTY CHANGES
->>
->> fetch, push, bundle
-> They just transfer an existing history from one place to another  
-> without
-> modifying, so it is unfortunately true that they preserve such a  
-> broken
-> history with empty commits.
 
->> 'format-patch', 'send-email', 'apply', 'am', 'rebase' (automatic,
->> non-fast-forward; and --interactive).
->
-> These are all about creating history afresh, and they actively  
-> discourage
-> empty commits to be (re)created.
->
-> There is no "uneven treatment".
+--VI7iFJw/I65Bwf78
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
->> 36863af16e (git-commit --allow-empty) says "This is primarily for
->> use by foreign scm interface scripts.". Is this the only case
->> where empty commits _should_ be used?
->
-> If foreign scm recorded an empty commit, it would be nice to be  
-> able to
-> recreate such a broken history _if the user wanted to_, and that is  
-> where
-> the --allow-empty option can be used.
+On Sat, Mar 07, 2009 at 08:27:22PM -0500, Jeff King <peff@peff.net> wrote:
+> diff --git a/builtin-ls-files.c b/builtin-ls-files.c
+> index 1742c0f..437c366 100644
+> --- a/builtin-ls-files.c
+> +++ b/builtin-ls-files.c
+> @@ -454,8 +454,8 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
+>  		OPT_BIT(0, "directory", &dir.flags,
+>  			"show 'other' directories' name only",
+>  			DIR_SHOW_OTHER_DIRECTORIES),
+> -		OPT_BIT(0, "empty-directory", &dir.flags,
+> -			"list empty directories",
+> +		OPT_BIT(0, "no-empty-directory", &dir.flags,
+> +			"don't show empty directories",
+>  			DIR_HIDE_EMPTY_DIRECTORIES),
+>  		OPT_BOOLEAN('u', "unmerged", &show_unmerged,
+>  			"show unmerged files in the output"),
 
-Thank you for the clarification. I will explain the source of my  
-confusion.
+Thanks for catching this. But then why not using PARSE_OPT_NONEG?
 
-The current documentation "Usually recording [an empty commit] is a  
-mistake... This option ... is primarily for use by foreign scm  
-interface scripts." implied to me that there was room outside foreign  
-scm interface for "normal" use of empty commits.
+That would avoid --no-no-empty-directory.
 
-My confusion was that I took "usually a mistake" to refer to the case  
-where the user meant to commit content changes but forgot to first  
-stage any changed content. But your clarification shows that "usually  
-a mistake" really means that making any empty commit, intentional or  
-not, is (considered to be) a fundamental misuse of SCM machinery.
+--VI7iFJw/I65Bwf78
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-Would it be acceptable to strengthen the language in the  
-documentation for --allow-empty? Possibly something like the  
-following paragraph:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-Empty commits are a broken concept and should never be made during
-normal usage. By default, the command prevents you
-from making such a commit. This option bypasses the safety, and is
-primarily for use by foreign scm interface scripts.
+iEYEARECAAYFAkm0NOgACgkQe81tAgORUJZOFgCgjiYRxznkaE8s3ou1neFdC5Pt
+/JYAn1kkCe0dgwz8r19Gu6JNuafjabvg
+=nwJj
+-----END PGP SIGNATURE-----
 
-If such a change is acceptable, I will send a patch.
-
--- 
-Chris
+--VI7iFJw/I65Bwf78--
