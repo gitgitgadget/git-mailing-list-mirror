@@ -1,88 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFD] builtin-revert.c: release index lock when
- cherry-picking an empty commit
-Date: Sun, 08 Mar 2009 12:45:55 -0700
-Message-ID: <7v8wnflrws.fsf@gitster.siamese.dyndns.org>
-References: <1236418251-16947-1-git-send-email-chris_johnsen@pobox.com>
- <20090308144240.GA30794@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Chris Johnsen <chris_johnsen@pobox.com>,
-	Miklos Vajna <vmiklos@frugalware.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Mar 08 20:47:46 2009
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: [PATCH] Create USE_ST_TIMESPEC and turn it on for Darwin
+Date: Sun,  8 Mar 2009 16:04:28 -0400
+Message-ID: <1236542668-83333-1-git-send-email-benji@silverinsanity.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Mar 08 21:06:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgOyH-0007T2-W0
-	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 20:47:38 +0100
+	id 1LgPGO-0004oK-VF
+	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 21:06:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753360AbZCHTqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2009 15:46:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753294AbZCHTqJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 15:46:09 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48102 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753043AbZCHTqI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2009 15:46:08 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 6ABDE4819;
-	Sun,  8 Mar 2009 15:46:05 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 88EFB4814; Sun, 
- 8 Mar 2009 15:45:57 -0400 (EDT)
-In-Reply-To: <20090308144240.GA30794@coredump.intra.peff.net> (Jeff King's
- message of "Sun, 8 Mar 2009 10:42:40 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: C3140B86-0C19-11DE-B48E-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
+	id S1753703AbZCHUEg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2009 16:04:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753654AbZCHUEg
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 16:04:36 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:37561 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753289AbZCHUEf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2009 16:04:35 -0400
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 729F51FFC3FB; Sun,  8 Mar 2009 20:04:27 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.8 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from localhost.localdomain (cpe-74-74-137-205.rochester.res.rr.com [74.74.137.205])
+	by silverinsanity.com (Postfix) with ESMTPA id 3C20A1FFC043;
+	Sun,  8 Mar 2009 20:04:23 +0000 (UTC)
+X-Mailer: git-send-email 1.6.2.222.g01cbd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112635>
 
-Jeff King <peff@peff.net> writes:
+Not all OSes use st_ctim and st_mtim in their struct stat.  In
+particular, it appears that OS X uses st_*timespec instead.  So add a
+Makefile variable and #define called USE_ST_TIMESPEC to switch the
+USE_NSEC defines to use st_*timespec.
 
->   1. Declare appended newline a forbidden style, fix all existing cases
->      in the test suite, and be on the lookout for new ones.
->
->      The biggest problem with this option is that we have no automated
->      way of policing. Such tests will just silently pass on the broken
->      platform.
->
->   2. Have test_run_ canonicalize the snippet by removing trailing
->      newlines.
->
->   3. Declare FreeBSD's /bin/sh unfit for git consumption, and require
->      bash for the test suite.
->
-> I think (2) is the most reasonable option of those choices.
->
-> We could also try to convince FreeBSD that it's a bug, but that doesn't
-> change the fact that the tests are broken on every existing version.
+This also turns it on by default for OS X (Darwin) machines.  Likely
+this is a sane default for other BSD kernels as well, but I don't have
+any to test that assumption on.
 
-If this part from your analysis is true for a shell:
+Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
+---
 
-> eval 'false
->
-> '
-> echo status is $?
->
-> generates:
-> ...
->   status is 0
+ This is on top of "next".
 
-I would be very tempted to declare that shell is unfit for any serious
-use, not just for test suite.  Removing the empty line at the end of a
-scriptlet that such a broken shell misinterprets as an empty command
-that is equivalent to ":" (or "true") might hide breakages in the test
-suite, but
+ Now time to go debug a Bus Error in git-grep that made this hard to find.
 
- (1) eval "$string" is used outside of test suite, most notably "am" and
-     "bisect".  I think "am"'s use is safe, but I wouldn't be surprised if
-     the scriptlet "bisect" internally creates has empty lines if only for
-     debuggability; and more importantly
+ Makefile          |    7 +++++++
+ git-compat-util.h |    5 +++++
+ 2 files changed, 12 insertions(+), 0 deletions(-)
 
- (2) who knows what _other_ things may be broken in such a shell?
+diff --git a/Makefile b/Makefile
+index 9a23aa5..4bdaad7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -126,6 +126,9 @@ all::
+ # randomly break unless your underlying filesystem supports those sub-second
+ # times (my ext3 doesn't).
+ #
++# Define USE_ST_TIMESPEC if your "struct stat" uses "st_ctimespec" instead of
++# "st_ctim"
++#
+ # Define NO_NSEC if your "struct stat" does not have "st_ctim.tv_nsec"
+ # available.  This automatically turns USE_NSEC off.
+ #
+@@ -660,6 +663,7 @@ ifeq ($(uname_S),Darwin)
+ 	endif
+ 	NO_MEMMEM = YesPlease
+ 	THREADED_DELTA_SEARCH = YesPlease
++	USE_ST_TIMESPEC = YesPlease
+ endif
+ ifeq ($(uname_S),SunOS)
+ 	NEEDS_SOCKET = YesPlease
+@@ -925,6 +929,9 @@ endif
+ ifdef NO_ST_BLOCKS_IN_STRUCT_STAT
+ 	BASIC_CFLAGS += -DNO_ST_BLOCKS_IN_STRUCT_STAT
+ endif
++ifdef USE_ST_TIMESPEC
++	BASIC_CFLAGS += -DUSE_ST_TIMESPEC
++endif
+ ifdef NO_NSEC
+ 	BASIC_CFLAGS += -DNO_NSEC
+ endif
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 83d8389..1906253 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -393,8 +393,13 @@ void git_qsort(void *base, size_t nmemb, size_t size,
+ #define ST_CTIME_NSEC(st) 0
+ #define ST_MTIME_NSEC(st) 0
+ #else
++#ifdef USE_ST_TIMESPEC
++#define ST_CTIME_NSEC(st) ((unsigned int)((st).st_ctimespec.tv_nsec))
++#define ST_MTIME_NSEC(st) ((unsigned int)((st).st_mtimespec.tv_nsec))
++#else
+ #define ST_CTIME_NSEC(st) ((unsigned int)((st).st_ctim.tv_nsec))
+ #define ST_MTIME_NSEC(st) ((unsigned int)((st).st_mtim.tv_nsec))
+ #endif
++#endif
+ 
+ #endif
+-- 
+1.6.2.221.g2411c.dirty
