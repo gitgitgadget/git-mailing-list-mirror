@@ -1,65 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Lee Henson <lee.m.henson@gmail.com>
 Subject: Re: Git for Windows 1.6.2-preview20090308
-Date: Sun, 8 Mar 2009 12:54:58 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903081253510.10279@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0903080132470.10279@pacific.mpi-cbg.de> <200903081413.28354.angavrilov@gmail.com>
-Reply-To: Johannes.Schindelin@gmx.de
+Date: Sun, 8 Mar 2009 12:59:46 +0000
+Message-ID: <935bb4150903080559s5cfc76e4u83d9ed8bb2becd0e@mail.gmail.com>
+References: <alpine.DEB.1.00.0903080132470.10279@pacific.mpi-cbg.de>
+Reply-To: lee.m.henson@gmail.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: msysgit@googlegroups.com, git@vger.kernel.org,  Junio C Hamano <gitster@pobox.com>
-To: Alexander Gavrilov <angavrilov@gmail.com>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Sun Mar 08 12:54:58 2009
+Content-Type: multipart/alternative; boundary=0016e64c2718a49a7a04649b172b
+Cc: git@vger.kernel.org, msysgit@googlegroups.com
+To: Johannes.Schindelin@gmx.de
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Sun Mar 08 14:01:25 2009
 Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from wf-out-1516.google.com ([209.85.200.161])
+Received: from mail-qy0-f163.google.com ([209.85.221.163])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgHar-0001nc-Gc
-	for gcvm-msysgit@m.gmane.org; Sun, 08 Mar 2009 12:54:57 +0100
-Received: by wf-out-1516.google.com with SMTP id r34so344350wfc.33
-        for <gcvm-msysgit@m.gmane.org>; Sun, 08 Mar 2009 04:53:32 -0700 (PDT)
+	id 1LgId8-0008VY-0W
+	for gcvm-msysgit@m.gmane.org; Sun, 08 Mar 2009 14:01:22 +0100
+Received: by qyk35 with SMTP id 35so1612752qyk.3
+        for <gcvm-msysgit@m.gmane.org>; Sun, 08 Mar 2009 05:59:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=beta;
         h=domainkey-signature:received:received:x-sender:x-apparently-to
          :received:received:received-spf:authentication-results:received
-         :received:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc
-         :subject:in-reply-to:message-id:references:user-agent:mime-version
-         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        bh=aY9AVGVg5LgedjEm/eoUOUqtwvkcO40zaa1vsjSyAOs=;
-        b=YQYPriebVAnqIU62DUDdc2v+AisXEIJPQhhRI9gHmV6XpmZ7MG5OLS2UWmrif78TvX
-         2S0mXeNQzLzVyRD0Dv80LQ47XKC1go/VpJXN18U4q3BxmEOFgahW4qiLCLTww7diA+eO
-         eMEsXOjzHXr4z1eeXu7t5vQJlDd4W3PpoLNgk=
+         :dkim-signature:domainkey-signature:mime-version:received
+         :in-reply-to:references:date:message-id:subject:from:to:cc
+         :content-type:reply-to:sender:precedence:x-google-loop:mailing-list
+         :list-id:list-post:list-help:list-unsubscribe:x-beenthere-env
+         :x-beenthere;
+        bh=ZqadKcCDlZUBCQT/M49jwEHMOAMYkK9pkSUUDxlSGxg=;
+        b=IkJS1liklaNo5aeJ2CRM0wf6MwOSlQtxGpsF0Otve0yCpOFXwU4MY8ZJvDzlEc34zb
+         vno8H/1sc7JR6O8swZA4kwa10FJbhQ565Sc8dYlv1RDcD4IvBG8F5RPXNC5sLJ197gRH
+         H4XBK9Jo/wiIUMCUKA6oYt8vgMy5po3nuBImg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlegroups.com; s=beta;
         h=x-sender:x-apparently-to:received-spf:authentication-results
-         :x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject
-         :in-reply-to:message-id:references:user-agent:mime-version
-         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        b=aJu9hULaaD3SG1ibuMAKlWykIcfD1p3LEavDrfQaii8qDfuZkUoUVbCKU+GkC4+xZX
-         hjaK21M6lx6BCk9mZ/8bOgX/P/X8+X6dvs8597CrO/eq0EDPF3tXshabsZIR2vTKhmcy
-         t/xNUKySBnkOudmqmfADd9pGpJssYOyzehg34=
-Received: by 10.142.230.9 with SMTP id c9mr333959wfh.17.1236513203770;
-        Sun, 08 Mar 2009 04:53:23 -0700 (PDT)
-Received: by 10.177.6.2 with SMTP id j2gr3855yqi.0;
-	Sun, 08 Mar 2009 04:53:23 -0700 (PDT)
-X-Sender: Johannes.Schindelin@gmx.de
+         :dkim-signature:domainkey-signature:mime-version:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type:reply-to
+         :sender:precedence:x-google-loop:mailing-list:list-id:list-post
+         :list-help:list-unsubscribe:x-beenthere-env:x-beenthere;
+        b=audIzMgea5XUMPcwIhqGd6oVNUnEO9FNvUH9WKzcSy0fMgEdm0VUf5YQhVDOkHYPAN
+         sjl6Tm8jNKyUuCEprPpGyJ8Y/IqU1K1eMgMdwcLTho/My5gbKhBrUQ9lOaKcGNBeMgKp
+         NNl5w3KMk4AgElp5zPGgM9+hDntaC+xq1EaGo=
+Received: by 10.229.73.145 with SMTP id q17mr438914qcj.27.1236517188098;
+        Sun, 08 Mar 2009 05:59:48 -0700 (PDT)
+Received: by 10.176.101.40 with SMTP id y40gr3863yqb.0;
+	Sun, 08 Mar 2009 05:59:48 -0700 (PDT)
+X-Sender: lee.m.henson@gmail.com
 X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.180.248.9 with SMTP id v9mr116632bkh.17.1236513203148; Sun, 08 Mar 2009 04:53:23 -0700 (PDT)
-Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by gmr-mx.google.com with SMTP id 15si250087bwz.6.2009.03.08.04.53.23; Sun, 08 Mar 2009 04:53:23 -0700 (PDT)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
-Received: (qmail invoked by alias); 08 Mar 2009 11:53:22 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38] by mail.gmx.net (mp005) with SMTP; 08 Mar 2009 12:53:22 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX195ZTg1uYJ5fSYnAHUCPgOzvNGgzV9+9sMTo1M2Nk FZXarXCoAMLswz
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <200903081413.28354.angavrilov@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+Received: by 10.210.27.20 with SMTP id a20mr203992eba.6.1236517187311; Sun, 08 Mar 2009 05:59:47 -0700 (PDT)
+Received: from mail-ew0-f170.google.com (mail-ew0-f170.google.com [209.85.219.170]) by gmr-mx.google.com with ESMTP id 15si350861ewy.0.2009.03.08.05.59.46; Sun, 08 Mar 2009 05:59:46 -0700 (PDT)
+Received-SPF: pass (google.com: domain of lee.m.henson@gmail.com designates 209.85.219.170 as permitted sender) client-ip=209.85.219.170;
+Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of lee.m.henson@gmail.com designates 209.85.219.170 as permitted sender) smtp.mail=lee.m.henson@gmail.com; dkim=pass (test mode) header.i=@gmail.com
+Received: by mail-ew0-f170.google.com with SMTP id 18so633709ewy.25 for <msysgit@googlegroups.com>; Sun, 08 Mar 2009 05:59:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:mime-version:received:in-reply-to:references :date:message-id:subject:from:to:cc:content-type; bh=H/fKerDoXDrJkoDD9ZfMZUQfMD0dBMCfW2876Ay2rIM=; b=laWZgYmukvhD9PIo6rb24GNbtMKXXLcJj9fTq2jJu+ggH+GILpFKLxJ90wYI+M3cTz x4vuuhuahfAtiZLnWOY672gmNJCB2vNXkYwqDlScYiiDqQnMcEdsxLTc2aeQqCKdBvK4 S5We6dU7FjgcGpYnqNT3uFbz/8GTeFckrgh+Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=mime-version:in-reply-to:references:date:message-id:subject:from:to :cc:content-type; b=SoGBfnLUM/b4pZQamXcRo7k4eMFmxjZ2oaF5ZraOA2/JIIR5a6NCzYBh+KY8NZ1k0l AyIiPuF59T4Fv4NdwYILKoz5TbvtrwI7icCmE4SJXlyQ0Lx274VG1zibKvX3kWYBG1CP 2ix4i1+lWIGXQjbDRQx95C4vApxkUnVkFpfmA=
+Received: by 10.216.19.68 with SMTP id m46mr1772770wem.7.1236517186214; Sun,  08 Mar 2009 05:59:46 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0903080132470.10279@pacific.mpi-cbg.de>
 Sender: msysgit@googlegroups.com
 Precedence: bulk
 X-Google-Loop: groups
@@ -72,37 +67,191 @@ List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
 	<mailto:msysgit+unsubscribe@googlegroups.com>
 X-BeenThere-Env: msysgit@googlegroups.com
 X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112618>
 
 
-Hi,
+--0016e64c2718a49a7a04649b172b
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 
-On Sun, 8 Mar 2009, Alexander Gavrilov wrote:
+Thanks to everyone involved in the production of this installer!
 
-> On Sunday 08 March 2009 04:10:21 Johannes Schindelin wrote:
-> > I just released a new version of Git for Windows (TAFKA WinGit).  It is 
-> > basically Git 1.6.2 plus a few patches.  Please find the installer here:
-> > 
-> > 	http://msysgit.googlecode.com/
-> > 
-> > Disclaimer: Git for Windows is still in a state where I do _not_ recommend 
-> > using it unless you have the means to fix issues.  Unlike git.git 
-> > developer community, the msysGit team is heavily undermanned.
-> > 
-> > Known issues
-> 
-> I've just noticed that the following git-gui fixes haven't been merged in 1.6.2:
-> 
->   git-gui: Support more git version notations.
->   git-gui: Avoid an infinite rescan loop in handle_empty_diff.
->   git-gui: Fix post-commit status with subject in non-locale encoding
-> 
-> The second one is a fix for a rather important problem reported on the msysgit list.
-> The last one is msysgit bug #181.
+2009/3/8 Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-Thanks for keeping an eye on things.  Would you agree that we can wait a 
-few days, maybe this whole week, to collect issues like these, and then 
-release another installer with the issues fixed?
+>
+> Hi,
+>
+> I just released a new version of Git for Windows (TAFKA WinGit).  It is
+> basically Git 1.6.2 plus a few patches.  Please find the installer here:
+>
+>        http://msysgit.googlecode.com/
+>
+> Disclaimer: Git for Windows is still in a state where I do _not_ recommend
+> using it unless you have the means to fix issues.  Unlike git.git
+> developer community, the msysGit team is heavily undermanned.
+>
+> Known issues
+>
+> - Some commands are not yet supported on Windows and excluded from the
+>  installation; namely: git archimport, git cvsexportcommit, git
+>  cvsimport, git cvsserver, git filter-branch, git instaweb, git
+>  send-email, git shell.
+>
+> - The Logitec QuickCam software can cause spurious crashes. See "Why does
+>  make often crash creating a sh.exe.stackdump file when I try to compile
+>  my source code?" in the MinGW FAQs
+>  (http://www.mingw.org/MinGWiki/index.php/FAQ).
+>
+> - The Quick Launch icon will only be installed for the user running setup
+>  (typically the Administrator). This is a technical restriction and will
+>  not change.
+>
+> - Git Bash launched through the Explorer shell extension does not have the
+>  git icon in its taskbar. This is a technical restriction and will not
+>  change.
+>
+> - git send-mail does not work properly (Issue 27).
+>
+> - curl uses $HOME/_netrc instead of $HOME/.netrc.
+>
+> - If you want to specify a different location for --upload-pack, you have
+>  to start the absolute path with two slashes. Otherwise MSys will mangle
+>  the path.
+>
+> - git clone fails when the repository contains UTF-8 filepaths (Issue 80).
+>
+> Changes since Git-1.6.1-preview20081225
+>
+> New Features
+> - Comes with official git 1.6.2.
+> - Comes with upgraded vim 7.2.
+> - Compiled with GCC 4.3.3.
+> - The user can choose the preferred CR/LF behavior in the installer now.
+> - Peter Kodl contributed support for hardlinks on Windows.
+> - The bash prompt now shows information about the current repository.
+>
+> Bugfixes
+> - If supported by the file system, pack files can grow larger than 2gb.
+> - Comes with updated msys-1.0.dll (should fix some Vista issues).
+> - Assorted fixes to support the new libexec/git-core/ layout better.
+> - Read-only files can be properly replaced now.
+> - git-svn is included again (original caveats still apply).
+> - Obsolete programs from previous installations are cleaned up.
+>
+>
+> So what are the next steps?
+>
+> Hannes is busy sorting out the differences between the test suites in
+> git.git and mingw.git.
+>
+> Thanks to the awesome efforts of both Hannes and Steffen, the rest of the
+> differences are really small (the biggest being Peter's hard link patch).
+> I'll try to put together a patch series in the next few weeks.
+>
+> Ciao,
+> Dscho
+>
+>
 
-Ciao,
-Dscho
+--0016e64c2718a49a7a04649b172b
+Content-Type: text/html; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+
+Thanks to everyone involved in the production of this installer!<br><br><di=
+v class=3D"gmail_quote">2009/3/8 Johannes Schindelin <span dir=3D"ltr">&lt;=
+<a href=3D"mailto:Johannes.Schindelin@gmx.de">Johannes.Schindelin@gmx.de</a=
+>&gt;</span><br>
+<blockquote class=3D"gmail_quote" style=3D"border-left: 1px solid rgb(204, =
+204, 204); margin: 0pt 0pt 0pt 0.8ex; padding-left: 1ex;"><br>
+Hi,<br>
+<br>
+I just released a new version of Git for Windows (TAFKA WinGit). =A0It is<b=
+r>
+basically Git 1.6.2 plus a few patches. =A0Please find the installer here:<=
+br>
+<br>
+ =A0 =A0 =A0 =A0<a href=3D"http://msysgit.googlecode.com/" target=3D"_blank=
+">http://msysgit.googlecode.com/</a><br>
+<br>
+Disclaimer: Git for Windows is still in a state where I do _not_ recommend<=
+br>
+using it unless you have the means to fix issues. =A0Unlike git.git<br>
+developer community, the msysGit team is heavily undermanned.<br>
+<br>
+Known issues<br>
+<br>
+- Some commands are not yet supported on Windows and excluded from the<br>
+ =A0installation; namely: git archimport, git cvsexportcommit, git<br>
+ =A0cvsimport, git cvsserver, git filter-branch, git instaweb, git<br>
+ =A0send-email, git shell.<br>
+<br>
+- The Logitec QuickCam software can cause spurious crashes. See &quot;Why d=
+oes<br>
+ =A0make often crash creating a sh.exe.stackdump file when I try to compile=
+<br>
+ =A0my source code?&quot; in the MinGW FAQs<br>
+ =A0(<a href=3D"http://www.mingw.org/MinGWiki/index.php/FAQ" target=3D"_bla=
+nk">http://www.mingw.org/MinGWiki/index.php/FAQ</a>).<br>
+<br>
+- The Quick Launch icon will only be installed for the user running setup<b=
+r>
+ =A0(typically the Administrator). This is a technical restriction and will=
+<br>
+ =A0not change.<br>
+<br>
+- Git Bash launched through the Explorer shell extension does not have the<=
+br>
+ =A0git icon in its taskbar. This is a technical restriction and will not<b=
+r>
+ =A0change.<br>
+<br>
+- git send-mail does not work properly (Issue 27).<br>
+<br>
+- curl uses $HOME/_netrc instead of $HOME/.netrc.<br>
+<br>
+- If you want to specify a different location for --upload-pack, you have<b=
+r>
+ =A0to start the absolute path with two slashes. Otherwise MSys will mangle=
+<br>
+ =A0the path.<br>
+<br>
+- git clone fails when the repository contains UTF-8 filepaths (Issue 80).<=
+br>
+<br>
+Changes since Git-1.6.1-preview20081225<br>
+<br>
+New Features<br>
+- Comes with official git 1.6.2.<br>
+- Comes with upgraded vim 7.2.<br>
+- Compiled with GCC 4.3.3.<br>
+- The user can choose the preferred CR/LF behavior in the installer now.<br=
+>
+- Peter Kodl contributed support for hardlinks on Windows.<br>
+- The bash prompt now shows information about the current repository.<br>
+<br>
+Bugfixes<br>
+- If supported by the file system, pack files can grow larger than 2gb.<br>
+- Comes with updated msys-1.0.dll (should fix some Vista issues).<br>
+- Assorted fixes to support the new libexec/git-core/ layout better.<br>
+- Read-only files can be properly replaced now.<br>
+- git-svn is included again (original caveats still apply).<br>
+- Obsolete programs from previous installations are cleaned up.<br>
+<br>
+<br>
+So what are the next steps?<br>
+<br>
+Hannes is busy sorting out the differences between the test suites in<br>
+git.git and mingw.git.<br>
+<br>
+Thanks to the awesome efforts of both Hannes and Steffen, the rest of the<b=
+r>
+differences are really small (the biggest being Peter&#39;s hard link patch=
+).<br>
+I&#39;ll try to put together a patch series in the next few weeks.<br>
+<br>
+Ciao,<br>
+Dscho<br>
+<br>
+</blockquote></div><br>
+
+--0016e64c2718a49a7a04649b172b--
