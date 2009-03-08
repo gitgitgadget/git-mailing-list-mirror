@@ -1,248 +1,193 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 4/4] archive: use parseopt for local-only options
-Date: Sun, 08 Mar 2009 19:21:53 +0100
-Message-ID: <49B40CC1.2090906@lsrfire.ath.cx>
-References: <7vfxhs2shk.fsf@gitster.siamese.dyndns.org> <49B2C784.90800@lsrfire.ath.cx>
+From: Sam Hocevar <sam@zoy.org>
+Subject: [PATCH 1/2] fast-import: no longer compute the SHA1 data in
+	store_object(). Instead, do it in the caller through the new
+	sha1_object() and parse_object_data() functions.
+Date: Sun, 8 Mar 2009 19:35:34 +0100
+Message-ID: <20090308183533.GA9585@zoy.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, carlos.duclos@nokia.com,
-	Pierre Habouzit <madcoder@madism.org>
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 08 19:23:26 2009
+X-From: git-owner@vger.kernel.org Sun Mar 08 19:43:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgNen-0005gS-HX
-	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 19:23:26 +0100
+	id 1LgNxc-00037Y-Fe
+	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 19:42:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753865AbZCHSV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2009 14:21:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753373AbZCHSV5
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 14:21:57 -0400
-Received: from india601.server4you.de ([85.25.151.105]:46152 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753245AbZCHSV4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2009 14:21:56 -0400
-Received: from [10.0.1.101] (p57B7C244.dip.t-dialin.net [87.183.194.68])
-	by india601.server4you.de (Postfix) with ESMTPSA id B63E92F8063;
-	Sun,  8 Mar 2009 19:21:53 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
-In-Reply-To: <49B2C784.90800@lsrfire.ath.cx>
+	id S1753542AbZCHSlY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2009 14:41:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753384AbZCHSlY
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 14:41:24 -0400
+Received: from poulet.zoy.org ([80.65.228.129]:53939 "EHLO poulet.zoy.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753425AbZCHSlX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2009 14:41:23 -0400
+Received: from poukram (localhost [127.0.0.1])
+	by poulet.zoy.org (Postfix) with ESMTP id 39084120416
+	for <git@vger.kernel.org>; Sun,  8 Mar 2009 19:41:20 +0100 (CET)
+Received: by poukram (Postfix, from userid 1000)
+	id 557EB7F9E5; Sun,  8 Mar 2009 19:35:33 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112629>
 
-Replace the hand-rolled parsers that find and remove --remote and --exec
-by a parseopt parser that also handles --output.
+This is necessary if we want to send deflated data to store_object() without
+keeping the original data in memory.
 
-All three options only have a meaning if no remote server is used or on
-the local side.  They must be rejected by upload-archive and should not
-be sent to the server by archive.
-
-We can't use a single parser for both remote and local side because the
-remote end possibly understands a different set of options than the
-local side.  A local parser would then wrongly accuse options valid on
-the other side as being incorrect.
-
-This patch implements a very forgiving parser that understands only the
-three options mentioned above.  All others are passed to the normal,
-complete parser in archive.c (running either locally in archive, or
-remotely in upload-archive).  This normal parser definition contains
-dummy entries for the three options, in order for them to appear in the
-help screen.
-
-The parseopt parser allows multiple occurrences of --remote and --exec
-unlike the previous one; the one specified last wins.  This looseness
-is acceptable, I think.
-
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Signed-off-by: Sam Hocevar <sam@zoy.org>
 ---
- archive.c         |   18 +--------
- builtin-archive.c |  103 +++++++++++++++++++---------------------------------
- 2 files changed, 40 insertions(+), 81 deletions(-)
+ fast-import.c |   58 +++++++++++++++++++++++++++++++++++++++++---------------
+ 1 files changed, 42 insertions(+), 16 deletions(-)
 
-diff --git a/archive.c b/archive.c
-index c6aea83..96b62d4 100644
---- a/archive.c
-+++ b/archive.c
-@@ -239,19 +239,6 @@ static void parse_treeish_arg(const char **argv,
- 	ar_args->time = archive_time;
+diff --git a/fast-import.c b/fast-import.c
+index 3748ddf..6419d00 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -1022,29 +1022,35 @@ static size_t encode_header(
+ 	return n;
  }
  
--static void create_output_file(const char *output_file)
--{
--	int output_fd = open(output_file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
--	if (output_fd < 0)
--		die("could not create archive file: %s ", output_file);
--	if (output_fd != 1) {
--		if (dup2(output_fd, 1) < 0)
--			die("could not redirect output");
--		else
--			close(output_fd);
--	}
--}
--
- #define OPT__COMPR(s, v, h, p) \
- 	{ OPTION_SET_INT, (s), NULL, (v), NULL, (h), \
- 	  PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, (p) }
-@@ -306,13 +293,12 @@ static int parse_archive_args(int argc, const char **argv,
- 		die("Unexpected option --remote");
- 	if (exec)
- 		die("Option --exec can only be used together with --remote");
-+	if (output)
-+		die("Unexpected option --output");
+-static int store_object(
++static void sha1_object(
+ 	enum object_type type,
+ 	struct strbuf *dat,
+-	struct last_object *last,
+-	unsigned char *sha1out,
+-	uintmax_t mark)
++	unsigned char *sha1out)
+ {
+-	void *out, *delta;
+-	struct object_entry *e;
+ 	unsigned char hdr[96];
+-	unsigned char sha1[20];
+-	unsigned long hdrlen, deltalen;
++	unsigned long hdrlen;
+ 	git_SHA_CTX c;
+-	z_stream s;
  
- 	if (!base)
- 		base = "";
- 
--	if (output)
--		create_output_file(output);
--
- 	if (list) {
- 		for (i = 0; i < ARRAY_SIZE(archivers); i++)
- 			printf("%s\n", archivers[i].name);
-diff --git a/builtin-archive.c b/builtin-archive.c
-index 5ceec43..60adef9 100644
---- a/builtin-archive.c
-+++ b/builtin-archive.c
-@@ -5,44 +5,35 @@
- #include "cache.h"
- #include "builtin.h"
- #include "archive.h"
-+#include "parse-options.h"
- #include "pkt-line.h"
- #include "sideband.h"
- 
--static int run_remote_archiver(const char *remote, int argc,
--			       const char **argv)
-+static void create_output_file(const char *output_file)
-+{
-+	int output_fd = open(output_file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
-+	if (output_fd < 0)
-+		die("could not create archive file: %s ", output_file);
-+	if (output_fd != 1) {
-+		if (dup2(output_fd, 1) < 0)
-+			die("could not redirect output");
-+		else
-+			close(output_fd);
-+	}
+ 	hdrlen = sprintf((char*)hdr,"%s %lu", typename(type),
+ 		(unsigned long)dat->len) + 1;
+ 	git_SHA1_Init(&c);
+ 	git_SHA1_Update(&c, hdr, hdrlen);
+ 	git_SHA1_Update(&c, dat->buf, dat->len);
+-	git_SHA1_Final(sha1, &c);
+-	if (sha1out)
+-		hashcpy(sha1out, sha1);
++	git_SHA1_Final(sha1out, &c);
 +}
 +
-+static int run_remote_archiver(int argc, const char **argv,
-+			       const char *remote, const char *exec)
- {
- 	char *url, buf[LARGE_PACKET_MAX];
- 	int fd[2], i, len, rv;
- 	struct child_process *conn;
--	const char *exec = "git-upload-archive";
--	int exec_at = 0, exec_value_at = 0;
--
--	for (i = 1; i < argc; i++) {
--		const char *arg = argv[i];
--		if (!prefixcmp(arg, "--exec=")) {
--			if (exec_at)
--				die("multiple --exec specified");
--			exec = arg + 7;
--			exec_at = i;
--		} else if (!strcmp(arg, "--exec")) {
--			if (exec_at)
--				die("multiple --exec specified");
--			if (i + 1 >= argc)
--				die("option --exec requires a value");
--			exec = argv[i + 1];
--			exec_at = i;
--			exec_value_at = ++i;
--		}
--	}
++static int store_object(
++	enum object_type type,
++	struct strbuf *dat,
++	struct last_object *last,
++	unsigned char *sha1,
++	uintmax_t mark)
++{
++	void *out, *delta;
++	struct object_entry *e;
++	unsigned char hdr[96];
++	unsigned long hdrlen, deltalen;
++	z_stream s;
  
- 	url = xstrdup(remote);
- 	conn = git_connect(fd, url, exec, 0);
+ 	e = insert_object(sha1);
+ 	if (mark)
+@@ -1336,6 +1342,7 @@ static void store_tree(struct tree_entry *root)
+ 	}
  
--	for (i = 1; i < argc; i++) {
--		if (i == exec_at || i == exec_value_at)
--			continue;
-+	for (i = 1; i < argc; i++)
- 		packet_write(fd[1], "argument %s\n", argv[i]);
--	}
- 	packet_flush(fd[1]);
+ 	mktree(t, 1, &new_tree);
++	sha1_object(OBJ_TREE, &new_tree, root->versions[1].sha1);
+ 	store_object(OBJ_TREE, &new_tree, &lo, root->versions[1].sha1, 0);
  
- 	len = packet_read_line(fd[0], buf, sizeof(buf));
-@@ -69,51 +60,33 @@ static int run_remote_archiver(const char *remote, int argc,
- 	return !!rv;
+ 	t->delta_depth = lo.depth;
+@@ -1702,7 +1709,12 @@ static void parse_mark(void)
+ 		next_mark = 0;
  }
  
--static const char *extract_remote_arg(int *ac, const char **av)
--{
--	int ix, iy, cnt = *ac;
--	int no_more_options = 0;
--	const char *remote = NULL;
--
--	for (ix = iy = 1; ix < cnt; ix++) {
--		const char *arg = av[ix];
--		if (!strcmp(arg, "--"))
--			no_more_options = 1;
--		if (!no_more_options) {
--			if (!prefixcmp(arg, "--remote=")) {
--				if (remote)
--					die("Multiple --remote specified");
--				remote = arg + 9;
--				continue;
--			} else if (!strcmp(arg, "--remote")) {
--				if (remote)
--					die("Multiple --remote specified");
--				if (++ix >= cnt)
--					die("option --remote requires a value");
--				remote = av[ix];
--				continue;
--			}
--			if (arg[0] != '-')
--				no_more_options = 1;
--		}
--		if (ix != iy)
--			av[iy] = arg;
--		iy++;
--	}
--	if (remote) {
--		av[--cnt] = NULL;
--		*ac = cnt;
--	}
--	return remote;
--}
-+#define PARSE_OPT_KEEP_ALL ( PARSE_OPT_KEEP_DASHDASH | 	\
-+			     PARSE_OPT_KEEP_ARGV0 | 	\
-+			     PARSE_OPT_KEEP_UNKNOWN |	\
-+			     PARSE_OPT_NO_INTERNAL_HELP	)
- 
- int cmd_archive(int argc, const char **argv, const char *prefix)
+-static void parse_data(struct strbuf *sb)
++/* This actually parses a "data" command, with the addition that if sha1out
++ * is not NULL, it will also compute the sha1 on the fly. */
++static void parse_object_data(
++	enum object_type type,
++	struct strbuf *sb,
++	unsigned char *sha1out)
  {
-+	const char *exec = "git-upload-archive";
-+	const char *output = NULL;
- 	const char *remote = NULL;
-+	struct option local_opts[] = {
-+		OPT_STRING(0, "output", &output, "file",
-+			"write the archive to this file"),
-+		OPT_STRING(0, "remote", &remote, "repo",
-+			"retrieve the archive from remote repository <repo>"),
-+		OPT_STRING(0, "exec", &exec, "cmd",
-+			"path to the remote git-upload-archive command"),
-+		OPT_END()
-+	};
+ 	strbuf_reset(sb);
+ 
+@@ -1724,6 +1736,9 @@ static void parse_data(struct strbuf *sb)
+ 			strbuf_addch(sb, '\n');
+ 		}
+ 		free(term);
 +
-+	argc = parse_options(argc, argv, local_opts, NULL, PARSE_OPT_KEEP_ALL);
++		if(sha1out)
++			sha1_object(type, sb, sha1out);
+ 	}
+ 	else {
+ 		size_t n = 0, length;
+@@ -1737,11 +1752,19 @@ static void parse_data(struct strbuf *sb)
+ 					(unsigned long)(length - n));
+ 			n += s;
+ 		}
 +
-+	if (output)
-+		create_output_file(output);
++		if(sha1out)
++			sha1_object(type, sb, sha1out);
+ 	}
  
--	remote = extract_remote_arg(&argc, argv);
- 	if (remote)
--		return run_remote_archiver(remote, argc, argv);
-+		return run_remote_archiver(argc, argv, remote, exec);
+ 	skip_optional_lf();
+ }
  
- 	setvbuf(stderr, NULL, _IOLBF, BUFSIZ);
++static void parse_data(struct strbuf *sb)
++{
++	parse_object_data(OBJ_NONE, sb, NULL);
++}
++
+ static int validate_raw_date(const char *src, char *result, int maxlen)
+ {
+ 	const char *orig_src = src;
+@@ -1805,12 +1828,13 @@ static char *parse_ident(const char *buf)
  
+ static void parse_new_blob(void)
+ {
++	unsigned char sha1[20];
+ 	static struct strbuf buf = STRBUF_INIT;
+ 
+ 	read_next_command();
+ 	parse_mark();
+-	parse_data(&buf);
+-	store_object(OBJ_BLOB, &buf, &last_blob, NULL, next_mark);
++	parse_object_data(OBJ_BLOB, &buf, sha1);
++	store_object(OBJ_BLOB, &buf, &last_blob, sha1, next_mark);
+ }
+ 
+ static void unload_one_branch(void)
+@@ -1928,7 +1952,7 @@ static void file_change_m(struct branch *b)
+ 			p = uq.buf;
+ 		}
+ 		read_next_command();
+-		parse_data(&buf);
++		parse_object_data(OBJ_BLOB, &buf, sha1);
+ 		store_object(OBJ_BLOB, &buf, &last_blob, sha1, 0);
+ 	} else if (oe) {
+ 		if (oe->type != OBJ_BLOB)
+@@ -2211,6 +2235,7 @@ static void parse_new_commit(void)
+ 	free(author);
+ 	free(committer);
+ 
++	sha1_object(OBJ_COMMIT, &new_data, b->sha1);
+ 	if (!store_object(OBJ_COMMIT, &new_data, NULL, b->sha1, next_mark))
+ 		b->pack_id = pack_id;
+ 	b->last_commit = object_count_by_type[OBJ_COMMIT];
+@@ -2291,6 +2316,7 @@ static void parse_new_tag(void)
+ 	strbuf_addbuf(&new_data, &msg);
+ 	free(tagger);
+ 
++	sha1_object(OBJ_TAG, &new_data, t->sha1);
+ 	if (store_object(OBJ_TAG, &new_data, NULL, t->sha1, 0))
+ 		t->pack_id = MAX_PACK_ID;
+ 	else
 -- 
 1.6.2
