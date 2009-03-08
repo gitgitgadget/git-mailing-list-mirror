@@ -1,99 +1,82 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: JGit server performance
-Date: Sat, 7 Mar 2009 19:22:14 -0800
-Message-ID: <20090308032214.GU16213@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFD] builtin-revert.c: release index lock when
+ cherry-picking an empty commit
+Date: Sat, 07 Mar 2009 20:14:34 -0800
+Message-ID: <7v63ikmz11.fsf@gitster.siamese.dyndns.org>
+References: <1236418251-16947-1-git-send-email-chris_johnsen@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 08 04:28:18 2009
+Cc: git@vger.kernel.org, Miklos Vajna <vmiklos@frugalware.org>
+To: Chris Johnsen <chris_johnsen@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 08 05:16:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lg9gT-0005eR-Q9
-	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 04:28:14 +0100
+	id 1LgAQu-0004FQ-85
+	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 05:16:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752716AbZCHDWR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Mar 2009 22:22:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752624AbZCHDWQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 22:22:16 -0500
-Received: from george.spearce.org ([209.20.77.23]:59321 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752277AbZCHDWQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Mar 2009 22:22:16 -0500
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 5BBAF38211; Sun,  8 Mar 2009 03:22:14 +0000 (UTC)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753740AbZCHEOn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Mar 2009 23:14:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752320AbZCHEOn
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 23:14:43 -0500
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42196 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751203AbZCHEOn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Mar 2009 23:14:43 -0500
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7D0F6A087B;
+	Sat,  7 Mar 2009 23:14:40 -0500 (EST)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 460A0A0873; Sat,
+  7 Mar 2009 23:14:35 -0500 (EST)
+In-Reply-To: <1236418251-16947-1-git-send-email-chris_johnsen@pobox.com>
+ (Chris Johnsen's message of "Sat, 7 Mar 2009 03:30:51 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A50F20F8-0B97-11DE-9FC3-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112611>
 
-As Gerrit Code Review provides Gitosis-like functionality, but
-that is implemented through JGit's pure Java implementation, the
-performance of JGit's UploadPack matters to me.
+Chris Johnsen <chris_johnsen@pobox.com> writes:
 
-JGit is about 66% slower on my hardware when cloning the linux-2.6
-repository, compared to git-core (jgit 2m21s, git-core 1m23s).
+> When a cherry-pick of an empty commit is done, release the lock
+> held on the index.
+>
+> The fix is the same as was applied to similar code in 4271666046.
+>
+> Signed-off-by: Chris Johnsen <chris_johnsen@pobox.com>
 
-The bottlenecks are:
+Thanks.  Will apply.  We should handle possible refactoring as a separate
+topic.
 
-  ~41.2% in ObjectLoader.getCachedBytes()
+> UNEVEN TREATMENT OF EMPTY CHANGES
+>
+> It seems that empty commits suffer uneven treatment under various
+> patch-transport/history-rewriting mechanisms. They seem to be
+> handled okay in the most of the core (fetch, push, bundle all
+> seem to preserve empty commits, though I have not done rigorous
+> testing).
 
-    This is the tree objects being parsed out of the pack file.
-    The problem here (I believe) is we have horrible locality
-    when reading.  The delta base for a tree isn't in memory most
-    of the time, because its been evicted by other trees accessed
-    since the last time that tree was touched.
+They just transfer an existing history from one place to another without
+modifying, so it is unfortunately true that they preserve such a broken
+history with empty commits.
 
-    Conceptually this makes some sense, as ObjectWalk does a depth
-    first traversal through the tree of each commit, in most-recent
-    to least-recent commit order.  On a larger project like the
-    kernel we'll touch a lot more objects between two root trees,
-    and there isn't even any guarantee that two root trees that
-    appear near each other in the commit sequence have a delta
-    base relationship.
+> 'format-patch', 'send-email', 'apply', 'am', 'rebase' (automatic,
+> non-fast-forward; and --interactive).
 
-  ~20.5% in AbstractTreeIterator.getEntryObjectId()
+These are all about creating history afresh, and they actively discourage
+empty commits to be (re)created.
 
-    The bulk of the time here is really down in NB.decodeInt32().
-    We spend a lot of time converting an object id in a tree data
-    stream into an AnyObjectId (really a reused MutableObjectId)
-    so that we can probe the ObjectIdSubclassMap to see if we have
-    seen this object before.
+There is no "uneven treatment".
 
-    The sad fact is, we need all 20 bytes to be converted into the 5
-    words, because the majority of the time, we have actually seen
-    the object before, and it exists in our hash table.  The only
-    way to know is to convert and compare all 5 words.  Any attempt
-    to lazily convert the 5 words would just make it slower.
+> 36863af16e (git-commit --allow-empty) says "This is primarily for
+> use by foreign scm interface scripts.". Is this the only case
+> where empty commits _should_ be used?
 
-... and it falls off from there.
-
-I'm at a loss on how to improve the performance.  I don't think that
-we can do anything about the 20% in getEntryObjectId() due to the
-way our data structures are organized around the 5-word ObjectId,
-and not a byte[].  That 20% is a penalty git-core doesn't have to
-pay, and is most certainly one reason why JGit is so much slower.
-
-The only thing that may work is to modify ObjectWalk to try and
-deduce some delta-chain locality from the pack.  Buffer up objects
-that it needs to parse in a queue, rank them by the delta base
-they would need to use, and then try to unfold the base first,
-and then the children.
-
-That is, do something like what IndexPack does, where we try to
-unpack each object exactly once, and recursively process the delta
-chain children after unpacking the parent.
-
-We _might_ get better locality if we can queue up all root trees,
-process all of them, then process the first level children, etc,
-so go breadth first.
-
-But that seems like a lot of code, and it probably wrecks the simple
-recency ordering produced natively by ObjectWalk.  :-\
-
--- 
-Shawn.
+If foreign scm recorded an empty commit, it would be nice to be able to
+recreate such a broken history _if the user wanted to_, and that is where
+the --allow-empty option can be used.
