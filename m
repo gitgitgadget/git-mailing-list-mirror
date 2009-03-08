@@ -1,82 +1,110 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: t9500-gitweb-standalone-no-errors.sh.prb 4 errors
-Date: Sat, 07 Mar 2009 17:05:47 -0800 (PST)
-Message-ID: <m3ab7wizz5.fsf@localhost.localdomain>
-References: <alpine.LNX.2.00.0903071645370.20607@suse104.zenez.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Git for Windows 1.6.2-preview20090308
+Date: Sun, 8 Mar 2009 02:10:21 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903080132470.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Boyd Lynn Gerber <gerberb@zenez.com>
-X-From: git-owner@vger.kernel.org Sun Mar 08 02:07:21 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, msysgit@googlegroups.com
+X-From: git-owner@vger.kernel.org Sun Mar 08 02:10:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lg7U8-0006sg-8e
-	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 02:07:20 +0100
+	id 1Lg7Wz-0007Ua-O7
+	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 02:10:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752772AbZCHBFw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Mar 2009 20:05:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752066AbZCHBFw
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 20:05:52 -0500
-Received: from fg-out-1718.google.com ([72.14.220.156]:10653 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751990AbZCHBFv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Mar 2009 20:05:51 -0500
-Received: by fg-out-1718.google.com with SMTP id 16so680349fgg.17
-        for <git@vger.kernel.org>; Sat, 07 Mar 2009 17:05:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=zHRivP6rs4aLXXMafu77zZTIbvLWLJ06VNZdOr6GqTo=;
-        b=uTsiLDIIkZiCLB8pScRatMBnr1eOc4zmDB5xBabHkzaGYb4DFsLntllEKXZexyNa6m
-         0msCDARJrf0jhNf65Rpufk+ukpilr9xp4D9gvWeXybFQ5XeY6zZvcyeDx+AONglytPEp
-         KwNCaQwNz79yFb9OfYvkB7rKXrnFgKJaJAwGw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=GK/26UxOPuUUFMIenepy9w1Vl2fH60NNBpGFBKCyuk982nfMCfviHQSQY44wLE1xDu
-         AAJzrpj3GyOyWsliln/xHydvsQcDy7sPj7HjE8tx+SFVzQ3UJBNR9+/3YCjLg92u2CJX
-         5O/9z/AFdOPaDLqvSLqWFCEdhfys782W2hgAM=
-Received: by 10.86.98.18 with SMTP id v18mr2984853fgb.46.1236474348175;
-        Sat, 07 Mar 2009 17:05:48 -0800 (PST)
-Received: from localhost.localdomain (abwb243.neoplus.adsl.tpnet.pl [83.8.225.243])
-        by mx.google.com with ESMTPS id 3sm1675577fge.48.2009.03.07.17.05.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 07 Mar 2009 17:05:47 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n2817iCW032573;
-	Sun, 8 Mar 2009 02:07:46 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n2817g2Q032570;
-	Sun, 8 Mar 2009 02:07:42 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <alpine.LNX.2.00.0903071645370.20607@suse104.zenez.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753153AbZCHBIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Mar 2009 20:08:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753020AbZCHBIu
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 20:08:50 -0500
+Received: from mail.gmx.net ([213.165.64.20]:35328 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751707AbZCHBIt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Mar 2009 20:08:49 -0500
+Received: (qmail invoked by alias); 08 Mar 2009 01:08:46 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp039) with SMTP; 08 Mar 2009 02:08:46 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19YRSF5lQFYSYrvS6s2/iC3RH4Spq+rvebMYwToTM
+	tR4FuCRVXNXx07
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.51
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112602>
 
-Boyd Lynn Gerber <gerberb@zenez.com> writes:
+Hi,
 
-> Test fails for SCO OpenServer 6.0 MP4 with 1.6.2
-> 
-> Below is the set -x output of the tests.
+I just released a new version of Git for Windows (TAFKA WinGit).  It is 
+basically Git 1.6.2 plus a few patches.  Please find the installer here:
 
-Could you run it without -x, but with --debug (as option to test
-itself) instead?  Because what matters here not on which command the
-test failed (we know it is on gitweb_run), but what error message
-gitweb returned.
+	http://msysgit.googlecode.com/
 
-Also the problem might with in Perl modules gitweb uses (CGI, Encode,
-...), and with Perl version used, although it is less likely...
+Disclaimer: Git for Windows is still in a state where I do _not_ recommend 
+using it unless you have the means to fix issues.  Unlike git.git 
+developer community, the msysGit team is heavily undermanned.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Known issues
+
+- Some commands are not yet supported on Windows and excluded from the 
+  installation; namely: git archimport, git cvsexportcommit, git 
+  cvsimport, git cvsserver, git filter-branch, git instaweb, git 
+  send-email, git shell.
+
+- The Logitec QuickCam software can cause spurious crashes. See "Why does 
+  make often crash creating a sh.exe.stackdump file when I try to compile 
+  my source code?" in the MinGW FAQs 
+  (http://www.mingw.org/MinGWiki/index.php/FAQ).
+
+- The Quick Launch icon will only be installed for the user running setup 
+  (typically the Administrator). This is a technical restriction and will 
+  not change.
+
+- Git Bash launched through the Explorer shell extension does not have the 
+  git icon in its taskbar. This is a technical restriction and will not 
+  change.
+
+- git send-mail does not work properly (Issue 27).
+
+- curl uses $HOME/_netrc instead of $HOME/.netrc.
+
+- If you want to specify a different location for --upload-pack, you have 
+  to start the absolute path with two slashes. Otherwise MSys will mangle 
+  the path.
+
+- git clone fails when the repository contains UTF-8 filepaths (Issue 80).
+
+Changes since Git-1.6.1-preview20081225
+
+New Features
+- Comes with official git 1.6.2.
+- Comes with upgraded vim 7.2.
+- Compiled with GCC 4.3.3.
+- The user can choose the preferred CR/LF behavior in the installer now.
+- Peter Kodl contributed support for hardlinks on Windows.
+- The bash prompt now shows information about the current repository.
+
+Bugfixes
+- If supported by the file system, pack files can grow larger than 2gb.
+- Comes with updated msys-1.0.dll (should fix some Vista issues).
+- Assorted fixes to support the new libexec/git-core/ layout better.
+- Read-only files can be properly replaced now.
+- git-svn is included again (original caveats still apply).
+- Obsolete programs from previous installations are cleaned up.
+
+
+So what are the next steps?
+
+Hannes is busy sorting out the differences between the test suites in 
+git.git and mingw.git.
+
+Thanks to the awesome efforts of both Hannes and Steffen, the rest of the 
+differences are really small (the biggest being Peter's hard link patch).  
+I'll try to put together a patch series in the next few weeks.
+
+Ciao,
+Dscho
