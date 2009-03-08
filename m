@@ -1,135 +1,154 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] ls-files: fix broken --no-empty-directory
-Date: Sat, 7 Mar 2009 20:27:22 -0500
-Message-ID: <20090308012722.GB18714@coredump.intra.peff.net>
-References: <20090308012049.GA18616@coredump.intra.peff.net>
+From: Boyd Lynn Gerber <gerberb@zenez.com>
+Subject: Re: t9500-gitweb-standalone-no-errors.sh.prb 4 errors
+Date: Sat, 7 Mar 2009 18:29:38 -0700
+Message-ID: <alpine.LNX.2.00.0903071814050.20607@suse104.zenez.com>
+References: <alpine.LNX.2.00.0903071645370.20607@suse104.zenez.com> <m3ab7wizz5.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 08 02:29:05 2009
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Cc: Git List <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 08 02:31:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lg7p9-0002XG-BR
-	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 02:29:03 +0100
+	id 1Lg7rB-0002rB-KB
+	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 02:31:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753369AbZCHB1f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Mar 2009 20:27:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753247AbZCHB1f
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 20:27:35 -0500
-Received: from peff.net ([208.65.91.99]:34412 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753088AbZCHB1f (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Mar 2009 20:27:35 -0500
-Received: (qmail 18532 invoked by uid 107); 8 Mar 2009 01:27:36 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 07 Mar 2009 20:27:36 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 07 Mar 2009 20:27:22 -0500
-Content-Disposition: inline
-In-Reply-To: <20090308012049.GA18616@coredump.intra.peff.net>
+	id S1753509AbZCHB3m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Mar 2009 20:29:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752379AbZCHB3l
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 20:29:41 -0500
+Received: from suse104.zenez.com ([198.60.105.164]:34519 "EHLO
+	suse104.zenez.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751354AbZCHB3l (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Mar 2009 20:29:41 -0500
+Received: by suse104.zenez.com (Postfix, from userid 1000)
+	id E54B76C08B2; Sat,  7 Mar 2009 18:29:38 -0700 (MST)
+Received: from localhost (localhost [127.0.0.1])
+	by suse104.zenez.com (Postfix) with ESMTP id D4ED4938188;
+	Sat,  7 Mar 2009 18:29:38 -0700 (MST)
+In-Reply-To: <m3ab7wizz5.fsf@localhost.localdomain>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112608>
 
-Commit ce8e880 converted ls-files to use parseopt; the
---no-empty-directory option was converted as an
-OPT_BIT for "empty-directory" to set the
-DIR_HIDE_EMPTY_DIRECTORY flag. However, that makes it do the
-opposite of what it should: --empty-directory would hide,
-but --no-empty-directory would turn off hiding.
+On Sat, 7 Mar 2009, Jakub Narebski wrote:
+> Boyd Lynn Gerber <gerberb@zenez.com> writes:
+>> Test fails for SCO OpenServer 6.0 MP4 with 1.6.2
+>>
+>> Below is the set -x output of the tests.
+>
+> Could you run it without -x, but with --debug (as option to test
+> itself) instead?  Because what matters here not on which command the
+> test failed (we know it is on gitweb_run), but what error message
+> gitweb returned.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Two comments on this patch:
+Yes,
 
-  1. The original conversion gave us --empty-directory and
-     --no-empty-directory. This one gives us --no-empty-directory and
-     --no-no-empty-directory. If we really want to expose a negatable
-     flag, then either:
+> Also the problem might with in Perl modules gitweb uses (CGI, Encode,
+> ...), and with Perl version used, although it is less likely...
 
-       - the bit needs to change to DIR_SHOW_EMPTY_DIRECTORY; however,
-         that changes the behavior for callers who zero the flag field
+It is a perl problem...
 
-       - we need a custom option which implements the negation with
-         respect to the bit, instead of a vanilla OPT_BIT
+* FAIL 18: .git blob (file)
+         gitweb_run "p=.git;a=blob;f=file"
+[Sun Mar  8 01:11:44 2009] gitweb.perl: -T and -B not implemented on 
+filehandles at /tmp/git-1.6.2/t/../gitweb/gitweb.perl line 2853.
+* FAIL 19: .git blob_plain (file)
+         gitweb_run "p=.git;a=blob_plain;f=file"
+[Sun Mar  8 01:11:44 2009] gitweb.perl: -T and -B not implemented on 
+filehandles at /tmp/git-1.6.2/t/../gitweb/gitweb.perl line 2853.
+* FAIL 62: path_info: project/branch:file
+         gitweb_run "" "/.git/master:file"
+[Sun Mar  8 01:12:15 2009] gitweb.perl: -T and -B not implemented on 
+filehandles at /tmp/git-1.6.2/t/../gitweb/gitweb.perl line 2853.
+* FAIL 66: path_info: project/branch:/file
+         gitweb_run "" "/.git/master:/file"
+[Sun Mar  8 01:12:17 2009] gitweb.perl: -T and -B not implemented on 
+filehandles at /tmp/git-1.6.2/t/../gitweb/gitweb.perl line 2853.
 
-  2. I tried to follow the existing style of the t3000 test script
-     rather than overhauling it. However, I think the result is a little
-     hard to read. We set up expectations for many cases at the
-     beginning, and then do all the tests. I think it might read better
-     as "set up a case, create expectat, run test".
+I am not really sure what to do about it.  I contacted SCO on a 
+different problem with the same type of filehandle problem and they told 
+me they have not implemented any thing is the OS that could do this test.
 
- builtin-ls-files.c         |    4 ++--
- t/t3000-ls-files-others.sh |   14 +++++++++++++-
- 2 files changed, 15 insertions(+), 3 deletions(-)
+This is what I traced it to...
 
-diff --git a/builtin-ls-files.c b/builtin-ls-files.c
-index 1742c0f..437c366 100644
---- a/builtin-ls-files.c
-+++ b/builtin-ls-files.c
-@@ -454,8 +454,8 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
- 		OPT_BIT(0, "directory", &dir.flags,
- 			"show 'other' directories' name only",
- 			DIR_SHOW_OTHER_DIRECTORIES),
--		OPT_BIT(0, "empty-directory", &dir.flags,
--			"list empty directories",
-+		OPT_BIT(0, "no-empty-directory", &dir.flags,
-+			"don't show empty directories",
- 			DIR_HIDE_EMPTY_DIRECTORIES),
- 		OPT_BOOLEAN('u', "unmerged", &show_unmerged,
- 			"show unmerged files in the output"),
-diff --git a/t/t3000-ls-files-others.sh b/t/t3000-ls-files-others.sh
-index 36eee0f..379d963 100755
---- a/t/t3000-ls-files-others.sh
-+++ b/t/t3000-ls-files-others.sh
-@@ -13,12 +13,13 @@ filesystem.
-     path2/file2 - a file in a directory
-     path3-junk  - a file to confuse things
-     path3/file3 - a file in a directory
-+    path4       - an empty directory
- '
- . ./test-lib.sh
- 
- date >path0
- ln -s xyzzy path1
--mkdir path2 path3
-+mkdir path2 path3 path4
- date >path2/file2
- date >path2-junk
- date >path3/file3
-@@ -28,6 +29,7 @@ git update-index --add path3-junk path3/file3
- cat >expected1 <<EOF
- expected1
- expected2
-+expected3
- output
- path0
- path1
-@@ -35,6 +37,8 @@ path2-junk
- path2/file2
- EOF
- sed -e 's|path2/file2|path2/|' <expected1 >expected2
-+cat <expected2 >expected3
-+echo path4/ >>expected2
- 
- test_expect_success \
-     'git ls-files --others to show output.' \
-@@ -53,4 +57,12 @@ test_expect_success \
-     'git ls-files --others --directory should not get confused.' \
-     'test_cmp expected2 output'
- 
-+test_expect_success \
-+    'git ls-files --others --directory --no-empty-directory to show output.' \
-+    'git ls-files --others --directory --no-empty-directory >output'
-+
-+test_expect_success \
-+    '--no-empty-directory hides empty directory' \
-+    'test_cmp expected3 output'
-+
- test_done
+This is what Tim Rice and I received from SCO...
+
+  Re: __fpending()
+
+Tim Rice wrote:
+> It looks like it needs __fpending, __fpurge, & __freading.
+> But as mentioned before, we can use funflush for __fpurge.
+
+And for __freading() you could use
+
+#define __freading(p) ((p)->__flag & _IOREAD)
+
+or if we were to have had it in <stdio.h>, it'd look
+more like the following (for C) for various reasons:
+
+#define __freading(p) ((void)sizeof(__filbuf(p)), ((FILE *)(p))->__flag &
+_IOREAD)
+
+> I strongly suspect these missing APIs are responsible for the
+For C++, it's be an inline routine checking the flag.
+
+> I strongly suspect these missing APIs are responsible for the
+> problem I found with Perl too. See "uw714 MP4 perl" and "osr600 
+MP4 perl" thread.
+
+This hadn't been raised as a possibility as far as I've
+read in that thread -- did I miss something?  Does this
+mean you've built your own perl for uw7 and found that
+you needed one or more of these __f...() routines?
+
+And Boyd Gerber wrote:
+Ah yes, we're doing
+#if defined(__USLC__)
+   return (fp->__flag & _IOREAD) != 0;
+#else
+   return (fp->_flag & _IOREAD) != 0;
+#endif
+
+Would you consider this test case.
+......
+cat > tst.pl << 'EOF'
+open (FH, $ARGV[0]) || die ("Can't open $ARGV[0] -- $!\n");
+print "Text\n" if (-T FH);
+print "Binary\n" if (-B FH);
+close (FH);
+EOF
+......
+
+On OpenServer 5 if you run "perl tst.pl tst.pl" it will say
+Text
+
+On UnixWare 7.1.4 MP4 and OpenSever 6.0 MP4 if you run "perl tst.pl 
+tst.pl" it will say -T and -B not implemented on filehandles at tst.pl 
+line 2.
+
+While googling I found according to a post by Randal Schwartz that this 
+means perl doesn't know enough about stdio on that platform.
+
+Looking at /opt/lib/perl5/5.8.8/i386-unixware-thread-multi/Config_heavy.pl
+we see things like stdio_base='((fp)->_base)' but then we have
+d_stdiobase='undef' so it is not used.
+
+And this wouldn't work but probably isn't used because of
+d_stdiobase='undef'
+stdio_bufsiz='((fp)->_cnt + (fp)->_ptr - (fp)->_base)'
+
+If we had  __fbufsiz() it might be
+stdio_bufsiz='__fbufsiz(fp)'
+
+As the test program shows, there is something missing in UnixWare's
+and OpenServer 6 perl's implementation.
+
 -- 
-1.6.2.198.ge2a58
+Boyd Gerber <gerberb@zenez.com> 801 849-0213
+ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
