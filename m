@@ -1,69 +1,99 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Git for Windows 1.6.2-preview20090308
-Date: Sun, 8 Mar 2009 03:07:38 +0100
-Message-ID: <fabb9a1e0903071807s55baaf81icbc28ec44906fccd@mail.gmail.com>
-References: <alpine.DEB.1.00.0903080132470.10279@pacific.mpi-cbg.de>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: JGit server performance
+Date: Sat, 7 Mar 2009 19:22:14 -0800
+Message-ID: <20090308032214.GU16213@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Mar 08 03:09:16 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 08 04:28:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lg8S3-0001BF-Md
-	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 03:09:16 +0100
+	id 1Lg9gT-0005eR-Q9
+	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 04:28:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752254AbZCHCHo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Mar 2009 21:07:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754259AbZCHCHm
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 21:07:42 -0500
-Received: from mail-fx0-f176.google.com ([209.85.220.176]:39633 "EHLO
-	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753941AbZCHCHl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 Mar 2009 21:07:41 -0500
-Received: by fxm24 with SMTP id 24so829863fxm.37
-        for <git@vger.kernel.org>; Sat, 07 Mar 2009 18:07:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=txC0jNEQyqfprHo3YbjMq0cHVw2WrmsN5u+vOlyDARI=;
-        b=lCzc6CJHYGya1Z7iCnsMhcVcUBqTGxawnqebuEmX5GmT8dmFM3bL9pjYJQdhehSi7e
-         6JbLa5jBopBhJ4FalhN+6/V6LvhExtoXiFHWLYvWEpZeZ2mdfj3sAIa/Pung7yzeTf+n
-         pMSXYl2SP0P0PiBZ581K/l7Y/X7mwVZ0ZyS8M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=GbmHutZgmpxkOgzwGAkXJPPcmW8+VJ08O/dp0Fiotk+4SvUbH2YiiUvoIPWAU93Ptl
-         Haz4+dl1oUS6Ao/s1EbnWawnPe0a6YXF5YzZGC6W4pFs1N1Wp2TZgoZK41esMgs3f0eH
-         k+mlws/74wI63iuFPqH534CpiMyDINWK8u0gc=
-Received: by 10.103.11.5 with SMTP id o5mr1872342mui.75.1236478058807; Sat, 07 
-	Mar 2009 18:07:38 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0903080132470.10279@pacific.mpi-cbg.de>
+	id S1752716AbZCHDWR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Mar 2009 22:22:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752624AbZCHDWQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 22:22:16 -0500
+Received: from george.spearce.org ([209.20.77.23]:59321 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752277AbZCHDWQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Mar 2009 22:22:16 -0500
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 5BBAF38211; Sun,  8 Mar 2009 03:22:14 +0000 (UTC)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112610>
 
-Heya,
+As Gerrit Code Review provides Gitosis-like functionality, but
+that is implemented through JGit's pure Java implementation, the
+performance of JGit's UploadPack matters to me.
 
-On Sun, Mar 8, 2009 at 03:10, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> I just released a new version of Git for Windows (TAFKA WinGit). =A0I=
-t is
-> basically Git 1.6.2 plus a few patches. =A0Please find the installer =
-here:
+JGit is about 66% slower on my hardware when cloning the linux-2.6
+repository, compared to git-core (jgit 2m21s, git-core 1m23s).
 
-Good to see you're carrying MSysGit forward again, both you and J6t, th=
-anks!
+The bottlenecks are:
 
---=20
-Cheers,
+  ~41.2% in ObjectLoader.getCachedBytes()
 
-Sverre Rabbelier
+    This is the tree objects being parsed out of the pack file.
+    The problem here (I believe) is we have horrible locality
+    when reading.  The delta base for a tree isn't in memory most
+    of the time, because its been evicted by other trees accessed
+    since the last time that tree was touched.
+
+    Conceptually this makes some sense, as ObjectWalk does a depth
+    first traversal through the tree of each commit, in most-recent
+    to least-recent commit order.  On a larger project like the
+    kernel we'll touch a lot more objects between two root trees,
+    and there isn't even any guarantee that two root trees that
+    appear near each other in the commit sequence have a delta
+    base relationship.
+
+  ~20.5% in AbstractTreeIterator.getEntryObjectId()
+
+    The bulk of the time here is really down in NB.decodeInt32().
+    We spend a lot of time converting an object id in a tree data
+    stream into an AnyObjectId (really a reused MutableObjectId)
+    so that we can probe the ObjectIdSubclassMap to see if we have
+    seen this object before.
+
+    The sad fact is, we need all 20 bytes to be converted into the 5
+    words, because the majority of the time, we have actually seen
+    the object before, and it exists in our hash table.  The only
+    way to know is to convert and compare all 5 words.  Any attempt
+    to lazily convert the 5 words would just make it slower.
+
+... and it falls off from there.
+
+I'm at a loss on how to improve the performance.  I don't think that
+we can do anything about the 20% in getEntryObjectId() due to the
+way our data structures are organized around the 5-word ObjectId,
+and not a byte[].  That 20% is a penalty git-core doesn't have to
+pay, and is most certainly one reason why JGit is so much slower.
+
+The only thing that may work is to modify ObjectWalk to try and
+deduce some delta-chain locality from the pack.  Buffer up objects
+that it needs to parse in a queue, rank them by the delta base
+they would need to use, and then try to unfold the base first,
+and then the children.
+
+That is, do something like what IndexPack does, where we try to
+unpack each object exactly once, and recursively process the delta
+chain children after unpacking the parent.
+
+We _might_ get better locality if we can queue up all root trees,
+process all of them, then process the first level children, etc,
+so go breadth first.
+
+But that seems like a lot of code, and it probably wrecks the simple
+recency ordering produced natively by ObjectWalk.  :-\
+
+-- 
+Shawn.
