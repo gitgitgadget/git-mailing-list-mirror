@@ -1,116 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Create USE_ST_TIMESPEC and turn it on for Darwin
-Date: Sun, 08 Mar 2009 13:51:33 -0700
-Message-ID: <7vhc23kaay.fsf@gitster.siamese.dyndns.org>
-References: <1236542668-83333-1-git-send-email-benji@silverinsanity.com>
+From: Florian Mickler <florian@mickler.org>
+Subject: Re: git-svn and repository hierarchy?
+Date: Sun, 8 Mar 2009 21:33:40 +0100
+Message-ID: <20090308213340.6784e685@schatten>
+References: <20090227220512.GC14187@raven.wolf.lan>
+	<49A97B7A.8010005@drmicha.warpmail.net>
+	<20090303185108.GA11278@raven.wolf.lan>
+	<eaa105840903031135o4cf72ed0oe3fffed69cb7ce03@mail.gmail.com>
+	<20090303223600.GB11278@raven.wolf.lan>
+	<eaa105840903031618s5e0b6f24j64aade8d752fb11@mail.gmail.com>
+	<20090304192752.GC11278@raven.wolf.lan>
+	<eaa105840903041406k36088763w5a70fe1d7458dfb1@mail.gmail.com>
+	<20090305180529.GD11278@raven.wolf.lan>
+	<eaa105840903051148s3515e8b7x9d7b8f9be12da735@mail.gmail.com>
+	<20090306161026.GA14554@raven.wolf.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Sun Mar 08 21:53:15 2009
+Content-Type: multipart/signed; boundary="Sig_/ph8Jd+QU7bdL4kU6i=8h0c.";
+ protocol="application/pgp-signature"; micalg=PGP-SHA1
+Cc: git@vger.kernel.org, Peter Harris <git@peter.is-a-geek.org>
+To: Josef Wolf <jw@raven.inka.de>
+X-From: git-owner@vger.kernel.org Sun Mar 08 22:09:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgPzk-00030M-Ve
-	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 21:53:13 +0100
+	id 1LgQF7-0007cS-Ns
+	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 22:09:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754070AbZCHUvl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2009 16:51:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753991AbZCHUvl
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 16:51:41 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51181 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753474AbZCHUvk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2009 16:51:40 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 6F44B4B3E;
-	Sun,  8 Mar 2009 16:51:37 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B9A0A4B3C; Sun, 
- 8 Mar 2009 16:51:34 -0400 (EDT)
-In-Reply-To: <1236542668-83333-1-git-send-email-benji@silverinsanity.com>
- (Brian Gernhardt's message of "Sun, 8 Mar 2009 16:04:28 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: EABE7492-0C22-11DE-BED8-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
+	id S1754297AbZCHVHh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2009 17:07:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754270AbZCHVHh
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 17:07:37 -0400
+Received: from ist.d-labs.de ([213.239.218.44]:43612 "EHLO mx01.d-labs.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753542AbZCHVHg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2009 17:07:36 -0400
+X-Greylist: delayed 1998 seconds by postgrey-1.27 at vger.kernel.org; Sun, 08 Mar 2009 17:07:35 EDT
+Received: from schatten (f053208153.adsl.alicedsl.de [78.53.208.153])
+	by mx01.d-labs.de (Postfix) with ESMTP id 76E2E83E21;
+	Sun,  8 Mar 2009 21:34:13 +0100 (CET)
+In-Reply-To: <20090306161026.GA14554@raven.wolf.lan>
+X-Mailer: Claws Mail 3.7.0 (GTK+ 2.12.11; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112642>
 
-Brian Gernhardt <benji@silverinsanity.com> writes:
+--Sig_/ph8Jd+QU7bdL4kU6i=8h0c.
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: quoted-printable
 
-> This also turns it on by default for OS X (Darwin) machines.  Likely
-> this is a sane default for other BSD kernels as well, but I don't have
-> any to test that assumption on.
+On Fri, 6 Mar 2009 17:10:26 +0100
+Josef Wolf <jw@raven.inka.de> wrote:
 
-Yeah, that was my initial reaction.  Any BSDers?
+> On Thu, Mar 05, 2009 at 02:48:14PM -0500, Peter Harris wrote:
+> > On Thu, Mar 5, 2009 at 1:05 PM, Josef Wolf wrote:
+> > >
+> > > Well, actually it allows the changes for a very limited user
+> > > group (that is: only me 8-). =A0While I agree that author/date
+> > > should not be changed, I like to be able to fix silly typos in
+> > > the log. =A0After all, we all do typos now and then ;-)
+> >=20
+> > True, but in my experience it happens considerably less often with
+> > git. I find and fix most of my typos when reviewing my change-set
+> > before doing a "git push" or "git svn dcommit".
+>=20
+> So you are rewriting yourself but not accept rewrites by svn ;-)
 
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 83d8389..1906253 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -393,8 +393,13 @@ void git_qsort(void *base, size_t nmemb, size_t size,
->  #define ST_CTIME_NSEC(st) 0
->  #define ST_MTIME_NSEC(st) 0
->  #else
-> +#ifdef USE_ST_TIMESPEC
-> +#define ST_CTIME_NSEC(st) ((unsigned int)((st).st_ctimespec.tv_nsec))
-> +#define ST_MTIME_NSEC(st) ((unsigned int)((st).st_mtimespec.tv_nsec))
-> +#else
->  #define ST_CTIME_NSEC(st) ((unsigned int)((st).st_ctim.tv_nsec))
->  #define ST_MTIME_NSEC(st) ((unsigned int)((st).st_mtim.tv_nsec))
->  #endif
-> +#endif
+the thing is: with git you don't ''rewrite history''.=20
+you create a completely new history. that is because the
+sha1-descriptions includes the meta-data.
 
-Thanks.
+that means, even if you want, you can't change ''published'' history.
+because the history is unique'ly identified by the topmost sha-1.=20
+if smth changes underneath the topmost sha-1 you have to rebase all
+your other changes on the new sha-1 and thus altering them.=20
 
-I think this patch moves things in the right direction, but there are
-other uses of "st_[cm]tim.tv_nsec" that do not use the ST_[CM]TIME_NSEC
-macro.
+that is why the dcommitt'ed&svn-rebased changes have different sha-1s
+and all your clone's work needs to be rebased onto the newly altered
+committs.
 
-$ git grep -n -e 'st_[cm]tim\.' --cached -- '*.[ch]'
-builtin-fetch-pack.c:810:				|| st.st_mtim.tv_nsec != mtime.nsec
-git-compat-util.h:396:#define ST_CTIME_NSEC(st) ((unsigned int)((st).st_ctim.tv_nsec))
-git-compat-util.h:397:#define ST_MTIME_NSEC(st) ((unsigned int)((st).st_mtim.tv_nsec))
-read-cache.c:207:	if (ce->ce_mtime.nsec != (unsigned int)st->st_mtim.tv_nsec)
-read-cache.c:209:	if (trust_ctime && ce->ce_ctime.nsec != (unsigned int)st->st_ctim.tv_nsec)
 
-Probably we should apply the following patch as a fix, and then apply your
-enhancement to support st_[cm]timespec systems?
+Sincerely,
 
- builtin-fetch-pack.c |    2 +-
- read-cache.c         |    4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+Florian
 
-diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
-index 59b0b0a..1d7e023 100644
---- a/builtin-fetch-pack.c
-+++ b/builtin-fetch-pack.c
-@@ -807,7 +807,7 @@ struct ref *fetch_pack(struct fetch_pack_args *my_args,
- 				die("shallow file was removed during fetch");
- 		} else if (st.st_mtime != mtime.sec
- #ifdef USE_NSEC
--				|| st.st_mtim.tv_nsec != mtime.nsec
-+				|| ST_CTIME_NSEC(st) != mtime.nsec
- #endif
- 			  )
- 			die("shallow file was changed during fetch");
-diff --git a/read-cache.c b/read-cache.c
-index b819abb..7f74c8d 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -204,9 +204,9 @@ static int ce_match_stat_basic(struct cache_entry *ce, struct stat *st)
- 		changed |= CTIME_CHANGED;
- 
- #ifdef USE_NSEC
--	if (ce->ce_mtime.nsec != (unsigned int)st->st_mtim.tv_nsec)
-+	if (ce->ce_mtime.nsec != ST_MTIME_NSEC(*st))
- 		changed |= MTIME_CHANGED;
--	if (trust_ctime && ce->ce_ctime.nsec != (unsigned int)st->st_ctim.tv_nsec)
-+	if (trust_ctime && ce->ce_ctime.nsec != ST_CTIME_NSEC(*st))
- 		changed |= CTIME_CHANGED;
- #endif
- 
+
+
+--Sig_/ph8Jd+QU7bdL4kU6i=8h0c.
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Disposition: attachment; filename=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEARECAAYFAkm0K6oACgkQPjqCkyL3Kv3uBQCgoCcKl4w4ntS0x3LS3t3Xe9NH
+KUEAn0F5Abf+YQ9ivY89taoWqh5CM1yy
+=DfBp
+-----END PGP SIGNATURE-----
+
+--Sig_/ph8Jd+QU7bdL4kU6i=8h0c.--
