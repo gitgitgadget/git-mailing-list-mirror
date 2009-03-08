@@ -1,40 +1,42 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH] Fix a race condition when loading non-mmapd byte windows
-Date: Sat,  7 Mar 2009 16:12:05 -0800
-Message-ID: <1236471125-21382-1-git-send-email-spearce@spearce.org>
+Subject: [JGIT PATCH v2] Fix a race condition when loading non-mmapd byte windows
+Date: Sat,  7 Mar 2009 16:17:15 -0800
+Message-ID: <1236471435-21888-1-git-send-email-spearce@spearce.org>
+References: <1236471125-21382-1-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
 To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Sun Mar 08 01:14:11 2009
+X-From: git-owner@vger.kernel.org Sun Mar 08 01:18:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lg6ef-000493-EH
-	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 01:14:10 +0100
+	id 1Lg6j9-00057s-6k
+	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 01:18:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753514AbZCHAMM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Mar 2009 19:12:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752845AbZCHAMK
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 19:12:10 -0500
-Received: from george.spearce.org ([209.20.77.23]:56440 "EHLO
+	id S1752902AbZCHART (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Mar 2009 19:17:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752379AbZCHARS
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 19:17:18 -0500
+Received: from george.spearce.org ([209.20.77.23]:40895 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753190AbZCHAMI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Mar 2009 19:12:08 -0500
+	with ESMTP id S1752270AbZCHARS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Mar 2009 19:17:18 -0500
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id F2C9B38215; Sun,  8 Mar 2009 00:12:06 +0000 (UTC)
+	id AC34838215; Sun,  8 Mar 2009 00:17:16 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 3AF99381D5;
-	Sun,  8 Mar 2009 00:12:06 +0000 (UTC)
+	by george.spearce.org (Postfix) with ESMTP id F1623381D5;
+	Sun,  8 Mar 2009 00:17:15 +0000 (UTC)
 X-Mailer: git-send-email 1.6.2.185.g8b635
+In-Reply-To: <1236471125-21382-1-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112600>
 
 Back in 439d441b0800 ("Change ByteArrayWindow to read content
 outside of WindowCache's lock") I introduced a race condition
@@ -63,26 +65,15 @@ window still in the window cache.
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
 
- I've decided I hate WindowedFile, ByteWindow, WindowCache.
+ Oh hell, I missed the fact that markLoaded(ByteWindow) may be
+ dropping the last reference and need to close the file.
 
- The API and implementation is crap.  Its all my own fault.  This
- code is mine, but its impossible to work with, not as concurrent
- as I'd like the cache to be, and there's problems getting it to
- be thread-safe, as this patch just pointed out.  *sigh*
-
- I think we should apply this, but really, someone needs to come
- back here and overhaul how we do our most low level IO ops.
- Its a crime that this code is in the state it is in.
-
- Or maybe I'm just pissed off because I'm hunting down a stupid
- concurrency issue on a Saturday.
- 
  .../src/org/spearce/jgit/lib/ByteArrayWindow.java  |    7 +++----
  .../src/org/spearce/jgit/lib/ByteBufferWindow.java |    4 ++++
  .../src/org/spearce/jgit/lib/ByteWindow.java       |    2 ++
- .../src/org/spearce/jgit/lib/WindowCache.java      |   12 +++++++++++-
+ .../src/org/spearce/jgit/lib/WindowCache.java      |   14 +++++++++++++-
  .../src/org/spearce/jgit/lib/WindowedFile.java     |    1 +
- 5 files changed, 21 insertions(+), 5 deletions(-)
+ 5 files changed, 23 insertions(+), 5 deletions(-)
 
 diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/ByteArrayWindow.java b/org.spearce.jgit/src/org/spearce/jgit/lib/ByteArrayWindow.java
 index 7b7c7a4..055a329 100644
@@ -155,7 +146,7 @@ index 732664b..e957138 100644
  }
 \ No newline at end of file
 diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCache.java b/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCache.java
-index 0b9d20c..fc4bab8 100644
+index 0b9d20c..4b7e10d 100644
 --- a/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCache.java
 +++ b/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCache.java
 @@ -189,7 +189,13 @@ private static synchronized void reconfigureImpl(final int packedGitLimit,
@@ -173,12 +164,14 @@ index 0b9d20c..fc4bab8 100644
  			final WindowedFile wp, final long position) throws IOException {
  		final int id = (int) (position >> windowSizeShift);
  		final int idx = hash(wp, id);
-@@ -254,6 +260,10 @@ public static synchronized final void get(final WindowCursor curs,
+@@ -254,6 +260,12 @@ public static synchronized final void get(final WindowCursor curs,
  		insertLRU(e);
  	}
  
 +	static synchronized void markLoaded(final ByteWindow w) {
-+		w.provider.openCount--;
++		if (--w.provider.openCount == 0) {
++			w.provider.cacheClose();
++		}
 +	}
 +
  	private static void makeMostRecent(ByteWindow<?> e) {
