@@ -1,102 +1,100 @@
-From: Florian Mickler <florian@mickler.org>
-Subject: Re: git-svn and repository hierarchy?
-Date: Sun, 8 Mar 2009 21:33:40 +0100
-Message-ID: <20090308213340.6784e685@schatten>
-References: <20090227220512.GC14187@raven.wolf.lan>
-	<49A97B7A.8010005@drmicha.warpmail.net>
-	<20090303185108.GA11278@raven.wolf.lan>
-	<eaa105840903031135o4cf72ed0oe3fffed69cb7ce03@mail.gmail.com>
-	<20090303223600.GB11278@raven.wolf.lan>
-	<eaa105840903031618s5e0b6f24j64aade8d752fb11@mail.gmail.com>
-	<20090304192752.GC11278@raven.wolf.lan>
-	<eaa105840903041406k36088763w5a70fe1d7458dfb1@mail.gmail.com>
-	<20090305180529.GD11278@raven.wolf.lan>
-	<eaa105840903051148s3515e8b7x9d7b8f9be12da735@mail.gmail.com>
-	<20090306161026.GA14554@raven.wolf.lan>
-Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/ph8Jd+QU7bdL4kU6i=8h0c.";
- protocol="application/pgp-signature"; micalg=PGP-SHA1
-Cc: git@vger.kernel.org, Peter Harris <git@peter.is-a-geek.org>
-To: Josef Wolf <jw@raven.inka.de>
-X-From: git-owner@vger.kernel.org Sun Mar 08 22:09:06 2009
+From: Chris Johnsen <chris_johnsen@pobox.com>
+Subject: Re: [PATCH/RFD] builtin-revert.c: release index lock when
+ cherry-picking an empty commit
+Date: Sun, 8 Mar 2009 16:09:50 -0500
+Message-ID: <B0CBEE84-0F46-4AF2-86B1-C80BADAEF4E5@pobox.com>
+References: <1236418251-16947-1-git-send-email-chris_johnsen@pobox.com>
+ <7v63ikmz11.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v753.1)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Miklos Vajna <vmiklos@frugalware.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 08 22:11:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgQF7-0007cS-Ns
-	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 22:09:06 +0100
+	id 1LgQHK-0008MG-Bc
+	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 22:11:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754297AbZCHVHh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2009 17:07:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754270AbZCHVHh
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 17:07:37 -0400
-Received: from ist.d-labs.de ([213.239.218.44]:43612 "EHLO mx01.d-labs.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753542AbZCHVHg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2009 17:07:36 -0400
-X-Greylist: delayed 1998 seconds by postgrey-1.27 at vger.kernel.org; Sun, 08 Mar 2009 17:07:35 EDT
-Received: from schatten (f053208153.adsl.alicedsl.de [78.53.208.153])
-	by mx01.d-labs.de (Postfix) with ESMTP id 76E2E83E21;
-	Sun,  8 Mar 2009 21:34:13 +0100 (CET)
-In-Reply-To: <20090306161026.GA14554@raven.wolf.lan>
-X-Mailer: Claws Mail 3.7.0 (GTK+ 2.12.11; x86_64-pc-linux-gnu)
+	id S1754448AbZCHVJy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2009 17:09:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754308AbZCHVJy
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 17:09:54 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:52027 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754195AbZCHVJx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2009 17:09:53 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 532F74C16;
+	Sun,  8 Mar 2009 17:09:51 -0400 (EDT)
+Received: from [192.168.1.241] (unknown [76.201.177.183]) (using TLSv1 with
+ cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A284E4C13; Sun, 
+ 8 Mar 2009 17:09:48 -0400 (EDT)
+In-Reply-To: <7v63ikmz11.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.753.1)
+X-Pobox-Relay-ID: 76BBEA4A-0C25-11DE-81CE-CBE7E3B37BAC-07245699!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112643>
 
---Sig_/ph8Jd+QU7bdL4kU6i=8h0c.
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: quoted-printable
+On 2009 Mar 7, at 22:14, Junio C Hamano wrote:
+>> UNEVEN TREATMENT OF EMPTY CHANGES
+>>
+>> fetch, push, bundle
+> They just transfer an existing history from one place to another  
+> without
+> modifying, so it is unfortunately true that they preserve such a  
+> broken
+> history with empty commits.
 
-On Fri, 6 Mar 2009 17:10:26 +0100
-Josef Wolf <jw@raven.inka.de> wrote:
+>> 'format-patch', 'send-email', 'apply', 'am', 'rebase' (automatic,
+>> non-fast-forward; and --interactive).
+>
+> These are all about creating history afresh, and they actively  
+> discourage
+> empty commits to be (re)created.
+>
+> There is no "uneven treatment".
 
-> On Thu, Mar 05, 2009 at 02:48:14PM -0500, Peter Harris wrote:
-> > On Thu, Mar 5, 2009 at 1:05 PM, Josef Wolf wrote:
-> > >
-> > > Well, actually it allows the changes for a very limited user
-> > > group (that is: only me 8-). =A0While I agree that author/date
-> > > should not be changed, I like to be able to fix silly typos in
-> > > the log. =A0After all, we all do typos now and then ;-)
-> >=20
-> > True, but in my experience it happens considerably less often with
-> > git. I find and fix most of my typos when reviewing my change-set
-> > before doing a "git push" or "git svn dcommit".
->=20
-> So you are rewriting yourself but not accept rewrites by svn ;-)
+>> 36863af16e (git-commit --allow-empty) says "This is primarily for
+>> use by foreign scm interface scripts.". Is this the only case
+>> where empty commits _should_ be used?
+>
+> If foreign scm recorded an empty commit, it would be nice to be  
+> able to
+> recreate such a broken history _if the user wanted to_, and that is  
+> where
+> the --allow-empty option can be used.
 
-the thing is: with git you don't ''rewrite history''.=20
-you create a completely new history. that is because the
-sha1-descriptions includes the meta-data.
+Thank you for the clarification. I will explain the source of my  
+confusion.
 
-that means, even if you want, you can't change ''published'' history.
-because the history is unique'ly identified by the topmost sha-1.=20
-if smth changes underneath the topmost sha-1 you have to rebase all
-your other changes on the new sha-1 and thus altering them.=20
+The current documentation "Usually recording [an empty commit] is a  
+mistake... This option ... is primarily for use by foreign scm  
+interface scripts." implied to me that there was room outside foreign  
+scm interface for "normal" use of empty commits.
 
-that is why the dcommitt'ed&svn-rebased changes have different sha-1s
-and all your clone's work needs to be rebased onto the newly altered
-committs.
+My confusion was that I took "usually a mistake" to refer to the case  
+where the user meant to commit content changes but forgot to first  
+stage any changed content. But your clarification shows that "usually  
+a mistake" really means that making any empty commit, intentional or  
+not, is (considered to be) a fundamental misuse of SCM machinery.
 
+Would it be acceptable to strengthen the language in the  
+documentation for --allow-empty? Possibly something like the  
+following paragraph:
 
-Sincerely,
+Empty commits are a broken concept and should never be made during
+normal usage. By default, the command prevents you
+from making such a commit. This option bypasses the safety, and is
+primarily for use by foreign scm interface scripts.
 
-Florian
+If such a change is acceptable, I will send a patch.
 
-
-
---Sig_/ph8Jd+QU7bdL4kU6i=8h0c.
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Disposition: attachment; filename=signature.asc
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEARECAAYFAkm0K6oACgkQPjqCkyL3Kv3uBQCgoCcKl4w4ntS0x3LS3t3Xe9NH
-KUEAn0F5Abf+YQ9ivY89taoWqh5CM1yy
-=DfBp
------END PGP SIGNATURE-----
-
---Sig_/ph8Jd+QU7bdL4kU6i=8h0c.--
+-- 
+Chris
