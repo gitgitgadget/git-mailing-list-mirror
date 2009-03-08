@@ -1,64 +1,98 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [EGIT PATCH] Prevent an exception if the user tries to push a non-existing ref.
-Date: Sun,  8 Mar 2009 16:21:07 +0100
-Message-ID: <1236525667-852-1-git-send-email-robin.rosenberg@dewire.com>
-References: <20090307224831.GS16213@spearce.org>
-Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
-To: spearce@spearce.org, Daniel Cheng <j16sdiz+freenet@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 08 16:23:38 2009
+From: Marius Vollmer <marius.vollmer@gmail.com>
+Subject: [ANNOUNCE] Magit 0.7
+Date: Sun, 08 Mar 2009 19:12:00 +0200
+Message-ID: <87y6vgos67.fsf@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: magit@googlegroups.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 08 18:37:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgKqo-0003Rj-1t
-	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 16:23:38 +0100
+	id 1LgMwS-0008PQ-00
+	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 18:37:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752533AbZCHPVS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2009 11:21:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752282AbZCHPVS
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 11:21:18 -0400
-Received: from mail.dewire.com ([83.140.172.130]:28014 "EHLO dewire.com"
+	id S1753136AbZCHRcJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2009 13:32:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753011AbZCHRcH
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 13:32:07 -0400
+Received: from smtp5.welho.com ([213.243.153.39]:49961 "EHLO smtp5.welho.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752098AbZCHPVR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2009 11:21:17 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id AD93615E0DEA;
-	Sun,  8 Mar 2009 16:21:10 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Owy0kupbb-bd; Sun,  8 Mar 2009 16:21:09 +0100 (CET)
-Received: from localhost.localdomain (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id A8EED15E0DE0;
-	Sun,  8 Mar 2009 16:21:09 +0100 (CET)
-X-Mailer: git-send-email 1.6.1.285.g35d8b
-In-Reply-To: <20090307224831.GS16213@spearce.org>
+	id S1752859AbZCHRcG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2009 13:32:06 -0400
+X-Greylist: delayed 1200 seconds by postgrey-1.27 at vger.kernel.org; Sun, 08 Mar 2009 13:32:06 EDT
+Received: from zagadka.ping.de (cs178034.pp.htv.fi [213.243.178.34])
+	by smtp5.welho.com (Postfix) with SMTP id 13DAE5BC163
+	for <git@vger.kernel.org>; Sun,  8 Mar 2009 19:12:01 +0200 (EET)
+Received: (qmail 13583 invoked by uid 1000); 8 Mar 2009 19:12:00 +0200
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.91 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112624>
 
-Instead of a StringIndexOutOfBoundsException we now get an error telling
-us that the ref could not be resolved.
+It's time for the next release of Magit, the Emacs interface to Git!
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
- .../src/org/spearce/jgit/transport/Transport.java  |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+    http://zagadka.vm.bytemark.co.uk/magit/
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java b/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java
-index a0a2575..8a25213 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java
-@@ -255,7 +255,7 @@ else if (TransportLocal.canHandle(remote))
- 			} else {
- 				if (!remoteName.startsWith(Constants.R_REFS)) {
- 					// null source is another special case (delete)
--					if (srcRef != null) {
-+					if (src != null) {
- 						// assume the same type of ref at the destination
- 						String srcPrefix = srcRef.substring(0, srcRef.indexOf('/', Constants.R_REFS.length()));
- 						remoteName = srcPrefix + "/" + remoteName;
--- 
-1.6.1.285.g35d8b
+A lot of people have contributed to it.  Thanks a lot!
+
+Please report bugs and general feedback to our little mailing list:
+
+    http://groups.google.com/group/magit
+
+or to me directly, of course.
+
+What's new:
+
+* Tagging, on 't' and 'T'.
+
+* Stashing, on 'z' and 'Z'.
+
+* Wazzup, on 'w'.  Wazzup gives you an overview over how other
+  branches relate to the current one.
+
+* There is more control over pushing.  'P' now takes a prefix argument
+  and pushing a branch without a default remote will ask for one.
+
+* Logs have changed a bit: 'l' shows the traditional brief log, and
+  'L' shows a more verbose log.  Use the prefix arg to specify the
+  range of the log.
+
+* M-x magit-status doesn't prompt anymore for a directory when invoked
+  from within a Git repository.  Use C-u to force a prompt.
+
+* When you have nothing staged, 'c' will now explicitly ask whether to
+  commit everything instead of just going ahead and do it.  This can
+  be customized.
+
+* The digit keys '1', '2', '3', and '4' now show sections on the
+  respective level and hide everything below.  With Meta, they work on
+  all sections; without, they work only on sections that are a parent
+  or child of the current section.
+
+* Typing '+' and '-' will change the size of hunks, via the "-U"
+  option to git diff.  '0' resets hunks to their default size.
+
+* Typing 'k' on the "Untracked files" section title will offer to
+  delete all untracked files.
+
+* Magit understands a bit of git-svn: the status buffer shows unpushed
+  and unpulled commits, 'N r' runs git svn rebase, and 'N c' runs git
+  svn dcommit.
+
+* Magit now also works when the direcory is accessed via tramp.
+
+* M-x magit-status can also create new repositories when given a
+  directory that is not a Git repository.
+
+* Magit works better with oldish Gits that don't understand "--graph",
+  for example.
+
+* The name of the Git program and common options for it can be
+  customized.
+
+Enjoy!
