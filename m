@@ -1,82 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFD] builtin-revert.c: release index lock when
- cherry-picking an empty commit
-Date: Sat, 07 Mar 2009 20:14:34 -0800
-Message-ID: <7v63ikmz11.fsf@gitster.siamese.dyndns.org>
-References: <1236418251-16947-1-git-send-email-chris_johnsen@pobox.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [RFC PATCH] git-svn does not support intermediate directories?
+Date: Sat, 7 Mar 2009 20:43:18 -0800
+Message-ID: <20090308044318.GA31205@untitled>
+References: <21fc26450903031743x4beda8a3i835ecbd428817070@mail.gmail.com> <20090304043019.GC20790@mail.rocksoft.com> <21fc26450903051612u1400b2b4gd71c3eafa4418e37@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Miklos Vajna <vmiklos@frugalware.org>
-To: Chris Johnsen <chris_johnsen@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 08 05:16:14 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Tim Stoakes <tim@stoakes.net>, git@vger.kernel.org
+To: Michael Lai <myllai@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 08 05:45:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgAQu-0004FQ-85
-	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 05:16:12 +0100
+	id 1LgAtD-0008QE-9M
+	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 05:45:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753740AbZCHEOn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Mar 2009 23:14:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752320AbZCHEOn
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 23:14:43 -0500
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42196 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751203AbZCHEOn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Mar 2009 23:14:43 -0500
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7D0F6A087B;
-	Sat,  7 Mar 2009 23:14:40 -0500 (EST)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 460A0A0873; Sat,
-  7 Mar 2009 23:14:35 -0500 (EST)
-In-Reply-To: <1236418251-16947-1-git-send-email-chris_johnsen@pobox.com>
- (Chris Johnsen's message of "Sat, 7 Mar 2009 03:30:51 -0600")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A50F20F8-0B97-11DE-9FC3-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1754684AbZCHEnV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Mar 2009 23:43:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754271AbZCHEnV
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 23:43:21 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:51878 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752320AbZCHEnV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Mar 2009 23:43:21 -0500
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E8381F79E;
+	Sun,  8 Mar 2009 04:43:19 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <21fc26450903051612u1400b2b4gd71c3eafa4418e37@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112612>
 
-Chris Johnsen <chris_johnsen@pobox.com> writes:
+Michael Lai <myllai@gmail.com> wrote:
+> I did some additional hacking and may have found a slightly cleaner
+> way of at least fixing the problems with "git svn fetch".  The proble=
+m
+> with the wrong paths being initialized for branches and tags is fairl=
+y
+> minor (since you can just edit the config by hand), so I'll probably
+> address that later, if I have time.  Here's the patch (I hope I'm
+> doing this right):
 
-> When a cherry-pick of an empty commit is done, release the lock
-> held on the index.
->
-> The fix is the same as was applied to similar code in 4271666046.
->
-> Signed-off-by: Chris Johnsen <chris_johnsen@pobox.com>
+Hi Michael,
 
-Thanks.  Will apply.  We should handle possible refactoring as a separate
-topic.
+Your patch was whitespace damaged and lacked a proposed commit message.
+Please read Documentation/SubmittingPatches next time.
 
-> UNEVEN TREATMENT OF EMPTY CHANGES
->
-> It seems that empty commits suffer uneven treatment under various
-> patch-transport/history-rewriting mechanisms. They seem to be
-> handled okay in the most of the core (fetch, push, bundle all
-> seem to preserve empty commits, though I have not done rigorous
-> testing).
+Anyhow, I fixed your patch up a bit.  Can you sign-off on it
+if its right to you or let me know if it's broken?  Thanks.
 
-They just transfer an existing history from one place to another without
-modifying, so it is unfortunately true that they preserve such a broken
-history with empty commits.
+=46rom cddc7e5bde060eb963534156ae0daaf41c87c21a Mon Sep 17 00:00:00 200=
+1
+=46rom: Eric Wong <normalperson@yhbt.net>
+Date: Sat, 7 Mar 2009 20:22:29 -0800
+Subject: [PATCH] git-svn: support intermediate paths when matching tags=
+/branches
+MIME-Version: 1.0
+Content-Type: text/plain; charset=3Dutf-8
+Content-Transfer-Encoding: 8bit
 
-> 'format-patch', 'send-email', 'apply', 'am', 'rebase' (automatic,
-> non-fast-forward; and --interactive).
+=46or repositories laid out like the following:
 
-These are all about creating history afresh, and they actively discourage
-empty commits to be (re)created.
+> [svn-remote "svn"]
+> =A0 =A0 =A0 url =3D http://foo.com/svn/repos/bar
+> =A0 =A0 =A0 fetch =3D myproject/trunk:refs/remotes/trunk
+> =A0 =A0 =A0 branches =3D bar/myproject/branches/*:refs/remotes/*
+> =A0 =A0 =A0 tags =3D bar/myproject/tags/*:refs/remotes/tags/*
 
-There is no "uneven treatment".
+The "bar" component above is considered the intermediate path
+and was not handled correctly.
 
-> 36863af16e (git-commit --allow-empty) says "This is primarily for
-> use by foreign scm interface scripts.". Is this the only case
-> where empty commits _should_ be used?
+This patch was originally by Michael Lai (without a commit
+message) with some minor fixes:
 
-If foreign scm recorded an empty commit, it would be nice to be able to
-recreate such a broken history _if the user wanted to_, and that is where
-the --allow-empty option can be used.
+  * extraneous slash removed from $intermediate_path,
+    this was causing tests to fail.
+
+  * fixed a case where $intermediate_path could be "0" and
+    considered false by Perl, preventing the necessary
+    slash from being appended.
+
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ git-svn.perl |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 959eb52..745dd03 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -2351,7 +2351,11 @@ sub match_paths {
+ 	if (my $path =3D $paths->{"/$self->{path}"}) {
+ 		return ($path->{action} eq 'D') ? 0 : 1;
+ 	}
+-	$self->{path_regex} ||=3D qr/^\/\Q$self->{path}\E\//;
++	my $repos_root =3D $self->ra->{repos_root};
++	my $intermediate_path =3D $self->{url};
++	$intermediate_path =3D~ s#^\Q$repos_root\E(/|$)##;
++	$intermediate_path .=3D '/' if length($intermediate_path) > 0;
++	$self->{path_regex} ||=3D qr/^\/\Q$intermediate_path$self->{path}\E\/=
+/;
+ 	if (grep /$self->{path_regex}/, keys %$paths) {
+ 		return 1;
+ 	}
+--=20
+Eric Wong
