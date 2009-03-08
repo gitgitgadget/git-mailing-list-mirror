@@ -1,112 +1,106 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [RFC PATCH] git-svn does not support intermediate directories?
-Date: Sat, 7 Mar 2009 20:43:18 -0800
-Message-ID: <20090308044318.GA31205@untitled>
-References: <21fc26450903031743x4beda8a3i835ecbd428817070@mail.gmail.com> <20090304043019.GC20790@mail.rocksoft.com> <21fc26450903051612u1400b2b4gd71c3eafa4418e37@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/5] Extend pattern refspecs
+Date: Sun, 08 Mar 2009 00:31:13 -0800
+Message-ID: <7vocwcl8ku.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LNX.1.00.0903052346270.19665@iabervon.org>
+ <76718490903052119y4d6a7e0ck24bfeb1c0964e413@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Tim Stoakes <tim@stoakes.net>, git@vger.kernel.org
-To: Michael Lai <myllai@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 08 05:45:30 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 08 09:32:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgAtD-0008QE-9M
-	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 05:45:27 +0100
+	id 1LgERH-0000tk-Ff
+	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 09:32:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754684AbZCHEnV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Mar 2009 23:43:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754271AbZCHEnV
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Mar 2009 23:43:21 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:51878 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752320AbZCHEnV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Mar 2009 23:43:21 -0500
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E8381F79E;
-	Sun,  8 Mar 2009 04:43:19 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <21fc26450903051612u1400b2b4gd71c3eafa4418e37@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751213AbZCHIbY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2009 04:31:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751200AbZCHIbX
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 04:31:23 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58043 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750870AbZCHIbV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2009 04:31:21 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C4ECE9F3B9;
+	Sun,  8 Mar 2009 04:31:19 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 6BD459F3B8; Sun,
+  8 Mar 2009 04:31:15 -0400 (EDT)
+In-Reply-To: <76718490903052119y4d6a7e0ck24bfeb1c0964e413@mail.gmail.com>
+ (Jay Soffian's message of "Fri, 6 Mar 2009 00:19:42 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 7FC06798-0BBB-11DE-B50C-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112613>
 
-Michael Lai <myllai@gmail.com> wrote:
-> I did some additional hacking and may have found a slightly cleaner
-> way of at least fixing the problems with "git svn fetch".  The proble=
-m
-> with the wrong paths being initialized for branches and tags is fairl=
-y
-> minor (since you can just edit the config by hand), so I'll probably
-> address that later, if I have time.  Here's the patch (I hope I'm
-> doing this right):
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-Hi Michael,
+> This series and js/remote-improvements (e5dcbfd) in pu may not get
+> along completely. "git remote show" tries to show how the refspecs
+> expand out.
 
-Your patch was whitespace damaged and lacked a proposed commit message.
-Please read Documentation/SubmittingPatches next time.
+I've created an "early semantic conflict resolution" topic branch that is
+a cross between this series and js/remote-improvements, like so:
 
-Anyhow, I fixed your patch up a bit.  Can you sign-off on it
-if its right to you or let me know if it's broken?  Thanks.
+    $ git checkout -b xx/db-refspec-vs-js-remote db/refspec-wildcard-in-the-middle
+    $ git merge js/remote-improvements
+    $ git apply evil-fixup.diff
+    $ git commit --amend -a -m "Evil merge."
 
-=46rom cddc7e5bde060eb963534156ae0daaf41c87c21a Mon Sep 17 00:00:00 200=
-1
-=46rom: Eric Wong <normalperson@yhbt.net>
-Date: Sat, 7 Mar 2009 20:22:29 -0800
-Subject: [PATCH] git-svn: support intermediate paths when matching tags=
-/branches
-MIME-Version: 1.0
-Content-Type: text/plain; charset=3Dutf-8
-Content-Transfer-Encoding: 8bit
+with the following "fixup-as-an-evil-merge patch", which I'd appreciate if
+you two can sanity check.
 
-=46or repositories laid out like the following:
+The result will be queued at the tip of 'pu', and hopefully I can merge it
+to 'next' when this series goes to 'next'.  Similarly, whichever one goes
+first to 'master' can be merged straight, but the merge of the other one
+needs to merge this branch as well.
 
-> [svn-remote "svn"]
-> =A0 =A0 =A0 url =3D http://foo.com/svn/repos/bar
-> =A0 =A0 =A0 fetch =3D myproject/trunk:refs/remotes/trunk
-> =A0 =A0 =A0 branches =3D bar/myproject/branches/*:refs/remotes/*
-> =A0 =A0 =A0 tags =3D bar/myproject/tags/*:refs/remotes/tags/*
-
-The "bar" component above is considered the intermediate path
-and was not handled correctly.
-
-This patch was originally by Michael Lai (without a commit
-message) with some minor fixes:
-
-  * extraneous slash removed from $intermediate_path,
-    this was causing tests to fail.
-
-  * fixed a case where $intermediate_path could be "0" and
-    considered false by Perl, preventing the necessary
-    slash from being appended.
-
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- git-svn.perl |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index 959eb52..745dd03 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -2351,7 +2351,11 @@ sub match_paths {
- 	if (my $path =3D $paths->{"/$self->{path}"}) {
- 		return ($path->{action} eq 'D') ? 0 : 1;
+diff --git a/builtin-remote.c b/builtin-remote.c
+index 7e82a52..3e4a41b 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -359,14 +358,9 @@ static int get_push_ref_states_noquery(struct ref_states *states)
  	}
--	$self->{path_regex} ||=3D qr/^\/\Q$self->{path}\E\//;
-+	my $repos_root =3D $self->ra->{repos_root};
-+	my $intermediate_path =3D $self->{url};
-+	$intermediate_path =3D~ s#^\Q$repos_root\E(/|$)##;
-+	$intermediate_path .=3D '/' if length($intermediate_path) > 0;
-+	$self->{path_regex} ||=3D qr/^\/\Q$intermediate_path$self->{path}\E\/=
-/;
- 	if (grep /$self->{path_regex}/, keys %$paths) {
- 		return 1;
+ 	for (i = 0; i < remote->push_refspec_nr; i++) {
+ 		struct refspec *spec = remote->push + i;
+-		char buf[PATH_MAX];
+ 		if (spec->matching)
+ 			item = string_list_append("(matching)", &states->push);
+-		else if (spec->pattern) {
+-			snprintf(buf, (sizeof(buf)), "%s*", spec->src);
+-			item = string_list_append(buf, &states->push);
+-			snprintf(buf, (sizeof(buf)), "%s*", spec->dst);
+-		} else if (strlen(spec->src))
++		else if (strlen(spec->src))
+ 			item = string_list_append(spec->src, &states->push);
+ 		else
+ 			item = string_list_append("(delete)", &states->push);
+@@ -374,10 +368,7 @@ static int get_push_ref_states_noquery(struct ref_states *states)
+ 		info = item->util = xcalloc(sizeof(struct push_info), 1);
+ 		info->forced = spec->force;
+ 		info->status = PUSH_STATUS_NOTQUERIED;
+-		if (spec->pattern)
+-			info->dest = xstrdup(buf);
+-		else
+-			info->dest = xstrdup(spec->dst ? spec->dst : item->string);
++		info->dest = xstrdup(spec->dst ? spec->dst : item->string);
  	}
---=20
-Eric Wong
+ 	return 0;
+ }
+@@ -390,7 +381,7 @@ static int get_head_names(const struct ref *remote_refs, struct ref_states *stat
+ 
+ 	refspec.force = 0;
+ 	refspec.pattern = 1;
+-	refspec.src = refspec.dst = "refs/heads/";
++	refspec.src = refspec.dst = "refs/heads/*";
+ 	states->heads.strdup_strings = 1;
+ 	get_fetch_map(remote_refs, &refspec, &fetch_map_tail, 0);
+ 	matches = guess_remote_head(find_ref_by_name(remote_refs, "HEAD"),
