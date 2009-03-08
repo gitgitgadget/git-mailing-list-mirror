@@ -1,110 +1,148 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: [PATCH] Create USE_ST_TIMESPEC and turn it on for Darwin
-Date: Sun,  8 Mar 2009 16:04:28 -0400
-Message-ID: <1236542668-83333-1-git-send-email-benji@silverinsanity.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Mar 08 21:06:37 2009
+From: Robin Stocker <robin@nibor.org>
+Subject: [EGIT PATCH] Show diff when double-clicking on file in commit dialog
+Date: Sun, 08 Mar 2009 21:09:49 +0100
+Message-ID: <49B4260D.6070501@nibor.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Sun Mar 08 21:18:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgPGO-0004oK-VF
-	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 21:06:21 +0100
+	id 1LgPRo-0000CV-Gd
+	for gcvg-git-2@gmane.org; Sun, 08 Mar 2009 21:18:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753703AbZCHUEg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2009 16:04:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753654AbZCHUEg
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 16:04:36 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:37561 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753289AbZCHUEf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2009 16:04:35 -0400
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id 729F51FFC3FB; Sun,  8 Mar 2009 20:04:27 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from localhost.localdomain (cpe-74-74-137-205.rochester.res.rr.com [74.74.137.205])
-	by silverinsanity.com (Postfix) with ESMTPA id 3C20A1FFC043;
-	Sun,  8 Mar 2009 20:04:23 +0000 (UTC)
-X-Mailer: git-send-email 1.6.2.222.g01cbd
+	id S1753656AbZCHUQj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2009 16:16:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753474AbZCHUQi
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 16:16:38 -0400
+Received: from securemail.seppmail.ch ([195.49.105.241]:56149 "EHLO
+	securemail.seppmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753315AbZCHUQi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2009 16:16:38 -0400
+X-Greylist: delayed 366 seconds by postgrey-1.27 at vger.kernel.org; Sun, 08 Mar 2009 16:16:37 EDT
+Received: from localhost (localhost.seppmail.local [127.0.0.1])
+	by securemail.seppmail.ch (Postfix) with SMTP id 006223C639
+	for <git@vger.kernel.org>; Sun,  8 Mar 2009 21:10:06 +0100 (CET)
+Received: from gnu.speedpc.ch (unknown [192.168.0.4])
+	by securemail.seppmail.ch (Postfix) with ESMTPS
+	for <git@vger.kernel.org>; Sun,  8 Mar 2009 21:10:05 +0100 (CET)
+Received: (qmail 11372 invoked from network); 8 Mar 2009 21:10:25 +0100
+Received: from 217-162-182-112.dclient.hispeed.ch (HELO ?10.0.0.33?) (217.162.182.112)
+  by mail.speedpc.ch with (DHE-RSA-AES256-SHA encrypted) SMTP; 8 Mar 2009 21:10:24 +0100
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112636>
 
-Not all OSes use st_ctim and st_mtim in their struct stat.  In
-particular, it appears that OS X uses st_*timespec instead.  So add a
-Makefile variable and #define called USE_ST_TIMESPEC to switch the
-USE_NSEC defines to use st_*timespec.
+It only compares the index version to the working tree version for now.
+So if the file was already added to the index, the diff is empty. What
+it should show is the diff that will be in the commit.
 
-This also turns it on by default for OS X (Darwin) machines.  Likely
-this is a sane default for other BSD kernels as well, but I don't have
-any to test that assumption on.
-
-Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
+Signed-off-by: Robin Stocker <robin@nibor.org>
 ---
 
- This is on top of "next".
+Hi,
 
- Now time to go debug a Bus Error in git-grep that made this hard to find.
+An essential feature I miss in EGit at the moment (apart from the
+synchronize view [1]) is seeing what changes one is about to commit. In
+the Subclipse SVN plugin one can double-click a file in the commit
+dialog and the diff is shown.
 
- Makefile          |    7 +++++++
- git-compat-util.h |    5 +++++
- 2 files changed, 12 insertions(+), 0 deletions(-)
+This patch is a first step for adding this to EGit. It only compares the
+index version to the working tree version as I couldn't figure out an
+easy way to get the HEAD version.
 
-diff --git a/Makefile b/Makefile
-index 9a23aa5..4bdaad7 100644
---- a/Makefile
-+++ b/Makefile
-@@ -126,6 +126,9 @@ all::
- # randomly break unless your underlying filesystem supports those sub-second
- # times (my ext3 doesn't).
- #
-+# Define USE_ST_TIMESPEC if your "struct stat" uses "st_ctimespec" instead of
-+# "st_ctim"
-+#
- # Define NO_NSEC if your "struct stat" does not have "st_ctim.tv_nsec"
- # available.  This automatically turns USE_NSEC off.
- #
-@@ -660,6 +663,7 @@ ifeq ($(uname_S),Darwin)
- 	endif
- 	NO_MEMMEM = YesPlease
- 	THREADED_DELTA_SEARCH = YesPlease
-+	USE_ST_TIMESPEC = YesPlease
- endif
- ifeq ($(uname_S),SunOS)
- 	NEEDS_SOCKET = YesPlease
-@@ -925,6 +929,9 @@ endif
- ifdef NO_ST_BLOCKS_IN_STRUCT_STAT
- 	BASIC_CFLAGS += -DNO_ST_BLOCKS_IN_STRUCT_STAT
- endif
-+ifdef USE_ST_TIMESPEC
-+	BASIC_CFLAGS += -DUSE_ST_TIMESPEC
-+endif
- ifdef NO_NSEC
- 	BASIC_CFLAGS += -DNO_NSEC
- endif
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 83d8389..1906253 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -393,8 +393,13 @@ void git_qsort(void *base, size_t nmemb, size_t size,
- #define ST_CTIME_NSEC(st) 0
- #define ST_MTIME_NSEC(st) 0
- #else
-+#ifdef USE_ST_TIMESPEC
-+#define ST_CTIME_NSEC(st) ((unsigned int)((st).st_ctimespec.tv_nsec))
-+#define ST_MTIME_NSEC(st) ((unsigned int)((st).st_mtimespec.tv_nsec))
-+#else
- #define ST_CTIME_NSEC(st) ((unsigned int)((st).st_ctim.tv_nsec))
- #define ST_MTIME_NSEC(st) ((unsigned int)((st).st_mtim.tv_nsec))
- #endif
-+#endif
+It's more a proof of concept than a final patch. What do you think?
+
+[1] Someone is working on the synchronize view:
+    http://github.com/yanns/egit/commits/compare-with-index
+
+-- Robin, a different one :)
+
+ .../egit/ui/internal/dialogs/CommitDialog.java     |   40 ++++++++++++++++++++
+ 1 files changed, 40 insertions(+), 0 deletions(-)
+
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/dialogs/CommitDialog.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/dialogs/CommitDialog.java
+index 8b7fe45..6999e87 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/dialogs/CommitDialog.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/dialogs/CommitDialog.java
+@@ -18,6 +18,8 @@
+ import java.util.Comparator;
+ import java.util.Iterator;
  
- #endif
++import org.eclipse.compare.CompareUI;
++import org.eclipse.compare.ITypedElement;
+ import org.eclipse.core.resources.IFile;
+ import org.eclipse.core.resources.IProject;
+ import org.eclipse.jface.dialogs.Dialog;
+@@ -52,9 +54,17 @@
+ import org.eclipse.swt.widgets.Table;
+ import org.eclipse.swt.widgets.TableColumn;
+ import org.eclipse.swt.widgets.Text;
++import org.eclipse.team.core.RepositoryProvider;
++import org.eclipse.team.core.history.IFileHistory;
++import org.eclipse.team.core.history.IFileRevision;
++import org.eclipse.team.internal.ui.history.FileRevisionTypedElement;
+ import org.eclipse.ui.model.WorkbenchLabelProvider;
++import org.spearce.egit.core.GitProvider;
++import org.spearce.egit.core.internal.storage.GitFileHistoryProvider;
++import org.spearce.egit.core.internal.storage.GitFileRevision;
+ import org.spearce.egit.core.project.RepositoryMapping;
+ import org.spearce.egit.ui.UIText;
++import org.spearce.egit.ui.internal.GitCompareFileRevisionEditorInput;
+ import org.spearce.jgit.lib.Constants;
+ import org.spearce.jgit.lib.GitIndex;
+ import org.spearce.jgit.lib.PersonIdent;
+@@ -262,6 +272,8 @@ public void modifyText(ModifyEvent e) {
+ 		resourcesTable.setLayoutData(GridDataFactory.fillDefaults().hint(600,
+ 				200).span(2,1).grab(true, true).create());
+ 
++		resourcesTable.addSelectionListener(new CommitItemSelectionListener());
++
+ 		resourcesTable.setHeaderVisible(true);
+ 		TableColumn statCol = new TableColumn(resourcesTable, SWT.LEFT);
+ 		statCol.setText(UIText.CommitDialog_Status);
+@@ -505,6 +517,34 @@ public void widgetSelected(SelectionEvent e) {
+ 
+ 	}
+ 
++	class CommitItemSelectionListener extends SelectionAdapter {
++
++		public void widgetDefaultSelected(SelectionEvent e) {
++			IStructuredSelection selection = (IStructuredSelection) filesViewer.getSelection();
++
++			CommitItem commitItem = (CommitItem) selection.getFirstElement();
++			if (commitItem == null) {
++				return;
++			}
++
++			IProject project = commitItem.file.getProject();
++			GitProvider provider = (GitProvider) RepositoryProvider.getProvider(project);
++			GitFileHistoryProvider fileHistoryProvider = (GitFileHistoryProvider) provider.getFileHistoryProvider();
++
++			IFileHistory fileHistory = fileHistoryProvider.getFileHistoryFor(commitItem.file, 0, null);
++
++			IFileRevision baseFile = fileHistory.getFileRevision(GitFileRevision.INDEX);
++			IFileRevision nextFile = fileHistoryProvider.getWorkspaceFileRevision(commitItem.file);
++
++			ITypedElement base = new FileRevisionTypedElement(baseFile);
++			ITypedElement next = new FileRevisionTypedElement(nextFile);
++
++			GitCompareFileRevisionEditorInput input = new GitCompareFileRevisionEditorInput(base, next, null);
++			CompareUI.openCompareDialog(input);
++		}
++
++	}
++
+ 	@Override
+ 	protected void okPressed() {
+ 		commitMessage = commitText.getText();
 -- 
-1.6.2.221.g2411c.dirty
+1.6.1.2
