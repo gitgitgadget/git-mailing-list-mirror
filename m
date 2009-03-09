@@ -1,58 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC/PATCH] git push usability improvements and default change
-Date: Tue, 10 Mar 2009 00:35:12 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903100033400.6358@intel-tinevez-2-302>
-References: <1236638151-6465-1-git-send-email-finnag@pvv.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 3/7] git push: New options --matching and --current
+Date: Mon, 9 Mar 2009 19:49:47 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0903091938150.19665@iabervon.org>
+References: <1236638151-6465-1-git-send-email-finnag@pvv.org> <1236638151-6465-4-git-send-email-finnag@pvv.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Finn Arne Gangstad <finnag@pvv.org>
-X-From: git-owner@vger.kernel.org Tue Mar 10 00:36:57 2009
+X-From: git-owner@vger.kernel.org Tue Mar 10 00:51:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lgp1b-0008S7-Je
-	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 00:36:48 +0100
+	id 1LgpFf-0004bT-L1
+	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 00:51:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752046AbZCIXfS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2009 19:35:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752035AbZCIXfS
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 19:35:18 -0400
-Received: from mail.gmx.net ([213.165.64.20]:36132 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752002AbZCIXfQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2009 19:35:16 -0400
-Received: (qmail invoked by alias); 09 Mar 2009 23:35:13 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp058) with SMTP; 10 Mar 2009 00:35:13 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18GAWl1BLQGjRzdb6SgM3++ga9IjZdDZ9IRLvSi6+
-	pUIeGPnAs9lGT4
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <1236638151-6465-1-git-send-email-finnag@pvv.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.75
+	id S1752524AbZCIXtu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2009 19:49:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752434AbZCIXtu
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 19:49:50 -0400
+Received: from iabervon.org ([66.92.72.58]:53436 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752380AbZCIXtt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2009 19:49:49 -0400
+Received: (qmail 10293 invoked by uid 1000); 9 Mar 2009 23:49:47 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 9 Mar 2009 23:49:47 -0000
+In-Reply-To: <1236638151-6465-4-git-send-email-finnag@pvv.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112762>
-
-Hi,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112763>
 
 On Mon, 9 Mar 2009, Finn Arne Gangstad wrote:
 
-> git push default change:
-> 
-> git push will by default push "nothing" instead of "matching".
+> diff --git a/transport.h b/transport.h
+> index 6bbc1a8..b897d0c 100644
+> --- a/transport.h
+> +++ b/transport.h
+> @@ -34,6 +34,15 @@ struct transport {
+>  #define TRANSPORT_PUSH_DRY_RUN 4
+>  #define TRANSPORT_PUSH_MIRROR 8
+>  #define TRANSPORT_PUSH_VERBOSE 16
+> +#define TRANSPORT_PUSH_MATCHING 32
+> +#define TRANSPORT_PUSH_CURRENT 64
+> +/**
+> + * All push flags that imply a certain set of refspecs to be pushed must
+> + * be combined into TRANSPORT_PUSH_MODE_MASK
+> + **/
+> +#define TRANSPORT_PUSH_MODE_MASK \
+> +    (TRANSPORT_PUSH_ALL | TRANSPORT_PUSH_MIRROR | TRANSPORT_PUSH_MATCHING | \
+> +    TRANSPORT_PUSH_CURRENT)
 
-Hasn't this been shot down already?  I do not want that change.  I think 
-it is harmful.
+It's kind of odd that you define these flags as TRANSPORT_PUSH_*, but 
+implement them before entering transport_push(). I'm not sure which is 
+right, but the combination is odd. I think just taking care of it in 
+builtin-push with flags or options defined there is probably the best 
+thing, currently.
 
-At least without a proper way to prepare existing users for the end of the 
-world.
-
-Ciao,
-Dscho
+	-Daniel
+*This .sig left intentionally blank*
