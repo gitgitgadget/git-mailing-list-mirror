@@ -1,46 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/2] Move push logic to transport.c
-Date: Mon, 9 Mar 2009 10:14:58 -0400
-Message-ID: <20090309141457.GA20708@coredump.intra.peff.net>
-References: <alpine.LNX.1.00.0903082046280.19665@iabervon.org> <alpine.DEB.1.00.0903091033330.10279@pacific.mpi-cbg.de>
+From: Sam Hocevar <sam@zoy.org>
+Subject: git-p4 workflow suggestions?
+Date: Mon, 9 Mar 2009 15:21:08 +0100
+Message-ID: <20090309142108.GK12880@zoy.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Mar 09 15:16:53 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 09 15:22:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LggHg-0003Th-Rx
-	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 15:16:49 +0100
+	id 1LggNP-0005bC-Vg
+	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 15:22:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751460AbZCIOPS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2009 10:15:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751382AbZCIOPR
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 10:15:17 -0400
-Received: from peff.net ([208.65.91.99]:58577 "EHLO peff.net"
+	id S1751899AbZCIOVP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2009 10:21:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751410AbZCIOVP
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 10:21:15 -0400
+Received: from poulet.zoy.org ([80.65.228.129]:46445 "EHLO poulet.zoy.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751376AbZCIOPQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2009 10:15:16 -0400
-Received: (qmail 1292 invoked by uid 107); 9 Mar 2009 14:15:18 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 09 Mar 2009 10:15:18 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 09 Mar 2009 10:14:58 -0400
+	id S1751342AbZCIOVO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2009 10:21:14 -0400
+Received: by poulet.zoy.org (Postfix, from userid 1000)
+	id 7A6D512046A; Mon,  9 Mar 2009 15:21:08 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0903091033330.10279@pacific.mpi-cbg.de>
+Mail-Copies-To: never
+X-No-CC: I read mailing-lists; do not CC me on replies.
+X-Snort: uid=0(root) gid=0(root)
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112697>
 
-On Mon, Mar 09, 2009 at 10:35:45AM +0100, Johannes Schindelin wrote:
+   Dear list,
 
-> BTW thanks for the patch, I guess it will help Peff to complete "push 
-> --track" properly ;-)
+   I have modified git and git-p4 to a point where they are usable in
+my work environment. I am now faced with a new problem: Perforce's
+composite workspaces. They allow you to "mount" parts of the repo onto
+other directories, even nonempty ones.
 
-If I wait long enough, maybe my original patch will Just Work. ;)
+   Take the following example repository, where a "framework" project
+contains an example subdirectory with build files and other directories,
+and a "project1" project contains subdirectories that are meant to
+replace the ones in "example":
 
--Peff
+   //work/framework/example/src/
+                           /include/
+			   /Makefile
+			   /...
+   //work/project1/src/
+                  /include/
+
+   Using the Perforce client, one can reorganise the workspace
+so that project1/src/ transparently replaces the contents of
+framework/example/src/ (same for */include). All the work is then done
+in the framework/ local checkout, but commits may also affect project1/.
+
+   I could not find a way to do the same with git and git-p4. My main
+requirements are the following:
+
+   - preserve the atomicity of commits affecting both project1/src and
+   project1/include (having to commit from a different directory due to
+   symlink hacks is acceptable to me, even if not terribly practical)
+
+   - have git-p4 rebase work without requiring tedious merges
+
+   - *if possible* (but not a strong requirement), preserve the
+   atomicity of commits affecting both framework/ and project1/.
+
+   If anyone ever ran into the problem, I'd like to hear from their
+experience. Or maybe someone will have suggestions based on similar
+requirements.
+
+Cheers,
+-- 
+Sam.
