@@ -1,74 +1,89 @@
-From: "John Dlugosz" <JDlugosz@TradeStation.com>
-Subject: RE: Help designing work flow
-Date: Mon, 9 Mar 2009 11:36:12 -0400
-Message-ID: <450196A1AAAE4B42A00A8B27A59278E70A116188@EXCHANGE.trad.tradestation.com>
-References: <450196A1AAAE4B42A00A8B27A59278E709F07D30@EXCHANGE.trad.tradestation.com> <49B4F5A9.5060304@op5.se>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH 0/5] Extend pattern refspecs
+Date: Mon, 9 Mar 2009 11:46:25 -0400
+Message-ID: <76718490903090846x2e84816emed5e21da9788680d@mail.gmail.com>
+References: <alpine.LNX.1.00.0903052346270.19665@iabervon.org>
+	 <76718490903052119y4d6a7e0ck24bfeb1c0964e413@mail.gmail.com>
+	 <7vocwcl8ku.fsf@gitster.siamese.dyndns.org>
+	 <alpine.LNX.1.00.0903080447450.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-To: "Andreas Ericsson" <ae@op5.se>
-X-From: git-owner@vger.kernel.org Mon Mar 09 16:38:52 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 09 16:48:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LghYz-00021B-5x
-	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 16:38:45 +0100
+	id 1Lghht-0005Hw-0Z
+	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 16:47:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751599AbZCIPhQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2009 11:37:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751511AbZCIPhQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 11:37:16 -0400
-Received: from mail2.tradestation.com ([63.99.207.80]:59594 "EHLO
-	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751220AbZCIPhP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Mar 2009 11:37:15 -0400
-X-ASG-Debug-ID: 1236613033-3fe701c50000-QuoKaX
-X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
-Received: from mail5.tradestation.com (localhost [127.0.0.1])
-	by mail2.tradestation.com (Spam Firewall) with ESMTP
-	id 5186E1FDEC5; Mon,  9 Mar 2009 11:37:13 -0400 (EDT)
-Received: from mail5.tradestation.com ([192.168.51.76]) by mail2.tradestation.com with ESMTP id ZpDzvZVNYdGMz093; Mon, 09 Mar 2009 11:37:13 -0400 (EDT)
-X-ASG-Whitelist: Client
-Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 9 Mar 2009 11:37:12 -0400
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-ASG-Orig-Subj: RE: Help designing work flow
-In-Reply-To: <49B4F5A9.5060304@op5.se>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Help designing work flow
-Thread-Index: AcmgpZiIOpQWTB8lRt6C7jZxLJ6UmgAJqOfw
-X-OriginalArrivalTime: 09 Mar 2009 15:37:12.0971 (UTC) FILETIME=[EACAEDB0:01C9A0CC]
-X-Barracuda-Connect: UNKNOWN[192.168.51.76]
-X-Barracuda-Start-Time: 1236613033
-X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
+	id S1752216AbZCIPq2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Mar 2009 11:46:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751748AbZCIPq2
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 11:46:28 -0400
+Received: from rv-out-0506.google.com ([209.85.198.225]:24752 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751428AbZCIPq1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Mar 2009 11:46:27 -0400
+Received: by rv-out-0506.google.com with SMTP id g37so1714051rvb.1
+        for <git@vger.kernel.org>; Mon, 09 Mar 2009 08:46:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=BWOXP/GgOzm8mfBjsf6BkpJSqMN5PfOgbmjSGxlIfVM=;
+        b=skRqCbPIPJ+aBzPU+cXapCZg3G7A3DYIyywqbaHXZWx9uRRYRxY/d104aVV+kP0Hqg
+         SinzQRuZB7nJ5DpaKXEsD5CwKGGaK2n9ybprwaSiqK1TX30QXKncK+kRY3tArA2lA0mm
+         Z4q4Gb58PsSnxh5SbbrZ2Hcp9oQeTof8GcyJo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=XiK/OyxF6mhpMLazuX5f8dKHQL/BP/j+iZQ3Gg5z9oC/KqUPuNhCtRagKoZ/W5lwQE
+         gbJmO/HQAT83MOoSVc7fk1mA7dox1tB+w2Il4VdllCbRGyGwXrU0AzFd2LYMSD8C5v36
+         dfoSYUg93WgaY4GrsOS0ELNoroWHzdi54dfeE=
+Received: by 10.140.141.16 with SMTP id o16mr3134729rvd.138.1236613585772; 
+	Mon, 09 Mar 2009 08:46:25 -0700 (PDT)
+In-Reply-To: <alpine.LNX.1.00.0903080447450.19665@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112706>
 
-Thank you very much for your thoughts, especially the specific commands
-etc. that I can show the team as reasons.
+On Sun, Mar 8, 2009 at 4:49 AM, Daniel Barkalow <barkalow@iabervon.org>=
+ wrote:
+> On Sun, 8 Mar 2009, Junio C Hamano wrote:
+>
+>> Jay Soffian <jaysoffian@gmail.com> writes:
+>>
+>> > This series and js/remote-improvements (e5dcbfd) in pu may not get
+>> > along completely. "git remote show" tries to show how the refspecs
+>> > expand out.
+>>
+>> I've created an "early semantic conflict resolution" topic branch th=
+at is
+>> a cross between this series and js/remote-improvements, like so:
+>>
+>> =C2=A0 =C2=A0 $ git checkout -b xx/db-refspec-vs-js-remote db/refspe=
+c-wildcard-in-the-middle
+>> =C2=A0 =C2=A0 $ git merge js/remote-improvements
+>> =C2=A0 =C2=A0 $ git apply evil-fixup.diff
+>> =C2=A0 =C2=A0 $ git commit --amend -a -m "Evil merge."
+>>
+>> with the following "fixup-as-an-evil-merge patch", which I'd appreci=
+ate if
+>> you two can sanity check.
+>
+> That looks like what I'd come up with as a resolution, too, so I thin=
+k
+> it's sane unless Jay knows of another way to get remote to care about
+> patterns.
 
-=== Re: ===
-You can tell "git log" to only show one line of history too, but besides
-that, micro-details are good. You definitely want to be able to search
-the micro-details when things go awry (and they will), so you see
-exactly
-why some particular algorithm changed later.
-=== end ===
+Looks good to me too.
 
-Is there a way that someone (for example, product manager) can view only
-the main line consisting of topic merges, and not see each one separated
-by many many lines of detail changes?  Especially using the GUI?
-
---John
-(please excuse the footer; it's not my idea)
-
-TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
-  If you received this in error, please contact the sender and delete the material from any computer.
+j.
