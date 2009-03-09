@@ -1,103 +1,127 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git for Windows 1.6.2-preview20090308
-Date: Mon, 9 Mar 2009 11:37:50 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903091137330.10279@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0903080132470.10279@pacific.mpi-cbg.de> <20090309103414.GA5247@wingding.demon.nl>
-Reply-To: Johannes.Schindelin@gmx.de
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Help designing work flow
+Date: Mon, 09 Mar 2009 11:55:37 +0100
+Message-ID: <49B4F5A9.5060304@op5.se>
+References: <450196A1AAAE4B42A00A8B27A59278E709F07D30@EXCHANGE.trad.tradestation.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: git@tux.tmfweb.nl
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Mon Mar 09 11:37:54 2009
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from yw-out-2122.google.com ([74.125.46.26])
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: John Dlugosz <JDlugosz@TradeStation.com>
+X-From: git-owner@vger.kernel.org Mon Mar 09 11:57:22 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lgcrm-0005qB-6V
-	for gcvm-msysgit@m.gmane.org; Mon, 09 Mar 2009 11:37:50 +0100
-Received: by yw-out-2122.google.com with SMTP id 1so971965ywp.63
-        for <gcvm-msysgit@m.gmane.org>; Mon, 09 Mar 2009 03:36:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received-spf:authentication-results:received
-         :received:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc
-         :subject:in-reply-to:message-id:references:user-agent:mime-version
-         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        bh=NFyyKGhLoy57zeqP2gdVoET0U7hflN+TWQkRGEURGIg=;
-        b=C6JTETtUEJIb5Rb3upDSr6Csroa7SMkLo9dIwNeIylr1VS9aeAqwQMHlJqyrZoe7ba
-         0KBWj0O6UsLbGFcp1HOUZoP1o39DLpcBB6qHk/d2ps8Rj1RpPi2fSLcBPZnWD79Fhnwr
-         kd2+0pAgBR6WWdZZxNY/LzUytb3jPPIb2It1g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject
-         :in-reply-to:message-id:references:user-agent:mime-version
-         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        b=ZyIIhKexND+hXrgq6e9UQR8DGJtncZDFKtjysvMJt6J9F1imvZPOlEr+m47Y7/88RT
-         qKZtRsnkjjRsOznETx67hhUHmVuTykEAeoaBLAZfkFqiKQdfkejv95mhV7RIkh2jvPK0
-         UQbQpaAeWI80Zx/fpqP3RDtnt+cx+GRA1Af8M=
-Received: by 10.100.131.16 with SMTP id e16mr933441and.10.1236594977424;
-        Mon, 09 Mar 2009 03:36:17 -0700 (PDT)
-Received: by 10.177.6.2 with SMTP id j2gr3904yqi.0;
-	Mon, 09 Mar 2009 03:36:17 -0700 (PDT)
-X-Sender: Johannes.Schindelin@gmx.de
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.180.248.9 with SMTP id v9mr144379bkh.17.1236594976834; Mon, 09 Mar 2009 03:36:16 -0700 (PDT)
-Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by gmr-mx.google.com with SMTP id 13si446060bwz.7.2009.03.09.03.36.16; Mon, 09 Mar 2009 03:36:16 -0700 (PDT)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
-Received: (qmail invoked by alias); 09 Mar 2009 10:36:16 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38] by mail.gmx.net (mp042) with SMTP; 09 Mar 2009 11:36:16 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+mgSkkfyOmYeOtAWbh6B8crVh9F11TPprOQmeLzQ 4IJEPFLm/5oCA8
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20090309103414.GA5247@wingding.demon.nl>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5600000000000001
-Sender: msysgit@googlegroups.com
+	id 1LgdAW-0003PU-Hc
+	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 11:57:12 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753435AbZCIKzn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2009 06:55:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753284AbZCIKzn
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 06:55:43 -0400
+Received: from spsmtp02oc.mail2world.com ([74.202.142.148]:4407 "EHLO
+	spsmtp02oc.mail2world.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753216AbZCIKzm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2009 06:55:42 -0400
+Received: from mail pickup service by spsmtp02oc.mail2world.com with Microsoft SMTPSVC;
+	 Mon, 9 Mar 2009 03:54:06 -0700
+auth-sender: exon@home.se
+Received: from 212.112.174.166 unverified ([212.112.174.166]) by spsmtp02oc.mail2world.com with Mail2World SMTP Server; 
+	Mon, 09 Mar 2009 03:54:05 -0700
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
+In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E709F07D30@EXCHANGE.trad.tradestation.com>
+X-OriginalArrivalTime: 09 Mar 2009 10:54:06.0418 (UTC) FILETIME=[5E04A320:01C9A0A5]
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit+owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit+help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-X-BeenThere-Env: msysgit@googlegroups.com
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112686>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112687>
 
-
-Hi,
-
-On Mon, 9 Mar 2009, Rutger Nijlunsing wrote:
-
-> On Sun, Mar 08, 2009 at 02:10:21AM +0100, Johannes Schindelin wrote:
-> > 
-> > Hi,
-> > 
-> > I just released a new version of Git for Windows (TAFKA WinGit).  It is 
-> > basically Git 1.6.2 plus a few patches.  Please find the installer here:
-> > 
-> > 	http://msysgit.googlecode.com/
-> > 
-> [snip]
-> > Changes since Git-1.6.1-preview20081225
-> > 
-> > Bugfixes
-> > - Comes with updated msys-1.0.dll (should fix some Vista issues).
+John Dlugosz wrote:
+> I know we (my group) should use "topic" branches and apply them back to
+> the dev branch when done.  There is concern that the commit history gets
+> too full of detailed stuff, especially with several developers, that you
+> can't tell what "really changed".  So, our dev branch should appear to
+> contain only commit nodes representing completed assignments; not every
+> day's checkpoint and trying to keep one's own stuff on top to avoid
+> merging later.
 > 
-> Thanks! This also fixes the 'git hangs 5s without any reason on some
-> Windows XP machines'!
+> I guess that's how it is on these Open Source projects where patches are
+> submitted by email and applied by the maintainer.  We don't see the
+> details, just the final patch.  But, my situation will be developers
+> gathered around an in-house master repo, and everyone should be able to
+> push their own changes as assignments are completed.
+> 
+> What is the best procedure to achieve that?  Or what are some good
+> alternatives with trade-offs?
+> 
 
-Good to know!
+Use topic-branches and let someone merge them into master after having
+verified that they work properly.
 
-Thanks,
-Dscho
+We usually commit simple bugfixes directly to master and then have
+developers rebase their changes onto master when they're ready to
+integrate it. They push their development branches though, and further
+changes to the topic are done on the topic-branches which can get
+merged to master (or stable) many times. Once a topic is merged, we
+always "git commit --amend" the merge commit to write a proper
+commit-message for it, adding a link to our bug- and feature-tracker
+so we get the at-a-glance information quickly and can dig up the
+entire discussion history around the bug/feature later. Each topic
+should be complete with documentation and test-cases before it's
+merged.
+
+
+> I see that if a topic branch is merged (disabling FF if applicable), the
+> main line (leftmost parent) will be a history of completed topics.  But,
+> we don't need to keep the detailed side-branches forever, and even if
+> gitk and other visualization  tools can be told to just show the main
+> line, advanced use such as git log this..that will forever be packed
+> with the micro-details.
+> 
+
+You can tell "git log" to only show one line of history too, but besides
+that, micro-details are good. You definitely want to be able to search
+the micro-details when things go awry (and they will), so you see exactly
+why some particular algorithm changed later.
+
+> So, unless someone has more input along that line, I'm assuming that we
+> want to apply the completed topic as a single-parent commit.  That is
+> the natural result if preparing patches and then applying them, but is
+> there a simpler, direct way to do that in git?
+> 
+
+You do not want to do that. We did it for a while, and it was hell when
+we found out that one of them broke down. The really, really *nice* thing
+about git is called "git bisect". What makes it so awesomely nice is
+that, instead of looking at a 100k diff-file knowing that somewhere in
+there a bug was introduced, you get (with good discipline using small
+commits), a 1-40 line patch with a clear and concise message of why
+those changes were thought necessary at that time. Applying a topic
+branch as a single patch would rob you of that functionality, and you
+will regret it. Trust me on this.
+
+> The detailed topic branches can be kept around for a while, for the
+> original author to extend if it needs to be returned to, and to examine
+> if the gestalt change in the single commit is too overwhelming to
+> understand, or to help figure out what might have broken.  But after a
+> while they can be deleted and then gc will free up the disk space.
+> 
+
+But if they do need to be returned to, you cannot merge them again if
+you've already applied the topic-patch (ugh), since you'd get conflicts
+if any of the sections touched by the patch have been changed since.
+
+We use topic-branches quite a lot. When we're done with them we delete
+the branch-pointers but I wouldn't, ever, dream of re-cooking them as
+mega-patches when applying them to master.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
