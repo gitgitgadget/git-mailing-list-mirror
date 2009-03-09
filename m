@@ -1,73 +1,63 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [EGIT PATCH] Make commit amend work when a resource is selected
-Date: Mon,  9 Mar 2009 23:35:39 +0100
-Message-ID: <1236638139-17806-1-git-send-email-robin.rosenberg@dewire.com>
-Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
-To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Mon Mar 09 23:37:25 2009
+From: Cap Petschulat <cap@naviasystems.com>
+Subject: filter-branch --subdirectory-filter prematurely truncating history?
+Date: Mon, 9 Mar 2009 23:08:12 +0000 (UTC)
+Message-ID: <loom.20090309T230424-857@post.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 10 00:11:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lgo5v-00041B-IC
-	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 23:37:11 +0100
+	id 1LgodD-00086q-LO
+	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 00:11:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752386AbZCIWfn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2009 18:35:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752187AbZCIWfn
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 18:35:43 -0400
-Received: from mail.dewire.com ([83.140.172.130]:9615 "EHLO dewire.com"
+	id S1751444AbZCIXKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2009 19:10:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751345AbZCIXKG
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 19:10:06 -0400
+Received: from main.gmane.org ([80.91.229.2]:43532 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751928AbZCIWfm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2009 18:35:42 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 1E53D15E0E00;
-	Mon,  9 Mar 2009 23:35:40 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id CRabcSkdLRjf; Mon,  9 Mar 2009 23:35:39 +0100 (CET)
-Received: from localhost.localdomain (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 8037E15E0DFC;
-	Mon,  9 Mar 2009 23:35:39 +0100 (CET)
-X-Mailer: git-send-email 1.6.1.285.g35d8b
+	id S1750926AbZCIXKF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2009 19:10:05 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1Lgobj-0007QN-2d
+	for git@vger.kernel.org; Mon, 09 Mar 2009 23:10:03 +0000
+Received: from 69-92-193-253.cpe.cableone.net ([69.92.193.253])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 09 Mar 2009 23:10:03 +0000
+Received: from cap by 69-92-193-253.cpe.cableone.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 09 Mar 2009 23:10:03 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 69.92.193.253 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.19) Gecko/20081216 Ubuntu/8.04 (hardy) Firefox/2.0.0.19)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112752>
 
-We previously made it possible to commit when any resource
-was selected. Due to the internal workings of the commit
-action the patch was not enough to extend this functionality
-into the amend mode.
+I'd like to spin a subdirectory of an existing git repo off in to its
+own repo while preserving history. From what I've read, I should be
+able to do this with a fresh clone followed by git filter-branch
+--subdirectory-filter MYSUBDIR, assuming I don't care about other
+branches or tags. This runs, and when it's done, I have a repo that
+contains the subdir's contents as its root. So far so good.
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
- .../egit/ui/internal/actions/CommitAction.java     |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+I would expect to see the subdir's full history when I run git log,
+but instead it cuts off prematurely, showing the first commit to be
+some relatively recent minor change I'll call FOO. In gitk, I can see
+that history prior to FOO is still around, but FOO has no parents, and
+the commit before FOO has no children. In the original repo, FOO's
+parent was the merge of a branch which no longer exists, if this
+matters.
 
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CommitAction.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CommitAction.java
-index 5996596..03649c6 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CommitAction.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/CommitAction.java
-@@ -175,7 +175,7 @@ private void performCommit(CommitDialog commitDialog, String commitMessage)
- 		} catch (IOException e) {
- 			throw new TeamException("Committing changes", e);
- 		}
--		for (IProject proj : getSelectedProjects()) {
-+		for (IProject proj : getProjectsForSelectedResources()) {
- 			RepositoryMapping.getMapping(proj).fireRepositoryChanged();
- 		}
- 	}
-@@ -230,7 +230,7 @@ private void prepareTrees(IFile[] selectedItems,
- 			UnsupportedEncodingException {
- 		if (selectedItems.length == 0) {
- 			// amending commit - need to put something into the map
--			for (IProject proj : getSelectedProjects()) {
-+			for (IProject proj : getProjectsForSelectedResources()) {
- 				Repository repo = RepositoryMapping.getMapping(proj).getRepository();
- 				if (!treeMap.containsKey(repo))
- 					treeMap.put(repo, repo.mapTree(Constants.HEAD));
--- 
-1.6.1.285.g35d8b
+Am I expecting filter-branch to do something unreasonable? Is there an
+easy way to reconnect the orphaned history? Am I using the wrong tool
+for the job?
