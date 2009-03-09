@@ -1,63 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] grep: make show_line more portable
-Date: Sun, 08 Mar 2009 20:52:58 -0700
-Message-ID: <7vbpsbic85.fsf@gitster.siamese.dyndns.org>
-References: <1236561326-1231-1-git-send-email-benji@silverinsanity.com>
- <76718490903081922p105ebf79vb0bf06989413887c@mail.gmail.com>
- <5ACAF49A-84B5-4F55-A8B8-0FC711708810@silverinsanity.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jay Soffian <jaysoffian@gmail.com>, Git List <git@vger.kernel.org>
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Mon Mar 09 04:55:54 2009
+From: Csaba Henk <csaba-ml@creo.hu>
+Subject: Re: import files w/ history
+Date: Mon, 9 Mar 2009 05:15:16 +0000 (UTC)
+Message-ID: <slrngr99ei.1t4t.csaba-ml@beastie.creo.hu>
+References: <slrngqqa4l.1t4t.csaba-ml@beastie.creo.hu> <20090303130046.GA7867@coredump.intra.peff.net> <slrngr299k.1t4t.csaba-ml@beastie.creo.hu> <20090308001021.GA26167@coredump.intra.peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 09 06:18:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgWaS-0000UM-R4
-	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 04:55:33 +0100
+	id 1LgXsA-0006JB-O4
+	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 06:17:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751233AbZCIDxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2009 23:53:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751167AbZCIDxJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 23:53:09 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60979 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751096AbZCIDxJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2009 23:53:09 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 57CD3A0383;
-	Sun,  8 Mar 2009 23:53:05 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 13A60A0382; Sun,
-  8 Mar 2009 23:53:00 -0400 (EDT)
-In-Reply-To: <5ACAF49A-84B5-4F55-A8B8-0FC711708810@silverinsanity.com> (Brian
- Gernhardt's message of "Sun, 8 Mar 2009 22:44:40 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: CB805434-0C5D-11DE-AE52-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1751290AbZCIFP2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2009 01:15:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751211AbZCIFP2
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 01:15:28 -0400
+Received: from main.gmane.org ([80.91.229.2]:59515 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751082AbZCIFP2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2009 01:15:28 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LgXpk-0007Rc-Hq
+	for git@vger.kernel.org; Mon, 09 Mar 2009 05:15:24 +0000
+Received: from www.creo.hu ([217.113.62.14])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 09 Mar 2009 05:15:24 +0000
+Received: from csaba-ml by www.creo.hu with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 09 Mar 2009 05:15:24 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: www.creo.hu
+User-Agent: slrn/0.9.8.1 (FreeBSD)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112677>
 
-Brian Gernhardt <benji@silverinsanity.com> writes:
-
-> On Mar 8, 2009, at 10:22 PM, Jay Soffian wrote:
+On 2009-03-08, Jeff King <peff@peff.net> wrote:
+> What you really want to do is say:
 >
->> On Sun, Mar 8, 2009 at 9:15 PM, Brian Gernhardt
->> <benji@silverinsanity.com> wrote:
->>> On OS X the printf specifier "%.0s" outputs the entire string instead
->>> of 0 characters as POSIX states.
->>
->> Does not reproduce for me:
+>   - for every commit, narrow the tree to _just_ the one file
 >
-> Nor for me, as I noted on the other thread...  And looking again, I
-> was reading the man page for printf(1), not printf(3).  Ouch.
-> *grumble, grumble*  I'm crawling back under my rock now.
+>   - if there were no changes in the narrowed tree, just throw out the
+>     commit
+>
+> You can use an --index-filter to do the former, and a --commit-filter to
+> do the latter (or just use --prune-empty, which is a shorthand).
+>
+> Another poster had a similar problem, and you can see the right
+> filter-branch recipe there:
+>
+>   http://article.gmane.org/gmane.comp.version-control.git/111991
 
-Heh, people make mistakes and others are here to help spot them.
-Collectively we all win.
+Thanks, this did the job.
 
-Thanks for a breakage report, initial fix and a confirmation.
+>
+> I think you need an extra '--' to separate the paths from the revisions
+> in the rev-list arguments:
+>
+>   git filter-branch -- master -- sys/dev/disk/vn/vn.c
+>
+> but even that doesn't quite do what you want. It limits the commits that
+> are shown, similar to your first attempt above, but it doesn't cut down
+> the tree itself (OTOH, limiting by path rather than using --prune-empty
+> is likely to run faster, since you won't even look at commits that are
+> uninteresting. However, it may change the shape of your history with
+> respect to branching and merging).
+
+Finally I choose to add the path to the rev-list args -- 80 vs
+15000 commits does make a difference. (I can still check if there was
+any histroy [I just coined this from "history" and "destroy" :)] and
+go back to the full-scan way if yes.)
+
+But I still had a hard time with it... Finally I realized that if I do
+filtering this way, I have to start filtering from the topmost commit
+which affects the given file.
+
+If I just start from origin/HEAD (assuming that it's on a commit which
+does not affect the file), then it won't be found as a key of the mapping
+created by git-filter-branch (as it's ignored because rev-listing was
+narrowed down to the file), and therefore filter-branch finally punts
+with "WARNING: Ref '<sha1>' is unchanged". I don't know if it's an
+intended behaviour, or something which could/should be improved, or at
+least documented... seems to be some sort of POLS violation to me (at
+least I was surprised :) ).
+
+Regards,
+Csaba
