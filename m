@@ -1,64 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] grep: make show_line more portable
-Date: Sun, 08 Mar 2009 18:35:35 -0700
-Message-ID: <7vhc23iil4.fsf@gitster.siamese.dyndns.org>
-References: <1236561326-1231-1-git-send-email-benji@silverinsanity.com>
+From: Frank Li <lznuaa@gmail.com>
+Subject: [ANNOUNCE] TortoiseGit 0.4.2.0 release
+Date: Mon, 9 Mar 2009 09:38:33 +0800
+Message-ID: <1976ea660903081838o77d9992ds5ddadd1c7fcd5952@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Mon Mar 09 02:38:15 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: tortoisegit-dev <tortoisegit-dev@googlegroups.com>,
+	tortoisegit-users@googlegroups.com, git@vger.kernel.org,
+	tortoisegit-announce@googlegroups.com
+X-From: git-owner@vger.kernel.org Mon Mar 09 02:41:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgURa-0007dy-Vf
-	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 02:38:15 +0100
+	id 1LgUUQ-0008EQ-4l
+	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 02:41:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753913AbZCIBfm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2009 21:35:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753839AbZCIBfl
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 21:35:41 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34598 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753767AbZCIBfl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2009 21:35:41 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 59100492D;
-	Sun,  8 Mar 2009 21:35:39 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B482B492C; Sun, 
- 8 Mar 2009 21:35:36 -0400 (EDT)
-In-Reply-To: <1236561326-1231-1-git-send-email-benji@silverinsanity.com>
- (Brian Gernhardt's message of "Sun, 8 Mar 2009 21:15:26 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 98836408-0C4A-11DE-8879-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
+	id S1754192AbZCIBig (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2009 21:38:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754146AbZCIBif
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 21:38:35 -0400
+Received: from rv-out-0506.google.com ([209.85.198.225]:26392 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754145AbZCIBif (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2009 21:38:35 -0400
+Received: by rv-out-0506.google.com with SMTP id g37so1404404rvb.1
+        for <git@vger.kernel.org>; Sun, 08 Mar 2009 18:38:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=+OzMnOTREVwFkeAaAZ2E6M8MvYVitbhOgVOC2IMTBEw=;
+        b=MQOimKkinZHxiiywPzUNsnDIqvgr4VQV1JBWYTXzTmJZZnFh5KDJkNNCEEWudhQDs/
+         879zbvVMNF6d7XOWDk7x8vwTZteE5VZzfxW3tOTa36HK6G/ZiP4JsEZihMU28Aut61eg
+         qAd0P/l+wL5qGbD6zDSekxuR3r3V8a+7Rd7wk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=EBN3le4nrkjwnCrj7p4IuhwcERagDKfARYnDbh+1utZ0QDnhcT3Tz8p28mpPrkF25K
+         aBk4jZ0whzvnY/EdBOVlsaSSkAudUaArkz9pleU1bsikQWqU1EhxNQtlmHLsmGaAg70L
+         xk68QCNMeeyABVdg1K7vG1jI0Nh8jmD1ni31E=
+Received: by 10.141.26.19 with SMTP id d19mr2768290rvj.84.1236562713509; Sun, 
+	08 Mar 2009 18:38:33 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112667>
 
-Brian Gernhardt <benji@silverinsanity.com> writes:
+TortoiseGit Shell can not appear at explore context menu because miss
+install ATL library at v0.4.1.0.
+I am sorry for such critial problem happen.
 
-> On OS X the printf specifier "%.0s" outputs the entire string instead
-> of 0 characters as POSIX states.
->
-> In addition, for * width or precision printf expects an integer
-> argument.  On systems were regoff_t is 64-bit, unexpected results can
-> occur.
+This release is for quick fix this issue.
 
-I would prefer to see these two issues solved as separate issues.
+Version 0.4.2.0 version(external)
+	*Fix Shell menu disappear because ATL library have not installed.
+	*Fix Commit Dialog and Log Dialog default column is wrong
+	*Fix some dialog can't show after resize and close and open again
+	*Fix ProgressDlg Sometime thread is dead blocked.
 
-Specifically, I'd like to know if the patch from me to you a few message
-ago solves the issue.
+Version 0.4.1.0 version(external)
+        *Fixed x64 build of TortoiseProc crashed due to received
+unexpected messages
+	*Fix tag to head when *force* check box checked
+	*Add Git document to help
 
-If you still need a "some implementations of printf is broken with respect
-to 0 precision" workaround on top of that patch, we would want to add it
-separately, but it may have to cover not just this printf(), as I am not
-convinced this is the only place that lets (integer) 0 passed to the
-"%.*s" format.  That patch needs to be written after a separate auditing
-of output from "git grep -n -e 'printf.*%\.\*s'", which I do not think
-happened yet (at least I haven't done that, and I somehow do not think you
-have yet either).
+Version 0.4.0.0 version(internal)
+Features:
+	*Full Overlay Icon Support.
+	 Show "Conflict, ignore file, untracked file, modified, Add, staged"
+icon according to file status.
+
+	*Rebase Support.
+         Support "Pick" "Sqaush" "Edit" and "Skip" commit when rebase branch.
+         Support abort.
+ 	
+	*Combine Multi-commits to one commit.
+	 Combine continous commits to one commit. The limition is the only
+single line(no merge point) above combined commit.
+
+	*Cherry Pick multi commits.
+	 User can use multi commits at log dialog and then choose cherry pick
+these. Cherry Pick dialog guide you finish whole work.
+         Support "Pick" "Squash" "Edit" and "Skip" commits.
+	
+	*First x64 version.
+
+	*Support version "browse" at switch, export, new branch/tag and merge dialogs.
+
+	*Add context menu item "Revert" at Commit dialog File List.
+
+	*Show bold font for HEAD at log dialog.
+	
+	*Add "Whole Project" checkbox at commit dialog
+
+	*First Version Help Document.
+
+Bug Fix:
+	*Fix issue 36, Push not working if no remote branch is specified
+	*Default UnCheck untrack file at commit dialog
+	*Issue 40:  Commit from subfolder shows unversioned files in parent
+	*Fix diff problem when filenames have embedded spaces
+	*Fix Issue 24,45, Commit results not in window with scroll bars
+	*Fix for win2k context menu icons
+	*Fix Issue 46, The about window title still displays TortoiseSVN
+	*Fix Issue 37, When the file name contains Chinese char, Diff doesn't work.
+	*Fix Issue 28, "Add" status icon overlay is not correct.
