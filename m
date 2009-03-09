@@ -1,60 +1,106 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [PATCH] grep: make show_line more portable
-Date: Sun, 8 Mar 2009 22:44:40 -0400
-Message-ID: <5ACAF49A-84B5-4F55-A8B8-0FC711708810@silverinsanity.com>
-References: <1236561326-1231-1-git-send-email-benji@silverinsanity.com> <76718490903081922p105ebf79vb0bf06989413887c@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: "Daniel Cheng (aka SDiZ)" <j16sdiz+freenet-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Subject: [PoC PATCH JGIT 0/2] Proof of concept code for Git
+	Freenet transport
+Date: Mon,  9 Mar 2009 11:36:03 +0800
+Message-ID: <1236569765-8882-1-git-send-email-j16sdiz+freenet@gmail.com>
+Reply-To: Discussion of development issues <devl-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 09 03:48:18 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+To: devl-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org,
+	git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+X-From: devl-bounces-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org Mon Mar 09 04:37:46 2009
+Return-path: <devl-bounces-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org>
+Envelope-to: gcfd-devl-602-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org
+Received: from emu.freenetproject.org ([89.16.176.201] helo=freenetproject.org)
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgVXM-0004Jq-Le
-	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 03:48:17 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753355AbZCICop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2009 22:44:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752800AbZCICop
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 22:44:45 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:57092 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752209AbZCICoo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2009 22:44:44 -0400
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id 643281FFC3FB; Mon,  9 Mar 2009 02:44:33 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+	id 1LgWJF-0005hK-Sw
+	for gcfd-devl-602-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org; Mon, 09 Mar 2009 04:37:45 +0100
+Received: by freenetproject.org (Postfix, from userid 108)
+	id B3025478727; Mon,  9 Mar 2009 03:36:21 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb3 (2006-10-05) on 
+	emu.dh.bytemark.co.uk
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [192.168.1.115] (cpe-74-74-137-205.rochester.res.rr.com [74.74.137.205])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTPSA id 0E6A71FFC043;
-	Mon,  9 Mar 2009 02:44:31 +0000 (UTC)
-In-Reply-To: <76718490903081922p105ebf79vb0bf06989413887c@mail.gmail.com>
-X-Mailer: Apple Mail (2.930.3)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112672>
+X-Spam-Status: No, score=-9.5 required=5.0 tests=AWL,BAYES_00,
+	FORGED_RCVD_HELO,SPF_PASS autolearn=ham version=3.1.7-deb3
+Received: from emu.dh.bytemark.co.uk (localhost.localdomain [127.0.0.1])
+	by freenetproject.org (Postfix) with ESMTP id 0B2EA478702;
+	Mon,  9 Mar 2009 03:36:19 +0000 (UTC)
+X-Original-To: devl-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org
+Delivered-To: devl-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org
+Received: by freenetproject.org (Postfix, from userid 108)
+	id E47A747871B; Mon,  9 Mar 2009 03:36:15 +0000 (UTC)
+Received-SPF: pass (emu.dh.bytemark.co.uk: domain of j16sdiz-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
+	designates 209.85.200.169 as permitted sender)
+Received: from wf-out-1314.google.com (wf-out-1314.google.com [209.85.200.169])
+	by freenetproject.org (Postfix) with ESMTP id 5EC3547867B
+	for <devl-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org>; Mon,  9 Mar 2009 03:36:12 +0000 (UTC)
+Received: by wf-out-1314.google.com with SMTP id 27so1796865wfd.22
+	for <devl-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org>; Sun, 08 Mar 2009 20:36:11 -0700 (PDT)
+Received: by 10.142.113.19 with SMTP id l19mr2334060wfc.10.1236569771605;
+	Sun, 08 Mar 2009 20:36:11 -0700 (PDT)
+Received: from localhost.localdomain (n058153086094.netvigator.com
+	[58.153.86.94])
+	by mx.google.com with ESMTPS id 29sm7732622wfg.53.2009.03.08.20.36.10
+	(version=TLSv1/SSLv3 cipher=RC4-MD5);
+	Sun, 08 Mar 2009 20:36:11 -0700 (PDT)
+X-Mailer: git-send-email 1.6.2.rc2
+X-BeenThere: devl-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org
+X-Mailman-Version: 2.1.9
+Precedence: list
+List-Id: Discussion of development issues <devl.freenetproject.org>
+List-Unsubscribe: <http://emu.freenetproject.org/cgi-bin/mailman/listinfo/devl>, 
+	<mailto:devl-request-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org?subject=unsubscribe>
+List-Archive: <http://emu.freenetproject.org/pipermail/devl>
+List-Post: <mailto:devl-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org>
+List-Help: <mailto:devl-request-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org?subject=help>
+List-Subscribe: <http://emu.freenetproject.org/cgi-bin/mailman/listinfo/devl>, 
+	<mailto:devl-request-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org?subject=subscribe>
+Sender: devl-bounces-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org
+Errors-To: devl-bounces-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112673>
+
+Hi JGit / Freenet community,
+
+Here is some proof-of-concept code for Git-over-Freenet.
+I am sending this to see the feedback from communities.
+
+The code need some more cleanups, so it it is not ready for apply (yet).
+
+This is a real-life example
+
+Push:
+   $ git remote add fcp fcp://SSK@[my public key]^[my private key]/test.git
+   $ ./jgit push fcp refs/remotes/origin/stable:refs/heads/master
+ 
+ /ALTERNATIVLY/
+
+   Insert a bare repository under USK@<.....>/test.git/-1/
+
+Pull:
+ $ ./jgit clone fcp://SSK@[my public key]^[my private key]/test.git
 
 
-On Mar 8, 2009, at 10:22 PM, Jay Soffian wrote:
+To workaround the metadata update problem, this client translate the
+path seperator to "-", that means:
 
-> On Sun, Mar 8, 2009 at 9:15 PM, Brian Gernhardt
-> <benji@silverinsanity.com> wrote:
->> On OS X the printf specifier "%.0s" outputs the entire string instead
->> of 0 characters as POSIX states.
->
-> Does not reproduce for me:
+On push:
+   objects/aa/bbbbbbbb   --> USK@..../test.git-objects-aa-bbbbbbb/-1/
+   refs/heads/xxx        --> USK@..../test.git-objects-ref-heads-xxx/-1/
 
-Nor for me, as I noted on the other thread...  And looking again, I  
-was reading the man page for printf(1), not printf(3).  Ouch.   
-*grumble, grumble*  I'm crawling back under my rock now.
+On pull:
+   To support uploading from jSite, 
+    when we load the info/refs we first check USK@..../test.git-info-refs/-1/
+    if it is unavailiable, we would use USK@..../test.git/-1/info/refs
 
-~~ B
+   The "traditional" type (USK@..../test.git/-1/objects) repository is
+   always added as an alternative objects database. No other info/alternatives 
+   are supported
+
+FIXME:
+ - How to store the private key of repository?
+   Currently, we use URI of form fcp://SSK@<public key>^<private key>/some-id
+   This is quite ugly. Could we use a per remote Config ? How can I get remote
+   name from transport?
+
+ - Make pushing async, could we?
