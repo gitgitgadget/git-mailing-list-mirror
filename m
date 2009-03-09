@@ -1,83 +1,89 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: push problem for new repo on repo.or.cz
-Date: Mon, 09 Mar 2009 18:11:21 +0100
-Message-ID: <49B54DB9.9010407@drmicha.warpmail.net>
-References: <49B53DAF.9080004@drmicha.warpmail.net> <20090309165139.GV8940@machine.or.cz> <alpine.DEB.1.00.0903091758390.6358@intel-tinevez-2-302>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/2] Move push logic to transport.c
+Date: Mon, 9 Mar 2009 18:11:55 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903091809330.6358@intel-tinevez-2-302>
+References: <alpine.LNX.1.00.0903082046280.19665@iabervon.org> <alpine.DEB.1.00.0903091033330.10279@pacific.mpi-cbg.de> <alpine.LNX.1.00.0903091200150.19665@iabervon.org> <alpine.DEB.1.00.0903091711180.6358@intel-tinevez-2-302>
+ <alpine.LNX.1.00.0903091230430.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@suse.cz>, Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Mar 09 18:13:21 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Mon Mar 09 18:13:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lgj2F-0006TH-1L
-	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 18:13:03 +0100
+	id 1Lgj2t-0006jn-2v
+	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 18:13:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752545AbZCIRLf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2009 13:11:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752284AbZCIRLe
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 13:11:34 -0400
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:41751 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751625AbZCIRLe (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Mar 2009 13:11:34 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id 278DB2EBF3E;
-	Mon,  9 Mar 2009 13:11:32 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Mon, 09 Mar 2009 13:11:32 -0400
-X-Sasl-enc: 2hnI169P0z65G8QfUwySJA0/YhzrVAavt9eA2lWkkHV8 1236618691
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 6AFCD3BABA;
-	Mon,  9 Mar 2009 13:11:31 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090305 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <alpine.DEB.1.00.0903091758390.6358@intel-tinevez-2-302>
+	id S1753319AbZCIRMO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2009 13:12:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753067AbZCIRMO
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 13:12:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59437 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751690AbZCIRMM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2009 13:12:12 -0400
+Received: (qmail invoked by alias); 09 Mar 2009 17:12:07 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp064) with SMTP; 09 Mar 2009 18:12:07 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX180E4l5MuA0c7pH69q43IhimebcsmpcWatHJnxZVs
+	EhpXedy80GrVFZ
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <alpine.LNX.1.00.0903091230430.19665@iabervon.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112722>
 
-Johannes Schindelin venit, vidit, dixit 09.03.2009 17:59:
-> Hi,
+Hi,
+
+On Mon, 9 Mar 2009, Daniel Barkalow wrote:
+
+> On Mon, 9 Mar 2009, Johannes Schindelin wrote:
 > 
-> On Mon, 9 Mar 2009, Petr Baudis wrote:
+> > On Mon, 9 Mar 2009, Daniel Barkalow wrote:
+> > 
+> > > On Mon, 9 Mar 2009, Johannes Schindelin wrote:
+> > > 
+> > > > On Sun, 8 Mar 2009, Daniel Barkalow wrote:
+> > > > 
+> > > > > It doesn't convert http-push or the rsync transports, largely 
+> > > > > because I don't have test setups for rsync or webdav to make sure 
+> > > > > that they're still working.
+> > > > 
+> > > > $ ls t/*http-push*
+> > > > t/t5540-http-push.sh
+> > > > 
+> > > > $ git grep -n test.*rsync t/
+> > > > t/t5510-fetch.sh:195:test_expect_success 'fetch via rsync' '
+> > > > t/t5510-fetch.sh:206:test_expect_success 'push via rsync' '
+> > > > t/t5510-fetch.sh:217:test_expect_success 'push via rsync' '
+> > > > 
+> > > > It should be just a matter of installing an apache and rsync.
+> > > 
+> > > And configuring them suitably, yes. That's the part I haven't previously 
+> > > done.
+> > 
+> > If you have to configure apache (or rsync) for the test to run properly, 
+> > we have a serious bug in our test suite.  Please share the output in that 
+> > case.
 > 
->> On Mon, Mar 09, 2009 at 05:02:55PM +0100, Michael J Gruber wrote:
->>> I have problems pushing into a new project on repo.or.cz. My user 
->>> (mjg) is added in the admin interface, the key is correct because I've 
->>> been using it for a while already for other projects (forks though). 
->>> I'm using a qualified refspec. What else could be wrong on my side, 
->>> assuming it's not the scripts on repo.or.cz? My git is 1.6.2.
->> your user has actually not been added in the admin interface, please try 
->> again.
+> rsync: failed to connect to 127.0.0.1: Connection refused (111)
+> rsync error: error in socket IO (code 10) at clientserver.c(104) [receiver=2.6.9]
+> fatal: Could not run rsync to get refs
 > 
-> Indeed.  I should have checked before giving a smart-ass answer ;-)
-> 
-> Note: when adding a user, you have to enter the admin password...  Failing 
-> that, you will see exactly the same form, but a red warning saying that 
-> the user has not been added.
+> I mean, I won't need to do anything really special in the configuration, 
+> but I do need to have rsyncd running giving access to that directory 
+> without any funny mapping on localhost.
 
-Uhm, what I had done:
+That is my mistake, I guess.  I tried to be lazy and not change 
+transport.c so that it groks "rsync:$(pwd)" style paths.
 
-- added the user
-- got back the same admin form /which now listed mjg as a user which had
-been added/ (with a checkmark)
-- after the push failed, went to the form again, hit update again, still
-saw mjg listed as a user for the project.
-
-So, there was no red warning, instead there was a confirmation.
-
-OK, I went back now. mjg was not listed any more. Added it (again), now
-things work, I'm happy, I shut up.
-
-Well, what may have happened was that the red warning was displayed at
-the top of the paage while the confirmation was listed at the bottom.
-
-In any case, thanks for hosting!
-
-Cheers,
-Michael
+Sorry,
+Dscho
