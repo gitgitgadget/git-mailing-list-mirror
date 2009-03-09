@@ -1,106 +1,99 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH] http: add_fill_function checks if function has been added
-Date: Mon, 9 Mar 2009 20:01:32 +0800
-Message-ID: <be6fef0d0903090501m21ee33b6pc3b45680324d932c@mail.gmail.com>
-References: <49B266B0.4020304@gmail.com>
-	 <7vy6vhm6it.fsf@gitster.siamese.dyndns.org>
-	 <be6fef0d0903071249s42ac7f94o82461ca32dcdfcd5@mail.gmail.com>
-	 <7vd4ctm29m.fsf@gitster.siamese.dyndns.org>
-	 <be6fef0d0903080327u551c0b4mcb86f2ba76473efc@mail.gmail.com>
-	 <7vd4crls8q.fsf@gitster.siamese.dyndns.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Help designing work flow
+Date: Mon, 09 Mar 2009 13:27:40 +0100
+Message-ID: <49B50B3C.50700@op5.se>
+References: <450196A1AAAE4B42A00A8B27A59278E709F07D30@EXCHANGE.trad.tradestation.com>	 <49B4F5A9.5060304@op5.se> <43d8ce650903090444n352f310fs9cd4b8b0184be010@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 09 13:03:12 2009
+Cc: John Dlugosz <JDlugosz@tradestation.com>, git@vger.kernel.org
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 09 13:29:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgeCG-0000Ji-FX
-	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 13:03:04 +0100
+	id 1Lgebd-00085U-I2
+	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 13:29:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750961AbZCIMBg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2009 08:01:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750945AbZCIMBf
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 08:01:35 -0400
-Received: from rv-out-0506.google.com ([209.85.198.225]:5934 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750928AbZCIMBe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2009 08:01:34 -0400
-Received: by rv-out-0506.google.com with SMTP id g9so1718138rvb.5
-        for <git@vger.kernel.org>; Mon, 09 Mar 2009 05:01:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=s0NEs04ww/Fbt6x1Iff8+l1YX7yzv0YldHCaIvo4kIk=;
-        b=s66n8sSVF9bPNhYblmZATTBEQJHfi4bTlK7rhZyN7lmhHAhuyC/9qXVvILm1TguDbp
-         KspT3x0i+Zj0rnavbLVs9AiFvJPeIh8XSUaFht0UKf1wP44QCPKwsqpej1emAdWEjbax
-         gSK+VgQxkke28lpQZBMr5rrezJ77bR68CotdU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=po27ugd+uuzcf9eugELCks4A49eg+bq7aZYfzCXUMDU4MhATEVdUvIhPC6PMe9TmrU
-         WkRcp4VRI4PG3xSbLkp6f5tul4fKqi6cTdG9xz0R37HmHKCfIUo/cTs3noBctaU9SODv
-         uyGBgFLOtXBAjb0wPFUgwelPhObqC3qlW16MQ=
-Received: by 10.115.18.3 with SMTP id v3mr3478095wai.141.1236600092052; Mon, 
-	09 Mar 2009 05:01:32 -0700 (PDT)
-In-Reply-To: <7vd4crls8q.fsf@gitster.siamese.dyndns.org>
+	id S1751078AbZCIM1t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2009 08:27:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751047AbZCIM1s
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 08:27:48 -0400
+Received: from spsmtp02oc.mail2world.com ([74.202.142.148]:3173 "EHLO
+	spsmtp02oc.mail2world.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751022AbZCIM1s (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2009 08:27:48 -0400
+Received: from mail pickup service by spsmtp02oc.mail2world.com with Microsoft SMTPSVC;
+	 Mon, 9 Mar 2009 05:26:12 -0700
+auth-sender: exon@home.se
+Received: from 212.112.174.166 unverified ([212.112.174.166]) by spsmtp02oc.mail2world.com with Mail2World SMTP Server; 
+	Mon, 09 Mar 2009 05:26:11 -0700
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
+In-Reply-To: <43d8ce650903090444n352f310fs9cd4b8b0184be010@mail.gmail.com>
+X-OriginalArrivalTime: 09 Mar 2009 12:26:12.0389 (UTC) FILETIME=[3BC0E550:01C9A0B2]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112692>
 
-Hi,
+John Tapsell wrote:
+> 2009/3/9 Andreas Ericsson <ae@op5.se>:
+>> John Dlugosz wrote:
+>>> I know we (my group) should use "topic" branches and apply them back to
+>>> the dev branch when done.  There is concern that the commit history gets
+>>> too full of detailed stuff, especially with several developers, that you
+>>> can't tell what "really changed".  So, our dev branch should appear to
+>>> contain only commit nodes representing completed assignments; not every
+>>> day's checkpoint and trying to keep one's own stuff on top to avoid
+>>> merging later.
+>>>
+>>> I guess that's how it is on these Open Source projects where patches are
+>>> submitted by email and applied by the maintainer.  We don't see the
+>>> details, just the final patch.  But, my situation will be developers
+>>> gathered around an in-house master repo, and everyone should be able to
+>>> push their own changes as assignments are completed.
+>>>
+>>> What is the best procedure to achieve that?  Or what are some good
+>>> alternatives with trade-offs?
+>>>
+>> Use topic-branches and let someone merge them into master after having
+>> verified that they work properly.
+>>
+>> We usually commit simple bugfixes directly to master and then have
+>> developers rebase their changes onto master when they're ready to
+> 
+> The trouble with rebasing is that it then you end up with lots of
+> patches that haven't been tested.  You can end up with lots of
+> uncompiling commits.
+> 
 
-On Mon, Mar 9, 2009 at 3:38 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> That is not what I was worried about.  There are two callsites to
-> add_fill_function().
+Not really, no. Unit-tests can still run just fine, and integration
+testing still needs to be done after each feature is completed.
 
-I'm sorry I didn't catch this from your earlier message; on a
-re-reading I caught it.
+> Although merging is no better either.  Then you end up with one single
+> commit that tries to merge two trees, making it almost impossible to
+> track down bugs that resulted from the merge.
+> 
 
-> But it is not immediately obvious in http-walker.c callchain if multiple
-> calls to add_fill_function(), if they were ever made, give the same
-> "walker" as the callback data.  Your patch only looks at the function but
-> not the callback data for its filtering.  Doesn't it mean that if a caller
-> made two calls to add_fill_function() with walker#1 and then walker#2 as
-> the callback data, you would discard the request for walker#2 and call the
-> callback function fill_active_slot() with walker#1 inside run_active_slot
-> repeatedly, without ever calling it for walker#2?
+Not really. If bugs are in "unrelated" areas (if the topic changed some
+API without changing its' other callers, fe), you can backstep between
+each commit on the merged branch, remerge that commit (instead of the
+tip) and then run the tests again. But really, such bugs should have
+been detected prior to merging the branch, and in any case "git bisect"
+will find the commit that introduced the bug for you either way.
 
-You're right, in addition to checking whether the callback is the
-same, I should also have checked the callback data, before discarding
-the invocation of add_fill_function as a duplicate.
 
-> If it is the former, then your change is introducing a bug. If it is the
-> latter, your change won't break anything immediately, but still introduces
-> a potential bug waiting to happen, as the API looks as if you can call
-> add_fill_function() to ask for callback functions to be called with
-> different callback data and the caller can rely on both of them to be
-> called at appropriate times, but in reality that guarantee does not hold.
-
-That indeed is true, but afaik, none of the two instances of the API
-usage does that -- calling callback functions with different callback
-data to change behaviour. The fill functions are basically used to
-"clear" the request queue.
-
-Look at the fill function in http-walker.c. Yes, it's true that
-callback data is passed on by the fill function, unlike the one in
-http-push.c, which is passed NULL. But it doesn't really seem to use
-the callback data. It loops through the request queue to find requests
-that have yet to start (ie. their state is WAITING), and starts them
-if they haven't start yet. The request object (struct file_request)
-already contains a pointer to the callback data (walker), so it
-doesn't really need it.
-
-Nevertheless, I'll make add_fill_function additionally check the callback data.
+For next time, please cut away those parts of the email you didn't
+reply to. I had to scroll down to the bottom to make sure you hadn't
+written more.
 
 -- 
-Cheers,
-Ray Chuan
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
