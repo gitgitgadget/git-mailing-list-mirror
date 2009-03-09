@@ -1,106 +1,49 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 0/2] Move push logic to transport.c
-Date: Mon, 9 Mar 2009 14:12:51 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0903091331290.19665@iabervon.org>
-References: <alpine.LNX.1.00.0903082046280.19665@iabervon.org> <alpine.DEB.1.00.0903091033330.10279@pacific.mpi-cbg.de> <alpine.LNX.1.00.0903091200150.19665@iabervon.org> <alpine.DEB.1.00.0903091711180.6358@intel-tinevez-2-302> <alpine.LNX.1.00.0903091230430.19665@iabervon.org>
- <alpine.DEB.1.00.0903091809330.6358@intel-tinevez-2-302> <alpine.LNX.1.00.0903091315440.19665@iabervon.org> <alpine.DEB.1.00.0903091828280.6358@intel-tinevez-2-302>
+From: "Isabel" <e.schiemann@dhv.com>
+Subject: Look and send it to your friends
+Date: Mon, 9 Mar 2009 19:06:40 +0100
+Message-ID: <20090309190640.2040808@dhv.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Mar 09 19:14:24 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 09 19:15:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lgjza-0005H3-M4
-	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 19:14:23 +0100
+	id 1Lgk14-0005kj-4v
+	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 19:15:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751977AbZCISMz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2009 14:12:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751402AbZCISMx
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 14:12:53 -0400
-Received: from iabervon.org ([66.92.72.58]:42774 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750935AbZCISMx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2009 14:12:53 -0400
-Received: (qmail 15908 invoked by uid 1000); 9 Mar 2009 18:12:51 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 9 Mar 2009 18:12:51 -0000
-In-Reply-To: <alpine.DEB.1.00.0903091828280.6358@intel-tinevez-2-302>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752940AbZCISO1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2009 14:14:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752623AbZCISO0
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 14:14:26 -0400
+Received: from HSI-KBW-078-043-122-037.hsi4.kabel-badenwuerttemberg.de ([78.43.122.37]:42402
+	"HELO HSI-KBW-078-043-122-037.hsi4.kabel-badenwuerttemberg.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752491AbZCISOZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2009 14:14:25 -0400
+Received: from localhost.localdomain (byifsz [192.168.15.191])
+	by HSI-KBW-078-043-122-037.hsi4.kabel-badenwuerttemberg.de (Postfix) with ESMTP id 15851583CE1
+	for <git@vger.kernel.org>; Mon, 9 Mar 2009 19:06:40 +0100
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112728>
+X-Spam-Report: 11.9 points;
+ *  3.9 RATWARE_RCVD_PF Bulk email fingerprint (Received PF) found
+ *  3.0 RAZOR2_CF_RANGE_51_100 BODY: Razor2 gives confidence level above 50%
+ *      [cf: 100]
+ * -2.6 BAYES_00 BODY: Bayesian spam probability is 0 to 1%
+ *      [score: 0.0000]
+ *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
+ *  2.0 URIBL_PH_SURBL Contains an URL listed in the PH SURBL blocklist
+ *      [URIs: codecouponsite.com]
+ *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: codecouponsite.com]
+ *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
+ *      [URIs: codecouponsite.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112729>
 
-On Mon, 9 Mar 2009, Johannes Schindelin wrote:
-
-> Hi,
-> 
-> On Mon, 9 Mar 2009, Daniel Barkalow wrote:
-> 
-> > On Mon, 9 Mar 2009, Johannes Schindelin wrote:
-> > 
-> > > On Mon, 9 Mar 2009, Daniel Barkalow wrote:
-> > > 
-> > > > On Mon, 9 Mar 2009, Johannes Schindelin wrote:
-> > > > 
-> > > > > On Mon, 9 Mar 2009, Daniel Barkalow wrote:
-> > > > > 
-> > > > > > On Mon, 9 Mar 2009, Johannes Schindelin wrote:
-> > > > > > 
-> > > > > > > On Sun, 8 Mar 2009, Daniel Barkalow wrote:
-> > > > > > > 
-> > > > > > > > It doesn't convert http-push or the rsync transports, largely 
-> > > > > > > > because I don't have test setups for rsync or webdav to make sure 
-> > > > > > > > that they're still working.
-> > > > > > > 
-> > > > > > > $ ls t/*http-push*
-> > > > > > > t/t5540-http-push.sh
-> > > > > > > 
-> > > > > > > $ git grep -n test.*rsync t/
-> > > > > > > t/t5510-fetch.sh:195:test_expect_success 'fetch via rsync' '
-> > > > > > > t/t5510-fetch.sh:206:test_expect_success 'push via rsync' '
-> > > > > > > t/t5510-fetch.sh:217:test_expect_success 'push via rsync' '
-> > > > > > > 
-> > > > > > > It should be just a matter of installing an apache and rsync.
-> > > > > > 
-> > > > > > And configuring them suitably, yes. That's the part I haven't previously 
-> > > > > > done.
-> > > > > 
-> > > > > If you have to configure apache (or rsync) for the test to run properly, 
-> > > > > we have a serious bug in our test suite.  Please share the output in that 
-> > > > > case.
-> > > > 
-> > > > rsync: failed to connect to 127.0.0.1: Connection refused (111)
-> > > > rsync error: error in socket IO (code 10) at clientserver.c(104) [receiver=2.6.9]
-> > > > fatal: Could not run rsync to get refs
-> > > > 
-> > > > I mean, I won't need to do anything really special in the configuration, 
-> > > > but I do need to have rsyncd running giving access to that directory 
-> > > > without any funny mapping on localhost.
-> > > 
-> > > That is my mistake, I guess.  I tried to be lazy and not change 
-> > > transport.c so that it groks "rsync:$(pwd)" style paths.
-> > 
-> > Oh, I think it's probably not worth allowing rsync:$(pwd) (particularly 
-> > since rsync itself seems not to let you say "rsync:" for local paths). 
-> 
-> This contradicts that:
-> 
-> > I'll set something up to run rsyncd with an appropriate config, like the 
-> > lib-httpd stuff. Oh, and it looks like nobody actually runs the rsync 
-> > tests; they're broken by $(pwd) including whitespace, and haven't been 
-> > fixed yet.
-> 
-> If we would support local rsync paths, testing it would be easy.
-
-Ok, I think having transport_get strip off the "rsync:" would make it work 
-with the rest of the functions unchanged, which would in turn mean that 
-the tests would be a pretty reasonable approximation of the real-world 
-code.
-
-	-Daniel
-*This .sig left intentionally blank*
+Coupon&Sales http://ik.codecouponsite.com/coupons.php
