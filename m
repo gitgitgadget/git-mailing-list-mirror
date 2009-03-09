@@ -1,93 +1,121 @@
-From: Csaba Henk <csaba-ml@creo.hu>
-Subject: Re: import files w/ history
-Date: Mon, 9 Mar 2009 05:15:16 +0000 (UTC)
-Message-ID: <slrngr99ei.1t4t.csaba-ml@beastie.creo.hu>
-References: <slrngqqa4l.1t4t.csaba-ml@beastie.creo.hu> <20090303130046.GA7867@coredump.intra.peff.net> <slrngr299k.1t4t.csaba-ml@beastie.creo.hu> <20090308001021.GA26167@coredump.intra.peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 09 06:18:01 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+From: Daniel Cheng <j16sdiz+freenet-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Subject: Re: [PoC PATCH JGIT 0/2] Proof of concept code for
+	Git Freenet transport
+Date: Mon, 9 Mar 2009 13:58:57 +0800
+Message-ID: <ff6a9c820903082258q24fd6cefh4bc528e79cecedf3@mail.gmail.com>
+References: <1236569765-8882-1-git-send-email-j16sdiz+freenet@gmail.com>
+Reply-To: Discussion of development issues <devl-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+To: devl-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+X-From: devl-bounces-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org Mon Mar 09 07:00:42 2009
+Return-path: <devl-bounces-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org>
+Envelope-to: gcfd-devl-602-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org
+Received: from emu.freenetproject.org ([89.16.176.201] helo=freenetproject.org)
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgXsA-0006JB-O4
-	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 06:17:55 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751290AbZCIFP2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2009 01:15:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751211AbZCIFP2
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 01:15:28 -0400
-Received: from main.gmane.org ([80.91.229.2]:59515 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751082AbZCIFP2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2009 01:15:28 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LgXpk-0007Rc-Hq
-	for git@vger.kernel.org; Mon, 09 Mar 2009 05:15:24 +0000
-Received: from www.creo.hu ([217.113.62.14])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 09 Mar 2009 05:15:24 +0000
-Received: from csaba-ml by www.creo.hu with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 09 Mar 2009 05:15:24 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: www.creo.hu
-User-Agent: slrn/0.9.8.1 (FreeBSD)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112677>
+	id 1LgYXO-0005I7-O5
+	for gcfd-devl-602-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org; Mon, 09 Mar 2009 07:00:30 +0100
+Received: by freenetproject.org (Postfix, from userid 108)
+	id 71A2A47872B; Mon,  9 Mar 2009 05:59:06 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb3 (2006-10-05) on 
+	emu.dh.bytemark.co.uk
+X-Spam-Level: 
+X-Spam-Status: No, score=-8.9 required=5.0 tests=AWL,BAYES_00,SPF_PASS 
+	autolearn=unavailable version=3.1.7-deb3
+Received: from emu.dh.bytemark.co.uk (localhost.localdomain [127.0.0.1])
+	by freenetproject.org (Postfix) with ESMTP id 101EE478698;
+	Mon,  9 Mar 2009 05:59:05 +0000 (UTC)
+X-Original-To: devl-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org
+Delivered-To: devl-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org
+Received: by freenetproject.org (Postfix, from userid 108)
+	id 6E5E647871B; Mon,  9 Mar 2009 05:59:02 +0000 (UTC)
+Received-SPF: pass (emu.dh.bytemark.co.uk: domain of j16sdiz-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
+	designates 209.85.146.176 as permitted sender)
+Received: from wa-out-1112.google.com (wa-out-1112.google.com [209.85.146.176])
+	by freenetproject.org (Postfix) with ESMTP id 603A54785AB
+	for <devl-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org>; Mon,  9 Mar 2009 05:58:59 +0000 (UTC)
+Received: by wa-out-1112.google.com with SMTP id j32so852924waf.6
+	for <devl-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org>; Sun, 08 Mar 2009 22:58:57 -0700 (PDT)
+Received: by 10.114.197.10 with SMTP id u10mr3304011waf.174.1236578337543; 
+	Sun, 08 Mar 2009 22:58:57 -0700 (PDT)
+In-Reply-To: <1236569765-8882-1-git-send-email-j16sdiz+freenet-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+X-Google-Sender-Auth: 9ad76130066fd666
+X-BeenThere: devl-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org
+X-Mailman-Version: 2.1.9
+Precedence: list
+List-Id: Discussion of development issues <devl.freenetproject.org>
+List-Unsubscribe: <http://emu.freenetproject.org/cgi-bin/mailman/listinfo/devl>, 
+	<mailto:devl-request-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org?subject=unsubscribe>
+List-Archive: <http://emu.freenetproject.org/pipermail/devl>
+List-Post: <mailto:devl-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org>
+List-Help: <mailto:devl-request-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org?subject=help>
+List-Subscribe: <http://emu.freenetproject.org/cgi-bin/mailman/listinfo/devl>, 
+	<mailto:devl-request-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org?subject=subscribe>
+Sender: devl-bounces-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org
+Errors-To: devl-bounces-RdDMkVZAZeuJnvDnx1genB2eb7JE58TQ@public.gmane.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112678>
 
-On 2009-03-08, Jeff King <peff@peff.net> wrote:
-> What you really want to do is say:
+On Mon, Mar 9, 2009 at 11:36 AM, Daniel Cheng (aka SDiZ)
+<j16sdiz+freenet-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org> wrote:
+> Hi JGit / Freenet community,
 >
->   - for every commit, narrow the tree to _just_ the one file
->
->   - if there were no changes in the narrowed tree, just throw out the
->     commit
->
-> You can use an --index-filter to do the former, and a --commit-filter to
-> do the latter (or just use --prune-empty, which is a shorthand).
->
-> Another poster had a similar problem, and you can see the right
-> filter-branch recipe there:
->
->   http://article.gmane.org/gmane.comp.version-control.git/111991
+> Here is some proof-of-concept code for Git-over-Freenet.
+> I am sending this to see the feedback from communities.
 
-Thanks, this did the job.
+Sorry, all. The code I have posted wasn't work.
+(the pack file is missing on push, only idx files are pushed)
+
+The new, fixed code is now available at http://github.com/j16sdiz/egit-free=
+net/
+Please use this repository if you want to actually try it.
 
 >
-> I think you need an extra '--' to separate the paths from the revisions
-> in the rev-list arguments:
+> The code need some more cleanups, so it it is not ready for apply (yet).
 >
->   git filter-branch -- master -- sys/dev/disk/vn/vn.c
+> This is a real-life example
 >
-> but even that doesn't quite do what you want. It limits the commits that
-> are shown, similar to your first attempt above, but it doesn't cut down
-> the tree itself (OTOH, limiting by path rather than using --prune-empty
-> is likely to run faster, since you won't even look at commits that are
-> uninteresting. However, it may change the shape of your history with
-> respect to branching and merging).
-
-Finally I choose to add the path to the rev-list args -- 80 vs
-15000 commits does make a difference. (I can still check if there was
-any histroy [I just coined this from "history" and "destroy" :)] and
-go back to the full-scan way if yes.)
-
-But I still had a hard time with it... Finally I realized that if I do
-filtering this way, I have to start filtering from the topmost commit
-which affects the given file.
-
-If I just start from origin/HEAD (assuming that it's on a commit which
-does not affect the file), then it won't be found as a key of the mapping
-created by git-filter-branch (as it's ignored because rev-listing was
-narrowed down to the file), and therefore filter-branch finally punts
-with "WARNING: Ref '<sha1>' is unchanged". I don't know if it's an
-intended behaviour, or something which could/should be improved, or at
-least documented... seems to be some sort of POLS violation to me (at
-least I was surprised :) ).
-
-Regards,
-Csaba
+> Push:
+> =A0 $ git remote add fcp fcp://SSK@[my public key]^[my private key]/test.=
+git
+> =A0 $ ./jgit push fcp refs/remotes/origin/stable:refs/heads/master
+>
+> =A0/ALTERNATIVLY/
+>
+> =A0 Insert a bare repository under USK@<.....>/test.git/-1/
+>
+> Pull:
+> =A0$ ./jgit clone fcp://SSK@[my public key]^[my private key]/test.git
+>
+>
+> To workaround the metadata update problem, this client translate the
+> path seperator to "-", that means:
+>
+> On push:
+> =A0 objects/aa/bbbbbbbb =A0 --> USK@..../test.git-objects-aa-bbbbbbb/-1/
+> =A0 refs/heads/xxx =A0 =A0 =A0 =A0--> USK@..../test.git-objects-ref-heads=
+-xxx/-1/
+>
+> On pull:
+> =A0 To support uploading from jSite,
+> =A0 =A0when we load the info/refs we first check USK@..../test.git-info-r=
+efs/-1/
+> =A0 =A0if it is unavailiable, we would use USK@..../test.git/-1/info/refs
+>
+> =A0 The "traditional" type (USK@..../test.git/-1/objects) repository is
+> =A0 always added as an alternative objects database. No other info/altern=
+atives
+> =A0 are supported
+>
+> FIXME:
+> =A0- How to store the private key of repository?
+> =A0 Currently, we use URI of form fcp://SSK@<public key>^<private key>/so=
+me-id
+> =A0 This is quite ugly. Could we use a per remote Config ? How can I get =
+remote
+> =A0 name from transport?
+>
+> =A0- Make pushing async, could we?
+>
+>
+>
