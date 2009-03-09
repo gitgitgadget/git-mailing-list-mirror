@@ -1,101 +1,143 @@
-From: "John Dlugosz" <JDlugosz@TradeStation.com>
-Subject: RE: fetch and pull
-Date: Mon, 9 Mar 2009 11:08:11 -0400
-Message-ID: <450196A1AAAE4B42A00A8B27A59278E70A11614B@EXCHANGE.trad.tradestation.com>
-References: <450196A1AAAE4B42A00A8B27A59278E70A115E0D@EXCHANGE.trad.tradestation.com> <m3iqmmidlf.fsf@localhost.localdomain> <7vd4cus7ez.fsf@gitster.siamese.dyndns.org> <450196A1AAAE4B42A00A8B27A59278E70A115F5D@EXCHANGE.trad.tradestation.com> <3e8340490903070000t2780764cocfbf28d538037df5@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: JGit server performance
+Date: Mon, 9 Mar 2009 08:27:50 -0700
+Message-ID: <20090309152750.GD11989@spearce.org>
+References: <20090308032214.GU16213@spearce.org> <d411cc4a0903090801w7748d26pb821a7bfb3db660@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Jakub Narebski" <jnareb@gmail.com>, <git@vger.kernel.org>
-To: "Bryan Donlan" <bdonlan@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 09 16:10:42 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 09 16:29:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lgh7a-00080W-Km
-	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 16:10:27 +0100
+	id 1LghPu-0006xi-1o
+	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 16:29:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751378AbZCIPI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2009 11:08:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751258AbZCIPI6
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 11:08:58 -0400
-Received: from mail2.tradestation.com ([63.99.207.80]:56841 "EHLO
-	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751256AbZCIPI5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Mar 2009 11:08:57 -0400
-X-ASG-Debug-ID: 1236611332-488403200002-QuoKaX
-X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
-Received: from mail5.tradestation.com (localhost [127.0.0.1])
-	by mail2.tradestation.com (Spam Firewall) with ESMTP
-	id 88CA31FE11F; Mon,  9 Mar 2009 11:08:54 -0400 (EDT)
-Received: from mail5.tradestation.com ([192.168.51.76]) by mail2.tradestation.com with ESMTP id NXwvHimafiL06Y5d; Mon, 09 Mar 2009 11:08:54 -0400 (EDT)
-X-ASG-Whitelist: Client
-Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 9 Mar 2009 11:08:51 -0400
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-ASG-Orig-Subj: RE: fetch and pull
-In-Reply-To: <3e8340490903070000t2780764cocfbf28d538037df5@mail.gmail.com>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: fetch and pull
-Thread-Index: Acme+toPVHpQskugQVKJlB31atkA3ABzNaAw
-X-OriginalArrivalTime: 09 Mar 2009 15:08:51.0759 (UTC) FILETIME=[F4CA93F0:01C9A0C8]
-X-Barracuda-Connect: UNKNOWN[192.168.51.76]
-X-Barracuda-Start-Time: 1236611334
-X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
+	id S1751220AbZCIP1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2009 11:27:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750941AbZCIP1x
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 11:27:53 -0400
+Received: from george.spearce.org ([209.20.77.23]:55456 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751031AbZCIP1w (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2009 11:27:52 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 039BE38211; Mon,  9 Mar 2009 15:27:50 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <d411cc4a0903090801w7748d26pb821a7bfb3db660@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112703>
 
-=== Re: ===
-If the local "dev" is meant to just track the remote, [that is the case]
-you really ought to avoid doing anything very involved in it (unless
-you're 
-planning on merging something into it and pushing the result, that is!).
-If
-there's no local changes, then you can just pull with impunity, and
-let it fast-forward - or use git merge or git rebase if you've already
-fetched and don't want to spend the few seconds it takes to ask the
-server if there's anything new :)
-=== end ===
+[+git]
 
-I thought about that.  But wouldn't that require you to checkout dev
-first?  It seems that pull wants to merge into the current branch,
-period.  That makes it unsuitable for something that just refreshes the
-remote view of things, and is an accident waiting to happen if you run
-it while on your topic branch instead.
+Scott Chacon <schacon@gmail.com> wrote:
+> On Sat, Mar 7, 2009 at 8:22 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
+> > As Gerrit Code Review provides Gitosis-like functionality, but
+> > that is implemented through JGit's pure Java implementation, the
+> > performance of JGit's UploadPack matters to me.
+> >
+> > JGit is about 66% slower on my hardware when cloning the linux-2.6
+> > repository, compared to git-core (jgit 2m21s, git-core 1m23s).
+> 
+> What about packfile caching?  I thought I just saw someone propose
+> this for a GSOC project - it obviously wouldn't help with making the
+> first clone faster, but since it seems that you're talking about a
+> server that is probably recomputing the same packfile bits over and
+> over, perhaps caching the final output would be a simpler way to get
+> more aggregate time savings.  I remember there were some issues with
+> client capabilities and whatnot, but would that be a useful solution
+> to speeding up overall throughput?
 
-=== Re: ===
-Finally, if you really, truly, definitely want to blow away the
-current branch and replace it with another one, you can use git reset
---hard. This will throw away (irretrievably) local uncommitted
-changes, and force the current branch to point to the specified one.
-=== end ===
+Indeed.
 
-"reset" does not change the current branch.  It updates the contents of
-the working directory and index to match the node specified, but does
-not change what git considers to be the branch you are "on".  I got a
-few floating heads and later merge confusion before I finally understood
-that.  It appears that "checkout" is the only thing that changes the
-"current branch".  In any case, reset does not reposition any refs at
-all.
+I think over the weekend I came to the conclusion that the only
+way I can "fix" this is to implement some form of automatic caching
+inside of JGit.
 
-=== Re: ===
-Remember, you can undo most things using the reflog if you mess up,
-including unwanted merges, git reset --hard (committed changes only)
-etc.
-=== end ===
+I came up with two ideas, but haven't tried either one yet:
 
-Yes, indeed.
+Cache Object List:
 
---John
-(please excuse the footer; it's not my idea)
+  The idea here is that JGit spends the majority of its server side
+  resources enumerating objects, doing the `git rev-list --objects
+  $wants --not $haves` computation.  Once you reach a certain point
+  on the DAG, that computation just isn't going to change much.
 
-TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
-  If you received this in error, please contact the sender and delete the material from any computer.
+  So, for example, if we tag a dump of the object listing for all
+  objects that are reachable from the most recently reachable
+  annotated tag, and cache that dump, we can reload it when we
+  encounter that tag again.  By restoring that dump, we can cut
+  off a huge part of the object evaluation.
+
+  Initial clones would always benefit from this dump, and we can
+  expand it to cover more of the DAG as new tags are produced.
+
+  The really recent commits still require enumeration, but this
+  is a small percentage of the total objects being processed,
+  and should go quite quickly.
+
+  We still need to select and serve ranges of existing packs,
+  based on the objects chosen for transmission.
+
+Cache Packs:
+
+  As you point out above, do the GSoC project idea (but in JGit)
+  where we cache packs.
+
+  My problem with this approach is it doesn't help initial clones
+  very much once any one of the refs changes.  As soon as any
+  ref is updated in any way, that cached pack is invalid and must
+  be recomputed from scratch.
+
+  However, it probably would generalize nicely into supporting a
+  decent cache for incremental updates of clients.  In many cases
+  in a Linus/Junio single-push-a-day world, all clients would be
+  roughly asking for the same pack, and we'd get a decent return on
+  our investment by saving the thin pack to disk in some cache area.
+
+  But in a Gerrit Code Review world, its expected that the
+  branches will update hundreds of times per day, and clients
+  will be fetching off those multiple times throughout the day.
+  So the life span of any given cached pack is probably quite small.
+
+  However, I have no real proof to back this theory up with yet,
+  its just back of the envelope guessing on my part.
+
+Hybrid:
+
+  I also considered some sort of hybrid approach.
+
+  E.g. create a cache pack for everything reachable from a stable
+  tag point (the object set in that pack is the same as the cached
+  object list).  When sending data to a client, we send the current
+  objects that aren't in the big cache pack, and then we tack the
+  pack onto the end of the data stream.  So we only need to "read,
+  SHA-1, send" through the entire length of the file (minus the 12
+  byte header, 20 byte footer).
+  
+  Really quite efficient.
+
+  My problem with this approach is you cannot duplicate an object
+  in a pack stream.  So I have to be very careful when using this
+  pack to complete a larger pack stream, as I need to avoid writing
+  any object in the front if it will appear in the pack I am tacking
+  onto the end.
+
+  That is more common that you might expect, e.g.  consider a
+  "Documentation/SubmittingPatches" file that hasn't been touched in
+  ages...  it would appear in the recent commit object enumeration,
+  but it also will appear in the big cache pack I want to tack on
+  the end, as it hasn't changed since the pack was created.
+
+
+Right now I am leaning towards caching the object enumeration
+(the first approach mentioned).
+
+-- 
+Shawn.
