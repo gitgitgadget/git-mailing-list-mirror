@@ -1,95 +1,76 @@
-From: Phil Lawrence <prlawrence@gmail.com>
-Subject: Re: [PATCH] git-gui: Append ampersand to Target of lnk files created 
-	by do_cygwin_shortcut.
-Date: Mon, 9 Mar 2009 15:57:16 -0500
-Message-ID: <530ac78e0903091357v248895ack63588ae6e5e6b57a@mail.gmail.com>
-References: <530ac78e0903091022s2585231br9ef11d91851250f4@mail.gmail.com>
-	 <alpine.DEB.1.00.0903092109360.6358@intel-tinevez-2-302>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: [RFC PATCH] git push: Push nothing if no refspecs are given or configured
+Date: Mon, 9 Mar 2009 22:10:26 +0100
+Message-ID: <200903092210.27417.markus.heidelberg@web.de>
+References: <20090305221529.GA25871@pvv.org> <200903092139.35788.markus.heidelberg@web.de> <alpine.DEB.1.00.0903092148040.6358@intel-tinevez-2-302>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Cc: Finn Arne Gangstad <finnag@pvv.org>, git@vger.kernel.org,
+	John Tapsell <johnflux@gmail.com>, Andreas Ericsson <ae@op5.se>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Mar 09 22:07:12 2009
+X-From: git-owner@vger.kernel.org Mon Mar 09 22:11:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lgmg9-0003qJ-Im
-	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 22:06:30 +0100
+	id 1Lgmki-00069P-5X
+	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 22:11:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752150AbZCIVEr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2009 17:04:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751793AbZCIVEr
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 17:04:47 -0400
-Received: from yx-out-2324.google.com ([74.125.44.29]:13902 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751948AbZCIVEq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2009 17:04:46 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so1188936yxm.1
-        for <git@vger.kernel.org>; Mon, 09 Mar 2009 14:04:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=KUH8wDnMpQkyIGEBTYnIfgUzqHKuPrmWXHY8fxkDaDg=;
-        b=u+E1JsWHknjqEHB6WvoVPWAAbYSTwHRQtAFlvQj1NQUBaRWfaknzbRyRKKR4MXJamO
-         b5toYx7uONH7a9VLHeJEwVCi7653b90hstHQkS+muReJRTzthLFB7g306HdCxoFdi6e8
-         S2iYP7a4baK8Pss38f+XfDfJXsDuScRSlTK4s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=bfq4PfxNhk2kDExIaleGbFSWVtCKGlst5JVke/OqPBoxB5esLZJMRvqmVfY82JlufZ
-         JyVk9q7mfbGSoYMc/9C4i1yX/8KrVAfdXdvkM5uTznBcChAIulTYtWVg2i9vSiAw3Z7t
-         tDX5m61HVwzpNc5UdBj1ZhEtXQoBVZC1yxq/M=
-Received: by 10.231.14.196 with SMTP id h4mr1535627iba.15.1236632236552; Mon, 
-	09 Mar 2009 13:57:16 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0903092109360.6358@intel-tinevez-2-302>
+	id S1752761AbZCIVJn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2009 17:09:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752202AbZCIVJm
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 17:09:42 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:33398 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752239AbZCIVJm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2009 17:09:42 -0400
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 259ACF9176A4;
+	Mon,  9 Mar 2009 22:09:40 +0100 (CET)
+Received: from [89.59.65.53] (helo=pluto)
+	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1LgmjE-0001vg-00; Mon, 09 Mar 2009 22:09:40 +0100
+User-Agent: KMail/1.9.9
+In-Reply-To: <alpine.DEB.1.00.0903092148040.6358@intel-tinevez-2-302>
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX1+QdItlkQEqFXYheGB+o+VrC+zU/ypzTNK7Bw9a
+	7OSXXm2sS8TFfDPkCkAttcJdPFwcFZH7IHbRg5bNUwlGGFX+YU
+	FGKitz6Qmajx9o3gQZSw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112743>
 
-On Mon, Mar 9, 2009 at 3:13 PM, Johannes Schindelin wrote:
+Johannes Schindelin, 09.03.2009:
 > Hi,
->
-> <snip!>
->
-> A few comments.
->
-> Usually we try to use that subject as the subject of the mail, and we also
-> try to keep the subject shorter than 77 characters (so that "git log" on
-> an 80-column display does not need to wrap lines).
+> 
+> On Mon, 9 Mar 2009, Markus Heidelberg wrote:
+> 
+> > Johannes Schindelin, 06.03.2009:
+> > > > -already exists on the remote side.  This is the default operation mode
+> > > > +already exists on the remote side. Nothing will be pushed
+> > > 
+> > > The two spaces after the full stop were not actually a typo.
+> > 
+> > What's its purpose? Just recently I added "set nojoinspaces" to my
+> > .vimrc to not insert two spaces when joining sentences.
+> 
+> It was explained to me as "English grammar".  Two spaces after a full 
+> stop.
 
-> Also, we like authors to provide Signed-off-by: lines.
+I should have tried searching, I didn't think I'd get useful results
+with "two spaces after sentence" as search item, but I did.
 
-OK, thank you.
+http://en.wikipedia.org/wiki/Full_stop#Spacing_after_full_stop
 
-> Now, with the technical stuff out of the way: are you not changing
-> behavior?  It seems that Linux users expect an program called by a menu
-> item to block the application until the program returns, so that an error
-> can be caught.
+Two spaces between sentences.  But no space between
+text and the dash---strange.
 
-The menu item in question is "Repository | Create Desktop Icon".  It
-does not launch a program, but rather creates a shortcut (.lnk file)
-on the Windows desktop.
-
-The purpose of the created shortcut is to make it easy for a user to
-launch git-gui for a particular repo in the future.
-
-> Maybe the expectation is different on Windows?  But then, we'd still like
-> to catch errors and warn the user about it, right?
-
-I believe a windows user would expect to see git gui launch when they
-click the shortcut; they would not expect (nor want) to see a cmd
-window open and remain open in the background.
-
-msysGit avoids opening a command window altogether when it's Git GUI
-shortcut is used.  Ideally git on cygwin would also have shortcuts
-that simply open the GUI, but as a first step I saw we could at least
-make the command window politely disappear.
-
-Phil Lawrence
+Markus
