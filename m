@@ -1,74 +1,70 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: git-grep Bus Error
-Date: Sun, 8 Mar 2009 20:58:42 -0400
-Message-ID: <49C11A48-5246-4477-9F33-26942B8C99D9@silverinsanity.com>
-References: <C36B091A-ABE9-4C74-9E59-4EBD50E3B9F5@gernhardtsoftware.com> <20090308234141.GJ12880@zoy.org>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Sam Hocevar <sam@zoy.org>
-X-From: git-owner@vger.kernel.org Mon Mar 09 02:03:23 2009
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [PATCH 0/2] Move push logic to transport.c
+Date: Sun, 8 Mar 2009 21:06:01 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0903082046280.19665@iabervon.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 09 02:07:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgTtm-0000KP-AU
-	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 02:03:18 +0100
+	id 1LgTxv-0001Qc-Q8
+	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 02:07:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752679AbZCIA6r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2009 20:58:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752677AbZCIA6r
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 20:58:47 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:48588 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752353AbZCIA6q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2009 20:58:46 -0400
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id EE4851FFC3FB; Mon,  9 Mar 2009 00:58:35 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.4 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [192.168.1.115] (cpe-74-74-137-205.rochester.res.rr.com [74.74.137.205])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTPSA id AC59E1FFC043;
-	Mon,  9 Mar 2009 00:58:34 +0000 (UTC)
-In-Reply-To: <20090308234141.GJ12880@zoy.org>
-X-Mailer: Apple Mail (2.930.3)
+	id S1752890AbZCIBGH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Mar 2009 21:06:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752757AbZCIBGG
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 21:06:06 -0400
+Received: from iabervon.org ([66.92.72.58]:43449 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752768AbZCIBGF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Mar 2009 21:06:05 -0400
+Received: (qmail 4828 invoked by uid 1000); 9 Mar 2009 01:06:01 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 9 Mar 2009 01:06:01 -0000
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112657>
 
+Currently, send_pack() does the work of figuring out what the refspecs 
+mean before pushing (with the help of functions from remote.c), updating 
+local state afterwards, and reporting what it did.
 
-On Mar 8, 2009, at 7:41 PM, Sam Hocevar wrote:
+Transports other than the native protocol use the same logic for the first 
+of these, and don't do the other two at all. In order to be able to share 
+more code and make it easier to be consist, move the logic to 
+transport_push. This is also more similar to how fetch is organized, 
+although fetch puts most of the logic in builtin-fetch, which isn't really 
+feasible until all of the transports are converted to the new functions, 
+and may be less convenient anyway.
 
-> On Sun, Mar 08, 2009, Brian Gernhardt wrote:
->
->>> 			printf( "%d %d %d",
->>> 				  match.rm_so, match.rm_eo,
->>> 				  match.rm_eo - match.rm_so );
->>
->> .gitignore:0 0 3\033[31m\033[1m(nugit
->> .mailmap:23 0 26(null)\033[31m\033[1m(nugit-shortlog to fix a few
->> botched name translations-shortlog to fix a few botched name
->> translations
->>
->> And now I'm baffled.  Apparently my computer thinks 0 - 0 == 3 and  
->> 0 -
->> 23 == 26.
->
->   rm_so and rm_eo are ints on Linux but off_t's on Darwin, hence
-> probably int64_t's here. You should cast the arguments.
+This series only goes as far as adding a new "push_refs" method to struct 
+transport and using it for the git native transport. It doesn't convert 
+http-push or the rsync transports, largely because I don't have test 
+setups for rsync or webdav to make sure that they're still working.
 
+It also leaves copies of matching, updating, and reporting code in 
+builtin-send-pack, but these are only used for "git send-pack", and are 
+not used in the code paths for "git push". Hopefully, we can deprecate the 
+protocol-specific command at some point in favor of just using "git push".
 
-And that explains the warnings about the parameters to printf not  
-being integers.  I was looking at compat/regex/regex.h and was confused.
+This is on top of next for Jay's patch to make get_local_heads() common.
 
-Adding a cast to int on all of the format specifiers solves my  
-problems.  Thank you.
+Daniel Barkalow (2):
+  Use a common function to get the pretty name of refs
+  Move push matching and reporting logic into transport.c
 
-~~ Brian
+ builtin-fetch.c     |    6 +-
+ builtin-send-pack.c |  153 +++++++++++++--------------
+ refs.c              |   10 ++
+ refs.h              |    2 +
+ send-pack.h         |    6 +-
+ transport.c         |  283 +++++++++++++++++++++++++++++++++++++++++++++++----
+ transport.h         |    3 +-
+ 7 files changed, 356 insertions(+), 107 deletions(-)
