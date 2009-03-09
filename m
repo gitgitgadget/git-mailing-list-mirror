@@ -1,65 +1,66 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: push problem for new repo on repo.or.cz
-Date: Mon, 09 Mar 2009 17:02:55 +0100
-Message-ID: <49B53DAF.9080004@drmicha.warpmail.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 0/2] Move push logic to transport.c
+Date: Mon, 9 Mar 2009 12:04:21 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0903091200150.19665@iabervon.org>
+References: <alpine.LNX.1.00.0903082046280.19665@iabervon.org> <alpine.DEB.1.00.0903091033330.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>, Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Mon Mar 09 17:04:42 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 09 17:06:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lghy3-0003l5-Ak
-	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 17:04:39 +0100
+	id 1LghzE-00049h-NP
+	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 17:05:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751410AbZCIQDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2009 12:03:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751199AbZCIQDJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 12:03:09 -0400
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:60957 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751079AbZCIQDI (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Mar 2009 12:03:08 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id 350F22EB290;
-	Mon,  9 Mar 2009 12:03:06 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Mon, 09 Mar 2009 12:03:06 -0400
-X-Sasl-enc: Aq2UVd+DH8XHyNeScaC3Dq31PlMHunbS0tVbsUL8q7RB 1236614585
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 9E6975120B;
-	Mon,  9 Mar 2009 12:03:05 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090305 Lightning/1.0pre Shredder/3.0b3pre
+	id S1752146AbZCIQEZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2009 12:04:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751947AbZCIQEY
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 12:04:24 -0400
+Received: from iabervon.org ([66.92.72.58]:38924 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751551AbZCIQEX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2009 12:04:23 -0400
+Received: (qmail 5531 invoked by uid 1000); 9 Mar 2009 16:04:21 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 9 Mar 2009 16:04:21 -0000
+In-Reply-To: <alpine.DEB.1.00.0903091033330.10279@pacific.mpi-cbg.de>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112712>
 
-Hi there
+On Mon, 9 Mar 2009, Johannes Schindelin wrote:
 
-I have problems pushing into a new project on repo.or.cz. My user (mjg)
-is added in the admin interface, the key is correct because I've been
-using it for a while already for other projects (forks though). I'm
-using a qualified refspec. What else could be wrong on my side, assuming
-it's not the scripts on repo.or.cz? My git is 1.6.2.
+> Hi,
+> 
+> On Sun, 8 Mar 2009, Daniel Barkalow wrote:
+> 
+> > It doesn't convert http-push or the rsync transports, largely because I 
+> > don't have test setups for rsync or webdav to make sure that they're 
+> > still working.
+> 
+> $ ls t/*http-push*
+> t/t5540-http-push.sh
+> 
+> $ git grep -n test.*rsync t/
+> t/t5510-fetch.sh:195:test_expect_success 'fetch via rsync' '
+> t/t5510-fetch.sh:206:test_expect_success 'push via rsync' '
+> t/t5510-fetch.sh:217:test_expect_success 'push via rsync' '
+> 
+> It should be just a matter of installing an apache and rsync.
 
-Michael
+And configuring them suitably, yes. That's the part I haven't previously 
+done.
 
-git  push  git+ssh://repo.or.cz/srv/git/conformal.git master:master
-Counting objects: 14, done.
-Delta compression using 2 threads.
-Compressing objects: 100% (11/11), done.
-Writing objects: 100% (14/14), 11.50 KiB, done.
-Total 14 (delta 3), reused 0 (delta 0)
-error: unpack failed: unpacker exited with error code
-To git+ssh://repo.or.cz/srv/git/conformal.git
- ! [remote rejected] master -> master (n/a (unpacker error))
-error: unable to create temporary sha1 filename ./objects/a3: Permission
-denied
+> BTW thanks for the patch, I guess it will help Peff to complete "push 
+> --track" properly ;-)
 
-fatal: failed to write object
-error: failed to push some refs to
-'git+ssh://repo.or.cz/srv/git/conformal.git'
+Yes, I expect so.
+
+	-Daniel
+*This .sig left intentionally blank*
