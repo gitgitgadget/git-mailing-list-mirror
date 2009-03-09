@@ -1,143 +1,140 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: JGit server performance
-Date: Mon, 9 Mar 2009 08:27:50 -0700
-Message-ID: <20090309152750.GD11989@spearce.org>
-References: <20090308032214.GU16213@spearce.org> <d411cc4a0903090801w7748d26pb821a7bfb3db660@mail.gmail.com>
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: RE: fetch and pull
+Date: Mon, 9 Mar 2009 11:27:53 -0400
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E70A116178@EXCHANGE.trad.tradestation.com>
+References: <450196A1AAAE4B42A00A8B27A59278E70A115E0D@EXCHANGE.trad.tradestation.com> <m3iqmmidlf.fsf@localhost.localdomain> <7vd4cus7ez.fsf@gitster.siamese.dyndns.org> <450196A1AAAE4B42A00A8B27A59278E70A115F5D@EXCHANGE.trad.tradestation.com> <3e8340490903070000t2780764cocfbf28d538037df5@mail.gmail.com> <7vfxhpnl7g.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 09 16:29:23 2009
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "Jakub Narebski" <jnareb@gmail.com>, <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>,
+	"Bryan Donlan" <bdonlan@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 09 16:30:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LghPu-0006xi-1o
-	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 16:29:22 +0100
+	id 1LghQr-0007GN-Vs
+	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 16:30:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751220AbZCIP1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2009 11:27:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750941AbZCIP1x
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 11:27:53 -0400
-Received: from george.spearce.org ([209.20.77.23]:55456 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751031AbZCIP1w (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2009 11:27:52 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 039BE38211; Mon,  9 Mar 2009 15:27:50 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <d411cc4a0903090801w7748d26pb821a7bfb3db660@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751599AbZCIP2y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2009 11:28:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751511AbZCIP2x
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 11:28:53 -0400
+Received: from mail2.tradestation.com ([63.99.207.80]:58792 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751406AbZCIP2w convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Mar 2009 11:28:52 -0400
+X-ASG-Debug-ID: 1236612529-488403630000-QuoKaX
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
+Received: from mail5.tradestation.com (localhost [127.0.0.1])
+	by mail2.tradestation.com (Spam Firewall) with ESMTP
+	id B992E1FE481; Mon,  9 Mar 2009 11:28:49 -0400 (EDT)
+Received: from mail5.tradestation.com ([192.168.51.76]) by mail2.tradestation.com with ESMTP id q5VKDp3VvUFlMDJ6; Mon, 09 Mar 2009 11:28:49 -0400 (EDT)
+X-ASG-Whitelist: Client
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 9 Mar 2009 11:28:49 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-ASG-Orig-Subj: RE: fetch and pull
+In-Reply-To: <7vfxhpnl7g.fsf@gitster.siamese.dyndns.org>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: fetch and pull
+Thread-Index: AcmfYYDMHn4thgSiR0io7qMx81HeUgBZ55Lg
+X-OriginalArrivalTime: 09 Mar 2009 15:28:49.0398 (UTC) FILETIME=[BEA3C960:01C9A0CB]
+X-Barracuda-Connect: UNKNOWN[192.168.51.76]
+X-Barracuda-Start-Time: 1236612529
+X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112704>
 
-[+git]
+Thanks for your thoughts.  I'm still trying to figure out not just the
+basic meaning of the tools but what can be done with them.
 
-Scott Chacon <schacon@gmail.com> wrote:
-> On Sat, Mar 7, 2009 at 8:22 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
-> > As Gerrit Code Review provides Gitosis-like functionality, but
-> > that is implemented through JGit's pure Java implementation, the
-> > performance of JGit's UploadPack matters to me.
-> >
-> > JGit is about 66% slower on my hardware when cloning the linux-2.6
-> > repository, compared to git-core (jgit 2m21s, git-core 1m23s).
-> 
-> What about packfile caching?  I thought I just saw someone propose
-> this for a GSOC project - it obviously wouldn't help with making the
-> first clone faster, but since it seems that you're talking about a
-> server that is probably recomputing the same packfile bits over and
-> over, perhaps caching the final output would be a simpler way to get
-> more aggregate time savings.  I remember there were some issues with
-> client capabilities and whatnot, but would that be a useful solution
-> to speeding up overall throughput?
+=== Re: ===
+With git that is not ancient (i.e. v1.5.0 or newer), there is no reason
+to
+have local "dev" that purely track the remote anymore.  If you only want
+to go-look-and-see, you can check out the remote tracking branch
+directly
+on a detached HEAD with "git checkout origin/dev".
+=== end ===
 
-Indeed.
+Yes, I figured out that since gitk shows the remote, there is no reason
+to have local copies of any master (upstream) refs that I don't plan on
+modifying.  After setting it to track remotes, I deleted all my unneeded
+copies.
 
-I think over the weekend I came to the conclusion that the only
-way I can "fix" this is to implement some form of automatic caching
-inside of JGit.
+=== Re: ===
+Which means that the only cases we need to make it convenient for users
+are to handle these local branches that "track" remote ones when you do
+have local changes, or when you plan to have some.
+=== end ===
 
-I came up with two ideas, but haven't tried either one yet:
+I also realized recently that, with the use of topic branches, the user
+doesn't need to see the "old" (local copy of) dev to understand what
+changed since he last looked.  The visible branch point with the topic
+will serve as that marker.
 
-Cache Object List:
+The only time the local dev is used is when the developer is going to
+add a commit for the completed topic.  But, dealing with it (only) then
+would be more steps when doing that.  And the local dev would still be
+visible and out-dated from day-to-day, and when keeping the topic
+up-to-date with dev changes he would need to use origin/dev not just dev
+in his commands to rebase or merge.
 
-  The idea here is that JGit spends the majority of its server side
-  resources enumerating objects, doing the `git rev-list --objects
-  $wants --not $haves` computation.  Once you reach a certain point
-  on the DAG, that computation just isn't going to change much.
+=== Re: ===
+I'd actually say we should give users a convenient way to remove the
+local
+branches that are marked to track remote tracking branches but do not
+have
+anything interesting on their own (iow when they can fast-forward to
+their
+corresponding remote tracking branches), if the true motive behind this
+thread is "'git push' will notice 'dev' that is left behind and gives
+clutter".
+=== end ===
 
-  So, for example, if we tag a dump of the object listing for all
-  objects that are reachable from the most recently reachable
-  annotated tag, and cache that dump, we can reload it when we
-  encounter that tag again.  By restoring that dump, we can cut
-  off a huge part of the object evaluation.
+I found that using the GUI was easy enough, when "converting" my local
+to track remote branches.  If you mean make a way to have a local
+version of a tracking branch transiently, that is, only when it is
+interesting, then I think I like that idea.
 
-  Initial clones would always benefit from this dump, and we can
-  expand it to cover more of the DAG as new tags are produced.
+=== Re: ===
+So how about "git branch --prune --remote=<upstream>" that iterates over
+local branches, and if
 
-  The really recent commits still require enumeration, but this
-  is a small percentage of the total objects being processed,
-  and should go quite quickly.
+ (1) it is not the current branch; and
+ (2) it is marked to track some branch taken from the <upstream>; and
+ (3) it does not have any commits on its own;
 
-  We still need to select and serve ranges of existing packs,
-  based on the objects chosen for transmission.
+then remove that branch?  "git remote --prune-local-forks <upstream>" is
+also fine; I do not care about which command implements the feature that
+much.
+=== end ===
 
-Cache Packs:
+Since fetch is the command that does the tracking of remotes, how about
+having an option to fetch that does this before proceeding with the
+fetch?  That is what people really want if they think they want locals
+to auto-track the remotes.
 
-  As you point out above, do the GSoC project idea (but in JGit)
-  where we cache packs.
+=== Re: ===
+But in that case, you shouldn't mark "dev" as tracking the remote's
+"dev"
+to begin with, so the hypothetical "branch --prune --remote=<upstream>"
+would not touch such a "fork to address old issues", and we'd be safe.
+=== end ===
 
-  My problem with this approach is it doesn't help initial clones
-  very much once any one of the refs changes.  As soon as any
-  ref is updated in any way, that cached pack is invalid and must
-  be recomputed from scratch.
+Does git now "associate" local branch names with the remotes, other than
+by simply having the same name?
 
-  However, it probably would generalize nicely into supporting a
-  decent cache for incremental updates of clients.  In many cases
-  in a Linus/Junio single-push-a-day world, all clients would be
-  roughly asking for the same pack, and we'd get a decent return on
-  our investment by saving the thin pack to disk in some cache area.
+--John
+(please excuse the footer; it's not my choice)
 
-  But in a Gerrit Code Review world, its expected that the
-  branches will update hundreds of times per day, and clients
-  will be fetching off those multiple times throughout the day.
-  So the life span of any given cached pack is probably quite small.
-
-  However, I have no real proof to back this theory up with yet,
-  its just back of the envelope guessing on my part.
-
-Hybrid:
-
-  I also considered some sort of hybrid approach.
-
-  E.g. create a cache pack for everything reachable from a stable
-  tag point (the object set in that pack is the same as the cached
-  object list).  When sending data to a client, we send the current
-  objects that aren't in the big cache pack, and then we tack the
-  pack onto the end of the data stream.  So we only need to "read,
-  SHA-1, send" through the entire length of the file (minus the 12
-  byte header, 20 byte footer).
-  
-  Really quite efficient.
-
-  My problem with this approach is you cannot duplicate an object
-  in a pack stream.  So I have to be very careful when using this
-  pack to complete a larger pack stream, as I need to avoid writing
-  any object in the front if it will appear in the pack I am tacking
-  onto the end.
-
-  That is more common that you might expect, e.g.  consider a
-  "Documentation/SubmittingPatches" file that hasn't been touched in
-  ages...  it would appear in the recent commit object enumeration,
-  but it also will appear in the big cache pack I want to tack on
-  the end, as it hasn't changed since the pack was created.
-
-
-Right now I am leaning towards caching the object enumeration
-(the first approach mentioned).
-
--- 
-Shawn.
+TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
+  If you received this in error, please contact the sender and delete the material from any computer.
