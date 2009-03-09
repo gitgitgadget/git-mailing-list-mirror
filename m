@@ -1,63 +1,87 @@
 From: Finn Arne Gangstad <finnag@pvv.org>
-Subject: [PATCH 1/7] remote: Make "-" an alias for the current remote
-Date: Mon,  9 Mar 2009 23:35:45 +0100
-Message-ID: <1236638151-6465-2-git-send-email-finnag@pvv.org>
+Subject: [PATCH 4/7] git push: Display warning on unconfigured default push
+Date: Mon,  9 Mar 2009 23:35:48 +0100
+Message-ID: <1236638151-6465-5-git-send-email-finnag@pvv.org>
 References: <1236638151-6465-1-git-send-email-finnag@pvv.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 10 00:22:23 2009
+X-From: git-owner@vger.kernel.org Tue Mar 10 00:22:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgonQ-0003Hb-50
-	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 00:22:08 +0100
+	id 1Lgonm-0003QR-Jk
+	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 00:22:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753543AbZCIXUm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2009 19:20:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753470AbZCIXUk
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 19:20:40 -0400
-Received: from decibel.pvv.ntnu.no ([129.241.210.179]:36502 "EHLO
+	id S1753775AbZCIXUr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2009 19:20:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753564AbZCIXUq
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 19:20:46 -0400
+Received: from decibel.pvv.ntnu.no ([129.241.210.179]:36513 "EHLO
 	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753248AbZCIXUj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2009 19:20:39 -0400
+	with ESMTP id S1753538AbZCIXUo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2009 19:20:44 -0400
 Received: from decibel.pvv.ntnu.no
 	([129.241.210.179] helo=localhost.localdomain ident=finnag)
 	by decibel.pvv.ntnu.no with esmtp (Exim 4.69)
 	(envelope-from <finnag@pvv.org>)
-	id 1Lgo51-0002Lo-0t
-	for git@vger.kernel.org; Mon, 09 Mar 2009 23:36:17 +0100
+	id 1Lgo5B-0002Lo-Sw
+	for git@vger.kernel.org; Mon, 09 Mar 2009 23:36:31 +0100
 X-Mailer: git-send-email 1.6.2.99.g52e77
 In-Reply-To: <1236638151-6465-1-git-send-email-finnag@pvv.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112759>
 
-This creates a handy alias "-" for the remote of the current branch
-(or origin if no such remote exists), which can be used in both
-push, pull, fetch and remote to make many tasks easier. E.g.:
-git push - HEAD  : push the current branch
-git remote prune - : prune the current remote
-git fetch - next : get the next branch from the current remote
+As a preparation for a possible future "git push" default behaviour change,
+display a prominent warning for operations that may change behaviour
+in the future. The warning explains for the user how to configure this
+permanently so the warning will not be seen again after proper configuration.
 
 Signed-off-by: Finn Arne Gangstad <finnag@pvv.org>
 ---
- remote.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ builtin-push.c |   23 +++++++++++++++++++++++
+ 1 files changed, 23 insertions(+), 0 deletions(-)
 
-diff --git a/remote.c b/remote.c
-index d7079c6..3a6d002 100644
---- a/remote.c
-+++ b/remote.c
-@@ -645,7 +645,7 @@ struct remote *remote_get(const char *name)
- 	struct remote *ret;
+diff --git a/builtin-push.c b/builtin-push.c
+index 5706c99..b9fe206 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -74,11 +74,34 @@ static void setup_push_current(struct remote *remote)
+ 						branch->merge[n]->src));
+ }
  
- 	read_config();
--	if (!name)
-+	if (!name || !strcmp(name, "-"))
- 		name = default_remote_name;
- 	ret = make_remote(name, 0);
- 	if (valid_remote_nick(name)) {
++static const char *warn_unconfigured_push_msg[] = {
++	"You did not specify any refspecs to push, and the current remote",
++	"has not configured any push refspecs. The default action in this",
++	"case has been to push all matching refspecs, that is, all branches",
++	"that exist both locally and remotely will be updated.",
++	"This default may change in the future.",
++	"",
++	"You can specify what action you want to take in this case, and",
++	"avoid seeing this message again, by configuring 'push.default' to:",
++	"  'nothing'  : Do not push anythig",
++	"  'matching' : Push all matching branches (the current default)",
++	"  'current'  : Push the current branch to whatever it is tracking",
++	""
++};
++
++static void warn_unconfigured_push()
++{
++	int i;
++	for (i = 0; i < ARRAY_SIZE(warn_unconfigured_push_msg); i++)
++		warning("%s", warn_unconfigured_push_msg[i]);
++}
++
+ static void handle_default_push(struct remote *remote, int *flags)
+ {
+ 	git_config(git_default_config, NULL);
+ 	switch (push_default) {
+ 	case PUSH_DEFAULT_UNSPECIFIED:
++		warn_unconfigured_push();
+ 		/* fallthrough */
+ 
+ 	case PUSH_DEFAULT_MATCHING:
 -- 
 1.6.2.105.g6ff1f.dirty
