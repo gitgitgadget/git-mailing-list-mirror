@@ -1,148 +1,146 @@
-From: Heiko Voigt <git-list@hvoigt.net>
-Subject: [CVSPS PATCH] fix: correct rev order in case commiters clocks were
- not syncronised
-Date: Mon, 09 Mar 2009 12:26:18 +0100
-Message-ID: <49B4FCDA.4030106@hvoigt.net>
-References: <49A2EFC6.5000104@hvoigt.net> <49A37ED1.5090506@alum.mit.edu> <49AC1E88.1010709@hvoigt.net>
+From: Daniel Cheng <j16sdiz+freenet@gmail.com>
+Subject: Re: [freenet-dev] [PoC PATCH JGIT 0/2] Proof of concept code for Git 
+	Freenet transport
+Date: Mon, 9 Mar 2009 19:35:38 +0800
+Message-ID: <ff6a9c820903090435n375b2e0ftde4c47f122d8132e@mail.gmail.com>
+References: <1541866875@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>, ydirson@altern.org
-X-From: git-owner@vger.kernel.org Mon Mar 09 12:27:54 2009
+To: Discussion of development issues <devl@freenetproject.org>
+X-From: git-owner@vger.kernel.org Mon Mar 09 12:37:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgdeA-0004Ww-UU
-	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 12:27:51 +0100
+	id 1LgdnC-0008Vb-9G
+	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 12:37:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750807AbZCIL0W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2009 07:26:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750742AbZCIL0W
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 07:26:22 -0400
-Received: from darksea.de ([83.133.111.250]:36654 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750728AbZCIL0V (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2009 07:26:21 -0400
-Received: (qmail 2825 invoked from network); 9 Mar 2009 12:26:11 +0100
-Received: from unknown (HELO heiko-voigts-macbook.local) (127.0.0.1)
-  by localhost with SMTP; 9 Mar 2009 12:26:11 +0100
-User-Agent: Thunderbird 2.0.0.19 (Macintosh/20081209)
-In-Reply-To: <49AC1E88.1010709@hvoigt.net>
+	id S1750807AbZCILfm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Mar 2009 07:35:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750757AbZCILfl
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 07:35:41 -0400
+Received: from wa-out-1112.google.com ([209.85.146.180]:55438 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750732AbZCILfl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Mar 2009 07:35:41 -0400
+Received: by wa-out-1112.google.com with SMTP id v33so937598wah.21
+        for <git@vger.kernel.org>; Mon, 09 Mar 2009 04:35:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=bNG3CnEFlGD0fqV7VjB8CQXOCU7a9pOdbjUt2XnONT0=;
+        b=ND3glFxbqOU7PC0uCcqhpBzE8FQUlDCxYSJNeugSwEXIVl5B6H49JWidEPsOsxc5N2
+         5OJuP2PunyyBqLoHgfkB36bHS4vnLhKXdVaxbIwGPnEbv3+a0PHr8S48shroOSYBuFNo
+         Pj3n/KYgaAHIwKiOSgmQcp5kbnw+LPRQrQq7g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=FqbExiTSLPiR0dav3pA3kDJn46Ge2x5GnSC3JvgP57muJmoYTIpYoFBYiS14RRsi+0
+         vB9LTnWAptW5NzN3D/0CGk26gZC7SoSYw1fKk6hQ4e+En4K21NSZNrFr4rdJXyo2KBXZ
+         M0iTq/p/TfdbSs6xACwWOoueka9OYUP48aMKA=
+Received: by 10.114.202.15 with SMTP id z15mr3473720waf.67.1236598538492; Mon, 
+	09 Mar 2009 04:35:38 -0700 (PDT)
+In-Reply-To: <1541866875@web.de>
+X-Google-Sender-Auth: 92fd331f60fafee1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112689>
 
-This fixes the following kind of cvsps issues:
+On Mon, Mar 9, 2009 at 6:46 PM,  <bo-le@web.de> wrote:
+>> -----Urspr=FCngliche Nachricht-----
+>> Von: "Daniel Cheng (aka SDiZ)" <j16sdiz+freenet@gmail.com>
+>> Gesendet: 09.03.09 04:36:25
+>> An: =A0git@vger.kernel.org
+>> Betreff: [freenet-dev] [PoC PATCH JGIT 0/2] Proof of concept code fo=
+r Git Freenet transport
+>
+>> Hi JGit / Freenet community,
+>>
+>> Here is some proof-of-concept code for Git-over-Freenet.
+>> I am sending this to see the feedback from communities.
+>>
+>> The code need some more cleanups, so it it is not ready for apply (y=
+et).
+>>
+>> This is a real-life example
+>>
+>> Push:
+>> =A0 =A0$ git remote add fcp fcp://SSK@[my public key]^[my private ke=
+y]/test.git
+>> =A0 =A0$ ./jgit push fcp refs/remotes/origin/stable:refs/heads/maste=
+r
+>>
+>> =A0/ALTERNATIVLY/
+>>
+>> =A0 =A0Insert a bare repository under USK@<.....>/test.git/-1/
+>>
+>> Pull:
+>> =A0$ ./jgit clone fcp://SSK@[my public key]^[my private key]/test.gi=
+t
+>
+> a pull from fproxy should be possible. so the average user can grab a=
+nd build sources with an unpatched/regular git version
+> $ git clone http://127.0.0.1:8888/key/app.git =A0//grab & build a app
+> $ git clone http://127.0.0.1:8888/key/jFreeGit.git =A0//ha, bootstrap=
+! grab & build the modified git for creating repos in freenet
+>
+>>
+>>
+>> To workaround the metadata update problem, this client translate the
+>> path seperator to "-", that means:
+>
+> you need to mangele path names properly, it may fail on names with '-=
+' inside.
 
- Structure of the test cvs repository
+It doesn't matter -- we don't have to convert it back.
 
- Message   File:Content         Commit Time
- Rev 1     a: 1.1               2009-02-21 19:11:43 +0100
- Rev 2     a: 1.2    b: 1.1     2009-02-21 19:11:14 +0100
- Rev 3               b: 1.2     2009-02-21 19:11:43 +0100
+>> On push:
+>> =A0 =A0objects/aa/bbbbbbbb =A0 --> USK@..../test.git-objects-aa-bbbb=
+bbb/-1/
+>> =A0 =A0refs/heads/xxx =A0 =A0 =A0 =A0--> USK@..../test.git-objects-r=
+ef-heads-xxx/-1/
+>>
+> why not 'USK@..../test.git/1/objects/aa/bbbbbbb' ?
 
- As you can see the commit of Rev 3 has the same time as
- Rev 1 this was leading to a broken estimation of patchset
- order.
+In freenet,
+all files under   USK@..../test.git/1/* are packed in a zip file and
+must be updated at once.
+If we do this, we have to upload all pack files again on every push --
+this is very bad.
 
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
----
-After precisely formulating my problem with cvsps I was curious if this
-issue actually could be fixed. Additionally I don't want my test to be
-disabled ;). This patch seems to fix it. Is Yann still maintaining the
-patches for cvsps or should I forward this patch to someone else ?
+see http://wiki.github.com/j16sdiz/egit-freenet for more detail reply.
 
-Calculating with time_t like I did is probably not valid on all systems
-if you know of a nicer, more portable solution please let me know.
-
- cvsps.c |   40 ++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 40 insertions(+), 0 deletions(-)
-
-diff --git a/cvsps.c b/cvsps.c
-index 81c6e21..d5c30d4 100644
---- a/cvsps.c
-+++ b/cvsps.c
-@@ -259,6 +259,32 @@ int main(int argc, char *argv[])
-     exit(0);
- }
- 
-+void detect_and_repair_time_skew(const char *last_date, char *date, int n,
-+                                 const char *filename)
-+{
-+
-+    time_t smaller;
-+    time_t bigger;
-+    struct tm *ts;
-+
-+    /* if last_date does not exist do nothing */
-+    if (last_date[0] == '\0')
-+        return;
-+
-+    /* important: because rlog is showing revisions backwards last_date should
-+     * always be bigger than date */
-+    convert_date(&bigger, last_date);
-+    convert_date(&smaller, date);
-+
-+    if (difftime(bigger, smaller) <= 0) {
-+        debug(DEBUG_APPMSG1, "broken revision date: %s -> %s file: %s, repairing.\n",
-+              date, last_date, filename);
-+        smaller = bigger - 1;
-+        ts = gmtime(&smaller);
-+        strftime(date, n, "%Y-%m-%d %H:%M:%S", ts);
-+    }
-+}
-+
- static void load_from_cvs()
- {
-     FILE * cvsfp;
-@@ -267,6 +293,7 @@ static void load_from_cvs()
-     CvsFile * file = NULL;
-     PatchSetMember * psm = NULL;
-     char datebuff[20];
-+    char last_datebuff[20];
-     char authbuff[AUTH_STR_MAX];
-     int logbufflen = LOG_STR_MAX + 1;
-     char * logbuff = malloc(logbufflen);
-@@ -334,6 +361,8 @@ static void load_from_cvs()
- 	exit(1);
-     }
- 
-+    /* initialize the last_datebuff with value indicating invalid date */
-+    last_datebuff[0]='\0';
-     for (;;)
-     {
- 	char * tst;
-@@ -474,8 +503,14 @@ static void load_from_cvs()
- 	    {
- 		if (psm)
- 		{
-+		    detect_and_repair_time_skew(last_datebuff, datebuff, 20, psm->file->filename);
- 		    PatchSet * ps = get_patch_set(datebuff, logbuff, authbuff, psm->post_rev->branch, psm);
- 		    patch_set_add_member(ps, psm);
-+
-+		    /* remember last revision */
-+		    strncpy(last_datebuff, datebuff, 20);
-+		    /* just to be sure */
-+		    last_datebuff[19] = '\0';
- 		}
- 
- 		logbuff[0] = 0;
-@@ -487,8 +522,13 @@ static void load_from_cvs()
- 	    {
- 		if (psm)
- 		{
-+		    detect_and_repair_time_skew(last_datebuff, datebuff, 20, psm->file->filename);
- 		    PatchSet * ps = get_patch_set(datebuff, logbuff, authbuff, psm->post_rev->branch, psm);
- 		    patch_set_add_member(ps, psm);
-+
-+		    /* just finished the last revision of this file, set last_datebuff to invalid */
-+		    last_datebuff[0]='\0';
-+
- 		    assign_pre_revision(psm, NULL);
- 		}
- 
+>> On pull:
+>> =A0 =A0To support uploading from jSite,
+>> =A0 =A0 when we load the info/refs we first check USK@..../test.git-=
+info-refs/-1/
+>> =A0 =A0 if it is unavailiable, we would use USK@..../test.git/-1/inf=
+o/refs
+>>
+>> =A0 =A0The "traditional" type (USK@..../test.git/-1/objects) reposit=
+ory is
+>> =A0 =A0always added as an alternative objects database. No other inf=
+o/alternatives
+>> =A0 =A0are supported
+>>
+>> FIXME:
+>> =A0- How to store the private key of repository?
+> hg have a per repository config. was quite easy here ;)
+>
+>> =A0 =A0Currently, we use URI of form fcp://SSK@<public key>^<private=
+ key>/some-id
+>> =A0 =A0This is quite ugly. Could we use a per remote Config ? How ca=
+n I get remote
+>> =A0 =A0name from transport?
+>>
+>> =A0- Make pushing async, could we?
+> inserting to an USK should be blocking until the toplevel chunk is in=
+=2E this is a helpful tactic to hold the edition chain clean.
