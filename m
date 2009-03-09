@@ -1,79 +1,79 @@
-From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-Subject: Re: [PATCH v2] git-clone: Add option --branch to override initial branch
-Date: Mon, 9 Mar 2009 14:39:54 +0000 (UTC)
-Message-ID: <loom.20090309T143413-334@post.gmane.org>
-References: <alpine.DEB.1.00.0903030047130.10279@pacific.mpi-cbg.de> <1236040414-19089-1-git-send-email-torarnv@gmail.com> <7vbpsh93q5.fsf@gitster.siamese.dyndns.org>
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: RE: git-forest on msysgit
+Date: Mon, 9 Mar 2009 10:59:05 -0400
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E70A116139@EXCHANGE.trad.tradestation.com>
+References: <450196A1AAAE4B42A00A8B27A59278E70A115F15@EXCHANGE.trad.tradestation.com> <alpine.DEB.1.00.0903070352580.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 09 15:41:51 2009
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 09 16:00:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lggfg-0004qW-H8
-	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 15:41:36 +0100
+	id 1LggyG-0003x1-NP
+	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 16:00:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751404AbZCIOkI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Mar 2009 10:40:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751394AbZCIOkH
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 10:40:07 -0400
-Received: from main.gmane.org ([80.91.229.2]:44417 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751213AbZCIOkF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2009 10:40:05 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LggeB-0002zt-ET
-	for git@vger.kernel.org; Mon, 09 Mar 2009 14:40:03 +0000
-Received: from 85.205.253.203 ([85.205.253.203])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 09 Mar 2009 14:40:03 +0000
-Received: from paolo.ciarrocchi by 85.205.253.203 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 09 Mar 2009 14:40:03 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 85.205.253.203 (Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.9.0.7; .NET CLR 3.0; ffco7) Gecko/2009021910 Firefox/3.0.7 GTB5)
+	id S1751597AbZCIO7U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2009 10:59:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751573AbZCIO7U
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 10:59:20 -0400
+Received: from mail2.tradestation.com ([63.99.207.80]:55885 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751460AbZCIO7T convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Mar 2009 10:59:19 -0400
+X-ASG-Debug-ID: 1236610756-4039033f0000-QuoKaX
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
+Received: from mail5.tradestation.com (localhost [127.0.0.1])
+	by mail2.tradestation.com (Spam Firewall) with ESMTP
+	id 469D01FDF87; Mon,  9 Mar 2009 10:59:16 -0400 (EDT)
+Received: from mail5.tradestation.com ([192.168.51.76]) by mail2.tradestation.com with ESMTP id JPvq2cBZrg7X5Lyg; Mon, 09 Mar 2009 10:59:16 -0400 (EDT)
+X-ASG-Whitelist: Client
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 9 Mar 2009 10:59:15 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-ASG-Orig-Subj: RE: git-forest on msysgit
+In-Reply-To: <alpine.DEB.1.00.0903070352580.10279@pacific.mpi-cbg.de>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: git-forest on msysgit
+Thread-Index: Acmez9+w0OlGhQwrTCKuq3GtxU9PQwB9yxZw
+X-OriginalArrivalTime: 09 Mar 2009 14:59:15.0262 (UTC) FILETIME=[9D2C1DE0:01C9A0C7]
+X-Barracuda-Connect: UNKNOWN[192.168.51.76]
+X-Barracuda-Start-Time: 1236610756
+X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112699>
 
-Junio C Hamano <gitster <at> pobox.com> writes:
+>> Note: this is pretty much obviously the wrong mailing list for 
+msysGit-related issues.
 
->=20
-> Tor Arne Vestb=C3=B8 <torarnv <at> gmail.com> writes:
->=20
-> > The options --branch and -b allow the user to override the initial
-> > branch created and checked out by git-clone (normally this is the
-> > active branch of the remote repository).
-> >
-> > If the selected branch is not found the operation aborts.
-> >
-> > Signed-off-by: Tor Arne Vestb=C3=B8 <torarnv <at> gmail.com>
->=20
-> The semantics and desirability of the new feature have been already
-> discussed, and I am not convinced that it is necessary, in the sense =
-that
-> I do not think I likely ever use this myself, but I am just one of gi=
-t
-> users so that is not a strong basis for rejection.
+This is the list where I get friendly and useful answers as well as
+fruitful discussions, and I've seen Windows and MSYSget in particular
+mentioned many times when reviewing the threads.
 
-I wrote a comment about the --branch approach a couple of days ago, dun=
-no why
-but this thread never reached my inbox (replying via gmame web interfac=
-e).
+>> You can try recompiling git-svn.  Maybe I forgot to commit a file.
 
-http://thread.gmane.org/gmane.comp.version-control.git/112527
+I've not delved into the source code yet, but some day...
 
-As I wrote in my post a friend of mine, new to git, was looking for the
-possibility of cloning a repo and automatically checkout a specific bra=
-nch.
+>> > I wonder if I can just copy it from somewhere, like someone's Linux
 
-Regards,
-           Paolo
+>> > build?
+
+>> How do you expect a Linux-specific binary object to be usable on
+Windows?
+
+Because it's the Perl inside MSys/Cigwin.  Isn't the POSIX layer like
+Wine in reverse?
+
+--John
+
+TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
+  If you received this in error, please contact the sender and delete the material from any computer.
