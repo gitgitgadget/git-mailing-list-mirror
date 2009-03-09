@@ -1,110 +1,110 @@
-From: Frank Li <lznuaa@gmail.com>
-Subject: [ANNOUNCE] TortoiseGit 0.4.2.0 release
-Date: Mon, 9 Mar 2009 09:38:33 +0800
-Message-ID: <1976ea660903081838o77d9992ds5ddadd1c7fcd5952@mail.gmail.com>
+From: Ealdwulf Wuffinga <ealdwulf@googlemail.com>
+Subject: Generalised bisection
+Date: Mon, 9 Mar 2009 01:40:08 +0000
+Message-ID: <efe2b6d70903081840v18e77aa7w2dac2bed553d0d6a@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: tortoisegit-dev <tortoisegit-dev@googlegroups.com>,
-	tortoisegit-users@googlegroups.com, git@vger.kernel.org,
-	tortoisegit-announce@googlegroups.com
-X-From: git-owner@vger.kernel.org Mon Mar 09 02:41:17 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: John Tapsell <johnflux@gmail.com>, Ingo Molnar <mingo@elte.hu>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 09 02:42:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgUUQ-0008EQ-4l
-	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 02:41:10 +0100
+	id 1LgUVF-0008SR-4h
+	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 02:42:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754192AbZCIBig (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Mar 2009 21:38:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754146AbZCIBif
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 21:38:35 -0400
-Received: from rv-out-0506.google.com ([209.85.198.225]:26392 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754145AbZCIBif (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Mar 2009 21:38:35 -0400
-Received: by rv-out-0506.google.com with SMTP id g37so1404404rvb.1
-        for <git@vger.kernel.org>; Sun, 08 Mar 2009 18:38:33 -0700 (PDT)
+	id S1754221AbZCIBkO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Mar 2009 21:40:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754201AbZCIBkO
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Mar 2009 21:40:14 -0400
+Received: from mail-fx0-f176.google.com ([209.85.220.176]:45912 "EHLO
+	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754146AbZCIBkM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 Mar 2009 21:40:12 -0400
+Received: by fxm24 with SMTP id 24so1068368fxm.37
+        for <git@vger.kernel.org>; Sun, 08 Mar 2009 18:40:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
+        d=googlemail.com; s=gamma;
         h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=+OzMnOTREVwFkeAaAZ2E6M8MvYVitbhOgVOC2IMTBEw=;
-        b=MQOimKkinZHxiiywPzUNsnDIqvgr4VQV1JBWYTXzTmJZZnFh5KDJkNNCEEWudhQDs/
-         879zbvVMNF6d7XOWDk7x8vwTZteE5VZzfxW3tOTa36HK6G/ZiP4JsEZihMU28Aut61eg
-         qAd0P/l+wL5qGbD6zDSekxuR3r3V8a+7Rd7wk=
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=KESUDmBqUffIBoJJ31K00yOUqj5h0V1ERw3lDVSpLSo=;
+        b=qBf92VULnjrzmQvu7D9UywP7z4wdYM8msbB1TZNCG0jn9MfVLVrICRxvoe9dU7Jnyv
+         CHi5kKd28flTmj+ZwGIA097RDI9qBbeIVbMoV3G2GR5zLSd1w6gZohFziGxvgrydVKRa
+         HoRtzghPSyGZxDVQWolf6KgzNfD+TPbDagC+g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
+        d=googlemail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        b=EBN3le4nrkjwnCrj7p4IuhwcERagDKfARYnDbh+1utZ0QDnhcT3Tz8p28mpPrkF25K
-         aBk4jZ0whzvnY/EdBOVlsaSSkAudUaArkz9pleU1bsikQWqU1EhxNQtlmHLsmGaAg70L
-         xk68QCNMeeyABVdg1K7vG1jI0Nh8jmD1ni31E=
-Received: by 10.141.26.19 with SMTP id d19mr2768290rvj.84.1236562713509; Sun, 
-	08 Mar 2009 18:38:33 -0700 (PDT)
+        b=aeBmqA+K46zFgKqJsg6wS0SHeEH3+/Jqy1oFDUF/uwOZzRK3OJg428IGcWqVQPzaN2
+         eF2Md/vG9g187z2FNI6d5+9C3PXFWBUZRakMOdIQN3rOeyvesHOkXfkff7qvzP2DT+oW
+         ZNve6a3DaCT1whMnPVi92yjOO6m1jXl8zUaVY=
+Received: by 10.181.148.2 with SMTP id a2mr1837478bko.117.1236562808452; Sun, 
+	08 Mar 2009 18:40:08 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112668>
 
-TortoiseGit Shell can not appear at explore context menu because miss
-install ATL library at v0.4.1.0.
-I am sorry for such critial problem happen.
+[whoops, mail server does not like html. trying again...]
 
-This release is for quick fix this issue.
+Hi,
 
-Version 0.4.2.0 version(external)
-	*Fix Shell menu disappear because ATL library have not installed.
-	*Fix Commit Dialog and Log Dialog default column is wrong
-	*Fix some dialog can't show after resize and close and open again
-	*Fix ProgressDlg Sometime thread is dead blocked.
+I have developed a generalised bisection algorithm, for the case where
+a bug is intermittent. The code may be found at
+git://github.com/Ealdwulf/bbchop.git. It should be considered
+experimental.
 
-Version 0.4.1.0 version(external)
-        *Fixed x64 build of TortoiseProc crashed due to received
-unexpected messages
-	*Fix tag to head when *force* check box checked
-	*Add Git document to help
+This should cover the use cases requested by Ingo
+(http://article.gmane.org/gmane.comp.version-control.git/108565) and
+John=A0 (http://article.gmane.org/gmane.comp.version-control.git/112280=
+),
+although it does not work in the same way as your proposed solutions -
+it is intended to be more general, working when the bug is not
+almost-deterministic. It is based on Bayesian Search Theory
+(http://en.wikipedia.org/wiki/Bayesian_search_theory, although that
+description is a bit simplistic) which is usually used to find
+submarines, or people lost on mountains.
 
-Version 0.4.0.0 version(internal)
-Features:
-	*Full Overlay Icon Support.
-	 Show "Conflict, ignore file, untracked file, modified, Add, staged"
-icon according to file status.
+To try it out, you need python and mpmath (from
+http://code.google.com/p/mpmath/ or your distribution).
+Once your have obtained the source, you can immediately run BBChop/sour=
+ce/bbchop
+which is the main driver program.
 
-	*Rebase Support.
-         Support "Pick" "Sqaush" "Edit" and "Skip" commit when rebase branch.
-         Support abort.
- 	
-	*Combine Multi-commits to one commit.
-	 Combine continous commits to one commit. The limition is the only
-single line(no merge point) above combined commit.
+It is not currently integrated into git, although doing so should only
+involve minor scriptery.
 
-	*Cherry Pick multi commits.
-	 User can use multi commits at log dialog and then choose cherry pick
-these. Cherry Pick dialog guide you finish whole work.
-         Support "Pick" "Squash" "Edit" and "Skip" commits.
-	
-	*First x64 version.
+The simplest way to try it out to is run it in manual mode:
 
-	*Support version "browse" at switch, export, new branch/tag and merge dialogs.
 
-	*Add context menu item "Revert" at Commit dialog File List.
+>=A0=A0 bbchop -l 10 -c 0.9
 
-	*Show bold font for HEAD at log dialog.
-	
-	*Add "Whole Project" checkbox at commit dialog
+This means, search in a linear history of 10 revisions, numbered 0 to
+9, until bbchop thinks it has found
+the faulty location with probability at least 0.9. It will start
+asking questions:
 
-	*First Version Help Document.
+] Most likely location is 0 (probability 0.100000).
+] Please test at location 3.
+] Target detected at 3? Y/N/S(kip)
 
-Bug Fix:
-	*Fix issue 36, Push not working if no remote branch is specified
-	*Default UnCheck untrack file at commit dialog
-	*Issue 40:  Commit from subfolder shows unversioned files in parent
-	*Fix diff problem when filenames have embedded spaces
-	*Fix Issue 24,45, Commit results not in window with scroll bars
-	*Fix for win2k context menu icons
-	*Fix Issue 46, The about window title still displays TortoiseSVN
-	*Fix Issue 37, When the file name contains Chinese char, Diff doesn't work.
-	*Fix Issue 28, "Add" status icon overlay is not correct.
+Eventually the search will terminate and BBChop will print out its
+conclusion, with evidence, eg:
+
+] Search complete.=A0 Most likely location is 3 (probability 0.919614).
+] Number of tests at 3: 3 of which 1 detected
+] Number of tests at parents of 3:
+]=A0 =A0=A0=A0=A0=A0=A0 At 2, 5 of which 0 detected
+
+More information canbe found in the readme file.
+
+=46eel free to reply with any comments, questions, etc. If anyone tries
+it out on a real bug, please let me know how it goes.
+
+regards,
+
+Ealdwulf
