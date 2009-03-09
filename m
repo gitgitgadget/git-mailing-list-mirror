@@ -1,79 +1,79 @@
-From: "John Dlugosz" <JDlugosz@TradeStation.com>
-Subject: RE: git-forest on msysgit
-Date: Mon, 9 Mar 2009 10:59:05 -0400
-Message-ID: <450196A1AAAE4B42A00A8B27A59278E70A116139@EXCHANGE.trad.tradestation.com>
-References: <450196A1AAAE4B42A00A8B27A59278E70A115F15@EXCHANGE.trad.tradestation.com> <alpine.DEB.1.00.0903070352580.10279@pacific.mpi-cbg.de>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PoC PATCH JGIT 0/2] Proof of concept code for Git Freenet
+	transport
+Date: Mon, 9 Mar 2009 07:59:55 -0700
+Message-ID: <20090309145955.GB11989@spearce.org>
+References: <1236569765-8882-1-git-send-email-j16sdiz+freenet@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Mar 09 16:00:53 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: devl@freenetproject.org, git@vger.kernel.org
+To: "Daniel Cheng (aka SDiZ)" <j16sdiz+freenet@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 09 16:01:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LggyG-0003x1-NP
-	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 16:00:49 +0100
+	id 1Lggyu-0004Cw-2g
+	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 16:01:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751597AbZCIO7U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2009 10:59:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751573AbZCIO7U
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 10:59:20 -0400
-Received: from mail2.tradestation.com ([63.99.207.80]:55885 "EHLO
-	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751460AbZCIO7T convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Mar 2009 10:59:19 -0400
-X-ASG-Debug-ID: 1236610756-4039033f0000-QuoKaX
-X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
-Received: from mail5.tradestation.com (localhost [127.0.0.1])
-	by mail2.tradestation.com (Spam Firewall) with ESMTP
-	id 469D01FDF87; Mon,  9 Mar 2009 10:59:16 -0400 (EDT)
-Received: from mail5.tradestation.com ([192.168.51.76]) by mail2.tradestation.com with ESMTP id JPvq2cBZrg7X5Lyg; Mon, 09 Mar 2009 10:59:16 -0400 (EDT)
-X-ASG-Whitelist: Client
-Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 9 Mar 2009 10:59:15 -0400
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-ASG-Orig-Subj: RE: git-forest on msysgit
-In-Reply-To: <alpine.DEB.1.00.0903070352580.10279@pacific.mpi-cbg.de>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: git-forest on msysgit
-Thread-Index: Acmez9+w0OlGhQwrTCKuq3GtxU9PQwB9yxZw
-X-OriginalArrivalTime: 09 Mar 2009 14:59:15.0262 (UTC) FILETIME=[9D2C1DE0:01C9A0C7]
-X-Barracuda-Connect: UNKNOWN[192.168.51.76]
-X-Barracuda-Start-Time: 1236610756
-X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
+	id S1751603AbZCIO77 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2009 10:59:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751386AbZCIO76
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 10:59:58 -0400
+Received: from george.spearce.org ([209.20.77.23]:44722 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751306AbZCIO75 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2009 10:59:57 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 1E22538211; Mon,  9 Mar 2009 14:59:55 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1236569765-8882-1-git-send-email-j16sdiz+freenet@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112700>
 
->> Note: this is pretty much obviously the wrong mailing list for 
-msysGit-related issues.
+"Daniel Cheng (aka SDiZ)" <j16sdiz+freenet@gmail.com> wrote:
+> 
+> Here is some proof-of-concept code for Git-over-Freenet.
+> I am sending this to see the feedback from communities.
 
-This is the list where I get friendly and useful answers as well as
-fruitful discussions, and I've seen Windows and MSYSget in particular
-mentioned many times when reviewing the threads.
+Interesting!
 
->> You can try recompiling git-svn.  Maybe I forgot to commit a file.
+I'm quite open to bringing this into JGit itself, so long as it
+doesn't cause us to import 42 other libraries that we don't need.
 
-I've not delved into the source code yet, but some day...
+:-)
+ 
+> FIXME:
+>  - How to store the private key of repository?
+>    Currently, we use URI of form fcp://SSK@<public key>^<private key>/some-id
+>    This is quite ugly. Could we use a per remote Config ? How can I get remote
+>    name from transport?
 
->> > I wonder if I can just copy it from somewhere, like someone's Linux
+Use something like amazon-s3 does, where there is a file path under
+~/ specified by the host part of the URI, and store the data there?
 
->> > build?
+I did that rather than storing into ~/.gitconfig or GIT_DIR/config
+as the private key really should remain private.  Chmod'ing your
+config file to be private is a pain, and "git config" last I checked
+wouldn't preserve the permissions when it modified the file for you.
 
->> How do you expect a Linux-specific binary object to be usable on
-Windows?
+That said, the Transport API in JGit doesn't get access to the
+RemoteConfig it was created with, because it isn't always made
+from a remote (e.g. you can pass the URIish on the command line).
+We could however optionally expose it, but in general I prefer
+to make everything that can be obtained via the RemoteConfig be
+settable without one, so it can also come through from the CLI
+or some higher-level GUI.
+ 
+>  - Make pushing async, could we?
 
-Because it's the Perl inside MSys/Cigwin.  Isn't the POSIX layer like
-Wine in reverse?
+I'm not sure I understand that.  Do you want to background the push
+task?  Isn't that what your shell is for?  Or do you want to perform
+the writes in an async fashion in parallel, to reduce the latency?
 
---John
-
-TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
-  If you received this in error, please contact the sender and delete the material from any computer.
+-- 
+Shawn.
