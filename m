@@ -1,101 +1,105 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [RFC PATCH] git-svn does not support intermediate directories?
-Date: Mon, 9 Mar 2009 14:54:48 -0700
-Message-ID: <20090309215447.GA25947@dcvr.yhbt.net>
-References: <21fc26450903031743x4beda8a3i835ecbd428817070@mail.gmail.com> <20090304043019.GC20790@mail.rocksoft.com> <21fc26450903051612u1400b2b4gd71c3eafa4418e37@mail.gmail.com> <20090308044318.GA31205@untitled> <21fc26450903091402u60d6cfcepd67ba7510af8f4a3@mail.gmail.com>
+From: Phil Lawrence <prlawrence@gmail.com>
+Subject: [PATCH] Append ampersand to "Target" of lnk files created by 
+	do_cygwin_shortcut
+Date: Mon, 9 Mar 2009 17:09:49 -0500
+Message-ID: <530ac78e0903091509y5209dec9q4c716d1e400357f3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Michael Lai <myllai@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 09 22:56:28 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 09 23:12:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgnSO-00063j-2z
-	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 22:56:20 +0100
+	id 1LgnhZ-0003Ms-PL
+	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 23:12:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752393AbZCIVyv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Mar 2009 17:54:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751728AbZCIVyv
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 17:54:51 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:38694 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751705AbZCIVyu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2009 17:54:50 -0400
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 978B01F604;
-	Mon,  9 Mar 2009 21:54:48 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <21fc26450903091402u60d6cfcepd67ba7510af8f4a3@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751777AbZCIWJx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2009 18:09:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751512AbZCIWJw
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 18:09:52 -0400
+Received: from el-out-1112.google.com ([209.85.162.181]:45602 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751396AbZCIWJw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2009 18:09:52 -0400
+Received: by el-out-1112.google.com with SMTP id b25so1073285elf.1
+        for <git@vger.kernel.org>; Mon, 09 Mar 2009 15:09:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=DyrEdL9+B+HSCQYD4zuO1JJM1srutHIX3J9fBHkpxkI=;
+        b=u183BxwdA0Ns2ddtVuPfJiW8u1NoyeNBq4Lt/fGjWutsb4X6RlmzITkjAMVNbxGWzp
+         oI6HeiI4Ny0ewqq8iW1yQIddJnYRzSvKRPU4/qnMX4y4cayGTVIKAG5BMdDxyYU7ayFE
+         m9D2GF2WE3DYUV84HZ92NGyBpGLM2/Fb58xBI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=WRftXM8m62OfgGTIq85qMGY2vIvSdCMQGNiFwjExgsQfgP4MDEheq0hD/TV4HG3eM2
+         RP92LDGgTBIr6Tx0tWu3OjoFs8TPZaEiVxc5vRO4SIgZX4XrSABgQnWlgjmNXW7yRaHM
+         48j5TdhYlOwAzeU16bpeLYYmfZNoBnCRjRJfI=
+Received: by 10.231.30.67 with SMTP id t3mr1552998ibc.21.1236636589294; Mon, 
+	09 Mar 2009 15:09:49 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112750>
 
-Michael Lai <myllai@gmail.com> wrote:
-> > Your patch was whitespace damaged and lacked a proposed commit mess=
-age.
-> > Please read Documentation/SubmittingPatches next time.
-> Hey Eric,
->=20
-> Sorry, I didn't notice that; I've read through it and hopefully my
-> patches should conform from now on.
->=20
-> >
-> > Anyhow, I fixed your patch up a bit. =A0Can you sign-off on it
-> > if its right to you or let me know if it's broken? =A0Thanks.
->=20
-> I looked through the patch and that would work, but at the same time =
-I
-> had another idea which may be a little cleaner.  Let me know what you
-> think.
+On Mon, Mar 9, 2009 at 4:12 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> <snip!>
+>
+> Could you add those explanations to the commit message?
 
-Thanks Michael, looks good to me,
+Done:
 
-Acked and pushed out to git://git.bogomips.org/git-svn
+>From 0780db8d53bdd0bb02b154d23c3c80bcccc0d955 Mon Sep 17 00:00:00 2001
+From: Phil Lawrence <prlawrence@gmail.com>
+Date: Thu, 5 Mar 2009 17:56:58 -0600
+Subject: [PATCH] Append ampersand to "Target" of lnk files created by
+do_cygwin_shortcut
 
-> From ae38acf85cfc86c075578c1c3f3c204d91d1d1f4 Mon Sep 17 00:00:00 200=
-1
-> From: Michael Lai <myllai@gmail.com>
-> Date: Mon, 9 Mar 2009 11:45:47 -0700
-> Subject: [PATCH] git-svn: support intermediate paths when matching ta=
-gs/branches
->=20
-> For repositories laid out like the following:
->=20
-> [svn-remote "svn"]
->       url =3D http://foo.com/svn/repos/bar
->       fetch =3D myproject/trunk:refs/remotes/trunk
->       branches =3D bar/myproject/branches/*:refs/remotes/*
->       tags =3D bar/myproject/tags/*:refs/remotes/tags/*
->=20
-> The "bar" component above is considered the intermediate path
-> and was not handled correctly.
->=20
-> Signed-off-by: Michael Lai <myllai@gmail.com>
-> ---
->  git-svn.perl |    5 ++++-
->  1 files changed, 4 insertions(+), 1 deletions(-)
->=20
-> diff --git a/git-svn.perl b/git-svn.perl
-> index 959eb52..8be6be0 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -2351,7 +2351,10 @@ sub match_paths {
->  	if (my $path =3D $paths->{"/$self->{path}"}) {
->  		return ($path->{action} eq 'D') ? 0 : 1;
->  	}
-> -	$self->{path_regex} ||=3D qr/^\/\Q$self->{path}\E\//;
-> +	my $repos_root =3D $self->ra->{repos_root};
-> +	my $extended_path =3D $self->{url} . '/' . $self->{path};
-> +	$extended_path =3D~ s#^\Q$repos_root\E(/|$)##;
-> +	$self->{path_regex} ||=3D qr/^\/\Q$extended_path\E\//;
->  	if (grep /$self->{path_regex}/, keys %$paths) {
->  		return 1;
->  	}
-> --=20
-> 1.6.2
+The git-gui menu item "Repository | Create Desktop Icon" creates a
+shortcut (.lnk file) on the Windows desktop.  The purpose of the
+created shortcut is to make it easy for a user to launch git-gui
+for a particular repo in the future.
+
+A Windows user would expect to see git gui launch when they click
+the shortcut; they would not expect (nor want) to see a cmd window
+open and remain open in the background.
+
+msysGit avoids opening a command window altogether when it's Git GUI
+shortcut is used.  Ideally, git on cygwin would also have shortcuts
+that simply open the GUI, but as a first step, this change allows
+the shell window to politely disappear after starting git gui as a
+background process.
+
+Signed-off-by: Phil Lawrence <prlawrence@gmail.com>
+---
+ lib/shortcut.tcl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/lib/shortcut.tcl b/lib/shortcut.tcl
+index 38c3151..2f20eb3 100644
+--- a/lib/shortcut.tcl
++++ b/lib/shortcut.tcl
+@@ -54,7 +54,7 @@ proc do_cygwin_shortcut {} {
+                                        $argv0]
+                                win32_create_lnk $fn [list \
+                                        $sh -c \
+-                                       "CHERE_INVOKING=1 source
+/etc/profile;[sq $me]" \
++                                       "CHERE_INVOKING=1 source
+/etc/profile;[sq $me] &" \
+                                        ] \
+                                        [file dirname [file normalize [gitdir]]]
+                        } err]} {
+--
+1.6.1.9.g97c34
+
+Phil Lawrence
