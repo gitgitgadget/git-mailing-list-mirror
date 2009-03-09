@@ -1,68 +1,58 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Append ampersand to "Target" of lnk files created by
-	do_cygwin_shortcut
-Date: Mon, 9 Mar 2009 16:23:00 -0700
-Message-ID: <20090309232300.GK11989@spearce.org>
-References: <530ac78e0903091509y5209dec9q4c716d1e400357f3@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC/PATCH] git push usability improvements and default change
+Date: Tue, 10 Mar 2009 00:35:12 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903100033400.6358@intel-tinevez-2-302>
+References: <1236638151-6465-1-git-send-email-finnag@pvv.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Phil Lawrence <prlawrence@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 10 00:24:58 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Finn Arne Gangstad <finnag@pvv.org>
+X-From: git-owner@vger.kernel.org Tue Mar 10 00:36:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lgopl-0004Ez-4V
-	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 00:24:33 +0100
+	id 1Lgp1b-0008S7-Je
+	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 00:36:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752525AbZCIXXG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2009 19:23:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752204AbZCIXXF
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 19:23:05 -0400
-Received: from george.spearce.org ([209.20.77.23]:34688 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752059AbZCIXXE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2009 19:23:04 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 0EE6E38211; Mon,  9 Mar 2009 23:23:00 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <530ac78e0903091509y5209dec9q4c716d1e400357f3@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752046AbZCIXfS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2009 19:35:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752035AbZCIXfS
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 19:35:18 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36132 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752002AbZCIXfQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2009 19:35:16 -0400
+Received: (qmail invoked by alias); 09 Mar 2009 23:35:13 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp058) with SMTP; 10 Mar 2009 00:35:13 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18GAWl1BLQGjRzdb6SgM3++ga9IjZdDZ9IRLvSi6+
+	pUIeGPnAs9lGT4
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <1236638151-6465-1-git-send-email-finnag@pvv.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.75
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112762>
 
-Phil Lawrence <prlawrence@gmail.com> wrote:
-> From 0780db8d53bdd0bb02b154d23c3c80bcccc0d955 Mon Sep 17 00:00:00 2001
-> From: Phil Lawrence <prlawrence@gmail.com>
-> Date: Thu, 5 Mar 2009 17:56:58 -0600
-> Subject: [PATCH] Append ampersand to "Target" of lnk files created by
-> do_cygwin_shortcut
+Hi,
+
+On Mon, 9 Mar 2009, Finn Arne Gangstad wrote:
+
+> git push default change:
 > 
-> The git-gui menu item "Repository | Create Desktop Icon" creates a
-> shortcut (.lnk file) on the Windows desktop.  The purpose of the
-> created shortcut is to make it easy for a user to launch git-gui
-> for a particular repo in the future.
+> git push will by default push "nothing" instead of "matching".
 
-Thanks.  The patch was white space damaged, but being only 2
-characters it was easier for me to just redo the change than
-to ask you to resend the patch.
- 
-> @@ -54,7 +54,7 @@ proc do_cygwin_shortcut {} {
->                                         $argv0]
->                                 win32_create_lnk $fn [list \
->                                         $sh -c \
-> -                                       "CHERE_INVOKING=1 source
-> /etc/profile;[sq $me]" \
-> +                                       "CHERE_INVOKING=1 source
-> /etc/profile;[sq $me] &" \
->                                         ] \
->                                         [file dirname [file normalize [gitdir]]]
->                         } err]} {
+Hasn't this been shot down already?  I do not want that change.  I think 
+it is harmful.
 
--- 
-Shawn.
+At least without a proper way to prepare existing users for the end of the 
+world.
+
+Ciao,
+Dscho
