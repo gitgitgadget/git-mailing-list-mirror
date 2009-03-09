@@ -1,114 +1,101 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 2/3] config: set help text for --bool-or-int
-Date: Mon, 9 Mar 2009 23:50:09 +0200
-Message-ID: <94a0d4530903091450gdcad625g95cd9550cfb724fa@mail.gmail.com>
-References: <1236446046-18319-1-git-send-email-peff@peff.net>
-	 <1236446046-18319-3-git-send-email-peff@peff.net>
-	 <94a0d4530903071307p46092810rb1637bfc853ee4d1@mail.gmail.com>
-	 <20090307224807.GA18548@coredump.intra.peff.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [RFC PATCH] git-svn does not support intermediate directories?
+Date: Mon, 9 Mar 2009 14:54:48 -0700
+Message-ID: <20090309215447.GA25947@dcvr.yhbt.net>
+References: <21fc26450903031743x4beda8a3i835ecbd428817070@mail.gmail.com> <20090304043019.GC20790@mail.rocksoft.com> <21fc26450903051612u1400b2b4gd71c3eafa4418e37@mail.gmail.com> <20090308044318.GA31205@untitled> <21fc26450903091402u60d6cfcepd67ba7510af8f4a3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Mar 09 22:51:57 2009
+Cc: git@vger.kernel.org, Michael Lai <myllai@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 09 22:56:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgnO0-0004We-Uv
-	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 22:51:49 +0100
+	id 1LgnSO-00063j-2z
+	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 22:56:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751725AbZCIVuQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Mar 2009 17:50:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752393AbZCIVuP
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 17:50:15 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:22140 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751954AbZCIVuM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Mar 2009 17:50:12 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so888564fgg.17
-        for <git@vger.kernel.org>; Mon, 09 Mar 2009 14:50:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=YEc3z8yFgUNNgh9CuSAr25v8pogWUr1uD+GfUqwLtc4=;
-        b=gFf91LOPNyzkevpAMSTDBdPiS08Aaeft6ZhbLVNmIp9P4Up9X+0TLmuZ99T8TqXt8p
-         ezHmiNLR5wfL2BXSxxh2Tf4nVczjdbUHzC0hnSnl5szBmIyAzv7OVmt9RWD6Ohy/E/iy
-         x7/noReoT01mAyWe+aFD1lRKV6T5YPJ9hYoSw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=kat3P2QGBOpUoMyaVI7ybKexkMcO9q42XvxU4TMyoE6OPo0jc7HvRhAtPGP9mhiNde
-         QGc1OBJvjHosr2mgRS7KFrqrzXMql9kEBvgj54P9gg34ahVc8jwwntdrvFEvur0MjJUU
-         NylNlXoBXCy5Zj5TKK8P1V34Jvs2IT1dEUSao=
-Received: by 10.86.74.4 with SMTP id w4mr4466481fga.21.1236635409555; Mon, 09 
-	Mar 2009 14:50:09 -0700 (PDT)
-In-Reply-To: <20090307224807.GA18548@coredump.intra.peff.net>
+	id S1752393AbZCIVyv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Mar 2009 17:54:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751728AbZCIVyv
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 17:54:51 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:38694 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751705AbZCIVyu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2009 17:54:50 -0400
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 978B01F604;
+	Mon,  9 Mar 2009 21:54:48 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <21fc26450903091402u60d6cfcepd67ba7510af8f4a3@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112749>
 
-On Sun, Mar 8, 2009 at 12:48 AM, Jeff King <peff@peff.net> wrote:
-> On Sat, Mar 07, 2009 at 11:07:46PM +0200, Felipe Contreras wrote:
->
->> On Sat, Mar 7, 2009 at 7:14 PM, Jeff King <peff@peff.net> wrote:
->> > The conversion to parse_opt left this as NULL; on glibc
->> > systems, the usage message prints
->> >
->> > =C2=A0 --bool-or-int =C2=A0 (null)
->> >
->> > and on other ones, segfaults.
->>
->> Shouldn't then OPT_BIT make sure there is no crash?
->
-> Perhaps, but it doesn't (and I assume you mean usage_with_help, as
-> OPT_BIT is just filling in the struct). It's not clear what a NULL he=
-lp
-> parameter should do, though. Hide the option? Show no help descriptio=
-n?
-> There are already ways to accomplish both of those.
+Michael Lai <myllai@gmail.com> wrote:
+> > Your patch was whitespace damaged and lacked a proposed commit mess=
+age.
+> > Please read Documentation/SubmittingPatches next time.
+> Hey Eric,
+>=20
+> Sorry, I didn't notice that; I've read through it and hopefully my
+> patches should conform from now on.
+>=20
+> >
+> > Anyhow, I fixed your patch up a bit. =A0Can you sign-off on it
+> > if its right to you or let me know if it's broken? =A0Thanks.
+>=20
+> I looked through the patch and that would work, but at the same time =
+I
+> had another idea which may be a little cleaner.  Let me know what you
+> think.
 
-Yeah, I meant usage_with_help. I don't know what should be done, but I
-think two things should be achieved:
+Thanks Michael, looks good to me,
 
-a) don't crash
-b) encourage the options to always have a description
+Acked and pushed out to git://git.bogomips.org/git-svn
 
-Perhaps not showing the option at all, or perhaps showing "**EMPTY**".
-
->> I was surprised when it didn't complain. I thought on making it "" b=
-ut
->> I wanted to make it visible that there was no documentation for that=
-,
->> which is the reason I left it that way.
->
-> OK. I think there are really valid options:
->
-> =C2=A01. it's there with a description (which is what my patch does)
->
-> =C2=A02. it's there without a description, because it's obvious what =
-it does
-> =C2=A0 =C2=A0 coming after --bool and --int
-
-I don't think it's obvious, that partly why I didn't fill the descripti=
-on.
-
-> =C2=A03. it's hidden
->
-> I really don't care which. But what is there now is broken.
-
-Definitely, your patch must be applied ASAP.
-
-Minor nitpick: "value is interpreted either as bool or int"
-
-The value is what it is, the --boo-or-int option doesn't change the
-value, just how it is interpreted.
-
---=20
-=46elipe Contreras
+> From ae38acf85cfc86c075578c1c3f3c204d91d1d1f4 Mon Sep 17 00:00:00 200=
+1
+> From: Michael Lai <myllai@gmail.com>
+> Date: Mon, 9 Mar 2009 11:45:47 -0700
+> Subject: [PATCH] git-svn: support intermediate paths when matching ta=
+gs/branches
+>=20
+> For repositories laid out like the following:
+>=20
+> [svn-remote "svn"]
+>       url =3D http://foo.com/svn/repos/bar
+>       fetch =3D myproject/trunk:refs/remotes/trunk
+>       branches =3D bar/myproject/branches/*:refs/remotes/*
+>       tags =3D bar/myproject/tags/*:refs/remotes/tags/*
+>=20
+> The "bar" component above is considered the intermediate path
+> and was not handled correctly.
+>=20
+> Signed-off-by: Michael Lai <myllai@gmail.com>
+> ---
+>  git-svn.perl |    5 ++++-
+>  1 files changed, 4 insertions(+), 1 deletions(-)
+>=20
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 959eb52..8be6be0 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -2351,7 +2351,10 @@ sub match_paths {
+>  	if (my $path =3D $paths->{"/$self->{path}"}) {
+>  		return ($path->{action} eq 'D') ? 0 : 1;
+>  	}
+> -	$self->{path_regex} ||=3D qr/^\/\Q$self->{path}\E\//;
+> +	my $repos_root =3D $self->ra->{repos_root};
+> +	my $extended_path =3D $self->{url} . '/' . $self->{path};
+> +	$extended_path =3D~ s#^\Q$repos_root\E(/|$)##;
+> +	$self->{path_regex} ||=3D qr/^\/\Q$extended_path\E\//;
+>  	if (grep /$self->{path_regex}/, keys %$paths) {
+>  		return 1;
+>  	}
+> --=20
+> 1.6.2
