@@ -1,55 +1,105 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Massive spam attack on the GitWiki
-Date: Mon, 9 Mar 2009 18:27:14 +0100
-Message-ID: <20090309172714.GX8940@machine.or.cz>
-References: <alpine.DEB.1.00.0903091807240.6358@intel-tinevez-2-302>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/2] Move push logic to transport.c
+Date: Mon, 9 Mar 2009 18:29:03 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903091828280.6358@intel-tinevez-2-302>
+References: <alpine.LNX.1.00.0903082046280.19665@iabervon.org> <alpine.DEB.1.00.0903091033330.10279@pacific.mpi-cbg.de> <alpine.LNX.1.00.0903091200150.19665@iabervon.org> <alpine.DEB.1.00.0903091711180.6358@intel-tinevez-2-302> <alpine.LNX.1.00.0903091230430.19665@iabervon.org>
+ <alpine.DEB.1.00.0903091809330.6358@intel-tinevez-2-302> <alpine.LNX.1.00.0903091315440.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Mar 09 18:28:54 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Mon Mar 09 18:30:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgjHT-00042V-EF
-	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 18:28:47 +0100
+	id 1LgjJJ-0004in-Kw
+	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 18:30:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752545AbZCIR1S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2009 13:27:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752402AbZCIR1S
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 13:27:18 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:56807 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752073AbZCIR1R (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2009 13:27:17 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 2D7E71E4C02E; Mon,  9 Mar 2009 18:27:14 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0903091807240.6358@intel-tinevez-2-302>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1752860AbZCIR3N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2009 13:29:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752421AbZCIR3N
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 13:29:13 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44172 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752373AbZCIR3M (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2009 13:29:12 -0400
+Received: (qmail invoked by alias); 09 Mar 2009 17:29:04 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp066) with SMTP; 09 Mar 2009 18:29:04 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+37mhGP4u35o2lIQX2ToKEEJGQPP8Nyp6tWkGHiX
+	z1ltp7jrhVqJf+
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <alpine.LNX.1.00.0903091315440.19665@iabervon.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112726>
 
-  Hi,
+Hi,
 
-On Mon, Mar 09, 2009 at 06:07:40PM +0100, Johannes Schindelin wrote:
-> there seems to be a spam attack on the GitWiki.  Pasky, could you change 
-> the settings so that attachments are disallowed?  It is really 
-> distressing.  Especially since pages I delete crop up again because of 
-> those spammers attaching new attachments.
+On Mon, 9 Mar 2009, Daniel Barkalow wrote:
 
-  I have tried to disable adding new attachments now.
+> On Mon, 9 Mar 2009, Johannes Schindelin wrote:
+> 
+> > On Mon, 9 Mar 2009, Daniel Barkalow wrote:
+> > 
+> > > On Mon, 9 Mar 2009, Johannes Schindelin wrote:
+> > > 
+> > > > On Mon, 9 Mar 2009, Daniel Barkalow wrote:
+> > > > 
+> > > > > On Mon, 9 Mar 2009, Johannes Schindelin wrote:
+> > > > > 
+> > > > > > On Sun, 8 Mar 2009, Daniel Barkalow wrote:
+> > > > > > 
+> > > > > > > It doesn't convert http-push or the rsync transports, largely 
+> > > > > > > because I don't have test setups for rsync or webdav to make sure 
+> > > > > > > that they're still working.
+> > > > > > 
+> > > > > > $ ls t/*http-push*
+> > > > > > t/t5540-http-push.sh
+> > > > > > 
+> > > > > > $ git grep -n test.*rsync t/
+> > > > > > t/t5510-fetch.sh:195:test_expect_success 'fetch via rsync' '
+> > > > > > t/t5510-fetch.sh:206:test_expect_success 'push via rsync' '
+> > > > > > t/t5510-fetch.sh:217:test_expect_success 'push via rsync' '
+> > > > > > 
+> > > > > > It should be just a matter of installing an apache and rsync.
+> > > > > 
+> > > > > And configuring them suitably, yes. That's the part I haven't previously 
+> > > > > done.
+> > > > 
+> > > > If you have to configure apache (or rsync) for the test to run properly, 
+> > > > we have a serious bug in our test suite.  Please share the output in that 
+> > > > case.
+> > > 
+> > > rsync: failed to connect to 127.0.0.1: Connection refused (111)
+> > > rsync error: error in socket IO (code 10) at clientserver.c(104) [receiver=2.6.9]
+> > > fatal: Could not run rsync to get refs
+> > > 
+> > > I mean, I won't need to do anything really special in the configuration, 
+> > > but I do need to have rsyncd running giving access to that directory 
+> > > without any funny mapping on localhost.
+> > 
+> > That is my mistake, I guess.  I tried to be lazy and not change 
+> > transport.c so that it groks "rsync:$(pwd)" style paths.
+> 
+> Oh, I think it's probably not worth allowing rsync:$(pwd) (particularly 
+> since rsync itself seems not to let you say "rsync:" for local paths). 
 
-> Also, is it possible to remove/block users?
+This contradicts that:
 
-  Probably, but I don't know how. But I have given you full admin
-rights now, if you know how to use them (I don't). :-)
+> I'll set something up to run rsyncd with an appropriate config, like the 
+> lib-httpd stuff. Oh, and it looks like nobody actually runs the rsync 
+> tests; they're broken by $(pwd) including whitespace, and haven't been 
+> fixed yet.
 
--- 
-				Petr "Pasky" Baudis
-The average, healthy, well-adjusted adult gets up at seven-thirty
-in the morning feeling just terrible. -- Jean Kerr
+If we would support local rsync paths, testing it would be easy.
+
+Ciao,
+Dscho
