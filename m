@@ -1,102 +1,156 @@
 From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: Using Git with windows
-Date: Mon, 09 Mar 2009 18:29:25 +0000
-Message-ID: <49B56005.5010802@ramsay1.demon.co.uk>
-References: <e878dbad0903052321l6c0d310bk2ba568138b409d36@mail.gmail.com> <c115fd3c0903060638lfc52073nd40e0d7379d7f593@mail.gmail.com> <49B2B638.2090506@obry.net> <200903072002.38698.robin.rosenberg.lists@dewire.com> <49B2C529.6010002@obry.net>
+Subject: [PATCH] git-instaweb: fix lighttpd configuration on cygwin
+Date: Mon, 09 Mar 2009 18:31:55 +0000
+Message-ID: <49B5609B.5070705@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Tim Visher <tim.visher@gmail.com>,
-	Tariq Hassanen <tariq.hassanen@gmail.com>, git@vger.kernel.org
-To: pascal@obry.net
-X-From: git-owner@vger.kernel.org Mon Mar 09 19:34:58 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>, pascal@obry.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 09 19:35:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgkJM-000493-2Q
-	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 19:34:48 +0100
+	id 1LgkJY-0004D9-JG
+	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 19:35:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752974AbZCISdT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Mar 2009 14:33:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752251AbZCISdT
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 14:33:19 -0400
-Received: from lon1-post-3.mail.demon.net ([195.173.77.150]:40425 "EHLO
-	lon1-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751394AbZCISdS (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Mar 2009 14:33:18 -0400
+	id S1753565AbZCISd2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2009 14:33:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753153AbZCISd1
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 14:33:27 -0400
+Received: from lon1-post-2.mail.demon.net ([195.173.77.149]:42328 "EHLO
+	lon1-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751836AbZCISd0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Mar 2009 14:33:26 -0400
 Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by lon1-post-3.mail.demon.net with esmtp (Exim 4.69)
-	id 1LgkHr-0002kL-dn; Mon, 09 Mar 2009 18:33:16 +0000
+	by lon1-post-2.mail.demon.net with esmtp (Exim 4.69)
+	id 1LgkHz-0001sh-b2; Mon, 09 Mar 2009 18:33:24 +0000
 User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <49B2C529.6010002@obry.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112731>
 
-Pascal Obry wrote:
-> Robin Rosenberg a =C3=A9crit :
->> I think that worked fine when I tried using cygwin's apache. Mixing =
-a cygwin
->> git with a win32 apache did not work well.
->=20
-> Well, I tried with lighttpd IIRC. I do not want Apache just for brows=
-ing
-> a Git repo.
->=20
-Pascal, I also installed lighttpd on cygwin, just so that I could test =
-gitweb
-and cgit (I have Apache installed on Linux).  I had a few problems gett=
-ing it
-to work at first. Only later did I notice that "git-instaweb" didn't wo=
-rk.
-Having fixed the installation problems earlier, I fixed git-instaweb an=
-d then
-forgot to send in the patch. Oops... Patch on the way... ;-)
 
-[I had intended to make several other changes and submit it later...]
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
 
-You may also notice that "git-instaweb" does not provide the git-logo.p=
-ng
-and git-favicon.png; so if that bothers you, just copy those files from
-your git repo into the target repo's .git/gitweb directory. (That was o=
-ne
-of the things I was going to look at fixing)
+A recent email from Pascal reminded me that I had this patch
+kicking around. I haven't tested this on Linux, since I don't
+have lighttpd installed there (I already have Apache), but I
+don't expect any problems; famous last words!
 
-<off-topic>
-Note: if you decide to try cgit, then be aware that lighttpd has a bug =
-which
-causes problems with mixed-case pathnames in the pathinfo. lighttpd dow=
-n-cases
-the filename part of the pathinfo when on a case insensitive filesystem=
-, so
-cgit can't find the corresponding blob. (This is not a problem with git=
-web).
+The essence of the change is the addition of the "mod_setenv"
+module, along with the PATH environment variable assignment.
+(otherwise gitweb can't find a shell and, therefore, can't
+execute any git programs)
 
-I sent a fix for this bug to (who I thought was) the lighttpd maintaine=
-r, but
-didn't get any response; so don't count on a fix for this.
+Also, I had to add a default mime-type assignment of text/plain
+("" => "text/plain").  If my memory serves me, the other additions
+to the mime-type mapping was just cosmetic; and why not?
 
-An amusing, but impractical, workaround for this is to name your docume=
-nt root
-something like /123 ie the path is numeric (and so does not differ in c=
-ase ;-)
-[lighttpd uses a runtime test of the case-sensitive-ness of the documen=
-t root
-pathname to control this behaviour]
-
-Also, I could not get lighttpd to execute a cgi program with an ".exe" =
-extension
-so I had to create a simple script, viz:
-
-$ cat /var/www/cgit/cgit.cgi
-#!/bin/sh
-exec /var/www/cgit/cgit.cgi.exe
-$
-<off-topic>
+Hmmm, I just noticed that the first hunk, which is needed to
+suppress a "lighttpd: not found" error message, could perhaps be
+seen as an un-related fix. Dunno.
 
 ATB,
 Ramsay Jones
+
+
+ git-instaweb.sh |   69 ++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 files changed, 66 insertions(+), 3 deletions(-)
+
+diff --git a/git-instaweb.sh b/git-instaweb.sh
+index 0843372..5f4419b 100755
+--- a/git-instaweb.sh
++++ b/git-instaweb.sh
+@@ -49,7 +49,7 @@ resolve_full_httpd () {
+ 	esac
+ 
+ 	httpd_only="$(echo $httpd | cut -f1 -d' ')"
+-	if case "$httpd_only" in /*) : ;; *) which $httpd_only >/dev/null;; esac
++	if case "$httpd_only" in /*) : ;; *) which $httpd_only >/dev/null 2>&1;; esac
+ 	then
+ 		full_httpd=$httpd
+ 	else
+@@ -179,11 +179,74 @@ lighttpd_conf () {
+ 	cat > "$conf" <<EOF
+ server.document-root = "$fqgitdir/gitweb"
+ server.port = $port
+-server.modules = ( "mod_cgi" )
++server.modules = ( "mod_setenv", "mod_cgi" )
+ server.indexfiles = ( "gitweb.cgi" )
+ server.pid-file = "$fqgitdir/pid"
++server.errorlog = "$fqgitdir/gitweb/error.log"
++
++# to enable, add "mod_access", "mod_accesslog" to server.modules
++# variable above and uncomment this
++#accesslog.filename = "$fqgitdir/gitweb/access.log"
++
++setenv.add-environment = ( "PATH" => "/usr/local/bin:/usr/bin:/bin" )
++
+ cgi.assign = ( ".cgi" => "" )
+-mimetype.assign = ( ".css" => "text/css" )
++
++# mimetype mapping
++mimetype.assign             = (
++  ".pdf"          =>      "application/pdf",
++  ".sig"          =>      "application/pgp-signature",
++  ".spl"          =>      "application/futuresplash",
++  ".class"        =>      "application/octet-stream",
++  ".ps"           =>      "application/postscript",
++  ".torrent"      =>      "application/x-bittorrent",
++  ".dvi"          =>      "application/x-dvi",
++  ".gz"           =>      "application/x-gzip",
++  ".pac"          =>      "application/x-ns-proxy-autoconfig",
++  ".swf"          =>      "application/x-shockwave-flash",
++  ".tar.gz"       =>      "application/x-tgz",
++  ".tgz"          =>      "application/x-tgz",
++  ".tar"          =>      "application/x-tar",
++  ".zip"          =>      "application/zip",
++  ".mp3"          =>      "audio/mpeg",
++  ".m3u"          =>      "audio/x-mpegurl",
++  ".wma"          =>      "audio/x-ms-wma",
++  ".wax"          =>      "audio/x-ms-wax",
++  ".ogg"          =>      "application/ogg",
++  ".wav"          =>      "audio/x-wav",
++  ".gif"          =>      "image/gif",
++  ".jpg"          =>      "image/jpeg",
++  ".jpeg"         =>      "image/jpeg",
++  ".png"          =>      "image/png",
++  ".xbm"          =>      "image/x-xbitmap",
++  ".xpm"          =>      "image/x-xpixmap",
++  ".xwd"          =>      "image/x-xwindowdump",
++  ".css"          =>      "text/css",
++  ".html"         =>      "text/html",
++  ".htm"          =>      "text/html",
++  ".js"           =>      "text/javascript",
++  ".asc"          =>      "text/plain",
++  ".c"            =>      "text/plain",
++  ".cpp"          =>      "text/plain",
++  ".log"          =>      "text/plain",
++  ".conf"         =>      "text/plain",
++  ".text"         =>      "text/plain",
++  ".txt"          =>      "text/plain",
++  ".dtd"          =>      "text/xml",
++  ".xml"          =>      "text/xml",
++  ".mpeg"         =>      "video/mpeg",
++  ".mpg"          =>      "video/mpeg",
++  ".mov"          =>      "video/quicktime",
++  ".qt"           =>      "video/quicktime",
++  ".avi"          =>      "video/x-msvideo",
++  ".asf"          =>      "video/x-ms-asf",
++  ".asx"          =>      "video/x-ms-asf",
++  ".wmv"          =>      "video/x-ms-wmv",
++  ".bz2"          =>      "application/x-bzip",
++  ".tbz"          =>      "application/x-bzip-compressed-tar",
++  ".tar.bz2"      =>      "application/x-bzip-compressed-tar",
++  ""              =>      "text/plain"
++ )
+ EOF
+ 	test x"$local" = xtrue && echo 'server.bind = "127.0.0.1"' >> "$conf"
+ }
+-- 
+1.6.2
