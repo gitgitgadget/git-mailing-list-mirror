@@ -1,79 +1,79 @@
-From: Sam Hocevar <sam@zoy.org>
-Subject: git-p4 workflow suggestions?
-Date: Mon, 9 Mar 2009 15:21:08 +0100
-Message-ID: <20090309142108.GK12880@zoy.org>
+From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+Subject: Re: [PATCH v2] git-clone: Add option --branch to override initial branch
+Date: Mon, 9 Mar 2009 14:39:54 +0000 (UTC)
+Message-ID: <loom.20090309T143413-334@post.gmane.org>
+References: <alpine.DEB.1.00.0903030047130.10279@pacific.mpi-cbg.de> <1236040414-19089-1-git-send-email-torarnv@gmail.com> <7vbpsh93q5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 09 15:22:47 2009
+X-From: git-owner@vger.kernel.org Mon Mar 09 15:41:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LggNP-0005bC-Vg
-	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 15:22:44 +0100
+	id 1Lggfg-0004qW-H8
+	for gcvg-git-2@gmane.org; Mon, 09 Mar 2009 15:41:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751899AbZCIOVP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2009 10:21:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751410AbZCIOVP
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 10:21:15 -0400
-Received: from poulet.zoy.org ([80.65.228.129]:46445 "EHLO poulet.zoy.org"
+	id S1751404AbZCIOkI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Mar 2009 10:40:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751394AbZCIOkH
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 10:40:07 -0400
+Received: from main.gmane.org ([80.91.229.2]:44417 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751342AbZCIOVO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2009 10:21:14 -0400
-Received: by poulet.zoy.org (Postfix, from userid 1000)
-	id 7A6D512046A; Mon,  9 Mar 2009 15:21:08 +0100 (CET)
-Content-Disposition: inline
-Mail-Copies-To: never
-X-No-CC: I read mailing-lists; do not CC me on replies.
-X-Snort: uid=0(root) gid=0(root)
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751213AbZCIOkF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2009 10:40:05 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LggeB-0002zt-ET
+	for git@vger.kernel.org; Mon, 09 Mar 2009 14:40:03 +0000
+Received: from 85.205.253.203 ([85.205.253.203])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 09 Mar 2009 14:40:03 +0000
+Received: from paolo.ciarrocchi by 85.205.253.203 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 09 Mar 2009 14:40:03 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 85.205.253.203 (Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.9.0.7; .NET CLR 3.0; ffco7) Gecko/2009021910 Firefox/3.0.7 GTB5)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112698>
 
-   Dear list,
+Junio C Hamano <gitster <at> pobox.com> writes:
 
-   I have modified git and git-p4 to a point where they are usable in
-my work environment. I am now faced with a new problem: Perforce's
-composite workspaces. They allow you to "mount" parts of the repo onto
-other directories, even nonempty ones.
+>=20
+> Tor Arne Vestb=C3=B8 <torarnv <at> gmail.com> writes:
+>=20
+> > The options --branch and -b allow the user to override the initial
+> > branch created and checked out by git-clone (normally this is the
+> > active branch of the remote repository).
+> >
+> > If the selected branch is not found the operation aborts.
+> >
+> > Signed-off-by: Tor Arne Vestb=C3=B8 <torarnv <at> gmail.com>
+>=20
+> The semantics and desirability of the new feature have been already
+> discussed, and I am not convinced that it is necessary, in the sense =
+that
+> I do not think I likely ever use this myself, but I am just one of gi=
+t
+> users so that is not a strong basis for rejection.
 
-   Take the following example repository, where a "framework" project
-contains an example subdirectory with build files and other directories,
-and a "project1" project contains subdirectories that are meant to
-replace the ones in "example":
+I wrote a comment about the --branch approach a couple of days ago, dun=
+no why
+but this thread never reached my inbox (replying via gmame web interfac=
+e).
 
-   //work/framework/example/src/
-                           /include/
-			   /Makefile
-			   /...
-   //work/project1/src/
-                  /include/
+http://thread.gmane.org/gmane.comp.version-control.git/112527
 
-   Using the Perforce client, one can reorganise the workspace
-so that project1/src/ transparently replaces the contents of
-framework/example/src/ (same for */include). All the work is then done
-in the framework/ local checkout, but commits may also affect project1/.
+As I wrote in my post a friend of mine, new to git, was looking for the
+possibility of cloning a repo and automatically checkout a specific bra=
+nch.
 
-   I could not find a way to do the same with git and git-p4. My main
-requirements are the following:
-
-   - preserve the atomicity of commits affecting both project1/src and
-   project1/include (having to commit from a different directory due to
-   symlink hacks is acceptable to me, even if not terribly practical)
-
-   - have git-p4 rebase work without requiring tedious merges
-
-   - *if possible* (but not a strong requirement), preserve the
-   atomicity of commits affecting both framework/ and project1/.
-
-   If anyone ever ran into the problem, I'd like to hear from their
-experience. Or maybe someone will have suggestions based on similar
-requirements.
-
-Cheers,
--- 
-Sam.
+Regards,
+           Paolo
