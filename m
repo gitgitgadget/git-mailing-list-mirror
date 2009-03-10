@@ -1,148 +1,109 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] Typo and language fixes for git-checkout.txt
-Date: Tue, 10 Mar 2009 16:06:30 +0100
-Message-ID: <1236697590-7728-1-git-send-email-git@drmicha.warpmail.net>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 10 16:10:25 2009
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH/RFC] recv_sideband: Band #2 always goes to stderr
+Date: Tue, 10 Mar 2009 16:07:29 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903101605460.14295@intel-tinevez-2-302>
+References: <cover.1236639280u.git.johannes.schindelin@gmx.de> <e2b19f6c7c50e5b0a652c40b0d8e4947134ed669.1236639280u.git.johannes.schindelin@gmx.de> <49B61377.90103@viscovery.net> <49B61703.8030602@viscovery.net> <20090310144646.GQ11989@spearce.org>
+ <49B680F7.4040103@viscovery.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	gitster@pobox.com, Peter Harris <git@peter.is-a-geek.org>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Nicolas Pitre <nico@cam.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Mar 10 16:10:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lh3ZU-0002Go-Ej
-	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 16:08:44 +0100
+	id 1Lh3Zs-0002TH-QY
+	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 16:09:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755115AbZCJPGp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2009 11:06:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754848AbZCJPGp
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 11:06:45 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:42233 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754188AbZCJPGo (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Mar 2009 11:06:44 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 5109C2EE28D;
-	Tue, 10 Mar 2009 11:06:42 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Tue, 10 Mar 2009 11:06:42 -0400
-X-Sasl-enc: xyD42R2pq1xoIeFjK4xb6wfoGCcgxTom2eO4r9qBlwyu 1236697601
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 79267165C1;
-	Tue, 10 Mar 2009 11:06:41 -0400 (EDT)
-X-Mailer: git-send-email 1.6.2
+	id S1754992AbZCJPHf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2009 11:07:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754287AbZCJPHe
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 11:07:34 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36421 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754069AbZCJPHe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2009 11:07:34 -0400
+Received: (qmail invoked by alias); 10 Mar 2009 15:07:31 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp014) with SMTP; 10 Mar 2009 16:07:31 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+SQzFN7qmS36TxCMTcoHqNzKVd/ywleh7X4qjqca
+	FRPIxr8oNbzNdv
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <49B680F7.4040103@viscovery.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112825>
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- Documentation/git-checkout.txt |   33 ++++++++++++++++-----------------
- 1 files changed, 16 insertions(+), 17 deletions(-)
+Hi,
 
-A few fixes for typos and speakos. I tried to be lenient, not enforcing
-a different writing style esp. w.r.t. punctuation.
+On Tue, 10 Mar 2009, Johannes Sixt wrote:
 
-In the hunk about --track guess work without -b I removed the
-unfortunate term "remote system" which isn't used anywhere else (and is
-incorrect).
+> Shawn O. Pearce schrieb:
+> > Johannes Sixt <j.sixt@viscovery.net> wrote:
+> >> diff --git a/sideband.c b/sideband.c
+> >> index cca3360..a706ac8 100644
+> >> --- a/sideband.c
+> >> +++ b/sideband.c
+> >> @@ -50,8 +49,8 @@ int recv_sideband(const char *me, int in_stream, int out, int err)
+> >>  		switch (band) {
+> >>  		case 3:
+> >>  			buf[pf] = ' ';
+> >> -			buf[pf+1+len] = '\n';
+> >> -			safe_write(err, buf, pf+1+len+1);
+> >> +			buf[pf+1+len] = '\0';
+> >> +			fprintf(stderr, "%s\n", buf);
+> > 
+> > Can't you instead do:
+> > 
+> > 	fprintf(stderr, "%.*s\n", buf, pf + len);
+> > 
+> > like you do...
+> > 
+> >> @@ -95,12 +94,13 @@ int recv_sideband(const char *me, int in_stream, int out, int err)
+> >>  					memcpy(save, b + brk, sf);
+> >>  					b[brk + sf - 1] = b[brk - 1];
+> >>  					memcpy(b + brk - 1, suffix, sf);
+> >> -					safe_write(err, b, brk + sf);
+> >> +					fprintf(stderr, "%.*s", brk + sf, b);
+> >>  					memcpy(b + brk, save, sf);
+> >>  					len -= brk;
+> >>  				} else {
+> >>  					int l = brk ? brk : len;
+> >> -					safe_write(err, b, l);
+> >> +					if (l > 0)
+> >> +						fprintf(stderr, "%.*s", l, b);
+> > 
+> > here?
+> 
+> I deliberatly avoided "%.*s" in the former hunk (1) because of the posts
+> that we had yesterday about potentially misbehaved fprintf in the case
+> where the precision is 0;
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 3bccffa..125d8f3 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -8,7 +8,7 @@ git-checkout - Checkout a branch or paths to the working tree
- SYNOPSIS
- --------
- [verse]
--'git checkout' [-q] [-f] [--track | --no-track] [-b <new_branch> [-l]] [-m] [<branch>]
-+'git checkout' [-q] [-f] [-t | --track | --no-track] [-b <new_branch> [-l]] [-m] [<branch>]
- 'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <paths>...
- 
- DESCRIPTION
-@@ -21,15 +21,15 @@ specified, <new_branch>.  Using -b will cause <new_branch> to
- be created; in this case you can use the --track or --no-track
- options, which will be passed to `git branch`.
- 
--As a convenience, --track will default to create a branch whose
-+As a convenience, --track will default to creating a branch whose
- name is constructed from the specified branch name by stripping
- the first namespace level.
- 
- When <paths> are given, this command does *not* switch
- branches.  It updates the named paths in the working tree from
- the index file, or from a named <tree-ish> (most often a commit).  In
--this case, the `-b` options is meaningless and giving
--either of them results in an error.  <tree-ish> argument can be
-+this case, the `-b` and `--track` options are meaningless and giving
-+either of them results in an error. The <tree-ish> argument can be
- used to specify a specific tree-ish (i.e. commit, tag or tree)
- to update the index for the given paths before updating the
- working tree.
-@@ -75,14 +75,13 @@ entries; instead, unmerged entries are ignored.
- 	<repository> <refspec>" explicitly. This behavior is the default
- 	when the start point is a remote branch. Set the
- 	branch.autosetupmerge configuration variable to `false` if you want
--	'git-checkout' and 'git-branch' to always behave as if '--no-track' were
-+	'git checkout' and 'git branch' to always behave as if '--no-track' were
- 	given. Set it to `always` if you want this behavior when the
--	start-point is either a local or remote branch.
-+	start point is either a local or remote branch.
- +
--If no '-b' option was given, the name of the new branch will be
--derived from the remote branch, by attempting to guess the name
--of the branch on remote system.  If "remotes/" or "refs/remotes/"
--are prefixed, it is stripped away, and then the part up to the
-+If no '-b' option is given, the name of the new branch will be
-+derived from the remote branch.  If "remotes/" or "refs/remotes/"
-+is prefixed it is stripped away, and then the part up to the
- next slash (which would be the nickname of the remote) is removed.
- This would tell us to use "hack" as the local branch when branching
- off of "origin/hack" (or "remotes/origin/hack", or even
-@@ -152,12 +151,12 @@ $ git checkout v2.6.18
- ------------
- 
- Earlier versions of git did not allow this and asked you to
--create a temporary branch using `-b` option, but starting from
-+create a temporary branch using the `-b` option, but starting from
- version 1.5.0, the above command 'detaches' your HEAD from the
--current branch and directly point at the commit named by the tag
--(`v2.6.18` in the above example).
-+current branch and directly points at the commit named by the tag
-+(`v2.6.18` in the example above).
- 
--You can use usual git commands while in this state.  You can use
-+You can use all git commands while in this state.  You can use
- `git reset --hard $othercommit` to further move around, for
- example.  You can make changes and create a new commit on top of
- a detached HEAD.  You can even create a merge by using `git
-@@ -191,7 +190,7 @@ $ git checkout hello.c            <3>
- ------------
- +
- <1> switch branch
--<2> take out a file out of other commit
-+<2> take a file out of another commit
- <3> restore hello.c from HEAD of current branch
- +
- If you have an unfortunate branch that is named `hello.c`, this
-@@ -202,7 +201,7 @@ You should instead write:
- $ git checkout -- hello.c
- ------------
- 
--. After working in a wrong branch, switching to the correct
-+. After working in the wrong branch, switching to the correct
- branch would be done using:
- +
- ------------
-@@ -210,7 +209,7 @@ $ git checkout mytopic
- ------------
- +
- However, your "wrong" branch and correct "mytopic" branch may
--differ in files that you have locally modified, in which case,
-+differ in files that you have modified locally, in which case
- the above checkout would fail like this:
- +
- ------------
--- 
-1.6.2
+Didn't that turn out to be a false alarm?
+
+> and (2) because it was so easy to avoid it. I don't think we need 
+> ultimate performance in this case, and I also consider the plain "%s\n" 
+> more readable.
+> 
+> That said, the second hunk is really only the minimal change and I'd 
+> like to rewrite it to get rid of the memcpy stuff. It is really not 
+> needed once fprintf is in the game. But that's a separate patch.
+
+I think, indeed, that you can avoid the memcpy() by using %.*s.  The 
+private buffer is only used to make sure that the text is written in one 
+go anyway (i.e. that two sidebands messages are not written to the same 
+line because they use multiple calls to fprintf()/fwrite() per line), 
+right?
+
+Ciao,
+Dscho
