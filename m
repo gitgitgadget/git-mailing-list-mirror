@@ -1,50 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] git push usability improvements and default change
-Date: Tue, 10 Mar 2009 18:10:10 -0400
-Message-ID: <20090310221010.GA13452@coredump.intra.peff.net>
-References: <1236638151-6465-1-git-send-email-finnag@pvv.org> <20090310175233.GA26351@sigill.intra.peff.net> <20090310220400.GA9612@pvv.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH 2/2] ls-files: fix broken --no-empty-directory
+Date: Tue, 10 Mar 2009 23:16:48 +0100
+Message-ID: <20090310221648.GB4371@genesis.frugalware.org>
+References: <20090308012049.GA18616@coredump.intra.peff.net> <20090308012722.GB18714@coredump.intra.peff.net> <20090308211312.GE4371@genesis.frugalware.org> <20090310191111.GA27662@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Finn Arne Gangstad <finnag@pvv.org>
-X-From: git-owner@vger.kernel.org Tue Mar 10 23:11:56 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="BBkx5mFZr42MYbGL"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 10 23:18:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhAAs-0005Vi-H4
-	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 23:11:46 +0100
+	id 1LhAHJ-0007tV-V4
+	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 23:18:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755798AbZCJWKQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2009 18:10:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754734AbZCJWKP
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 18:10:15 -0400
-Received: from peff.net ([208.65.91.99]:57251 "EHLO peff.net"
+	id S1755467AbZCJWQ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2009 18:16:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754920AbZCJWQ4
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 18:16:56 -0400
+Received: from virgo.iok.hu ([212.40.97.103]:49375 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753156AbZCJWKP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2009 18:10:15 -0400
-Received: (qmail 14372 invoked by uid 107); 10 Mar 2009 22:10:17 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 10 Mar 2009 18:10:17 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Mar 2009 18:10:10 -0400
+	id S1754274AbZCJWQz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2009 18:16:55 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 6C47858100;
+	Tue, 10 Mar 2009 23:16:51 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 7315A44783;
+	Tue, 10 Mar 2009 23:16:48 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id DF4DE11B80AE; Tue, 10 Mar 2009 23:16:48 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <20090310220400.GA9612@pvv.org>
+In-Reply-To: <20090310191111.GA27662@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112855>
 
-On Tue, Mar 10, 2009 at 11:04:00PM +0100, Finn Arne Gangstad wrote:
 
-> --current pushs the current branch to whatever it is tracking, no
-> matter what name it has (i.e. it can push to a branch of different
-> name). If it is not tracking anything, it will not push.
-> 
-> git push - HEAD pushes the current branch to a branch of the same name
-> on the "current remote", which defaults to origin if nothing is set up
-> for the branch.
+--BBkx5mFZr42MYbGL
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-OK, that's what I was missing. Thanks.
+On Tue, Mar 10, 2009 at 03:11:11PM -0400, Jeff King <peff@peff.net> wrote:
+> which is even still a little confusing, as you get "--empty-directory"
+> in the usage message. But you would almost never want to use that, as it
+> is already the default.
 
--Peff
+Exactly, that's why I suggested the usage of PARSE_OPT_NONEG, which
+would avoid a new no-op option. ;-)
+
+But I'm fine with the above patch as well, in case having the "no-"
+prefix in an option name is considered as an improper negation.
+
+--BBkx5mFZr42MYbGL
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkm25tAACgkQe81tAgORUJZkNwCgi2HO/kji8utqwLk+gBKTpB2v
+jTwAnjkCHinbF/6bU6RyktYambXNiq3r
+=U9F5
+-----END PGP SIGNATURE-----
+
+--BBkx5mFZr42MYbGL--
