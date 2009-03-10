@@ -1,190 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [RFH/Patch 1/2] http.c: style cleanups
-Date: Mon, 09 Mar 2009 19:19:40 -0700
-Message-ID: <7vljrece6b.fsf@gitster.siamese.dyndns.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [RFH Patch 2/2] http_init(): Fix config file parsing
+Date: Mon, 9 Mar 2009 23:05:53 -0400
+Message-ID: <76718490903092005n66bca743t67eb7f0ff830d9d7@mail.gmail.com>
+References: <7vfxhmce67.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 10 03:24:48 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 10 04:12:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgrbC-0001LZ-47
-	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 03:21:42 +0100
+	id 1LgsLy-0001Gh-LN
+	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 04:10:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753479AbZCJCTr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2009 22:19:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752185AbZCJCTr
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 22:19:47 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51711 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753479AbZCJCTq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2009 22:19:46 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 61913407B;
-	Mon,  9 Mar 2009 22:19:44 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 7ED2C407A; Mon, 
- 9 Mar 2009 22:19:42 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: EB7D685A-0D19-11DE-BEE1-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
+	id S1751182AbZCJDF4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Mar 2009 23:05:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751383AbZCJDF4
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 23:05:56 -0400
+Received: from rv-out-0506.google.com ([209.85.198.225]:13977 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750902AbZCJDFz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Mar 2009 23:05:55 -0400
+Received: by rv-out-0506.google.com with SMTP id g37so1980665rvb.1
+        for <git@vger.kernel.org>; Mon, 09 Mar 2009 20:05:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=wcSDHNmYPxRjasu90eTsuIpyMl8/kzNObCVJ2d46wAI=;
+        b=QF5nOi5xbar+B4CqLV+5HClry9jyhQHhEiHKynKrlGVcRXus992cBVJTLGCh7GarSA
+         0MCA4lHIBrD+amB6d+hzsnDm+0rxcRi4dlT++svYkiWF4H8o6aCEeR4Ddm9A5cxmTT30
+         HKZ3AAsvE0Q5NqgRpUqSnMGm9MurO4axFgpA0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Xo93+mCtwRA7gSfx6rvVqaNJCgvK0DyI1si7tvSzeJrutLs4ZvOAun7k71hDqoBnYe
+         oqaJpj+hpUZw0B5hO7Bsx4wO1i0fstbs2To/aU2WqvqqWaGQe4EfmHsnhrqa2a95RuHh
+         m3cfvCEn3qjVHj4UcyExpLVVPJV2UzuXMXr8A=
+Received: by 10.141.115.20 with SMTP id s20mr3440343rvm.255.1236654353327; 
+	Mon, 09 Mar 2009 20:05:53 -0700 (PDT)
+In-Reply-To: <7vfxhmce67.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112776>
 
-The file is littered with coding style violations; this cleans-up before I
-touch it with the next patch.
+On Mon, Mar 9, 2009 at 10:19 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> =C2=A0* This is what I need help from people who actually do use http=
+ transport
+> =C2=A0 and extra set of eyeballs to spot silly mistakes.
 
- - We do not initialize statics to NULL/0; we let BSS take care of it
-   instead.
+It looks sane to me.
 
- - Asterisk that means a pointerness comes next to variable, not type;
-   i.e. a decl looks like "type *variable", not "type* variable".
+> @@ -241,14 +221,18 @@ void http_init(struct remote *remote)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (getenv("GIT_SSL_NO_VERIFY"))
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0curl_ssl_verif=
+y =3D 0;
+>
+> - =C2=A0 =C2=A0 =C2=A0 ssl_cert =3D getenv("GIT_SSL_CERT");
+> + =C2=A0 =C2=A0 =C2=A0 if (getenv("GIT_SSL_CERT"))
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ssl_cert =3D geten=
+v("GIT_SSL_CERT");
+> =C2=A0#if LIBCURL_VERSION_NUM >=3D 0x070902
+> - =C2=A0 =C2=A0 =C2=A0 ssl_key =3D getenv("GIT_SSL_KEY");
+> + =C2=A0 =C2=A0 =C2=A0 if (getenv("GIT_SSL_KEY"))
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ssl_key =3D getenv=
+("GIT_SSL_KEY");
+> =C2=A0#endif
+> =C2=A0#if LIBCURL_VERSION_NUM >=3D 0x070908
+> - =C2=A0 =C2=A0 =C2=A0 ssl_capath =3D getenv("GIT_SSL_CAPATH");
+> + =C2=A0 =C2=A0 =C2=A0 if (getenv("GIT_SSL_CAPATH"))
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ssl_capath =3D get=
+env("GIT_SSL_CAPATH");
+> =C2=A0#endif
+> - =C2=A0 =C2=A0 =C2=A0 ssl_cainfo =3D getenv("GIT_SSL_CAINFO");
+> + =C2=A0 =C2=A0 =C2=A0 if (getenv("GIT_SSL_CAINFO"))
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ssl_cainfo =3D get=
+env("GIT_SSL_CAINFO");
 
- - A single-statement in true/false clause of an "if () ... else ...;"
-   statement comes on its own line, without curlies {} around it.
+Would these be a little cleaner with a temporary variable. e.g.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+char *value;
 
- * This is not what I am asking for help by sending the series, but the
-   next one is.
+if ((value =3D getenv("GIT_SSL_CERT")))
+    ssl_cert =3D value;
 
- http.c |   44 +++++++++++++++++++++-----------------------
- 1 files changed, 21 insertions(+), 23 deletions(-)
 
-diff --git a/http.c b/http.c
-index 56f18f1..d1ead66 100644
---- a/http.c
-+++ b/http.c
-@@ -1,7 +1,7 @@
- #include "http.h"
- 
- int data_received;
--int active_requests = 0;
-+int active_requests;
- 
- #ifdef USE_CURL_MULTI
- static int max_requests = -1;
-@@ -13,22 +13,22 @@ static CURL *curl_default;
- char curl_errorstr[CURL_ERROR_SIZE];
- 
- static int curl_ssl_verify = -1;
--static const char *ssl_cert = NULL;
-+static const char *ssl_cert;
- #if LIBCURL_VERSION_NUM >= 0x070902
--static const char *ssl_key = NULL;
-+static const char *ssl_key;
- #endif
- #if LIBCURL_VERSION_NUM >= 0x070908
--static const char *ssl_capath = NULL;
-+static const char *ssl_capath;
- #endif
--static const char *ssl_cainfo = NULL;
-+static const char *ssl_cainfo;
- static long curl_low_speed_limit = -1;
- static long curl_low_speed_time = -1;
--static int curl_ftp_no_epsv = 0;
--static const char *curl_http_proxy = NULL;
-+static int curl_ftp_no_epsv;
-+static const char *curl_http_proxy;
- 
- static struct curl_slist *pragma_header;
- 
--static struct active_request_slot *active_queue_head = NULL;
-+static struct active_request_slot *active_queue_head;
- 
- size_t fread_buffer(void *ptr, size_t eltsize, size_t nmemb, void *buffer_)
- {
-@@ -94,9 +94,8 @@ static void process_curl_messages(void)
- static int http_options(const char *var, const char *value, void *cb)
- {
- 	if (!strcmp("http.sslverify", var)) {
--		if (curl_ssl_verify == -1) {
-+		if (curl_ssl_verify == -1)
- 			curl_ssl_verify = git_config_bool(var, value);
--		}
- 		return 0;
- 	}
- 
-@@ -158,9 +157,9 @@ static int http_options(const char *var, const char *value, void *cb)
- 	return git_default_config(var, value, cb);
- }
- 
--static CURL* get_curl_handle(void)
-+static CURL *get_curl_handle(void)
- {
--	CURL* result = curl_easy_init();
-+	CURL *result = curl_easy_init();
- 
- 	if (!curl_ssl_verify) {
- 		curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, 0);
-@@ -322,15 +321,14 @@ struct active_request_slot *get_active_slot(void)
- 	/* Wait for a slot to open up if the queue is full */
- 	while (active_requests >= max_requests) {
- 		curl_multi_perform(curlm, &num_transfers);
--		if (num_transfers < active_requests) {
-+		if (num_transfers < active_requests)
- 			process_curl_messages();
--		}
- 	}
- #endif
- 
--	while (slot != NULL && slot->in_use) {
-+	while (slot != NULL && slot->in_use)
- 		slot = slot->next;
--	}
-+
- 	if (slot == NULL) {
- 		newslot = xmalloc(sizeof(*newslot));
- 		newslot->curl = NULL;
-@@ -341,9 +339,8 @@ struct active_request_slot *get_active_slot(void)
- 		if (slot == NULL) {
- 			active_queue_head = newslot;
- 		} else {
--			while (slot->next != NULL) {
-+			while (slot->next != NULL)
- 				slot = slot->next;
--			}
- 			slot->next = newslot;
- 		}
- 		slot = newslot;
-@@ -404,7 +401,7 @@ struct fill_chain {
- 	struct fill_chain *next;
- };
- 
--static struct fill_chain *fill_cfg = NULL;
-+static struct fill_chain *fill_cfg;
- 
- void add_fill_function(void *data, int (*fill)(void *))
- {
-@@ -535,9 +532,8 @@ static void finish_active_slot(struct active_request_slot *slot)
- 	}
- 
- 	/* Run callback if appropriate */
--	if (slot->callback_func != NULL) {
-+	if (slot->callback_func != NULL)
- 		slot->callback_func(slot->callback_data);
--	}
- }
- 
- void finish_all_active_slots(void)
-@@ -567,8 +563,10 @@ static inline int needs_quote(int ch)
- 
- static inline int hex(int v)
- {
--	if (v < 10) return '0' + v;
--	else return 'A' + v - 10;
-+	if (v < 10)
-+		return '0' + v;
-+	else
-+		return 'A' + v - 10;
- }
- 
- static char *quote_ref_url(const char *base, const char *ref)
--- 
-1.6.2.206.g5bda76
+j.
