@@ -1,82 +1,113 @@
-From: Jiri Olsa <olsajiri@gmail.com>
-Subject: [BUG] - git-read-tree segfaults
-Date: Tue, 10 Mar 2009 20:34:28 +0100
-Message-ID: <35476bd20903101234q71bc520fh18828d7170a4a2f5@mail.gmail.com>
+From: Tim Visher <tim.visher@gmail.com>
+Subject: Confusing `stash apply` behavior
+Date: Tue, 10 Mar 2009 15:46:00 -0400
+Message-ID: <c115fd3c0903101246n1eff50d4rc819e5fe7586a974@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 10 20:36:19 2009
+X-From: git-owner@vger.kernel.org Tue Mar 10 20:47:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lh7kA-0002Ul-8A
-	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 20:36:02 +0100
+	id 1Lh7vM-0007Km-8g
+	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 20:47:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754074AbZCJTed (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2009 15:34:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754285AbZCJTec
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 15:34:32 -0400
-Received: from ey-out-2122.google.com ([74.125.78.25]:48904 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753885AbZCJTeb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2009 15:34:31 -0400
-Received: by ey-out-2122.google.com with SMTP id 25so440878eya.37
-        for <git@vger.kernel.org>; Tue, 10 Mar 2009 12:34:28 -0700 (PDT)
+	id S1753665AbZCJTqH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2009 15:46:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753049AbZCJTqF
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 15:46:05 -0400
+Received: from yw-out-2324.google.com ([74.125.46.31]:15258 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752702AbZCJTqC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2009 15:46:02 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so196645ywh.1
+        for <git@vger.kernel.org>; Tue, 10 Mar 2009 12:46:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:date:message-id:subject
          :from:to:content-type:content-transfer-encoding;
-        bh=g9oH5Y6XAVx7c9ZqyIRvbvOFvgLNX7eTGiyeCAXslcc=;
-        b=sl1ZQ5ZcDBZ2RB4JYu9Y6cDdDy7MsZSMIngYWrUFS7pyma2wN8GQy3mQ7dWBE09RgX
-         tJGwyPFzE6zHqy/TswCYNHdSnMoviGa4kgKwhooTlRqp8bQAoTQdd0CX1/fv6AUPzKbc
-         QXQYXBWBzZkdTL5t0nnZO4DaMjGzpLYF28Z84=
+        bh=/wAFLPZYT0mZWw5Ju1aZ2TjSIGcrkiBDoI1oRppUjTQ=;
+        b=OClVsB4cOyFfoceDimCk1NQ5shy2BjyD4cOIT9aR/5iwqIia+fqHSVKNiscJUkU+t7
+         MnvN+p4MzzvwF06ux69pIr21cfQSFlwwEkVzw3ZecK+cAGRLO3hhjmDv+H73rmfMSD5u
+         0KkmAUVBbWKNLJeLoPm1y6GbVgLOy+8sm1LZE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:date:message-id:subject:from:to:content-type
          :content-transfer-encoding;
-        b=woS88ex78mQU+ZaPm9apZYElCnBDvB884RUcuDB1rOUaHPewcjy8biljnG3SgGRqyd
-         t66Oh9Js4vALSq2tQDcwcRdNZYRsErzzsfI1OsMOoJ4XB6ElPtP7Xjbc2pYSFcjWaTIh
-         ItveHoEi3sl+akG/eB6SbtxGdvThc5OWpvqgU=
-Received: by 10.210.88.3 with SMTP id l3mr4840813ebb.11.1236713668761; Tue, 10 
-	Mar 2009 12:34:28 -0700 (PDT)
+        b=LXr26DxLQq6t808AzhYBDW/cW8L6rmVatTUND2yJ4nlyURp7qfbWOsugofjEWtB5Ab
+         4Fn24Y/dQsWd32J9rEtudZ52tNQ7xLO2+q2HtgTZ94N0nP2PjmdAaVslX1v9BVOSyyqR
+         Uo44qMs/FUZiDlhlflN8+JwTRTO3Y26/oOhmM=
+Received: by 10.100.253.7 with SMTP id a7mr2004048ani.153.1236714360701; Tue, 
+	10 Mar 2009 12:46:00 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112842>
 
-Hi,
+Hello Everyone,
 
-I was following the git core tutorial and git-read-tree got me segfault.
-I accidentaly executed the git-read-tree without "-m -u" options and
-got segfault.
+I was just trying to do some experimentation with `stash` and I've run
+into a problem.
 
-I can reproduce with the latest git using following script.
+I was working on my `master` branch and decided that I wanted to
+create a `dev` branch.  I did `git stash` and then `git checkout -b
+dev`.  Then I did `git stash apply` and everything worked as expected.
+ I continued working but then realized that I wanted a `refactoring`
+branch.  In the process of continuing to work I had also cleared the
+stash stack with `git stash clear`, although this had no visible
+effect other than to remove any entries from `git stash list`.  As
+before, I did `git stash` and then `git checkout -b refactoring` and
+here lies my problem.
 
------------------------------------------------
-#!/bin/sh
+When I do `git stash apply`, it deletes the file I'm working with.
 
-GIT=$1
+    $ ls
+    featureList.txt*  keycontrol.mdb*
 
-rm -rf crash; mkdir -p crash; cd crash
-$GIT init
-echo "xxx" > xxx
-$GIT add xxx
-$GIT commit -m "xxx"
-$GIT checkout -b yyy
-echo "yyy" > yyy
-$GIT add yyy
-$GIT commit -m "yyy"
-echo "yyy1" >> yyy
-$GIT commit -a -m "yyy1"
-$GIT checkout master
-echo "xxx1" >> xxx
-$GIT commit -a -m "xxx1"
-mb=$($GIT merge-base HEAD yyy)
-$GIT read-tree $mb HEAD yyy
------------------------------------------------
+    $ git show stash@{0}
+    commit b3c0f4b9b3c3ef7741a03fb27174f5838abc939d
+    Merge: 9fb9886 112bba9
+    Author: Tim Visher <timothy.visher@fms.treas.gov>
+    Date:   Tue Mar 10 15:25:04 2009 -0400
 
-regards,
-jirka
+    WIP on dev: 9fb9886 Added DB Lock file to .gitignore. EOM
+
+    diff --cc keycontrol.mdb
+    index 68a9bac,68a9bac..0000000
+    --- a/keycontrol.mdb
+    +++ b/keycontrol.mdb
+
+    $ git stash apply
+    Removing keycontrol.mdb
+    # On branch refactoring
+    # Changed but not updated:
+    #   (use "git add/rm <file>..." to update what will be committed)
+    #   (use "git checkout -- <file>..." to discard changes in working
+directory)
+    #
+    #       deleted:    keycontrol.mdb
+    #
+    no changes added to commit (use "git add" and/or "git commit -a")
+
+Considering the output of `git show` I would expect that the contents
+of the stash are, well, what I expect them to be: a new version of
+keycontrol.mdb.
+
+I'm sure I'm missing something completely juvenile but I could really
+use some help because that stash represents about an hours worth of
+work.  Not something to totally loose sleep over but something that
+would be nicer to not have to do over.
+
+Thanks in advance for your help!
+
+-- 
+
+In Christ,
+
+Timmy V.
+
+http://burningones.com/
+http://five.sentenc.es/ - Spend less time on e-mail
