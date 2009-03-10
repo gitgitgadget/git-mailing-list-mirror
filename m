@@ -1,51 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] builtin-tag.c: remove global variable to use the
- callback data of git-config.
-Date: Tue, 10 Mar 2009 09:36:56 -0700
-Message-ID: <7vzlft8hcn.fsf@gitster.siamese.dyndns.org>
-References: <1236690219.20402.28.camel@luis-desktop>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 0/5] grep: color search patterns
+Date: Tue, 10 Mar 2009 17:38:51 +0100
+Message-ID: <49B6979B.8080900@lsrfire.ath.cx>
+References: <1236428699.6486.41.camel@ubuntu.ubuntu-domain> <fcaeb9bf0903092301i7bc6322dtbd37f662fe4b224b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, johannes.schindelin@gmx.de
-To: Carlos Rica <jasampler@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 10 17:38:37 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Thiago Alves <thiago.salves@gmail.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 10 17:40:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lh4yR-0005be-40
-	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 17:38:35 +0100
+	id 1Lh50I-0006L2-D7
+	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 17:40:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754533AbZCJQhG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2009 12:37:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753665AbZCJQhF
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 12:37:05 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:49440 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753938AbZCJQhE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2009 12:37:04 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6EA7DA0B5F;
-	Tue, 10 Mar 2009 12:37:02 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2CAAFA0B5E; Tue,
- 10 Mar 2009 12:36:57 -0400 (EDT)
-In-Reply-To: <1236690219.20402.28.camel@luis-desktop> (Carlos Rica's message
- of "Tue, 10 Mar 2009 14:03:39 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: AEF3528C-0D91-11DE-B93F-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1754635AbZCJQjA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Mar 2009 12:39:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754039AbZCJQjA
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 12:39:00 -0400
+Received: from india601.server4you.de ([85.25.151.105]:43045 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753962AbZCJQi7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2009 12:38:59 -0400
+Received: from [10.0.1.101] (p57B7FF57.dip.t-dialin.net [87.183.255.87])
+	by india601.server4you.de (Postfix) with ESMTPSA id 655712F8045;
+	Tue, 10 Mar 2009 17:38:57 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <fcaeb9bf0903092301i7bc6322dtbd37f662fe4b224b@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112832>
 
-Carlos Rica <jasampler@gmail.com> writes:
+Nguyen Thai Ngoc Duy schrieb:
+> On 3/7/09, Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> wrote:
+>> Match coloring is a major missing feature of git grep.  It makes rea=
+ding
+>>  the output much easier and brings grep onto the same visual level a=
+s the
+>>  other colorized git commands.
+>=20
+> "git --color test" did not colorize the result for me. "git --color
+> --no-ext-grep test" did. Maybe you should ignore external grep unless
+> it is explicitly requested, like in the last patch. I have very
+> limited net access these days. Let's see if I can work out something
+> for tomorrow, unless you beat me to it.
 
-> Signed-off-by: Carlos Rica <jasampler@yahoo.es>
-> ---
->
-> This way the data flow is much clearer.
+I assume with "last patch" you mean your last patch, right?  It
+automatically switched to internal grep if coloring was turned on.
 
-Good.  I think the Subject is backwards, though.
+Patch 5 of my series adds support for coloring external greps, but you
+have to explicitly specify the config option grep.color.external.  It
+can be set by distributors in the system config file -- they should kno=
+w
+which grep option is needed.
+
+But I can see that a half-colored git grep can be confusing.
+
+Ren=C3=A9
