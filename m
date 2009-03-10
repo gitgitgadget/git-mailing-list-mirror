@@ -1,95 +1,82 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] ls-files: fix broken --no-empty-directory
-Date: Tue, 10 Mar 2009 15:11:11 -0400
-Message-ID: <20090310191111.GA27662@sigill.intra.peff.net>
-References: <20090308012049.GA18616@coredump.intra.peff.net> <20090308012722.GB18714@coredump.intra.peff.net> <20090308211312.GE4371@genesis.frugalware.org>
+From: Jiri Olsa <olsajiri@gmail.com>
+Subject: [BUG] - git-read-tree segfaults
+Date: Tue, 10 Mar 2009 20:34:28 +0100
+Message-ID: <35476bd20903101234q71bc520fh18828d7170a4a2f5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Tue Mar 10 20:12:52 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 10 20:36:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lh7Nh-0001wE-R0
-	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 20:12:50 +0100
+	id 1Lh7kA-0002Ul-8A
+	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 20:36:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752625AbZCJTLP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2009 15:11:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752097AbZCJTLP
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 15:11:15 -0400
-Received: from peff.net ([208.65.91.99]:58556 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751770AbZCJTLO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2009 15:11:14 -0400
-Received: (qmail 13164 invoked by uid 107); 10 Mar 2009 19:11:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 10 Mar 2009 15:11:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Mar 2009 15:11:11 -0400
-Content-Disposition: inline
-In-Reply-To: <20090308211312.GE4371@genesis.frugalware.org>
+	id S1754074AbZCJTed (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2009 15:34:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754285AbZCJTec
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 15:34:32 -0400
+Received: from ey-out-2122.google.com ([74.125.78.25]:48904 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753885AbZCJTeb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2009 15:34:31 -0400
+Received: by ey-out-2122.google.com with SMTP id 25so440878eya.37
+        for <git@vger.kernel.org>; Tue, 10 Mar 2009 12:34:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=g9oH5Y6XAVx7c9ZqyIRvbvOFvgLNX7eTGiyeCAXslcc=;
+        b=sl1ZQ5ZcDBZ2RB4JYu9Y6cDdDy7MsZSMIngYWrUFS7pyma2wN8GQy3mQ7dWBE09RgX
+         tJGwyPFzE6zHqy/TswCYNHdSnMoviGa4kgKwhooTlRqp8bQAoTQdd0CX1/fv6AUPzKbc
+         QXQYXBWBzZkdTL5t0nnZO4DaMjGzpLYF28Z84=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=woS88ex78mQU+ZaPm9apZYElCnBDvB884RUcuDB1rOUaHPewcjy8biljnG3SgGRqyd
+         t66Oh9Js4vALSq2tQDcwcRdNZYRsErzzsfI1OsMOoJ4XB6ElPtP7Xjbc2pYSFcjWaTIh
+         ItveHoEi3sl+akG/eB6SbtxGdvThc5OWpvqgU=
+Received: by 10.210.88.3 with SMTP id l3mr4840813ebb.11.1236713668761; Tue, 10 
+	Mar 2009 12:34:28 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112841>
 
-On Sun, Mar 08, 2009 at 10:13:12PM +0100, Miklos Vajna wrote:
+Hi,
 
-> > +		OPT_BIT(0, "no-empty-directory", &dir.flags,
-> > +			"don't show empty directories",
-> >  			DIR_HIDE_EMPTY_DIRECTORIES),
-> >  		OPT_BOOLEAN('u', "unmerged", &show_unmerged,
-> >  			"show unmerged files in the output"),
-> 
-> Thanks for catching this. But then why not using PARSE_OPT_NONEG?
-> 
-> That would avoid --no-no-empty-directory.
+I was following the git core tutorial and git-read-tree got me segfault.
+I accidentaly executed the git-read-tree without "-m -u" options and
+got segfault.
 
-I think either we don't care about negation, in which case it is not
-hurting anybody to support --no-no-empty-directory, or we do, in which
-case you actually want to do the negation properly. Which would be
-something like:
+I can reproduce with the latest git using following script.
 
-diff --git a/builtin-ls-files.c b/builtin-ls-files.c
-index 437c366..2c5f7a5 100644
---- a/builtin-ls-files.c
-+++ b/builtin-ls-files.c
-@@ -427,6 +427,7 @@ static int option_parse_exclude_standard(const struct option *opt,
- int cmd_ls_files(int argc, const char **argv, const char *prefix)
- {
- 	int require_work_tree = 0, show_tag = 0;
-+	int show_empty_directories = 1;
- 	struct dir_struct dir;
- 	struct option builtin_ls_files_options[] = {
- 		{ OPTION_CALLBACK, 'z', NULL, NULL, NULL,
-@@ -454,9 +455,8 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
- 		OPT_BIT(0, "directory", &dir.flags,
- 			"show 'other' directories' name only",
- 			DIR_SHOW_OTHER_DIRECTORIES),
--		OPT_BIT(0, "no-empty-directory", &dir.flags,
--			"don't show empty directories",
--			DIR_HIDE_EMPTY_DIRECTORIES),
-+		OPT_BOOLEAN(0, "empty-directory", &show_empty_directories,
-+			"show empty directories (on by default)"),
- 		OPT_BOOLEAN('u', "unmerged", &show_unmerged,
- 			"show unmerged files in the output"),
- 		{ OPTION_CALLBACK, 'x', "exclude", &dir.exclude_list[EXC_CMDL], "pattern",
-@@ -506,6 +506,8 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
- 		show_stage = 1;
- 	if (dir.exclude_per_dir)
- 		exc_given = 1;
-+	if (!show_empty_directories)
-+		dir.flags |= DIR_HIDE_EMPTY_DIRECTORIES;
- 
- 	if (require_work_tree && !is_inside_work_tree())
- 		setup_work_tree();
+-----------------------------------------------
+#!/bin/sh
 
+GIT=$1
 
-which is even still a little confusing, as you get "--empty-directory"
-in the usage message. But you would almost never want to use that, as it
-is already the default.
+rm -rf crash; mkdir -p crash; cd crash
+$GIT init
+echo "xxx" > xxx
+$GIT add xxx
+$GIT commit -m "xxx"
+$GIT checkout -b yyy
+echo "yyy" > yyy
+$GIT add yyy
+$GIT commit -m "yyy"
+echo "yyy1" >> yyy
+$GIT commit -a -m "yyy1"
+$GIT checkout master
+echo "xxx1" >> xxx
+$GIT commit -a -m "xxx1"
+mb=$($GIT merge-base HEAD yyy)
+$GIT read-tree $mb HEAD yyy
+-----------------------------------------------
 
--Peff
+regards,
+jirka
