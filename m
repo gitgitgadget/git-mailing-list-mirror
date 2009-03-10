@@ -1,58 +1,69 @@
-From: "Marcel M. Cary" <marcel@oak.homeunix.org>
-Subject: Re: Remove leading/trailing whitespace from commit messages when
- importing from Subversion?
-Date: Mon, 09 Mar 2009 22:38:27 -0700
-Message-ID: <49B5FCD3.8060707@oak.homeunix.org>
-References: <49B5DB01.8080206@gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 0/5] grep: color search patterns
+Date: Tue, 10 Mar 2009 17:01:24 +1100
+Message-ID: <fcaeb9bf0903092301i7bc6322dtbd37f662fe4b224b@mail.gmail.com>
+References: <1236428699.6486.41.camel@ubuntu.ubuntu-domain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Mike Swanson <mikeonthecomputer@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 10 06:40:50 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Thiago Alves <thiago.salves@gmail.com>
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Tue Mar 10 07:02:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lguhq-0003on-GM
-	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 06:40:46 +0100
+	id 1Lgv3I-0008GL-2l
+	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 07:02:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753415AbZCJFil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2009 01:38:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752919AbZCJFil
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 01:38:41 -0400
-Received: from smtp119.sbc.mail.sp1.yahoo.com ([69.147.64.92]:39995 "HELO
-	smtp119.sbc.mail.sp1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752880AbZCJFik (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Mar 2009 01:38:40 -0400
-Received: (qmail 65987 invoked from network); 10 Mar 2009 05:38:38 -0000
-Received: from unknown (HELO ordinateur.home.org) (marcel@75.61.101.228 with plain)
-  by smtp119.sbc.mail.sp1.yahoo.com with SMTP; 10 Mar 2009 05:38:37 -0000
-X-YMail-OSG: J4TLQPcVM1nK.bmNX3QD.a7EnYyNsN.FAoIFavL8pHLbur3q9YXkeUZPNy_JhExIuf2WXLqbDRNW_K2q2qrqLwQf.O4YARUrLMWOvuAjLvCaDxcYJyHoWiHvgiAUXXvsJRbm0Yrd0pjbnUZz84hC_Rlu
-X-Yahoo-Newman-Property: ymail-3
-Received: from polliwog.home.org ([192.168.0.18])
-	by ordinateur.home.org with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <marcel@oak.homeunix.org>)
-	id 1Lgufk-0007y6-Cs; Mon, 09 Mar 2009 22:38:36 -0700
-User-Agent: Thunderbird 2.0.0.6 (X11/20070801)
-In-Reply-To: <49B5DB01.8080206@gmail.com>
-X-Enigmail-Version: 0.95.3
+	id S1752871AbZCJGB1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Mar 2009 02:01:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752057AbZCJGB1
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 02:01:27 -0400
+Received: from wf-out-1314.google.com ([209.85.200.168]:2961 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751995AbZCJGB0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Mar 2009 02:01:26 -0400
+Received: by wf-out-1314.google.com with SMTP id 28so2409661wfa.4
+        for <git@vger.kernel.org>; Mon, 09 Mar 2009 23:01:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=GXQkYECezK83C6BgqIW7LJaWvC9V5C4WahZCbE/plmM=;
+        b=hASgujziMgxCefu/2vHtjaI2br7ypt4zay4vJgZKAx7GbnONFRC8/ZWfXHnvSamnAc
+         ZhoQhFuZFCrgyRGyNAu99iu36XlnEIZuPZ38WxeHO7ep3G4DhV0ajKx7tRuU+3eo4fg1
+         m2oW1VhWBHWFlFdm7oNHmafM1z+m7Ioq0pDWU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=A4VOtpwgynxG6oE1tltD6cihaH6TfbNTp7vEso2D+GPGCUX6bqg0CMGJpAqW9CwO95
+         eIpx7OiAzaf0oypM247B9XBbGOBiAxTR/Hh5H6hI4iy6QpE3YFa8ZWG/3CSanprGOqU3
+         9EUpBHNSwRIILOwDGraZMdOLs21rzvvWoZxaY=
+Received: by 10.142.241.10 with SMTP id o10mr2921563wfh.119.1236664884975; 
+	Mon, 09 Mar 2009 23:01:24 -0700 (PDT)
+In-Reply-To: <1236428699.6486.41.camel@ubuntu.ubuntu-domain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112780>
 
-Mike Swanson wrote:
-> I was wondering if it's possible to removing leading and trailing
-> whitespace (tabs, newlines, spaces) from commit messages when importing
-> from Subversion via git-svn.
-> 
-> I've got a repository with tens of thousands of commits, and not all of
-> the messages are entered... sanely.  I need to know whether it is
-> possible to clean these up when transfering the repository to Git.
+On 3/7/09, Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> wrote:
+> Match coloring is a major missing feature of git grep.  It makes read=
+ing
+>  the output much easier and brings grep onto the same visual level as=
+ the
+>  other colorized git commands.
 
-Try "git filter-branch --msg-filter your-filter-command".
-
-Marcel
+"git --color test" did not colorize the result for me. "git --color
+--no-ext-grep test" did. Maybe you should ignore external grep unless
+it is explicitly requested, like in the last patch. I have very
+limited net access these days. Let's see if I can work out something
+for tomorrow, unless you beat me to it.
+--=20
+Duy
