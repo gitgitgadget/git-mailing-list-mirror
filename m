@@ -1,65 +1,98 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] builtin-tag.c: remove global variable to use the callback
- data of git-config.
-Date: Tue, 10 Mar 2009 14:34:20 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903101432010.14295@intel-tinevez-2-302>
+From: Carlos Rica <jasampler@gmail.com>
+Subject: Re: [PATCH] builtin-tag.c: remove global variable to use the callback 
+	data of git-config.
+Date: Tue, 10 Mar 2009 15:00:55 +0100
+Message-ID: <1b46aba20903100700ob46a797lcf600e0ae868a35f@mail.gmail.com>
 References: <1236690219.20402.28.camel@luis-desktop>
+	 <alpine.DEB.1.00.0903101432010.14295@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, gitster@pobox.com
-To: Carlos Rica <jasampler@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 10 14:36:59 2009
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 10 15:03:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lh28K-0001Pu-Kp
-	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 14:36:37 +0100
+	id 1Lh2XN-0002L8-Im
+	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 15:02:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754681AbZCJNeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2009 09:34:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753268AbZCJNeZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 09:34:25 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52930 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753853AbZCJNeY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2009 09:34:24 -0400
-Received: (qmail invoked by alias); 10 Mar 2009 13:34:20 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp047) with SMTP; 10 Mar 2009 14:34:20 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19+VYwt61R+pVmOvJEVwJ4Dogr/ogkn5YVPFU9r+w
-	YUR3G+Q8hAUUjH
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <1236690219.20402.28.camel@luis-desktop>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1754435AbZCJOBA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Mar 2009 10:01:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753863AbZCJOA7
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 10:00:59 -0400
+Received: from mail-fx0-f176.google.com ([209.85.220.176]:62039 "EHLO
+	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754248AbZCJOA7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Mar 2009 10:00:59 -0400
+Received: by fxm24 with SMTP id 24so1628618fxm.37
+        for <git@vger.kernel.org>; Tue, 10 Mar 2009 07:00:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=HxRXPhJ3q2RRuB3KGUHww1gR+fq/PZXUQ+bHq/B7qZc=;
+        b=sdDPFln4Q6gWprEZ+kFG8KooiQ+foaE6wPBsocpaUjPQwznKj7/FDFuPfocK866Zm/
+         2hxjoF5aplvie0SCcvLX/szd7YNJiMhGiFPBlwULCP9ksJsqzspascjWlGVleKnfP1RT
+         +k5O2sH07FBUTjXMVjMMMl5hFOQWa/glWNqHw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=sae0uEVYZcj3vta92pDHomzQiYvRqezQWEK5kNsVC3m5nLabTJ8HQblDvmgvFJvCvB
+         amgA58z7Ou4hnoSmla9gtqsusbhQ9VEDpbHNni9jpdj0byGuU7pzNTPpqvdL+HkGl/dR
+         /T0T+fnhgvAeNsUsWP2pHyr6y+uGzZwAGwUQo=
+Received: by 10.223.117.1 with SMTP id o1mr5411266faq.53.1236693656026; Tue, 
+	10 Mar 2009 07:00:56 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0903101432010.14295@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112815>
 
-Hi,
+Please, don't even try to apply this patch, since long lines are wrappe=
+d.
 
-On Tue, 10 Mar 2009, Carlos Rica wrote:
+I will send it fixed, sorry by the inconvenience.
 
-> 
-> Signed-off-by: Carlos Rica <jasampler@yahoo.es>
+On Tue, Mar 10, 2009 at 2:34 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Tue, 10 Mar 2009, Carlos Rica wrote:
+>
+>>
+>> Signed-off-by: Carlos Rica <jasampler@yahoo.es>
+>
+> Good to see you again!
 
-Good to see you again!
+Thanks!
+>
+> BTW do you want to be recorded with a different email address in the
+> author line than in the S-O-B?
 
-BTW do you want to be recorded with a different email address in the 
-author line than in the S-O-B?
+Thank you for notify it, Johannes! That's was another mistake here,
+I wanted to use the gmail account for this, I will change it when I
+send this fixed.
 
-> -static int do_sign(struct strbuf *buffer)
-> +struct char_array {
-> +	char *buf;
-> +	size_t size;
-> +};
+>> -static int do_sign(struct strbuf *buffer)
+>> +struct char_array {
+>> + =A0 =A0 char *buf;
+>> + =A0 =A0 size_t size;
+>> +};
+>
+> That looks very much like you want a struct strbuf, no?
 
-That looks very much like you want a struct strbuf, no?
+I was asking exactly that, in the hidden lines of the patch,
+so if everybody prefers the strbuf solution I will use it, and then,
+we should choose if there must be a limit for the signing key id max le=
+ngth
+(now 1000) since by using dynamic memory it would not be required.
 
-Ciao,
-Dscho
+> Ciao,
+> Dscho
+>
+>
