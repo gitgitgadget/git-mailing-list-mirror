@@ -1,198 +1,190 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [RFH Patch 2/2] http_init(): Fix config file parsing
-Date: Mon, 09 Mar 2009 19:19:44 -0700
-Message-ID: <7vfxhmce67.fsf@gitster.siamese.dyndns.org>
+Subject: [RFH/Patch 1/2] http.c: style cleanups
+Date: Mon, 09 Mar 2009 19:19:40 -0700
+Message-ID: <7vljrece6b.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 10 03:22:18 2009
+X-From: git-owner@vger.kernel.org Tue Mar 10 03:24:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgrbC-0001LZ-Q2
-	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 03:21:43 +0100
+	id 1LgrbC-0001LZ-47
+	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 03:21:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753631AbZCJCTv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2009 22:19:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753567AbZCJCTv
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 22:19:51 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51721 "EHLO
+	id S1753479AbZCJCTr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2009 22:19:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752185AbZCJCTr
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 22:19:47 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51711 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753621AbZCJCTt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2009 22:19:49 -0400
+	with ESMTP id S1753479AbZCJCTq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2009 22:19:46 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 46971407E;
-	Mon,  9 Mar 2009 22:19:48 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 61913407B;
+	Mon,  9 Mar 2009 22:19:44 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 79311407D; Mon, 
- 9 Mar 2009 22:19:46 -0400 (EDT)
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 7ED2C407A; Mon, 
+ 9 Mar 2009 22:19:42 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: EDCEFAC4-0D19-11DE-A64C-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: EB7D685A-0D19-11DE-BEE1-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112775>
 
-We honor the command line options, environment variables, variables in
-repository configuration file, variables in user's global configuration
-file, variables in the system configuration file, and then finally use
-built-in default.  To implement this semantics, the code should:
+The file is littered with coding style violations; this cleans-up before I
+touch it with the next patch.
 
- - start from built-in default values;
+ - We do not initialize statics to NULL/0; we let BSS take care of it
+   instead.
 
- - call git_config() with the configuration parser callback, which
-   implements "later definition overrides earlier ones" logic
-   (git_config() reads the system's, user's and then repository's
-   configuration file in this order);
+ - Asterisk that means a pointerness comes next to variable, not type;
+   i.e. a decl looks like "type *variable", not "type* variable".
 
- - override the result from the above with environment variables if set;
-
- - override the result from the above with command line options.
-
-The initialization code http_init() for http transfer got this wrong, and
-implemented a "first one wins, ignoring the later ones" in http_options(),
-to compensate this mistake, read environment variables before calling
-git_config().  This is all wrong.
-
-As a second class citizen, the http codepath hasn't been audited as
-closely as other parts of the system, but we should try to bring sanity to
-the existing codebase before inviting contributors to improve on it.
+ - A single-statement in true/false clause of an "if () ... else ...;"
+   statement comes on its own line, without curlies {} around it.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
 
- * This is what I need help from people who actually do use http transport
-   and extra set of eyeballs to spot silly mistakes.
+ * This is not what I am asking for help by sending the series, but the
+   next one is.
 
- http.c |   66 +++++++++++++++++++++++----------------------------------------
- 1 files changed, 24 insertions(+), 42 deletions(-)
+ http.c |   44 +++++++++++++++++++++-----------------------
+ 1 files changed, 21 insertions(+), 23 deletions(-)
 
 diff --git a/http.c b/http.c
-index d1ead66..f4f0bf6 100644
+index 56f18f1..d1ead66 100644
 --- a/http.c
 +++ b/http.c
-@@ -94,52 +94,33 @@ static void process_curl_messages(void)
+@@ -1,7 +1,7 @@
+ #include "http.h"
+ 
+ int data_received;
+-int active_requests = 0;
++int active_requests;
+ 
+ #ifdef USE_CURL_MULTI
+ static int max_requests = -1;
+@@ -13,22 +13,22 @@ static CURL *curl_default;
+ char curl_errorstr[CURL_ERROR_SIZE];
+ 
+ static int curl_ssl_verify = -1;
+-static const char *ssl_cert = NULL;
++static const char *ssl_cert;
+ #if LIBCURL_VERSION_NUM >= 0x070902
+-static const char *ssl_key = NULL;
++static const char *ssl_key;
+ #endif
+ #if LIBCURL_VERSION_NUM >= 0x070908
+-static const char *ssl_capath = NULL;
++static const char *ssl_capath;
+ #endif
+-static const char *ssl_cainfo = NULL;
++static const char *ssl_cainfo;
+ static long curl_low_speed_limit = -1;
+ static long curl_low_speed_time = -1;
+-static int curl_ftp_no_epsv = 0;
+-static const char *curl_http_proxy = NULL;
++static int curl_ftp_no_epsv;
++static const char *curl_http_proxy;
+ 
+ static struct curl_slist *pragma_header;
+ 
+-static struct active_request_slot *active_queue_head = NULL;
++static struct active_request_slot *active_queue_head;
+ 
+ size_t fread_buffer(void *ptr, size_t eltsize, size_t nmemb, void *buffer_)
+ {
+@@ -94,9 +94,8 @@ static void process_curl_messages(void)
  static int http_options(const char *var, const char *value, void *cb)
  {
  	if (!strcmp("http.sslverify", var)) {
--		if (curl_ssl_verify == -1)
--			curl_ssl_verify = git_config_bool(var, value);
--		return 0;
--	}
--
--	if (!strcmp("http.sslcert", var)) {
--		if (ssl_cert == NULL)
--			return git_config_string(&ssl_cert, var, value);
-+		curl_ssl_verify = git_config_bool(var, value);
- 		return 0;
- 	}
-+	if (!strcmp("http.sslcert", var))
-+		return git_config_string(&ssl_cert, var, value);
- #if LIBCURL_VERSION_NUM >= 0x070902
--	if (!strcmp("http.sslkey", var)) {
--		if (ssl_key == NULL)
--			return git_config_string(&ssl_key, var, value);
--		return 0;
--	}
-+	if (!strcmp("http.sslkey", var))
-+		return git_config_string(&ssl_key, var, value);
- #endif
- #if LIBCURL_VERSION_NUM >= 0x070908
--	if (!strcmp("http.sslcapath", var)) {
--		if (ssl_capath == NULL)
--			return git_config_string(&ssl_capath, var, value);
--		return 0;
--	}
-+	if (!strcmp("http.sslcapath", var))
-+		return git_config_string(&ssl_capath, var, value);
- #endif
--	if (!strcmp("http.sslcainfo", var)) {
--		if (ssl_cainfo == NULL)
--			return git_config_string(&ssl_cainfo, var, value);
--		return 0;
--	}
--
-+	if (!strcmp("http.sslcainfo", var))
-+		return git_config_string(&ssl_cainfo, var, value);
- #ifdef USE_CURL_MULTI
- 	if (!strcmp("http.maxrequests", var)) {
--		if (max_requests == -1)
--			max_requests = git_config_int(var, value);
-+		max_requests = git_config_int(var, value);
- 		return 0;
- 	}
- #endif
--
- 	if (!strcmp("http.lowspeedlimit", var)) {
--		if (curl_low_speed_limit == -1)
--			curl_low_speed_limit = (long)git_config_int(var, value);
-+		curl_low_speed_limit = (long)git_config_int(var, value);
- 		return 0;
- 	}
- 	if (!strcmp("http.lowspeedtime", var)) {
--		if (curl_low_speed_time == -1)
--			curl_low_speed_time = (long)git_config_int(var, value);
-+		curl_low_speed_time = (long)git_config_int(var, value);
+-		if (curl_ssl_verify == -1) {
++		if (curl_ssl_verify == -1)
+ 			curl_ssl_verify = git_config_bool(var, value);
+-		}
  		return 0;
  	}
  
-@@ -147,11 +128,8 @@ static int http_options(const char *var, const char *value, void *cb)
- 		curl_ftp_no_epsv = git_config_bool(var, value);
- 		return 0;
- 	}
--	if (!strcmp("http.proxy", var)) {
--		if (curl_http_proxy == NULL)
--			return git_config_string(&curl_http_proxy, var, value);
--		return 0;
--	}
-+	if (!strcmp("http.proxy", var))
-+		return git_config_string(&curl_http_proxy, var, value);
- 
- 	/* Fall back on the default ones */
+@@ -158,9 +157,9 @@ static int http_options(const char *var, const char *value, void *cb)
  	return git_default_config(var, value, cb);
-@@ -217,6 +195,8 @@ void http_init(struct remote *remote)
- 	char *low_speed_limit;
- 	char *low_speed_time;
+ }
  
-+	git_config(http_options, NULL);
+-static CURL* get_curl_handle(void)
++static CURL *get_curl_handle(void)
+ {
+-	CURL* result = curl_easy_init();
++	CURL *result = curl_easy_init();
+ 
+ 	if (!curl_ssl_verify) {
+ 		curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, 0);
+@@ -322,15 +321,14 @@ struct active_request_slot *get_active_slot(void)
+ 	/* Wait for a slot to open up if the queue is full */
+ 	while (active_requests >= max_requests) {
+ 		curl_multi_perform(curlm, &num_transfers);
+-		if (num_transfers < active_requests) {
++		if (num_transfers < active_requests)
+ 			process_curl_messages();
+-		}
+ 	}
+ #endif
+ 
+-	while (slot != NULL && slot->in_use) {
++	while (slot != NULL && slot->in_use)
+ 		slot = slot->next;
+-	}
 +
- 	curl_global_init(CURL_GLOBAL_ALL);
+ 	if (slot == NULL) {
+ 		newslot = xmalloc(sizeof(*newslot));
+ 		newslot->curl = NULL;
+@@ -341,9 +339,8 @@ struct active_request_slot *get_active_slot(void)
+ 		if (slot == NULL) {
+ 			active_queue_head = newslot;
+ 		} else {
+-			while (slot->next != NULL) {
++			while (slot->next != NULL)
+ 				slot = slot->next;
+-			}
+ 			slot->next = newslot;
+ 		}
+ 		slot = newslot;
+@@ -404,7 +401,7 @@ struct fill_chain {
+ 	struct fill_chain *next;
+ };
  
- 	if (remote && remote->http_proxy)
-@@ -241,14 +221,18 @@ void http_init(struct remote *remote)
- 	if (getenv("GIT_SSL_NO_VERIFY"))
- 		curl_ssl_verify = 0;
+-static struct fill_chain *fill_cfg = NULL;
++static struct fill_chain *fill_cfg;
  
--	ssl_cert = getenv("GIT_SSL_CERT");
-+	if (getenv("GIT_SSL_CERT"))
-+		ssl_cert = getenv("GIT_SSL_CERT");
- #if LIBCURL_VERSION_NUM >= 0x070902
--	ssl_key = getenv("GIT_SSL_KEY");
-+	if (getenv("GIT_SSL_KEY"))
-+		ssl_key = getenv("GIT_SSL_KEY");
- #endif
- #if LIBCURL_VERSION_NUM >= 0x070908
--	ssl_capath = getenv("GIT_SSL_CAPATH");
-+	if (getenv("GIT_SSL_CAPATH"))
-+		ssl_capath = getenv("GIT_SSL_CAPATH");
- #endif
--	ssl_cainfo = getenv("GIT_SSL_CAINFO");
-+	if (getenv("GIT_SSL_CAINFO"))
-+		ssl_cainfo = getenv("GIT_SSL_CAINFO");
+ void add_fill_function(void *data, int (*fill)(void *))
+ {
+@@ -535,9 +532,8 @@ static void finish_active_slot(struct active_request_slot *slot)
+ 	}
  
- 	low_speed_limit = getenv("GIT_HTTP_LOW_SPEED_LIMIT");
- 	if (low_speed_limit != NULL)
-@@ -257,8 +241,6 @@ void http_init(struct remote *remote)
- 	if (low_speed_time != NULL)
- 		curl_low_speed_time = strtol(low_speed_time, NULL, 10);
+ 	/* Run callback if appropriate */
+-	if (slot->callback_func != NULL) {
++	if (slot->callback_func != NULL)
+ 		slot->callback_func(slot->callback_data);
+-	}
+ }
  
--	git_config(http_options, NULL);
--
- 	if (curl_ssl_verify == -1)
- 		curl_ssl_verify = 1;
+ void finish_all_active_slots(void)
+@@ -567,8 +563,10 @@ static inline int needs_quote(int ch)
  
+ static inline int hex(int v)
+ {
+-	if (v < 10) return '0' + v;
+-	else return 'A' + v - 10;
++	if (v < 10)
++		return '0' + v;
++	else
++		return 'A' + v - 10;
+ }
+ 
+ static char *quote_ref_url(const char *base, const char *ref)
 -- 
 1.6.2.206.g5bda76
