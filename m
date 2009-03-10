@@ -1,114 +1,235 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] git push usability improvements and default change
-Date: Mon, 09 Mar 2009 17:07:08 -0700
-Message-ID: <7vfxhmdyvn.fsf@gitster.siamese.dyndns.org>
-References: <1236638151-6465-1-git-send-email-finnag@pvv.org>
+From: Mike Gaffney <mr.gaffo@gmail.com>
+Subject: [PATCH][v2] http authentication via prompts (with correct line lengths)
+Date: Mon, 09 Mar 2009 19:08:07 -0500
+Message-ID: <49B5AF67.6050508@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Finn Arne Gangstad <finnag@pvv.org>
-X-From: git-owner@vger.kernel.org Tue Mar 10 01:08:58 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 10 01:09:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgpWh-00023d-9l
-	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 01:08:55 +0100
+	id 1LgpXO-0002JX-Fc
+	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 01:09:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752154AbZCJAHU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Mar 2009 20:07:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751615AbZCJAHT
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 20:07:19 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:61605 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751271AbZCJAHS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2009 20:07:18 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9A71DA0C64;
-	Mon,  9 Mar 2009 20:07:13 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 733A7A0C63; Mon,
-  9 Mar 2009 20:07:10 -0400 (EDT)
-In-Reply-To: <1236638151-6465-1-git-send-email-finnag@pvv.org> (Finn Arne
- Gangstad's message of "Mon, 9 Mar 2009 23:35:44 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 68744A58-0D07-11DE-BFA3-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1752524AbZCJAID (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2009 20:08:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752370AbZCJAIB
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 20:08:01 -0400
+Received: from 9a.26.1243.static.theplanet.com ([67.18.38.154]:38506 "EHLO
+	rubble.crucialcrossbar.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752194AbZCJAIA (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Mar 2009 20:08:00 -0400
+Received: from nat.asynchrony.com ([66.236.120.131] helo=[192.168.11.131])
+	by rubble.crucialcrossbar.com with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(envelope-from <mr.gaffo@gmail.com>)
+	id 1LgpVi-00047m-E5
+	for git@vger.kernel.org; Mon, 09 Mar 2009 18:07:54 -0600
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - rubble.crucialcrossbar.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - gmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112765>
 
-Finn Arne Gangstad <finnag@pvv.org> writes:
+Currently git over http only works with a .netrc file which required
+that you store your password on the file system in plaintext. This
+commit adds to configuration options for http for a username and an
+optional password. If a http.username is set, then the .netrc file
+is ignored and the username is used instead. If a http.password is
+set, then that is used as well, otherwise the user is prompted for
+their password.
 
-> "-" is now an alias for the current remote (the remote of the current
-> branch or "origin" as a fallback). This works both for push, fetch,
-> pull, remote (and possibly some others), creating a lot of nice
-> shortcuts I think:
-> git remote prune - : prune the current remote
-> git push - HEAD : push the current branch to a branch of the same name
-> git fetch - next : fetch the next branch from the current remote
->
-> git push has learned two new command line options --matching and
-> --current, which override any configuration.  'matching' pushes all
-> branches that already exist at the remote, while 'current' pushes the
-> current branch to whatever it is tracking
->
-> I chose this behaviour for 'current', since it is the one that I find
-> most useful, and there seems to be no good way of expressing it from
-> the command line.  Pushing a branch to an identically named branch on
-> a remote can now easily be done by "git push - HEAD".
->
-> Also added a new configuration option push.default, which can have values
-> "nothing", "matching" and "current". This variable will only be used if
-> you have not specificed any refspecs at all, no command line options imply
-> any refspecs, and the current branch has no push configuration.
->
-> This is implemented in 1-3
+With the old .netrc working, this patch provides backwards
+compatibility while adding a more secure option for users whose
+http password may be sensitive (such as if its a domain controller
+password) and do not wish to have it on the filesystem.
 
-I think the last four are more or less sane, but I am not sure about the
-first three, which makes it very unfortunate that the former depends on
-the latter.
+Signed-off-by: Mike Gaffney <mike@uberu.com>
+---
+ Documentation/config.txt                           |    7 +++
+ Documentation/howto/setup-git-server-over-http.txt |   38 ++++++++++++++++--
+ http.c                                             |   41 ++++++++++++++++++-
+ http.h                                             |    2 +
+ 4 files changed, 81 insertions(+), 7 deletions(-)
 
-Some design issues and questions regarding the first three; not all of
-them are objections:
-
- * Do we use a short-hand for "the default thing" anywhere else in the
-   current UI (not just "git push" but in the "git" command set)?
-
-   - If the answer to the above question is "yes", does it use '-' as the
-     short-hand too?  In other words, is this new short-hand consistent
-     with it, or is it introducing "git-push uses '-' as the short-hand
-     for the default, while git-frotz uses something else" confusion?
-
-   - Even if the answer to the above question is "no", are there other
-     commands that we currently do not allow a quick shorthand to mean
-     "the default thing", but would benefit from having one?  If so, how
-     good does it look to use '-' as such a short-hand?
-
-     In other words, is it safe to establish a precedent to use '-' to
-     denote "the default thing"?  Would we later regret, saying that
-     "'git-frotz command would benefit from a short-hand notation for 'the
-     default thing', but - is already taken -- it means send the output to
-     the stdout"?
-
-   - Do we use a short-hand '-' to mean something entirely different in
-     the UI, making this new use of '-' to mean the default confusing?
-
-     I think '-' for checkout means "the previous one", which already
-     answers this question somewhat.
-
- * What's the point of having --matching option, when you can already say
-   ':', i.e.
-
-	$ git push origin :
-
- * What's the point of having --current option, when you can already say
-   HEAD, i.e.
-
-	$ git push origin HEAD
-
- * Is push.default still necessary if we had "remote.*.push" (where '*' is
-   literally an "asterisk") that is used as a fall-back default when there
-   is no "remote.<name>.push" for the remote we are about to push to?
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index f5152c5..821bf48 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -920,6 +920,13 @@ help.autocorrect::
+ 	value is 0 - the command will be just shown but not executed.
+ 	This is the default.
+ 
++http.username, http.password:
++    The username and password for http authentication. http.username is
++    required, http.password is optional. If supplied, the .netrc file will
++    be ignored. If a password is not supplied, git will prompt for it.
++    Be careful when configuring a password as it will be stored in plain text
++    on the filesystem.
++
+ http.proxy::
+ 	Override the HTTP proxy, normally configured using the 'http_proxy'
+ 	environment variable (see linkgit:curl[1]).  This can be overridden
+diff --git a/Documentation/howto/setup-git-server-over-http.txt b/Documentation/howto/setup-git-server-over-http.txt
+index 622ee5c..462a9d4 100644
+--- a/Documentation/howto/setup-git-server-over-http.txt
++++ b/Documentation/howto/setup-git-server-over-http.txt
+@@ -189,8 +189,19 @@ Make sure that you have HTTP support, i.e. your git was built with
+ libcurl (version more recent than 7.10). The command 'git http-push' with
+ no argument should display a usage message.
+ 
+-Then, add the following to your $HOME/.netrc (you can do without, but will be
+-asked to input your password a _lot_ of times):
++There are 2 ways to authenticate with git http, netrc and via the git config.
++The netrc option requires that you put the username and password for the connection
++in $HOME/.netrc. The configuration method allows you to specify a username and
++optionally a password. If the password is not supplied then git will prompt you
++for the password. The downside to the netrc method is that you must have your
++username and password in plaintext on the filesystem, albeit in a protected file.
++If the username/password combo is a sensitive one, you may wish to use the
++git config method. The downside of the config method is that you will be prompted
++for your password every time you push or pull to the remote repository.
++
++Using netrc:
++
++Using your favourite ext editor, add the following to your $HOME/.netrc:
+ 
+     machine <servername>
+     login <username>
+@@ -204,7 +215,7 @@ instead of the server name.
+ 
+ To check whether all is OK, do:
+ 
+-   curl --netrc --location -v http://<username>@<servername>/my-new-repo.git/HEAD
++   curl --netrc --location -v http://<servername>/my-new-repo.git/HEAD
+ 
+ ...this should give something like 'ref: refs/heads/master', which is
+ the content of the file HEAD on the server.
+@@ -213,12 +224,31 @@ Now, add the remote in your existing repository which contains the project
+ you want to export:
+ 
+    $ git-config remote.upload.url \
+-       http://<username>@<servername>/my-new-repo.git/
++       http://<servername>/my-new-repo.git/
+ 
+ It is important to put the last '/'; Without it, the server will send
+ a redirect which git-http-push does not (yet) understand, and git-http-push
+ will repeat the request infinitely.
+ 
++Using git config:
++
++curl --user <username>:<password> --location -v http://<servername>/my-new-repo.git/HEAD
++
++...this should give something like 'ref: refs/heads/master', which is
++the content of the file HEAD on the server.
++
++Now, add the remote in your existing repository which contains the project
++you want to export:
++
++   $ git-config remote.upload.url \
++       http://<servername>/my-new-repo.git/
++
++Also, add in your username with:
++   $ git-config http.username <username>
++
++And optionally your password (you will be prompted for it if you do not):
++   $ git-config http.password <password>
++
+ 
+ Step 4: make the initial push
+ -----------------------------
+diff --git a/http.c b/http.c
+index ee58799..348b9fb 100644
+--- a/http.c
++++ b/http.c
+@@ -26,6 +26,9 @@ static long curl_low_speed_time = -1;
+ static int curl_ftp_no_epsv = 0;
+ static const char *curl_http_proxy = NULL;
+ 
++static const char *curl_http_username = NULL;
++static const char *curl_http_password = NULL;
++
+ static struct curl_slist *pragma_header;
+ 
+ static struct active_request_slot *active_queue_head = NULL;
+@@ -153,11 +156,45 @@ static int http_options(const char *var, const char *value, void *cb)
+ 			return git_config_string(&curl_http_proxy, var, value);
+ 		return 0;
+ 	}
++	if (!strcmp("http.username", var)) {
++		if (curl_http_username == NULL)
++		{
++			return git_config_string(&curl_http_username, var, value);
++		}
++		return 0;
++	}
++	if (!strcmp("http.password", var)) {
++		if (curl_http_password == NULL)
++		{
++			return git_config_string(&curl_http_password, var, value);
++		}
++		return 0;
++	}
+ 
+ 	/* Fall back on the default ones */
+ 	return git_default_config(var, value, cb);
+ }
+ 
++static void init_curl_http_auth(CURL* result){
++#if LIBCURL_VERSION_NUM >= 0x070907
++        struct strbuf userpass;
++        strbuf_init(&userpass, 0);
++        if (curl_http_username != NULL) {
++                strbuf_addstr(&userpass, curl_http_username);
++		strbuf_addstr(&userpass, ":");
++		if (curl_http_password != NULL) {
++			strbuf_addstr(&userpass, curl_http_password);
++		} else {
++			strbuf_addstr(&userpass, getpass("Password: "));
++		}
++		curl_easy_setopt(result, CURLOPT_USERPWD, userpass.buf);
++		curl_easy_setopt(result, CURLOPT_NETRC, CURL_NETRC_IGNORED);
++        } else {
++		curl_easy_setopt(result, CURLOPT_NETRC, CURL_NETRC_OPTIONAL);
++        }
++#endif
++}
++
+ static CURL* get_curl_handle(void)
+ {
+ 	CURL* result = curl_easy_init();
+@@ -172,9 +209,7 @@ static CURL* get_curl_handle(void)
+ 		curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, 2);
+ 	}
+ 
+-#if LIBCURL_VERSION_NUM >= 0x070907
+-	curl_easy_setopt(result, CURLOPT_NETRC, CURL_NETRC_OPTIONAL);
+-#endif
++        init_curl_http_auth(result);
+ 
+ 	if (ssl_cert != NULL)
+ 		curl_easy_setopt(result, CURLOPT_SSLCERT, ssl_cert);
+diff --git a/http.h b/http.h
+index 905b462..71320d1 100644
+--- a/http.h
++++ b/http.h
+@@ -5,6 +5,8 @@
+ 
+ #include <curl/curl.h>
+ #include <curl/easy.h>
++#include <termios.h>
++#include <stdio.h>
+ 
+ #include "strbuf.h"
+ #include "remote.h"
+-- 
+1.6.1.2
