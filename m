@@ -1,151 +1,77 @@
-From: pi song <pi.songs@gmail.com>
-Subject: Re: [PATCH 1/2] grep Added --blame so that grep can show result 
-	tagged with blame entries
-Date: Tue, 10 Mar 2009 22:29:49 +1100
-Message-ID: <1b29507a0903100429v5b4a66d7sa9e3b32010fae2e0@mail.gmail.com>
-References: <49B51791.4030801@gmail.com>
-	 <7v7i2xaewh.fsf@gitster.siamese.dyndns.org>
-Reply-To: pi.songs@gmail.com
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] winansi: support ESC [ K (erase in line)
+Date: Tue, 10 Mar 2009 12:31:44 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903101231240.14295@intel-tinevez-2-302>
+References: <cover.1236639280u.git.johannes.schindelin@gmx.de> <e2b19f6c7c50e5b0a652c40b0d8e4947134ed669.1236639280u.git.johannes.schindelin@gmx.de> <49B61377.90103@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: gitster@pobox.com, git@vger.kernel.org, rene.scharfe@lsrfire.ath.cx
-X-From: git-owner@vger.kernel.org Tue Mar 10 12:31:23 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Peter Harris <git@peter.is-a-geek.org>,
+	Sebastian Schuberth <sschuberth@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Mar 10 12:33:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lh0B8-000431-Mk
-	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 12:31:23 +0100
+	id 1Lh0D2-0004ZC-ED
+	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 12:33:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754356AbZCJL3v convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Mar 2009 07:29:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754337AbZCJL3v
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 07:29:51 -0400
-Received: from wf-out-1314.google.com ([209.85.200.172]:5331 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754327AbZCJL3v convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Mar 2009 07:29:51 -0400
-Received: by wf-out-1314.google.com with SMTP id 28so2544358wfa.4
-        for <git@vger.kernel.org>; Tue, 10 Mar 2009 04:29:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=c13r06LP7+7t7hAGjtQguVAQtNOhWU7BRmZEurc+MaY=;
-        b=SgV+6ljyx24y8M5g4sEbJ1TEHRckCqivJl04Zh57oGwK0xMvGWSNt4ZvtnSksRRa/d
-         X5AD+tdEsTnEEZYRiFUDTsWdSThh8M6rHyPANqUpYDpxdRT75N9ezyzoQ/PU+GPXn0OB
-         eonVtOEgjSKgDLknSOqGkE6J0eGGQ5bKM85qM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:content-type:content-transfer-encoding;
-        b=kehuLZ0VEovZCyKSIeekHAEFhaXQZbJHHDFTTXj2bn1yNuECo6wkasRZTXgMkJU20A
-         cwZRZBofd5cXzCk/le/vlN4zYCv+u7JvCYIkcTH7THy+TKLyYfmkTA+n66bpNUa+SiGi
-         odZZcAVrY3TdPnQlEVqNyvWoNrY9MH6nJUeOE=
-Received: by 10.142.141.21 with SMTP id o21mr2441150wfd.79.1236684589215; Tue, 
-	10 Mar 2009 04:29:49 -0700 (PDT)
-In-Reply-To: <7v7i2xaewh.fsf@gitster.siamese.dyndns.org>
+	id S1751466AbZCJLbs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2009 07:31:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751250AbZCJLbs
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 07:31:48 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59609 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750928AbZCJLbr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2009 07:31:47 -0400
+Received: (qmail invoked by alias); 10 Mar 2009 11:31:44 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp039) with SMTP; 10 Mar 2009 12:31:44 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+DICtK//ODiBKyH3uqwOfAteMOSYYLRRTp9pfr6N
+	jSS7sNE5GHHTHf
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <49B61377.90103@viscovery.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112807>
 
-OK, I'll move my work to "next" branch. BTW, can anyone tell me what
-the "next" and "pu" branch are for ?
+Hi,
 
-Pi Song
+On Tue, 10 Mar 2009, Johannes Sixt wrote:
 
-On Tue, Mar 10, 2009 at 8:46 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> pi song <pi.songs@gmail.com> writes:
->
->> This part:-
->> 1) Move reusable bits from builtin-blame.c into blame.c, blame.h
->> 2) Replace static variables with context struct
->>
->> Signed-off-by: Pi Song <pi.songs@gmail.com>
->> ---
->> Makefile =A0 =A0 =A0 =A0| =A0 =A02 +
->> blame.c =A0 =A0 =A0 =A0 | 1919 +++++++++++++++++++++++++++++++++++++=
-++++++++++++++
->> blame.h =A0 =A0 =A0 =A0 | =A0222 ++++++
->> builtin-blame.c | 2072
->> +++----------------------------------------------------
->> 4 files changed, 2245 insertions(+), 1970 deletions(-)
->> create mode 100644 blame.c
->> create mode 100644 blame.h
->
-> This is simply too big to ask anybody sane to review (besides as we c=
-an
-> clearly see in the above the patch is severely whitespace damaged to =
-be
-> usable nor mechanically reviewable).
->
-> I suspect that most of the file-scope static variables can be moved t=
-o the
-> scoreboard, and when the reusable parts are made public, some structu=
-re
-> and function names may need to become a bit more blame specific to av=
-oid
-> namespace contamination.
->
-> Perhaps the first two patches in an equivalent series that is rerolle=
-d to
-> be reviewable would look like:
->
-> =A0(1) move file-scope static variables to the scoreboard, and necess=
-ary
-> =A0 =A0 code changes associated with it;
->
-> =A0 =A0 renaming of some structures and functions (if needed---I didn=
-'t
-> =A0 =A0 check);
->
-> =A0(2) create blame.c and blame.h, and move lines from builtin-blame.=
-c *and*
-> =A0 =A0 do NOTHING OTHER THAN
->
-> =A0 =A0 - adding #include "blame.h" to builtin-blame.c,
->
-> =A0 =A0 - adding necessary #include at the top of blame.c,
->
-> =A0 =A0 - surrounding blame.h with necessary
->
-> =A0 =A0 =A0 =A0 #ifndef BLAME_H
-> =A0 =A0 =A0 =A0 #define BLAME_H
-> =A0 =A0 =A0 =A0 ...
-> =A0 =A0 =A0 =A0 #endif
->
-> =A0 =A0 =A0 and finally
->
-> =A0 =A0 - updating Makefile to add blame.c and blame.h
->
-> =A0 =A0 This step will make a HUGE patch, and it is crucial for revie=
-wability
-> =A0 =A0 for it not to do anything other than line movement. =A0Ideall=
-y, the
-> =A0 =A0 patch shouldn't even reorder the structures and function defi=
-nitions
-> =A0 =A0 during this step.
->
-> =A0 =A0 Then we can use "git blame" itself to make sure that no other=
- changes
-> =A0 =A0 were sneaked in by mistake. =A0"git blame -C blame.h" and "gi=
-t blame -C
-> =A0 =A0 blame.c" would show everything came from builtin-blame.c.
->
-> At this point, there shouldn't still be any behaviour change nor new
-> feature. =A0And the titles of these preparatory step will never say a=
-nything
-> about "grep". =A0They are only refactoring "blame".
->
-> Once this becomes solid, you can start adding features to blame.c to
-> support your new caller, and we can be reasonably sure that such patc=
-hes
-> can be reviewed to decide if its change breaks the existing (and so f=
-ar
-> the only) caller builtin_blame() or not.
->
+> Johannes Schindelin schrieb:
+> > 	This fixes the last bit of msysGit issue 124 for me:
+> > 
+> > 		http://code.google.com/p/msysgit/issues/detail?id=124
+> > 
+> > 	which annoyed me one time to many today.
+> > 
+> > 	I had an earlier version which was smaller, but pretty hacky, in 
+> > 	that it checked if fprintf is #define'd in xwrite(), and had 
+> > 	special handling for that case.
+> > 
+> > 	This patch is only slightly hacky, in that it assumes that you do 
+> > 	not try to output something that ends in an incomplete ESC [
+> > 	sequence.
+> 
+> Good that I read mail before I start hacking. I was about to do something
+> about this in a moment. ;)
+
+Heh...
+
+> > To make use of it during a fetch, write() needs to be overridden, too.
+> 
+> No, that's not necessary with the patch that I'm about to send in a
+> moment. To replace write() for ANSI emulation really goes too far.
+
+See my response to your patch...
+
+Ciao,
+Dscho
