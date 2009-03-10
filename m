@@ -1,49 +1,52 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: *
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=1.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=0.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=unavailable autolearn_force=no version=3.4.0
-Received: (qmail 6133 invoked by uid 107); 10 Mar 2009 03:27:17 -0000
+Received: (qmail 6341 invoked by uid 107); 10 Mar 2009 04:25:31 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.40) with ESMTP; Mon, 09 Mar 2009 23:27:15 -0400
+    by peff.net (qpsmtpd/0.40) with ESMTP; Tue, 10 Mar 2009 00:25:29 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752554AbZCJD1H (ORCPT <rfc822;peff@peff.net>);
-	Mon, 9 Mar 2009 23:27:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752525AbZCJD1G
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 23:27:06 -0400
-Received: from sentry-three.sandia.gov ([132.175.109.17]:33530 "EHLO
+	id S1751009AbZCJEZO (ORCPT <rfc822;peff@peff.net>);
+	Tue, 10 Mar 2009 00:25:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751044AbZCJEZO
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 00:25:14 -0400
+Received: from sentry-three.sandia.gov ([132.175.109.17]:47040 "EHLO
 	sentry-three.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752519AbZCJD1F (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Mar 2009 23:27:05 -0400
-X-WSS-ID: 0KG9TLB-08-7KQ-02
+	with ESMTP id S1751005AbZCJEZM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2009 00:25:12 -0400
+X-WSS-ID: 0KG9WA8-08-98C-02
 X-M-MSG: 
-Received: from sentry.sandia.gov (sentry.sandia.gov [132.175.109.20])
-	by sentry-three.sandia.gov (Tumbleweed MailGate 3.6.1) with ESMTP id 247B1901B55;
-	Mon,  9 Mar 2009 21:27:10 -0600 (MDT)
-Received: from [134.253.165.160] by sentry.sandia.gov with ESMTP (SMTP
- Relay 01 (Email Firewall v6.3.2)); Mon, 09 Mar 2009 21:26:55 -0600
-X-Server-Uuid: 6BFC7783-7E22-49B4-B610-66D6BE496C0E
+Received: from sentry.sandia.gov (mm03snlnto.sandia.gov [132.175.109.20])
+	by sentry-three.sandia.gov (Tumbleweed MailGate 3.6.1) with ESMTP id 26A8E901EEB;
+	Mon,  9 Mar 2009 22:25:19 -0600 (MDT)
+Received: from [132.175.109.1] by sentry.sandia.gov with ESMTP (SMTP
+ Relay 01 (Email Firewall v6.3.2)); Mon, 09 Mar 2009 22:25:00 -0600
+X-Server-Uuid: AF72F651-81B1-4134-BA8C-A8E1A4E620FF
+Received: from mail.sandia.gov (cas2.sandia.gov [134.253.165.160]) by
+ mailgate.sandia.gov (8.14.1/8.14.1) with ESMTP id n2A4P03o021573; Mon,
+ 9 Mar 2009 22:25:00 -0600
 Received: from localhost.localdomain (134.253.112.216) by
  cas2.srn.sandia.gov (134.253.165.189) with Microsoft SMTP Server id
- 8.1.340.0; Mon, 9 Mar 2009 21:26:51 -0600
+ 8.1.340.0; Mon, 9 Mar 2009 22:24:59 -0600
 From:	"Pat Notz" <pknotz@sandia.gov>
 To:	git@vger.kernel.org
 cc:	"Junio C Hamano" <gitster@pobox.com>
-Subject: [PATCHv5] Make git-clone respect branch.autosetuprebase
-Date:	Mon, 9 Mar 2009 21:26:50 -0600
-Message-ID: <1236655610-14236-1-git-send-email-pknotz@sandia.gov>
+Subject: [PATCHv6] Make git-clone respect branch.autosetuprebase
+Date:	Mon, 9 Mar 2009 22:24:58 -0600
+Message-ID: <1236659098-14400-1-git-send-email-pknotz@sandia.gov>
 X-Mailer: git-send-email 1.6.2
-In-Reply-To: <1cd1989b0903060621w60124401s9986507e356783b1@mail.gmail.com>
-References: <1cd1989b0903060621w60124401s9986507e356783b1@mail.gmail.com>
+In-Reply-To: <1236655610-14236-1-git-send-email-pknotz@sandia.gov>
+References: <1236655610-14236-1-git-send-email-pknotz@sandia.gov>
 MIME-Version: 1.0
-X-TMWD-Spam-Summary: TS=20090310032655; ID=1; SEV=2.3.1;
- DFV=B2009031002; IFV=NA; AIF=B2009031002; RPD=5.03.0010; ENG=NA;
- RPDID=7374723D303030312E30413031303230392E34394235444446462E303042302C73733D312C6667733D30;
+X-TMWD-Spam-Summary: TS=20090310042501; ID=1; SEV=2.3.1;
+ DFV=B2009031003; IFV=NA; AIF=B2009031003; RPD=5.03.0010; ENG=NA;
+ RPDID=7374723D303030312E30413031303230392E34394235454239442E303032443A534346535441543838363133332C73733D312C6667733D30;
  CAT=NONE; CON=NONE; SIG=AAAAAAAAAAAAAAAAAAAAAAAAfQ==
-X-MMS-Spam-Filter-ID: B2009031002_5.03.0010
-X-WSS-ID: 65AB02753BW1190882-01-01
+X-MMS-Spam-Filter-ID: B2009031003_5.03.0010
+X-WSS-ID: 65AB34164LO1221711-01-01
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
@@ -62,22 +65,24 @@ in builtin-clone.
 Minor modification of the patch from Junio Hamano.
 ---
 
+Ugh.  Another resend... I need to stop working at night.
+
 This version fixes the verbose output to be more human friendly.  Before,
 the branch being tracked was printed as 'refs/heads/frotz' regardless of
 wether that was a local or remote branch.  Now, a local branch is just
 printed as 'frotz' and a remote branch is printed as 'origin/frotz'
 
- branch.c         |   49 +++++++++++++++++++++++++++++++++----------------
- branch.h         |    7 +++++++
- builtin-clone.c  |   18 +++---------------
- t/t5601-clone.sh |   15 +++++++++++++++
- 4 files changed, 58 insertions(+), 31 deletions(-)
+ branch.c         |   55 ++++++++++++++++++++++++++++++++++++++---------------
+ branch.h         |    7 ++++++
+ builtin-clone.c  |   18 ++--------------
+ t/t5601-clone.sh |   15 ++++++++++++++
+ 4 files changed, 64 insertions(+), 31 deletions(-)
 
 diff --git a/branch.c b/branch.c
-index 1f00e44..d20fb04 100644
+index 1f00e44..eecda64 100644
 --- a/branch.c
 +++ b/branch.c
-@@ -32,21 +32,48 @@ static int find_tracked_branch(struct remote *remote, void *priv)
+@@ -32,21 +32,54 @@ static int find_tracked_branch(struct remote *remote, void *priv)
  	return 0;
  }
  
@@ -117,19 +122,25 @@ index 1f00e44..d20fb04 100644
 +		git_config_set(key.buf, "true");
 +	}
 +
-+	if (flag & BRANCH_CONFIG_VERBOSE)
++	if (flag & BRANCH_CONFIG_VERBOSE){
++		strbuf_reset(&key);
++		if(origin)
++			strbuf_addf(&key, "%s/%s", origin, remote+11);
++		else
++			strbuf_addf(&key, "%s", remote+11);
 +		printf("Branch %s set up to track %s branch %s %s.\n",
 +		       local,
 +		       origin ? "remote" : "local",
-+		       remote,
++		       key.buf,
 +		       rebasing ? "by rebasing" : "by merging");
++	}
 +	strbuf_release(&key);
 +}
 +
  /*
   * This is called when new_ref is branched off of orig_ref, and tries
   * to infer the settings for branch.<new_ref>.{remote,merge} from the
-@@ -55,7 +82,6 @@ static int should_setup_rebase(const struct tracking *tracking)
+@@ -55,7 +88,6 @@ static int should_setup_rebase(const struct tracking *tracking)
  static int setup_tracking(const char *new_ref, const char *orig_ref,
                            enum branch_track track)
  {
@@ -137,7 +148,7 @@ index 1f00e44..d20fb04 100644
  	struct tracking tracking;
  
  	if (strlen(new_ref) > 1024 - 7 - 7 - 1)
-@@ -80,19 +106,10 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
+@@ -80,19 +112,10 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
  		return error("Not tracking: ambiguous information for ref %s",
  				orig_ref);
  
