@@ -1,267 +1,68 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=0.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=unavailable autolearn_force=no version=3.4.0
-Received: (qmail 6341 invoked by uid 107); 10 Mar 2009 04:25:31 -0000
+X-Spam-Status: No, score=1.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+Received: (qmail 8025 invoked by uid 107); 10 Mar 2009 09:57:48 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.40) with ESMTP; Tue, 10 Mar 2009 00:25:29 -0400
+    by peff.net (qpsmtpd/0.40) with ESMTP; Tue, 10 Mar 2009 05:57:44 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751009AbZCJEZO (ORCPT <rfc822;peff@peff.net>);
-	Tue, 10 Mar 2009 00:25:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751044AbZCJEZO
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 00:25:14 -0400
-Received: from sentry-three.sandia.gov ([132.175.109.17]:47040 "EHLO
-	sentry-three.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751005AbZCJEZM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2009 00:25:12 -0400
-X-WSS-ID: 0KG9WA8-08-98C-02
-X-M-MSG: 
-Received: from sentry.sandia.gov (mm03snlnto.sandia.gov [132.175.109.20])
-	by sentry-three.sandia.gov (Tumbleweed MailGate 3.6.1) with ESMTP id 26A8E901EEB;
-	Mon,  9 Mar 2009 22:25:19 -0600 (MDT)
-Received: from [132.175.109.1] by sentry.sandia.gov with ESMTP (SMTP
- Relay 01 (Email Firewall v6.3.2)); Mon, 09 Mar 2009 22:25:00 -0600
-X-Server-Uuid: AF72F651-81B1-4134-BA8C-A8E1A4E620FF
-Received: from mail.sandia.gov (cas2.sandia.gov [134.253.165.160]) by
- mailgate.sandia.gov (8.14.1/8.14.1) with ESMTP id n2A4P03o021573; Mon,
- 9 Mar 2009 22:25:00 -0600
-Received: from localhost.localdomain (134.253.112.216) by
- cas2.srn.sandia.gov (134.253.165.189) with Microsoft SMTP Server id
- 8.1.340.0; Mon, 9 Mar 2009 22:24:59 -0600
-From:	"Pat Notz" <pknotz@sandia.gov>
+	id S1753987AbZCJJ5g (ORCPT <rfc822;peff@peff.net>);
+	Tue, 10 Mar 2009 05:57:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753983AbZCJJ5g
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 05:57:36 -0400
+Received: from poulet.zoy.org ([80.65.228.129]:44861 "EHLO poulet.zoy.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753878AbZCJJ5f (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2009 05:57:35 -0400
+Received: by poulet.zoy.org (Postfix, from userid 1000)
+	id 64ABA1206D7; Tue, 10 Mar 2009 10:57:29 +0100 (CET)
+Date:	Tue, 10 Mar 2009 10:57:29 +0100
+From:	Sam Hocevar <sam@zoy.org>
 To:	git@vger.kernel.org
-cc:	"Junio C Hamano" <gitster@pobox.com>
-Subject: [PATCHv6] Make git-clone respect branch.autosetuprebase
-Date:	Mon, 9 Mar 2009 22:24:58 -0600
-Message-ID: <1236659098-14400-1-git-send-email-pknotz@sandia.gov>
-X-Mailer: git-send-email 1.6.2
-In-Reply-To: <1236655610-14236-1-git-send-email-pknotz@sandia.gov>
-References: <1236655610-14236-1-git-send-email-pknotz@sandia.gov>
+Subject: Re: git-p4 workflow suggestions?
+Message-ID: <20090310095729.GA27280@zoy.org>
+References: <20090309142108.GK12880@zoy.org> <200903100815.53847.chriscool@tuxfamily.org>
 MIME-Version: 1.0
-X-TMWD-Spam-Summary: TS=20090310042501; ID=1; SEV=2.3.1;
- DFV=B2009031003; IFV=NA; AIF=B2009031003; RPD=5.03.0010; ENG=NA;
- RPDID=7374723D303030312E30413031303230392E34394235454239442E303032443A534346535441543838363133332C73733D312C6667733D30;
- CAT=NONE; CON=NONE; SIG=AAAAAAAAAAAAAAAAAAAAAAAAfQ==
-X-MMS-Spam-Filter-ID: B2009031003_5.03.0010
-X-WSS-ID: 65AB34164LO1221711-01-01
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <200903100815.53847.chriscool@tuxfamily.org>
+Mail-Copies-To:	never
+X-No-CC: I read mailing-lists; do not CC me on replies.
+X-Snort: uid=0(root) gid=0(root)
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Junio C Hamano <gitster@pobox.com>
+On Tue, Mar 10, 2009, Christian Couder wrote:
+> >    I have modified git and git-p4 to a point where they are usable in
+> > my work environment. I am now faced with a new problem: Perforce's
+> > composite workspaces. They allow you to "mount" parts of the repo onto
+> > other directories, even nonempty ones.
+> 
+> It looks like SVN externals. So I think you should read about "git 
+> submodule".
+> 
+> There is this related link on the wiki:
+> 
+> http://blog.alieniloquent.com/2008/03/08/git-svn-with-svnexternals/
 
-When git-clone creates an initial branch it was not checking the
-branch.autosetuprebase configuration option (which may exist in
-~/.gitconfig).  Refactor the code used by "git branch" to create
-a new branch, and use it instead of the insufficiently duplicated code
-in builtin-clone.
+   Unfortunately submodules are considered separate repositories, so if
+I have /include and /src as submodules, I cannot commit atomically to
+both. Or can I? That's probably my strongest requirement.
 
-Minor modification of the patch from Junio Hamano.
----
+> You may also want to search the mailing list as this subject has often been 
+> discussed.
 
-Ugh.  Another resend... I need to stop working at night.
+   I did skim through the archives, but couldn't find much. There was
+this discussion: http://kerneltrap.org/mailarchive/git/2006/11/28/231515
+where the idea of Perforce-like workspaces was apparently dismissed as
+being "a mess".
 
-This version fixes the verbose output to be more human friendly.  Before,
-the branch being tracked was printed as 'refs/heads/frotz' regardless of
-wether that was a local or remote branch.  Now, a local branch is just
-printed as 'frotz' and a remote branch is printed as 'origin/frotz'
-
- branch.c         |   55 ++++++++++++++++++++++++++++++++++++++---------------
- branch.h         |    7 ++++++
- builtin-clone.c  |   18 ++--------------
- t/t5601-clone.sh |   15 ++++++++++++++
- 4 files changed, 64 insertions(+), 31 deletions(-)
-
-diff --git a/branch.c b/branch.c
-index 1f00e44..eecda64 100644
---- a/branch.c
-+++ b/branch.c
-@@ -32,21 +32,54 @@ static int find_tracked_branch(struct remote *remote, void *priv)
- 	return 0;
- }
- 
--static int should_setup_rebase(const struct tracking *tracking)
-+static int should_setup_rebase(const char *origin)
- {
- 	switch (autorebase) {
- 	case AUTOREBASE_NEVER:
- 		return 0;
- 	case AUTOREBASE_LOCAL:
--		return tracking->remote == NULL;
-+		return origin == NULL;
- 	case AUTOREBASE_REMOTE:
--		return tracking->remote != NULL;
-+		return origin != NULL;
- 	case AUTOREBASE_ALWAYS:
- 		return 1;
- 	}
- 	return 0;
- }
- 
-+void install_branch_config(int flag, const char *local, const char *origin, const char *remote)
-+{
-+	struct strbuf key = STRBUF_INIT;
-+	int rebasing = should_setup_rebase(origin);
-+
-+	strbuf_addf(&key, "branch.%s.remote", local);
-+	git_config_set(key.buf, origin ? origin : ".");
-+
-+	strbuf_reset(&key);
-+	strbuf_addf(&key, "branch.%s.merge", local);
-+	git_config_set(key.buf, remote);
-+
-+	if (rebasing) {
-+		strbuf_reset(&key);
-+		strbuf_addf(&key, "branch.%s.rebase", local);
-+		git_config_set(key.buf, "true");
-+	}
-+
-+	if (flag & BRANCH_CONFIG_VERBOSE){
-+		strbuf_reset(&key);
-+		if(origin)
-+			strbuf_addf(&key, "%s/%s", origin, remote+11);
-+		else
-+			strbuf_addf(&key, "%s", remote+11);
-+		printf("Branch %s set up to track %s branch %s %s.\n",
-+		       local,
-+		       origin ? "remote" : "local",
-+		       key.buf,
-+		       rebasing ? "by rebasing" : "by merging");
-+	}
-+	strbuf_release(&key);
-+}
-+
- /*
-  * This is called when new_ref is branched off of orig_ref, and tries
-  * to infer the settings for branch.<new_ref>.{remote,merge} from the
-@@ -55,7 +88,6 @@ static int should_setup_rebase(const struct tracking *tracking)
- static int setup_tracking(const char *new_ref, const char *orig_ref,
-                           enum branch_track track)
- {
--	char key[1024];
- 	struct tracking tracking;
- 
- 	if (strlen(new_ref) > 1024 - 7 - 7 - 1)
-@@ -80,19 +112,10 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
- 		return error("Not tracking: ambiguous information for ref %s",
- 				orig_ref);
- 
--	sprintf(key, "branch.%s.remote", new_ref);
--	git_config_set(key, tracking.remote ?  tracking.remote : ".");
--	sprintf(key, "branch.%s.merge", new_ref);
--	git_config_set(key, tracking.src ? tracking.src : orig_ref);
--	printf("Branch %s set up to track %s branch %s.\n", new_ref,
--		tracking.remote ? "remote" : "local", orig_ref);
--	if (should_setup_rebase(&tracking)) {
--		sprintf(key, "branch.%s.rebase", new_ref);
--		git_config_set(key, "true");
--		printf("This branch will rebase on pull.\n");
--	}
--	free(tracking.src);
-+	install_branch_config(BRANCH_CONFIG_VERBOSE, new_ref, tracking.remote,
-+			      tracking.src ? tracking.src : orig_ref);
- 
-+	free(tracking.src);
- 	return 0;
- }
- 
-diff --git a/branch.h b/branch.h
-index 9f0c2a2..eed817a 100644
---- a/branch.h
-+++ b/branch.h
-@@ -21,4 +21,11 @@ void create_branch(const char *head, const char *name, const char *start_name,
-  */
- void remove_branch_state(void);
- 
-+/*
-+ * Configure local branch "local" to merge remote branch "remote"
-+ * taken from origin "origin".
-+ */
-+#define BRANCH_CONFIG_VERBOSE 01
-+extern void install_branch_config(int flag, const char *local, const char *origin, const char *remote);
-+
- #endif
-diff --git a/builtin-clone.c b/builtin-clone.c
-index 92826cd..687df9a 100644
---- a/builtin-clone.c
-+++ b/builtin-clone.c
-@@ -20,6 +20,7 @@
- #include "dir.h"
- #include "pack-refs.h"
- #include "sigchain.h"
-+#include "branch.h"
- 
- /*
-  * Overall FIXMEs:
-@@ -350,19 +351,6 @@ static struct ref *write_remote_refs(const struct ref *refs,
- 	return local_refs;
- }
- 
--static void install_branch_config(const char *local,
--				  const char *origin,
--				  const char *remote)
--{
--	struct strbuf key = STRBUF_INIT;
--	strbuf_addf(&key, "branch.%s.remote", local);
--	git_config_set(key.buf, origin);
--	strbuf_reset(&key);
--	strbuf_addf(&key, "branch.%s.merge", local);
--	git_config_set(key.buf, remote);
--	strbuf_release(&key);
--}
--
- int cmd_clone(int argc, const char **argv, const char *prefix)
- {
- 	int is_bundle = 0;
-@@ -547,7 +535,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		remote_head = NULL;
- 		option_no_checkout = 1;
- 		if (!option_bare)
--			install_branch_config("master", option_origin,
-+			install_branch_config(0, "master", option_origin,
- 					      "refs/heads/master");
- 	}
- 
-@@ -577,7 +565,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 				      head_points_at->peer_ref->name,
- 				      reflog_msg.buf);
- 
--			install_branch_config(head, option_origin,
-+			install_branch_config(0, head, option_origin,
- 					      head_points_at->name);
- 		}
- 	} else if (remote_head) {
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 44793f2..2335d8b 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -159,4 +159,19 @@ test_expect_success 'clone a void' '
- 	test_cmp target-6/.git/config target-7/.git/config
- '
- 
-+test_expect_success 'clone respects global branch.autosetuprebase' '
-+	(
-+		HOME=$(pwd) &&
-+		export HOME &&
-+		test_config="$HOME/.gitconfig" &&
-+		unset GIT_CONFIG_NOGLOBAL &&
-+		git config -f "$test_config" branch.autosetuprebase remote &&
-+		rm -fr dst &&
-+		git clone src dst &&
-+		cd dst &&
-+		actual="z$(git config branch.master.rebase)" &&
-+		test ztrue = $actual
-+	)
-+'
-+
- test_done
+Cheers,
 -- 
-1.6.2
-
-
+Sam.
