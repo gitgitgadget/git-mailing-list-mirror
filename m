@@ -1,77 +1,63 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] winansi: support ESC [ K (erase in line)
-Date: Tue, 10 Mar 2009 12:31:44 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903101231240.14295@intel-tinevez-2-302>
-References: <cover.1236639280u.git.johannes.schindelin@gmx.de> <e2b19f6c7c50e5b0a652c40b0d8e4947134ed669.1236639280u.git.johannes.schindelin@gmx.de> <49B61377.90103@viscovery.net>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH 1/2] grep Added --blame so that grep can show result  tagged with blame entries
+Date: Tue, 10 Mar 2009 12:46:55 +0100
+Message-ID: <vpq8wnd7g7k.fsf@bauges.imag.fr>
+References: <49B51791.4030801@gmail.com>
+	<7v7i2xaewh.fsf@gitster.siamese.dyndns.org>
+	<1b29507a0903100429v5b4a66d7sa9e3b32010fae2e0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Peter Harris <git@peter.is-a-geek.org>,
-	Sebastian Schuberth <sschuberth@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Mar 10 12:33:21 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, git@vger.kernel.org, rene.scharfe@lsrfire.ath.cx
+To: pi.songs@gmail.com
+X-From: git-owner@vger.kernel.org Tue Mar 10 12:51:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lh0D2-0004ZC-ED
-	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 12:33:20 +0100
+	id 1Lh0Ue-0001XL-CF
+	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 12:51:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751466AbZCJLbs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2009 07:31:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751250AbZCJLbs
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 07:31:48 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59609 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750928AbZCJLbr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2009 07:31:47 -0400
-Received: (qmail invoked by alias); 10 Mar 2009 11:31:44 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp039) with SMTP; 10 Mar 2009 12:31:44 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+DICtK//ODiBKyH3uqwOfAteMOSYYLRRTp9pfr6N
-	jSS7sNE5GHHTHf
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <49B61377.90103@viscovery.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.62
+	id S1752616AbZCJLuE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2009 07:50:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751749AbZCJLuD
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 07:50:03 -0400
+Received: from imag.imag.fr ([129.88.30.1]:50412 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752548AbZCJLuA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2009 07:50:00 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n2ABktdl003107
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 10 Mar 2009 12:46:55 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Lh0QB-0002EF-FL; Tue, 10 Mar 2009 12:46:55 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Lh0QB-000297-Ck; Tue, 10 Mar 2009 12:46:55 +0100
+In-Reply-To: <1b29507a0903100429v5b4a66d7sa9e3b32010fae2e0@mail.gmail.com> (pi song's message of "Tue\, 10 Mar 2009 22\:29\:49 +1100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 10 Mar 2009 12:46:56 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112808>
 
-Hi,
+pi song <pi.songs@gmail.com> writes:
 
-On Tue, 10 Mar 2009, Johannes Sixt wrote:
+> OK, I'll move my work to "next" branch. BTW, can anyone tell me what
+> the "next" and "pu" branch are for ?
 
-> Johannes Schindelin schrieb:
-> > 	This fixes the last bit of msysGit issue 124 for me:
-> > 
-> > 		http://code.google.com/p/msysgit/issues/detail?id=124
-> > 
-> > 	which annoyed me one time to many today.
-> > 
-> > 	I had an earlier version which was smaller, but pretty hacky, in 
-> > 	that it checked if fprintf is #define'd in xwrite(), and had 
-> > 	special handling for that case.
-> > 
-> > 	This patch is only slightly hacky, in that it assumes that you do 
-> > 	not try to output something that ends in an incomplete ESC [
-> > 	sequence.
-> 
-> Good that I read mail before I start hacking. I was about to do something
-> about this in a moment. ;)
+git/Documentation/gitworkflows.txt
 
-Heh...
+In short : next = things that _should_ enter master in the future.
+           pu = proposed updates = things that _may_ enter master.
 
-> > To make use of it during a fetch, write() needs to be overridden, too.
-> 
-> No, that's not necessary with the patch that I'm about to send in a
-> moment. To replace write() for ANSI emulation really goes too far.
-
-See my response to your patch...
-
-Ciao,
-Dscho
+-- 
+Matthieu
