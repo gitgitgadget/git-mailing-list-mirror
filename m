@@ -1,96 +1,66 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [RFH Patch 2/2] http_init(): Fix config file parsing
-Date: Mon, 9 Mar 2009 23:05:53 -0400
-Message-ID: <76718490903092005n66bca743t67eb7f0ff830d9d7@mail.gmail.com>
-References: <7vfxhmce67.fsf@gitster.siamese.dyndns.org>
+From: Mike Swanson <mikeonthecomputer@gmail.com>
+Subject: Remove leading/trailing whitespace from commit messages when importing
+ from Subversion?
+Date: Mon, 09 Mar 2009 20:14:09 -0700
+Message-ID: <49B5DB01.8080206@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 10 04:12:26 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 10 04:15:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LgsLy-0001Gh-LN
-	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 04:10:03 +0100
+	id 1LgsRX-0002aH-A2
+	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 04:15:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751182AbZCJDF4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Mar 2009 23:05:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751383AbZCJDF4
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 23:05:56 -0400
-Received: from rv-out-0506.google.com ([209.85.198.225]:13977 "EHLO
+	id S1752031AbZCJDON (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Mar 2009 23:14:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751509AbZCJDON
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Mar 2009 23:14:13 -0400
+Received: from rv-out-0506.google.com ([209.85.198.225]:14657 "EHLO
 	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750902AbZCJDFz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Mar 2009 23:05:55 -0400
-Received: by rv-out-0506.google.com with SMTP id g37so1980665rvb.1
-        for <git@vger.kernel.org>; Mon, 09 Mar 2009 20:05:53 -0700 (PDT)
+	with ESMTP id S1751646AbZCJDOM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Mar 2009 23:14:12 -0400
+Received: by rv-out-0506.google.com with SMTP id g37so1983732rvb.1
+        for <git@vger.kernel.org>; Mon, 09 Mar 2009 20:14:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:content-type
          :content-transfer-encoding;
-        bh=wcSDHNmYPxRjasu90eTsuIpyMl8/kzNObCVJ2d46wAI=;
-        b=QF5nOi5xbar+B4CqLV+5HClry9jyhQHhEiHKynKrlGVcRXus992cBVJTLGCh7GarSA
-         0MCA4lHIBrD+amB6d+hzsnDm+0rxcRi4dlT++svYkiWF4H8o6aCEeR4Ddm9A5cxmTT30
-         HKZ3AAsvE0Q5NqgRpUqSnMGm9MurO4axFgpA0=
+        bh=xGjR8yZBszk+4qIVpTSvkauVxlOeIBWK1bj7XaJHHzs=;
+        b=hv8Jc5SpmoO2ZPPr6j2VyoL0/H3/nn7EenUZa+GnAyFZiILQEC0xgVnJrQ7W4Onzip
+         kbwRO2GaDOwQaxDc8pxFiRP07EEGkTlD+N2IUd/k6cLjuArclMYgaFuyTPfZeuJTCCZe
+         QFxd+hh8x7XhbepC5tL4wbgh8AmV7pvPbCjFc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Xo93+mCtwRA7gSfx6rvVqaNJCgvK0DyI1si7tvSzeJrutLs4ZvOAun7k71hDqoBnYe
-         oqaJpj+hpUZw0B5hO7Bsx4wO1i0fstbs2To/aU2WqvqqWaGQe4EfmHsnhrqa2a95RuHh
-         m3cfvCEn3qjVHj4UcyExpLVVPJV2UzuXMXr8A=
-Received: by 10.141.115.20 with SMTP id s20mr3440343rvm.255.1236654353327; 
-	Mon, 09 Mar 2009 20:05:53 -0700 (PDT)
-In-Reply-To: <7vfxhmce67.fsf@gitster.siamese.dyndns.org>
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=XGZH7JEytj6DLeK1x9gu9qr+7j0lq2SMj7QW+DnVrx8YdrrIBr6oy4xEWe4I2nh/qV
+         MmTrgQ4RPxGaypyaCRAn/Sr9y6i6J5c273UddcZZe/HTVPcmSgV/phaT4DyBMUDLDEpD
+         4NQv4/moLFlRNlcbwlbnSVrPOuf9IYoyq4q+g=
+Received: by 10.114.180.1 with SMTP id c1mr3941779waf.206.1236654850302;
+        Mon, 09 Mar 2009 20:14:10 -0700 (PDT)
+Received: from ?192.168.1.2? (c-76-28-231-90.hsd1.wa.comcast.net [76.28.231.90])
+        by mx.google.com with ESMTPS id n20sm13919699pof.17.2009.03.09.20.14.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 09 Mar 2009 20:14:09 -0700 (PDT)
+User-Agent: Mozilla-Thunderbird 2.0.0.19 (X11/20090103)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112777>
 
-On Mon, Mar 9, 2009 at 10:19 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> =C2=A0* This is what I need help from people who actually do use http=
- transport
-> =C2=A0 and extra set of eyeballs to spot silly mistakes.
+I was wondering if it's possible to removing leading and trailing
+whitespace (tabs, newlines, spaces) from commit messages when importing
+from Subversion via git-svn.
 
-It looks sane to me.
-
-> @@ -241,14 +221,18 @@ void http_init(struct remote *remote)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (getenv("GIT_SSL_NO_VERIFY"))
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0curl_ssl_verif=
-y =3D 0;
->
-> - =C2=A0 =C2=A0 =C2=A0 ssl_cert =3D getenv("GIT_SSL_CERT");
-> + =C2=A0 =C2=A0 =C2=A0 if (getenv("GIT_SSL_CERT"))
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ssl_cert =3D geten=
-v("GIT_SSL_CERT");
-> =C2=A0#if LIBCURL_VERSION_NUM >=3D 0x070902
-> - =C2=A0 =C2=A0 =C2=A0 ssl_key =3D getenv("GIT_SSL_KEY");
-> + =C2=A0 =C2=A0 =C2=A0 if (getenv("GIT_SSL_KEY"))
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ssl_key =3D getenv=
-("GIT_SSL_KEY");
-> =C2=A0#endif
-> =C2=A0#if LIBCURL_VERSION_NUM >=3D 0x070908
-> - =C2=A0 =C2=A0 =C2=A0 ssl_capath =3D getenv("GIT_SSL_CAPATH");
-> + =C2=A0 =C2=A0 =C2=A0 if (getenv("GIT_SSL_CAPATH"))
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ssl_capath =3D get=
-env("GIT_SSL_CAPATH");
-> =C2=A0#endif
-> - =C2=A0 =C2=A0 =C2=A0 ssl_cainfo =3D getenv("GIT_SSL_CAINFO");
-> + =C2=A0 =C2=A0 =C2=A0 if (getenv("GIT_SSL_CAINFO"))
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ssl_cainfo =3D get=
-env("GIT_SSL_CAINFO");
-
-Would these be a little cleaner with a temporary variable. e.g.
-
-char *value;
-
-if ((value =3D getenv("GIT_SSL_CERT")))
-    ssl_cert =3D value;
+I've got a repository with tens of thousands of commits, and not all of
+the messages are entered... sanely.  I need to know whether it is
+possible to clean these up when transfering the repository to Git.
 
 
-j.
+Thanks.
