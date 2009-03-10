@@ -1,139 +1,123 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: [RFC] rerere to recreate topic branches
-Date: Tue, 10 Mar 2009 11:18:40 +0100
-Message-ID: <20090310101840.GA21234@elte.hu>
-References: <20090310093200.GA12931@pengutronix.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH][v2] http authentication via prompts (with correct line
+ lengths)
+Date: Tue, 10 Mar 2009 11:43:30 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903101132360.14295@intel-tinevez-2-302>
+References: <49B5AF67.6050508@gmail.com> <7v1vt6dxg9.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0903100143550.6358@intel-tinevez-2-302> <49B5DDA6.8070108@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Debian TopGit maintainers <pkg-topgit@teams.debian.net>
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Tue Mar 10 11:20:43 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Mike Gaffney <mr.gaffo@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 10 11:45:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lgz4h-0001ke-9s
-	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 11:20:39 +0100
+	id 1LgzSW-0000Il-PX
+	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 11:45:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754219AbZCJKS4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Mar 2009 06:18:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751991AbZCJKSz
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 06:18:55 -0400
-Received: from mx2.mail.elte.hu ([157.181.151.9]:33332 "EHLO mx2.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754135AbZCJKSy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2009 06:18:54 -0400
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx2.mail.elte.hu with esmtp (Exim)
-	id 1Lgz2r-0005g8-6x
-	from <mingo@elte.hu>; Tue, 10 Mar 2009 11:18:51 +0100
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id 10B8D3E2136; Tue, 10 Mar 2009 11:18:37 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20090310093200.GA12931@pengutronix.de>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-Received-SPF: neutral (mx2: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: -1.5
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
-	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+	id S1753701AbZCJKnf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2009 06:43:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752434AbZCJKnf
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 06:43:35 -0400
+Received: from mail.gmx.net ([213.165.64.20]:53888 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751849AbZCJKne (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2009 06:43:34 -0400
+Received: (qmail invoked by alias); 10 Mar 2009 10:43:31 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp070) with SMTP; 10 Mar 2009 11:43:31 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+W++xpjmqWe2L356tVsvp7ckkUeqw6BVQq6SumBb
+	I+CWOFYRD8D3/Y
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <49B5DDA6.8070108@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112801>
 
+Hi,
 
-* Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de> wrote:
+On Mon, 9 Mar 2009, Mike Gaffney wrote:
 
-> Hello,
->=20
-> Ingo sent a similar mail some time ago[1], that's why I Cc:=20
-> him.
+> I guess it makes sense to split the config out into two patches.
 
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/85176/
+I guess, too, because it has been asked for.  I guess that since nobody 
+contradicted that wish, it would make sense, I guess.
 
-Just a few generic comments - i have written that mail 8 months=20
-ago.
+> I wanted both to help with automated builds, and as it's a read only 
+> account I wasn't worried about someone reading the password. I'm not 
+> very impressed with the permissions on the .netrc file actually 
+> providing security so I can see not allowing the password in the config 
+> either.
 
-Since then our -tip workflow has shifted in the direction of=20
-what i'd call an "append-mostly delta integration" workflow.
+If Git were written for you, for that very specific setup, then yes, I can 
+see that one does not need to care about storing passwords in plaintext 
+files _there_.
 
-When i wrote that mail we used to do daily full reintegrations=20
-of 100-200 topic branches using git-rerere, but that was not=20
-really feasible in the long run for two reasons:
+However, in addition to you, Git was written for some others, too.
 
- - back then a full integration took up to 30 minutes with over=20
-   a 100 branches and on a fast box - if it was all=20
-   problem-free.
+And $HOME/.netrc is a well established paradigm, many programs check the 
+permissions and flatly refuse to run with a big red warning if the 
+permissions are not set restrictively.  So there is definitely a big, 
+huge, vast difference between storing passwords in $HOME/.netrc and 
+storing them in .git/config.
 
-   [ It's much faster now both due to the speedups Git has done,
-     due to smarter scripting we do and due to me using an SSD=20
-     to host the -tip repo. ]
+> In my system at work, we have shared machines but all developers have 
+> root access, so file permissions don't really secure anything for us. 
+> It's also why we can't really use keys (there is no way to enforce that 
+> a key is secured afaik).
 
- - the full integration itself 'locked' the whole repo for a=20
-   long time. The old integration branch was destroyed and a new=20
-   one constructued - with 1000-2000 commits. This was fragile=20
-   in a number of ways.
+Again, happily the Git team decided that in addition to you, we want to 
+support other users.  For example us.
 
- - if there was any problem during the integration (a bad=20
-   conflict resolution) it often had to be repeated which easily=20
-   pushed the time to do the integration to over an hour.
+And we _do_ work on computers where only trustworthy people have root 
+access.
 
-So full integration of 1000-2000 commits spread out into 100+=20
-topic branches required a lot of concentration and even then it=20
-was too fragile.
+> I wanted to do a remote specific config as well but a global works well 
+> in many environments where your push repo is under http as you don't 
+> keep having to configure it.
 
-So now we do full reintegrations only about every two weeks,=20
-plus we do finegrained per commit and per pull "delta=20
-integrations" that is based on:
+IMHO in this case, "works well" does not mean the same as "makes sense" at 
+all.
 
- DELTA_BRANCHES=3D$(git branch --no-merged | cut -c3-)
- git merge $DELTA_BRANCHES
+Again, Git was written for other people, too.
 
-Plus we have the same finegrained topical setup that allows the=20
-specific isolation of gone-bad topics without the collateral=20
-damage of them holding the full tree and other contributors=20
-hostage.
+It should not be necessary to say more, but here I go: on two projects I 
+have to push to multiple HTTP servers, and I do have different passwords 
+there.
 
-So when a topic goes bad i dont revert nor do i destroy those=20
-commits - i just rewind/reset the integration branch to before=20
-the bad topic merge point, exclude the topic from=20
-delta-integration (add it to a blacklist) and re-run the delta=20
-integration and notify the people who caused the breakage. It's=20
-about 30 seconds to do so there's no noticeable workflow hickup.
+However, I am pretty convinced that it is a good idea to have the 
+passwords in $HOME/.netrc where they belong instead of in a config where 
+it is all too easy to fsck up the permissions.
 
-When the fix comes in 1-2 days later, the 'bad' topic branch is=20
-reactivated and gets picked up by delta integration.
+BTW that is another reason (in addition to it just being good style, 
+separating different issues into different patches) why I want you to 
+split the patch: to reject something insecure (storing passwords in 
+config) and to accept the secure part (reading passwords interactively 
+from the console).
 
-So all in one, delta integration is a lot less stressful in=20
-practice, and undo is possible and easy, as most of the=20
-breakages are in fresh commits.
+> I also couldn't see a good way to do a remote specific config without 
+> changing the remote struct (which seemd like putting specific in a 
+> general). I would love some advice on this and where to put it.
 
-It's also very fast:
+Umm.  Into the remote struct?
 
- earth4:~/tip> time todo-merge-all=20
- searching for updated branches ...
- excluded branches: core/kill-the-BKL tracing/dump-tracer
- Updated branches: tracing/ftrace
- merging tracing/ftrace ... Merge made by recursive.          =20
-  kernel/trace/trace_workqueue.c |   14 +++++++-------
-  1 files changed, 7 insertions(+), 7 deletions(-)
- merging linus ... ... merge done.                            =20
+> I can see your security points but I would argue that if that's what we 
+> are worried about then we should not allow the netrc file at all.
 
- real	0m5.402s
- user	0m5.002s
- sys	0m0.445s
+See above.
 
-Even though there are more than 400 branches it has to check,=20
-100 of which are active (=3D=3Dcarry new commits relative to Linus's=20
-latest kernel tree).
+> I added notes in the config documentation about this. I'm open to 
+> discussion on this point.
 
-	Ingo
+Oh, so you mean you will address my concerns?  That's good, as I am 
+looking forward to your answers to them.
+
+Ciao,
+Dscho
