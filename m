@@ -1,113 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFH Patch 2/2] http_init(): Fix config file parsing
-Date: Tue, 10 Mar 2009 12:07:56 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903101206440.14295@intel-tinevez-2-302>
-References: <7vfxhmce67.fsf@gitster.siamese.dyndns.org> <76718490903092005n66bca743t67eb7f0ff830d9d7@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH/RFC] recv_sideband: Band #2 always goes to stderr
+Date: Tue, 10 Mar 2009 12:11:24 +0100
+Message-ID: <49B64ADC.2090406@viscovery.net>
+References: <cover.1236639280u.git.johannes.schindelin@gmx.de> <e2b19f6c7c50e5b0a652c40b0d8e4947134ed669.1236639280u.git.johannes.schindelin@gmx.de> <49B61377.90103@viscovery.net> <49B61703.8030602@viscovery.net> <alpine.DEB.1.00.0903101153250.14295@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-714814996-1236683277=:14295"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 10 12:09:45 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Peter Harris <git@peter.is-a-geek.org>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Nicolas Pitre <nico@cam.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 10 12:13:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
-Received: from mail-forward2.uio.no ([129.240.10.71])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lgzq8-0006b8-GW
-	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 12:09:40 +0100
-Received: from exim by mail-out2.uio.no with local-bsmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Lgzon-0002FW-7e
-	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 12:08:17 +0100
-Received: from mail-mx1.uio.no ([129.240.10.29])
-	by mail-out2.uio.no with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Lgzom-0002E8-WB
-	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 12:08:17 +0100
 Received: from vger.kernel.org ([209.132.176.167])
-	by mail-mx1.uio.no with esmtp  (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Lgzok-0005Ll-2G
-	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 12:08:16 +0100
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1Lgzte-0007YJ-Ch
+	for gcvg-git-2@gmane.org; Tue, 10 Mar 2009 12:13:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753884AbZCJLID (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2009 07:08:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754382AbZCJLID
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 07:08:03 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37602 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754463AbZCJLIB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2009 07:08:01 -0400
-Received: (qmail invoked by alias); 10 Mar 2009 11:07:57 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp071) with SMTP; 10 Mar 2009 12:07:57 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+hm7kDEA+hS50620iUsJm5GFhu9oYBeAmABJqtje
-	TMYAzU7T+f7it4
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <76718490903092005n66bca743t67eb7f0ff830d9d7@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.52
+	id S1754024AbZCJLLm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2009 07:11:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753359AbZCJLLm
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 07:11:42 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:53736 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752570AbZCJLLl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2009 07:11:41 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Lgzrp-0002LF-3f; Tue, 10 Mar 2009 12:11:25 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 2F8B14FB; Tue, 10 Mar 2009 12:11:24 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <alpine.DEB.1.00.0903101153250.14295@intel-tinevez-2-302>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-UiO-Spam-info: not spam, SpamAssassin (score=-7.0, required=5.0, autolearn=disabled, RCVD_IN_DNSWL_MED=-4,UIO_VGER=-3, uiobl=NO, uiouri=NO)
-X-UiO-Scanned: E0ADDEBE5712577857A4824CB2A6F9BCF7C77994
-X-UiO-SPAM-Test: remote_host: 209.132.176.167 spam_score: -69 maxlevel 200 minaction 2 bait 0 mail/h: 25 total 2137237 max/h 849 blacklist 0 greylist 0 ratelimit 0
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112804>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323329-714814996-1236683277=:14295
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-
-Hi,
-
-On Mon, 9 Mar 2009, Jay Soffian wrote:
-
-> On Mon, Mar 9, 2009 at 10:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
+Johannes Schindelin schrieb:
+> On Tue, 10 Mar 2009, Johannes Sixt wrote:
+>> This removes the last parameter of recv_sideband, by which the callers
+>> told which channel band #2 data should be written to. Since both callers
+>> of the function passed 2 for the parameter, we hereby remove the
+>> parameter and send band #2 to stderr explicitly using fprintf.
 > 
-> > @@ -241,14 +221,18 @@ void http_init(struct remote *remote)
-> >        if (getenv("GIT_SSL_NO_VERIFY"))
-> >                curl_ssl_verify = 0;
-> >
-> > -       ssl_cert = getenv("GIT_SSL_CERT");
-> > +       if (getenv("GIT_SSL_CERT"))
-> > +               ssl_cert = getenv("GIT_SSL_CERT");
-> >  #if LIBCURL_VERSION_NUM >= 0x070902
-> > -       ssl_key = getenv("GIT_SSL_KEY");
-> > +       if (getenv("GIT_SSL_KEY"))
-> > +               ssl_key = getenv("GIT_SSL_KEY");
-> >  #endif
-> >  #if LIBCURL_VERSION_NUM >= 0x070908
-> > -       ssl_capath = getenv("GIT_SSL_CAPATH");
-> > +       if (getenv("GIT_SSL_CAPATH"))
-> > +               ssl_capath = getenv("GIT_SSL_CAPATH");
-> >  #endif
-> > -       ssl_cainfo = getenv("GIT_SSL_CAINFO");
-> > +       if (getenv("GIT_SSL_CAINFO"))
-> > +               ssl_cainfo = getenv("GIT_SSL_CAINFO");
+> To be honest, I considered this myself.
 > 
-> Would these be a little cleaner with a temporary variable. e.g.
+> But I think it is wrong.  Just because the current callers happen to 
+> output to stderr does not mean that we would not like sidebands that 
+> exchange binary data for other uses in the future.
 > 
-> char *value;
-> 
-> if ((value = getenv("GIT_SSL_CERT")))
->     ssl_cert = value;
+> I am thinking GitTorrent here.
 
-Nah, you should go the full nine yards right away:
+Clearly, we are looking at git here, not GitTorrent. "Because we could" is
+IMNSHO not a good justification keep code unnecessarily complicated.
 
-static void set_from_env(const char **variable, const char *name)
-{
-	const char *value = getenv(name);
-	if (value)
-		*variable = value;
-}
+> And clearly, sideband support was written with future uses like that in 
+> mind, as it goes out of its way to transmit packets instead of strings.
 
-Ciao,
-Dscho
+All data producers and data consumers *in git* use band #2 to transport
+error messages and progress report. GitTorrent cannot not talk to
+upload-pack or upload-archive and expect to get arbitrary binary data over
+band #2.
 
---8323329-714814996-1236683277=:14295--
+For use-cases that you have in mind in GitTorrent, the *protocol* may be a
+good choice, but the current implementation is definitely a special case.
+
+-- Hannes
