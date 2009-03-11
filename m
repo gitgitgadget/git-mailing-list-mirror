@@ -1,60 +1,82 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Google Summer of Code 2009: GIT
-Date: Wed, 11 Mar 2009 13:52:23 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903111351280.10498@intel-tinevez-2-302>
-References: <49B74373.3090609@gmail.com>  <ee77f5c20903110159l1cda4c3dnc9588c1352905932@mail.gmail.com>  <alpine.DEB.1.00.0903111254410.10279@pacific.mpi-cbg.de> <ee77f5c20903110455p6926b580i8c8e92b051328d18@mail.gmail.com>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: git-p4 workflow suggestions?
+Date: Wed, 11 Mar 2009 05:58:05 -0700
+Message-ID: <20090311125805.GA28155@padd.com>
+References: <20090309142108.GK12880@zoy.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Saurabh Gupta <saurabhgupta1403@gmail.com>, git@vger.kernel.org
-To: David Symonds <dsymonds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 11 13:53:57 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Sam Hocevar <sam@zoy.org>
+X-From: git-owner@vger.kernel.org Wed Mar 11 13:58:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhNwW-0003N2-LE
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 13:53:53 +0100
+	id 1LhO1N-000567-3l
+	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 13:58:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753644AbZCKMw1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2009 08:52:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753380AbZCKMw1
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 08:52:27 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53516 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751458AbZCKMw1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Mar 2009 08:52:27 -0400
-Received: (qmail invoked by alias); 11 Mar 2009 12:52:23 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp009) with SMTP; 11 Mar 2009 13:52:23 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+GvbMH0pSGFW16mTyoUILTzcRmWOrNbnn/I5X1Ln
-	nnoBWcBxAr9MSs
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <ee77f5c20903110455p6926b580i8c8e92b051328d18@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.7
+	id S1754970AbZCKM5X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2009 08:57:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754892AbZCKM5W
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 08:57:22 -0400
+Received: from marge.padd.com ([99.188.165.110]:60373 "EHLO marge.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753932AbZCKM5U (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Mar 2009 08:57:20 -0400
+Received: from honk.padd.com (honk.padd.com [209.17.171.228])
+	by marge.padd.com (Postfix) with ESMTPSA id C05EB10F8274;
+	Wed, 11 Mar 2009 05:57:18 -0700 (PDT)
+Received: by honk.padd.com (Postfix, from userid 7770)
+	id 534E61C400CE; Wed, 11 Mar 2009 05:58:05 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20090309142108.GK12880@zoy.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112923>
 
-Hi,
-
-On Wed, 11 Mar 2009, David Symonds wrote:
-
-> On Wed, Mar 11, 2009 at 10:55 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
+sam@zoy.org wrote on Mon, 09 Mar 2009 15:21 +0100:
+>    I have modified git and git-p4 to a point where they are usable in
+> my work environment. I am now faced with a new problem: Perforce's
+> composite workspaces. They allow you to "mount" parts of the repo onto
+> other directories, even nonempty ones.
 > 
-> > It has been suggested on the GSoC mentor list, and IMHO Git is as good 
-> > as any organization to host that project.
+>    Take the following example repository, where a "framework" project
+> contains an example subdirectory with build files and other directories,
+> and a "project1" project contains subdirectories that are meant to
+> replace the ones in "example":
 > 
-> Yeah, I think Git would be a good host for such a project. I'd still
-> like to see it VCS-neutral, though.
+>    //work/framework/example/src/
+>                            /include/
+> 			   /Makefile
+> 			   /...
+>    //work/project1/src/
+>                   /include/
 
-Yeah, I cannot see this begin Git-specific, either.  But it may be 
-integrated with Git so that it works best using Git...
+In perforce terms, your "view mapping" looks like:
 
-Ciao,
-Dscho
+    //work/framework/example/src/... //client/src/...
+    //work/project1/src/include/...  //client/src/include/...
+
+?
+
+I'm not a pro with p4, but do deal with many-line mappings like
+this.  Stock git-p4 handles these, except doesn't map correctly to
+the right-hand side.  I haven't tried to see if it would correctly
+use the include files from project1 instead of framework in your
+example.
+
+If you can get git-p4 to figure out the mapping correctly, I don't
+expect any problems with respect to atomicity of commits.  As far as
+perforce goes, a server seems to manage its entire p4 space as one
+big single project.  Similarly with the git side of things---it's
+just a matter of getting this mapping correct.
+
+I too hacked the getClientSpec() part of git-p4 to put files into
+the correct directories in the git side.  My changes are a bit
+messy, and may interfere with other usage models, hence not
+submitted.  Maybe we should make an effort to get this right though.
+Do you have any changes to show how you are modifying things?
+
+		-- Pete
