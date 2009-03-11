@@ -1,115 +1,103 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: Removed unnecessary use of global variables.
-Date: Tue, 10 Mar 2009 18:19:46 -0700 (PDT)
-Message-ID: <55ef48ab-403d-41b8-bf16-203bb0f73fc7@b16g2000yqb.googlegroups.com>
-References: <1236730168-7164-1-git-send-email-kusmabite@gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: setting up tracking on push
+Date: Tue, 10 Mar 2009 21:52:44 -0400
+Message-ID: <76718490903101852y2c90e0abi8e0e4f71e6f0bc52@mail.gmail.com>
+References: <buofxhr2vta.fsf@dhlpc061.dev.necel.com>
+	 <76718490903052049k217e9c12gb7881f8904fdd9d@mail.gmail.com>
+	 <alpine.DEB.1.00.0903061144480.10279@pacific.mpi-cbg.de>
+	 <buoy6vi297q.fsf@dhlpc061.dev.necel.com>
+	 <49b12ff7.nCWIz4ABJcgwW3BZ%obrien654j@gmail.com>
+	 <76718490903060743m425c2d55n6e8737c893c936e8@mail.gmail.com>
+	 <87d4cuobrc.fsf@catnip.gol.com> <49B6CCDB.8010305@xiplink.com>
+	 <20090310230939.GB14083@sigio.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 11 02:21:23 2009
+Cc: Marc Branchaud <marcnarc@xiplink.com>, Miles Bader <miles@gnu.org>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 11 02:54:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhD8L-0007SW-H4
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 02:21:21 +0100
+	id 1LhDeB-0006zz-PK
+	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 02:54:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755257AbZCKBTu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Mar 2009 21:19:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754694AbZCKBTu
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 21:19:50 -0400
-Received: from yx-out-2122.google.com ([74.125.44.25]:16429 "EHLO
-	yx-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754126AbZCKBTt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Mar 2009 21:19:49 -0400
-Received: by yx-out-2122.google.com with SMTP id 33so1553225yxl.1
-        for <git@vger.kernel.org>; Tue, 10 Mar 2009 18:19:46 -0700 (PDT)
-Received: by 10.100.6.13 with SMTP id 13mr1219140anf.1.1236734386185; Tue, 10 
-	Mar 2009 18:19:46 -0700 (PDT)
-In-Reply-To: <1236730168-7164-1-git-send-email-kusmabite@gmail.com>
-X-IP: 84.48.62.155
-User-Agent: G2/1.0
-X-HTTP-UserAgent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) 
-	AppleWebKit/525.19 (KHTML, like Gecko) Chrome/1.0.154.48 Safari/525.19,gzip(gfe),gzip(gfe)
+	id S1754290AbZCKBws convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Mar 2009 21:52:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753610AbZCKBwr
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 21:52:47 -0400
+Received: from rv-out-0506.google.com ([209.85.198.231]:59371 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753225AbZCKBwq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Mar 2009 21:52:46 -0400
+Received: by rv-out-0506.google.com with SMTP id g37so2496779rvb.1
+        for <git@vger.kernel.org>; Tue, 10 Mar 2009 18:52:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ySTV7mZ/4OZItTC5jDbaWyc3yB85SNEUZVykBjrUygY=;
+        b=PanJ+pZ2vrEg/kqzIcU83fogSV9/6WwH3yDfSp7jgLhNCkF35wAaAHw4Y4xIwpCOyk
+         Y2/gWb9fb7tjOV45rW8d4jAVN48+qXzcRuu9/1o65a6PY7pg/2eDbAFWWbbDPYPaTep3
+         RvWX8XnyeN3QmF11+nCzEzK5kgaS6hpP9w0U8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=kPFArt01X0D0zQ0Xd2Lyo1QA2YU+B+oyVUs1FL4gCOhn5LeTdTi3Auy4hdEujCk1QP
+         GtpKjXBQaALpXgT7BG/8+sLq1GkCW3oE/RnQzazPYYwxMGPjko7IqvVgshpww6vEdWPU
+         2h6GWShVYNBPeos8Z3/b+scZ6eTEMb3Xfb78Q=
+Received: by 10.141.88.3 with SMTP id q3mr4071882rvl.125.1236736364571; Tue, 
+	10 Mar 2009 18:52:44 -0700 (PDT)
+In-Reply-To: <20090310230939.GB14083@sigio.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112866>
 
-Sorry about the whole double-post thing, this whole submitting patches
-over email thing is new to me, and I'm making too many mistakes right
-now. Hopefully, I'll improve in the future ;)
+On Tue, Mar 10, 2009 at 7:09 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Mar 10, 2009 at 04:26:03PM -0400, Marc Branchaud wrote:
+>
+>> It would be good if the branch command allowed modification of a
+>> branch's properties. =C2=A0At the very least, branch-creation comman=
+ds like
+>> "git branch --track foobranch origin/master" could offer to modify i=
+f
+>> the branch already exists, instead of just quitting.
+>
+> I agree that it would be nice if an interface could be made around
+> "branch --track". However, the problem with
+>
+> =C2=A0git branch --track foobranch origin/master
+>
+> is that it does two things: it sets up tracking, and it resets the
+> foobranch ref. Right now we complain if foobranch already exists. We
+> have a "-f" to override. But what you want to say is "set foobranch t=
+o
+> track origin/master, but _don't_ actually reset where it points". And=
+ I
+> don't see an intuitive way of doing that with that syntax. If you don=
+'t
+> require "-f", then you are silently ignoring half of what the user as=
+ked
+> you to do.
 
-On Mar 11, 1:09=A0am, Erik Faye-Lund <kusmab...@gmail.com> wrote:
-> git_config() now takes a third data-parameter that is passed back
-> to the callback-function. At the time this code was written, that
-> parameter did not exist, so a somewhat nasty (but by all means
-> correct) use of global variables was introduced. In commit
-> ef90d6d4208a5130185b04f06e5f90a5f9959fe3 Johannes Schindelin
-> <Johannes.Schinde...@gmx.de> introduced a parameter for similar
-> purposes.
->
-> I've changed the code to utilize this parameter to pass the
-> string. In addition, I've made the function calculate the string
-> length on usage instead, to reduce the parameters needed to what
-> the callback-interface supplies.
->
-> Signed-off-by: Erik Faye-Lund <kusmab...@gmail.com>
-> ---
-> =A0connect.c | =A0 16 ++++++----------
-> =A01 files changed, 6 insertions(+), 10 deletions(-)
->
-> diff --git a/connect.c b/connect.c
-> index 2f23ab3..98fbaea 100644
-> --- a/connect.c
-> +++ b/connect.c
-> @@ -371,14 +371,13 @@ static void git_tcp_connect(int fd[2], char *ho=
-st, int flags)
-> =A0 =A0 =A0 =A0 fd[1] =3D dup(sockfd);
-> =A0}
->
-> -
-> =A0static char *git_proxy_command;
-> -static const char *rhost_name;
-> -static int rhost_len;
-> -
-> =A0static int git_proxy_command_options(const char *var, const char *=
-value,
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 void *cb)
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 void *data)
-> =A0{
-> + =A0 =A0 =A0 const char *rhost_name =3D data;
-> + =A0 =A0 =A0 const size_t rhost_len =3D strlen(rhost_name);
-> +
-> =A0 =A0 =A0 =A0 if (!strcmp(var, "core.gitproxy")) {
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 const char *for_pos;
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 int matchlen =3D -1;
-> @@ -421,16 +420,13 @@ static int git_proxy_command_options(const char=
- *var, const char *value,
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 return 0;
-> =A0 =A0 =A0 =A0 }
->
-> - =A0 =A0 =A0 return git_default_config(var, value, cb);
-> + =A0 =A0 =A0 return git_default_config(var, value, data);
-> =A0}
->
-> =A0static int git_use_proxy(const char *host)
-> =A0{
-> - =A0 =A0 =A0 rhost_name =3D host;
-> - =A0 =A0 =A0 rhost_len =3D strlen(host);
-> =A0 =A0 =A0 =A0 git_proxy_command =3D getenv("GIT_PROXY_COMMAND");
-> - =A0 =A0 =A0 git_config(git_proxy_command_options, NULL);
-> - =A0 =A0 =A0 rhost_name =3D NULL;
-> + =A0 =A0 =A0 git_config(git_proxy_command_options, (void*)host);
-> =A0 =A0 =A0 =A0 return (git_proxy_command && *git_proxy_command);
-> =A0}
->
-> --
-> 1.6.2.GIT
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majord...@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+Maybe a new switch, say -u for update:
+
+-u --track [<branch>] <upstream>
+
+Update tracking information for an existing branch. <branch> is
+optional and defaults to the current branch. <upstream> is the branch
+you wish to track, e.g. origin/master; normally <upstream> is a remote
+tracking branch, but specifying a local branch is valid as well.
+
+-u --no-track [<branch>]
+
+Remove tracking information for an existing branch. <branch> is
+optional and defaults to the current branch.
+
+j.
