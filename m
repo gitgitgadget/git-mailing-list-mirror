@@ -1,114 +1,106 @@
-From: Matthieu Poullet <matthieu.poullet@gmail.com>
-Subject: Wrong, misleading error message when "branch.<name>.merge" is invalid
-Date: Wed, 11 Mar 2009 13:27:47 +0100
-Message-ID: <80a0c20d0903110527s1fed1f36wf33446220f6628ac@mail.gmail.com>
+From: Tim Visher <tim.visher@gmail.com>
+Subject: Re: Confusing `stash apply` behavior
+Date: Wed, 11 Mar 2009 08:45:34 -0400
+Message-ID: <c115fd3c0903110545o67b00fe2u3bb4924b5c84c0ce@mail.gmail.com>
+References: <c115fd3c0903101246n1eff50d4rc819e5fe7586a974@mail.gmail.com>
+	 <20090311190217.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 11 13:29:31 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Wed Mar 11 13:47:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhNYn-0002t7-Rd
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 13:29:22 +0100
+	id 1LhNpy-0001A3-R0
+	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 13:47:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755511AbZCKM1v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2009 08:27:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754806AbZCKM1u
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 08:27:50 -0400
-Received: from mail-fx0-f176.google.com ([209.85.220.176]:38284 "EHLO
-	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754285AbZCKM1u (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Mar 2009 08:27:50 -0400
-Received: by fxm24 with SMTP id 24so1953230fxm.37
-        for <git@vger.kernel.org>; Wed, 11 Mar 2009 05:27:47 -0700 (PDT)
+	id S1752148AbZCKMpi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2009 08:45:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752098AbZCKMpi
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 08:45:38 -0400
+Received: from yx-out-2324.google.com ([74.125.44.29]:64483 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751719AbZCKMph convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Mar 2009 08:45:37 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so1908081yxm.1
+        for <git@vger.kernel.org>; Wed, 11 Mar 2009 05:45:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=aNYlLG6CXemG5AVOaU62hN1BoExjHV76s92tMtUbZ8s=;
-        b=ewDmgd7/tXozJPU8sSzYEtppj+jVy1YKeZaM3ckanoImOiBrTHdvSihQD7lEztacol
-         8P8r4021Lorwm4s4WwTKE4H1RCWBOJxPbxtu21UcqAUmtn4/CmXcWMeJ6bzBUTEYARTu
-         944aKhZeExBdwcJUSnxagmV+Mn+980WAcr6Ns=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=SJBV+D0o2iYFI2XdEmPgl2qrlEk2QPwSmMwuoF0Bmxk=;
+        b=R9JAXD0qxyRN7Bt26xuJEuAd8aoUOIfaAhy5AlG5m8VtSy2WrPiwq4+K9Gil5I2Yaf
+         tYY2AubftFLr6rRzUmyBI7B+D8zjY3W6htUPInGqpOvii3CcMaozgrBhuyHOqkX5vMpY
+         LI9Snvcprli8Y5FgATMS5/5qp+rh3qE+DJb9E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=fux+cnRA1AxiMstYiCrjgV6F1m8b8SRjHx0t54FuykKc5sB2VJCcy5bPkiObmkiV7q
-         QnMhuZY00qYOPeALIiwdzsk3J5wVW+hdU+Or7TuSWZiiWROcHj9PCkwkkPrvLetvFVHp
-         Ui60/LxlVFN/aX6LJE0Fn14uOvxs2I680Iocs=
-Received: by 10.223.113.200 with SMTP id b8mr6314606faq.84.1236774467323; Wed, 
-	11 Mar 2009 05:27:47 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=iq+VwnYh5Jh1fcWa8tqcVRm8s7vUxamrJ+ZDZ/x9JmYiYE0r1dq6Qd5a0Y+awqthUw
+         PvEpUuMXTqsenF2RazSfNODv213m2R0tOhECzQ3YXMtqVd5gD1Ufzp9m/mZZAvRgzi1l
+         voFz8T93/YYPITSU7VjsI7o1gIvzS+0J5nLNk=
+Received: by 10.100.106.1 with SMTP id e1mr2565349anc.51.1236775534223; Wed, 
+	11 Mar 2009 05:45:34 -0700 (PDT)
+In-Reply-To: <20090311190217.6117@nanako3.lavabit.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112921>
 
-Hi,
+On Wed, Mar 11, 2009 at 6:02 AM, Nanako Shiraishi <nanako3@lavabit.com> wrote:
+> Quoting Tim Visher <tim.visher@gmail.com>:
+>
+>> When I do `git stash apply`, it deletes the file I'm working with.
+>>
+>>     $ ls
+>>     featureList.txt*  keycontrol.mdb*
+>>
+>>     $ git show stash@{0}
+>>     commit b3c0f4b9b3c3ef7741a03fb27174f5838abc939d
+>>     Merge: 9fb9886 112bba9
+>>     Author: Tim Visher <timothy.visher@fms.treas.gov>
+>>     Date:   Tue Mar 10 15:25:04 2009 -0400
+>>
+>>     WIP on dev: 9fb9886 Added DB Lock file to .gitignore. EOM
+>>
+>>     diff --cc keycontrol.mdb
+>>     index 68a9bac,68a9bac..0000000
+>>     --- a/keycontrol.mdb
+>>     +++ b/keycontrol.mdb
+>>
+>>     $ git stash apply
+>>     Removing keycontrol.mdb
+>>     # On branch refactoring
+>>     # Changed but not updated:
+>>     #   (use "git add/rm <file>..." to update what will be committed)
+>>     #   (use "git checkout -- <file>..." to discard changes in working
+>> directory)
+>>     #
+>>     #       deleted:    keycontrol.mdb
+>>     #
+>>     no changes added to commit (use "git add" and/or "git commit -a")
+>>
+>> Considering the output of `git show` I would expect that the contents
+>> of the stash are, well, what I expect them to be: a new version of
+>> keycontrol.mdb.
+>
+> The 'index' line in your 'diff --cc' output says that back when you created that stash, the HEAD and your index both held a blob object 68a9bac and your working tree didn't have that file, ie, removed. It is very natural that the file is removed when you apply that stash.
 
-today I've tried to update a repo I haven't used for a while (see
-complete log below).
-When trying to pull changes for my remote tracking branch, I've got an
-error message suggesting that my config was wrong instead of
-suggesting that this branch was gone on the remote.
+Huh.  I don't know how that would have happened, but I guess I should
+have been more careful with the stash command.  Oh well.
 
-As people (thanks to them) explain me on #git, fetch doesn't remove
-stale tracking branches, and so in this case the error message is
-pretty misleading.
-Maybe "Error: ref 'refs/heads/omap3' does not exist in remote repo
-'origin'" (suggested by Ilari on #git) would be more appropriate?
+Thanks for your help!
 
-Regards,
-Matthieu.
+-- 
 
-mpoullet@LU84-mpoullet:~/src/u-boot-arm$ git branch -a
-* master
-  omap3
-  origin/20070326_ene
-  origin/HEAD
-  origin/master
-  origin/mm
-  origin/next
-  origin/old-next
-  origin/omap3
-  origin/testing
-mpoullet@LU84-mpoullet:~/src/u-boot-arm$ git pull
-Already up-to-date.
-mpoullet@LU84-mpoullet:~/src/u-boot-arm$ git checkout omap3
-Switched to branch "omap3"
-mpoullet@LU84-mpoullet:~/src/u-boot-arm$ git pull
-You asked me to pull without telling me which branch you
-want to merge with, and 'branch.omap3.merge' in
-your configuration file does not tell me either. Please
-name which branch you want to merge on the command line and
-try again (e.g. 'git pull <repository> <refspec>').
-See git-pull(1) for details on the refspec.
+In Christ,
 
-If you often merge with the same branch, you may want to
-configure the following variables in your configuration
-file:
+Timmy V.
 
-    branch.omap3.remote = <nickname>
-    branch.omap3.merge = <remote-ref>
-    remote.<nickname>.url = <url>
-    remote.<nickname>.fetch = <refspec>
-
-See git-config(1) for details.
-mpoullet@LU84-mpoullet:~/src/u-boot-arm$ cat .git/config
-[core]
-  repositoryformatversion = 0
-  filemode = true
-  bare = false
-  logallrefupdates = true
-[remote "origin"]
-  url = git://git.denx.de/u-boot-arm.git
-  fetch = +refs/heads/*:refs/remotes/origin/*
-[branch "master"]
-  remote = origin
-  merge = refs/heads/master
-[branch "omap3"]
-  remote = origin
-  merge = refs/heads/omap3
+http://burningones.com/
+http://five.sentenc.es/ - Spend less time on e-mail
