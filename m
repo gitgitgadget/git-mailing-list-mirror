@@ -1,116 +1,82 @@
-From: saurabh gupta <saurabhgupta1403@gmail.com>
-Subject: Re: Google Summer of Code 2009: GIT
-Date: Thu, 12 Mar 2009 01:32:02 +0530
-Message-ID: <ab9fa62a0903111302j46c46c2q96af497fa2ac513e@mail.gmail.com>
-References: <49B74373.3090609@gmail.com>
-	 <alpine.DEB.1.00.0903111255470.10279@pacific.mpi-cbg.de>
-	 <ab9fa62a0903110511u63e7d46dr3bb783ee891ca4ae@mail.gmail.com>
-	 <alpine.DEB.1.00.0903111353340.10498@intel-tinevez-2-302>
-	 <ab9fa62a0903110655y4a47ccfkde0984ecb46b3307@mail.gmail.com>
-	 <alpine.DEB.1.00.0903111458340.10498@intel-tinevez-2-302>
-	 <alpine.DEB.1.10.0903110931070.13653@asgard.lang.hm>
-	 <ab9fa62a0903111007w4772b234x8e6fd19cdc7fc595@mail.gmail.com>
-	 <alpine.DEB.1.10.0903111223470.16753@asgard.lang.hm>
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: Re: Help understanding "rebase"
+Date: Wed, 11 Mar 2009 16:04:11 -0400
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E70A2AE398@EXCHANGE.trad.tradestation.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Wed Mar 11 21:07:31 2009
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>, <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Wed Mar 11 21:13:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhUeP-0005QS-QX
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 21:03:38 +0100
+	id 1LhUhq-0006Ke-Lj
+	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 21:07:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751759AbZCKUCI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2009 16:02:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751468AbZCKUCG
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 16:02:06 -0400
-Received: from wa-out-1112.google.com ([209.85.146.181]:19605 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751220AbZCKUCE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Mar 2009 16:02:04 -0400
-Received: by wa-out-1112.google.com with SMTP id v33so94289wah.21
-        for <git@vger.kernel.org>; Wed, 11 Mar 2009 13:02:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=3ZpQ3Nk3qU/JBi/bAWE0UHwCuNs5t7jNtc7FaL+Q/l0=;
-        b=X+U/KuV1bw7jda0i6/Au4nyndfnfMO5NYe6uk0tGWBUhPjUrb3jrAcuvXmaVj3HsAx
-         LE6TaZ984zG6O16vZ2v3yom/poBXpMlHIYfXmW+s7b0ZO+pg04oT+P9Xl4pnP1bBMQa1
-         8n2KZxw7jWm9vcsbvNRiJMrYl1J7/kRA1apzQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=TScmw1vu3azL684YPopT+upEnWK8C5UIqoe11xMT3j2zI71llUV40JueO7VJv2J+eE
-         reNOSMXiDW8GLgdE1LDb3c8bfr/xkj+DDlFRg2ijV4kjs5dHvD26eQdASb8hFJxo8L9D
-         9+f/XsFMUWbo+CiEQ9BSBxicRli9H0nPW+jHE=
-Received: by 10.115.89.18 with SMTP id r18mr5401064wal.111.1236801722241; Wed, 
-	11 Mar 2009 13:02:02 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.10.0903111223470.16753@asgard.lang.hm>
+	id S1754730AbZCKUEx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2009 16:04:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754825AbZCKUEw
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 16:04:52 -0400
+Received: from mail2.tradestation.com ([63.99.207.80]:49683 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754797AbZCKUEv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Mar 2009 16:04:51 -0400
+X-ASG-Debug-ID: 1236801886-041301bb0002-QuoKaX
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
+Received: from mail5.tradestation.com (localhost [127.0.0.1])
+	by mail2.tradestation.com (Spam Firewall) with ESMTP
+	id 6713A206738; Wed, 11 Mar 2009 16:04:47 -0400 (EDT)
+Received: from mail5.tradestation.com ([192.168.51.76]) by mail2.tradestation.com with ESMTP id BjlLpZoE4fHRMrhV; Wed, 11 Mar 2009 16:04:47 -0400 (EDT)
+X-ASG-Whitelist: Client
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 11 Mar 2009 16:04:46 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-ASG-Orig-Subj: Re: Help understanding "rebase"
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Re: Help understanding "rebase"
+Thread-Index: AcmihIspVy6KzrKfT4GGCpUBiyEKwQ==
+X-OriginalArrivalTime: 11 Mar 2009 20:04:46.0464 (UTC) FILETIME=[A03F1000:01C9A284]
+X-Barracuda-Connect: UNKNOWN[192.168.51.76]
+X-Barracuda-Start-Time: 1236801887
+X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112971>
 
-On Thu, Mar 12, 2009 at 12:59 AM,  <david@lang.hm> wrote:
-> On Wed, 11 Mar 2009, saurabh gupta wrote:
->
->> On Wed, Mar 11, 2009 at 10:02 PM,  <david@lang.hm> wrote:
->>>
->>> On Wed, 11 Mar 2009, Johannes Schindelin wrote:
->>>
->>>> Hi,
->>>>
->>>> On Wed, 11 Mar 2009, saurabh gupta wrote:
->>>>
->>
->> In case of only a terminal, It would be very difficult to show an OO
->> document to represent the *diff* output in both text as well in GUI.
->> For example, to indicate the changes in an OO document, we will have
->> to change the underlying XML file appropriately to show the markers
->> signs and other things in the conflict file. Now, if this file is
->> opened in terminal, it would not be at all comprehensible to see the
->> differences.
->>
->> The main thing is that to create *diff* for different file formats, we
->> will have to write the parser code accordingly.
->
-> correct, and in the case of an XML file, the meaningful diff can be
-> substantially shorter than what a text diff of the two files would be
-> (whitespace changes that don't matter, even some tag ordering changes may
-> not matter)
->
-> I'm just asking that you don't get so fixated on what can be done in a GUI
-> that you provide no benifit to people who don't have the GUI
->
-> there are a _lot_ of XML based formats out there, having a diff/merge
-> capability to make dealing with them better than just treating them as text
-> files would be a _very_ useful thing.
->
-> going beyond that and creating the ability to do the markup in
-> application-specific ways, and present it to the user in a nice GUI would
-> also be nice, but these are a step up after having the basic XML handling
-> that isn't specific to a particular application.
+=== Re: ===
+It may help those who know the internals of git-rebase if you supplied
+the
+commands you used and your git version.
 
-Yes, but the thing is that the underlying codes and method will be
-different for GUI part and terminal part to make it readable and
-understandable. Like for OO Documents, if we aim to show the *diff*
-output in the Office tool, then we have to change the xml file
-accordingly. But the same xml file when used with terminal only, the
-*diff* output is not clear.
+So, you're saying you did
 
-As Johannes said in above post that for OO documents, while showing
-the *diff* result, no xml data should be shown.
+   git checkout topic
+   git rebase dev
 
--- 
-Saurabh Gupta
-Senior,
-NSIT,New Delhi, India
+or the equivalent
+
+   git rebase dev topic
+
+?  Are you sure you didn't get the arguments to rebase reversed?
+===end===
+
+Sorry, I did not write down exactly what I typed.  But the situation was
+the latter:
+
+	git rebase dev topic
+
+While looking at the man page to get the arguments right, with dev being
+"upstream" and the branch to rewrite last.  I suppose I _could_ have
+gotten it backwards.
+
+--John
+(please excuse the footer)
+
+TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
+  If you received this in error, please contact the sender and delete the material from any computer.
