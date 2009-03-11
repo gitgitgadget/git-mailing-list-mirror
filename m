@@ -1,99 +1,107 @@
-From: saurabh gupta <saurabhgupta1403@gmail.com>
-Subject: Google Summer of Code 2009: GIT
-Date: Wed, 11 Mar 2009 14:34:09 +0530
-Message-ID: <ab9fa62a0903110204o5b436a58v848905319e579753@mail.gmail.com>
-References: <49B74373.3090609@gmail.com>
-	 <alpine.LNX.1.00.0903110147270.19665@iabervon.org>
-	 <ab9fa62a0903102317l3a7322f7w5e4d9ba0e02af37b@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Help understanding "rebase"
+Date: Wed, 11 Mar 2009 10:24:47 +0100
+Message-ID: <49B7835F.4020503@drmicha.warpmail.net>
+References: <gp6kqj$tkb$1@ger.gmane.org> <KVXTFwpJn-0uEQYfgfg9YwrrimNYx6hbxe73y6qLYxfHYZH9eE4N4g@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 11 10:06:30 2009
+Cc: "John M. Dlugosz" <ngnr63q02@sneakemail.com>, git@vger.kernel.org
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Wed Mar 11 10:26:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhKNh-0004DR-1z
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 10:05:54 +0100
+	id 1LhKi5-0002Zs-Q6
+	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 10:26:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752303AbZCKJEN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2009 05:04:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752148AbZCKJEN
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 05:04:13 -0400
-Received: from yw-out-2324.google.com ([74.125.46.30]:64092 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751892AbZCKJEM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Mar 2009 05:04:12 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so438526ywh.1
-        for <git@vger.kernel.org>; Wed, 11 Mar 2009 02:04:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=C0QWE+ISnZfCwIQ95MnWR3NlFdt/ru0DqlJ08SmEBUQ=;
-        b=wFTGp5ZB4Bq3ABeXapntIHJWUYfiDRdclUxt03XGkiLlk79XDSSqlVDxa/g/Lyesy/
-         P4X5p3Etgt/w7RcrQx/9xLO4H+AcAwqNQjBwhuw9+cJtjmaF31UCVcBNxMsRey3kY9AD
-         GF6ge2hJc8FndZ4n8f+0aVERjxJ2Ic8k5I3tw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=mywi44UMbh2bbZW4+HrXALnifA5o/kKOqdg+KzBESGEnfPu4FDha2r6MZ/guN+9vIf
-         6YrkYjaIP5BEjQnxqT1NVD6eBk0PvkqMUPq0F6GzrNUGOI4LpzwKCe/8rJxP4B4WGKjx
-         9b7061mK5IA+asj44J4a+1ZSZkKur5484gP+M=
-Received: by 10.231.19.70 with SMTP id z6mr1940815iba.32.1236762249234; Wed, 
-	11 Mar 2009 02:04:09 -0700 (PDT)
-In-Reply-To: <ab9fa62a0903102317l3a7322f7w5e4d9ba0e02af37b@mail.gmail.com>
+	id S1752525AbZCKJZJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2009 05:25:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752456AbZCKJZJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 05:25:09 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:45439 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752329AbZCKJZH (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Mar 2009 05:25:07 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 6DCD32EDA07;
+	Wed, 11 Mar 2009 05:24:59 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Wed, 11 Mar 2009 05:24:59 -0400
+X-Sasl-enc: SKOxylHAro8Z3Mj33q2KCBOKRlyrJSS+wVhxrkMqfuWW 1236763499
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id B4C30518F0;
+	Wed, 11 Mar 2009 05:24:58 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090311 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <KVXTFwpJn-0uEQYfgfg9YwrrimNYx6hbxe73y6qLYxfHYZH9eE4N4g@cipher.nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112897>
 
-hello,
+Brandon Casey venit, vidit, dixit 10.03.2009 22:30:
+> John M. Dlugosz wrote:
+>> Here is the situation:  An old topic branch containing 3 commits.  A dev
+>> branch that has recently been merged.  To catch up the topic's work
+>> before adding it to dev, I expected that rebase would do what I ended up
+>> doing manually, detailed below.
+>>
+>> Instead, it crunched away for a long time and gave errors applying patches.
+>>
+>> So I did it manually by checking out dev, then cherry-picking each of
+>> the three commits. Actually, this left it on top of dev, but suppose I
+>> had created a new branch at dev, cherry-picked the stuff from the old
+>> topic branch, and then deleted the old topic branch.  Now I have a new
+>> topic branch with the rebased changes, albeit with a different branch
+>> name.  Point is, there were no conflicts and the changes were simple, so
+>> cherry-picking each node was clean.
+>>
+>> So, what did the rebase command try to do?  I think it may have
+>> something to do with finding a common root between the topic and dev,
+>> which, due to the merge, was a long way back.  Something like this:
+>>
+>>       o--o--   ...  --o
+>>      /                 \
+>>     A--...--B--   ... --C--D <== dev
+>>              \
+>>                   q--r--s  <== topic
+>>
+>>
+>> I was able to cherry-pick q,r,s on top of D without any issues.  So why
+>> did rebase get in such a tizzy?
+> It may help those who know the internals of git-rebase if you supplied the
+> commands you used and your git version.
+> 
+> So, you're saying you did
+> 
+>    git checkout topic
+>    git rebase dev
+> 
+> or the equivalent
+> 
+>    git rebase dev topic
+> 
+> ?  Are you sure you didn't get the arguments to rebase reversed?
+> 
+> -brandon
+> 
 
-On Wed, Mar 11, 2009 at 11:26 AM, Daniel Barkalow <barkalow@iabervon.org> wrote:
->
-> On Wed, 11 Mar 2009, Saurabh Gupta wrote:
->
-> >
-> > /*About GSoC GIT ideas;
-> > */Here are the ideas which I found to be interested in. Although, I
-> > would like to discuss any other idea than these in GIT organization.
-> >
-> > *1) Domain specific merge helpers*
-> > Intelligence in the merger can be put which modifies the source file
-> > according the format. Different file formats can be put in the merger
-> > to support.
->
-> This is something I've thought would be really handy for making git more
-> widely useful. The hard part, of course, is coming up with useful
-> alternative merge algorithms which work for formats that the usual merge
-> doesn't handle. The infrastructure is mostly there (git supports declaring
-> the types of files), but there's no point in support for running a
-> type-specific merger until there are actually type-specific mergers to
-> run.
->
-> Do you have ideas on what formats you'd try to merge, and how?
+That happens very easily: You want to rewrite dev using rebase, so you
+check out dev. You want to rebase the topic branch, so you run "git
+rebase topic". Very logical, but the wrong way round... The doc is
+clear, though.
 
-Well, What I think is to implement file formats other than text like
-that written on wiki i.e. latex, xml, or even any database file (db
-file).  Another idea (although it can be weired also) is to implement
-the new file formats in the plug-in formats. For example, to
-incorporate the merger engine for a new file format, a plug-in is
-created and can be integrated with the present merger in the git.
-However, I am not sure how much valid is this idea to make the present
-merger in git to be compatible with the plug-ins for enabling newer
-file formats.
+A useful mnemonic is that git rebase A B is about the commits A..B (B
+defaulting to the current branch), and that the new B after rebasing will be
 
-Any new idea or suggestions are welcome.
+B' = C + (A..B)
 
+where C is the value of --onto, which defaults to A. The point of rebase
+is that A + (A..B) does not equal B in general, even though A..B=^A B ;)
 
+git rebase A does not rewrite/rebase A! I'll think about a concise first
+paragraph for git-rebase.txt.
 
--- 
-Saurabh Gupta
-Senior,
-Electronics and Communication Engg.
-NSIT,New Delhi, India
+Michael
