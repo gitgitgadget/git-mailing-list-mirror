@@ -1,109 +1,116 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: saurabh gupta <saurabhgupta1403@gmail.com>
 Subject: Re: Google Summer of Code 2009: GIT
-Date: Wed, 11 Mar 2009 20:55:22 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903112049470.10279@pacific.mpi-cbg.de>
-References: <49B74373.3090609@gmail.com>  <alpine.DEB.1.00.0903111255470.10279@pacific.mpi-cbg.de>  <ab9fa62a0903110511u63e7d46dr3bb783ee891ca4ae@mail.gmail.com>  <alpine.DEB.1.00.0903111353340.10498@intel-tinevez-2-302> <ab9fa62a0903110655y4a47ccfkde0984ecb46b3307@mail.gmail.com>
- <alpine.DEB.1.00.0903111458340.10498@intel-tinevez-2-302> <alpine.DEB.1.10.0903110931070.13653@asgard.lang.hm> <alpine.DEB.1.00.0903111800500.10498@intel-tinevez-2-302> <alpine.DEB.1.10.0903111229330.16753@asgard.lang.hm>
+Date: Thu, 12 Mar 2009 01:32:02 +0530
+Message-ID: <ab9fa62a0903111302j46c46c2q96af497fa2ac513e@mail.gmail.com>
+References: <49B74373.3090609@gmail.com>
+	 <alpine.DEB.1.00.0903111255470.10279@pacific.mpi-cbg.de>
+	 <ab9fa62a0903110511u63e7d46dr3bb783ee891ca4ae@mail.gmail.com>
+	 <alpine.DEB.1.00.0903111353340.10498@intel-tinevez-2-302>
+	 <ab9fa62a0903110655y4a47ccfkde0984ecb46b3307@mail.gmail.com>
+	 <alpine.DEB.1.00.0903111458340.10498@intel-tinevez-2-302>
+	 <alpine.DEB.1.10.0903110931070.13653@asgard.lang.hm>
+	 <ab9fa62a0903111007w4772b234x8e6fd19cdc7fc595@mail.gmail.com>
+	 <alpine.DEB.1.10.0903111223470.16753@asgard.lang.hm>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: saurabh gupta <saurabhgupta1403@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 To: david@lang.hm
-X-From: git-owner@vger.kernel.org Wed Mar 11 20:57:15 2009
+X-From: git-owner@vger.kernel.org Wed Mar 11 21:07:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhUWV-0002bn-1s
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 20:55:27 +0100
+	id 1LhUeP-0005QS-QX
+	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 21:03:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753574AbZCKTxq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2009 15:53:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752244AbZCKTxq
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 15:53:46 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47544 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754480AbZCKTxp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Mar 2009 15:53:45 -0400
-Received: (qmail invoked by alias); 11 Mar 2009 19:53:41 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp034) with SMTP; 11 Mar 2009 20:53:41 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18V5fI6KO0VlWzkPtyhQqgRxH4Oel7y7LdtehWqjX
-	/GctCkheQSB3O/
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.DEB.1.10.0903111229330.16753@asgard.lang.hm>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+	id S1751759AbZCKUCI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2009 16:02:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751468AbZCKUCG
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 16:02:06 -0400
+Received: from wa-out-1112.google.com ([209.85.146.181]:19605 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751220AbZCKUCE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Mar 2009 16:02:04 -0400
+Received: by wa-out-1112.google.com with SMTP id v33so94289wah.21
+        for <git@vger.kernel.org>; Wed, 11 Mar 2009 13:02:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3ZpQ3Nk3qU/JBi/bAWE0UHwCuNs5t7jNtc7FaL+Q/l0=;
+        b=X+U/KuV1bw7jda0i6/Au4nyndfnfMO5NYe6uk0tGWBUhPjUrb3jrAcuvXmaVj3HsAx
+         LE6TaZ984zG6O16vZ2v3yom/poBXpMlHIYfXmW+s7b0ZO+pg04oT+P9Xl4pnP1bBMQa1
+         8n2KZxw7jWm9vcsbvNRiJMrYl1J7/kRA1apzQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=TScmw1vu3azL684YPopT+upEnWK8C5UIqoe11xMT3j2zI71llUV40JueO7VJv2J+eE
+         reNOSMXiDW8GLgdE1LDb3c8bfr/xkj+DDlFRg2ijV4kjs5dHvD26eQdASb8hFJxo8L9D
+         9+f/XsFMUWbo+CiEQ9BSBxicRli9H0nPW+jHE=
+Received: by 10.115.89.18 with SMTP id r18mr5401064wal.111.1236801722241; Wed, 
+	11 Mar 2009 13:02:02 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.10.0903111223470.16753@asgard.lang.hm>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112970>
 
-Hi,
+On Thu, Mar 12, 2009 at 12:59 AM,  <david@lang.hm> wrote:
+> On Wed, 11 Mar 2009, saurabh gupta wrote:
+>
+>> On Wed, Mar 11, 2009 at 10:02 PM,  <david@lang.hm> wrote:
+>>>
+>>> On Wed, 11 Mar 2009, Johannes Schindelin wrote:
+>>>
+>>>> Hi,
+>>>>
+>>>> On Wed, 11 Mar 2009, saurabh gupta wrote:
+>>>>
+>>
+>> In case of only a terminal, It would be very difficult to show an OO
+>> document to represent the *diff* output in both text as well in GUI.
+>> For example, to indicate the changes in an OO document, we will have
+>> to change the underlying XML file appropriately to show the markers
+>> signs and other things in the conflict file. Now, if this file is
+>> opened in terminal, it would not be at all comprehensible to see the
+>> differences.
+>>
+>> The main thing is that to create *diff* for different file formats, we
+>> will have to write the parser code accordingly.
+>
+> correct, and in the case of an XML file, the meaningful diff can be
+> substantially shorter than what a text diff of the two files would be
+> (whitespace changes that don't matter, even some tag ordering changes may
+> not matter)
+>
+> I'm just asking that you don't get so fixated on what can be done in a GUI
+> that you provide no benifit to people who don't have the GUI
+>
+> there are a _lot_ of XML based formats out there, having a diff/merge
+> capability to make dealing with them better than just treating them as text
+> files would be a _very_ useful thing.
+>
+> going beyond that and creating the ability to do the markup in
+> application-specific ways, and present it to the user in a nice GUI would
+> also be nice, but these are a step up after having the basic XML handling
+> that isn't specific to a particular application.
 
-On Wed, 11 Mar 2009, david@lang.hm wrote:
+Yes, but the thing is that the underlying codes and method will be
+different for GUI part and terminal part to make it readable and
+understandable. Like for OO Documents, if we aim to show the *diff*
+output in the Office tool, then we have to change the xml file
+accordingly. But the same xml file when used with terminal only, the
+*diff* output is not clear.
 
-> On Wed, 11 Mar 2009, Johannes Schindelin wrote:
-> 
-> > On Wed, 11 Mar 2009, david@lang.hm wrote:
-> >
-> > > On Wed, 11 Mar 2009, Johannes Schindelin wrote:
-> > >
-> > > > On Wed, 11 Mar 2009, saurabh gupta wrote:
-> > > >
-> > > > > What I think is to implement file formats other than text like 
-> > > > > that written on wiki i.e. latex, xml, or even any database file 
-> > > > > (db file). Another idea (although it can be weired also) is to 
-> > > > > implement the new file formats in the plug-in formats. For 
-> > > > > example, to incorporate the merger engine for a new file format, 
-> > > > > a plug-in is created and can be integrated with the present 
-> > > > > merger in the git. However, I am not sure how much valid is this 
-> > > > > idea to make the present merger in git to be compatible with the 
-> > > > > plug-ins for enabling newer file formats.
-> > > >
-> > > > I am not sure that a plugin structure is needed.  Take, for 
-> > > > example, three different .xml based formats: OpenOffice documents, 
-> > > > .svg files and Ant build.xml files.  They need very different user 
-> > > > interfaces.
-> > > >
-> > > > > I am thinking of using gtk+ libraries to implement the GUI part 
-> > > > > (I am quite comfortable with gtk+).
-> > > >
-> > > > I mentioned Tcl/Tk, because it is portable, but I'll also take 
-> > > > gtk-based stuff ;-)
-> > > >
-> > > > > However, I think in merging and notifying about the conflicts in 
-> > > > > the xml files, other things can also be put forward. Like the 
-> > > > > GUI will show the number of tags differing and what are the new 
-> > > > > tags added and even if any tag is renamed with the content 
-> > > > > unchanged. If possible, how about showing a tree like structure 
-> > > > > (just like DOM model) to compare (or diff) the two xml files.
-> > > >
-> > > > This is a little bit too low-level for my liking.  Taking the 
-> > > > OpenOffice example again, the GUI should not expose XML at all...
-> > >
-> > > don't assume that you have a GUI just to handle a filetype. if you 
-> > > have one, good, make use of it. but have a fallback for how to deal 
-> > > with things if all you have is a text terminal.
-> >
-> > I do not think it makes sense to assume all you have at your hands is 
-> > a terminal when you try to resolve a merge conflict in an .svg file.
-> 
-> I'm not saying that you assume that all you have is a terminal, I'm 
-> saying that you _support_ the case that all you have is a terminal.
+As Johannes said in above post that for OO documents, while showing
+the *diff* result, no xml data should be shown.
 
-Sorry, no, the GSoC idea was not about "merge helpers that run also in a 
-terminal".  The idea was about "Domain specific merge helpers".
-
-If I can choose, I'd rather have support for one more merge helper, even 
-if it is all graphical, than an enhancement to support also a terminal.
-
-While I am dreaming: this is the list of domains _I_ would like to see 
-supported: LaTeX, OpenOffice documents, .svg files.
-
-But that is not up to me to decide, just to suggest.
-
-Ciao,
-Dscho
+-- 
+Saurabh Gupta
+Senior,
+NSIT,New Delhi, India
