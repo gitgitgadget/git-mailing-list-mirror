@@ -1,81 +1,67 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: git doc build failure on OS X 10.5.6 (Leopard) during xmlto phase
-Date: Wed, 11 Mar 2009 11:12:01 -0400
-Message-ID: <76718490903110812t5e1723ebi28a84da680422d8a@mail.gmail.com>
-References: <5e68abd90903110721o414283a4te188b58e0e4df8ad@mail.gmail.com>
+From: Svenn Are Bjerkem <svenn.bjerkem@googlemail.com>
+Subject: After git svn clone master is tied to a branch in svn, howto set 
+	master to trunk
+Date: Wed, 11 Mar 2009 08:17:04 -0700 (PDT)
+Message-ID: <09fb20f5-3722-49d4-9565-95a5b41d15ac@c36g2000yqn.googlegroups.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Tom Holaday <tlholaday@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 11 16:14:01 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 11 16:19:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhQ7j-0008PH-Sa
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 16:13:36 +0100
+	id 1LhQCi-000299-BF
+	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 16:18:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753651AbZCKPMH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Mar 2009 11:12:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752247AbZCKPMF
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 11:12:05 -0400
-Received: from rv-out-0506.google.com ([209.85.198.224]:58838 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752089AbZCKPMD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Mar 2009 11:12:03 -0400
-Received: by rv-out-0506.google.com with SMTP id g37so45389rvb.1
-        for <git@vger.kernel.org>; Wed, 11 Mar 2009 08:12:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=2q7BzN8HvAH5oBHpvdxW2knhB7gbUhEaPX69r8Vn2Z4=;
-        b=kDTmKO5qcCjpvFV6Dn11J5nh0uQjfEIlJC6aElBicWvPhBF6TZDUf0bnn/DUxxt3/f
-         US643+5qE99ngMsFLNHumo/9sWVngJEXYB9SITHr+vI6S4VhsDy6mC6zQ/kg6ca+Hyto
-         h9XURfHmfVW7jzwzIqMaomyE0brefOGyDedD0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=DKPu3y0U6BggmE8ansZsga64tL8qyPxYb+Nagg8m4Bbt/jKvsWjJ9+Q0diKsxq/yRz
-         tPMriC0XpAZ+uVOvuuZcyUGpebK+M5b2ymkxdA9aqtxi0H1psIc9oYnUyM1zMQ/sllHx
-         k+iMlnZIoJmXOTcJ997iUTm21uS+c3jo2F0S0=
-Received: by 10.141.195.9 with SMTP id x9mr4419290rvp.216.1236784321737; Wed, 
-	11 Mar 2009 08:12:01 -0700 (PDT)
-In-Reply-To: <5e68abd90903110721o414283a4te188b58e0e4df8ad@mail.gmail.com>
+	id S1752502AbZCKPRK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2009 11:17:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752117AbZCKPRI
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 11:17:08 -0400
+Received: from yx-out-2122.google.com ([74.125.44.25]:41489 "EHLO
+	yx-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751336AbZCKPRG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Mar 2009 11:17:06 -0400
+Received: by yx-out-2122.google.com with SMTP id 33so18185yxl.1
+        for <git@vger.kernel.org>; Wed, 11 Mar 2009 08:17:04 -0700 (PDT)
+Received: by 10.100.111.15 with SMTP id j15mr1294318anc.13.1236784624170; Wed, 
+	11 Mar 2009 08:17:04 -0700 (PDT)
+X-IP: 62.92.119.36
+User-Agent: G2/1.0
+X-HTTP-UserAgent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.0.3) 
+	Gecko/2008092814 Iceweasel/3.0.3 (Debian-3.0.3-3),gzip(gfe),gzip(gfe)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112937>
 
-On Wed, Mar 11, 2009 at 10:21 AM, Tom Holaday <tlholaday@gmail.com> wro=
-te:
-> Hello,
->
-> On OS X 10.5.6 (Leopard), the command ...
->
-> =C2=A0 xmlto -m callouts.xsl man git-filter-branch.xml
->
-> ... terminates with these errors:
+Hi,
+after performing a
+$> git svn clone https://svnserver/svn/a/b/c -T trunk/current -t tags -
+b branches
+I find that the git master has been tied to one of the branches. It
+turns out that the highest svn revision number in the repository was
+tied to that branch.
 
-Assuming you're using the MacPorts asciidoc, to build on OS X you need:
+For historical reasons we have subdirectories in trunk/ on svn, but I
+inspected .git/config
+[svn-remote "svn"]
+        url = https://svnserver/svn
+        fetch = a/b/c/trunk/current:refs/remotes/trunk
+        branches = a/b/c/branches/*:refs/remotes/*
+        tags = a/b/c/tags/*:refs/remotes/tags/*
+And I assume it picked up the strange trunk correctly.
 
-  export ASCIIDOC8=3DYesPlease
-  export DOCBOOK_XSL_172=3DYesPlease
+I have been googling around for a while looking for instructions how
+to tell git that when I check out "master" it should be "trunk" from
+svn and not "branches/next_gen", or more precisely how to move master
+to trunk from branches/next_gen.
 
-And your man pages still won't be perfect. Preformatted text will look
-like this:
+I guess I could solve the problem by modifying a file in trunk on svn
+and commit so that the trunk will get the highest svn revision number
+again and redo the clone.
 
-  .ft C
-          ...
-  .ft
-
-I haven't had a chance to track down what is causing this. If you
-build and install the html pages and use "help -w" those are formatted
-fine. You may just want to install the prebuilt man-pages
-(quick-install-doc or quick-install-man).
-
-j.
+--
+Svenn
