@@ -1,56 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] recv_sideband: Band #2 always goes to stderr
-Date: Tue, 10 Mar 2009 16:59:15 -0700
-Message-ID: <7viqmh7wvg.fsf@gitster.siamese.dyndns.org>
-References: <cover.1236639280u.git.johannes.schindelin@gmx.de>
- <e2b19f6c7c50e5b0a652c40b0d8e4947134ed669.1236639280u.git.johannes.schindelin@gmx.de> <49B61377.90103@viscovery.net> <49B61703.8030602@viscovery.net> <alpine.DEB.1.00.0903101153250.14295@intel-tinevez-2-302> <49B64ADC.2090406@viscovery.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, gitster@pobox.com,
-	Peter Harris <git@peter.is-a-geek.org>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Nicolas Pitre <nico@cam.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Mar 11 01:01:19 2009
+From: Csaba Henk <csaba-ml@creo.hu>
+Subject: Re: import files w/ history
+Date: Wed, 11 Mar 2009 00:11:34 +0000 (UTC)
+Message-ID: <slrngre0d2.1t4t.csaba-ml@beastie.creo.hu>
+References: <slrngqqa4l.1t4t.csaba-ml@beastie.creo.hu> <20090303130046.GA7867@coredump.intra.peff.net> <slrngr299k.1t4t.csaba-ml@beastie.creo.hu> <20090308001021.GA26167@coredump.intra.peff.net> <slrngr99ei.1t4t.csaba-ml@beastie.creo.hu> <20090310180353.GC26351@sigill.intra.peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 11 01:13:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhBsd-0001ZS-1D
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 01:01:03 +0100
+	id 1LhC4j-0005QU-Fa
+	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 01:13:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752363AbZCJX73 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2009 19:59:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752140AbZCJX72
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 19:59:28 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:43004 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752024AbZCJX71 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2009 19:59:27 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id D3DB2576C;
-	Tue, 10 Mar 2009 19:59:25 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DD3415768; Tue,
- 10 Mar 2009 19:59:17 -0400 (EDT)
-In-Reply-To: <49B64ADC.2090406@viscovery.net> (Johannes Sixt's message of
- "Tue, 10 Mar 2009 12:11:24 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7C111C1C-0DCF-11DE-BBBC-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
+	id S1751614AbZCKALw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2009 20:11:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750923AbZCKALv
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 20:11:51 -0400
+Received: from main.gmane.org ([80.91.229.2]:40433 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750898AbZCKALu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2009 20:11:50 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LhC31-00060m-KG
+	for git@vger.kernel.org; Wed, 11 Mar 2009 00:11:47 +0000
+Received: from www.creo.hu ([217.113.62.14])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Mar 2009 00:11:47 +0000
+Received: from csaba-ml by www.creo.hu with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Mar 2009 00:11:47 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: www.creo.hu
+User-Agent: slrn/0.9.8.1 (FreeBSD)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112860>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+On 2009-03-10, Jeff King <peff@peff.net> wrote:
+> I think passing path limiters to filter-branch is just something that
+> nobody ever really tried before. I think the solutions are, in order of
+> decreasing easiness and increasing difficulty:
+>
+>   1. document the problem in Documentation/git-filter-branch.txt
+>
+>   2. create a failing test for it in the test suite
+>
+>   3. fix the failing test. ;)
+>
+> Do you want to try a patch for one (or more!) of those?
 
-> All data producers and data consumers *in git* use band #2 to transport
-> error messages and progress report.
+I'm eager to contribute... next month. I'm pretty much overwhelmed
+now. (Accidentally I almost wrote "overclocked" instead of
+"overwhelmed"... only if that were true!)
 
-Correct; I wrote that in the big comment at the beginning of sideband.c.
-
-Of course we could enhance the protocol to use more bands as needed.  #2
-and #3 have their own meanings and they both map well to "send to stderr".
+Regards,
+Csaba
