@@ -1,102 +1,100 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: First round of UGFWIINI results
-Date: Wed, 11 Mar 2009 03:27:05 -0700 (PDT)
-Message-ID: <m3wsawgxto.fsf@localhost.localdomain>
-References: <alpine.DEB.1.00.0902171745320.6185@intel-tinevez-2-302>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Removed unnecessary use of global variables.
+Date: Wed, 11 Mar 2009 11:30:07 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903111126280.10279@pacific.mpi-cbg.de>
+References: <1236730168-7164-1-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Mar 11 11:28:41 2009
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 11 11:30:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhLg0-0005x3-FU
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 11:28:40 +0100
+	id 1LhLhF-0006LG-AB
+	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 11:29:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753068AbZCKK1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2009 06:27:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753011AbZCKK1L
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 06:27:11 -0400
-Received: from rv-out-0506.google.com ([209.85.198.237]:34971 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751914AbZCKK1K (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Mar 2009 06:27:10 -0400
-Received: by rv-out-0506.google.com with SMTP id g37so2686336rvb.1
-        for <git@vger.kernel.org>; Wed, 11 Mar 2009 03:27:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=udAUdED1l11DF6Xpm/ZN/PvEWVLV23jRfjuhOAljt2k=;
-        b=wyvKTSYkCU0mlUvbfeWeaXNyl+iQy2BCd6CcpTcXY5mmLoZWjUwX/DyR1+CBnnlSQh
-         29gYIHfqm1MNr3wHxpAEb9u/oOzLtE6XtTLJU1SpCSNnTeoQHy5ZgCW586zEo2f7tLvz
-         NPNecEg3mjtQlOJmNevLJ0VAwTgY48xPX3bcE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=mdvL5qfIK86nJRvEMT0BLOZrul2841h0atFniZXW/knyHjkbEu8wvHIU7n6O5BU0Wl
-         SNgqsP7ijICEnC2cqKFOw7c996i12/hM1ouwgY0wQsZzq4a1eyWWdfUX+umhV8CznlBR
-         +zCddiA7hiM3a2sUONlwxZDl5clJL5wEoYbyQ=
-Received: by 10.141.50.11 with SMTP id c11mr4314955rvk.28.1236767227698;
-        Wed, 11 Mar 2009 03:27:07 -0700 (PDT)
-Received: from localhost.localdomain (abwo62.neoplus.adsl.tpnet.pl [83.8.238.62])
-        by mx.google.com with ESMTPS id f42sm12626186rvb.3.2009.03.11.03.27.04
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 11 Mar 2009 03:27:05 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n2BAQSHF005339;
-	Wed, 11 Mar 2009 11:26:39 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n2BAQCJU005335;
-	Wed, 11 Mar 2009 11:26:12 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <alpine.DEB.1.00.0902171745320.6185@intel-tinevez-2-302>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753297AbZCKK2a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2009 06:28:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753288AbZCKK23
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 06:28:29 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46670 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753085AbZCKK22 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Mar 2009 06:28:28 -0400
+Received: (qmail invoked by alias); 11 Mar 2009 10:28:25 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp012) with SMTP; 11 Mar 2009 11:28:25 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/hZhlzfDHhgvPnLICfB4N2gbrq8VmrFu1cwsLfOU
+	kc6SxxJf4hOAkg
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1236730168-7164-1-git-send-email-kusmabite@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112906>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> Dear fans of Git,
-> 
-> a while ago I announced the UGFWIINI contest, a glorious battle of ideas
-> how to
-> 
-> 	Use Git For What It Is Not Indended
+On Wed, 11 Mar 2009, Erik Faye-Lund wrote:
 
-[...]
-> Number 2:
-> 
-> At the GitTogether, Sam Vilain presented his idea to use Git as a DB backend:
-> 
-> 	http://utsl.gen.nz/talks/git-db
-> 
-> Just think about it: committing by "INSERT INTO"!
+> git_config() now takes a third data-parameter that is passed back
+> to the callback-function. At the time this code was written, that
+> parameter did not exist, so a somewhat nasty (but by all means
+> correct) use of global variables was introduced. In commit
+> ef90d6d4208a5130185b04f06e5f90a5f9959fe3 Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> introduced a parameter for similar
+> purposes.
 
-And something very similar: "Using Git as a versioned data store
-in Python" by John Wiegley (similar to 'shelve' which uses database)
+We tend to quote commits in this form: ef90d6d(Provide git_config with a 
+callback-data parameter)
 
-  http://www.newartisans.com/2008/05/using-git-as-a-versioned-data-store-in-python.html
-  http://github.com/jwiegley/git-issues/
+> I've changed the code to utilize this parameter to pass the
+> string. In addition, I've made the function calculate the string
+> length on usage instead, to reduce the parameters needed to what
+> the callback-interface supplies.
 
-And similar solution for Ruby
+Usually, commit messages are held in a more imperative form than a 
+subjective one:
 
-  http://github.com/georgi/git_store
+	Utilize this parameter to pass the string.
 
-by the way of GitHub Blog: 
+> diff --git a/connect.c b/connect.c
+> index 2f23ab3..98fbaea 100644
+> --- a/connect.c
+> +++ b/connect.c
+> @@ -371,14 +371,13 @@ static void git_tcp_connect(int fd[2], char *host, int flags)
+>  	fd[1] = dup(sockfd);
+>  }
+>  
+> -
+>  static char *git_proxy_command;
+> -static const char *rhost_name;
+> -static int rhost_len;
+> -
+>  static int git_proxy_command_options(const char *var, const char *value,
+> -		void *cb)
+> +		void *data)
+>  {
+> +	const char *rhost_name = data;
+> +	const size_t rhost_len = strlen(rhost_name);
+> +
 
-  http://github.com/blog/374-git-as-a-data-store-in-python-and-ruby
+git_proxy_command_options is called for each and every config variable.  
+The idea of having the length in a local variable was to avoid 
+recalculating the length each and every time.  I think I'd actually use a 
+strbuf for that.
 
+BTW I would not rename "cb", as it is only distracting the reader of the 
+patch.
 
-P.S. When there would be next round of UGFWIINI contest?
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+But I like the idea of your patch (as you can see from me replying ;-)
+
+Thanks,
+Dscho
