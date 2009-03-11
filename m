@@ -1,94 +1,96 @@
-From: Bernie Innocenti <bernie@codewiz.org>
-Subject: How newbies create remote repositories
-Date: Wed, 11 Mar 2009 07:59:47 +0100
-Organization: Sugar Labs Foundation - http://sugarlabs.org/
-Message-ID: <49B76163.2080205@codewiz.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: git-p4 workflow suggestions?
+Date: Wed, 11 Mar 2009 08:03:12 +0100
+Message-ID: <200903110803.12736.chriscool@tuxfamily.org>
+References: <20090309142108.GK12880@zoy.org> <200903100815.53847.chriscool@tuxfamily.org> <20090310095729.GA27280@zoy.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 11 08:01:20 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Sam Hocevar <sam@zoy.org>
+X-From: git-owner@vger.kernel.org Wed Mar 11 08:05:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhIRL-0004Wb-M2
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 08:01:20 +0100
+	id 1LhIVX-0005Gj-2K
+	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 08:05:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751938AbZCKG7v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2009 02:59:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751865AbZCKG7v
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 02:59:51 -0400
-Received: from trinity.develer.com ([89.97.188.34]:60672 "EHLO
-	trinity.develer.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751730AbZCKG7v (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Mar 2009 02:59:51 -0400
-Received: (qmail 13575 invoked from network); 11 Mar 2009 06:59:48 -0000
-Received: from static-217-133-10-139.clienti.tiscali.it (HELO ?10.4.4.169?) (bernie@217.133.10.139)
-  by trinity.develer.com with ESMTPA; 11 Mar 2009 06:59:48 -0000
-User-Agent: Thunderbird 2.0.0.19 (X11/20090103)
-X-Enigmail-Version: 0.95.6
+	id S1752604AbZCKHEL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Mar 2009 03:04:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752502AbZCKHEK
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 03:04:10 -0400
+Received: from smtp1-g21.free.fr ([212.27.42.1]:35149 "EHLO smtp1-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751878AbZCKHEI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Mar 2009 03:04:08 -0400
+Received: from smtp1-g21.free.fr (localhost [127.0.0.1])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id 9086D940099;
+	Wed, 11 Mar 2009 08:03:59 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id A72139400A4;
+	Wed, 11 Mar 2009 08:03:57 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <20090310095729.GA27280@zoy.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112890>
 
-Here's another usability problem report from my friends who
-are learning their way to Git from previous experience with
-Subversion and Mercurial.
+Le mardi 10 mars 2009, Sam Hocevar a =E9crit :
+> On Tue, Mar 10, 2009, Christian Couder wrote:
+> > >    I have modified git and git-p4 to a point where they are usabl=
+e in
+> > > my work environment. I am now faced with a new problem: Perforce'=
+s
+> > > composite workspaces. They allow you to "mount" parts of the repo
+> > > onto other directories, even nonempty ones.
+> >
+> > It looks like SVN externals. So I think you should read about "git
+> > submodule".
+> >
+> > There is this related link on the wiki:
+> >
+> > http://blog.alieniloquent.com/2008/03/08/git-svn-with-svnexternals/
+>
+>    Unfortunately submodules are considered separate repositories, so =
+if
+> I have /include and /src as submodules, I cannot commit atomically to
+> both. Or can I? That's probably my strongest requirement.
 
-Three of them confessed they couldn't find a simple recipe
-to setup remote repositories, after looking in obvious
-places such as the git-push manpage.
+I thought that you can commit in /include then in /src and then in the=20
+supermodule. This way you should have an atomic commit in the supermodu=
+le=20
+with both changes. But I don't know much about submodules.
 
-Each one could figure it out independently after some time, coming
-up with a variety of creative strategies:
+> > You may also want to search the mailing list as this subject has of=
+ten
+> > been discussed.
+>
+>    I did skim through the archives, but couldn't find much. There was
+> this discussion: http://kerneltrap.org/mailarchive/git/2006/11/28/231=
+515
+> where the idea of Perforce-like workspaces was apparently dismissed a=
+s
+> being "a mess".
 
-Strategy 1:
- client$ ssh server
- server$ mkdir foo.git
- server$ cd foo.git
- server$ git init --bare --shared
- server$ exit
- client$ git push --mirror server:foo.git 
+Perhaps. Anyway I think there are patches about submodules quite often =
+on=20
+the list and it seems a hot topic as there is an entry on the GSoC2009 =
+idea=20
+page:
 
-Problem: Does not setup the remote for you.
-Solution: Would be nice if "git push <URL>" could give this tip
+http://git.or.cz/gitwiki/SoC2009Ideas
 
-Problem: Requires a full unrestricted shell on the server
-Solution: If "git init <dir>" was supported, one could do
-  ssh server git init --bare --shared foo.git
+On this page you may also be interested by the "Narrow and Sparse clone=
+=20
+support" idea.
 
+Best regards,
+Christian.
 
-Strategy 2:
- client$ ssh server
- server$ mkdir foo.git
- server$ cd foo.git
- server$ git init --bare --shared
- server$ exit
- client$ git clone server:foo.git .
- client$ git add .
- client$ git commit
- client$ git push
-
-Problem: only works if you had no local repository yet
-
-
-Strategy 3:
- client$ scp -r .git server:foo.git
- client$ cd ..
- client$ rm -r foo
- client$ git clone server:foo.git
-
-Problem: the user checks out the repository from scratch
-  to properly add the remote
-Solution: "git pull" might suggest to use "git remote".
-
-A simple "git remote create" or "git remote new" along with a
-reference to it in the manpage of "git push" might have helped
-these users.
-
--- 
-   // Bernie Innocenti - http://www.codewiz.org/
- \X/  Sugar Labs       - http://www.sugarlabs.org/
+PS: it would be nice to put me in the CC header of your emails when you=
+=20
+reply to me.
