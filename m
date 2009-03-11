@@ -1,78 +1,80 @@
-From: david@lang.hm
-Subject: Re: Google Summer of Code 2009: GIT
-Date: Wed, 11 Mar 2009 09:32:05 -0700 (PDT)
-Message-ID: <alpine.DEB.1.10.0903110931070.13653@asgard.lang.hm>
-References: <49B74373.3090609@gmail.com>  <alpine.DEB.1.00.0903111255470.10279@pacific.mpi-cbg.de>  <ab9fa62a0903110511u63e7d46dr3bb783ee891ca4ae@mail.gmail.com>  <alpine.DEB.1.00.0903111353340.10498@intel-tinevez-2-302> <ab9fa62a0903110655y4a47ccfkde0984ecb46b3307@mail.gmail.com>
- <alpine.DEB.1.00.0903111458340.10498@intel-tinevez-2-302>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: After git svn clone master is tied to a branch in svn, howto
+ set    master to trunk
+Date: Wed, 11 Mar 2009 17:32:59 +0100
+Message-ID: <49B7E7BB.2090803@drmicha.warpmail.net>
+References: <09fb20f5-3722-49d4-9565-95a5b41d15ac@c36g2000yqn.googlegroups.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: saurabh gupta <saurabhgupta1403@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Mar 11 17:34:03 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Svenn Are Bjerkem <svenn.bjerkem@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 11 17:35:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhRNG-0000yW-CZ
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 17:33:42 +0100
+	id 1LhROZ-0001dh-IT
+	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 17:35:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751688AbZCKQcO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2009 12:32:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751790AbZCKQcN
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 12:32:13 -0400
-Received: from mail.lang.hm ([64.81.33.126]:59572 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751727AbZCKQcM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Mar 2009 12:32:12 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n2BGW5iC008338;
-	Wed, 11 Mar 2009 08:32:05 -0800
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <alpine.DEB.1.00.0903111458340.10498@intel-tinevez-2-302>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1752682AbZCKQdO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2009 12:33:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752397AbZCKQdN
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 12:33:13 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:47414 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751990AbZCKQdM (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Mar 2009 12:33:12 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 587DB2EADF1;
+	Wed, 11 Mar 2009 12:33:10 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Wed, 11 Mar 2009 12:33:10 -0400
+X-Sasl-enc: jKTvEO6O+Km8zGnCiay3qS2eqAOOckTNDMOWC0xtPyas 1236789190
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id B8929E2A8;
+	Wed, 11 Mar 2009 12:33:09 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090311 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <09fb20f5-3722-49d4-9565-95a5b41d15ac@c36g2000yqn.googlegroups.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112954>
 
-On Wed, 11 Mar 2009, Johannes Schindelin wrote:
-
+Svenn Are Bjerkem venit, vidit, dixit 11.03.2009 16:17:
 > Hi,
->
-> On Wed, 11 Mar 2009, saurabh gupta wrote:
->
->> What I think is to implement file formats other than text like that
->> written on wiki i.e. latex, xml, or even any database file (db file).
->> Another idea (although it can be weired also) is to implement the new
->> file formats in the plug-in formats. For example, to incorporate the
->> merger engine for a new file format, a plug-in is created and can be
->> integrated with the present merger in the git. However, I am not sure
->> how much valid is this idea to make the present merger in git to be
->> compatible with the plug-ins for enabling newer file formats.
->
-> I am not sure that a plugin structure is needed.  Take, for example, three
-> different .xml based formats: OpenOffice documents, .svg files and Ant
-> build.xml files.  They need very different user interfaces.
->
->> I am thinking of using gtk+ libraries to implement the GUI part (I am
->> quite comfortable with gtk+).
->
-> I mentioned Tcl/Tk, because it is portable, but I'll also take gtk-based
-> stuff ;-)
->
->> However, I think in merging and notifying about the conflicts in the xml
->> files, other things can also be put forward. Like the GUI will show the
->> number of tags differing and what are the new tags added and even if any
->> tag is renamed with the content unchanged. If possible, how about
->> showing a tree like structure (just like DOM model) to compare (or diff)
->> the two xml files.
->
-> This is a little bit too low-level for my liking.  Taking the OpenOffice
-> example again, the GUI should not expose XML at all...
+> after performing a
+> $> git svn clone https://svnserver/svn/a/b/c -T trunk/current -t tags -
+> b branches
+> I find that the git master has been tied to one of the branches. It
+> turns out that the highest svn revision number in the repository was
+> tied to that branch.
+> 
+> For historical reasons we have subdirectories in trunk/ on svn, but I
+> inspected .git/config
+> [svn-remote "svn"]
+>         url = https://svnserver/svn
+>         fetch = a/b/c/trunk/current:refs/remotes/trunk
+>         branches = a/b/c/branches/*:refs/remotes/*
+>         tags = a/b/c/tags/*:refs/remotes/tags/*
+> And I assume it picked up the strange trunk correctly.
+> 
+> I have been googling around for a while looking for instructions how
+> to tell git that when I check out "master" it should be "trunk" from
+> svn and not "branches/next_gen", or more precisely how to move master
+> to trunk from branches/next_gen.
+> 
+> I guess I could solve the problem by modifying a file in trunk on svn
+> and commit so that the trunk will get the highest svn revision number
+> again and redo the clone.
 
-don't assume that you have a GUI just to handle a filetype. if you have 
-one, good, make use of it. but have a fallback for how to deal with things 
-if all you have is a text terminal.
+I'm not quite sure what you mean by master being "tied" to an svn
+branch. You mean you want master to track the svn trunk? Then
 
-David Lang
+git branch -D master
+git checkout --track -b master trunk
+
+should do (assuming you haven't worked on master yet).
+
+Michael
