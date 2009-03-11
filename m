@@ -1,295 +1,76 @@
-From: Finn Arne Gangstad <finnag@pvv.org>
-Subject: [PATCH v2] New config push.default to decide default behavior for
-	push
-Date: Wed, 11 Mar 2009 23:01:45 +0100
-Message-ID: <20090311220144.GA6782@pvv.org>
+From: Ealdwulf Wuffinga <ealdwulf@googlemail.com>
+Subject: Re: Generalised bisection
+Date: Wed, 11 Mar 2009 22:14:28 +0000
+Message-ID: <efe2b6d70903111514r2855d910heac71bc0029d2766@mail.gmail.com>
+References: <efe2b6d70903081840v18e77aa7w2dac2bed553d0d6a@mail.gmail.com>
+	 <200903100808.15875.chriscool@tuxfamily.org>
+	 <efe2b6d70903110159h78de744yc141effaf5aa0821@mail.gmail.com>
+	 <43d8ce650903110235q5e2a59f6t201d5e65a4937476@mail.gmail.com>
+	 <alpine.DEB.1.00.0903111304520.10279@pacific.mpi-cbg.de>
+	 <43d8ce650903110508o3d12f32m8202fae750d215a@mail.gmail.com>
+	 <alpine.DEB.1.00.0903111358260.10498@intel-tinevez-2-302>
+	 <43d8ce650903110624t47e37b19n3fc72e3243978200@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 11 23:08:39 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Git List <git@vger.kernel.org>, Ingo Molnar <mingo@elte.hu>
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 11 23:21:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhWYs-0006FW-79
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 23:06:02 +0100
+	id 1LhWij-0000pj-LK
+	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 23:16:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755603AbZCKWBw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2009 18:01:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755609AbZCKWBv
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 18:01:51 -0400
-Received: from decibel.pvv.ntnu.no ([129.241.210.179]:54680 "EHLO
-	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755702AbZCKWBu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Mar 2009 18:01:50 -0400
-Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
-	(envelope-from <finnag@pvv.ntnu.no>)
-	id 1LhWUj-0000xx-1H; Wed, 11 Mar 2009 23:01:45 +0100
-Content-Disposition: inline
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753655AbZCKWOc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Mar 2009 18:14:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753488AbZCKWOc
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 18:14:32 -0400
+Received: from mail-fx0-f176.google.com ([209.85.220.176]:51038 "EHLO
+	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751759AbZCKWOb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Mar 2009 18:14:31 -0400
+Received: by fxm24 with SMTP id 24so180719fxm.37
+        for <git@vger.kernel.org>; Wed, 11 Mar 2009 15:14:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=iKjqgUcgbVrykbPjWYRyyFvKspr2V00kdd92To6S8lk=;
+        b=Td/5FfOnp16yLuD9SgBjLabCWWo15hmHl7ObCalZaIEruDVIlRLWq3oOkhaBG52yh9
+         QxuOFaGYmukLJImvR8BrniREuFrDbfjCHqyBXFJ257b0npNQdpQyox1bvAYpHLc46XGq
+         MS4j+V66OZptdjKHY1vCULtTbZJq4+0w4v9vI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=bK/nt/nXw47DOkzoZXMLR67Ni1HjEzZdnyw2/8fj3SKjIfAHUcHr0HYbatnj7Gkr3+
+         qyCFsojZy36PGGzYomqbqD8myHOPC/GBi18OUUF4b/x/n5RQtRcMpSfqgtyfYi8adle/
+         XUlfD26fjail8G0ceyHwoQv9mzxslJ+iItqio=
+Received: by 10.204.62.82 with SMTP id w18mr257621bkh.129.1236809668854; Wed, 
+	11 Mar 2009 15:14:28 -0700 (PDT)
+In-Reply-To: <43d8ce650903110624t47e37b19n3fc72e3243978200@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112983>
 
-This is intended to replace fg/push-default, I'll repost some of the missing
-parts as other patches.
+[John will get this twice, sorry]
 
---8<--
-New config push.default to decide default behavior for push
+On Wed, Mar 11, 2009 at 1:24 PM, John Tapsell <johnflux@gmail.com> wrot=
+e:
 
-Currently git push will push all matching branches to the current
-remote.  For some workflows this default is suboptimal, for new users
-it is often surprising, and some have found the default behaviour too
-easy to trig by accident with unwanted consequences.
+> =A0 Not
+> quite sure how it would fit in though (I'd rather it was called from
+> "git bisect" rather than adding another separate git command)
 
-Introduce a new configuration variable "push.default" that decides what
-action git push should take if no refspecs are given or implied by the
-command line arguments or the current remote configuration. If this
-variable is unconfigured, display a prominent warning when default
-behavior is trigged.
+I guess the most obvious route would be to add an option to 'git bisect=
+ start'
+ to specify that it should be used instead of the usual algorithm.
 
-Possible values are:
-'nothing'  : Push nothing
-'matching' : Current default behaviour, push all branches that already exist
-   in the current remote
-'tracking' : Push the current branch to whatever it is tracking
-'current'  : Push the current branch to a branch of the same name
-
-Signed-off-by: Finn Arne Gangstad <finnag@pvv.org>
----
- Documentation/RelNotes-1.6.3.txt |    7 +++
- Documentation/config.txt         |   19 +++++++++
- builtin-push.c                   |   80 +++++++++++++++++++++++++++++++++++--
- cache.h                          |    9 ++++
- config.c                         |   25 ++++++++++++
- environment.c                    |    1 +
- 6 files changed, 136 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/RelNotes-1.6.3.txt b/Documentation/RelNotes-1.6.3.txt
-index ee1fddb..3eb6bf0 100644
---- a/Documentation/RelNotes-1.6.3.txt
-+++ b/Documentation/RelNotes-1.6.3.txt
-@@ -22,6 +22,13 @@ branch pointed at by its HEAD, gets a large warning.  You can choose what
- should happen upon such a push by setting the configuration variable
- receive.denyDeleteCurrent in the receiving repository.
- 
-+In a future release, the default of "git push" without further
-+arguments may be changed. Currently, it will push all matching
-+refspecs to the current remote.  A configuration variable push.default
-+has been introduced to select the default behaviour.  To ease the
-+transition, a big warning is issued if this is not configured and a
-+git push without arguments is attempted.
-+
- 
- Updates since v1.6.2
- --------------------
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index f5152c5..6fdf829 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1160,6 +1160,25 @@ pull.octopus::
- pull.twohead::
- 	The default merge strategy to use when pulling a single branch.
- 
-+push.default::
-+	Defines the action git push should take if no refspec is given
-+	on the command line, no refspec is configured in the remote, and
-+	no refspec is implied by any of the options given on the command
-+	line.
-+
-+	The term `current remote` means the remote configured for the current
-+	branch, or `origin` if no remote is configured. `origin` is also used
-+	if you are not on any branch.
-+
-+	Possible values are:
-++
-+* `nothing` do not push anything.
-+* `matching` push all matching branches to the current remote.
-+  All branches having the same name in both ends are considered to be
-+  matching. This is the current default value.
-+* `tracking` push the current branch to whatever it is tracking.
-+* `current` push the current branch to a branch of the same name.
-+
- receive.fsckObjects::
- 	If it is set to true, git-receive-pack will check all received
- 	objects. It will abort in the case of a malformed object or a
-diff --git a/builtin-push.c b/builtin-push.c
-index 122fdcf..fa5eabb 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -48,6 +48,75 @@ static void set_refspecs(const char **refs, int nr)
- 	}
- }
- 
-+static void setup_push_tracking(struct remote *remote)
-+{
-+	int n;
-+	struct branch *branch = branch_get(NULL);
-+	if (!branch)
-+		die("You are not currently on a branch.");
-+	if (!branch->merge_nr)
-+		die("The current branch %s is not tracking anything.",
-+		    branch->name);
-+	if (branch->remote != remote)
-+		die("The current branch is tracking \"%s\", not \"%s\"!",
-+		    branch->remote->name, remote->name);
-+	for (n = 0; n < branch->merge_nr; n++) {
-+		struct strbuf rs = STRBUF_INIT;
-+		strbuf_addf(&rs, "%s:%s", branch->name, branch->merge[n]->src);
-+		add_refspec(rs.buf);
-+	}
-+}
-+
-+static const char *warn_unconfigured_push_msg[] = {
-+	"You did not specify any refspecs to push, and the current remote",
-+	"has not configured any push refspecs. The default action in this",
-+	"case has been to push all matching refspecs, that is, all branches",
-+	"that exist both locally and remotely will be updated.",
-+	"This default may change in the future.",
-+	"",
-+	"You can specify what action you want to take in this case, and",
-+	"avoid seeing this message again, by configuring 'push.default' to:",
-+	"  'nothing'  : Do not push anythig",
-+	"  'matching' : Push all matching branches (the current default)",
-+	"  'tracking' : Push the current branch to whatever it is tracking",
-+	"  'current'  : Push the current branch",
-+	""
-+};
-+
-+static void warn_unconfigured_push()
-+{
-+	int i;
-+	for (i = 0; i < ARRAY_SIZE(warn_unconfigured_push_msg); i++)
-+		warning("%s", warn_unconfigured_push_msg[i]);
-+}
-+
-+static void do_default_push(struct remote *remote)
-+{
-+	git_config(git_default_config, NULL);
-+	switch (push_default) {
-+	case PUSH_DEFAULT_UNSPECIFIED:
-+		warn_unconfigured_push();
-+		/* fallthrough */
-+
-+	case PUSH_DEFAULT_MATCHING:
-+		add_refspec(":");
-+		break;
-+
-+	case PUSH_DEFAULT_TRACKING:
-+		setup_push_tracking(remote);
-+		break;
-+
-+	case PUSH_DEFAULT_CURRENT:
-+		add_refspec("HEAD");
-+		break;
-+
-+	case PUSH_DEFAULT_NOTHING:
-+		die("Nothing to push, and push is configured to push nothing "
-+		    "by default.");
-+		break;
-+	}
-+}
-+
- static int do_push(const char *repo, int flags)
- {
- 	int i, errs;
-@@ -76,11 +145,12 @@ static int do_push(const char *repo, int flags)
- 		return error("--all and --mirror are incompatible");
- 	}
- 
--	if (!refspec
--		&& !(flags & TRANSPORT_PUSH_ALL)
--		&& remote->push_refspec_nr) {
--		refspec = remote->push_refspec;
--		refspec_nr = remote->push_refspec_nr;
-+	if (!refspec && !(flags & TRANSPORT_PUSH_ALL)) {
-+		if (remote->push_refspec_nr) {
-+			refspec = remote->push_refspec;
-+			refspec_nr = remote->push_refspec_nr;
-+		} else if (!(flags & TRANSPORT_PUSH_MIRROR))
-+			do_default_push(remote);
- 	}
- 	errs = 0;
- 	for (i = 0; i < remote->url_nr; i++) {
-diff --git a/cache.h b/cache.h
-index 189151d..df4f117 100644
---- a/cache.h
-+++ b/cache.h
-@@ -541,8 +541,17 @@ enum rebase_setup_type {
- 	AUTOREBASE_ALWAYS,
- };
- 
-+enum push_default_type {
-+	PUSH_DEFAULT_UNSPECIFIED = -1,
-+	PUSH_DEFAULT_NOTHING = 0,
-+	PUSH_DEFAULT_MATCHING,
-+	PUSH_DEFAULT_TRACKING,
-+	PUSH_DEFAULT_CURRENT,
-+};
-+
- extern enum branch_track git_branch_track;
- extern enum rebase_setup_type autorebase;
-+extern enum push_default_type push_default;
- 
- #define GIT_REPO_VERSION 0
- extern int repository_format_version;
-diff --git a/config.c b/config.c
-index 0c8c76f..e36a2b0 100644
---- a/config.c
-+++ b/config.c
-@@ -565,6 +565,28 @@ static int git_default_branch_config(const char *var, const char *value)
- 	return 0;
- }
- 
-+static int git_default_push_config(const char *var, const char *value)
-+{
-+	if (!strcmp(var, "push.default")) {
-+		if (!value)
-+			return config_error_nonbool(var);
-+		else if (!strcmp(value, "nothing"))
-+			push_default = PUSH_DEFAULT_NOTHING;
-+		else if (!strcmp(value, "matching"))
-+			push_default = PUSH_DEFAULT_MATCHING;
-+		else if (!strcmp(value, "tracking"))
-+			push_default = PUSH_DEFAULT_TRACKING;
-+		else if (!strcmp(value, "current"))
-+			push_default = PUSH_DEFAULT_CURRENT;
-+		else
-+			return error("Malformed value for %s", var);
-+		return 0;
-+	}
-+
-+	/* Add other config variables here and to Documentation/config.txt. */
-+	return 0;
-+}
-+
- static int git_default_mailmap_config(const char *var, const char *value)
- {
- 	if (!strcmp(var, "mailmap.file"))
-@@ -588,6 +610,9 @@ int git_default_config(const char *var, const char *value, void *dummy)
- 	if (!prefixcmp(var, "branch."))
- 		return git_default_branch_config(var, value);
- 
-+	if (!prefixcmp(var, "push."))
-+		return git_default_push_config(var, value);
-+
- 	if (!prefixcmp(var, "mailmap."))
- 		return git_default_mailmap_config(var, value);
- 
-diff --git a/environment.c b/environment.c
-index e278bce..4696885 100644
---- a/environment.c
-+++ b/environment.c
-@@ -42,6 +42,7 @@ enum safe_crlf safe_crlf = SAFE_CRLF_WARN;
- unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
- enum branch_track git_branch_track = BRANCH_TRACK_REMOTE;
- enum rebase_setup_type autorebase = AUTOREBASE_NEVER;
-+enum push_default_type push_default = PUSH_DEFAULT_UNSPECIFIED;
- 
- /* Parallel index stat data preload? */
- int core_preload_index = 0;
--- 
-1.6.2.107.ge47ee.dirty
+Ealdwulf
