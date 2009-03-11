@@ -1,7 +1,7 @@
 From: Jay Soffian <jaysoffian@gmail.com>
 Subject: Re: setting up tracking on push
-Date: Tue, 10 Mar 2009 23:40:29 -0400
-Message-ID: <76718490903102040m6bfb45f1xfd7ff3d53a79ef5b@mail.gmail.com>
+Date: Tue, 10 Mar 2009 23:44:14 -0400
+Message-ID: <76718490903102044j4ca3462eye5ffcb178608dc29@mail.gmail.com>
 References: <alpine.DEB.1.00.0903061144480.10279@pacific.mpi-cbg.de>
 	 <49b12ff7.nCWIz4ABJcgwW3BZ%obrien654j@gmail.com>
 	 <76718490903060743m425c2d55n6e8737c893c936e8@mail.gmail.com>
@@ -13,67 +13,70 @@ References: <alpine.DEB.1.00.0903061144480.10279@pacific.mpi-cbg.de>
 	 <20090311030604.GA3044@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Cc: Marc Branchaud <marcnarc@xiplink.com>, Miles Bader <miles@gnu.org>,
 	git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 11 04:43:47 2009
+X-From: git-owner@vger.kernel.org Wed Mar 11 04:45:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhFM9-000684-EJ
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 04:43:45 +0100
+	id 1LhFO5-0006YM-2R
+	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 04:45:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755916AbZCKDkg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Mar 2009 23:40:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755905AbZCKDkd
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 23:40:33 -0400
-Received: from rv-out-0506.google.com ([209.85.198.234]:3477 "EHLO
+	id S1753987AbZCKDoR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2009 23:44:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753912AbZCKDoQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 23:44:16 -0400
+Received: from rv-out-0506.google.com ([209.85.198.228]:64019 "EHLO
 	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755874AbZCKDkb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Mar 2009 23:40:31 -0400
-Received: by rv-out-0506.google.com with SMTP id g9so2772121rvb.5
-        for <git@vger.kernel.org>; Tue, 10 Mar 2009 20:40:30 -0700 (PDT)
+	with ESMTP id S1753882AbZCKDoQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2009 23:44:16 -0400
+Received: by rv-out-0506.google.com with SMTP id g37so2538354rvb.1
+        for <git@vger.kernel.org>; Tue, 10 Mar 2009 20:44:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=Z59+zTGx0Uapv2a8XTMthJ8BhZYCNVxRSsFySL9KWzQ=;
-        b=gLqzWGDNMeOUJ4NyY+pfBoVWRKy6z/FZ6TXhLyRO/Qu7XeKAoXhTZQTMfD59BjWYyw
-         7jmu8DyWPOx0flawwBLoGaQeU+npXbbnUfHS/lKeg5h/2MBvhvA1k67qWE/DjRpbQvYu
-         kp9fD+xV1Vz9PagbXzd6vI/o0Tikr5zNX24wQ=
+        bh=2aRRrscbvgv4JECKRfvtyQIdG9SI+IE7m2npPAdELeo=;
+        b=vShgJOK5edoEf4evR/KO9kpO1DN5prAzk3Gbqzw7iqvA3hoGRaw0nhVSx9cJwCItSv
+         oyO2nNzig+cLn+YK0CRaTgDlCCknlKrUsy8ZnMK4vqlRiIZwzvYfl33dJPCTmkP5wlrV
+         hlX5EmN1ULNZB7wCpFhQuVDGsH345W487UAec=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=VSzaSfp7EC3WyMyc85zcf57/g1ssXgZh26oFAXGpZ9vxjkA0HTdF4tV19yax+oc241
-         ZmvIXbaKY7oylOexbFFoL3URlhgqddjTGJJy5cwWjrnc89uR9JwAKI3p3gbz5xK12RAV
-         fto76vlYhNh0Q3f9Oqq26hEHo0oKZgZsN/qqM=
-Received: by 10.141.71.14 with SMTP id y14mr4125025rvk.131.1236742829966; Tue, 
-	10 Mar 2009 20:40:29 -0700 (PDT)
+        b=ZIibGAgsNEDxq4wjNKZQWjruGwdl/be78VBMQhtZK/dc4pEMh41DCtH+NYkw+xxLOB
+         NYNisuvrCESQubNSlEuDi1Io20SOlJUaGoHq7lIvzJi8f4DJiBGI9sH0zMlPxae/se3H
+         lUl6lsLuAZLWzCAPE8fhMjNpqWKlAptecx0js=
+Received: by 10.141.71.14 with SMTP id y14mr4123205rvk.202.1236743054158; Tue, 
+	10 Mar 2009 20:44:14 -0700 (PDT)
 In-Reply-To: <20090311030604.GA3044@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112875>
 
 On Tue, Mar 10, 2009 at 11:06 PM, Jeff King <peff@peff.net> wrote:
-> If "-u" is supposed to be a general mode, then what does it mean to s=
-ay:
+>> No, look at how -m works. [<oldbranch>] <newbranch>. I modeled it after that.
 >
-> =C2=A0git branch -u foo
+> Hmm. I think of that as "make <newbranch>, move from <oldbranch> or
+> HEAD".
 
-Nothing, that would emit the usage message since it's not valid.
+Um, I think of it as "rename <oldbranch> to <newbranch>" where
+<oldbranch> defaults to the current branch (aka HEAD).
 
-> ? I would expect that to "update" foo. But if --track is given, then =
-it
-> means "update HEAD to track foo".
+> Just as regular branch is "make <newbranch>, start from
+> <oldbranch> or HEAD". But your proposal is "update <newbranch> or HEAD,
+> from <oldbranch>".
 
-Maybe branch isn't the best place to put this feature, but it's where
-I'd look. I'm not married to -u, it was just the first thing that came
-to mind. But I still can't think of anything better.
+Wait, what? No it isn't. My proposal is add or remove tracking
+information to <branch> where <branch> defaults to the current branch
+(aka HEAD).
+
+-u w/o --track/--no-track is a usage error.
 
 j.
