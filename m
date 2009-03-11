@@ -1,60 +1,51 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFD] builtin-revert.c: release index lock when
-	cherry-picking an empty commit
-Date: Tue, 10 Mar 2009 20:30:22 -0400
-Message-ID: <20090311003022.GA22273@coredump.intra.peff.net>
-References: <1236418251-16947-1-git-send-email-chris_johnsen@pobox.com> <20090308144240.GA30794@coredump.intra.peff.net> <7v8wnflrws.fsf@gitster.siamese.dyndns.org> <20090310181730.GD26351@sigill.intra.peff.net> <AA6A171F-70CE-4CB3-9AE1-27CD69C3202C@pobox.com>
+From: Cap Petschulat <cap@naviasystems.com>
+Subject: Re: filter-branch --subdirectory-filter prematurely truncating history?
+Date: Wed, 11 Mar 2009 00:37:16 +0000 (UTC)
+Message-ID: <loom.20090311T003412-973@post.gmane.org>
+References: <loom.20090309T230424-857@post.gmane.org> <49B60FF9.9020805@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Miklos Vajna <vmiklos@frugalware.org>
-To: Chris Johnsen <chris_johnsen@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 11 01:32:44 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 11 01:39:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhCMd-00034S-KO
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 01:32:04 +0100
+	id 1LhCTP-0005DM-I2
+	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 01:39:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752005AbZCKAa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2009 20:30:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751002AbZCKAa2
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 20:30:28 -0400
-Received: from peff.net ([208.65.91.99]:45088 "EHLO peff.net"
+	id S1753150AbZCKAhd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2009 20:37:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753029AbZCKAhd
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 20:37:33 -0400
+Received: from main.gmane.org ([80.91.229.2]:52395 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750791AbZCKAa1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2009 20:30:27 -0400
-Received: (qmail 15117 invoked by uid 107); 11 Mar 2009 00:30:29 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 10 Mar 2009 20:30:29 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Mar 2009 20:30:22 -0400
-Content-Disposition: inline
-In-Reply-To: <AA6A171F-70CE-4CB3-9AE1-27CD69C3202C@pobox.com>
+	id S1751809AbZCKAhc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2009 20:37:32 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LhCRu-00079d-0z
+	for git@vger.kernel.org; Wed, 11 Mar 2009 00:37:30 +0000
+Received: from 69-92-193-253.cpe.cableone.net ([69.92.193.253])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Mar 2009 00:37:30 +0000
+Received: from cap by 69-92-193-253.cpe.cableone.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Mar 2009 00:37:30 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 69.92.193.253 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.19) Gecko/20081216 Ubuntu/8.04 (hardy) Firefox/2.0.0.19)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112862>
 
-On Tue, Mar 10, 2009 at 06:57:55PM -0500, Chris Johnsen wrote:
+Johannes Sixt <j.sixt <at> viscovery.net> writes:
+> A bug in this area was fixed in git v1.6.0-rc3. Which version are you using?
 
-> On 2009 Mar 10, at 13:17, Jeff King wrote:
->> Can somebody with an OS X box try:
->>
->>   $ /bin/sh
->>   $ eval 'false
->>
->>     '
->>   $ echo $?
->>
->> It should print '1'; if it prints '0', the shell is broken.
->
-> I wrote t3505 on a Mac OS X 10.4.11 system. On that system, /bin/sh is a 
-> copy of bash v2.05b. Your test code prints 1 here.
-
-OK, then nothing to worry about there. I have no idea which shell
-OpenBSD and NetBSD use these days, and I don't have access to a box.
-Anybody?
-
--Peff
+I was using 1.5.4.3 from Ubuntu Hardy, but I just rebuilt git from the most
+recent sources and now filter-branch does what I want. Thanks for the suggestion!
