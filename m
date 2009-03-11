@@ -1,70 +1,100 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] Include log_config module in apache.conf
-Date: Wed, 11 Mar 2009 18:43:12 -0400
-Message-ID: <76718490903111543n33179571r2b3498f1f4ecacf3@mail.gmail.com>
-References: <alpine.LNX.1.00.0903102320170.19665@iabervon.org>
-	 <alpine.DEB.1.00.0903111240150.10279@pacific.mpi-cbg.de>
-	 <7vab7r6g59.fsf@gitster.siamese.dyndns.org>
-	 <E7E9DDFD-F8F6-4B39-A3E3-48CC1C8F5BBC@silverinsanity.com>
-	 <7vhc1z4y31.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Brian Gernhardt <benji@silverinsanity.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 11 23:52:30 2009
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] Documentation: filter-branch: show --ignore-unmatch in main index-filter example
+Date: Thu, 12 Mar 2009 00:00:56 +0100
+Message-ID: <fc756c64020427c7bff3a9d9a41c4842b1c13acb.1236812339.git.trast@student.ethz.ch>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 12 00:28:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhXAL-0001H6-9S
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 23:44:45 +0100
+	id 1LhXRx-0006yF-CP
+	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 00:02:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752958AbZCKWnP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2009 18:43:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752942AbZCKWnP
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 18:43:15 -0400
-Received: from rv-out-0506.google.com ([209.85.198.239]:32702 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752919AbZCKWnO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Mar 2009 18:43:14 -0400
-Received: by rv-out-0506.google.com with SMTP id g9so3287149rvb.5
-        for <git@vger.kernel.org>; Wed, 11 Mar 2009 15:43:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=f8ZnRMSQ9v40DrGb5BmTIq9l93Y3msyPFYZiO7y2+dU=;
-        b=nn2KYVsQ4rP8seXW0UWqqzHCHtd9BWnMD2TFmIehXXh9x9BCZH5Da+FzYeFO5E4kgZ
-         YJLqoZudl3g3KYZUhVhc/EPyajNFT0MOTca59cRqhfixDvz15Pfn76YktvNeFfyvVxgu
-         1KumkQkCv028Swz5yrdYEJ6lrxgTRnrXTZDFw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=IyJMmfB2HYjIdJe0uvkE7i0wfqsOwUy4Bxxgp1R1v2VDMWg388t8GuNPO8GRGZFTYi
-         SWQXwpqzzrziggYo2tzgty6uJ0SjViai0AJ8GvXfhlEBltWbNZLcGF5zl7wxEZUOcxbL
-         ckgbTuA/EK2TIyXlJfwsVnd1KsnRDm7et0p0k=
-Received: by 10.141.142.1 with SMTP id u1mr4630248rvn.93.1236811392500; Wed, 
-	11 Mar 2009 15:43:12 -0700 (PDT)
-In-Reply-To: <7vhc1z4y31.fsf@gitster.siamese.dyndns.org>
+	id S1752088AbZCKXB2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2009 19:01:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751905AbZCKXB2
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 19:01:28 -0400
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:55977 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750742AbZCKXB2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Mar 2009 19:01:28 -0400
+Received: from xfe1.d.ethz.ch ([82.130.124.41]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 12 Mar 2009 00:01:25 +0100
+Received: from localhost.localdomain ([84.75.148.224]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 12 Mar 2009 00:01:25 +0100
+X-Mailer: git-send-email 1.6.2.489.g51f6b7
+X-OriginalArrivalTime: 11 Mar 2009 23:01:25.0182 (UTC) FILETIME=[4D9315E0:01C9A29D]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112989>
 
-On Wed, Mar 11, 2009 at 4:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> We have PidFile definition in the file already, and we have added
-> necessary LoadModule for log_config_module recently.
->
-> This patch will end up giving LockFile to everybody not just limited to
-> Darwin, but why not?
+Rearrange the example usage of
 
-In that case, the -DDarwin added to lib-httpd.sh by commit 69707d61 is
-no longer needed.
+  git filter-branch --index-filter 'git rm --cached ...'
 
-j.
+so that --ignore-unmatch is in the main example block.  People keep
+stumbling over the (lack of this) option to the point where it is a
+FAQ, so we would want to expose the most common usage where it stands
+out.
+
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
+
+This actually came up once again on IRC about a week ago, but the doc
+change sank somewhere deep into my todo stack.
+
+Arguably the --tree-filter 'rm filename' example should get the same
+treatment, but I can't find a nice way to do so without harming the
+flow of thought in the example development.
+
+
+ Documentation/git-filter-branch.txt |   17 +++++++++--------
+ 1 files changed, 9 insertions(+), 8 deletions(-)
+
+diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+index 7ffe03f..237f85e 100644
+--- a/Documentation/git-filter-branch.txt
++++ b/Documentation/git-filter-branch.txt
+@@ -91,7 +91,9 @@ OPTIONS
+ --index-filter <command>::
+ 	This is the filter for rewriting the index.  It is similar to the
+ 	tree filter but does not check out the tree, which makes it much
+-	faster.  For hairy cases, see linkgit:git-update-index[1].
++	faster.  Frequently used with `git rm \--cached
++	\--ignore-unmatch ...`, see EXAMPLES below.  For hairy
++	cases, see linkgit:git-update-index[1].
+ 
+ --parent-filter <command>::
+ 	This is the filter for rewriting the commit's parent list.
+@@ -204,19 +206,18 @@ However, if the file is absent from the tree of some commit,
+ a simple `rm filename` will fail for that tree and commit.
+ Thus you may instead want to use `rm -f filename` as the script.
+ 
+-A significantly faster version:
++Using `\--index-filter` with 'git-rm' yields a significantly faster
++version.  Like with using `rm filename`, `git rm --cached filename`
++will fail if the file is absent from the tree of a commit.  If you
++want to "completely forget" a file, it does not matter when it entered
++history, so we also add `\--ignore-unmatch`:
+ 
+ --------------------------------------------------------------------------
+-git filter-branch --index-filter 'git rm --cached filename' HEAD
++git filter-branch --index-filter 'git rm --cached --ignore-unmatch filename' HEAD
+ --------------------------------------------------------------------------
+ 
+ Now, you will get the rewritten history saved in HEAD.
+ 
+-As with using `rm filename`, `git rm --cached filename` will fail
+-if the file is absent from the tree of a commit.  If it is not important
+-whether the file is already absent from the tree, you can use
+-`git rm --cached --ignore-unmatch filename` instead.
+-
+ To rewrite the repository to look as if `foodir/` had been its project
+ root, and discard all other history:
+ 
+-- 
+1.6.2.489.g51f6b7
