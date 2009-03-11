@@ -1,54 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Removed unnecessary use of global variables.
-Date: Wed, 11 Mar 2009 11:31:04 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903111130460.10279@pacific.mpi-cbg.de>
-References: <1236730168-7164-1-git-send-email-kusmabite@gmail.com> <55ef48ab-403d-41b8-bf16-203bb0f73fc7@b16g2000yqb.googlegroups.com>
+From: Mike Ralphson <mike.ralphson@gmail.com>
+Subject: Re: [PATCH/RFD] builtin-revert.c: release index lock when 
+	cherry-picking an empty commit
+Date: Wed, 11 Mar 2009 11:08:06 +0000
+Message-ID: <e2b179460903110408i4ab3c9cg3c863b89a2f57cba@mail.gmail.com>
+References: <1236418251-16947-1-git-send-email-chris_johnsen@pobox.com>
+	 <20090308144240.GA30794@coredump.intra.peff.net>
+	 <7v8wnflrws.fsf@gitster.siamese.dyndns.org>
+	 <20090310181730.GD26351@sigill.intra.peff.net>
+	 <AA6A171F-70CE-4CB3-9AE1-27CD69C3202C@pobox.com>
+	 <20090311003022.GA22273@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Erik Faye-Lund <kusmabite@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 11 11:31:24 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Chris Johnsen <chris_johnsen@pobox.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Miklos Vajna <vmiklos@frugalware.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 11 12:09:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhLia-0006nx-Es
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 11:31:20 +0100
+	id 1LhMJg-0002hZ-24
+	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 12:09:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754729AbZCKK31 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2009 06:29:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754853AbZCKK30
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 06:29:26 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47195 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754789AbZCKK3Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Mar 2009 06:29:25 -0400
-Received: (qmail invoked by alias); 11 Mar 2009 10:29:22 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp023) with SMTP; 11 Mar 2009 11:29:22 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/gNpJFyTXgHt6KGzI9oL2MDVt9CqYBQS0ndOltEJ
-	Gmah4bi359fJk2
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <55ef48ab-403d-41b8-bf16-203bb0f73fc7@b16g2000yqb.googlegroups.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.72
+	id S1753865AbZCKLIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2009 07:08:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753252AbZCKLIJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 07:08:09 -0400
+Received: from qw-out-2122.google.com ([74.125.92.26]:31826 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752793AbZCKLII (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Mar 2009 07:08:08 -0400
+Received: by qw-out-2122.google.com with SMTP id 5so2339995qwi.37
+        for <git@vger.kernel.org>; Wed, 11 Mar 2009 04:08:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=PjxdYRniv39T8Qm4PHXU3m9K/BQulgrKhVzBVXS+wsk=;
+        b=Tw/lc0/LKuh0itBa22eQWZC6gm7+eUTnGuJTg5YF8F8ptmXb8nktZ8xCSI6tP+U6dl
+         2OXvbJxliyrrNVaw6I7IwTLfrYzjw5LUzKxxz/gRcMNAKMi0Cw8tv9dVJca0G0DEhN7R
+         hpSvQKz8LnKeufxeC0BBIOnpxa5d7M99xXq5I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=LDyDcX8bsgznEzkXCK85HDHOeHcaoYWKSACsZsqLcu5IAf6USlyYkEEvczr6YYGMTA
+         F2gkOFdGsNl1k/Tw4c54Ehvr1N0P4BGCex4+EAuc+PDp7nOkw+EfG77Szjk7PSljwKt3
+         I7/HqqbQhk9FyPLdk5qOtzWlPqUGkR1z44wOQ=
+Received: by 10.224.45.144 with SMTP id e16mr10934427qaf.53.1236769686299; 
+	Wed, 11 Mar 2009 04:08:06 -0700 (PDT)
+In-Reply-To: <20090311003022.GA22273@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112908>
 
-Hi,
+2009/3/11 Jeff King <peff@peff.net>:
+> OK, then nothing to worry about there. I have no idea which shell
+> OpenBSD and NetBSD use these days, and I don't have access to a box.
+> Anybody?
 
-On Tue, 10 Mar 2009, Erik Faye-Lund wrote:
+OpenBSD uses pdksh in Bourne shell mode for non-root shells (ksh mode
+for root) [1].
 
-> Sorry about the whole double-post thing, this whole submitting patches 
-> over email thing is new to me, and I'm making too many mistakes right 
-> now. Hopefully, I'll improve in the future ;)
+NetBSD >=4 uses a Bourne shell but I don't know the exact provenance.
+[2] "A sh command appeared in Version 1 AT&T UNIX.  It was, however,
+unmaintainable so we wrote this one."
 
-No need to be sorry.  Thanks for your contribution!
-
-Ciao,
-Dscho
+[1] http://www.openbsd.org/faq/faq10.html#ksh
+[2] http://www.netbsd.org/docs/misc/index.html#shells
