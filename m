@@ -1,45 +1,44 @@
 From: Erik Faye-Lund <kusmabite@gmail.com>
 Subject: [PATCH] Removed unnecessary use of global variables.
-Date: Wed, 11 Mar 2009 01:05:24 +0000
-Message-ID: <1236733524-8892-1-git-send-email-kusmabite@gmail.com>
+Date: Wed, 11 Mar 2009 00:09:28 +0000
+Message-ID: <1236730168-7164-1-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
 Content-Transfer-Encoding: 7BIT
 Cc: Johannes.Schindelin@gmx.de, Erik Faye-Lund <kusmabite@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 11 02:06:55 2009
+X-From: git-owner@vger.kernel.org Wed Mar 11 02:11:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhCuN-0003iB-5v
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 02:06:55 +0100
+	id 1LhCyN-0004qE-TE
+	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 02:11:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753654AbZCKBF1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Mar 2009 21:05:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753571AbZCKBF0
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 21:05:26 -0400
-Received: from bgo1smout1.broadpark.no ([217.13.4.94]:59463 "EHLO
+	id S1753809AbZCKBJf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Mar 2009 21:09:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753593AbZCKBJf
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 21:09:35 -0400
+Received: from bgo1smout1.broadpark.no ([217.13.4.94]:59859 "EHLO
 	bgo1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753399AbZCKBF0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2009 21:05:26 -0400
-X-Greylist: delayed 3352 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Mar 2009 21:05:26 EDT
+	with ESMTP id S1753203AbZCKBJf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Mar 2009 21:09:35 -0400
 Received: from bgo1sminn1.broadpark.no ([217.13.4.93])
  by bgo1smout1.broadpark.no
  (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KGB00BKLHOZPPB0@bgo1smout1.broadpark.no> for
- git@vger.kernel.org; Wed, 11 Mar 2009 02:05:23 +0100 (CET)
+ with ESMTP id <0KGB00BZYF3RPP30@bgo1smout1.broadpark.no> for
+ git@vger.kernel.org; Wed, 11 Mar 2009 01:09:27 +0100 (CET)
 Received: from localhost.localdomain ([84.48.62.155])
  by bgo1sminn1.broadpark.no
  (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KGB00J5FHOZ7A40@bgo1sminn1.broadpark.no> for
- git@vger.kernel.org; Wed, 11 Mar 2009 02:05:23 +0100 (CET)
+ with ESMTP id <0KGB00IZ1F3R3R30@bgo1sminn1.broadpark.no> for
+ git@vger.kernel.org; Wed, 11 Mar 2009 01:09:27 +0100 (CET)
 X-Mailer: git-send-email 1.6.2.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112864>
 
 git_config() now takes a third data-parameter that is passed back
 to the callback-function. At the time this code was written, that
