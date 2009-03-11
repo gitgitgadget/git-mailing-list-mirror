@@ -1,66 +1,69 @@
-From: David Symonds <dsymonds@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Google Summer of Code 2009: GIT
-Date: Wed, 11 Mar 2009 22:55:04 +1100
-Message-ID: <ee77f5c20903110455p6926b580i8c8e92b051328d18@mail.gmail.com>
+Date: Wed, 11 Mar 2009 12:58:45 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903111255470.10279@pacific.mpi-cbg.de>
 References: <49B74373.3090609@gmail.com>
-	 <ee77f5c20903110159l1cda4c3dnc9588c1352905932@mail.gmail.com>
-	 <alpine.DEB.1.00.0903111254410.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Saurabh Gupta <saurabhgupta1403@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Mar 11 12:56:48 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Saurabh Gupta <saurabhgupta1403@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 11 12:58:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhN38-0000an-C8
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 12:56:38 +0100
+	id 1LhN56-0001Bj-5Q
+	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 12:58:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755801AbZCKLzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2009 07:55:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755621AbZCKLzH
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 07:55:07 -0400
-Received: from wf-out-1314.google.com ([209.85.200.169]:60785 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754466AbZCKLzF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Mar 2009 07:55:05 -0400
-Received: by wf-out-1314.google.com with SMTP id 28so3173669wfa.4
-        for <git@vger.kernel.org>; Wed, 11 Mar 2009 04:55:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=hbAT7CSIqhiR4yrx1+9zybORlBwtt2o3GZQJhN1++VE=;
-        b=fneYfJszjK9SE77n8o8mELnE8XoIyDaPAkNJqkG7O+lawIzLbbrYQPoBB3W8PQbHu2
-         w3zbnzKnu2hN+6w6GQgJHNpc+gfSsVzLzl3IW/RwOx8jGXhYqhRsgesE02VGJCO2/THc
-         I5GBC06ar+epkhm77qmT8YSxi8Z5Jyzv5dQ2o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=rFuWI11dT+iDm49MtP2YtMu1zPWLhnC+1sGWXcgH9RfPM/iLLcbBDLAuhv2acfhwug
-         sx4tE+EFMusXp5KkY8QtL57ujummHmkhsHM7yKqfPxyeTlYhXIRQ5qFeUWCse233U5nf
-         SHBf7uRVh3D5ZAc+UDRYtEg3luYH4Txh6NhKo=
-Received: by 10.142.193.10 with SMTP id q10mr628514wff.48.1236772504339; Wed, 
-	11 Mar 2009 04:55:04 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0903111254410.10279@pacific.mpi-cbg.de>
+	id S1755047AbZCKL5K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2009 07:57:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752917AbZCKL5I
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 07:57:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52761 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752743AbZCKL5H (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Mar 2009 07:57:07 -0400
+Received: (qmail invoked by alias); 11 Mar 2009 11:57:04 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp003) with SMTP; 11 Mar 2009 12:57:04 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19dP5tnLwZdN9QvRCoSrCeqqfDXRsbWzaW8snpUOy
+	dPG5cgDhm6Tfrj
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <49B74373.3090609@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.68
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112914>
 
-On Wed, Mar 11, 2009 at 10:55 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+Hi,
 
-> It has been suggested on the GSoC mentor list, and IMHO Git is as good as
-> any organization to host that project.
+Welcome, Saurabh!
 
-Yeah, I think Git would be a good host for such a project. I'd still
-like to see it VCS-neutral, though.
+On Wed, 11 Mar 2009, Saurabh Gupta wrote:
 
+> /*About GSoC GIT ideas; */Here are the ideas which I found to be 
+> interested in. Although, I would like to discuss any other idea than 
+> these in GIT organization.
+> 
+> *1) Domain specific merge helpers* Intelligence in the merger can be put 
+> which modifies the source file according the format. Different file 
+> formats can be put in the merger to support.
 
-Dave.
+You said that you are interested in this project, but from your mails I do 
+not see what are the specific reasons why.
+
+IMHO this project can only fly if you have a specific file format that you 
+absolutely want to be able to merge; otherwise, it will be an uphill 
+fight.
+
+Personally, I would _love_ to see a good graphical tool (maybe written 
+in Tcl/Tk) to help merging conflicts in LaTeX files, but I just do not 
+have the time...
+
+Ciao,
+Dscho
