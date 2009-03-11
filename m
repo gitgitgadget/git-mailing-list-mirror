@@ -1,92 +1,90 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [PATCH v2] connect.c: remove a few globals by using git_config 
-	callback data
-Date: Wed, 11 Mar 2009 14:17:53 +0100
-Message-ID: <40aa078e0903110617g60e0d7d0x1e0d94e44ef89f40@mail.gmail.com>
-References: <1236739092-8280-1-git-send-email-kusmabite@gmail.com>
-	 <alpine.DEB.1.00.0903111251160.10279@pacific.mpi-cbg.de>
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: Generalised bisection
+Date: Wed, 11 Mar 2009 13:24:09 +0000
+Message-ID: <43d8ce650903110624t47e37b19n3fc72e3243978200@mail.gmail.com>
+References: <efe2b6d70903081840v18e77aa7w2dac2bed553d0d6a@mail.gmail.com>
+	 <200903100808.15875.chriscool@tuxfamily.org>
+	 <efe2b6d70903110159h78de744yc141effaf5aa0821@mail.gmail.com>
+	 <43d8ce650903110235q5e2a59f6t201d5e65a4937476@mail.gmail.com>
+	 <alpine.DEB.1.00.0903111304520.10279@pacific.mpi-cbg.de>
+	 <43d8ce650903110508o3d12f32m8202fae750d215a@mail.gmail.com>
+	 <alpine.DEB.1.00.0903111358260.10498@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Erik Faye-Lund <kusmabite@gmail.com>, git@vger.kernel.org
+Cc: Ealdwulf Wuffinga <ealdwulf@googlemail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Git List <git@vger.kernel.org>, Ingo Molnar <mingo@elte.hu>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Mar 11 14:19:42 2009
+X-From: git-owner@vger.kernel.org Wed Mar 11 14:25:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhOLH-0003jX-2P
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 14:19:27 +0100
+	id 1LhORM-0005zj-Qy
+	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 14:25:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754247AbZCKNR5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Mar 2009 09:17:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753646AbZCKNR5
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 09:17:57 -0400
-Received: from mail-ew0-f177.google.com ([209.85.219.177]:57729 "EHLO
-	mail-ew0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753288AbZCKNR4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Mar 2009 09:17:56 -0400
-Received: by ewy25 with SMTP id 25so1654535ewy.37
-        for <git@vger.kernel.org>; Wed, 11 Mar 2009 06:17:53 -0700 (PDT)
+	id S1755048AbZCKNYN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Mar 2009 09:24:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754987AbZCKNYN
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 09:24:13 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:15993 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754956AbZCKNYM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Mar 2009 09:24:12 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so508785ywh.1
+        for <git@vger.kernel.org>; Wed, 11 Mar 2009 06:24:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
+        d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=0zAnQT2ecSYxEhbEFGx/3Xf7QD1pdUt77njC/GDdwVA=;
-        b=rsToJIV/b7y0kWpX904+l+RKi+eVS/sqQPW9Xu5YJDRQHi3WYudkJL1ppVK50I98W1
-         7uXx1FlgbR/c6+Dp2RPywtZfdwGEcS4xXBxX0rGKi45ouS5JwwcDzAux0tPEIx6ymgv9
-         dHe6h7H+kGlqD8LpJPYDZuoPcrxHmCH33bEXU=
+        bh=oQ5GhOCLkjB2jQIdKbOMpZkn74NY8NF09I1q792jnys=;
+        b=qHcyiO1g5ba8e9TmE7R2VtdRl0QGOpaAgpsjVAWT1CV/npZxjSylS6NNn4zqmS9AKs
+         waIWUFItSATSA6OZsN+Z3rIETq03TQrfQ6l8/h7UfIwUqfWjjHy5jJeGj40hL30cjpSJ
+         +TyO1fyyWcx+ZTnr9ajDcDH0yG2xNJ0GItoAE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
+        d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=eiHcd/oNAno+/7CgYycFVoG+oWgwu/XMt5IlLKc6tOfauO+s/A1epnkD9eYMRV7ZGJ
-         8iDdfp6ktxJ347HuwP9eE7WDZdDidu4ih6UlIcEEhM4aC7NDUwOD3JHAXhsfuFIGWESp
-         eYwN2VDyBPrxnta4oxIcjqHB/Qz8uoz6HWJbM=
-Received: by 10.210.39.8 with SMTP id m8mr1380016ebm.59.1236777473725; Wed, 11 
-	Mar 2009 06:17:53 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0903111251160.10279@pacific.mpi-cbg.de>
+        b=FIFwQlfFqkuE7B3HsQwaaKbqFQqlfOmLRrdJRqsOaRvKEIGLWGHmo5nyXtu5ev1cL8
+         7DJUn1xEnbN4t//M7aNarmgFujpOlN0FyRSge9+pzz9qfwT5+kL+rgwvtduYvqX3zIrk
+         XiIc4rOWrBFUVftssnPSMQ7Ai9F+qE7EyjFlg=
+Received: by 10.142.193.10 with SMTP id q10mr664151wff.205.1236777849435; Wed, 
+	11 Mar 2009 06:24:09 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0903111358260.10498@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112927>
 
-Thanks for the feedback.
-
-On Wed, Mar 11, 2009 at 12:52 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->> @@ -383,6 +381,8 @@ static int git_proxy_command_options(const char =
-*var, const char *value,
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 const char *for_pos;
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 int matchlen =3D -1;
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 int hostlen;
->> + =A0 =A0 =A0 =A0 =A0 =A0 const char *rhost_name =3D cb;
->> + =A0 =A0 =A0 =A0 =A0 =A0 int rhost_len =3D strlen(rhost_name);
+2009/3/11 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> Hi,
 >
-> I see that you still calculate the length everytime
-> git_proxy_command_options() is called -- which is for every config
-> variable.
-
-Actually, the length-calculation is now moved inside the check for
-"core.gitproxy", so it should only trigger for each config variable
-that is "core.gitproxy". Hopefully, this should usually be just once
-;)
-
-This change was suggested as a compromise by Junio.
-
+> On Wed, 11 Mar 2009, John Tapsell wrote:
 >
->> + =A0 =A0 git_config(git_proxy_command_options, (void*)host);
+>> 2009/3/11 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+>>
+>> > On Wed, 11 Mar 2009, John Tapsell wrote:
+>> >
+>> >> There used to be a dependency on python. =C2=A0git-merge-recursiv=
+e for
+>> >> example, before it was converted to C.
+>> >
+>> > Not "for example". =C2=A0It was the only dependency of git.git on =
+Python,
+>> > and the rewrite of merge-recursive was only done to break that
+>> > dependency, as I had a platform where I could not install Python.
+>>
+>> But installing perl was no problem? =C2=A0(Just curious)
 >
-> The (void *) should not be needed.
+> Perl was installed, albeit in an ancient version, and compiling Perl
+> modules written in C was out. =C2=A0It just did not work.
 
-Actually, it is - it casts away the const-ness of the string. Removing
-the cast generates a warning on my installation of GCC. Perhaps I
-should have made that clearer by casting to "char*" instead of
-"void*"?
+I wonder if it would then be acceptable to have a python script for
+this generalised bisect?  Since it's not core functionality.   Not
+quite sure how it would fit in though (I'd rather it was called from
+"git bisect" rather than adding another separate git command)
 
---=20
-Erik "kusma" Faye-Lund
-kusmabite@gmail.com
-(+47) 986 59 656
+John
