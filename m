@@ -1,90 +1,93 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: Generalised bisection
-Date: Wed, 11 Mar 2009 13:24:09 +0000
-Message-ID: <43d8ce650903110624t47e37b19n3fc72e3243978200@mail.gmail.com>
-References: <efe2b6d70903081840v18e77aa7w2dac2bed553d0d6a@mail.gmail.com>
-	 <200903100808.15875.chriscool@tuxfamily.org>
-	 <efe2b6d70903110159h78de744yc141effaf5aa0821@mail.gmail.com>
-	 <43d8ce650903110235q5e2a59f6t201d5e65a4937476@mail.gmail.com>
-	 <alpine.DEB.1.00.0903111304520.10279@pacific.mpi-cbg.de>
-	 <43d8ce650903110508o3d12f32m8202fae750d215a@mail.gmail.com>
-	 <alpine.DEB.1.00.0903111358260.10498@intel-tinevez-2-302>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] connect.c: remove a few globals by using git_config
+  callback data
+Date: Wed, 11 Mar 2009 14:28:24 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903111427120.10498@intel-tinevez-2-302>
+References: <1236739092-8280-1-git-send-email-kusmabite@gmail.com>  <alpine.DEB.1.00.0903111251160.10279@pacific.mpi-cbg.de> <40aa078e0903110617g60e0d7d0x1e0d94e44ef89f40@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ealdwulf Wuffinga <ealdwulf@googlemail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Git List <git@vger.kernel.org>, Ingo Molnar <mingo@elte.hu>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Mar 11 14:25:51 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-2059770444-1236778104=:10498"
+Cc: Erik Faye-Lund <kusmabite@gmail.com>, git@vger.kernel.org
+To: Erik Faye-Lund <kusmabite@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 11 14:30:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhORM-0005zj-Qy
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 14:25:45 +0100
+	id 1LhOVt-00080q-8Y
+	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 14:30:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755048AbZCKNYN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Mar 2009 09:24:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754987AbZCKNYN
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 09:24:13 -0400
-Received: from yw-out-2324.google.com ([74.125.46.28]:15993 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754956AbZCKNYM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Mar 2009 09:24:12 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so508785ywh.1
-        for <git@vger.kernel.org>; Wed, 11 Mar 2009 06:24:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=oQ5GhOCLkjB2jQIdKbOMpZkn74NY8NF09I1q792jnys=;
-        b=qHcyiO1g5ba8e9TmE7R2VtdRl0QGOpaAgpsjVAWT1CV/npZxjSylS6NNn4zqmS9AKs
-         waIWUFItSATSA6OZsN+Z3rIETq03TQrfQ6l8/h7UfIwUqfWjjHy5jJeGj40hL30cjpSJ
-         +TyO1fyyWcx+ZTnr9ajDcDH0yG2xNJ0GItoAE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=FIFwQlfFqkuE7B3HsQwaaKbqFQqlfOmLRrdJRqsOaRvKEIGLWGHmo5nyXtu5ev1cL8
-         7DJUn1xEnbN4t//M7aNarmgFujpOlN0FyRSge9+pzz9qfwT5+kL+rgwvtduYvqX3zIrk
-         XiIc4rOWrBFUVftssnPSMQ7Ai9F+qE7EyjFlg=
-Received: by 10.142.193.10 with SMTP id q10mr664151wff.205.1236777849435; Wed, 
-	11 Mar 2009 06:24:09 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0903111358260.10498@intel-tinevez-2-302>
+	id S1754798AbZCKN22 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2009 09:28:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754617AbZCKN22
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 09:28:28 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42954 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754355AbZCKN21 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Mar 2009 09:28:27 -0400
+Received: (qmail invoked by alias); 11 Mar 2009 13:28:24 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp071) with SMTP; 11 Mar 2009 14:28:24 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/sIn43t4jsuttBSCC1id+x3mAO9EWrBic6voi0EP
+	pHou2vhEXCKydc
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <40aa078e0903110617g60e0d7d0x1e0d94e44ef89f40@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.5600000000000001
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112928>
 
-2009/3/11 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> Hi,
->
-> On Wed, 11 Mar 2009, John Tapsell wrote:
->
->> 2009/3/11 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
->>
->> > On Wed, 11 Mar 2009, John Tapsell wrote:
->> >
->> >> There used to be a dependency on python. =C2=A0git-merge-recursiv=
-e for
->> >> example, before it was converted to C.
->> >
->> > Not "for example". =C2=A0It was the only dependency of git.git on =
-Python,
->> > and the rewrite of merge-recursive was only done to break that
->> > dependency, as I had a platform where I could not install Python.
->>
->> But installing perl was no problem? =C2=A0(Just curious)
->
-> Perl was installed, albeit in an ancient version, and compiling Perl
-> modules written in C was out. =C2=A0It just did not work.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I wonder if it would then be acceptable to have a python script for
-this generalised bisect?  Since it's not core functionality.   Not
-quite sure how it would fit in though (I'd rather it was called from
-"git bisect" rather than adding another separate git command)
+--8323329-2059770444-1236778104=:10498
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 
-John
+Hi,
+
+On Wed, 11 Mar 2009, Erik Faye-Lund wrote:
+
+> On Wed, Mar 11, 2009 at 12:52 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >> @@ -383,6 +381,8 @@ static int git_proxy_command_options(const char *var, const char *value,
+> >>               const char *for_pos;
+> >>               int matchlen = -1;
+> >>               int hostlen;
+> >> +             const char *rhost_name = cb;
+> >> +             int rhost_len = strlen(rhost_name);
+> >
+> > I see that you still calculate the length everytime
+> > git_proxy_command_options() is called -- which is for every config
+> > variable.
+> 
+> Actually, the length-calculation is now moved inside the check for
+> "core.gitproxy", so it should only trigger for each config variable
+> that is "core.gitproxy". Hopefully, this should usually be just once
+> ;)
+> 
+> This change was suggested as a compromise by Junio.
+
+Ah, okay, I am lacking time to read all emails today, so I missed that 
+one.
+
+> >> +     git_config(git_proxy_command_options, (void*)host);
+> >
+> > The (void *) should not be needed.
+> 
+> Actually, it is - it casts away the const-ness of the string. Removing
+> the cast generates a warning on my installation of GCC. Perhaps I
+> should have made that clearer by casting to "char*" instead of
+> "void*"?
+
+Oh, that's why... Thanks for the clarification!  Now only a space between 
+the void and the star, and I am happy!
+
+Ciao,
+Dscho
+
+--8323329-2059770444-1236778104=:10498--
