@@ -1,71 +1,52 @@
-From: david@lang.hm
-Subject: Re: Google Summer of Code 2009: GIT
-Date: Wed, 11 Mar 2009 14:05:56 -0700 (PDT)
-Message-ID: <alpine.DEB.1.10.0903111401520.16753@asgard.lang.hm>
-References: <49B74373.3090609@gmail.com>  <alpine.DEB.1.00.0903111255470.10279@pacific.mpi-cbg.de>  <ab9fa62a0903110511u63e7d46dr3bb783ee891ca4ae@mail.gmail.com>  <alpine.DEB.1.00.0903111353340.10498@intel-tinevez-2-302>  <ab9fa62a0903110655y4a47ccfkde0984ecb46b3307@mail.gmail.com>
-  <alpine.DEB.1.00.0903111458340.10498@intel-tinevez-2-302>  <alpine.DEB.1.10.0903110931070.13653@asgard.lang.hm>  <ab9fa62a0903111007w4772b234x8e6fd19cdc7fc595@mail.gmail.com>  <alpine.DEB.1.10.0903111223470.16753@asgard.lang.hm>
- <ab9fa62a0903111302j46c46c2q96af497fa2ac513e@mail.gmail.com> <alpine.DEB.1.10.0903111307050.16753@asgard.lang.hm> <alpine.DEB.1.00.0903112136560.10279@pacific.mpi-cbg.de>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: setting up tracking on push
+Date: Wed, 11 Mar 2009 17:39:27 -0400
+Message-ID: <49B82F8F.5050105@xiplink.com>
+References: <buofxhr2vta.fsf@dhlpc061.dev.necel.com>	 <buoy6vi297q.fsf@dhlpc061.dev.necel.com>	 <49b12ff7.nCWIz4ABJcgwW3BZ%obrien654j@gmail.com>	 <76718490903060743m425c2d55n6e8737c893c936e8@mail.gmail.com>	 <87d4cuobrc.fsf@catnip.gol.com> <49B6CCDB.8010305@xiplink.com>	 <20090310230939.GB14083@sigio.peff.net>	 <76718490903101852y2c90e0abi8e0e4f71e6f0bc52@mail.gmail.com>	 <20090311020409.GA31365@coredump.intra.peff.net>	 <7vwsaw7jzy.fsf@gitster.siamese.dyndns.org> <76718490903102222n23e0e7fdlcee2888333a2b912@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: saurabh gupta <saurabhgupta1403@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Mar 11 22:09:05 2009
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Miles Bader <miles@gnu.org>, git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 11 22:41:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhVeN-0006l8-Ma
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 22:07:40 +0100
+	id 1LhWAi-0005Mb-Ok
+	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 22:41:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751570AbZCKVGJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2009 17:06:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751240AbZCKVGI
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 17:06:08 -0400
-Received: from mail.lang.hm ([64.81.33.126]:38578 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750770AbZCKVGH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Mar 2009 17:06:07 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n2BL5ufx009409;
-	Wed, 11 Mar 2009 13:05:56 -0800
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <alpine.DEB.1.00.0903112136560.10279@pacific.mpi-cbg.de>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1752089AbZCKVjd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2009 17:39:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751497AbZCKVjd
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 17:39:33 -0400
+Received: from smtp162.iad.emailsrvr.com ([207.97.245.162]:33630 "EHLO
+	smtp162.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751417AbZCKVjc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Mar 2009 17:39:32 -0400
+Received: from relay6.relay.iad.emailsrvr.com (localhost [127.0.0.1])
+	by relay6.relay.iad.emailsrvr.com (SMTP Server) with ESMTP id D22AA7B918A;
+	Wed, 11 Mar 2009 17:39:29 -0400 (EDT)
+Received: by relay6.relay.iad.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 83F837B9632;
+	Wed, 11 Mar 2009 17:39:28 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
+In-Reply-To: <76718490903102222n23e0e7fdlcee2888333a2b912@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112978>
 
-On Wed, 11 Mar 2009, Johannes Schindelin wrote:
+Jay Soffian wrote:
+> 
+> Actually, for me, I find sometimes I've forgotten to setup tracking,
+> or I've setup tracking and don't want it. I just fire up an editor on
+> .git/config, or use git config, but I would appreciate an easy way to
+> add/remove tracking to a branch after the fact.
 
-> Hi,
->
-> On Wed, 11 Mar 2009, david@lang.hm wrote:
->
->> there are two types of helpers that can be written
->>
->> 1. a low-level part that does the simple merges automaticaly and leaves
->>    behind appropriate conflict markers when it can't
->>
->> [...]
->>
->>
->> 2. after a conflict has taken place, a helper to work with the user to
->>    resolve the conflict
->
-> I thought that from my description on the wiki it was obvious that both
-> are needed.
+I second that -- that's the exact situation I ran into.
 
-first off, I'll admit that I am just going by what's been posted here, I 
-haven't gone looking on the wiki.
+Editing .git/config is scary and obscurely documented for new users (who are more likely to forget to set up tracking).  Plus encapsulating this in some porcelain makes it a bit less error-prone.
 
-secondly, I somewhat disagree with you. #1 is needed for any new formats 
-that are goning to be handled, but #2 may not be.
-
-take the case of OO documents, you may not need to write a conflict 
-resolver helper. the 'appropriate conflict markers' may be something that 
-shows up in your normal OO document editor similar to how the ====> shows 
-up in a text editor for text conflicts
-
-David Lang
+		M.
