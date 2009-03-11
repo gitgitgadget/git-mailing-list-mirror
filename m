@@ -1,75 +1,171 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: setting up tracking on push
-Date: Wed, 11 Mar 2009 01:22:26 -0400
-Message-ID: <76718490903102222n23e0e7fdlcee2888333a2b912@mail.gmail.com>
-References: <buofxhr2vta.fsf@dhlpc061.dev.necel.com>
-	 <buoy6vi297q.fsf@dhlpc061.dev.necel.com>
-	 <49b12ff7.nCWIz4ABJcgwW3BZ%obrien654j@gmail.com>
-	 <76718490903060743m425c2d55n6e8737c893c936e8@mail.gmail.com>
-	 <87d4cuobrc.fsf@catnip.gol.com> <49B6CCDB.8010305@xiplink.com>
-	 <20090310230939.GB14083@sigio.peff.net>
-	 <76718490903101852y2c90e0abi8e0e4f71e6f0bc52@mail.gmail.com>
-	 <20090311020409.GA31365@coredump.intra.peff.net>
-	 <7vwsaw7jzy.fsf@gitster.siamese.dyndns.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [PATCH] Give error when no remote is configured
+Date: Wed, 11 Mar 2009 01:47:20 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0903110139450.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Marc Branchaud <marcnarc@xiplink.com>,
-	Miles Bader <miles@gnu.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 11 06:26:28 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Giovanni Bajo <rasky@develer.com>
+To: bernie@codewiz.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 11 06:49:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhGxT-0002EC-5X
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 06:26:23 +0100
+	id 1LhHJe-0006w9-Fm
+	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 06:49:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751059AbZCKFW3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Mar 2009 01:22:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750881AbZCKFW3
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 01:22:29 -0400
-Received: from rv-out-0506.google.com ([209.85.198.237]:11572 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750742AbZCKFW2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Mar 2009 01:22:28 -0400
-Received: by rv-out-0506.google.com with SMTP id g37so2574147rvb.1
-        for <git@vger.kernel.org>; Tue, 10 Mar 2009 22:22:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=/PteDT2Xsl5AObcTVvXLjVDj94EaX8JmD8kNr/nt5eo=;
-        b=pl5fs1Uspot7NoHEcPfnL7KJeGCUN3HW7IG1kTWYuu0fh+640OIviChaMD+hdj8tsI
-         KZax2n1udzW+3uqFogS77OM/5TtwKryKpCRxwziMe5mTNWwP/My/IzdLCSkyxDxBxRP8
-         LtbTAl0IaU8e5rmsFvr/JKq2AgjzSIXqe+Jmo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=j1sBmy+cFHRJfcvs+9XfnW/aSIlFKBDCJyKPapLy+rD10p5PD/9cOjYbDzjnHudOXd
-         jXyzOWz++CNrWy+LgMkM7SqYQikM8H5jKFV5ra81y8cbhnKEOqAsD3tZ2yMPMvMBdp+g
-         w6Ja27y3gh9njVf6KB4ZE5vshxSRsLGm7n9/c=
-Received: by 10.141.179.5 with SMTP id g5mr4177251rvp.31.1236748946203; Tue, 
-	10 Mar 2009 22:22:26 -0700 (PDT)
-In-Reply-To: <7vwsaw7jzy.fsf@gitster.siamese.dyndns.org>
+	id S1751469AbZCKFrY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2009 01:47:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751452AbZCKFrX
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 01:47:23 -0400
+Received: from iabervon.org ([66.92.72.58]:43864 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751442AbZCKFrX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Mar 2009 01:47:23 -0400
+Received: (qmail 1154 invoked by uid 1000); 11 Mar 2009 05:47:20 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 11 Mar 2009 05:47:20 -0000
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112885>
 
-On Wed, Mar 11, 2009 at 12:37 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> I need to ask a more fundamental question. =C2=A0Is it really useful =
-for people
-> to be able to re-track arbitrary remote/branch with an existing branc=
-h?
+When there's no explicitly-named remote, we use the remote specified
+for the current branch, which in turn defaults to "origin". But it
+this case should require the remote to actually be configured, and not
+fall back to the path "origin".
 
-Actually, for me, I find sometimes I've forgotten to setup tracking,
-or I've setup tracking and don't want it. I just fire up an editor on
-=2Egit/config, or use git config, but I would appreciate an easy way to
-add/remove tracking to a branch after the fact.
+Possibly, the config file's "remote = something" should require the
+something to be a configured remote instead of a bare repository URL,
+but we actually test with a bare repository URL.
 
-j.
+In fetch, we were giving the sensible error message when coming up
+with a URL failed, but this wasn't actually reachable, so move that
+error up and use it when appropriate.
+
+In push, we need a new error message, because the old one (formerly
+unreachable without a lot of help) used the repo name, which was NULL.
+
+Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+---
+I think the main way to reach this in actual usage would be to use git-svn 
+to create a repository and then forget that you used it and therefore 
+don't have an origin.
+
+ builtin-fetch.c |    6 +++---
+ builtin-push.c  |    7 +++++--
+ remote.c        |   30 +++++++++++++++++++++++++++---
+ 3 files changed, 35 insertions(+), 8 deletions(-)
+
+diff --git a/builtin-fetch.c b/builtin-fetch.c
+index 1e4a3d9..7fb35fc 100644
+--- a/builtin-fetch.c
++++ b/builtin-fetch.c
+@@ -636,6 +636,9 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 	else
+ 		remote = remote_get(argv[0]);
+ 
++	if (!remote)
++		die("Where do you want to fetch from today?");
++
+ 	transport = transport_get(remote, remote->url[0]);
+ 	if (verbosity >= 2)
+ 		transport->verbose = 1;
+@@ -648,9 +651,6 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 	if (depth)
+ 		set_option(TRANS_OPT_DEPTH, depth);
+ 
+-	if (!transport->url)
+-		die("Where do you want to fetch from today?");
+-
+ 	if (argc > 1) {
+ 		int j = 0;
+ 		refs = xcalloc(argc + 1, sizeof(const char *));
+diff --git a/builtin-push.c b/builtin-push.c
+index 122fdcf..ca36fb1 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -53,8 +53,11 @@ static int do_push(const char *repo, int flags)
+ 	int i, errs;
+ 	struct remote *remote = remote_get(repo);
+ 
+-	if (!remote)
+-		die("bad repository '%s'", repo);
++	if (!remote) {
++		if (repo)
++			die("bad repository '%s'", repo);
++		die("No destination configured to push to.");
++	}
+ 
+ 	if (remote->mirror)
+ 		flags |= (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE);
+diff --git a/remote.c b/remote.c
+index d7079c6..199830e 100644
+--- a/remote.c
++++ b/remote.c
+@@ -38,6 +38,7 @@ static int branches_nr;
+ 
+ static struct branch *current_branch;
+ static const char *default_remote_name;
++static int explicit_default_remote_name;
+ 
+ static struct rewrite **rewrite;
+ static int rewrite_alloc;
+@@ -104,6 +105,16 @@ static void add_url_alias(struct remote *remote, const char *url)
+ 	add_url(remote, alias_url(url));
+ }
+ 
++static struct remote *get_remote_by_name(const char *name)
++{
++	int i;
++	for (i = 0; i < remotes_nr; i++) {
++		if (!strcmp(name, remotes[i]->name))
++			return remotes[i];
++	}
++	return NULL;
++}
++
+ static struct remote *make_remote(const char *name, int len)
+ {
+ 	struct remote *ret;
+@@ -330,8 +341,10 @@ static int handle_config(const char *key, const char *value, void *cb)
+ 			if (!value)
+ 				return config_error_nonbool(key);
+ 			branch->remote_name = xstrdup(value);
+-			if (branch == current_branch)
++			if (branch == current_branch) {
+ 				default_remote_name = branch->remote_name;
++				explicit_default_remote_name = 1;
++			}
+ 		} else if (!strcmp(subkey, ".merge")) {
+ 			if (!value)
+ 				return config_error_nonbool(key);
+@@ -643,11 +656,22 @@ static int valid_remote_nick(const char *name)
+ struct remote *remote_get(const char *name)
+ {
+ 	struct remote *ret;
++	int name_given = 0;
+ 
+ 	read_config();
+-	if (!name)
++	if (name)
++		name_given = 1;
++	else {
+ 		name = default_remote_name;
+-	ret = make_remote(name, 0);
++		name_given = explicit_default_remote_name;
++	}
++	if (name_given)
++		ret = make_remote(name, 0);
++	else {
++		ret = get_remote_by_name(name);
++		if (!ret)
++			return NULL;
++	}
+ 	if (valid_remote_nick(name)) {
+ 		if (!ret->url)
+ 			read_remotes_file(ret);
+-- 
+1.6.2.104.g7aeb2.dirty
