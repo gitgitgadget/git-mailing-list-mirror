@@ -1,52 +1,68 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: setting up tracking on push
-Date: Wed, 11 Mar 2009 17:39:27 -0400
-Message-ID: <49B82F8F.5050105@xiplink.com>
-References: <buofxhr2vta.fsf@dhlpc061.dev.necel.com>	 <buoy6vi297q.fsf@dhlpc061.dev.necel.com>	 <49b12ff7.nCWIz4ABJcgwW3BZ%obrien654j@gmail.com>	 <76718490903060743m425c2d55n6e8737c893c936e8@mail.gmail.com>	 <87d4cuobrc.fsf@catnip.gol.com> <49B6CCDB.8010305@xiplink.com>	 <20090310230939.GB14083@sigio.peff.net>	 <76718490903101852y2c90e0abi8e0e4f71e6f0bc52@mail.gmail.com>	 <20090311020409.GA31365@coredump.intra.peff.net>	 <7vwsaw7jzy.fsf@gitster.siamese.dyndns.org> <76718490903102222n23e0e7fdlcee2888333a2b912@mail.gmail.com>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: [PATCH] Removed unnecessary use of global variables.
+Date: Thu, 12 Mar 2009 06:42:37 +0900
+Message-ID: <20090312064237.6117@nanako3.lavabit.com>
+References: <1236730168-7164-1-git-send-email-kusmabite@gmail.com>
+ <alpine.DEB.1.00.0903111126280.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Miles Bader <miles@gnu.org>, git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 11 22:41:19 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Erik Faye-Lund <kusmabite@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Mar 11 22:45:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhWAi-0005Mb-Ok
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 22:41:05 +0100
+	id 1LhWEM-0006zR-JX
+	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 22:44:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752089AbZCKVjd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2009 17:39:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751497AbZCKVjd
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 17:39:33 -0400
-Received: from smtp162.iad.emailsrvr.com ([207.97.245.162]:33630 "EHLO
-	smtp162.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751417AbZCKVjc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Mar 2009 17:39:32 -0400
-Received: from relay6.relay.iad.emailsrvr.com (localhost [127.0.0.1])
-	by relay6.relay.iad.emailsrvr.com (SMTP Server) with ESMTP id D22AA7B918A;
-	Wed, 11 Mar 2009 17:39:29 -0400 (EDT)
-Received: by relay6.relay.iad.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 83F837B9632;
-	Wed, 11 Mar 2009 17:39:28 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
-In-Reply-To: <76718490903102222n23e0e7fdlcee2888333a2b912@mail.gmail.com>
+	id S1751727AbZCKVnW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2009 17:43:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751499AbZCKVnW
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 17:43:22 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:52107 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751256AbZCKVnW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Mar 2009 17:43:22 -0400
+Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
+	by karen.lavabit.com (Postfix) with ESMTP id 5160611B8CF;
+	Wed, 11 Mar 2009 16:43:20 -0500 (CDT)
+Received: from 7328.lavabit.com (212.62.97.21)
+	by lavabit.com with ESMTP id CKARRTXRMUFQ; Wed, 11 Mar 2009 16:43:20 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=byEBRJPtdEcvQIlGynr+lcT722CtEt7RWhW+8/oQBn4FpKmSVz6vkf1Yi+hk2mjkfCRBRglX8Uf96Dx62AibMRHl/wJxGSRQqxrgdztHrKDO1PATPLW2XFWcrGjZdlJc+WwTHuaY8JGRM8CICw6wXKYWSQEBohQYjHNj4s5qs8U=;
+  h=From:To:Cc:Subject:In-Reply-To:References:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <alpine.DEB.1.00.0903111126280.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112979>
 
-Jay Soffian wrote:
-> 
-> Actually, for me, I find sometimes I've forgotten to setup tracking,
-> or I've setup tracking and don't want it. I just fire up an editor on
-> .git/config, or use git config, but I would appreciate an easy way to
-> add/remove tracking to a branch after the fact.
+Quoting Johannes Schindelin <Johannes.Schindelin@gmx.de>:
 
-I second that -- that's the exact situation I ran into.
+> Hi,
+>
+> On Wed, 11 Mar 2009, Erik Faye-Lund wrote:
+>
+>> git_config() now takes a third data-parameter that is passed back
+>> to the callback-function. At the time this code was written, that
+>> parameter did not exist, so a somewhat nasty (but by all means
+>> correct) use of global variables was introduced. In commit
+>> ef90d6d4208a5130185b04f06e5f90a5f9959fe3 Johannes Schindelin
+>> <Johannes.Schindelin@gmx.de> introduced a parameter for similar
+>> purposes.
+>
+> We tend to quote commits in this form: ef90d6d(Provide git_config with a 
+> callback-data parameter)
 
-Editing .git/config is scary and obscurely documented for new users (who are more likely to forget to set up tracking).  Plus encapsulating this in some porcelain makes it a bit less error-prone.
+Your review comments are a subset of the ones Junio sent about 8 hours before you did, and are almost identical except for the comment on the subject line yours didn't have. I'm curious about two things.
 
-		M.
+1. Are you and Junio one same person, and if so what made you change your mind during these 8 hours ;-)?
+
+2. Junio said "ef90d6d (Provide git_config with a callback-data parameter, 2008-05-14)" and yours is slightly different. Both are equally readable but I think it would help to make sure everybody uses the same format within one project. Do we need a helper command that everybody can use?
+
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
