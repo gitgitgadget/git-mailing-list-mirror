@@ -1,82 +1,111 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: git-p4 workflow suggestions?
-Date: Wed, 11 Mar 2009 05:58:05 -0700
-Message-ID: <20090311125805.GA28155@padd.com>
-References: <20090309142108.GK12880@zoy.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Google Summer of Code 2009: GIT
+Date: Wed, 11 Mar 2009 13:58:10 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903111353340.10498@intel-tinevez-2-302>
+References: <49B74373.3090609@gmail.com>  <alpine.DEB.1.00.0903111255470.10279@pacific.mpi-cbg.de> <ab9fa62a0903110511u63e7d46dr3bb783ee891ca4ae@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Sam Hocevar <sam@zoy.org>
-X-From: git-owner@vger.kernel.org Wed Mar 11 13:58:56 2009
+To: saurabh gupta <saurabhgupta1403@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 11 14:00:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhO1N-000567-3l
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 13:58:53 +0100
+	id 1LhO33-0005c2-Dm
+	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 14:00:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754970AbZCKM5X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2009 08:57:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754892AbZCKM5W
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 08:57:22 -0400
-Received: from marge.padd.com ([99.188.165.110]:60373 "EHLO marge.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753932AbZCKM5U (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Mar 2009 08:57:20 -0400
-Received: from honk.padd.com (honk.padd.com [209.17.171.228])
-	by marge.padd.com (Postfix) with ESMTPSA id C05EB10F8274;
-	Wed, 11 Mar 2009 05:57:18 -0700 (PDT)
-Received: by honk.padd.com (Postfix, from userid 7770)
-	id 534E61C400CE; Wed, 11 Mar 2009 05:58:05 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20090309142108.GK12880@zoy.org>
+	id S1755871AbZCKM6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2009 08:58:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755810AbZCKM6P
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 08:58:15 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48631 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754372AbZCKM6O (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Mar 2009 08:58:14 -0400
+Received: (qmail invoked by alias); 11 Mar 2009 12:58:10 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp065) with SMTP; 11 Mar 2009 13:58:10 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/1W40EKV71PwMq67fvr9HZR6Kt0YNAgbozI69bfJ
+	V8gj3sAz/2PpE3
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <ab9fa62a0903110511u63e7d46dr3bb783ee891ca4ae@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112924>
 
-sam@zoy.org wrote on Mon, 09 Mar 2009 15:21 +0100:
->    I have modified git and git-p4 to a point where they are usable in
-> my work environment. I am now faced with a new problem: Perforce's
-> composite workspaces. They allow you to "mount" parts of the repo onto
-> other directories, even nonempty ones.
+Hi,
+
+On Wed, 11 Mar 2009, saurabh gupta wrote:
+
+> On Wed, Mar 11, 2009 at 5:28 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+>
+> > On Wed, 11 Mar 2009, Saurabh Gupta wrote:
+> >
+> > > /*About GSoC GIT ideas; */Here are the ideas which I found to be 
+> > > interested in. Although, I would like to discuss any other idea than 
+> > > these in GIT organization.
+> > >
+> > > *1) Domain specific merge helpers* Intelligence in the merger can be 
+> > > put which modifies the source file according the format. Different 
+> > > file formats can be put in the merger to support.
+> >
+> > You said that you are interested in this project, but from your mails 
+> > I do not see what are the specific reasons why.
 > 
->    Take the following example repository, where a "framework" project
-> contains an example subdirectory with build files and other directories,
-> and a "project1" project contains subdirectories that are meant to
-> replace the ones in "example":
+> All right. May be I lacked in my mail to specify the reason for my 
+> interest.
+
+Oh, sorry, I did not mean to imply any offense...
+
+> The reason is that from my past experience, I got the notion that this 
+> project is according to my interest and is doable in the three months 
+> time period.
+>
+> Another reason is that I have been using the versioning tools like svn 
+> and now perforce for a long time and this added up to my interest.
+
+Sounds good!
+
+> > IMHO this project can only fly if you have a specific file format that 
+> > you absolutely want to be able to merge; otherwise, it will be an 
+> > uphill fight.
 > 
->    //work/framework/example/src/
->                            /include/
-> 			   /Makefile
-> 			   /...
->    //work/project1/src/
->                   /include/
+> Well, as suggested on the wiki, I would like to work on the xml file 
+> formats as I have quite experience of working with xml files and parsing 
+> them using msxml and nsxml libraries and some of personal wrappers.
 
-In perforce terms, your "view mapping" looks like:
+As I am known to not exactly like Microsoft's products, if you wanted to 
+have me as a mentor, you'd need to use Open Source libraries to do the 
+parsing.
 
-    //work/framework/example/src/... //client/src/...
-    //work/project1/src/include/...  //client/src/include/...
+> How about my idea of making the support of new file formats in the 
+> plug-ins (suggested in my last post).
 
-?
+Sorry, I missed that idea.  Could you describe it again?
 
-I'm not a pro with p4, but do deal with many-line mappings like
-this.  Stock git-p4 handles these, except doesn't map correctly to
-the right-hand side.  I haven't tried to see if it would correctly
-use the include files from project1 instead of framework in your
-example.
+> > Personally, I would _love_ to see a good graphical tool (maybe written 
+> > in Tcl/Tk) to help merging conflicts in LaTeX files, but I just do not 
+> > have the time...
+> 
+> Ok. What I am thinking is to implement something  like that of
+> graphical *diff* command output but in these special file formats, it
+> ought to have intelligence to bring out the difference of two files
+> (like latex or xml) in a readable manner. For example, in case of xml
+> files, if one file contains an inner tag block , then merger GUI
+> should notify the user in a readable manner about this added tag
+> rather than only the difference in lines.
 
-If you can get git-p4 to figure out the mapping correctly, I don't
-expect any problems with respect to atomicity of commits.  As far as
-perforce goes, a server seems to manage its entire p4 space as one
-big single project.  Similarly with the git side of things---it's
-just a matter of getting this mapping correct.
+A diff would be a first step, but the real issue are the merge helpers.  
+And they need first and foremost a thought-through user interface design.  
+The technical issues are all solveable, I am sure.
 
-I too hacked the getClientSpec() part of git-p4 to put files into
-the correct directories in the git side.  My changes are a bit
-messy, and may interfere with other usage models, hence not
-submitted.  Maybe we should make an effort to get this right though.
-Do you have any changes to show how you are modifying things?
-
-		-- Pete
+Ciao,
+Dscho
