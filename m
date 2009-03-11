@@ -1,85 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Include log_config module in apache.conf
-Date: Wed, 11 Mar 2009 11:58:10 -0700
-Message-ID: <7vab7r6g59.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LNX.1.00.0903102320170.19665@iabervon.org>
- <alpine.DEB.1.00.0903111240150.10279@pacific.mpi-cbg.de>
+From: david@lang.hm
+Subject: Re: Google Summer of Code 2009: GIT
+Date: Wed, 11 Mar 2009 12:29:29 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0903111223470.16753@asgard.lang.hm>
+References: <49B74373.3090609@gmail.com>  <alpine.DEB.1.00.0903111255470.10279@pacific.mpi-cbg.de>  <ab9fa62a0903110511u63e7d46dr3bb783ee891ca4ae@mail.gmail.com>  <alpine.DEB.1.00.0903111353340.10498@intel-tinevez-2-302>  <ab9fa62a0903110655y4a47ccfkde0984ecb46b3307@mail.gmail.com>
+  <alpine.DEB.1.00.0903111458340.10498@intel-tinevez-2-302>  <alpine.DEB.1.10.0903110931070.13653@asgard.lang.hm> <ab9fa62a0903111007w4772b234x8e6fd19cdc7fc595@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Mar 11 19:59:55 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: saurabh gupta <saurabhgupta1403@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 11 20:31:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhTee-0004wm-8m
-	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 19:59:48 +0100
+	id 1LhU9W-0001fO-Gf
+	for gcvg-git-2@gmane.org; Wed, 11 Mar 2009 20:31:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752482AbZCKS6U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2009 14:58:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752235AbZCKS6T
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 14:58:19 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53063 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751698AbZCKS6T (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Mar 2009 14:58:19 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C4B4DA0039;
-	Wed, 11 Mar 2009 14:58:16 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5CCF4A0033; Wed,
- 11 Mar 2009 14:58:12 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0903111240150.10279@pacific.mpi-cbg.de>
- (Johannes Schindelin's message of "Wed, 11 Mar 2009 12:46:23 +0100 (CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 94786D2E-0E6E-11DE-AC0A-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1752919AbZCKTaN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Mar 2009 15:30:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752191AbZCKTaN
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 15:30:13 -0400
+Received: from mail.lang.hm ([64.81.33.126]:59627 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751995AbZCKTaM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Mar 2009 15:30:12 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n2BJTUq7008978;
+	Wed, 11 Mar 2009 11:29:30 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <ab9fa62a0903111007w4772b234x8e6fd19cdc7fc595@mail.gmail.com>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/112964>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Wed, 11 Mar 2009, saurabh gupta wrote:
 
-> Sorry, no:
+> On Wed, Mar 11, 2009 at 10:02 PM,  <david@lang.hm> wrote:
+>> On Wed, 11 Mar 2009, Johannes Schindelin wrote:
+>>
+>>> Hi,
+>>>
+>>> On Wed, 11 Mar 2009, saurabh gupta wrote:
+>>>
+>>>> What I think is to implement file formats other than text like that
+>>>> written on wiki i.e. latex, xml, or even any database file (db file).
+>>>> Another idea (although it can be weired also) is to implement the new
+>>>> file formats in the plug-in formats. For example, to incorporate the
+>>>> merger engine for a new file format, a plug-in is created and can be
+>>>> integrated with the present merger in the git. However, I am not sure
+>>>> how much valid is this idea to make the present merger in git to be
+>>>> compatible with the plug-ins for enabling newer file formats.
+>>>
+>>> I am not sure that a plugin structure is needed.  Take, for example, three
+>>> different .xml based formats: OpenOffice documents, .svg files and Ant
+>>> build.xml files.  They need very different user interfaces.
+>>>
+>>>> I am thinking of using gtk+ libraries to implement the GUI part (I am
+>>>> quite comfortable with gtk+).
+>>>
+>>> I mentioned Tcl/Tk, because it is portable, but I'll also take gtk-based
+>>> stuff ;-)
+>>>
+>>>> However, I think in merging and notifying about the conflicts in the xml
+>>>> files, other things can also be put forward. Like the GUI will show the
+>>>> number of tags differing and what are the new tags added and even if any
+>>>> tag is renamed with the content unchanged. If possible, how about
+>>>> showing a tree like structure (just like DOM model) to compare (or diff)
+>>>> the two xml files.
+>>>
+>>> This is a little bit too low-level for my liking.  Taking the OpenOffice
+>>> example again, the GUI should not expose XML at all...
+>>
+>> don't assume that you have a GUI just to handle a filetype. if you have one,
+>> good, make use of it. but have a fallback for how to deal with things if all
+>> you have is a text terminal.
 >
-> -- snip --
-> apache2: Syntax error on line 7 of 
-> /home/schindelin/git/t/lib-httpd/apache.conf: module log_config_module is 
-> built-in and can't be loaded
-> -- snap --
+> In case of only a terminal, It would be very difficult to show an OO
+> document to represent the *diff* output in both text as well in GUI.
+> For example, to indicate the changes in an OO document, we will have
+> to change the underlying XML file appropriately to show the markers
+> signs and other things in the conflict file. Now, if this file is
+> opened in terminal, it would not be at all comprehensible to see the
+> differences.
+>
+> The main thing is that to create *diff* for different file formats, we
+> will have to write the parser code accordingly.
 
-Sorry and thanks---I'll apply an interdiff and credit it to you.
+correct, and in the case of an XML file, the meaningful diff can be 
+substantially shorter than what a text diff of the two files would be 
+(whitespace changes that don't matter, even some tag ordering changes 
+may not matter)
 
--- >8 --
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Date: Wed, 11 Mar 2009 12:47:06 +0100 (CET)
-Subject: [PATCH] test: do not LoadModule log_config_module unconditionally
+I'm just asking that you don't get so fixated on what can be done in a GUI 
+that you provide no benifit to people who don't have the GUI
 
-LoadModule directive for log_config_module will not work if the module is
-built-in.
+there are a _lot_ of XML based formats out there, having a diff/merge 
+capability to make dealing with them better than just treating them as 
+text files would be a _very_ useful thing.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/lib-httpd/apache.conf |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+going beyond that and creating the ability to do the markup in 
+application-specific ways, and present it to the user in a nice GUI would 
+also be nice, but these are a step up after having the basic XML handling 
+that isn't specific to a particular application.
 
-diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-index a0d4077..f460e40 100644
---- a/t/lib-httpd/apache.conf
-+++ b/t/lib-httpd/apache.conf
-@@ -4,7 +4,9 @@ DocumentRoot www
- LogFormat "%h %l %u %t \"%r\" %>s %b" common
- CustomLog access.log common
- ErrorLog error.log
--LoadModule log_config_module modules/mod_log_config.so
-+<IfModule !mod_log_config.c>
-+	LoadModule log_config_module modules/mod_log_config.so
-+</IfModule>
- 
- <IfDefine Darwin>
- 	LoadModule log_config_module modules/mod_log_config.so
--- 
+David Lang
