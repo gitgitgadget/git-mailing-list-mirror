@@ -1,92 +1,108 @@
-From: Steven Tweed <orthochronous@gmail.com>
-Subject: Re: Generalised bisection
-Date: Thu, 12 Mar 2009 18:02:37 +0000
-Message-ID: <d9c1caea0903121102y5452603fua0e7a1b82e121b01@mail.gmail.com>
-References: <efe2b6d70903081840v18e77aa7w2dac2bed553d0d6a@mail.gmail.com>
-	 <200903100808.15875.chriscool@tuxfamily.org>
-	 <efe2b6d70903110159h78de744yc141effaf5aa0821@mail.gmail.com>
-	 <43d8ce650903110235q5e2a59f6t201d5e65a4937476@mail.gmail.com>
-	 <efe2b6d70903111515p2b9f656bp186d0b3cc7ae483d@mail.gmail.com>
-	 <43d8ce650903112345x3d40b70ap7e4c0f8c7d0b6069@mail.gmail.com>
-	 <alpine.DEB.1.00.0903121154560.10279@pacific.mpi-cbg.de>
+From: david@lang.hm
+Subject: Re: Google Summer of Code 2009: GIT
+Date: Thu, 12 Mar 2009 11:03:47 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0903121100360.16753@asgard.lang.hm>
+References: <49B74373.3090609@gmail.com>  <ab9fa62a0903110511u63e7d46dr3bb783ee891ca4ae@mail.gmail.com>  <alpine.DEB.1.00.0903111353340.10498@intel-tinevez-2-302>  <ab9fa62a0903110655y4a47ccfkde0984ecb46b3307@mail.gmail.com>  <alpine.DEB.1.00.0903111458340.10498@intel-tinevez-2-302>
+  <alpine.DEB.1.10.0903110931070.13653@asgard.lang.hm>  <ab9fa62a0903111007w4772b234x8e6fd19cdc7fc595@mail.gmail.com>  <alpine.DEB.1.10.0903111223470.16753@asgard.lang.hm>  <ab9fa62a0903111302j46c46c2q96af497fa2ac513e@mail.gmail.com> 
+ <alpine.DEB.1.10.0903111307050.16753@asgard.lang.hm> <ab9fa62a0903120542s45b1ceebwddab932891c47cf0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: John Tapsell <johnflux@gmail.com>,
-	Ealdwulf Wuffinga <ealdwulf@googlemail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Git List <git@vger.kernel.org>, Ingo Molnar <mingo@elte.hu>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Mar 12 19:06:17 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: saurabh gupta <saurabhgupta1403@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 12 19:06:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhpGM-00011K-Al
-	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 19:04:10 +0100
+	id 1LhpI5-0001QY-Sj
+	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 19:05:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752490AbZCLSCn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Mar 2009 14:02:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752294AbZCLSCm
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 14:02:42 -0400
-Received: from mail-bw0-f178.google.com ([209.85.218.178]:46373 "EHLO
-	mail-bw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751700AbZCLSCl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Mar 2009 14:02:41 -0400
-Received: by bwz26 with SMTP id 26so1771981bwz.37
-        for <git@vger.kernel.org>; Thu, 12 Mar 2009 11:02:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=IeIdOTnvcZtnjrIkDQdAvbzWeKZPJsGI7OvGIQKbdVc=;
-        b=cmuuURKbrfR3ZyiT57tlm/FHQ++XTaaD23ix5DKOpQR1pm0J3+7XpCfe7MYTaMaFQR
-         X2IJQVKJCbdC80h4ScrhLbgHv9+75e0bgeP4REc+Wq0OYiZFd2CW6BsqbgNS+my00xm/
-         H40A8vKp/L/P750oi3sQh7LWjSSbaHBZnjFmA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=VSuK75CB3lQIvAhHQvxtb+7/b91IlrMuQ77uVmoc0FC8y08K0xPaHNHR2kJ9nkmybp
-         o0FX5+4QmW0Bx9PSqZoF/WV8oAJsCqWq97tz8Ht5Dw25w2WL+zDpcdTT+c1SKVCdCYnF
-         8mRFsESzbjz0nDrKXvbsWD3SxMPBS1oFNOK4g=
-Received: by 10.223.126.1 with SMTP id a1mr209171fas.52.1236880957951; Thu, 12 
-	Mar 2009 11:02:37 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0903121154560.10279@pacific.mpi-cbg.de>
+	id S1756279AbZCLSD4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Mar 2009 14:03:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755860AbZCLSDz
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 14:03:55 -0400
+Received: from mail.lang.hm ([64.81.33.126]:33854 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753153AbZCLSDy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Mar 2009 14:03:54 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n2CI3l0v016925;
+	Thu, 12 Mar 2009 10:03:47 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <ab9fa62a0903120542s45b1ceebwddab932891c47cf0@mail.gmail.com>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113099>
 
-On Thu, Mar 12, 2009 at 10:55 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> On Thu, 12 Mar 2009, John Tapsell wrote:
-> > 2009/3/11 Ealdwulf Wuffinga <ealdwulf@googlemail.com>:
-> > > What I use is the multiprecision floating point number class. dou=
-bles
-> > > don't seem to be long enough.
-> >
-> > Hmm, really really? =A0Sometimes this sort of thing can be fixed by=
- just
-> > readjusting the formulas. =A0What formulas are you using that requi=
-re more
-> > precision than doubles?
+On Thu, 12 Mar 2009, saurabh gupta wrote:
+
+> hello,
 >
-> Maybe you could post the formulae instead of forcing people to deduct=
- them
-> from the source code?
+> On Thu, Mar 12, 2009 at 1:51 AM,  <david@lang.hm> wrote:
+>>
+>>> Yes, but the thing is that the underlying codes and method will be
+>>> different for GUI part and terminal part to make it readable and
+>>> understandable. Like for OO Documents, if we aim to show the *diff*
+>>> output in the Office tool, then we have to change the xml file
+>>> accordingly. But the same xml file when used with terminal only, the
+>>> *diff* output is not clear.
+>>>
+>>> As Johannes said in above post that for OO documents, while showing
+>>> the *diff* result, no xml data should be shown.
+>>
+>> in part we are talking about different aspects of things, and we were all
+>> wrong.
+>>
+>> see the e-mail a little bit ago by Junio
+>>
+>> there are two types of helpers that can be written
+>>
+>> 1. a low-level part that does the simple merges automaticaly and leaves
+>> behind appropriate conflict markers when it can't
+>>
+>> there is no GUI involved with this.
+>>
+>> what 'appropriate conflict markers' are can vary from XML file to XML file
+>>
+>>
+>> 2. after a conflict has taken place, a helper to work with the user to
+>> resolve the conflict
+>>
+>> this can have a GUI and/or a text UI and is tied to the 'appropriate
+>> conflict markers' as defined in #1, and can be _very_ tightly coupled to the
+>> specific use of the XML file.
+>>
+>> I think it's very important to have a text UI tool that can be used for the
+>> conflict resolution step as well as supporting GUI tools.
+>
+> All right. What I can understand from the current situation is that
+> for merging and marking conflicts in xml (for example) files has
+> following things to do.
+>
+> One, if the markers are put in the xml files like that of a text file,
+> one can see the difference using a text editor or a terminal. But if
+> the same xml file is to be opened in another editor which expects a
+> valid xml (as clearly mentioned on the wiki ideas for GIT), then a
+> merge helper is needed.
+>
+> But if the conflict markers are put in a way to make the xml file
+> still valid which can be then opened in the appropriate editor, then
+> the marking will be different. The merge driver has to produce the
+> conflicted merged file in a manner which is still a valid xml file and
+> user has the choice to open it in his own editor to resolve the
+> conflicts.
 
-I haven't even looked at the source code so a description of the
-mathematical algorithm would help, but I'll just point out that
-underflow (in the case of working with probabilities) and overflow
-(when working with their negated logarithms) is inherent in most
-multi-step Bayesian algorithms. The only solution is to rescale things
-as you go so that things stay in a "computable" range. (You're almost
-never interested in absolute probabilities anyway but rather relative
-probabilities or, in extreme cases, just the biggest probability, so
-rescaling isn't losing any useful information.)
+exactly. and how you mark the conflict to have it be valid XML is going to 
+depend on details of the type of file. there are probably a few basic 
+methods that will work the vast majority of the time, but with some 
+details needing to be configurable.
 
-cheers,
-dave tweed
+for example, if the XML document is a ODF document, it may be possible to 
+add 'revision' tags around the conflict that are already understood by the 
+editor.
+
+David Lang
