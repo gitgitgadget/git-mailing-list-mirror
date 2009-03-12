@@ -1,106 +1,55 @@
-From: "Kelly F. Hickel" <kfh@mqsoftware.com>
-Subject: newb: Given a commit id, find which branches have it as an ancestor
-Date: Thu, 12 Mar 2009 10:21:50 -0500
-Message-ID: <63BEA5E623E09F4D92233FB12A9F794302E0F98D@emailmn.mqsoftware.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "Kelly F. Hickel" <kfh@mqsoftware.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 12 16:31:46 2009
+From: Pieter de Bie <pdebie@ai.rug.nl>
+Subject: Re: git checkout -b origin/mybranch origin/mybranch
+Date: Thu, 12 Mar 2009 15:21:48 +0000
+Message-ID: <B9479687-D936-4EE1-A5A4-663968B76EBF@ai.rug.nl>
+References: <43d8ce650903120436u261cb7e3p838e4a12e7b54d7d@mail.gmail.com> <alpine.DEB.1.00.0903121240400.10279@pacific.mpi-cbg.de> <43d8ce650903120448x51220ba0k660be7706acba755@mail.gmail.com> <alpine.DEB.1.00.0903121357320.6335@intel-tinevez-2-302> <43d8ce650903120618h79686207vaa478c54f34e26f8@mail.gmail.com> <fabb9a1e0903120643r3cfefdfej560ff7edda2be6f5@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: John Tapsell <johnflux@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git List <git@vger.kernel.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 12 16:31:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lhmln-0001g5-C0
-	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 16:24:27 +0100
+	id 1Lhmlo-0001g5-1s
+	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 16:24:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756530AbZCLPVw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Mar 2009 11:21:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751469AbZCLPVw
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 11:21:52 -0400
-Received: from emailmn.mqsoftware.com ([66.192.70.108]:37113 "EHLO
-	emailmn.mqsoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756335AbZCLPVv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Mar 2009 11:21:51 -0400
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: newb: Given a commit id, find which branches have it as an ancestor
-Thread-Index: AcmjJkP97P/xbzeYQW2QfzhPUF8iPA==
+	id S1755678AbZCLPV7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Mar 2009 11:21:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755783AbZCLPV6
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 11:21:58 -0400
+Received: from frim.nl ([87.230.85.232]:40418 "EHLO
+	lvps87-230-85-232.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753629AbZCLPV5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Mar 2009 11:21:57 -0400
+Received: from vpn-014.vpn.net.ed.ac.uk ([129.215.37.14])
+	by lvps87-230-85-232.dedicated.hosteurope.de with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <pdebie@ai.rug.nl>)
+	id 1LhmjJ-0006Gz-Aw; Thu, 12 Mar 2009 16:21:54 +0100
+In-Reply-To: <fabb9a1e0903120643r3cfefdfej560ff7edda2be6f5@mail.gmail.com>
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113077>
-
-Hi all, I've been working on testing importing our cvs repo via cvs2git,
-then using cvsps to pull incremental updates.  Something seems to have
-gone awry with one of the commits, and I'm having trouble tracking it
-down.
-
-This is a question about how to track something down after the fact, not
-a question about what went wrong with the cvsps import....
-
-This is git 1.6.1 running on Centos 5.2 linux.
-
-So, the scenario is that one of the last few commits pulled into my git
-repo by cvsps/cvsimport should have landed on origin/master, but when I
-look at the file, the change is missing.  I'm trying to figure out
-"where it went", since it didn't go where I expected it.
-
-Things I've tried that didn't tell me what I wanted to know:
-$ git name-rev 15fa81b
-15fa81b undefined
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113078>
 
 
-$ git log --children 15fa81b
-This shows me a bunch of commits that, going by the commit date, appear
-to be ancestors of the commit I'm interested in, not children.
+On Mar 12, 2009, at 1:43 PM, Sverre Rabbelier wrote:
 
-$ git checkout  15fa81b5ae
-Note: moving to "15fa81b5ae" which isn't a local branch If you want to
-create a new branch from this checkout, you may do so (now or later) by
-using -b with the checkout command again. Example:
-  git checkout -b <new_branch_name>
-HEAD is now at 15fa81b... Changed version to 4.1.0.157 $ gitk (as
-expected, shows me that the commit I care about is the latest in the
-workspace)
+> The point is that we _already_ warned the user (like Dscho pointed
+> out), and that(as you pointed out), it didn't work :P.
 
-$ git checkout master
-Previous HEAD position was 15fa81b... Changed version to 4.1.0.157
-Switched to branch "master"
-$ gitk
-Doesn't list my target commit, in fact, doesn't list any commits after
-the cvs2git date, so it appears that none of my cvsps pulled commits
-landed on master (ok, so maybe this post is about what went wrong, just
-a little ;-} ).
+You can also get this in other interactions, for example:
 
-I suspect that I'm missing some factoid in trying to map my workflow to
-Git, but this seems like the kind of thing I'd want to know, i.e. given
-a commit, what branches have that commit as an ancestor.  It would seem
-to be useful in two cases:
-1) I've found a commit that introduced a bug and want to know what
-releases that bug ended up in.
-2) I've identified a fix for a previous bug and want to know what
-releases already contain the fix.
-(ok, those are pretty much the same workflow, but different reasons).
+	$ git checkout -b origin/test HEAD
+	$ git checkout -b origin/test master
 
-What am I missing????
-
-
-
---
-
-Kelly F. Hickel
-Senior Product Architect
-MQSoftware, Inc.
-952-345-8677 Office
-952-345-8721 Fax
-kfh@mqsoftware.com
-www.mqsoftware.com
-Certified IBM SOA Specialty
-Your Full Service Provider for IBM WebSphere
-Learn more at www.mqsoftware.com 
+yes, these might be user errors, but I still think it's not OK to  
+create a new ref 'refs/heads/origin/test' if there's also a 'refs/ 
+remotes/origin/test' (as I've said a few months ago).
