@@ -1,93 +1,73 @@
-From: Stephen Bannasch <stephen.bannasch@deanbrook.org>
-Subject: Re: [EGIT RFC PATCH(was Re: egit problem with sym linked eclipse project dirs)] Add some support for symlinked
- projects.
-Date: Wed, 11 Mar 2009 22:57:09 -0400
-Message-ID: <p06240814c5de27cbf520@[63.138.152.192]>
-References: <p0624081cc5928e2885fd@[192.168.1.114]> <p06240812c59ed365d694@[192.168.1.106]>
- <200901232233.59232.robin.rosenberg.lists@dewire.com> <200903112317.41380.robin.rosenberg.lists@dewire.com>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: [PATCH v2] git-clone: Add option --branch to override initial  branch
+Date: Thu, 12 Mar 2009 13:18:49 +0900
+Message-ID: <buoocw7s79y.fsf@dhlpc061.dev.necel.com>
+References: <alpine.DEB.1.00.0903030047130.10279@pacific.mpi-cbg.de>
+	<1236040414-19089-1-git-send-email-torarnv@gmail.com>
+	<7vbpsh93q5.fsf@gitster.siamese.dyndns.org>
+	<loom.20090309T143413-334@post.gmane.org>
+	<94a0d4530903090901o6e8c2a40k676387f90ee461b3@mail.gmail.com>
+	<4d8e3fd30903110152m1b52de30ge630d6b9f6a4c7fe@mail.gmail.com>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii" ; format="flowed"
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Thu Mar 12 04:04:59 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	torarnv@gmail.com, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 12 05:20:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhbE9-0005b8-F9
-	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 04:04:57 +0100
+	id 1LhcPN-0004g7-Qj
+	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 05:20:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754231AbZCLDD3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Mar 2009 23:03:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753543AbZCLDD2
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Mar 2009 23:03:28 -0400
-Received: from deanbrook.org ([72.52.70.192]:43775 "HELO deanbrook.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752777AbZCLDD2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Mar 2009 23:03:28 -0400
-X-Greylist: delayed 348 seconds by postgrey-1.27 at vger.kernel.org; Wed, 11 Mar 2009 23:03:28 EDT
-Received: from ::ffff:70.109.253.176 ([70.109.253.176]) by deanbrook.org for <git@vger.kernel.org>; Wed, 11 Mar 2009 19:57:38 -0700
-In-Reply-To: <200903112317.41380.robin.rosenberg.lists@dewire.com>
+	id S1754078AbZCLETH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Mar 2009 00:19:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751097AbZCLETH
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 00:19:07 -0400
+Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:44339 "EHLO
+	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750821AbZCLETG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Mar 2009 00:19:06 -0400
+Received: from relay21.aps.necel.com ([10.29.19.50])
+	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id n2C4Io8q024077;
+	Thu, 12 Mar 2009 13:18:50 +0900 (JST)
+Received: from relay31.aps.necel.com ([10.29.19.24] [10.29.19.24]) by relay21.aps.necel.com with ESMTP; Thu, 12 Mar 2009 13:18:50 +0900
+Received: from dhlpc061 ([10.114.114.241] [10.114.114.241]) by relay31.aps.necel.com with ESMTP; Thu, 12 Mar 2009 13:18:49 +0900
+Received: by dhlpc061 (Postfix, from userid 31295)
+	id CB30352E276; Thu, 12 Mar 2009 13:18:49 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
+In-Reply-To: <4d8e3fd30903110152m1b52de30ge630d6b9f6a4c7fe@mail.gmail.com>
+	(Paolo Ciarrocchi's message of "Wed, 11 Mar 2009 09:52:28 +0100")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113001>
 
-OK ... I'm a bit confused now because I no longer have Git listed as 
-a repository type for Team Sharing.
+Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com> writes:
+> $ git clone -n URL
+> $ git checkout -b foo origin/bar
+>
+> That being said, I see the following command as an improvement over
+> the actual GIT UI:
+>
+>  $ git clone git://URI -b bar
 
-I deleted the existing org.spearce.* eclipse plugins
+Note that in your original advice, foo and bar can be different, and
+it's not clear to me what "-b bar" should do...
 
-   [eclipse]$ rm -f plugins/org.spearce.*
+Personally I frequently use foo == bar (no local master branch), but I
+think another common pattern is foo != bar, but foo or bar == "master".
 
-pulled from git://repo.or.cz/egit.git
+Maybe a syntax similar to push, like "-b LOCAL_BR:REMOTE_BR",
+with "-b BR" being shorthand for "-b BR:BR"?
 
-created a new branch for this test and applied your patch
+-Miles
 
-   [egit.git (linksbranch)]$ git log
-   commit 2b86cd4e27a9d9158092305271d6fb25ab27846e
-   Author: Stephen Bannasch <stephen.bannasch@gmail.com>
-   Date:   Wed Mar 11 22:29:26 2009 -0400
-
-       check through links for repositories
-       Robin Rosenberg's patch
-       see: http://marc.info/?l=git&m=123681033214178&w=2
-       and: http://code.google.com/p/egit/issues/detail?id=52
-
-   commit 341b9c1abadd2ac0ec9ecc7c597990070612e058
-   Author: Ruth Alkema <ruth@diasoft.nl>
-   Date:   Wed Mar 11 16:42:45 2009 +0100
-
-       Better fix for 'negative position' error on large pack files
-
-       If position is really big and the window size is fairly small, id can
-       be negative.  Instead of producing a negative position by extending
-       id to a long, mask out the low bits from the original position value
-       to compute the window start.
-
-       [sp: message by me, as I had already applied v1 of the patch
-            and pushed it (see immediate parent)]
-
-       Signed-off-by: Ruth Alkema <ruth@diasoft.nl>
-       Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-
-   ...
-
-Opened Eclipse and switched to the egit workspace. Refreshed the egit 
-projects and exported the org.spearce.* packages as deployable 
-plugins and fragments to the Eclipse dir.
-
-The new plugins are there:
-
-   [eclipse]$ ls plugins/org.spearce.*
-   plugins/org.spearce.egit.core.test_0.4.0.200903112237.jar
-   plugins/org.spearce.egit_0.4.0.200903112237.jar
-   plugins/org.spearce.egit.core_0.4.0.200903112237.jar
-   plugins/org.spearce.jgit_0.4.0.200903112237.jar
-   plugins/org.spearce.egit.ui_0.4.0.200903112237.jar
-
-Quit and restarted Eclipse.
-
-When I select a project with an existing git repository and try to 
-enable team/sharing only CVS and SVN are listed.
+-- 
+Happiness, n. An agreeable sensation arising from contemplating the misery of
+another.
