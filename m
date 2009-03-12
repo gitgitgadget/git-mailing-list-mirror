@@ -1,110 +1,194 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 6/7] rev-list: don't find all bisect commits if there are no
- skipped commits
-Date: Thu, 12 Mar 2009 08:51:37 +0100
-Message-ID: <20090312085137.f58fa54b.chriscool@tuxfamily.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Ingo Molnar <mingo@elte.hu>,
-	John Tapsell <johnflux@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 12 08:55:06 2009
+From: "Daniel Cheng (aka SDiZ)" <j16sdiz+freenet@gmail.com>
+Subject: [PATCH JGIT] Allow writeObject() write to OutputStream
+Date: Thu, 12 Mar 2009 16:02:10 +0800
+Message-ID: <1236844931-12807-1-git-send-email-j16sdiz+freenet@gmail.com>
+Cc: "Daniel Cheng (aka SDiZ)" <j16sdiz+freenet@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 12 09:04:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lhfkm-0007QV-Gh
-	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 08:54:57 +0100
+	id 1Lhftb-0001Rw-6j
+	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 09:04:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752899AbZCLHwf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Mar 2009 03:52:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754033AbZCLHwf
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 03:52:35 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2]:54871 "EHLO smtp2-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752899AbZCLHwe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Mar 2009 03:52:34 -0400
-Received: from smtp2-g21.free.fr (localhost [127.0.0.1])
-	by smtp2-g21.free.fr (Postfix) with ESMTP id E5C3C4B016F;
-	Thu, 12 Mar 2009 08:52:24 +0100 (CET)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp2-g21.free.fr (Postfix) with SMTP id C86F94B009D;
-	Thu, 12 Mar 2009 08:52:21 +0100 (CET)
-X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.12; i486-pc-linux-gnu)
+	id S1753622AbZCLICV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Mar 2009 04:02:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752842AbZCLICU
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 04:02:20 -0400
+Received: from wa-out-1112.google.com ([209.85.146.179]:40433 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751785AbZCLICS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Mar 2009 04:02:18 -0400
+Received: by wa-out-1112.google.com with SMTP id v33so262544wah.21
+        for <git@vger.kernel.org>; Thu, 12 Mar 2009 01:02:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:from:to:cc:subject
+         :date:message-id:x-mailer;
+        bh=ElccPAviCodZe8nVw/oTf2KbcdIu7fi+2OnGt03gYEc=;
+        b=JUiiLqOIEJOsKyVAykc0G3Q8Xl9K02m1iZ3WoRcSgOnEVPH0L83vfg6vQBDcfgXeEJ
+         XtXIq65ek40RLClDGgb5SeGFJbehspbRpa2ZHHkWrSn32PZ/9YwWa79qmLfTm2A00G1N
+         r47fU4k1VuLx/1QQCepSxxe5Scaw8vhit17XU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:from:to:cc:subject:date:message-id:x-mailer;
+        b=eRn40zvJ3S7WFh3GyxIjYGUUYHDSgAcyuWBeTeK6PnSzOcQdOyteEjMWhaBqcn7mjb
+         Iu9bVcWOVXSxfZlazSOvt4OpFNV5TDqhXNn7xQVFW3F+aGbBoNVIwvZJn+n+OuUuzFoq
+         GfXrs97eV8jjvRv8zYY0mKNPn2/xBLsQMCr6c=
+Received: by 10.114.193.15 with SMTP id q15mr5847285waf.199.1236844935874;
+        Thu, 12 Mar 2009 01:02:15 -0700 (PDT)
+Received: from localhost.localdomain ([116.49.52.167])
+        by mx.google.com with ESMTPS id n40sm352830wag.48.2009.03.12.01.02.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 12 Mar 2009 01:02:15 -0700 (PDT)
+X-Mailer: git-send-email 1.6.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113019>
 
-This patch optimizes the behavior of the "--bisect-skip" option of
-"git rev-list", so that it does not try to find all possible bisection
-points when only one is needed because there are no skipped commits.
 
-This makes the behavior of "git rev-list --bisect-skip" similar as
-what is done in "git-bisect.sh" to choose if it should pass the
-"--bisect-all" option to "git rev-list". So this has the added
-benefit that it will make the test suite pass as is when we will
-use "--bisect-skip" in "git-bisect.sh" in a later patch.
-
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Daniel Cheng (aka SDiZ) <j16sdiz+freenet@gmail.com>
 ---
- bisect-skip.c      |    5 +++++
- bisect.h           |    1 +
- builtin-rev-list.c |    4 +++-
- 3 files changed, 9 insertions(+), 1 deletions(-)
 
-diff --git a/bisect-skip.c b/bisect-skip.c
-index 9228465..789ee09 100644
---- a/bisect-skip.c
-+++ b/bisect-skip.c
-@@ -28,6 +28,11 @@ void register_skipped(const char *skipped)
- 	strbuf_release(&sb);
- }
+This patch make factor out the object writing code in ObjectWriter,
+allow it to write to any OutputStream. 
+Subclass class may then override
+  writeObject(final int type, long len, InputStream is, boolean store)
+to make it write to alternative locations.
+
+There are some discussion on devl@freenetproject.org to use raw 
+(uncompressed) object to freenet. This patch allow the testing.
+
+ .../src/org/spearce/jgit/lib/ObjectWriter.java     |   93 +++++++++++---------
+ 1 files changed, 50 insertions(+), 43 deletions(-)
+
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectWriter.java b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectWriter.java
+index 546cc68..97acae4 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectWriter.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectWriter.java
+@@ -45,6 +45,7 @@
+ import java.io.FileOutputStream;
+ import java.io.IOException;
+ import java.io.InputStream;
++import java.io.OutputStream;
+ import java.io.OutputStreamWriter;
+ import java.security.MessageDigest;
+ import java.util.zip.Deflater;
+@@ -297,8 +298,52 @@ public ObjectId computeBlobSha1(final long len, final InputStream is)
+ 		return writeObject(Constants.OBJ_BLOB, len, is, false);
+ 	}
  
-+int skipped_nr(void)
-+{
-+	return skipped_sha1_nr;
-+}
+-	ObjectId writeObject(final int type, long len, final InputStream is,
+-			boolean store) throws IOException {
++	protected ObjectId writeObject(final int type, long len,
++			final InputStream is, final OutputStream deflateStream)
++			throws IOException {
++		md.reset();
 +
- static int skipcmp(const void *a, const void *b)
- {
- 	return hashcmp(a, b);
-diff --git a/bisect.h b/bisect.h
-index c5f9fe1..ff9c781 100644
---- a/bisect.h
-+++ b/bisect.h
-@@ -2,6 +2,7 @@
- #define BISECT_H
- 
- void register_skipped(const char *skipped);
-+int skipped_nr(void);
- struct commit_list *filter_skipped(struct commit_list *list,
- 				   struct commit_list **tried,
- 				   int show_all);
-diff --git a/builtin-rev-list.c b/builtin-rev-list.c
-index 6e0466e..4af70d7 100644
---- a/builtin-rev-list.c
-+++ b/builtin-rev-list.c
-@@ -337,7 +337,6 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 		if (!prefixcmp(arg, "--bisect-skip=")) {
- 			bisect_list = 1;
- 			bisect_show_vars = 1;
--			bisect_find_all = 1;
- 			bisect_skip = 1;
- 			register_skipped(arg + 14);
- 			continue;
-@@ -384,6 +383,9 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 	if (bisect_list) {
- 		int reaches = reaches, all = all;
- 
-+		if (bisect_skip && !bisect_find_all)
-+			bisect_find_all = !!skipped_nr();
++		byte[] header;
++		int n;
 +
- 		revs.commits = find_bisection(revs.commits, &reaches, &all,
- 					      bisect_find_all);
++		header = Constants.encodedTypeString(type);
++		md.update(header);
++		if (deflateStream != null)
++			deflateStream.write(header);
++
++		md.update((byte) ' ');
++		if (deflateStream != null)
++			deflateStream.write((byte) ' ');
++
++		header = Constants.encodeASCII(len);
++		md.update(header);
++		if (deflateStream != null)
++			deflateStream.write(header);
++
++		md.update((byte) 0);
++		if (deflateStream != null)
++			deflateStream.write((byte) 0);
++
++		while (len > 0
++				&& (n = is.read(buf, 0, (int) Math.min(len, buf.length))) > 0) {
++			md.update(buf, 0, n);
++			if (deflateStream != null)
++				deflateStream.write(buf, 0, n);
++			len -= n;
++		}
++
++		if (len != 0)
++			throw new IOException("Input did not match supplied length. " + len
++					+ " bytes are missing.");
++
++		if (deflateStream != null)
++			deflateStream.close();
++
++		return ObjectId.fromRaw(md.digest());
++	}
++
++	protected ObjectId writeObject(final int type, long len,
++			final InputStream is, boolean store) throws IOException {
+ 		final File t;
+ 		final DeflaterOutputStream deflateStream;
+ 		final FileOutputStream fileStream;
+@@ -312,7 +357,6 @@ ObjectId writeObject(final int type, long len, final InputStream is,
+ 			fileStream = null;
+ 		}
  
+-		md.reset();
+ 		if (store) {
+ 			def.reset();
+ 			deflateStream = new DeflaterOutputStream(fileStream, def);
+@@ -320,46 +364,9 @@ ObjectId writeObject(final int type, long len, final InputStream is,
+ 			deflateStream = null;
+ 
+ 		try {
+-			byte[] header;
+-			int n;
+-
+-			header = Constants.encodedTypeString(type);
+-			md.update(header);
+-			if (deflateStream != null)
+-				deflateStream.write(header);
+-
+-			md.update((byte) ' ');
+-			if (deflateStream != null)
+-				deflateStream.write((byte) ' ');
+-
+-			header = Constants.encodeASCII(len);
+-			md.update(header);
+-			if (deflateStream != null)
+-				deflateStream.write(header);
+-
+-			md.update((byte) 0);
+-			if (deflateStream != null)
+-				deflateStream.write((byte) 0);
+-
+-			while (len > 0
+-					&& (n = is.read(buf, 0, (int) Math.min(len, buf.length))) > 0) {
+-				md.update(buf, 0, n);
+-				if (deflateStream != null)
+-					deflateStream.write(buf, 0, n);
+-				len -= n;
+-			}
+-
+-			if (len != 0)
+-				throw new IOException("Input did not match supplied length. "
+-						+ len + " bytes are missing.");
+-
+-			if (deflateStream != null ) {
+-				deflateStream.close();
+-				if (t != null)
+-					t.setReadOnly();
+-			}
+-
+-			id = ObjectId.fromRaw(md.digest());
++			id = writeObject(type, len, is, deflateStream);
++			if (t != null)
++				t.setReadOnly();
+ 		} finally {
+ 			if (id == null && deflateStream != null) {
+ 				try {
 -- 
-1.6.2.83.g012a16.dirty
+1.6.2
