@@ -1,150 +1,111 @@
-From: saurabh gupta <saurabhgupta1403@gmail.com>
-Subject: Re: Google Summer of Code 2009: GIT
-Date: Fri, 13 Mar 2009 00:30:46 +0530
-Message-ID: <ab9fa62a0903121200v73ec3522gcdebcd34122efc72@mail.gmail.com>
-References: <49B74373.3090609@gmail.com>
-	 <ab9fa62a0903111302j46c46c2q96af497fa2ac513e@mail.gmail.com>
-	 <alpine.DEB.1.10.0903111307050.16753@asgard.lang.hm>
-	 <alpine.DEB.1.00.0903112136560.10279@pacific.mpi-cbg.de>
-	 <alpine.DEB.1.10.0903111401520.16753@asgard.lang.hm>
-	 <7veix33f5e.fsf@gitster.siamese.dyndns.org>
-	 <ab9fa62a0903120545o7e5bc359g7df233b00858869c@mail.gmail.com>
-	 <alpine.DEB.1.10.0903121052310.16753@asgard.lang.hm>
-	 <ab9fa62a0903121119j6c2a1d43kd9cda99db47b5e7c@mail.gmail.com>
-	 <alpine.DEB.1.10.0903121148540.16753@asgard.lang.hm>
+From: =?ISO-8859-1?Q?Johan_S=F8rensen?= <johan@johansorensen.com>
+Subject: Re: [PATCH] Introduce a filter-path argument to git-daemon, for doing 
+	custom path transformations
+Date: Thu, 12 Mar 2009 20:06:25 +0100
+Message-ID: <9e0f31700903121206m3adbabacra655c5d340365f43@mail.gmail.com>
+References: <49B7DFA1.4030409@viscovery.net>
+	 <1236852820-12980-1-git-send-email-johan@johansorensen.com>
+	 <alpine.DEB.1.00.0903121218000.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Thu Mar 12 20:02:23 2009
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Mar 12 20:08:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhqAf-0008TS-LZ
-	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 20:02:22 +0100
+	id 1LhqG9-00024f-TU
+	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 20:08:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754697AbZCLTAu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Mar 2009 15:00:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754218AbZCLTAu
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 15:00:50 -0400
-Received: from mail-gx0-f167.google.com ([209.85.217.167]:37711 "EHLO
-	mail-gx0-f167.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751836AbZCLTAs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Mar 2009 15:00:48 -0400
-Received: by gxk11 with SMTP id 11so2037035gxk.13
-        for <git@vger.kernel.org>; Thu, 12 Mar 2009 12:00:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=AwVLZ5qtIU6cXwRUllpnaujrBINSX1+f0pFSCNWng5A=;
-        b=WpVcMtBZAy7HD3mxVrBB/rhzvnnP22YqCZZVn0j1oZrD5pHqCf21tXxsdUR+gQkUF1
-         Ff/ppv6wpYGWpc8oS3xsuy2rFOLnvNZ6ngw9cJRE/oDJ8i0luli3boN4ATuIu/7y7vc9
-         WoSTXZ2a9T8VaUmVh8KahzXkuUM2kHgsOQLlk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=xUHLbthZYsTSut6Poy90Faa96y67ePcoNeyN6BJqtda0IC01QrAQVSEM36yCcN+l7f
-         /UzrPCpNxEtna2A9LGcIVOfaQFNdbNjTfn6fYgCqeRyVYGhLsWo6OFgFjvlxQE+2Wboe
-         wk+p2w913Nlzs3G/kwiCDm69MRjzfGRS5vrp4=
-Received: by 10.231.20.3 with SMTP id d3mr85449ibb.18.1236884446361; Thu, 12 
-	Mar 2009 12:00:46 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.10.0903121148540.16753@asgard.lang.hm>
+	id S1754551AbZCLTGa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Mar 2009 15:06:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754035AbZCLTGa
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 15:06:30 -0400
+Received: from nf-out-0910.google.com ([64.233.182.186]:47268 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753790AbZCLTG3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Mar 2009 15:06:29 -0400
+Received: by nf-out-0910.google.com with SMTP id d21so596032nfb.21
+        for <git@vger.kernel.org>; Thu, 12 Mar 2009 12:06:25 -0700 (PDT)
+Received: by 10.210.131.6 with SMTP id e6mr40462ebd.64.1236884785501; Thu, 12 
+	Mar 2009 12:06:25 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0903121218000.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113106>
 
-On Fri, Mar 13, 2009 at 12:23 AM,  <david@lang.hm> wrote:
-> On Thu, 12 Mar 2009, saurabh gupta wrote:
->
->> On Thu, Mar 12, 2009 at 11:30 PM, <david@lang.hm> wrote:
->>
->>> On Thu, 12 Mar 2009, saurabh gupta wrote:
->>>
->>>>
->>>> =3D>Merging of two xml files
->>>>
->>>> =3D> existing merge driver (like xdl) is called which marks the
->>>> conflicts points just like a normal text file.
->>>>
->>>> =3D> the conflicted file can be read through a text terminal and
->>>> conflicted lines can be seen.
->>>>
->>>> =3D> suppose the xml file is from the domain of OO document. Then,=
- a
->>>> merge helper for OO xml type file is called which takes input as t=
-he
->>>> conflicted file produced by xdl driver.
->>>>
->>>> =3D> The merge helper creates a new file or changes the input file=
- to
->>>> make it a valid xml file so that it can be opened in OpenOffice an=
-d
->>>> user can see the markers like "=3D=3D=3D=3D" or "<<<<<" =A0in an a=
-ppropriate
->>>> manner and can resolve the file manually.
->>>>
->>>
->>> with XML files it's possible to be symanticly identical, but not
->>> identical
->>> as far as a text merge driver is concerned.
->>>
-> <SNIPB>
->>
->> you are right. For xml merging, what I am thinking is to create the
->> algorithm based on the document object model. Inside, any tag, all t=
-ags
->> are
->> compared only in terms of content and not in order. But again, this
->> ordering
->> option can be given to the user. If the user wants order to matter, =
-then a
->> conflict will be resulted if order mismatches.
->
-> right.
->
->> But other issue is regarding the display of conflict markers. Either
->> conflict markers should be put in xml format or like text merger. Th=
-is is
->> the main project idea for GSoC 2009.
->
-> this may need to be a configurable option, but I suspect that we coul=
-d get
-> away with always using something in XML format. exactly what the mark=
-ers are
-> needs to be configurable (the markers for OO will not be the same as =
-for SVG
-> for example)
+On Thu, Mar 12, 2009 at 12:29 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 
-yeah.
+(all my comments below refer to my latest patch)
 
-> building a library of 'this works especially well for this app' marke=
-rs is
-> something that needs to be started as part of the GSOC project, but p=
-ossibly
-> only far enough to show a couple of examples and have confidence that=
- the
-> tool is configurable enough.
+> More importantly, you might want to point out the security concerns o=
+f
+> running a script with the full permissions of git-daemon. =A0(AFAICT =
+from
+> your patch you are not dropping any privileges at any point.)
+
+Do you really think this is needed? It doesn't seem like running the
+hook scripts does anything more than trusting the script author and
+permissions of the hook scripts (?). I see the path-filter script
+exactly the same way, with the exception of having to double-check the
+user supplied path the script receives.
+
+> Which brings me to another idea: we have quite a few places in Git wh=
+ere
+> we use regular expressions. =A0Would they not be enough for your use =
+case?
+
+Hmm, please do elaborate on your idea. If you mean being able to
+supply a bunch of regexp mappings when starting the daemon then it
+wouldn't cut it for me; I'm in need of something more dynamic.
+
+>> diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon=
+=2Etxt
+>> index 36f00ae..efd1687 100644
+>> --- a/Documentation/git-daemon.txt
+>> +++ b/Documentation/git-daemon.txt
+>> @@ -71,6 +72,18 @@ OPTIONS
+[snip]
+> Please keep the lines shorter than 81 characters.
+
+I believe the longest line I've added in the docs is 77.
+
+> But there is more: what about concurrent accesses?
+
+The external path-filter script is run from the execute(), which is
+forked+exec'ed for each incoming connection to the daemon, so that
+would mean a concurrency of one in that child-process, unless I've
+missed something in the code path?
+
+>> + =A0 =A0 read(filter_cmd.out, result, sizeof(result) - 1);
+>
+> No error checking?
+>
+> BTW we do have strbuf_read(), which would solve your "static char *"
+> problem nicely.
+
+I'm using strbuf_read() now, but this being my very first git patch, I
+may have misunderstood the api slightly?
+
+> And your code would be even easier to read if your
+> run_path_filter_script() would never return NULL, but the unchanged p=
+ath
+> instead.
+
+Done.
+
+Thanks for giving my patch the run-through. I'm still curious to hear
+what people think about the idea in general though!
+
+>
+> Ciao,
+> Dscho
 >
 
-I think picking up some formats and then building libraries above that
-is needed. In some sense, I talked about the plug-in architecture
-also. Can;t it be possible that for different applications (like OO or
-SVG), different merge helper plugins are created which can be
-integrated with it. Or speaking in  other words, instead of plug-ins
-now, libraries for merge helpers for different applications are
-created.
-
-
---=20
-Saurabh Gupta
-Senior,
-NSIT,New Delhi, India
+Cheers,
+JS
