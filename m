@@ -1,138 +1,148 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: git checkout -b origin/mybranch origin/mybranch
-Date: Thu, 12 Mar 2009 17:45:56 +0000
-Message-ID: <43d8ce650903121045s74584d97o708d4f8fd2baf664@mail.gmail.com>
-References: <alpine.DEB.1.00.0903121357320.6335@intel-tinevez-2-302>
-	 <fabb9a1e0903120643r3cfefdfej560ff7edda2be6f5@mail.gmail.com>
-	 <B9479687-D936-4EE1-A5A4-663968B76EBF@ai.rug.nl>
-	 <20090312153738.GA24690@coredump.intra.peff.net>
-	 <43d8ce650903120916yb91113fy5485813c512c8108@mail.gmail.com>
-	 <20090312163533.GA28205@coredump.intra.peff.net>
-	 <EAF5D3F1-32F2-4BF3-9B10-F91C17D06A6A@ai.rug.nl>
-	 <20090312165153.GA28401@coredump.intra.peff.net>
-	 <43d8ce650903120958n18baf6c0w9d083976b52d6e40@mail.gmail.com>
-	 <20090312171420.GA2192@coredump.intra.peff.net>
+From: david@lang.hm
+Subject: Re: Google Summer of Code 2009: GIT
+Date: Thu, 12 Mar 2009 11:00:12 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0903121052310.16753@asgard.lang.hm>
+References: <49B74373.3090609@gmail.com>  <alpine.DEB.1.00.0903111458340.10498@intel-tinevez-2-302>  <alpine.DEB.1.10.0903110931070.13653@asgard.lang.hm>  <ab9fa62a0903111007w4772b234x8e6fd19cdc7fc595@mail.gmail.com>  <alpine.DEB.1.10.0903111223470.16753@asgard.lang.hm>
+  <ab9fa62a0903111302j46c46c2q96af497fa2ac513e@mail.gmail.com>  <alpine.DEB.1.10.0903111307050.16753@asgard.lang.hm>  <alpine.DEB.1.00.0903112136560.10279@pacific.mpi-cbg.de>  <alpine.DEB.1.10.0903111401520.16753@asgard.lang.hm>  <7veix33f5e.fsf@gitster.siamese.dyndns.org>
+ <ab9fa62a0903120545o7e5bc359g7df233b00858869c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pieter de Bie <pdebie@ai.rug.nl>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
+Content-Type: MULTIPART/MIXED; BOUNDARY="680960-807451073-1236880812=:16753"
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 12 18:49:19 2009
+	git@vger.kernel.org
+To: saurabh gupta <saurabhgupta1403@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 12 19:03:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lhp1a-0003Ba-Hy
-	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 18:48:55 +0100
+	id 1LhpEN-0000Ce-3S
+	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 19:02:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756497AbZCLRqB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Mar 2009 13:46:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756439AbZCLRp7
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 13:45:59 -0400
-Received: from wf-out-1314.google.com ([209.85.200.170]:54898 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756497AbZCLRp5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Mar 2009 13:45:57 -0400
-Received: by wf-out-1314.google.com with SMTP id 28so1198603wfa.4
-        for <git@vger.kernel.org>; Thu, 12 Mar 2009 10:45:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=qtZw9vGH7yAJAAEhzoUXVSm2eWRtURqbryx+mGrTW6g=;
-        b=gnNCyC1AapcWGhTSZdr1cr7fwbpco/Az/KbeN4WCmrftOQVvgcJjo/WXuQC53www3g
-         XkDcFAS+OZ4Fyh4hbB8AxigmH1gjYZ7pQ3+w287HDPtJ2zBuZpgReI+7eSYlvsA8+X0Z
-         QWKP8LCxpOzg4WDK8xiMAeckInz30mZLnF3Dw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ZbngLWtvR/ak1L6tT3uhZGWNDSLkxN5+FE3dBjhxrjoDLeG0b6h94Ty6y+AD+yAxaj
-         uNJOuoYpebJXRwKCJ9rCOkMhsrsYtNdfa2Zq/3Qy1Xo2o4i/tsGW7C478T/jKNCY6lVs
-         vvBtIpXpDtnfKGL9+njfyUw046zhYoaQ3ZNhk=
-Received: by 10.142.82.13 with SMTP id f13mr87480wfb.290.1236879956104; Thu, 
-	12 Mar 2009 10:45:56 -0700 (PDT)
-In-Reply-To: <20090312171420.GA2192@coredump.intra.peff.net>
+	id S1755539AbZCLSAh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Mar 2009 14:00:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755176AbZCLSAh
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 14:00:37 -0400
+Received: from mail.lang.hm ([64.81.33.126]:58722 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753006AbZCLSAg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Mar 2009 14:00:36 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n2CI0Cqj016909;
+	Thu, 12 Mar 2009 10:00:12 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <ab9fa62a0903120545o7e5bc359g7df233b00858869c@mail.gmail.com>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113097>
 
-2009/3/12 Jeff King <peff@peff.net>:
-> On Thu, Mar 12, 2009 at 04:58:22PM +0000, John Tapsell wrote:
->
->> > - =C2=A0 =C2=A0 =C2=A0 if (resolve_ref(ref.buf, sha1, 1, NULL)) {
->> > + =C2=A0 =C2=A0 =C2=A0 if (dwim_ref(name, strlen(name), sha1, &jun=
-k)) {
->> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 free(junk);
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--680960-807451073-1236880812=:16753
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+On Thu, 12 Mar 2009, saurabh gupta wrote:
+
+> On Thu, Mar 12, 2009 at 3:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
 >>
->> Presumably 'junk' is the resolved name? =C2=A0I wonder if it's worth
->> putting this info in the error message?
+>> You can cut it both ways.  For an OO document, you do not necessarily need
+>> any file-level merger at the driver level, but just let the "binary"
+>> driver declare conflicts and punt.  A merge helper can do all the work
+>> starting from the "original, ours and theirs" that are not smudged with
+>> conflict markers.
+>>
+>> Between these two extremes, the discussion from other people in the thread
+>> seemed to all focus too heavily on the "driver punts" approach, forgetting
+>> that mergetool is useful only because most of the time we do not have to
+>> even use it, thanks to the fact that "xdl" driver works reasonably well
+>> for most trivial cases where branches being merged stayed away from each
+>> other, which is the majority case.  It is a huge win from the productivity
+>> point of view, and many people might be unaware of it because it is so
+>> invisible.
 >
-> Hey, I said it was sloppy, right? ;)
+> If I am not wrong, then for merging two xml files, if we use a simple
+> xdl merge driver then it will mark the conflicts in the normal way as
+> it does for simple text files. As far as I can understand, the
+> following things are supposed to be aimed here taking an example of
+> xml file:
 >
-> Here's your suggestion, plus specifying which situation (existing bra=
-nch
-> or ambiguous ref) would occur. It would still need tests. But I'm
-> curious to hear more opinions on this direction before cleaning it up
-> much more (at the very least, it needs some tests).
-
-I like :-)  Just minor comments:
-
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -133,6 +133,7 @@ void create_branch(const char *head,
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0unsigned char sha1[20];
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0char *real_ref, msg[PATH_MAX + 20];
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct strbuf ref =3D STRBUF_INIT;
-> + =C2=A0 =C2=A0 =C2=A0 char *existing;
-
-Don't suppose you could set this NULL.  Just in case dwim_ref doesn't
-set &existing for whatever reason.
-
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0int forcing =3D 0;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0int len;
 >
-> @@ -146,12 +147,18 @@ void create_branch(const char *head,
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (check_ref_format(ref.buf))
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0die("'%s' is n=
-ot a valid branch name.", name);
+> =>Merging of two xml files
 >
-> - =C2=A0 =C2=A0 =C2=A0 if (resolve_ref(ref.buf, sha1, 1, NULL)) {
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!force)
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 die("A branch named '%s' already exists.", name);
-> + =C2=A0 =C2=A0 =C2=A0 if (dwim_ref(name, strlen(name), sha1, &existi=
-ng)) {
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!force) {
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 if (!prefixcmp(existing, "refs/heads/"))
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die("A branch named '%s' already ex=
-ists.",
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 name);
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 die("Creating '%s' would be ambiguous with"
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 " the existing %s", name, existing);
+> => existing merge driver (like xdl) is called which marks the
+> conflicts points just like a normal text file.
+>
+> => the conflicted file can be read through a text terminal and
+> conflicted lines can be seen.
+>
+> => suppose the xml file is from the domain of OO document. Then, a
+> merge helper for OO xml type file is called which takes input as the
+> conflicted file produced by xdl driver.
+>
+> => The merge helper creates a new file or changes the input file to
+> make it a valid xml file so that it can be opened in OpenOffice and
+> user can see the markers like "====" or "<<<<<"  in an appropriate
+> manner and can resolve the file manually.
 
-Maybe put single quotes around the second %s, for consistency with the =
-first?
+with XML files it's possible to be symanticly identical, but not identical 
+as far as a text merge driver is concerned.
 
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0else if (!is_b=
-are_repository() && !strcmp(head, name))
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0die("Cannot force update the current branch.");
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0forcing =3D 1;
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 free(existing);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+for example, the following two tags are identical in meaning, but would 
+show up as different (and therefor in conflict) in a text merge
+
+
+<tag attr1='foo' attr2='bar' />
+<tag attr2='bar' attr1='foo' />
+
+in many instances (such as config files), the order of items doesn't 
+change the meaning. so the following two items would be identical
+
+<tag1>
+   stuff
+</tag1>
+<tag2>
+   more stuff
+</tag2>
+
+vs
+
+<tag2>
+   more stuff
+</tag2>
+<tag1>
+   stuff>
+</tag1>
+
+in addition whitespace may or may not be relavent (depending on how the 
+XML is used) so the following may also be identical
+
+<tag>stuff<tag>
+
+vs
+<tag>
+stuff
+</tag>
+
+a good XML merge driver would have options that you could set for a 
+particular file type to know about these sorts of things.
+
+
+>>  When it cannot autoresolve,
+>> but there is no way to "mark" a tentative result with conflict markers, it
+>> can do the same thing as the "binary" driver and let the mergetool backend
+>> handle the "driver punted" case.
 >
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0real_ref =3D NULL;
->
+> I think you mean to say that in case, there is a conflict and the
+> changes don't overlap, then merge driver leaves the file as it is and
+> the merge helper will handle the file.
+
+if there is a conflict it should be because the changes do overlap. if 
+they don't overlap why is it a conflict?
+
+David Lang
+--680960-807451073-1236880812=:16753--
