@@ -1,77 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Generalised bisection
-Date: Thu, 12 Mar 2009 11:55:26 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903121154560.10279@pacific.mpi-cbg.de>
-References: <efe2b6d70903081840v18e77aa7w2dac2bed553d0d6a@mail.gmail.com>  <200903100808.15875.chriscool@tuxfamily.org>  <efe2b6d70903110159h78de744yc141effaf5aa0821@mail.gmail.com>  <43d8ce650903110235q5e2a59f6t201d5e65a4937476@mail.gmail.com> 
- <efe2b6d70903111515p2b9f656bp186d0b3cc7ae483d@mail.gmail.com> <43d8ce650903112345x3d40b70ap7e4c0f8c7d0b6069@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git doc build failure on OS X 10.5.6 (Leopard) during xmlto 
+  phase
+Date: Thu, 12 Mar 2009 12:17:18 +0100
+Message-ID: <49B8EF3E.2070208@drmicha.warpmail.net>
+References: <5e68abd90903110721o414283a4te188b58e0e4df8ad@mail.gmail.com>	<76718490903110812t5e1723ebi28a84da680422d8a@mail.gmail.com>	<76718490903110839m17041c7bxd7912eb09496c81a@mail.gmail.com>	<76718490903110849x2ef48a89j3f17706390991eda@mail.gmail.com>	<49B7E670.7060606@drmicha.warpmail.net> <gp95vf$gp1$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1133572879-1236855327=:10279"
-Cc: Ealdwulf Wuffinga <ealdwulf@googlemail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Git List <git@vger.kernel.org>, Ingo Molnar <mingo@elte.hu>
-To: John Tapsell <johnflux@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 12 11:55:22 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jay Soffian <jaysoffian@gmail.com>,
+	Tom Holaday <tlholaday@gmail.com>
+To: Alejandro Riveira <ariveira@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 12 12:19:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhiZN-0005Qt-4n
-	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 11:55:21 +0100
+	id 1LhiwI-00047z-IA
+	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 12:19:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754706AbZCLKxs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Mar 2009 06:53:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754075AbZCLKxr
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 06:53:47 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35770 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753374AbZCLKxq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Mar 2009 06:53:46 -0400
-Received: (qmail invoked by alias); 12 Mar 2009 10:53:43 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp066) with SMTP; 12 Mar 2009 11:53:43 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1++aLRXQsq+MHQ0+0bIIAtkxOUJ5VDwlx6pg3HIo4
-	0e/JUkBz67VA9g
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <43d8ce650903112345x3d40b70ap7e4c0f8c7d0b6069@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6899999999999999
+	id S1753196AbZCLLRd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Mar 2009 07:17:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752239AbZCLLRd
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 07:17:33 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:45152 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752169AbZCLLRc (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Mar 2009 07:17:32 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 8FA292ECBA8;
+	Thu, 12 Mar 2009 07:17:30 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Thu, 12 Mar 2009 07:17:30 -0400
+X-Sasl-enc: 5GKfcspuqOmroyxKJm163FDmidO2i4O2NmXQRG5IO0b4 1236856650
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 9426548C3;
+	Thu, 12 Mar 2009 07:17:29 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090311 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <gp95vf$gp1$1@ger.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113042>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Alejandro Riveira venit, vidit, dixit 11.03.2009 21:12:
+> El Wed, 11 Mar 2009 17:27:28 +0100, Michael J Gruber escribi=C3=B3:
+>=20
+>> Jay Soffian venit, vidit, dixit 11.03.2009 16:49:
+>>> j.
+>> FWIW: The effect you describe (which is different from the OP) occur=
+s on
+>> Fedora 10 as well, and not only for git man pages, also for others. =
+I've
+>> been meaning to look into this, just like I've been meaning to look =
+into
+>> so much stuff...
+>>
+>  "Me too" from a Ubuntu 8.10 Box
 
---8323328-1133572879-1236855327=:10279
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+=46ollowing up on this:
+On Fedora 10, I have asciidoc 8.2.5 and docbook 1.7.4 xsl's. For proper
+man and html doc, I have to set DOCBOOK_XSL_172=3DYes but leave ASCIIDO=
+C8
+unset! I always forget, though (just like the packagers).
 
-Hi,
+Setting DOCBOOK_XSL_172 shuts off a certain hack which would otherwise
+introduce the notorious .ft in man output.
 
-On Thu, 12 Mar 2009, John Tapsell wrote:
+Setting ASCIIDOC8 would keep _emphasis_ from being transformed into
+<emphasis>emphasis</emphasis>, which means it would end up as literal
+_emphasis_ in man as well as html.
 
-> 2009/3/11 Ealdwulf Wuffinga <ealdwulf@googlemail.com>:
-> > [John will get this twice, sorry; not used to this mail interface yet.]
-> >
-> > On Wed, Mar 11, 2009 at 9:35 AM, John Tapsell <johnflux@gmail.com> wrote:
-> >
-> >> mpmath might be the more annoying dependency - what functions do you
-> >> use from it?  Could they trivially be reimplemented?
-> >
-> > What I use is the multiprecision floating point number class. doubles
-> > don't seem to be long enough.
-> 
-> Hmm, really really?  Sometimes this sort of thing can be fixed by just 
-> readjusting the formulas.  What formulas are you using that require more 
-> precision than doubles?
+Michael
 
-Maybe you could post the formulae instead of forcing people to deduct them 
-from the source code?
-
-Thanks,
-Dscho
---8323328-1133572879-1236855327=:10279--
+BTW: Alejandro, please don't cull cc here.
