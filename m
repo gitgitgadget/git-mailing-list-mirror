@@ -1,104 +1,210 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: git checkout -b origin/mybranch origin/mybranch
-Date: Thu, 12 Mar 2009 11:48:31 +0000
-Message-ID: <43d8ce650903120448x51220ba0k660be7706acba755@mail.gmail.com>
-References: <43d8ce650903120436u261cb7e3p838e4a12e7b54d7d@mail.gmail.com>
-	 <alpine.DEB.1.00.0903121240400.10279@pacific.mpi-cbg.de>
+From: Finn Arne Gangstad <finnag@pvv.org>
+Subject: Re: [PATCH v2] New config push.default to decide default behavior
+	for push
+Date: Thu, 12 Mar 2009 12:54:33 +0100
+Message-ID: <20090312115433.GA2848@pvv.org>
+References: <20090311220144.GA6782@pvv.org> <7vwsavlg6q.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Mar 12 12:50:05 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 12 12:56:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhjQI-0005YH-St
-	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 12:50:03 +0100
+	id 1LhjWb-0007T7-TZ
+	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 12:56:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753581AbZCLLse convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Mar 2009 07:48:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752678AbZCLLse
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 07:48:34 -0400
-Received: from wf-out-1314.google.com ([209.85.200.168]:32062 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752572AbZCLLsd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Mar 2009 07:48:33 -0400
-Received: by wf-out-1314.google.com with SMTP id 28so600436wfa.4
-        for <git@vger.kernel.org>; Thu, 12 Mar 2009 04:48:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=MxjRa/7CdsngIlalqHLJpeEW+lkBZhAPUxi8tUeHcRA=;
-        b=WIgFtCX+tiLbGskKbkRVD6bc3bJ4W6bBYIHdouASQiECnhPHxAX6RwDYmu5PsDyqFu
-         yUgYxc7Vy6iCNnqhna1cbNkXuqs4oHmYz4dgQHdvGExxspxFwGnpOYMizBQh2AyUSLuy
-         cdWnSCXefCL9p8SrlKOy9w0iZZUSkQ2t+uWbQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=SBGBnNtgyQtYj73FX+o2qONMXM0xGV5LcPrqi6BFYorPJHC6oHsokQKOdlz4n2/Le3
-         dECLS0eq0jR7MXTzDKnaFGGw5vprZTsMr9UmStIPpHBaQA60gMNHu6Bg36zDR6YwbRJ/
-         3HMSvIXLWDUM+bzpIChzQbaDX1hqpeV3GmYcQ=
-Received: by 10.143.12.19 with SMTP id p19mr4260197wfi.212.1236858511927; Thu, 
-	12 Mar 2009 04:48:31 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0903121240400.10279@pacific.mpi-cbg.de>
+	id S1755282AbZCLLyj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Mar 2009 07:54:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754571AbZCLLyj
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 07:54:39 -0400
+Received: from decibel.pvv.ntnu.no ([129.241.210.179]:58308 "EHLO
+	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752020AbZCLLyi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Mar 2009 07:54:38 -0400
+Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
+	(envelope-from <finnag@pvv.ntnu.no>)
+	id 1LhjUf-000747-So; Thu, 12 Mar 2009 12:54:33 +0100
+Content-Disposition: inline
+In-Reply-To: <7vwsavlg6q.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113049>
 
-2009/3/12 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> Hi,
->
-> On Thu, 12 Mar 2009, John Tapsell wrote:
->
->> =C2=A0 One of my collegues did:
->>
->> git checkout origin/somebranch
->>
->> =C2=A0 git complained that they need to specify the name with -b. =C2=
-=A0So they did:
->>
->> git checkout -b origin/somebranch origin/somebranch
->
-> Yeah, a pilot error. =C2=A0It should have been
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ git checkout -t origin/somebranch
+On Wed, Mar 11, 2009 at 05:48:13PM -0700, Junio C Hamano wrote:
 
-Maybe the error message for "git checkout origin/somebranch"  should
-suggest:  git checkout -t origin/somebranch?
+> I thought I fixed asciidoc formatting around this part in the version I
+> queued in 'pu'; in any case, the second and subsequent paragraphs need
+> dedenting.
 
-> I have to wonder, though, why "git checkout origin/somebranch" did no=
-t
-> detach your HEAD.
+I am sorry, it wasn't immediately obvious to me that you had changed
+the version i sent. Fixed up this (and other fixes) in my working
+branch I think.
 
-It did.  But that doesn't affect doing "git checkout -b
-origin/somebranch origin/somebranch"  afterwards.
+> > +static void setup_push_tracking(struct remote *remote)
+> > +{
+> > +	int n;
+> > +	struct branch *branch = branch_get(NULL);
+> > +	if (!branch)
+> > +		die("You are not currently on a branch.");
+> > +	if (!branch->merge_nr)
+> > +		die("The current branch %s is not tracking anything.",
+> > +		    branch->name);
+> > +	if (branch->remote != remote)
+> > +		die("The current branch is tracking \"%s\", not \"%s\"!",
+> > +		    branch->remote->name, remote->name);
+> > +	for (n = 0; n < branch->merge_nr; n++) {
+> > +		struct strbuf rs = STRBUF_INIT;
+> > +		strbuf_addf(&rs, "%s:%s", branch->name, branch->merge[n]->src);
+> > +		add_refspec(rs.buf);
+> > +	}
+> > +}
+> 
+> If a branch is configured to merge from multiple places (e.g. testing
+> branch similar to the linux-next tree to integrate from multiple staging
+> trees), a sane default would be not to push it out to any of the branches
+> it pulls from---it is a consumer to the other branches, and it is meant to
+> be sent to somewhere else, not back to any of the originators.  Instead,
+> this code will push to all of them, which I would not see any sane use
+> case for.  It might make a bit sense if you refused unless merge_nr is
+> exactly one.
 
->> =C2=A0 Git accepts this with no problems, but boy - all hell broke l=
-oose.
->> Doing a push or pull gave errors, because "origin/somebranch" is now
->> ambigous (since there is two of them).
->
-> I strongly doubt that it gave errors, but rather warnings. =C2=A0I ha=
-ve a
-> repository where I get warnings all the time (it has a cvsimport and =
-an
-> origin remote), but it works without problems.
->
->> =C2=A0They can't even: =C2=A0"git checkout -b somebranch origin/some=
-branch"
->> anymore, since "origin/somebranch" is ambigous. =C2=A0It all got int=
-o a mess.
->
-> I wonder why you did not just "git branch -m somebranch".
+Yes I agree, fixed this up.
 
-Because they didn't know what on earth was going on, and git was
-spitting out errors everywhere, they were afraid git would crash.
+> Also I am not sure if the check between the name of the remote makes much
+> practical sense.  Many people use two remotes to name the same one for
+> pushing over ssh and fetching over git.  Which name comes in which?  I
+> think with this logic you are trying to catch a mistake like:
+> 
+>     $ git push --tracking $there
 
-John
+Yes that was the idea. I was not familiar with the "multiple remotes
+to the same thing" common usage, but have no problems supporting that
+instead.
+
+Something like this amended into the last commit? I can amend it on top
+of the last one and resend if that is better.
+
+--8<--
+git push tracking mode fixes
+
+If a branch is tracking multiple branches, refuse to push it.
+Some asciidoc format fixes.
+
+Signed-off-by: Finn Arne Gangstad <finnag@pvv.org>
+---
+To be amended into the previous commit
+
+ Documentation/config.txt |   16 ++++++++--------
+ builtin-push.c           |   25 +++++++++++--------------
+ 2 files changed, 19 insertions(+), 22 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 6fdf829..986becc 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1165,19 +1165,19 @@ push.default::
+ 	on the command line, no refspec is configured in the remote, and
+ 	no refspec is implied by any of the options given on the command
+ 	line.
+-
+-	The term `current remote` means the remote configured for the current
+-	branch, or `origin` if no remote is configured. `origin` is also used
+-	if you are not on any branch.
+-
+-	Possible values are:
+++
++The term `current remote` means the remote configured for the current
++branch, or `origin` if no remote is configured. `origin` is also used
++if you are not on any branch. Possible values are:
+ +
+ * `nothing` do not push anything.
+ * `matching` push all matching branches to the current remote.
+   All branches having the same name in both ends are considered to be
+   matching. This is the current default value.
+-* `tracking` push the current branch to whatever it is tracking.
+-* `current` push the current branch to a branch of the same name.
++* `tracking` push the current branch to the branch it is tracking.
++* `current` push the current branch to a branch of the same name on the
++  current remote.
++
+ 
+ receive.fsckObjects::
+ 	If it is set to true, git-receive-pack will check all received
+diff --git a/builtin-push.c b/builtin-push.c
+index fa5eabb..51f4c4a 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -48,23 +48,20 @@ static void set_refspecs(const char **refs, int nr)
+ 	}
+ }
+ 
+-static void setup_push_tracking(struct remote *remote)
++static void setup_push_tracking(void)
+ {
+-	int n;
++	struct strbuf refspec = STRBUF_INIT;
+ 	struct branch *branch = branch_get(NULL);
+ 	if (!branch)
+ 		die("You are not currently on a branch.");
+ 	if (!branch->merge_nr)
+ 		die("The current branch %s is not tracking anything.",
+ 		    branch->name);
+-	if (branch->remote != remote)
+-		die("The current branch is tracking \"%s\", not \"%s\"!",
+-		    branch->remote->name, remote->name);
+-	for (n = 0; n < branch->merge_nr; n++) {
+-		struct strbuf rs = STRBUF_INIT;
+-		strbuf_addf(&rs, "%s:%s", branch->name, branch->merge[n]->src);
+-		add_refspec(rs.buf);
+-	}
++	if (branch->merge_nr != 1)
++		die("The current branch %s is tracking multiple branches, "
++		    "refusing to push.", branch->name);
++	strbuf_addf(&refspec, "%s:%s", branch->name, branch->merge[0]->src);
++	add_refspec(refspec.buf);
+ }
+ 
+ static const char *warn_unconfigured_push_msg[] = {
+@@ -83,14 +80,14 @@ static const char *warn_unconfigured_push_msg[] = {
+ 	""
+ };
+ 
+-static void warn_unconfigured_push()
++static void warn_unconfigured_push(void)
+ {
+ 	int i;
+ 	for (i = 0; i < ARRAY_SIZE(warn_unconfigured_push_msg); i++)
+ 		warning("%s", warn_unconfigured_push_msg[i]);
+ }
+ 
+-static void do_default_push(struct remote *remote)
++static void do_default_push(void)
+ {
+ 	git_config(git_default_config, NULL);
+ 	switch (push_default) {
+@@ -103,7 +100,7 @@ static void do_default_push(struct remote *remote)
+ 		break;
+ 
+ 	case PUSH_DEFAULT_TRACKING:
+-		setup_push_tracking(remote);
++		setup_push_tracking();
+ 		break;
+ 
+ 	case PUSH_DEFAULT_CURRENT:
+@@ -150,7 +147,7 @@ static int do_push(const char *repo, int flags)
+ 			refspec = remote->push_refspec;
+ 			refspec_nr = remote->push_refspec_nr;
+ 		} else if (!(flags & TRANSPORT_PUSH_MIRROR))
+-			do_default_push(remote);
++			do_default_push();
+ 	}
+ 	errs = 0;
+ 	for (i = 0; i < remote->url_nr; i++) {
+-- 
+1.6.2.81.gc6c21.dirty
