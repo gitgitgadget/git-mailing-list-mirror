@@ -1,74 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Google Summer of Code 2009: GIT
-Date: Thu, 12 Mar 2009 00:40:05 -0700
-Message-ID: <7vy6vbi3ze.fsf@gitster.siamese.dyndns.org>
-References: <49B74373.3090609@gmail.com>
- <alpine.DEB.1.00.0903111255470.10279@pacific.mpi-cbg.de>
- <ab9fa62a0903110511u63e7d46dr3bb783ee891ca4ae@mail.gmail.com>
- <alpine.DEB.1.00.0903111353340.10498@intel-tinevez-2-302>
- <ab9fa62a0903110655y4a47ccfkde0984ecb46b3307@mail.gmail.com>
- <alpine.DEB.1.00.0903111458340.10498@intel-tinevez-2-302>
- <alpine.DEB.1.10.0903110931070.13653@asgard.lang.hm>
- <ab9fa62a0903111007w4772b234x8e6fd19cdc7fc595@mail.gmail.com>
- <alpine.DEB.1.10.0903111223470.16753@asgard.lang.hm>
- <ab9fa62a0903111302j46c46c2q96af497fa2ac513e@mail.gmail.com>
- <alpine.DEB.1.10.0903111307050.16753@asgard.lang.hm>
- <alpine.DEB.1.00.0903112136560.10279@pacific.mpi-cbg.de>
- <alpine.DEB.1.10.0903111401520.16753@asgard.lang.hm>
- <7veix33f5e.fsf@gitster.siamese.dyndns.org>
- <20090312125709.qnfnw7glc4ko8soo@webmail.fussycoder.id.au>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: Re: [PATCH 2/2] [TopGit] Portability: Don't use alternation ("|")
+	in sed regular expressions
+Date: Thu, 12 Mar 2009 08:45:24 +0100
+Message-ID: <20090312074524.GA14844@pengutronix.de>
+References: <1236837389-35687-1-git-send-email-brian.p.campbell@dartmouth.edu> <1236837389-35687-2-git-send-email-brian.p.campbell@dartmouth.edu> <7viqmfjklm.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: david@lang.hm, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	saurabh gupta <saurabhgupta1403@gmail.com>, git@vger.kernel.org
-To: thestar@fussycoder.id.au
-X-From: git-owner@vger.kernel.org Thu Mar 12 08:42:10 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
+To: Brian Campbell <brian.p.campbell@dartmouth.edu>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 12 08:47:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhfYO-000490-Co
-	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 08:42:08 +0100
+	id 1Lhfd7-0005LJ-9o
+	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 08:47:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751785AbZCLHkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Mar 2009 03:40:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751565AbZCLHkS
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 03:40:18 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42712 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751047AbZCLHkQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Mar 2009 03:40:16 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A7DDEA1EDE;
-	Thu, 12 Mar 2009 03:40:14 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2B13DA1ED9; Thu,
- 12 Mar 2009 03:40:06 -0400 (EDT)
-In-Reply-To: <20090312125709.qnfnw7glc4ko8soo@webmail.fussycoder.id.au>
- (thestar@fussycoder.id.au's message of "Thu, 12 Mar 2009 12:57:09 +1100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 06664BB2-0ED9-11DE-A2C1-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1752726AbZCLHpd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Mar 2009 03:45:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752634AbZCLHpc
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 03:45:32 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:32828 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752302AbZCLHpc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Mar 2009 03:45:32 -0400
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1Lhfbc-0001dp-Hg; Thu, 12 Mar 2009 08:45:28 +0100
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1LhfbY-0003vk-Sf; Thu, 12 Mar 2009 08:45:24 +0100
+Content-Disposition: inline
+In-Reply-To: <7viqmfjklm.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113011>
 
-thestar@fussycoder.id.au writes:
+Hello Brian, hello Junio,
 
-> <Entire conversation snipped>
+On Wed, Mar 11, 2009 at 11:55:49PM -0700, Junio C Hamano wrote:
+> Brian Campbell <brian.p.campbell@dartmouth.edu> writes:
+>=20
+> > +current_branch()
+> > +{
+> > +	echo "$(git symbolic-ref HEAD | sed -e 's#^refs/heads/##' -e 's#^=
+refs/top-bases/##')"
+> > +}
+>=20
+> Two micronits.
+>=20
+>  - what happens when you are on a detached HEAD?
+The original code had this problem, too, so I would not take this as a
+stopper for the patch.  There are some other locations that suffer from
+the same problem.  That's already on my todo list.  So I don't care muc=
+h
+here.
+=20
+>  - You will be utterly confused by a local branch whose name is
+>    "refs/top-bases/foo"
+You mean a branch that has the full name refs/heads/refs/top-bases/foo?
+Well OK, valid concern.
 
-Which is not appreciated at all.
+> To fix these, you might want to do something like:
+>=20
+> 	if head_=3D$(git symbolic-ref HEAD)
+>         then
+>                 case "$head_" in
+>                 refs/heads/*)
+>                         echo "${head_#refs/heads/}"
+>                         ;;
+>                 refs/top-bases/*)
+>                         echo "${head_#refs/top-bases/}"
+>                         ;;
+>                 *)
+>                         echo "$head_"
+>                         ;;
+>                 esac
+> 	else
+>         	whatever you want to do on a detached HEAD
+> 	fi
+Thanks Junio and Brian.
 
-> Guys, I'm sure you're only using OpenOffice.org documents as an
-> example to facilitate discussing merge helpers, but I feel the need to
-> point out that one can already merge OpenOffice documents using
-> OpenOffice to do so. (And I have done so in the past while reconciling
-> differences between some spreadsheets).
+Brian, do you update the series?
 
-It sounds like OOo itself can be counted as a "domain specific merge
-helper" in the second sense of the word---it wouldn't work as a merge
-driver but the end user can use it to merge the forked documents.
+Best regards
+Uwe
 
-Which is good to know ;-)
+--=20
+Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
+       |
+Industrial Linux Solutions                    | http://www.pengutronix.=
+de/  |
