@@ -1,86 +1,120 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] read-tree A B C: do not create a bogus index and do not
- segfault
-Date: Thu, 12 Mar 2009 09:34:49 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.0903120929250.32478@localhost.localdomain>
-References: <35476bd20903101234q71bc520fh18828d7170a4a2f5@mail.gmail.com> <alpine.DEB.1.00.0903102120290.14295@intel-tinevez-2-302> <35476bd20903110059v7d6d8aa0g93af17a940c91919@mail.gmail.com> <alpine.DEB.1.00.0903111300330.10279@pacific.mpi-cbg.de>
- <7vtz5zjnai.fsf@gitster.siamese.dyndns.org> <7vfxhjjkcm.fsf@gitster.siamese.dyndns.org> <7v3adjjj1y.fsf_-_@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0903121024400.19665@iabervon.org>
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: git checkout -b origin/mybranch origin/mybranch
+Date: Thu, 12 Mar 2009 16:45:21 +0000
+Message-ID: <43d8ce650903120945h7063e7baraa3911d2cf63d1d8@mail.gmail.com>
+References: <43d8ce650903120436u261cb7e3p838e4a12e7b54d7d@mail.gmail.com>
+	 <alpine.DEB.1.00.0903121240400.10279@pacific.mpi-cbg.de>
+	 <43d8ce650903120448x51220ba0k660be7706acba755@mail.gmail.com>
+	 <alpine.DEB.1.00.0903121357320.6335@intel-tinevez-2-302>
+	 <43d8ce650903120618h79686207vaa478c54f34e26f8@mail.gmail.com>
+	 <fabb9a1e0903120643r3cfefdfej560ff7edda2be6f5@mail.gmail.com>
+	 <B9479687-D936-4EE1-A5A4-663968B76EBF@ai.rug.nl>
+	 <20090312153738.GA24690@coredump.intra.peff.net>
+	 <43d8ce650903120916yb91113fy5485813c512c8108@mail.gmail.com>
+	 <20090312163533.GA28205@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jiri Olsa <olsajiri@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Thu Mar 12 17:47:58 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pieter de Bie <pdebie@ai.rug.nl>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 12 17:53:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lhnvn-0005GI-6U
-	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 17:38:51 +0100
+	id 1Lho3a-0000ds-Is
+	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 17:46:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753135AbZCLQhW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Mar 2009 12:37:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755110AbZCLQhW
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 12:37:22 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:51960 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754074AbZCLQhV (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Mar 2009 12:37:21 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n2CGYo6U027514
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 12 Mar 2009 09:35:11 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n2CGYniA011248;
-	Thu, 12 Mar 2009 09:34:49 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <alpine.LNX.1.00.0903121024400.19665@iabervon.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-5.454 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1755018AbZCLQpZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Mar 2009 12:45:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754331AbZCLQpZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 12:45:25 -0400
+Received: from yx-out-2324.google.com ([74.125.44.30]:52254 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751587AbZCLQpY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Mar 2009 12:45:24 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so764543yxm.1
+        for <git@vger.kernel.org>; Thu, 12 Mar 2009 09:45:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=cN+lqgyv/DFs7EXECkcdaEMYRpKwTG0/YTNcsqyMdxk=;
+        b=ANGLZoJxnt17hKlCkcHQAOIZlr/mjQasALPXgDiosFq6JALi/6PFbkyBjp05mzp5VF
+         PykZMiNz+4AMK1kGsRwdcij9t1XIwhq7B6imwhpHCQNBO6J+6r+cl1DcefZ0Ijo/x4Bh
+         8HKqJBeKTEvOceL9Yqbt7KAzUNcZfcNXecGk0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=OP4vuQIfnx941N2EFjCBRVEK4W24EEVWe5ISKEoV5i/6Ey1x6Zb2mM5PxTdUcKSTjd
+         EUiQIdX6osotdM9Fk0sEjTCGxwolnKWxXbp/hdFfv31K5A07acUHV1EpN2RZ1bEI3wcS
+         Hhxsf4DZc5o5+ly69D/AM201IEgaIkPG6irOI=
+Received: by 10.142.174.8 with SMTP id w8mr25133wfe.15.1236876321875; Thu, 12 
+	Mar 2009 09:45:21 -0700 (PDT)
+In-Reply-To: <20090312163533.GA28205@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113086>
 
+2009/3/12 Jeff King <peff@peff.net>:
+> On Thu, Mar 12, 2009 at 04:16:09PM +0000, John Tapsell wrote:
+>
+>> I was thinking more along the lines of checking if it begins with
+>> remotes/, origin/, tags/, stash/, bisect/ =C2=A0 =C2=A0and blacklist=
+ing these.
+>>
+>> Can anyone suggest a reason that you really might want to create a
+>> branch called =C2=A0origin/something ?
+>
+> The name "origin" is simply convention. So if you are thinking about
+> blacklisting "origin/*", then it is certainly possible to have a fals=
+e
+> positive (although as you note, it is unlikely). But what is worse is
+> that it is very likely for you to have a false negative if you use a
+> different remote name (and people often do if they have multiple
+> remotes).
+>
+> For example, in one of my projects where I do integration, "origin" i=
+s
+> my own public repo, and I have a remote pointing to the public repo o=
+f a
+> number of other developers from whom I pull. So I would encounter the
+> same error by doing:
+>
+> =C2=A0git checkout -b mike/master mike/master
+>
+> but it would not be caught by your rule.
+>
+> One area where your rule _is_ nicer than mine is that mine only looks=
+ at
+> what exists _now_ and doesn't future-proof you at all. So I could say
+>
+> =C2=A0git checkout -b origin/newtopic
+>
+> which might not be ambiguous. But if the remote adds a "newtopic"
+> branch, then the next time I fetch it will _become_ ambiguous.
+>
+> Potentially you could blacklist "X/*" for every remote.X.* that
+> exists in your config. Even that, of course, isn't future-proof again=
+st
+> you creating a new remote. :)
+>
+> I think the future-proofing is probably not worth the effort. Catchin=
+g
+> things that are ambiguous _now_ will cover the "oops, I typed the wro=
+ng
+> thing" case, which I think is really the issue.
 
+Yep, makes sense.
 
-On Thu, 12 Mar 2009, Daniel Barkalow wrote:
-> 
-> I think one of the later refactorings may have given up on seeing 
-> conflicts while reading trees, but didn't drop the flag (perhaps because 
-> Linus knew at the time that my assumption that conflicts would actually 
-> have been recognized was false, and didn't realize that it was also the 
-> source of the flag).
+I suppose you could do both.  Blacklist and check if it already
+exists, but I think just checking if it exists is "good enough".
 
-That is very thoughtful of you, but I suspect the real reason was a much 
-simpler one: redoing the read-tree logic was a huge pain in the posterior, 
-and my primary goal at the time was to make the code more readable while 
-passing all the tests.
-
-So while I tried to make patches minimal (which may well explain why the 
-flag remained), it wasn't the main goal, and trying to sort out the 
-read-tree logic into something more understandable was quite test-driven.
-
-So I think the big issue to take away from this is that I think this is 
-such an odd case that if we want to support it, it would need explicit 
-tests. Or:
-
-> I think it might be a good idea to take this as evidence that nobody is 
-> using read-tree with multiple trees without merge, and just disallow it. 
-
-Hmm. It _has_ been used. It's been useful for really odd things 
-historically, namely trying to merge different trees by hand. So while I 
-agree that we could probably remove it, it _is_ a very interesting 
-feature in theory, and since we have the code.. 
-
-So I'd say "add a few tests for the known horrible cases" should be the 
-first approach. If it ever actually breaks again and becomes a big 
-maintenance headache, maybe _then_ remove the feature as not being worth 
-the pain?
-
-			Linus
+John
