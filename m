@@ -1,171 +1,92 @@
 From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: [PATCH] configure: rework pthread handling to allow for user defined flags
-Date: Thu, 12 Mar 2009 15:20:12 -0400
-Message-ID: <1236885612-22575-8-git-send-email-bwalton@artsci.utoronto.ca>
+Subject: [PATCH] configure: ensure settings from user are also usable in the script
+Date: Thu, 12 Mar 2009 15:20:06 -0400
+Message-ID: <1236885612-22575-2-git-send-email-bwalton@artsci.utoronto.ca>
 References: <1236885612-22575-1-git-send-email-bwalton@artsci.utoronto.ca>
- <1236885612-22575-2-git-send-email-bwalton@artsci.utoronto.ca>
- <1236885612-22575-3-git-send-email-bwalton@artsci.utoronto.ca>
- <1236885612-22575-4-git-send-email-bwalton@artsci.utoronto.ca>
- <1236885612-22575-5-git-send-email-bwalton@artsci.utoronto.ca>
- <1236885612-22575-6-git-send-email-bwalton@artsci.utoronto.ca>
- <1236885612-22575-7-git-send-email-bwalton@artsci.utoronto.ca>
 Cc: Ben Walton <bwalton@artsci.utoronto.ca>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 12 20:23:58 2009
+X-From: git-owner@vger.kernel.org Thu Mar 12 20:24:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhqVC-0000Gf-Bg
-	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 20:23:34 +0100
+	id 1LhqVD-0000Gf-1B
+	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 20:23:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756361AbZCLTUi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Mar 2009 15:20:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756826AbZCLTUg
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 15:20:36 -0400
-Received: from www.cquest.utoronto.ca ([192.82.128.5]:36893 "EHLO
+	id S1750945AbZCLTUl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Mar 2009 15:20:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756783AbZCLTUk
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 15:20:40 -0400
+Received: from www.cquest.utoronto.ca ([192.82.128.5]:36883 "EHLO
 	www.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756467AbZCLTUR (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1756469AbZCLTUR (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 12 Mar 2009 15:20:17 -0400
 Received: from ntdws12.chass.utoronto.ca ([128.100.160.253] ident=93)
 	by www.cquest.utoronto.ca with esmtp (Exim 4.43)
-	id 1LhqRy-0004TL-BE; Thu, 12 Mar 2009 15:20:14 -0400
+	id 1LhqRx-0004Sd-J1; Thu, 12 Mar 2009 15:20:13 -0400
 Received: from localhost
 	([127.0.0.1] helo=ntdws12.chass.utoronto.ca ident=505)
 	by ntdws12.chass.utoronto.ca with esmtp (Exim 4.63)
 	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1LhqRy-0005uY-8Z; Thu, 12 Mar 2009 15:20:14 -0400
+	id 1LhqRx-0005tg-G7; Thu, 12 Mar 2009 15:20:13 -0400
 Received: (from bwalton@localhost)
-	by ntdws12.chass.utoronto.ca (8.13.8/8.13.8/Submit) id n2CJKEUL022721;
-	Thu, 12 Mar 2009 15:20:14 -0400
+	by ntdws12.chass.utoronto.ca (8.13.8/8.13.8/Submit) id n2CJKDN9022666;
+	Thu, 12 Mar 2009 15:20:13 -0400
 X-Mailer: git-send-email 1.5.5.6
-In-Reply-To: <1236885612-22575-7-git-send-email-bwalton@artsci.utoronto.ca>
+In-Reply-To: <1236885612-22575-1-git-send-email-bwalton@artsci.utoronto.ca>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113114>
 
-The tests for POSIX threads can now be controlled by the user with the
---enable-pthreads=FLAGS option.  If this is set (to some value other
-than yes or no), the value is passed to the compiler.  Thread support
-is based solely on the outcome of this test.  The user may specify not
-to use threading at all or to use the default tests (first -pthread
-then -lpthread) by not specifying FLAGS when passing --enable-pthreads.
+Allow things set by the user (--with-lib, --with-iconv, etc) to set
+variables for use by other parts of the script.  Display values as
+they're set.
 
 Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
 ---
- configure.ac |   89 ++++++++++++++++++++++++++++++++++++++++++++++++----------
- 1 files changed, 74 insertions(+), 15 deletions(-)
+ configure.ac |   11 +++++++++++
+ 1 files changed, 11 insertions(+), 0 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index 6fe4bfe..4e728bc 100644
+index 082a03d..0b314d7 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -127,6 +127,27 @@ if test -z "$lib"; then
-    lib=lib
- fi
- 
-+AC_ARG_ENABLE([pthreads],
-+ [AS_HELP_STRING([--enable-pthreads=FLAGS],
-+  [FLAGS is the value to pass to the compiler to enable POSIX Threads.]
-+  [The default if FLAGS is not specified is to try first -pthread]
-+  [and then -lpthread.]
-+  [--without-pthreads will disable threading.])],
-+[
-+if test "x$enableval" = "xyes"; then
-+   AC_MSG_NOTICE([Will try -pthread then -lpthread to enable POSIX Threads])
-+elif test "x$enableval" != "xno"; then
-+   PTHREAD_CFLAGS=$enableval
-+   AC_MSG_NOTICE([Setting '$PTHREAD_CFLAGS' as the FLAGS to enable POSIX Threads])
-+else
-+   AC_MSG_NOTICE([POSIX Threads will be disabled.])
-+   NO_PTHREADS=YesPlease
-+   USER_NOPTHREAD=1
-+fi],
-+[
-+   AC_MSG_NOTICE([Will try -pthread then -lpthread to enable POSIX Threads.])
-+])
+@@ -42,6 +42,8 @@ else \
+ 	if test "$withval" = "yes"; then \
+ 		AC_MSG_WARN([You should provide path for --with-$1=PATH]); \
+ 	else \
++		m4_toupper($1)_PATH=$withval; \
++		AC_MSG_NOTICE([Setting m4_toupper($1)_PATH to $withval]); \
+ 		GIT_CONF_APPEND_LINE(${PROGRAM}_PATH=$withval); \
+ 	fi; \
+ fi; \
+@@ -61,6 +63,8 @@ elif test "$withval" = "yes"; then \
+ 	m4_toupper(NO_$1)=; \
+ else \
+ 	m4_toupper(NO_$1)=; \
++	m4_toupper($1)DIR=$withval; \
++	AC_MSG_NOTICE([Setting m4_toupper($1)DIR to $withval]); \
+ 	GIT_CONF_APPEND_LINE(${PACKAGE}DIR=$withval); \
+ fi \
+ ])# GIT_PARSE_WITH
+@@ -86,9 +90,16 @@ AC_ARG_WITH([lib],
+  [if test "$withval" = "no" || test "$withval" = "yes"; then \
+ 	AC_MSG_WARN([You should provide name for --with-lib=ARG]); \
+ else \
++	lib=$withval; \
++	AC_MSG_NOTICE([Setting lib to '$lib']); \
+ 	GIT_CONF_APPEND_LINE(lib=$withval); \
+ fi; \
+ ],[])
 +
- ## Site configuration (override autodetection)
- ## --with-PACKAGE[=ARG] and --without-PACKAGE
- AC_MSG_NOTICE([CHECKS for site configuration])
-@@ -672,23 +693,61 @@ AC_SUBST(NO_MKDTEMP)
++if test -z "$lib"; then
++   AC_MSG_NOTICE([Setting lib to 'lib' (the default)])
++   lib=lib
++fi
  #
- # Define PTHREAD_LIBS to the linker flag used for Pthread support and define
- # THREADED_DELTA_SEARCH if Pthreads are available.
--AC_LANG_CONFTEST([AC_LANG_PROGRAM(
--  [[#include <pthread.h>]],
--  [[pthread_mutex_t test_mutex;]]
--)])
--${CC} -pthread conftest.c -o conftest.o > /dev/null 2>&1
--if test $? -eq 0;then
-- PTHREAD_LIBS="-pthread"
-- THREADED_DELTA_SEARCH=YesPlease
-+AC_DEFUN([PTHREADTEST_SRC], [
-+#include <pthread.h>
-+
-+int main(void)
-+{
-+	pthread_mutex_t test_mutex;
-+	return (0);
-+}
-+])
-+
-+dnl AC_LANG_CONFTEST([AC_LANG_PROGRAM(
-+dnl   [[#include <pthread.h>]],
-+dnl   [[pthread_mutex_t test_mutex;]]
-+dnl )])
-+
-+NO_PTHREADS=UnfortunatelyYes
-+THREADED_DELTA_SEARCH=
-+PTHREAD_LIBS=
-+
-+if test -n "$USER_NOPTHREAD"; then
-+   AC_MSG_NOTICE([Skipping POSIX Threads at user request.])
-+# handle these separately since PTHREAD_CFLAGS could be '-lpthreads
-+# -D_REENTRANT' or some such.
-+elif test -z "$PTHREAD_CFLAGS"; then
-+  for opt in -pthread -lpthread; do
-+     old_CFLAGS="$CFLAGS"
-+     CFLAGS="$opt $CFLAGS"
-+     AC_MSG_CHECKING([Checking for POSIX Threads with '$opt'])
-+     AC_LINK_IFELSE(PTHREADTEST_SRC,
-+	[AC_MSG_RESULT([yes])
-+		NO_PTHREADS=
-+		PTHREAD_LIBS="$opt"
-+		THREADED_DELTA_SEARCH=YesPlease
-+		break
-+	],
-+	[AC_MSG_RESULT([no])])
-+      CFLAGS="$old_CFLAGS"
-+  done
- else
-- ${CC} -lpthread conftest.c -o conftest.o > /dev/null 2>&1
-- if test $? -eq 0;then
--  PTHREAD_LIBS="-lpthread"
--  THREADED_DELTA_SEARCH=YesPlease
-- else
--  NO_PTHREADS=UnfortunatelyYes
-- fi
-+  old_CFLAGS="$CFLAGS"
-+  CFLAGS="$PTHREAD_CFLAGS $CFLAGS"
-+  AC_MSG_CHECKING([Checking for POSIX Threads with '$PTHREAD_CFLAGS'])
-+  AC_LINK_IFELSE(PTHREADTEST_SRC,
-+	[AC_MSG_RESULT([yes])
-+		NO_PTHREADS=
-+		PTHREAD_LIBS="$PTHREAD_CFLAGS"
-+		THREADED_DELTA_SEARCH=YesPlease
-+	],
-+	[AC_MSG_RESULT([no])])
-+
-+  CFLAGS="$old_CFLAGS"
- fi
-+
-+CFLAGS="$old_CFLAGS"
-+
- AC_SUBST(PTHREAD_LIBS)
- AC_SUBST(NO_PTHREADS)
- AC_SUBST(THREADED_DELTA_SEARCH)
+ # Define SHELL_PATH to provide path to shell.
+ GIT_ARG_SET_PATH(shell)
 -- 
 1.6.0.5
