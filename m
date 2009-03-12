@@ -1,71 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Mar 2009, #03; Wed, 11)
-Date: Thu, 12 Mar 2009 13:43:52 -0700
-Message-ID: <7viqmejwtz.fsf@gitster.siamese.dyndns.org>
-References: <7vvdqg5s17.fsf@gitster.siamese.dyndns.org>
- <49B96F1A.3060001@lsrfire.ath.cx>
+From: david@lang.hm
+Subject: Re: Google Summer of Code 2009: GIT
+Date: Thu, 12 Mar 2009 13:45:46 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0903121343590.16753@asgard.lang.hm>
+References: <49B74373.3090609@gmail.com>  <7veix33f5e.fsf@gitster.siamese.dyndns.org>  <ab9fa62a0903120545o7e5bc359g7df233b00858869c@mail.gmail.com>  <alpine.DEB.1.10.0903121052310.16753@asgard.lang.hm>  <ab9fa62a0903121119j6c2a1d43kd9cda99db47b5e7c@mail.gmail.com>
+  <alpine.DEB.1.10.0903121148540.16753@asgard.lang.hm>  <ab9fa62a0903121200v73ec3522gcdebcd34122efc72@mail.gmail.com>  <alpine.DEB.1.10.0903121214390.16753@asgard.lang.hm>  <ab9fa62a0903121245m621643bfq3c58557ccc9b266f@mail.gmail.com> 
+ <alpine.DEB.1.10.0903121255040.16753@asgard.lang.hm> <ab9fa62a0903121303v5a6cbf0ax413cc440b9c32e77@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Thu Mar 12 21:45:41 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: saurabh gupta <saurabhgupta1403@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 12 21:47:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhrmW-0000QO-SY
-	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 21:45:33 +0100
+	id 1LhroS-0001ME-3k
+	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 21:47:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752694AbZCLUoA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Mar 2009 16:44:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751638AbZCLUoA
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 16:44:00 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42186 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750943AbZCLUn7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Mar 2009 16:43:59 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2558E5EE1;
-	Thu, 12 Mar 2009 16:43:57 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 879295EE0; Thu,
- 12 Mar 2009 16:43:54 -0400 (EDT)
-In-Reply-To: <49B96F1A.3060001@lsrfire.ath.cx> (=?utf-8?Q?Ren=C3=A9?=
- Scharfe's message of "Thu, 12 Mar 2009 21:22:50 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 8208CE80-0F46-11DE-967F-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
+	id S1752995AbZCLUqE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Mar 2009 16:46:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750943AbZCLUqD
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 16:46:03 -0400
+Received: from mail.lang.hm ([64.81.33.126]:53647 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751018AbZCLUqB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Mar 2009 16:46:01 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n2CKjktA017630;
+	Thu, 12 Mar 2009 12:45:46 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <ab9fa62a0903121303v5a6cbf0ax413cc440b9c32e77@mail.gmail.com>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113123>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+On Fri, 13 Mar 2009, saurabh gupta wrote:
 
-> Junio C Hamano schrieb:
->> Tonight's 'pu' does not pass its self-test and it is expected; I won=
-'t be
->> fixing it and I'm going to bed now.
+> On Fri, Mar 13, 2009 at 1:29 AM,  <david@lang.hm> wrote:
+>> On Fri, 13 Mar 2009, saurabh gupta wrote:
+>>
+>>> Very well described, David. I agree with you and providing these merge
+>>> options to the user, merge drivers can do the work and mark the
+>>> conflicts according to the option. The work to do is to modify the
+>>> merge driver. I think in this way, even people who have only a
+>>> terminal can also gain from it. They can choose the apt option to see
+>>> the conflict markers in their way. So, the aim is to make merge driver
+>>> configurable and create the merged/conflicted file according to the
+>>> options.
+>>
+>> for the GSOC I suspect that the right thing to do is the define one or more
+>> merge drivers to create, and list what applications are going to be used for
+>> testing these merges.
+>>
+>> you and the mentor can decide what is a reasonable amount of work.
+>>
 >
-> This fixes a segfault:
+> I will very glad to hear about this thing from the mentor (Johannes
+> Schindelin, according to wiki). I will try to plan out the things in a
+> proper way to carry out this project if I get a chance to work on this
+> for GSoC 2009.
+>
+>> it may be just doing an XML merge driver is a summer's worth of work, or it
+>> may be that it's not really enough and you should try to do another one or
+>> two.
+>>
+>> it also may be that there is a lot of overlap between different merge
+>> drivers, and once you have the XML driver the others become fairly trivial
+>> to do. (I'm thinking the config file examples I posted earlier in the
+>> thread)
+>
+> with the options given to the user, one can handle the config files
+> also where order doesn't matter and also the whitespaces problem can
+> also be handled in the similar way.
 
-Oops, you're right.
+when I am mentioning config files here I'm thinking of ones that don't use 
+XML (such as the git config file)
 
+a 'paragraph' merge driver could also help with things like a maintainers 
+file where the order of the paragaphs doesn't matter, just the content 
+inside each one.
 
-> diff --git a/remote.c b/remote.c
-> index 68c1a84..ea1841e 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -655,9 +655,9 @@ struct remote *remote_get(const char *name)
->  	struct remote *ret;
->  	int name_given =3D 0;
-> =20
->  	read_config();
-> -	if (name || strcmp(name, "-"))
-> +	if (name && strcmp(name, "-"))
->  		name_given =3D 1;
->  	else {
->  		name =3D default_remote_name;
->  		name_given =3D explicit_default_remote_name;
+that's very similar to re-ordering XML tags, but with a slightly different 
+syntax
+
+David Lang
