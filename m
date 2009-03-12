@@ -1,148 +1,92 @@
-From: david@lang.hm
-Subject: Re: Google Summer of Code 2009: GIT
-Date: Thu, 12 Mar 2009 11:00:12 -0700 (PDT)
-Message-ID: <alpine.DEB.1.10.0903121052310.16753@asgard.lang.hm>
-References: <49B74373.3090609@gmail.com>  <alpine.DEB.1.00.0903111458340.10498@intel-tinevez-2-302>  <alpine.DEB.1.10.0903110931070.13653@asgard.lang.hm>  <ab9fa62a0903111007w4772b234x8e6fd19cdc7fc595@mail.gmail.com>  <alpine.DEB.1.10.0903111223470.16753@asgard.lang.hm>
-  <ab9fa62a0903111302j46c46c2q96af497fa2ac513e@mail.gmail.com>  <alpine.DEB.1.10.0903111307050.16753@asgard.lang.hm>  <alpine.DEB.1.00.0903112136560.10279@pacific.mpi-cbg.de>  <alpine.DEB.1.10.0903111401520.16753@asgard.lang.hm>  <7veix33f5e.fsf@gitster.siamese.dyndns.org>
- <ab9fa62a0903120545o7e5bc359g7df233b00858869c@mail.gmail.com>
+From: Steven Tweed <orthochronous@gmail.com>
+Subject: Re: Generalised bisection
+Date: Thu, 12 Mar 2009 18:02:37 +0000
+Message-ID: <d9c1caea0903121102y5452603fua0e7a1b82e121b01@mail.gmail.com>
+References: <efe2b6d70903081840v18e77aa7w2dac2bed553d0d6a@mail.gmail.com>
+	 <200903100808.15875.chriscool@tuxfamily.org>
+	 <efe2b6d70903110159h78de744yc141effaf5aa0821@mail.gmail.com>
+	 <43d8ce650903110235q5e2a59f6t201d5e65a4937476@mail.gmail.com>
+	 <efe2b6d70903111515p2b9f656bp186d0b3cc7ae483d@mail.gmail.com>
+	 <43d8ce650903112345x3d40b70ap7e4c0f8c7d0b6069@mail.gmail.com>
+	 <alpine.DEB.1.00.0903121154560.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="680960-807451073-1236880812=:16753"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: saurabh gupta <saurabhgupta1403@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 12 19:03:36 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: John Tapsell <johnflux@gmail.com>,
+	Ealdwulf Wuffinga <ealdwulf@googlemail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Git List <git@vger.kernel.org>, Ingo Molnar <mingo@elte.hu>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Mar 12 19:06:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhpEN-0000Ce-3S
-	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 19:02:07 +0100
+	id 1LhpGM-00011K-Al
+	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 19:04:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755539AbZCLSAh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Mar 2009 14:00:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755176AbZCLSAh
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 14:00:37 -0400
-Received: from mail.lang.hm ([64.81.33.126]:58722 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753006AbZCLSAg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Mar 2009 14:00:36 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n2CI0Cqj016909;
-	Thu, 12 Mar 2009 10:00:12 -0800
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <ab9fa62a0903120545o7e5bc359g7df233b00858869c@mail.gmail.com>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1752490AbZCLSCn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Mar 2009 14:02:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752294AbZCLSCm
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 14:02:42 -0400
+Received: from mail-bw0-f178.google.com ([209.85.218.178]:46373 "EHLO
+	mail-bw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751700AbZCLSCl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Mar 2009 14:02:41 -0400
+Received: by bwz26 with SMTP id 26so1771981bwz.37
+        for <git@vger.kernel.org>; Thu, 12 Mar 2009 11:02:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=IeIdOTnvcZtnjrIkDQdAvbzWeKZPJsGI7OvGIQKbdVc=;
+        b=cmuuURKbrfR3ZyiT57tlm/FHQ++XTaaD23ix5DKOpQR1pm0J3+7XpCfe7MYTaMaFQR
+         X2IJQVKJCbdC80h4ScrhLbgHv9+75e0bgeP4REc+Wq0OYiZFd2CW6BsqbgNS+my00xm/
+         H40A8vKp/L/P750oi3sQh7LWjSSbaHBZnjFmA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=VSuK75CB3lQIvAhHQvxtb+7/b91IlrMuQ77uVmoc0FC8y08K0xPaHNHR2kJ9nkmybp
+         o0FX5+4QmW0Bx9PSqZoF/WV8oAJsCqWq97tz8Ht5Dw25w2WL+zDpcdTT+c1SKVCdCYnF
+         8mRFsESzbjz0nDrKXvbsWD3SxMPBS1oFNOK4g=
+Received: by 10.223.126.1 with SMTP id a1mr209171fas.52.1236880957951; Thu, 12 
+	Mar 2009 11:02:37 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0903121154560.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113098>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---680960-807451073-1236880812=:16753
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 8BIT
-
-On Thu, 12 Mar 2009, saurabh gupta wrote:
-
-> On Thu, Mar 12, 2009 at 3:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> You can cut it both ways.  For an OO document, you do not necessarily need
->> any file-level merger at the driver level, but just let the "binary"
->> driver declare conflicts and punt.  A merge helper can do all the work
->> starting from the "original, ours and theirs" that are not smudged with
->> conflict markers.
->>
->> Between these two extremes, the discussion from other people in the thread
->> seemed to all focus too heavily on the "driver punts" approach, forgetting
->> that mergetool is useful only because most of the time we do not have to
->> even use it, thanks to the fact that "xdl" driver works reasonably well
->> for most trivial cases where branches being merged stayed away from each
->> other, which is the majority case.  It is a huge win from the productivity
->> point of view, and many people might be unaware of it because it is so
->> invisible.
+On Thu, Mar 12, 2009 at 10:55 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Thu, 12 Mar 2009, John Tapsell wrote:
+> > 2009/3/11 Ealdwulf Wuffinga <ealdwulf@googlemail.com>:
+> > > What I use is the multiprecision floating point number class. dou=
+bles
+> > > don't seem to be long enough.
+> >
+> > Hmm, really really? =A0Sometimes this sort of thing can be fixed by=
+ just
+> > readjusting the formulas. =A0What formulas are you using that requi=
+re more
+> > precision than doubles?
 >
-> If I am not wrong, then for merging two xml files, if we use a simple
-> xdl merge driver then it will mark the conflicts in the normal way as
-> it does for simple text files. As far as I can understand, the
-> following things are supposed to be aimed here taking an example of
-> xml file:
->
->
-> =>Merging of two xml files
->
-> => existing merge driver (like xdl) is called which marks the
-> conflicts points just like a normal text file.
->
-> => the conflicted file can be read through a text terminal and
-> conflicted lines can be seen.
->
-> => suppose the xml file is from the domain of OO document. Then, a
-> merge helper for OO xml type file is called which takes input as the
-> conflicted file produced by xdl driver.
->
-> => The merge helper creates a new file or changes the input file to
-> make it a valid xml file so that it can be opened in OpenOffice and
-> user can see the markers like "====" or "<<<<<"  in an appropriate
-> manner and can resolve the file manually.
+> Maybe you could post the formulae instead of forcing people to deduct=
+ them
+> from the source code?
 
-with XML files it's possible to be symanticly identical, but not identical 
-as far as a text merge driver is concerned.
+I haven't even looked at the source code so a description of the
+mathematical algorithm would help, but I'll just point out that
+underflow (in the case of working with probabilities) and overflow
+(when working with their negated logarithms) is inherent in most
+multi-step Bayesian algorithms. The only solution is to rescale things
+as you go so that things stay in a "computable" range. (You're almost
+never interested in absolute probabilities anyway but rather relative
+probabilities or, in extreme cases, just the biggest probability, so
+rescaling isn't losing any useful information.)
 
-for example, the following two tags are identical in meaning, but would 
-show up as different (and therefor in conflict) in a text merge
-
-
-<tag attr1='foo' attr2='bar' />
-<tag attr2='bar' attr1='foo' />
-
-in many instances (such as config files), the order of items doesn't 
-change the meaning. so the following two items would be identical
-
-<tag1>
-   stuff
-</tag1>
-<tag2>
-   more stuff
-</tag2>
-
-vs
-
-<tag2>
-   more stuff
-</tag2>
-<tag1>
-   stuff>
-</tag1>
-
-in addition whitespace may or may not be relavent (depending on how the 
-XML is used) so the following may also be identical
-
-<tag>stuff<tag>
-
-vs
-<tag>
-stuff
-</tag>
-
-a good XML merge driver would have options that you could set for a 
-particular file type to know about these sorts of things.
-
-
->>  When it cannot autoresolve,
->> but there is no way to "mark" a tentative result with conflict markers, it
->> can do the same thing as the "binary" driver and let the mergetool backend
->> handle the "driver punted" case.
->
-> I think you mean to say that in case, there is a conflict and the
-> changes don't overlap, then merge driver leaves the file as it is and
-> the merge helper will handle the file.
-
-if there is a conflict it should be because the changes do overlap. if 
-they don't overlap why is it a conflict?
-
-David Lang
---680960-807451073-1236880812=:16753--
+cheers,
+dave tweed
