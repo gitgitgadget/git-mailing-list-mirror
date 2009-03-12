@@ -1,91 +1,66 @@
-From: david@lang.hm
-Subject: Re: Google Summer of Code 2009: GIT
-Date: Thu, 12 Mar 2009 13:45:46 -0700 (PDT)
-Message-ID: <alpine.DEB.1.10.0903121343590.16753@asgard.lang.hm>
-References: <49B74373.3090609@gmail.com>  <7veix33f5e.fsf@gitster.siamese.dyndns.org>  <ab9fa62a0903120545o7e5bc359g7df233b00858869c@mail.gmail.com>  <alpine.DEB.1.10.0903121052310.16753@asgard.lang.hm>  <ab9fa62a0903121119j6c2a1d43kd9cda99db47b5e7c@mail.gmail.com>
-  <alpine.DEB.1.10.0903121148540.16753@asgard.lang.hm>  <ab9fa62a0903121200v73ec3522gcdebcd34122efc72@mail.gmail.com>  <alpine.DEB.1.10.0903121214390.16753@asgard.lang.hm>  <ab9fa62a0903121245m621643bfq3c58557ccc9b266f@mail.gmail.com> 
- <alpine.DEB.1.10.0903121255040.16753@asgard.lang.hm> <ab9fa62a0903121303v5a6cbf0ax413cc440b9c32e77@mail.gmail.com>
+From: Matthias Nothhaft <matthias.nothhaft@googlemail.com>
+Subject: Transparently encrypt repository contents with GPG
+Date: Thu, 12 Mar 2009 22:19:48 +0100
+Message-ID: <978bdee00903121419o61cd7a87rb55809796bd257d7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: saurabh gupta <saurabhgupta1403@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 12 21:47:35 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 12 22:22:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhroS-0001ME-3k
-	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 21:47:32 +0100
+	id 1LhsLE-0000fs-Mw
+	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 22:21:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752995AbZCLUqE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Mar 2009 16:46:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750943AbZCLUqD
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 16:46:03 -0400
-Received: from mail.lang.hm ([64.81.33.126]:53647 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751018AbZCLUqB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Mar 2009 16:46:01 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n2CKjktA017630;
-	Thu, 12 Mar 2009 12:45:46 -0800
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <ab9fa62a0903121303v5a6cbf0ax413cc440b9c32e77@mail.gmail.com>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1753032AbZCLVTw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Mar 2009 17:19:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752679AbZCLVTw
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 17:19:52 -0400
+Received: from mail-fx0-f176.google.com ([209.85.220.176]:38095 "EHLO
+	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751018AbZCLVTv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Mar 2009 17:19:51 -0400
+Received: by fxm24 with SMTP id 24so2306940fxm.37
+        for <git@vger.kernel.org>; Thu, 12 Mar 2009 14:19:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=XNM7DwZjVgbak+e3Lg4US3iyK4AXClwZMuBZ/YdxlKU=;
+        b=woh/XZfMGpZz2hsrcQ2joYvi4wooyACFlHb+jJZc4nebp+4nt50fp0nZd2mvCDsHfx
+         QsNYrqdViQuvBXb1854gDmvhR5k3EfjfBflo6b0X5TwjPtwCAEI20sEE/WOILwlLakio
+         fQBXFCba90WViex6OENJ4eSPg3D+QgyXqSNxE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=AdED7i0mOUZkooX2Mf9+uXJt41t4iUgzQQgIHE7+X8N+OZeBDiyqxA3Pq98FEBkb0J
+         p8at1dg1Q8V2d6jxXWMwM29hOjKyomn8hkBMqHmWHGJcZ0pOafAq2adbdatBclWd1bZj
+         8xarRqVFZuo1GKXE6EPegx21J/Ru1obJcw7vQ=
+Received: by 10.86.51.10 with SMTP id y10mr337984fgy.51.1236892788622; Thu, 12 
+	Mar 2009 14:19:48 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113124>
 
-On Fri, 13 Mar 2009, saurabh gupta wrote:
+Hi,
 
-> On Fri, Mar 13, 2009 at 1:29 AM,  <david@lang.hm> wrote:
->> On Fri, 13 Mar 2009, saurabh gupta wrote:
->>
->>> Very well described, David. I agree with you and providing these merge
->>> options to the user, merge drivers can do the work and mark the
->>> conflicts according to the option. The work to do is to modify the
->>> merge driver. I think in this way, even people who have only a
->>> terminal can also gain from it. They can choose the apt option to see
->>> the conflict markers in their way. So, the aim is to make merge driver
->>> configurable and create the merged/conflicted file according to the
->>> options.
->>
->> for the GSOC I suspect that the right thing to do is the define one or more
->> merge drivers to create, and list what applications are going to be used for
->> testing these merges.
->>
->> you and the mentor can decide what is a reasonable amount of work.
->>
->
-> I will very glad to hear about this thing from the mentor (Johannes
-> Schindelin, according to wiki). I will try to plan out the things in a
-> proper way to carry out this project if I get a chance to work on this
-> for GSoC 2009.
->
->> it may be just doing an XML merge driver is a summer's worth of work, or it
->> may be that it's not really enough and you should try to do another one or
->> two.
->>
->> it also may be that there is a lot of overlap between different merge
->> drivers, and once you have the XML driver the others become fairly trivial
->> to do. (I'm thinking the config file examples I posted earlier in the
->> thread)
->
-> with the options given to the user, one can handle the config files
-> also where order doesn't matter and also the whitespaces problem can
-> also be handled in the similar way.
+I'm new to Git but I really already love it. ;-)
 
-when I am mentioning config files here I'm thinking of ones that don't use 
-XML (such as the git config file)
+I would like to have repository that transparently encrypts and
+decrypts all files using GPG.
 
-a 'paragraph' merge driver could also help with things like a maintainers 
-file where the order of the paragaphs doesn't matter, just the content 
-inside each one.
+What I need is a way to automatically modify each file
 
-that's very similar to re-ordering XML tags, but with a slightly different 
-syntax
+a) before it is written in the repository
+b) after it is read from the repository
 
-David Lang
+Is there a way to get this work somehow? Can someone give me some
+hints where I need to begin?
+
+regards,
+Matthias
