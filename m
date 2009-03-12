@@ -1,70 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Google Summer of Code 2009: GIT
-Date: Thu, 12 Mar 2009 14:07:48 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903121407070.6335@intel-tinevez-2-302>
-References: <49B74373.3090609@gmail.com>  <alpine.DEB.1.00.0903111255470.10279@pacific.mpi-cbg.de>  <ab9fa62a0903110511u63e7d46dr3bb783ee891ca4ae@mail.gmail.com>  <alpine.DEB.1.00.0903111353340.10498@intel-tinevez-2-302>  <ab9fa62a0903110655y4a47ccfkde0984ecb46b3307@mail.gmail.com>
-  <alpine.DEB.1.00.0903111458340.10498@intel-tinevez-2-302> <ab9fa62a0903110713k2a21cefbj1e7cd3c126aca8f9@mail.gmail.com> <alpine.LNX.1.00.0903111159530.19665@iabervon.org> <alpine.DEB.1.00.0903111742360.10498@intel-tinevez-2-302>
- <49B90683.1060501@drmicha.warpmail.net>
+From: Samuel Tardieu <sam@rfc1149.net>
+Subject: Choosing between "renaming" and "copy"
+Date: Thu, 12 Mar 2009 14:01:14 +0100
+Organization: RFC 1149 (see http://www.rfc1149.net/)
+Message-ID: <2009-03-12-14-01-15+trackit+sam@rfc1149.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	saurabh gupta <saurabhgupta1403@gmail.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Mar 12 14:09:53 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 12 14:13:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhkfG-0006LM-32
-	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 14:09:34 +0100
+	id 1LhkiN-0007a8-DS
+	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 14:12:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755126AbZCLNHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Mar 2009 09:07:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754158AbZCLNHx
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 09:07:53 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43150 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753790AbZCLNHw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Mar 2009 09:07:52 -0400
-Received: (qmail invoked by alias); 12 Mar 2009 13:07:49 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp068) with SMTP; 12 Mar 2009 14:07:49 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+frA5DCMufoNZdV4/rY0/qYrJL0YPXe2tGbyX1lM
-	tgcIvN8SHtePuP
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <49B90683.1060501@drmicha.warpmail.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.65
+	id S1755770AbZCLNLP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Mar 2009 09:11:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755600AbZCLNLP
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 09:11:15 -0400
+Received: from zoidberg.rfc1149.net ([91.121.19.179]:41364 "EHLO
+	zoidberg.rfc1149.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755355AbZCLNLO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Mar 2009 09:11:14 -0400
+X-Greylist: delayed 594 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Mar 2009 09:11:13 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by zoidberg.rfc1149.net (Postfix) with ESMTP id 6E02310FD6B
+	for <git@vger.kernel.org>; Thu, 12 Mar 2009 14:01:15 +0100 (CET)
+X-Virus-Scanned: amavisd-new at rfc1149.net
+Received: from zoidberg.rfc1149.net ([127.0.0.1])
+	by localhost (zaphod.rfc1149.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id HqT0kpcDPodA for <git@vger.kernel.org>;
+	Thu, 12 Mar 2009 14:01:10 +0100 (CET)
+Received: from mail2.rfc1149.net (willow.rfc1149.net [IPv6:2001:6f8:37a:2::2])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "mail2.rfc1149.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by zoidberg.rfc1149.net (Postfix) with ESMTPS id 700A210FD09
+	for <git@vger.kernel.org>; Thu, 12 Mar 2009 14:01:10 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mail2.rfc1149.net (Postfix) with ESMTP id 5ECDFC400A;
+	Thu, 12 Mar 2009 14:01:15 +0100 (CET)
+Received: from mail2.rfc1149.net ([127.0.0.1])
+	by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 7QkBQCVCe847; Thu, 12 Mar 2009 14:01:15 +0100 (CET)
+Received: by mail2.rfc1149.net (Postfix, from userid 1000)
+	id 42CB2C4099; Thu, 12 Mar 2009 14:01:15 +0100 (CET)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-WWW: http://www.rfc1149.net/sam
+X-Jabber: <sam@rfc1149.net> (see http://www.jabber.org/)
+X-OpenPGP-Fingerprint: 79C0 AE3C CEA8 F17B 0EF1  45A5 F133 2241 1B80 ADE6 (see http://www.gnupg.org/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113066>
 
-Hi,
+I renamed a file in my repository, and made a slightly modified copy
+of it. It looks like GIT gets confused on which one is the renaming
+and which one is the copy, and doesn't favour the 100% identical one
+to be chosen as the renaming.
 
-On Thu, 12 Mar 2009, Michael J Gruber wrote:
+Not a big deal, but maybe git could be more clever here.
 
-> Johannes Schindelin venit, vidit, dixit 11.03.2009 17:44:
-> 
-> > On Wed, 11 Mar 2009, Daniel Barkalow wrote:
-> > 
-> >> One thing that I think would be good whenever possible is to have the 
-> >> merge program generate a file in the same format which is easily 
-> >> recognizable as having conflict markers. For example, I think it 
-> >> should be possible to show conflicts in the text of office documents 
-> >> by having styles for each side of the merge, and show each side's 
-> >> content in the appropriate style. Then the user opens the document 
-> >> with their choice of office software, finds the things in the 
-> >> conflict styles, and decides what the result should be.
-> > That's a very good idea!  (Except for LaTeX, maybe...)
-> 
-> latexdiff (in perl) may give you a head start (or ache, I dunno).
+% git commit -m "Split into flash and ram alternatives." 
+[stm32-sk 601462c] Split into flash and ram alternatives.
+ 3 files changed, 3 insertions(+), 2 deletions(-)
+ copy Demo/CORTEX_STM32SK_GCC/{stm32f103r8t6.ld => stm32f103r8t6_flash.ld} (100%)
+ rename Demo/CORTEX_STM32SK_GCC/{stm32f103r8t6.ld => stm32f103r8t6_ram.ld} (98%)
 
-No.  latexdiff is about diffing.  It does nothing to help me resolve a 
-conflict.
+% git --version
+git version 1.6.2.rc2.305.g23381
 
-Thanks,
-Dscho
+  Sam
+-- 
+Samuel Tardieu -- sam@rfc1149.net -- http://www.rfc1149.net/
