@@ -1,133 +1,86 @@
-From: saurabh gupta <saurabhgupta1403@gmail.com>
-Subject: Re: Google Summer of Code 2009: GIT
-Date: Thu, 12 Mar 2009 18:15:02 +0530
-Message-ID: <ab9fa62a0903120545o7e5bc359g7df233b00858869c@mail.gmail.com>
-References: <49B74373.3090609@gmail.com>
-	 <alpine.DEB.1.00.0903111458340.10498@intel-tinevez-2-302>
-	 <alpine.DEB.1.10.0903110931070.13653@asgard.lang.hm>
-	 <ab9fa62a0903111007w4772b234x8e6fd19cdc7fc595@mail.gmail.com>
-	 <alpine.DEB.1.10.0903111223470.16753@asgard.lang.hm>
-	 <ab9fa62a0903111302j46c46c2q96af497fa2ac513e@mail.gmail.com>
-	 <alpine.DEB.1.10.0903111307050.16753@asgard.lang.hm>
-	 <alpine.DEB.1.00.0903112136560.10279@pacific.mpi-cbg.de>
-	 <alpine.DEB.1.10.0903111401520.16753@asgard.lang.hm>
-	 <7veix33f5e.fsf@gitster.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Deleting remote branch pointed by remote HEAD
+Date: Thu, 12 Mar 2009 14:47:24 +0200
+Message-ID: <94a0d4530903120547rfbbaccra8ee68498688fa54@mail.gmail.com>
+References: <49773240.7090605@drmicha.warpmail.net>
+	 <49773E48.90302@drmicha.warpmail.net>
+	 <20090121161940.GA20702@coredump.intra.peff.net>
+	 <alpine.LNX.1.00.0901211237530.19665@iabervon.org>
+	 <20090121191219.GD21686@coredump.intra.peff.net>
+	 <20090121191408.GA22958@coredump.intra.peff.net>
+	 <alpine.LNX.1.00.0901211443140.19665@iabervon.org>
+	 <20090121195348.GB3589@sigill.intra.peff.net>
+	 <94a0d4530903120202w22f1f8ecwc6b4d22652afc427@mail.gmail.com>
+	 <20090312113908.GA19572@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: david@lang.hm, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	=?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>,
 	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 12 13:47:13 2009
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Mar 12 13:49:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhkJc-0007Yu-AF
-	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 13:47:12 +0100
+	id 1LhkLN-0008BB-EV
+	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 13:49:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755126AbZCLMpH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Mar 2009 08:45:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753738AbZCLMpG
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 08:45:06 -0400
-Received: from yx-out-2324.google.com ([74.125.44.29]:13846 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752114AbZCLMpE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Mar 2009 08:45:04 -0400
-Received: by yx-out-2324.google.com with SMTP id 8so453680yxm.1
-        for <git@vger.kernel.org>; Thu, 12 Mar 2009 05:45:02 -0700 (PDT)
+	id S1755112AbZCLMr2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Mar 2009 08:47:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754770AbZCLMr2
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 08:47:28 -0400
+Received: from fk-out-0910.google.com ([209.85.128.186]:63354 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752371AbZCLMr1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Mar 2009 08:47:27 -0400
+Received: by fk-out-0910.google.com with SMTP id f33so77732fkf.5
+        for <git@vger.kernel.org>; Thu, 12 Mar 2009 05:47:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=NC5XpuRomXZIu/xb+oeu5qmoocc1Ae56u0AIeTSOUT8=;
-        b=FqHdYSTcn7umM7zjjIfGq4uA/zBgzWE+PWKwr8wG+TeHjuaqz9KTMvmlS4Mtxs2mWz
-         yWSJwrA23FqtV4FGvDeyJXaBssqZsTytb3iOmvGcFB6DXTMV71l3UZFA7qF6D403vjIB
-         rGVI74hLKbU1MrmlITQhqa09yWFP6MnbC6/8g=
+        bh=lXJ4Kg0IXCRQAQjzNBZv6USze5btw8+mobtazODEjOE=;
+        b=twKdt99TvsQqslP127q4GwRHIYbp5/Zn2f0oambDz1eDsZDQWkgKckM5jPWaJ4tcB0
+         OaspbBHJ2NLJiikxfzwM3+5B5tfrJqOh4RrKuamb0Sh5fx7O/OYlSsWxC4psObnFQ0lI
+         H2XYENutUBnmMvb+hYuwRsqYn/lSNJRxrI55o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=wglROmTv2UDisWUI5TEP3FXH0A5U52SKi4ay5mHUhFxhQRVMxQNDtYnkP4qlJSAXG7
-         W9+AefvbmDMotleWvUsMg5lnBtztXO7HdCi6n/+LgfY+9jSnn4Km41esVq0JZw46exlC
-         mN42fUNYUqGiWOSTf4FnSLtQMbiHiiRIxyoUA=
-Received: by 10.231.14.72 with SMTP id f8mr2264946iba.34.1236861902200; Thu, 
-	12 Mar 2009 05:45:02 -0700 (PDT)
-In-Reply-To: <7veix33f5e.fsf@gitster.siamese.dyndns.org>
+        b=rN/lTflNIRSuFCdWF09l9iN1n7jnJHZ4Nw9EC8fr73PjHc/1Gji8AuqD9Szj8xfZBt
+         tHEdZBnaWxI9v0GeMbpsgVE+4Gj5UgjNPvs9LuBjDR22dlvaKE4YvmPGot8PjT0TRQTQ
+         nqMGem/oiyS6/A2hAqfm6UyT6aKiYpdGz4cKk=
+Received: by 10.86.95.8 with SMTP id s8mr6770170fgb.79.1236862044242; Thu, 12 
+	Mar 2009 05:47:24 -0700 (PDT)
+In-Reply-To: <20090312113908.GA19572@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113060>
 
-On Thu, Mar 12, 2009 at 3:17 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
+On Thu, Mar 12, 2009 at 1:39 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Mar 12, 2009 at 11:02:08AM +0200, Felipe Contreras wrote:
 >
-> You can cut it both ways. =A0For an OO document, you do not necessari=
-ly need
-> any file-level merger at the driver level, but just let the "binary"
-> driver declare conflicts and punt. =A0A merge helper can do all the w=
-ork
-> starting from the "original, ours and theirs" that are not smudged wi=
-th
-> conflict markers.
+>> >> =C2=A0 git remote set-default $foo <name>
+>> [...]
+>> > I think that would be reasonable behavior (and probably a special =
+mode
+>> > for set-default to just update from the remote's idea of HEAD).
+>>
+>> Nobody is working on this, right?
 >
-> Between these two extremes, the discussion from other people in the t=
-hread
-> seemed to all focus too heavily on the "driver punts" approach, forge=
-tting
-> that mergetool is useful only because most of the time we do not have=
- to
-> even use it, thanks to the fact that "xdl" driver works reasonably we=
-ll
-> for most trivial cases where branches being merged stayed away from e=
-ach
-> other, which is the majority case. =A0It is a huge win from the produ=
-ctivity
-> point of view, and many people might be unaware of it because it is s=
-o
-> invisible.
+> Jay has a number of improvements to "git remote" in next, including
+> this. See 104a914 (Merge branch 'js/remote-improvements' into next,
+> 2009-03-05). Especially bc14fac (builtin-remote: add set-head
+> subcommand, 2009-02-25).
 
-If I am not wrong, then for merging two xml files, if we use a simple
-xdl merge driver then it will mark the conflicts in the normal way as
-it does for simple text files. As far as I can understand, the
-following things are supposed to be aimed here taking an example of
-xml file:
-
-
-=3D>Merging of two xml files
-
-=3D> existing merge driver (like xdl) is called which marks the
-conflicts points just like a normal text file.
-
-=3D> the conflicted file can be read through a text terminal and
-conflicted lines can be seen.
-
-=3D> suppose the xml file is from the domain of OO document. Then, a
-merge helper for OO xml type file is called which takes input as the
-conflicted file produced by xdl driver.
-
-=3D> The merge helper creates a new file or changes the input file to
-make it a valid xml file so that it can be opened in OpenOffice and
-user can see the markers like "=3D=3D=3D=3D" or "<<<<<"  in an appropri=
-ate
-manner and can resolve the file manually.
-
-
->=A0When it cannot autoresolve,
-> but there is no way to "mark" a tentative result with conflict marker=
-s, it
-> can do the same thing as the "binary" driver and let the mergetool ba=
-ckend
-> handle the "driver punted" case.
-
-I think you mean to say that in case, there is a conflict and the
-changes don't overlap, then merge driver leaves the file as it is and
-the merge helper will handle the file.
-
+Yes, I looked at that, but set-head will only change the remote HEAD lo=
+cally.
 
 --=20
-Saurabh Gupta
-Senior,
-NSIT,New Delhi, India
+=46elipe Contreras
