@@ -1,86 +1,94 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Deleting remote branch pointed by remote HEAD
-Date: Thu, 12 Mar 2009 14:47:24 +0200
-Message-ID: <94a0d4530903120547rfbbaccra8ee68498688fa54@mail.gmail.com>
-References: <49773240.7090605@drmicha.warpmail.net>
-	 <49773E48.90302@drmicha.warpmail.net>
-	 <20090121161940.GA20702@coredump.intra.peff.net>
-	 <alpine.LNX.1.00.0901211237530.19665@iabervon.org>
-	 <20090121191219.GD21686@coredump.intra.peff.net>
-	 <20090121191408.GA22958@coredump.intra.peff.net>
-	 <alpine.LNX.1.00.0901211443140.19665@iabervon.org>
-	 <20090121195348.GB3589@sigill.intra.peff.net>
-	 <94a0d4530903120202w22f1f8ecwc6b4d22652afc427@mail.gmail.com>
-	 <20090312113908.GA19572@coredump.intra.peff.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Google Summer of Code 2009: GIT
+Date: Thu, 12 Mar 2009 13:47:28 +0100
+Message-ID: <49B90460.2020803@drmicha.warpmail.net>
+References: <49B74373.3090609@gmail.com>	 <alpine.DEB.1.00.0903111255470.10279@pacific.mpi-cbg.de>	 <ab9fa62a0903110511u63e7d46dr3bb783ee891ca4ae@mail.gmail.com>	 <alpine.DEB.1.00.0903111353340.10498@intel-tinevez-2-302>	 <ab9fa62a0903110655y4a47ccfkde0984ecb46b3307@mail.gmail.com>	 <alpine.DEB.1.00.0903111458340.10498@intel-tinevez-2-302>	 <ab9fa62a0903110713k2a21cefbj1e7cd3c126aca8f9@mail.gmail.com>	 <alpine.LNX.1.00.0903111159530.19665@iabervon.org> <ab9fa62a0903110958s215a84e6y16b4527ab76cb25b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	=?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 12 13:49:04 2009
+To: saurabh gupta <saurabhgupta1403@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 12 13:49:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhkLN-0008BB-EV
-	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 13:49:01 +0100
+	id 1LhkLh-0008Hh-MB
+	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 13:49:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755112AbZCLMr2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Mar 2009 08:47:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754770AbZCLMr2
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 08:47:28 -0400
-Received: from fk-out-0910.google.com ([209.85.128.186]:63354 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752371AbZCLMr1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Mar 2009 08:47:27 -0400
-Received: by fk-out-0910.google.com with SMTP id f33so77732fkf.5
-        for <git@vger.kernel.org>; Thu, 12 Mar 2009 05:47:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=lXJ4Kg0IXCRQAQjzNBZv6USze5btw8+mobtazODEjOE=;
-        b=twKdt99TvsQqslP127q4GwRHIYbp5/Zn2f0oambDz1eDsZDQWkgKckM5jPWaJ4tcB0
-         OaspbBHJ2NLJiikxfzwM3+5B5tfrJqOh4RrKuamb0Sh5fx7O/OYlSsWxC4psObnFQ0lI
-         H2XYENutUBnmMvb+hYuwRsqYn/lSNJRxrI55o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=rN/lTflNIRSuFCdWF09l9iN1n7jnJHZ4Nw9EC8fr73PjHc/1Gji8AuqD9Szj8xfZBt
-         tHEdZBnaWxI9v0GeMbpsgVE+4Gj5UgjNPvs9LuBjDR22dlvaKE4YvmPGot8PjT0TRQTQ
-         nqMGem/oiyS6/A2hAqfm6UyT6aKiYpdGz4cKk=
-Received: by 10.86.95.8 with SMTP id s8mr6770170fgb.79.1236862044242; Thu, 12 
-	Mar 2009 05:47:24 -0700 (PDT)
-In-Reply-To: <20090312113908.GA19572@coredump.intra.peff.net>
+	id S1755539AbZCLMro (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Mar 2009 08:47:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755437AbZCLMrn
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 08:47:43 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:35846 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755402AbZCLMrm (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Mar 2009 08:47:42 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 4A43E2ECCE3;
+	Thu, 12 Mar 2009 08:47:40 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Thu, 12 Mar 2009 08:47:40 -0400
+X-Sasl-enc: YgmFSZTgEuPdJyKjF5bcdAsWQZqLonPY6LuhUr3rfJY1 1236862059
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 534144C69E;
+	Thu, 12 Mar 2009 08:47:39 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090311 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <ab9fa62a0903110958s215a84e6y16b4527ab76cb25b@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113061>
 
-On Thu, Mar 12, 2009 at 1:39 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Mar 12, 2009 at 11:02:08AM +0200, Felipe Contreras wrote:
->
->> >> =C2=A0 git remote set-default $foo <name>
->> [...]
->> > I think that would be reasonable behavior (and probably a special =
-mode
->> > for set-default to just update from the remote's idea of HEAD).
+saurabh gupta venit, vidit, dixit 11.03.2009 17:58:
+> On Wed, Mar 11, 2009 at 9:59 PM, Daniel Barkalow <barkalow@iabervon.org> wrote:
+>> On Wed, 11 Mar 2009, saurabh gupta wrote:
 >>
->> Nobody is working on this, right?
->
-> Jay has a number of improvements to "git remote" in next, including
-> this. See 104a914 (Merge branch 'js/remote-improvements' into next,
-> 2009-03-05). Especially bc14fac (builtin-remote: add set-head
-> subcommand, 2009-02-25).
+>>> On Wed, Mar 11, 2009 at 7:32 PM, Johannes Schindelin
+>>> <Johannes.Schindelin@gmx.de> wrote:
+>>>> Hi,
+>>>>
+>>>> On Wed, 11 Mar 2009, saurabh gupta wrote:
+>>>>
+>>>>> What I think is to implement file formats other than text like that
+>>>>> written on wiki i.e. latex, xml, or even any database file (db file).
+>>>>> Another idea (although it can be weired also) is to implement the new
+>>>>> file formats in the plug-in formats. For example, to incorporate the
+>>>>> merger engine for a new file format, a plug-in is created and can be
+>>>>> integrated with the present merger in the git. However, I am not sure
+>>>>> how much valid is this idea to make the present merger in git to be
+>>>>> compatible with the plug-ins for enabling newer file formats.
+>>>> I am not sure that a plugin structure is needed.  Take, for example, three
+>>>> different .xml based formats: OpenOffice documents, .svg files and Ant
+>>>> build.xml files.  They need very different user interfaces.
+>>> okay. In that case, if they have  a different user interfaces then
+>>> separate plug-in would be needed for each of these. May be this will
+>>> get more messy.
+>> One thing that I think would be good whenever possible is to have the
+>> merge program generate a file in the same format which is easily
+>> recognizable as having conflict markers. For example, I think it should be
+>> possible to show conflicts in the text of office documents by having
+>> styles for each side of the merge, and show each side's content in the
+>> appropriate style. Then the user opens the document with their choice of
+>> office software, finds the things in the conflict styles, and decides what
+>> the result should be.
+> Well, I think this is what which is done in case of normal text files
+> also. The conflicts put the markers in the file to indicate the
+> changes and the modification part. However, in the case of OO
+> documents, we have to change the content for the xml file and when it
+> is opened in the office software, the user will get the modified
+> contents.
 
-Yes, I looked at that, but set-head will only change the remote HEAD lo=
-cally.
+OO already knows versioned documents and recording of changes. It can
+even merge documents which are different modifications of the same base
+document (assuming all authors used recording of changes) and compare
+possibly unrelated documents, merging them interactively. At least OO 3
+can do that. So I guess for OO one mostly has to figure out how to call
+that stuff from the command line. Heck, even MS Office can do that.
+Remember those docs with recorded changes, where published documents
+contained the deletions as well as the deleted passages?
 
---=20
-=46elipe Contreras
+Michael
