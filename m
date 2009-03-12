@@ -1,65 +1,86 @@
-From: Finn Arne Gangstad <finnag@pvv.org>
-Subject: Re: [RFC/PATCH] git push usability improvements and default change
-Date: Thu, 12 Mar 2009 13:20:47 +0100
-Message-ID: <20090312122047.GA14157@pvv.org>
-References: <1236638151-6465-1-git-send-email-finnag@pvv.org> <7vfxhmdyvn.fsf@gitster.siamese.dyndns.org> <20090310100400.GC11448@pvv.org> <7v7i2v4x2v.fsf@gitster.siamese.dyndns.org> <20090312120109.6117@nanako3.lavabit.com> <20090312102243.GA27665@pvv.org> <buomybrqahe.fsf@dhlpc061.dev.necel.com>
+From: Tom Holaday <tlholaday@gmail.com>
+Subject: git doc build failure on OS X 10.5.6 (Leopard) during docbook2x-texi 
+	phase
+Date: Thu, 12 Mar 2009 08:22:29 -0400
+Message-ID: <5e68abd90903120522q635e41f9j118e74158ab04524@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Miles Bader <miles@gnu.org>, '@pvv.org
-X-From: git-owner@vger.kernel.org Thu Mar 12 13:23:00 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 12 13:24:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lhjvw-0007El-WD
-	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 13:22:45 +0100
+	id 1LhjxA-0007dB-LH
+	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 13:24:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755357AbZCLMUz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Mar 2009 08:20:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753969AbZCLMUz
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 08:20:55 -0400
-Received: from decibel.pvv.ntnu.no ([129.241.210.179]:55998 "EHLO
-	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753942AbZCLMUz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Mar 2009 08:20:55 -0400
-Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
-	(envelope-from <finnag@pvv.ntnu.no>)
-	id 1Lhju3-0005Mf-7o; Thu, 12 Mar 2009 13:20:47 +0100
-Content-Disposition: inline
-In-Reply-To: <buomybrqahe.fsf@dhlpc061.dev.necel.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753575AbZCLMWd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Mar 2009 08:22:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753179AbZCLMWc
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 08:22:32 -0400
+Received: from wf-out-1314.google.com ([209.85.200.170]:41715 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752371AbZCLMWb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Mar 2009 08:22:31 -0400
+Received: by wf-out-1314.google.com with SMTP id 28so615479wfa.4
+        for <git@vger.kernel.org>; Thu, 12 Mar 2009 05:22:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=PlNZsaLA013X6eR1tcDOSayg5AEn4NiLrSaR3EnfL18=;
+        b=GZ/VSkuznlhxjC7RouoET+DiCTA7onyNaZI+Iku44H1V9aMC7C4i5JhdN6Q6jnfivL
+         YodRASyly9jKFW54Jazk8Q1UI6/fIzst5JnjpJ21UbrG5NJx0njnpw3KL+FOQjcW5TGN
+         Qf3Wx4RWZCjePX+h+7KcnH8yqx2ta0wDWhgUU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=iticapIO3t7sVfja9v50q667FmTk1/VO7MMDgZrW+oUFS306ypBNlgHtm90b+oiCuu
+         YuKKuqgHrFhdfxCNx7Wp9U4ui/mir78p4ALbIQqNhm1ItsJL14fI6IjbmufABszCtEnw
+         J0Qt8DPdYKOzVlVmxNdXN9HrrglR6bHRZ72kg=
+Received: by 10.142.14.18 with SMTP id 18mr4269328wfn.215.1236860549798; Thu, 
+	12 Mar 2009 05:22:29 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113057>
 
-On Thu, Mar 12, 2009 at 07:52:29PM +0900, Miles Bader wrote:
-> Finn Arne Gangstad <finnag@pvv.org> writes:
-> > The main problem with all these examples is that the underlying
-> > assumption is that you can always use the same branch name locally and
-> > remotely.
-> 
-> Presumably the push --track option would be used with an explicit branch
-> name given to push anyway, right?  Then it can use that info to set up
-> the tracking flexibly (and with sane defaults).
-> 
-> E.g.,, simple case:
-> 
->     git push --track SOME_REMOTE BRANCH_NAME
-> 
-> complex case:
-> 
->     git push --track SOME_REMOTE MY-BRANCH:REMOTE-BRANCH
+(Thanks Jay Soffian for the environment variables)
 
-Yes, git push --track ... would typically do the same thing to the
-config as git checkout -b MY-BRANCH SOME_REMOTE/REMOTE-BRANCH, which
-is enough for push --tracking to do its thing.
+The commands ...
 
-I am not sure if you mean that git push --track could do something
-extra to make --tracking unecessary for git push, currently it cannot
-do that since the push configuration is per remote, not per branch.
+  $ export ASCIIDOC8=YesPlease
+  $ export DOCBOOK_XSL_172=YesPlease
+  $ make prefix=/usr/local all doc info
 
-- Finn Arne
+... terminate with these errors:
+
+  /bin/sh: docbook2x-texi: command not found [ x 147 ]
+
+... this warning:
+
+  gitman.texi:4: warning: unrecognized encoding name `UTF-8'.
+
+and a zero-length user-manual.texi in Documentation.
+
+Upon investigation, I determined that ...
+
+  $ which docbook2x-texi
+
+... reports empty, but ...
+
+  $ which docbook2texi
+
+... reports /opt/local/bin/docbook2texi.
+
+  $ docbook2texi --version
+  /opt/local/bin/docbook2texi (part of docbook2X 0.8.8)
+  $Revision: 1.12 $ $Date: 2006/04/14 17:29:04 $
+  <URL:http://docbook2x.sourceforge.net/>
+
+Is docbook2texi vs docbook2x-texi a mere dialect difference that can
+be completely rectified with a symbolic link, or an indication that my
+docbook2X is misbuilt?
