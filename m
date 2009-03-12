@@ -1,113 +1,92 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [EGIT RFC PATCH(was Re: egit problem with sym linked eclipse project dirs)] Add some support for symlinked projects.
-Date: Thu, 12 Mar 2009 07:56:07 +0100
-Message-ID: <200903120756.07853.robin.rosenberg.lists@dewire.com>
-References: <p0624081cc5928e2885fd@[192.168.1.114]> <200903112317.41380.robin.rosenberg.lists@dewire.com> <p06240814c5de27cbf520@[63.138.152.192]>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] - git-read-tree segfaults
+Date: Thu, 12 Mar 2009 00:01:13 -0700
+Message-ID: <7vfxhjjkcm.fsf@gitster.siamese.dyndns.org>
+References: <35476bd20903101234q71bc520fh18828d7170a4a2f5@mail.gmail.com>
+ <alpine.DEB.1.00.0903102120290.14295@intel-tinevez-2-302>
+ <35476bd20903110059v7d6d8aa0g93af17a940c91919@mail.gmail.com>
+ <alpine.DEB.1.00.0903111300330.10279@pacific.mpi-cbg.de>
+ <7vtz5zjnai.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Stephen Bannasch <stephen.bannasch@deanbrook.org>
-X-From: git-owner@vger.kernel.org Thu Mar 12 07:57:56 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jiri Olsa <olsajiri@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Mar 12 08:03:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LherY-0002HR-Jr
-	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 07:57:53 +0100
+	id 1LhewQ-0003Wh-2j
+	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 08:02:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753274AbZCLG4P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Mar 2009 02:56:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755650AbZCLG4O
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 02:56:14 -0400
-Received: from mail.dewire.com ([83.140.172.130]:24342 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755496AbZCLG4M (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Mar 2009 02:56:12 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id E8BBC8027E7;
-	Thu, 12 Mar 2009 07:56:09 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id BUBPbYbwoSCZ; Thu, 12 Mar 2009 07:56:08 +0100 (CET)
-Received: from sleipner.localnet (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id CACF68006B8;
-	Thu, 12 Mar 2009 07:56:08 +0100 (CET)
-User-Agent: KMail/1.11.1 (Linux/2.6.27-12-generic; KDE/4.2.1; i686; ; )
-In-Reply-To: <p06240814c5de27cbf520@[63.138.152.192]>
-Content-Disposition: inline
+	id S1753997AbZCLHB0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Mar 2009 03:01:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752302AbZCLHBZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 03:01:25 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:47926 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752169AbZCLHBY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Mar 2009 03:01:24 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3675D51C2;
+	Thu, 12 Mar 2009 03:01:23 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 6A6AF51BE; Thu,
+ 12 Mar 2009 03:01:17 -0400 (EDT)
+In-Reply-To: <7vtz5zjnai.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 11 Mar 2009 22:57:41 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 98CCBF32-0ED3-11DE-BFC7-CBE7E3B37BAC-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113008>
 
-torsdag 12 mars 2009 03:57:09 skrev Stephen Bannasch <stephen.bannasch@deanbrook.org>:
-> OK ... I'm a bit confused now because I no longer have Git listed as 
-> a repository type for Team Sharing.
-> 
-> I deleted the existing org.spearce.* eclipse plugins
-> 
->    [eclipse]$ rm -f plugins/org.spearce.*
-> 
-> pulled from git://repo.or.cz/egit.git
-> 
-> created a new branch for this test and applied your patch
-> 
->    [egit.git (linksbranch)]$ git log
->    commit 2b86cd4e27a9d9158092305271d6fb25ab27846e
->    Author: Stephen Bannasch <stephen.bannasch@gmail.com>
->    Date:   Wed Mar 11 22:29:26 2009 -0400
-> 
->        check through links for repositories
->        Robin Rosenberg's patch
->        see: http://marc.info/?l=git&m=123681033214178&w=2
->        and: http://code.google.com/p/egit/issues/detail?id=52
-> 
->    commit 341b9c1abadd2ac0ec9ecc7c597990070612e058
->    Author: Ruth Alkema <ruth@diasoft.nl>
->    Date:   Wed Mar 11 16:42:45 2009 +0100
-> 
->        Better fix for 'negative position' error on large pack files
-> 
->        If position is really big and the window size is fairly small, id can
->        be negative.  Instead of producing a negative position by extending
->        id to a long, mask out the low bits from the original position value
->        to compute the window start.
-> 
->        [sp: message by me, as I had already applied v1 of the patch
->             and pushed it (see immediate parent)]
-> 
->        Signed-off-by: Ruth Alkema <ruth@diasoft.nl>
->        Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-> 
->    ...
-> 
-> Opened Eclipse and switched to the egit workspace. Refreshed the egit 
-> projects and exported the org.spearce.* packages as deployable 
-> plugins and fragments to the Eclipse dir.
-> 
-> The new plugins are there:
-> 
->    [eclipse]$ ls plugins/org.spearce.*
->    plugins/org.spearce.egit.core.test_0.4.0.200903112237.jar
->    plugins/org.spearce.egit_0.4.0.200903112237.jar
->    plugins/org.spearce.egit.core_0.4.0.200903112237.jar
->    plugins/org.spearce.jgit_0.4.0.200903112237.jar
->    plugins/org.spearce.egit.ui_0.4.0.200903112237.jar
-> 
-> Quit and restarted Eclipse.
-> 
-> When I select a project with an existing git repository and try to 
-> enable team/sharing only CVS and SVN are listed.
+Junio C Hamano <gitster@pobox.com> writes:
 
-You don't have the a matching feature. That could be it, but I'm not sure. 
-You can also try starting eclipse witth the -clean switch. Looking at the
-<workspace>/.metadata/.log could also give you some hints.
+> I suspect that the reason add_entry() passed SKIP_DFCHECK was to work
+> around an old bug in add_index_entry() that considered it a D/F conflict
+> if you have a file D at stage N and a file D/F at stage M when N and M are
+> different.  I think such a bug has been fixed long time ago, and there is
+> no reason for such a workaround.  Besides, OK_TO_REPLACE only makes sense
+> when you do check D/F conflict ("replace" in the name of the flag means
+> "If you want to add 'xxx/zzz' when the index has 'xxx', it is Ok to drop
+> the existing 'xxx' in order to add your 'xxx/zzz''); it makes no sense to
+> give it if you are giving SKIP_DFCHECK at the same time.
 
-For debugging/testing in general it is often easier to launch Eclipse from
-eclipse (Run As) without reinstalling. 
+The ancient D/F conflict detection bug in add_cache_entry() I had in mind
+was fixed by b155725 ([PATCH] Fix oversimplified optimization for
+add_cache_entry()., 2005-06-25).  The use of SKIP_DFCHECK turns out to
+have nothing to do with working that ancient bug around.
 
--- robin
+The real culprit seems to be 34110cd (Make 'unpack_trees()' have a
+separate source and destination index, 2008-03-06).
+
+Before that commit:
+
+ * merge_entry() that records the final tree-level 3-way merge decision
+   used to pass OK_TO_REPLACE without SKIP_DFCHECK.
+
+ * unpack_nondirectories() codepath for non-merge multi-tree read-tree
+   (the one under discussion in this thread) used to pass SKIP_DFCHECK but
+   did not pass OK_TO_REPLACE.
+
+The fact that even merge_entry() side passes SKIP_DFCHECK these days does
+not appear to be a workaround for an old bug in D/F conflict detection
+code after all; it simply is a bug in the refactoring done with the said
+commit.
+
+The unpack_nondirectories() codepath passed SKIP_DFCHECK from ee6566e
+(Rewrite read-tree, 2005-09-05), which is the very original implementation
+of the modern "read-tree A B C" code.  The ancient bug in the D/F conflict
+detection code was killed way before that commit, and SKIP_DFCHECK in the
+commit is not a workaround either; it also simply is a bug.
+
+	Side note: I was somewhat surprised that "make test" of that old
+	commit dates from September 2005 runs _much_ faster than the test
+	suite we have these days.
+
+The only sane use of SKIP_DFCHECK is when the caller knows the addition is
+not introducing D/F conflict in the index to avoid the overhead.
