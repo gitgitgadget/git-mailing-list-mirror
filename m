@@ -1,129 +1,106 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: [PATCH 2/2] [TopGit] Portability: Don't use alternation ("|")
-	in sed regular expressions
-Date: Thu, 12 Mar 2009 16:20:39 +0100
-Message-ID: <20090312152039.GA15626@pengutronix.de>
-References: <78BA729B-0026-45D0-96FC-330700519AAB@dartmouth.edu>
+From: "Kelly F. Hickel" <kfh@mqsoftware.com>
+Subject: newb: Given a commit id, find which branches have it as an ancestor
+Date: Thu, 12 Mar 2009 10:21:50 -0500
+Message-ID: <63BEA5E623E09F4D92233FB12A9F794302E0F98D@emailmn.mqsoftware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
-To: Brian Campbell <brian.p.campbell@dartmouth.edu>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 12 16:29:26 2009
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "Kelly F. Hickel" <kfh@mqsoftware.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 12 16:31:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhmkF-0000yb-1Y
-	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 16:22:51 +0100
+	id 1Lhmln-0001g5-C0
+	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 16:24:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756509AbZCLPUq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Mar 2009 11:20:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755437AbZCLPUq
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 11:20:46 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:58425 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754696AbZCLPUp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Mar 2009 11:20:45 -0400
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Lhmi9-0007hj-FA; Thu, 12 Mar 2009 16:20:41 +0100
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Lhmi7-00044E-62; Thu, 12 Mar 2009 16:20:39 +0100
-Content-Disposition: inline
-In-Reply-To: <78BA729B-0026-45D0-96FC-330700519AAB@dartmouth.edu>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1756530AbZCLPVw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Mar 2009 11:21:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751469AbZCLPVw
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 11:21:52 -0400
+Received: from emailmn.mqsoftware.com ([66.192.70.108]:37113 "EHLO
+	emailmn.mqsoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756335AbZCLPVv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Mar 2009 11:21:51 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: newb: Given a commit id, find which branches have it as an ancestor
+Thread-Index: AcmjJkP97P/xbzeYQW2QfzhPUF8iPA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113077>
 
-Hello Brian, hello Junio,
+Hi all, I've been working on testing importing our cvs repo via cvs2git,
+then using cvsps to pull incremental updates.  Something seems to have
+gone awry with one of the commits, and I'm having trouble tracking it
+down.
 
-On Thu, Mar 12, 2009 at 11:00:00AM -0400, Brian Campbell wrote:
-> On Mar 12, 2009, at 3:45 AM, Uwe Kleine-K=F6nig wrote:
->
->>> - You will be utterly confused by a local branch whose name is
->>>   "refs/top-bases/foo"
->> You mean a branch that has the full name refs/heads/refs/top-bases/=20
->> foo?
->> Well OK, valid concern.
->
-> Yes, you're right, this is a problem.
->
->>> To fix these, you might want to do something like:
->>>
->>> 	if head_=3D$(git symbolic-ref HEAD)
-Shouldn't git symbolic-ref -q HEAD be used here?
+This is a question about how to track something down after the fact, not
+a question about what went wrong with the cvsps import....
 
->>>        then
->>>                case "$head_" in
->>>                refs/heads/*)
->>>                        echo "${head_#refs/heads/}"
->>>                        ;;
->>>                refs/top-bases/*)
->>>                        echo "${head_#refs/top-bases/}"
->>>                        ;;
->>>                *)
->>>                        echo "$head_"
->>>                        ;;
->>>                esac
->>> 	else
->>>        	whatever you want to do on a detached HEAD
-How do I  distinguish between a detached HEAD and another error?  I hav=
-e
-the feeling that git symbolic-ref -q HEAD should exit(0) with a detache=
-d
-HEAD.
+This is git 1.6.1 running on Centos 5.2 linux.
 
->> Thanks Junio and Brian.
->>
->> Brian, do you update the series?
->
-> Sure, I'll send an updated patch.
->
-> I'm thinking that for the detached HEAD case, this function should di=
-e =20
-> with a message about not being on a valid branch, and then the call s=
-ite=20
-> in tg-summary that doesn't care about being on a valid branch should=20
-> ignore the error and leave curname empty. Does that sound about right=
-?=20
-mmh, I would return "" and let the caller handle that.
+So, the scenario is that one of the last few commits pulled into my git
+repo by cvsps/cvsimport should have landed on origin/master, but when I
+look at the file, the change is missing.  I'm trying to figure out
+"where it went", since it didn't go where I expected it.
 
-> Also, has anyone considered writing a test suite for TopGit?
-Yes, but I didn't found the time for that until now.  If you'd voluntee=
-r
-that would be very welcome.
+Things I've tried that didn't tell me what I wanted to know:
+$ git name-rev 15fa81b
+15fa81b undefined
 
-IMHO we should reuse as much as possible from git.git.  For me even
-requiring a git.git checkout to use its files would be OK.  I consider
-that even better then duplicating the relevant files.
 
-Best regards
-Uwe
+$ git log --children 15fa81b
+This shows me a bunch of commits that, going by the commit date, appear
+to be ancestors of the commit I'm interested in, not children.
 
---=20
-Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
-       |
-Industrial Linux Solutions                    | http://www.pengutronix.=
-de/  |
+$ git checkout  15fa81b5ae
+Note: moving to "15fa81b5ae" which isn't a local branch If you want to
+create a new branch from this checkout, you may do so (now or later) by
+using -b with the checkout command again. Example:
+  git checkout -b <new_branch_name>
+HEAD is now at 15fa81b... Changed version to 4.1.0.157 $ gitk (as
+expected, shows me that the commit I care about is the latest in the
+workspace)
 
---=20
-Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
-       |
-Industrial Linux Solutions                    | http://www.pengutronix.=
-de/  |
-Peiner Strasse 6-8, 31137 Hildesheim, Germany | Phone: +49-5121-206917-=
-0    |
-Amtsgericht Hildesheim, HRA 2686              | Fax:   +49-5121-206917-=
-5555 |
+$ git checkout master
+Previous HEAD position was 15fa81b... Changed version to 4.1.0.157
+Switched to branch "master"
+$ gitk
+Doesn't list my target commit, in fact, doesn't list any commits after
+the cvs2git date, so it appears that none of my cvsps pulled commits
+landed on master (ok, so maybe this post is about what went wrong, just
+a little ;-} ).
+
+I suspect that I'm missing some factoid in trying to map my workflow to
+Git, but this seems like the kind of thing I'd want to know, i.e. given
+a commit, what branches have that commit as an ancestor.  It would seem
+to be useful in two cases:
+1) I've found a commit that introduced a bug and want to know what
+releases that bug ended up in.
+2) I've identified a fix for a previous bug and want to know what
+releases already contain the fix.
+(ok, those are pretty much the same workflow, but different reasons).
+
+What am I missing????
+
+
+
+--
+
+Kelly F. Hickel
+Senior Product Architect
+MQSoftware, Inc.
+952-345-8677 Office
+952-345-8721 Fax
+kfh@mqsoftware.com
+www.mqsoftware.com
+Certified IBM SOA Specialty
+Your Full Service Provider for IBM WebSphere
+Learn more at www.mqsoftware.com 
