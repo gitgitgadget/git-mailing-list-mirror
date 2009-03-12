@@ -1,104 +1,123 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: [PATCH 2/2] [TopGit] Portability: Don't use alternation ("|")
-	in sed regular expressions
-Date: Thu, 12 Mar 2009 08:45:24 +0100
-Message-ID: <20090312074524.GA14844@pengutronix.de>
-References: <1236837389-35687-1-git-send-email-brian.p.campbell@dartmouth.edu> <1236837389-35687-2-git-send-email-brian.p.campbell@dartmouth.edu> <7viqmfjklm.fsf@gitster.siamese.dyndns.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 1/7] strbuf: add "include_delim" parameter to "strbuf_split"
+Date: Thu, 12 Mar 2009 08:51:03 +0100
+Message-ID: <20090312085103.e83b34a5.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
-To: Brian Campbell <brian.p.campbell@dartmouth.edu>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 12 08:47:08 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Ingo Molnar <mingo@elte.hu>,
+	John Tapsell <johnflux@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Pierre Habouzit <madcoder@debian.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 12 08:53:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lhfd7-0005LJ-9o
-	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 08:47:01 +0100
+	id 1LhfjV-00079b-Vc
+	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 08:53:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752726AbZCLHpd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Mar 2009 03:45:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752634AbZCLHpc
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 03:45:32 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:32828 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752302AbZCLHpc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Mar 2009 03:45:32 -0400
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Lhfbc-0001dp-Hg; Thu, 12 Mar 2009 08:45:28 +0100
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1LhfbY-0003vk-Sf; Thu, 12 Mar 2009 08:45:24 +0100
-Content-Disposition: inline
-In-Reply-To: <7viqmfjklm.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1753783AbZCLHwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Mar 2009 03:52:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751191AbZCLHwE
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 03:52:04 -0400
+Received: from smtp1-g21.free.fr ([212.27.42.1]:46627 "EHLO smtp1-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754179AbZCLHwC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Mar 2009 03:52:02 -0400
+Received: from smtp1-g21.free.fr (localhost [127.0.0.1])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id 450C89400ED;
+	Thu, 12 Mar 2009 08:51:50 +0100 (CET)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g21.free.fr (Postfix) with SMTP id D929E940180;
+	Thu, 12 Mar 2009 08:51:47 +0100 (CET)
+X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.12; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113012>
 
-Hello Brian, hello Junio,
+The "strbuf_split" function used to include the delimiter character
+at the end of the splited strbufs it produced.
 
-On Wed, Mar 11, 2009 at 11:55:49PM -0700, Junio C Hamano wrote:
-> Brian Campbell <brian.p.campbell@dartmouth.edu> writes:
->=20
-> > +current_branch()
-> > +{
-> > +	echo "$(git symbolic-ref HEAD | sed -e 's#^refs/heads/##' -e 's#^=
-refs/top-bases/##')"
-> > +}
->=20
-> Two micronits.
->=20
->  - what happens when you are on a detached HEAD?
-The original code had this problem, too, so I would not take this as a
-stopper for the patch.  There are some other locations that suffer from
-the same problem.  That's already on my todo list.  So I don't care muc=
-h
-here.
-=20
->  - You will be utterly confused by a local branch whose name is
->    "refs/top-bases/foo"
-You mean a branch that has the full name refs/heads/refs/top-bases/foo?
-Well OK, valid concern.
+This behavior is not wanted in many cases, so this patch adds a new
+"include_delim" parameter to the function to let us switch it on or
+off as we want.
 
-> To fix these, you might want to do something like:
->=20
-> 	if head_=3D$(git symbolic-ref HEAD)
->         then
->                 case "$head_" in
->                 refs/heads/*)
->                         echo "${head_#refs/heads/}"
->                         ;;
->                 refs/top-bases/*)
->                         echo "${head_#refs/top-bases/}"
->                         ;;
->                 *)
->                         echo "$head_"
->                         ;;
->                 esac
-> 	else
->         	whatever you want to do on a detached HEAD
-> 	fi
-Thanks Junio and Brian.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ builtin-mailinfo.c |    2 +-
+ imap-send.c        |    2 +-
+ strbuf.c           |    8 +++++---
+ strbuf.h           |    2 +-
+ 4 files changed, 8 insertions(+), 6 deletions(-)
 
-Brian, do you update the series?
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
-       |
-Industrial Linux Solutions                    | http://www.pengutronix.=
-de/  |
+diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
+index 2789ccd..b96ea1a 100644
+--- a/builtin-mailinfo.c
++++ b/builtin-mailinfo.c
+@@ -814,7 +814,7 @@ static void handle_body(void)
+ 			 * multiple new lines.  Pass only one chunk
+ 			 * at a time to handle_filter()
+ 			 */
+-			lines = strbuf_split(&line, '\n');
++			lines = strbuf_split(&line, '\n', 1);
+ 			for (it = lines; (sb = *it); it++) {
+ 				if (*(it + 1) == NULL) /* The last line */
+ 					if (sb->buf[sb->len - 1] != '\n') {
+diff --git a/imap-send.c b/imap-send.c
+index cb518eb..a27f744 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -1289,7 +1289,7 @@ static void wrap_in_html(struct msg_data *msg)
+ 	int added_header = 0;
+ 
+ 	strbuf_attach(&buf, msg->data, msg->len, msg->len);
+-	lines = strbuf_split(&buf, '\n');
++	lines = strbuf_split(&buf, '\n', 1);
+ 	strbuf_release(&buf);
+ 	for (p = lines; *p; p++) {
+ 		if (! added_header) {
+diff --git a/strbuf.c b/strbuf.c
+index 6ed0684..4ef9084 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -97,7 +97,9 @@ void strbuf_tolower(struct strbuf *sb)
+ 		sb->buf[i] = tolower(sb->buf[i]);
+ }
+ 
+-struct strbuf **strbuf_split(const struct strbuf *sb, int delim)
++struct strbuf **strbuf_split(const struct strbuf *sb,
++			     int delim,
++			     int include_delim)
+ {
+ 	int alloc = 2, pos = 0;
+ 	char *n, *p;
+@@ -114,8 +116,8 @@ struct strbuf **strbuf_split(const struct strbuf *sb, int delim)
+ 			ret = xrealloc(ret, sizeof(struct strbuf *) * alloc);
+ 		}
+ 		if (!n)
+-			n = sb->buf + sb->len - 1;
+-		len = n - p + 1;
++			n = sb->buf + sb->len - (include_delim ? 1 : 0);
++		len = n - p + (include_delim ? 1 : 0);
+ 		t = xmalloc(sizeof(struct strbuf));
+ 		strbuf_init(t, len);
+ 		strbuf_add(t, p, len);
+diff --git a/strbuf.h b/strbuf.h
+index 89bd36e..2202d28 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -83,7 +83,7 @@ extern void strbuf_ltrim(struct strbuf *);
+ extern int strbuf_cmp(const struct strbuf *, const struct strbuf *);
+ extern void strbuf_tolower(struct strbuf *);
+ 
+-extern struct strbuf **strbuf_split(const struct strbuf *, int delim);
++extern struct strbuf **strbuf_split(const struct strbuf *, int delim, int include_delim);
+ extern void strbuf_list_free(struct strbuf **);
+ 
+ /*----- add data in your buffer -----*/
+-- 
+1.6.2.83.g012a16.dirty
