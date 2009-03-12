@@ -1,92 +1,90 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Deleting remote branch pointed by remote HEAD
-Date: Thu, 12 Mar 2009 11:02:08 +0200
-Message-ID: <94a0d4530903120202w22f1f8ecwc6b4d22652afc427@mail.gmail.com>
-References: <e29894ca0901210502n1ed1187bm46669a402ab4fe48@mail.gmail.com>
-	 <49773240.7090605@drmicha.warpmail.net>
-	 <e29894ca0901210638t636de791sf27d28893a7a0b65@mail.gmail.com>
-	 <49773E48.90302@drmicha.warpmail.net>
-	 <20090121161940.GA20702@coredump.intra.peff.net>
-	 <alpine.LNX.1.00.0901211237530.19665@iabervon.org>
-	 <20090121191219.GD21686@coredump.intra.peff.net>
-	 <20090121191408.GA22958@coredump.intra.peff.net>
-	 <alpine.LNX.1.00.0901211443140.19665@iabervon.org>
-	 <20090121195348.GB3589@sigill.intra.peff.net>
+From: Mike Ralphson <mike.ralphson@gmail.com>
+Subject: Re: [PATCH][v2] http authentication via prompts (with correct line 
+	lengths)
+Date: Thu, 12 Mar 2009 09:12:11 +0000
+Message-ID: <e2b179460903120212x67081f69wb66364918714add7@mail.gmail.com>
+References: <49B5AF67.6050508@gmail.com>
+	 <7v1vt6dxg9.fsf@gitster.siamese.dyndns.org>
+	 <49B5F0BA.3070806@gmail.com>
+	 <7v63ihdgy6.fsf@gitster.siamese.dyndns.org>
+	 <e2b179460903120153u5fdb58b6tf3027eea23673df0@mail.gmail.com>
+	 <alpine.DEB.1.10.0903120956460.18527@yvahk2.pbagnpgbe.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	=?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 12 10:03:51 2009
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Mike Gaffney <mr.gaffo@gmail.com>, git@vger.kernel.org
+To: Daniel Stenberg <daniel@haxx.se>
+X-From: git-owner@vger.kernel.org Thu Mar 12 10:14:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhgpR-0001Ti-12
-	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 10:03:49 +0100
+	id 1Lhgz9-00055V-Nv
+	for gcvg-git-2@gmane.org; Thu, 12 Mar 2009 10:13:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751451AbZCLJCN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Mar 2009 05:02:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751086AbZCLJCM
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 05:02:12 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:54986 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750845AbZCLJCL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Mar 2009 05:02:11 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so86524fgg.17
-        for <git@vger.kernel.org>; Thu, 12 Mar 2009 02:02:08 -0700 (PDT)
+	id S1752508AbZCLJMX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Mar 2009 05:12:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751716AbZCLJMV
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 05:12:21 -0400
+Received: from mail-qy0-f122.google.com ([209.85.221.122]:55564 "EHLO
+	mail-qy0-f122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751451AbZCLJMT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Mar 2009 05:12:19 -0400
+Received: by qyk28 with SMTP id 28so577730qyk.33
+        for <git@vger.kernel.org>; Thu, 12 Mar 2009 02:12:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=G6DhF2308cpqoHAB/WlpseC/bnLDYLfIutYQaPXMfDE=;
-        b=Em2mpKMWmklsDD3KJNFM1DQbOI6+6BbfNG1/vrHOdM7SSYkgdKwU1jKkZrEIVL77S3
-         U3fOci83xY9zDObjpApTP39QNBd4LtRldwq40LlG/lzKFxdJMWGx7gM59FX2iEovAg3l
-         Z8NhJcBMABZZ4Wnb4Yb4l0FaUVVlL+orVT+UM=
+        bh=PUuP+mwVpbKCCaGFwBPZWn0TiFM+rcNoGnztLx/hM3A=;
+        b=rHo9gDWWorQxDDT4uBYSE2DK6bJVOJKAwi0/F9Yz0aUCne4EDHqcsEunvhFeHeABMd
+         816KQ0dXlx0YeB64qVgEvyXwYtGNpJ+pjTOO6QwiHSDxVqW+yS+2Gdtlew2edWoXGl6G
+         Vi2ntF+MSo+xOPkX44rWSLQawEEjZlvrN5fjM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=JYDvcbB7/a7GgNMOkKGt+J5/KVQEjpSFnObSNMlvzYS/zLwxQtYhqceLumA8tvD+Rf
-         3lEATSv+WR7TCr9UKw2TP3DH1tZJDUdyWoOc+adZF7FTZ7lG/E46WwnsrAvcvIWvh0zq
-         v3bRTQ9KZTQ/ETWSNbT+EJabBnNs9ndVI0dyo=
-Received: by 10.86.94.11 with SMTP id r11mr6590117fgb.11.1236848528275; Thu, 
-	12 Mar 2009 02:02:08 -0700 (PDT)
-In-Reply-To: <20090121195348.GB3589@sigill.intra.peff.net>
+        b=x2u947HFT28BDPNAKaUivHEZn/aYJ0DBUq7zQqZhgxvQkHOnlR3bWwd5olISWHlrvO
+         BgKjUN8C7Hh35q/Ze1YQmJZYKGH/Zj38NWoY/qXunZ2FW8m6MRcwUUOXJW5GvtmTnzj0
+         5g6CtSQ2gm10gjOb4xD9MY2LOPrk7XsTFgGiM=
+Received: by 10.224.2.141 with SMTP id 13mr4172944qaj.299.1236849131541; Thu, 
+	12 Mar 2009 02:12:11 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.10.0903120956460.18527@yvahk2.pbagnpgbe.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113025>
 
-On Wed, Jan 21, 2009 at 9:53 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Jan 21, 2009 at 02:50:40PM -0500, Daniel Barkalow wrote:
+2009/3/12 Daniel Stenberg <daniel@haxx.se>:
+> On Thu, 12 Mar 2009, Mike Ralphson wrote:
 >
->> I think the ideal thing is to keep the symref as a reminder and just=
- give
->> a non-confusing error message instead of a confusing one. E.g.:
+>> Elsewhere we seem to protect use of CURL_NETRC_OPTIONAL by checking for
+>> LIBCURL_VERSION_NUM >= 0x070907. I have an ancient curl here
+>> (curl-7.9.3-2ssl) which doesn't seem to have this option, so building next
+>> is broken on AIX for me from this morning (c33976cb).
 >>
->> """
->> $foo is set to mean the tracking branch $foo/bar, which does not exi=
-st.
->> Use:
->>
->> =C2=A0 git remote set-default $foo <name>
->>
->> to set a new default branch for $foo.
->> """
->>
->> (And, of course, add that subcommand to remote)
+>> Is there a specific minimum version of curl we want to continue
+>> supporting?
 >
-> I think that would be reasonable behavior (and probably a special mod=
-e
-> for set-default to just update from the remote's idea of HEAD).
+> May I suggest perhaps require a libcurl version that is no older than three
+> years or something like that?
 
-Nobody is working on this, right?
+It might be a plan 8-) Though I was thinking technically in terms of
+features we think git needs. Though doubtless there are several
+security fixes it would be beneficial to keep up to date with.
 
---=20
-=46elipe Contreras
+> (spoiler: libcurl 7.9.3 is more than seven years old!)
+
+And still the release IBM package for AIX [1]. 8-(
+
+The summary of automatic builds (http://curl.haxx.se/auto/) is very
+nicely presented. Is that custom code?
+
+Thanks for curl, even the old versions!
+
+Mike
+
+[1] http://www-03.ibm.com/systems/power/software/aix/linux/toolbox/alpha.html
