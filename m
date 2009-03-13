@@ -1,103 +1,98 @@
-From: Martin Paraskevov <martin.paraskevov@gmail.com>
-Subject: git apply won't work
-Date: Thu, 12 Mar 2009 16:14:34 -0700
-Message-ID: <a6d7dc140903121614s229ce97an2cb5737ef46c0421@mail.gmail.com>
+From: Bryan Donlan <bdonlan@gmail.com>
+Subject: Re: git apply won't work
+Date: Thu, 12 Mar 2009 20:09:44 -0400
+Message-ID: <3e8340490903121709w6c6c444o10e7c8b655246373@mail.gmail.com>
+References: <a6d7dc140903121614s229ce97an2cb5737ef46c0421@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 13 00:16:07 2009
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Martin Paraskevov <martin.paraskevov@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 13 01:11:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lhu8E-0000AY-BK
-	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 00:16:06 +0100
+	id 1Lhuzj-0002Gk-54
+	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 01:11:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755322AbZCLXOi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Mar 2009 19:14:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753575AbZCLXOh
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 19:14:37 -0400
-Received: from rv-out-0506.google.com ([209.85.198.236]:49126 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751271AbZCLXOh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Mar 2009 19:14:37 -0400
-Received: by rv-out-0506.google.com with SMTP id g9so218335rvb.5
-        for <git@vger.kernel.org>; Thu, 12 Mar 2009 16:14:34 -0700 (PDT)
+	id S1752591AbZCMAJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Mar 2009 20:09:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751792AbZCMAJr
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 20:09:47 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:6087 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750876AbZCMAJq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Mar 2009 20:09:46 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so63322ywh.1
+        for <git@vger.kernel.org>; Thu, 12 Mar 2009 17:09:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=GEndhZ/Jh7BNl+OE8N18cV+m5B/HOlVfSV9x8pKV3oA=;
-        b=KWw/qBv8ZxtZEdB1UhnhftYfpQPy6P1NH6gkj23kAPiEqxOm7UfuiSbZ/R5AA76fAp
-         feHgmSyQYDIteiVA1NpOWYw5a3XWcwTzBJaUv1BbHG7QN0sI7Bkzrr+PKpwZKneJunyH
-         eS6KU59Tzpe8k846D3DhWSqxchPX16ELnZl5Y=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=N+jgpKEqPQ7w+1taWTCFCR6ejlGbjxpoEfYMyDWZk/E=;
+        b=MmJTx2f76MoZSiyx8WrxKgZmHs0EGbzeP/rnFTgM3/xaBNz6NqhvjMT8r9tjfpS8i9
+         EOZatv+dY5V2n5DY0rwbPnwAwenILN8QBzVDc5PC1E3cWk17mmPMFhDwFqH7/tTiHTxQ
+         X0pWKN53kZix0dFsQ1zpsvaz/YUrwY6vN6aWM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=GhoExRW54wQJf8uOcrU/dYwzGrA5zBKM89BoCSRRxmf38Jq6BLIgXOYeiE+josvczL
-         IDNMupgrBVfBUG+kttzv1KzUQxZAqNnle8agFEKN54Vjp+Y5HTqUNH1Tz1bPyxFXZNkF
-         eZ+lhgrEkDZ/k3UomQsZnvqiz2UwGjltaCG68=
-Received: by 10.141.122.1 with SMTP id z1mr230229rvm.275.1236899674166; Thu, 
-	12 Mar 2009 16:14:34 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=mFinQxB+z6SUk7oGy1fv4cKWMCb28yGiczg/JNP3HF2vrNQ/iyF06WjduVl99ApNq+
+         5jkJIgUXvI/ee9uS8dP5BhCrD3HicGgvAiFRnYGgw3/QawDKLJ7FhhlbU4v1lwDcMQWZ
+         sLEu6bZ8g6fkdtav/ANEetLEQQ1cDdkZoDnts=
+Received: by 10.220.87.4 with SMTP id u4mr438356vcl.28.1236902984467; Thu, 12 
+	Mar 2009 17:09:44 -0700 (PDT)
+In-Reply-To: <a6d7dc140903121614s229ce97an2cb5737ef46c0421@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113127>
 
-Hi all,
-
-I did the following:
-
-edited
-did commit 1
-edited
-did commit 2
-edited
-did commit 3
-
-Now I want to patch the changes between 2 and 3 onto 1, i.e. have commi=
-t 3 but
-with the changes from commit 2 removed. I created a branch where I rese=
-t
-it to commit 1 and then tried to apply the diff between 3 and 2.
-
-The patch however won't patch certain files. It contains the excerpt be=
-low,
-for example, so it should be patching directory.c but it isn't. The com=
-mand
-I'm running is just:
-
-% git apply filesys.patch
-
-What am I doing wrong?
+On Thu, Mar 12, 2009 at 7:14 PM, Martin Paraskevov
+<martin.paraskevov@gmail.com> wrote:
+> Hi all,
+>
+> I did the following:
+>
+> edited
+> did commit 1
+> edited
+> did commit 2
+> edited
+> did commit 3
+>
+> Now I want to patch the changes between 2 and 3 onto 1, i.e. have commit 3 but
+> with the changes from commit 2 removed. I created a branch where I reset
+> it to commit 1 and then tried to apply the diff between 3 and 2.
+>
+> The patch however won't patch certain files. It contains the excerpt below,
+> for example, so it should be patching directory.c but it isn't. The command
+> I'm running is just:
+>
+> % git apply filesys.patch
+>
+> What am I doing wrong?
 
 
-diff --git a/src/filesys/directory.c b/src/filesys/directory.c
-index 0d265d5..31b7fd6 100644
---- a/src/filesys/directory.c
-+++ b/src/filesys/directory.c
-@@ -2,50 +2,57 @@
-=A0#include <stdio.h>
-=A0#include <string.h>
-=A0#include <list.h>
-+#include "filesys/file.h"
-=A0#include "filesys/filesys.h"
-=A0#include "filesys/inode.h"
-=A0#include "threads/malloc.h"
--
--/* A directory. */
--struct dir
--=A0 {
--=A0=A0=A0 struct inode *inode;=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0 /* Backing store. */
--=A0=A0=A0 off_t pos;=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0 /* Current position. */
--=A0 };
+It's hard to say what's going wrong when we can't see the exact
+errors, git tree and patch in question, but if you just want to remove
+a patch, there are easier ways to do it.
 
-=2E.. more lines ...
+If you want to keep the old patch in the history, but reverse it, do:
+  git revert commitid
+This will record a new commit that reverses the changes in the
+indicated one. This is the recommended way to do things if others have
+based work off your branch.
 
-
-- Martin
+If you want to completely forget about the patch in question, you can
+do this using git rebase --interactive:
+  git rebase --interactive commitid~
+  (an editor will open; remove the patch in question from the list,
+save and exit your editor)
+  (fix any conflicts that come up as prompted)
+This will delete it from history, but will result in commit IDs for
+commits after that point changing. If anyone has based work off your
+branch, then you might have a hard time merging later.
