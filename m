@@ -1,54 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: John Tapsell <johnflux@gmail.com>
 Subject: Re: Not pushing all branches?
-Date: Fri, 13 Mar 2009 14:53:07 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903131452390.6288@intel-tinevez-2-302>
-References: <alpine.DEB.2.00.0903130846410.17450@perkele.intern.softwolves.pp.se>  <43d8ce650903130125m6335d189obbcdb86ec9036083@mail.gmail.com>  <alpine.DEB.1.00.0903131149200.10279@pacific.mpi-cbg.de>
- <43d8ce650903130537r2459e1d2pef8fffc1c9b3fa5e@mail.gmail.com>
+Date: Fri, 13 Mar 2009 13:56:10 +0000
+Message-ID: <43d8ce650903130656p73e1e149s702f70466bbdb182@mail.gmail.com>
+References: <alpine.DEB.2.00.0903130846410.17450@perkele.intern.softwolves.pp.se>
+	 <43d8ce650903130125m6335d189obbcdb86ec9036083@mail.gmail.com>
+	 <alpine.DEB.1.00.0903131149200.10279@pacific.mpi-cbg.de>
+	 <43d8ce650903130537r2459e1d2pef8fffc1c9b3fa5e@mail.gmail.com>
+	 <alpine.DEB.1.00.0903131452390.6288@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Peter Krefting <peter@softwolves.pp.se>, git@vger.kernel.org
-To: John Tapsell <johnflux@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 13 14:54:48 2009
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 13 14:57:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Li7qT-0004Ba-79
-	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 14:54:41 +0100
+	id 1Li7tM-0005Ic-R3
+	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 14:57:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754148AbZCMNxM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2009 09:53:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753859AbZCMNxM
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 09:53:12 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37284 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753325AbZCMNxL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Mar 2009 09:53:11 -0400
-Received: (qmail invoked by alias); 13 Mar 2009 13:53:07 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp009) with SMTP; 13 Mar 2009 14:53:07 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/hf5JAPvThmw38VtD28J/L0W8cMggfXwwVmrMrF/
-	4u9AKEEEO/NiAd
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <43d8ce650903130537r2459e1d2pef8fffc1c9b3fa5e@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.75
+	id S1754466AbZCMN4O convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Mar 2009 09:56:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754366AbZCMN4N
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 09:56:13 -0400
+Received: from wf-out-1314.google.com ([209.85.200.169]:57994 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754129AbZCMN4M convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Mar 2009 09:56:12 -0400
+Received: by wf-out-1314.google.com with SMTP id 28so451696wfa.4
+        for <git@vger.kernel.org>; Fri, 13 Mar 2009 06:56:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=sYqi7v7pRQFBGMkF3Htu2Krjp9l1pG1QLyUCYMNUYnY=;
+        b=dg8FgG/3yb+bqZ1mR+cucX0amaok3KbzlYy+1r5mUODLz+Gi/MhGsrgxo7b+A5HBiK
+         wSujJqzhty+XJ8hisPmS1L6Rfp43056DACE6tXXlZsqu5Z7ySCkfUkrA8PK5QARkIzYp
+         foFfZdVIQ6hVGyF0BO4w14Qxwg16l62EPjGEo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=CcTyUDRgBtGlDdrp4kCt+nVI5OXHYrBcw5TFOX6+SKWuRat77kJeqD+BbuD25LOV+L
+         OuwCh2PxkAGlFkHqc30aijRF27bj+WXXBxnp7McyCVDN+CMYJOl26WDJF5GTsFk5sBhx
+         We9axIR/9h4mGyS25RIr4o5+LflubE3Ypd8zY=
+Received: by 10.142.53.19 with SMTP id b19mr609199wfa.154.1236952570787; Fri, 
+	13 Mar 2009 06:56:10 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0903131452390.6288@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113187>
 
-Hi,
+2009/3/13 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> Hi,
+>
+> On Fri, 13 Mar 2009, John Tapsell wrote:
+>
+>> Hopefully the first 5 will be applied and the 6 will debated, then
+>> grudgingly applied :-)
+>
+> No. =C2=A0If it has to be applied grudgingly, it is most likely wrong=
+=2E
 
-On Fri, 13 Mar 2009, John Tapsell wrote:
+If there's an email about this every week from yet another person that
+has been bitten by the current default, then the current default is
+most likely wrong :-)
 
-> Hopefully the first 5 will be applied and the 6 will debated, then 
-> grudgingly applied :-)
-
-No.  If it has to be applied grudgingly, it is most likely wrong.
-
-Ciao,
-Dscho
+John
