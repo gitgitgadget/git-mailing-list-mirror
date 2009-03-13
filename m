@@ -1,81 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Not pushing all branches?
-Date: Fri, 13 Mar 2009 17:00:03 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903131657140.6288@intel-tinevez-2-302>
-References: <alpine.DEB.2.00.0903130846410.17450@perkele.intern.softwolves.pp.se>  <43d8ce650903130125m6335d189obbcdb86ec9036083@mail.gmail.com>  <alpine.DEB.1.00.0903131149200.10279@pacific.mpi-cbg.de>  <43d8ce650903130537r2459e1d2pef8fffc1c9b3fa5e@mail.gmail.com>
-  <alpine.DEB.1.00.0903131452390.6288@intel-tinevez-2-302> <43d8ce650903130656p73e1e149s702f70466bbdb182@mail.gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: git doc build failure on OS X 10.5.6 (Leopard) during xmlto phase
+Date: Fri, 13 Mar 2009 12:18:02 -0400
+Message-ID: <76718490903130918r733e3ef4meae49311883969b5@mail.gmail.com>
+References: <5e68abd90903110721o414283a4te188b58e0e4df8ad@mail.gmail.com>
+	 <76718490903110812t5e1723ebi28a84da680422d8a@mail.gmail.com>
+	 <76718490903110839m17041c7bxd7912eb09496c81a@mail.gmail.com>
+	 <76718490903110849x2ef48a89j3f17706390991eda@mail.gmail.com>
+	 <49B7E670.7060606@drmicha.warpmail.net> <gp95vf$gp1$1@ger.gmane.org>
+	 <49B8EF3E.2070208@drmicha.warpmail.net>
+	 <20090312170931.GB19175@inocybe.teonanacatl.org>
+	 <49BA356D.8050007@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-140955781-1236960004=:6288"
-Cc: Peter Krefting <peter@softwolves.pp.se>, git@vger.kernel.org
-To: John Tapsell <johnflux@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 13 17:01:39 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Todd Zullinger <tmz@pobox.com>,
+	Alejandro Riveira <ariveira@gmail.com>, git@vger.kernel.org,
+	Tom Holaday <tlholaday@gmail.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Mar 13 17:20:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Li9pJ-0000Cp-QG
-	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 17:01:38 +0100
+	id 1LiA7B-0007d3-UD
+	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 17:20:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752314AbZCMQAK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2009 12:00:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752447AbZCMQAI
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 12:00:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39347 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752191AbZCMQAH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Mar 2009 12:00:07 -0400
-Received: (qmail invoked by alias); 13 Mar 2009 16:00:04 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp018) with SMTP; 13 Mar 2009 17:00:04 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18N0dIWs7kNuYOoj+apk9MK8eZAt2vJvABDSpV+fH
-	yBV5/0aI+bAua+
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <43d8ce650903130656p73e1e149s702f70466bbdb182@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6899999999999999
+	id S1754358AbZCMQSI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2009 12:18:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754096AbZCMQSH
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 12:18:07 -0400
+Received: from yx-out-2324.google.com ([74.125.44.30]:23915 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752299AbZCMQSE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Mar 2009 12:18:04 -0400
+Received: by yx-out-2324.google.com with SMTP id 8so318920yxm.1
+        for <git@vger.kernel.org>; Fri, 13 Mar 2009 09:18:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=/7fkvbCoHyrzxkcp9lGT9EnsDbP1xd9wN2wTrhR3Mgs=;
+        b=xktYVpTkusuTA+4FfCpIyvjgHJua+d4VHNT1VXQCiKRUMjv2q8xzn8mMRqVY025t6A
+         Ss02+TOgFDNXN/5Pp01/xnT2tH+1D5BlBf0wKZsFDOAp6yS8k4TUMj/sBBsfnhQMHAv2
+         FXTSam2vXD5dAOeZtkN3Q3TodrZcmm88dqW/w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=tRJL+RWwg5m3ahGeg23IFq7FuDtru27ecbrqT9ebusPjXlsFOcw4FT+7IB+ItFcRcG
+         hcJbfjVfkmvekuszW8+nY2SlWlAWxdTLo43hOzxexaosNsxhDhMPgcAXRaYORjXP0RBZ
+         JkmsT9U6Rp0Bf2qv3oObcXoBPtFnEVtzAW7so=
+Received: by 10.151.112.10 with SMTP id p10mr2215162ybm.61.1236961082702; Fri, 
+	13 Mar 2009 09:18:02 -0700 (PDT)
+In-Reply-To: <49BA356D.8050007@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113204>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Fri, Mar 13, 2009 at 6:29 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> On a related issue: Does anybody know which asciidoc versions need
+> asciidoc7compatible to be set? 8.2.5 and above certainly don't, so we
+> should not advise using it. asciidoc's hg repo doesn't go back much more
+> (the initial revision does not need it either), and I haven't dug for
+> their earlier history yet.
 
---8323329-140955781-1236960004=:6288
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+I'm using 8.3.1 and set asciidoc7compatible. I don't recall why I set
+it, but I'm sure I had a good reason for it. :-)
 
-Hi,
-
-On Fri, 13 Mar 2009, John Tapsell wrote:
-
-> 2009/3/13 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
->
-> > On Fri, 13 Mar 2009, John Tapsell wrote:
-> >
-> >> Hopefully the first 5 will be applied and the 6 will debated, then 
-> >> grudgingly applied :-)
-> >
-> > No.  If it has to be applied grudgingly, it is most likely wrong.
-> 
-> If there's an email about this every week from yet another person that 
-> has been bitten by the current default, then the current default is most 
-> likely wrong :-)
-
-I suggest a different tack:
-
-- try to come up with a solution that does not bite anybody,
-
-- continue to modify the proposal until there are no objections left, and
-
-- continue to be liked on the list.
-
-;-)
-
-Ciao,
-Dscho
-
---8323329-140955781-1236960004=:6288--
+j.
