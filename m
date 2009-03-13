@@ -1,70 +1,91 @@
-From: Yann Simon <yann.simon.fr@gmail.com>
-Subject: Re: [PATCH JGIT] Add "compare with Git Index" action.
-Date: Fri, 13 Mar 2009 11:28:48 +0100
-Message-ID: <551f769b0903130328g49ce9971t53e1571d1b7de06c@mail.gmail.com>
-References: <49B63ADC.4080009@gmail.com>
-	 <200903110022.53854.robin.rosenberg.lists@dewire.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git doc build failure on OS X 10.5.6 (Leopard) during xmlto 
+  phase
+Date: Fri, 13 Mar 2009 11:29:01 +0100
+Message-ID: <49BA356D.8050007@drmicha.warpmail.net>
+References: <5e68abd90903110721o414283a4te188b58e0e4df8ad@mail.gmail.com> <76718490903110812t5e1723ebi28a84da680422d8a@mail.gmail.com> <76718490903110839m17041c7bxd7912eb09496c81a@mail.gmail.com> <76718490903110849x2ef48a89j3f17706390991eda@mail.gmail.com> <49B7E670.7060606@drmicha.warpmail.net> <gp95vf$gp1$1@ger.gmane.org> <49B8EF3E.2070208@drmicha.warpmail.net> <20090312170931.GB19175@inocybe.teonanacatl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git <git@vger.kernel.org>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Fri Mar 13 11:30:22 2009
+Cc: Alejandro Riveira <ariveira@gmail.com>, git@vger.kernel.org,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Tom Holaday <tlholaday@gmail.com>
+To: Todd Zullinger <tmz@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 13 11:30:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Li4ek-0001Qm-0e
-	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 11:30:22 +0100
+	id 1Li4fD-0001c8-2D
+	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 11:30:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752906AbZCMK2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2009 06:28:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752670AbZCMK2w
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 06:28:52 -0400
-Received: from mail-fx0-f176.google.com ([209.85.220.176]:54404 "EHLO
-	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752125AbZCMK2v (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Mar 2009 06:28:51 -0400
-Received: by fxm24 with SMTP id 24so2584252fxm.37
-        for <git@vger.kernel.org>; Fri, 13 Mar 2009 03:28:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=v2HsUWpqQpjrRFFFsP8KSUOVCyF+a4FvGyY8MoEebkE=;
-        b=rFnFUeGOHul5aujy4Hgyo9cl4oR2g8fOtf17/1BRg+xgepZYqe0RqFMyJNstE11csP
-         /c0RaCbJPq6YOeQQT7KBiUA3byQ6fQtuIrFE/4amPjWscPo2HwQKJevnfmAvpvirT/H9
-         pY1atFGuKhSKf9oQEnGKuj/SAxScVG17k9FWQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=X8huFZfZig3rHR/CsRe7n8N+SbZGpGLojNjTtc/NMa60drL/Ftqi9lCDkbq63bWTGl
-         B3SBEhiknDfypgK3Q/4H+CQPe9WNFyzlhIRm7UwVwMyd1MfD5nj6j9D1y2qxidIiCwQ6
-         bSwNya4g9TOyxvrxq4PJurIREiSxcXUfnzy6s=
-Received: by 10.103.217.5 with SMTP id u5mr564263muq.118.1236940128292; Fri, 
-	13 Mar 2009 03:28:48 -0700 (PDT)
-In-Reply-To: <200903110022.53854.robin.rosenberg.lists@dewire.com>
+	id S1753877AbZCMK3U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2009 06:29:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753066AbZCMK3S
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 06:29:18 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:42315 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753526AbZCMK3S (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Mar 2009 06:29:18 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 487D32EE565;
+	Fri, 13 Mar 2009 06:29:14 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Fri, 13 Mar 2009 06:29:15 -0400
+X-Sasl-enc: fh4QZBXIbu5F18wEPCXpths5q0v1JZ9lwE1JcAyAYWf0 1236940153
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 5CD6310B29;
+	Fri, 13 Mar 2009 06:29:13 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090313 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <20090312170931.GB19175@inocybe.teonanacatl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113165>
 
-2009/3/11 Robin Rosenberg <robin.rosenberg.lists@dewire.com>:
-> Saving works, but the diff regions aren't updated on save.
+Todd Zullinger venit, vidit, dixit 12.03.2009 18:09:
+> Michael J Gruber wrote:
+>> Following up on this:
+>> On Fedora 10, I have asciidoc 8.2.5 and docbook 1.7.4 xsl's. For
+>> proper man and html doc, I have to set DOCBOOK_XSL_172=Yes but leave
+>> ASCIIDOC8 unset! I always forget, though (just like the packagers).
+> 
+> Check the fedora git packages in rawhide, we don't set ASCIIDOC8. :)
 
-Sorry, I do not understand. Can you explain me more?
+I was unclear, but I meant forgetting to set DOCB... But:
 
-> When there is a diff
-> this would give us the partial staging similar to git gui, if only (not your fault) the
-> commit dialog would allow us to make a distinction between changes in the
-> workdir and the index.
+> I experimented with that and found it did not improve things.  We are
+> only setting DOCBOOK_XSL_172.  Without that, we get the '.ft C'
+> droppings.  With it, we get non-ascii characters in various places
+> (where bold should be used to make the (1) notations stand out, for
+> example).  This was filed as:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=485161
 
-Yes, I know that this patch is not very usefull for the moment.
-I was more looking for a review as an inclusion.
-And you found one bug. Thank you for that!
+I hadn't noticed that yet (neither the effect nor the report). So, you
+kept it unset intentionally and for a good reason. Please accept my apology!
 
---
-yann
+> 
+> I didn't add DOCBOOK_XSL_172 to the F-10 packages yet, because I know
+> that it fixes one problem and causes another.  Either way, we'd be
+> shipping packages with known brokeness.  I chose to stick with keeping
+> the currently broken '.ft C' behavior.  Pick your poison. ;)
+> 
+> One of the fedora/red hat folks that works on the xmlto and docbook
+> packages was going to take a look, as I very much don't understand the
+> documentation stack.  :/
+> 
+> Anyone who does is very welcome to help find the culprit(s) and help
+> get fixes to the proper places.
+
+So the easy solution is out again, quite a pitty. The problem occurs on
+F10 as well as F11/rawhide, right?
+
+On a related issue: Does anybody know which asciidoc versions need
+asciidoc7compatible to be set? 8.2.5 and above certainly don't, so we
+should not advise using it. asciidoc's hg repo doesn't go back much more
+(the initial revision does not need it either), and I haven't dug for
+their earlier history yet.
+
+Michael J Gruber
