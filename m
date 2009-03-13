@@ -1,74 +1,106 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git doc build failure on OS X 10.5.6 (Leopard) during xmlto phase
-Date: Fri, 13 Mar 2009 18:06:11 +0100
-Message-ID: <49BA9283.9090607@drmicha.warpmail.net>
-References: <5e68abd90903110721o414283a4te188b58e0e4df8ad@mail.gmail.com>	 <76718490903110812t5e1723ebi28a84da680422d8a@mail.gmail.com>	 <76718490903110839m17041c7bxd7912eb09496c81a@mail.gmail.com>	 <76718490903110849x2ef48a89j3f17706390991eda@mail.gmail.com>	 <49B7E670.7060606@drmicha.warpmail.net> <gp95vf$gp1$1@ger.gmane.org>	 <49B8EF3E.2070208@drmicha.warpmail.net>	 <20090312170931.GB19175@inocybe.teonanacatl.org>	 <49BA356D.8050007@drmicha.warpmail.net> <76718490903130918r733e3ef4meae49311883969b5@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Transparently encrypt repository contents with GPG
+Date: Fri, 13 Mar 2009 13:13:12 -0400
+Message-ID: <20090313171312.GB16504@sigill.intra.peff.net>
+References: <978bdee00903121419o61cd7a87rb55809796bd257d7@mail.gmail.com> <fabb9a1e0903121434u4a3d71bdi6277071f54557a7e@mail.gmail.com> <49BA39A1.9090203@drmicha.warpmail.net> <200903131215.49336.trast@student.ethz.ch> <fabb9a1e0903130417x36121bd5ya8b323e0a80bbd8f@mail.gmail.com> <49BA6606.1070403@fastmail.fm>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Todd Zullinger <tmz@pobox.com>,
-	Alejandro Riveira <ariveira@gmail.com>, git@vger.kernel.org,
-	Tom Holaday <tlholaday@gmail.com>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 13 18:09:21 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Matthias Nothhaft <matthias.nothhaft@googlemail.com>,
+	git@vger.kernel.org
+To: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
+X-From: git-owner@vger.kernel.org Fri Mar 13 18:17:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LiAsa-0004Ju-Ft
-	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 18:09:04 +0100
+	id 1LiAzw-0007hB-N1
+	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 18:16:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760945AbZCMRG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2009 13:06:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760939AbZCMRG0
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 13:06:26 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:40109 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760933AbZCMRGZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Mar 2009 13:06:25 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id A58C92EF620;
-	Fri, 13 Mar 2009 13:06:23 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Fri, 13 Mar 2009 13:06:23 -0400
-X-Sasl-enc: S3lSYXbtZMcjnZ8HYjWCCZ+ZWqLsLxF/NvyK16m1HUbx 1236963983
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id BDA6034D9D;
-	Fri, 13 Mar 2009 13:06:22 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090313 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <76718490903130918r733e3ef4meae49311883969b5@mail.gmail.com>
+	id S1759189AbZCMRNQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2009 13:13:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759175AbZCMRNQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 13:13:16 -0400
+Received: from peff.net ([208.65.91.99]:60101 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758435AbZCMRNP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Mar 2009 13:13:15 -0400
+Received: (qmail 8683 invoked by uid 107); 13 Mar 2009 17:13:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 13 Mar 2009 13:13:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Mar 2009 13:13:12 -0400
+Content-Disposition: inline
+In-Reply-To: <49BA6606.1070403@fastmail.fm>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113210>
 
-Jay Soffian venit, vidit, dixit 13.03.2009 17:18:
-> On Fri, Mar 13, 2009 at 6:29 AM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> On a related issue: Does anybody know which asciidoc versions need
->> asciidoc7compatible to be set? 8.2.5 and above certainly don't, so we
->> should not advise using it. asciidoc's hg repo doesn't go back much more
->> (the initial revision does not need it either), and I haven't dug for
->> their earlier history yet.
+On Fri, Mar 13, 2009 at 02:56:22PM +0100, Michael J Gruber wrote:
+
+> Sverre was being prophetic with the somehow. Here's a working setup
+> (though I still don't know why not to use luks):
 > 
-> I'm using 8.3.1 and set asciidoc7compatible. I don't recall why I set
-> it, but I'm sure I had a good reason for it. :-)
+> In .gitattributes (or.git/info/a..) use
+> 
+> * filter=gpg diff=gpg
+> 
+> In your config:
+> 
+> [filter "gpg"]
+>         smudge = gpg -d -q --batch --no-tty
+>         clean = gpg -ea -q --batch --no-tty -r C920A124
+> [diff "gpg"]
+>         textconv = decrypt
+> 
+> This gives you textual diffs even in log! You want use gpg-agent here.
 
-And you don't have any issues with _emphasis_? E.g. in git help
-filter-branch, "positive" in the second paragraph should be emphasized,
-possibly underlined.
+This is not going to work very well in general.  Smudging and cleaning
+is about putting the canonical version of a file in the git repo, and
+munging it for the working tree. Trying to go backwards is going to lead
+to problems, including:
 
-OK, I just checked myself. At least 8.2.7 still had problems, but 8.3.0
-is fine, even 8.4.1 is. asciidoc needs to be convinced forcibly to look
-for its config in its own location (rather than /etc), which is what
-tripped off my first tests...
+  1. Git sometimes wants to look at content of special files inside
+     trees, like .gitignore. Now it can't.
 
-So, asciidoc version 8.3.0 and above is fine with asciidoc7compatible
-(at least regarding emphasis), 8.2.4~23 through 8.2.7 is not. Below
-their hg history ends.
+  2. Git uses timestamps and inodes to decide whether files need to be
+     looked at all to determine if they are different. So when you do
+     a checkout and "git diff", everything will look OK. But when it
+     does actually look at file contents, it compares canonical
+     versions. And your canonical versions are going to be _different_
+     everytime you encrypt, even if the content is the same:
 
-Oh well, the doc tool chain. Dig into it and feel chained to a stool, in
-need to see a doc. Lame pun, time to go home :|
+       echo content >file
+       git add file
+       git diff ;# no output
+       touch file
+       git diff ;# looks like file is totally rewritten
 
-Michael
+     So you will probably end up with extra cruft in your commits if you
+     ever touch files.
+
+> Now for Sverre's prophecy and the helper I haven't shown you yet: It
+> turns out that blobs are not smudged before they are fed to textconv!
+> [Also, it seems that the textconv config does allow parameters, bit I
+> haven't checked thoroughly.]
+
+I don't think they should be smudged. Smudging is about converting for
+the working tree, and the diff is operating on canonical formats. If
+anything, I think the error is that we feed smudged data from the
+working tree to textconv; we should always be handing it clean data (and
+this goes for external diff, too, which I suspect behaves the same way).
+
+I haven't looked, but it probably is a result of the optimization to
+reuse worktree files.
+
+-Peff
+
+PS If it isn't obvious, I don't think this smudge/filter technique is
+the right way to go about this. But one final comment if you did want to
+pursue this: you are using asymmetric encryption in your GPG invocation,
+which is going to be a lot slower and the result will take up more
+space. Try using a symmetric cipher.
