@@ -1,72 +1,81 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
 Subject: Re: Transparently encrypt repository contents with GPG
-Date: Fri, 13 Mar 2009 11:51:43 +0100
-Message-ID: <fabb9a1e0903130351w592ee33dm499f10306d565aab@mail.gmail.com>
-References: <978bdee00903121419o61cd7a87rb55809796bd257d7@mail.gmail.com>
-	 <fabb9a1e0903121434u4a3d71bdi6277071f54557a7e@mail.gmail.com>
-	 <49BA39A1.9090203@drmicha.warpmail.net>
+Date: Fri, 13 Mar 2009 12:15:43 +0100
+Message-ID: <200903131215.49336.trast@student.ethz.ch>
+References: <978bdee00903121419o61cd7a87rb55809796bd257d7@mail.gmail.com> <fabb9a1e0903121434u4a3d71bdi6277071f54557a7e@mail.gmail.com> <49BA39A1.9090203@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: multipart/signed;
+  boundary="nextPart1592618.ZQDPQFTDDC";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: Matthias Nothhaft <matthias.nothhaft@googlemail.com>,
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Matthias Nothhaft <matthias.nothhaft@googlemail.com>,
 	git@vger.kernel.org
 To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Mar 13 11:59:55 2009
+X-From: git-owner@vger.kernel.org Fri Mar 13 12:17:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Li57H-0002iT-2M
-	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 11:59:51 +0100
+	id 1Li5Oj-0008K8-OE
+	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 12:17:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753590AbZCMK6W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2009 06:58:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752591AbZCMK6V
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 06:58:21 -0400
-Received: from mail-bw0-f175.google.com ([209.85.218.175]:43180 "EHLO
-	mail-bw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752529AbZCMK6U (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Mar 2009 06:58:20 -0400
-X-Greylist: delayed 394 seconds by postgrey-1.27 at vger.kernel.org; Fri, 13 Mar 2009 06:58:20 EDT
-Received: by bwz23 with SMTP id 23so69755bwz.37
-        for <git@vger.kernel.org>; Fri, 13 Mar 2009 03:58:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=HV5KTo5i0IZhblzuIvO+ZM9rbjtR7LJPSo+B2I4DclU=;
-        b=hSB66L8/kSIX83kUzujiB0LakLFuse3Jii0laAOvW73INFQTcZ3Qr1acNIQFfzMWrg
-         zvkjfg86litQxhvOPC02z+oHzir3TPoFREp7ndxKPVKA1P3AGOuTGbDKhAMCaK41nQaA
-         nTmYskubDhoNPvEp7tNXZkWVcoUiahEEHzi8w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=cZSffi5LAxnjTLFZo2Yv+6+qV/u9wclth6iRrqvtPqK9V07lr1bfgd1Fbyokxxiy15
-         4n677NoNaPCXmSYbaBcS9KPRvm45XlrSo91wiGudc3lj0pCxGRRSIwMv+16fG9yRdD/+
-         p3Y5CsmDqj7hHZeDRxFekbPZPx2oCGbMdag8o=
-Received: by 10.103.227.10 with SMTP id e10mr541902mur.30.1236941503590; Fri, 
-	13 Mar 2009 03:51:43 -0700 (PDT)
+	id S1752489AbZCMLQY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2009 07:16:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752459AbZCMLQX
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 07:16:23 -0400
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:24655 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751625AbZCMLQX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Mar 2009 07:16:23 -0400
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 13 Mar 2009 12:16:19 +0100
+Received: from thomas.localnet ([129.132.153.233]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 13 Mar 2009 12:16:19 +0100
+User-Agent: KMail/1.11.1 (Linux/2.6.27.19-3.2-default; KDE/4.2.1; x86_64; ; )
 In-Reply-To: <49BA39A1.9090203@drmicha.warpmail.net>
+X-OriginalArrivalTime: 13 Mar 2009 11:16:19.0251 (UTC) FILETIME=[2219D030:01C9A3CD]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113172>
 
-Heya,
+--nextPart1592618.ZQDPQFTDDC
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-On Fri, Mar 13, 2009 at 11:46, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> And people asked me not to be cryptic... even though the OP explicitely
-> asked for encryption, of course ;)
+Michael J Gruber wrote:
+> "git help attributes" may help: look for filter and set attributes and
+> config (filter.$name.{clean,smudge}) accordingly. smudge should probably
+> decrypt, clean should encrypt.
 
-I wasn't being cryptic, I just don't remember the details of smudge,
-just that it exists, and that it allows you to perform operations on a
-file on checkout and on add.
+Wouldn't this trip over the randomness included in all encryption [to
+avoid generating the same cyphertext for two separate identical
+messages, which gives away some information], which would let git
+think the file has been changed as soon as its stat info has changed
+(or is just racy)?
 
--- 
-Cheers,
+Not to mention that this makes most source-oriented features such as
+diff, blame, merge, etc., rather useless.
 
-Sverre Rabbelier
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
+
+--nextPart1592618.ZQDPQFTDDC
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkm6QGUACgkQqUud07tmzP352QCeJ/K3TLnMQKxkL0XG/Qmztkn/
+bdcAnR44HoenhC54DsQpWoDNR/DkvYE7
+=mkd9
+-----END PGP SIGNATURE-----
+
+--nextPart1592618.ZQDPQFTDDC--
