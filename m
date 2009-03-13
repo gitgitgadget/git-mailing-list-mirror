@@ -1,79 +1,70 @@
-From: Ealdwulf Wuffinga <ealdwulf@googlemail.com>
-Subject: Re: Generalised bisection
-Date: Fri, 13 Mar 2009 10:00:53 +0000
-Message-ID: <efe2b6d70903130300q4ea2aa99q7e956d3bcbcfec4c@mail.gmail.com>
-References: <efe2b6d70903081840v18e77aa7w2dac2bed553d0d6a@mail.gmail.com>
-	 <200903100808.15875.chriscool@tuxfamily.org>
-	 <efe2b6d70903110159h78de744yc141effaf5aa0821@mail.gmail.com>
-	 <43d8ce650903110235q5e2a59f6t201d5e65a4937476@mail.gmail.com>
-	 <efe2b6d70903111515p2b9f656bp186d0b3cc7ae483d@mail.gmail.com>
-	 <43d8ce650903112345x3d40b70ap7e4c0f8c7d0b6069@mail.gmail.com>
-	 <alpine.DEB.1.00.0903121154560.10279@pacific.mpi-cbg.de>
-	 <d9c1caea0903121102y5452603fua0e7a1b82e121b01@mail.gmail.com>
+From: Yann Simon <yann.simon.fr@gmail.com>
+Subject: Re: [PATCH JGIT] Add "compare with Git Index" action.
+Date: Fri, 13 Mar 2009 11:28:48 +0100
+Message-ID: <551f769b0903130328g49ce9971t53e1571d1b7de06c@mail.gmail.com>
+References: <49B63ADC.4080009@gmail.com>
+	 <200903110022.53854.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	John Tapsell <johnflux@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Git List <git@vger.kernel.org>
-To: Steven Tweed <orthochronous@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 13 11:10:47 2009
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git <git@vger.kernel.org>
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Fri Mar 13 11:30:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Li4Ld-00036S-1P
-	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 11:10:37 +0100
+	id 1Li4ek-0001Qm-0e
+	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 11:30:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754063AbZCMKIl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2009 06:08:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752331AbZCMKIl
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 06:08:41 -0400
-Received: from mail-bw0-f175.google.com ([209.85.218.175]:51245 "EHLO
-	mail-bw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751306AbZCMKIk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Mar 2009 06:08:40 -0400
-X-Greylist: delayed 464 seconds by postgrey-1.27 at vger.kernel.org; Fri, 13 Mar 2009 06:08:39 EDT
-Received: by bwz23 with SMTP id 23so53583bwz.37
-        for <git@vger.kernel.org>; Fri, 13 Mar 2009 03:08:37 -0700 (PDT)
+	id S1752906AbZCMK2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2009 06:28:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752670AbZCMK2w
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 06:28:52 -0400
+Received: from mail-fx0-f176.google.com ([209.85.220.176]:54404 "EHLO
+	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752125AbZCMK2v (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Mar 2009 06:28:51 -0400
+Received: by fxm24 with SMTP id 24so2584252fxm.37
+        for <git@vger.kernel.org>; Fri, 13 Mar 2009 03:28:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
+        d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=7yr4u2CnGkVCmk14dMqmFyLczCZ1PBSyjhaEO8I2xXI=;
-        b=aCvh9A5MIkjdD3uBoegcRbylRvzlwP1VdUGruFVK/fGC6SqdxVOi/R7y5Lzcd0HZW0
-         S+dvBKGQyQnJrrbrwgUFac12CFWGLhU9hVpQtmPg6/wD4PCGM6xAZ/Yi/k0LDxSRpMac
-         i5iIyF2qOOFt/swgU+TGU7WcJFDNeSQgS06xU=
+        bh=v2HsUWpqQpjrRFFFsP8KSUOVCyF+a4FvGyY8MoEebkE=;
+        b=rFnFUeGOHul5aujy4Hgyo9cl4oR2g8fOtf17/1BRg+xgepZYqe0RqFMyJNstE11csP
+         /c0RaCbJPq6YOeQQT7KBiUA3byQ6fQtuIrFE/4amPjWscPo2HwQKJevnfmAvpvirT/H9
+         pY1atFGuKhSKf9oQEnGKuj/SAxScVG17k9FWQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
+        d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=S4l8GsWeTLmXAgpwJpc85t241B9ihGzxEQtZhoJLPlxxof0FhFRoS+OMrbw70Twbzk
-         eJ7Y8HaXoBps1AOx/i9waV2ogX0XgR0XiqTdmGl0pun29uZC4O15NA34JZ5oqgjn+Bvc
-         lklzlm5gtaX6li738UHveXtFfXJDvmNF2KsSQ=
-Received: by 10.204.57.79 with SMTP id b15mr336513bkh.172.1236938453488; Fri, 
-	13 Mar 2009 03:00:53 -0700 (PDT)
-In-Reply-To: <d9c1caea0903121102y5452603fua0e7a1b82e121b01@mail.gmail.com>
+        b=X8huFZfZig3rHR/CsRe7n8N+SbZGpGLojNjTtc/NMa60drL/Ftqi9lCDkbq63bWTGl
+         B3SBEhiknDfypgK3Q/4H+CQPe9WNFyzlhIRm7UwVwMyd1MfD5nj6j9D1y2qxidIiCwQ6
+         bSwNya4g9TOyxvrxq4PJurIREiSxcXUfnzy6s=
+Received: by 10.103.217.5 with SMTP id u5mr564263muq.118.1236940128292; Fri, 
+	13 Mar 2009 03:28:48 -0700 (PDT)
+In-Reply-To: <200903110022.53854.robin.rosenberg.lists@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113164>
 
-On Thu, Mar 12, 2009 at 6:02 PM, Steven Tweed <orthochronous@gmail.com> wrote:
+2009/3/11 Robin Rosenberg <robin.rosenberg.lists@dewire.com>:
+> Saving works, but the diff regions aren't updated on save.
 
-> I haven't even looked at the source code so a description of the
-> mathematical algorithm would help, but I'll just point out that
-> underflow (in the case of working with probabilities) and overflow
-> (when working with their negated logarithms) is inherent in most
-> multi-step Bayesian algorithms. The only solution is to rescale things
-> as you go so that things stay in a "computable" range. (You're almost
-> never interested in absolute probabilities anyway but rather relative
-> probabilities or, in extreme cases, just the biggest probability, so
-> rescaling isn't losing any useful information.)
+Sorry, I do not understand. Can you explain me more?
 
-Hmm, I'll have to think about that one.
+> When there is a diff
+> this would give us the partial staging similar to git gui, if only (not your fault) the
+> commit dialog would allow us to make a distinction between changes in the
+> workdir and the index.
 
-Ealdwulf
+Yes, I know that this patch is not very usefull for the moment.
+I was more looking for a review as an inclusion.
+And you found one bug. Thank you for that!
+
+--
+yann
