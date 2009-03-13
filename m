@@ -1,104 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Transparently encrypt repository contents with GPG
-Date: Fri, 13 Mar 2009 13:23:08 -0700
-Message-ID: <7vy6v9f9zn.fsf@gitster.siamese.dyndns.org>
-References: <978bdee00903121419o61cd7a87rb55809796bd257d7@mail.gmail.com>
- <fabb9a1e0903121434u4a3d71bdi6277071f54557a7e@mail.gmail.com>
- <49BA39A1.9090203@drmicha.warpmail.net>
- <200903131215.49336.trast@student.ethz.ch>
- <fabb9a1e0903130417x36121bd5ya8b323e0a80bbd8f@mail.gmail.com>
- <49BA6606.1070403@fastmail.fm>
+From: saurabh gupta <saurabhgupta1403@gmail.com>
+Subject: Re: Google Summer of Code 2009: GIT
+Date: Sat, 14 Mar 2009 01:48:04 +0530
+Message-ID: <ab9fa62a0903131318u47abdc68qefe971bb6d76e8e6@mail.gmail.com>
+References: <49B74373.3090609@gmail.com>
+	 <alpine.DEB.1.10.0903110931070.13653@asgard.lang.hm>
+	 <ab9fa62a0903111007w4772b234x8e6fd19cdc7fc595@mail.gmail.com>
+	 <alpine.DEB.1.10.0903111223470.16753@asgard.lang.hm>
+	 <ab9fa62a0903111302j46c46c2q96af497fa2ac513e@mail.gmail.com>
+	 <alpine.DEB.1.10.0903111307050.16753@asgard.lang.hm>
+	 <ab9fa62a0903120542s45b1ceebwddab932891c47cf0@mail.gmail.com>
+	 <alpine.DEB.1.10.0903121100360.16753@asgard.lang.hm>
+	 <ab9fa62a0903121123v35004215hbb64f0ad65399d9f@mail.gmail.com>
+	 <49BA2A4E.3030506@dawes.za.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Matthias Nothhaft <matthias.nothhaft@googlemail.com>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: david@lang.hm, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-To: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
-X-From: git-owner@vger.kernel.org Fri Mar 13 21:24:55 2009
+To: Rogan Dawes <lists@dawes.za.net>
+X-From: git-owner@vger.kernel.org Fri Mar 13 21:25:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LiDw5-00016p-Oj
-	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 21:24:54 +0100
+	id 1LiDx8-0001VG-0N
+	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 21:25:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751917AbZCMUXX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2009 16:23:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751865AbZCMUXW
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 16:23:22 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64283 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751549AbZCMUXV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Mar 2009 16:23:21 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B15F1A1B44;
-	Fri, 13 Mar 2009 16:23:18 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 87964A1B39; Fri,
- 13 Mar 2009 16:23:10 -0400 (EDT)
-In-Reply-To: <49BA6606.1070403@fastmail.fm> (Michael J. Gruber's message of
- "Fri, 13 Mar 2009 14:56:22 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: CA476AFA-100C-11DE-9BAA-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1753932AbZCMUY1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2009 16:24:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753534AbZCMUY0
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 16:24:26 -0400
+Received: from mail-gx0-f165.google.com ([209.85.217.165]:37374 "EHLO
+	mail-gx0-f165.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753408AbZCMUYZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Mar 2009 16:24:25 -0400
+X-Greylist: delayed 376 seconds by postgrey-1.27 at vger.kernel.org; Fri, 13 Mar 2009 16:24:25 EDT
+Received: by gxk9 with SMTP id 9so354988gxk.13
+        for <git@vger.kernel.org>; Fri, 13 Mar 2009 13:24:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=fEvOEJrdRSGC4dOT1yIs/vpQ3wSrYvi48tn28RSFnZc=;
+        b=KJtJ4UvrjS0EIKnLYlX7pwur9aMNqk7wAfi+O+jwCW0g4JMT9gnHiOqR/dQ6ibpi2N
+         zoX7RQ6x9Ng9c+SluLe56XsrPFhtP3i8hb17OBjnvxrMX5cavyfHXK29vB8oqniBKnP9
+         PG0lj6K644xQDaZQdPegGEtXgLHCSWUqNPurA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=qOGOb/uEnKdegGU/OIfG4YZJW7L3oXs1M5oi5/AYFqnqsMKWtk5hNOOYcqsYvBuNIx
+         pJwQAuyk1g8VE1lJ7oTC+g+508GTv0ic4vGXdwM71i4bWDNTG4b1zfkM+ye8rvSozC1D
+         BR17RCFnl3L3iCxfFpKuld/qbjib0E9QCbR/E=
+Received: by 10.231.12.12 with SMTP id v12mr377793ibv.43.1236975484488; Fri, 
+	13 Mar 2009 13:18:04 -0700 (PDT)
+In-Reply-To: <49BA2A4E.3030506@dawes.za.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113222>
 
-Michael J Gruber <michaeljgruber+gmane@fastmail.fm> writes:
-
-> In .gitattributes (or.git/info/a..) use
+On Fri, Mar 13, 2009 at 3:11 PM, Rogan Dawes <lists@dawes.za.net> wrote:
+> saurabh gupta wrote:
+>>> exactly. and how you mark the conflict to have it be valid XML is
+>>> going to depend on details of the type of file. there are probably
+>>> a few basic methods that will work the vast majority of the time,
+>>> but with some details needing to be configurable.
+>>>
+>>> for example, if the XML document is a ODF document, it may be
+>>> possible to add 'revision' tags around the conflict that are
+>>> already understood by the editor.
+>>
+>> Exactly. This includes the work to modify the xml tags and add
+>> contents to represent marker in the best way.
 >
-> * filter=gpg diff=gpg
->
-> In your config:
->
-> [filter "gpg"]
->         smudge = gpg -d -q --batch --no-tty
->         clean = gpg -ea -q --batch --no-tty -r C920A124
-> [diff "gpg"]
->         textconv = decrypt
->
-> This gives you textual diffs even in log! You want use gpg-agent here.
+> On the XML topic, one last thing to keep in mind is the DTD/XSD which
+> governs the file.
 
-Don't do this.
+This is another point of thinking. A merge helper changing an xml file
+may need to modify the schema file also accordingly. Or, by proper
+implementation, the need of changing the schema file can be escaped.
+:-|
 
-Think why the smudge/clean pair exists.
 
-The version controlled data, the contents, may not be suitable for
-consumption in the work tree in its verbatim form.  For example, a cross
-platform project would want to consistently use LF line termination inside
-a repository, but on a platform whose tools expect CRLF line endings, the
-contents cannot be used verbatim.  We "smudge" the contents running
-unix2dos when checking things out on such platforms, and "clean" the
-platform specific CRLF line endings by running dos2unix when checking
-things in.  By doing so, you can see what really got changed between
-versions without getting distracted, and more importantly, "you" in this
-sentence is not limited to the human end users alone.
-
-git internally runs diff and xdelta to see what was changed, so that:
-
- * it can reduce storage requirement when it runs pack-objects;
-
- * it can check what path in the preimage was similar to what other path
-   in the postimage, to deduce a rename;
-
- * it can check what blocks of lines in the postimage came from what other
-   blocks of lines in the preimage, to pass blames across file boundaries.
-
-If your "clean" encrypts and "smudge" decrypts, it means you are refusing
-all the benifit git offers.  You are making a pair of similar "smudged"
-contents totally dissimilar in their "clean" counterparts.  That is simply
-backwards.
-
-As the sole raison d'etre of diff.textconv is to allow potentially lossy
-conversion (e.g. msword-to-text) applied to the preimage and postimage
-pair of contents (that are supposed to be "clean") before giving a textual
-diff to human consumption, the above config may appear to work, but if you
-really want an encrypted repository, you should be using an encrypting
-filesystem.  That would give an added benefit that the work tree
-associated with your repository would also be encrypted.
+-- 
+Saurabh Gupta
+Senior,
+NSIT,New Delhi, India
