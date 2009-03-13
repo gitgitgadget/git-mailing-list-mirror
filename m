@@ -1,69 +1,62 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH] Fix sorting of thin packs in PackWriter
-Date: Fri, 13 Mar 2009 08:45:25 -0700
-Message-ID: <1236959125-3789-1-git-send-email-spearce@spearce.org>
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Fri Mar 13 16:47:06 2009
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH 0/2] Allow running the test suite against installed git
+Date: Fri, 13 Mar 2009 16:45:14 +0100
+Message-ID: <1236959116-3334-1-git-send-email-git@drmicha.warpmail.net>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 13 16:47:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Li9b8-0002QL-Da
-	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 16:46:58 +0100
+	id 1Li9b9-0002QL-2y
+	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 16:46:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752348AbZCMPp2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2009 11:45:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753630AbZCMPp2
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 11:45:28 -0400
-Received: from george.spearce.org ([209.20.77.23]:46269 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752146AbZCMPp1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Mar 2009 11:45:27 -0400
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id 07EB138215; Fri, 13 Mar 2009 15:45:26 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 8BBCA3814F;
-	Fri, 13 Mar 2009 15:45:25 +0000 (UTC)
-X-Mailer: git-send-email 1.6.2.288.gc3f22
+	id S1756653AbZCMPpc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2009 11:45:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755818AbZCMPpb
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 11:45:31 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:55681 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755740AbZCMPpb (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Mar 2009 11:45:31 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 23F832EF5AE;
+	Fri, 13 Mar 2009 11:45:29 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Fri, 13 Mar 2009 11:45:29 -0400
+X-Sasl-enc: PNqurRyB/c1vrZ9ybCMEOP9VGZwBtZWtu+qcJIcivV+I 1236959128
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 8E227461E4;
+	Fri, 13 Mar 2009 11:45:28 -0400 (EDT)
+X-Mailer: git-send-email 1.6.2.149.g6462
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113198>
 
-We must retain the TOPO and COMMIT_TIME_DESC rules when we add in
-BOUNDARY for a thin pack, otherwise the resulting thin pack won't
-match the expected ordering.
+Part 1 corrects only an inconsistency which does not matter as long as
+you run tests against git compiled in a checkout only: There,
+$GIT_EXEC_PATH contains git, in general it does not.
 
-Its a non-critical error to sort the pack wrong, but it may cause the
-client to skip around the pack data more frequently during access.
+Part 2 allows running the test suite against a git installed anywhere in
+the file system. This has at least 2 use cases:
+- Test an installed distro package after the installation.
+- Run easily current tests against older versions, or vice versa, if you
+  have those versions installed somewhere.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- .../src/org/spearce/jgit/lib/PackWriter.java       |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+Note that one still needs git compiled in git.git for test helpers etc.,
+and also because I did not adjust the paths to templates and such. I did
+not really feel a need for that.
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/PackWriter.java b/org.spearce.jgit/src/org/spearce/jgit/lib/PackWriter.java
-index f9945c4..b878409 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/PackWriter.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/PackWriter.java
-@@ -765,10 +765,10 @@ private ObjectWalk setUpWalker(
- 			throws MissingObjectException, IOException,
- 			IncorrectObjectTypeException {
- 		final ObjectWalk walker = new ObjectWalk(db);
--		walker.sort(RevSort.TOPO, true);
-+		walker.sort(RevSort.TOPO);
- 		walker.sort(RevSort.COMMIT_TIME_DESC, true);
- 		if (thin)
--			walker.sort(RevSort.BOUNDARY);
-+			walker.sort(RevSort.BOUNDARY, true);
- 
- 		for (ObjectId id : interestingObjects) {
- 			RevObject o = walker.parseAny(id);
--- 
-1.6.2.288.gc3f22
+Also, t0000 there is still one explicit use of "../git" which is fine
+because it simply tests for the presence of a built, which we need
+anyways.
+
+Michael J Gruber (2):
+  test-lib.sh: Test for presence of git-init in the right path.
+  test-lib.sh: Allow running the test suite against installed git
+
+ t/test-lib.sh |   12 +++++++++---
+ 1 files changed, 9 insertions(+), 3 deletions(-)
