@@ -1,113 +1,89 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH] test-suite: Make test script numbers unique
-Date: Fri, 13 Mar 2009 13:23:26 +0100
-Message-ID: <1236947006-16827-1-git-send-email-j6t@kdbg.org>
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 13 13:26:08 2009
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: Not pushing all branches?
+Date: Fri, 13 Mar 2009 12:37:42 +0000
+Message-ID: <43d8ce650903130537r2459e1d2pef8fffc1c9b3fa5e@mail.gmail.com>
+References: <alpine.DEB.2.00.0903130846410.17450@perkele.intern.softwolves.pp.se>
+	 <43d8ce650903130125m6335d189obbcdb86ec9036083@mail.gmail.com>
+	 <alpine.DEB.1.00.0903131149200.10279@pacific.mpi-cbg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Peter Krefting <peter@softwolves.pp.se>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 13 13:39:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Li6Sl-0004Y1-Mg
-	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 13:26:08 +0100
+	id 1Li6fW-0000VT-Tm
+	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 13:39:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754697AbZCMMYX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2009 08:24:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755071AbZCMMYX
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 08:24:23 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:4646 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754466AbZCMMYW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Mar 2009 08:24:22 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@eudaptics.com>)
-	id 1Li6Qr-0006FD-8V; Fri, 13 Mar 2009 13:24:13 +0100
-Received: from srv.linz.viscovery (srv.linz.viscovery [192.168.1.4])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 35C6E6EF; Fri, 13 Mar 2009 13:24:09 +0100 (CET)
-Received: by srv.linz.viscovery (Postfix, from userid 1000)
-	id EC0CCFA46; Fri, 13 Mar 2009 13:24:08 +0100 (CET)
-X-Mailer: git-send-email 1.6.2.127.g9cd69
-X-Spam-Score: -1.4 (-)
+	id S1752759AbZCMMhr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Mar 2009 08:37:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752244AbZCMMhr
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 08:37:47 -0400
+Received: from mail-gx0-f167.google.com ([209.85.217.167]:35286 "EHLO
+	mail-gx0-f167.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750765AbZCMMhq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Mar 2009 08:37:46 -0400
+Received: by gxk11 with SMTP id 11so2811107gxk.13
+        for <git@vger.kernel.org>; Fri, 13 Mar 2009 05:37:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=BmfCiSFt6Eu73Y56sT1LWPEDbvN9JCeESRI/2DaX5aw=;
+        b=hcVcgbT7MgvvjJ0npWkLM/ZlgWaB6BtF8ZPxAeT586c6Nxdo/miI1qdxmnR8IUJtZK
+         1o0xDbQbSwt63F8GNOoCof3IE8VnD2iEXlf1tEphrPagFImGO8aOwwzC7kbTTIYot2w+
+         XmwngFm8qLjcydrlEON/3zDVYsddUiq+vRv0s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=NFRZepTQS7GGRmyDyc4ebrKcfZOLjxlb+fBOrW+IRR1PVZhoWU2CNmcoNyi6wYdsFB
+         9Bhnq6roJC6YcbpiupNgbQ88zcdkeqhM3GsGWYAYJmBrOLZzIESHAlh8CmK7IQiUWL17
+         +8WxbovUeeRjb4WliLsxbpIRCxyDTSco/IVHQ=
+Received: by 10.142.54.11 with SMTP id c11mr534438wfa.14.1236947862701; Fri, 
+	13 Mar 2009 05:37:42 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0903131149200.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113176>
 
-In order to selectively skip tests, the environment variable GIT_SKIP_TESTS
-can be set like this:
+2009/3/13 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> Hi,
+>
+> On Fri, 13 Mar 2009, John Tapsell wrote:
+>
+>> 2009/3/13 Peter Krefting <peter@softwolves.pp.se>:
+>>
+>> > Doing "git push remote" pushes all my local branches by default. I=
+s
+>> > there a way to set it to *not* do that, and (for this particular
+>> > remote repository) just push the current branch?
+>>
+>> > Or failing that, not allow me to run "git push" without specifying=
+ a
+>> > branch?
+>>
+>> I've been pushing for this behaviour, and there was a patch a few da=
+ys
+>> ago to do this. =C2=A0I'm not sure if it is/will be committed.
+>
+> As Junio is a careful maintainer, he will not change anything radical
+> which would piss of a lot of people _without_ a proper, long-term pla=
+n
+> that gives users a chance.
+>
+> I know, I once tried to push for something like that, and I am glad t=
+hat
+> Junio is too wise as to make Git unstable for existing users.
 
-  $ GIT_SKIP_TESTS='t1301 t4150.18' make test
+Understandable.  There were 6 patches, only the last one changes the
+default.  Hopefully the first 5 will be applied and the 6 will
+debated, then grudgingly applied :-)
 
-That is, its value can contain only the test script numbers, but not the
-full script name. Therefore, it is important that the test scripts are
-uniquely numbered. This makes it so.
-
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- This applies to master.  Today's next and pu do not have any new
- duplicated numbers.
-
- -- Hannes
-
- t/{t3409-rebase-hook.sh => t3413-rebase-hook.sh}   |    0
- t/{t4017-quiet.sh => t4035-diff-quiet.sh}          |    0
- ...r-mime.sh => t4036-format-patch-signer-mime.sh} |    0
- t/{t4203-patch-id.sh => t4204-patch-id.sh}         |    0
- t/{t5521-pull-symlink.sh => t5522-pull-symlink.sh} |    0
- ...me-nocruft.sh => t6034-merge-rename-nocruft.sh} |    0
- t/{t7502-status.sh => t7508-status.sh}             |    0
- ...n-multi-glob.sh => t9109-git-svn-multi-glob.sh} |    0
- ....sh => t9137-git-svn-dcommit-clobber-series.sh} |    0
- 9 files changed, 0 insertions(+), 0 deletions(-)
- rename t/{t3409-rebase-hook.sh => t3413-rebase-hook.sh} (100%)
- rename t/{t4017-quiet.sh => t4035-diff-quiet.sh} (100%)
- rename t/{t4021-format-patch-signer-mime.sh => t4036-format-patch-signer-mime.sh} (100%)
- rename t/{t4203-patch-id.sh => t4204-patch-id.sh} (100%)
- rename t/{t5521-pull-symlink.sh => t5522-pull-symlink.sh} (100%)
- rename t/{t6023-merge-rename-nocruft.sh => t6034-merge-rename-nocruft.sh} (100%)
- rename t/{t7502-status.sh => t7508-status.sh} (100%)
- rename t/{t9108-git-svn-multi-glob.sh => t9109-git-svn-multi-glob.sh} (100%)
- rename t/{t9106-git-svn-dcommit-clobber-series.sh => t9137-git-svn-dcommit-clobber-series.sh} (100%)
-
-diff --git a/t/t3409-rebase-hook.sh b/t/t3413-rebase-hook.sh
-similarity index 100%
-rename from t/t3409-rebase-hook.sh
-rename to t/t3413-rebase-hook.sh
-diff --git a/t/t4017-quiet.sh b/t/t4035-diff-quiet.sh
-similarity index 100%
-rename from t/t4017-quiet.sh
-rename to t/t4035-diff-quiet.sh
-diff --git a/t/t4021-format-patch-signer-mime.sh b/t/t4036-format-patch-signer-mime.sh
-similarity index 100%
-rename from t/t4021-format-patch-signer-mime.sh
-rename to t/t4036-format-patch-signer-mime.sh
-diff --git a/t/t4203-patch-id.sh b/t/t4204-patch-id.sh
-similarity index 100%
-rename from t/t4203-patch-id.sh
-rename to t/t4204-patch-id.sh
-diff --git a/t/t5521-pull-symlink.sh b/t/t5522-pull-symlink.sh
-similarity index 100%
-rename from t/t5521-pull-symlink.sh
-rename to t/t5522-pull-symlink.sh
-diff --git a/t/t6023-merge-rename-nocruft.sh b/t/t6034-merge-rename-nocruft.sh
-similarity index 100%
-rename from t/t6023-merge-rename-nocruft.sh
-rename to t/t6034-merge-rename-nocruft.sh
-diff --git a/t/t7502-status.sh b/t/t7508-status.sh
-similarity index 100%
-rename from t/t7502-status.sh
-rename to t/t7508-status.sh
-diff --git a/t/t9108-git-svn-multi-glob.sh b/t/t9109-git-svn-multi-glob.sh
-similarity index 100%
-rename from t/t9108-git-svn-multi-glob.sh
-rename to t/t9109-git-svn-multi-glob.sh
-diff --git a/t/t9106-git-svn-dcommit-clobber-series.sh b/t/t9137-git-svn-dcommit-clobber-series.sh
-similarity index 100%
-rename from t/t9106-git-svn-dcommit-clobber-series.sh
-rename to t/t9137-git-svn-dcommit-clobber-series.sh
--- 
-1.6.2.127.g9cd69
+John
