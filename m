@@ -1,78 +1,57 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [RFC/PATCH] git push usability improvements and default change
-Date: Fri, 13 Mar 2009 17:28:49 +0900
-Message-ID: <buohc1xddxa.fsf@dhlpc061.dev.necel.com>
-References: <1236638151-6465-1-git-send-email-finnag@pvv.org>
-	<7vfxhmdyvn.fsf@gitster.siamese.dyndns.org>
-	<20090310100400.GC11448@pvv.org>
-	<7v7i2v4x2v.fsf@gitster.siamese.dyndns.org>
-	<20090312120109.6117@nanako3.lavabit.com>
-	<20090312102243.GA27665@pvv.org>
-	<buomybrqahe.fsf@dhlpc061.dev.necel.com>
-	<20090312122047.GA14157@pvv.org>
-Reply-To: Miles Bader <miles@gnu.org>
+From: Rogan Dawes <lists@dawes.za.net>
+Subject: Re: Google Summer of Code 2009: GIT
+Date: Fri, 13 Mar 2009 11:41:34 +0200
+Message-ID: <49BA2A4E.3030506@dawes.za.net>
+References: <49B74373.3090609@gmail.com>	 <ab9fa62a0903110655y4a47ccfkde0984ecb46b3307@mail.gmail.com>	 <alpine.DEB.1.00.0903111458340.10498@intel-tinevez-2-302>	 <alpine.DEB.1.10.0903110931070.13653@asgard.lang.hm>	 <ab9fa62a0903111007w4772b234x8e6fd19cdc7fc595@mail.gmail.com>	 <alpine.DEB.1.10.0903111223470.16753@asgard.lang.hm>	 <ab9fa62a0903111302j46c46c2q96af497fa2ac513e@mail.gmail.com>	 <alpine.DEB.1.10.0903111307050.16753@asgard.lang.hm>	 <ab9fa62a0903120542s45b1ceebwddab932891c47cf0@mail.gmail.com>	 <alpine.DEB.1.10.0903121100360.16753@asgard.lang.hm> <ab9fa62a0903121123v35004215hbb64f0ad65399d9f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: '@pvv.org, Nanako Shiraishi <nanako3@lavabit.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Finn Arne Gangstad <finnag@pvv.org>
-X-From: git-owner@vger.kernel.org Fri Mar 13 09:31:42 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: david@lang.hm, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: saurabh gupta <saurabhgupta1403@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 13 10:43:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Li2nV-0005M3-0r
-	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 09:31:17 +0100
+	id 1Li3v6-0002gu-Rd
+	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 10:43:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752677AbZCMI3r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2009 04:29:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752445AbZCMI3q
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 04:29:46 -0400
-Received: from TYO202.gate.nec.co.jp ([202.32.8.206]:34346 "EHLO
-	tyo202.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752380AbZCMI3o (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Mar 2009 04:29:44 -0400
-Received: from relay21.aps.necel.com ([10.29.19.50])
-	by tyo202.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id n2D8SbKA029317;
-	Fri, 13 Mar 2009 17:28:49 +0900 (JST)
-Received: from relay21.aps.necel.com ([10.29.19.24] [10.29.19.24]) by relay21.aps.necel.com with ESMTP; Fri, 13 Mar 2009 17:28:49 +0900
-Received: from dhlpc061 ([10.114.114.241] [10.114.114.241]) by relay21.aps.necel.com with ESMTP; Fri, 13 Mar 2009 17:28:49 +0900
-Received: by dhlpc061 (Postfix, from userid 31295)
-	id 3C10452E276; Fri, 13 Mar 2009 17:28:49 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-Reply-To: <20090312122047.GA14157@pvv.org> (Finn Arne Gangstad's message of
-	"Thu, 12 Mar 2009 13:20:47 +0100")
+	id S1752331AbZCMJlo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2009 05:41:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751964AbZCMJlo
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 05:41:44 -0400
+Received: from caiajhbdcaib.dreamhost.com ([208.97.132.81]:52879 "EHLO
+	spunkymail-a20.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750935AbZCMJln (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Mar 2009 05:41:43 -0400
+Received: from artemis.local (unknown [41.246.3.53])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by spunkymail-a20.g.dreamhost.com (Postfix) with ESMTP id 38308E2501;
+	Fri, 13 Mar 2009 02:41:38 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.19 (Macintosh/20081209)
+In-Reply-To: <ab9fa62a0903121123v35004215hbb64f0ad65399d9f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113159>
 
-Finn Arne Gangstad <finnag@pvv.org> writes:
->> Presumably the push --track option would be used with an explicit branch
->> name given to push anyway, right?  Then it can use that info to set up
->> the tracking flexibly (and with sane defaults).
+saurabh gupta wrote:
+>> exactly. and how you mark the conflict to have it be valid XML is
+>> going to depend on details of the type of file. there are probably
+>> a few basic methods that will work the vast majority of the time,
+>> but with some details needing to be configurable.
 >> 
->> E.g.,, simple case:
->>     git push --track SOME_REMOTE BRANCH_NAME
->> 
->> complex case:
->>     git push --track SOME_REMOTE MY-BRANCH:REMOTE-BRANCH
->
-> Yes, git push --track ... would typically do the same thing to the
-> config as git checkout -b MY-BRANCH SOME_REMOTE/REMOTE-BRANCH, which
-> is enough for push --tracking to do its thing.
->
-> I am not sure if you mean that git push --track could do something
-> extra to make --tracking unecessary for git push, currently it cannot
-> do that since the push configuration is per remote, not per branch.
+>> for example, if the XML document is a ODF document, it may be
+>> possible to add 'revision' tags around the conflict that are
+>> already understood by the editor.
+> 
+> Exactly. This includes the work to modify the xml tags and add 
+> contents to represent marker in the best way.
 
-Hmm, now I'm confused... I was just thinking about --track, but am not
-sure what --tracking is ... need to go grovel past posts...
+On the XML topic, one last thing to keep in mind is the DTD/XSD which
+governs the file.
 
--Miles
-
--- 
-Happiness, n. An agreeable sensation arising from contemplating the misery of
-another.
+Rogan
