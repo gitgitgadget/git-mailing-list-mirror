@@ -1,181 +1,69 @@
-From: Benjamin Kramer <benny.kra@googlemail.com>
-Subject: [PATCH] Remove unused assignments
-Date: Fri, 13 Mar 2009 13:51:33 +0100
-Message-ID: <49BA56D5.5050807@googlemail.com>
+From: Kristian Amlie <kristian.amlie@nokia.com>
+Subject: Re: Honoring a checked out gitattributes file
+Date: Fri, 13 Mar 2009 14:24:14 +0100
+Message-ID: <1236950656-1967-1-git-send-email-kristian.amlie@nokia.com>
+References: <49B8DD1D.3060908@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Mar 13 13:53:10 2009
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 13 14:26:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Li6sv-0005VB-2w
-	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 13:53:09 +0100
+	id 1Li7Ok-0001ew-8q
+	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 14:26:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753056AbZCMMvm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2009 08:51:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752389AbZCMMvl
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 08:51:41 -0400
-Received: from mail-fx0-f176.google.com ([209.85.220.176]:44975 "EHLO
-	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750910AbZCMMvk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Mar 2009 08:51:40 -0400
-Received: by fxm24 with SMTP id 24so2633202fxm.37
-        for <git@vger.kernel.org>; Fri, 13 Mar 2009 05:51:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:content-type
-         :content-transfer-encoding;
-        bh=pu8/TCDDMKL9wBr5UDY1vZnaZ93YTbJkO7kn54Of1Gc=;
-        b=sL2OTHvGG94TZcHij8wEXFCa734Nlt6T0gNpnN/cK8qiPCsEsW5dvprl8C7Qj/REut
-         tWOl89xjaWbL8NtJCLFx6r3L41hCuOz0HVZiC4oroBzQLAY+H8FnmQYfu17roOLjJNhd
-         NVT5y5iP4ukjWzvyy0JHhUGYLW8oiMzBFi8Ec=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding;
-        b=s+6pwvf4YFQVGd7pu/PCb2yY+rFYXlMdBjfVIm0dTOhX4frVLEqB+7hG64u9pG9pY6
-         DK3f6xxV1ANnGHolNCoXCM22FoteJlou09DNDv3FZyPovHUX7dn0JrmO1CV90g2+tF1I
-         N+rmjWZbs/lJlAlY2Q6LqXs0peHF9r90uAjGc=
-Received: by 10.103.24.17 with SMTP id b17mr631371muj.112.1236948696684;
-        Fri, 13 Mar 2009 05:51:36 -0700 (PDT)
-Received: from golden.local (p5B01EE39.dip.t-dialin.net [91.1.238.57])
-        by mx.google.com with ESMTPS id b9sm3522536mug.2.2009.03.13.05.51.35
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 13 Mar 2009 05:51:36 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.19 (Macintosh/20081209)
+	id S1754471AbZCMNY0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2009 09:24:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753904AbZCMNYZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 09:24:25 -0400
+Received: from hoat.troll.no ([62.70.27.150]:59317 "EHLO hoat.troll.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753568AbZCMNYY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Mar 2009 09:24:24 -0400
+Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
+	by hoat.troll.no (Postfix) with SMTP id 8BFF22131A
+	for <git@vger.kernel.org>; Fri, 13 Mar 2009 14:24:17 +0100 (CET)
+Received: from sx01.troll.no (sx01.troll.no [62.70.27.21])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hoat.troll.no (Postfix) with ESMTP id 76F54212F7
+	for <git@vger.kernel.org>; Fri, 13 Mar 2009 14:24:17 +0100 (CET)
+Received: from sx01.troll.no (localhost.localdomain [127.0.0.1])
+	by sx01.troll.no (8.13.8/8.13.8) with ESMTP id n2DDOHu0007225
+	for <git@vger.kernel.org>; Fri, 13 Mar 2009 14:24:17 +0100
+Received: from axis.localdomain ( [172.24.90.99])
+    by sx01.troll.no (Scalix SMTP Relay 11.4.1.11929)
+    via ESMTP; Fri, 13 Mar 2009 14:24:17 +0100 (CET)
+Received: by axis.localdomain (Postfix, from userid 1000)
+	id CF03136182DE; Fri, 13 Mar 2009 14:24:16 +0100 (CET)
+In-Reply-To: <49B8DD1D.3060908@viscovery.net>
+x-scalix-Hops: 1
+X-Mailer: git-send-email 1.6.1.1
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113181>
 
-These variables were always overwritten or the assigned
-value was unused:
 
-builtin-diff-tree.c::cmd_diff_tree(): nr_sha1
-builtin-for-each-ref.c::opt_parse_sort(): sort_tail
-builtin-mailinfo.c::decode_header_bq(): in
-builtin-shortlog.c::insert_one_record(): len
-connect.c::git_connect(): path
-imap-send.c::v_issue_imap_cmd(): n
-pretty.c::pp_user_info(): filler
-remote::parse_refspec_internal(): llen
+Ok, here's another round. I fixed the test case to expect failure, as
+pointed out by Matthieu, and I also added code to make sure that
+.gitattributes gets checked out first.
 
-Signed-off-by: Benjamin Kramer <benny.kra@googlemail.com>
----
- builtin-diff-tree.c    |    1 -
- builtin-for-each-ref.c |    1 -
- builtin-mailinfo.c     |    1 -
- builtin-shortlog.c     |    1 -
- connect.c              |    2 +-
- imap-send.c            |    2 +-
- pretty.c               |    1 -
- remote.c               |    2 +-
- 8 files changed, 3 insertions(+), 8 deletions(-)
+I also added a test case and some code to support the case where
+.gitattributes is removed in a commit, but this doesn't work properly
+yet (see commit message). I'm not sure how to solve this without
+resolving to ugly hacks like passing the new index_state* all the way
+down to where git_checkattr gets called. If anybody has any
+suggestions, do share.
 
-diff --git a/builtin-diff-tree.c b/builtin-diff-tree.c
-index 8ecefd4..79cedb7 100644
---- a/builtin-diff-tree.c
-+++ b/builtin-diff-tree.c
-@@ -102,7 +102,6 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
- 
- 	init_revisions(opt, prefix);
- 	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
--	nr_sha1 = 0;
- 	opt->abbrev = 0;
- 	opt->diff = 1;
- 	argc = setup_revisions(argc, argv, opt, NULL);
-diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
-index e46b7ad..5cbb4b0 100644
---- a/builtin-for-each-ref.c
-+++ b/builtin-for-each-ref.c
-@@ -943,7 +943,6 @@ static int opt_parse_sort(const struct option *opt, const char *arg, int unset)
- 		return -1;
- 
- 	*sort_tail = s = xcalloc(1, sizeof(*s));
--	sort_tail = &s->next;
- 
- 	if (*arg == '-') {
- 		s->reverse = 1;
-diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
-index 2789ccd..1eeeb4d 100644
---- a/builtin-mailinfo.c
-+++ b/builtin-mailinfo.c
-@@ -537,7 +537,6 @@ static int decode_header_bq(struct strbuf *it)
- 				 */
- 				strbuf_add(&outbuf, in, ep - in);
- 			}
--			in = ep;
- 		}
- 		/* E.g.
- 		 * ep : "=?iso-2022-jp?B?GyR...?= foo"
-diff --git a/builtin-shortlog.c b/builtin-shortlog.c
-index badd912..b28091b 100644
---- a/builtin-shortlog.c
-+++ b/builtin-shortlog.c
-@@ -101,7 +101,6 @@ static void insert_one_record(struct shortlog *log,
- 	}
- 	while (*oneline && isspace(*oneline) && *oneline != '\n')
- 		oneline++;
--	len = eol - oneline;
- 	format_subject(&subject, oneline, " ");
- 	buffer = strbuf_detach(&subject, NULL);
- 
-diff --git a/connect.c b/connect.c
-index 0a35cc1..7636bf9 100644
---- a/connect.c
-+++ b/connect.c
-@@ -504,7 +504,7 @@ struct child_process *git_connect(int fd[2], const char *url_orig,
- 				  const char *prog, int flags)
- {
- 	char *url = xstrdup(url_orig);
--	char *host, *path = url;
-+	char *host, *path;
- 	char *end;
- 	int c;
- 	struct child_process *conn;
-diff --git a/imap-send.c b/imap-send.c
-index cb518eb..8154cb2 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -579,7 +579,7 @@ static struct imap_cmd *v_issue_imap_cmd(struct imap_store *ctx,
- 			n = socket_write(&imap->buf.sock, cmd->cb.data, cmd->cb.dlen);
- 			free(cmd->cb.data);
- 			if (n != cmd->cb.dlen ||
--			    (n = socket_write(&imap->buf.sock, "\r\n", 2)) != 2) {
-+			    socket_write(&imap->buf.sock, "\r\n", 2) != 2) {
- 				free(cmd->cmd);
- 				free(cmd);
- 				return NULL;
-diff --git a/pretty.c b/pretty.c
-index c018408..3a24cd5 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -154,7 +154,6 @@ void pp_user_info(const char *what, enum cmit_fmt fmt, struct strbuf *sb,
- 		while (line < name_tail && isspace(name_tail[-1]))
- 			name_tail--;
- 		display_name_length = name_tail - line;
--		filler = "";
- 		strbuf_addstr(sb, "From: ");
- 		add_rfc2047(sb, line, display_name_length, encoding);
- 		strbuf_add(sb, name_tail, namelen - display_name_length);
-diff --git a/remote.c b/remote.c
-index d7079c6..7efaa02 100644
---- a/remote.c
-+++ b/remote.c
-@@ -495,7 +495,7 @@ static struct refspec *parse_refspec_internal(int nr_refspec, const char **refsp
- 		int is_glob;
- 		const char *lhs, *rhs;
- 
--		llen = is_glob = 0;
-+		is_glob = 0;
- 
- 		lhs = refspec[i];
- 		if (*lhs == '+') {
--- 
-1.6.2.169.g92418
+The main usecase where .gitattributes is modified, is anyway covered
+by this patch.
+
+--
+Kristian
