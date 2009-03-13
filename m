@@ -1,55 +1,93 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Generalised bisection
-Date: Fri, 13 Mar 2009 11:55:06 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903131154190.10279@pacific.mpi-cbg.de>
-References: <efe2b6d70903081840v18e77aa7w2dac2bed553d0d6a@mail.gmail.com>  <200903100808.15875.chriscool@tuxfamily.org>  <efe2b6d70903110159h78de744yc141effaf5aa0821@mail.gmail.com>  <43d8ce650903110235q5e2a59f6t201d5e65a4937476@mail.gmail.com> 
- <efe2b6d70903111515p2b9f656bp186d0b3cc7ae483d@mail.gmail.com>  <43d8ce650903112345x3d40b70ap7e4c0f8c7d0b6069@mail.gmail.com> <efe2b6d70903130258t2594b027m5812e9a5895f477e@mail.gmail.com>
+From: Mike Ralphson <mike.ralphson@gmail.com>
+Subject: Re: [PATCH][v2] http authentication via prompts (with correct line 
+	lengths)
+Date: Fri, 13 Mar 2009 10:53:24 +0000
+Message-ID: <e2b179460903130353p1d3c1cb2n8286c2a284724156@mail.gmail.com>
+References: <49B5AF67.6050508@gmail.com>
+	 <7v1vt6dxg9.fsf@gitster.siamese.dyndns.org>
+	 <49B5F0BA.3070806@gmail.com>
+	 <7v63ihdgy6.fsf@gitster.siamese.dyndns.org>
+	 <e2b179460903120153u5fdb58b6tf3027eea23673df0@mail.gmail.com>
+	 <7vsklihsti.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: John Tapsell <johnflux@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Git List <git@vger.kernel.org>, Ingo Molnar <mingo@elte.hu>
-To: Ealdwulf Wuffinga <ealdwulf@googlemail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 13 11:55:16 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Mike Gaffney <mr.gaffo@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Daniel Stenberg <daniel@haxx.se>
+X-From: git-owner@vger.kernel.org Fri Mar 13 11:55:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Li52n-0001Jx-QL
+	id 1Li52o-0001Jx-Fc
 	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 11:55:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756887AbZCMKx1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2009 06:53:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751636AbZCMKx0
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 06:53:26 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41992 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758107AbZCMKxZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Mar 2009 06:53:25 -0400
-Received: (qmail invoked by alias); 13 Mar 2009 10:53:21 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp057) with SMTP; 13 Mar 2009 11:53:21 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX185ylZtNDI56k72kLQ08h4zWRKEtCO8z/+jMTXxpS
-	/2XmS42xMtTwa7
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <efe2b6d70903130258t2594b027m5812e9a5895f477e@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.75
+	id S1758175AbZCMKxa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Mar 2009 06:53:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757735AbZCMKxa
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 06:53:30 -0400
+Received: from mail-qy0-f122.google.com ([209.85.221.122]:58432 "EHLO
+	mail-qy0-f122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751636AbZCMKx3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Mar 2009 06:53:29 -0400
+Received: by qyk28 with SMTP id 28so2857755qyk.33
+        for <git@vger.kernel.org>; Fri, 13 Mar 2009 03:53:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=NdsEFakscni4gCqgqqTb/XW3RVsUt4kDRVkWUvGbH28=;
+        b=QHONT2tJ0Q3dSxYhxdTQF+/quK/VwiEjkmhSBk7IeqApzRPd4+31jLTk6tN1P6bPLa
+         22t6SkG/GLBlfB4tslK+OeX8E/kwd8uliYL7dNFCCIb0frn2mLdiCOCkb9u/EZu0m/40
+         0AOOfJGdjSeMB7f+yJ9yiAGMvVpkOCTNGRH8U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=oBOm+IW+1L2Aamdrzv2WWMXa8OptZtGDjbFril4MEhRLzI0FNeC+gu/XlJI9S0AcJ0
+         l0ZyaUSrlb5eDt0envnKMJBZZHXf/RScA0Z3e7LlPJrPI8xJ670zpgw946SDFmbUCe+e
+         g66zMvZC3bQhSwyxRotbdom40XqBWBUA3MXCc=
+Received: by 10.224.89.82 with SMTP id d18mr1661702qam.134.1236941604713; Fri, 
+	13 Mar 2009 03:53:24 -0700 (PDT)
+In-Reply-To: <7vsklihsti.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113170>
 
-Hi,
+2009/3/13 Junio C Hamano <gitster@pobox.com>:
+> Yeah, I did this as "How about doing it this way without adding a ban=
+d-aid
+> configuration options" demonstration, and meant to clean it up (rathe=
+r,
+> meant to wait for the original submitter to clean-up) before moving i=
+t
+> forward, but I forgot. =C2=A0Sorry about that.
+>
+> How does this look?
 
-On Fri, 13 Mar 2009, Ealdwulf Wuffinga wrote:
+This patch fixes the build breakage for me, thanks. If I can find a
+combination of AIX + working gcc + correct 32bit / non-broken 64bit
+libraries + necessary Gnu tools + ancient curl + Apache2 in this maze
+of twisty turny servers (all different) I'll give the http server
+tests a whirl too.
 
-> It is BayesianSearch_Debugging.pdf.
+2009/3/13 Daniel Stenberg <daniel@haxx.se>:
+>Driven by use cases such as this, I also recently produced the
+>"symbols-in-versions" document in the libcurl tree which should
+> help apps to know what should works when:
 
-Now I'll only need a bayesian-search-for-original-url-in-mails.py.
+> http://cool.haxx.se/cvs.cgi/curl/docs/libcurl/symbols-in-versions?rev=
+=3DHEAD&content-type=3Dtext/vnd.viewcvs-markup
 
-Ciao,
-Dscho
+Very helpful, thanks.
+
+Junio, if I check all the unprotected CURL* options against this list,
+would that give us our absolute minimum supported version? If so,
+would it then be ok to remove any unnecessary ifdefs for lower
+versions if they exist?
+
+Mike
