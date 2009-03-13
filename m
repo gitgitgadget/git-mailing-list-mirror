@@ -1,66 +1,58 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Not pushing all branches?
-Date: Fri, 13 Mar 2009 08:48:55 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.0903130846410.17450@perkele.intern.softwolves.pp.se>
+From: Daniel Stenberg <daniel@haxx.se>
+Subject: Re: [PATCH][v2] http authentication via prompts (with correct line
+  lengths)
+Date: Fri, 13 Mar 2009 08:58:04 +0100 (CET)
+Message-ID: <alpine.DEB.1.10.0903130855240.24124@yvahk2.pbagnpgbe.fr>
+References: <49B5AF67.6050508@gmail.com> <7v1vt6dxg9.fsf@gitster.siamese.dyndns.org> <49B5F0BA.3070806@gmail.com> <7v63ihdgy6.fsf@gitster.siamese.dyndns.org> <e2b179460903120153u5fdb58b6tf3027eea23673df0@mail.gmail.com>
+ <7vsklihsti.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 13 08:51:36 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Mike Ralphson <mike.ralphson@gmail.com>,
+	Mike Gaffney <mr.gaffo@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 13 09:01:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Li2B6-0003WJ-AX
-	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 08:51:36 +0100
+	id 1Li2KA-0005nn-UD
+	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 09:00:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753613AbZCMHtZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2009 03:49:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752591AbZCMHtZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 03:49:25 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:51933 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751502AbZCMHtY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Mar 2009 03:49:24 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0KGF00G2HPQ6QM00@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Fri, 13 Mar 2009 08:49:18 +0100 (CET)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0KGF00G3OPPROP00@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Fri, 13 Mar 2009 08:49:03 +0100 (CET)
-Received: from perkele ([84.215.142.63]) by no-osl-m323-srv-004-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0KGF00KHYPPRPQC0@no-osl-m323-srv-004-z1.isp.get.no> for
- git@vger.kernel.org; Fri, 13 Mar 2009 08:49:03 +0100 (CET)
-Received: by perkele (Postfix, from userid 501)	id C280E2FC0B; Fri,
- 13 Mar 2009 08:48:55 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
- with ESMTP id BF41C2FBF7	for <git@vger.kernel.org>; Fri,
- 13 Mar 2009 08:48:55 +0100 (CET)
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+	id S1751099AbZCMH62 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2009 03:58:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752169AbZCMH62
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 03:58:28 -0400
+Received: from kluster1.contactor.se ([91.191.140.11]:34963 "EHLO
+	kluster1.contactor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750876AbZCMH61 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Mar 2009 03:58:27 -0400
+Received: from linux2.contactor.se (linux2.contactor.se [91.191.140.14])
+	by kluster1.contactor.se (8.13.8/8.13.8/Debian-3) with ESMTP id n2D7wGIW001229;
+	Fri, 13 Mar 2009 08:58:16 +0100
+X-X-Sender: dast@linux2.contactor.se
+In-Reply-To: <7vsklihsti.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+X-fromdanielhimself: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113153>
 
-Hi!
+On Thu, 12 Mar 2009, Junio C Hamano wrote:
 
-Doing "git push remote" pushes all my local branches by default. Is there a 
-way to set it to *not* do that, and (for this particular remote repository) 
-just push the current branch? Or failing that, not allow me to run "git 
-push" without specifying a branch?
+> http://curl.haxx.se/libcurl/c/curl_easy_setopt.html seems to say "added in 
+> 7.X.Y" for some options but does say when CURLOPT_USERPWD was added, so I am 
+> assuming it was available even in very early versions...
 
-The git-config manual page leads me to believe that I should recofigure 
-"remote.<name>.push", but it points me to the "refspec" spec on git-push, 
-which is a tad cryptic.
+Yes it was.
+
+Driven by use cases such as this, I also recently produced the 
+"symbols-in-versions" document in the libcurl tree which should help apps to 
+know what should works when:
+
+http://cool.haxx.se/cvs.cgi/curl/docs/libcurl/symbols-in-versions?rev=HEAD&content-type=text/vnd.viewcvs-markup
 
 -- 
-\\// Peter - http://www.softwolves.pp.se/
+
+  / daniel.haxx.se
