@@ -1,70 +1,75 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git checkout -b origin/mybranch origin/mybranch
-Date: Fri, 13 Mar 2009 15:08:17 +0100
-Message-ID: <49BA68D1.2070102@drmicha.warpmail.net>
-References: <43d8ce650903120436u261cb7e3p838e4a12e7b54d7d@mail.gmail.com>	 <alpine.DEB.1.00.0903121240400.10279@pacific.mpi-cbg.de>	 <43d8ce650903120448x51220ba0k660be7706acba755@mail.gmail.com>	 <alpine.DEB.1.00.0903121357320.6335@intel-tinevez-2-302>	 <43d8ce650903120618h79686207vaa478c54f34e26f8@mail.gmail.com>	 <fabb9a1e0903120643r3cfefdfej560ff7edda2be6f5@mail.gmail.com> <43d8ce650903120714g782b98e8t81340546547fe98d@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: Transparently encrypt repository contents with GPG
+Date: Fri, 13 Mar 2009 15:19:24 +0100
+Message-ID: <fabb9a1e0903130719w6c5ddb3dre040091cfb373de1@mail.gmail.com>
+References: <978bdee00903121419o61cd7a87rb55809796bd257d7@mail.gmail.com>
+	 <fabb9a1e0903121434u4a3d71bdi6277071f54557a7e@mail.gmail.com>
+	 <49BA39A1.9090203@drmicha.warpmail.net>
+	 <200903131215.49336.trast@student.ethz.ch>
+	 <fabb9a1e0903130417x36121bd5ya8b323e0a80bbd8f@mail.gmail.com>
+	 <49BA6606.1070403@fastmail.fm>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git List <git@vger.kernel.org>
-To: John Tapsell <johnflux@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 13 15:11:36 2009
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Matthias Nothhaft <matthias.nothhaft@googlemail.com>,
+	git@vger.kernel.org
+To: Michael J Gruber <michaeljgruber+gmane@fastmail.fm>
+X-From: git-owner@vger.kernel.org Fri Mar 13 15:21:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Li85I-0002H9-Ns
-	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 15:10:01 +0100
+	id 1Li8GF-0007Vr-Dc
+	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 15:21:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753425AbZCMOIc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2009 10:08:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752931AbZCMOIc
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 10:08:32 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:53347 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752299AbZCMOIb (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Mar 2009 10:08:31 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id CEE5C2EFC62;
-	Fri, 13 Mar 2009 10:08:29 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Fri, 13 Mar 2009 10:08:29 -0400
-X-Sasl-enc: 3s8KIzXjfkeOaiZFGQodcbkG6LcseOSYcwiVdA7+aCj4 1236953309
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 0E5F6301D6;
-	Fri, 13 Mar 2009 10:08:28 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090313 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <43d8ce650903120714g782b98e8t81340546547fe98d@mail.gmail.com>
+	id S1755492AbZCMOTi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2009 10:19:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753904AbZCMOTi
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 10:19:38 -0400
+Received: from mail-bw0-f175.google.com ([209.85.218.175]:65529 "EHLO
+	mail-bw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751850AbZCMOTh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Mar 2009 10:19:37 -0400
+Received: by bwz23 with SMTP id 23so138772bwz.37
+        for <git@vger.kernel.org>; Fri, 13 Mar 2009 07:19:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=utTjCSp410LOpk5uRP2O5JK1zviF1YKHpnxq7PdccfY=;
+        b=Uz8xLWdNjX0ViTlN29tJo1s5+hIpVa6lOt1XIJumVKNouOCyiuZycgnJairdhMDpFl
+         XITJVxuMpu7bp8bGeL7SCzs/Ru5RiJR4BvjR8TA+tRZc/rqKk0HuDQaYvBIQFYpMyfUp
+         VbcvYr3z2Hd9kDw5Fe4Cv+arN0Sh2agzosXYo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=tqKf8HbtGjFZs2nl75CyK9le7MDDSsXTUpVHYFW2NrcslidEZlL6vKi4dyf3VbK1u+
+         m0Gruww/hn4jBmJf7P9k8x+oVCLOyHWpn5V7wNygt7H31V+vOZwNGZ94ytCu2SxNrpRn
+         U99WevPps65BlWEmuRb1SUlm9e0VVZdSGaUAY=
+Received: by 10.103.214.13 with SMTP id r13mr686073muq.37.1236953974387; Fri, 
+	13 Mar 2009 07:19:34 -0700 (PDT)
+In-Reply-To: <49BA6606.1070403@fastmail.fm>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113191>
 
-John Tapsell venit, vidit, dixit 12.03.2009 15:14:
-> 2009/3/12 Sverre Rabbelier <srabbelier@gmail.com>:
->> Heya,
->>
->> On Thu, Mar 12, 2009 at 14:18, John Tapsell <johnflux@gmail.com> wrote:
->>> Is probably a mistake by the user.  We should warn the user and point
->>> them in the right direction.
->>
->> The point is that we _already_ warned the user (like Dscho pointed
->> out), and that(as you pointed out), it didn't work :P.
-> 
-> Just doing:
-> 
-> git branch -b origin/master origin/master
-> 
-> gives no error or warning at all.
+Heya,
 
-...and it really should not. If you have a repo with lots of remotes and
-tracking branches, it makes a lot of sense to have a local branch
-reponame/branchname which tracks the remote branch reponame/branchname.
-Note that the first is refs/heads/reponame/branchname whereas the latter
-is refs/remotes/reponame/branchname. It gives warnings when it's
-ambiguous, yay.
+On Fri, Mar 13, 2009 at 14:56, Michael J Gruber
+<michaeljgruber+gmane@fastmail.fm> wrote:
+> Sverre was being prophetic with the somehow. Here's a working setup
+> (though I still don't know why not to use luks):
 
-Michael J Gruber
+Glad to hear I was right ;). Also awesome that you looked into this
+and shared your findings, thanks!
+
+-- 
+Cheers,
+
+Sverre Rabbelier
