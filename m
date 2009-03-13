@@ -1,64 +1,66 @@
-From: Nicolas Morey-Chaisemartin <devel@morey-chaisemartin.com>
-Subject: Re: Rebasing local patches
-Date: Fri, 13 Mar 2009 08:39:39 +0100
-Message-ID: <49BA0DBB.7000700@morey-chaisemartin.com>
-References: <49B237E2.3080606@morey-chaisemartin.com> <alpine.DEB.1.00.0903071229220.10279@pacific.mpi-cbg.de>
-Reply-To: devel@morey-chaisemartin.com
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Not pushing all branches?
+Date: Fri, 13 Mar 2009 08:48:55 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.0903130846410.17450@perkele.intern.softwolves.pp.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Mar 13 08:47:53 2009
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 13 08:51:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Li27U-0002gM-Fi
-	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 08:47:52 +0100
+	id 1Li2B6-0003WJ-AX
+	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 08:51:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751260AbZCMHqY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2009 03:46:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750876AbZCMHqY
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 03:46:24 -0400
-Received: from 27.mail-out.ovh.net ([91.121.30.210]:37356 "HELO
-	27.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1750791AbZCMHqX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Mar 2009 03:46:23 -0400
-X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Fri, 13 Mar 2009 03:46:23 EDT
-Received: (qmail 6994 invoked by uid 503); 13 Mar 2009 07:46:48 -0000
-Received: from gw2.ovh.net (HELO mail426.ha.ovh.net) (213.251.189.202)
-  by 27.mail-out.ovh.net with SMTP; 13 Mar 2009 07:46:48 -0000
-Received: from b0.ovh.net (HELO queue-out) (213.186.33.50)
-	by b0.ovh.net with SMTP; 13 Mar 2009 07:39:41 -0000
-Received: from ensilinx1.imag.fr (HELO ?184.247.3.0?) (devel@morey-chaisemartin.com@195.221.227.189)
-  by ns0.ovh.net with SMTP; 13 Mar 2009 07:39:40 -0000
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
-In-Reply-To: <alpine.DEB.1.00.0903071229220.10279@pacific.mpi-cbg.de>
-X-Enigmail-Version: 0.95.7
-X-Ovh-Tracer-Id: 989666018401505001
-X-Ovh-Remote: 195.221.227.189 (ensilinx1.imag.fr)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-Spam-Check: DONE|H 0.500002/N
+	id S1753613AbZCMHtZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2009 03:49:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752591AbZCMHtZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 03:49:25 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:51933 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751502AbZCMHtY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Mar 2009 03:49:24 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0KGF00G2HPQ6QM00@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 13 Mar 2009 08:49:18 +0100 (CET)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0KGF00G3OPPROP00@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 13 Mar 2009 08:49:03 +0100 (CET)
+Received: from perkele ([84.215.142.63]) by no-osl-m323-srv-004-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0KGF00KHYPPRPQC0@no-osl-m323-srv-004-z1.isp.get.no> for
+ git@vger.kernel.org; Fri, 13 Mar 2009 08:49:03 +0100 (CET)
+Received: by perkele (Postfix, from userid 501)	id C280E2FC0B; Fri,
+ 13 Mar 2009 08:48:55 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
+ with ESMTP id BF41C2FBF7	for <git@vger.kernel.org>; Fri,
+ 13 Mar 2009 08:48:55 +0100 (CET)
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113152>
 
->> I noticed that when the branch was rebased on the centralized and repo 
->> and origin/our_patches is up-to-date in mine.
->>
->> If I checkout another branch and then ckecout our_branches, I got a 
->> message telling my our_patches and the one from the server have diverged 
->> (or you are two commits behind...).
->>
->> How can you get this info directly without leaving/rejoining your 
->> branch?
-> 
-> It is also part of "git status"' output.
+Hi!
 
-Is there some option to just get the status of HEAD against tracked branch and not the index status? 
-I guess I could do an alias but an option would be nicer ;)
+Doing "git push remote" pushes all my local branches by default. Is there a 
+way to set it to *not* do that, and (for this particular remote repository) 
+just push the current branch? Or failing that, not allow me to run "git 
+push" without specifying a branch?
 
-Nicolas
+The git-config manual page leads me to believe that I should recofigure 
+"remote.<name>.push", but it points me to the "refspec" spec on git-push, 
+which is a tad cryptic.
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
