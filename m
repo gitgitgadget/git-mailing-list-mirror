@@ -1,11 +1,10 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 4/5] Fix RevWalk with Linus Torvald's occasional bad commit date hack
-Date: Thu, 12 Mar 2009 19:07:41 -0700
-Message-ID: <1236910062-18476-5-git-send-email-spearce@spearce.org>
+Subject: [JGIT PATCH 3/5] Remove the horribly stupid RevSort.START_ORDER
+Date: Thu, 12 Mar 2009 19:07:40 -0700
+Message-ID: <1236910062-18476-4-git-send-email-spearce@spearce.org>
 References: <1236910062-18476-1-git-send-email-spearce@spearce.org>
  <1236910062-18476-2-git-send-email-spearce@spearce.org>
  <1236910062-18476-3-git-send-email-spearce@spearce.org>
- <1236910062-18476-4-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
 To: Robin Rosenberg <robin.rosenberg@dewire.com>
 X-From: git-owner@vger.kernel.org Fri Mar 13 03:10:00 2009
@@ -13,155 +12,180 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LhwqW-0006PX-2e
-	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 03:10:00 +0100
+	id 1LhwqV-0006PX-DH
+	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 03:09:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754182AbZCMCH5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Mar 2009 22:07:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753567AbZCMCHy
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 22:07:54 -0400
-Received: from george.spearce.org ([209.20.77.23]:46995 "EHLO
+	id S1754118AbZCMCHy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Mar 2009 22:07:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753759AbZCMCHv
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Mar 2009 22:07:51 -0400
+Received: from george.spearce.org ([209.20.77.23]:46992 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750843AbZCMCHr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Mar 2009 22:07:47 -0400
+	with ESMTP id S1751954AbZCMCHq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Mar 2009 22:07:46 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id A2AA938221; Fri, 13 Mar 2009 02:07:45 +0000 (UTC)
+	id E377838260; Fri, 13 Mar 2009 02:07:44 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id BEFC238211;
+	by george.spearce.org (Postfix) with ESMTP id 7009F3821F;
 	Fri, 13 Mar 2009 02:07:43 +0000 (UTC)
 X-Mailer: git-send-email 1.6.2.288.gc3f22
-In-Reply-To: <1236910062-18476-4-git-send-email-spearce@spearce.org>
+In-Reply-To: <1236910062-18476-3-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113134>
 
-In git-core commit 7d004199d134c9d465e013064f72dbc04507f6c0 Linus
-describes a hack he created to improve the handling of cases where
-commit dates are out of order, such as a child commit having a date
-older than its parent.  These cases can show up when there is bad
-imported data, or significant clock skew between distributed peers.
+I must have been on crack the day I wrote 3b27268f49 ("Allow RevWalk
+users to ask for FIFO style ordering").  Its a really bad idea.
 
-The original git-core bug report identified a failure in:
+Applications can get themselves into a situation where they process
+one branch long before another, and then abort too early, before all
+commits have been correctly flagged UNINTERESTING.
 
-  git rev-list A..B C
+For example, given the graph:
 
-where commits contained in both A and B were reported, due to out
-of order commit dates.
+  Z-A------------B
+  |             /
+  |    ---------
+  \   /
+   Q-R-S-T-U-V
 
-We keep running until the most recent commit in the pending queue
-is more recent than the last commit sent to the caller.  If the
-pending queue suddenly goes "backwards" due to one of our parent's
-having a more recent commit date, this new check ensures we will
-keep processing the graph until we see a more consistent cut.
+If B is "interesting" and A,V are UNINTERESTING, without forcing the
+commit timestamp ordering in the pending queue we wind up processing
+all of B-Z, producing R,Q as "interesting" output in the process, and
+terminate before S can even be parsed. Consequently we never push the
+UNINTERESTING flag down onto R, and R,Q produced when they shouldn't.
 
-We process an extra OVER_SCAN commits after we decide that all
-remaining commits are UNINTERESTING.  Processing these extra
-commits ensures flags are carried back further in the graph,
-increasing the chances that we correctly mark relevant nodes.
-
-As a result of this hack, we may produce a commit to our caller,
-but then later mark it UNINTERESTING if we discover date skew.
-To handle such cases, callers could buffer produced commits and
-filter out those that are UNINTERESTING, but this somewhat costly
-and may not always be necessary.
+We now require that the pending queue use a DateRevQueue instead of
+the FIFORevQueue, so that in the above graph S must be parsed before
+we can even consider R or A, even though R,A were reached earlier.
+This of course still assumes there is no clock skew between S and R.
+The next commit will address some limited clock skew issues.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- .../org/spearce/jgit/revwalk/PendingGenerator.java |   51 ++++++++++++++++++--
- 1 files changed, 47 insertions(+), 4 deletions(-)
+ .../org/spearce/jgit/revwalk/PendingGenerator.java |    8 +++-----
+ .../src/org/spearce/jgit/revwalk/RevSort.java      |   11 -----------
+ .../src/org/spearce/jgit/revwalk/RevWalk.java      |    6 +++---
+ .../org/spearce/jgit/revwalk/StartGenerator.java   |    8 ++------
+ 4 files changed, 8 insertions(+), 25 deletions(-)
 
 diff --git a/org.spearce.jgit/src/org/spearce/jgit/revwalk/PendingGenerator.java b/org.spearce.jgit/src/org/spearce/jgit/revwalk/PendingGenerator.java
-index 144e909..cd24e8f 100644
+index 25b2966..144e909 100644
 --- a/org.spearce.jgit/src/org/spearce/jgit/revwalk/PendingGenerator.java
 +++ b/org.spearce.jgit/src/org/spearce/jgit/revwalk/PendingGenerator.java
-@@ -42,6 +42,7 @@
- import org.spearce.jgit.errors.IncorrectObjectTypeException;
- import org.spearce.jgit.errors.MissingObjectException;
- import org.spearce.jgit.errors.StopWalkException;
-+import org.spearce.jgit.lib.ObjectId;
- import org.spearce.jgit.revwalk.filter.RevFilter;
+@@ -62,7 +62,7 @@
  
- /**
-@@ -60,6 +61,24 @@
- 
- 	private static final int UNINTERESTING = RevWalk.UNINTERESTING;
- 
-+	/**
-+	 * Number of additional commits to scan after we think we are done.
-+	 * <p>
-+	 * This small buffer of commits is scanned to ensure we didn't miss anything
-+	 * as a result of clock skew when the commits were made. We need to set our
-+	 * constant to 1 additional commit due to the use of a pre-increment
-+	 * operator when accessing the value.
-+	 */
-+	private static final int OVER_SCAN = 5 + 1;
-+
-+	/** A commit near the end of time, to initialize {@link #last} with. */
-+	private static final RevCommit INIT_LAST;
-+
-+	static {
-+		INIT_LAST = new RevCommit(ObjectId.zeroId());
-+		INIT_LAST.commitTime = Integer.MAX_VALUE;
-+	}
-+
  	private final RevWalk walker;
  
- 	private final DateRevQueue pending;
-@@ -68,6 +87,17 @@
+-	private final AbstractRevQueue pending;
++	private final DateRevQueue pending;
  
- 	private final int output;
+ 	private final RevFilter filter;
  
-+	/** Last commit produced to the caller from {@link #next()}. */
-+	private RevCommit last = INIT_LAST;
-+
-+	/**
-+	 * Number of commits we have remaining in our over-scan allotment.
-+	 * <p>
-+	 * Only relevant if there are {@link #UNINTERESTING} commits in the
-+	 * {@link #pending} queue.
-+	 */
-+	private int overScan = OVER_SCAN;
-+
+@@ -70,7 +70,7 @@
+ 
  	boolean canDispose;
  
- 	PendingGenerator(final RevWalk w, final DateRevQueue p,
-@@ -112,14 +142,27 @@ RevCommit next() throws MissingObjectException,
- 				walker.carryFlagsImpl(c);
+-	PendingGenerator(final RevWalk w, final AbstractRevQueue p,
++	PendingGenerator(final RevWalk w, final DateRevQueue p,
+ 			final RevFilter f, final int out) {
+ 		walker = w;
+ 		pending = p;
+@@ -81,9 +81,7 @@ PendingGenerator(final RevWalk w, final AbstractRevQueue p,
  
- 				if ((c.flags & UNINTERESTING) != 0) {
--					if (pending.everbodyHasFlag(UNINTERESTING))
--						throw StopWalkException.INSTANCE;
--					c.dispose();
-+					if (pending.everbodyHasFlag(UNINTERESTING)) {
-+						final RevCommit n = pending.peek();
-+						if (n != null && n.commitTime <= last.commitTime) {
-+							// This is too close to call. The next commit we
-+							// would pop is before the last one we produced.
-+							// We have to keep going to ensure that we carry
-+							// flags as much as necessary.
-+							//
-+							overScan = OVER_SCAN;
-+						} else if (--overScan == 0)
-+							throw StopWalkException.INSTANCE;
-+					} else {
-+						overScan = OVER_SCAN;
-+					}
-+					if (canDispose)
-+						c.dispose();
- 					continue;
- 				}
+ 	@Override
+ 	int outputType() {
+-		if (pending instanceof DateRevQueue)
+-			return output | SORT_COMMIT_TIME_DESC;
+-		return output;
++		return output | SORT_COMMIT_TIME_DESC;
+ 	}
  
- 				if (produce)
--					return c;
-+					return last = c;
- 				else if (canDispose)
- 					c.dispose();
- 			}
+ 	@Override
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/revwalk/RevSort.java b/org.spearce.jgit/src/org/spearce/jgit/revwalk/RevSort.java
+index b0a03ad..8c3eaed 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/revwalk/RevSort.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/revwalk/RevSort.java
+@@ -49,17 +49,6 @@
+ 	NONE,
+ 
+ 	/**
+-	 * Maintain the order commits were marked as starting points.
+-	 * <p>
+-	 * This strategy is largely a FIFO strategy; commits are enumerated in the
+-	 * order they were added to the RevWalk by the application. Parents not yet
+-	 * visited are added behind all commits already enqueued for visiting.
+-	 * <p>
+-	 * This strategy should not be combined with {@link #COMMIT_TIME_DESC}.
+-	 */
+-	START_ORDER,
+-
+-	/**
+ 	 * Sort by commit time, descending (newest first, oldest last).
+ 	 * <p>
+ 	 * This strategy can be combined with {@link #TOPO}.
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/revwalk/RevWalk.java b/org.spearce.jgit/src/org/spearce/jgit/revwalk/RevWalk.java
+index c8ec458..316f722 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/revwalk/RevWalk.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/revwalk/RevWalk.java
+@@ -187,7 +187,7 @@ public RevWalk(final Repository repo) {
+ 		idBuffer = new MutableObjectId();
+ 		objects = new ObjectIdSubclassMap<RevObject>();
+ 		roots = new ArrayList<RevCommit>();
+-		queue = new FIFORevQueue();
++		queue = new DateRevQueue();
+ 		pending = new StartGenerator(this);
+ 		sorting = EnumSet.of(RevSort.NONE);
+ 		filter = RevFilter.ALL;
+@@ -915,7 +915,7 @@ protected void reset(int retainFlags) {
+ 
+ 		curs.release();
+ 		roots.clear();
+-		queue = new FIFORevQueue();
++		queue = new DateRevQueue();
+ 		pending = new StartGenerator(this);
+ 	}
+ 
+@@ -934,7 +934,7 @@ public void dispose() {
+ 		objects.clear();
+ 		curs.release();
+ 		roots.clear();
+-		queue = new FIFORevQueue();
++		queue = new DateRevQueue();
+ 		pending = new StartGenerator(this);
+ 	}
+ 
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/revwalk/StartGenerator.java b/org.spearce.jgit/src/org/spearce/jgit/revwalk/StartGenerator.java
+index 1b7947f..bf7067a 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/revwalk/StartGenerator.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/revwalk/StartGenerator.java
+@@ -108,11 +108,7 @@ RevCommit next() throws MissingObjectException,
+ 		}
+ 
+ 		int pendingOutputType = 0;
+-		if (walker.hasRevSort(RevSort.START_ORDER)
+-				&& !(q instanceof FIFORevQueue))
+-			q = new FIFORevQueue(q);
+-		if (walker.hasRevSort(RevSort.COMMIT_TIME_DESC)
+-				&& !(q instanceof DateRevQueue))
++		if (!(q instanceof DateRevQueue))
+ 			q = new DateRevQueue(q);
+ 		if (tf != TreeFilter.ALL) {
+ 			rf = AndRevFilter.create(rf, new RewriteTreeFilter(w, tf));
+@@ -120,7 +116,7 @@ RevCommit next() throws MissingObjectException,
+ 		}
+ 
+ 		walker.queue = q;
+-		g = new PendingGenerator(w, q, rf, pendingOutputType);
++		g = new PendingGenerator(w, (DateRevQueue) q, rf, pendingOutputType);
+ 
+ 		if (boundary) {
+ 			// Because the boundary generator may produce uninteresting
 -- 
 1.6.2.288.gc3f22
