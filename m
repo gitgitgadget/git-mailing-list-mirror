@@ -1,70 +1,67 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Transparently encrypt repository contents with GPG
-Date: Fri, 13 Mar 2009 11:46:57 +0100
-Message-ID: <49BA39A1.9090203@drmicha.warpmail.net>
-References: <978bdee00903121419o61cd7a87rb55809796bd257d7@mail.gmail.com> <fabb9a1e0903121434u4a3d71bdi6277071f54557a7e@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Not pushing all branches?
+Date: Fri, 13 Mar 2009 11:49:08 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903131148250.10279@pacific.mpi-cbg.de>
+References: <alpine.DEB.2.00.0903130846410.17450@perkele.intern.softwolves.pp.se> <7bfdc29a0903130112w17d40473s14a895d518dbf8ae@mail.gmail.com> <alpine.DEB.2.00.0903131043510.17450@perkele.intern.softwolves.pp.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Matthias Nothhaft <matthias.nothhaft@googlemail.com>,
-	git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 13 11:48:41 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Imran M Yousuf <imyousuf@gmail.com>, git@vger.kernel.org
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Fri Mar 13 11:49:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Li4wS-0007P0-PP
-	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 11:48:41 +0100
+	id 1Li4wq-0007Tk-3i
+	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 11:49:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754738AbZCMKrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2009 06:47:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754384AbZCMKrL
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 06:47:11 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:51664 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754174AbZCMKrK (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Mar 2009 06:47:10 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id AF0B02EED16;
-	Fri, 13 Mar 2009 06:47:08 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Fri, 13 Mar 2009 06:47:08 -0400
-X-Sasl-enc: IBPI0x6dRqDBzrMI+DCsdfdOg5D8Ywy5K0v6n1JeXjYh 1236941228
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 0D902FF6A;
-	Fri, 13 Mar 2009 06:47:07 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090313 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <fabb9a1e0903121434u4a3d71bdi6277071f54557a7e@mail.gmail.com>
+	id S1754959AbZCMKr2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2009 06:47:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754384AbZCMKr1
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 06:47:27 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45124 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754162AbZCMKr0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Mar 2009 06:47:26 -0400
+Received: (qmail invoked by alias); 13 Mar 2009 10:47:23 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp036) with SMTP; 13 Mar 2009 11:47:23 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19jOjk4Fk1jOmwUUXSaiUgtAqCVNSQJCr9GbQHqAh
+	u5TSGGJqbogGk2
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <alpine.DEB.2.00.0903131043510.17450@perkele.intern.softwolves.pp.se>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.75
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113167>
 
-Sverre Rabbelier venit, vidit, dixit 12.03.2009 22:34:
-> Heya,
+Hi,
+
+On Fri, 13 Mar 2009, Peter Krefting wrote:
+
+> Imran M Yousuf:
 > 
-> On Thu, Mar 12, 2009 at 22:19, Matthias Nothhaft
-> <matthias.nothhaft@googlemail.com> > What I need is a way to
-> automatically modify each file
->>
->> a) before it is written in the repository
->> b) after it is read from the repository
+> > Just try -
+> > git push remote branch :)
 > 
-> Have a look at smudging, you might not need to touch the git source
-> code at all ;).
-> 
+> That is what I do. Unfortunately, the times I forged to name the branch, 
+> it pushes my master branch, which is different from the remote's, and I 
+> have to go to the other repository and reset it manually...
 
-And people asked me not to be cryptic... even though the OP explicitely
-asked for encryption, of course ;)
+You can set
 
-"git help attributes" may help: look for filter and set attributes and
-config (filter.$name.{clean,smudge}) accordingly. smudge should probably
-decrypt, clean should encrypt.
+$ git config remote.<remote>.push invalid-branch-name
 
-BTW: Why not use an encrypted file system? That way your work tree would
-be encrypted also.
+so that
 
-Cheers,
-Michael
+$ git push <remote>
+
+will give you an error.
+
+Ciao,
+Dscho
