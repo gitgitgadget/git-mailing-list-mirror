@@ -1,89 +1,76 @@
 From: John Tapsell <johnflux@gmail.com>
-Subject: Re: Not pushing all branches?
-Date: Fri, 13 Mar 2009 12:37:42 +0000
-Message-ID: <43d8ce650903130537r2459e1d2pef8fffc1c9b3fa5e@mail.gmail.com>
-References: <alpine.DEB.2.00.0903130846410.17450@perkele.intern.softwolves.pp.se>
-	 <43d8ce650903130125m6335d189obbcdb86ec9036083@mail.gmail.com>
-	 <alpine.DEB.1.00.0903131149200.10279@pacific.mpi-cbg.de>
+Subject: Re: Generalised bisection
+Date: Fri, 13 Mar 2009 12:42:00 +0000
+Message-ID: <43d8ce650903130542o4125fef3rdddea4a31c23aa30@mail.gmail.com>
+References: <efe2b6d70903081840v18e77aa7w2dac2bed553d0d6a@mail.gmail.com>
+	 <200903100808.15875.chriscool@tuxfamily.org>
+	 <efe2b6d70903110159h78de744yc141effaf5aa0821@mail.gmail.com>
+	 <43d8ce650903110235q5e2a59f6t201d5e65a4937476@mail.gmail.com>
+	 <efe2b6d70903111515p2b9f656bp186d0b3cc7ae483d@mail.gmail.com>
+	 <43d8ce650903112345x3d40b70ap7e4c0f8c7d0b6069@mail.gmail.com>
+	 <efe2b6d70903130258t2594b027m5812e9a5895f477e@mail.gmail.com>
+	 <alpine.DEB.1.00.0903131154190.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Peter Krefting <peter@softwolves.pp.se>, git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Cc: Ealdwulf Wuffinga <ealdwulf@googlemail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Git List <git@vger.kernel.org>, Ingo Molnar <mingo@elte.hu>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Mar 13 13:39:25 2009
+X-From: git-owner@vger.kernel.org Fri Mar 13 13:43:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Li6fW-0000VT-Tm
-	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 13:39:19 +0100
+	id 1Li6ji-00020H-0C
+	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 13:43:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752759AbZCMMhr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Mar 2009 08:37:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752244AbZCMMhr
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 08:37:47 -0400
-Received: from mail-gx0-f167.google.com ([209.85.217.167]:35286 "EHLO
-	mail-gx0-f167.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750765AbZCMMhq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Mar 2009 08:37:46 -0400
-Received: by gxk11 with SMTP id 11so2811107gxk.13
-        for <git@vger.kernel.org>; Fri, 13 Mar 2009 05:37:44 -0700 (PDT)
+	id S1752941AbZCMMmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2009 08:42:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752389AbZCMMmG
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 08:42:06 -0400
+Received: from an-out-0708.google.com ([209.85.132.247]:30988 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752445AbZCMMmF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Mar 2009 08:42:05 -0400
+Received: by an-out-0708.google.com with SMTP id c2so1103066anc.1
+        for <git@vger.kernel.org>; Fri, 13 Mar 2009 05:42:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=BmfCiSFt6Eu73Y56sT1LWPEDbvN9JCeESRI/2DaX5aw=;
-        b=hcVcgbT7MgvvjJ0npWkLM/ZlgWaB6BtF8ZPxAeT586c6Nxdo/miI1qdxmnR8IUJtZK
-         1o0xDbQbSwt63F8GNOoCof3IE8VnD2iEXlf1tEphrPagFImGO8aOwwzC7kbTTIYot2w+
-         XmwngFm8qLjcydrlEON/3zDVYsddUiq+vRv0s=
+        bh=twQ4ieHFHwUgqgJk21s7RVVZE0RUWmCvqxHeQVtVriU=;
+        b=i+0aFPVP32kxG7qza0kB7gFYVqV0Ky4ejumxtfGepmxWvXuRjr6LcRBCI3hNjnBAab
+         ia8T3g9k6UM94OaGoPiLysA++Q85bP2M82pxwqSVhNMMsOI06oTBLV6OWI0IRoy36X9T
+         5vqk+RlS66/nyEc00gQD7Ap3+j+J8PPSES8Xw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=NFRZepTQS7GGRmyDyc4ebrKcfZOLjxlb+fBOrW+IRR1PVZhoWU2CNmcoNyi6wYdsFB
-         9Bhnq6roJC6YcbpiupNgbQ88zcdkeqhM3GsGWYAYJmBrOLZzIESHAlh8CmK7IQiUWL17
-         +8WxbovUeeRjb4WliLsxbpIRCxyDTSco/IVHQ=
-Received: by 10.142.54.11 with SMTP id c11mr534438wfa.14.1236947862701; Fri, 
-	13 Mar 2009 05:37:42 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0903131149200.10279@pacific.mpi-cbg.de>
+        b=bRhVe4mteeqX0ajs/OzvF/oDJiVZ2rMwXhDVwMFNsinlz3AQdsfygJ0YIUpdPlMCA2
+         RD453jwaadFjzAmTpM6O75w6P4Oii7I4DEyY9sAaWHFPtz5mQJKIsKC7IcTgUCsZv60m
+         2zUbj5UYcDEk3nA28vDIh0aoWg6VTGG+5ispg=
+Received: by 10.142.217.17 with SMTP id p17mr572485wfg.235.1236948121108; Fri, 
+	13 Mar 2009 05:42:01 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0903131154190.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113177>
 
 2009/3/13 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
 > Hi,
 >
-> On Fri, 13 Mar 2009, John Tapsell wrote:
+> On Fri, 13 Mar 2009, Ealdwulf Wuffinga wrote:
 >
->> 2009/3/13 Peter Krefting <peter@softwolves.pp.se>:
->>
->> > Doing "git push remote" pushes all my local branches by default. I=
-s
->> > there a way to set it to *not* do that, and (for this particular
->> > remote repository) just push the current branch?
->>
->> > Or failing that, not allow me to run "git push" without specifying=
- a
->> > branch?
->>
->> I've been pushing for this behaviour, and there was a patch a few da=
-ys
->> ago to do this. =C2=A0I'm not sure if it is/will be committed.
+>> It is BayesianSearch_Debugging.pdf.
 >
-> As Junio is a careful maintainer, he will not change anything radical
-> which would piss of a lot of people _without_ a proper, long-term pla=
-n
-> that gives users a chance.
->
-> I know, I once tried to push for something like that, and I am glad t=
-hat
-> Junio is too wise as to make Git unstable for existing users.
+> Now I'll only need a bayesian-search-for-original-url-in-mails.py.
 
-Understandable.  There were 6 patches, only the last one changes the
-default.  Hopefully the first 5 will be applied and the 6 will
-debated, then grudgingly applied :-)
+I managed to work it out:
+
+http://github.com/Ealdwulf/bbchop.git/BBChop/doc/BayesianSearch_Debugging.pdf
 
 John
