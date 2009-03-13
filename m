@@ -1,79 +1,54 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT PATCH 2/3] Fix ObjectWalk to handle single-entry
-	subtrees correctly
-Date: Fri, 13 Mar 2009 11:37:03 -0700
-Message-ID: <20090313183703.GG22920@spearce.org>
-References: <1236967912-15088-1-git-send-email-spearce@spearce.org> <1236967912-15088-2-git-send-email-spearce@spearce.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [JGIT PATCH 0/5] RevWalk fixes for UNINTERESTING
+Date: Fri, 13 Mar 2009 21:00:26 +0100
+Message-ID: <200903132100.26527.robin.rosenberg.lists@dewire.com>
+References: <1236910062-18476-1-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-6"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Fri Mar 13 19:38:45 2009
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Mar 13 21:02:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LiCHC-00011U-9H
-	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 19:38:34 +0100
+	id 1LiDa1-0000fu-F5
+	for gcvg-git-2@gmane.org; Fri, 13 Mar 2009 21:02:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757581AbZCMShH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2009 14:37:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754189AbZCMShG
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 14:37:06 -0400
-Received: from george.spearce.org ([209.20.77.23]:46400 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751798AbZCMShF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Mar 2009 14:37:05 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 505E338211; Fri, 13 Mar 2009 18:37:03 +0000 (UTC)
+	id S1753057AbZCMUAg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2009 16:00:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752286AbZCMUAg
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 16:00:36 -0400
+Received: from mail.dewire.com ([83.140.172.130]:15138 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751549AbZCMUAf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Mar 2009 16:00:35 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 927E6139A475;
+	Fri, 13 Mar 2009 21:00:28 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id a8mRlFYQD2sd; Fri, 13 Mar 2009 21:00:28 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id EA650139A474;
+	Fri, 13 Mar 2009 21:00:27 +0100 (CET)
+User-Agent: KMail/1.11.1 (Linux/2.6.27-12-generic; KDE/4.2.1; i686; ; )
+In-Reply-To: <1236910062-18476-1-git-send-email-spearce@spearce.org>
 Content-Disposition: inline
-In-Reply-To: <1236967912-15088-2-git-send-email-spearce@spearce.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113219>
 
-"Shawn O. Pearce" <spearce@spearce.org> wrote:
-> diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/CanonicalTreeParser.java b/org.spearce.jgit/src/org/spearce/jgit/treewalk/CanonicalTreeParser.java
-> index 8028b14..5c331ca 100644
-> --- a/org.spearce.jgit/src/org/spearce/jgit/treewalk/CanonicalTreeParser.java
-> +++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/CanonicalTreeParser.java
-> @@ -145,8 +145,19 @@ public CanonicalTreeParser resetRoot(final Repository repo,
->  
->  	/** @return this iterator, or its parent, if the tree is at eof. */
->  	public CanonicalTreeParser next() {
-> -		next(1);
-> -		return eof() && parent != null ? (CanonicalTreeParser) parent : this;
-> +		CanonicalTreeParser p = this;
-> +		for (;;) {
-> +			p.next(1);
-> +			if (p.eof() && parent != null) {
-> +				// Parent was left pointing at the entry for us; advance
-> +				// the parent to the next entry, possibly unwinding many
-> +				// levels up the tree.
-> +				//
-> +				p = (CanonicalTreeParser) p.parent;
-> +				continue;
-> +			}
-> +			return p;
-> +		}
+fredag 13 mars 2009 03:07:37 skrev "Shawn O. Pearce" <spearce@spearce.org>:
+> Today I uncovered some ugly cases with "jgit rev-list B ^A", where
+> some commits reachable from A were still being output, even though
+> we asked that they be excluded.
 
-The parent != null test is wrong, we need "p.parent" here:
+How about a test suite to prove this is better than before?
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/CanonicalTreeParser.java b/org.spearce.jgit/src/org/spearce/jgit/treewalk/CanonicalTreeParser.java
-index 5c331ca..7f89cff 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/treewalk/CanonicalTreeParser.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/CanonicalTreeParser.java
-@@ -148,7 +148,7 @@ public CanonicalTreeParser next() {
- 		CanonicalTreeParser p = this;
- 		for (;;) {
- 			p.next(1);
--			if (p.eof() && parent != null) {
-+			if (p.eof() && p.parent != null) {
- 				// Parent was left pointing at the entry for us; advance
- 				// the parent to the next entry, possibly unwinding many
- 				// levels up the tree.
--- 
-Shawn.
+-- robin
