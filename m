@@ -1,126 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] New config push.default to decide default behavior
- for push
-Date: Sat, 14 Mar 2009 13:56:42 -0700
-Message-ID: <7viqmbakmt.fsf@gitster.siamese.dyndns.org>
-References: <20090311220144.GA6782@pvv.org>
- <7vwsavlg6q.fsf@gitster.siamese.dyndns.org> <20090312115433.GA2848@pvv.org>
+From: Benjamin Kramer <benny.kra@googlemail.com>
+Subject: Re: [PATCH] Remove unused assignments
+Date: Sat, 14 Mar 2009 21:57:13 +0100
+Message-ID: <49BC1A29.60503@googlemail.com>
+References: <49BA56D5.5050807@googlemail.com> <7v7i2rc0zp.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Finn Arne Gangstad <finnag@pvv.org>
-X-From: git-owner@vger.kernel.org Sat Mar 14 21:58:24 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 14 21:58:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Liaw3-0002WC-Ue
-	for gcvg-git-2@gmane.org; Sat, 14 Mar 2009 21:58:24 +0100
+	id 1LiawS-0002cf-VE
+	for gcvg-git-2@gmane.org; Sat, 14 Mar 2009 21:58:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755567AbZCNU4w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Mar 2009 16:56:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751242AbZCNU4v
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Mar 2009 16:56:51 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63514 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754878AbZCNU4u (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Mar 2009 16:56:50 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A1F7B6873;
-	Sat, 14 Mar 2009 16:56:48 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id CF0416872; Sat,
- 14 Mar 2009 16:56:43 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A2B776AA-10DA-11DE-B436-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+	id S1755617AbZCNU5T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Mar 2009 16:57:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754593AbZCNU5T
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Mar 2009 16:57:19 -0400
+Received: from mail-fx0-f176.google.com ([209.85.220.176]:54931 "EHLO
+	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751242AbZCNU5S (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Mar 2009 16:57:18 -0400
+Received: by fxm24 with SMTP id 24so3032880fxm.37
+        for <git@vger.kernel.org>; Sat, 14 Mar 2009 13:57:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=X/Bpod2vDW0sYziuqq+NHyrcpnTHa9bFux+FM5D+WMQ=;
+        b=cx5CgnLhM4rAdQCxLfLXwpi/XobNf3CAe7XtrLUiOe8s2kIRgM2W+qx9H/s5hIl/ZW
+         e/MlMycJfG/7HttZm5voolJGXfj1eiTn9EHJAihsgB/fh7MwCi3U8jvKppxtbFCZMbMG
+         Q+33IEyHef9eEWBi0wonwd7QFj+B02stJljBs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=pgSmSSinyLjD3u2V2CGsQ8bpDYeCM5cLFdmwtnTvDhayw518+gMC3GWKaCowWZePVk
+         6V6Mwpug3lBSFVkgwJtBW8BVovGN8qLQ9sbpsN3/52QyZFSxrChoovihlL8FNcadHzmt
+         Gr4NUnu4I/apVCWA3OKuQpvqTKjInOwRU/ZPw=
+Received: by 10.103.198.20 with SMTP id a20mr1349514muq.63.1237064235205;
+        Sat, 14 Mar 2009 13:57:15 -0700 (PDT)
+Received: from golden.local (p5B01D5C6.dip.t-dialin.net [91.1.213.198])
+        by mx.google.com with ESMTPS id s11sm6670195mue.47.2009.03.14.13.57.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 14 Mar 2009 13:57:14 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.19 (Macintosh/20081209)
+In-Reply-To: <7v7i2rc0zp.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113266>
 
-Finn Arne Gangstad <finnag@pvv.org> writes:
+Junio C Hamano wrote:
+> 
+> Thanks.  I eyeballed all of them and they look safe, but this patch made
+> me wonder...
+> 
+> Did you use some dataflow analysis tool to spot these?
+> 
+> It will never scale if a human has to sanity check output from a
+> mechanical process like this patch, especially when the human is already a
+> chokepoint of the whole process (i.e. the maintainer).
 
-> Something like this amended into the last commit? I can amend it on top
-> of the last one and resend if that is better.
+Yep, they were found with a little help of the clang static analyzer
 
-Thanks.
+http://clang.llvm.org/StaticAnalysis.html
 
-I looked at these two patches after squashing them into one, and I think
-it makes sense as the final shape of a two patch series.
+It is in early stages of development so it may report false positives and
+it chokes on some files. Here is the latest output I have, with my patch
+applied:
 
-Although the purist in me tells me that addition of the "tracking" and the
-"current" should be in a separate commit as they are purely new features,
-I think it is Ok.  In that sense, "nothing" is a new feature anyway, and
-"current" is something we already have, so the true addition here is only
-the "tracking" one.
+http://doktorz.mooltied.de/stuff/scan-build-2009-03-13-2/
 
-I also reworded the commit log message a bit, like this:
+I've looked briefly at the "Logic Errors" and they all seem to be false
+positives. I did not have enough time to look into all the remaining "Dead
+Stores" though.
 
-    Author: Finn Arne Gangstad <finnag@pvv.org>
-    Date:   Wed Mar 11 23:01:45 2009 +0100
-
-    New config push.default to decide default behavior for push
-    
-    When "git push" is not told what refspecs to push, it pushes all matching
-    branches to the current remote.  For some workflows this default is not
-    useful, and surprises new users.  Some have even found that this default
-    behaviour too easy to trigger by accident with unwanted consequences.
-    
-    Introduce a new configuration variable "push.default" that decides what
-    action git push should take if no refspecs are given or implied by the
-    command line arguments or the current remote configuration. If this
-    variable is unconfigured, display a prominent warning when default
-    behavior is triggered.
-    
-    Possible values are:
-    
-      'nothing'  : Push nothing;
-      'matching' : Current default behaviour, push all branches that already
-                   exist in the current remote;
-      'tracking' : Push the current branch to whatever it is tracking;
-      'current'  : Push the current branch to a branch of the same name,
-      	           i.e. HEAD.
-
-    Signed-off-by: Finn Arne Gangstad <finnag@pvv.org>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-I however had to scratch my head for 20 seconds wondering where the push
-happens when do_default_push() codepath is taken, and it turns out that
-the function is there merely to set up the push refspecs for the default
-case; the function is misnamed.  I'd further squash the following patch
-in.
-
-diff --git a/builtin-push.c b/builtin-push.c
-index 51f4c4a..e4988da 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -76,8 +76,7 @@ static const char *warn_unconfigured_push_msg[] = {
- 	"  'nothing'  : Do not push anythig",
- 	"  'matching' : Push all matching branches (the current default)",
- 	"  'tracking' : Push the current branch to whatever it is tracking",
--	"  'current'  : Push the current branch",
--	""
-+	"  'current'  : Push the current branch"
- };
- 
- static void warn_unconfigured_push(void)
-@@ -87,7 +86,7 @@ static void warn_unconfigured_push(void)
- 		warning("%s", warn_unconfigured_push_msg[i]);
- }
- 
--static void do_default_push(void)
-+static void setup_default_push_refspecs(void)
- {
- 	git_config(git_default_config, NULL);
- 	switch (push_default) {
-@@ -147,7 +146,7 @@ static int do_push(const char *repo, int flags)
- 			refspec = remote->push_refspec;
- 			refspec_nr = remote->push_refspec_nr;
- 		} else if (!(flags & TRANSPORT_PUSH_MIRROR))
--			do_default_push();
-+			setup_default_push_refspecs();
- 	}
- 	errs = 0;
- 	for (i = 0; i < remote->url_nr; i++) {
+-- Benjamin
