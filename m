@@ -1,83 +1,132 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Migrate bisect to C
-Date: Sat, 14 Mar 2009 01:16:59 -0700
-Message-ID: <7v63iccydg.fsf@gitster.siamese.dyndns.org>
-References: <20090312085103.e83b34a5.chriscool@tuxfamily.org>
- <200903130702.01039.chriscool@tuxfamily.org>
- <7vfxhhj4mh.fsf@gitster.siamese.dyndns.org>
- <200903140846.17599.chriscool@tuxfamily.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Transparently encrypt repository contents with GPG
+Date: Sat, 14 Mar 2009 12:16:26 +0100
+Message-ID: <49BB920A.20301@drmicha.warpmail.net>
+References: <978bdee00903121419o61cd7a87rb55809796bd257d7@mail.gmail.com> <fabb9a1e0903121434u4a3d71bdi6277071f54557a7e@mail.gmail.com> <49BA39A1.9090203@drmicha.warpmail.net> <200903131215.49336.trast@student.ethz.ch> <fabb9a1e0903130417x36121bd5ya8b323e0a80bbd8f@mail.gmail.com> <49BA6606.1070403@fastmail.fm> <7vy6v9f9zn.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org,
-	Ingo Molnar <mingo@elte.hu>, John Tapsell <johnflux@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Pierre Habouzit <madcoder@debian.org>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sat Mar 14 09:18:45 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Matthias Nothhaft <matthias.nothhaft@googlemail.com>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 14 12:18:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LiP4u-00018y-4r
-	for gcvg-git-2@gmane.org; Sat, 14 Mar 2009 09:18:44 +0100
+	id 1LiRt5-00024R-03
+	for gcvg-git-2@gmane.org; Sat, 14 Mar 2009 12:18:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754038AbZCNIRQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Mar 2009 04:17:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753516AbZCNIRO
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Mar 2009 04:17:14 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60188 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752978AbZCNIRM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Mar 2009 04:17:12 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 5A1345AA5;
-	Sat, 14 Mar 2009 04:17:09 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3EF665AA3; Sat,
- 14 Mar 2009 04:17:01 -0400 (EDT)
-In-Reply-To: <200903140846.17599.chriscool@tuxfamily.org> (Christian Couder's
- message of "Sat, 14 Mar 2009 08:46:17 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 835704B6-1070-11DE-A24B-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+	id S1752990AbZCNLQl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Mar 2009 07:16:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752909AbZCNLQk
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Mar 2009 07:16:40 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:49770 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752480AbZCNLQi (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 Mar 2009 07:16:38 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 6658B2EF710;
+	Sat, 14 Mar 2009 07:16:36 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Sat, 14 Mar 2009 07:16:36 -0400
+X-Sasl-enc: dp2XRyMDKnFAgyG/9I0D1hV7Rf+I6yBpCDb6vDyrTC4S 1237029395
+Received: from localhost.localdomain (p4FC60DCD.dip0.t-ipconnect.de [79.198.13.205])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 80B5AC627;
+	Sat, 14 Mar 2009 07:16:34 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090314 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <7vy6v9f9zn.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113244>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Junio C Hamano venit, vidit, dixit 13.03.2009 21:23:
+> Michael J Gruber <michaeljgruber+gmane@fastmail.fm> writes:
+> 
+>> In .gitattributes (or.git/info/a..) use
+>>
+>> * filter=gpg diff=gpg
+>>
+>> In your config:
+>>
+>> [filter "gpg"]
+>>         smudge = gpg -d -q --batch --no-tty
+>>         clean = gpg -ea -q --batch --no-tty -r C920A124
+>> [diff "gpg"]
+>>         textconv = decrypt
+>>
+>> This gives you textual diffs even in log! You want use gpg-agent here.
+> 
+> Don't do this.
+> 
+> Think why the smudge/clean pair exists.
+> 
+> The version controlled data, the contents, may not be suitable for
+> consumption in the work tree in its verbatim form.  For example, a cross
+> platform project would want to consistently use LF line termination inside
+> a repository, but on a platform whose tools expect CRLF line endings, the
+> contents cannot be used verbatim.  We "smudge" the contents running
+> unix2dos when checking things out on such platforms, and "clean" the
+> platform specific CRLF line endings by running dos2unix when checking
+> things in.  By doing so, you can see what really got changed between
+> versions without getting distracted, and more importantly, "you" in this
+> sentence is not limited to the human end users alone.
+> 
+> git internally runs diff and xdelta to see what was changed, so that:
+> 
+>  * it can reduce storage requirement when it runs pack-objects;
+> 
+>  * it can check what path in the preimage was similar to what other path
+>    in the postimage, to deduce a rename;
+> 
+>  * it can check what blocks of lines in the postimage came from what other
+>    blocks of lines in the preimage, to pass blames across file boundaries.
+> 
+> If your "clean" encrypts and "smudge" decrypts, it means you are refusing
+> all the benifit git offers.  You are making a pair of similar "smudged"
+> contents totally dissimilar in their "clean" counterparts.  That is simply
+> backwards.
+> 
+> As the sole raison d'etre of diff.textconv is to allow potentially lossy
+> conversion (e.g. msword-to-text) applied to the preimage and postimage
+> pair of contents (that are supposed to be "clean") before giving a textual
+> diff to human consumption, the above config may appear to work, but if you
+> really want an encrypted repository, you should be using an encrypting
+> filesystem.  That would give an added benefit that the work tree
+> associated with your repository would also be encrypted.
 
-> Do you mean that you want this series to migrate both "filter_skipped" and
-> "check_good_are_ancestors_of_bad" to C? Or is it ok 
-> if "check_good_are_ancestors_of_bad" migrates later?
+Exactly. This is why I suggested using cryptfs/luks in my first response
+already.
 
-One small step at a time.  That's the only sane way we can get there.
+But I don't know the OP's requirements, which is why I also told him how
+to do what he wanted, even though it has the drawbacks you and Jeff (and
+maybe I) mentioned. Maybe it's an attempt at hosting a semi-private repo
+on a public (free) server?
 
-> If it is ok to migrate "check_good_are_ancestors_of_bad" later, then I think 
-> something like the 8/7 patch I posted yesterday might be a good way, 
+Besides the non-text nature of encrypted content, the problem here is
+that d(e(x))=x for all x but e(d(x)) differs from x most probably, and
+hopefully randomly, unless you use the right version of debian's openssl
+of course ;)
 
-In the final shape, you will be reading from refs/bisect namespace using
-for_each_ref(), and at that point you won't have anybody feeding the
-skipped from the standard input.  The code you would add in [8/7] would
-have to be removed if you go that route.  If you make the filter_skipped
-codepath to read from for_each_ref() during this round, you can still keep
-that codepath even after you fully migrate everybody to C, no?
+That being said:
+git diff calls textconv filters with smudged as well as cleaned files
+(when diffing work tree files to blobs), and this does not seem right. I
+hope this is not happening with the internal diff, nor with crlf!
 
-> ...
-> That means that at least one <commit-id> should always be passed to "git 
-> rev-list".
+Since both the cleaned and the smudged version are supposed to be
+"authoritative" (as opposed to the textconv'ed one) one may argue either
+way what's the right approach. For internal use comparing the cleaned
+versions may make more sense, for displaying diff's the checked-out
+form, i.e. smudged versions make more sense.
 
-But you do not have to even be tied to rev-list.  After all, the partial
-migration of filter_skipped is not "git bisect in C", but more like the
-first subcommand to "git bisect--helper" command that is written in C and
-can be called from shell.  The next subcommand might be check_good_are...
-and eventually you will have all the necessary and complex pieces the
-shell version of "git bisect" currently implements as shell function as
-the subcommands of "git bisect--helper".  Finally, "git bisect in C" will
-then make direct calls to the functions that would implement that "git
-bisect--helper" command, and gets rid of the "helper" command altogether.
+But that is another topic which would need to be substantiated with
+tests. It's not completely unlikely I may come up with some, but don't
+count on it...
 
-	Side note.  That was how git-fetch--tool was started; it was a
-	helper to partially migrate slower parts of git-fetch.sh to C.  I
-	suspect we can almost remove it but not quite yet...
+Cheers,
+Michael
