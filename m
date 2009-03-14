@@ -1,208 +1,123 @@
-From: Carlos Rica <jasampler@gmail.com>
-Subject: [PATCH] builtin-tag.c: remove global variable to use the callback
-	data of git-config.
-Date: Sat, 14 Mar 2009 08:17:15 +0100
-Message-ID: <1237015035.9952.10.camel@luis-desktop>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Migrate bisect to C (was: [PATCH 1/7] strbuf: add "include_delim" parameter to "strbuf_split")
+Date: Sat, 14 Mar 2009 08:46:17 +0100
+Message-ID: <200903140846.17599.chriscool@tuxfamily.org>
+References: <20090312085103.e83b34a5.chriscool@tuxfamily.org> <200903130702.01039.chriscool@tuxfamily.org> <7vfxhhj4mh.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org, johannes.schindelin@gmx.de, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Mar 14 08:18:43 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org,
+	Ingo Molnar <mingo@elte.hu>, John Tapsell <johnflux@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Pierre Habouzit <madcoder@debian.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 14 08:49:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LiO8o-0005WD-EW
-	for gcvg-git-2@gmane.org; Sat, 14 Mar 2009 08:18:43 +0100
+	id 1LiOcS-0002ai-JO
+	for gcvg-git-2@gmane.org; Sat, 14 Mar 2009 08:49:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753315AbZCNHRO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Mar 2009 03:17:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754334AbZCNHRN
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Mar 2009 03:17:13 -0400
-Received: from mail-bw0-f175.google.com ([209.85.218.175]:64012 "EHLO
-	mail-bw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753622AbZCNHRK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Mar 2009 03:17:10 -0400
-X-Greylist: delayed 16443 seconds by postgrey-1.27 at vger.kernel.org; Sat, 14 Mar 2009 03:17:10 EDT
-Received: by bwz23 with SMTP id 23so354920bwz.37
-        for <git@vger.kernel.org>; Sat, 14 Mar 2009 00:17:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:content-type
-         :date:message-id:mime-version:x-mailer:content-transfer-encoding;
-        bh=6kzyyzGa9+t94Xc3Aq6DiYrAOtveRNnh0ZoHkwUv5xw=;
-        b=XpJxnD3+IW27iedWLRJSubin45nA4w94xrOCpE0r3xE4GXT1MsdqitmaRRl47HUPsr
-         osVVZvxhLRp764253Nl2tv4UystDCbnnzLOtiL7KOCQa/dw/pZ3jOkCJDtlK1kBiDV00
-         0fdHIxwvsGYtA07k4WjxljUJ9u7VVAIqM3WpA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:content-type:date:message-id:mime-version:x-mailer
-         :content-transfer-encoding;
-        b=jyN2T+kKuSWuNxow3qzIqzLNB9MNwlQKuBhkfvvKmSRlR6Nocu2bPVoqny+tVPUYeZ
-         rvdwQ0hSw+vQcpHW3XEQNmMLPoo6ceMiCuB/QndmAmP4nrsn6VDuQNrHbwlk7oS8/WYD
-         Il6zIb7XiJUiD0LfmUaQNaQ0O5njtXae+aJXM=
-Received: by 10.103.105.1 with SMTP id h1mr1016175mum.13.1237015027511;
-        Sat, 14 Mar 2009 00:17:07 -0700 (PDT)
-Received: from ?192.168.0.194? ([212.145.102.186])
-        by mx.google.com with ESMTPS id 23sm5310616mum.7.2009.03.14.00.17.05
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 14 Mar 2009 00:17:06 -0700 (PDT)
-X-Mailer: Evolution 2.22.3.1 
+	id S1753176AbZCNHrS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Mar 2009 03:47:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752284AbZCNHrS
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Mar 2009 03:47:18 -0400
+Received: from smtp2-g21.free.fr ([212.27.42.2]:56233 "EHLO smtp2-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752204AbZCNHrR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 Mar 2009 03:47:17 -0400
+Received: from smtp2-g21.free.fr (localhost [127.0.0.1])
+	by smtp2-g21.free.fr (Postfix) with ESMTP id 75F0A4B0026;
+	Sat, 14 Mar 2009 08:47:04 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp2-g21.free.fr (Postfix) with ESMTP id 7F1FE4B0113;
+	Sat, 14 Mar 2009 08:47:02 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vfxhhj4mh.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113241>
 
-Signed-off-by: Carlos Rica <jasampler@gmail.com>
----
+Le vendredi 13 mars 2009, Junio C Hamano a =E9crit :
+>
+> I also do not agree that you have to keep list of skip both in shell =
+and
+> rev-list when you go the route I suggested.  I think a separate bisec=
+t.c
+> you did is a good first step to make not just the bisect machinery bu=
+t
+> the whole bisect command into a built-in, and even if we do not do th=
+e
+> full rewrite in C in one go, moving these "shell script reads from
+> refs/bisect only to feed the result to rev-list --bisect" pattern to
+> "shell script updates refs/bisect and let rev-list --bisect read from
+> there" pattern would be a good initial step.  Oh, and I did not mean =
+it
+> only for "skip", but also doing this for "good" and "bad" as well.
+>
+> For example, you read "refs/bisect/skip-*" and keep that in $skip to:
+>
+>  - feed it to filter_skipped() which you are making built-in with thi=
+s
+>    series;
+>
+>  - feed it to check_good_are_ancestors_of_bad that in turn calls
+>    check_merge_bases;
+>
+> and its use is contained in bisect_next() alone.  After this series i=
+s
+> done, we can move the logic in check_good_are... to bisect.c and you =
+do
+> not have to read refs/bisect/skip-* in the shell anymore.  IOW, we ca=
+n
+> migrate away from the "shell reads from refs/bisect/ and feeds that t=
+o
+> rev-list --bisect" pattern incrementally.
 
-Here I declare a struct to wrap the new local array along with its size.
-QUESTION: An alternative to this is strbuf, would it be preferable?
+Do you mean that you want this series to migrate both "filter_skipped" =
+and
+"check_good_are_ancestors_of_bad" to C? Or is it ok=20
+if "check_good_are_ancestors_of_bad" migrates later?
 
+If it is ok to migrate "check_good_are_ancestors_of_bad" later, then I =
+think=20
+something like the 8/7 patch I posted yesterday might be a good way,=20
+because I think a "--bisect-read-refs" option that read refs=20
+from "refs/bisect/*" would not fit well in "git rev-list".
 
-builtin-tag.c |   43 ++++++++++++++++++++++++++-----------------
- 1 files changed, 26 insertions(+), 17 deletions(-)
+Because, the "git rev-list" usage is:
 
-diff --git a/builtin-tag.c b/builtin-tag.c
-index 01e7374..2b2d728 100644
---- a/builtin-tag.c
-+++ b/builtin-tag.c
-@@ -21,8 +21,6 @@ static const char * const git_tag_usage[] = {
- 	NULL
- };
- 
--static char signingkey[1000];
--
- struct tag_filter {
- 	const char *pattern;
- 	int lines;
-@@ -156,7 +154,12 @@ static int verify_tag(const char *name, const char *ref,
- 	return 0;
- }
- 
--static int do_sign(struct strbuf *buffer)
-+struct char_array {
-+	char *buf;
-+	size_t size;
-+};
-+
-+static int do_sign(struct char_array *signingkey, struct strbuf *buffer)
- {
- 	struct child_process gpg;
- 	const char *args[4];
-@@ -164,11 +167,12 @@ static int do_sign(struct strbuf *buffer)
- 	int len;
- 	int i, j;
- 
--	if (!*signingkey) {
--		if (strlcpy(signingkey, git_committer_info(IDENT_ERROR_ON_NO_NAME),
--				sizeof(signingkey)) > sizeof(signingkey) - 1)
-+	if (!signingkey->buf[0]) {
-+		if (strlcpy(signingkey->buf,
-+				git_committer_info(IDENT_ERROR_ON_NO_NAME),
-+				signingkey->size) > signingkey->size - 1)
- 			return error("committer info too long.");
--		bracket = strchr(signingkey, '>');
-+		bracket = strchr(signingkey->buf, '>');
- 		if (bracket)
- 			bracket[1] = '\0';
- 	}
-@@ -183,7 +187,7 @@ static int do_sign(struct strbuf *buffer)
- 	gpg.out = -1;
- 	args[0] = "gpg";
- 	args[1] = "-bsau";
--	args[2] = signingkey;
-+	args[2] = signingkey->buf;
- 	args[3] = NULL;
- 
- 	if (start_command(&gpg))
-@@ -220,9 +224,10 @@ static const char tag_template[] =
- 	"# Write a tag message\n"
- 	"#\n";
- 
--static void set_signingkey(const char *value)
-+static void set_signingkey(struct char_array *signingkey, const char *value)
- {
--	if (strlcpy(signingkey, value, sizeof(signingkey)) >= sizeof(signingkey))
-+	if (strlcpy(signingkey->buf, value, signingkey->size)
-+					>= signingkey->size)
- 		die("signing key value too long (%.10s...)", value);
- }
- 
-@@ -231,7 +236,7 @@ static int git_tag_config(const char *var, const char *value, void *cb)
- 	if (!strcmp(var, "user.signingkey")) {
- 		if (!value)
- 			return config_error_nonbool(var);
--		set_signingkey(value);
-+		set_signingkey((struct char_array *) cb, value);
- 		return 0;
- 	}
- 
-@@ -266,9 +271,10 @@ static void write_tag_body(int fd, const unsigned char *sha1)
- 	free(buf);
- }
- 
--static int build_tag_object(struct strbuf *buf, int sign, unsigned char *result)
-+static int build_tag_object(struct strbuf *buf, int sign,
-+			struct char_array *signingkey, unsigned char *result)
- {
--	if (sign && do_sign(buf) < 0)
-+	if (sign && do_sign(signingkey, buf) < 0)
- 		return error("unable to sign the tag");
- 	if (write_sha1_file(buf->buf, buf->len, tag_type, result) < 0)
- 		return error("unable to write tag file");
-@@ -277,6 +283,7 @@ static int build_tag_object(struct strbuf *buf, int sign, unsigned char *result)
- 
- static void create_tag(const unsigned char *object, const char *tag,
- 		       struct strbuf *buf, int message, int sign,
-+		       struct char_array *signingkey,
- 		       unsigned char *prev, unsigned char *result)
- {
- 	enum object_type type;
-@@ -331,7 +338,7 @@ static void create_tag(const unsigned char *object, const char *tag,
- 
- 	strbuf_insert(buf, 0, header_buf, header_len);
- 
--	if (build_tag_object(buf, sign, result) < 0) {
-+	if (build_tag_object(buf, sign, signingkey, result) < 0) {
- 		if (path)
- 			fprintf(stderr, "The tag message has been left in %s\n",
- 				path);
-@@ -374,6 +381,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	const char *msgfile = NULL, *keyid = NULL;
- 	struct msg_arg msg = { 0, STRBUF_INIT };
- 	struct commit_list *with_commit = NULL;
-+	char keyarr[1000] = {'\0'};
-+	struct char_array signingkey = { keyarr, sizeof(keyarr) };
- 	struct option options[] = {
- 		OPT_BOOLEAN('l', NULL, &list, "list tag names"),
- 		{ OPTION_INTEGER, 'n', NULL, &lines, NULL,
-@@ -403,14 +412,14 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 
--	git_config(git_tag_config, NULL);
-+	git_config(git_tag_config, &signingkey);
- 
- 	argc = parse_options(argc, argv, options, git_tag_usage, 0);
- 	msgfile = parse_options_fix_filename(prefix, msgfile);
- 
- 	if (keyid) {
- 		sign = 1;
--		set_signingkey(keyid);
-+		set_signingkey(&signingkey, keyid);
- 	}
- 	if (sign)
- 		annotate = 1;
-@@ -474,7 +483,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 
- 	if (annotate)
- 		create_tag(object, tag, &buf, msg.given || msgfile,
--			   sign, prev, object);
-+			   sign, &signingkey, prev, object);
- 
- 	lock = lock_any_ref_for_update(ref, prev, 0);
- 	if (!lock)
--- 
-1.5.4.3
+git rev-list [OPTION] <commit-id>... [ -- paths... ]
+
+That means that at least one <commit-id> should always be passed to "gi=
+t=20
+rev-list".
+
+So it would be strange to have to pass a commit on the command line whe=
+n=20
+using the "--bisect-read-refs" option. And I think it would not be very=
+=20
+consistent to change the usage like this:
+
+git rev-list [OPTION] [ --bisect-read-refs | <commit-id>... ] [ --=20
+paths... ]
+
+Also when we migrate "check_good_are_ancestors_of_bad" to C, we will=20
+probably have to move the code that checks out the source code=20
+("bisect_checkout" shell function),=20
+because "check_good_are_ancestors_of_bad" can call "bisect_checkout".
+And I don't think that the checkout behavior would fit well in "git=20
+rev-list".
+
+That's why I suggested to add a new "git rev-bisect" plumbing command t=
+hat=20
+would read refs from "refs/bisect/*" and that could later be fitted wit=
+h=20
+the "bisect_checkout" and "check_good_are_ancestors_of_bad" behavior.
+
+Best regards,
+Christian.
