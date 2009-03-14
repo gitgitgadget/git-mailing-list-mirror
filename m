@@ -1,94 +1,107 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH] test-lib: write test results to
-	test-results/<basename>-<pid>
-Date: Sat, 14 Mar 2009 14:59:04 +0100
-Message-ID: <20090314135904.GL6808@neumann>
-References: <cover.1236961524u.git.johannes.schindelin@gmx.de>
-	<3728317206182c4d4539f3d20b8441cb160e72e3.1236961524u.git.johannes.schindelin@gmx.de>
-	<alpine.DEB.1.00.0903131735110.6288@intel-tinevez-2-302>
-	<20090313172002.GA16232@neumann>
-	<alpine.DEB.1.00.0903141250450.10279@pacific.mpi-cbg.de>
-	<20090314121617.GJ6808@neumann>
-	<alpine.DEB.1.00.0903141321550.10279@pacific.mpi-cbg.de>
-	<20090314122833.GK6808@neumann>
-	<fabb9a1e0903140616q3770f89axff84755abb1f47c7@mail.gmail.com>
+From: =?ISO-8859-1?Q?Johan_S=F8rensen?= <johan@johansorensen.com>
+Subject: Re: [PATCH] Introduce a filter-path argument to git-daemon, for doing 
+	custom path transformations
+Date: Sat, 14 Mar 2009 15:39:24 +0100
+Message-ID: <9e0f31700903140739g26be7981lb0fa411cdd8029e6@mail.gmail.com>
+References: <49B7DFA1.4030409@viscovery.net>
+	 <1236852820-12980-1-git-send-email-johan@johansorensen.com>
+	 <alpine.DEB.1.00.0903121218000.10279@pacific.mpi-cbg.de>
+	 <9e0f31700903121206m3adbabacra655c5d340365f43@mail.gmail.com>
+	 <7vvdqcd1zh.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, gitster@pobox.com
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 14 15:01:19 2009
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 14 15:41:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LiUQR-0003dp-Av
-	for gcvg-git-2@gmane.org; Sat, 14 Mar 2009 15:01:19 +0100
+	id 1LiV2n-0006li-Jn
+	for gcvg-git-2@gmane.org; Sat, 14 Mar 2009 15:40:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753356AbZCNN7O convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Mar 2009 09:59:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753264AbZCNN7O
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Mar 2009 09:59:14 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:51629 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753060AbZCNN7N (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Mar 2009 09:59:13 -0400
-Received: from [127.0.1.1] (p5B130307.dip0.t-ipconnect.de [91.19.3.7])
-	by mrelayeu.kundenserver.de (node=mrelayeu6) with ESMTP (Nemesis)
-	id 0ML29c-1LiUOG1dAL-0001tX; Sat, 14 Mar 2009 14:59:05 +0100
-Content-Disposition: inline
-In-Reply-To: <fabb9a1e0903140616q3770f89axff84755abb1f47c7@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Provags-ID: V01U2FsdGVkX18XzPSS3/balwGNgf/qIJoLGbD2h/i376ZY+RE
- TDzg+HbkqIfIvz0Ddls4n3eK/28Q/AlfdcmvkvtsH+t+0U+202
- tjEN2GaTYIXcqOqujXAOA==
+	id S1754712AbZCNOj2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Mar 2009 10:39:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752328AbZCNOj2
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Mar 2009 10:39:28 -0400
+Received: from mail-ew0-f177.google.com ([209.85.219.177]:45432 "EHLO
+	mail-ew0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751765AbZCNOj2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 Mar 2009 10:39:28 -0400
+Received: by ewy25 with SMTP id 25so2911703ewy.37
+        for <git@vger.kernel.org>; Sat, 14 Mar 2009 07:39:24 -0700 (PDT)
+Received: by 10.210.66.1 with SMTP id o1mr1767307eba.16.1237041564209; Sat, 14 
+	Mar 2009 07:39:24 -0700 (PDT)
+In-Reply-To: <7vvdqcd1zh.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113253>
 
-Hi,
-
-On Sat, Mar 14, 2009 at 02:16:57PM +0100, Sverre Rabbelier wrote:
-> On Sat, Mar 14, 2009 at 13:28, SZEDER G=E1bor <szeder@ira.uka.de> wro=
+On Sat, Mar 14, 2009 at 7:58 AM, Junio C Hamano <gitster@pobox.com> wro=
 te:
-> > With my proposed change there would be no need to clean 'test-resul=
-ts'
-> > before running the tests, because test-lib.sh would take care of th=
-at
-> > (not by removing and recreating 'test-results/', but by overwriting
-> > (IOW: removing and recreating, but in one step) individual test res=
-ult
-> > files).
->=20
-> Wouldn't that result in possible stale files being counted in the
-> result (e.g., if those tests were not run this time, but they were ru=
-n
-> previously)?
+> However, being paranoid is a good thing when we talk about instructio=
+ns we
+> give to the end users. =A0The site owner who uses this facility needs=
+ to be
+> aware that the script is run as the same user that runs git-daemon, a=
+nd
+> that more than one instances of the script can be run at the same tim=
+e.
+> The script writer needs to be careful about using the same scratchpad
+> location for the temporary files the script uses and not letting mult=
+iple
+> instances of scripts stomping on each other's toes. =A0These things n=
+eed to
+> be documented.
 
-It depends.
+Will expand the docs further.
 
-If you run only a few tests, then you do it with a command like 'make
-t1234-foo.sh t5678-bar.sh'.
+> Do you run git-daemon from inetd, or standalone, by the way?
 
-Currently this doesn't run the 'pre-clean' target, therefore if you
-run different tests (e.g. 'make t1234-foo.sh ; make t5678-bar.sh'),
-then a 'make aggregate-results' will include the result of both of
-those tests.  The same happens with my proposal, too, because the test
-of the last run will not overwrite the results of the test in the
-first run.
+Standalone.
 
-Now suppose that you want to run the same set of tests twice (or more;
-e.g. 'make t1234-foo.sh ; make t1234-foo.sh ; make
-aggregate-results').  Since currently the pid of the test is included
-in the test result file name, there will be two files (t1234-<pid1>
-and t1234-<pid2>) created under 'test-results/', and _both_ will be
-counted by 'aggregate-results'.  In this case my proposal is better,
-because the last round will overwrite the result of the previous runs,
-therefore no stale files will be counted.
+>=A0I am wondering how well it would scale if you spawn an external "fi=
+lter path"
+> script every time you get a request.
 
+A quick test of 250 consecutive requests with ls-remote to localhost
+(all without the --verbose flag), slowest run:
+- Baseline (no --filter-path agument): 3.39s
 
-Best,
-G=E1bor
+$ cat filter.c
+#import "stdio.h"
+int main (int argc, char const *argv[]) {
+	printf("%s", "/existing.git\0");
+	return 0;
+}
+- 3.84s
+
+$ cat filter.rb
+#!/usr/bin/ruby
+print "/existing.git\0"
+- 4.76s
+
+So, obviously highly dependent on how long it takes the script to
+launch and how much work it does. And yes, neither of the above really
+does anything :) nor takes any increased cpu load into account
+
+Another approach is to keep the external script running and feed it on
+stdin, but that would involve a bit more micro-management of the
+external process. I will revisit that idea if I find out that's
+needed.
+
+> (by the way, "filter path" sounds as if it checks and conditionally
+> denies access to, or something like that, which is not what you are u=
+sing
+> it for.  It is more about rewriting paths, a la mod_rewrite, and I th=
+ink
+> the option is misnamed)
+
+Maybe --rewrite-script or --rewrite-command  instead?
+
+Cheers,
+JS
