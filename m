@@ -1,70 +1,106 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: Not pushing all branches?
-Date: Sat, 14 Mar 2009 10:08:20 +0900
-Message-ID: <874oxwgbcr.fsf@catnip.gol.com>
-References: <alpine.DEB.2.00.0903130846410.17450@perkele.intern.softwolves.pp.se>
-	<43d8ce650903130125m6335d189obbcdb86ec9036083@mail.gmail.com>
-	<7v4oxxgpil.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Chris Johnsen <chris_johnsen@pobox.com>
+Subject: [PATCH] git-push.txt: describe how to default to pushing only
+ current branch
+Date: Fri, 13 Mar 2009 20:27:31 -0500
+Message-ID: <1236994051-27346-1-git-send-email-chris_johnsen@pobox.com>
+References: <20090313164941.GA16504@sigill.intra.peff.net>
+Cc: Jeff King <peff@peff.net>, Chris Johnsen <chris_johnsen@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 14 02:10:08 2009
+X-From: git-owner@vger.kernel.org Sat Mar 14 02:33:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LiIO6-0007cC-Rp
-	for gcvg-git-2@gmane.org; Sat, 14 Mar 2009 02:10:07 +0100
+	id 1LiIku-0004EE-VU
+	for gcvg-git-2@gmane.org; Sat, 14 Mar 2009 02:33:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750821AbZCNBIh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Mar 2009 21:08:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751090AbZCNBIg
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 21:08:36 -0400
-Received: from main.gmane.org ([80.91.229.2]:43773 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750821AbZCNBIf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Mar 2009 21:08:35 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LiIMa-0007uJ-Lz
-	for git@vger.kernel.org; Sat, 14 Mar 2009 01:08:32 +0000
-Received: from 218.231.175.8.eo.eaccess.ne.jp ([218.231.175.8])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 14 Mar 2009 01:08:32 +0000
-Received: from miles by 218.231.175.8.eo.eaccess.ne.jp with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 14 Mar 2009 01:08:32 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 218.231.175.8.eo.eaccess.ne.jp
-System-Type: x86_64-unknown-linux-gnu
-Cancel-Lock: sha1:UeS28iUyGuGlUXvsYafp6n91Qmg=
+	id S1762411AbZCNBaj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Mar 2009 21:30:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762399AbZCNBai
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Mar 2009 21:30:38 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:52344 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932109AbZCNBag (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Mar 2009 21:30:36 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B47155D30;
+	Fri, 13 Mar 2009 21:30:34 -0400 (EDT)
+Received: from localhost.localdomain (unknown [76.201.178.103]) (using TLSv1
+ with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate
+ requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id
+ 34FE75D2F; Fri, 13 Mar 2009 21:30:31 -0400 (EDT)
+X-Mailer: git-send-email 1.6.2
+In-Reply-To: <20090313164941.GA16504@sigill.intra.peff.net>
+X-Pobox-Relay-ID: B701ECC4-1037-11DE-97D9-C5D912508E2D-07245699!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113231>
 
-Junio C Hamano <gitster@pobox.com> writes:
->    - The first "-" one; even though it may be useful to be able to say
->      "the remote the current branch is associated with by default", using
->      "-" as a short-hand for that might be harmful to the long term UI
->      health, and further study was requested, which hasn't been responded
->      yet.
+---
+Jeff King <peff@peff.net> writes:
+>   git config remote.$remote.push HEAD
+> 
+> It isn't mentioned in the git-push manpage; maybe a documentation
+> patch to give an example using HEAD would make sense?
 
-I've often wished for such a thing in some contexts, actually...
-e.g., "git diff REMOTE_BRANCH" to see what updates are pending if I
-merge...  Also, it would be nice to have a more concise way to say
-"git merge REMOTE_BRANCH".
+Here is a patch. It also attempts to document bare 'git push'.
 
-I'm not sure "-" seems like the best syntax though... maybe it's a bit
-_too_ short.
+In the resulting manpage the inline commands are not very
+obvious (the HTML looks OK though). There is some sort of
+formatting in there, but it does not seem to display any
+differently from the surrounding text when I use man to view it
+on my system.  Would it be better to do something like wrap
+double quotes around the inline commands to help readers viewing
+the manpage?
+---
+ Documentation/git-push.txt |   26 ++++++++++++++++++++++++--
+ 1 files changed, 24 insertions(+), 2 deletions(-)
 
-[Is there a general standard syntax for "keywords" in git, e.g., to
-distinguish them from branch/rev names?  I mean, if the standard syntax
-were "@foo", then one could imagine "git diff @remote" or something.]
-
--miles
-
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 4e7e5a7..fd53c49 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -24,8 +24,8 @@ every time you push into it, by setting up 'hooks' there.  See
+ documentation for linkgit:git-receive-pack[1].
+ 
+ 
+-OPTIONS
+--------
++OPTIONS[[OPTIONS]]
++------------------
+ <repository>::
+ 	The "remote" repository that is destination of a push
+ 	operation.  This parameter can be either a URL
+@@ -187,6 +187,28 @@ reason::
+ Examples
+ --------
+ 
++git push::
++	Works like `git push <remote>`, where <remote> is the
++	current branch's remote (or `origin`, if no remote is
++	configured for the current branch).
++
++git push origin::
++	Without additional configuration, works like
++	`git push origin :`.
+++
++The default behavior of this command when no <refspec> is given can be
++configured by setting the `push` option of the remote.
+++
++For example, to default to pushing only the current branch to `origin`
++use `git config remote.origin.push HEAD`.  Any valid <refspec> (like
++the ones in the examples below) can be configured as the default for
++`git push origin`.
++
++git push origin :::
++	Push "matching" branches to `origin`. See
++	<refspec> in the <<OPTIONS,OPTIONS>> section above for a
++	description of "matching" branches.
++
+ git push origin master::
+ 	Find a ref that matches `master` in the source repository
+ 	(most likely, it would find `refs/heads/master`), and update
 -- 
-Run away!  Run away!
+1.6.2
