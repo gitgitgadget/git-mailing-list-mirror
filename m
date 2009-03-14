@@ -1,108 +1,67 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] test-lib: write test results to
-	test-results/<basename>-<pid>
-Date: Sat, 14 Mar 2009 13:16:17 +0100
-Message-ID: <20090314121617.GJ6808@neumann>
-References: <cover.1236961524u.git.johannes.schindelin@gmx.de>
-	<3728317206182c4d4539f3d20b8441cb160e72e3.1236961524u.git.johannes.schindelin@gmx.de>
-	<alpine.DEB.1.00.0903131735110.6288@intel-tinevez-2-302>
-	<20090313172002.GA16232@neumann>
-	<alpine.DEB.1.00.0903141250450.10279@pacific.mpi-cbg.de>
+ test-results/<basename>-<pid>
+Date: Sat, 14 Mar 2009 13:22:59 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903141321550.10279@pacific.mpi-cbg.de>
+References: <cover.1236961524u.git.johannes.schindelin@gmx.de> <3728317206182c4d4539f3d20b8441cb160e72e3.1236961524u.git.johannes.schindelin@gmx.de> <alpine.DEB.1.00.0903131735110.6288@intel-tinevez-2-302> <20090313172002.GA16232@neumann>
+ <alpine.DEB.1.00.0903141250450.10279@pacific.mpi-cbg.de> <20090314121617.GJ6808@neumann>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>,
-	git@vger.kernel.org, gitster@pobox.com,
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-252002524-1237033380=:10279"
+Cc: git@vger.kernel.org, gitster@pobox.com,
 	Sverre Rabbelier <alturin@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Mar 14 13:19:40 2009
+To: =?ISO-8859-15?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Sat Mar 14 13:22:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LiSq3-0000mF-Aj
-	for gcvg-git-2@gmane.org; Sat, 14 Mar 2009 13:19:39 +0100
+	id 1LiSt4-0001l4-TW
+	for gcvg-git-2@gmane.org; Sat, 14 Mar 2009 13:22:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751178AbZCNMQn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Mar 2009 08:16:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750844AbZCNMQn
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Mar 2009 08:16:43 -0400
-Received: from moutng.kundenserver.de ([212.227.126.188]:61248 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750742AbZCNMQn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Mar 2009 08:16:43 -0400
-Received: from [127.0.1.1] (p5B130307.dip0.t-ipconnect.de [91.19.3.7])
-	by mrelayeu.kundenserver.de (node=mrelayeu8) with ESMTP (Nemesis)
-	id 0ML31I-1LiSmn4AOk-0004kZ; Sat, 14 Mar 2009 13:16:20 +0100
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0903141250450.10279@pacific.mpi-cbg.de>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Provags-ID: V01U2FsdGVkX19gVLJF/4VtNJjnszXODrghTF6OqQmXnkZ05R2
- TSfhXUtrWEa7SKULUA65OrWeyUL61bi11pkmQmmMsM8rWGsjmK
- R8OoiciZgF8E0H9zoh2ug==
+	id S1751542AbZCNMVQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Mar 2009 08:21:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751465AbZCNMVQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Mar 2009 08:21:16 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36132 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751396AbZCNMVP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Mar 2009 08:21:15 -0400
+Received: (qmail invoked by alias); 14 Mar 2009 12:21:12 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp018) with SMTP; 14 Mar 2009 13:21:12 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19q8ygVd0RqS05qBZmSLZq10/sEBC694wLxNJVaR9
+	pkmr84v92vRECi
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20090314121617.GJ6808@neumann>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.72
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113248>
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-252002524-1237033380=:10279
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: 8BIT
 
 Hi,
 
-On Sat, Mar 14, 2009 at 12:53:06PM +0100, Johannes Schindelin wrote:
-> Hi,
->=20
-> On Fri, 13 Mar 2009, SZEDER G=E1bor wrote:
->=20
-> > diff --git a/t/Makefile b/t/Makefile
-> > index 0d65ced..2e6e205 100644
-> > --- a/t/Makefile
-> > +++ b/t/Makefile
-> > @@ -14,14 +14,11 @@ SHELL_PATH_SQ =3D $(subst ','\'',$(SHELL_PATH))
-> >  T =3D $(wildcard t[0-9][0-9][0-9][0-9]-*.sh)
-> >  TSVN =3D $(wildcard t91[0-9][0-9]-*.sh)
-> > =20
-> > -all: pre-clean $(T) aggregate-results clean
-> > +all: $(T) aggregate-results clean
+On Sat, 14 Mar 2009, SZEDER Gábor wrote:
 
-Well, this part is wrong, or at least not up-to-date.  I just digged
-up an ancient branch in my tree and sent out the diff, without
-realizing that there were some conflicting changes since then.
+> If you have failing tests, or if you interrupt the tests, then you
+> will have stale files lying around _anyway_:  not only test results
+> are left there, but also trash directories.
 
-> > =20
-> >  $(T):
-> >  	@echo "*** $@ ***"; GIT_CONFIG=3D.git/config '$(SHELL_PATH_SQ)' $=
-@ $(GIT_TEST_OPTS)
-> > =20
-> > -pre-clean:
-> > -	$(RM) -r test-results
-> > -
-> >  clean:
-> >  	$(RM) -r 'trash directory' test-results
-> > =20
-> > @@ -33,5 +30,5 @@ full-svn-test:
-> >  	$(MAKE) $(TSVN) GIT_SVN_NO_OPTIMIZE_COMMITS=3D1 LC_ALL=3DC
-> >  	$(MAKE) $(TSVN) GIT_SVN_NO_OPTIMIZE_COMMITS=3D0 LC_ALL=3Den_US.UT=
-=46-8
-> > =20
-> > -.PHONY: pre-clean $(T) aggregate-results clean
-> > +.PHONY: $(T) aggregate-results clean
-> >  .NOTPARALLEL:
->=20
-> This is wrong.  If you have failing tests, or if you interrupt the te=
-sts,=20
-> it will never clean the test results, and after Hannes' patch you _wi=
-ll_=20
-> have stale files lying around all the time.
+The 'pre-clean' target actually cleans test-results/, and test-lib.sh make 
+sure that the trash directory is removed and recreated.
 
-If you have failing tests, or if you interrupt the tests, then you
-will have stale files lying around _anyway_:  not only test results
-are left there, but also trash directories.  To remove the trash
-directories, you'll need to run 'make clean' (in t/), but that will
-remove the test results, too, so there is no difference.  But even if
-you don't run 'make clean' before running the test suite again, test
-results cruft from the previous run doesn't matter, because they will
-be overwritten.
+Ciao,
+Dscho
 
-
-Best,
-G=E1bor
+--8323328-252002524-1237033380=:10279--
