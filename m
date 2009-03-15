@@ -1,115 +1,84 @@
-From: Tom Huybrechts <tom.huybrechts@gmail.com>
-Subject: git-svn: creating tags from a subdirectory of trunk
-Date: Sun, 15 Mar 2009 22:18:41 +0100
-Message-ID: <632a37a0903151418u483ca6cal1582518b9120da8e@mail.gmail.com>
+From: Kjetil Barvik <barvik@broadpark.no>
+Subject: Re: [PATCH 2/2] make the ST_{C,M}TIME_NSEC macros more function like
+Date: Sun, 15 Mar 2009 22:59:45 +0100
+Organization: private
+Message-ID: <86tz5u1m7i.fsf@broadpark.no>
+References: <cover.1237115791.git.barvik@broadpark.no>
+ <cover.1237115791.git.barvik@broadpark.no>
+ <0681248ac5c9cedf5f42adeeae89966a89e6d42a.1237115791.git.barvik@broadpark.no>
+ <7v4oxu7dyn.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 15 22:20:35 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 15 23:01:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lixl4-0001Zu-Tf
-	for gcvg-git-2@gmane.org; Sun, 15 Mar 2009 22:20:35 +0100
+	id 1LiyOV-0004Lr-Dl
+	for gcvg-git-2@gmane.org; Sun, 15 Mar 2009 23:01:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755463AbZCOVSq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Mar 2009 17:18:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752373AbZCOVSp
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Mar 2009 17:18:45 -0400
-Received: from nf-out-0910.google.com ([64.233.182.186]:31633 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751002AbZCOVSp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Mar 2009 17:18:45 -0400
-Received: by nf-out-0910.google.com with SMTP id d21so914283nfb.21
-        for <git@vger.kernel.org>; Sun, 15 Mar 2009 14:18:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=+Jp4MrIWWgNeKElK+i8Se64GGYXOkAXAnuuHOym9r5w=;
-        b=QsLntrfd97vF0+zZm1KeCUYKqXdt3iQP6iTHa6TW9+fGH/8Q77spTBqkSndOUPSoIv
-         i2squEovi5OlMv/uAHafUc1PWpvt2vTTgLiB2p/E+iqNON9WbMXhCjiqmVgAN3TdwtYn
-         1GNieo95JF8VAQnqnIeL5BPXyDmm6XY/ZyvYA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=J43RWAJZFlXeHaSNVcUYXcujvgau2PCcU3uoJpNWW/oY/Z/LL2a814AtSL+NGlFYEA
-         aRvJjqqaNu6A9Qwh81FZ0llzdMU3e7Y5yEG3n8VScs/zRtbWcMLYkXVLqWumHgum8oM0
-         atnqbTKprXpXKHaoKiqKYPjynSZEyjddhm+jQ=
-Received: by 10.210.130.14 with SMTP id c14mr1532574ebd.33.1237151921916; Sun, 
-	15 Mar 2009 14:18:41 -0700 (PDT)
+	id S1752907AbZCOV7t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Mar 2009 17:59:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752475AbZCOV7t
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Mar 2009 17:59:49 -0400
+Received: from osl1smout1.broadpark.no ([80.202.4.58]:41378 "EHLO
+	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752373AbZCOV7s (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Mar 2009 17:59:48 -0400
+Received: from osl1sminn1.broadpark.no ([80.202.4.59])
+ by osl1smout1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KGK001PUIFMK9A0@osl1smout1.broadpark.no> for
+ git@vger.kernel.org; Sun, 15 Mar 2009 22:59:46 +0100 (CET)
+Received: from localhost ([80.203.106.191]) by osl1sminn1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KGK00IO0IFLPU30@osl1sminn1.broadpark.no> for
+ git@vger.kernel.org; Sun, 15 Mar 2009 22:59:46 +0100 (CET)
+In-reply-to: <7v4oxu7dyn.fsf@gitster.siamese.dyndns.org>
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113300>
 
-Hi,
+Junio C Hamano <gitster@pobox.com> writes:
 
-I'm trying to setup a git mirror of a svn repository.  The tags in
-this repository are not created trunk it self, but from subdirectories
-of trunk. The tags and branches are in the standard places.
-e.g:
-/trunk/main -> tags/main-1
-/trunk/plugins/foo -> tags/foo-1
-/trunk/plugins/bar -> tags/bar-1
+> Kjetil Barvik <barvik@broadpark.no> writes:
+>
+>> Make the macros take a pointer to a 'struct stat'. This is so that it
+>> should be easier to understand what is going on, and that the macros
+>> can later be implemented as a inline function if we want to.
+>>
+>> Impact: cosmetic change
+>
+> Hmm,...
+>
+> I have to wonder if this cosmetic change is an improvement, though.
+>
+> I do not have a strong feeling either way, but I think it makes it
+> clear that these two macros are not lvalues if you do not pass a
+> pointer but instead pass a structure.  An inline function can still
+> take a structure passed by value as an argument anyway, no?
 
-I run 'git svn clone -s svn-url target'. It starts going over the
-history nicely until it reaches the first branch. It calls this branch
-something like tags/tag-name@revision, and starts retrieving the
-entire project history again from r1. This is repeated for every
-branch.
+  It seems to woork from a small gcc test, but since C has call-by-
+  value, and http://en.wikipedia.org/wiki/Call_by_value#Call_by_value
+  says:
 
-I've created a very small standalone shell script that demonstrates the problem:
+    [...] in C or Pascal, calling a function with a large structure as
+    an argument will cause the entire structure to be copied,
+    potentially causing serious performance degradation, and mutations
+    to the structure are invisible to the caller. [...]
 
-=====
-#!/bin/bash
+  So in my eyes it make more sense to be consistent and take the address
+  of all struct like objects (&st in this case) for all arguments to
+  "function-like" things.
 
-REPO=`pwd`/svn-repo
-WC=`pwd`/svn-wc
-svnadmin create $REPO
-REPO=file://$REPO
-svn co $REPO $WC
-SUBDIR=$WC/trunk/subdir
+  But, since these 2 are macros, which use textual substitution, I guess
+  things will work correctly either way, and the compiled result will be
+  the same.  But, I still like the more "function friendly" macros.
 
-mkdir $WC/tags $WC/trunk $WC/branches $SUBDIR
-svn add $WC/*
-svn commit -m "structure" $WC
-svn cp -m "create a tag" $REPO/trunk/subdir $REPO/tags/1
-
-git svn clone -s $REPO git-repo
-=====
-
-
-When you run this, the output of git-svn is:
-
-=====
-Initialized empty Git repository in /home/tom/experiment/git-repo/.git/
-W: +empty_dir: trunk/subdir
-r1 = 3b90e67a4d8e9a2d32d4389b0f6ac93e23f38a46 (trunk)
-Found possible branch point:
-file:///home/tom/experiment/svn-repo/trunk/subdir =>
-file:///home/tom/experiment/svn-repo/tags/1, 1
-Initializing parent: tags/1@1
-r1 = 0ad93ba4a7f6c43de30ab4dd05161662b75a6adb (tags/1@1)
-Found branch parent: (tags/1) 0ad93ba4a7f6c43de30ab4dd05161662b75a6adb
-Following parent with do_switch
-Successfully followed parent
-r2 = ce47fc7b4e21000c84da63ad5f643c18118d1918 (tags/1)
-Checked out HEAD:
-  file:///home/tom/experiment/svn-repo/tags/1 r2
-=====
-
-Note the tags/1@1 and then starting over again from r1.
-
-It's not so bad in this little example, but try this on a repository
-with  200 tags and 16000 revisions...
-So my question: is this normal or a bug ? Can I do something to import
-this repository correctly ?
-
-Thanks,
-
-Tom
+  -- kjetil
