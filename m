@@ -1,58 +1,79 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [JGIT PATCH 3/3] Use a common skipObject method to avoid UNINTERESTING items
-Date: Sun, 15 Mar 2009 01:25:56 +0100
-Message-ID: <200903150125.56987.robin.rosenberg.lists@dewire.com>
-References: <1236967912-15088-1-git-send-email-spearce@spearce.org> <1236967912-15088-2-git-send-email-spearce@spearce.org> <1236967912-15088-3-git-send-email-spearce@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] config: --replace-all with one argument exits properly 
+ with a better message.
+Date: Sat, 14 Mar 2009 18:53:24 -0700
+Message-ID: <7vab7na6wb.fsf@gitster.siamese.dyndns.org>
+References: <1236998552.9952.2.camel@luis-desktop>
+ <7vtz5vakrp.fsf@gitster.siamese.dyndns.org>
+ <94a0d4530903141434w2fb8aa28we087465482a12e41@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-6"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Mar 15 01:27:40 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Carlos Rica <jasampler@gmail.com>, git@vger.kernel.org,
+	johannes.schindelin@gmx.de
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 15 02:56:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LieCX-0006fy-Pd
-	for gcvg-git-2@gmane.org; Sun, 15 Mar 2009 01:27:38 +0100
+	id 1LifaU-00056A-3e
+	for gcvg-git-2@gmane.org; Sun, 15 Mar 2009 02:56:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753624AbZCOA0I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Mar 2009 20:26:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753248AbZCOA0H
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Mar 2009 20:26:07 -0400
-Received: from mail.dewire.com ([83.140.172.130]:19885 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751723AbZCOA0G (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Mar 2009 20:26:06 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 2299F139A44D;
-	Sun, 15 Mar 2009 01:25:58 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1KzbgAqgLRvy; Sun, 15 Mar 2009 01:25:58 +0100 (CET)
-Received: from sleipner.localnet (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 6C8D280289B;
-	Sun, 15 Mar 2009 01:25:58 +0100 (CET)
-User-Agent: KMail/1.11.1 (Linux/2.6.27-12-generic; KDE/4.2.1; i686; ; )
-In-Reply-To: <1236967912-15088-3-git-send-email-spearce@spearce.org>
-Content-Disposition: inline
+	id S1753005AbZCOBxe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Mar 2009 21:53:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751802AbZCOBxd
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Mar 2009 21:53:33 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54329 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751272AbZCOBxd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 Mar 2009 21:53:33 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1A70B6DB7;
+	Sat, 14 Mar 2009 21:53:31 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5908D6DB5; Sat,
+ 14 Mar 2009 21:53:26 -0400 (EDT)
+In-Reply-To: <94a0d4530903141434w2fb8aa28we087465482a12e41@mail.gmail.com>
+ (Felipe Contreras's message of "Sat, 14 Mar 2009 23:34:55 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 15CCEDF4-1104-11DE-BCD8-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113271>
 
-fredag 13 mars 2009 19:11:52 skrev "Shawn O. Pearce" <spearce@spearce.org>:
-> All cases are using the same logic to decide that we should skip
-> this current object and not return it to the caller.  A common
-> implementation makes the code easier to follow, especially as it
-> reduces the ugly line wrap involved in the loop body.
+=46elipe Contreras <felipe.contreras@gmail.com> writes:
 
-Java conventions dictate that this method should be called shouldSkipObject. It
-is a boolean method that actually does not itself skip any objects.
+> On Sat, Mar 14, 2009 at 10:53 PM, Junio C Hamano <gitster@pobox.com> =
+wrote:
+>> Carlos Rica <jasampler@gmail.com> writes:
+>>
+>>> 'config --replace-all ONE_ARG' was being treated as 'config NAME VA=
+LUE',
+>>> showing the error "key does not contain a section: --replace-all".
+>>
+>> Hmm, I am getting "error: wrong number of arguments" followed by the=
+ long
+>> and somewhat annoying "usage" from the parseopt table dump.
+>
+> If you find it annoying why don't you remove the usage?
 
-I can amend that for you.
+Because the primary target audience of the help text is not me?
 
--- robin
+>> Can you work with Felipe to see if this is still needed, or needs to=
+ be
+>> fixed in a different way? =C2=A0It could be that your tests may alre=
+ady pass
+>> over there on 'next'. =C2=A0I didn't check.
+>
+> The new code is already checking correctly that --replace-all needs a=
+t
+> least two arguments. However, the "usage" is incorrect and of course
+> the test will come in handy.
+
+So perhaps you can pick a part of it and send in an update to your
+parseoptification series?  I think the series is ready for 'master'
+sometime next week if not sooner.
