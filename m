@@ -1,242 +1,127 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH] Tests: use test_cmp instead of diff where possible
-Date: Sun, 15 Mar 2009 19:42:48 +0100
-Message-ID: <49BD4C28.4030303@lsrfire.ath.cx>
-References: <1237124036-1348-1-git-send-email-vmiklos@frugalware.org>
+From: Ealdwulf Wuffinga <ealdwulf@googlemail.com>
+Subject: Re: Generalised bisection
+Date: Sun, 15 Mar 2009 19:16:16 +0000
+Message-ID: <efe2b6d70903151216q4a8881e5t797cf5d3bebc5697@mail.gmail.com>
+References: <efe2b6d70903081840v18e77aa7w2dac2bed553d0d6a@mail.gmail.com>
+	 <200903100808.15875.chriscool@tuxfamily.org>
+	 <efe2b6d70903110159h78de744yc141effaf5aa0821@mail.gmail.com>
+	 <43d8ce650903110235q5e2a59f6t201d5e65a4937476@mail.gmail.com>
+	 <efe2b6d70903111515p2b9f656bp186d0b3cc7ae483d@mail.gmail.com>
+	 <43d8ce650903112345x3d40b70ap7e4c0f8c7d0b6069@mail.gmail.com>
+	 <alpine.DEB.1.00.0903121154560.10279@pacific.mpi-cbg.de>
+	 <d9c1caea0903121102y5452603fua0e7a1b82e121b01@mail.gmail.com>
+	 <efe2b6d70903130549m63ae9bdeg1cd3f24a43b3e66f@mail.gmail.com>
+	 <d9c1caea0903130819u770686b1w867f074ffef8fabf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sun Mar 15 19:44:29 2009
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	John Tapsell <johnflux@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Git List <git@vger.kernel.org>
+To: Steven Tweed <orthochronous@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 15 20:17:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LivJz-0004fy-UU
-	for gcvg-git-2@gmane.org; Sun, 15 Mar 2009 19:44:28 +0100
+	id 1LivqI-0006KJ-FT
+	for gcvg-git-2@gmane.org; Sun, 15 Mar 2009 20:17:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751654AbZCOSm7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Mar 2009 14:42:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751511AbZCOSm6
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Mar 2009 14:42:58 -0400
-Received: from india601.server4you.de ([85.25.151.105]:50292 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751476AbZCOSm5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Mar 2009 14:42:57 -0400
-Received: from [10.0.1.101] (p57B7C9F4.dip.t-dialin.net [87.183.201.244])
-	by india601.server4you.de (Postfix) with ESMTPSA id 43DB42F8050;
-	Sun, 15 Mar 2009 19:42:54 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
-In-Reply-To: <1237124036-1348-1-git-send-email-vmiklos@frugalware.org>
+	id S1753292AbZCOTQV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Mar 2009 15:16:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751738AbZCOTQU
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Mar 2009 15:16:20 -0400
+Received: from mail-bw0-f175.google.com ([209.85.218.175]:33120 "EHLO
+	mail-bw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751511AbZCOTQU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Mar 2009 15:16:20 -0400
+Received: by bwz23 with SMTP id 23so715745bwz.37
+        for <git@vger.kernel.org>; Sun, 15 Mar 2009 12:16:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=7pcod1V58c7Z88P2fzrAYT4J1iF6NrKrzv5PIForB3g=;
+        b=eb740fRlHVtldlMFfnjN5cecCy5HlBgtdZ/ZdEeoolY1S02cjl/rwNOal4RxBkGACy
+         t+FpLUfNNsLBRrGn4pqOPLaUsNcP8YU2U2wI0vIuQnE+DEOG2vQ9BTUIq2O9fCcg9COQ
+         Dg0uvEPe3uhQDj7HZRJnh3QqgrxB6Y6Unlp3E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ISZx9ZuYpUfFA4uZhdWT7wbYnDYidGEsOxnyM5uvKuqHiKagOtdVE6LZNPdhoUzy/6
+         rM1OkzMocIbFS+tAIuwEMbRXuz1yAHFEBVnaDYYTl1zo5ukJ+o1Dl3+5xxpLQ2VMPZXm
+         66aemSQHqtyxMpR0bLuvax1Q5KSH/2rxzu4LM=
+Received: by 10.204.65.1 with SMTP id g1mr1293331bki.57.1237144576661; Sun, 15 
+	Mar 2009 12:16:16 -0700 (PDT)
+In-Reply-To: <d9c1caea0903130819u770686b1w867f074ffef8fabf@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113294>
 
-Miklos Vajna schrieb:
-> Several old tests were written before test_cmp was introduced, convert
-> these to test_cmp.
-> 
-> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
-> ---
-> 
-> I intentionally did not touch t5000 - using test_cmp -r works for me,
-> since the default is diff -u, but that would break the setup of users
-> where GIT_TEST_CMP is set to cmp.
-> 
->  t/t0000-basic.sh                    |    8 ++++----
->  t/t1100-commit-tree-options.sh      |    2 +-
->  t/t1400-update-ref.sh               |    6 +++---
->  t/t3000-ls-files-others.sh          |    4 ++--
->  t/t3010-ls-files-killed-modified.sh |    4 ++--
->  t/t5000-tar-tree.sh                 |    2 +-
->  t/t9001-send-email.sh               |    2 +-
->  7 files changed, 14 insertions(+), 14 deletions(-)
+On Fri, Mar 13, 2009 at 3:19 PM, Steven Tweed <orthochronous@gmail.com> wrote:
 
-You _did_ touch t5000, and converted one of the diff calls.  I agree
-that the ones using the option -r should stay, but the rest could be
-switched to test_cmp, too.
+> Underflow when using probabilities and lack of precision (rather than
+> overflow) when using negated logarithms are well known problems in the
+> kind of probabilistic object tracking, inference in graphical networks
+> and object identification processes I work with (in computer vision).
+> I there may well be other areas of Bayesian decision theory where this
+> doesn't happen, and indeed a _very_ quick scan through your document
+> suggests that you're adding to tallying information on each timestep
+> and recalcuating the entire model from those tallys, which is one of
+> the few cases where you can't really do rescaling. I'll try and have a
+> more detailled read over the weekend.
 
+That is useful information, thanks.
+
+It is not obvious how to perform this algorithm incrementally, because
+of the need to
+marginalise out the fault rate. As I understand it, marginalisation
+has to be done after you
+have incorporated all your information into the model, which means we
+can't use the
+usual bayesian updating.
+
+> On Fri, Mar 13, 2009 at 12:49 PM, Ealdwulf Wuffinga
+> <ealdwulf@googlemail.com> wrote:
+>> One issue in BBChop which should be easy to fix, is that I use a dumb
+>> way of calculating Beta functions. These
+>> are ratios of factorials, so the subexpressions get stupidly big very
+>> quickly. But I don't think that is the only problem.
 >
-> diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-> index 70df15c..4837300 100755
-> --- a/t/t0000-basic.sh
-> +++ b/t/t0000-basic.sh
-> @@ -127,7 +127,7 @@ cat >expected <<\EOF
->  EOF
->  test_expect_success \
->      'validate git ls-files output for a known tree.' \
-> -    'diff current expected'
-> +    'test_cmp current expected'
+> Yes, "Numerical Recipes" seems to suggest that computing with
+> log-factorials and exponentiating works reasonably, although I've
+> never tried it and NR does occasionally get things completely wrong...
 
-While you're changing this, you could switch the order of the two files,
-for consistency.  If expected comes first, the command shows how the
-test result deviates from the correct output.
+I have implemented this and it does indeed allow the program to work
+in more cases
+without underflow, with ordinary floating point. However, I think the
+underflow can still occur
+in plausible use cases.
 
->  
->  test_expect_success \
->      'writing tree out with git write-tree.' \
-> @@ -147,7 +147,7 @@ cat >expected <<\EOF
->  EOF
->  test_expect_success \
->      'git ls-tree output for a known tree.' \
-> -    'diff current expected'
-> +    'test_cmp current expected'
+The problem is still the Beta function. In bbchop it is always passed
+D and T where D is
+the sum of the number of detecting observations in some of the
+revisions, and T is the
+same for nondetecting observations. Beta(x,y) underflows a python float
+if both x and y are > ~550, and also in other cases when one is
+smaller and the other,
+larger. BBChop never looks again at a revision if the bug has been
+observed there, but if
+there are a large number of revisions, it might look at enough of them
+to cause a problem.
 
-Same here.
+Obviously no-one is going to manually do hundreds of observations, but
+ I want BBChop
+to work in the case where someone runs it on a machine in the corner
+for a few days,
+or even weeks,  to track down a bug which occurs too infrequently to
+bisect manually.
 
->  
->  # This changed in ls-tree pathspec change -- recursive does
->  # not show tree nodes anymore.
-> @@ -166,7 +166,7 @@ cat >expected <<\EOF
->  EOF
->  test_expect_success \
->      'git ls-tree -r output for a known tree.' \
-> -    'diff current expected'
-> +    'test_cmp current expected'
+Which means I'm still stuck with mpmath, or some equivalent.
 
-Same here.
-
->  
->  # But with -r -t we can have both.
->  test_expect_success \
-> @@ -187,7 +187,7 @@ cat >expected <<\EOF
->  EOF
->  test_expect_success \
->      'git ls-tree -r output for a known tree.' \
-> -    'diff current expected'
-> +    'test_cmp current expected'
-
-Same here.
-
->  
->  test_expect_success \
->      'writing partial tree out with git write-tree --prefix.' \
-> diff --git a/t/t1100-commit-tree-options.sh b/t/t1100-commit-tree-options.sh
-> index 7f7fc36..c4414ff 100755
-> --- a/t/t1100-commit-tree-options.sh
-> +++ b/t/t1100-commit-tree-options.sh
-> @@ -40,6 +40,6 @@ test_expect_success \
->  
->  test_expect_success \
->      'compare commit' \
-> -    'diff expected commit'
-> +    'test_cmp expected commit'
->  
->  test_done
-> diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-> index bd58926..54ba3df 100755
-> --- a/t/t1400-update-ref.sh
-> +++ b/t/t1400-update-ref.sh
-> @@ -137,7 +137,7 @@ $B $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150860 +0000
->  EOF
->  test_expect_success \
->  	"verifying $m's log" \
-> -	"diff expect .git/logs/$m"
-> +	"test_cmp expect .git/logs/$m"
->  rm -rf .git/$m .git/logs expect
->  
->  test_expect_success \
-> @@ -168,7 +168,7 @@ $B $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150980 +0000
->  EOF
->  test_expect_success \
->  	"verifying $m's log" \
-> -	'diff expect .git/logs/$m'
-> +	'test_cmp expect .git/logs/$m'
->  rm -f .git/$m .git/logs/$m expect
->  
->  git update-ref $m $D
-> @@ -272,7 +272,7 @@ $h_FIXED $h_MERGED $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117151100 +0000	c
->  EOF
->  test_expect_success \
->  	'git commit logged updates' \
-> -	"diff expect .git/logs/$m"
-> +	"test_cmp expect .git/logs/$m"
->  unset h_TEST h_OTHER h_FIXED h_MERGED
->  
->  test_expect_success \
-> diff --git a/t/t3000-ls-files-others.sh b/t/t3000-ls-files-others.sh
-> index bc0a351..304dd02 100755
-> --- a/t/t3000-ls-files-others.sh
-> +++ b/t/t3000-ls-files-others.sh
-> @@ -42,7 +42,7 @@ test_expect_success \
->  
->  test_expect_success \
->      'git ls-files --others should pick up symlinks.' \
-> -    'diff output expected1'
-> +    'test_cmp output expected1'
-
-Same here.
-
->  
->  test_expect_success \
->      'git ls-files --others --directory to show output.' \
-> @@ -51,6 +51,6 @@ test_expect_success \
->  
->  test_expect_success \
->      'git ls-files --others --directory should not get confused.' \
-> -    'diff output expected2'
-> +    'test_cmp output expected2'
-
-Same here.
-
->  
->  test_done
-> diff --git a/t/t3010-ls-files-killed-modified.sh b/t/t3010-ls-files-killed-modified.sh
-> index ec14040..4f5375e 100755
-> --- a/t/t3010-ls-files-killed-modified.sh
-> +++ b/t/t3010-ls-files-killed-modified.sh
-> @@ -75,7 +75,7 @@ EOF
->  
->  test_expect_success \
->      'validate git ls-files -k output.' \
-> -    'diff .output .expected'
-> +    'test_cmp .output .expected'
-
-Same here.
-
->  
->  test_expect_success \
->      'git ls-files -m to show modified files.' \
-> @@ -91,6 +91,6 @@ EOF
->  
->  test_expect_success \
->      'validate git ls-files -m output.' \
-> -    'diff .output .expected'
-> +    'test_cmp .output .expected'
-
-And here.
-
->  
->  test_done
-> diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
-> index b7e3628..bfd593c 100755
-> --- a/t/t5000-tar-tree.sh
-> +++ b/t/t5000-tar-tree.sh
-> @@ -76,7 +76,7 @@ test_expect_success \
->  
->  test_expect_success \
->      'git archive vs. git tar-tree' \
-> -    'diff b.tar b2.tar'
-> +    'test_cmp b.tar b2.tar'
->  
->  test_expect_success \
->      'git archive in a bare repo' \
-> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> index 08d5b91..4fcc2e1 100755
-> --- a/t/t9001-send-email.sh
-> +++ b/t/t9001-send-email.sh
-> @@ -88,7 +88,7 @@ cat >expected <<\EOF
->  EOF
->  test_expect_success \
->      'Verify commandline' \
-> -    'diff commandline1 expected'
-> +    'test_cmp commandline1 expected'
-
-And here, too.
-
->  
->  cat >expected-show-all-headers <<\EOF
->  0001-Second.patch
+Ealdwulf
