@@ -1,95 +1,60 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Autoconf: Disable inline for compilers that don't
- support it.
-Date: Sun, 15 Mar 2009 12:52:54 -0700
-Message-ID: <7vab7m7ecp.fsf@gitster.siamese.dyndns.org>
-References: <20090114223832.GC30710@genesis.frugalware.org>
- <20090314010421.GA6642@linux.vnet>
- <7vy6v7al37.fsf@gitster.siamese.dyndns.org>
- <20090315152127.GA7988@linux.vnet>
+Subject: Re: [PATCH 2/2] make the ST_{C,M}TIME_NSEC macros more function like
+Date: Sun, 15 Mar 2009 13:01:20 -0700
+Message-ID: <7v4oxu7dyn.fsf@gitster.siamese.dyndns.org>
+References: <cover.1237115791.git.barvik@broadpark.no>
+ <cover.1237115791.git.barvik@broadpark.no>
+ <0681248ac5c9cedf5f42adeeae89966a89e6d42a.1237115791.git.barvik@broadpark.no>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Allan Caffee <allan.caffee@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 15 20:55:27 2009
+To: Kjetil Barvik <barvik@broadpark.no>
+X-From: git-owner@vger.kernel.org Sun Mar 15 21:03:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LiwQg-0000aa-LR
-	for gcvg-git-2@gmane.org; Sun, 15 Mar 2009 20:55:27 +0100
+	id 1LiwXw-00033y-5R
+	for gcvg-git-2@gmane.org; Sun, 15 Mar 2009 21:02:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756957AbZCOTxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Mar 2009 15:53:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755776AbZCOTxE
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Mar 2009 15:53:04 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56361 "EHLO
+	id S1754830AbZCOUB2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Mar 2009 16:01:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752088AbZCOUB1
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Mar 2009 16:01:27 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:62564 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754162AbZCOTxB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Mar 2009 15:53:01 -0400
+	with ESMTP id S1751656AbZCOUB1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Mar 2009 16:01:27 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7844EA29A0;
-	Sun, 15 Mar 2009 15:52:59 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1F8F46130;
+	Sun, 15 Mar 2009 16:01:25 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 285BCA299D; Sun,
- 15 Mar 2009 15:52:55 -0400 (EDT)
-In-Reply-To: <20090315152127.GA7988@linux.vnet> (Allan Caffee's message of
- "Sun, 15 Mar 2009 11:21:27 -0400")
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DCAA0612F; Sun,
+ 15 Mar 2009 16:01:21 -0400 (EDT)
+In-Reply-To: <0681248ac5c9cedf5f42adeeae89966a89e6d42a.1237115791.git.barvik@broadpark.no>
+ (Kjetil Barvik's message of "Sun, 15 Mar 2009 12:38:56 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E2B4956A-119A-11DE-88D8-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 10261C52-119C-11DE-9261-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113297>
 
-Allan Caffee <allan.caffee@gmail.com> writes:
+Kjetil Barvik <barvik@broadpark.no> writes:
 
-> My mistake; it looks like this macro will only work the way I described
-> when using a config.h, which I see git is not currently doing.  I
-> assumed that it would also provide a -D flag to the precompiler if a
-> configuration header isn't used but this doesn't appear to be case (from
-> a cursory glance at the macros definition).
+> Make the macros take a pointer to a 'struct stat'. This is so that it
+> should be easier to understand what is going on, and that the macros
+> can later be implemented as a inline function if we want to.
+>
+> Impact: cosmetic change
 
-The design of our Makefile is such that it will default to some reasonable
-values for the make variables depending on the environment, and people who
-do not want to use the configure script can override them by creating
-custom entries in config.mak manually, which is included by the Makefile.
+Hmm,...
 
-OPTIONALLY configure can be used to produce config.mak.autogen that is
-included just before config.mak is included (so that misdetection by
-configure script can be overridden away by config.mak), so the same kind
-of overriding happens.
+I have to wonder if this cosmetic change is an improvement, though.
 
-I suspect addition of config.h, unless done carefully, will close the door
-to the people who do not use configure to get certain customizations, and
-when the same carefulness is applied, we probably do no need to introduce
-config.h.
-
-For example, for -Dinline=__inline__, I think you can:
-
- (1) Add something like this near the beginning of the Makefile:
-
-     # Define USE_THIS_INLINE=__inline__ if your compiler does not
-     # understand "inline", but does understand __inline__.
-     #
-     # Define NO_INLINE=UnfortunatelyYes if your compiler does not
-     # understand "inline" at all.
-
- (2) Add something like this after include "config.mak" happens in the
-     Makefile:
-
-     ifdef USE_THIS_INLINE
-         BASIC_CFLAGS += -Dinline=$(USE_THIS_INLINE)
-     else
-         ifdef NO_INLINE
-             BASIC_CFLAGS += -Dinline=""
-	 endif
-     endif
-
- (3) Add your new logic to configure.ac, _and_ arrange it to substitute
-     USE_THIS_INLINE if ac_cv_c_inline is not "inline", and set NO_INLINE
-     if it detected that the compiler does not understand inline in any
-     shape or form.  You would need two new entries in config.mak.in, I
-     think.
+I do not have a strong feeling either way, but I think it makes it clear
+that these two macros are not lvalues if you do not pass a pointer but
+instead pass a structure.  An inline function can still take a structure
+passed by value as an argument anyway, no?
