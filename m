@@ -1,98 +1,56 @@
-From: Chris Johnsen <chris_johnsen@pobox.com>
-Subject: Re: [PATCH] git-push.txt: describe how to default to pushing only
- current branch
-Date: Sat, 14 Mar 2009 21:49:09 -0500
-Message-ID: <1237085349-14824-1-git-send-email-chris_johnsen@pobox.com>
-References: <20090314205628.GA17445@coredump.intra.peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Chris Johnsen <chris_johnsen@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Mar 15 03:51:34 2009
+From: "John M. Dlugosz" <ngnr63q02@sneakemail.com>
+Subject: Re: setting up tracking on push
+Date: Sat, 14 Mar 2009 22:28:36 -0500
+Message-ID: <4845-91917@sneakemail.com>
+References: <buofxhr2vta.fsf@dhlpc061.dev.necel.com>	 <gp9jp7$uc3$1@ger.gmane.org>	 <76718490903111758l4e4bd29et379e975deb8e99bd@mail.gmail.com> <76718490903111814t1ab90a39h9252d0ccf8af05c4@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 15 04:56:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LigRo-0005e1-Jj
-	for gcvg-git-2@gmane.org; Sun, 15 Mar 2009 03:51:33 +0100
+	id 1LihSx-0007q8-2g
+	for gcvg-git-2@gmane.org; Sun, 15 Mar 2009 04:56:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754049AbZCOCte (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Mar 2009 22:49:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753833AbZCOCte
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Mar 2009 22:49:34 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57970 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753082AbZCOCte (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Mar 2009 22:49:34 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2F4A46178;
-	Sat, 14 Mar 2009 22:49:32 -0400 (EDT)
-Received: from localhost.localdomain (unknown [76.203.162.168]) (using TLSv1
- with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate
- requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id
- 8337A6177; Sat, 14 Mar 2009 22:49:28 -0400 (EDT)
-X-Mailer: git-send-email 1.6.2
-In-Reply-To: <20090314205628.GA17445@coredump.intra.peff.net>
-X-Pobox-Relay-ID: E929E1E6-110B-11DE-B1AB-C5D912508E2D-07245699!a-sasl-quonix.pobox.com
+	id S1757145AbZCODzM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Mar 2009 23:55:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754937AbZCODzM
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Mar 2009 23:55:12 -0400
+Received: from sneakemail.com ([38.113.6.61]:43837 "HELO sneak1.sneakemail.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1753236AbZCODzL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Mar 2009 23:55:11 -0400
+X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Sat, 14 Mar 2009 23:55:10 EDT
+Received: (qmail 8498 invoked by uid 508); 15 Mar 2009 03:48:29 -0000
+Received: (sneakemail censored 4845-91917 #1); 15 Mar 2009 03:48:28 -0000
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.19) Gecko/20081209 Thunderbird/2.0.0.19 Mnenhy/0.7.5.666
+In-Reply-To: <76718490903111814t1ab90a39h9252d0ccf8af05c4@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113274>
 
-On 2009 Mar 14, at 15:56, Jeff King wrote:
-> On Sat, Mar 14, 2009 at 04:34:34PM -0400, Jeff King wrote:
-> > The question is how it _should_ be rendered. Monospace isn't really
-> > useful for terminals. Maybe simply putting quotation marks around it
-> > would cover all situations (I'm worried it will look funny for
-> > single-word instances).
+Jay Soffian jaysoffian-at-gmail.com |git| wrote:
+> - The branches under refs/remotes (those shown by "git branch -r") are
+> remote tracking branches. 
+ > So that tells git fetch where to fetch from, which remote branches to
+> fetch, and where to store those branches locally. In this case, each
+> branch under refs/heads/ on git://git.kernel.org/pub/scm/git/git.git
+> will be fetched and stored locally as refs/remotes/origin/. Locally
+> the branches are called "remote tracking branches".
 >
-> And here's a patch that does that; skimming through the output it
-> doesn't look too bad. What do you guys think?
->
-> ---
+>   
 
-The presentation seems OK to me. I thought of two issues:
 
-1) literals that contain a double quote
+Things under refs/remotes are remote tracking branches, and local 
+branches (under refs/heads) that automatically updated based on a fetch 
+("store locally" means merge or rebase, right?) are also called remote 
+tracking branches.
 
-	$ git grep '`[^`]*"[^`]`' | cat
-	config.txt:You can have `[section]` if you have `[section "subsection"]`, but you
+I think that's why some of us are confused.
 
-   There might be a better regexp to find these, I did not think
-   about it too long. The above "hit" seems like a reasonable
-   literal string. Maybe it is OK to live with this one
-   ("[section "subsection"]").
-
-2) manpage-1.72.xsl 
-
-   I have been setting DOCBOOK_XSL_172 to avoid the ".ft" problem
-   (<http://article.gmane.org/gmane.comp.version-control.git/112943>;
-   my system is Mac OS X 10.4.11 with MacPorts asciidoc 8.3.1,
-   xmlto version 0.0.21, and docbook-xsl 1.74.0). Since non-null
-   DOCBOOK_XSL_172 replaces callouts.xsl with manpage-1.72.xsl, I
-   added the line to manpage-1.72.xsl.
-
-   Here is the patch if it is deemed appropriate (same line Peff
-   added to callouts.xsl):
-
--- >8 -- 
-Subject: [PATCH] manpage-1.72.xsl: wrap inline literal text with double quotes
-
-Signed-off-by: Chris Johnsen <chris_johnsen@pobox.com>
----
- Documentation/manpage-1.72.xsl |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/manpage-1.72.xsl b/Documentation/manpage-1.72.xsl
-index 4065a3a..a39fd55 100644
---- a/Documentation/manpage-1.72.xsl
-+++ b/Documentation/manpage-1.72.xsl
-@@ -18,4 +18,6 @@
- 	<xsl:text>&#x2302;br&#10;</xsl:text>
- </xsl:template>
- 
-+<xsl:template match="literal">"<xsl:apply-templates/>"</xsl:template>
-+
- </xsl:stylesheet>
--- 
-1.6.2
+--John
