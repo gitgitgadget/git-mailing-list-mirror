@@ -1,60 +1,58 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-push.txt: describe how to default to pushing only
-	current branch
-Date: Sat, 14 Mar 2009 17:46:03 -0400
-Message-ID: <20090314214603.GA20418@sigill.intra.peff.net>
-References: <20090313164941.GA16504@sigill.intra.peff.net> <1236994051-27346-1-git-send-email-chris_johnsen@pobox.com> <7vd4cjc3da.fsf@gitster.siamese.dyndns.org> <20090313164941.GA16504@sigill.intra.peff.net> <1236994051-27346-1-git-send-email-chris_johnsen@pobox.com> <20090314203434.GA15444@coredump.intra.peff.net> <7veiwzajbc.fsf@gitster.siamese.dyndns.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [JGIT PATCH 3/3] Use a common skipObject method to avoid UNINTERESTING items
+Date: Sun, 15 Mar 2009 01:25:56 +0100
+Message-ID: <200903150125.56987.robin.rosenberg.lists@dewire.com>
+References: <1236967912-15088-1-git-send-email-spearce@spearce.org> <1236967912-15088-2-git-send-email-spearce@spearce.org> <1236967912-15088-3-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Chris Johnsen <chris_johnsen@pobox.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 14 22:48:46 2009
+Content-Type: text/plain;
+  charset="iso-8859-6"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Mar 15 01:27:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Libii-00086W-MB
-	for gcvg-git-2@gmane.org; Sat, 14 Mar 2009 22:48:41 +0100
+	id 1LieCX-0006fy-Pd
+	for gcvg-git-2@gmane.org; Sun, 15 Mar 2009 01:27:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759937AbZCNVqI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Mar 2009 17:46:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759926AbZCNVqG
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Mar 2009 17:46:06 -0400
-Received: from peff.net ([208.65.91.99]:45452 "EHLO peff.net"
+	id S1753624AbZCOA0I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Mar 2009 20:26:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753248AbZCOA0H
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Mar 2009 20:26:07 -0400
+Received: from mail.dewire.com ([83.140.172.130]:19885 "EHLO dewire.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759906AbZCNVqE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Mar 2009 17:46:04 -0400
-Received: (qmail 15358 invoked by uid 107); 14 Mar 2009 21:46:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Sat, 14 Mar 2009 17:46:09 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 14 Mar 2009 17:46:03 -0400
+	id S1751723AbZCOA0G (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Mar 2009 20:26:06 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 2299F139A44D;
+	Sun, 15 Mar 2009 01:25:58 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 1KzbgAqgLRvy; Sun, 15 Mar 2009 01:25:58 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 6C8D280289B;
+	Sun, 15 Mar 2009 01:25:58 +0100 (CET)
+User-Agent: KMail/1.11.1 (Linux/2.6.27-12-generic; KDE/4.2.1; i686; ; )
+In-Reply-To: <1236967912-15088-3-git-send-email-spearce@spearce.org>
 Content-Disposition: inline
-In-Reply-To: <7veiwzajbc.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113270>
 
-On Sat, Mar 14, 2009 at 02:25:11PM -0700, Junio C Hamano wrote:
+fredag 13 mars 2009 19:11:52 skrev "Shawn O. Pearce" <spearce@spearce.org>:
+> All cases are using the same logic to decide that we should skip
+> this current object and not return it to the caller.  A common
+> implementation makes the code easier to follow, especially as it
+> reduces the ugly line wrap involved in the loop body.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Actually, looking closer, the information seems to be lost entirely.
-> > Asciidoc renders this to <literal> in the XML, but docbook seems to
-> > throw it away when converting to a manpage. In theory it's possible to
-> > apply our own xsl style to turn this into something else, and I think
-> > that is a better solution than just trying to fix this one spot.
-> 
-> When I check the asciidoc output for manpages (which I rarely do), I often
-> render it to Postscript to see the typesetting.  I guess not many people
-> consider manpages are for printing anymore but are solely for monospaced
-> terminal consumption these days.
+Java conventions dictate that this method should be called shouldSkipObject. It
+is a boolean method that actually does not itself skip any objects.
 
-How do you render it? From the XML, or from the roff? Because if I am
-reading it right (which it is entirely possible that I am not), the
-information is lost in the roff version. And that is the version I would
-expect people to be looking at (via man -Tps, or just plain man).
+I can amend that for you.
 
--Peff
+-- robin
