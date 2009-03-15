@@ -1,70 +1,66 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: excluding files from a merge
-Date: Mon, 16 Mar 2009 07:14:40 +0900
-Message-ID: <20090316071440.6117@nanako3.lavabit.com>
-References: <loom.20090315T011519-497@post.gmane.org>
- <76718490903150547o1c791d35r5d71000b481f443b@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn: creating tags from a subdirectory of trunk
+Date: Sun, 15 Mar 2009 16:21:05 -0700
+Message-ID: <20090315232105.GA21667@dcvr.yhbt.net>
+References: <632a37a0903151418u483ca6cal1582518b9120da8e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Daniel Jacobs <djacobs7@gmail.com>, git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 15 23:17:15 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Tom Huybrechts <tom.huybrechts@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 16 00:22:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Liyds-00004r-Tb
-	for gcvg-git-2@gmane.org; Sun, 15 Mar 2009 23:17:13 +0100
+	id 1LizfC-0000M7-D2
+	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 00:22:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754963AbZCOWPj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Mar 2009 18:15:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754552AbZCOWPj
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Mar 2009 18:15:39 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:41666 "EHLO karen.lavabit.com"
+	id S1753101AbZCOXVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Mar 2009 19:21:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751852AbZCOXVI
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Mar 2009 19:21:08 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:41683 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753101AbZCOWPi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Mar 2009 18:15:38 -0400
-Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
-	by karen.lavabit.com (Postfix) with ESMTP id 9FB7211B7F1;
-	Sun, 15 Mar 2009 17:15:36 -0500 (CDT)
-Received: from 9494.lavabit.com (212.62.97.21)
-	by lavabit.com with ESMTP id YIR0VBPOS29N; Sun, 15 Mar 2009 17:15:36 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=uiKhYRDmzvFd3BHfpiSFM3nSEN0QcyVw2/AggmdHqbbwxWaezqB+9rHQP7KiiHvUrZ+zVJ4ZynqEoZMoKi2gMg50KlDQajR+F0+/aZquEt7rIql8PL7yvzT8AX7trYRu+mLe8Lg6hFu7JMbFtOa06heAlcmWU0+38oVJZ8D3WNg=;
-  h=From:To:Cc:Subject:In-Reply-To:References:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <76718490903150547o1c791d35r5d71000b481f443b@mail.gmail.com>
+	id S1751792AbZCOXVI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Mar 2009 19:21:08 -0400
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABB1F1F4E3;
+	Sun, 15 Mar 2009 23:21:05 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <632a37a0903151418u483ca6cal1582518b9120da8e@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113302>
 
-Quoting Jay Soffian <jaysoffian@gmail.com>:
+Tom Huybrechts <tom.huybrechts@gmail.com> wrote:
+> Hi,
+> 
+> I'm trying to setup a git mirror of a svn repository.  The tags in
+> this repository are not created trunk it self, but from subdirectories
+> of trunk. The tags and branches are in the standard places.
+> e.g:
+> /trunk/main -> tags/main-1
+> /trunk/plugins/foo -> tags/foo-1
+> /trunk/plugins/bar -> tags/bar-1
+> 
+> I run 'git svn clone -s svn-url target'. It starts going over the
+> history nicely until it reaches the first branch. It calls this branch
+> something like tags/tag-name@revision, and starts retrieving the
+> entire project history again from r1. This is repeated for every
+> branch.
 
-> On Sat, Mar 14, 2009 at 9:23 PM, Daniel Jacobs <djacobs7@gmail.com> w=
-rote:
->> I would like it if every file was merged, except for files that were=
- explictly
->> excluded from a merge between these two branches. =C2=A0Is there a g=
-ood way to do
->> this?
->
-> Please see http://thread.gmane.org/gmane.comp.version-control.git/110=
-488
-> (Is there a way to exclude user-specified files or directories from
-> participating in merges?)
->
-> I believe it is the same use case, and Junio provided a very detailed=
- reply.
+Hi Tom,
 
-Would it help to have the final summary by Sitaram Chamarty
+This is a known problem with some repositories.  My suggestion is to
+use individual "fetch" directives for each of those tags you want to
+follow.
 
-    http://article.gmane.org/gmane.comp.version-control.git/110697
+The -s/--stdlayout is only for projects that follow the SVN-recommended
+repository layout exactly and we haven't thought of a generic way to
+handle those non-standard tags in repos...
 
-somewhere under Documentation/howto?
-
-
---=20
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+-- 
+Eric Wong
