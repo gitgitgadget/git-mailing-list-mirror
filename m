@@ -1,127 +1,109 @@
-From: Ealdwulf Wuffinga <ealdwulf@googlemail.com>
-Subject: Re: Generalised bisection
-Date: Sun, 15 Mar 2009 19:16:16 +0000
-Message-ID: <efe2b6d70903151216q4a8881e5t797cf5d3bebc5697@mail.gmail.com>
-References: <efe2b6d70903081840v18e77aa7w2dac2bed553d0d6a@mail.gmail.com>
-	 <200903100808.15875.chriscool@tuxfamily.org>
-	 <efe2b6d70903110159h78de744yc141effaf5aa0821@mail.gmail.com>
-	 <43d8ce650903110235q5e2a59f6t201d5e65a4937476@mail.gmail.com>
-	 <efe2b6d70903111515p2b9f656bp186d0b3cc7ae483d@mail.gmail.com>
-	 <43d8ce650903112345x3d40b70ap7e4c0f8c7d0b6069@mail.gmail.com>
-	 <alpine.DEB.1.00.0903121154560.10279@pacific.mpi-cbg.de>
-	 <d9c1caea0903121102y5452603fua0e7a1b82e121b01@mail.gmail.com>
-	 <efe2b6d70903130549m63ae9bdeg1cd3f24a43b3e66f@mail.gmail.com>
-	 <d9c1caea0903130819u770686b1w867f074ffef8fabf@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] git checkout: one bugfix and one cosmetic change
+Date: Sun, 15 Mar 2009 12:38:55 -0700
+Message-ID: <7viqma7f00.fsf@gitster.siamese.dyndns.org>
+References: <cover.1237115791.git.barvik@broadpark.no>
+ <7vab7m8x5w.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	John Tapsell <johnflux@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Git List <git@vger.kernel.org>
-To: Steven Tweed <orthochronous@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 15 20:17:54 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Kjetil Barvik <barvik@broadpark.no>
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 15 20:41:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LivqI-0006KJ-FT
-	for gcvg-git-2@gmane.org; Sun, 15 Mar 2009 20:17:50 +0100
+	id 1LiwCq-0004nS-Dh
+	for gcvg-git-2@gmane.org; Sun, 15 Mar 2009 20:41:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753292AbZCOTQV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Mar 2009 15:16:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751738AbZCOTQU
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Mar 2009 15:16:20 -0400
-Received: from mail-bw0-f175.google.com ([209.85.218.175]:33120 "EHLO
-	mail-bw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751511AbZCOTQU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Mar 2009 15:16:20 -0400
-Received: by bwz23 with SMTP id 23so715745bwz.37
-        for <git@vger.kernel.org>; Sun, 15 Mar 2009 12:16:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=7pcod1V58c7Z88P2fzrAYT4J1iF6NrKrzv5PIForB3g=;
-        b=eb740fRlHVtldlMFfnjN5cecCy5HlBgtdZ/ZdEeoolY1S02cjl/rwNOal4RxBkGACy
-         t+FpLUfNNsLBRrGn4pqOPLaUsNcP8YU2U2wI0vIuQnE+DEOG2vQ9BTUIq2O9fCcg9COQ
-         Dg0uvEPe3uhQDj7HZRJnh3QqgrxB6Y6Unlp3E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ISZx9ZuYpUfFA4uZhdWT7wbYnDYidGEsOxnyM5uvKuqHiKagOtdVE6LZNPdhoUzy/6
-         rM1OkzMocIbFS+tAIuwEMbRXuz1yAHFEBVnaDYYTl1zo5ukJ+o1Dl3+5xxpLQ2VMPZXm
-         66aemSQHqtyxMpR0bLuvax1Q5KSH/2rxzu4LM=
-Received: by 10.204.65.1 with SMTP id g1mr1293331bki.57.1237144576661; Sun, 15 
-	Mar 2009 12:16:16 -0700 (PDT)
-In-Reply-To: <d9c1caea0903130819u770686b1w867f074ffef8fabf@mail.gmail.com>
+	id S1760189AbZCOTjL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Mar 2009 15:39:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757730AbZCOTjK
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Mar 2009 15:39:10 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53133 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760459AbZCOTjI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Mar 2009 15:39:08 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id BEECBA28A8;
+	Sun, 15 Mar 2009 15:39:01 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 63AD9A28A7; Sun,
+ 15 Mar 2009 15:38:57 -0400 (EDT)
+In-Reply-To: <7vab7m8x5w.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sun, 15 Mar 2009 11:21:15 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: EF7177B6-1198-11DE-A1D1-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113295>
 
-On Fri, Mar 13, 2009 at 3:19 PM, Steven Tweed <orthochronous@gmail.com> wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Underflow when using probabilities and lack of precision (rather than
-> overflow) when using negated logarithms are well known problems in the
-> kind of probabilistic object tracking, inference in graphical networks
-> and object identification processes I work with (in computer vision).
-> I there may well be other areas of Bayesian decision theory where this
-> doesn't happen, and indeed a _very_ quick scan through your document
-> suggests that you're adding to tallying information on each timestep
-> and recalcuating the entire model from those tallys, which is one of
-> the few cases where you can't really do rescaling. I'll try and have a
-> more detailled read over the weekend.
-
-That is useful information, thanks.
-
-It is not obvious how to perform this algorithm incrementally, because
-of the need to
-marginalise out the fault rate. As I understand it, marginalisation
-has to be done after you
-have incorporated all your information into the model, which means we
-can't use the
-usual bayesian updating.
-
-> On Fri, Mar 13, 2009 at 12:49 PM, Ealdwulf Wuffinga
-> <ealdwulf@googlemail.com> wrote:
->> One issue in BBChop which should be easy to fix, is that I use a dumb
->> way of calculating Beta functions. These
->> are ratios of factorials, so the subexpressions get stupidly big very
->> quickly. But I don't think that is the only problem.
+> Kjetil Barvik <barvik@broadpark.no> writes:
 >
-> Yes, "Numerical Recipes" seems to suggest that computing with
-> log-factorials and exponentiating works reasonably, although I've
-> never tried it and NR does occasionally get things completely wrong...
+>> Just one small bugfix patch, and one small cosmetic change.
+>>
+>> By the way, I wonder how often the list of 'Primary Authors' and
+>> 'Contributors' on the webpage http://git-scm.com/about is updated.
+>> Should'nt it be updated when a new release, like v1.6.2, is made?
+>
+> Thanks for noticing.  Though git-scm.com is not under my control, the=
+ site
+> is considered the official git homepage these days, and I am glad to =
+see
+> improvements to its contents discussed here.  I do not see Scott very
+> often on this list these days, so I am CC'ing him.
 
-I have implemented this and it does indeed allow the program to work
-in more cases
-without underflow, with ordinary floating point. However, I think the
-underflow can still occur
-in plausible use cases.
+Ragarding the list on the page, I have one thought (not complete enough=
+ to
+be called suggestion) and one datapoint:
 
-The problem is still the Beta function. In bbchop it is always passed
-D and T where D is
-the sum of the number of detecting observations in some of the
-revisions, and T is the
-same for nondetecting observations. Beta(x,y) underflows a python float
-if both x and y are > ~550, and also in other cases when one is
-smaller and the other,
-larger. BBChop never looks again at a revision if the bug has been
-observed there, but if
-there are a large number of revisions, it might look at enough of them
-to cause a problem.
+ (1) The boundary between the "Primary Authors" vs "Contributors" seems=
+ to
+     be set at 50 commits with the current table.  This would mean that=
+ we
+     will have a lot more primary authors as project progresses.  Is th=
+is
+     desirable?
 
-Obviously no-one is going to manually do hundreds of observations, but
- I want BBChop
-to work in the case where someone runs it on a machine in the corner
-for a few days,
-or even weeks,  to track down a bug which occurs too infrequently to
-bisect manually.
+     We have 14999 non-merge commits as of 1.6.2; perhaps a per-cent (o=
+r a
+     half per-cent) cutoff rule would give a more balanced and consiste=
+nt
+     view in the longer term [*1*]?
 
-Which means I'm still stuck with mpmath, or some equivalent.
+ (2) This script:
 
-Ealdwulf
+     $ git shortlog -s v1.6.1 | sed -e 's/^[ 0-9]*//' >/var/tmp/1
+     $ git shortlog -s v1.6.2 | sed -e 's/^[ 0-9]*//' >/var/tmp/2
+     $ comm -13 /var/tmp/[12]
+
+     produces the list of new contributors.  There are 39 names [*2*].
+
+[Footnotes]
+
+*1* A more drastic change would be not to have two lists, but just one.
+
+*2* Thanks and welcome.
+
+    Allan Caffee, Ben Walton, Benjamin Kramer, Benjamin Sergeant, Benoi=
+t
+    Sigoure, Danijel Tasov, David J. Mellor, Devin Doucette, D=C3=A9vai=
+ Tam=C3=A1s,
+    Elijah Newren, Eric Kidd, Fabian Franz, Felipe Contreras, Geoffrey
+    Thomas, Henrik Austad, Jacob Helwig, Jake Goulding, Jeremy White,
+    Johannes Gilger, Jonas Flod=C3=A9n, Keith Cascio, Kjetil Barvik, Ma=
+rc
+    Branchaud, Marc-Andre Lureau, Nazri Ramliy, Pat Notz, Paul Jarc, Pe=
+ter
+    Oberndorfer, Ray Chuan, Roy Lee, Serge van den Boom, Sergei Organov=
+,
+    Stefan Karpinski, Tay Ray Chuan, Ted Pavlic, Tor Arne Vestb=C3=B8, =
+Vitaly
+    "_Vi" Shukela, V=C3=A4in=C3=B6 J=C3=A4rvel=C3=A4, jidanni@jidanni.o=
+rg.
