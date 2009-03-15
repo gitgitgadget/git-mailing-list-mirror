@@ -1,106 +1,242 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: setting up tracking on push
-Date: Sun, 15 Mar 2009 11:33:58 -0700
-Message-ID: <7v1vsy8wkp.fsf@gitster.siamese.dyndns.org>
-References: <buofxhr2vta.fsf@dhlpc061.dev.necel.com>
- <gp9jp7$uc3$1@ger.gmane.org>
- <76718490903111758l4e4bd29et379e975deb8e99bd@mail.gmail.com>
- <76718490903111814t1ab90a39h9252d0ccf8af05c4@mail.gmail.com>
- <4845-91917@sneakemail.com>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] Tests: use test_cmp instead of diff where possible
+Date: Sun, 15 Mar 2009 19:42:48 +0100
+Message-ID: <49BD4C28.4030303@lsrfire.ath.cx>
+References: <1237124036-1348-1-git-send-email-vmiklos@frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "John M. Dlugosz" <ngnr63q02@sneakemail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 15 19:38:25 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Sun Mar 15 19:44:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LivE7-0002n7-5L
-	for gcvg-git-2@gmane.org; Sun, 15 Mar 2009 19:38:23 +0100
+	id 1LivJz-0004fy-UU
+	for gcvg-git-2@gmane.org; Sun, 15 Mar 2009 19:44:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753441AbZCOSeJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Mar 2009 14:34:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751608AbZCOSeI
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Mar 2009 14:34:08 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39393 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751511AbZCOSeG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Mar 2009 14:34:06 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5340CA2581;
-	Sun, 15 Mar 2009 14:34:03 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3094CA257E; Sun,
- 15 Mar 2009 14:33:59 -0400 (EDT)
-In-Reply-To: <4845-91917@sneakemail.com> (John M. Dlugosz's message of "Sat,
- 14 Mar 2009 22:28:36 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: DBCA9DA4-118F-11DE-BED5-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1751654AbZCOSm7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Mar 2009 14:42:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751511AbZCOSm6
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Mar 2009 14:42:58 -0400
+Received: from india601.server4you.de ([85.25.151.105]:50292 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751476AbZCOSm5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Mar 2009 14:42:57 -0400
+Received: from [10.0.1.101] (p57B7C9F4.dip.t-dialin.net [87.183.201.244])
+	by india601.server4you.de (Postfix) with ESMTPSA id 43DB42F8050;
+	Sun, 15 Mar 2009 19:42:54 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <1237124036-1348-1-git-send-email-vmiklos@frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113293>
 
-"John M. Dlugosz" <ngnr63q02@sneakemail.com> writes:
+Miklos Vajna schrieb:
+> Several old tests were written before test_cmp was introduced, convert
+> these to test_cmp.
+> 
+> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+> ---
+> 
+> I intentionally did not touch t5000 - using test_cmp -r works for me,
+> since the default is diff -u, but that would break the setup of users
+> where GIT_TEST_CMP is set to cmp.
+> 
+>  t/t0000-basic.sh                    |    8 ++++----
+>  t/t1100-commit-tree-options.sh      |    2 +-
+>  t/t1400-update-ref.sh               |    6 +++---
+>  t/t3000-ls-files-others.sh          |    4 ++--
+>  t/t3010-ls-files-killed-modified.sh |    4 ++--
+>  t/t5000-tar-tree.sh                 |    2 +-
+>  t/t9001-send-email.sh               |    2 +-
+>  7 files changed, 14 insertions(+), 14 deletions(-)
 
-> Jay Soffian jaysoffian-at-gmail.com |git| wrote:
->> - The branches under refs/remotes (those shown by "git branch -r") are
->> remote tracking branches. So that tells git fetch where to fetch
->> from, which remote branches to
->> fetch, and where to store those branches locally. In this case, each
->> branch under refs/heads/ on git://git.kernel.org/pub/scm/git/git.git
->> will be fetched and stored locally as refs/remotes/origin/. Locally
->> the branches are called "remote tracking branches".
+You _did_ touch t5000, and converted one of the diff calls.  I agree
+that the ones using the option -r should stay, but the rest could be
+switched to test_cmp, too.
+
 >
-> Things under refs/remotes are remote tracking branches, and local
-> branches (under refs/heads) that automatically updated based on a
-> fetch ("store locally" means merge or rebase, right?) are also called
-> remote tracking branches.
->
-> I think that's why some of us are confused.
+> diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+> index 70df15c..4837300 100755
+> --- a/t/t0000-basic.sh
+> +++ b/t/t0000-basic.sh
+> @@ -127,7 +127,7 @@ cat >expected <<\EOF
+>  EOF
+>  test_expect_success \
+>      'validate git ls-files output for a known tree.' \
+> -    'diff current expected'
+> +    'test_cmp current expected'
 
-True; the latter wording invites confusion.
+While you're changing this, you could switch the order of the two files,
+for consistency.  If expected comes first, the command shows how the
+test result deviates from the correct output.
 
-What fetch updates directly from remote site are called "remote tracking
-branches".  The local branches you intend to keep up to date with respect
-to one remote tracking branch is sometimes said to "track" the remote
-tracking branch, but because I find it confusing to use the same verb for
-this other purpose, I tend to say that local branch (that "tracks" the
-other one)
+>  
+>  test_expect_success \
+>      'writing tree out with git write-tree.' \
+> @@ -147,7 +147,7 @@ cat >expected <<\EOF
+>  EOF
+>  test_expect_success \
+>      'git ls-tree output for a known tree.' \
+> -    'diff current expected'
+> +    'test_cmp current expected'
 
- (1) _forked_ from; or
- (2) _builds_ on
+Same here.
 
-the remote tracking branch, in order to avoid confusion.
+>  
+>  # This changed in ls-tree pathspec change -- recursive does
+>  # not show tree nodes anymore.
+> @@ -166,7 +166,7 @@ cat >expected <<\EOF
+>  EOF
+>  test_expect_success \
+>      'git ls-tree -r output for a known tree.' \
+> -    'diff current expected'
+> +    'test_cmp current expected'
 
-Historically, refs/remotes/ hierarchy did not exist, and "git clone"
-created these refspecs after cloning from a two branch project:
+Same here.
 
-    refs/heads/master:refs/heads/origin
-    refs/heads/maint:refs/heads/maint
+>  
+>  # But with -r -t we can have both.
+>  test_expect_success \
+> @@ -187,7 +187,7 @@ cat >expected <<\EOF
+>  EOF
+>  test_expect_success \
+>      'git ls-tree -r output for a known tree.' \
+> -    'diff current expected'
+> +    'test_cmp current expected'
 
-and created a local master starting at 'origin'.
+Same here.
 
-The expectation was that everybody would work on 'master', occasionally
-referring to 'maint', and because 'master' is always checked out, avoid 
-'fetch' from disturbing it by using a separate local branch 'origin' to
-keep track of the advance of the other side, while updating 'maint' that
-is not checked out directly.
+>  
+>  test_expect_success \
+>      'writing partial tree out with git write-tree --prefix.' \
+> diff --git a/t/t1100-commit-tree-options.sh b/t/t1100-commit-tree-options.sh
+> index 7f7fc36..c4414ff 100755
+> --- a/t/t1100-commit-tree-options.sh
+> +++ b/t/t1100-commit-tree-options.sh
+> @@ -40,6 +40,6 @@ test_expect_success \
+>  
+>  test_expect_success \
+>      'compare commit' \
+> -    'diff expected commit'
+> +    'test_cmp expected commit'
+>  
+>  test_done
+> diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+> index bd58926..54ba3df 100755
+> --- a/t/t1400-update-ref.sh
+> +++ b/t/t1400-update-ref.sh
+> @@ -137,7 +137,7 @@ $B $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150860 +0000
+>  EOF
+>  test_expect_success \
+>  	"verifying $m's log" \
+> -	"diff expect .git/logs/$m"
+> +	"test_cmp expect .git/logs/$m"
+>  rm -rf .git/$m .git/logs expect
+>  
+>  test_expect_success \
+> @@ -168,7 +168,7 @@ $B $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150980 +0000
+>  EOF
+>  test_expect_success \
+>  	"verifying $m's log" \
+> -	'diff expect .git/logs/$m'
+> +	'test_cmp expect .git/logs/$m'
+>  rm -f .git/$m .git/logs/$m expect
+>  
+>  git update-ref $m $D
+> @@ -272,7 +272,7 @@ $h_FIXED $h_MERGED $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117151100 +0000	c
+>  EOF
+>  test_expect_success \
+>  	'git commit logged updates' \
+> -	"diff expect .git/logs/$m"
+> +	"test_cmp expect .git/logs/$m"
+>  unset h_TEST h_OTHER h_FIXED h_MERGED
+>  
+>  test_expect_success \
+> diff --git a/t/t3000-ls-files-others.sh b/t/t3000-ls-files-others.sh
+> index bc0a351..304dd02 100755
+> --- a/t/t3000-ls-files-others.sh
+> +++ b/t/t3000-ls-files-others.sh
+> @@ -42,7 +42,7 @@ test_expect_success \
+>  
+>  test_expect_success \
+>      'git ls-files --others should pick up symlinks.' \
+> -    'diff output expected1'
+> +    'test_cmp output expected1'
 
-This was the layout used in the good old times, and worked well *only* in
-the most simplistic case.  In reality, people used far more branches and
-worked on branches other than master.
+Same here.
 
-To fix that, refs/remotes/ hierarchy was introduced, and we started
-treating the tracking part of master the same way as other branches, i.e.
+>  
+>  test_expect_success \
+>      'git ls-files --others --directory to show output.' \
+> @@ -51,6 +51,6 @@ test_expect_success \
+>  
+>  test_expect_success \
+>      'git ls-files --others --directory should not get confused.' \
+> -    'diff output expected2'
+> +    'test_cmp output expected2'
 
-    refs/heads/*:refs/remotes/origin/*
+Same here.
 
-The local 'maint' in the old layout was called a remote tracking branch,
-too, even though it was local.  These days, if you use the default layout
-"git clone" gives you, you can say refs under refs/remotes/ hierarchy are
-all remote tracking branches, and you do not have any remote tracking
-branches that are local.
+>  
+>  test_done
+> diff --git a/t/t3010-ls-files-killed-modified.sh b/t/t3010-ls-files-killed-modified.sh
+> index ec14040..4f5375e 100755
+> --- a/t/t3010-ls-files-killed-modified.sh
+> +++ b/t/t3010-ls-files-killed-modified.sh
+> @@ -75,7 +75,7 @@ EOF
+>  
+>  test_expect_success \
+>      'validate git ls-files -k output.' \
+> -    'diff .output .expected'
+> +    'test_cmp .output .expected'
+
+Same here.
+
+>  
+>  test_expect_success \
+>      'git ls-files -m to show modified files.' \
+> @@ -91,6 +91,6 @@ EOF
+>  
+>  test_expect_success \
+>      'validate git ls-files -m output.' \
+> -    'diff .output .expected'
+> +    'test_cmp .output .expected'
+
+And here.
+
+>  
+>  test_done
+> diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+> index b7e3628..bfd593c 100755
+> --- a/t/t5000-tar-tree.sh
+> +++ b/t/t5000-tar-tree.sh
+> @@ -76,7 +76,7 @@ test_expect_success \
+>  
+>  test_expect_success \
+>      'git archive vs. git tar-tree' \
+> -    'diff b.tar b2.tar'
+> +    'test_cmp b.tar b2.tar'
+>  
+>  test_expect_success \
+>      'git archive in a bare repo' \
+> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+> index 08d5b91..4fcc2e1 100755
+> --- a/t/t9001-send-email.sh
+> +++ b/t/t9001-send-email.sh
+> @@ -88,7 +88,7 @@ cat >expected <<\EOF
+>  EOF
+>  test_expect_success \
+>      'Verify commandline' \
+> -    'diff commandline1 expected'
+> +    'test_cmp commandline1 expected'
+
+And here, too.
+
+>  
+>  cat >expected-show-all-headers <<\EOF
+>  0001-Second.patch
