@@ -1,7 +1,7 @@
 From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [EGIT PATCH 08/10] Drop unused end parameters in hunk parsing code
-Date: Mon, 16 Mar 2009 21:14:41 +0100
-Message-ID: <1237234483-3405-9-git-send-email-robin.rosenberg@dewire.com>
+Subject: [EGIT PATCH 09/10] Drop unused File arguments in IndexTreeWalker and WorkdirCheckout
+Date: Mon, 16 Mar 2009 21:14:42 +0100
+Message-ID: <1237234483-3405-10-git-send-email-robin.rosenberg@dewire.com>
 References: <1237234483-3405-1-git-send-email-robin.rosenberg@dewire.com>
  <1237234483-3405-2-git-send-email-robin.rosenberg@dewire.com>
  <1237234483-3405-3-git-send-email-robin.rosenberg@dewire.com>
@@ -10,114 +10,105 @@ References: <1237234483-3405-1-git-send-email-robin.rosenberg@dewire.com>
  <1237234483-3405-6-git-send-email-robin.rosenberg@dewire.com>
  <1237234483-3405-7-git-send-email-robin.rosenberg@dewire.com>
  <1237234483-3405-8-git-send-email-robin.rosenberg@dewire.com>
+ <1237234483-3405-9-git-send-email-robin.rosenberg@dewire.com>
 Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
 To: spearce@sparce.org
-X-From: git-owner@vger.kernel.org Mon Mar 16 21:17:45 2009
+X-From: git-owner@vger.kernel.org Mon Mar 16 21:17:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjJFf-0007z8-1f
-	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 21:17:35 +0100
+	id 1LjJFe-0007z8-CA
+	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 21:17:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759307AbZCPUPi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Mar 2009 16:15:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759251AbZCPUPf
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 16:15:35 -0400
-Received: from mail.dewire.com ([83.140.172.130]:5296 "EHLO dewire.com"
+	id S1756754AbZCPUPg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Mar 2009 16:15:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759178AbZCPUPe
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 16:15:34 -0400
+Received: from mail.dewire.com ([83.140.172.130]:5292 "EHLO dewire.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758879AbZCPUPa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Mar 2009 16:15:30 -0400
+	id S1758705AbZCPUP3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Mar 2009 16:15:29 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 319C6138AD60;
-	Mon, 16 Mar 2009 21:15:27 +0100 (CET)
+	by dewire.com (Postfix) with ESMTP id E58B9138AD6C;
+	Mon, 16 Mar 2009 21:15:25 +0100 (CET)
 X-Virus-Scanned: by amavisd-new at dewire.com
 Received: from dewire.com ([127.0.0.1])
 	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id nkm+yooukS2J; Mon, 16 Mar 2009 21:15:22 +0100 (CET)
+	with ESMTP id 1GiOkMrUDHqi; Mon, 16 Mar 2009 21:15:25 +0100 (CET)
 Received: from localhost.localdomain (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id F0934138AD61;
-	Mon, 16 Mar 2009 21:14:45 +0100 (CET)
+	by dewire.com (Postfix) with ESMTP id 3EAAF138AD63;
+	Mon, 16 Mar 2009 21:14:46 +0100 (CET)
 X-Mailer: git-send-email 1.6.1.285.g35d8b
-In-Reply-To: <1237234483-3405-8-git-send-email-robin.rosenberg@dewire.com>
+In-Reply-To: <1237234483-3405-9-git-send-email-robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113370>
 
-Is this safe, or should they actually be used?
 ---
- .../org/spearce/jgit/patch/CombinedHunkHeader.java |    2 +-
- .../src/org/spearce/jgit/patch/HunkHeader.java     |    2 +-
- .../src/org/spearce/jgit/patch/Patch.java          |    8 ++++----
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ .../src/org/spearce/jgit/lib/IndexTreeWalker.java  |    8 ++++----
+ .../src/org/spearce/jgit/lib/WorkDirCheckout.java  |    5 ++---
+ 2 files changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/patch/CombinedHunkHeader.java b/org.spearce.jgit/src/org/spearce/jgit/patch/CombinedHunkHeader.java
-index 83ea681..b1aef91 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/patch/CombinedHunkHeader.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/patch/CombinedHunkHeader.java
-@@ -90,7 +90,7 @@ public OldImage getOldImage(final int nthParent) {
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/IndexTreeWalker.java b/org.spearce.jgit/src/org/spearce/jgit/lib/IndexTreeWalker.java
+index 5c7909a..e2078e1 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/IndexTreeWalker.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/IndexTreeWalker.java
+@@ -104,10 +104,10 @@ public IndexTreeWalker(GitIndex index, Tree mainTree, Tree newTree, File root, I
+ 	 * @throws IOException
+ 	 */
+ 	public void walk() throws IOException {
+-		walk(mainTree, newTree, "");
++		walk(mainTree, newTree);
  	}
  
- 	@Override
--	void parseHeader(final int end) {
-+	void parseHeader() {
- 		// Parse "@@@ -55,12 -163,13 +163,15 @@@ protected boolean"
- 		//
- 		final byte[] buf = file.buf;
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/patch/HunkHeader.java b/org.spearce.jgit/src/org/spearce/jgit/patch/HunkHeader.java
-index e3ce546..e9c55e3 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/patch/HunkHeader.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/patch/HunkHeader.java
-@@ -161,7 +161,7 @@ public int getLinesContext() {
- 		return nContext;
+-	private void walk(Tree tree, Tree auxTree, String curDir) throws IOException {
++	private void walk(Tree tree, Tree auxTree) throws IOException {
+ 		TreeIterator mi = new TreeIterator(tree, TreeIterator.Order.POSTORDER);
+ 		TreeIterator ai = new TreeIterator(auxTree, TreeIterator.Order.POSTORDER);
+ 		TreeEntry m = mi.hasNext() ? mi.next() : null;
+@@ -124,7 +124,7 @@ private void walk(Tree tree, Tree auxTree, String curDir) throws IOException {
+ 			Entry     pi = cmpmi >= 0 && cmpai >= 0 ? i : null;
+ 
+ 			if (pi != null)
+-				visitEntry(pm, pa, pi, root);
++				visitEntry(pm, pa, pi);
+ 			else
+ 				finishVisitTree(pm, pa, curIndexPos, root);
+ 
+@@ -135,7 +135,7 @@ private void walk(Tree tree, Tree auxTree, String curDir) throws IOException {
  	}
  
--	void parseHeader(final int end) {
-+	void parseHeader() {
- 		// Parse "@@ -236,9 +236,9 @@ protected boolean"
- 		//
- 		final byte[] buf = file.buf;
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/patch/Patch.java b/org.spearce.jgit/src/org/spearce/jgit/patch/Patch.java
-index 9c2a8d6..4b2121e 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/patch/Patch.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/patch/Patch.java
-@@ -222,7 +222,7 @@ private int parseDiffGit(final byte[] buf, final int start, final int end) {
- 		final FileHeader fh = new FileHeader(buf, start);
- 		int ptr = fh.parseGitFileName(start + DIFF_GIT.length, end);
- 		if (ptr < 0)
--			return skipFile(buf, start, end);
-+			return skipFile(buf, start);
+ 	private void visitEntry(TreeEntry t1, TreeEntry t2,
+-			Entry i, File root) throws IOException {
++			Entry i) throws IOException {
  
- 		ptr = fh.parseGitHeaders(ptr, end);
- 		ptr = parseHunks(fh, ptr, end);
-@@ -236,7 +236,7 @@ private int parseDiffCombined(final byte[] hdr, final byte[] buf,
- 		final CombinedFileHeader fh = new CombinedFileHeader(buf, start);
- 		int ptr = fh.parseGitFileName(start + hdr.length, end);
- 		if (ptr < 0)
--			return skipFile(buf, start, end);
-+			return skipFile(buf, start);
- 
- 		ptr = fh.parseGitHeaders(ptr, end);
- 		ptr = parseHunks(fh, ptr, end);
-@@ -255,7 +255,7 @@ private int parseTraditionalPatch(final byte[] buf, final int start,
- 		return ptr;
+ 		assert t1 != null || t2 != null || i != null : "Needs at least one entry";
+ 		assert root != null : "Needs workdir";
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/WorkDirCheckout.java b/org.spearce.jgit/src/org/spearce/jgit/lib/WorkDirCheckout.java
+index d3da74a..8435223 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/WorkDirCheckout.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/WorkDirCheckout.java
+@@ -259,7 +259,7 @@ public void visitEntry(TreeEntry treeEntry, TreeEntry auxEntry,
+ 				if (treeEntry instanceof Tree || auxEntry instanceof Tree) {
+ 					throw new IllegalArgumentException("Can't pass me a tree!");
+ 				}
+-				processEntry(treeEntry, auxEntry, indexEntry, file);
++				processEntry(treeEntry, auxEntry, indexEntry);
+ 			}
+ 	
+ 			@Override
+@@ -294,8 +294,7 @@ else if (file.isDirectory()) {
+ 		conflicts.removeAll(removed);
  	}
  
--	private static int skipFile(final byte[] buf, int ptr, final int end) {
-+	private static int skipFile(final byte[] buf, int ptr) {
- 		ptr = nextLF(buf, ptr);
- 		if (match(buf, ptr, OLD_NAME) >= 0)
- 			ptr = nextLF(buf, ptr);
-@@ -282,7 +282,7 @@ private int parseHunks(final FileHeader fh, int c, final int end) {
- 
- 			if (isHunkHdr(buf, c, end) == fh.getParentCount()) {
- 				final HunkHeader h = fh.newHunkHeader(c);
--				h.parseHeader(end);
-+				h.parseHeader();
- 				c = h.parseBody(this, end);
- 				h.endOffset = c;
- 				fh.addHunk(h);
+-	void processEntry(TreeEntry h, TreeEntry m, Entry i,
+-			File file) throws IOException {
++	void processEntry(TreeEntry h, TreeEntry m, Entry i) throws IOException {
+ 				ObjectId iId = (i == null ? null : i.getObjectId());
+ 				ObjectId mId = (m == null ? null : m.getId());
+ 				ObjectId hId = (h == null ? null : h.getId());
 -- 
 1.6.1.285.g35d8b
