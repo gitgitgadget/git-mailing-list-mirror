@@ -1,99 +1,93 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: Generalised bisection
-Date: Mon, 16 Mar 2009 10:37:45 +0000
-Message-ID: <43d8ce650903160337p5a48c429nd9efd7f35e66248d@mail.gmail.com>
-References: <efe2b6d70903081840v18e77aa7w2dac2bed553d0d6a@mail.gmail.com>
-	 <43d8ce650903110235q5e2a59f6t201d5e65a4937476@mail.gmail.com>
-	 <efe2b6d70903111515p2b9f656bp186d0b3cc7ae483d@mail.gmail.com>
-	 <43d8ce650903112345x3d40b70ap7e4c0f8c7d0b6069@mail.gmail.com>
-	 <alpine.DEB.1.00.0903121154560.10279@pacific.mpi-cbg.de>
-	 <d9c1caea0903121102y5452603fua0e7a1b82e121b01@mail.gmail.com>
-	 <efe2b6d70903130549m63ae9bdeg1cd3f24a43b3e66f@mail.gmail.com>
-	 <d9c1caea0903130819u770686b1w867f074ffef8fabf@mail.gmail.com>
-	 <efe2b6d70903151216q4a8881e5t797cf5d3bebc5697@mail.gmail.com>
-	 <d9c1caea0903160329v3c1a1600m9913eafa00cc2f37@mail.gmail.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH] test-lib: write test results to
+	test-results/<basename>-<pid>
+Date: Mon, 16 Mar 2009 11:41:38 +0100
+Message-ID: <20090316104138.GD10963@neumann>
+References: <cover.1236961524u.git.johannes.schindelin@gmx.de>
+	<3728317206182c4d4539f3d20b8441cb160e72e3.1236961524u.git.johannes.schindelin@gmx.de>
+	<alpine.DEB.1.00.0903131735110.6288@intel-tinevez-2-302>
+	<20090313172002.GA16232@neumann>
+	<alpine.DEB.1.00.0903141250450.10279@pacific.mpi-cbg.de>
+	<20090314121617.GJ6808@neumann>
+	<alpine.DEB.1.00.0903141321550.10279@pacific.mpi-cbg.de>
+	<20090314122833.GK6808@neumann>
+	<fabb9a1e0903140616q3770f89axff84755abb1f47c7@mail.gmail.com>
+	<alpine.DEB.1.00.0903161115520.5741@eeepc-johanness>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Ealdwulf Wuffinga <ealdwulf@googlemail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Git List <git@vger.kernel.org>
-To: Steven Tweed <orthochronous@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 16 11:39:22 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 16 11:43:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjAE2-00010V-P5
-	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 11:39:19 +0100
+	id 1LjAHs-0002Ad-CV
+	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 11:43:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755071AbZCPKhs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Mar 2009 06:37:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752073AbZCPKhs
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 06:37:48 -0400
-Received: from wf-out-1314.google.com ([209.85.200.169]:52037 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754061AbZCPKhr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Mar 2009 06:37:47 -0400
-Received: by wf-out-1314.google.com with SMTP id 28so1842997wfa.4
-        for <git@vger.kernel.org>; Mon, 16 Mar 2009 03:37:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=WotaHMhDdD0gclDy5Opq8A2RKXKKrN9ayja6vL8smyY=;
-        b=hPa7paCHTbRX/8BP1wVWjMO7QPjEp4tubTeZA/fTcSYB70C77s8IZNjka5ZAglOg3M
-         YIiL2+K9KTSoRg0BfgQ54qQYRohymsveUWoXO9OYcinQY9s4xSEcxJ+yC86bIw+CCTBd
-         L8HlhJrCorqcKDlYw7i/kqtJ3lj8BUdtxyfFg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=JOELqkXqHSAC7fWOG8HVF/akAchhIRSGc2eiodxtj2LqdbELC8wFoJe8hGjY08VHfT
-         LlAmeXOwbX6pgxL37i5hOiL4WTQPOFEzDWECRrBHfqfRpmMvhi6w54lWlDopmqalp6T8
-         1ZAlJJqOK+KmCUKaSvVzKNl4RG5kViPDtCeaQ=
-Received: by 10.142.157.9 with SMTP id f9mr2069629wfe.341.1237199865511; Mon, 
-	16 Mar 2009 03:37:45 -0700 (PDT)
-In-Reply-To: <d9c1caea0903160329v3c1a1600m9913eafa00cc2f37@mail.gmail.com>
+	id S1754432AbZCPKlp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Mar 2009 06:41:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754262AbZCPKlp
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 06:41:45 -0400
+Received: from francis.fzi.de ([141.21.7.5]:52889 "EHLO exchange.fzi.de"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753904AbZCPKlo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Mar 2009 06:41:44 -0400
+Received: from [127.0.1.1] ([141.21.4.196]) by exchange.fzi.de with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 16 Mar 2009 11:41:38 +0100
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0903161115520.5741@eeepc-johanness>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-OriginalArrivalTime: 16 Mar 2009 10:41:38.0064 (UTC) FILETIME=[C8DB2100:01C9A623]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113318>
 
-2009/3/16 Steven Tweed <orthochronous@gmail.com>:
-> On Sun, Mar 15, 2009 at 7:16 PM, Ealdwulf Wuffinga
-> <ealdwulf@googlemail.com> wrote:
->> On Fri, Mar 13, 2009 at 3:19 PM, Steven Tweed <orthochronous@gmail.com> wrote:
->> It is not obvious how to perform this algorithm incrementally, because
->> of the need to
->> marginalise out the fault rate. As I understand it, marginalisation
->> has to be done after you
->> have incorporated all your information into the model, which means we
->> can't use the
->> usual bayesian updating.
->
-> I had a look over the weekend, and got a bit sidetracked on one of
-> your assumptions. You seem to be assuming that the bug is such that
-> observing a single positive observation of the symptom at a position i
-> in the linear history _does not_ completely rule out that the guilty
-> commit occurs after that point. I would have thought the generally
-> more applicable assumption is that, given that generally you don't
-> have a bug ridden system where more than one bug causes the same
-> symptom _within the history of interest_, that a single observation of
-> the symptom does totally rule out the bug after that point (whilst
-> intermittency clearly not having observed the bug before that point
-> doesn't completely rule out the guilty commit being earlier, although
-> it should increase the liklihood estimate of the bug being later).
+On Mon, Mar 16, 2009 at 11:18:19AM +0100, Johannes Schindelin wrote:
+> On Sat, 14 Mar 2009, Sverre Rabbelier wrote:
+>=20
+> > On Sat, Mar 14, 2009 at 13:28, SZEDER G=E1bor <szeder@ira.uka.de> w=
+rote:
+> > > With my proposed change there would be no need to clean 'test-res=
+ults'
+> > > before running the tests, because test-lib.sh would take care of =
+that
+> > > (not by removing and recreating 'test-results/', but by overwriti=
+ng
+> > > (IOW: removing and recreating, but in one step) individual test r=
+esult
+> > > files).
+> >=20
+> > Wouldn't that result in possible stale files being counted in the
+> > result (e.g., if those tests were not run this time, but they were =
+run
+> > previously)?
+>=20
+> Yes.  Stale files would be counted in.  The fact that aggregate-resul=
+ts.sh=20
+> is called when running "make" in t/ is a sure sign for me that you sh=
+ould=20
+> not muddy waters by making unnecessary changes that break the default=
+=20
+> usage from time to time.
 
-I think it's reasonable to expect false-positives as well as
-false-negatives.  e.g. you're looking for a commit that slows down the
-frame rate.  But on one of the good commits the hard disk hits a bad
-sector and takes a bit longer to retrieve data and so you get a
-false-positive.
+As I explained earlier, it won't change the default usage at all, but,
+as I explained in my response to Sverre, it would actually fix a
+current breakage in certain cases (i.e. make t1234-foo.sh ; make
+t1234-foo.sh ; make aggregate-results would report the correct
+numbers).
 
-It's a bit contrived, but I'm sure you can think of better example
+> And I really would like to be able to spend my time on other things t=
+han=20
+> discussing this at more length than necessary.
 
-John
+Ok, then I will also spare the effort of updating the patch.
+Unless, of course, there are others who are interested.
+
+
+Thanks,
+G=E1bor
