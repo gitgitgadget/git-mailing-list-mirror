@@ -1,66 +1,44 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn: creating tags from a subdirectory of trunk
-Date: Sun, 15 Mar 2009 16:21:05 -0700
-Message-ID: <20090315232105.GA21667@dcvr.yhbt.net>
-References: <632a37a0903151418u483ca6cal1582518b9120da8e@mail.gmail.com>
+From: "John M. Dlugosz" <ngnr63q02@sneakemail.com>
+Subject: Re: setting up tracking on push
+Date: Sun, 15 Mar 2009 20:07:45 -0500
+Message-ID: <4218-19699@sneakemail.com>
+References: <buofxhr2vta.fsf@dhlpc061.dev.necel.com>	 <gp9jp7$uc3$1@ger.gmane.org>	 <76718490903111758l4e4bd29et379e975deb8e99bd@mail.gmail.com>	 <76718490903111814t1ab90a39h9252d0ccf8af05c4@mail.gmail.com>	 <4845-91917@sneakemail.com> <76718490903150536r2d3e687ckbcc4e1bdb2d2194d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Tom Huybrechts <tom.huybrechts@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 16 00:22:45 2009
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 16 02:30:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LizfC-0000M7-D2
-	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 00:22:38 +0100
+	id 1Lj1ed-0003pT-UW
+	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 02:30:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753101AbZCOXVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Mar 2009 19:21:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751852AbZCOXVI
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Mar 2009 19:21:08 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:41683 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751792AbZCOXVI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Mar 2009 19:21:08 -0400
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ABB1F1F4E3;
-	Sun, 15 Mar 2009 23:21:05 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <632a37a0903151418u483ca6cal1582518b9120da8e@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751539AbZCPB2p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Mar 2009 21:28:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751339AbZCPB2o
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Mar 2009 21:28:44 -0400
+Received: from sneakemail.com ([38.113.6.61]:47177 "HELO sneak1.sneakemail.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1751217AbZCPB2n (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Mar 2009 21:28:43 -0400
+Received: (qmail 931 invoked by uid 508); 16 Mar 2009 01:28:31 -0000
+Received: (sneakemail censored 4218-19699 #1); 16 Mar 2009 01:28:31 -0000
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.19) Gecko/20081209 Thunderbird/2.0.0.19 Mnenhy/0.7.5.666
+In-Reply-To: <76718490903150536r2d3e687ckbcc4e1bdb2d2194d@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113303>
 
-Tom Huybrechts <tom.huybrechts@gmail.com> wrote:
-> Hi,
-> 
-> I'm trying to setup a git mirror of a svn repository.  The tags in
-> this repository are not created trunk it self, but from subdirectories
-> of trunk. The tags and branches are in the standard places.
-> e.g:
-> /trunk/main -> tags/main-1
-> /trunk/plugins/foo -> tags/foo-1
-> /trunk/plugins/bar -> tags/bar-1
-> 
-> I run 'git svn clone -s svn-url target'. It starts going over the
-> history nicely until it reaches the first branch. It calls this branch
-> something like tags/tag-name@revision, and starts retrieving the
-> entire project history again from r1. This is repeated for every
-> branch.
+Jay Soffian jaysoffian-at-gmail.com |git| wrote:
+> I remember being just as confused, but oddly it seems so clear to me
+> now. I think there is an inflection point where git goes from
+> "confusing" to "ah hah, it's ingenious!" :-)
+>
+>   
 
-Hi Tom,
-
-This is a known problem with some repositories.  My suggestion is to
-use individual "fetch" directives for each of those tags you want to
-follow.
-
-The -s/--stdlayout is only for projects that follow the SVN-recommended
-repository layout exactly and we haven't thought of a generic way to
-handle those non-standard tags in repos...
-
--- 
-Eric Wong
+In this case, the confusion is with different people posting different 
+meanings for the term, and more generally using the term in different ways.
