@@ -1,81 +1,181 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: [StGit PATCH 5/5] Convert "float" to the lib infrastructure
-Date: Mon, 16 Mar 2009 16:36:43 +0000
-Message-ID: <b0943d9e0903160936m1971fbaft928a495eaab4fa20@mail.gmail.com>
-References: <20090312120426.2992.35213.stgit@pc1117.cambridge.arm.com>
-	 <20090312120918.2992.82713.stgit@pc1117.cambridge.arm.com>
-	 <20090313024137.GE15393@diana.vm.bytemark.co.uk>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] Give error when no remote is configured
+Date: Mon, 16 Mar 2009 12:55:26 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0903161204240.19665@iabervon.org>
+References: <alpine.LNX.1.00.0903110139450.19665@iabervon.org> <7vocw2x7ob.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Mon Mar 16 17:39:21 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: bernie@codewiz.org, git@vger.kernel.org,
+	Giovanni Bajo <rasky@develer.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 16 17:57:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjFqK-0005QM-7P
-	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 17:39:12 +0100
+	id 1LjG7W-0004mZ-En
+	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 17:56:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757659AbZCPQgr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Mar 2009 12:36:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752463AbZCPQgr
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 12:36:47 -0400
-Received: from mail-fx0-f176.google.com ([209.85.220.176]:53724 "EHLO
-	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758075AbZCPQgq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Mar 2009 12:36:46 -0400
-Received: by fxm24 with SMTP id 24so3563446fxm.37
-        for <git@vger.kernel.org>; Mon, 16 Mar 2009 09:36:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=z1McZ5JjXXY9CpTO7wiuF/YncPQtHtOxHbdy+yKXHXE=;
-        b=CTbog2xHEXf6xGd+y/sj7ftAZpm+H72fTGndOjKQPJ2iYn4sIZ76WMxia4SWgfIrFU
-         ZEGei5tnDVGOIY+P/Jweu5TlaK4ilvUHCIMcdx4ALVlkzdZX5bToN1hIMI5qa26UqcgH
-         hfWPW1/7IV/ihOebJDH8Q5nZ0nvJH9tJkqo/o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=n937fj7z5GVDXmWlCp6muSq2GOJ0Ft/bP8P7HjqJh0omDyAY/VD5ipChwshef62uFL
-         1Z912ycS757GfwXcjNIoPl4Aoc2EqB8n/bGZ+1oc2YX06tY2XRjij4M9U/3mzPwBlslS
-         YZQBP4sb6G8m+6NlEjsLiALz8EyyOBo8qcCIM=
-Received: by 10.204.58.79 with SMTP id f15mr1676147bkh.202.1237221403201; Mon, 
-	16 Mar 2009 09:36:43 -0700 (PDT)
-In-Reply-To: <20090313024137.GE15393@diana.vm.bytemark.co.uk>
+	id S1756392AbZCPQz3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Mar 2009 12:55:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755542AbZCPQz3
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 12:55:29 -0400
+Received: from iabervon.org ([66.92.72.58]:41315 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751689AbZCPQz2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Mar 2009 12:55:28 -0400
+Received: (qmail 30548 invoked by uid 1000); 16 Mar 2009 16:55:26 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 16 Mar 2009 16:55:26 -0000
+In-Reply-To: <7vocw2x7ob.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113343>
 
-2009/3/13 Karl Hasselstr=F6m <kha@treskal.com>:
-> On 2009-03-12 12:09:18 +0000, Catalin Marinas wrote:
->> =A0options =3D [
->> =A0 =A0 =A0opt('-s', '--series', action =3D 'store_true',
->> - =A0 =A0 =A0 =A0short =3D 'Rearrange according to a series file')]
->> + =A0 =A0 =A0 =A0short =3D 'Rearrange according to a series file')
->> + =A0 =A0] + argparse.keep_option()
->
-> This flag should take the filename as a parameter, both because it's
-> the right thing to do and because it'll make the tab completion work
-> right (as is, it'll complete on patch names after the -s flag).
->
-> Something like
->
-> =A0opt('-s', '--series', type =3D 'string')
->
-> ought to do it.
+On Mon, 16 Mar 2009, Junio C Hamano wrote:
 
-This command was accepting series via the stdin as well (maybe for
-easier use in other scripts or from stgit.el). Anyway, it doesn't seem
-to make any difference with the bash completion. It still tries to
-complete patches but when this fails bash lists files if the prefix
-matches some.
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+> 
+> > When there's no explicitly-named remote, we use the remote specified
+> > for the current branch, which in turn defaults to "origin". But it
+> > this case should require the remote to actually be configured, and not
+> > fall back to the path "origin".
+> 
+> This is seriously broken.
+> 
+> > @@ -643,11 +656,22 @@ static int valid_remote_nick(const char *name)
+> >  struct remote *remote_get(const char *name)
+> >  {
+> >  	struct remote *ret;
+> > +	int name_given = 0;
+> >  
+> >  	read_config();
+> > -	if (!name)
+> > +	if (name)
+> > +		name_given = 1;
+> > +	else {
+> >  		name = default_remote_name;
+> > -	ret = make_remote(name, 0);
+> > +		name_given = explicit_default_remote_name;
+> > +	}
+> > +	if (name_given)
+> > +		ret = make_remote(name, 0);
+> > +	else {
+> > +		ret = get_remote_by_name(name);
+> > +		if (!ret)
+> > +			return NULL;
+> > +	}
+> 
+> When you do not have any config entry to name your remotes but have been
+> using .git/remotes/origin happily, you may have read config already at
+> this point, but when you call get_remote_by_name() you haven't read
+> anything from .git/remotes/* (nor .git/branches/* for that matter).  The
+> caller will get NULL in such a case.  This happens for both fetch and
+> push.
 
---=20
-Catalin
+That's actually a simple bug; the block that's just after what you quoted 
+should be just before it. I thought we had a test for having "origin" 
+defined by one of the old methods, but I guess not. Your version is 
+better, though; I'd forgotten that using the name as the URL was in 
+remote_get() and not make_remote().
+
+> Because you did not have any test to protect whatever you wanted to "fix"
+> with your patch, I have no way knowing if I am breaking something else you
+> wanted to do with your patch,
+
+$ git init
+$ git fetch
+
+Shouldn't try fetching from ./origin/.git; I suppose the best test would 
+be to do something like:
+
+$ mkdir origin
+$ (cd origin; git init; touch a; git add a; git commit -m "initial")
+$ git init
+$ git fetch
+
+With test_must_fail. (But I'm more going for having it not give weird 
+errors in an error situation, which is kind of fluffy to try to test.)
+
+> but the patch below at least fixes the
+> regression for me when running "git pull" in a repository I initialized
+> long time ago that does not use the .git/config file to specify where my
+> remote repositories are.
+> 
+> It applies on top of fa685bd (Give error when no remote is configured,
+> 2009-03-11)
+> 
+> -- >8 --
+> Subject: Remove total confusion from git-fetch and git-push
+> 
+> The config file is not the only place remotes are defined, and without
+> consulting .git/remotes and .git/branches, you won't know if "origin" is
+> configured by the user.  Don't give up too early and insult the user with
+> a wisecrack "Where do you want to fetch from today?"
+
+You actually wrote that message, in 853a3697. I think a better message 
+would probably be something like:
+
+No default remote is configured for your current branch, and the default 
+remote "origin" is not configured either.
+
+I think the message missed being made user-friendly in earlier passes due 
+to being inaccessible at the time.
+
+> Insulting is ok, but I personally get really pissed off if a tool is both
+> confused and insulting.  At least be _correct_ and insulting.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  remote.c |   21 ++++-----------------
+>  1 files changed, 4 insertions(+), 17 deletions(-)
+> 
+> diff --git a/remote.c b/remote.c
+> index 199830e..9f07dbc 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -105,16 +105,6 @@ static void add_url_alias(struct remote *remote, const char *url)
+>  	add_url(remote, alias_url(url));
+>  }
+>  
+> -static struct remote *get_remote_by_name(const char *name)
+> -{
+> -	int i;
+> -	for (i = 0; i < remotes_nr; i++) {
+> -		if (!strcmp(name, remotes[i]->name))
+> -			return remotes[i];
+> -	}
+> -	return NULL;
+> -}
+> -
+>  static struct remote *make_remote(const char *name, int len)
+>  {
+>  	struct remote *ret;
+> @@ -665,19 +655,16 @@ struct remote *remote_get(const char *name)
+>  		name = default_remote_name;
+>  		name_given = explicit_default_remote_name;
+>  	}
+> -	if (name_given)
+> -		ret = make_remote(name, 0);
+> -	else {
+> -		ret = get_remote_by_name(name);
+> -		if (!ret)
+> -			return NULL;
+> -	}
+> +
+> +	ret = make_remote(name, 0);
+>  	if (valid_remote_nick(name)) {
+>  		if (!ret->url)
+>  			read_remotes_file(ret);
+>  		if (!ret->url)
+>  			read_branches_file(ret);
+>  	}
+> +	if (!name_given && !ret->url)
+> +		return NULL;
+>  	if (!ret->url)
+>  		add_url_alias(ret, name);
+>  	if (!ret->url)
+> 
