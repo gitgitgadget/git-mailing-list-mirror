@@ -1,64 +1,69 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: What's cooking in git.git (Mar 2009, #04; Sat, 14)
-Date: Mon, 16 Mar 2009 19:11:03 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0903161834530.19665@iabervon.org>
-References: <7vr60z8fkl.fsf@gitster.siamese.dyndns.org>
+From: pi song <pi.songs@gmail.com>
+Subject: Re: [PATCH2/2] Libify blame
+Date: Tue, 17 Mar 2009 10:11:05 +1100
+Message-ID: <1b29507a0903161611w735d3ed2l958eeec9295c7432@mail.gmail.com>
+References: <49BE5466.5050202@gmail.com>
+	 <fabb9a1e0903160649o6b576976jeb884e18713c154e@mail.gmail.com>
+	 <20090316200418.GM3817@genesis.frugalware.org>
+Reply-To: pi.songs@gmail.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 17 00:12:48 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: rene.scharfe@lsrfire.ath.cx
+To: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org,
+	gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Mar 17 00:12:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjLz2-00041I-JJ
+	id 1LjLz3-00041I-9u
 	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 00:12:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762199AbZCPXLI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Mar 2009 19:11:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762111AbZCPXLH
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 19:11:07 -0400
-Received: from iabervon.org ([66.92.72.58]:60671 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757750AbZCPXLG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Mar 2009 19:11:06 -0400
-Received: (qmail 23708 invoked by uid 1000); 16 Mar 2009 23:11:03 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 16 Mar 2009 23:11:03 -0000
-In-Reply-To: <7vr60z8fkl.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1762224AbZCPXLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Mar 2009 19:11:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762202AbZCPXLJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 19:11:09 -0400
+Received: from wf-out-1314.google.com ([209.85.200.174]:10826 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761997AbZCPXLH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Mar 2009 19:11:07 -0400
+Received: by wf-out-1314.google.com with SMTP id 28so2166548wfa.4
+        for <git@vger.kernel.org>; Mon, 16 Mar 2009 16:11:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=bVgmJpm2iNYOKAC+FhlfHasecWWF4e4G7cKI0ee84YU=;
+        b=lxqIU11ocMe7FRMSYtPbsuY0FJ2NY9ZGowqJU1wwmImxCcLPpkBhMj9KJbh+Lmq307
+         5VSKPpETObaEpGN2ygJHpU1M/YSjyh4+qKoKKeBttdmSqSx46cq1ZEMJpfuRWcF4ByvU
+         mYoexuTvizCNnpV43xPwzXR5840N1G/Iqflh0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=C6qhL1+O6L10lAkNDiuixwlJUke9kxbCvVUBOqZUohjR46Cj9oNLqE03JhnvAEzK/K
+         uJeTK2qFqfqWR1gyfnQKx2tUp5H+sf3Obz03MU18rGZIZvV4xjXVoNjwFYio7oHbjcNF
+         p4HowqnT4tLxhbky85ZdJeVdQYQaaVwpHOLHk=
+Received: by 10.142.105.10 with SMTP id d10mr2373334wfc.71.1237245065258; Mon, 
+	16 Mar 2009 16:11:05 -0700 (PDT)
+In-Reply-To: <20090316200418.GM3817@genesis.frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113403>
 
-On Sat, 14 Mar 2009, Junio C Hamano wrote:
+This was generated from git format-patch -M. After applying the patch,
+you can look in git gui to confirm that I didn't change any logic.
 
-> * db/foreign-scm (Sun Jan 11 15:12:10 2009 -0500) 3 commits
->  - Support fetching from foreign VCSes
->  - Add specification of git-vcs helpers
->  - Add "vcs" config option in remotes
-> 
-> The "spec" did not seem quite well cooked yet, but in the longer term I
-> think something like this to allow interoperating with other SCMs as if
-> the other end is a native git repository is a very worthy goal.
+Pi Song
 
-I recently figured out a way to alter the transport API slightly to make 
-it possible to attach foreign VCSes there. This amounts to allowing 
-get_refs_list() to leave the sha1s null, and allowing fetch() to set them. 
-This just requires a copy of a ref list in the clone path, and a check to 
-make null (for not having a ref) not match null (for not knowing the hash 
-of the ref) in the fetch logic.
-
-I think I will end up changing the spec, mostly to allow a single 
-non-trivial call to the helper to provide both the list of refs and the 
-fast-import stream; this matches how the pack protocol works (except, of 
-course, that the initial list doesn't have hashes, and the output goes to 
-fast-import instead of unpack-objects). I'm going to rebase the series at 
-some point, but I've been focused more on the more core transport and 
-remote stuff now that I think I can go through that.
-
-	-Daniel
-*This .sig left intentionally blank*
+On Tue, Mar 17, 2009 at 7:04 AM, Miklos Vajna <vmiklos@frugalware.org> wrote:
+> On Mon, Mar 16, 2009 at 02:49:31PM +0100, Sverre Rabbelier <srabbelier@gmail.com> wrote:
+>> It would be nice if you could paste the output of "git diff -M" after
+>> the triple-dash to show that it is indeed only a small change.
+>
+> Or just use git format-patch -M?
+>
