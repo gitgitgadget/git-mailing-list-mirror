@@ -1,100 +1,87 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT PATCH] Create a debugging tool "jgit rebuild-commitgraph"
-Date: Mon, 16 Mar 2009 07:44:50 -0700
-Message-ID: <20090316144450.GN22920@spearce.org>
-References: <1236954901-30990-1-git-send-email-spearce@spearce.org> <200903151234.39367.robin.rosenberg@dewire.com>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: [StGit PATCH 1/5] Check for local changes with "goto"
+Date: Mon, 16 Mar 2009 14:56:11 +0000
+Message-ID: <b0943d9e0903160756g79ac3464i4bb6f7f61ba0555a@mail.gmail.com>
+References: <20090312120426.2992.35213.stgit@pc1117.cambridge.arm.com>
+	 <20090312120856.2992.48548.stgit@pc1117.cambridge.arm.com>
+	 <20090313015755.GA15393@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Mon Mar 16 15:46:37 2009
+To: =?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Mon Mar 16 15:57:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjE5L-0003mf-QE
-	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 15:46:36 +0100
+	id 1LjEG8-00084C-B1
+	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 15:57:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759524AbZCPOow (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Mar 2009 10:44:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759203AbZCPOow
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 10:44:52 -0400
-Received: from george.spearce.org ([209.20.77.23]:44433 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758764AbZCPOov (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Mar 2009 10:44:51 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 3392438211; Mon, 16 Mar 2009 14:44:50 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <200903151234.39367.robin.rosenberg@dewire.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753051AbZCPO4Q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Mar 2009 10:56:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752391AbZCPO4P
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 10:56:15 -0400
+Received: from mail-fx0-f176.google.com ([209.85.220.176]:40337 "EHLO
+	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751794AbZCPO4O convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Mar 2009 10:56:14 -0400
+Received: by fxm24 with SMTP id 24so3520071fxm.37
+        for <git@vger.kernel.org>; Mon, 16 Mar 2009 07:56:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=IzvwgGh5t8O3BhKmFc+VWIG32SMXugv5x19IIxD9UsQ=;
+        b=CGQHb50i7+9f5F7/fg2UNCiPRKCKhfHzJmW7E5qfWBwmsiDNPrDUupGxd4hbEzzbOC
+         1PSfbMFGecHRKTbh63lRywVlG9iS1Kx8GWzR6Hf3SHKmPCIBNsIuce7o50WX86j/spYl
+         7aboXnhhPLv07txOOIFDuTjbE02vI8EhGybk4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=gXZBXF88y7iP/ssxl8DK8XyVK6db6TFJf6UjAWsV6K+o6dkafVIGRf7ntwjva73oJ3
+         UtAkFrcD1OXTZuSzdvhY8u2eOHfuFN14cF6Aw7x/wRniF6WJfoHcUqj49czo5NIvcaVv
+         zsf2hb73Kn44fVvI9ikQ8rf+QRGVGGEx83Ips=
+Received: by 10.204.101.71 with SMTP id b7mr1655961bko.107.1237215371486; Mon, 
+	16 Mar 2009 07:56:11 -0700 (PDT)
+In-Reply-To: <20090313015755.GA15393@diana.vm.bytemark.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113331>
 
-Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
-> 
-> I'd hate to put such a dangerous thing in the list of normal tools. If the user
-> want to shoot him/her-self in the foot they should get a license first.
+2009/3/13 Karl Hasselstr=F6m <kha@treskal.com>:
+> On 2009-03-12 12:08:56 +0000, Catalin Marinas wrote:
+>> + =A0 =A0def __assert_index_worktree_clean(self, iw):
+>> + =A0 =A0 =A0 =A0if not iw.worktree_clean() or \
+>> + =A0 =A0 =A0 =A0 =A0 not iw.index.is_clean(self.stack.head):
+>> + =A0 =A0 =A0 =A0 =A0 =A0self.__halt('Repository not clean. Use "ref=
+resh" or '
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0'"status --reset"')
+>
+> "Repository" is misleading here. Maybe something like
+>
+> =A0 ix_c =3D iw.index.is_clean(self.stack.head)
+> =A0 wt_c =3D iw.worktree_clean()
+> =A0 if not ix_c or not wt_c:
+> =A0 =A0 =A0 self.__halt('%s not clean. Use "refresh" or "status --res=
+et"'
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 % { (False, True): 'Index', (True=
+, False): 'Worktree',
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 (False, False): 'Index an=
+d worktree' }[(ix_c, wt_c)])
 
-How about squashing this in?
+I added two separate if's as I don't find the above readable :-)
 
-diff --git a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/RebuildCommitGraph.java b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/RebuildCommitGraph.java
-index ccee997..cc23438 100644
---- a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/RebuildCommitGraph.java
-+++ b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/RebuildCommitGraph.java
-@@ -50,6 +50,7 @@
- import java.util.Map;
- 
- import org.kohsuke.args4j.Argument;
-+import org.kohsuke.args4j.Option;
- import org.spearce.jgit.errors.MissingObjectException;
- import org.spearce.jgit.errors.ObjectWritingException;
- import org.spearce.jgit.lib.Commit;
-@@ -85,6 +86,11 @@
-  * <p>
-  */
- class RebuildCommitGraph extends TextBuiltin {
-+	private final String REALLY = "--destroy-this-repository";
-+
-+	@Option(name = REALLY, usage = "approve destruction of repository")
-+	boolean really;
-+
- 	@Argument(index = 0, required = true, metaVar = "REFS", usage = "for-each-ref output")
- 	File refList;
- 
-@@ -97,6 +103,30 @@
- 
- 	@Override
- 	protected void run() throws Exception {
-+		if (!really && !db.getAllRefs().isEmpty()) {
-+			final StringBuilder m = new StringBuilder();
-+			m.append("fatal: ");
-+			m.append("This program will destroy the repository:");
-+			m.append("\n");
-+			m.append("fatal:\n");
-+			m.append("fatal:    ");
-+			m.append(db.getDirectory().getAbsolutePath());
-+			m.append("\n");
-+			m.append("fatal:\n");
-+			m.append("fatal: ");
-+			m.append("To continue, add ");
-+			m.append(REALLY);
-+			m.append(" to the command line");
-+			m.append("\n");
-+			m.append("fatal:");
-+			System.err.println(m);
-+			throw die("Need approval to destroy current repository");
-+		}
-+		if (!refList.isFile())
-+			throw die("no such file: " + refList.getPath());
-+		if (!graph.isFile())
-+			throw die("no such file: " + graph.getPath());
-+
- 		recreateCommitGraph();
- 		detachHead();
- 		deleteAllRefs();
--- 
-Shawn.
+if not iw.worktree_clean():
+    self.__halt('Worktree not clean. Use "refresh" or "status --reset"'=
+)
+if not iw.index.is_clean(self.stack.head):
+    self.__halt('Index not clean. Use "refresh" or "status --reset"')
+def __checkout(self, tree, iw, allow_bad_head):
+
+--=20
+Catalin
