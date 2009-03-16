@@ -1,76 +1,103 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT PATCH] Create a debugging tool "jgit rebuild-commitgraph"
-Date: Mon, 16 Mar 2009 13:13:33 -0700
-Message-ID: <20090316201333.GR22920@spearce.org>
-References: <1236954901-30990-1-git-send-email-spearce@spearce.org> <200903151234.39367.robin.rosenberg@dewire.com> <20090316144450.GN22920@spearce.org> <200903162109.46653.robin.rosenberg.lists@dewire.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Mon Mar 16 21:15:33 2009
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [EGIT PATCH 02/10] Rename the objectsUrl in the nested HttpObjectDB to
+Date: Mon, 16 Mar 2009 21:14:35 +0100
+Message-ID: <1237234483-3405-3-git-send-email-robin.rosenberg@dewire.com>
+References: <1237234483-3405-1-git-send-email-robin.rosenberg@dewire.com>
+ <1237234483-3405-2-git-send-email-robin.rosenberg@dewire.com>
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: spearce@sparce.org
+X-From: git-owner@vger.kernel.org Mon Mar 16 21:16:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjJDE-00071R-N7
-	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 21:15:05 +0100
+	id 1LjJEU-0007a9-At
+	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 21:16:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754977AbZCPUNh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Mar 2009 16:13:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756598AbZCPUNf
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 16:13:35 -0400
-Received: from george.spearce.org ([209.20.77.23]:60710 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752361AbZCPUNf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Mar 2009 16:13:35 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 93E5238211; Mon, 16 Mar 2009 20:13:33 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <200903162109.46653.robin.rosenberg.lists@dewire.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1757784AbZCPUOw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Mar 2009 16:14:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754429AbZCPUOv
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 16:14:51 -0400
+Received: from mail.dewire.com ([83.140.172.130]:5249 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752014AbZCPUOs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Mar 2009 16:14:48 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 3BD03138AD62;
+	Mon, 16 Mar 2009 21:14:46 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id vtj1kJ7ZHnHV; Mon, 16 Mar 2009 21:14:45 +0100 (CET)
+Received: from localhost.localdomain (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id B177C138AD58;
+	Mon, 16 Mar 2009 21:14:44 +0100 (CET)
+X-Mailer: git-send-email 1.6.1.285.g35d8b
+In-Reply-To: <1237234483-3405-2-git-send-email-robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113365>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-> m=E5ndag 16 mars 2009 15:44:50 skrev "Shawn O. Pearce" <spearce@spear=
-ce.org>:
-> > Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
-> > >=20
-> > > I'd hate to put such a dangerous thing in the list of normal tool=
-s. If the user
-> > > want to shoot him/her-self in the foot they should get a license =
-first.
-> >=20
-> > How about squashing this in?
->=20
-> Does it have to be a utility accessible through the pgm interface? Wh=
-y not=20
-> just run ut as java org.spearce.jgit.pgm.debug.RebuildCommitGraph ?=20
+It is used for looking at alternate objects, so name it such
+---
+ .../org/spearce/jgit/transport/TransportHttp.java  |   14 +++++++-------
+ 1 files changed, 7 insertions(+), 7 deletions(-)
 
-Yea, that's fine too.  Then its "debug-rebuildcommitgraph" I think,
-but that's still a reasonable name for it.
-=20
-> >  	@Override
-> >  	protected void run() throws Exception {
-> > +		if (!really && !db.getAllRefs().isEmpty()) {
-> > +			final StringBuilder m =3D new StringBuilder();
-> > +			m.append("fatal: ");
-=2E..
-> > +			System.err.println(m);
-> > +			throw die("Need approval to destroy current repository");
->=20
-> What's wrong with old fashioned '+' ? (which just translated to exact=
-ly this series
-> of StringBuilder calls anyway?
-
-Nothing, other than formatting.  + line wraps somewhat ugly sometimes
-under the Eclipse formatter.  Using StringBuilder with one append per
-line and a short name for the StringBuilder variable makes it easier
-to format.
-
---=20
-Shawn.
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportHttp.java b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportHttp.java
+index fe4a437..38d26b3 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportHttp.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportHttp.java
+@@ -112,15 +112,15 @@ public void close() {
+ 	}
+ 
+ 	class HttpObjectDB extends WalkRemoteObjectDatabase {
+-		private final URL objectsUrl;
++		private final URL alternateObjectsUrl;
+ 
+ 		HttpObjectDB(final URL b) {
+-			objectsUrl = b;
++			alternateObjectsUrl = b;
+ 		}
+ 
+ 		@Override
+ 		URIish getURI() {
+-			return new URIish(objectsUrl);
++			return new URIish(alternateObjectsUrl);
+ 		}
+ 
+ 		@Override
+@@ -143,7 +143,7 @@ URIish getURI() {
+ 		@Override
+ 		WalkRemoteObjectDatabase openAlternate(final String location)
+ 				throws IOException {
+-			return new HttpObjectDB(new URL(objectsUrl, location));
++			return new HttpObjectDB(new URL(alternateObjectsUrl, location));
+ 		}
+ 
+ 		@Override
+@@ -171,7 +171,7 @@ WalkRemoteObjectDatabase openAlternate(final String location)
+ 
+ 		@Override
+ 		FileStream open(final String path) throws IOException {
+-			final URL base = objectsUrl;
++			final URL base = alternateObjectsUrl;
+ 			final URL u = new URL(base, path);
+ 			final Proxy proxy = HttpSupport.proxyFor(proxySelector, u);
+ 			final HttpURLConnection c;
+@@ -201,10 +201,10 @@ FileStream open(final String path) throws IOException {
+ 				}
+ 			} catch (IOException err) {
+ 				try {
+-					throw new TransportException(new URL(objectsUrl, INFO_REFS)
++					throw new TransportException(new URL(alternateObjectsUrl, INFO_REFS)
+ 							+ ": cannot read available refs", err);
+ 				} catch (MalformedURLException mue) {
+-					throw new TransportException(objectsUrl + INFO_REFS
++					throw new TransportException(alternateObjectsUrl + INFO_REFS
+ 							+ ": cannot read available refs", err);
+ 				}
+ 			}
+-- 
+1.6.1.285.g35d8b
