@@ -1,117 +1,73 @@
-From: Tom Huybrechts <tom.huybrechts@gmail.com>
-Subject: Re: git-svn: creating tags from a subdirectory of trunk
-Date: Mon, 16 Mar 2009 20:02:08 +0100
-Message-ID: <632a37a0903161202w23848f41g5cde3942195369cb@mail.gmail.com>
-References: <632a37a0903151418u483ca6cal1582518b9120da8e@mail.gmail.com>
-	 <20090315232105.GA21667@dcvr.yhbt.net>
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: undoing something
+Date: Mon, 16 Mar 2009 15:06:31 -0400
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E70A2AEFA4@EXCHANGE.trad.tradestation.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Mar 16 20:04:30 2009
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 16 20:08:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjI6f-0003f8-KD
-	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 20:04:14 +0100
+	id 1LjIAx-0005Rv-LN
+	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 20:08:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759978AbZCPTCN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Mar 2009 15:02:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761373AbZCPTCM
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 15:02:12 -0400
-Received: from mail-ew0-f177.google.com ([209.85.219.177]:35923 "EHLO
-	mail-ew0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759142AbZCPTCL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Mar 2009 15:02:11 -0400
-Received: by ewy25 with SMTP id 25so3593051ewy.37
-        for <git@vger.kernel.org>; Mon, 16 Mar 2009 12:02:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=e0cxE/iw0D6MWMifp+phxd9yzeZpMezBNTijHGDZ7RA=;
-        b=HaPnetr5ZR96PPuDf+SQMw5S+EJvv0AOw5vLVOuM82fei28zsmFYYanZuLzD+5k+iw
-         I0Ky2SFQTkRnRroNez6UVZUMt5R7QjOdbYbDKiisjYPnc4lnO8Akc/kNqAwHTdj7vata
-         GQ6Xj4MiOASFYm9jWZUMVePXUy3TlXvnB16Ow=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=IjTmdS+UPB8VUA/aPngRn7Z8FbNqZFNhppA+Dv23Plvj2ZlVv9o0Zo3OKqFpPvhL1C
-         BV2kUiaJ0EgQjvaD2C65wWVE3z/3drdoUbblvHFW7Tse5RLa9V2k5xjDTp+5lGqSpdO1
-         6SohpY9M1C0U2CAaK7htr3N6AdAniKrUML+cY=
-Received: by 10.210.18.18 with SMTP id 18mr3794175ebr.11.1237230128379; Mon, 
-	16 Mar 2009 12:02:08 -0700 (PDT)
-In-Reply-To: <20090315232105.GA21667@dcvr.yhbt.net>
+	id S1752919AbZCPTHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Mar 2009 15:07:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752098AbZCPTHJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 15:07:09 -0400
+Received: from mail2.tradestation.com ([63.99.207.80]:55819 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752087AbZCPTHI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Mar 2009 15:07:08 -0400
+X-ASG-Debug-ID: 1237230424-48a701690000-QuoKaX
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
+Received: from mail5.tradestation.com (localhost [127.0.0.1])
+	by mail2.tradestation.com (Spam Firewall) with ESMTP id 6955E216E32
+	for <git@vger.kernel.org>; Mon, 16 Mar 2009 15:07:04 -0400 (EDT)
+Received: from mail5.tradestation.com ([192.168.51.76]) by mail2.tradestation.com with ESMTP id jXW7Eel5f67yEoXv for <git@vger.kernel.org>; Mon, 16 Mar 2009 15:07:04 -0400 (EDT)
+X-ASG-Whitelist: Client
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 16 Mar 2009 15:07:03 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-ASG-Orig-Subj: undoing something
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: undoing something
+Thread-Index: AcmmalFaRr6H17RrQBGIGliu4j0P8A==
+X-OriginalArrivalTime: 16 Mar 2009 19:07:03.0565 (UTC) FILETIME=[64435BD0:01C9A66A]
+X-Barracuda-Connect: UNKNOWN[192.168.51.76]
+X-Barracuda-Start-Time: 1237230424
+X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113355>
 
-On Mon, Mar 16, 2009 at 12:21 AM, Eric Wong <normalperson@yhbt.net> wro=
-te:
-> Tom Huybrechts <tom.huybrechts@gmail.com> wrote:
->> Hi,
->>
->> I'm trying to setup a git mirror of a svn repository. =A0The tags in
->> this repository are not created trunk it self, but from subdirectori=
-es
->> of trunk. The tags and branches are in the standard places.
->> e.g:
->> /trunk/main -> tags/main-1
->> /trunk/plugins/foo -> tags/foo-1
->> /trunk/plugins/bar -> tags/bar-1
->>
->> I run 'git svn clone -s svn-url target'. It starts going over the
->> history nicely until it reaches the first branch. It calls this bran=
-ch
->> something like tags/tag-name@revision, and starts retrieving the
->> entire project history again from r1. This is repeated for every
->> branch.
->
-> Hi Tom,
->
-> This is a known problem with some repositories. =A0My suggestion is t=
-o
-> use individual "fetch" directives for each of those tags you want to
-> follow.
->
-> The -s/--stdlayout is only for projects that follow the SVN-recommend=
-ed
-> repository layout exactly and we haven't thought of a generic way to
-> handle those non-standard tags in repos...
->
-> --
-> Eric Wong
->
+I made a mistake.  Big deal, now that I know that git storage is
+immutable and changes just add to what's already there.  
 
-Hi Eric,
+A quick look at
+	git reflog show topic
+tells me that {1} is the one I want.  So, how do I rewind branch topic
+to point to topic@{1} ?
+I did it by making a tag, and then in gitk pointing to it and picking
+"reset to here" from the context menu.  
 
-The repository I'm trying to convert is that of Hudson. I did some
-digging in the list archives, and found this came up earlier
-(2009/01/08).
-Back then you replied:
+A while back I was looking for the right/easy way to simply repoint my
+branch to where I wanted.  The best answer was to use push.  But, I
+wonder if gitk and other high-level commands simply call a more
+primitive command that does this?  And can I call it directly?  Or is
+push with a dot as the repository just doing this with no excessive
+processing and trust that the side-effects are all vacuous?
 
-"""
-Alternately, you could just clone the root and have all the branches al=
-l
-over the place in one tree (your eventually working copy will be huge).
+--John
+(please excuse the footer; it's not my choice)
 
-  git svn clone https://svn.dev.java.net/svn/hudson
-
-
-Basically this is the equivalent of:
-
-  svn co https://svn.dev.java.net/svn/hudson
-
-Except you'll have the full history.
-"""
-
-Is that still valid ? That is what I did, and which caused the
-behaviour I described.
-
-Tom
+TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
+  If you received this in error, please contact the sender and delete the material from any computer.
