@@ -1,64 +1,77 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [EGIT PATCH 02/10] Rename the objectsUrl in the nested
-	HttpObjectDB to
-Date: Mon, 16 Mar 2009 14:28:31 -0700
-Message-ID: <20090316212831.GU22920@spearce.org>
-References: <1237234483-3405-1-git-send-email-robin.rosenberg@dewire.com> <1237234483-3405-3-git-send-email-robin.rosenberg@dewire.com> <20090316202513.GS22920@spearce.org> <200903162225.00347.robin.rosenberg.lists@dewire.com>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: Effective Posting
+Date: Mon, 16 Mar 2009 22:29:24 +0100
+Message-ID: <49BEC4B4.6070305@lsrfire.ath.cx>
+References: <450196A1AAAE4B42A00A8B27A59278E70A2AEFA4@EXCHANGE.trad.tradestation.com> <7veiwxwa9z.fsf@gitster.siamese.dyndns.org> <450196A1AAAE4B42A00A8B27A59278E70A2AEFD7@EXCHANGE.trad.tradestation.com> <7v3addw7mv.fsf@gitster.siamese.dyndns.org> <450196A1AAAE4B42A00A8B27A59278E70A2AF031@EXCHANGE.trad.tradestation.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: spearce@sparce.org, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Mon Mar 16 22:30:33 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: John Dlugosz <JDlugosz@TradeStation.com>
+X-From: git-owner@vger.kernel.org Mon Mar 16 22:31:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjKOG-0001WP-9i
-	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 22:30:32 +0100
+	id 1LjKOp-0001jv-40
+	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 22:31:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760977AbZCPV2e convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Mar 2009 17:28:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753808AbZCPV2d
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 17:28:33 -0400
-Received: from george.spearce.org ([209.20.77.23]:35480 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756693AbZCPV2d (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Mar 2009 17:28:33 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 75F903821F; Mon, 16 Mar 2009 21:28:31 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <200903162225.00347.robin.rosenberg.lists@dewire.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1761516AbZCPV3c convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Mar 2009 17:29:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752135AbZCPV3c
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 17:29:32 -0400
+Received: from india601.server4you.de ([85.25.151.105]:42726 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755133AbZCPV3b (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Mar 2009 17:29:31 -0400
+Received: from [10.0.1.101] (p57B7E56F.dip.t-dialin.net [87.183.229.111])
+	by india601.server4you.de (Postfix) with ESMTPSA id D49CF2F8050;
+	Mon, 16 Mar 2009 22:29:28 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
+In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E70A2AF031@EXCHANGE.trad.tradestation.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113387>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-> m=E5ndag 16 mars 2009 21:25:13 skrev "Shawn O. Pearce" <spearce@spear=
-ce.org>:
-> > Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
-> > > It is used for looking at alternate objects, so name it such
-> >=20
-> > No SOB?
-> >=20
-> > But I disagree with this name change.  Its pointing at the
-> > objects directory of a repository.  It may also be used to
-> > point at an alternate when opening an alternate, in which
-> > case it points at the alternate's objects directory.
-> >=20
-> > IMHO, objectsUrl is the right name for this.
->=20
-> Ok, I missed the real reason in the comment. It is name hiding. objec=
-tsUrl
-> is the name of another variable in the outer scope.
+John Dlugosz schrieb:
+> If you can tell me how to make Outlook insert >'s in front of a block
+>  of text, I'm all ears.  I can't find any kind of "quote content" or=20
+> "paste as quotation" on the menus, or any option to do anything with=20
+> the original message other than to put it at the end with ---original
+>  message--- in front of it.  This was the best I could figure out=20
+> that was useful, and gets replies threaded (mostly) properly.
 
-OK.
+Tools -> Options -> Preferences -> E-mail Options, set "When replying t=
+o
+a message" to "Prefix each line of the original message".
 
-I still disagree with the name change.  Can we hide the outer name by
-making it private?  Or come up with a better name for the inner one?
+> While you're at it, how do you tell Outlook to always start a message
+>  in "plain text" (not HTML) based on the target address, like=20
+> Thunderbird does?
 
---=20
-Shawn.
+Tools -> Options -> Mail Format, set "Compose in this message format" t=
+o
+"Plain Text".
+
+> Alternatively, tell me how to reply using the Gmane web viewer, or=20
+> point me to another web-based viewer that shows current content.
+
+No idea.  But why not use a real mail user agent?
+
+> Or, the mailing list server could translate Outlook's visible=20
+> interspersed quotes (the original message is blue, new typing is=20
+> black) with a uniform quote style that is specified in each=20
+> subscriber's preference settings.
+
+Avoiding garbage is better than converting it to something useful.  If
+someone wrote an Outlook mail sanitizer, I'd probably use it at work,
+too, though.
+
+> Could be worse.  Ever use Lotus Notes?
+
+Yes, long ago, and thankfully I don't remember much about it.  There's
+always a way to do worse -- that's small comfort.
+
+Ren=E9
