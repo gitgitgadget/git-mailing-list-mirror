@@ -1,77 +1,68 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: fetch and pull
-Date: Mon, 16 Mar 2009 16:03:59 -0400
-Message-ID: <76718490903161303h45e47a8co83159e32ae749352@mail.gmail.com>
-References: <AcmmaYOKDtJohyDSQt2B3xvVeIPNPw==>
-	 <450196A1AAAE4B42A00A8B27A59278E70A2AEF9A@EXCHANGE.trad.tradestation.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH2/2] Libify blame
+Date: Mon, 16 Mar 2009 21:04:18 +0100
+Message-ID: <20090316200418.GM3817@genesis.frugalware.org>
+References: <49BE5466.5050202@gmail.com> <fabb9a1e0903160649o6b576976jeb884e18713c154e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: John Dlugosz <JDlugosz@tradestation.com>
-X-From: git-owner@vger.kernel.org Mon Mar 16 21:06:14 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="xA/XKXTdy9G3iaIz"
+Cc: pi song <pi.songs@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com, rene.scharfe@lsrfire.ath.cx
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 16 21:06:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjJ43-000393-7F
-	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 21:05:53 +0100
+	id 1LjJ4M-000393-Ac
+	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 21:05:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753082AbZCPUEH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Mar 2009 16:04:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752173AbZCPUEF
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 16:04:05 -0400
-Received: from rv-out-0506.google.com ([209.85.198.228]:6497 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751835AbZCPUEC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Mar 2009 16:04:02 -0400
-Received: by rv-out-0506.google.com with SMTP id g37so1747126rvb.1
-        for <git@vger.kernel.org>; Mon, 16 Mar 2009 13:03:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=5DThmfnx/1ApSe7xzWjV9t94PnorwgP3Ofa6iDBXhiw=;
-        b=VGSdLsVtyi/K268e8Mig4AkgrRIQVsybk/SEqjVTL+Vvce2OhUmo8VBfMwwMJ9zE0b
-         HcCcn1CVkhgqdzWJSk0k4ub3DFeAk/YYwIl04SeY1FMIFTMj+myLNCHpJ4rXs7pgFOY/
-         XBHG4AT6c03MASlM33+e6apN/jxrBqY1zNc/A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=op8VdhXpXGaUPR48lzXOnwek5rNZr6WTe783HS1SwUV+8Sr7Hrw4FAkgDyp4F6LwiH
-         cOchYzJHSeOKmF0fU2qB7uaYsbZCZTYKM0FHR1me4nZQnydAOMXfnrVy5zBeDQLL1X2D
-         5uppSSbqLhe+G6jw+/YZ9wmRFJa2WVhQX+hYs=
-Received: by 10.141.13.13 with SMTP id q13mr2478205rvi.163.1237233839661; Mon, 
-	16 Mar 2009 13:03:59 -0700 (PDT)
-In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E70A2AEF9A@EXCHANGE.trad.tradestation.com>
+	id S1753819AbZCPUE2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Mar 2009 16:04:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753444AbZCPUE1
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 16:04:27 -0400
+Received: from virgo.iok.hu ([212.40.97.103]:45151 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753378AbZCPUE1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Mar 2009 16:04:27 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id E85ED580B9;
+	Mon, 16 Mar 2009 21:04:19 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 9EC5644786;
+	Mon, 16 Mar 2009 21:04:19 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 835DD11B80AD; Mon, 16 Mar 2009 21:04:18 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <fabb9a1e0903160649o6b576976jeb884e18713c154e@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113360>
 
-On Mon, Mar 16, 2009 at 3:00 PM, John Dlugosz <JDlugosz@tradestation.co=
-m> wrote:
-> =3D=3D=3D Re: =3D=3D=3D
->> So, after inspecting the changes, how do you fast-forward your local
-> dev
->> to sync up with origin/dev?
->
-> $ git push . origin/dev dev
-> =3D=3D=3D end =3D=3D=3D
->
-> That did not work. =C2=A0It just reports "everything up to date". =C2=
-=A0If I
-> understand the point of what it does correctly, I think
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ git push . +origin/dev:dev
->
-> is correct.
 
-You very likely do not want the '+' at the start:
+--xA/XKXTdy9G3iaIz
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-$ git push . origin/dev:dev
+On Mon, Mar 16, 2009 at 02:49:31PM +0100, Sverre Rabbelier <srabbelier@gmail.com> wrote:
+> It would be nice if you could paste the output of "git diff -M" after
+> the triple-dash to show that it is indeed only a small change.
 
-j.
+Or just use git format-patch -M?
+
+--xA/XKXTdy9G3iaIz
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkm+sMIACgkQe81tAgORUJbuVgCfSPBiGz6h/3muBVK8sYtNLFif
+RI4An0K8aqaTryZ8+EY0O1SGDhCkXSk4
+=gBra
+-----END PGP SIGNATURE-----
+
+--xA/XKXTdy9G3iaIz--
