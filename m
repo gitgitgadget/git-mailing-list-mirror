@@ -1,82 +1,82 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH] git-send-email.txt: describe --compose better
-Date: Mon, 16 Mar 2009 00:44:57 -0700
-Message-ID: <780e0a6b0903160044u301e65c7sc75e3f5b8230273c@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] test-lib: write test results to
+ test-results/<basename>-<pid>
+Date: Mon, 16 Mar 2009 11:18:19 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903161115520.5741@eeepc-johanness>
+References: <cover.1236961524u.git.johannes.schindelin@gmx.de>  <3728317206182c4d4539f3d20b8441cb160e72e3.1236961524u.git.johannes.schindelin@gmx.de>  <alpine.DEB.1.00.0903131735110.6288@intel-tinevez-2-302>  <20090313172002.GA16232@neumann> 
+ <alpine.DEB.1.00.0903141250450.10279@pacific.mpi-cbg.de>  <20090314121617.GJ6808@neumann>  <alpine.DEB.1.00.0903141321550.10279@pacific.mpi-cbg.de>  <20090314122833.GK6808@neumann> <fabb9a1e0903140616q3770f89axff84755abb1f47c7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 16 08:46:44 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="658432-802818595-1237198699=:5741"
+Cc: =?ISO-8859-15?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
+	git@vger.kernel.org, gitster@pobox.com
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 16 11:18:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lj7Wy-0005ew-Qe
-	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 08:46:41 +0100
+	id 1Lj9te-0002sh-TY
+	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 11:18:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755876AbZCPHpB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Mar 2009 03:45:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752512AbZCPHpA
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 03:45:00 -0400
-Received: from wf-out-1314.google.com ([209.85.200.172]:6657 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755625AbZCPHo7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Mar 2009 03:44:59 -0400
-Received: by wf-out-1314.google.com with SMTP id 28so1775018wfa.4
-        for <git@vger.kernel.org>; Mon, 16 Mar 2009 00:44:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=P17ldNF8OOdxB+fCGsDYPYs6hAzlAqM5g2jmjiuUkX4=;
-        b=JS6SIfj7AeFoCq5u8vb3Qq7u3UMR4KsZthalDdR8Huleu9u3gIzubozGZ6SUYHb0LJ
-         7n24Wlrl3kLfWd9WIx3pffp/60EffySRT6q/CAzm+sKFA8EP/Cz/o7Upo+RQOitePqMp
-         UHdeBbaiGj+ibEqLC2W3GAVJXDDLM0K6FrIwQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=nWAicKiCYPHKCS+IB2uwG2Xa49SMEWY+n+H0wiER18Rvgl5l211yXsE8bpVRDmz6bG
-         ErFPpgH5BkrAMAhuSw9IA+sv3aLs3zmP02PvcNUO//NhS6IHbtD33BcFGKgQi7fSUZrm
-         Q8cdUfn9k9w5ePZRfPPEyR/K3khwCRWCkPdL0=
-Received: by 10.143.4.16 with SMTP id g16mr2007089wfi.307.1237189497412; Mon, 
-	16 Mar 2009 00:44:57 -0700 (PDT)
+	id S1757933AbZCPKPw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Mar 2009 06:15:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755265AbZCPKPw
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 06:15:52 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33402 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753088AbZCPKPv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Mar 2009 06:15:51 -0400
+Received: (qmail invoked by alias); 16 Mar 2009 10:15:48 -0000
+Received: from BABd231.bab.pppool.de (EHLO eeepc-johanness.st-andrews.ac.uk) [77.129.210.49]
+  by mail.gmx.net (mp057) with SMTP; 16 Mar 2009 11:15:48 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX199dDEcw0t9ZB38x6/I/Aen4NN2g1rsEjNghBseDD
+	AOOOXKh8tAEd0K
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <fabb9a1e0903140616q3770f89axff84755abb1f47c7@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113314>
 
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
----
- Documentation/git-send-email.txt |   13 ++++++-------
- 1 files changed, 6 insertions(+), 7 deletions(-)
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 14dfb50..10dfd66 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -60,14 +60,13 @@ The --cc option must be repeated for each user you
-want on the cc list.
- 	Use $GIT_EDITOR, core.editor, $VISUAL, or $EDITOR to edit an
- 	introductory message for the patch series.
- +
--When '--compose' is used, git send-email gets less interactive will use the
--values of the headers you set there. If the body of the email (what you type
--after the headers and a blank line) only contains blank (or GIT: prefixed)
--lines, the summary won't be sent, but git-send-email will still use the
--Headers values if you don't removed them.
-+When '--compose' is used, git send-email will use the From, Subject, and
-+In-Reply-To headers specified in the message. If the body of the message
-+(what you type after the headers and a blank line) only contains blank
-+(or GIT: prefixed) lines the summary won't be sent, but From, Subject,
-+and In-Reply-To headers will be used unless they are removed.
- +
--If it wasn't able to see a header in the summary it will ask you about it
--interactively after quitting your editor.
-+Missing From or In-Reply-To headers will be prompted for.
+--658432-802818595-1237198699=:5741
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 
- --from::
- 	Specify the sender of the emails.  This will default to
--- 
-1.6.2
+Hi,
+
+On Sat, 14 Mar 2009, Sverre Rabbelier wrote:
+
+> On Sat, Mar 14, 2009 at 13:28, SZEDER Gábor <szeder@ira.uka.de> wrote:
+> > With my proposed change there would be no need to clean 'test-results'
+> > before running the tests, because test-lib.sh would take care of that
+> > (not by removing and recreating 'test-results/', but by overwriting
+> > (IOW: removing and recreating, but in one step) individual test result
+> > files).
+> 
+> Wouldn't that result in possible stale files being counted in the
+> result (e.g., if those tests were not run this time, but they were run
+> previously)?
+
+Yes.  Stale files would be counted in.  The fact that aggregate-results.sh 
+is called when running "make" in t/ is a sure sign for me that you should 
+not muddy waters by making unnecessary changes that break the default 
+usage from time to time.
+
+So I really, really, really, really would like that patch _not_ to be 
+applied.
+
+And I really would like to be able to spend my time on other things than 
+discussing this at more length than necessary.
+
+Ciao,
+Dscho
+
+--658432-802818595-1237198699=:5741--
