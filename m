@@ -1,61 +1,85 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: adding files in .git?
-Date: Mon, 16 Mar 2009 17:56:32 +0100
-Message-ID: <vpqr60x76f3.fsf@bauges.imag.fr>
-References: <3a69fa7c0903160814u42fbb461qf03a37176546357d@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: E R <pc88mxer@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 16 18:03:24 2009
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCHv2 2/2] test-lib.sh: Allow running the test suite against installed git
+Date: Mon, 16 Mar 2009 18:03:12 +0100
+Message-ID: <1237222992-19421-3-git-send-email-git@drmicha.warpmail.net>
+References: <7v3adfc0n4.fsf@gitster.siamese.dyndns.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 16 18:05:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjGDN-00079W-2b
-	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 18:03:01 +0100
+	id 1LjGFI-0007qy-R4
+	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 18:05:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754629AbZCPRB0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Mar 2009 13:01:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753018AbZCPRB0
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 13:01:26 -0400
-Received: from harmonie.imag.fr ([147.171.130.40]:56824 "EHLO harmonie.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752586AbZCPRBZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Mar 2009 13:01:25 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id n2GGufwk011822;
-	Mon, 16 Mar 2009 17:56:41 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1LjG76-0005Hj-V1; Mon, 16 Mar 2009 17:56:32 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1LjG76-0007Fg-Pt; Mon, 16 Mar 2009 17:56:32 +0100
-In-Reply-To: <3a69fa7c0903160814u42fbb461qf03a37176546357d@mail.gmail.com> (E. R.'s message of "Mon\, 16 Mar 2009 10\:14\:58 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Mon, 16 Mar 2009 17:56:42 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1756191AbZCPRDf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Mar 2009 13:03:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756055AbZCPRDe
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 13:03:34 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:44201 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756039AbZCPRDd (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Mar 2009 13:03:33 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 7A63E2F0F0D;
+	Mon, 16 Mar 2009 13:03:31 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Mon, 16 Mar 2009 13:03:31 -0400
+X-Sasl-enc: JMQiDaROAde97y8tM1W2w16kqtz9GwiyzFpncjWRpsTT 1237223010
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id D42FC125D3;
+	Mon, 16 Mar 2009 13:03:30 -0400 (EDT)
+X-Mailer: git-send-email 1.6.2.149.g6462
+In-Reply-To: <7v3adfc0n4.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <7v3adfc0n4.fsf@gitster.siamese.dyndns.org>
+References: <7v3adfc0n4.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113345>
 
-E R <pc88mxer@gmail.com> writes:
+Introduce variables GIT_TEST_INSTALLED and GIT_TEST_EXEC_PATH such that
+the test suite can be run against a git which is installed at
+GIT_TEST_INSTALLED with subcommands at GIT_TEST_EXEC_PATH.
+GIT_TEST_INSTALLED defaults to the git.git checkout, GIT_TEST_EXEC_PATH
+defaults to the output of '$GIT_TEST_INSTALLED/git --exec-path'. Run the
+suite e.g. as
 
-> 1) Use another file in .git similar to the "description" file (such as
-> .git/short-description)
-> 2) Use a setting in the .git/config file.
->
-> Any comments on the advantages/disadvantages of these approaches?
+GIT_TEST_INSTALLED=/some/path make test
 
-Neither of them will propagate through clone. Depending on your
-use-case, this is an advantage or not.
+but note that this requires and uses parts of a compiled git in the
+git.git checkout: test helpers, templates and perl libraries are taken
+from there.
 
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ t/test-lib.sh |   12 ++++++++++--
+ 1 files changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index b9da86e..c677904 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -514,8 +514,16 @@ test_done () {
+ TEST_DIRECTORY=$(pwd)
+ if test -z "$valgrind"
+ then
+-	PATH=$TEST_DIRECTORY/..:$PATH
+-	GIT_EXEC_PATH=$TEST_DIRECTORY/..
++	if test -z "$GIT_TEST_INSTALLED"
++	then
++		PATH=$TEST_DIRECTORY/..:$PATH
++		GIT_EXEC_PATH=$TEST_DIRECTORY/..
++	else
++		GIT_EXEC_PATH=$($GIT_TEST_INSTALLED/git --exec-path)  ||
++		error "Cannot run git from $GIT_TEST_INSTALLED."
++		PATH=$GIT_TEST_INSTALLED:$TEST_DIRECTORY/..:$PATH
++		GIT_EXEC_PATH=${GIT_TEST_EXEC_PATH:-$GIT_EXEC_PATH}
++	fi
+ else
+ 	make_symlink () {
+ 		test -h "$2" &&
 -- 
-Matthieu
+1.6.2.149.g6462
