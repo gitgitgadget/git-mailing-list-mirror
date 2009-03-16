@@ -1,104 +1,382 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [TopGit PATCH] tg-patch: fix invocation in sub working tree 
-	directory
-Date: Tue, 17 Mar 2009 00:25:38 +0100
-Message-ID: <36ca99e90903161625x317556f4hc826aabd01494ca0@mail.gmail.com>
-References: <1237241299-25515-1-git-send-email-bert.wesarg@googlemail.com>
-	 <7vbps1umg9.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH v3] Create a debugging tool "jgit
+	debug-rebuild-commitgraph"
+Date: Mon, 16 Mar 2009 16:58:44 -0700
+Message-ID: <20090316235844.GW22920@spearce.org>
+References: <1236954901-30990-1-git-send-email-spearce@spearce.org> <200903151234.39367.robin.rosenberg@dewire.com> <20090316144450.GN22920@spearce.org> <200903162109.46653.robin.rosenberg.lists@dewire.com> <20090316201333.GR22920@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org,
-	martin f krafft <madduck@debian.org>,
-	u.kleine-koenig@pengutronix.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 17 00:27:25 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Mar 17 01:00:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjMDD-0008S2-PQ
-	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 00:27:16 +0100
+	id 1LjMjB-0001GK-0j
+	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 01:00:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754101AbZCPXZm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Mar 2009 19:25:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751703AbZCPXZm
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 19:25:42 -0400
-Received: from mail-ew0-f177.google.com ([209.85.219.177]:57618 "EHLO
-	mail-ew0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751088AbZCPXZl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Mar 2009 19:25:41 -0400
-Received: by ewy25 with SMTP id 25so3675113ewy.37
-        for <git@vger.kernel.org>; Mon, 16 Mar 2009 16:25:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=hw6UJRFMQI7hTUNNfFHkYzeoZ99ldaAIl1uR92qTEDU=;
-        b=Q7FnKCZyq1yeCNWIxpAn6PTp0n3Ns069stAfySEJOBkn/FUeLGlyDy91o7vDTpUnu/
-         n1qIEXZIOQS9qGhTKqenvA4tTU9Tf8J/GzfFG2bmHdEjxqmUvZvNtKp1eZnFV+hn6BLB
-         09FlIwCShbYapTWqC1GEcojNbcVFLXEWVX43w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=BPKv87MHPfjiAKMoEPDMPCFhy5ZWBs+1NPLugFua8aPhE42BWkvtziGTq4hsLE7iNd
-         oy5Yra6pZ4QpCULs075FNEzATZ4IpfLm7CYjppJ6Kjp+xytxMnLrdwq1y7FZQ/IKNFtr
-         ky+XGeqQX6Q1KofnPcm6oUIjWCyzgGOo/67tA=
-Received: by 10.210.130.13 with SMTP id c13mr3957235ebd.40.1237245938841; Mon, 
-	16 Mar 2009 16:25:38 -0700 (PDT)
-In-Reply-To: <7vbps1umg9.fsf@gitster.siamese.dyndns.org>
+	id S1754451AbZCPX6s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Mar 2009 19:58:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753843AbZCPX6r
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 19:58:47 -0400
+Received: from george.spearce.org ([209.20.77.23]:37827 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751088AbZCPX6q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Mar 2009 19:58:46 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 5F0F138221; Mon, 16 Mar 2009 23:58:44 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20090316201333.GR22920@spearce.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113405>
 
-On Mon, Mar 16, 2009 at 23:33, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> Bert Wesarg <bert.wesarg@googlemail.com> writes:
->
->> tg patch won't work in a sub directory of the working tree, because =
-'git diff
->> --name-only' prints the names relative to the top working tree.
->
-> "diff --relative --name-only"?
-No, unfortunately. In my bug case the changed file was in another
-subtree, and --relative restricts the output to only files under the
-current subtree.
+This is a command line tool which can be used to import only
+the commit graph of another Git repository, to help debug a
+topology related bug, without actually needing a clone of the
+problematic repository.
 
->
->> This is only a quick fix which prefixes all file names with 'git rev=
--parse
->> --show-cdup'. The right solution would be to cd into the top working=
- tree
->> somewhere in tg.sh.
->>
->> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
->>
->> ---
->> =C2=A0tg-patch.sh | =C2=A0 =C2=A07 ++++++-
->> =C2=A01 files changed, 6 insertions(+), 1 deletions(-)
->>
->> diff --git a/tg-patch.sh b/tg-patch.sh
->> index d701c54..e33bab2 100644
->> --- a/tg-patch.sh
->> +++ b/tg-patch.sh
->> @@ -50,13 +50,18 @@ cat_file "$topic:.topmsg"
->> =C2=A0echo
->> =C2=A0[ -n "$(git grep $diff_opts '^[-]--' ${diff_committed_only:+"$=
-name"} -- ".topmsg")" ] || echo '---'
->>
->> +# if we are in a sub working tree dir, we need to prefix all file n=
-ames from
->> +# git diff --name-only with this cdup
->> +cdup=3D$(git rev-parse --show-cdup)
->> ...
->> + =C2=A0 =C2=A0 sed -e "s#^#$cdup#" "$git_is_stupid" |
->
-> Do TopGit folks care about special characters in pathnames?
-Do 'git rev-parse --show-cdup' return anything other than slashes and d=
-ots?
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
+ > Does it have to be a utility accessible through the pgm interface? Why not 
+ > just run ut as java org.spearce.jgit.pgm.debug.RebuildCommitGraph ? 
 
-Bert
+ Moved.  Prior squash request was also squashed.
+
+ .../services/org.spearce.jgit.pgm.TextBuiltin      |    1 +
+ .../spearce/jgit/pgm/debug/RebuildCommitGraph.java |  307 ++++++++++++++++++++
+ 2 files changed, 308 insertions(+), 0 deletions(-)
+ create mode 100644 org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/debug/RebuildCommitGraph.java
+
+diff --git a/org.spearce.jgit.pgm/src/META-INF/services/org.spearce.jgit.pgm.TextBuiltin b/org.spearce.jgit.pgm/src/META-INF/services/org.spearce.jgit.pgm.TextBuiltin
+index 1ba29e6..2fe6612 100644
+--- a/org.spearce.jgit.pgm/src/META-INF/services/org.spearce.jgit.pgm.TextBuiltin
++++ b/org.spearce.jgit.pgm/src/META-INF/services/org.spearce.jgit.pgm.TextBuiltin
+@@ -21,6 +21,7 @@ org.spearce.jgit.pgm.Version
+ 
+ org.spearce.jgit.pgm.debug.MakeCacheTree
+ org.spearce.jgit.pgm.debug.ReadDirCache
++org.spearce.jgit.pgm.debug.RebuildCommitGraph
+ org.spearce.jgit.pgm.debug.ShowCacheTree
+ org.spearce.jgit.pgm.debug.ShowCommands
+ org.spearce.jgit.pgm.debug.ShowDirCache
+diff --git a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/debug/RebuildCommitGraph.java b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/debug/RebuildCommitGraph.java
+new file mode 100644
+index 0000000..63e189c
+--- /dev/null
++++ b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/debug/RebuildCommitGraph.java
+@@ -0,0 +1,307 @@
++/*
++ * Copyright (C) 2009, Google Inc.
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++package org.spearce.jgit.pgm.debug;
++
++import java.io.BufferedReader;
++import java.io.File;
++import java.io.FileInputStream;
++import java.io.IOException;
++import java.io.InputStreamReader;
++import java.util.ArrayList;
++import java.util.Date;
++import java.util.HashMap;
++import java.util.List;
++import java.util.ListIterator;
++import java.util.Map;
++
++import org.kohsuke.args4j.Argument;
++import org.kohsuke.args4j.Option;
++import org.spearce.jgit.errors.MissingObjectException;
++import org.spearce.jgit.errors.ObjectWritingException;
++import org.spearce.jgit.lib.Commit;
++import org.spearce.jgit.lib.Constants;
++import org.spearce.jgit.lib.LockFile;
++import org.spearce.jgit.lib.ObjectId;
++import org.spearce.jgit.lib.ObjectWriter;
++import org.spearce.jgit.lib.PersonIdent;
++import org.spearce.jgit.lib.ProgressMonitor;
++import org.spearce.jgit.lib.Ref;
++import org.spearce.jgit.lib.RefUpdate;
++import org.spearce.jgit.lib.RefWriter;
++import org.spearce.jgit.lib.TextProgressMonitor;
++import org.spearce.jgit.lib.Tree;
++import org.spearce.jgit.pgm.TextBuiltin;
++import org.spearce.jgit.revwalk.RevWalk;
++
++/**
++ * Recreates a repository from another one's commit graph.
++ * <p>
++ * <b>Do not run this on a repository unless you want to destroy it.</b>
++ * <p>
++ * To create the input files, in the source repository use:
++ * 
++ * <pre>
++ * git for-each-ref &gt;in.refs
++ * git log --all '--pretty=format:%H %ct %P' &gt;in.dag
++ * </pre>
++ * <p>
++ * Run the rebuild in either an empty repository, or a clone of the source. Any
++ * missing commits (which might be the entire graph) will be created. All refs
++ * will be modified to match the input exactly, which means some refs may be
++ * deleted from the current repository.
++ * <p>
++ */
++class RebuildCommitGraph extends TextBuiltin {
++	private final String REALLY = "--destroy-this-repository";
++
++	@Option(name = REALLY, usage = "approve destruction of repository")
++	boolean really;
++
++	@Argument(index = 0, required = true, metaVar = "REFS", usage = "for-each-ref output")
++	File refList;
++
++	@Argument(index = 1, required = true, metaVar = "DAG", usage = "log --all '--pretty=format:%H %ct %P' output")
++	File graph;
++
++	private final ProgressMonitor pm = new TextProgressMonitor();
++
++	private Map<ObjectId, ObjectId> rewrites = new HashMap<ObjectId, ObjectId>();
++
++	@Override
++	protected void run() throws Exception {
++		if (!really && !db.getAllRefs().isEmpty()) {
++			final StringBuilder m = new StringBuilder();
++			m.append("fatal: ");
++			m.append("This program will destroy the repository:");
++			m.append("\n");
++			m.append("fatal:\n");
++			m.append("fatal:    ");
++			m.append(db.getDirectory().getAbsolutePath());
++			m.append("\n");
++			m.append("fatal:\n");
++			m.append("fatal: ");
++			m.append("To continue, add ");
++			m.append(REALLY);
++			m.append(" to the command line");
++			m.append("\n");
++			m.append("fatal:");
++			System.err.println(m);
++			throw die("Need approval to destroy current repository");
++		}
++		if (!refList.isFile())
++			throw die("no such file: " + refList.getPath());
++		if (!graph.isFile())
++			throw die("no such file: " + graph.getPath());
++
++		recreateCommitGraph();
++		detachHead();
++		deleteAllRefs();
++		recreateRefs();
++	}
++
++	private void recreateCommitGraph() throws IOException {
++		final RevWalk rw = new RevWalk(db);
++		final Map<ObjectId, ToRewrite> toRewrite = new HashMap<ObjectId, ToRewrite>();
++		List<ToRewrite> queue = new ArrayList<ToRewrite>();
++		final BufferedReader br = new BufferedReader(new InputStreamReader(
++				new FileInputStream(graph), Constants.CHARSET));
++		try {
++			String line;
++			while ((line = br.readLine()) != null) {
++				final String[] parts = line.split("[ \t]{1,}");
++				final ObjectId oldId = ObjectId.fromString(parts[0]);
++				try {
++					rw.parseCommit(oldId);
++					// We have it already. Don't rewrite it.
++					continue;
++				} catch (MissingObjectException mue) {
++					// Fall through and rewrite it.
++				}
++
++				final long time = Long.parseLong(parts[1]) * 1000L;
++				final ObjectId[] parents = new ObjectId[parts.length - 2];
++				for (int i = 0; i < parents.length; i++) {
++					parents[i] = ObjectId.fromString(parts[2 + i]);
++				}
++
++				final ToRewrite t = new ToRewrite(oldId, time, parents);
++				toRewrite.put(oldId, t);
++				queue.add(t);
++			}
++		} finally {
++			br.close();
++		}
++
++		pm.beginTask("Rewriting commits", queue.size());
++		final ObjectWriter ow = new ObjectWriter(db);
++		final ObjectId emptyTree = ow.writeTree(new Tree(db));
++		final PersonIdent me = new PersonIdent("jgit rebuild-commitgraph",
++				"rebuild-commitgraph@localhost");
++		while (!queue.isEmpty()) {
++			final ListIterator<ToRewrite> itr = queue
++					.listIterator(queue.size());
++			queue = new ArrayList<ToRewrite>();
++			REWRITE: while (itr.hasPrevious()) {
++				final ToRewrite t = itr.previous();
++				final ObjectId[] newParents = new ObjectId[t.oldParents.length];
++				for (int k = 0; k < t.oldParents.length; k++) {
++					final ToRewrite p = toRewrite.get(t.oldParents[k]);
++					if (p != null) {
++						if (p.newId == null) {
++							// Must defer until after the parent is rewritten.
++							queue.add(t);
++							continue REWRITE;
++						} else {
++							newParents[k] = p.newId;
++						}
++					} else {
++						// We have the old parent object. Use it.
++						//
++						newParents[k] = t.oldParents[k];
++					}
++				}
++
++				final Commit newc = new Commit(db);
++				newc.setTreeId(emptyTree);
++				newc.setAuthor(new PersonIdent(me, new Date(t.commitTime)));
++				newc.setCommitter(newc.getAuthor());
++				newc.setParentIds(newParents);
++				newc.setMessage("ORIGINAL " + t.oldId.name() + "\n");
++				t.newId = ow.writeCommit(newc);
++				rewrites.put(t.oldId, t.newId);
++				pm.update(1);
++			}
++		}
++		pm.endTask();
++	}
++
++	private static class ToRewrite {
++		final ObjectId oldId;
++
++		final long commitTime;
++
++		final ObjectId[] oldParents;
++
++		ObjectId newId;
++
++		ToRewrite(final ObjectId o, final long t, final ObjectId[] p) {
++			oldId = o;
++			commitTime = t;
++			oldParents = p;
++		}
++	}
++
++	private void detachHead() throws IOException {
++		final String head = db.getFullBranch();
++		final ObjectId id = db.resolve(Constants.HEAD);
++		if (!ObjectId.isId(head) && id != null) {
++			final LockFile lf;
++			lf = new LockFile(new File(db.getDirectory(), Constants.HEAD));
++			if (!lf.lock())
++				throw new IOException("Cannot lock HEAD");
++			lf.write(id);
++			if (!lf.commit())
++				throw new IOException("Cannot deatch HEAD");
++		}
++	}
++
++	private void deleteAllRefs() throws Exception {
++		final RevWalk rw = new RevWalk(db);
++		for (final Ref r : db.getAllRefs().values()) {
++			if (Constants.HEAD.equals(r.getName()))
++				continue;
++			final RefUpdate u = db.updateRef(r.getName());
++			u.setForceUpdate(true);
++			u.delete(rw);
++		}
++	}
++
++	private void recreateRefs() throws Exception {
++		final Map<String, Ref> refs = computeNewRefs();
++		new RefWriter(refs.values()) {
++			@Override
++			protected void writeFile(final String name, final byte[] content)
++					throws IOException {
++				final File file = new File(db.getDirectory(), name);
++				final LockFile lck = new LockFile(file);
++				if (!lck.lock())
++					throw new ObjectWritingException("Can't write " + file);
++				try {
++					lck.write(content);
++				} catch (IOException ioe) {
++					throw new ObjectWritingException("Can't write " + file);
++				}
++				if (!lck.commit())
++					throw new ObjectWritingException("Can't write " + file);
++			}
++		}.writePackedRefs();
++	}
++
++	private Map<String, Ref> computeNewRefs() throws IOException {
++		final RevWalk rw = new RevWalk(db);
++		final Map<String, Ref> refs = new HashMap<String, Ref>();
++		final BufferedReader br = new BufferedReader(new InputStreamReader(
++				new FileInputStream(refList), Constants.CHARSET));
++		try {
++			String line;
++			while ((line = br.readLine()) != null) {
++				final String[] parts = line.split("[ \t]{1,}");
++				final ObjectId origId = ObjectId.fromString(parts[0]);
++				final String type = parts[1];
++				final String name = parts[2];
++
++				ObjectId id = rewrites.get(origId);
++				if (id == null)
++					id = origId;
++				try {
++					rw.parseAny(id);
++				} catch (MissingObjectException mue) {
++					if (!Constants.TYPE_COMMIT.equals(type)) {
++						System.err.println("skipping " + type + " " + name);
++						continue;
++					}
++					throw new MissingObjectException(id, type);
++				}
++				refs.put(name, new Ref(Ref.Storage.PACKED, name, id));
++			}
++		} finally {
++			br.close();
++		}
++		return refs;
++	}
++}
+-- 
+1.6.2.1.286.g8173
