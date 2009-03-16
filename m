@@ -1,110 +1,86 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn: creating tags from a subdirectory of trunk
-Date: Mon, 16 Mar 2009 14:08:56 -0700
-Message-ID: <20090316210856.GB19153@dcvr.yhbt.net>
-References: <632a37a0903151418u483ca6cal1582518b9120da8e@mail.gmail.com> <20090315232105.GA21667@dcvr.yhbt.net> <632a37a0903161202w23848f41g5cde3942195369cb@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] New config push.default to decide default behavior
+ for push
+Date: Mon, 16 Mar 2009 14:13:05 -0700
+Message-ID: <7vljr5uq72.fsf@gitster.siamese.dyndns.org>
+References: <20090311220144.GA6782@pvv.org>
+ <7vwsavlg6q.fsf@gitster.siamese.dyndns.org> <20090312115433.GA2848@pvv.org>
+ <7viqmbakmt.fsf@gitster.siamese.dyndns.org>
+ <7viqmayslg.fsf@gitster.siamese.dyndns.org> <20090316155629.GA17526@pvv.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Tom Huybrechts <tom.huybrechts@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 16 22:10:31 2009
+To: Finn Arne Gangstad <finnag@pvv.org>
+X-From: git-owner@vger.kernel.org Mon Mar 16 22:14:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjK4r-0002hk-8k
-	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 22:10:29 +0100
+	id 1LjK8y-0004Gc-4z
+	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 22:14:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754889AbZCPVI7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Mar 2009 17:08:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753982AbZCPVI7
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 17:08:59 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:34321 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753374AbZCPVI6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Mar 2009 17:08:58 -0400
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F16361F605;
-	Mon, 16 Mar 2009 21:08:56 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <632a37a0903161202w23848f41g5cde3942195369cb@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1760301AbZCPVNP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Mar 2009 17:13:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760976AbZCPVNP
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 17:13:15 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60291 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760825AbZCPVNO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Mar 2009 17:13:14 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 9FE21A2988;
+	Mon, 16 Mar 2009 17:13:10 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 86F1BA2984; Mon,
+ 16 Mar 2009 17:13:07 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 40D88FBE-126F-11DE-9F8B-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113384>
 
-Tom Huybrechts <tom.huybrechts@gmail.com> wrote:
-> On Mon, Mar 16, 2009 at 12:21 AM, Eric Wong <normalperson@yhbt.net> w=
-rote:
-> > Tom Huybrechts <tom.huybrechts@gmail.com> wrote:
-> >> Hi,
-> >>
-> >> I'm trying to setup a git mirror of a svn repository. =A0The tags =
-in
-> >> this repository are not created trunk it self, but from subdirecto=
-ries
-> >> of trunk. The tags and branches are in the standard places.
-> >> e.g:
-> >> /trunk/main -> tags/main-1
-> >> /trunk/plugins/foo -> tags/foo-1
-> >> /trunk/plugins/bar -> tags/bar-1
-> >>
-> >> I run 'git svn clone -s svn-url target'. It starts going over the
-> >> history nicely until it reaches the first branch. It calls this br=
-anch
-> >> something like tags/tag-name@revision, and starts retrieving the
-> >> entire project history again from r1. This is repeated for every
-> >> branch.
-> >
-> > Hi Tom,
-> >
-> > This is a known problem with some repositories. =A0My suggestion is=
- to
-> > use individual "fetch" directives for each of those tags you want t=
-o
-> > follow.
-> >
-> > The -s/--stdlayout is only for projects that follow the SVN-recomme=
-nded
-> > repository layout exactly and we haven't thought of a generic way t=
-o
-> > handle those non-standard tags in repos...
-> >
-> > --
-> > Eric Wong
-> >
->=20
-> Hi Eric,
->=20
-> The repository I'm trying to convert is that of Hudson. I did some
-> digging in the list archives, and found this came up earlier
-> (2009/01/08).
-> Back then you replied:
->=20
-> """
-> Alternately, you could just clone the root and have all the branches =
-all
-> over the place in one tree (your eventually working copy will be huge=
-).
->=20
->   git svn clone https://svn.dev.java.net/svn/hudson
->=20
->=20
-> Basically this is the equivalent of:
->=20
->   svn co https://svn.dev.java.net/svn/hudson
->=20
-> Except you'll have the full history.
-> """
->=20
-> Is that still valid ? That is what I did, and which caused the
-> behaviour I described.
+Finn Arne Gangstad <finnag@pvv.org> writes:
 
-I did not use the -s/--stdlayout option in my example.
-But yeah, either way that repository is nasty with git-svn :<
+> On Sun, Mar 15, 2009 at 09:55:23PM -0700, Junio C Hamano wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>> 
+>> As some people still seem to object to the change of default (and that
+>> includes 20-30% of myself), we may end up deciding not to switch the
+>> default after all, but even in that case, applying the first half would
+>> benefit people who would want different behaviour.
+>
+> I think the suggested new default is a lot safer then the current
+> one. A default of "nothing" will print a nice message if you end up
+> pushing nothing, which you will fix in a heartbeat with a single git
+> config command.
+>
+> If you erroneously push one or more branches however, cleanup might
+> end up being very complicated. Many pushable repos are set up with
+> disallowing non-fast-forward pushes, so it may require intervention by
+> someone else to clean up, and by then someone else have already
+> fetched the bad push.
 
---=20
-Eric Wong
+I think traditionalists who do not like changing the default already know
+these, though.  I would not object to the push.default as a _choice_.
+
+In fact, sourceforge.jp (they added git support late last year, and I keep
+a secondary public repository just like my alt-git.git at repo.or.cz) is
+one of such places.  It seems to forbid non fast-forward pushes, and that
+is why I have been pushing only maint and master there.  It does allow
+deletion, and I could push deletion followed by creation in two stages,
+i.e. "git push sfjp :pu && git push sfjp pu", but I did not bother.
+
+In a later part of the message you are responding to (but did not quote),
+I was agreeing with all of what you wrote here, and even more ;-) Notice
+the "tradeoff does not look too bad to me" part.
+
+Your new [1/2] gives the choice without advertisement, and _if_ you remove
+or tone down "The default may change in the future" from [2/2], it becomes
+purely an advertisement of the feature to help people from burning
+themselves.  I do not see anything a sane traditionist would object to at
+that point, and I thought we could even squash the two into one commit
+(which was what I meant by "I am inclined to change my mind" in the
+message you are responding to).
