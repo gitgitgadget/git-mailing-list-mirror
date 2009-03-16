@@ -1,67 +1,68 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: fetch and pull
-Date: Mon, 16 Mar 2009 21:43:47 +0100
-Message-ID: <fabb9a1e0903161343v458dec59oaae92794a367888c@mail.gmail.com>
-References: <450196A1AAAE4B42A00A8B27A59278E70A2AEF9A@EXCHANGE.trad.tradestation.com>
-	 <76718490903161303h45e47a8co83159e32ae749352@mail.gmail.com>
-	 <450196A1AAAE4B42A00A8B27A59278E70A2AF023@EXCHANGE.trad.tradestation.com>
+From: Kevin Williams <kevwil@gmail.com>
+Subject: git-svn rebase can change branches during merge?
+Date: Mon, 16 Mar 2009 14:49:35 -0600
+Message-ID: <683a886f0903161349k172679a6t24cc4e393aea8f2d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: John Dlugosz <JDlugosz@tradestation.com>
-X-From: git-owner@vger.kernel.org Mon Mar 16 21:45:33 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 16 21:51:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjJgW-0001gj-Qy
-	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 21:45:21 +0100
+	id 1LjJm7-00042P-Ox
+	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 21:51:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755806AbZCPUnu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Mar 2009 16:43:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754915AbZCPUnu
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 16:43:50 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:16218 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754052AbZCPUnu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Mar 2009 16:43:50 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so3227fgg.17
-        for <git@vger.kernel.org>; Mon, 16 Mar 2009 13:43:47 -0700 (PDT)
+	id S1758727AbZCPUti (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Mar 2009 16:49:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757784AbZCPUti
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 16:49:38 -0400
+Received: from mail-gx0-f165.google.com ([209.85.217.165]:57705 "EHLO
+	mail-gx0-f165.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757750AbZCPUth (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Mar 2009 16:49:37 -0400
+Received: by gxk9 with SMTP id 9so2217535gxk.13
+        for <git@vger.kernel.org>; Mon, 16 Mar 2009 13:49:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=EWK5cr9u1oNp/rpOV0UJnDA5LUJcPCMJEHYk+Mw/bLg=;
-        b=oFGFr4ymIXcuRcotWmNWXPEeupfGCnAzcMCwhWN4chzDoYmUcRHSWxJ55snxJ30368
-         I+gfWHVwsD/NXaSsEX65HO/5IuPcWV16yoKlelfGrC+M33RhR2KZTQ0HMDwSDX8iJt2j
-         Xw/gPI8dqhwEwr2Oal3O5OXzkNtzGuUwRG+eA=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=3efqRj3wddUKctzNgD7bR6tu4kcSX87q1Xo/lUoRCbg=;
+        b=rjVfkJlh4nDBooa+iCbkgj1Xdaq8Tk+mFhQDmD+/qjyK46nCR+Fp96E1kBDdIu+Zgu
+         imsbNlJ/pQodjSA0ycU/DSKK3JB5KYxyen/8idPZNmfEcepTLDub5T4NDi20GPYjmP/m
+         YHER7CSilq6sux0P91OPDpTyOP3g6EwJkC6Go=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=OHYnTjOzEDoUjkFol+M99b0gprZRiTMMw52eovbeh23wtknz4DsoDrrDscd8ANxgAk
-         HJNzAxx9BYUcMmgqrwtUZaqUd8bkxLufgG5rJAEPTenK1cFeS8H6itAsgjQf5Va4qL4m
-         SPek4zGbVncxPV8ZVjb9kohJw9aKI7oYBPpz0=
-Received: by 10.86.77.5 with SMTP id z5mr2929189fga.34.1237236227274; Mon, 16 
-	Mar 2009 13:43:47 -0700 (PDT)
-In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E70A2AF023@EXCHANGE.trad.tradestation.com>
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=kCXF9+dF/O2sW6sMwqopDgeQax/oN1kpiOAQA9Fr1yQIQetW3eodubeM+ow+Z2nMlM
+         TjSkz+w/mynztdDVhPN2yvQDcLG8kN1gdeT7ys5NpdWxs5eRrbMILEm0n9tocFddBus8
+         aiTLtYizhaCKCkC15sitPjNNyiYFuiP8zfyvw=
+Received: by 10.151.82.13 with SMTP id j13mr9219445ybl.84.1237236575231; Mon, 
+	16 Mar 2009 13:49:35 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113381>
 
-Heya,
+I've outlined steps where I can reproduce this bug here:
+http://gist.github.com/80058
 
-On Mon, Mar 16, 2009 at 21:39, John Dlugosz <JDlugosz@tradestation.com> wrote:
-> PT09IFJlOiA9PT0NCllvdSB2ZXJ5IGxpa2VseSBkbyBub3Qgd2FudCB0aGUg
+When using "git svn rebase" and there is a conflict between a local
+(git) change and an upstream (svn) change, the local git repository is
+left in a ghost-branch. It shouldn't change branches during a rebase,
+should it? I also seem to be unable to recover from the merge
+conflict, but that may be just due to the noob at the keyboard (me).
 
-Forgot to turn off encryption?
+I tried working through this with some folks in the #git channel last
+week but they were stumped as well.
+
+I'm using the latest Git build from MacPorts (1.6.2.1 as of today) on
+a MacbookPro with OS X 10.5.6 (fully updated with all patches)
 
 -- 
 Cheers,
 
-Sverre Rabbelier
+Kevin Williams
