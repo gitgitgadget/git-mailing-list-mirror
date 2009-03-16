@@ -1,92 +1,111 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [TopGit PATCH] tg-patch: fix invocation in sub working tree directory
-Date: Mon, 16 Mar 2009 23:08:19 +0100
-Message-ID: <1237241299-25515-1-git-send-email-bert.wesarg@googlemail.com>
-Cc: Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org,
-	martin f krafft <madduck@debian.org>,
-	u.kleine-koenig@pengutronix.de
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Mon Mar 16 23:10:54 2009
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: fetch and pull
+Date: Mon, 16 Mar 2009 18:14:48 -0400
+Message-ID: <76718490903161514ubbdc948o1a0251212fe65fea@mail.gmail.com>
+References: <450196A1AAAE4B42A00A8B27A59278E70A2AEF9A@EXCHANGE.trad.tradestation.com>
+	 <76718490903161303h45e47a8co83159e32ae749352@mail.gmail.com>
+	 <450196A1AAAE4B42A00A8B27A59278E70A2AF023@EXCHANGE.trad.tradestation.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: John Dlugosz <JDlugosz@tradestation.com>
+X-From: git-owner@vger.kernel.org Mon Mar 16 23:16:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjL1E-0007aT-4L
-	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 23:10:48 +0100
+	id 1LjL6j-00019k-Ex
+	for gcvg-git-2@gmane.org; Mon, 16 Mar 2009 23:16:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756531AbZCPWJK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Mar 2009 18:09:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755861AbZCPWJJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 18:09:09 -0400
-Received: from mail-fx0-f176.google.com ([209.85.220.176]:40148 "EHLO
-	mail-fx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754387AbZCPWJI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Mar 2009 18:09:08 -0400
-Received: by fxm24 with SMTP id 24so3689250fxm.37
-        for <git@vger.kernel.org>; Mon, 16 Mar 2009 15:09:05 -0700 (PDT)
+	id S1755527AbZCPWOw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Mar 2009 18:14:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754061AbZCPWOv
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 18:14:51 -0400
+Received: from rv-out-0506.google.com ([209.85.198.235]:25372 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753013AbZCPWOu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Mar 2009 18:14:50 -0400
+Received: by rv-out-0506.google.com with SMTP id g37so1795360rvb.1
+        for <git@vger.kernel.org>; Mon, 16 Mar 2009 15:14:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=2UQY4/t+nmVxYCdr26/NMEwtf38zC+XPsSU73P9wyTA=;
-        b=Uj6PUH2qniqzoLbceXn/+IDvqfwr0cAVaHdzzvZyw9mULzF2mI8GmZpXkv4fRuRu3D
-         11T9M0aQWgN07lGAu4YaVHOqtQecIYBzWYX6U/O8Ur8+UawmzBm2bgnmuExAZ3yb74Qh
-         zsKS5q3t7cykVlzVzVwMJtYBAbCFofEsAlRAQ=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=r+OgQNAmO6SqBPLr5mRnMYgazlmMvLRcnkw7bjbITjI=;
+        b=Sk7Z0OYnp95VblLQIaufOvlufN6gpgJMjE7F2ZI+8SlmN0GsXJrO5XSI9Z9MUIAMLa
+         6vlQVpwiq8TOzccpE/mQOHSjGGqthI5hfRN4LOXUaGrWxiK9pH6TfgWY4KVTASp2UqCS
+         RkWUH2Dyp9ETWX/rJGRhE5MhW7lWHcjM1B1TM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=VeFUgIE76IieDfQh3K9WMsvkV7x9S/DdfwJPKZbJdo4/Myk6RT+RPdmnN5DG4RIIHU
-         7vd2klNS9mOZqqd5J7tnOf4Dt5ESQcJQLFX9pxp5cC02cxpFJwwcHP9J9DBS01ggEYrd
-         hOMehD76C43/h+mZqaNjlgHnc41CUPhhjb3Xc=
-Received: by 10.103.138.16 with SMTP id q16mr2365794mun.7.1237241345661;
-        Mon, 16 Mar 2009 15:09:05 -0700 (PDT)
-Received: from localhost (p5B0F4307.dip.t-dialin.net [91.15.67.7])
-        by mx.google.com with ESMTPS id s10sm11559424mue.16.2009.03.16.15.09.05
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 16 Mar 2009 15:09:05 -0700 (PDT)
-X-Mailer: git-send-email 1.6.2.1.148.g0b7ce
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=H0AGwg7q5N/9wtCwAJdFjAHEPqMqZr8mv+MUQ11i6ckE2Sxtw+xEJ+ItL9AKKduIYn
+         thTqwJq7bsB47Q/UMFoc/VDJabD0PniPhwBlUpQXeibI6EljKxjjfKXqdslWgNtahoc6
+         xOl2hxCQxtk+WuInCJ97/3v1vqJTWmxcUoQTA=
+Received: by 10.141.196.8 with SMTP id y8mr2539550rvp.101.1237241688742; Mon, 
+	16 Mar 2009 15:14:48 -0700 (PDT)
+In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E70A2AF023@EXCHANGE.trad.tradestation.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113394>
 
-tg patch won't work in a sub directory of the working tree, because 'git diff
---name-only' prints the names relative to the top working tree.
+On Mon, Mar 16, 2009 at 4:39 PM, John Dlugosz <JDlugosz@tradestation.co=
+m> wrote:
+> Yes, I do. =C2=A0If the central repository changed dev in some way ot=
+her than a fast-forward, or if you really messed up your local dev, it =
+still needs to be repointed.
+>
+> Remember the overall flow: =C2=A0first fetch (not pull) and then insp=
+ect the difference between your dev and origin/dev. =C2=A0Then, change =
+your dev to match.
 
-This is only a quick fix which prefixes all file names with 'git rev-parse
---show-cdup'. The right solution would be to cd into the top working tree
-somewhere in tg.sh.
+Let me illustrate why this is still probably wrong. I have a clone of
+git://git.kernel.org/pub/scm/git/git.git. It has the following remote
+tracking branches:
 
-Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+$ git branch -r
+  origin/html
+  origin/maint
+  origin/man
+  origin/master
+  origin/next
+  origin/pu
+  origin/todo
 
----
- tg-patch.sh |    7 ++++++-
- 1 files changed, 6 insertions(+), 1 deletions(-)
+origin/master is never reset. origin/pu resets often. When I want to
+work on git, I typically create a branch from origin/master. In this
+case, I would almost never want to reset that branch. So I'd typically
+do:
 
-diff --git a/tg-patch.sh b/tg-patch.sh
-index d701c54..e33bab2 100644
---- a/tg-patch.sh
-+++ b/tg-patch.sh
-@@ -50,13 +50,18 @@ cat_file "$topic:.topmsg"
- echo
- [ -n "$(git grep $diff_opts '^[-]--' ${diff_committed_only:+"$name"} -- ".topmsg")" ] || echo '---'
- 
-+# if we are in a sub working tree dir, we need to prefix all file names from
-+# git diff --name-only with this cdup
-+cdup=$(git rev-parse --show-cdup)
-+
- # Evil obnoxious hack to work around the lack of git diff --exclude
- git_is_stupid="$(mktemp -t tg-patch-changes.XXXXXX)"
- git diff --name-only $diff_opts "$base_rev" ${diff_committed_only:+"$name"} -- |
- 	fgrep -vx ".topdeps" |
- 	fgrep -vx ".topmsg" >"$git_is_stupid" || : # fgrep likes to fail randomly?
- if [ -s "$git_is_stupid" ]; then
--	cat "$git_is_stupid" | xargs git diff --patch-with-stat $diff_opts "$base_rev" ${diff_committed_only:+"$name"} --
-+	sed -e "s#^#$cdup#" "$git_is_stupid" |
-+		xargs git diff --patch-with-stat $diff_opts "$base_rev" ${diff_committed_only:+"$name"} --
- else
- 	echo "No changes."
- fi
--- 
-tg: (d145a7b..) bw/fix-tg-patch-in-sub-dir (depends on: master)
+$ git checkout -b topic origin/master
+$ edit, commit, edit, commit...
+$ git fetch
+$ git log origin/master..topic
+$ git rebase origin/master
+
+Rarely, I'll base a topic on origin/pu. And origin/pu might get reset.
+But even if it were, I wouldn't want to blindly reset my local branch
+to match, thus losing my local changes. Instead I'd do this:
+
+$ git checkout -b pu-topic origin/pu
+$ git tag pu-topic-base # handy when origin/pu is reset
+$ edit, commit, edit, commit
+$ git fetch
+drat, origin/pu was reset
+$ git rebase --onto origin/pu pu-topic-base
+
+And in the rare circumstance that I really do want to reset a local
+branch, I'd do this:
+
+$ git checkout dev
+examine, make sure I really want to reset
+$ git reset --hard origin/dev
+
+I can't really think of a good reason I'd want to reset a local branch
+which I haven't checked out.
+
+j.
