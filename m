@@ -1,61 +1,102 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] disable post-checkout test on Cygwin
-Date: Tue, 17 Mar 2009 21:34:21 +0100
-Message-ID: <20090317203421.GB13458@blimp.localdomain>
-References: <81b0412b0903170926p4f2d536el2b96a71c79c0159e@mail.gmail.com> <7vprggqeh2.fsf@gitster.siamese.dyndns.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: git repack: --depth=100000 causing larger not smaler pack file?
+Date: Tue, 17 Mar 2009 16:38:45 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0903171608080.30483@xanadu.home>
+References: <867i2ot1fu.fsf@broadpark.no>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, layer <layer@known.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 17 21:36:02 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Kjetil Barvik <barvik@broadpark.no>
+X-From: git-owner@vger.kernel.org Tue Mar 17 21:40:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ljg13-0004vB-TI
-	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 21:36:02 +0100
+	id 1Ljg5G-0006Rr-In
+	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 21:40:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753620AbZCQUee (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2009 16:34:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753585AbZCQUed
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 16:34:33 -0400
-Received: from mout2.freenet.de ([195.4.92.92]:42310 "EHLO mout2.freenet.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753085AbZCQUec (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2009 16:34:32 -0400
-Received: from [195.4.92.23] (helo=13.mx.freenet.de)
-	by mout2.freenet.de with esmtpa (ID alexander.riesen@freenet.de) (port 25) (Exim 4.69 #76)
-	id 1LjfzW-0007zo-IV; Tue, 17 Mar 2009 21:34:26 +0100
-Received: from x6d6d.x.pppool.de ([89.59.109.109]:45721 helo=tigra.home)
-	by 13.mx.freenet.de with esmtpa (ID alexander.riesen@freenet.de) (port 587) (Exim 4.69 #76)
-	id 1LjfzW-0001GZ-Aq; Tue, 17 Mar 2009 21:34:26 +0100
-Received: from blimp.localdomain (ubuntu.home [192.168.1.28])
-	by tigra.home (Postfix) with ESMTP id C7BA3277D8;
-	Tue, 17 Mar 2009 21:34:21 +0100 (CET)
-Received: by blimp.localdomain (Postfix, from userid 1000)
-	id 8AC7F36D27; Tue, 17 Mar 2009 21:34:21 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <7vprggqeh2.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1754437AbZCQUix (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2009 16:38:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754224AbZCQUix
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 16:38:53 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:42676 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753702AbZCQUiw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2009 16:38:52 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KGO00EAT40LAYN0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 17 Mar 2009 16:38:45 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <867i2ot1fu.fsf@broadpark.no>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113524>
 
-Junio C Hamano, Tue, Mar 17, 2009 17:52:09 +0100:
-> Alex Riesen <raa.lkml@gmail.com> writes:
-> 
-> > It is broken because of the tricks we have to play with
-> > lstat to get the bearable perfomance out of the call.
-> > Sadly, it disables access to Cygwin's executable attribute,
-> > which Windows filesystems do not have at all.
-> 
-> Hmm, perhaps when checking hooks to see if they are executable, Cygwin
-> port should avoid using the "tricks"?  Compared to paths inside the
-> worktree the number of hooks is a lot smaller, no?
+On Tue, 17 Mar 2009, Kjetil Barvik wrote:
 
-Yes, the damn thing is just hard to disable without ifdef in
-builtin-db.c or builtin-clone.c
+>   aloha!
+> 
+>   Yesterday I run the following command on the updated GIT respository:
+> 
+>     git repack -adf --window=250000 --depth=100000
+> 
+>   After 280 minutes or so it finished, but the strange thing was that
+>   the resulting pack-file was larger than before.  I had expected that
+>   it should be smaler, or at least the same size as before.
+> 
+>   kjetil git (my_next)$ ls -l .git/objects/pack/*
+> -r-------- 1 kjetil kjetil  2757280 2009-03-16 15:18 .git/objects/pack/pack-c5f15d5c48d6b3902a49046d7e8a8d717e167051.idx
+> -r-------- 1 kjetil kjetil 19961120 2009-03-16 15:18 .git/objects/pack/pack-c5f15d5c48d6b3902a49046d7e8a8d717e167051.pack
+> 
+>   Before I started the pack file was around 19 250 000 bytes, and was
+>   the result of the following commands:
+> 
+>   1) git repack -adf --window=250000 --depth=20000
+>           - not completly sure about the --window number here
+>           - the resulting pack file was a litle less than 19 100 000
+> 
+>   2) 'git fetch' to get the latest GIT patches
+> 
+>   3) since 'git fetch' always make an extra new "smal" pack file, I run
+>      the command 'git repack -ad --window=40000 --depth=10000' to be
+>      able to get one singel pack file of 19 250 000 bytes or so.
+> 
+>   I can think of one thing which is spesial with the "--depth=100000"
+>   number, and that is that it is now larger than the total number of
+>   objects in the pack, which is around 96000 to 97000, or so.
+
+No, the depth should have zero negative influence on the pack size.  
+For tight compression, the larger the better.  What this will impact 
+though is runtime access to the pack data afterward.  The deeper a 
+given object is, the slower its access will be.  But since the object 
+recency order tend to put newer objects at the top of a delta chain, 
+this should impact older objects more than recent ones.
+
+>   I have run 'git fsck --strict --full' on the pack with no resulting
+>   error/debug output or change in the file size.
+
+There shouldn't be any.
+
+>   Any help on how to debug this?
+
+I doubt there is anything to debug.  In this case the window size is 
+used to evaluate a threshold slope for matching objects in the delta 
+search.  What we want is a broader delta tree more than a deep one in 
+order to have more deltas with a lower depth limit.  Therefore a size 
+threshold is applied, based on the object distance in the delta search 
+window (see commit c83f032e and the other ones referenced therein).
+
+By providing a big window value, the threshold slope becomes rather flat 
+and ineffective, and this changes the delta match outcome.  While delta 
+selection is based on the uncompressed delta result, the compressed size 
+of different deltas with the same size may vary.  I suspect you might 
+have been unlucky in that regard and this could explain the negative 
+effect on the pack size.
+
+
+Nicolas
