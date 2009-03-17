@@ -1,63 +1,84 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/2] git checkout: one bugfix and one cosmetic change
-Date: Tue, 17 Mar 2009 04:43:52 -0400
-Message-ID: <20090317084352.GL18475@coredump.intra.peff.net>
-References: <cover.1237115791.git.barvik@broadpark.no> <e51f4f550903162156i64b64900g815ee8317720f1a0@mail.gmail.com>
+Subject: Re: GIT_WORK_TREE=dir git ls-files --deleted
+Date: Tue, 17 Mar 2009 05:03:19 -0400
+Message-ID: <20090317090319.GM18475@coredump.intra.peff.net>
+References: <201bac3a0903161841y6bc59fe5iaf0c221c08db5f43@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Kjetil Barvik <barvik@broadpark.no>,
-	Git Mailing List <git@vger.kernel.org>
-To: Kris Shannon <kris@shannon.id.au>
-X-From: git-owner@vger.kernel.org Tue Mar 17 09:45:37 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jonas Bernoulli <jonas@bernoul.li>
+X-From: git-owner@vger.kernel.org Tue Mar 17 10:05:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjUvW-0003KI-9f
-	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 09:45:34 +0100
+	id 1LjVEI-0000Il-Ia
+	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 10:04:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754059AbZCQIoF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2009 04:44:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753177AbZCQIoB
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 04:44:01 -0400
-Received: from peff.net ([208.65.91.99]:43759 "EHLO peff.net"
+	id S1752992AbZCQJD3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2009 05:03:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752723AbZCQJD3
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 05:03:29 -0400
+Received: from peff.net ([208.65.91.99]:49540 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752873AbZCQIoB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2009 04:44:01 -0400
-Received: (qmail 3069 invoked by uid 107); 17 Mar 2009 08:44:07 -0000
+	id S1752700AbZCQJD2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2009 05:03:28 -0400
+Received: (qmail 3143 invoked by uid 107); 17 Mar 2009 09:03:34 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 17 Mar 2009 04:44:07 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Mar 2009 04:43:52 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 17 Mar 2009 05:03:34 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Mar 2009 05:03:19 -0400
 Content-Disposition: inline
-In-Reply-To: <e51f4f550903162156i64b64900g815ee8317720f1a0@mail.gmail.com>
+In-Reply-To: <201bac3a0903161841y6bc59fe5iaf0c221c08db5f43@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113444>
 
-On Tue, Mar 17, 2009 at 03:56:12PM +1100, Kris Shannon wrote:
+On Tue, Mar 17, 2009 at 02:41:50AM +0100, Jonas Bernoulli wrote:
 
-> I was rather surprised to see my name on that list.  A quick git log
-> showed my one contribution to git-parse-remote way pack in
-> August 2005.
+> git ls-files --deleted seams to be broken when GIT_WORK_TREE is set as
+> can be observed below.
 > 
-> I'd forgotten about that and was feeling all warm and fuzzy until I did:
-> git log -- git-parse-remote
+> Instead of just showing deleted files it also shows at least unchanged
+> and modified files.
 > 
-> and saw that it was deleted a week later :(
+> I have observed this behaviour with git.git and do not know if
+> released versions are affected.
 
-Heh. The current list just counts commits, which is nice and fast. But
-one could also "git blame" all of the content from master and credit
-people based either on:
+I don't think it has ever worked correctly. A fix is below, but I'm
+really unsure if it is right. It seems like we should be able to just
+refresh the index and see its status, rather than calling the lstat
+ourselves. But perhaps this is an optimization to avoid refresh (see
+builtin-ls-files.c, lines 186-202). Junio?
 
-  - number of surviving lines in the current codebase (which obviously
-    would give very rankings for people, as the number of lines added
-    in a commit is not constant)
+-- >8 --
+Subject: [PATCH] ls-files: require worktree when --deleted is given
 
-  - number of commits which have surviving lines
+The code will end up calling lstat() to check whether the
+file still exists; obviously this doesn't work if we're not
+in the worktree.
 
-Doing such a calculation would be pretty slow, though, I imagine. And it
-would of course remove you from the list. :)
+Signed-off-by: Jeff King <peff@peff.net>
+---
+The version in next has the same bug, but the code is totally different
+due to parseopt-ification (but the fix is still a one-liner to set
+require_work_tree when show_deleted is set).
 
--Peff
+ builtin-ls-files.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/builtin-ls-files.c b/builtin-ls-files.c
+index 9dec282..ca6f33d 100644
+--- a/builtin-ls-files.c
++++ b/builtin-ls-files.c
+@@ -419,6 +419,7 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
+ 		}
+ 		if (!strcmp(arg, "-d") || !strcmp(arg, "--deleted")) {
+ 			show_deleted = 1;
++			require_work_tree = 1;
+ 			continue;
+ 		}
+ 		if (!strcmp(arg, "-m") || !strcmp(arg, "--modified")) {
+-- 
+1.6.2.1.137.gb6aa78
