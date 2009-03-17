@@ -1,53 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] disable post-checkout test on Cygwin
-Date: Tue, 17 Mar 2009 09:52:09 -0700
-Message-ID: <7vprggqeh2.fsf@gitster.siamese.dyndns.org>
-References: <81b0412b0903170926p4f2d536el2b96a71c79c0159e@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Generate version file by hooks
+Date: Tue, 17 Mar 2009 17:54:57 +0100
+Message-ID: <49BFD5E1.60803@viscovery.net>
+References: <450196A1AAAE4B42A00A8B27A59278E70A2AF280@EXCHANGE.trad.tradestation.com> <200903171740.26575.bjoern01@nurfuerspam.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, layer <layer@known.net>,
-	git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 17 17:53:49 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, John Dlugosz <JDlugosz@tradestation.com>,
+	=?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+To: =?ISO-8859-1?Q?Bj=F6rn_Hendriks?= <bjoern01@nurfuerspam.de>
+X-From: git-owner@vger.kernel.org Tue Mar 17 17:56:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjcY0-0001mK-8R
-	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 17:53:48 +0100
+	id 1Ljcal-0002mj-Bu
+	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 17:56:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753548AbZCQQwU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2009 12:52:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752570AbZCQQwT
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 12:52:19 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35239 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751101AbZCQQwS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2009 12:52:18 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 22B687C1A;
-	Tue, 17 Mar 2009 12:52:16 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 4E5697C19; Tue,
- 17 Mar 2009 12:52:11 -0400 (EDT)
-In-Reply-To: <81b0412b0903170926p4f2d536el2b96a71c79c0159e@mail.gmail.com>
- (Alex Riesen's message of "Tue, 17 Mar 2009 17:26:43 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F873A0E2-1313-11DE-ACD2-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+	id S1754757AbZCQQzJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Mar 2009 12:55:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753851AbZCQQzJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 12:55:09 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:9700 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751101AbZCQQzI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Mar 2009 12:55:08 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LjcZ7-0007EW-SC; Tue, 17 Mar 2009 17:54:58 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 983406C4; Tue, 17 Mar 2009 17:54:57 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <200903171740.26575.bjoern01@nurfuerspam.de>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113505>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+Bj=F6rn Hendriks schrieb:
+> In fact my problem is not to find out the SHA1 of the last commit in =
+a script=20
+> but to have that script called automatically each time git changes th=
+e=20
+> commit. My idea was to use the git hooks for that, but as I explained=
+ I=20
+> couldn't find hooks for all cases in which a commit changes.
 
-> It is broken because of the tricks we have to play with
-> lstat to get the bearable perfomance out of the call.
-> Sadly, it disables access to Cygwin's executable attribute,
-> which Windows filesystems do not have at all.
+In fact there are so many situations where the current commit changes. =
+You
+won't find enough hooks to catch all cases.
 
-Hmm, perhaps when checking hooks to see if they are executable, Cygwin
-port should avoid using the "tricks"?  Compared to paths inside the
-worktree the number of hooks is a lot smaller, no?
+You better modify your build system to look for the current commit when=
+ it
+is needed. That is *much* safer.
+
+-- Hannes
