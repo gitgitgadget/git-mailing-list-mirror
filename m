@@ -1,70 +1,72 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [PATCH] contrib/difftool: use a separate config namespace for difftool commands
-Date: Tue, 17 Mar 2009 20:54:45 +0100
-Message-ID: <200903172054.46063.markus.heidelberg@web.de>
-References: <1236589956-13486-1-git-send-email-davvid@gmail.com> <76718490903090852se7fc756m818f5d8ba49278b5@mail.gmail.com> <20090310070122.GB4523@gmail.com>
-Reply-To: markus.heidelberg@web.de
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] disable post-checkout test on Cygwin
+Date: Tue, 17 Mar 2009 21:28:18 +0100
+Message-ID: <20090317202818.GA13458@blimp.localdomain>
+References: <81b0412b0903170926p4f2d536el2b96a71c79c0159e@mail.gmail.com> <7vprggqeh2.fsf@gitster.siamese.dyndns.org> <49BFD6DD.1010800@viscovery.net>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 17 20:56:10 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	layer <layer@known.net>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Mar 17 21:30:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjfOK-0006vM-TC
-	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 20:56:01 +0100
+	id 1Ljfvc-0002s9-93
+	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 21:30:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752863AbZCQTyb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Mar 2009 15:54:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751280AbZCQTyb
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 15:54:31 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:46702 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751204AbZCQTya convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Mar 2009 15:54:30 -0400
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate02.web.de (Postfix) with ESMTP id F3E02FBC222D;
-	Tue, 17 Mar 2009 20:54:28 +0100 (CET)
-Received: from [89.59.119.57] (helo=.)
-	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1LjfMq-0006cU-00; Tue, 17 Mar 2009 20:54:28 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <20090310070122.GB4523@gmail.com>
-Jabber-ID: markus.heidelberg@web.de
+	id S1753585AbZCQU2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2009 16:28:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753317AbZCQU2e
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 16:28:34 -0400
+Received: from mout2.freenet.de ([195.4.92.92]:45579 "EHLO mout2.freenet.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753168AbZCQU2d (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2009 16:28:33 -0400
+Received: from [195.4.92.21] (helo=11.mx.freenet.de)
+	by mout2.freenet.de with esmtpa (ID alexander.riesen@freenet.de) (port 25) (Exim 4.69 #76)
+	id 1Ljfth-0002mn-3f; Tue, 17 Mar 2009 21:28:25 +0100
+Received: from x6d6d.x.pppool.de ([89.59.109.109]:42997 helo=tigra.home)
+	by 11.mx.freenet.de with esmtpa (ID alexander.riesen@freenet.de) (port 587) (Exim 4.69 #76)
+	id 1Ljftg-0002LL-IV; Tue, 17 Mar 2009 21:28:25 +0100
+Received: from blimp.localdomain (blimp.home [192.168.1.28])
+	by tigra.home (Postfix) with ESMTP id 954A4277D8;
+	Tue, 17 Mar 2009 21:28:18 +0100 (CET)
+Received: by blimp.localdomain (Postfix, from userid 1000)
+	id 506BA36D27; Tue, 17 Mar 2009 21:28:18 +0100 (CET)
 Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX19htHfWpPv1rnGp4SeJwOVmsr4Gvxh7GOyD/i8A
-	fpRCqUNZkg25RgcrF9g/QYM6XIBf9v2HBFOnZfhb+1d/pLUehI
-	oJ8Kl3GJ57ynVrDv0Nuw==
+In-Reply-To: <49BFD6DD.1010800@viscovery.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113522>
 
-David Aguilar, 10.03.2009:
-> On  0, Jay Soffian <jaysoffian@gmail.com> wrote:
-> > On Mon, Mar 9, 2009 at 5:12 AM, David Aguilar <davvid@gmail.com> wr=
-ote:
-> > > =A0contrib/difftool/git-difftool =A0 =A0 =A0 =A0| =A0 =A06 +++---
-> >=20
-> > Aside, (for Junio I guess...), what's the reason this command is in
-> > contrib, and by what criteria might it graduate to being installed
-> > with the rest of the git commands?
-> >=20
-> > j.
->=20
-> My thoughts (also for Junio, I guess..):
->=20
-> If y'all feel that it can live with the rest of the git
-> commands then that would be great =3D)
+Johannes Sixt, Tue, Mar 17, 2009 17:59:09 +0100:
+> Junio C Hamano schrieb:
+> > Alex Riesen <raa.lkml@gmail.com> writes:
+> > 
+> >> It is broken because of the tricks we have to play with
+> >> lstat to get the bearable perfomance out of the call.
+> >> Sadly, it disables access to Cygwin's executable attribute,
+> >> which Windows filesystems do not have at all.
+> > 
+> > Hmm, perhaps when checking hooks to see if they are executable, Cygwin
+> > port should avoid using the "tricks"?  Compared to paths inside the
+> > worktree the number of hooks is a lot smaller, no?
+> 
+> Hmm. Nowadays, we run hooks through run_hook() in run_command.c. It uses
 
-I'd like to see it as a general git tool, too.
-Maybe it can even share some common functionality with git-mergetool.
+The problem is that copy_templates_1 does an lstat on the files in
+templates directory and gets 0666 mode (regular file, non-exec) for
+executable file under current Cygwin port. The st_mode of that lstat
+is passed to copy_file mentioned, which is useless now as we use the
+Win32 version of lstat, which doesn't do x-bit.
 
-Markus
+> access(..., X_OK), not lstat(). We don't play games with access(), do we?
+> 
+
+access(..., X_OK) will return -1.
