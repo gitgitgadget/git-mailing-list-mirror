@@ -1,75 +1,80 @@
-From: Roger Garvin <yoyodyn@gmail.com>
-Subject: Suggested Workflow Question
-Date: Tue, 17 Mar 2009 17:51:10 +0000 (UTC)
-Message-ID: <loom.20090317T175010-470@post.gmane.org>
+From: Carlos Rica <jasampler@gmail.com>
+Subject: Re: [PATCH] builtin-tag.c: remove global variable to use the callback 
+	data of git-config.
+Date: Tue, 17 Mar 2009 18:57:28 +0100
+Message-ID: <1b46aba20903171057r4fb4697eo3b8abc62a45fe858@mail.gmail.com>
+References: <1237301031.10001.13.camel@equipo-loli>
+	 <alpine.DEB.1.00.0903171646140.6393@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 17 18:57:01 2009
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 17 18:59:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjdWu-0003BE-FE
-	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 18:56:44 +0100
+	id 1LjdZF-0004JN-5e
+	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 18:59:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754770AbZCQRzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2009 13:55:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754315AbZCQRzI
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 13:55:08 -0400
-Received: from main.gmane.org ([80.91.229.2]:34091 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751342AbZCQRzH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2009 13:55:07 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1LjdVG-0005LP-NZ
-	for git@vger.kernel.org; Tue, 17 Mar 2009 17:55:03 +0000
-Received: from smtp.qmsionline.com ([65.163.36.91])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 17 Mar 2009 17:55:02 +0000
-Received: from yoyodyn by smtp.qmsionline.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 17 Mar 2009 17:55:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 65.163.36.90 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7)
+	id S1754986AbZCQR5c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2009 13:57:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754966AbZCQR5c
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 13:57:32 -0400
+Received: from mail-bw0-f169.google.com ([209.85.218.169]:60044 "EHLO
+	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754315AbZCQR5b (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2009 13:57:31 -0400
+Received: by bwz17 with SMTP id 17so185476bwz.37
+        for <git@vger.kernel.org>; Tue, 17 Mar 2009 10:57:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=4X98WBMhXr3dZq8rnE4N5cGU2QKK8uHqa0pRlwjaoTs=;
+        b=XGCiYUH/irkc7tH5hzXqlUqr8ErLLONaAA2aYqmvL6dCmfIFUzRC39fqdAPyectKO9
+         gOmJZqXg+Kc4W7WgkUEV3i3JDcKkTUWlHLbcd8UU4jVfOamts5fV9kiKhYEraXl0ByLt
+         tj0rCFAQyz5bb/HowalzmR5sHW7EjmG8fxY5k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=HXFGnITIzOGdboIicco413j6mUDqqhsBXIwPy33Re664pYYTsHvBo4SIhiknVSFrkt
+         kApLa7HKVFzXuygU01EHsTSfwJDQMQtHSY/8v2B+j/CIVnr2CEA4mu5amkH+S59+HDnd
+         Cr/nv3nhDIVGp6iUP3g9rv3wnDQk1lwnEBVnY=
+Received: by 10.223.113.68 with SMTP id z4mr252980fap.72.1237312648467; Tue, 
+	17 Mar 2009 10:57:28 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0903171646140.6393@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113512>
 
-I work for a small company with about 15 developers who work concurrently on
-about 10+ projects both in new development and support.
-We do custom software for manufacturing and production systems.  Part of our
-contracts with our customers is a perpetual single use license of the source
-code at each facility.
-So we have a copy of the source on our office server, and another copy at each
-customer site.  When we had only 5 developers it was easier to handle.  Now that
-we are growing we need a source control system and I have been looking heavily
-into Git.  Our old workflow does not seem that it will fit well with Git
-however, but I feel that I need a distributed system to keep track of the office
-version and the on-site versions of our source since development is taking place
-on both.
-(Some customers also have separate development, and testing versions on their
-servers as well.)
+On Tue, Mar 17, 2009 at 4:47 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+> On Tue, 17 Mar 2009, Carlos Rica wrote:
+>> @@ -164,11 +162,10 @@ static int do_sign(struct strbuf *buffer)
+>>       int len;
+>>       int i, j;
+>>
+>> -     if (!*signingkey) {
+>> -             if (strlcpy(signingkey, git_committer_info(IDENT_ERROR_ON_NO_NAME),
+>> -                             sizeof(signingkey)) > sizeof(signingkey) - 1)
+>> -                     return error("committer info too long.");
+>> -             bracket = strchr(signingkey, '>');
+>> +     if (!signingkey->buf[0]) {
+>
+> It is probably better to ask for !signingkey->len (think of trying to
+> understand the code in 6 months from now).
 
-I have created git repositories on a couple of our project source directories as
-test beds.  Right now (second day) I am the only one who is actually using git.
- Everyone else is simply accessing the files on the server as they have always
-done, and I am making the commits when I see signifigant changes. 
+I was in doubt here. By avoiding the use of signingkey->len  I was
+trying to say that you cannot rely in such field if we touch the
+buffer directly, as it happens below:
 
-My question is really a request for modified workflow ideas.  My plan was to
-have a master repository in our office server with clones at each customer site,
-and multiple branches for test, QA, and production versions of the source.
-Since most of these customers have closed networks, we would rely on people
-traveling onsite, or emailing patches to get any updates back into our office
-repository. 
-
-Thank you for any assistance for this revision control newb.
-
-Roger Garvin
+   bracket = strchr(signingkey->buf, '>');
+   if (bracket)
+      bracket[1] = '\0';
