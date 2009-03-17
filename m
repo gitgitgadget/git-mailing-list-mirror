@@ -1,70 +1,74 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] Tests: use test_cmp instead of diff where possible
-Date: Tue, 17 Mar 2009 14:21:50 +0100
-Message-ID: <20090317132150.GW3817@genesis.frugalware.org>
-References: <1237124036-1348-1-git-send-email-vmiklos@frugalware.org> <1b46aba20903170602j79735631uf20e0a729e69c4b@mail.gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGit PATCH 1/5] Check for local changes with "goto"
+Date: Tue, 17 Mar 2009 14:36:12 +0100
+Message-ID: <20090317133612.GA10001@diana.vm.bytemark.co.uk>
+References: <20090312120426.2992.35213.stgit@pc1117.cambridge.arm.com> <20090312120856.2992.48548.stgit@pc1117.cambridge.arm.com> <20090313015755.GA15393@diana.vm.bytemark.co.uk> <b0943d9e0903160756g79ac3464i4bb6f7f61ba0555a@mail.gmail.com> <20090317070654.GA3716@diana.vm.bytemark.co.uk> <b0943d9e0903170351p319bad36icf8252610e5c4f05@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="rnP2AJ7yb1j09OW/"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Carlos Rica <jasampler@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 17 14:23:30 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 17 14:38:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjZGN-00083g-IG
-	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 14:23:24 +0100
+	id 1LjZUc-0005Ih-JI
+	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 14:38:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756538AbZCQNVx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2009 09:21:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756197AbZCQNVx
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 09:21:53 -0400
-Received: from virgo.iok.hu ([212.40.97.103]:34930 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754933AbZCQNVx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2009 09:21:53 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id C3C7E580DD;
-	Tue, 17 Mar 2009 14:21:50 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 8B54A44783;
-	Tue, 17 Mar 2009 14:21:50 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id D81D9153C003; Tue, 17 Mar 2009 14:21:50 +0100 (CET)
+	id S1753807AbZCQNgQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Mar 2009 09:36:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752392AbZCQNgQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 09:36:16 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:50251 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752049AbZCQNgQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2009 09:36:16 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1LjZSm-0002bl-00; Tue, 17 Mar 2009 13:36:12 +0000
 Content-Disposition: inline
-In-Reply-To: <1b46aba20903170602j79735631uf20e0a729e69c4b@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <b0943d9e0903170351p319bad36icf8252610e5c4f05@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113469>
 
+On 2009-03-17 10:51:08 +0000, Catalin Marinas wrote:
 
---rnP2AJ7yb1j09OW/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> 2009/3/17 Karl Hasselstr=F6m <kha@treskal.com>:
+>
+> > On 2009-03-16 14:56:11 +0000, Catalin Marinas wrote:
+> >
+> > > if not iw.worktree_clean():
+> > > =A0 =A0 self.__halt('Worktree not clean. Use "refresh" or "status=
+ --reset"')
+> > > if not iw.index.is_clean(self.stack.head):
+> > > =A0 =A0 self.__halt('Index not clean. Use "refresh" or "status --=
+reset"')
+> [...]
+> > Your version doesn't generate the "Your index and worktree are
+> > both dirty" warning, but I guess that's OK.
+>
+> The iw.worktree_clean() only checks whether the worktree is clean
+> relative to the index (I just tried "git update-index --refresh"
+> after "git add <modified file>" and it returns 0).
 
-On Tue, Mar 17, 2009 at 02:02:37PM +0100, Carlos Rica <jasampler@gmail.com> wrote:
-> What about the current other calls to cmp? I don't know if they should
-> be changed too. Are they just the subject of another future change or
-> have a different purpose? I recently used test_cmp in a test full of
-> cmp calls (t1300-repo-config.sh).
+Yes, I know. The point I was trying to make was that your code doesn't
+make a difference between
 
-I think that would be the next step, my patch only converts diff calls
-to test_cmp.
+  (iw.worktree_clean(), iw.index.is_clean(self.stack.head)) =3D=3D (Fal=
+se, True)
 
---rnP2AJ7yb1j09OW/
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+and
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+  (iw.worktree_clean(), iw.index.is_clean(self.stack.head)) =3D=3D (Fal=
+se, False)
 
-iEYEARECAAYFAkm/o+4ACgkQe81tAgORUJbnFQCgjPUOsg8JJyG3LTKFcOK04Dy8
-gXwAoKFHrbHlATVmqiCXpB/CX/yFT7+r
-=1WCG
------END PGP SIGNATURE-----
+But as I said, it's not really important.
 
---rnP2AJ7yb1j09OW/--
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
