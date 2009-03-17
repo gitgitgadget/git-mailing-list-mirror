@@ -1,79 +1,70 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Local clone checks out wrong branch based on remote HEAD
-Date: Tue, 17 Mar 2009 15:39:55 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0903171530160.19665@iabervon.org>
-References: <b97024a40903171219k8841508p774d9dc4295a09bc@mail.gmail.com>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: [PATCH] contrib/difftool: use a separate config namespace for difftool commands
+Date: Tue, 17 Mar 2009 20:54:45 +0100
+Message-ID: <200903172054.46063.markus.heidelberg@web.de>
+References: <1236589956-13486-1-git-send-email-davvid@gmail.com> <76718490903090852se7fc756m818f5d8ba49278b5@mail.gmail.com> <20090310070122.GB4523@gmail.com>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Tom Preston-Werner <tom@github.com>
-X-From: git-owner@vger.kernel.org Tue Mar 17 20:41:38 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 17 20:56:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjfAG-0001Yd-QY
-	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 20:41:29 +0100
+	id 1LjfOK-0006vM-TC
+	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 20:56:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753085AbZCQTj6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2009 15:39:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752821AbZCQTj6
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 15:39:58 -0400
-Received: from iabervon.org ([66.92.72.58]:50558 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751836AbZCQTj6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2009 15:39:58 -0400
-Received: (qmail 340 invoked by uid 1000); 17 Mar 2009 19:39:55 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 17 Mar 2009 19:39:55 -0000
-In-Reply-To: <b97024a40903171219k8841508p774d9dc4295a09bc@mail.gmail.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752863AbZCQTyb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Mar 2009 15:54:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751280AbZCQTyb
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 15:54:31 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:46702 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751204AbZCQTya convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Mar 2009 15:54:30 -0400
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate02.web.de (Postfix) with ESMTP id F3E02FBC222D;
+	Tue, 17 Mar 2009 20:54:28 +0100 (CET)
+Received: from [89.59.119.57] (helo=.)
+	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1LjfMq-0006cU-00; Tue, 17 Mar 2009 20:54:28 +0100
+User-Agent: KMail/1.9.9
+In-Reply-To: <20090310070122.GB4523@gmail.com>
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX19htHfWpPv1rnGp4SeJwOVmsr4Gvxh7GOyD/i8A
+	fpRCqUNZkg25RgcrF9g/QYM6XIBf9v2HBFOnZfhb+1d/pLUehI
+	oJ8Kl3GJ57ynVrDv0Nuw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113521>
 
-On Tue, 17 Mar 2009, Tom Preston-Werner wrote:
+David Aguilar, 10.03.2009:
+> On  0, Jay Soffian <jaysoffian@gmail.com> wrote:
+> > On Mon, Mar 9, 2009 at 5:12 AM, David Aguilar <davvid@gmail.com> wr=
+ote:
+> > > =A0contrib/difftool/git-difftool =A0 =A0 =A0 =A0| =A0 =A06 +++---
+> >=20
+> > Aside, (for Junio I guess...), what's the reason this command is in
+> > contrib, and by what criteria might it graduate to being installed
+> > with the rest of the git commands?
+> >=20
+> > j.
+>=20
+> My thoughts (also for Junio, I guess..):
+>=20
+> If y'all feel that it can live with the rest of the git
+> commands then that would be great =3D)
 
-> I'm having some unexpected behavior when cloning a remote repo that
-> has several branches at the same commit. On the remote side, the HEAD
-> is 'trunk':
-> 
-> git@remote ~/repositories/akincisor/site.git $ cat HEAD
-> ref: refs/heads/trunk
-> 
-> After cloning this with a standard `git clone`, the refs are:
-> 
-> [11:48][tom@solid:~/dev/sandbox/site(release)]$ git branch -r -v
->   origin/HEAD    a52528a Fixed some routing problems
->   origin/release a52528a Fixed some routing problems
->   origin/trunk   a52528a Fixed some routing problems
-> 
-> And the checked out branch is 'release' instead of 'trunk' as I would expect:
-> 
-> [11:48][tom@solid:~/dev/sandbox/site(release)]$ git branch
-> * release
-> 
-> I'm guessing that the first branch that matches the remote HEAD
-> revision is being checked out instead of the actual remote branch. I
-> would expect the correct branch to be chosen regardless of where the
-> branches are pointing.
+I'd like to see it as a general git tool, too.
+Maybe it can even share some common functionality with git-mergetool.
 
-Unfortunately, the current protocol version just sends:
-
-a52528a HEAD
-a52528a refs/heads/release
-a52528a refs/heads/trunk
-
-It doesn't transmit the fact that HEAD is a pointer to anything, or what 
-it's a pointer to. One thing you can do is just change your local repo to 
-point origin/HEAD where you want, and check out what you want; the 
-defaults are just to get you started. Another thing is that it will guess 
-"master" if there is one. I think there's also been discussion of a 
-protocol extension to transmit the information, although I don't know 
-where that ended up. (The protocol-agnostic transport infrastructure can 
-represent the information, but doesn't receive it for the normal protocol)
-
-	-Daniel
-*This .sig left intentionally blank*
+Markus
