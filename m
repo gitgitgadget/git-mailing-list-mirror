@@ -1,63 +1,61 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [TopGit PATCH] tg-patch: fix invocation in sub working tree 
- directory
-Date: Mon, 16 Mar 2009 17:24:19 -0700
-Message-ID: <7vwsapt2rw.fsf@gitster.siamese.dyndns.org>
-References: <1237241299-25515-1-git-send-email-bert.wesarg@googlemail.com>
- <7vbps1umg9.fsf@gitster.siamese.dyndns.org>
- <36ca99e90903161625x317556f4hc826aabd01494ca0@mail.gmail.com>
+Subject: Re: [PATCH2/2] Libify blame
+Date: Mon, 16 Mar 2009 17:48:18 -0700
+Message-ID: <7vmyblt1nx.fsf@gitster.siamese.dyndns.org>
+References: <49BE5466.5050202@gmail.com>
+ <fabb9a1e0903160649o6b576976jeb884e18713c154e@mail.gmail.com>
+ <20090316200418.GM3817@genesis.frugalware.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org,
-	martin f krafft <madduck@debian.org>,
-	u.kleine-koenig@pengutronix.de
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 17 01:25:58 2009
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	pi song <pi.songs@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com, rene.scharfe@lsrfire.ath.cx
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Tue Mar 17 01:50:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjN82-00081f-EE
-	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 01:25:58 +0100
+	id 1LjNW2-0005Ys-0g
+	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 01:50:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757468AbZCQAY3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Mar 2009 20:24:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755635AbZCQAY2
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 20:24:28 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44186 "EHLO
+	id S1753186AbZCQAs3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Mar 2009 20:48:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752977AbZCQAs3
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 20:48:29 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46858 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755180AbZCQAY2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Mar 2009 20:24:28 -0400
+	with ESMTP id S1751715AbZCQAs2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Mar 2009 20:48:28 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id EB9506EDC;
-	Mon, 16 Mar 2009 20:24:26 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id E719A6068;
+	Mon, 16 Mar 2009 20:48:26 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 115E36ED8; Mon,
- 16 Mar 2009 20:24:20 -0400 (EDT)
-In-Reply-To: <36ca99e90903161625x317556f4hc826aabd01494ca0@mail.gmail.com>
- (Bert Wesarg's message of "Tue, 17 Mar 2009 00:25:38 +0100")
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id F15046063; Mon,
+ 16 Mar 2009 20:48:19 -0400 (EDT)
+In-Reply-To: <20090316200418.GM3817@genesis.frugalware.org> (Miklos Vajna's
+ message of "Mon, 16 Mar 2009 21:04:18 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F944E164-1289-11DE-A7C9-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 5390914C-128D-11DE-A03C-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113409>
 
-Bert Wesarg <bert.wesarg@googlemail.com> writes:
+Miklos Vajna <vmiklos@frugalware.org> writes:
 
-> On Mon, Mar 16, 2009 at 23:33, Junio C Hamano <gitster@pobox.com> wrote:
->> Bert Wesarg <bert.wesarg@googlemail.com> writes:
->>
->>> tg patch won't work in a sub directory of the working tree, because 'git diff
->>> --name-only' prints the names relative to the top working tree.
->>
->> "diff --relative --name-only"?
+> On Mon, Mar 16, 2009 at 02:49:31PM +0100, Sverre Rabbelier <srabbelier@gmail.com> wrote:
+>> It would be nice if you could paste the output of "git diff -M" after
+>> the triple-dash to show that it is indeed only a small change.
 >
-> No, unfortunately. In my bug case the changed file was in another
-> subtree, and --relative restricts the output to only files under the
-> current subtree.
+> Or just use git format-patch -M?
 
-Ah, Ok, then insertion of cdup output does make sense (after all cdup was
-designed to be used that way).
+No file disappears, so -M alone won't cut it.
+
+I think -B -M may do something interesting, but even then, I suspect you
+will see a lot of deletions (e.g. you start from two copies of the
+original builtin-blame.c and remove different parts to arrive at the new
+builtin-blame.c and blame.c) that amounts roughly about the same size as
+the original builtin-blame.c itself.
