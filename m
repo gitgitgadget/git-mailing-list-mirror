@@ -1,88 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] disable post-checkout test on Cygwin
-Date: Tue, 17 Mar 2009 13:42:31 -0700
-Message-ID: <7v63i7ridk.fsf@gitster.siamese.dyndns.org>
-References: <81b0412b0903170926p4f2d536el2b96a71c79c0159e@mail.gmail.com>
- <7vprggqeh2.fsf@gitster.siamese.dyndns.org> <49BFD6DD.1010800@viscovery.net>
- <20090317202818.GA13458@blimp.localdomain>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: =?iso-8859-15?Q?[PATCH]_git-gui:_Fix_merge_conflict_display_error_when?=
+ =?iso-8859-15?Q?_filename_contains_spaces?=
+Date: Tue, 17 Mar 2009 21:56:15 +0100
+Organization: http://freemail.web.de/
+Message-ID: <983770303@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>, Jeff King <peff@peff.net>,
-	layer <layer@known.net>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 17 21:44:16 2009
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 17 21:57:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ljg8z-0007ym-0I
-	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 21:44:13 +0100
+	id 1LjgMD-0004Rz-6R
+	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 21:57:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754468AbZCQUmn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2009 16:42:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754233AbZCQUmn
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 16:42:43 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34826 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753593AbZCQUmm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2009 16:42:42 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 054BF71E2;
-	Tue, 17 Mar 2009 16:42:39 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id CC97E71E1; Tue,
- 17 Mar 2009 16:42:32 -0400 (EDT)
-In-Reply-To: <20090317202818.GA13458@blimp.localdomain> (Alex Riesen's
- message of "Tue, 17 Mar 2009 21:28:18 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 27878EBE-1334-11DE-9A1E-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+	id S1756212AbZCQU4U convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Mar 2009 16:56:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754589AbZCQU4U
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 16:56:20 -0400
+Received: from fmmailgate05.web.de ([217.72.192.243]:51637 "EHLO
+	fmmailgate05.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755974AbZCQU4T convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Mar 2009 16:56:19 -0400
+Received: from web.de 
+	by fmmailgate05.web.de (Postfix) with SMTP id 5DA9A5B1D22A
+	for <git@vger.kernel.org>; Tue, 17 Mar 2009 21:56:16 +0100 (CET)
+Received: from [80.128.109.7] by freemailng0201.web.de with HTTP;
+ Tue, 17 Mar 2009 21:56:15 +0100
+X-Provags-Id: V01U2FsdGVkX1/JZS5SdRqkTrTRSNrQfq1TgPfhiXFLvEv9yuGrwPR0It5/7
+ DGjZsLM4wdKETQK2vuDYUztBiNM0UOTZ8xO3y/w7PJxd+UjGSP4c3hnsJfGP
+ A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113526>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+=46rom f548fd124ad3790b6ce3f30989fc3ed06c58b3dd Mon Sep 17 00:00:00 200=
+1
+=46rom: Jens Lehmann <Jens.Lehmann@web.de>
+Date: Tue, 17 Mar 2009 20:06:12 +0100
+Subject: [PATCH] git-gui: Fix merge conflict display error when filenam=
+e contains spaces
 
-> Johannes Sixt, Tue, Mar 17, 2009 17:59:09 +0100:
->> Junio C Hamano schrieb:
->> > Alex Riesen <raa.lkml@gmail.com> writes:
->> > 
->> >> It is broken because of the tricks we have to play with
->> >> lstat to get the bearable perfomance out of the call.
->> >> Sadly, it disables access to Cygwin's executable attribute,
->> >> which Windows filesystems do not have at all.
->> > 
->> > Hmm, perhaps when checking hooks to see if they are executable, Cygwin
->> > port should avoid using the "tricks"?  Compared to paths inside the
->> > worktree the number of hooks is a lot smaller, no?
->> 
->> Hmm. Nowadays, we run hooks through run_hook() in run_command.c. It uses
->
-> The problem is that copy_templates_1 does an lstat on the files in
-> templates directory and gets 0666 mode (regular file, non-exec) for
-> executable file under current Cygwin port. The st_mode of that lstat
-> is passed to copy_file mentioned, which is useless now as we use the
-> Win32 version of lstat, which doesn't do x-bit.
+When a merge conflict occurs in a file with spaces in the filename, git=
+-gui showed wrongly "LOCAL: deleted".
 
-Ahhh.
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
 
-I do not mind the patch as a band-aid to make the testsuite pass, so I'll
-apply your patch as-is.  Thanks.
+To reproduce the error with git 1.6.2.1.136.g8e24, i used the following=
+ commands:
+  mkdir spaces
+  cd spaces/
+  git init
+  echo "a" >file\ with\ spaces
+  git add file\ with\ spaces=20
+  git commit -m a .
+  git checkout -b b
+  echo "b" >file\ with\ spaces
+  git commit -m b .
+  git checkout master
+  echo "c" >file\ with\ spaces
+  git commit -m c .
+  git merge b
+  git gui
+git gui doesn't show the conflict markers as it should, displaying "LOC=
+AL: deleted" (but my old git-gui from 1.5.3.3 works fine).
 
-But isn't this something shops that do deploy Cygwin version of git want
-to see fixed, so that they can have a site-wide policy implemented in the
-hooks copied from templates?  I think we could pass mode 0 to copy_files()
-and have the function special case it (and allow a platform specific
-copy_files() implementated by Cygwin).  lstat() in the copy_templates_1()
-codepath is primarily done to see if we need to descend into a directory
-or symlink() and our use of st.st_mode to pass to copy_files() is a no
-cost side effect on platforms with x-bit support.
+Jens
 
->> access(..., X_OK), not lstat(). We don't play games with access(), do we?
->
-> access(..., X_OK) will return -1.
 
-That codepath would also need to be fixed if Cygwin wants to use hooks, I
-would guess.
+ git-gui/lib/mergetool.tcl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/git-gui/lib/mergetool.tcl b/git-gui/lib/mergetool.tcl
+index eb2b4b5..3e1b42b 100644
+--- a/git-gui/lib/mergetool.tcl
++++ b/git-gui/lib/mergetool.tcl
+@@ -88,7 +88,7 @@ proc merge_load_stages {path cont} {
+ 	set merge_stages(3) {}
+ 	set merge_stages_buf {}
+=20
+-	set merge_stages_fd [eval git_read ls-files -u -z -- $path]
++	set merge_stages_fd [eval git_read ls-files -u -z -- {$path}]
+=20
+ 	fconfigure $merge_stages_fd -blocking 0 -translation binary -encoding=
+ binary
+ 	fileevent $merge_stages_fd readable [list read_merge_stages $merge_st=
+ages_fd $cont]
+--=20
+1.5.3.3
+
+____________________________________________________________________
+Psssst! Schon vom neuen WEB.DE MultiMessenger geh=F6rt?=20
+Der kann`s mit allen: http://www.produkte.web.de/messenger/?did=3D3123
