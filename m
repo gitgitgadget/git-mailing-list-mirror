@@ -1,61 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH2/2] Libify blame
-Date: Mon, 16 Mar 2009 17:48:18 -0700
-Message-ID: <7vmyblt1nx.fsf@gitster.siamese.dyndns.org>
-References: <49BE5466.5050202@gmail.com>
- <fabb9a1e0903160649o6b576976jeb884e18713c154e@mail.gmail.com>
- <20090316200418.GM3817@genesis.frugalware.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	pi song <pi.songs@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, rene.scharfe@lsrfire.ath.cx
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Tue Mar 17 01:50:46 2009
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH 0/4] Avoid using 1280 file descriptors
+Date: Mon, 16 Mar 2009 18:16:06 -0700
+Message-ID: <1237252570-8596-1-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Mar 17 02:17:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjNW2-0005Ys-0g
-	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 01:50:46 +0100
+	id 1LjNwG-0003eC-EP
+	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 02:17:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753186AbZCQAs3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Mar 2009 20:48:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752977AbZCQAs3
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 20:48:29 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46858 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751715AbZCQAs2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Mar 2009 20:48:28 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id E719A6068;
-	Mon, 16 Mar 2009 20:48:26 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id F15046063; Mon,
- 16 Mar 2009 20:48:19 -0400 (EDT)
-In-Reply-To: <20090316200418.GM3817@genesis.frugalware.org> (Miklos Vajna's
- message of "Mon, 16 Mar 2009 21:04:18 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 5390914C-128D-11DE-A03C-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+	id S1756073AbZCQBQO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Mar 2009 21:16:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755314AbZCQBQO
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 21:16:14 -0400
+Received: from george.spearce.org ([209.20.77.23]:47491 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751079AbZCQBQN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Mar 2009 21:16:13 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id C282438239; Tue, 17 Mar 2009 01:16:11 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id 4B971381D3;
+	Tue, 17 Mar 2009 01:16:11 +0000 (UTC)
+X-Mailer: git-send-email 1.6.2.1.286.g8173
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113410>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
+This is a small series to teach WindowCache not to use 1280 file
+descriptors by default.  Most JVMs won't have a ulimit that large,
+resulting in out of file errors if the WindowCache actually tries
+to fully populate itself.
 
-> On Mon, Mar 16, 2009 at 02:49:31PM +0100, Sverre Rabbelier <srabbelier@gmail.com> wrote:
->> It would be nice if you could paste the output of "git diff -M" after
->> the triple-dash to show that it is indeed only a small change.
->
-> Or just use git format-patch -M?
+Shawn O. Pearce (4):
+  Refactor WindowCache.reconfigure() to take a configuration object
+  Update EGit plugin to use WindowCacheConfig
+  Cap the number of open files in the WindowCache
+  Teach WindowCacheConfig to read core.packedgit* settings from config
 
-No file disappears, so -M alone won't cut it.
-
-I think -B -M may do something interesting, but even then, I suspect you
-will see a lot of deletions (e.g. you start from two copies of the
-original builtin-blame.c and remove different parts to arrive at the new
-builtin-blame.c and blame.c) that amounts roughly about the same size as
-the original builtin-blame.c itself.
+ .../spearce/egit/core/project/GitProjectData.java  |   12 +-
+ .../org/spearce/jgit/lib/RepositoryTestCase.java   |    8 +-
+ .../org/spearce/jgit/lib/UnpackedObjectCache.java  |    7 +-
+ .../src/org/spearce/jgit/lib/WindowCache.java      |  119 ++++++++++----
+ .../org/spearce/jgit/lib/WindowCacheConfig.java    |  170 ++++++++++++++++++++
+ 5 files changed, 271 insertions(+), 45 deletions(-)
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/lib/WindowCacheConfig.java
