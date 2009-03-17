@@ -1,81 +1,50 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-branch.txt: document -f correctly
-Date: Tue, 17 Mar 2009 09:37:59 -0700
-Message-ID: <7vy6v4qf4o.fsf@gitster.siamese.dyndns.org>
-References: <7vtz5ssk0s.fsf@gitster.siamese.dyndns.org>
- <1237298780-11304-1-git-send-email-git@drmicha.warpmail.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGit PATCH 4/4] Use a default "hidden" argument in StackTransaction.reorder_patches
+Date: Tue, 17 Mar 2009 17:38:08 +0100
+Message-ID: <20090317163808.GE10001@diana.vm.bytemark.co.uk>
+References: <20090317110721.27748.10295.stgit@pc1117.cambridge.arm.com> <20090317110910.27748.80312.stgit@pc1117.cambridge.arm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Mar 17 17:39:42 2009
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 17 17:39:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjcKJ-0004lI-M9
+	id 1LjcKK-0004lI-Ba
 	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 17:39:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755469AbZCQQiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1755550AbZCQQiO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Mar 2009 12:38:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754166AbZCQQiO
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 12:38:14 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:56715 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754608AbZCQQiL (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 17 Mar 2009 12:38:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753672AbZCQQiK
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 12:38:10 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:65310 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752570AbZCQQiI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2009 12:38:08 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1039F7B0D;
-	Tue, 17 Mar 2009 12:38:04 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 6253C7B0C; Tue,
- 17 Mar 2009 12:38:01 -0400 (EDT)
-In-Reply-To: <1237298780-11304-1-git-send-email-git@drmicha.warpmail.net>
- (Michael J. Gruber's message of "Tue, 17 Mar 2009 15:06:20 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: FC932C12-1311-11DE-895F-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1LjcIq-0003ht-00; Tue, 17 Mar 2009 16:38:08 +0000
+Content-Disposition: inline
+In-Reply-To: <20090317110910.27748.80312.stgit@pc1117.cambridge.arm.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113500>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+On 2009-03-17 11:09:10 +0000, Catalin Marinas wrote:
 
-> 'git branch -f a b' resets a to b when a exists, rather then deleting a.
-> Say so in the documentation.
+> This argument is rarely used so adding a default value simplifies
+> the calling code.
 >
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
-> Something like this?
->
-> BTW, I noticed that 'git-subcmd' is used everywhere in here which does
-> not feel right, but I followed the existing style, leaving a consistent
-> clean-up for a later patch. Also, typesetting is inconsistent:
-> We have <branch> as well as `<branch>` when the text talks about the
-> options. Do we have a style guide or such?
->
->  Documentation/git-branch.txt |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-> index 6103d62..27b73bc 100644
-> --- a/Documentation/git-branch.txt
-> +++ b/Documentation/git-branch.txt
-> @@ -76,8 +76,8 @@ OPTIONS
->  	based sha1 expressions such as "<branchname>@\{yesterday}".
->  
->  -f::
-> -	Force the creation of a new branch even if it means deleting
-> -	a branch that already exists with the same name.
-> +	Reset <branchname> to <startpoint> if <branchname> exists
-> +	already. Without `-f` 'git-branch' refuses to change an existing branch.
+> Signed-off-by: Catalin Marinas <catalin.marinas@gmail.com>
 
-And what happens if the branchname does not exist?
+Acked-by: Karl Hasselstr=F6m <kha@treskal.com>
 
->  
->  -m::
->  	Move/rename a branch and the corresponding reflog.
-> -- 
-> 1.6.2.149.g6462
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
