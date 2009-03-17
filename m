@@ -1,75 +1,59 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: Mirroring repository state, with branches and submodules.
-Date: Tue, 17 Mar 2009 17:56:35 +0100
-Message-ID: <20090317165635.GB3817@genesis.frugalware.org>
-References: <623D3837-E899-49AF-9A37-F667A311EE58@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] disable post-checkout test on Cygwin
+Date: Tue, 17 Mar 2009 17:59:09 +0100
+Message-ID: <49BFD6DD.1010800@viscovery.net>
+References: <81b0412b0903170926p4f2d536el2b96a71c79c0159e@mail.gmail.com> <7vprggqeh2.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="nljfjKcp9HDtPSOP"
-Cc: git@vger.kernel.org
-To: Toby White <toby.o.h.white@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 17 17:58:20 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	layer <layer@known.net>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 17 18:00:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjccA-0003RU-Q2
-	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 17:58:07 +0100
+	id 1Ljcej-0004YI-Uu
+	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 18:00:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754276AbZCQQ4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2009 12:56:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753851AbZCQQ4h
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 12:56:37 -0400
-Received: from virgo.iok.hu ([212.40.97.103]:39953 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752570AbZCQQ4h (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2009 12:56:37 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 02E84580DB;
-	Tue, 17 Mar 2009 17:56:35 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id E917B44783;
-	Tue, 17 Mar 2009 17:56:34 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 4469411B80AE; Tue, 17 Mar 2009 17:56:35 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <623D3837-E899-49AF-9A37-F667A311EE58@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1756105AbZCQQ7Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2009 12:59:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755767AbZCQQ7P
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 12:59:15 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:50212 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755744AbZCQQ7P (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2009 12:59:15 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LjcdB-0004Uv-QZ; Tue, 17 Mar 2009 17:59:10 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 8C22C6C4; Tue, 17 Mar 2009 17:59:09 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <7vprggqeh2.fsf@gitster.siamese.dyndns.org>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113507>
 
+Junio C Hamano schrieb:
+> Alex Riesen <raa.lkml@gmail.com> writes:
+> 
+>> It is broken because of the tricks we have to play with
+>> lstat to get the bearable perfomance out of the call.
+>> Sadly, it disables access to Cygwin's executable attribute,
+>> which Windows filesystems do not have at all.
+> 
+> Hmm, perhaps when checking hooks to see if they are executable, Cygwin
+> port should avoid using the "tricks"?  Compared to paths inside the
+> worktree the number of hooks is a lot smaller, no?
 
---nljfjKcp9HDtPSOP
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Hmm. Nowadays, we run hooks through run_hook() in run_command.c. It uses
+access(..., X_OK), not lstat(). We don't play games with access(), do we?
 
-On Tue, Mar 17, 2009 at 03:21:40PM +0000, Toby White <toby.o.h.white@googlemail.com> wrote:
-> git fetch
-> for BRANCH in $(git branch -r | cut -d / -f 2); do
->    git checkout $BRANCH
->    git reset --hard origin/$BRANCH
-> done
-> git submodule update --init
-
-First, I think you don't handle the case when you have multiple
-remotes. I don't know if this is a problem for you or not.
-
-Second, use plumbing in scripts, git for-each-ref has a stable output
-format, while git branch may change.
-
---nljfjKcp9HDtPSOP
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkm/1kMACgkQe81tAgORUJYF4gCgjz2vA7uhJCtQ560aR/oAil8b
-V54AmweNKfxVLSk91AebQmZRNroU/9CN
-=3AgU
------END PGP SIGNATURE-----
-
---nljfjKcp9HDtPSOP--
+-- Hannes
