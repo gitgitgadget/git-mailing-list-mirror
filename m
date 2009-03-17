@@ -1,77 +1,75 @@
-From: Kjetil Barvik <barvik@broadpark.no>
-Subject: Re: [PATCH 2/2] make the ST_{C,M}TIME_NSEC macros more function like
-Date: Tue, 17 Mar 2009 18:38:59 +0100
-Organization: private
-Message-ID: <86bps0t5fw.fsf@broadpark.no>
-References: <cover.1237115791.git.barvik@broadpark.no>
- <cover.1237115791.git.barvik@broadpark.no>
- <0681248ac5c9cedf5f42adeeae89966a89e6d42a.1237115791.git.barvik@broadpark.no>
- <7v4oxu7dyn.fsf@gitster.siamese.dyndns.org> <86tz5u1m7i.fsf@broadpark.no>
- <7vhc1ux7nx.fsf@gitster.siamese.dyndns.org>
+From: Roger Garvin <yoyodyn@gmail.com>
+Subject: Suggested Workflow Question
+Date: Tue, 17 Mar 2009 17:51:10 +0000 (UTC)
+Message-ID: <loom.20090317T175010-470@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 17 18:40:54 2009
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 17 18:57:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjdHS-000503-NX
-	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 18:40:47 +0100
+	id 1LjdWu-0003BE-FE
+	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 18:56:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756022AbZCQRjG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2009 13:39:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755897AbZCQRjF
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 13:39:05 -0400
-Received: from osl1smout1.broadpark.no ([80.202.4.58]:52519 "EHLO
-	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755594AbZCQRjD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2009 13:39:03 -0400
-Received: from osl1sminn1.broadpark.no ([80.202.4.59])
- by osl1smout1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KGN00AQUVP0UR00@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Tue, 17 Mar 2009 18:39:00 +0100 (CET)
-Received: from localhost ([80.202.166.137]) by osl1sminn1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KGN009B4VOZOK20@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Tue, 17 Mar 2009 18:39:00 +0100 (CET)
-In-reply-to: <7vhc1ux7nx.fsf@gitster.siamese.dyndns.org>
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
+	id S1754770AbZCQRzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2009 13:55:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754315AbZCQRzI
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 13:55:08 -0400
+Received: from main.gmane.org ([80.91.229.2]:34091 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751342AbZCQRzH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2009 13:55:07 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1LjdVG-0005LP-NZ
+	for git@vger.kernel.org; Tue, 17 Mar 2009 17:55:03 +0000
+Received: from smtp.qmsionline.com ([65.163.36.91])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 17 Mar 2009 17:55:02 +0000
+Received: from yoyodyn by smtp.qmsionline.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 17 Mar 2009 17:55:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 65.163.36.90 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113511>
 
-Junio C Hamano <gitster@pobox.com> writes:
+I work for a small company with about 15 developers who work concurrently on
+about 10+ projects both in new development and support.
+We do custom software for manufacturing and production systems.  Part of our
+contracts with our customers is a perpetual single use license of the source
+code at each facility.
+So we have a copy of the source on our office server, and another copy at each
+customer site.  When we had only 5 developers it was easier to handle.  Now that
+we are growing we need a source control system and I have been looking heavily
+into Git.  Our old workflow does not seem that it will fit well with Git
+however, but I feel that I need a distributed system to keep track of the office
+version and the on-site versions of our source since development is taking place
+on both.
+(Some customers also have separate development, and testing versions on their
+servers as well.)
 
-> Kjetil Barvik <barvik@broadpark.no> writes:
->
->>     [...] in C or Pascal, calling a function with a large structure as
->>     an argument will cause the entire structure to be copied,
->>     potentially causing serious performance degradation, and mutations
->>     to the structure are invisible to the caller. [...]
->>
->>   So in my eyes it make more sense to be consistent and take the address
->>   of all struct like objects (&st in this case) for all arguments to
->>   "function-like" things.
->
-> Notice the "mutations to the structure are invisible to the caller" part.
-> The call site of st_ctime_nsec(st) can be sure that st won't be modified,
-> without checking the definition of the function.
->
-> Which is actually a nice property.  When st_ctime_nsec(st) is implemented as
-> a macro, you _could_ write it in such a way to mutate what is in st, but
-> the implementation does not do so, and will be unlikely to in the future,
-> so I think writing it as if it is a function that receives a structure by
-> value will help readers of the calling code.
->
-> And the readability is what we should optimize for when picking from two
-> ways to write it, and when the generated code is the same.
+I have created git repositories on a couple of our project source directories as
+test beds.  Right now (second day) I am the only one who is actually using git.
+ Everyone else is simply accessing the files on the server as they have always
+done, and I am making the commits when I see signifigant changes. 
 
-  OK, I guess we can dropp this patch!  :-)
+My question is really a request for modified workflow ideas.  My plan was to
+have a master repository in our office server with clones at each customer site,
+and multiple branches for test, QA, and production versions of the source.
+Since most of these customers have closed networks, we would rely on people
+traveling onsite, or emailing patches to get any updates back into our office
+repository. 
 
-  -- kjetil
+Thank you for any assistance for this revision control newb.
+
+Roger Garvin
