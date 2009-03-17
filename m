@@ -1,72 +1,63 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Mar 2009, #04; Sat, 14)
-Date: Mon, 16 Mar 2009 17:19:25 -0700
-Message-ID: <7v4oxtuhki.fsf@gitster.siamese.dyndns.org>
-References: <7vr60z8fkl.fsf@gitster.siamese.dyndns.org>
- <alpine.LNX.1.00.0903161834530.19665@iabervon.org>
+Subject: Re: [TopGit PATCH] tg-patch: fix invocation in sub working tree 
+ directory
+Date: Mon, 16 Mar 2009 17:24:19 -0700
+Message-ID: <7vwsapt2rw.fsf@gitster.siamese.dyndns.org>
+References: <1237241299-25515-1-git-send-email-bert.wesarg@googlemail.com>
+ <7vbps1umg9.fsf@gitster.siamese.dyndns.org>
+ <36ca99e90903161625x317556f4hc826aabd01494ca0@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Mar 17 01:21:09 2009
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org,
+	martin f krafft <madduck@debian.org>,
+	u.kleine-koenig@pengutronix.de
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 17 01:25:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjN3L-0006sW-9a
-	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 01:21:07 +0100
+	id 1LjN82-00081f-EE
+	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 01:25:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755463AbZCQATe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Mar 2009 20:19:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755180AbZCQATe
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 20:19:34 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:43298 "EHLO
+	id S1757468AbZCQAY3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Mar 2009 20:24:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755635AbZCQAY2
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 20:24:28 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44186 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751511AbZCQATe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Mar 2009 20:19:34 -0400
+	with ESMTP id S1755180AbZCQAY2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Mar 2009 20:24:28 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1B8CA6E75;
-	Mon, 16 Mar 2009 20:19:32 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id EB9506EDC;
+	Mon, 16 Mar 2009 20:24:26 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 7BF146E74; Mon,
- 16 Mar 2009 20:19:27 -0400 (EDT)
-In-Reply-To: <alpine.LNX.1.00.0903161834530.19665@iabervon.org> (Daniel
- Barkalow's message of "Mon, 16 Mar 2009 19:11:03 -0400 (EDT)")
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 115E36ED8; Mon,
+ 16 Mar 2009 20:24:20 -0400 (EDT)
+In-Reply-To: <36ca99e90903161625x317556f4hc826aabd01494ca0@mail.gmail.com>
+ (Bert Wesarg's message of "Tue, 17 Mar 2009 00:25:38 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4986083E-1289-11DE-A0F3-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: F944E164-1289-11DE-A7C9-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113408>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+Bert Wesarg <bert.wesarg@googlemail.com> writes:
 
-> On Sat, 14 Mar 2009, Junio C Hamano wrote:
+> On Mon, Mar 16, 2009 at 23:33, Junio C Hamano <gitster@pobox.com> wrote:
+>> Bert Wesarg <bert.wesarg@googlemail.com> writes:
+>>
+>>> tg patch won't work in a sub directory of the working tree, because 'git diff
+>>> --name-only' prints the names relative to the top working tree.
+>>
+>> "diff --relative --name-only"?
 >
->> * db/foreign-scm (Sun Jan 11 15:12:10 2009 -0500) 3 commits
->>  - Support fetching from foreign VCSes
->>  - Add specification of git-vcs helpers
->>  - Add "vcs" config option in remotes
->> 
->> The "spec" did not seem quite well cooked yet, but in the longer term I
->> think something like this to allow interoperating with other SCMs as if
->> the other end is a native git repository is a very worthy goal.
->
-> I recently figured out a way to alter the transport API slightly to make 
-> it possible to attach foreign VCSes there. This amounts to allowing 
-> get_refs_list() to leave the sha1s null, and allowing fetch() to set them. 
-> This just requires a copy of a ref list in the clone path, and a check to 
-> make null (for not having a ref) not match null (for not knowing the hash 
-> of the ref) in the fetch logic.
->
-> I think I will end up changing the spec, mostly to allow a single 
-> non-trivial call to the helper to provide both the list of refs and the 
-> fast-import stream; this matches how the pack protocol works (except, of 
-> course, that the initial list doesn't have hashes, and the output goes to 
-> fast-import instead of unpack-objects). I'm going to rebase the series at 
-> some point, but I've been focused more on the more core transport and 
-> remote stuff now that I think I can go through that.
+> No, unfortunately. In my bug case the changed file was in another
+> subtree, and --relative restricts the output to only files under the
+> current subtree.
 
-Thanks for a wonderful news.
+Ah, Ok, then insertion of cdup output does make sense (after all cdup was
+designed to be used that way).
