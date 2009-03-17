@@ -1,107 +1,56 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH 2/2] MinGW: a hardlink implementation
-Date: Tue, 17 Mar 2009 08:46:43 +0100
-Message-ID: <49BF5563.2060500@kdbg.org>
-References: <49BF53C2.6020707@kdbg.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (Mar 2009, #01; Tue, 03)
+Date: Tue, 17 Mar 2009 03:51:12 -0400
+Message-ID: <20090317075112.GC18475@coredump.intra.peff.net>
+References: <7vprgzdlom.fsf@gitster.siamese.dyndns.org> <20090303091504.GG3627@coredump.intra.peff.net> <7vprgiysow.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Petr Kodl <petrkodl@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 17 08:48:41 2009
+X-From: git-owner@vger.kernel.org Tue Mar 17 08:52:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjU2S-0006Gw-IZ
-	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 08:48:41 +0100
+	id 1LjU6U-0007KU-1m
+	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 08:52:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754895AbZCQHqu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2009 03:46:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752183AbZCQHqt
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 03:46:49 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:42538 "EHLO bsmtp.bon.at"
+	id S1755307AbZCQHvV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2009 03:51:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754121AbZCQHvV
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 03:51:21 -0400
+Received: from peff.net ([208.65.91.99]:41196 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752481AbZCQHqt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2009 03:46:49 -0400
-Received: from [192.168.1.98] (cm56-163-160.liwest.at [86.56.163.160])
-	by bsmtp.bon.at (Postfix) with ESMTP id DBD3D10043;
-	Tue, 17 Mar 2009 08:46:45 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
-In-Reply-To: <49BF53C2.6020707@kdbg.org>
+	id S1753177AbZCQHvU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2009 03:51:20 -0400
+Received: (qmail 2738 invoked by uid 107); 17 Mar 2009 07:51:27 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 17 Mar 2009 03:51:27 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Mar 2009 03:51:12 -0400
+Content-Disposition: inline
+In-Reply-To: <7vprgiysow.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113434>
 
-From: Petr Kodl <petrkodl@gmail.com>
-Date: Sat, 24 Jan 2009 15:04:39 +0100
+On Sun, Mar 15, 2009 at 09:53:19PM -0700, Junio C Hamano wrote:
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
-  This is the meat of Petr's original patch with the fixup that was
-  discussed in the msysgit mailing list (WINAPI was added in the
-  typedef).
+> But in reality, contributors who had leftover topics on 'next' simply
+> stopped working on their topics on 'next' without spending the freed up
+> time on concentrating on 'master'.  In an ideal world, the choice would be
+> between "git time on 'next'" vs "git time on 'master'", and closing 'next'
+> was meant to force the choice, but instead the outcome became "less git
+> time until 'next' reopens".
 
-  -- Hannes
+I think that is a reasonable argument for keeping 'next' open, and it
+seems to be borne out by this experiment (the post-1.6.2 period seemed
+no better or worse for bugfixes to me).
 
-  compat/mingw.c |   21 +++++++++++++++++++++
-  compat/mingw.h |    3 +--
-  2 files changed, 22 insertions(+), 2 deletions(-)
+Now the only problem with keeping next open is that the maintainer
+misses out on the relative lull in activity during release freeze to
+catch up on his day job work. But if you can handle that, I'm certainly
+in no position to complain. :)
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index f66ad56..171fa85 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -1118,3 +1118,24 @@ void mingw_open_html(const char *unixpath)
-  	printf("Launching default browser to display HTML ...\n");
-  	ShellExecute(NULL, "open", htmlpath, NULL, "\\", 0);
-  }
-+
-+int link(const char *oldpath, const char *newpath)
-+{
-+	typedef BOOL WINAPI (*T)(const char*, const char*, LPSECURITY_ATTRIBUTES);
-+	static T create_hard_link = NULL;
-+	if (!create_hard_link) {
-+		create_hard_link = (T) GetProcAddress(
-+			GetModuleHandle("kernel32.dll"), "CreateHardLinkA");
-+		if (!create_hard_link)
-+			create_hard_link = (T)-1;
-+	}
-+	if (create_hard_link == (T)-1) {
-+		errno = ENOSYS;
-+		return -1;
-+	}
-+	if (!create_hard_link(newpath, oldpath, NULL)) {
-+		errno = err_win_to_posix(GetLastError());
-+		return -1;
-+	}
-+	return 0;
-+}
-diff --git a/compat/mingw.h b/compat/mingw.h
-index f5da647..762eb14 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -67,8 +67,6 @@ static inline int readlink(const char *path, char *buf, size_t bufsiz)
-  { errno = ENOSYS; return -1; }
-  static inline int symlink(const char *oldpath, const char *newpath)
-  { errno = ENOSYS; return -1; }
--static inline int link(const char *oldpath, const char *newpath)
--{ errno = ENOSYS; return -1; }
-  static inline int fchmod(int fildes, mode_t mode)
-  { errno = ENOSYS; return -1; }
-  static inline int fork(void)
-@@ -134,6 +132,7 @@ int getpagesize(void);	/* defined in MinGW's libgcc.a */
-  struct passwd *getpwuid(int uid);
-  int setitimer(int type, struct itimerval *in, struct itimerval *out);
-  int sigaction(int sig, struct sigaction *in, struct sigaction *out);
-+int link(const char *oldpath, const char *newpath);
-
-  /*
-   * replacements of existing functions
--- 
-1.6.2.rc2.971.g14d5
+-Peff
