@@ -1,53 +1,69 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH 2/4] Add automatic git-mergetool invocation to the new infrastructure
-Date: Tue, 17 Mar 2009 16:30:52 +0100
-Message-ID: <20090317153052.GC10001@diana.vm.bytemark.co.uk>
-References: <20090317110721.27748.10295.stgit@pc1117.cambridge.arm.com> <20090317110858.27748.21534.stgit@pc1117.cambridge.arm.com>
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: Re: Generate version file by hooks
+Date: Tue, 17 Mar 2009 11:42:01 -0400
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E70A2AF280@EXCHANGE.trad.tradestation.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 17 16:33:17 2009
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: <bjoern01@nurfuerspam.de>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 17 16:44:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjbHk-0001pV-HB
-	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 16:32:56 +0100
+	id 1LjbSR-00072m-OJ
+	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 16:44:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756272AbZCQPa4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Mar 2009 11:30:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756162AbZCQPaz
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 11:30:55 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:46253 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755940AbZCQPay (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2009 11:30:54 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1LjbFk-0003JF-00; Tue, 17 Mar 2009 15:30:52 +0000
-Content-Disposition: inline
-In-Reply-To: <20090317110858.27748.21534.stgit@pc1117.cambridge.arm.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1754353AbZCQPmZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2009 11:42:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753118AbZCQPmZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 11:42:25 -0400
+Received: from mail2.tradestation.com ([63.99.207.80]:59616 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753032AbZCQPmY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Mar 2009 11:42:24 -0400
+X-ASG-Debug-ID: 1237304540-6eb600360000-QuoKaX
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
+Received: from mail5.tradestation.com (localhost [127.0.0.1])
+	by mail2.tradestation.com (Spam Firewall) with ESMTP
+	id C199A2193A2; Tue, 17 Mar 2009 11:42:20 -0400 (EDT)
+Received: from mail5.tradestation.com ([192.168.51.76]) by mail2.tradestation.com with ESMTP id ArH5QbTpQ15TLxQE; Tue, 17 Mar 2009 11:42:20 -0400 (EDT)
+X-ASG-Whitelist: Client
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 17 Mar 2009 11:42:20 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-ASG-Orig-Subj: Re: Generate version file by hooks
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Re: Generate version file by hooks
+Thread-Index: AcmnFupW987Wk+VLR9KNvurbEv3eGA==
+X-OriginalArrivalTime: 17 Mar 2009 15:42:20.0270 (UTC) FILETIME=[F54308E0:01C9A716]
+X-Barracuda-Connect: UNKNOWN[192.168.51.76]
+X-Barracuda-Start-Time: 1237304540
+X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113483>
 
-On 2009-03-17 11:08:58 +0000, Catalin Marinas wrote:
+=== Re: ===
+I'd like to put the SHA1 of the current commit into a source file so
+that my 
+program can further process it -- put it into a log file for example.
+=== end ===
 
-> This patch adds the IndexAndWorktree.mergetool() function
-> responsible for calling 'git mergetool' to interactively solve
-> conflicts. The function may also be called from
-> IndexAndWorktree.merge() if the standard 'git merge-recursive' fails
-> and 'interactive =3D=3D True'. The 'allow_interactive' parameter is
-> passed to Transaction.push_patch() from the functions allowing
-> interactive merging.
+Isn't that what the existing file HEAD is for?  Possibly with a level of
+indirection.  So use 
+	git rev-parse HEAD
+any time you need that SHA1 value.  The HEAD is always updated, since
+that _is_ what defines the "current" commit.
 
-Acked-by: Karl Hasselstr=F6m <kha@treskal.com>
+--John
+(please excuse the footer; it's not my idea)
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
+  If you received this in error, please contact the sender and delete the material from any computer.
