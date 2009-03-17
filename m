@@ -1,62 +1,80 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Transparently encrypt repository contents with GPG
-Date: Tue, 17 Mar 2009 03:40:54 -0400
-Message-ID: <20090317074054.GA18475@coredump.intra.peff.net>
-References: <978bdee00903121419o61cd7a87rb55809796bd257d7@mail.gmail.com> <fabb9a1e0903121434u4a3d71bdi6277071f54557a7e@mail.gmail.com> <49BA39A1.9090203@drmicha.warpmail.net> <200903131215.49336.trast@student.ethz.ch> <fabb9a1e0903130417x36121bd5ya8b323e0a80bbd8f@mail.gmail.com> <49BA6606.1070403@fastmail.fm> <7vy6v9f9zn.fsf@gitster.siamese.dyndns.org> <49BB920A.20301@drmicha.warpmail.net> <7viqmcaqov.fsf@gitster.siamese.dyndns.org> <49BE77DD.5020407@drmicha.warpmail.net>
+Subject: Re: [PATCH] git-push.txt: describe how to default to pushing only
+	current branch
+Date: Tue, 17 Mar 2009 03:46:33 -0400
+Message-ID: <20090317074633.GB18475@coredump.intra.peff.net>
+References: <20090314205628.GA17445@coredump.intra.peff.net> <1237085349-14824-1-git-send-email-chris_johnsen@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Matthias Nothhaft <matthias.nothhaft@googlemail.com>,
-	git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Mar 17 08:43:00 2009
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Chris Johnsen <chris_johnsen@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 17 08:48:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjTwx-0004w2-Tr
-	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 08:43:00 +0100
+	id 1LjU20-00069i-BA
+	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 08:48:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752838AbZCQHlG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2009 03:41:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752764AbZCQHlE
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 03:41:04 -0400
-Received: from peff.net ([208.65.91.99]:51566 "EHLO peff.net"
+	id S1755341AbZCQHqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2009 03:46:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754247AbZCQHqm
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 03:46:42 -0400
+Received: from peff.net ([208.65.91.99]:44834 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752481AbZCQHlC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2009 03:41:02 -0400
-Received: (qmail 2653 invoked by uid 107); 17 Mar 2009 07:41:08 -0000
+	id S1752838AbZCQHql (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2009 03:46:41 -0400
+Received: (qmail 2688 invoked by uid 107); 17 Mar 2009 07:46:48 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 17 Mar 2009 03:41:08 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Mar 2009 03:40:54 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 17 Mar 2009 03:46:48 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Mar 2009 03:46:33 -0400
 Content-Disposition: inline
-In-Reply-To: <49BE77DD.5020407@drmicha.warpmail.net>
+In-Reply-To: <1237085349-14824-1-git-send-email-chris_johnsen@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113432>
 
-On Mon, Mar 16, 2009 at 05:01:33PM +0100, Michael J Gruber wrote:
+On Sat, Mar 14, 2009 at 09:49:09PM -0500, Chris Johnsen wrote:
 
-> Now, a simple test shows that git diff obviously does this when diffing
-> HEAD to worktree:
+> 1) literals that contain a double quote
 > 
-> diff between HEAD and clean(worktree)
+> 	$ git grep '`[^`]*"[^`]`' | cat
+> 	config.txt:You can have `[section]` if you have `[section "subsection"]`, but you
 > 
-> Which is the right thing. It just seems so that textconv is not even
-> called "in the wrong place of the chain", but messes the diff up in this
-> way:
-> 
-> diff between textconv(HEAD) and textconv(worktree)
-> 
-> (I expected clean(textconv(worktree)) first, which would be wrong, too).
-> I.e., the clean filter is ignored completely in the presence of textconv.
+>    There might be a better regexp to find these, I did not think
+>    about it too long. The above "hit" seems like a reasonable
+>    literal string. Maybe it is OK to live with this one
+>    ("[section "subsection"]").
 
-Yeah, I think this should probably be textconv(clean(worktree)) to match
-the regular HEAD/worktree diff (if it isn't already). Can you put
-together a test that shows the breakage?
+Hmm, good point. Something with typeface that could not be in the string
+contents would probably be a better choice. The linkgit: links appear
+bolded. We could do that. We could also try underlining, though that
+might be hard to read if any strings contained underscores.
+
+I tried to find examples of other manpages that faced the same problem.
+I would guess that bold is the best bet (for example, the 'cat' manpage
+on my system looks like (excuse my fake markup):
+
+  -A, --show-all
+      equivalent to <b>-vET</b>
+
+> 2) manpage-1.72.xsl 
+> 
+>    I have been setting DOCBOOK_XSL_172 to avoid the ".ft" problem
+>    (<http://article.gmane.org/gmane.comp.version-control.git/112943>;
+>    my system is Mac OS X 10.4.11 with MacPorts asciidoc 8.3.1,
+>    xmlto version 0.0.21, and docbook-xsl 1.74.0). Since non-null
+>    DOCBOOK_XSL_172 replaces callouts.xsl with manpage-1.72.xsl, I
+>    added the line to manpage-1.72.xsl.
+
+The "callouts" XSL is obviously becoming more than that (there is
+already a "I know, this is not a callout, but where else to put it?"
+comment in it). It probably makes sense to rename it to manpage.xsl (or
+even manpage-1.8.xsl), factor out common parts to manpage-base.xsl, and
+then include the -base version from both manpage and manpage-1.72.xsl.
+
+Want to do a patch?
 
 -Peff
