@@ -1,253 +1,131 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 3/4] Cap the number of open files in the WindowCache
-Date: Mon, 16 Mar 2009 18:16:09 -0700
-Message-ID: <1237252570-8596-4-git-send-email-spearce@spearce.org>
-References: <1237252570-8596-1-git-send-email-spearce@spearce.org>
- <1237252570-8596-2-git-send-email-spearce@spearce.org>
- <1237252570-8596-3-git-send-email-spearce@spearce.org>
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Tue Mar 17 02:18:01 2009
+From: Jonas Bernoulli <jonas@bernoul.li>
+Subject: GIT_WORK_TREE=dir git ls-files --deleted
+Date: Tue, 17 Mar 2009 02:41:50 +0100
+Message-ID: <201bac3a0903161841y6bc59fe5iaf0c221c08db5f43@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 17 02:43:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjNwJ-0003eC-Kq
-	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 02:17:56 +0100
+	id 1LjOL1-0000v9-JD
+	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 02:43:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759613AbZCQBQY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Mar 2009 21:16:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756531AbZCQBQX
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 21:16:23 -0400
-Received: from george.spearce.org ([209.20.77.23]:47502 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756837AbZCQBQP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Mar 2009 21:16:15 -0400
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id 9453F38239; Tue, 17 Mar 2009 01:16:13 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 5199238222;
-	Tue, 17 Mar 2009 01:16:12 +0000 (UTC)
-X-Mailer: git-send-email 1.6.2.1.286.g8173
-In-Reply-To: <1237252570-8596-3-git-send-email-spearce@spearce.org>
+	id S1755300AbZCQBly (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Mar 2009 21:41:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755148AbZCQBly
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Mar 2009 21:41:54 -0400
+Received: from mail-ew0-f177.google.com ([209.85.219.177]:49088 "EHLO
+	mail-ew0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754111AbZCQBlx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Mar 2009 21:41:53 -0400
+Received: by ewy25 with SMTP id 25so3699983ewy.37
+        for <git@vger.kernel.org>; Mon, 16 Mar 2009 18:41:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=f9WTTove4d3M0B+K+idM4HTsvUPh6GOTtwK86OpEHVE=;
+        b=YdJm3b5lbB318ucJISONZsjyQ4wUxEmytVcZZC7jbdP3v6th+ePsgd3VGSB1Ylfc8A
+         u/VFH3fYZQ92WDJaH7OaS0gPiZXARJk5A0vSRe60pjQpcqxy/evtC5SkLc5IAjYY7Fcp
+         +JeCsrB50TuBY09KZLorVd9WqC5pMD8eYhGks=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        b=sS0VzpKEca5pAS7rQrH43LJNpuXiuWPW5hPTaNtDnc7GZIsPwz89iwuhv733Y7DWE5
+         H1OPPZC6DrWtC4cAPMuCbOTexfbgg/3tXFnCjebvkvI93a2rTmSrHByeC5B+ru49w/A2
+         7oy+HJReiB0dX+W4zLaUIjsYFzKsSC98320UQ=
+Received: by 10.210.139.15 with SMTP id m15mr4026941ebd.84.1237254110466; Mon, 
+	16 Mar 2009 18:41:50 -0700 (PDT)
+X-Google-Sender-Auth: c2a47bb3be1129f4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113415>
 
-The default WindowCache configuration is:
+Hello
 
-  packedGitLimit:      10 MB
-  packedGitWindowSize:  8 KB
+git ls-files --deleted seams to be broken when GIT_WORK_TREE is set as
+can be observed below.
 
-10 MB / 8 KB allows up to 1280 windows permitted in the WindowCache
-at any given time.  If every window came from a unique pack file, we
-need 1280 file descriptors just for the resources in the WindowCache.
-For most applications this is way beyond the hard limit configured
-for the host JVM, causing java.io.IOException("Too many open files")
-from possibly any part of JGit or the host application.
+Instead of just showing deleted files it also shows at least unchanged
+and modified files.
 
-Specifically, I ran into this problem in Gerrit Code Review, where we
-commonly see hundreds of very small pack files spread over hundreds
-of Git repositories, all accessed from a persistent JVM that is also
-hosting an SSH daemon and a web server.  The aggressive caching of
-windows in the WindowCache and of Repository objects in Gerrit's
-own RepositoryCache caused us to retain far too many tiny pack files.
+I have observed this behaviour with git.git and do not know if
+released versions are affected.
 
-We now set the limit at 128 open files, assuming this is a reasonable
-limit for most applications using the library.  Git repositories tend
-to be in the handful of packs/repository (e.g. <10 packs/repository)
-and applications using JGit tend to access only a handful of Git
-repositories at a time (e.g. <10 repositories/JVM).
+#### setup
 
-If we detect a file open failure while opening a pack we halve
-the number of permitted open files and try again, until we reach
-a lower bound of 16 open files.  Needing to go lower may indicate
-a file descriptor leak in the host application.
+$ mkdir -p base/worktree
+$ cd base/
+$ export GIT_DIR=/tmp/base/.git
+$ export GIT_WORK_TREE=/tmp/base/worktree
+$ git init
+Initialized empty Git repository in /tmp/base/.git/
+$ touch worktree/deleted worktree/modified worktree/unchanged
+$ git add .
+$ git commit -m init
+[master (root-commit) f4e1bd3] init
+ 0 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 deleted
+ create mode 100644 modified
+ create mode 100644 unchanged
+$ rm worktree/deleted
+$ echo modified > worktree/modified
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- .../src/org/spearce/jgit/lib/WindowCache.java      |   65 +++++++++++++++-----
- .../org/spearce/jgit/lib/WindowCacheConfig.java    |   20 ++++++
- 2 files changed, 70 insertions(+), 15 deletions(-)
+#### expected result
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCache.java b/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCache.java
-index ba1124a..13912a7 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCache.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCache.java
-@@ -54,6 +54,8 @@ private static final int bits(int newSize) {
- 		return Integer.numberOfTrailingZeros(newSize);
- 	}
- 
-+	private static int maxFileCount;
-+
- 	private static int maxByteCount;
- 
- 	private static int windowSize;
-@@ -70,10 +72,13 @@ private static final int bits(int newSize) {
- 
- 	private static ByteWindow lruTail;
- 
-+	private static int openFileCount;
-+
- 	private static int openByteCount;
- 
- 	static {
- 		final WindowCacheConfig c = new WindowCacheConfig();
-+		maxFileCount = c.getPackedGitOpenFiles();
- 		maxByteCount = c.getPackedGitLimit();
- 		windowSizeShift = bits(c.getPackedGitWindowSize());
- 		windowSize = 1 << windowSizeShift;
-@@ -133,6 +138,13 @@ private static synchronized void reconfigureImpl(final WindowCacheConfig cfg) {
- 		boolean prune = false;
- 		boolean evictAll = false;
- 
-+		if (maxFileCount < cfg.getPackedGitOpenFiles())
-+			maxFileCount = cfg.getPackedGitOpenFiles();
-+		else if (maxFileCount > cfg.getPackedGitOpenFiles()) {
-+			maxFileCount = cfg.getPackedGitOpenFiles();
-+			prune = true;
-+		}
-+
- 		if (maxByteCount < cfg.getPackedGitLimit()) {
- 			maxByteCount = cfg.getPackedGitLimit();
- 		} else if (maxByteCount > cfg.getPackedGitLimit()) {
-@@ -229,20 +241,37 @@ private static synchronized final void getImpl(final WindowCursor curs,
- 		}
- 
- 		if (wp.openCount == 0) {
--			try {
--				wp.openCount = 1;
--				wp.cacheOpen();
--			} catch (IOException ioe) {
--				wp.openCount = 0;
--				throw ioe;
--			} catch (RuntimeException ioe) {
--				wp.openCount = 0;
--				throw ioe;
--			} catch (Error ioe) {
--				wp.openCount = 0;
--				throw ioe;
--			} finally {
--				wp.openCount--;
-+			TRY_OPEN: for (;;) {
-+				try {
-+					openFileCount++;
-+					releaseMemory();
-+					runClearedWindowQueue();
-+					wp.openCount = 1;
-+					wp.cacheOpen();
-+					break;
-+				} catch (IOException ioe) {
-+					openFileCount--;
-+					if ("Too many open files".equals(ioe.getMessage())
-+							&& maxFileCount > 16) {
-+						// We may be able to recover by halving our limit
-+						// and trying again.
-+						//
-+						maxFileCount = Math.max(16, maxFileCount >> 2);
-+						continue TRY_OPEN;
-+					}
-+					wp.openCount = 0;
-+					throw ioe;
-+				} catch (RuntimeException ioe) {
-+					openFileCount--;
-+					wp.openCount = 0;
-+					throw ioe;
-+				} catch (Error ioe) {
-+					openFileCount--;
-+					wp.openCount = 0;
-+					throw ioe;
-+				} finally {
-+					wp.openCount--;
-+				}
- 			}
- 
- 			// The cacheOpen may have mapped the window we are trying to
-@@ -278,6 +307,7 @@ private static synchronized final void getImpl(final WindowCursor curs,
- 
- 	static synchronized void markLoaded(final ByteWindow w) {
- 		if (--w.provider.openCount == 0) {
-+			openFileCount--;
- 			w.provider.cacheClose();
- 		}
- 	}
-@@ -291,13 +321,17 @@ private static void makeMostRecent(ByteWindow<?> e) {
- 
- 	private static void releaseMemory() {
- 		ByteWindow<?> e = lruTail;
--		while (openByteCount > maxByteCount && e != null) {
-+		while (isOverLimit() && e != null) {
- 			final ByteWindow<?> p = e.lruPrev;
- 			clear(e);
- 			e = p;
- 		}
- 	}
- 
-+	private static boolean isOverLimit() {
-+		return openByteCount > maxByteCount || openFileCount > maxFileCount;
-+	}
-+
- 	/**
- 	 * Remove all windows associated with a specific provider.
- 	 * <p>
-@@ -341,6 +375,7 @@ private static void clear(final ByteWindow<?> e) {
- 	private static void unlinkSize(final ByteWindow<?> e) {
- 		if (e.sizeActive) {
- 			if (--e.provider.openCount == 0) {
-+				openFileCount--;
- 				e.provider.cacheClose();
- 			}
- 			openByteCount -= e.size;
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCacheConfig.java b/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCacheConfig.java
-index b4c4638..d906a7c 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCacheConfig.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCacheConfig.java
-@@ -45,6 +45,8 @@
- 	/** 1024 {@link #KB} (number of bytes in one mebibyte/megabyte) */
- 	public static final int MB = 1024 * KB;
- 
-+	private int packedGitOpenFiles;
-+
- 	private int packedGitLimit;
- 
- 	private int packedGitWindowSize;
-@@ -55,6 +57,7 @@
- 
- 	/** Create a default configuration. */
- 	public WindowCacheConfig() {
-+		packedGitOpenFiles = 128;
- 		packedGitLimit = 10 * MB;
- 		packedGitWindowSize = 8 * KB;
- 		packedGitMMAP = false;
-@@ -62,6 +65,23 @@ public WindowCacheConfig() {
- 	}
- 
- 	/**
-+	 * @return maximum number of streams to open at a time. Open packs count
-+	 *         against the process limits. <b>Default is 128.</b>
-+	 */
-+	public int getPackedGitOpenFiles() {
-+		return packedGitOpenFiles;
-+	}
-+
-+	/**
-+	 * @param fdLimit
-+	 *            maximum number of streams to open at a time. Open packs count
-+	 *            against the process limits
-+	 */
-+	public void setPackedGitOpenFiles(final int fdLimit) {
-+		packedGitOpenFiles = fdLimit;
-+	}
-+
-+	/**
- 	 * @return maximum number bytes of heap memory to dedicate to caching pack
- 	 *         file data. <b>Default is 10 MB.</b>
- 	 */
--- 
-1.6.2.1.286.g8173
+$ git ls-files --deleted
+deleted
+
+#### actual result
+
+$ git ls-files --deleted
+deleted
+modified
+unchanged
+
+#### untracked and out-of-worktree seam to be fine
+
+$ touch worktree/untracked
+$ touch not-in-worktree
+$ git ls-files --deleted
+deleted
+modified
+unchanged
+
+#### related options / commands seam to be fine
+
+$ git ls-files --modified
+deleted
+modified
+$ git ls-files --others
+$ git ls-files --cached
+deleted
+modified
+unchanged
+$ git status
+# On branch master
+# Changed but not updated:
+#   (use "git add/rm <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#       deleted:    deleted
+#       modified:   modified
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+
+Best regards,
+
+-- Jonas Bernoulli
+
+Ps: Is there a way to show modified files excluding deleted files
+other than this?
+( git ls-files --deleted; git ls-files --modified ) | uniq --unique
+Pps: The description of --others is ambitious, what is "other files"?
