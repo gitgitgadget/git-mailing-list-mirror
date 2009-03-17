@@ -1,65 +1,78 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Local clone checks out wrong branch based on remote HEAD
-Date: Tue, 17 Mar 2009 16:40:26 -0700
-Message-ID: <7viqm7pvkl.fsf@gitster.siamese.dyndns.org>
-References: <b97024a40903171219k8841508p774d9dc4295a09bc@mail.gmail.com>
- <alpine.LNX.1.00.0903171530160.19665@iabervon.org>
+Subject: Re: [PATCH] contrib/difftool: use a separate config namespace for
+ difftool commands
+Date: Tue, 17 Mar 2009 16:42:10 -0700
+Message-ID: <7veiwvpvhp.fsf@gitster.siamese.dyndns.org>
+References: <1236589956-13486-1-git-send-email-davvid@gmail.com>
+ <76718490903090852se7fc756m818f5d8ba49278b5@mail.gmail.com>
+ <20090310070122.GB4523@gmail.com>
+ <200903172054.46063.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tom Preston-Werner <tom@github.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Mar 18 00:42:08 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Aguilar <davvid@gmail.com>,
+	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+To: markus.heidelberg@web.de
+X-From: git-owner@vger.kernel.org Wed Mar 18 00:43:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ljiv8-0008WL-N6
-	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 00:42:07 +0100
+	id 1Ljiwn-0000Xv-Ox
+	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 00:43:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752353AbZCQXkf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2009 19:40:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752099AbZCQXkf
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 19:40:35 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54310 "EHLO
+	id S1752974AbZCQXmT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Mar 2009 19:42:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752581AbZCQXmT
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 19:42:19 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51543 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751450AbZCQXke (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2009 19:40:34 -0400
+	with ESMTP id S1752553AbZCQXmS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Mar 2009 19:42:18 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5071EA2608;
-	Tue, 17 Mar 2009 19:40:32 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id BF9FB7E5E;
+	Tue, 17 Mar 2009 19:42:16 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 1B884A2605; Tue,
- 17 Mar 2009 19:40:27 -0400 (EDT)
-In-Reply-To: <alpine.LNX.1.00.0903171530160.19665@iabervon.org> (Daniel
- Barkalow's message of "Tue, 17 Mar 2009 15:39:55 -0400 (EDT)")
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E397A7E5D; Tue,
+ 17 Mar 2009 19:42:11 -0400 (EDT)
+In-Reply-To: <200903172054.46063.markus.heidelberg@web.de> (Markus
+ Heidelberg's message of "Tue, 17 Mar 2009 20:54:45 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 014F17A8-134D-11DE-86F3-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 3F93CAFE-134D-11DE-AB7C-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113538>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+Markus Heidelberg <markus.heidelberg@web.de> writes:
 
-> ... I think there's also been discussion of a 
-> protocol extension to transmit the information, although I don't know 
-> where that ended up.
+> David Aguilar, 10.03.2009:
+>> On  0, Jay Soffian <jaysoffian@gmail.com> wrote:
+>> > On Mon, Mar 9, 2009 at 5:12 AM, David Aguilar <davvid@gmail.com> w=
+rote:
+>> > > =C2=A0contrib/difftool/git-difftool =C2=A0 =C2=A0 =C2=A0 =C2=A0|=
+ =C2=A0 =C2=A06 +++---
+>> >=20
+>> > Aside, (for Junio I guess...), what's the reason this command is i=
+n
+>> > contrib, and by what criteria might it graduate to being installed
+>> > with the rest of the git commands?
+>> >=20
+>> > j.
+>>=20
+>> My thoughts (also for Junio, I guess..):
+>>=20
+>> If y'all feel that it can live with the rest of the git
+>> commands then that would be great =3D)
+>
+> I'd like to see it as a general git tool, too.
+> Maybe it can even share some common functionality with git-mergetool.
 
-You can find them in the list of threads posted nearby.
-
-The first round's protocol extension was not quite backward compatible
-but in a benign way, in that it did not break anything but induced a
-harmless warning from older ls-remote.  The second round did not have such
-flaw but it got a "Yuck". 
-
-    From: Jeff King <peff@peff.net>
-    Date: Mon, 1 Dec 2008 12:44:15 -0500
-    Message-ID: <20081201174414.GA22185@coredump.intra.peff.net>
-    Subject: Re: [PATCH 5/6 (v2)] upload-pack: send the HEAD information
-
-I somehow feel that the "Yuck" was addressed not to the patches but to the
-problem the patch needs to address.
-
-We could resurrect it if somebody is interested.
+The code was copied and pasted very heavily, and I think (IIRC) the aut=
+hor
+was a bit too ashamed to have it outside contrib/ before it is properly
+refactored or something like that.  Which I happen to agree with, by th=
+e
+way.
