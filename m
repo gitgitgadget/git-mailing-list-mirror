@@ -1,78 +1,184 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH 5/5] Convert "float" to the lib infrastructure
-Date: Tue, 17 Mar 2009 08:16:45 +0100
-Message-ID: <20090317071645.GC3716@diana.vm.bytemark.co.uk>
-References: <20090312120426.2992.35213.stgit@pc1117.cambridge.arm.com> <20090312120918.2992.82713.stgit@pc1117.cambridge.arm.com> <20090313024137.GE15393@diana.vm.bytemark.co.uk> <b0943d9e0903160936m1971fbaft928a495eaab4fa20@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH 1/2] MinGW: a helper function that translates Win32 API error
+ codes
+Date: Tue, 17 Mar 2009 08:39:46 +0100
+Message-ID: <49BF53C2.6020707@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 17 08:18:19 2009
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Petr Kodl <petrkodl@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 17 08:41:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjTZ2-000881-Vn
-	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 08:18:17 +0100
+	id 1LjTvZ-0004cX-VO
+	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 08:41:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753667AbZCQHQs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Mar 2009 03:16:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753243AbZCQHQs
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 03:16:48 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:60054 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752838AbZCQHQs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2009 03:16:48 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1LjTXZ-00015N-00; Tue, 17 Mar 2009 07:16:45 +0000
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0903160936m1971fbaft928a495eaab4fa20@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1753904AbZCQHkF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2009 03:40:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752985AbZCQHkD
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 03:40:03 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:28632 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752764AbZCQHkA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2009 03:40:00 -0400
+Received: from [192.168.1.98] (cm56-163-160.liwest.at [86.56.163.160])
+	by bsmtp.bon.at (Postfix) with ESMTP id 5D79C2C402A;
+	Tue, 17 Mar 2009 08:39:52 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113430>
 
-On 2009-03-16 16:36:43 +0000, Catalin Marinas wrote:
+From: Petr Kodl <petrkodl@gmail.com>
+Date: Sat, 24 Jan 2009 15:04:39 +0100
 
-> 2009/3/13 Karl Hasselstr=F6m <kha@treskal.com>:
->
-> > On 2009-03-12 12:09:18 +0000, Catalin Marinas wrote:
-> >
-> > > =A0options =3D [
-> > > =A0 =A0 =A0opt('-s', '--series', action =3D 'store_true',
-> > > - =A0 =A0 =A0 =A0short =3D 'Rearrange according to a series file'=
-)]
-> > > + =A0 =A0 =A0 =A0short =3D 'Rearrange according to a series file'=
-)
-> > > + =A0 =A0] + argparse.keep_option()
-> >
-> > This flag should take the filename as a parameter, both because
-> > it's the right thing to do and because it'll make the tab
-> > completion work right (as is, it'll complete on patch names after
-> > the -s flag).
-> >
-> > Something like
-> >
-> > =A0opt('-s', '--series', type =3D 'string')
-> >
-> > ought to do it.
->
-> This command was accepting series via the stdin as well (maybe for
-> easier use in other scripts or from stgit.el).
+This function translates many possible Win32 error codes to suitable
+errno numbers.  We will use it in our wrapper functions that need to call
+into Win32.
 
-Ah. Hmm, I'd prefer if it used "-" for that, for consistency. And
-because I don't know how to make flags with optional parameters. :-/
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+  Dscho,
 
-> Anyway, it doesn't seem to make any difference with the bash
-> completion. It still tries to complete patches but when this fails
-> bash lists files if the prefix matches some.
+  I've split this off from the Petr's hard-link patch and moved the function
+  to the top or mingw.c because we should reuse it in our other wrappers
+  to convert error codes.
 
-Hmm, that's not right. But I can have a look at it if you like.
+  -- Hannes
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+  compat/mingw.c |  113 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  1 files changed, 113 insertions(+), 0 deletions(-)
+
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 27bcf3f..f66ad56 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -4,6 +4,119 @@
+
+  unsigned int _CRT_fmode = _O_BINARY;
+
++static int err_win_to_posix(DWORD winerr)
++{
++	int error = ENOSYS;
++	switch(winerr) {
++	case ERROR_ACCESS_DENIED: error = EACCES; break;
++	case ERROR_ACCOUNT_DISABLED: error = EACCES; break;
++	case ERROR_ACCOUNT_RESTRICTION: error = EACCES; break;
++	case ERROR_ALREADY_ASSIGNED: error = EBUSY; break;
++	case ERROR_ALREADY_EXISTS: error = EEXIST; break;
++	case ERROR_ARITHMETIC_OVERFLOW: error = ERANGE; break;
++	case ERROR_BAD_COMMAND: error = EIO; break;
++	case ERROR_BAD_DEVICE: error = ENODEV; break;
++	case ERROR_BAD_DRIVER_LEVEL: error = ENXIO; break;
++	case ERROR_BAD_EXE_FORMAT: error = ENOEXEC; break;
++	case ERROR_BAD_FORMAT: error = ENOEXEC; break;
++	case ERROR_BAD_LENGTH: error = EINVAL; break;
++	case ERROR_BAD_PATHNAME: error = ENOENT; break;
++	case ERROR_BAD_PIPE: error = EPIPE; break;
++	case ERROR_BAD_UNIT: error = ENODEV; break;
++	case ERROR_BAD_USERNAME: error = EINVAL; break;
++	case ERROR_BROKEN_PIPE: error = EPIPE; break;
++	case ERROR_BUFFER_OVERFLOW: error = ENAMETOOLONG; break;
++	case ERROR_BUSY: error = EBUSY; break;
++	case ERROR_BUSY_DRIVE: error = EBUSY; break;
++	case ERROR_CALL_NOT_IMPLEMENTED: error = ENOSYS; break;
++	case ERROR_CANNOT_MAKE: error = EACCES; break;
++	case ERROR_CANTOPEN: error = EIO; break;
++	case ERROR_CANTREAD: error = EIO; break;
++	case ERROR_CANTWRITE: error = EIO; break;
++	case ERROR_CRC: error = EIO; break;
++	case ERROR_CURRENT_DIRECTORY: error = EACCES; break;
++	case ERROR_DEVICE_IN_USE: error = EBUSY; break;
++	case ERROR_DEV_NOT_EXIST: error = ENODEV; break;
++	case ERROR_DIRECTORY: error = EINVAL; break;
++	case ERROR_DIR_NOT_EMPTY: error = ENOTEMPTY; break;
++	case ERROR_DISK_CHANGE: error = EIO; break;
++	case ERROR_DISK_FULL: error = ENOSPC; break;
++	case ERROR_DRIVE_LOCKED: error = EBUSY; break;
++	case ERROR_ENVVAR_NOT_FOUND: error = EINVAL; break;
++	case ERROR_EXE_MARKED_INVALID: error = ENOEXEC; break;
++	case ERROR_FILENAME_EXCED_RANGE: error = ENAMETOOLONG; break;
++	case ERROR_FILE_EXISTS: error = EEXIST; break;
++	case ERROR_FILE_INVALID: error = ENODEV; break;
++	case ERROR_FILE_NOT_FOUND: error = ENOENT; break;
++	case ERROR_GEN_FAILURE: error = EIO; break;
++	case ERROR_HANDLE_DISK_FULL: error = ENOSPC; break;
++	case ERROR_INSUFFICIENT_BUFFER: error = ENOMEM; break;
++	case ERROR_INVALID_ACCESS: error = EACCES; break;
++	case ERROR_INVALID_ADDRESS: error = EFAULT; break;
++	case ERROR_INVALID_BLOCK: error = EFAULT; break;
++	case ERROR_INVALID_DATA: error = EINVAL; break;
++	case ERROR_INVALID_DRIVE: error = ENODEV; break;
++	case ERROR_INVALID_EXE_SIGNATURE: error = ENOEXEC; break;
++	case ERROR_INVALID_FLAGS: error = EINVAL; break;
++	case ERROR_INVALID_FUNCTION: error = ENOSYS; break;
++	case ERROR_INVALID_HANDLE: error = EBADF; break;
++	case ERROR_INVALID_LOGON_HOURS: error = EACCES; break;
++	case ERROR_INVALID_NAME: error = EINVAL; break;
++	case ERROR_INVALID_OWNER: error = EINVAL; break;
++	case ERROR_INVALID_PARAMETER: error = EINVAL; break;
++	case ERROR_INVALID_PASSWORD: error = EPERM; break;
++	case ERROR_INVALID_PRIMARY_GROUP: error = EINVAL; break;
++	case ERROR_INVALID_SIGNAL_NUMBER: error = EINVAL; break;
++	case ERROR_INVALID_TARGET_HANDLE: error = EIO; break;
++	case ERROR_INVALID_WORKSTATION: error = EACCES; break;
++	case ERROR_IO_DEVICE: error = EIO; break;
++	case ERROR_IO_INCOMPLETE: error = EINTR; break;
++	case ERROR_LOCKED: error = EBUSY; break;
++	case ERROR_LOCK_VIOLATION: error = EACCES; break;
++	case ERROR_LOGON_FAILURE: error = EACCES; break;
++	case ERROR_MAPPED_ALIGNMENT: error = EINVAL; break;
++	case ERROR_META_EXPANSION_TOO_LONG: error = E2BIG; break;
++	case ERROR_MORE_DATA: error = EPIPE; break;
++	case ERROR_NEGATIVE_SEEK: error = ESPIPE; break;
++	case ERROR_NOACCESS: error = EFAULT; break;
++	case ERROR_NONE_MAPPED: error = EINVAL; break;
++	case ERROR_NOT_ENOUGH_MEMORY: error = ENOMEM; break;
++	case ERROR_NOT_READY: error = EAGAIN; break;
++	case ERROR_NOT_SAME_DEVICE: error = EXDEV; break;
++	case ERROR_NO_DATA: error = EPIPE; break;
++	case ERROR_NO_MORE_SEARCH_HANDLES: error = EIO; break;
++	case ERROR_NO_PROC_SLOTS: error = EAGAIN; break;
++	case ERROR_NO_SUCH_PRIVILEGE: error = EACCES; break;
++	case ERROR_OPEN_FAILED: error = EIO; break;
++	case ERROR_OPEN_FILES: error = EBUSY; break;
++	case ERROR_OPERATION_ABORTED: error = EINTR; break;
++	case ERROR_OUTOFMEMORY: error = ENOMEM; break;
++	case ERROR_PASSWORD_EXPIRED: error = EACCES; break;
++	case ERROR_PATH_BUSY: error = EBUSY; break;
++	case ERROR_PATH_NOT_FOUND: error = ENOENT; break;
++	case ERROR_PIPE_BUSY: error = EBUSY; break;
++	case ERROR_PIPE_CONNECTED: error = EPIPE; break;
++	case ERROR_PIPE_LISTENING: error = EPIPE; break;
++	case ERROR_PIPE_NOT_CONNECTED: error = EPIPE; break;
++	case ERROR_PRIVILEGE_NOT_HELD: error = EACCES; break;
++	case ERROR_READ_FAULT: error = EIO; break;
++	case ERROR_SEEK: error = EIO; break;
++	case ERROR_SEEK_ON_DEVICE: error = ESPIPE; break;
++	case ERROR_SHARING_BUFFER_EXCEEDED: error = ENFILE; break;
++	case ERROR_SHARING_VIOLATION: error = EACCES; break;
++	case ERROR_STACK_OVERFLOW: error = ENOMEM; break;
++	case ERROR_SWAPERROR: error = ENOENT; break;
++	case ERROR_TOO_MANY_MODULES: error = EMFILE; break;
++	case ERROR_TOO_MANY_OPEN_FILES: error = EMFILE; break;
++	case ERROR_UNRECOGNIZED_MEDIA: error = ENXIO; break;
++	case ERROR_UNRECOGNIZED_VOLUME: error = ENODEV; break;
++	case ERROR_WAIT_NO_CHILDREN: error = ECHILD; break;
++	case ERROR_WRITE_FAULT: error = EIO; break;
++	case ERROR_WRITE_PROTECT: error = EROFS; break;
++	}
++	return error;
++}
++
+  #undef open
+  int mingw_open (const char *filename, int oflags, ...)
+  {
+-- 
+1.6.2.rc2.971.g14d5
