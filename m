@@ -1,93 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: push.default, was Re: What's cooking in git.git (Mar 2009, #04;
- Sat, 14)
-Date: Tue, 17 Mar 2009 23:53:38 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903172350270.10279@pacific.mpi-cbg.de>
-References: <7vr60z8fkl.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0903171125420.6393@intel-tinevez-2-302> <20090318063053.6117@nanako3.lavabit.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [JGIT PATCH 3/4] Cap the number of open files in the WindowCache
+Date: Tue, 17 Mar 2009 23:59:32 +0100
+Message-ID: <200903172359.32595.robin.rosenberg.lists@dewire.com>
+References: <1237252570-8596-1-git-send-email-spearce@spearce.org> <1237252570-8596-3-git-send-email-spearce@spearce.org> <1237252570-8596-4-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Tue Mar 17 23:53:43 2009
+Content-Type: text/plain;
+  charset="iso-8859-6"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Mar 18 00:01:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjiAC-0002bK-PN
-	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 23:53:37 +0100
+	id 1LjiI0-00050m-9s
+	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 00:01:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754554AbZCQWvs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2009 18:51:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751855AbZCQWvs
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 18:51:48 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60111 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751270AbZCQWvr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2009 18:51:47 -0400
-Received: (qmail invoked by alias); 17 Mar 2009 22:51:44 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp011) with SMTP; 17 Mar 2009 23:51:44 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/bkW5HX3/bLTr0hb1yOgDr2dF6F7LDF0OPloVKjO
-	RqJUt8vC+GjCH2
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20090318063053.6117@nanako3.lavabit.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1752455AbZCQW7m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2009 18:59:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751628AbZCQW7l
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 18:59:41 -0400
+Received: from mail.dewire.com ([83.140.172.130]:18811 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751481AbZCQW7l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2009 18:59:41 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id A1182138AD5E;
+	Tue, 17 Mar 2009 23:59:34 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 9Syzn+lOuR0K; Tue, 17 Mar 2009 23:59:33 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.4])
+	by dewire.com (Postfix) with ESMTP id 757BC138AD53;
+	Tue, 17 Mar 2009 23:59:33 +0100 (CET)
+User-Agent: KMail/1.11.1 (Linux/2.6.27-12-generic; KDE/4.2.1; i686; ; )
+In-Reply-To: <1237252570-8596-4-git-send-email-spearce@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113534>
 
-Hi,
+tisdag 17 mars 2009 02:16:09 skrev "Shawn O. Pearce" <spearce@spearce.org>:
 
-On Wed, 18 Mar 2009, Nanako Shiraishi wrote:
+> If we detect a file open failure while opening a pack we halve
+> the number of permitted open files and try again, until we reach
+> a lower bound of 16 open files.  Needing to go lower may indicate
+> a file descriptor leak in the host application.
+...
+> +			TRY_OPEN: for (;;) {
+> +				try {
+> +					openFileCount++;
+> +					releaseMemory();
+> +					runClearedWindowQueue();
+> +					wp.openCount = 1;
+> +					wp.cacheOpen();
+> +					break;
+> +				} catch (IOException ioe) {
+> +					openFileCount--;
+> +					if ("Too many open files".equals(ioe.getMessage())
+> +							&& maxFileCount > 16) {
 
-> Quoting Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> 
-> > On Sat, 14 Mar 2009, Junio C Hamano wrote:
-> >
-> >> * fg/push-default (Wed Mar 11 23:01:45 2009 +0100) 1 commit
-> >>  - New config push.default to decide default behavior for push
-> >> 
-> >> Replaced the old series with the first step to allow a smooth 
-> >> transition. Some might argue that this should not give any warning 
-> >> but just give users this new configuration to play with first, and 
-> >> after we know we are going to switch default some day, start the 
-> >> warning.
-> >
-> > IIRC Steffen posted a patch series earlier, where he initialized 
-> > remote.origin.push upon clone (I am not sure if he provided a 
-> > corresponding patch for checkout --track), but personally, I think 
-> > that would be nicer than having a push.default.
-> 
-> Isn't recent trend to avoid such inconsistency between behavior in an 
-> existing repository and behavior in a newly created repository? For 
-> example, Jeff calls such inconsistency in
-> 
->   http://thread.gmane.org/gmane.comp.version-control.git/100339/focus=100433
-> 
-> as "this breaks in my repo, but when I make a test repo it works". Junio 
-> even called it 'madness' (^_^;)
+The output of getMessage isn't that simple to interpret. Here it is filename+" (Too many files open)",
+and on other platforms it is probably something else. This goes for the message part of most exceptions
+thrown from platform specific code like file i/o socket i/o etc. The type of exception is a FileNotFoundException,
+btw.
 
-My point is that it is _not_ an inconsistency.
-
-It has a default setting.  One that already is well established.  Push the 
-matching refs.
-
-But you can override it by setting the config variable.  Which is also 
-well established.
-
-The only thing Steffen's patches would have changed would be to set the 
-default differently now.
-
-Which is not that much of a 'madness'.
-
-Especially if you think about changing the default, which _will_ make for 
-angry users ("why did you change the default?  I _liked_ it!  Please 
-revert _now_!").
-
-Ciao,
-Dscho
+I wonder whether  your code works on any platform.
