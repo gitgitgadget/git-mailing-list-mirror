@@ -1,83 +1,95 @@
-From: Toby White <toby.o.h.white@googlemail.com>
-Subject: Mirroring repository state, with branches and submodules.
-Date: Tue, 17 Mar 2009 15:21:40 +0000
-Message-ID: <623D3837-E899-49AF-9A37-F667A311EE58@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
+From: =?iso-8859-1?q?Bj=F6rn_Hendriks?= <bjoern01@nurfuerspam.de>
+Subject: Generate version file by hooks
+Date: Tue, 17 Mar 2009 16:26:00 +0100
+Message-ID: <200903171626.01102.bjoern01@nurfuerspam.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 17 16:23:41 2009
+X-From: git-owner@vger.kernel.org Tue Mar 17 16:28:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ljb8j-0006H1-Vi
-	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 16:23:38 +0100
+	id 1LjbCc-00082L-4t
+	for gcvg-git-2@gmane.org; Tue, 17 Mar 2009 16:27:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752955AbZCQPWA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2009 11:22:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754287AbZCQPWA
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 11:22:00 -0400
-Received: from nf-out-0910.google.com ([64.233.182.184]:47369 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754050AbZCQPV7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2009 11:21:59 -0400
-Received: by nf-out-0910.google.com with SMTP id d21so13586nfb.21
-        for <git@vger.kernel.org>; Tue, 17 Mar 2009 08:21:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to
-         :content-type:content-transfer-encoding:mime-version:subject:date
-         :x-mailer;
-        bh=Hc39YurirFZHUv1n36a9AcGeNurutYXYM+LjYLuD29Q=;
-        b=hOCUJe9dF67wGdZxsul6TxIBcXbO3gg7MFciusyE34sKLxPrl6/aidhsQlSEMT7flf
-         Qt+mbZpJ2GCIXSo1sLfxrb1tIAfCSrPNdc3wUXsOjMAWQ1gkyw/cJ+ijJrlL28Ts9ZWu
-         C4Ak8/int9yjpoa9zgco2lFspKvwx/VIVBJNQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:from:to:content-type:content-transfer-encoding
-         :mime-version:subject:date:x-mailer;
-        b=tMbFNMi6tx92xEUXcKHmdIfiBGd3v1giBqgSHu3R1zMTg6iGf/eTeqkGwnj61Nfybs
-         b0uHRi5i3D+QppYz3dJ8pr7AcAviKLTuwOeRUtDeCtuh2/vJThPwXyeF0rt74W9EI5px
-         9ax6+aFx6vQcMmjJ8PdjOFSwpPsUn9CJDQQ54=
-Received: by 10.216.0.79 with SMTP id 57mr91851wea.48.1237303316711;
-        Tue, 17 Mar 2009 08:21:56 -0700 (PDT)
-Received: from ?192.168.1.102? ([213.104.11.10])
-        by mx.google.com with ESMTPS id d23sm6163295nfh.39.2009.03.17.08.21.53
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 17 Mar 2009 08:21:55 -0700 (PDT)
-X-Mailer: Apple Mail (2.930.3)
+	id S1752365AbZCQP0K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Mar 2009 11:26:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751851AbZCQP0H
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 11:26:07 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33721 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751915AbZCQP0G convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Mar 2009 11:26:06 -0400
+Received: (qmail invoked by alias); 17 Mar 2009 15:26:02 -0000
+Received: from malvasia.ibr.cs.tu-bs.de (EHLO malvasia.ibr.cs.tu-bs.de) [134.169.34.62]
+  by mail.gmx.net (mp068) with SMTP; 17 Mar 2009 16:26:02 +0100
+X-Authenticated: #1618055
+X-Provags-ID: V01U2FsdGVkX1882ycz8fs83zBrp75RSpwVuqyECPg3zbywCqH2Za
+	/UoH8neQdtsi2M
+User-Agent: KMail/1.9.10
+Content-Disposition: inline
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6899999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113480>
 
-I have a short script which does the following for a remote git  
-rpository:
 
-Clones it (checking out a working tree)
-Makes tracking local branches for all remote branches
-Init/updates all submodules.
+Hello,
 
-This gives me an up-to-date mirror of a remote repository. I treat  
-this as essentially read-only.
+I'd like to put the SHA1 of the current commit into a source file so th=
+at my=20
+program can further process it -- put it into a log file for example.
 
-What I now want to do is have some command which will update this  
-local mirror to reflect exactly the state of the remote mirror;
-even when the remote mirror may have rebased history.
+My idea is to write a script which reads the SHA1 of the current commit=
+ with=20
+the call
 
-So far, I'm doing the following:
+git log -1 --pretty=3Dformat:"%H"
 
-git fetch
-for BRANCH in $(git branch -r | cut -d / -f 2); do
-   git checkout $BRANCH
-   git reset --hard origin/$BRANCH
-done
-git submodule update --init
+(git-describe is not suitable for me) and then generates the wanted sou=
+rce=20
+file.  To avoid accidentally committing that file I will put its name=20
+into .git/info/exclude.
 
-but I'm not sure if that's actually the right way to do it, or if I'm  
-missing any corner cases. Am I safe to use it?
+I already put the call to my experimental generator script into the hoo=
+ks=20
+post-checkout and post-commit, so it will be called if I do a commit or=
+ a=20
+checkout of another branch.
 
-Thanks,
-Toby
+My problem is, that my script won't be called if I do a git-pull, a git=
+-reset=20
+or a git-merge without conflicts resulting in workfiles of a new commit=
+=2E =20
+Maybe there are more git calls which change the current commit I haven'=
+t=20
+thought of yet?
+
+So my question: How to make git call my script automatically in all cas=
+es=20
+where git changes the currently checked out commit?
+
+Maybe there are different solutions to put the current SHA1 into a sour=
+ce=20
+file?
+
+Of course I know that it's still possible to change the working files w=
+ithout=20
+git's notice resulting in an inconsistent commit SHA1.  But before doin=
+g any=20
+test runs I normally check with git-status that all files are in a comm=
+itted=20
+state but that won't reveal if my generated version file is not up to d=
+ate.
+
+I use git version 1.5.4.3 and would like to stick to it for some reason=
+ if=20
+possible.
+
+Thanks for your help
+Bj=F6rn
