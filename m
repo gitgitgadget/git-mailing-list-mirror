@@ -1,66 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Rebasing local patches
-Date: Wed, 18 Mar 2009 16:48:15 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903181647540.10279@pacific.mpi-cbg.de>
-References: <49B237E2.3080606@morey-chaisemartin.com> <alpine.DEB.1.00.0903071229220.10279@pacific.mpi-cbg.de> <49BA0DBB.7000700@morey-chaisemartin.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: GitTogether '09
+Date: Wed, 18 Mar 2009 08:55:32 -0700
+Message-ID: <20090318155532.GE23521@spearce.org>
+References: <20090310001613.GL11989@spearce.org> <200903180651.33381.chriscool@tuxfamily.org> <fabb9a1e0903172346j74b9992r1b0a8d6eb523103c@mail.gmail.com> <200903180805.32440.chriscool@tuxfamily.org> <fabb9a1e0903180254u5569e9f5u5e1aa43fa2d1d178@mail.gmail.com> <20090318143532.GD23521@spearce.org> <alpine.DEB.1.00.0903181551380.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Nicolas Morey-Chaisemartin <devel@morey-chaisemartin.com>
-X-From: git-owner@vger.kernel.org Wed Mar 18 16:48:35 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	git@vger.kernel.org, gittogether@lists.utsl.gen.nz
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Mar 18 16:58:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ljxzw-0001VZ-AK
-	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 16:48:04 +0100
+	id 1Ljy8e-00067f-8l
+	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 16:57:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752423AbZCRPqY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Mar 2009 11:46:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751339AbZCRPqX
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 11:46:23 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47948 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751172AbZCRPqX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Mar 2009 11:46:23 -0400
-Received: (qmail invoked by alias); 18 Mar 2009 15:46:20 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp071) with SMTP; 18 Mar 2009 16:46:20 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/BqYhRm3DB+RYXEnugFIIsakT5liomwhsPOY8Beo
-	HXSaObCycto/n6
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <49BA0DBB.7000700@morey-chaisemartin.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.68
+	id S1751592AbZCRPzf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Mar 2009 11:55:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751533AbZCRPze
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 11:55:34 -0400
+Received: from george.spearce.org ([209.20.77.23]:59412 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751361AbZCRPze (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Mar 2009 11:55:34 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id B06A138221; Wed, 18 Mar 2009 15:55:32 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0903181551380.10279@pacific.mpi-cbg.de>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113622>
 
-Hi,
-
-On Fri, 13 Mar 2009, Nicolas Morey-Chaisemartin wrote:
-
-> >> I noticed that when the branch was rebased on the centralized and 
-> >> repo and origin/our_patches is up-to-date in mine.
-> >>
-> >> If I checkout another branch and then ckecout our_branches, I got a 
-> >> message telling my our_patches and the one from the server have 
-> >> diverged (or you are two commits behind...).
-> >>
-> >> How can you get this info directly without leaving/rejoining your 
-> >> branch?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Wed, 18 Mar 2009, Shawn O. Pearce wrote:
 > > 
-> > It is also part of "git status"' output.
+> > Did Google do two international tickets last year for Git?
 > 
-> Is there some option to just get the status of HEAD against tracked 
-> branch and not the index status? I guess I could do an alias but an 
-> option would be nicer ;)
+> I do not think so.  Mugwump got the international airplane ticket, AFAIR, 
+> and warthog the local "ticket".
 
-Just try "git checkout".
+Oh, so it was two tickets.
 
-Ciao,
-Dscho
+Mugwump and Sverre flew on Google's dime.  The reason Sverre was
+invited was his already heavy involvement with Melange.
+
+Google initially asked me to spend our international ticket on
+Sverre only, but I talked them into including Mugwump too once I
+pointed out Sverre was attending for Google's own selfish reasons
+(Melange) and not to represent Git.
+
+warthog9 is a local.  Local mentors were accepted en-masse near
+the end of registration when a lot of orgs had open mentor slots.
+
+You flew on your own dime.  I'm local.  David also managed to fly
+on Google's dime, but out of his manager's business travel budget
+and not the Summer of Code budget.
+
+-- 
+Shawn.
