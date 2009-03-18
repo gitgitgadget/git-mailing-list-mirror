@@ -1,58 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Introduce %<branch> as shortcut to the tracked branch
-Date: Wed, 18 Mar 2009 15:34:26 -0700
-Message-ID: <7vr60ubgul.fsf@gitster.siamese.dyndns.org>
-References: <200903181448.50706.agruen@suse.de>
- <20090318182603.GM8940@machine.or.cz>
- <alpine.DEB.1.00.0903182210310.10279@pacific.mpi-cbg.de>
- <alpine.DEB.1.00.0903182245280.10279@pacific.mpi-cbg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] Introduce %<branch> as shortcut to the tracked
+ branch
+Date: Wed, 18 Mar 2009 23:43:40 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903182343200.10279@pacific.mpi-cbg.de>
+References: <200903181448.50706.agruen@suse.de> <alpine.DEB.1.00.0903182210310.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903182245280.10279@pacific.mpi-cbg.de> <200903182258.31113.agruen@suse.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, Andreas Gruenbacher <agruen@suse.de>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Mar 18 23:36:09 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: Andreas Gruenbacher <agruen@suse.de>
+X-From: git-owner@vger.kernel.org Wed Mar 18 23:44:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lk4Mp-0004R0-L2
-	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 23:36:08 +0100
+	id 1Lk4VE-0007SY-Tg
+	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 23:44:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754481AbZCRWeh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Mar 2009 18:34:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753646AbZCRWeh
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 18:34:37 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:43871 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753371AbZCRWeg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Mar 2009 18:34:36 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B0EDC7080;
-	Wed, 18 Mar 2009 18:34:34 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id ED3E97078; Wed,
- 18 Mar 2009 18:34:29 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0903182245280.10279@pacific.mpi-cbg.de>
- (Johannes Schindelin's message of "Wed, 18 Mar 2009 22:46:22 +0100 (CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F4D055EE-140C-11DE-8983-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+	id S1759766AbZCRWlt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Mar 2009 18:41:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759741AbZCRWls
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 18:41:48 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56633 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759791AbZCRWlr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Mar 2009 18:41:47 -0400
+Received: (qmail invoked by alias); 18 Mar 2009 22:41:44 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp047) with SMTP; 18 Mar 2009 23:41:44 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19xbzRBp9Zxy5h28FQILsZvb9rq+RYbSUjWFsTOsm
+	TZzVSpSWAb7b/I
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <200903182258.31113.agruen@suse.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113695>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi
 
-> Suggested by Pasky.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Wed, 18 Mar 2009, Andreas Gruenbacher wrote:
 
-In the longer term who suggested matters much less than why such a feature
-is desirable, how it is used, and without it what is impossible and/or
-cumbersome.  What's the motivation behind this?
+> On Wednesday, 18 March 2009 22:46:22 Johannes Schindelin wrote:
+> > Suggested by Pasky.
+> 
+> Works here now. Thanks a lot!
 
-You do not have to explain it to me, but you should explain it to the
-history that records this commit, and to the users who read doccos.
+You're welcome!  Was fun, too...
+
+Ciao,
+Dscho
