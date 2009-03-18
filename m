@@ -1,69 +1,120 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] gc --aggressive: make it really aggressive
-Date: Wed, 18 Mar 2009 17:01:31 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903181657180.10279@pacific.mpi-cbg.de>
-References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com>  <20071205.202047.58135920.davem@davemloft.net>  <4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com>  <20071205.204848.227521641.davem@davemloft.net>
- <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com> <alpine.LFD.0.9999.0712052132450.13796@woody.linux-foundation.org> <Pine.LNX.4.64.0712061201580.27959@racer.site>
+From: Stephen Bannasch <stephen.bannasch@deanbrook.org>
+Subject: Re: [EGIT RFC PATCH(was Re: egit problem with sym linked eclipse project dirs)] Add some support for symlinked
+ projects.
+Date: Wed, 18 Mar 2009 12:02:15 -0400
+Message-ID: <p06240820c5e6c6a7d62a@[63.138.152.192]>
+References: <p0624081cc5928e2885fd@[192.168.1.114]> <200903112317.41380.robin.rosenberg.lists@dewire.com>
+ <p06240814c5de27cbf520@[63.138.152.192]> <200903120756.07853.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 18 17:02:00 2009
+Content-Type: text/plain; charset="us-ascii" ; format="flowed"
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Wed Mar 18 17:04:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjyDG-0008Ii-3D
-	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 17:01:50 +0100
+	id 1LjyFM-0000hX-B8
+	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 17:04:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753425AbZCRP7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Mar 2009 11:59:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752685AbZCRP7k
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 11:59:40 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42599 "HELO mail.gmx.net"
+	id S1753894AbZCRQCb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Mar 2009 12:02:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753654AbZCRQCa
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 12:02:30 -0400
+Received: from deanbrook.org ([72.52.70.192]:35768 "HELO deanbrook.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751592AbZCRP7j (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Mar 2009 11:59:39 -0400
-Received: (qmail invoked by alias); 18 Mar 2009 15:59:36 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp017) with SMTP; 18 Mar 2009 16:59:36 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+4CE8bZzO4gOviJgr09Gv5818Itpq2d3WJsUMOFV
-	UK/zgsq9jW7ZmG
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <Pine.LNX.4.64.0712061201580.27959@racer.site>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.65
+	id S1753563AbZCRQC3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Mar 2009 12:02:29 -0400
+Received: from ::ffff:70.109.253.176 ([70.109.253.176]) by deanbrook.org for <git@vger.kernel.org>; Wed, 18 Mar 2009 09:02:24 -0700
+In-Reply-To: <200903120756.07853.robin.rosenberg.lists@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113624>
 
-Hi,
+At 7:56 AM +0100 3/12/09, Robin Rosenberg wrote:
+>torsdag 12 mars 2009 03:57:09 skrev Stephen Bannasch 
+><stephen.bannasch@deanbrook.org>:
+>>  OK ... I'm a bit confused now because I no longer have Git listed as
+>>  a repository type for Team Sharing.
+>>
+>  > I deleted the existing org.spearce.* eclipse plugins
 
-On Thu, 6 Dec 2007, Johannes Schindelin wrote:
+...
 
-> 
-> The default was not to change the window or depth at all.  As suggested
-> by Jon Smirl, Linus Torvalds and others, default to
-> 
-> 	--window=250 --depth=250
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
+>  > The new plugins are there:
+>>
+>>     [eclipse]$ ls plugins/org.spearce.*
+>>     plugins/org.spearce.egit.core.test_0.4.0.200903112237.jar
+>>     plugins/org.spearce.egit_0.4.0.200903112237.jar
+>>     plugins/org.spearce.egit.core_0.4.0.200903112237.jar
+>>     plugins/org.spearce.jgit_0.4.0.200903112237.jar
+>>     plugins/org.spearce.egit.ui_0.4.0.200903112237.jar
+>>
+>>  Quit and restarted Eclipse.
+>>
+>>  When I select a project with an existing git repository and try to
+>>  enable team/sharing only CVS and SVN are listed.
+>
+>You don't have the a matching feature. That could be it, but I'm not sure.
+>You can also try starting eclipse witth the -clean switch. Looking at the
+><workspace>/.metadata/.log could also give you some hints.
 
-Guess what.  This is still unresolved, and yet somebody else had to be 
-bitten by 'git gc --aggressive' being everything but aggressive.
+I figured out the problem I had when testing the patched egit plugin. 
+If I had installed egit from the update site I had to do more than 
+just delete the jars -- I had to delete the whole feature from within 
+Eclipse -- and then install the new plugin built from source.
 
-So...  I think it is high time to resolve the issue, either by applying 
-this patch with a delay of over one year, or by the pack wizards trying to 
-implement that 'never fall back to a worse delta' idea mentioned in this 
-thread.
+In figuring this out I ended up testing the original problem with the 
+master branch from earlier today and didn't see the issue I 
+originally reported.
 
-Although I suggest, really, that implying --depth=250 --window=250 (unless 
-overridden by the config) with --aggressive is not at all wrong.
+Did you already integrate the experimental patch?
 
-Ciao,
-Dscho
+Here's a documentation patch:
+
+ From feb1ae0ccf7f671506853f4f49e9041950404b3d Mon Sep 17 00:00:00 2001
+From: Stephen Bannasch <stephen.bannasch@gmail.com>
+Date: Wed, 18 Mar 2009 11:51:56 -0400
+Subject: [PATCH] clarify how to delete egit plugin when installing new build
+
+---
+  EGIT_INSTALL |   11 ++++++++++-
+  1 files changed, 10 insertions(+), 1 deletions(-)
+
+diff --git a/EGIT_INSTALL b/EGIT_INSTALL
+index 3a8f249..3a9c209 100644
+--- a/EGIT_INSTALL
++++ b/EGIT_INSTALL
+@@ -21,7 +21,16 @@ things.
+
+  INSTALLATION INSTRUCTIONS
+
+-- Delete any old versions of the plugin in the 
+<eclipse-path>/plugins/org.spearce.*
++First remove any existing egit plugin.
++
++If you have installed egit from the egit update site 
+http://www.jgit.org/update-site:
++
++  delete the plugin from Software Updates and Add-ons from within  Eclipse
++
++If you have installed the plugin from source:
++
++  delete any old versions of the plugin jars in the 
+<eclipse-path>/plugins/org.spearce.*
++
+  - Start eclipse
+  - Make sure a recent JDK 1.5.0_11 or JDK 1.6.x is among your 
+installed JRE's. Which
+    one is the default should not matter but Java 6 is recommended.
+--
+1.6.1.2
+
+
+>For debugging/testing in general it is often easier to launch Eclipse from
+>eclipse (Run As) without reinstalling.
+
+As part of this test I need to switch to another workspace and I 
+couldn't get that working with "Run As".
