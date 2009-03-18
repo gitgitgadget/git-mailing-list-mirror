@@ -1,101 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: push.default, was Re: What's cooking in git.git (Mar 2009, #04;
- Sat, 14)
-Date: Tue, 17 Mar 2009 16:47:20 -0700
-Message-ID: <7vab7jpv93.fsf@gitster.siamese.dyndns.org>
-References: <7vr60z8fkl.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0903171125420.6393@intel-tinevez-2-302>
- <20090318063053.6117@nanako3.lavabit.com>
- <alpine.DEB.1.00.0903172350270.10279@pacific.mpi-cbg.de>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [JGIT PATCH 3/4] Cap the number of open files in the WindowCache
+Date: Wed, 18 Mar 2009 01:09:39 +0100
+Message-ID: <200903180109.40074.robin.rosenberg.lists@dewire.com>
+References: <1237252570-8596-1-git-send-email-spearce@spearce.org> <200903172359.32595.robin.rosenberg.lists@dewire.com> <20090317230803.GA23521@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Mar 18 00:49:07 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Mar 18 01:11:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ljj1q-0001oi-Us
-	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 00:49:03 +0100
+	id 1LjjNO-0007tE-DA
+	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 01:11:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752070AbZCQXr2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2009 19:47:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751450AbZCQXr2
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 19:47:28 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51741 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751449AbZCQXr1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2009 19:47:27 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 0A9E37E9B;
-	Tue, 17 Mar 2009 19:47:26 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 29C4E7E99; Tue,
- 17 Mar 2009 19:47:22 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0903172350270.10279@pacific.mpi-cbg.de>
- (Johannes Schindelin's message of "Tue, 17 Mar 2009 23:53:38 +0100 (CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F7E8EEEA-134D-11DE-9033-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+	id S1753646AbZCRAJu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2009 20:09:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753392AbZCRAJt
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 20:09:49 -0400
+Received: from mail.dewire.com ([83.140.172.130]:19150 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752365AbZCRAJs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2009 20:09:48 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 490E8138AD50;
+	Wed, 18 Mar 2009 01:09:43 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id lEF73mbRC4Us; Wed, 18 Mar 2009 01:09:41 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.4])
+	by dewire.com (Postfix) with ESMTP id 4266D80289C;
+	Wed, 18 Mar 2009 01:09:41 +0100 (CET)
+User-Agent: KMail/1.11.1 (Linux/2.6.27-12-generic; KDE/4.2.1; i686; ; )
+In-Reply-To: <20090317230803.GA23521@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113540>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+onsdag 18 mars 2009 00:08:03 skrev "Shawn O. Pearce" <spearce@spearce.org>:
+> Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+> > tisdag 17 mars 2009 02:16:09 skrev "Shawn O. Pearce" <spearce@spearce.org>:
+> > 
+> > > If we detect a file open failure while opening a pack we halve
+> > > the number of permitted open files and try again, [...]
+> > 
+> > The output of getMessage isn't that simple to interpret. Here it is filename+" (Too many files open)",
+> > and on other platforms it is probably something else. This goes for the message part of most exceptions
+> > thrown from platform specific code like file i/o socket i/o etc. The type of exception is a FileNotFoundException,
+> > btw.
+> > 
+> > I wonder whether  your code works on any platform.
+> 
+> Arrrgh.
+>  
+> OK.  Maybe scrap that part of the patch then?
+Yes, I think so, inless you want to try something as ugly as getMessage().toLower().indexof("(too many")? Not
+sure what it looks like in Windows or OSX. We know from the JDK source it's filename + "(" + reason +")" and
+the problem here is the reason part.
 
-> Hi,
->
-> On Wed, 18 Mar 2009, Nanako Shiraishi wrote:
->
->> Quoting Johannes Schindelin <Johannes.Schindelin@gmx.de>:
->> 
->> > On Sat, 14 Mar 2009, Junio C Hamano wrote:
->> >
->> >> * fg/push-default (Wed Mar 11 23:01:45 2009 +0100) 1 commit
->> >>  - New config push.default to decide default behavior for push
->> >> 
->> >> Replaced the old series with the first step to allow a smooth 
->> >> transition. Some might argue that this should not give any warning 
->> >> but just give users this new configuration to play with first, and 
->> >> after we know we are going to switch default some day, start the 
->> >> warning.
->> >
->> > IIRC Steffen posted a patch series earlier, where he initialized 
->> > remote.origin.push upon clone (I am not sure if he provided a 
->> > corresponding patch for checkout --track), but personally, I think 
->> > that would be nicer than having a push.default.
->> 
->> Isn't recent trend to avoid such inconsistency between behavior in an 
->> existing repository and behavior in a newly created repository? For 
->> example, Jeff calls such inconsistency in
->> 
->>   http://thread.gmane.org/gmane.comp.version-control.git/100339/focus=100433
->> 
->> as "this breaks in my repo, but when I make a test repo it works". Junio 
->> even called it 'madness' (^_^;)
->
-> My point is that it is _not_ an inconsistency.
->
-> It has a default setting.  One that already is well established.  Push the 
-> matching refs.
->
-> But you can override it by setting the config variable.  Which is also 
-> well established.
->
-> The only thing Steffen's patches would have changed would be to set the 
-> default differently now.
->
-> Which is not that much of a 'madness'.
->
-> Especially if you think about changing the default, which _will_ make for 
-> angry users ("why did you change the default?  I _liked_ it!  Please 
-> revert _now_!").
+> Its too bad they don't have a specific type of exception for this,
+FileNotFoundException is a little more specific. Maybe in combinatikon with a file.exists() and file.canRead test...
+(thinking loud now)
 
-I cloned my old project to my new machine with a recent git and it behaves
-differently.  Why did you change the default "git clone" creates, without
-telling me?
+> nor do they have a way to hold onto file descriptors under a type
+> like a SoftReference where the runtime can whack them if you have
+> too many.
 
-Sounds like a huge inconsistency to me.
+The problem is that it's not connected to file descriptors but to memory. Doing a GC on filenotfoundexception
+(here) could help here if one uses soft reference, or one could prune the cache manually. The parameter
+could also be a 
+
+> 
+> I guess that's why Hadoop HBase just tells you to up your fd ulimit
+> to 32767.  :-)
+
+Yeah, with gigabytes of memory that might not consume too much resources anyway.
+
+-- robin
