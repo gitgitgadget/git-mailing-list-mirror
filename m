@@ -1,115 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v2] Introduce %<branch> as shortcut to the tracked branch
-Date: Wed, 18 Mar 2009 22:46:22 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903182245280.10279@pacific.mpi-cbg.de>
-References: <200903181448.50706.agruen@suse.de> <20090318182603.GM8940@machine.or.cz> <alpine.DEB.1.00.0903182210310.10279@pacific.mpi-cbg.de>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: Missing trailing newline with git log --pretty=format
+Date: Wed, 18 Mar 2009 22:56:43 +0100
+Message-ID: <200903182256.43817.markus.heidelberg@web.de>
+References: <200903182223.58800.agruen@suse.de>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andreas Gruenbacher <agruen@suse.de>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed Mar 18 22:46:39 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Andreas Gruenbacher <agruen@suse.de>
+X-From: git-owner@vger.kernel.org Wed Mar 18 23:00:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lk3aq-00038E-Ci
-	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 22:46:32 +0100
+	id 1Lk3o8-00087M-FP
+	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 23:00:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758782AbZCRVob (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Mar 2009 17:44:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758702AbZCRVoa
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 17:44:30 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50813 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758749AbZCRVo3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Mar 2009 17:44:29 -0400
-Received: (qmail invoked by alias); 18 Mar 2009 21:44:26 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp003) with SMTP; 18 Mar 2009 22:44:26 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/VliVu4Y/VMjo97ABohShL6ERarHDgBvHhYfac/v
-	t+ZcjudXpq4KZ0
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.DEB.1.00.0903182210310.10279@pacific.mpi-cbg.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5
+	id S1755368AbZCRV5R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Mar 2009 17:57:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760892AbZCRV5P
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 17:57:15 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:57608 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760910AbZCRV5O (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Mar 2009 17:57:14 -0400
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 70816FEB42BA;
+	Wed, 18 Mar 2009 22:56:44 +0100 (CET)
+Received: from [89.59.91.167] (helo=.)
+	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1Lk3ki-0001sV-00; Wed, 18 Mar 2009 22:56:44 +0100
+User-Agent: KMail/1.9.9
+In-Reply-To: <200903182223.58800.agruen@suse.de>
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX1/PfdPPvQBy0+hRtbbBEA8HTfepIQBpuDUJDsHl
+	UMLTB8/0aFZ0HSHaU8jY6AhKVRJPWdpDD3F/CGqRXe9/QmkKvm
+	cRyauN8fExthhgUffEGw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113686>
 
+Andreas Gruenbacher, 18.03.2009:
+> Hello,
+> 
+> with the latest version of git from right now (e986ceb):
+> 
+> While trying to get a reverse list of commit ids, I noticed that git log 
+> prints newlines between commits, but not at the end. This results in two 
+> joined lines with:
+> 
+> 	$ git log --pretty=format:%h HEAD^^..HEAD | tac
+> 	aab3b9a7d4e3a7
+> 	e986ceb
+> 
+> Any chance of getting this fixed?
 
-Suggested by Pasky.
+Use tformat instead of format. Or better for a script use
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+	$ git rev-list HEAD^^..HEAD
 
-	Arjen reminded me on IRC that I worked off of dscho/master instead 
-	of junio/next...  D'oh.
+But somehow --abbrev or --abbrev-commit don't work. Am I doing
+something wrong?
 
- sha1_name.c |   21 +++++++++++++++++----
- 1 files changed, 17 insertions(+), 4 deletions(-)
-
-diff --git a/sha1_name.c b/sha1_name.c
-index 2f75179..cb4168d 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -5,6 +5,7 @@
- #include "blob.h"
- #include "tree-walk.h"
- #include "refs.h"
-+#include "remote.h"
- 
- static int find_short_object_filename(int len, const char *name, unsigned char *sha1)
- {
-@@ -240,9 +241,10 @@ static int ambiguous_path(const char *path, int len)
- 
- /*
-  * *string and *len will only be substituted, and *string returned (for
-- * later free()ing) if the string passed in is of the form @{-<n>}.
-+ * later free()ing) if the string passed in is of the form @{-<n>} or
-+ * of the form %<branch>.
-  */
--static char *substitute_nth_last_branch(const char **string, int *len)
-+static char *substitute_branch(const char **string, int *len)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	int ret = interpret_nth_last_branch(*string, &buf);
-@@ -254,12 +256,23 @@ static char *substitute_nth_last_branch(const char **string, int *len)
- 		return (char *)*string;
- 	}
- 
-+	if (**string == '%') {
-+		struct branch *tracking = branch_get((*string)[1] ?
-+			(*string) + 1 : NULL);
-+
-+		if (tracking->merge && tracking->merge[0]->dst) {
-+			*string = xstrdup(tracking->merge[0]->dst);
-+			*len = strlen(*string);
-+			return (char *)*string;
-+		}
-+	}
-+
- 	return NULL;
- }
- 
- int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
- {
--	char *last_branch = substitute_nth_last_branch(&str, &len);
-+	char *last_branch = substitute_branch(&str, &len);
- 	const char **p, *r;
- 	int refs_found = 0;
- 
-@@ -288,7 +301,7 @@ int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
- 
- int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
- {
--	char *last_branch = substitute_nth_last_branch(&str, &len);
-+	char *last_branch = substitute_branch(&str, &len);
- 	const char **p;
- 	int logs_found = 0;
- 
--- 
-1.6.2.1.422.g885ce.dirty
+Markus
