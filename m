@@ -1,98 +1,56 @@
-From: Sam Hocevar <sam@zoy.org>
-Subject: [PATCH] git-gui: minor spelling fix and string factorisation.
-Date: Wed, 18 Mar 2009 22:22:30 +0100
-Message-ID: <20090318212230.GA2511@zoy.org>
+From: Andreas Gruenbacher <agruen@suse.de>
+Subject: Re: [PATCH] Introduce %<branch> as shortcut to the tracked branch
+Date: Wed, 18 Mar 2009 22:41:44 +0100
+Organization: SUSE Labs / Novell
+Message-ID: <200903182241.44388.agruen@suse.de>
+References: <200903181448.50706.agruen@suse.de> <20090318182603.GM8940@machine.or.cz> <alpine.DEB.1.00.0903182210310.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 18 22:31:33 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Mar 18 22:45:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lk3MK-0005kJ-Ju
-	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 22:31:33 +0100
+	id 1Lk3ZG-0002Ts-0X
+	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 22:44:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753315AbZCRVaB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Mar 2009 17:30:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752423AbZCRVaA
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 17:30:00 -0400
-Received: from poulet.zoy.org ([80.65.228.129]:48290 "EHLO poulet.zoy.org"
+	id S1757574AbZCRVmz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Mar 2009 17:42:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757118AbZCRVmy
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 17:42:54 -0400
+Received: from ns2.suse.de ([195.135.220.15]:34400 "EHLO mx2.suse.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751472AbZCRV37 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Mar 2009 17:29:59 -0400
-Received: from poukram (localhost [127.0.0.1])
-	by poulet.zoy.org (Postfix) with ESMTP id B765012042F
-	for <git@vger.kernel.org>; Wed, 18 Mar 2009 22:29:57 +0100 (CET)
-Received: by poukram (Postfix, from userid 1000)
-	id 7ABE37FA2B; Wed, 18 Mar 2009 22:22:30 +0100 (CET)
+	id S1757435AbZCRVmw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Mar 2009 17:42:52 -0400
+Received: from Relay2.suse.de (mail2.suse.de [195.135.221.8])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx2.suse.de (Postfix) with ESMTP id 7D2298730A;
+	Wed, 18 Mar 2009 22:42:50 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <alpine.DEB.1.00.0903182210310.10279@pacific.mpi-cbg.de>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113684>
 
-Properly spell "successful" and slightly rewrite a couple of strings
-that actually say the same thing in order to reduce translation work.
+On Wednesday, 18 March 2009 22:12:19 Johannes Schindelin wrote:
+> Suggested by Pasky.
 
-Signed-off-by: Sam Hocevar <sam@zoy.org>
----
- lib/branch_delete.tcl        |    4 ++--
- lib/remote_branch_delete.tcl |    4 +---
- lib/tools.tcl                |    2 +-
- 3 files changed, 4 insertions(+), 6 deletions(-)
+Doesn't work here with git e986ceb, unfortunately. On branch master which is 
+tracking origin/master, I get this:
 
-diff --git a/lib/branch_delete.tcl b/lib/branch_delete.tcl
-index ef1930b..20d5e42 100644
---- a/lib/branch_delete.tcl
-+++ b/lib/branch_delete.tcl
-@@ -51,7 +51,7 @@ constructor dialog {} {
- 		$w.check \
- 		[mc "Delete Only If Merged Into"] \
- 		]
--	$w_check none [mc "Always (Do not perform merge test.)"]
-+	$w_check none [mc "Always (Do not perform merge checks)"]
- 	pack $w.check -anchor nw -fill x -pady 5 -padx 5
- 
- 	foreach h [load_all_heads] {
-@@ -112,7 +112,7 @@ method _delete {} {
- 	}
- 	if {$to_delete eq {}} return
- 	if {$check_cmt eq {}} {
--		set msg [mc "Recovering deleted branches is difficult. \n\n Delete the selected branches?"]
-+		set msg [mc "Recovering deleted branches is difficult.\n\nDelete the selected branches?"]
- 		if {[tk_messageBox \
- 			-icon warning \
- 			-type yesno \
-diff --git a/lib/remote_branch_delete.tcl b/lib/remote_branch_delete.tcl
-index 89eb0f7..4e02fc0 100644
---- a/lib/remote_branch_delete.tcl
-+++ b/lib/remote_branch_delete.tcl
-@@ -213,9 +213,7 @@ method _delete {} {
- 		-type yesno \
- 		-title [wm title $w] \
- 		-parent $w \
--		-message [mc "Recovering deleted branches is difficult.
--
--Delete the selected branches?"]] ne yes} {
-+		-message [mc "Recovering deleted branches is difficult.\n\nDelete the selected branches?"]] ne yes} {
- 		return
- 	}
- 
-diff --git a/lib/tools.tcl b/lib/tools.tcl
-index 6ae63b6..95e6e55 100644
---- a/lib/tools.tcl
-+++ b/lib/tools.tcl
-@@ -146,7 +146,7 @@ proc tools_complete {fullname w {ok 1}} {
- 	}
- 
- 	if {$ok} {
--		set msg [mc "Tool completed succesfully: %s" $fullname]
-+		set msg [mc "Tool completed successfully: %s" $fullname]
- 	} else {
- 		set msg [mc "Tool failed: %s" $fullname]
- 	}
--- 
-1.6.2
+	$ git log %..
+	fatal: ambiguous argument '%..': unknown revision or path not in the
+		working tree.
+
+(There also is a trivial reject in hunk one as well.)
+
+Thanks,
+Andreas
