@@ -1,90 +1,68 @@
-From: Nate Case <ncase@xes-inc.com>
-Subject: [PATCH] format-patch: Respect --quiet option
-Date: Wed, 18 Mar 2009 12:00:45 -0500
-Message-ID: <1237395645-22085-1-git-send-email-ncase@xes-inc.com>
-Cc: Nate Case <ncase@xes-inc.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Mar 18 18:48:19 2009
+From: Michele Ballabio <barra_cuda@katamail.com>
+Subject: [PATCH 2/2] apply: hide unused options from short help
+Date: Wed, 18 Mar 2009 19:05:40 +0100
+Message-ID: <1237399540-27258-2-git-send-email-barra_cuda@katamail.com>
+References: <1237399540-27258-1-git-send-email-barra_cuda@katamail.com>
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 18 18:59:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ljzs2-0004IR-RG
-	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 18:48:03 +0100
+	id 1Lk02T-0000Uu-FE
+	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 18:58:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759058AbZCRRqg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Mar 2009 13:46:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759140AbZCRRqg
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 13:46:36 -0400
-Received: from xes-mad.com ([216.165.139.214]:39679 "EHLO xes-mad.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759108AbZCRRqf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Mar 2009 13:46:35 -0400
-X-Greylist: delayed 2739 seconds by postgrey-1.27 at vger.kernel.org; Wed, 18 Mar 2009 13:46:31 EDT
-Received: from localhost.localdomain (natec.xes-mad.com [10.52.0.27])
-	by xes-mad.com (8.13.8/8.13.8) with ESMTP id n2IH0jB7027155;
-	Wed, 18 Mar 2009 12:00:47 -0500
-X-Mailer: git-send-email 1.6.0.2
-X-Virus-Scanned: ClamAV 0.94.2/9127/Tue Mar 17 23:30:26 2009 on mail.xes-mad.com
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-5.3 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=no version=3.2.5
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on mail.xes-mad.com
+	id S1754882AbZCRR5S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Mar 2009 13:57:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754161AbZCRR5Q
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 13:57:16 -0400
+Received: from smtp.katamail.com ([62.149.157.154]:53094 "HELO smtp2.aruba.it"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1752614AbZCRR5O (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Mar 2009 13:57:14 -0400
+Received: (qmail 21792 invoked by uid 89); 18 Mar 2009 17:57:06 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp2-pc
+X-Spam-Level: **
+X-Spam-Status: No, score=2.3 required=5.0 tests=BAYES_50,HELO_LH_LD,RDNS_NONE
+	autolearn=no version=3.2.3
+Received: from unknown (HELO localhost.localdomain) (barra?cuda@katamail.com@80.104.57.140)
+  by smtp2-pc with SMTP; 18 Mar 2009 17:57:06 -0000
+X-Mailer: git-send-email 1.6.2.22.gc2ac
+In-Reply-To: <1237399540-27258-1-git-send-email-barra_cuda@katamail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113637>
 
-Hide the patch filename output from 'git format-patch' when --quiet
-is used.  The man pages suggested that this should have already worked.
+The options "--binary" and "--allow-binary-replacement" of
+git-apply are no-op and maintained for backward compatibility,
+so avoid to show them in the short help screen.
 
-Signed-off-by: Nate Case <ncase@xes-inc.com>
+Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
 ---
- builtin-log.c |   10 ++++++----
- 1 files changed, 6 insertions(+), 4 deletions(-)
+ builtin-apply.c |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/builtin-log.c b/builtin-log.c
-index 8684fcd..8af55d2 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -573,7 +573,7 @@ static FILE *realstdout = NULL;
- static const char *output_directory = NULL;
- static int outdir_offset;
- 
--static int reopen_stdout(const char *oneline, int nr, int total)
-+static int reopen_stdout(const char *oneline, int nr, struct rev_info *rev)
- {
- 	char filename[PATH_MAX];
- 	int len = 0;
-@@ -598,7 +598,9 @@ static int reopen_stdout(const char *oneline, int nr, int total)
- 		strcpy(filename + len, fmt_patch_suffix);
- 	}
- 
--	fprintf(realstdout, "%s\n", filename + outdir_offset);
-+	if (!DIFF_OPT_TST(&rev->diffopt, QUIET))
-+		fprintf(realstdout, "%s\n", filename + outdir_offset);
-+
- 	if (freopen(filename, "w", stdout) == NULL)
- 		return error("Cannot open patch file %s",filename);
- 
-@@ -687,7 +689,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
- 		die("Cover letter needs email format");
- 
- 	if (!use_stdout && reopen_stdout(numbered_files ?
--				NULL : "cover-letter", 0, rev->total))
-+				NULL : "cover-letter", 0, rev))
- 		return;
- 
- 	head_sha1 = sha1_to_hex(head->object.sha1);
-@@ -1106,7 +1108,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		}
- 		if (!use_stdout && reopen_stdout(numbered_files ? NULL :
- 				get_oneline_for_filename(commit, keep_subject),
--				rev.nr, rev.total))
-+				rev.nr, &rev))
- 			die("Failed to create output files");
- 		shown = log_tree_commit(&rev, commit);
- 		free(commit->buffer);
+diff --git a/builtin-apply.c b/builtin-apply.c
+index a664338..0e8e5ae 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -3224,10 +3224,10 @@ int cmd_apply(int argc, const char **argv, const char *unused_prefix)
+ 			"ignore additions made by the patch"),
+ 		OPT_BOOLEAN(0, "stat", &diffstat,
+ 			"instead of applying the patch, output diffstat for the input"),
+-		OPT_BOOLEAN(0, "allow-binary-replacement", &binary,
+-			"now no-op"),
+-		OPT_BOOLEAN(0, "binary", &binary,
+-			"now no-op"),
++		{ OPTION_BOOLEAN, 0, "allow-binary-replacement", &binary,
++		  NULL, "old option, now no-op", PARSE_OPT_HIDDEN },
++		{ OPTION_BOOLEAN, 0, "binary", &binary,
++		  NULL, "old option, now no-op", PARSE_OPT_HIDDEN },
+ 		OPT_BOOLEAN(0, "numstat", &numstat,
+ 			"shows number of added and deleted lines in decimal notation"),
+ 		OPT_BOOLEAN(0, "summary", &summary,
 -- 
-1.6.0.2
+1.6.2.22.gc2ac
