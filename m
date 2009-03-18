@@ -1,72 +1,50 @@
-From: Eric Raible <raible@gmail.com>
-Subject: Re: [RFC] Colorization of log --graph
-Date: Wed, 18 Mar 2009 10:29:08 -0700
-Message-ID: <279b37b20903181029q7a526168y360874a48783d1dc@mail.gmail.com>
-References: <20090318100512.GA7932@linux.vnet>
-	 <loom.20090318T164728-444@post.gmane.org>
-	 <adf1fd3d0903181004k2554ae90uc101aad64947be7@mail.gmail.com>
+From: Heiko Voigt <git-list@hvoigt.net>
+Subject: [PATCH v3 0/2] cvsimport: add test illustrating a bug in cvsps
+Date: Wed, 18 Mar 2009 18:33:22 +0100
+Message-ID: <49C13062.4020400@hvoigt.net>
+References: <49A2EFC6.5000104@hvoigt.net> <49A37ED1.5090506@alum.mit.edu> <49AC1E88.1010709@hvoigt.net> <49B4FCDA.4030106@hvoigt.net> <49B52F74.1090006@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Raible <raible+git@gmail.com>, git@vger.kernel.org
-To: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Wed Mar 18 18:30:48 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, ydirson@altern.org,
+	git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Mar 18 18:35:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjzbL-00057a-DK
-	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 18:30:47 +0100
+	id 1LjzfM-0006pD-Qw
+	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 18:34:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754786AbZCRR3M convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Mar 2009 13:29:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754108AbZCRR3M
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 13:29:12 -0400
-Received: from an-out-0708.google.com ([209.85.132.249]:46628 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752377AbZCRR3L convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Mar 2009 13:29:11 -0400
-Received: by an-out-0708.google.com with SMTP id d14so122202and.1
-        for <git@vger.kernel.org>; Wed, 18 Mar 2009 10:29:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=qcmovcRDru+flCM5xk/JCSA2CRfAE7kvBzlUkSjTDRs=;
-        b=W31A7JgxN1/QsEbG1RmtFic773uYXb0+Wq6QE/1eem48+CK3lR4t94Y5MVgxDZee7T
-         CVwhlEvIo/7d7LNWOTgQPKXChsfD28336pJq61/ZFa0b4eDi7k9M7aDZFkd3gDgozKdv
-         2+5a3axw0+Yaja7D3aaC1NUgf4JycGR3tvOjo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=c14BdMFx0Bp+ysClhrOL8kzYTSZuWHlmGUKGS22sem2WTmGf3i0QxSC98MoDxE6Eq0
-         n/98VckEgsatMj7uo9fzpsIQ0YrSL16Aq/qX3CbVi8ZkQQiT6MDLA3yZrZBStrDkvzGq
-         Bw6Ldqze6ocVHxHA9YlRdyU/jIBqNySrJaJHM=
-Received: by 10.142.242.8 with SMTP id p8mr625588wfh.25.1237397348415; Wed, 18 
-	Mar 2009 10:29:08 -0700 (PDT)
-In-Reply-To: <adf1fd3d0903181004k2554ae90uc101aad64947be7@mail.gmail.com>
+	id S1753712AbZCRRd2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Mar 2009 13:33:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753115AbZCRRd1
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 13:33:27 -0400
+Received: from darksea.de ([83.133.111.250]:55569 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751361AbZCRRd0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Mar 2009 13:33:26 -0400
+Received: (qmail 20237 invoked from network); 18 Mar 2009 18:33:12 +0100
+Received: from unknown (HELO macbook.lan) (127.0.0.1)
+  by localhost with SMTP; 18 Mar 2009 18:33:12 +0100
+User-Agent: Thunderbird 2.0.0.19 (Macintosh/20081209)
+In-Reply-To: <49B52F74.1090006@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113632>
 
-On Wed, Mar 18, 2009 at 10:04 AM, Santi B=E9jar <santi@agolina.net> wro=
-te:
-> Gitk paints lines of development (lineal history without merges nor
-> forks) with the same color.
->
-> HTH,
-> Santi
+This is an updated version of the first patch and an addition to ensure
+correct handling of branches in fixes. 
 
-Thanks for the quick reply.  I suppose I realized that but it just
-doesn't seem that profound.
-Don't get me wrong - I like gitk and still prefer it to any of the alte=
-rnatives.
-But its of color seems more flashy than useful to me.
+The commit message of the first patch did not describe the problem
+correctly. 
 
-Perhaps I'd be happier if the color of the nth parent of a merge
-(selectable, first by default)
-emerged from the merge?  I dunno.
+The second patch adds branches to the testcase so a possible bugfix in
+cvsps can be made sure that it retains a correct ordering on branches. I
+would like to keep the commits seperate for a better illustration of the
+purpose of this test.
+
+There also a new bugfix for cvsps following this patch series.
