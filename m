@@ -1,92 +1,109 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH] contrib/difftool: use a separate config namespace for difftool commands
-Date: Wed, 18 Mar 2009 11:53:31 +0100
-Message-ID: <EBA0E851-C259-4CA7-BF59-302300C0C3DC@wincent.com>
-References: <1236589956-13486-1-git-send-email-davvid@gmail.com> <76718490903090852se7fc756m818f5d8ba49278b5@mail.gmail.com> <20090310070122.GB4523@gmail.com> <200903172054.46063.markus.heidelberg@web.de> <7veiwvpvhp.fsf@gitster.siamese.dyndns.org> <20090318043543.GB13653@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, markus.heidelberg@web.de,
-	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 18 11:58:41 2009
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] MinGW: implement mmap
+Date: Wed, 18 Mar 2009 12:18:37 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903181213050.10279@pacific.mpi-cbg.de>
+References: <49C0A462.3060902@kdbg.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Janos Laube <janos.dev@gmail.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Mar 18 12:18:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjtTs-0007RW-AG
-	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 11:58:40 +0100
+	id 1Ljtmv-0005Vu-Qh
+	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 12:18:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754020AbZCRKxj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Mar 2009 06:53:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753637AbZCRKxj
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 06:53:39 -0400
-Received: from wincent1.inetu.net ([209.235.192.161]:40362 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753453AbZCRKxi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Mar 2009 06:53:38 -0400
-Received: from cuzco.lan (207.pool85-53-9.dynamic.orange.es [85.53.9.207])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id n2IArVWk028534
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Wed, 18 Mar 2009 06:53:33 -0400
-In-Reply-To: <20090318043543.GB13653@gmail.com>
-X-Mailer: Apple Mail (2.930.3)
+	id S1755033AbZCRLQs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Mar 2009 07:16:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753776AbZCRLQr
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 07:16:47 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48484 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752421AbZCRLQq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Mar 2009 07:16:46 -0400
+Received: (qmail invoked by alias); 18 Mar 2009 11:16:43 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp015) with SMTP; 18 Mar 2009 12:16:43 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18/KGQN9sY/cPmeVKhR5kNafEIe+85RtMQkICp/pK
+	llvADagBuo552R
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <49C0A462.3060902@kdbg.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.49
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113610>
 
-El 18/3/2009, a las 5:35, David Aguilar escribi=F3:
+Hi,
 
-> Junio C Hamano <gitster@pobox.com> wrote:
->> Markus Heidelberg <markus.heidelberg@web.de> writes:
->>
->>> Jay Soffian <jaysoffian@gmail.com> wrote:
->>>>
->>>> Aside, (for Junio I guess...), what's the reason this command is i=
-n
->>>> contrib, and by what criteria might it graduate to being installed
->>>> with the rest of the git commands?
->>>>
->>>> j.
->>>
->>> I'd like to see it as a general git tool, too.
->>> Maybe it can even share some common functionality with git-=20
->>> mergetool.
->>
->> The code was copied and pasted very heavily, and I think (IIRC) the =
-=20
->> author
->> was a bit too ashamed to have it outside contrib/ before it is =20
->> properly
->> refactored or something like that.  Which I happen to agree with, =20
->> by the
->> way.
->
-> I'll work on some patches to get the ball rolling on this.
->
->
-> Here's what I see as the steps I would take:
->
-> 1. move difftool into the root, update Makefile, etc.
->
-> 2. factor out the similarities between merge/difftool and
-> put them in maybe git-tool-lib.sh?
+On Wed, 18 Mar 2009, Johannes Sixt wrote:
 
-Given that git-difftool shares basically all the same options as "git =20
-diff", I think a good long-term plan would be looking at adding the "--=
-=20
-tool" option to "git diff" itself so that users wouldn't have to learn =
-=20
-a new subcommand, just a new option.
+> From: Janos Laube <janos.dev@gmail.com>
+> Date: Fri, 13 Mar 2009 16:50:45 +0100
+> 
+> Add USE_WIN32_MMAP which triggers the use of windows' native
+> file memory mapping functionality in git_mmap()/git_munmap() functions.
+> 
+> As git functions currently use mmap with MAP_PRIVATE set only, this
+> implementation supports only that mode for now.
+> 
+> On Windows, offsets for memory mapped files need to match the allocation
+> granularity. Take this into account when calculating the packed git-
+> windowsize and file offsets. At the moment, the only function which makes
+> use of offsets in conjunction with mmap is use_pack() in sha1-file.c.
+> 
+> Git fast-import's code path tries to map a portion of the temporary
+> packfile that exceeds the current filesize, i.e. offset+length is
+> greater than the filesize. The NO_MMAP code worked with that since pread()
+> just reads the file content until EOF and returns gracefully, while
+> MapViewOfFile() aborts the mapping and returns 'Access Denied'.
+> Working around that by determining the filesize and adjusting the length
+> parameter.
+> 
+> Signed-off-by: Janos Laube <janos.dev@gmail.com>
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> ---
 
-(Whether this is done by rolling the functionality of "git-difftool" =20
-into "git diff" itself, or delegating to a separate "git-difftool" =20
-command doesn't matter so much, now that most commands are neatly =20
-tucked away in $(git --exec-path) now.)
+In case anybody wonders why this is not integrated into mingw.[ch]: I 
+asked for it, as it is Windows-specific and could benefit Cygwin (or MSVC, 
+should someone attempt that), too.
 
-Cheers,
-Wincent
+And I think I missed this style in the patch:
+
+> +void *git_mmap
+> +(void *start, size_t length, int prot, int flags, int fd, off_t offset)
+> +{
+
+... which I would like to see fixed, of course... :-)
+
+Unfortunately, there is also a long line, which is corrupted due to 
+wrapping:
+
+> +	hmap = CreateFileMapping((HANDLE)_get_osfhandle(fd), 0,
+> PAGE_WRITECOPY,
+> +		0, 0, 0);
+
+It is easily fixed by moving the PAGE_WRITECOPY to the next line.
+
+These are only style issues, though.
+
+The more important part is: how much does this buy us (or is it more 
+expensive, as we saw one MacOSX at one stage).  Janos was nice enough to 
+perform some benchmark tests, and saw a ~40% improvement on rev-list 
+--objects --all on a sizeable project (GCC 'twas, IIRC).  Funnily, the 
+numbers got better when reducing the window, up until 1MB, and they got 
+worse when enlarging the window.
+
+So I guess there will be a follow-up patch at some stage which changes the 
+default pack window size on Windows to something smaller than 64MB.
+
+Ciao,
+Dscho
