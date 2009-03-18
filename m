@@ -1,86 +1,55 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [JGIT PATCH 3/4] Cap the number of open files in the WindowCache
-Date: Wed, 18 Mar 2009 01:09:39 +0100
-Message-ID: <200903180109.40074.robin.rosenberg.lists@dewire.com>
-References: <1237252570-8596-1-git-send-email-spearce@spearce.org> <200903172359.32595.robin.rosenberg.lists@dewire.com> <20090317230803.GA23521@spearce.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: fetch and pull
+Date: Tue, 17 Mar 2009 20:37:53 -0400
+Message-ID: <20090318003752.GA25454@coredump.intra.peff.net>
+References: <450196A1AAAE4B42A00A8B27A59278E70A2AEF9A@EXCHANGE.trad.tradestation.com> <76718490903161303h45e47a8co83159e32ae749352@mail.gmail.com> <450196A1AAAE4B42A00A8B27A59278E70A2AF023@EXCHANGE.trad.tradestation.com> <76718490903161514ubbdc948o1a0251212fe65fea@mail.gmail.com> <450196A1AAAE4B42A00A8B27A59278E70A2AF0A9@EXCHANGE.trad.tradestation.com> <76718490903161709v6d8d09f6k17d2fe1a5e56fb03@mail.gmail.com> <450196A1AAAE4B42A00A8B27A59278E70A2AF22F@EXCHANGE.trad.tradestation.com> <76718490903170921r36843c11y5aac537d53384298@mail.gmail.com> <450196A1AAAE4B42A00A8B27A59278E70A3FC0A5@EXCHANGE.trad.tradestation.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Mar 18 01:11:29 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: John Dlugosz <JDlugosz@TradeStation.com>
+X-From: git-owner@vger.kernel.org Wed Mar 18 01:39:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjjNO-0007tE-DA
-	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 01:11:18 +0100
+	id 1Ljjoj-0006fR-LJ
+	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 01:39:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753646AbZCRAJu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2009 20:09:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753392AbZCRAJt
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 20:09:49 -0400
-Received: from mail.dewire.com ([83.140.172.130]:19150 "EHLO dewire.com"
+	id S1752523AbZCRAiE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2009 20:38:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752185AbZCRAiC
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 20:38:02 -0400
+Received: from peff.net ([208.65.91.99]:60913 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752365AbZCRAJs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2009 20:09:48 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 490E8138AD50;
-	Wed, 18 Mar 2009 01:09:43 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id lEF73mbRC4Us; Wed, 18 Mar 2009 01:09:41 +0100 (CET)
-Received: from sleipner.localnet (unknown [10.9.0.4])
-	by dewire.com (Postfix) with ESMTP id 4266D80289C;
-	Wed, 18 Mar 2009 01:09:41 +0100 (CET)
-User-Agent: KMail/1.11.1 (Linux/2.6.27-12-generic; KDE/4.2.1; i686; ; )
-In-Reply-To: <20090317230803.GA23521@spearce.org>
+	id S1751685AbZCRAiB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2009 20:38:01 -0400
+Received: (qmail 9043 invoked by uid 107); 18 Mar 2009 00:38:07 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 17 Mar 2009 20:38:07 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Mar 2009 20:37:53 -0400
 Content-Disposition: inline
+In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E70A3FC0A5@EXCHANGE.trad.tradestation.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113541>
 
-onsdag 18 mars 2009 00:08:03 skrev "Shawn O. Pearce" <spearce@spearce.org>:
-> Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-> > tisdag 17 mars 2009 02:16:09 skrev "Shawn O. Pearce" <spearce@spearce.org>:
+On Tue, Mar 17, 2009 at 12:44:31PM -0400, John Dlugosz wrote:
+
+> > > You checkout master before updating it?
 > > 
-> > > If we detect a file open failure while opening a pack we halve
-> > > the number of permitted open files and try again, [...]
+> > You cannot merge/rebase a branch unless it is checked out.
 > > 
-> > The output of getMessage isn't that simple to interpret. Here it is filename+" (Too many files open)",
-> > and on other platforms it is probably something else. This goes for the message part of most exceptions
-> > thrown from platform specific code like file i/o socket i/o etc. The type of exception is a FileNotFoundException,
-> > btw.
-> > 
-> > I wonder whether  your code works on any platform.
-> 
-> Arrrgh.
->  
-> OK.  Maybe scrap that part of the patch then?
-Yes, I think so, inless you want to try something as ugly as getMessage().toLower().indexof("(too many")? Not
-sure what it looks like in Windows or OSX. We know from the JDK source it's filename + "(" + reason +")" and
-the problem here is the reason part.
+> Sure you can.
+> 	git rebase upstream topic
 
-> Its too bad they don't have a specific type of exception for this,
-FileNotFoundException is a little more specific. Maybe in combinatikon with a file.exists() and file.canRead test...
-(thinking loud now)
+This literally does a "checkout" behind the scenes, so it is still
+manipulating your working tree. It is basically the equivalent of:
 
-> nor do they have a way to hold onto file descriptors under a type
-> like a SoftReference where the runtime can whack them if you have
-> too many.
+  git checkout topic && git rebase upstream
 
-The problem is that it's not connected to file descriptors but to memory. Doing a GC on filenotfoundexception
-(here) could help here if one uses soft reference, or one could prune the cache manually. The parameter
-could also be a 
+The actual rebasing happens on a detached HEAD, but you will find at the
+end of such a rebase that you are now on the branch "topic".
 
-> 
-> I guess that's why Hadoop HBase just tells you to up your fd ulimit
-> to 32767.  :-)
-
-Yeah, with gigabytes of memory that might not consume too much resources anyway.
-
--- robin
+-Peff
