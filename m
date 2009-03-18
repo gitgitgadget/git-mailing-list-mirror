@@ -1,69 +1,81 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: GitTogether '09
-Date: Wed, 18 Mar 2009 07:46:55 +0100
-Message-ID: <fabb9a1e0903172346j74b9992r1b0a8d6eb523103c@mail.gmail.com>
-References: <20090310001613.GL11989@spearce.org>
-	 <200903180651.33381.chriscool@tuxfamily.org>
+From: pi song <pi.songs@gmail.com>
+Subject: Re: [PATCH1/2] Libify blame
+Date: Wed, 18 Mar 2009 17:52:38 +1100
+Message-ID: <1b29507a0903172352x7864911fm1104e22eddde54f1@mail.gmail.com>
+References: <49BE5343.60900@gmail.com>
+	 <7vocvzmlqf.fsf@gitster.siamese.dyndns.org>
+	 <1b29507a0903172259t348cb4d5n70f5b3003b1eeb00@mail.gmail.com>
+	 <7v3adbmjwy.fsf@gitster.siamese.dyndns.org>
+Reply-To: pi.songs@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Wed Mar 18 07:48:30 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 18 07:54:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjpZk-0005A9-O4
-	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 07:48:29 +0100
+	id 1LjpfH-0006MQ-7M
+	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 07:54:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754278AbZCRGq7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Mar 2009 02:46:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753836AbZCRGq6
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 02:46:58 -0400
-Received: from mu-out-0910.google.com ([209.85.134.189]:5285 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752627AbZCRGq6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Mar 2009 02:46:58 -0400
-Received: by mu-out-0910.google.com with SMTP id g7so123801muf.1
-        for <git@vger.kernel.org>; Tue, 17 Mar 2009 23:46:55 -0700 (PDT)
+	id S1751191AbZCRGwm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Mar 2009 02:52:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752951AbZCRGwm
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 02:52:42 -0400
+Received: from yw-out-2324.google.com ([74.125.46.31]:50554 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752651AbZCRGwl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Mar 2009 02:52:41 -0400
+Received: by yw-out-2324.google.com with SMTP id 3so403098ywj.1
+        for <git@vger.kernel.org>; Tue, 17 Mar 2009 23:52:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:content-type
          :content-transfer-encoding;
-        bh=5JKH/6YVV3IABSqvp/+W9RnlKPnZ3MoOO/+spk4mmTg=;
-        b=oYC3t6b1pYcqQ1jzlmuygHcPyLT2xJyqSiFOoo2SA/UV9VOrkK677CJ1R5zWRQqxfQ
-         TkGVeFlkmuB0t5mW+P3Gt61iR6Shd1432kdFWQJTi0aRjsWZO1/iDjhVU4U4ZxZtk2PC
-         eTzQBbwOWi1UAPIPMXjQqn9ESOEZB/uYeuE4s=
+        bh=A9JYaa48XGi+GVqnwmnmzGmH8jCuRRpCB6uLIOJ/QM0=;
+        b=U+LRngkiqfNOBMibkygcxCNkfivkZ0aJqPmiaZ1SedbovMv5PBoNGELPuK9PfYopei
+         PMHfAV4J7dxSoR+NGg2Ef/ox1pb367jJMriocog74V1cD/7LGEL8TjmU23H2ZkR8H/qr
+         2O881cGCW10cBdO9tfmnL4qVW4B1xkoU7EnyA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=qCDzClDVrYeJDeNYKRjedjbpgKGtSsKwWYc60zGx5MVsy6pBTLoToSeqPJVc3YuUuy
-         9sXOSYWZfOhvnYGRoW2jL4CiTcAZkMzpQfe3nwrDwEyHXHctv2rPWL/pb468EY9YNQbd
-         49m489CQaWy9JD33u3EIDE7x88/2LNaTtawKM=
-Received: by 10.103.244.10 with SMTP id w10mr381607mur.71.1237358815438; Tue, 
-	17 Mar 2009 23:46:55 -0700 (PDT)
-In-Reply-To: <200903180651.33381.chriscool@tuxfamily.org>
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:content-type:content-transfer-encoding;
+        b=oqhaflA4SJ9C0J306cftkgLcwZyhvB0s/V1u5iWuFyCgP+mA32yyNY6KPKt40QohG8
+         kJQldv1fjOR1A6VhHCDdXbTLDjPUsgy3SlpzjhvHsBMzO5D46ETQ4bOGL/pGBGWMqtlT
+         45MuZW2fSkGgLypFOhusP79xYiM4eqy45N0Ag=
+Received: by 10.142.133.19 with SMTP id g19mr367661wfd.298.1237359158758; Tue, 
+	17 Mar 2009 23:52:38 -0700 (PDT)
+In-Reply-To: <7v3adbmjwy.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113589>
 
-Heya,
+Wait. If you look at the builtin-blame.c, out of question it is very
+messy. Things like print_usage() or -L parameter parsing for example
+is not done upfront but hiding somewhere. Some functions are not very
+clear if they are frontend or backend. I would say nobody would be
+able to split it right in the first place. What you could do is to
+split it to something "roughly right" and then work from that.
 
-On Wed, Mar 18, 2009 at 06:51, Christian Couder <chriscool@tuxfamily.or=
-g> wrote:
-> =A0* San Francisco in October, just after the Google Summer of Code M=
-entor
+My latest two patches really do nothing but just splitting files. I
+haven't changed any logics or renamed any thing only to make this big
+beast more *manageable* rather than tackling the problem directly.
+Yes, some bits are  still wrong but I believe 70% of the functions
+should already stay in the right place. The following patches will
+make the structure more right *gradually*.
 
-Considering that (assuming git is accepted as mentoring organization)
-we can ask Google for 2 airplane tickets, I'm voting for this option
-;).
+Pi Song
 
---=20
-Cheers,
 
-Sverre Rabbelier
+On Wed, Mar 18, 2009 at 5:20 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> pi song <pi.songs@gmail.com> writes:
+>
+>> Don't you think we should rather split up into smaller files before
+>> start reorganizing things?
+>
+> Yes, but splitting it wrong is, eh, wrong ;-)
+>
