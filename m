@@ -1,56 +1,82 @@
-From: Michele Ballabio <barra_cuda@katamail.com>
-Subject: [PATCH 1/3] rebase: fix typo (force_rebas -> force-rebas)
-Date: Wed, 18 Mar 2009 19:05:56 +0100
-Message-ID: <1237399558-27289-1-git-send-email-barra_cuda@katamail.com>
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 18 18:59:55 2009
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH 1/2] Fix long running merge base computations
+Date: Wed, 18 Mar 2009 11:01:48 -0700
+Message-ID: <1237399309-29493-1-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Wed Mar 18 19:03:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lk03L-0000s2-CI
-	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 18:59:43 +0100
+	id 1Lk075-0002TA-6a
+	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 19:03:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755322AbZCRR5d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Mar 2009 13:57:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755123AbZCRR5c
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 13:57:32 -0400
-Received: from smtp.katamail.com ([62.149.157.154]:53113 "HELO smtp2.aruba.it"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1754143AbZCRR5b (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Mar 2009 13:57:31 -0400
-Received: (qmail 21837 invoked by uid 89); 18 Mar 2009 17:57:24 -0000
-X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp2-pc
-X-Spam-Level: **
-X-Spam-Status: No, score=2.3 required=5.0 tests=BAYES_50,HELO_LH_LD,RDNS_NONE
-	autolearn=no version=3.2.3
-Received: from unknown (HELO localhost.localdomain) (barra?cuda@katamail.com@80.104.57.140)
-  by smtp2-pc with SMTP; 18 Mar 2009 17:57:23 -0000
-X-Mailer: git-send-email 1.6.2.22.gc2ac
+	id S1754161AbZCRSBx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Mar 2009 14:01:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753216AbZCRSBw
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 14:01:52 -0400
+Received: from george.spearce.org ([209.20.77.23]:42371 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751361AbZCRSBv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Mar 2009 14:01:51 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 1D0CB38239; Wed, 18 Mar 2009 18:01:50 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id A3F43381D3;
+	Wed, 18 Mar 2009 18:01:49 +0000 (UTC)
+X-Mailer: git-send-email 1.6.2.1.337.g6270ba
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113643>
 
-Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
+If a part of the project history is reachable by more than one
+path through the revision graph, we only need to traverse down
+it once through the first detected path when marking parents
+as reachable from an input branch.
+
+Previously, JGit recomputed the entire project history for each
+path it was reachable through.  On linux-2.6 based histories we
+got stuck for hours computing a merge base, as we kept passing
+back through the same sections of the revision graph.
+
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- git-rebase.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ .../spearce/jgit/revwalk/MergeBaseGenerator.java   |    9 ++++++++-
+ 1 files changed, 8 insertions(+), 1 deletions(-)
 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index d38ab0b..e38d68a 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -315,7 +315,7 @@ do
- 	--root)
- 		rebase_root=t
- 		;;
--	-f|--f|--fo|--for|--forc|force|--force-r|--force-re|--force-reb|--force-reba|--force_rebas|--force-rebase)
-+	-f|--f|--fo|--for|--forc|force|--force-r|--force-re|--force-reb|--force-reba|--force-rebas|--force-rebase)
- 		force_rebase=t
- 		;;
- 	-*)
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/revwalk/MergeBaseGenerator.java b/org.spearce.jgit/src/org/spearce/jgit/revwalk/MergeBaseGenerator.java
+index 1676caa..2eb9688 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/revwalk/MergeBaseGenerator.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/revwalk/MergeBaseGenerator.java
+@@ -184,7 +184,9 @@ private void carryOntoHistory(RevCommit c, final int carry) {
+ 	}
+ 
+ 	private boolean carryOntoOne(final RevCommit p, final int carry) {
++		final boolean haveAll = (p.flags & carry) == carry;
+ 		p.flags |= carry;
++
+ 		if ((p.flags & POPPED) != 0 && (carry & MERGE_BASE) == 0
+ 				&& (p.flags & branchMask) == branchMask) {
+ 			// We were popped without being a merge base, but we just got
+@@ -197,6 +199,11 @@ private boolean carryOntoOne(final RevCommit p, final int carry) {
+ 			carryOntoHistory(p, branchMask | MERGE_BASE);
+ 			return true;
+ 		}
+-		return false;
++
++		// If we already had all carried flags, our parents do too.
++		// Return true to stop the caller from running down this leg
++		// of the revision graph any further.
++		//
++		return haveAll;
+ 	}
+ }
 -- 
-1.6.2.22.gc2ac
+1.6.2.1.337.g6270ba
