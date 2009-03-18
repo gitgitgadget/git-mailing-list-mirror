@@ -1,84 +1,109 @@
-From: Amos King <amos.l.king@gmail.com>
-Subject: [PATCH 2/2] Created a faux remote to pass to http_init. This allows 
-	http_push to authenticate http through a prompt.
-Date: Wed, 18 Mar 2009 18:46:41 -0500
-Message-ID: <d8c371a80903181646o6caf5948o25d2037486629c91@mail.gmail.com>
+From: david@lang.hm
+Subject: Re: Google Summer of Code 2009: GIT
+Date: Wed, 18 Mar 2009 16:55:03 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0903181645440.16753@asgard.lang.hm>
+References: <49B74373.3090609@gmail.com>  <7veix33f5e.fsf@gitster.siamese.dyndns.org>  <ab9fa62a0903120545o7e5bc359g7df233b00858869c@mail.gmail.com>  <alpine.DEB.1.10.0903121052310.16753@asgard.lang.hm>  <ab9fa62a0903121119j6c2a1d43kd9cda99db47b5e7c@mail.gmail.com>
+  <alpine.DEB.1.10.0903121148540.16753@asgard.lang.hm>  <ab9fa62a0903121200v73ec3522gcdebcd34122efc72@mail.gmail.com>  <alpine.DEB.1.10.0903121214390.16753@asgard.lang.hm>  <ab9fa62a0903121245m621643bfq3c58557ccc9b266f@mail.gmail.com> 
+ <alpine.DEB.1.10.0903121255040.16753@asgard.lang.hm> <ab9fa62a0903121303v5a6cbf0ax413cc440b9c32e77@mail.gmail.com> <alpine.DEB.1.00.0903190003100.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 19 00:48:12 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: saurabh gupta <saurabhgupta1403@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Mar 19 00:57:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lk5UY-0005mD-Hi
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 00:48:11 +0100
+	id 1Lk5dA-0000zD-Kw
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 00:57:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755235AbZCRXqo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Mar 2009 19:46:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755555AbZCRXqo
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 19:46:44 -0400
-Received: from mail-qy0-f118.google.com ([209.85.221.118]:54258 "EHLO
-	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752280AbZCRXqn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Mar 2009 19:46:43 -0400
-Received: by qyk16 with SMTP id 16so402926qyk.33
-        for <git@vger.kernel.org>; Wed, 18 Mar 2009 16:46:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=TzWI9YdZw2AQUuPw28h1/idy0lxE/JeZQfT60BQJKlw=;
-        b=N5hmpXOEGRAOAZ6WfZiQxQdryYN5Z0Ke89b0oJSXo6S8XxRKdbwPp5Ece3VxfvMjVd
-         rLHFRSmEjs9C662vdUpEO2KxD1ncmFamV3rT4lFhakUuXA0GumNShN7efOvsgtkUvPtx
-         jpvlDHbxa0F6eeuOPM1WWVaG/f2IpNfMV0oZE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=r2vVFlRfXajoglkdFX+CNChvA9DDE9LDQTVJ/4/+Tx6iEN+8qcG5nLv9+qRA+Z+XfV
-         j8hJ8/TXVv/FS0POw9tQRD0678xM5a5489psVuNSItkpRtllAZq0F7v1GR/xd6iVQ9di
-         OBdGJZ2zoXvMl2w7qc8IFbrHcO1C8xOFESXxY=
-Received: by 10.229.74.71 with SMTP id t7mr1233284qcj.47.1237420001538; Wed, 
-	18 Mar 2009 16:46:41 -0700 (PDT)
+	id S1755301AbZCRXzN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Mar 2009 19:55:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753184AbZCRXzM
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 19:55:12 -0400
+Received: from mail.lang.hm ([64.81.33.126]:39747 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755265AbZCRXzL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Mar 2009 19:55:11 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n2INt3OD025936;
+	Wed, 18 Mar 2009 15:55:03 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <alpine.DEB.1.00.0903190003100.10279@pacific.mpi-cbg.de>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113707>
 
-This patch allows http_push to use http authentication via prompts.
-You may notice that there is a remote struct that only contains the
-url from the repo struct.  This struct is a temporary fix for a larger
-issue, but gets http authentication via prompts out the door, and
-keeps users from having to store passwords in plain text files.
+On Thu, 19 Mar 2009, Johannes Schindelin wrote:
 
-Signed-off-by: Amos King <amos.l.king@gmail.com>
----
- http-push.c |    9 ++++++++-
- 1 files changed, 8 insertions(+), 1 deletions(-)
+> Hi,
+>
+> On Fri, 13 Mar 2009, saurabh gupta wrote:
+>
+>> On Fri, Mar 13, 2009 at 1:29 AM,  <david@lang.hm> wrote:
+>>> On Fri, 13 Mar 2009, saurabh gupta wrote:
+>>>
+>>> it may be just doing an XML merge driver is a summer's worth of work,
+>>> or it may be that it's not really enough and you should try to do
+>>> another one or two.
+>>>
+>>> it also may be that there is a lot of overlap between different merge
+>>> drivers, and once you have the XML driver the others become fairly
+>>> trivial to do. (I'm thinking the config file examples I posted earlier
+>>> in the thread)
+>>
+>> with the options given to the user, one can handle the config files
+>> also where order doesn't matter and also the whitespaces problem can
+>> also be handled in the similar way.
+>
+> In my humble opinion, we should focus on the data types we want to be
+> able to support at the end of the summer first.
+>
+> For example, if we decide that OOXML is a must (as it is a proper
+> standard, and many people will benefit from it), we will most likely end
+> up in having to write a merge _driver_ (to handle those .zip files), _and_
+> a merge _helper_, although we can avoid writing our own GUI, as we can
+> create an OOXML that has its own version of conflict markers.
 
-diff --git a/http-push.c b/http-push.c
-index 9ac2664..885378b 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -2195,7 +2195,14 @@ int main(int argc, char **argv)
+do you mean OOXML (the microsoft format) or ODF (the open office format)?
 
- 	memset(remote_dir_exists, -1, 256);
+> If we decide that SVG is something we want to support by the end of the
+> summer, then we can probably avoid writing a merge _driver_, as plain text
+> is handled reasonably well in Git.  OTOH it could turn out that there are
+> _real_ conflicts in overlapping tag ids, and it would still be easier to
+> write a merge driver, too.
+>
+> IOW the details are not as important as
+>
+> - knowing what data types we want to support _at the least_, and what data
+>  types we keep for the free skate,
+>
+> - a clear picture of the user interface we want to be able to provide,
+>
+> - a timeline (weekly milestones should be fine, I guess) what should be
+>  achieved when, and
+>
+> - being flexible in how to support that (IOW if a merge driver appears
+>  unnecessary first, but necessary later, we should be able to fit that
+>  into both the design and the timeline).
 
--	http_init(NULL);
-+	//This is a faked remote so that http_init can get the correct data for
-+	//builidng out athorization.
-+	struct remote *remote;
-+	remote = xcalloc(sizeof(*remote), 1);
-+	ALLOC_GROW(remote->url, remote->url_nr + 1, remote->url_alloc);
-+	remote->url[remote->url_nr++] = repo->url;
-+
-+	http_init(remote);
+it's up to the student, but I suspect that the best approach would be to 
+start with defining a merge driver to handle XML (with a minimum set of 
+capabilities, and additional optional ones), and go from there.
 
- 	no_pragma_header = curl_slist_append(no_pragma_header, "Pragma:");
+David Lang
 
--- 
-1.6.2.GIT
+> How does that sound?
+>
+> Ciao,
+> Dscho
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
