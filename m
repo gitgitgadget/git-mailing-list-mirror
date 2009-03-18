@@ -1,157 +1,98 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH 03/10] Call 'say' outside test_expect_success
-Date: Wed, 18 Mar 2009 22:27:05 +0100
-Message-ID: <9d346b6be9eb260b94a8f1bcd995932a311f03af.1237410682.git.j6t@kdbg.org>
-References: <cover.1237410682.git.j6t@kdbg.org>
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 18 22:30:11 2009
+From: Sam Hocevar <sam@zoy.org>
+Subject: [PATCH] git-gui: minor spelling fix and string factorisation.
+Date: Wed, 18 Mar 2009 22:22:30 +0100
+Message-ID: <20090318212230.GA2511@zoy.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 18 22:31:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lk3Ks-000574-V7
-	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 22:30:03 +0100
+	id 1Lk3MK-0005kJ-Ju
+	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 22:31:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755239AbZCRV1r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Mar 2009 17:27:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752615AbZCRV1m
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 17:27:42 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:46765 "EHLO bsmtp.bon.at"
+	id S1753315AbZCRVaB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Mar 2009 17:30:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752423AbZCRVaA
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 17:30:00 -0400
+Received: from poulet.zoy.org ([80.65.228.129]:48290 "EHLO poulet.zoy.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753894AbZCRV1W (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Mar 2009 17:27:22 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id CACE5CDF8C;
-	Wed, 18 Mar 2009 22:27:17 +0100 (CET)
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 881E560E6E;
-	Wed, 18 Mar 2009 22:27:17 +0100 (CET)
-X-Mailer: git-send-email 1.6.2.1.224.g2225f
-In-Reply-To: <cover.1237410682.git.j6t@kdbg.org>
-In-Reply-To: <cover.1237410682.git.j6t@kdbg.org>
-References: <cover.1237410682.git.j6t@kdbg.org>
+	id S1751472AbZCRV37 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Mar 2009 17:29:59 -0400
+Received: from poukram (localhost [127.0.0.1])
+	by poulet.zoy.org (Postfix) with ESMTP id B765012042F
+	for <git@vger.kernel.org>; Wed, 18 Mar 2009 22:29:57 +0100 (CET)
+Received: by poukram (Postfix, from userid 1000)
+	id 7ABE37FA2B; Wed, 18 Mar 2009 22:22:30 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113683>
 
-There were some uses of 'say' inside test_expect_success. But if the tests
-were not run in verbose mode, this message went to /dev/null. Pull them out
-of test_expect_success.
+Properly spell "successful" and slightly rewrite a couple of strings
+that actually say the same thing in order to reduce translation work.
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+Signed-off-by: Sam Hocevar <sam@zoy.org>
 ---
- t/t0050-filesystem.sh |    9 +++++++--
- t/t3600-rm.sh         |    3 ++-
- t/t7005-editor.sh     |   29 +++++++++++++----------------
- 3 files changed, 22 insertions(+), 19 deletions(-)
+ lib/branch_delete.tcl        |    4 ++--
+ lib/remote_branch_delete.tcl |    4 +---
+ lib/tools.tcl                |    2 +-
+ 3 files changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
-index 7edf49d..a449580 100755
---- a/t/t0050-filesystem.sh
-+++ b/t/t0050-filesystem.sh
-@@ -8,6 +8,7 @@ auml=`printf '\xc3\xa4'`
- aumlcdiar=`printf '\x61\xcc\x88'`
+diff --git a/lib/branch_delete.tcl b/lib/branch_delete.tcl
+index ef1930b..20d5e42 100644
+--- a/lib/branch_delete.tcl
++++ b/lib/branch_delete.tcl
+@@ -51,7 +51,7 @@ constructor dialog {} {
+ 		$w.check \
+ 		[mc "Delete Only If Merged Into"] \
+ 		]
+-	$w_check none [mc "Always (Do not perform merge test.)"]
++	$w_check none [mc "Always (Do not perform merge checks)"]
+ 	pack $w.check -anchor nw -fill x -pady 5 -padx 5
  
- case_insensitive=
-+unibad=
- test_expect_success 'see if we expect ' '
+ 	foreach h [load_all_heads] {
+@@ -112,7 +112,7 @@ method _delete {} {
+ 	}
+ 	if {$to_delete eq {}} return
+ 	if {$check_cmt eq {}} {
+-		set msg [mc "Recovering deleted branches is difficult. \n\n Delete the selected branches?"]
++		set msg [mc "Recovering deleted branches is difficult.\n\nDelete the selected branches?"]
+ 		if {[tk_messageBox \
+ 			-icon warning \
+ 			-type yesno \
+diff --git a/lib/remote_branch_delete.tcl b/lib/remote_branch_delete.tcl
+index 89eb0f7..4e02fc0 100644
+--- a/lib/remote_branch_delete.tcl
++++ b/lib/remote_branch_delete.tcl
+@@ -213,9 +213,7 @@ method _delete {} {
+ 		-type yesno \
+ 		-title [wm title $w] \
+ 		-parent $w \
+-		-message [mc "Recovering deleted branches is difficult.
+-
+-Delete the selected branches?"]] ne yes} {
++		-message [mc "Recovering deleted branches is difficult.\n\nDelete the selected branches?"]] ne yes} {
+ 		return
+ 	}
  
- 	test_case=test_expect_success
-@@ -19,7 +20,6 @@ test_expect_success 'see if we expect ' '
- 	then
- 		test_case=test_expect_failure
- 		case_insensitive=t
--		say "will test on a case insensitive filesystem"
- 	fi &&
- 	rm -fr junk &&
- 	mkdir junk &&
-@@ -27,13 +27,18 @@ test_expect_success 'see if we expect ' '
- 	case "$(cd junk && echo *)" in
- 	"$aumlcdiar")
- 		test_unicode=test_expect_failure
--		say "will test on a unicode corrupting filesystem"
-+		unibad=t
- 		;;
- 	*)	;;
- 	esac &&
- 	rm -fr junk
- '
+diff --git a/lib/tools.tcl b/lib/tools.tcl
+index 6ae63b6..95e6e55 100644
+--- a/lib/tools.tcl
++++ b/lib/tools.tcl
+@@ -146,7 +146,7 @@ proc tools_complete {fullname w {ok 1}} {
+ 	}
  
-+test "$case_insensitive" &&
-+	say "will test on a case insensitive filesystem"
-+test "$unibad" &&
-+	say "will test on a unicode corrupting filesystem"
-+
- if test "$case_insensitive"
- then
- test_expect_success "detection of case insensitive filesystem during repo init" '
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index 74ea8e0..2aefbcf 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -21,10 +21,11 @@ embedded'
- embedded' &&
-      git commit -m 'add files with tabs and newlines'
-      else
--         say 'Your filesystem does not allow tabs in filenames.'
-          test_tabs=n
-      fi"
- 
-+test "$test_tabs" = n && say 'Your filesystem does not allow tabs in filenames.'
-+
- # Later we will try removing an unremovable path to make sure
- # git rm barfs, but if the test is run as root that cannot be
- # arranged.
-diff --git a/t/t7005-editor.sh b/t/t7005-editor.sh
-index 2d919d6..2f8404a 100755
---- a/t/t7005-editor.sh
-+++ b/t/t7005-editor.sh
-@@ -87,30 +87,27 @@ do
- 	'
- done
- 
-+if ! echo 'echo space > "$1"' > "e space.sh"
-+then
-+	say "Skipping; FS does not support spaces in filenames"
-+	test_done
-+	exit
-+fi
-+
- test_expect_success 'editor with a space' '
- 
--	if echo "echo space > \"\$1\"" > "e space.sh"
--	then
--		chmod a+x "e space.sh" &&
--		GIT_EDITOR="./e\ space.sh" git commit --amend &&
--		test space = "$(git show -s --pretty=format:%s)"
--	else
--		say "Skipping; FS does not support spaces in filenames"
--	fi
-+	chmod a+x "e space.sh" &&
-+	GIT_EDITOR="./e\ space.sh" git commit --amend &&
-+	test space = "$(git show -s --pretty=format:%s)"
- 
- '
- 
- unset GIT_EDITOR
- test_expect_success 'core.editor with a space' '
- 
--	if test -f "e space.sh"
--	then
--		git config core.editor \"./e\ space.sh\" &&
--		git commit --amend &&
--		test space = "$(git show -s --pretty=format:%s)"
--	else
--		say "Skipping; FS does not support spaces in filenames"
--	fi
-+	git config core.editor \"./e\ space.sh\" &&
-+	git commit --amend &&
-+	test space = "$(git show -s --pretty=format:%s)"
- 
- '
- 
+ 	if {$ok} {
+-		set msg [mc "Tool completed succesfully: %s" $fullname]
++		set msg [mc "Tool completed successfully: %s" $fullname]
+ 	} else {
+ 		set msg [mc "Tool failed: %s" $fullname]
+ 	}
 -- 
-1.6.2.1.224.g2225f
+1.6.2
