@@ -1,63 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 04/10] test-lib: Replace uses of $(expr ...) by POSIX
- shell features.
-Date: Wed, 18 Mar 2009 23:28:38 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903182319180.10279@pacific.mpi-cbg.de>
-References: <cover.1237410682.git.j6t@kdbg.org> <680eb7fed78dc2ae0268f9b3adcd5978aed3ebcf.1237410682.git.j6t@kdbg.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Missing trailing newline with git log --pretty=format
+Date: Wed, 18 Mar 2009 15:27:39 -0700
+Message-ID: <7vzlfibh5w.fsf@gitster.siamese.dyndns.org>
+References: <200903182223.58800.agruen@suse.de>
+ <200903182256.43817.markus.heidelberg@web.de>
+ <200903182304.51387.agruen@suse.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Wed Mar 18 23:28:31 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: markus.heidelberg@web.de, git@vger.kernel.org
+To: Andreas Gruenbacher <agruen@suse.de>
+X-From: git-owner@vger.kernel.org Wed Mar 18 23:29:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lk4FK-0001ms-VT
-	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 23:28:23 +0100
+	id 1Lk4GE-000243-Vt
+	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 23:29:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753678AbZCRW0s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Mar 2009 18:26:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753512AbZCRW0s
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 18:26:48 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49080 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753496AbZCRW0q (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Mar 2009 18:26:46 -0400
-Received: (qmail invoked by alias); 18 Mar 2009 22:26:43 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp003) with SMTP; 18 Mar 2009 23:26:43 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/oSBtSnq3okMK57ze93QKa8TB9HiqXov6yrWODmu
-	i+g+90huiuiYjL
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <680eb7fed78dc2ae0268f9b3adcd5978aed3ebcf.1237410682.git.j6t@kdbg.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.58
+	id S1754441AbZCRW1t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Mar 2009 18:27:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754209AbZCRW1t
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 18:27:49 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51647 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752267AbZCRW1s (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Mar 2009 18:27:48 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E4802A3117;
+	Wed, 18 Mar 2009 18:27:45 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9B450A3116; Wed,
+ 18 Mar 2009 18:27:41 -0400 (EDT)
+In-Reply-To: <200903182304.51387.agruen@suse.de> (Andreas Gruenbacher's
+ message of "Wed, 18 Mar 2009 23:04:51 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 0125F2C8-140C-11DE-834B-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113691>
 
-Hi,
+Andreas Gruenbacher <agruen@suse.de> writes:
 
-On Wed, 18 Mar 2009, Johannes Sixt wrote:
+> On Wednesday, 18 March 2009 22:56:43 Markus Heidelberg wrote:
+>> Use tformat instead of format.
+>
+> Hmm ... didn't know that, thanks. Now I wonder why anyone would ever want 
+> format instead of tformat ;)
 
-> In particular:
-> 
-> - Test case counting can be achieved by arithmetic expansion.
-> 
-> - The name of the test, e.g. t1234, can be computed with ${0%%} and ${0##}.
-> 
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+If your payload is multi-line, you would want to see a separating empty
+line in between entries, but not after the last one:
 
-I guess this makes the tests less slow on Windows?  Do you have numbers?
+	$ command with --format
+        The first line of first entry.
+        The second line of first entry.
+        ...
+        The last line of first entry.
 
-FWIW I run the tests on Windows with -j10 these days, and they take about 
-15 minutes on a quad core 3GHz machine (which I may use from time to time; 
-the machine is not mine, otherwise it would run Linux).
+        The first line of second entry.
+        ...
+        ...
+        The last line of last entry.
+        $ notice there is no extra newline after that
 
-Ciao,
-Dscho
+That is what --format does.  One-line-per-entry is a special case.  You do
+not want a "separating LF in between entries", but a "terminating LF after
+each entry".  T in --tformat stands for this "terminating" aspect, as
+opposed to the "separator" behaviour --format gives you.
