@@ -1,65 +1,69 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: GitTogether '09
-Date: Wed, 18 Mar 2009 08:55:32 -0700
-Message-ID: <20090318155532.GE23521@spearce.org>
-References: <20090310001613.GL11989@spearce.org> <200903180651.33381.chriscool@tuxfamily.org> <fabb9a1e0903172346j74b9992r1b0a8d6eb523103c@mail.gmail.com> <200903180805.32440.chriscool@tuxfamily.org> <fabb9a1e0903180254u5569e9f5u5e1aa43fa2d1d178@mail.gmail.com> <20090318143532.GD23521@spearce.org> <alpine.DEB.1.00.0903181551380.10279@pacific.mpi-cbg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] gc --aggressive: make it really aggressive
+Date: Wed, 18 Mar 2009 17:01:31 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903181657180.10279@pacific.mpi-cbg.de>
+References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com>  <20071205.202047.58135920.davem@davemloft.net>  <4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com>  <20071205.204848.227521641.davem@davemloft.net>
+ <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com> <alpine.LFD.0.9999.0712052132450.13796@woody.linux-foundation.org> <Pine.LNX.4.64.0712061201580.27959@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	git@vger.kernel.org, gittogether@lists.utsl.gen.nz
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Mar 18 16:58:00 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 18 17:02:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ljy8e-00067f-8l
-	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 16:57:04 +0100
+	id 1LjyDG-0008Ii-3D
+	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 17:01:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751592AbZCRPzf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Mar 2009 11:55:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751533AbZCRPze
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 11:55:34 -0400
-Received: from george.spearce.org ([209.20.77.23]:59412 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751361AbZCRPze (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Mar 2009 11:55:34 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id B06A138221; Wed, 18 Mar 2009 15:55:32 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0903181551380.10279@pacific.mpi-cbg.de>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753425AbZCRP7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Mar 2009 11:59:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752685AbZCRP7k
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 11:59:40 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42599 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751592AbZCRP7j (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Mar 2009 11:59:39 -0400
+Received: (qmail invoked by alias); 18 Mar 2009 15:59:36 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp017) with SMTP; 18 Mar 2009 16:59:36 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+4CE8bZzO4gOviJgr09Gv5818Itpq2d3WJsUMOFV
+	UK/zgsq9jW7ZmG
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <Pine.LNX.4.64.0712061201580.27959@racer.site>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113623>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Wed, 18 Mar 2009, Shawn O. Pearce wrote:
-> > 
-> > Did Google do two international tickets last year for Git?
+Hi,
+
+On Thu, 6 Dec 2007, Johannes Schindelin wrote:
+
 > 
-> I do not think so.  Mugwump got the international airplane ticket, AFAIR, 
-> and warthog the local "ticket".
+> The default was not to change the window or depth at all.  As suggested
+> by Jon Smirl, Linus Torvalds and others, default to
+> 
+> 	--window=250 --depth=250
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
 
-Oh, so it was two tickets.
+Guess what.  This is still unresolved, and yet somebody else had to be 
+bitten by 'git gc --aggressive' being everything but aggressive.
 
-Mugwump and Sverre flew on Google's dime.  The reason Sverre was
-invited was his already heavy involvement with Melange.
+So...  I think it is high time to resolve the issue, either by applying 
+this patch with a delay of over one year, or by the pack wizards trying to 
+implement that 'never fall back to a worse delta' idea mentioned in this 
+thread.
 
-Google initially asked me to spend our international ticket on
-Sverre only, but I talked them into including Mugwump too once I
-pointed out Sverre was attending for Google's own selfish reasons
-(Melange) and not to represent Git.
+Although I suggest, really, that implying --depth=250 --window=250 (unless 
+overridden by the config) with --aggressive is not at all wrong.
 
-warthog9 is a local.  Local mentors were accepted en-masse near
-the end of registration when a lot of orgs had open mentor slots.
-
-You flew on your own dime.  I'm local.  David also managed to fly
-on Google's dime, but out of his manager's business travel budget
-and not the Summer of Code budget.
-
--- 
-Shawn.
+Ciao,
+Dscho
