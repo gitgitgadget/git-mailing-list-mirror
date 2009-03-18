@@ -1,78 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] blame: read custom grafts given by -S before calling
- setup_revisions()
-Date: Wed, 18 Mar 2009 00:50:56 -0700
-Message-ID: <7viqm7l15r.fsf@gitster.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Define a version of lstat(2) specially for copy operation
+Date: Wed, 18 Mar 2009 08:56:09 +0100
+Message-ID: <49C0A919.7070606@viscovery.net>
+References: <81b0412b0903170926p4f2d536el2b96a71c79c0159e@mail.gmail.com> <7vprggqeh2.fsf@gitster.siamese.dyndns.org> <49BFD6DD.1010800@viscovery.net> <20090317202818.GA13458@blimp.localdomain> <7v63i7ridk.fsf@gitster.siamese.dyndns.org> <20090317213820.GC13458@blimp.localdomain> <7vmybjl1l6.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 18 08:52:33 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Alex Riesen <raa.lkml@gmail.com>, Jeff King <peff@peff.net>,
+	layer <layer@known.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 18 08:57:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjqZk-0002h2-Gi
-	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 08:52:32 +0100
+	id 1Ljqen-0003yv-QN
+	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 08:57:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751704AbZCRHvE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Mar 2009 03:51:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751180AbZCRHvD
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 03:51:03 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44218 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751172AbZCRHvB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Mar 2009 03:51:01 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 78F3F7590;
-	Wed, 18 Mar 2009 03:50:59 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id EE004758F; Wed,
- 18 Mar 2009 03:50:57 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 85465532-1391-11DE-85F9-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+	id S1751172AbZCRH4R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Mar 2009 03:56:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750835AbZCRH4R
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 03:56:17 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:61396 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750782AbZCRH4Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Mar 2009 03:56:16 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LjqdG-0002GT-5r; Wed, 18 Mar 2009 08:56:10 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id E71FC69F; Wed, 18 Mar 2009 08:56:09 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <7vmybjl1l6.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113598>
 
-setup_revisions() while getting the command line arguments parses the
-given commits from the command line, which means their direct parents will
-not be rewritten by the custom graft file.
+Junio C Hamano schrieb:
+> Alex Riesen <raa.lkml@gmail.com> writes:
+> 
+>> So that Cygwin port can continue work around its supporting
+>> library and get access to its faked file attributes.
+>>
+>> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+>> ...
+>> diff --git a/builtin-init-db.c b/builtin-init-db.c
+>> index ee3911f..f3f781b 100644
+>> --- a/builtin-init-db.c
+>> +++ b/builtin-init-db.c
+>> @@ -66,7 +66,7 @@ static void copy_templates_1(char *path, int baselen,
+>>  		else
+>>  			exists = 1;
+>>  
+>> -		if (lstat(template, &st_template))
+>> +		if (lstat_for_copy(template, &st_template))
+>>  			die("cannot stat template %s", template);
+>>  
+>>  		if (S_ISDIR(st_template.st_mode)) {
+> 
+> Yuck; that's a bit too ugly for generic code.  Will there be other places
+> that this needs to be used?  If so, we'd probably need to encourage its
+> use where appropriate, which is even uglier but we cannot avoid it...
+> 
+> Also when the underlying system does not know the executable bit, how
+> would this help?  I thought that earlier you said the part that checks if
+> it wants to execute hooks with access(X_OK) will fail, so...
 
-Call read_ancestry() early to work around this issue.
+The "underlying system" in this case is Cygwin, and it *does* have an
+executable bit.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin-blame.c |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+But the FS gymnastics that implement it are slow and affect all lstat()
+calls, so we have replaced lstat() with a simpler and faster
+implementation. Only that the replacement doesn't know about the X bit
+anymore; it always returns mode 0666.
 
-diff --git a/builtin-blame.c b/builtin-blame.c
-index 4ea3431..0c241a9 100644
---- a/builtin-blame.c
-+++ b/builtin-blame.c
-@@ -2346,6 +2346,10 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- parse_done:
- 	argc = parse_options_end(&ctx);
- 
-+	if (revs_file && read_ancestry(revs_file))
-+		die("reading graft file %s failed: %s",
-+		    revs_file, strerror(errno));
-+
- 	if (DIFF_OPT_TST(&revs.diffopt, FIND_COPIES_HARDER))
- 		opt |= (PICKAXE_BLAME_COPY | PICKAXE_BLAME_MOVE |
- 			PICKAXE_BLAME_COPY_HARDER);
-@@ -2484,10 +2488,6 @@ parse_done:
- 	sb.ent = ent;
- 	sb.path = path;
- 
--	if (revs_file && read_ancestry(revs_file))
--		die("reading graft file %s failed: %s",
--		    revs_file, strerror(errno));
--
- 	read_mailmap(&mailmap, ".mailmap", NULL);
- 
- 	if (!incremental)
--- 
-1.6.2.1.278.g7b6274e
+Therefore, if a file is created whose mode is influenced by the fast
+lstat(), then it will always be non-X. The access(, X_OK) call on the hook
+script would do the right thing if only the script were created with the
+correct mode. access(, X_OK) fails because the file was created with non-X
+permissions.
+
+-- Hannes
