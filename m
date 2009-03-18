@@ -1,114 +1,128 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: push.default, was Re: What's cooking in git.git (Mar 2009, #04;
- Sat, 14)
-Date: Wed, 18 Mar 2009 01:40:39 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903180138210.10279@pacific.mpi-cbg.de>
-References: <7vr60z8fkl.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0903171125420.6393@intel-tinevez-2-302> <20090318063053.6117@nanako3.lavabit.com> <alpine.DEB.1.00.0903172350270.10279@pacific.mpi-cbg.de> <7vab7jpv93.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 18 01:40:21 2009
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [EGIT PATCH 01/25] Use generics for collections in commit dialog and import page
+Date: Wed, 18 Mar 2009 01:40:49 +0100
+Message-ID: <1237336849-2036-1-git-send-email-robin.rosenberg@dewire.com>
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Wed Mar 18 01:42:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjjpT-0006pi-MB
-	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 01:40:20 +0100
+	id 1LjjrV-0007SV-5N
+	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 01:42:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752525AbZCRAiu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Mar 2009 20:38:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752185AbZCRAit
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 20:38:49 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41448 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751685AbZCRAis (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Mar 2009 20:38:48 -0400
-Received: (qmail invoked by alias); 18 Mar 2009 00:38:45 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp049) with SMTP; 18 Mar 2009 01:38:45 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+ZPzB2OKeZ/wvr11hA5NaPoOXktkUhmmRVyj/A+1
-	Iz79SXMvZg6YaI
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7vab7jpv93.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1752614AbZCRAkz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Mar 2009 20:40:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752594AbZCRAky
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Mar 2009 20:40:54 -0400
+Received: from mail.dewire.com ([83.140.172.130]:19303 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751685AbZCRAky (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Mar 2009 20:40:54 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 351BF138AD7F;
+	Wed, 18 Mar 2009 01:40:51 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 5Wii9KzcDHc5; Wed, 18 Mar 2009 01:40:50 +0100 (CET)
+Received: from localhost.localdomain (unknown [10.9.0.7])
+	by dewire.com (Postfix) with ESMTP id 0C98080289C;
+	Wed, 18 Mar 2009 01:40:49 +0100 (CET)
+X-Mailer: git-send-email 1.6.1.285.g35d8b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113543>
 
-Hi,
+A little cleaner and fewer warnings.
 
-On Tue, 17 Mar 2009, Junio C Hamano wrote:
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+ .../ui/internal/clone/GitProjectsImportPage.java   |   16 ++++++++--------
+ .../egit/ui/internal/dialogs/CommitDialog.java     |    2 +-
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Wed, 18 Mar 2009, Nanako Shiraishi wrote:
-> >
-> >> Quoting Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> >> 
-> >> > On Sat, 14 Mar 2009, Junio C Hamano wrote:
-> >> >
-> >> >> * fg/push-default (Wed Mar 11 23:01:45 2009 +0100) 1 commit
-> >> >>  - New config push.default to decide default behavior for push
-> >> >> 
-> >> >> Replaced the old series with the first step to allow a smooth 
-> >> >> transition. Some might argue that this should not give any warning 
-> >> >> but just give users this new configuration to play with first, and 
-> >> >> after we know we are going to switch default some day, start the 
-> >> >> warning.
-> >> >
-> >> > IIRC Steffen posted a patch series earlier, where he initialized 
-> >> > remote.origin.push upon clone (I am not sure if he provided a 
-> >> > corresponding patch for checkout --track), but personally, I think 
-> >> > that would be nicer than having a push.default.
-> >> 
-> >> Isn't recent trend to avoid such inconsistency between behavior in an 
-> >> existing repository and behavior in a newly created repository? For 
-> >> example, Jeff calls such inconsistency in
-> >> 
-> >>   http://thread.gmane.org/gmane.comp.version-control.git/100339/focus=100433
-> >> 
-> >> as "this breaks in my repo, but when I make a test repo it works". 
-> >> Junio even called it 'madness' (^_^;)
-> >
-> > My point is that it is _not_ an inconsistency.
-> >
-> > It has a default setting.  One that already is well established.  
-> > Push the matching refs.
-> >
-> > But you can override it by setting the config variable.  Which is also 
-> > well established.
-> >
-> > The only thing Steffen's patches would have changed would be to set 
-> > the default differently now.
-> >
-> > Which is not that much of a 'madness'.
-> >
-> > Especially if you think about changing the default, which _will_ make 
-> > for angry users ("why did you change the default?  I _liked_ it!  
-> > Please revert _now_!").
-> 
-> I cloned my old project to my new machine with a recent git and it 
-> behaves differently.  Why did you change the default "git clone" 
-> creates, without telling me?
-> 
-> Sounds like a huge inconsistency to me.
-
-Okay, I'll bite.
-
-In my git.git clone on one machine, I have remote.orcz.push = master.  I 
-cloned it.  There, "git push" does something different.
-
-Inconsistent right there, correct?  Without any change to git.git.
-
-Assume push.default goes in.
-
-Nothing changes in my scenario.  Inconsistency right there.
-
-Ciao,
-Dscho
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/clone/GitProjectsImportPage.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/clone/GitProjectsImportPage.java
+index ece585a..5d82edc 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/clone/GitProjectsImportPage.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/clone/GitProjectsImportPage.java
+@@ -508,7 +508,7 @@ public void run(IProgressMonitor monitor) {
+ 							UIText.WizardProjectsImportPage_SearchingMessage,
+ 							100);
+ 					selectedProjects = new ProjectRecord[0];
+-					Collection files = new ArrayList();
++					Collection<File> files = new ArrayList<File>();
+ 					monitor.worked(10);
+ 					if (directory.isDirectory()) {
+ 
+@@ -516,14 +516,14 @@ public void run(IProgressMonitor monitor) {
+ 								null, monitor)) {
+ 							return;
+ 						}
+-						Iterator filesIterator = files.iterator();
++						Iterator<File> filesIterator = files.iterator();
+ 						selectedProjects = new ProjectRecord[files.size()];
+ 						int index = 0;
+ 						monitor.worked(50);
+ 						monitor
+ 								.subTask(UIText.WizardProjectsImportPage_ProcessingMessage);
+ 						while (filesIterator.hasNext()) {
+-							File file = (File) filesIterator.next();
++							File file = filesIterator.next();
+ 							selectedProjects[index] = new ProjectRecord(file);
+ 							index++;
+ 						}
+@@ -562,8 +562,8 @@ setMessage(UIText.WizardProjectsImportPage_projectsInWorkspace,
+ 	 *            The monitor to report to
+ 	 * @return boolean <code>true</code> if the operation was completed.
+ 	 */
+-	private boolean collectProjectFilesFromDirectory(Collection files,
+-			File directory, Set directoriesVisited, IProgressMonitor monitor) {
++	private boolean collectProjectFilesFromDirectory(Collection<File> files,
++			File directory, Set<String> directoriesVisited, IProgressMonitor monitor) {
+ 
+ 		if (monitor.isCanceled()) {
+ 			return false;
+@@ -577,7 +577,7 @@ private boolean collectProjectFilesFromDirectory(Collection files,
+ 
+ 		// Initialize recursion guard for recursive symbolic links
+ 		if (directoriesVisited == null) {
+-			directoriesVisited = new HashSet();
++			directoriesVisited = new HashSet<String>();
+ 			try {
+ 				directoriesVisited.add(directory.getCanonicalPath());
+ 			} catch (IOException exception) {
+@@ -759,13 +759,13 @@ public CheckboxTreeViewer getProjectsList() {
+ 	 *         workspace
+ 	 */
+ 	public ProjectRecord[] getValidProjects() {
+-		List validProjects = new ArrayList();
++		List<ProjectRecord> validProjects = new ArrayList<ProjectRecord>();
+ 		for (int i = 0; i < selectedProjects.length; i++) {
+ 			if (!isProjectInWorkspace(selectedProjects[i].getProjectName())) {
+ 				validProjects.add(selectedProjects[i]);
+ 			}
+ 		}
+-		return (ProjectRecord[]) validProjects
++		return validProjects
+ 				.toArray(new ProjectRecord[validProjects.size()]);
+ 	}
+ 
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/dialogs/CommitDialog.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/dialogs/CommitDialog.java
+index b69a4ba..e6bd02d 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/dialogs/CommitDialog.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/dialogs/CommitDialog.java
+@@ -366,7 +366,7 @@ public void handleEvent(Event arg0) {
+ 				}
+ 				try {
+ 					ArrayList<GitIndex> changedIndexes = new ArrayList<GitIndex>();
+-					for (Iterator<Object> it = sel.iterator(); it.hasNext();) {
++					for (Iterator<?> it = sel.iterator(); it.hasNext();) {
+ 						CommitItem commitItem = (CommitItem) it.next();
+ 
+ 						IProject project = commitItem.file.getProject();
+-- 
+1.6.1.285.g35d8b
