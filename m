@@ -1,66 +1,69 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [JGIT PATCH 00/12] Improve test coverage in revwalk
-Date: Wed, 18 Mar 2009 07:34:59 +0100
-Message-ID: <200903180734.59435.robin.rosenberg.lists@dewire.com>
-References: <1237340451-31562-1-git-send-email-spearce@spearce.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: GitTogether '09
+Date: Wed, 18 Mar 2009 07:46:55 +0100
+Message-ID: <fabb9a1e0903172346j74b9992r1b0a8d6eb523103c@mail.gmail.com>
+References: <20090310001613.GL11989@spearce.org>
+	 <200903180651.33381.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-6"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Mar 18 07:36:34 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Wed Mar 18 07:48:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjpOE-00032d-Dp
-	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 07:36:34 +0100
+	id 1LjpZk-0005A9-O4
+	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 07:48:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755499AbZCRGfF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Mar 2009 02:35:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755247AbZCRGfE
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 02:35:04 -0400
-Received: from mail.dewire.com ([83.140.172.130]:20965 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755230AbZCRGfD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Mar 2009 02:35:03 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id EFED2802AAD;
-	Wed, 18 Mar 2009 07:35:00 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id N3o0mb-qNPYj; Wed, 18 Mar 2009 07:35:00 +0100 (CET)
-Received: from sleipner.localnet (unknown [10.9.0.4])
-	by dewire.com (Postfix) with ESMTP id 77E56802A9A;
-	Wed, 18 Mar 2009 07:35:00 +0100 (CET)
-User-Agent: KMail/1.11.1 (Linux/2.6.27-12-generic; KDE/4.2.1; i686; ; )
-In-Reply-To: <1237340451-31562-1-git-send-email-spearce@spearce.org>
-Content-Disposition: inline
+	id S1754278AbZCRGq7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Mar 2009 02:46:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753836AbZCRGq6
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 02:46:58 -0400
+Received: from mu-out-0910.google.com ([209.85.134.189]:5285 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752627AbZCRGq6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Mar 2009 02:46:58 -0400
+Received: by mu-out-0910.google.com with SMTP id g7so123801muf.1
+        for <git@vger.kernel.org>; Tue, 17 Mar 2009 23:46:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=5JKH/6YVV3IABSqvp/+W9RnlKPnZ3MoOO/+spk4mmTg=;
+        b=oYC3t6b1pYcqQ1jzlmuygHcPyLT2xJyqSiFOoo2SA/UV9VOrkK677CJ1R5zWRQqxfQ
+         TkGVeFlkmuB0t5mW+P3Gt61iR6Shd1432kdFWQJTi0aRjsWZO1/iDjhVU4U4ZxZtk2PC
+         eTzQBbwOWi1UAPIPMXjQqn9ESOEZB/uYeuE4s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=qCDzClDVrYeJDeNYKRjedjbpgKGtSsKwWYc60zGx5MVsy6pBTLoToSeqPJVc3YuUuy
+         9sXOSYWZfOhvnYGRoW2jL4CiTcAZkMzpQfe3nwrDwEyHXHctv2rPWL/pb468EY9YNQbd
+         49m489CQaWy9JD33u3EIDE7x88/2LNaTtawKM=
+Received: by 10.103.244.10 with SMTP id w10mr381607mur.71.1237358815438; Tue, 
+	17 Mar 2009 23:46:55 -0700 (PDT)
+In-Reply-To: <200903180651.33381.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113588>
 
-onsdag 18 mars 2009 02:40:39 skrev "Shawn O. Pearce" <spearce@spearce.org>:
-> Most of these patches are to improve the test coverage within the
-> revwalk package.
-> 
-> 
-> The last commit points out what I feared, which is that a RevWalk
-> with a PathFilter applied doesn't produce the same results that
-> git-core would produce in the same situation.  We're either missing
-> some functions necessary to implement it, or we flat out produce
-> a wrong graph in some cases.
-> 
-> The tests are commented out because JUnit doesn't have a notion of
-> "known broken".  But I did leave in TODO comments.  I'd like to
-> apply the test, and then work later to improve it, but I'm open
-> to suggestions.
+Heya,
 
-If we'd switch to JUnit4/TestNG we could abuse the expected exception
-annotation.
+On Wed, Mar 18, 2009 at 06:51, Christian Couder <chriscool@tuxfamily.or=
+g> wrote:
+> =A0* San Francisco in October, just after the Google Summer of Code M=
+entor
 
--- robin
+Considering that (assuming git is accepted as mentoring organization)
+we can ask Google for 2 airplane tickets, I'm voting for this option
+;).
+
+--=20
+Cheers,
+
+Sverre Rabbelier
