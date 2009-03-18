@@ -1,65 +1,60 @@
-From: Roger Garvin <yoyodyn@gmail.com>
-Subject: Re: Suggested Workflow Question
-Date: Wed, 18 Mar 2009 13:00:51 +0000 (UTC)
-Message-ID: <loom.20090318T125717-946@post.gmane.org>
-References: <loom.20090317T175010-470@post.gmane.org>  <49C04DFC.10201@earth.care2.com> <46a038f90903172141o7b272c17v2c485bb66b529fe8@mail.gmail.com>
+From: Gustaf Gunnarsson <gustaf.gunnarsson@gmail.com>
+Subject: Git-shell do not work when git is not installed in PATH
+Date: Wed, 18 Mar 2009 14:16:37 +0100
+Message-ID: <e58a26890903180616k4f71bdc7s98016caaa3f03c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 18 14:03:02 2009
+X-From: git-owner@vger.kernel.org Wed Mar 18 14:18:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjvQC-0007fr-Rw
-	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 14:03:01 +0100
+	id 1Ljveu-0004vo-4k
+	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 14:18:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756111AbZCRNBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Mar 2009 09:01:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755784AbZCRNBL
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 09:01:11 -0400
-Received: from main.gmane.org ([80.91.229.2]:58179 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755201AbZCRNBK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Mar 2009 09:01:10 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LjvOM-000405-GZ
-	for git@vger.kernel.org; Wed, 18 Mar 2009 13:01:06 +0000
-Received: from c-69-137-84-33.hsd1.tn.comcast.net ([69.137.84.33])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 18 Mar 2009 13:01:06 +0000
-Received: from yoyodyn by c-69-137-84-33.hsd1.tn.comcast.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 18 Mar 2009 13:01:06 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 69.137.84.33 (Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7)
+	id S1754161AbZCRNQm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Mar 2009 09:16:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754155AbZCRNQl
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 09:16:41 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:43585 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752931AbZCRNQl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Mar 2009 09:16:41 -0400
+Received: by fxm2 with SMTP id 2so45432fxm.37
+        for <git@vger.kernel.org>; Wed, 18 Mar 2009 06:16:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=pFESXNesZ/6RD8qPfOnHx4FVIaqzQdGv7ZNrZMp4//M=;
+        b=IjPkp+vg60XMtAkxAEuZcu+LEG/jAoL0VxdtVYem5ygYP8vJfW1oKkWlFRmVV82rlP
+         b5V69mdJRrMa95t7Fab+A4k4dgKAPqzhLStDFy41k1HWh4m+lHw1nU3tX65Izvw2O1j1
+         I9wjO/O1O0KVSabd7pnqgne8JcBhOuGiY23j0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=Xjt39GH2Cuow5ZZ4028Z9u536wEXrn+rC1MLRg/NWhWL7BuCSg+cI4rqhqiFDt6CAT
+         goavZY5vGgVQmsEtkyzE7VgR3UnQLqzajf317HEbaRRpBfQjMle3+hlqbRTqarywdp3R
+         o8j+FwkDWEUULQz3Jbkqnyo3nTw57Iz7gn05c=
+Received: by 10.204.117.136 with SMTP id r8mr406622bkq.188.1237382197778; Wed, 
+	18 Mar 2009 06:16:37 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113614>
 
-Martin Langhoff <martin.langhoff <at> gmail.com> writes:
+Hi,
+git-shell is unable to spawn git-receive-pack, git-upload-pack and
+git-cvsserver when git is not installed in PATH.
 
-> We've done a ton of that. Even better than emailing is that you can
-> have a repo on a usb stick/disk.
-> 
+As far as I understund it is impossible to get
+git_extract_argv0_path() to work when using git-shell and the only
+path the actually works to use is GIT_EXEC_PATH. Hence, could the
+defaults be changed so that git is also installed in GIT_EXEC_PATH or
+is there some better solution?
 
-That would be great except that most of our customers do not technically allow
-us to plug USB drives into any of their computers.  It's a rather silly rule
-actually but the drives could be confiscated. 
-
-Thank you for the links to the other thread.  I will read through those today.
-I am hoping that this is simpler in practice than it looks on paper, cause what
-I see on paper is a fully connected graph of all our employees with all our
-customers multiple source locations and with our office server.  It seems like
-it could get out of control for tracking where changes might be (who is holding
-them)
-
-
-Roger Garvin
+//Gustaf
