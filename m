@@ -1,79 +1,76 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Ability to edit message from git rebase --interactive.
-Date: Wed, 18 Mar 2009 10:54:13 +0100
-Message-ID: <49C0C4C5.5070802@drmicha.warpmail.net>
-References: <200903171953.23650.ogoffart@kde.org>	 <alpine.DEB.1.00.0903172329480.10279@pacific.mpi-cbg.de>	 <20090318004056.GB25454@coredump.intra.peff.net>	 <7vsklbod0l.fsf@gitster.siamese.dyndns.org> <fabb9a1e0903172242v6f67aa9er40fe0ae2a2db7bc3@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: GitTogether '09
+Date: Wed, 18 Mar 2009 10:54:49 +0100
+Message-ID: <fabb9a1e0903180254u5569e9f5u5e1aa43fa2d1d178@mail.gmail.com>
+References: <20090310001613.GL11989@spearce.org>
+	 <200903180651.33381.chriscool@tuxfamily.org>
+	 <fabb9a1e0903172346j74b9992r1b0a8d6eb523103c@mail.gmail.com>
+	 <200903180805.32440.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Olivier Goffart <ogoffart@kde.org>, git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 18 10:56:01 2009
+Cc: git@vger.kernel.org, gittogether@lists.utsl.gen.nz
+To: Christian Couder <chriscool@tuxfamily.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Mar 18 10:56:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LjsVE-0004Iz-LA
-	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 10:56:01 +0100
+	id 1LjsVf-0004PO-R0
+	for gcvg-git-2@gmane.org; Wed, 18 Mar 2009 10:56:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754499AbZCRJyb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Mar 2009 05:54:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754476AbZCRJyb
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 05:54:31 -0400
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:54831 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753637AbZCRJya (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Mar 2009 05:54:30 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 30A742F4E09;
-	Wed, 18 Mar 2009 05:54:28 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Wed, 18 Mar 2009 05:54:28 -0400
-X-Sasl-enc: a+f9CoXlHtsCflMMo1aJmJlM05V9ZYBKT0Y/ze+mB6f8 1237370067
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 0F4A91E50E;
-	Wed, 18 Mar 2009 05:54:26 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090317 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <fabb9a1e0903172242v6f67aa9er40fe0ae2a2db7bc3@mail.gmail.com>
+	id S1754666AbZCRJyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Mar 2009 05:54:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754476AbZCRJyx
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 05:54:53 -0400
+Received: from fk-out-0910.google.com ([209.85.128.185]:9433 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753473AbZCRJyw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Mar 2009 05:54:52 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so183105fkq.5
+        for <git@vger.kernel.org>; Wed, 18 Mar 2009 02:54:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=rP3osAQo9x8tVWFzwSZZlEfKy+v59MgQC7AxXwSzLTo=;
+        b=h69idaLmaYC5kpgpBozMPZ/DBONDqZMSDFaiaPWJotcypCH8OTr685Xei2PUSC7aMt
+         UwoHYSvm1daGENUhrK9WbP1cJaIFXzhxSwLFORz3UlJdwJq7JlIziCppalJpFCWbDr0O
+         oM1nIAS1uOFoJi8koSBltvk6LmrB8liiSimiE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=gzxARMvpzXq3MFg3ZUm6MUMiJuW0J7yBCnd7XtMGqRgUbU/8jeu1GeDbLTs5rjiFtt
+         7ogpCQV5oEGRC09mVSfiwKu8RGF7K18HrznorqAvwZVJAAswIPh6DoOBiNbgoiRVav56
+         fEWRUXJZYqqwyj3IANIIcaa2rO/Vv0Jp4NH9U=
+Received: by 10.103.228.7 with SMTP id f7mr435698mur.130.1237370089877; Wed, 
+	18 Mar 2009 02:54:49 -0700 (PDT)
+In-Reply-To: <200903180805.32440.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113604>
 
-Sverre Rabbelier venit, vidit, dixit 18.03.2009 06:42:
-> Heya,
-> 
-> On Wed, Mar 18, 2009 at 02:06, Junio C Hamano <gitster@pobox.com> wrote:
->> Jeff King <peff@peff.net> writes:
->> I am not quite sure what rephrase is buying us.  Do we also want to
->> introduce retree that allows you to muck with the tree object recorded
->> without giving you a chance to clobber the commit log message?
-> 
-> Is that a common operation? Rephrase is, at least to me...
-> 
+Heya,
 
-Rephrase for sure is common, and for sure can be done currently... It's
-only that "commit --amend, save&quit, continue" could be shortened.
+On Wed, Mar 18, 2009 at 08:05, Christian Couder <chriscool@tuxfamily.org> wrote:
+> I thought that it was only one international airplane ticket last year,
+> except perhaps when there are no US based mentor. And we are not sure that
+> Google or another company in the Bay Area will be able to host us this
+> year. So the cost of hosting the GitTogether might be higher than the cost
+> of a few airplane tickets.
 
-OTOH: Most commonly one would want to rephrase a commit message or two
-without actually rebasing anything. And the proposed change doesn't help
-as much as it could, in two respects:
+Last year Google provided two international airplane tickets and was
+able to host us, we can at least ask them to host us again this year
+(if that is what we decide on).
+Shawn, how likely is it that Google will provide hosting for another
+GitTogether this year?
 
-1) I want to be able to say "rephrase HEAD~2" without having to edit a
-rebase action script. (That would be useful for rewriting a single
-commit as well, and could be added easily.)
+-- 
+Cheers,
 
-2) Currently, all rebasing operations have trouble with merges. But if
-all I want to do is rephrasing a log message then no diff/apply is
-necessary, no rewriting of trees, no change in the DAG structure (i.e.
-connectivity; sha1s change, of course). So there should be a special
-mode for DAG-preserving rewrites, where one can be sure that merges are
-fully preserved.
-
-2) seems to be the most important point to make rephrasing safe and
-convenient.
-
-Michael
+Sverre Rabbelier
