@@ -1,55 +1,124 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: t5505-remote fails on Windows
-Date: Thu, 19 Mar 2009 01:03:28 -0400
-Message-ID: <20090319050328.GA9746@coredump.intra.peff.net>
-References: <49C0DE23.8020809@viscovery.net> <20090319041837.GA32642@coredump.intra.peff.net> <20090319044313.GA341@coredump.intra.peff.net> <76718490903182156y3b2b9d8aw708829a6ed151aa@mail.gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] git-gui: various French translation fixes
+Date: Thu, 19 Mar 2009 06:09:25 +0100
+Message-ID: <200903190609.25344.chriscool@tuxfamily.org>
+References: <20090318205410.GA900@zoy.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 19 06:05:55 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>,
+	Alexandre Bourget <alexandre.bourget@savoirfairelinux.com>
+To: Sam Hocevar <sam@zoy.org>
+X-From: git-owner@vger.kernel.org Thu Mar 19 06:11:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkARH-0001VJ-Lk
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 06:05:28 +0100
+	id 1LkAXp-0002sC-Tl
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 06:11:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752575AbZCSFDj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2009 01:03:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752495AbZCSFDi
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 01:03:38 -0400
-Received: from peff.net ([208.65.91.99]:60907 "EHLO peff.net"
+	id S1752668AbZCSFKZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Mar 2009 01:10:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751677AbZCSFKX
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 01:10:23 -0400
+Received: from smtp4-g21.free.fr ([212.27.42.4]:58698 "EHLO smtp4-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752113AbZCSFDi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2009 01:03:38 -0400
-Received: (qmail 29704 invoked by uid 107); 19 Mar 2009 05:03:45 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 19 Mar 2009 01:03:45 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Mar 2009 01:03:28 -0400
+	id S1751493AbZCSFKW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Mar 2009 01:10:22 -0400
+Received: from smtp4-g21.free.fr (localhost [127.0.0.1])
+	by smtp4-g21.free.fr (Postfix) with ESMTP id DEE964C8068;
+	Thu, 19 Mar 2009 06:10:13 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp4-g21.free.fr (Postfix) with ESMTP id 8FC0B4C80A7;
+	Thu, 19 Mar 2009 06:10:10 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <20090318205410.GA900@zoy.org>
 Content-Disposition: inline
-In-Reply-To: <76718490903182156y3b2b9d8aw708829a6ed151aa@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113717>
 
-On Thu, Mar 19, 2009 at 12:56:37AM -0400, Jay Soffian wrote:
+Le mercredi 18 mars 2009, Sam Hocevar a =E9crit :
+> Mostly grammar, spelling and typography fixes, but also a few wording
+> enhancements here and there.
 
-> > As a side note, I find this solution a little bit ugly. String lists
-> > should sort on their strings, not on some other random magic in the util
-> > field. This usage really abuses string_list a bit as a data type because
-> > we have no generic "list" type.
-> 
-> I really don't think so. The string_list API accommodates this case
-> quite nicely. So why not?
+It looks mostly good to me.
 
-I think the code would be more natural as a list of structs, each with a
-source and dest. But C does not make it pleasant to write generic data
-types, so things end up stuffed into string_lists with a magic util
-field. So I think leaving it as a string_list is probably the most sane
-thing to do.
+> Signed-off-by: Sam Hocevar <sam@zoy.org>
+> ---
+>  po/fr.po |  196
+> +++++++++++++++++++++++++++++++------------------------------- 1 file=
+s
+> changed, 98 insertions(+), 98 deletions(-)
+>
+>  #: git-gui.sh:2484 lib/index.tcl:410
+>  msgid "Revert Changes"
+> -msgstr "Annuler les modifications (revert)"
+> +msgstr "R=E9voquer les modifications"
 
--Peff
+I am not sure that "R=E9voquer" is better than "Annuler".
+
+[...]
+
+>  #: lib/index.tcl:326
+>  msgid "Ready to commit."
+> @@ -1719,18 +1719,18 @@ msgstr "Ajout de %s"
+>  #: lib/index.tcl:396
+>  #, tcl-format
+>  msgid "Revert changes in file %s?"
+> -msgstr "Annuler les modifications dans le fichier %s ? "
+> +msgstr "R=E9voquer les modifications dans le fichier %s ? "
+>
+>  #: lib/index.tcl:398
+>  #, tcl-format
+>  msgid "Revert changes in these %i files?"
+> -msgstr "Annuler les modifications dans ces %i fichiers ?"
+> +msgstr "R=E9voquer les modifications dans ces %i fichiers ?"
+>
+>  #: lib/index.tcl:406
+>  msgid "Any unstaged changes will be permanently lost by the revert."
+>  msgstr ""
+>  "Toutes les modifications non-index=E9es seront d=E9finitivement per=
+dues par
+> " -"l'annulation."
+> +"la r=E9vocation."
+
+Same thing for the 3 strings above.
+
+[...]
+
+>  #: lib/index.tcl:427
+>  msgid "Reverting selected files"
+> -msgstr "Annuler modifications dans fichiers selectionn=E9s"
+> +msgstr "R=E9vocation en cours des fichiers selectionn=E9s"
+>
+>  #: lib/index.tcl:431
+>  #, tcl-format
+>  msgid "Reverting %s"
+> -msgstr "Annulation des modifications dans %s"
+> +msgstr "R=E9vocation en cours de %s"
+
+Same thing above.
+
+>  #: lib/remote_branch_delete.tcl:47
+>  msgid "From Repository"
+> @@ -2244,7 +2244,7 @@ msgid ""
+>  "One or more of the merge tests failed because you have not fetched =
+the
+> " "necessary commits.  Try fetching from %s first."
+>  msgstr ""
+> -"Une ou plusieurs des tests de fusion ont =E9chou=E9s parce que vous=
+ n'avez
+> pas "
+> +"Un ou plusieurs des tests de fusion ont =E9chou=E9 parce que vous=20
+> n'avez pas "
+> "r=E9cup=E9r=E9 les commits n=E9cessaires. Essayez de r=E9cup=E9r=E9 =
+=E0=20
+> partir de %s d'abord."
+
+The last "r=E9cup=E9r=E9" should be changed to "r=E9cup=E9rer".
+
+Thanks,
+Christian.
