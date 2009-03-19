@@ -1,54 +1,67 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Gnome chose Git
-Date: Thu, 19 Mar 2009 16:14:06 -0400
-Message-ID: <20090319201405.GD17028@coredump.intra.peff.net>
-References: <877i2lbvt7.fsf@iki.fi> <49C249B9.7010001@drmicha.warpmail.net> <1cd1989b0903190643p19a40718yc4fd2730aab0a9a0@mail.gmail.com> <49C24D9B.1060301@drmicha.warpmail.net> <1cd1989b0903190701uac4602dl1d2c3cace45a9938@mail.gmail.com> <20090319151610.GO23521@spearce.org> <1cd1989b0903190850p1a08991y754904e7799c7879@mail.gmail.com>
+Subject: Re: git am from scratch
+Date: Thu, 19 Mar 2009 16:18:17 -0400
+Message-ID: <20090319201817.GE17028@coredump.intra.peff.net>
+References: <200903191609.24812.agruen@suse.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Git <git@vger.kernel.org>
-To: Pat Notz <patnotz@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 19 21:15:48 2009
+Cc: git@vger.kernel.org
+To: Andreas Gruenbacher <agruen@suse.de>
+X-From: git-owner@vger.kernel.org Thu Mar 19 21:20:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkOeZ-0004VF-U6
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 21:15:48 +0100
+	id 1LkOii-00062k-DM
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 21:20:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755034AbZCSUOR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2009 16:14:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754273AbZCSUOQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 16:14:16 -0400
-Received: from peff.net ([208.65.91.99]:45724 "EHLO peff.net"
+	id S1757980AbZCSUS3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2009 16:18:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756817AbZCSUS2
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 16:18:28 -0400
+Received: from peff.net ([208.65.91.99]:45727 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754200AbZCSUOQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2009 16:14:16 -0400
-Received: (qmail 3288 invoked by uid 107); 19 Mar 2009 20:14:23 -0000
+	id S1755890AbZCSUS1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2009 16:18:27 -0400
+Received: (qmail 3328 invoked by uid 107); 19 Mar 2009 20:18:35 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 19 Mar 2009 16:14:23 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Mar 2009 16:14:06 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 19 Mar 2009 16:18:35 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Mar 2009 16:18:17 -0400
 Content-Disposition: inline
-In-Reply-To: <1cd1989b0903190850p1a08991y754904e7799c7879@mail.gmail.com>
+In-Reply-To: <200903191609.24812.agruen@suse.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113823>
 
-On Thu, Mar 19, 2009 at 09:50:39AM -0600, Pat Notz wrote:
+On Thu, Mar 19, 2009 at 04:09:24PM +0100, Andreas Gruenbacher wrote:
 
-> On Thu, Mar 19, 2009 at 9:16 AM, Shawn O. Pearce <spearce@spearce.org> wrote:
-> >
-> > Why are people reinventing the reflog, and core.logallrefupdates ?
-> >
+> lates git (e986ceb0): there is a bug in git am when trying to recreate the 
+> entire history of a repository:
+
+I don't think this has ever worked in any version of git.
+
+It might be nice to have, since it does come up once in a while, so I
+suspect patches would be welcome.
+
+But...
+
+> When the first commit is added by hand instead, git am will import the
+> rest of the mbox without problems. This is annoying because it's at
+> least not immediately obvious how to recreate the initial commit with
+> all the metadata.
 > 
-> Hmmm, lack of awareness of core.logallrefupdates in my case.  Thanks
-> for the pointer.
+> Is this easily fixed?
 
-But do note that reflogs expire eventually, so you will want to also
-look at gc.reflogexpire and gc.reflogexpireunreachable if you want to
-keep this as an activity log forever.
+There are many other ways to do this. Have you tried:
+
+  - simply pulling the old repo into the new one?
+
+  - if they are not connected in real-time, creating a bundle from the
+    first and pulling it into the latter?
+
+  - if you want to tweak the commit data during the process, have you
+    tried using fast-export/fast-import rather than format-patch/am?
 
 -Peff
