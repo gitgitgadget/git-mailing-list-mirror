@@ -1,89 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/11] Test on Windows - prequel
-Date: Thu, 19 Mar 2009 16:00:09 -0700
-Message-ID: <7v8wn16ruu.fsf@gitster.siamese.dyndns.org>
-References: <cover.1237410682.git.j6t@kdbg.org>
- <200903192158.46680.j6t@kdbg.org>
+From: Guido Ostkamp <git@ostkamp.fastmail.fm>
+Subject: Re: git-svn and incorrect working copy file timestamps?
+Date: Fri, 20 Mar 2009 00:02:01 +0100 (CET)
+Message-ID: <alpine.LSU.2.01.0903192355590.29898@bianca.dialin.t-online.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Fri Mar 20 00:01:56 2009
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+To: git@vger.kernel.org, derek.mahar@gmail.com
+X-From: git-owner@vger.kernel.org Fri Mar 20 00:03:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkRFE-0005iM-6d
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 00:01:48 +0100
+	id 1LkRH1-0006Gn-Su
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 00:03:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752800AbZCSXAS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Mar 2009 19:00:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752273AbZCSXAS
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 19:00:18 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44235 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751720AbZCSXAR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Mar 2009 19:00:17 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B6EA9A3382;
-	Thu, 19 Mar 2009 19:00:14 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B3CC8A3381; Thu,
- 19 Mar 2009 19:00:11 -0400 (EDT)
-In-Reply-To: <200903192158.46680.j6t@kdbg.org> (Johannes Sixt's message of
- "Thu, 19 Mar 2009 21:58:46 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B525093A-14D9-11DE-95A2-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1753705AbZCSXCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2009 19:02:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753361AbZCSXCJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 19:02:09 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:51477 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753081AbZCSXCJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Mar 2009 19:02:09 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 1D73D2F1C46;
+	Thu, 19 Mar 2009 19:02:07 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Thu, 19 Mar 2009 19:02:07 -0400
+X-Sasl-enc: bCbMy1I3fkn+h/+BCvf7Y9TkvdFkHkfa8m2HkDl7wsva 1237503726
+Received: from [192.168.2.101] (p549A49D8.dip.t-dialin.net [84.154.73.216])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 321D1A633;
+	Thu, 19 Mar 2009 19:02:06 -0400 (EDT)
+User-Agent: Alpine 2.01 (LSU 1184 2008-12-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113855>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+> I learned from http://marc.info/?l=git&m=122783905206964&w=2 that all 
+> Git commands do not preserve file timestamps because Git, by design, 
+> does not record timestamps in the tree objects.  So, in order to see the 
+> last time a particular file changed, you must examine the commit log. 
+> I guess I'll just have to get used to ignoring the working copy file 
+> timestamps.
 
-> On Mittwoch, 18. M=C3=A4rz 2009, Johannes Sixt wrote:
->> I'm preparing a series of patches that adjust the test suite so that=
- it
->> passes on Windows (MinGW port). This is the initial part of it. Anot=
-her
->> dozen or more are to follow. By splitting the series I hope to get
->> earlier feedback.
->>
->> The series is also available from
->>
->>  git://repo.or.cz/git/mingw/j6t.git for-junio
->>
-> I've updated the series. Would you please pick up it up from the URL
-> above?
+As far as I know setting the current time is required when switching 
+between different named branches in the same repository.
 
-I think you have a typo in the "Use 'say'" one ("In on case").  Here is=
- a
-diff from what I queued previously but didn't have a chance to merge to=
- 'pu':
+It can happen that a branch switch ('checkout' in Git's terminology) 
+retrieves an older version of a source file, and then the Makefile would 
+not detect that an object file (a result from earlier compilation that is 
+of course not stored in the repo itself) has to be rebuild because this is 
+based on time checks only. In order to avoid this, the source file (even 
+if older) gets the current date, so it is in any case newer than the 
+object file and causes an automatic rebuild.
 
-     test suite: Use 'say' to say something instead of 'test_expect_suc=
-cess'
+Regards
 
--    Some test scripts report that some tests will be skipped.  They us=
-ed
-+    Some tests report that some tests will be skipped.  They used
-     'test_expect_success' with a trivially successful test.  Nowadays =
-we have
-     the helper function 'say' for this purpose.
-
--    t9700-perl-git.sh was using 'say_color' for this kind of reporting=
-; change
--    it to a vanilla 'say' for consistency.
-+    In on case, 'say_color skip' is replaced by 'say' because the form=
-er is
-+    not intended as a public API.
-
-     Signed-off-by: Johannes Sixt <j6t@kdbg.org>
--    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-Other than that, the interdiff matches what I expected to see.
-
-Thanks.
+Guido
