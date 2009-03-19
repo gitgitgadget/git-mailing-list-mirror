@@ -1,65 +1,64 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 02/10] test suite: Use 'say' to say something instead
- of   'test_expect_success'
-Date: Thu, 19 Mar 2009 08:48:38 +0100
-Message-ID: <49C1F8D6.1060309@viscovery.net>
-References: <cover.1237410682.git.j6t@kdbg.org> <199f6a5e20f857a53af50872927a8086ce221345.1237410682.git.j6t@kdbg.org> <alpine.DEB.1.00.0903182306020.10279@pacific.mpi-cbg.de>
+From: Sam Hocevar <sam@zoy.org>
+Subject: Re: [PATCH] git-gui: various French translation fixes
+Date: Thu, 19 Mar 2009 08:58:55 +0100
+Message-ID: <20090319075855.GJ27280@zoy.org>
+References: <20090318205410.GA900@zoy.org> <200903190609.25344.chriscool@tuxfamily.org> <200903190714.25211.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Mar 19 08:50:13 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>,
+	Alexandre Bourget <alexandre.bourget@savoirfairelinux.com>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Thu Mar 19 09:00:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkD12-0001yu-Qd
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 08:50:13 +0100
+	id 1LkDBK-0005BL-8T
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 09:00:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753086AbZCSHsn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2009 03:48:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752477AbZCSHsn
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 03:48:43 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:43261 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751970AbZCSHsn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2009 03:48:43 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1LkCzX-0006yj-31; Thu, 19 Mar 2009 08:48:39 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id E47C8543; Thu, 19 Mar 2009 08:48:38 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
-In-Reply-To: <alpine.DEB.1.00.0903182306020.10279@pacific.mpi-cbg.de>
-X-Spam-Score: -1.4 (-)
+	id S1752560AbZCSH66 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Mar 2009 03:58:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752450AbZCSH66
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 03:58:58 -0400
+Received: from poulet.zoy.org ([80.65.228.129]:34859 "EHLO poulet.zoy.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752150AbZCSH66 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2009 03:58:58 -0400
+Received: by poulet.zoy.org (Postfix, from userid 1000)
+	id 095511203D9; Thu, 19 Mar 2009 08:58:55 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <200903190714.25211.chriscool@tuxfamily.org>
+Mail-Copies-To: never
+X-No-CC: I read mailing-lists; do not CC me on replies.
+X-Snort: uid=0(root) gid=0(root)
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113730>
 
-Johannes Schindelin schrieb:
-> Hi,
-> 
-> On Wed, 18 Mar 2009, Johannes Sixt wrote:
-> 
->> Some tests report that some tests will be skipped.  They used
->> 'test_exect_success' with a trivially successful test.  Nowadays we have
-> 
-> s/exect/expect/.
-> 
->> the helper function 'say' for this purpose.
->>
->> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> 
-> I see that you exchanged one "say_color" by "say".  What is the 
-> difference?
+On Thu, Mar 19, 2009, Christian Couder wrote:
+> > >  #: git-gui.sh:2484 lib/index.tcl:410
+> > >  msgid "Revert Changes"
+> > > -msgstr "Annuler les modifications (revert)"
+> > > +msgstr "R=E9voquer les modifications"
+> >
+> > I am not sure that "R=E9voquer" is better than "Annuler".
+>=20
+> Perhaps "Inverser"?
 
-The color. It's a change towards consistency. I figured that the command
-to use by the tests is "say", while "say_color" is an implementation
-detail of test-lib.sh.
+   I suggested "r=E9voquer" because it was close enough to "revert" tha=
+t
+there was no need to specify "(revert)" in the translation itself.
+It's what the French Wikipedia interface used to say to revert edits.
+But I see they now use "d=E9faire" (undo), so apparently they deemed
+it inappropriate for some reason. I have no strong preference for
+"Inverser" or even "Annuler", I just want it to be consistent and to ge=
+t
+rid of the "(revert)" at the end of this message.
 
--- Hannes
+Cheers,
+--=20
+Sam.
