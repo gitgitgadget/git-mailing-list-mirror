@@ -1,85 +1,88 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH v2] Introduce %<branch> as shortcut to the tracked   branch
-Date: Thu, 19 Mar 2009 15:52:58 +0100
-Message-ID: <49C25C4A.2010202@drmicha.warpmail.net>
-References: <200903181448.50706.agruen@suse.de> <20090318182603.GM8940@machine.or.cz> <alpine.DEB.1.00.0903182210310.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903182245280.10279@pacific.mpi-cbg.de> <7vr60ubgul.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0903182343580.10279@pacific.mpi-cbg.de>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Add a fast version of fstat to cygwin port
+Date: Thu, 19 Mar 2009 15:54:38 +0100
+Message-ID: <49C25CAE.6000003@viscovery.net>
+References: <81b0412b0903190730s40589291iea9a861ddeedcc0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Petr Baudis <pasky@suse.cz>,
-	Andreas Gruenbacher <agruen@suse.de>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Mar 19 15:55:14 2009
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Marius Storm-Olsen <marius@trolltech.com>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 19 15:57:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkJdv-0000AX-9w
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 15:54:47 +0100
+	id 1LkJfr-00010g-DR
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 15:56:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753598AbZCSOxP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2009 10:53:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753431AbZCSOxP
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 10:53:15 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:57559 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752537AbZCSOxO (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Mar 2009 10:53:14 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id C8E322F6C14;
-	Thu, 19 Mar 2009 10:53:12 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Thu, 19 Mar 2009 10:53:12 -0400
-X-Sasl-enc: yGWJklgDdaF+f3H+3BCbVqrrrkIfag/ALV3c5+i4gVwP 1237474392
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id C606315A35;
-	Thu, 19 Mar 2009 10:53:11 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090319 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <alpine.DEB.1.00.0903182343580.10279@pacific.mpi-cbg.de>
+	id S1755514AbZCSOyu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2009 10:54:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753624AbZCSOyu
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 10:54:50 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:32937 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754750AbZCSOyt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2009 10:54:49 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LkJdo-0002oU-Tf; Thu, 19 Mar 2009 15:54:41 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id A34A2543; Thu, 19 Mar 2009 15:54:40 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <81b0412b0903190730s40589291iea9a861ddeedcc0@mail.gmail.com>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113774>
 
-Johannes Schindelin venit, vidit, dixit 18.03.2009 23:46:
-> Hi,
-> 
-> On Wed, 18 Mar 2009, Junio C Hamano wrote:
-> 
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->>
->>> Suggested by Pasky.
->>>
->>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->>
->> In the longer term who suggested matters much less than why such a 
->> feature is desirable, how it is used, and without it what is impossible 
->> and/or cumbersome.  What's the motivation behind this?
->>
->> You do not have to explain it to me, but you should explain it to the 
->> history that records this commit, and to the users who read doccos.
-> 
-> And that's not all... Documentation updates and tests for % and %<branch> 
-> are missing, too.
-> 
-> My main motivation to make this patch was to see how fast I could come up 
-> with something working that does not hurt my eyes.
-> 
-> But I do not have time to do more today: My main project as well as Git 
-> got accepted into the Google Summer of Code program, so I am even more 
-> swamped than usually.
-> 
-> So... if anybody feels like it, I would be very thankful for a proper 
-> commit message, documentation and tests...
+Alex Riesen schrieb:
+> Besides, the output of the fast stat and lstat is not compatible
+> with cygwin's fstat with regard to uid, gid and ctime fields.
 
-Just a quick note that I'm feeling like it... Though it seems this does
-not quite work with local branches, i.e. a branch created with
+Why do you need this? I don't think that fstat() is used in a critical
+path. Do you see problems with the incompatible fields?
 
-git checkout --track -b tracking tracked
+> This is not strictly related to the other stat patches. The fstat
+> code is shamelessly stolen from the mingw port, sorry.
 
-with "tracked" being a local branch. I don't see why on first inspection
-of the code (branch.tracking.merge = refs/heads/tracked, so what), but
-maybe you will...
+I wouldn't call it "stolen", but "copied". Because if you copy it, it
+becomes your responsibility and all copied bugs are yours ;)
 
-Michael
+> BTW, why do we have to #undef fstat, but not stat/lstat?
+
+Because stat and lstat are #defined with an argument list, but in those
+instances where the cygwin version of stat/lstat is meant, they are used
+*without* argument list (see cygwin_stat/lstat_stub), and no macro
+expansion happens, and therefore we don't need to #undef the macro.
+
+OTOH, do_fstat calls into cygwin's fstat() if the file handle is not a
+file and uses an argument list that would cause a macro expansion if it
+were not #undef'd:
+
+> +#undef fstat
+> +static int cygwin_fstat(int fd, struct stat *buf)
+> +{
+> +	HANDLE fh = (HANDLE)_get_osfhandle(fd);
+> +	BY_HANDLE_FILE_INFORMATION fdata;
+> +
+> +	if (fh == INVALID_HANDLE_VALUE) {
+> +		errno = EBADF;
+> +		return -1;
+> +	}
+> +	/* direct non-file handles to cygwin's fstat() */
+> +	if (GetFileType(fh) != FILE_TYPE_DISK)
+> +		return fstat(fd, buf);
+
+We never do that for stat/lstat.
+
+-- Hannes
