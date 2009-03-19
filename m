@@ -1,75 +1,85 @@
-From: Mike Ralphson <mike.ralphson@gmail.com>
-Subject: Re: Gnome chose Git
-Date: Thu, 19 Mar 2009 11:33:54 +0000
-Message-ID: <e2b179460903190433l3619e09aj47490a6e3b10d42d@mail.gmail.com>
-References: <877i2lbvt7.fsf@iki.fi>
+From: Tim Blechmann <tim@klingt.org>
+Subject: Re: git svn unhandled.log compression
+Date: Thu, 19 Mar 2009 13:18:29 +0100
+Message-ID: <49C23815.5010204@klingt.org>
+References: <gps05u$905$1@ger.gmane.org> <fabb9a1e0903190406r31396bbao2717f94d7269b50a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Teemu Likonen <tlikonen@iki.fi>
-X-From: git-owner@vger.kernel.org Thu Mar 19 12:35:31 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigDF57E450FE24731B474A9045"
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 19 13:29:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkGX4-0006JN-Tp
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 12:35:31 +0100
+	id 1LkHNH-0008Ol-1E
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 13:29:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751512AbZCSLd7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Mar 2009 07:33:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751396AbZCSLd5
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 07:33:57 -0400
-Received: from mail-qy0-f118.google.com ([209.85.221.118]:46555 "EHLO
-	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751315AbZCSLd5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Mar 2009 07:33:57 -0400
-Received: by qyk16 with SMTP id 16so583711qyk.33
-        for <git@vger.kernel.org>; Thu, 19 Mar 2009 04:33:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ViLTY3hqoqzK+evh3AKPr9opFuYC/3OC4GPfLKWHj/s=;
-        b=Fkk5Cdw4W63Hdn1nxBs1mJmBapjwn3B+hrbSgQQBw3fENVlQNTY8H9TWEyjd8zx8kx
-         vtp47dJ/W1ZFG3QTnymOH08kx9z9tj8rZ8jkH2K+O/1YkSFIW+EQnUKET65nzh3QE0gy
-         mK6w22l0nptndryFbKrbx4xiAMgMYeTjUBjgo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=U2OaEpiCDcvNdsb2KoieX1fBQwXF4GtWr3aUwi7TtQJXwbmMPZvb62XNODH8sKv3yK
-         OM09xTxtnPkPZQpq3XqTj6j0uO9qP1tOmLMGqN54EqBN6Y3ey5WTqEa2yrGdzoaPFI3I
-         818oW6q670x+3CoflDm2puuVQIn0xmz1BWoWs=
-Received: by 10.224.74.83 with SMTP id t19mr3555926qaj.334.1237462435001; Thu, 
-	19 Mar 2009 04:33:55 -0700 (PDT)
-In-Reply-To: <877i2lbvt7.fsf@iki.fi>
+	id S1752648AbZCSM1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2009 08:27:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752642AbZCSM1u
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 08:27:50 -0400
+Received: from mail.klingt.org ([86.59.21.178]:59262 "EHLO klingt.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752398AbZCSM1t (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2009 08:27:49 -0400
+X-Greylist: delayed 538 seconds by postgrey-1.27 at vger.kernel.org; Thu, 19 Mar 2009 08:27:49 EDT
+Received: from [10.9.3.234] (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by klingt.org (8.14.3/8.14.3/Debian-6) with ESMTP id n2JCIl2s028563;
+	Thu, 19 Mar 2009 13:18:47 +0100
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
+In-Reply-To: <fabb9a1e0903190406r31396bbao2717f94d7269b50a@mail.gmail.com>
+X-Enigmail-Version: 0.95.0
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2b1 (klingt.org [127.0.0.1]); Thu, 19 Mar 2009 13:18:48 +0100 (CET)
+X-Virus-Scanned: ClamAV 0.94.2/9135/Thu Mar 19 11:04:44 2009 on es.klingt.org
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113766>
 
-2009/3/19 Teemu Likonen <tlikonen@iki.fi>:
-> FYI: The Gnome release team just announced that Gnome will migrate fr=
-om
-> Subversion to Git:
->
-> =C2=A0 =C2=A0http://thread.gmane.org/gmane.comp.gnome.infrastructure/=
-1134
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigDF57E450FE24731B474A9045
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-There does seem to be a typo in the release though.
+>> i am not familiar with the git svn codebase, so i am not sure, whether=
 
-"We realize that git is not perfect, and that the transition will
-require significant and important changes to many GNOME processes."
+>> it is feasible to implement a compression of the unhandled.log files,
+>> but it would definitely save me quite a lot of hd space ...
+>=20
+> On that note, Eric, what does the unhandled.log file do in the first
+> place? It's name would suggest it lists all revisions that aren't
+> handled yet, but the contents of the file seem to only grow over time,
+> what gives?
 
-s/ not//
+according to the man page, it logs unhandled svn properties
 
-There, fixed that.
+tim
 
-Seriously, they should be advocating a c) there, contributing
-improvements back to git (and whichever svn migration tool they used)
-for the benefit of all, which I'm sure we'll see.
+--=20
+tim@klingt.org
+http://tim.klingt.org
 
-Mike
+art is short - life is long
+  Jack Kerouac
+
+
+--------------enigDF57E450FE24731B474A9045
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAknCOCcACgkQdL+4qsZfVsu/QgCdHFxfTYdkjNA3egRI5uAOhdOT
+MdsAmgI/+o0QqXUNs7T5+KX0CyuzgqSH
+=zCW6
+-----END PGP SIGNATURE-----
+
+--------------enigDF57E450FE24731B474A9045--
