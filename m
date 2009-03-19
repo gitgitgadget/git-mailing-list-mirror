@@ -1,73 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: t5505-remote fails on Windows
-Date: Thu, 19 Mar 2009 04:02:19 -0700
-Message-ID: <7vhc1pai84.fsf@gitster.siamese.dyndns.org>
-References: <49C0DE23.8020809@viscovery.net>
- <20090319041837.GA32642@coredump.intra.peff.net>
- <20090319044313.GA341@coredump.intra.peff.net>
- <alpine.DEB.1.00.0903191135530.10279@pacific.mpi-cbg.de>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: git svn unhandled.log compression
+Date: Thu, 19 Mar 2009 12:06:01 +0100
+Message-ID: <fabb9a1e0903190406r31396bbao2717f94d7269b50a@mail.gmail.com>
+References: <gps05u$905$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Mar 19 12:04:22 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Tim Blechmann <tim@klingt.org>, Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Thu Mar 19 12:07:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkG2s-0003fP-By
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 12:04:18 +0100
+	id 1LkG6B-0004mr-PF
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 12:07:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754079AbZCSLCc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2009 07:02:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753082AbZCSLCb
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 07:02:31 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:41105 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752338AbZCSLCa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2009 07:02:30 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 76F40A3AB3;
-	Thu, 19 Mar 2009 07:02:28 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9570AA3AAC; Thu,
- 19 Mar 2009 07:02:21 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0903191135530.10279@pacific.mpi-cbg.de>
- (Johannes Schindelin's message of "Thu, 19 Mar 2009 11:36:50 +0100 (CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 6FA6FA08-1475-11DE-A08C-CFA5EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1753754AbZCSLGJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Mar 2009 07:06:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754658AbZCSLGG
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 07:06:06 -0400
+Received: from mail-bw0-f169.google.com ([209.85.218.169]:34232 "EHLO
+	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753754AbZCSLGF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Mar 2009 07:06:05 -0400
+Received: by bwz17 with SMTP id 17so440137bwz.37
+        for <git@vger.kernel.org>; Thu, 19 Mar 2009 04:06:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=gL6NHJPpOFS94RJbzMkrhJrAMV57FG+6MDvPvxGnU8I=;
+        b=VMEAjOc4BuGjHbba7VwmFjhCGbQ0hlEsFm5a8U+fzydFig8Aobzq2xyljQEgdb/HlH
+         pYYTIRgtLQPWSiGpJLR9UFFFOZtQgl7GrZ/VYwy65ULnoU/ql3VCsGNysPj+/1qncWIq
+         Vzxsn7Zq5UpJyV4pO6sPAIEOE4VRBLUomjmDY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=fuof9hEW405UWbXukma+PTIHKVoYja9UYRJ8xwqNGFLFX/I1bTs+iEOyMN8ODzc4Og
+         0Cgs5rccftcAvVsU7hHlAMC/JHzf17xWWDTl+FgofwAaTqkVvdzy5Dsj1HEAB0dVK/te
+         2rRWKE36Opk4kUzPM2s2G33zh1g/coa8U8TK8=
+Received: by 10.103.92.8 with SMTP id u8mr1045594mul.34.1237460761656; Thu, 19 
+	Mar 2009 04:06:01 -0700 (PDT)
+In-Reply-To: <gps05u$905$1@ger.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113759>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Heya
 
-> On Thu, 19 Mar 2009, Jeff King wrote:
+[full message quoted as now ccing Eric]
+
+On Thu, Mar 19, 2009 at 00:30, Tim Blechmann <tim@klingt.org> wrote:
+> is there a way to compress the unhandled.log files, generated by git =
+svn?
+> tracking several projects with git svn, the unhandled.log files are
+> larger, than the actual data ...
 >
->> @@ -163,9 +163,15 @@ static int cmp_items(const void *a, const void *b)
->>  	return strcmp(one->string, two->string);
->>  }
->>  
->> +void sort_string_list_with_fn(struct string_list *list,
->> +			      int (*fn)(const void *, const void *))
->> +{
->> +	qsort(list->items, list->nr, sizeof(*list->items), fn);
->> +}
->> +
+> e.g. the mirror of the svn repository of the boost library gives me:
+> 135M =A0 =A0.git/objects
+> 283M =A0 =A0.git/svn
 >
-> Do we really want an API for that?  Calling qsort() directly should be 
-> obvious enough, no?
+> the unhandled.log files can be compressed at pretty high rates, these
+> are the differently compressed files from the trunk of boost svn:
+> 9.0M =A0 =A0unhandled.log
+> 584K =A0 =A0unhandled.log.gz
+> 396K =A0 =A0unhandled.log.bz2
+> 344K =A0 =A0unhandled.log.lzma
+>
+> i am not familiar with the git svn codebase, so i am not sure, whethe=
+r
+> it is feasible to implement a compression of the unhandled.log files,
+> but it would definitely save me quite a lot of hd space ...
 
-I think so.  If it were done like this (notice the lack of double
-indirection in the cmp_fn signature):
+On that note, Eric, what does the unhandled.log file do in the first
+place? It's name would suggest it lists all revisions that aren't
+handled yet, but the contents of the file seem to only grow over time,
+what gives?
 
-    typedef int string_list_item_cmp_fn(const struct string_list_item *, const struct string_list_item *);
+--=20
+Cheers,
 
-    void sort_string_list_with_fn(struct string_list *list, string_list_item_cmp_fn *);
-
-it would have made more sense, though.
+Sverre Rabbelier
