@@ -1,111 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Produce a nicer output in case of sha1_object_info
- failures in ls-tree -l
-Date: Thu, 19 Mar 2009 16:08:43 -0700
-Message-ID: <7v4oxp6rgk.fsf@gitster.siamese.dyndns.org>
-References: <20090319203002.GA31014@blimp.localdomain>
- <7v4oxp89eb.fsf@gitster.siamese.dyndns.org>
- <20090319220020.GA8433@blimp.localdomain>
- <7vmybh6u15.fsf@gitster.siamese.dyndns.org>
- <20090319225429.GC8433@blimp.localdomain>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: t5505-remote fails on Windows
+Date: Fri, 20 Mar 2009 00:15:50 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903200014370.10279@pacific.mpi-cbg.de>
+References: <49C0DE23.8020809@viscovery.net> <20090319041837.GA32642@coredump.intra.peff.net> <20090319044313.GA341@coredump.intra.peff.net> <alpine.DEB.1.00.0903191135530.10279@pacific.mpi-cbg.de> <7vhc1pai84.fsf@gitster.siamese.dyndns.org>
+ <20090319200308.GB17028@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 20 00:10:29 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 20 00:15:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkRNX-0008SA-1l
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 00:10:23 +0100
+	id 1LkRSS-0001Z4-34
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 00:15:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752951AbZCSXIx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2009 19:08:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752462AbZCSXIx
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 19:08:53 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45679 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751056AbZCSXIw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2009 19:08:52 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 6CACB7ADA;
-	Thu, 19 Mar 2009 19:08:49 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 719E37AD9; Thu,
- 19 Mar 2009 19:08:45 -0400 (EDT)
-In-Reply-To: <20090319225429.GC8433@blimp.localdomain> (Alex Riesen's message
- of "Thu, 19 Mar 2009 23:54:29 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E7EB03F0-14DA-11DE-9E6A-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+	id S1754353AbZCSXN6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2009 19:13:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754108AbZCSXN6
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 19:13:58 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37962 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752242AbZCSXN5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2009 19:13:57 -0400
+Received: (qmail invoked by alias); 19 Mar 2009 23:13:54 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp065) with SMTP; 20 Mar 2009 00:13:54 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+rNzZYuSKrQzNTBEQhNRTnSnXYgpCawqUKbuRJc6
+	jSBb122P+yVKms
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20090319200308.GB17028@coredump.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113857>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+Hi,
 
-> How about this patch instead? I chose "BAD" for the marker, as any
-> automatic processing trying blindly to convert it into a number will
-> get a 0, which seems safe to me.
+On Thu, 19 Mar 2009, Jeff King wrote:
 
-Such a broken automatic processing won't mind getting any garbage; the
-choice among this patch, your original "say 0 when we do not know" patch,
-or unpatched "size is undefined when an entry is corrupt" git wouldn't
-make a whit of difference to it.
+> On Thu, Mar 19, 2009 at 04:02:19AM -0700, Junio C Hamano wrote:
+> 
+> > > Do we really want an API for that?  Calling qsort() directly should be 
+> > > obvious enough, no?
+> > 
+> > I think so.  If it were done like this (notice the lack of double
+> > indirection in the cmp_fn signature):
+> > 
+> >     typedef int string_list_item_cmp_fn(const struct string_list_item *, const struct string_list_item *);
+> > 
+> >     void sort_string_list_with_fn(struct string_list *list, string_list_item_cmp_fn *);
+> > 
+> > it would have made more sense, though.
+> 
+> IIRC, that is actually not valid C according to the standard (that is, 
+> even though a void* can be implicitly assigned to any other pointer, a 
+> function taking a void* and a function taking another pointer do not 
+> necessarily have the same function signature or calling conventions). 
+> Which is why cmp_items in string-list.c already does the indirection.
 
-An automatic processing that does validate its input will notice BAD is
-not a number, and can handle such a corrupt entry more sanely, which is
-potentially a big plus.
+AFAICT the idea was not to pass the function to qsort() directly, but I 
+have to agree that I do not see how that should be possible with the 
+current interface of qsort();
 
-I think this round is a big improvement.
-
->  builtin-ls-tree.c |   22 ++++++++++++----------
->  1 files changed, 12 insertions(+), 10 deletions(-)
->
-> diff --git a/builtin-ls-tree.c b/builtin-ls-tree.c
-> index fca4631..22008df 100644
-> --- a/builtin-ls-tree.c
-> +++ b/builtin-ls-tree.c
-> @@ -60,7 +60,6 @@ static int show_tree(const unsigned char *sha1, const char *base, int baselen,
->  {
->  	int retval = 0;
->  	const char *type = blob_type;
-> -	unsigned long size;
->  
->  	if (S_ISGITLINK(mode)) {
->  		/*
-> @@ -90,17 +89,20 @@ static int show_tree(const unsigned char *sha1, const char *base, int baselen,
->  
->  	if (!(ls_options & LS_NAME_ONLY)) {
->  		if (ls_options & LS_SHOW_SIZE) {
-> +			char size_text[24];
->  			if (!strcmp(type, blob_type)) {
-> -				sha1_object_info(sha1, &size);
-> -				printf("%06o %s %s %7lu\t", mode, type,
-> -				       abbrev ? find_unique_abbrev(sha1, abbrev)
-> -				              : sha1_to_hex(sha1),
-> -				       size);
-> +				unsigned long size;
-> +				if (sha1_object_info(sha1, &size) == OBJ_BAD)
-> +					strcpy(size_text, "BAD");
-> +				else
-> +					snprintf(size_text, sizeof(size_text),
-> +						 "%lu", size);
->  			} else
-> -				printf("%06o %s %s %7c\t", mode, type,
-> -				       abbrev ? find_unique_abbrev(sha1, abbrev)
-> -				              : sha1_to_hex(sha1),
-> -				       '-');
-> +				strcpy(size_text, "-");
-> +			printf("%06o %s %s %7s\t", mode, type,
-> +			       abbrev ? find_unique_abbrev(sha1, abbrev)
-> +				      : sha1_to_hex(sha1),
-> +			       size_text);
->  		} else
->  			printf("%06o %s %s\t", mode, type,
->  			       abbrev ? find_unique_abbrev(sha1, abbrev)
-> -- 
-> 1.6.2.1.237.g7206c6
+Ciao,
+Dscho
