@@ -1,84 +1,113 @@
-From: Shaun Cutts <scutts@entropycap.com>
-Subject: submodules for different deployment directories?
-Date: Thu, 19 Mar 2009 04:33:04 -0400
-Message-ID: <F042F333-32C4-4B0E-AB1A-4524AB1D9654@entropycap.com>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 19 09:34:51 2009
+From: david@lang.hm
+Subject: Re: Google Summer of Code 2009: GIT
+Date: Thu, 19 Mar 2009 01:37:15 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0903190129110.4560@asgard.lang.hm>
+References: <49B74373.3090609@gmail.com>  <7veix33f5e.fsf@gitster.siamese.dyndns.org>  <ab9fa62a0903120545o7e5bc359g7df233b00858869c@mail.gmail.com>  <alpine.DEB.1.10.0903121052310.16753@asgard.lang.hm>  <ab9fa62a0903121119j6c2a1d43kd9cda99db47b5e7c@mail.gmail.com>
+  <alpine.DEB.1.10.0903121148540.16753@asgard.lang.hm>  <ab9fa62a0903121200v73ec3522gcdebcd34122efc72@mail.gmail.com>  <alpine.DEB.1.10.0903121214390.16753@asgard.lang.hm>  <ab9fa62a0903121245m621643bfq3c58557ccc9b266f@mail.gmail.com> 
+ <alpine.DEB.1.10.0903121255040.16753@asgard.lang.hm> <ab9fa62a0903121303v5a6cbf0ax413cc440b9c32e77@mail.gmail.com> <alpine.DEB.1.00.0903190003100.10279@pacific.mpi-cbg.de> <alpine.DEB.1.10.0903181645440.16753@asgard.lang.hm>
+ <alpine.DEB.1.00.0903190141300.10279@pacific.mpi-cbg.de>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: saurabh gupta <saurabhgupta1403@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Mar 19 09:39:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkDiD-0006Bk-Dt
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 09:34:49 +0100
+	id 1LkDmG-0007Pm-Jo
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 09:39:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755028AbZCSIdU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2009 04:33:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753483AbZCSIdU
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 04:33:20 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:1710 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752700AbZCSIdT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2009 04:33:19 -0400
-Received: by yx-out-2324.google.com with SMTP id 31so434854yxl.1
-        for <git@vger.kernel.org>; Thu, 19 Mar 2009 01:33:17 -0700 (PDT)
-Received: by 10.100.229.12 with SMTP id b12mr2499870anh.52.1237451596948;
-        Thu, 19 Mar 2009 01:33:16 -0700 (PDT)
-Received: from ?192.168.0.115? (dsl092-072-228.bos1.dsl.speakeasy.net [66.92.72.228])
-        by mx.google.com with ESMTPS id d38sm1873369and.9.2009.03.19.01.33.15
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 19 Mar 2009 01:33:16 -0700 (PDT)
-X-Mailer: Apple Mail (2.930.3)
+	id S1753918AbZCSIhc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2009 04:37:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752477AbZCSIhb
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 04:37:31 -0400
+Received: from mail.lang.hm ([64.81.33.126]:60040 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751827AbZCSIha (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2009 04:37:30 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n2J8bF7a027292;
+	Thu, 19 Mar 2009 00:37:15 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <alpine.DEB.1.00.0903190141300.10279@pacific.mpi-cbg.de>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113734>
 
-Hello,
+On Thu, 19 Mar 2009, Johannes Schindelin wrote:
 
-We are currently migrating from svn....
+> On Wed, 18 Mar 2009, david@lang.hm wrote:
+>
+>> On Thu, 19 Mar 2009, Johannes Schindelin wrote:
+>>
+>>>
+>>> In my humble opinion, we should focus on the data types we want to be
+>>> able to support at the end of the summer first.
+>>>
+>>> For example, if we decide that OOXML is a must (as it is a proper
+>>> standard, and many people will benefit from it), we will most likely
+>>> end up in having to write a merge _driver_ (to handle those .zip
+>>> files), _and_ a merge _helper_, although we can avoid writing our own
+>>> GUI, as we can create an OOXML that has its own version of conflict
+>>> markers.
+>>
+>> do you mean OOXML (the microsoft format) or ODF (the open office
+>> format)?
+>
+> Oops.
+>
+> EOVERLOAD
 
-We have a growing project that is deployed differently in various  
-places. The deployment-specific stuff is in a subdirectory called  
-"deployment".
+it happens.
 
-In svn, we used svn switch to point that subdirectory at a different  
-tag. Then "update" on the overall tree left alone the switched parts  
-at the various different installations. We could "push" changes in any  
-overall copy of the project and the differences between the switched  
-subdirectories would be immaterial.
+>>> If we decide that SVG is something we want to support by the end of
+>>> the summer, then we can probably avoid writing a merge _driver_, as
+>>> plain text is handled reasonably well in Git.  OTOH it could turn out
+>>> that there are _real_ conflicts in overlapping tag ids, and it would
+>>> still be easier to write a merge driver, too.
+>>>
+>>> IOW the details are not as important as
+>>>
+>>> - knowing what data types we want to support _at the least_, and what
+>>>   data types we keep for the free skate,
+>>>
+>>> - a clear picture of the user interface we want to be able to provide,
+>>>
+>>> - a timeline (weekly milestones should be fine, I guess) what should
+>>>   be achieved when, and
+>>>
+>>> - being flexible in how to support that (IOW if a merge driver appears
+>>>   unnecessary first, but necessary later, we should be able to fit
+>>>   that into both the design and the timeline).
+>>
+>> it's up to the student, but I suspect that the best approach would be to
+>> start with defining a merge driver to handle XML (with a minimum set of
+>> capabilities, and additional optional ones), and go from there.
+>
+> Well, the thing is: if the student decides to have a go at an XML driver
+> first and foremost, then I'll just flatly refuse to mentor that.  Because
+> I sincerely believe that this project is best designed from top to bottom,
+> not the other way round.
+>
+> After all, the project is based on a user's request, not just a
+> playthingie for an XML enthusiast (if such a thing exists).
 
-It would seem (to me at least) that the equivalent functionality is  
-provided by "submodule" in git.
+all three formats mentioned here (OOXML, ODF, SVG) are XML-based formats 
+and a single flexible XML merge driver could potentially handle all three 
+(as well as other formats). for that matter, the ODF specs cover multiple 
+types of data, and I suspect that appropriate conflict markers for text 
+could well end up being different than the ones for spreadsheets.
 
-Accordingly I started a separate project with different branches  
-corresponding to the different deployment models.
+that's not a 'plaything for an XML entusiast', it's making the tool 
+slightly more general than it would need to be for any one of these 
+formats to let it handle all of them.
 
-I added this a submodule to the main project. In fact, we are thinking  
-of organizing some other things that differ by install this way, so I  
-made the actual directory a subdirectory of the "deployment" project,  
-which I "submodule added" to the various installations as a submodule  
-off the root repository, then used "ln -s"  to link that subdirectory  
-into the appropriate place in the overall tree. (Is this a mistake?)
 
-However, I'm not sure its working right. It seems that the various  
-overall repositories differ, even if only really the submodule's  
-branch differs. Also a diff comes up with lots of differences between  
-the submodules's trees. (Aside: where is the branch of the submodule  
-written down in the overall module -- if you add with -b... is this  
-just "transient info"?) But I thought that the idea of submodules were  
-that they are opaque?
+but I'm not a mentor or a student, just an interested user.
 
-I would enjoy help figuring out what is going on. I would be most  
-grateful, however, to learn how I'm *supposed* to do in this situation.
-
--- Shaun Cutts
-
-----------------
-Shaun Cutts
-Partner
-Entropy Capital, LLC
-scutts@entropycap.com
+David Lang
