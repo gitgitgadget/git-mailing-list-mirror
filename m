@@ -1,88 +1,119 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] Allow http authentication via prompt for http
- push.
-Date: Thu, 19 Mar 2009 17:59:32 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903191755270.6357@intel-tinevez-2-302>
-References: <d8c371a80903190812w59febbd3qc6bc3d70ce85f76e@mail.gmail.com>
+From: Rostislav Svoboda <rostislav.svoboda@gmail.com>
+Subject: Re: fatal: bad object HEAD
+Date: Thu, 19 Mar 2009 18:24:51 +0100
+Message-ID: <286817520903191024u7adecbebk30f6f064f38e615b@mail.gmail.com>
+References: <286817520903190955n2e27abb6ydd52d9ddcffccbc7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Amos King <amos.l.king@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 19 18:03:15 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 19 18:27:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkLcs-0008Mv-Bf
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 18:01:50 +0100
+	id 1LkM0e-0002cR-PZ
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 18:26:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750933AbZCSQ7i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2009 12:59:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751067AbZCSQ7i
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 12:59:38 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35819 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750722AbZCSQ7h (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2009 12:59:37 -0400
-Received: (qmail invoked by alias); 19 Mar 2009 16:59:34 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp048) with SMTP; 19 Mar 2009 17:59:34 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18zqL4zzQozLAu+f1CXa+F6leVWuP649WCI8RmPus
-	toNYDkbqano0th
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <d8c371a80903190812w59febbd3qc6bc3d70ce85f76e@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.52
+	id S1752985AbZCSRYz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Mar 2009 13:24:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751434AbZCSRYz
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 13:24:55 -0400
+Received: from mail-bw0-f169.google.com ([209.85.218.169]:60601 "EHLO
+	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751032AbZCSRYy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Mar 2009 13:24:54 -0400
+Received: by bwz17 with SMTP id 17so591497bwz.37
+        for <git@vger.kernel.org>; Thu, 19 Mar 2009 10:24:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=7B+D+lvTfuSfADlUGeBlhsJhXM1EM3PFHovHmV38PHw=;
+        b=WkZwW9ETdOKPoSVVeHHlPuLFTo3He2TQZdUVCsA1zJp/AtPqpUcj8vY22RZbJ21yY6
+         S903blCZoJpzrU5OKuj8DJvapMU+2jkzVhd2b5NBBLr5NlXwS6ZeNSvb603gYwqpU3NM
+         8viQwFkxfe9nIOq+2o8ulnYylE2rXApGSoSvQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=qzLck56NhpG6nJM15xxzjIX5ZpS60kYDC6p3v8o6GbyaMACzJWER0WIDYZqcywDuOQ
+         tK2Njjr+Tj2VWLavRcj0f+XYYiSvo+K7+6e1nylE8sW8sPUBVnDcawWzBZTydad0K7rW
+         DEgMm66r2flmJYScMfWvHzxXKoFQcs1G/I29I=
+Received: by 10.204.60.194 with SMTP id q2mr899205bkh.150.1237483491112; Thu, 
+	19 Mar 2009 10:24:51 -0700 (PDT)
+In-Reply-To: <286817520903190955n2e27abb6ydd52d9ddcffccbc7@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113795>
 
-Hi,
+I tried
 
-On Thu, 19 Mar 2009, Amos King wrote:
+$ git fsck --verbose
+Checking tree fe217057862c74e6c1a0cf12e39b941f967927b2
+Checking blob fe56c41c028f320bb474ca9e0fe15baa2b0aa122
+Checking blob fe7c85910717d546ee002bb64a9d1476a9451eed
+error: refs/heads/branch_1 does not point to a valid object!
+error: refs/heads/branch_2 does not point to a valid object!
+error: refs/heads/branch_3 does not point to a valid object!
+error: refs/heads/branch_4 does not point to a valid object!
+error: refs/heads/master does not point to a valid object!
+Checking reflog
+3d7d1cf8f8edae21d90be9d84c21b5ac65ee94dc->9e53015709777b533717b25687295=
+407f38f840e
+Checking reflog
+9e53015709777b533717b25687295407f38f840e->695e934882e78fb85b78649dea510=
+9aa69855a88
+=2E..
 
-> There is now a faux remote created in order to
-> be passed to http_init.
-> 
-> Signed-off-by: Amos King <amos.l.king@gmail.com>
-> ---
->  http-push.c |   11 ++++++++++-
->  1 files changed, 10 insertions(+), 1 deletions(-)
-> 
-> diff --git a/http-push.c b/http-push.c
-> index 9ac2664..468d5af 100644
-> --- a/http-push.c
-> +++ b/http-push.c
-> @@ -2195,7 +2195,16 @@ int main(int argc, char **argv)
-> 
->  	memset(remote_dir_exists, -1, 256);
-> 
-> -	http_init(NULL);
-> +	/*
-> +	 * This is a faked remote so that http_init can
-> +	 * get the correct data for builidng out athorization.
-> +	 */
+and deeper in the output there are 4 suspicious entries:
+Checking reflog
+0000000000000000000000000000000000000000->696bd2fc4a8554891976af42e65cc=
+af9d12009ac
+Checking reflog
+0000000000000000000000000000000000000000->aff44ac2a61607dd95caadd896e2c=
+ae51e4dfdcf
+Checking reflog
+0000000000000000000000000000000000000000->6f20af9bcc1f446116cc1af238cb8=
+49ca1ccd385
+Checking reflog
+0000000000000000000000000000000000000000->696bd2fc4a8554891976af42e65cc=
+af9d12009ac
 
-You might want to pass this through aspell ;-)  Altough it will not 
-suggest 'out ->our', I guess...
+I think here might the problem. Can anyone explain me what it means? th=
+x a lot
 
-> +	struct remote *remote;
-> +	remote = xcalloc(sizeof(*remote), 1);
-> +	ALLOC_GROW(remote->url, remote->url_nr + 1, remote->url_alloc);
-> +	remote->url[remote->url_nr++] = repo->url;
-> +
-> +	http_init(remote);
+Bost
 
-Would 'fake' not be a more appropriate name than 'remote'?
 
-That would also make the patch 1/2 rather unnecessary (I also have to 
-admit that I do not find 'repo' a better name, as we have a repository 
-both locally and remotely, and this _is_ the remote repository, not the 
-local one).
-
-Ciao,
-Dscho
+On Thu, Mar 19, 2009 at 17:55, Rostislav Svoboda
+<rostislav.svoboda@gmail.com> wrote:
+> Hi people, I have a BIG trouble:
+>
+> $ git fsck
+> error: refs/heads/branch_1 does not point to a valid object!
+> error: refs/heads/branch_2 does not point to a valid object!
+> error: refs/heads/branch_3 does not point to a valid object!
+> error: refs/heads/master does not point to a valid object!
+> (and quite many missing and dangling blobs)
+>
+> I use msysGit 1.6.1-preview20081227 and I did:
+> $ git checkout master
+> $ git gui
+>
+> here I got again and again that stupid error message
+> 'file fname.ext has been modified but no changes detected' so I did
+> $ git add fname.ext
+> $ git branch branch_1 =A0 =A0(here I did a mistake. I wanted to do 'g=
+it
+> checkout branch_1' )
+>
+> And now is _everything_ seems to be lost... uaaaa :( What can I do no=
+w?
+> Any would be REALLY appreciated
+>
+> Bost
+>
