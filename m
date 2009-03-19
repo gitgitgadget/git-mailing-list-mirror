@@ -1,147 +1,68 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: [PATCH] git-am: teach git-am to apply a patch to an unborn branch
-Date: Fri, 20 Mar 2009 07:12:31 +0900
-Message-ID: <20090320071231.6117@nanako3.lavabit.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Produce a nicer output in case of sha1_object_info
+ failures in ls-tree -l
+Date: Thu, 19 Mar 2009 15:13:10 -0700
+Message-ID: <7vmybh6u15.fsf@gitster.siamese.dyndns.org>
+References: <20090319203002.GA31014@blimp.localdomain>
+ <7v4oxp89eb.fsf@gitster.siamese.dyndns.org>
+ <20090319220020.GA8433@blimp.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 19 23:14:41 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 19 23:15:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkQVd-0006wb-DM
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 23:14:41 +0100
+	id 1LkQVw-00073T-EU
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 23:15:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754501AbZCSWNL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2009 18:13:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754065AbZCSWNJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 18:13:09 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:58364 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753576AbZCSWNI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2009 18:13:08 -0400
-Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
-	by karen.lavabit.com (Postfix) with ESMTP id C6AD411B818
-	for <git@vger.kernel.org>; Thu, 19 Mar 2009 17:13:03 -0500 (CDT)
-Received: from 3509.lavabit.com (212.62.97.21)
-	by lavabit.com with ESMTP id D3PNHENS3OEP
-	for <git@vger.kernel.org>; Thu, 19 Mar 2009 17:13:03 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=nfGPRkuR6ViLgA/aBiwo/kK55RXF2x2v5t6fSew0oMhO2q/yTDmPRd9Rgbu8cBP+e5Y8IuPcRuTzop9it7mge6WMAz7NL+J83p8p6pdSpAfZHj1XLT0yBqzeSax+zmRBuq3ezGEWUQTK8213Leqvo5yuANHAZtli1dPmdINSThM=;
-  h=From:To:Subject:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+	id S1755756AbZCSWNV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2009 18:13:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755046AbZCSWNV
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 18:13:21 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56822 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754065AbZCSWNU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2009 18:13:20 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 519F2A3FDA;
+	Thu, 19 Mar 2009 18:13:17 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 018E3A3FD9; Thu,
+ 19 Mar 2009 18:13:12 -0400 (EDT)
+In-Reply-To: <20090319220020.GA8433@blimp.localdomain> (Alex Riesen's message
+ of "Thu, 19 Mar 2009 23:00:21 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 25D54D4A-14D3-11DE-855A-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113848>
 
-Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
----
- git-am.sh     |   33 ++++++++++++++++++++++++++++-----
- t/t4150-am.sh |   15 +++++++++++++++
- 2 files changed, 43 insertions(+), 5 deletions(-)
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-diff --git a/git-am.sh b/git-am.sh
-index d339075..c21642b 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -36,6 +36,13 @@ cd_to_toplevel
- git var GIT_COMMITTER_IDENT >/dev/null ||
- 	die "You need to set your committer info first"
- 
-+if git rev-parse --verify -q HEAD >/dev/null
-+then
-+	HAS_HEAD=yes
-+else
-+	HAS_HEAD=
-+fi
-+
- sq () {
- 	for sqarg
- 	do
-@@ -290,16 +297,26 @@ else
- 		: >"$dotest/rebasing"
- 	else
- 		: >"$dotest/applying"
--		git update-ref ORIG_HEAD HEAD
-+		if test -n "$HAS_HEAD"
-+		then
-+			git update-ref ORIG_HEAD HEAD
-+		else
-+			git update-ref -d ORIG_HEAD >/dev/null 2>&1
-+		fi
- 	fi
- fi
- 
- case "$resolved" in
- '')
--	files=$(git diff-index --cached --name-only HEAD --) || exit
-+	if test -n "$HAS_HEAD"
-+	then
-+		files=$(git diff-index --cached --name-only HEAD --)
-+	else
-+		files=$(git ls-files)
-+	fi || exit
- 	if test "$files"
- 	then
--		: >"$dotest/dirtyindex"
-+		test -n "$HAS_HEAD" && : >"$dotest/dirtyindex"
- 		die "Dirty index: cannot apply patches (dirty: $files)"
- 	fi
- esac
-@@ -541,7 +558,13 @@ do
- 	fi
- 
- 	tree=$(git write-tree) &&
--	parent=$(git rev-parse --verify HEAD) &&
-+	if parent=$(git rev-parse --verify -q HEAD)
-+	then
-+		pparent="-p $parent"
-+	else
-+		echo >&2 "applying to an empty history"
-+		parent= pparent=
-+	fi &&
- 	commit=$(
- 		if test -n "$ignore_date"
- 		then
-@@ -552,7 +575,7 @@ do
- 			GIT_COMMITTER_DATE="$GIT_AUTHOR_DATE"
- 			export GIT_COMMITTER_DATE
- 		fi &&
--		git commit-tree $tree -p $parent <"$dotest/final-commit"
-+		git commit-tree $tree $pparent <"$dotest/final-commit"
- 	) &&
- 	git update-ref -m "$GIT_REFLOG_ACTION: $FIRSTLINE" HEAD $commit $parent ||
- 	stop_here $this
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index 5e65afa..b97d102 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -290,4 +290,19 @@ test_expect_success 'am --ignore-date' '
- 	echo "$at" | grep "+0000"
- '
- 
-+test_expect_success 'am in an unborn branch' '
-+	rm -fr subdir &&
-+	mkdir -p subdir &&
-+	git format-patch --numbered-files -o subdir -1 first &&
-+	(
-+		cd subdir &&
-+		git init &&
-+		git am 1
-+	) &&
-+	result=$(
-+		cd subdir && git rev-parse HEAD^{tree}
-+	) &&
-+	test "z$result" = "z$(git rev-parse first^{tree})"
-+'
-+
- test_done
--- 
-1.6.2.1
+> Junio C Hamano, Thu, Mar 19, 2009 22:55:56 +0100:
+>> Alex Riesen <raa.lkml@gmail.com> writes:
+>> > @@ -91,6 +90,7 @@ static int show_tree(const unsigned char *sha1, const char *base, int baselen,
+>> >  	if (!(ls_options & LS_NAME_ONLY)) {
+>> >  		if (ls_options & LS_SHOW_SIZE) {
+>> >  			if (!strcmp(type, blob_type)) {
+>> > +				unsigned long size = 0;
+>> >  				sha1_object_info(sha1, &size);
+>> >  				printf("%06o %s %s %7lu\t", mode, type,
+>> >  				       abbrev ? find_unique_abbrev(sha1, abbrev)
+>> 
+>> Hmm, shouldn't you be checking the return value from sha1_object_info()
+>> and skipping the printf() altogether instead?
+>
+> But then I cannot know the name of the failed tree entry.
 
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Why?
+
+	if (sha1_object_info() == OBJ_BAD)
+		die("object recorded at tree entry %s is bad", pathname);
+	printf ...
