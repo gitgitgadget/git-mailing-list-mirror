@@ -1,75 +1,105 @@
-From: Caleb Cushing <xenoterracide@gmail.com>
-Subject: Re: Google Summer of Code 2009: GIT
-Date: Thu, 19 Mar 2009 02:30:13 -0400
-Message-ID: <81bfc67a0903182330q786ef01ai9148e41664a3471a@mail.gmail.com>
-References: <49B74373.3090609@gmail.com>
-	 <alpine.DEB.1.10.0903121052310.16753@asgard.lang.hm>
-	 <ab9fa62a0903121119j6c2a1d43kd9cda99db47b5e7c@mail.gmail.com>
-	 <alpine.DEB.1.10.0903121148540.16753@asgard.lang.hm>
-	 <ab9fa62a0903121200v73ec3522gcdebcd34122efc72@mail.gmail.com>
-	 <alpine.DEB.1.10.0903121214390.16753@asgard.lang.hm>
-	 <ab9fa62a0903121245m621643bfq3c58557ccc9b266f@mail.gmail.com>
-	 <alpine.DEB.1.10.0903121255040.16753@asgard.lang.hm>
-	 <ab9fa62a0903121303v5a6cbf0ax413cc440b9c32e77@mail.gmail.com>
-	 <alpine.DEB.1.00.0903190003100.10279@pacific.mpi-cbg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: saurabh gupta <saurabhgupta1403@gmail.com>, david@lang.hm,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Mar 19 07:32:16 2009
+From: "David J. Mellor" <dmellor@whistlingcat.com>
+Subject: [PATCH] Documentation: reworded the "Description" section of git-bisect.txt.
+Date: Thu, 19 Mar 2009 00:00:12 -0700
+Message-ID: <1237446012-4533-1-git-send-email-dmellor@whistlingcat.com>
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Mar 19 08:01:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkBnX-0001N0-8S
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 07:32:11 +0100
+	id 1LkCGD-00076j-HK
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 08:01:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758786AbZCSGaU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2009 02:30:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756905AbZCSGaS
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 02:30:18 -0400
-Received: from mail-qy0-f118.google.com ([209.85.221.118]:55913 "EHLO
-	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755906AbZCSGaQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2009 02:30:16 -0400
-Received: by qyk16 with SMTP id 16so520943qyk.33
-        for <git@vger.kernel.org>; Wed, 18 Mar 2009 23:30:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=uq0QDgQVbW1xN/+f3qGJmLTwiQwVVyxJKMC1JWhcMyM=;
-        b=BZxMu+wX2Ckrg9kkVz8tWooBXUBjEMXhCerRdSiG5dGqufdlw4KJVtkMYZgvvPYYdB
-         qahwE8BhFEJlmVOQYtIhgnsJDMmSvxk40qz4BnqqQQeQ+RCGB8zVe9Wp7ByqdTfyWx1K
-         fP0ItpYQHRTZMZZVRQYlSSJrk78X0XqxqQGRk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=oWwTFLS3MUxNNHfOxNhpmqTd5Qth8ZzWmQypZSe8AdTizrqUO/QniWN6GEGqwySqWZ
-         zM1SxxTa44U69NdHvChiDMGFgOBzJFaEj48cpf+CXKEs9z6ilOTFciTvH7SRfJYJjiHn
-         DPvlkWnOlyi8y+/IAmooM7GNDgvA00+YdrKt4=
-Received: by 10.229.81.140 with SMTP id x12mr1291943qck.35.1237444214064; Wed, 
-	18 Mar 2009 23:30:14 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0903190003100.10279@pacific.mpi-cbg.de>
+	id S1754977AbZCSHAU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2009 03:00:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754246AbZCSHAS
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 03:00:18 -0400
+Received: from quartz.whistlingcat.com ([67.223.228.111]:59040 "EHLO
+	quartz.whistlingcat.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754096AbZCSHAR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2009 03:00:17 -0400
+Received: from whistlingcat.com (whistlingcat.com [99.12.234.57])
+	by quartz.whistlingcat.com (Postfix) with ESMTP id 3F631488007;
+	Thu, 19 Mar 2009 00:00:13 -0700 (PDT)
+Received: from sandstone.whistlingcat.com (sandstone.whistlingcat.com [192.168.0.2])
+	by whistlingcat.com (Postfix) with ESMTP id 0EE0938E74F4;
+	Thu, 19 Mar 2009 00:00:13 -0700 (PDT)
+Received: by sandstone.whistlingcat.com (Postfix, from userid 500)
+	id DA4F517A4B; Thu, 19 Mar 2009 00:00:12 -0700 (PDT)
+X-Mailer: git-send-email 1.6.2.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113722>
 
-On Wed, Mar 18, 2009 at 7:16 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> In my humble opinion, we should focus on the data types we want to be
-> able to support at the end of the summer first.
+Added fixes missing from 2364259.
 
-my 2 cents don't support xml, support sgml start at the least common
-denominator and refine from there.
+Signed-off-by: David J. Mellor <dmellor@whistlingcat.com>
+---
+ Documentation/git-bisect.txt |   17 +++++++++--------
+ 1 files changed, 9 insertions(+), 8 deletions(-)
 
+diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
+index 51d06c1..1a4a527 100644
+--- a/Documentation/git-bisect.txt
++++ b/Documentation/git-bisect.txt
+@@ -114,21 +114,22 @@ $ git bisect view --stat
+ Bisect log and bisect replay
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+-The good/bad input is logged, and:
++After having marked revisions as good or bad, then:
+ 
+ ------------
+ $ git bisect log
+ ------------
+ 
+-shows what you have done so far. You can truncate its output somewhere
+-and save it in a file, and run:
++shows what you have done so far. If you discover that you made a mistake
++in specifying the status of a revision, you can save the output of this
++command to a file, edit it to remove the incorrect entries, and then issue
++the following commands to return to a corrected state:
+ 
+ ------------
++$ git bisect reset
+ $ git bisect replay that-file
+ ------------
+ 
+-if you find later that you made a mistake specifying revisions as good/bad.
+-
+ Avoiding testing a commit
+ ~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+@@ -141,7 +142,7 @@ want to find a nearby commit and try that instead.
+ For example:
+ 
+ ------------
+-$ git bisect good/bad			# previous round was good/bad.
++$ git bisect good/bad			# previous round was good or bad.
+ Bisecting: 337 revisions left to test after this
+ $ git bisect visualize			# oops, that is uninteresting.
+ $ git reset --hard HEAD~3		# try 3 revisions before what
+@@ -149,7 +150,7 @@ $ git reset --hard HEAD~3		# try 3 revisions before what
+ ------------
+ 
+ Then compile and test the chosen revision. Afterwards the revision
+-is marked as good/bad in the usual manner.
++is marked as good or bad in the usual manner.
+ 
+ Bisect skip
+ ~~~~~~~~~~~~
+@@ -240,7 +241,7 @@ before compiling, run the real test, and afterwards decide if the
+ revision (possibly with the needed patch) passed the test and then
+ rewind the tree to the pristine state.  Finally the script should exit
+ with the status of the real test to let the "git bisect run" command loop
+-to determine the eventual outcome of the bisect session.
++determine the eventual outcome of the bisect session.
+ 
+ EXAMPLES
+ --------
 -- 
-Caleb Cushing
-
-http://xenoterracide.blogspot.com
+1.6.2.1
