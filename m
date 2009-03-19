@@ -1,159 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-am: teach git-am to apply a patch to an unborn
- branch
-Date: Thu, 19 Mar 2009 15:21:17 -0700
-Message-ID: <7viqm56tnm.fsf@gitster.siamese.dyndns.org>
-References: <20090320071231.6117@nanako3.lavabit.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Microoptimize strbuf_cmp
+Date: Thu, 19 Mar 2009 23:27:32 +0100
+Message-ID: <20090319222732.GB8433@blimp.localdomain>
+References: <20090319210931.GB31014@blimp.localdomain> <7vvdq56ukb.fsf@gitster.siamese.dyndns.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Thu Mar 19 23:23:12 2009
+Cc: git@vger.kernel.org, Pierre Habouzit <madcoder@debian.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 19 23:29:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkQdc-0001Or-CM
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 23:22:56 +0100
+	id 1LkQkN-0003bg-8z
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 23:29:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760335AbZCSWVZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2009 18:21:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759952AbZCSWVY
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 18:21:24 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42548 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757452AbZCSWVX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2009 18:21:23 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B84B2779B;
-	Thu, 19 Mar 2009 18:21:21 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DEA85779A; Thu,
- 19 Mar 2009 18:21:18 -0400 (EDT)
-In-Reply-To: <20090320071231.6117@nanako3.lavabit.com> (Nanako Shiraishi's
- message of "Fri, 20 Mar 2009 07:12:31 +0900")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 46948234-14D4-11DE-89A3-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+	id S1761533AbZCSW1p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2009 18:27:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760636AbZCSW1o
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 18:27:44 -0400
+Received: from mout0.freenet.de ([195.4.92.90]:41318 "EHLO mout0.freenet.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759298AbZCSW1n (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2009 18:27:43 -0400
+Received: from [195.4.92.27] (helo=17.mx.freenet.de)
+	by mout0.freenet.de with esmtpa (ID alexander.riesen@freenet.de) (port 25) (Exim 4.69 #79)
+	id 1LkQi8-0007jm-7d; Thu, 19 Mar 2009 23:27:36 +0100
+Received: from x62b3.x.pppool.de ([89.59.98.179]:59354 helo=tigra.home)
+	by 17.mx.freenet.de with esmtpa (ID alexander.riesen@freenet.de) (port 587) (Exim 4.69 #76)
+	id 1LkQi8-00023W-0f; Thu, 19 Mar 2009 23:27:36 +0100
+Received: from blimp.localdomain (ubuntu.home [192.168.1.28])
+	by tigra.home (Postfix) with ESMTP id 84564277D8;
+	Thu, 19 Mar 2009 23:27:32 +0100 (CET)
+Received: by blimp.localdomain (Postfix, from userid 1000)
+	id 45BAA36D27; Thu, 19 Mar 2009 23:27:32 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7vvdq56ukb.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113851>
 
-Nanako Shiraishi <nanako3@lavabit.com> writes:
+It can be less object code and may be even faster, even if at the
+moment there is no callers to take an advantage of that. This
+implementation can be trivially made inlinable later.
 
-> Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
-> ---
->  git-am.sh     |   33 ++++++++++++++++++++++++++++-----
->  t/t4150-am.sh |   15 +++++++++++++++
->  2 files changed, 43 insertions(+), 5 deletions(-)
->
-> diff --git a/git-am.sh b/git-am.sh
-> index d339075..c21642b 100755
-> --- a/git-am.sh
-> +++ b/git-am.sh
-> @@ -36,6 +36,13 @@ cd_to_toplevel
->  git var GIT_COMMITTER_IDENT >/dev/null ||
->  	die "You need to set your committer info first"
->  
-> +if git rev-parse --verify -q HEAD >/dev/null
-> +then
-> +	HAS_HEAD=yes
-> +else
-> +	HAS_HEAD=
-> +fi
-> +
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
 
-Probably nicer this way than Peff's as I suspect we would need to special
-case the unborn-branch case a lot more.  Have you tried --skip and --abort
-codepaths with your patch?
+Junio C Hamano, Thu, Mar 19, 2009 23:01:40 +0100:
+> Alex Riesen <raa.lkml@gmail.com> writes:
+> 
+> > Make it inline and cleanup a bit. It is definitely less code
+> > including object code, but it is not always measurably faster
+> > (but mostly is).
+> 
+> The only in-tree user seems to be rerere, so inlining for that single
+> caller will reduce the object side, but I am not sure if this is a good
+> change in the longer term if we want to encourage the use of strbuf
+> library.
+> 
+> The rewrite of the logic does seem worth doing, though.
 
->  sq () {
->  	for sqarg
->  	do
-> @@ -290,16 +297,26 @@ else
->  		: >"$dotest/rebasing"
->  	else
->  		: >"$dotest/applying"
-> -		git update-ref ORIG_HEAD HEAD
-> +		if test -n "$HAS_HEAD"
-> +		then
-> +			git update-ref ORIG_HEAD HEAD
-> +		else
-> +			git update-ref -d ORIG_HEAD >/dev/null 2>&1
-> +		fi
+But then it is only a half of the micro-optimization. In this case,
+the cost of call to the function's code is comparable with the change
+of the code.
 
-So is this part.
+Anyway, FWIW.
 
->  	fi
->  fi
->  
->  case "$resolved" in
->  '')
-> -	files=$(git diff-index --cached --name-only HEAD --) || exit
-> +	if test -n "$HAS_HEAD"
-> +	then
-> +		files=$(git diff-index --cached --name-only HEAD --)
-> +	else
-> +		files=$(git ls-files)
-> +	fi || exit
->  	if test "$files"
->  	then
-> -		: >"$dotest/dirtyindex"
-> +		test -n "$HAS_HEAD" && : >"$dotest/dirtyindex"
->  		die "Dirty index: cannot apply patches (dirty: $files)"
->  	fi
->  esac
+ strbuf.c |   13 +++++--------
+ 1 files changed, 5 insertions(+), 8 deletions(-)
 
-And here...
-
-> @@ -541,7 +558,13 @@ do
->  	fi
->  
->  	tree=$(git write-tree) &&
-> -	parent=$(git rev-parse --verify HEAD) &&
-> +	if parent=$(git rev-parse --verify -q HEAD)
-> +	then
-> +		pparent="-p $parent"
-> +	else
-> +		echo >&2 "applying to an empty history"
-> +		parent= pparent=
-> +	fi &&
->  	commit=$(
->  		if test -n "$ignore_date"
->  		then
-> @@ -552,7 +575,7 @@ do
->  			GIT_COMMITTER_DATE="$GIT_AUTHOR_DATE"
->  			export GIT_COMMITTER_DATE
->  		fi &&
-> -		git commit-tree $tree -p $parent <"$dotest/final-commit"
-> +		git commit-tree $tree $pparent <"$dotest/final-commit"
-
-Peff's ${a+something $a} trick looks more "expert" here ;-).
-
-> diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-> index 5e65afa..b97d102 100755
-> --- a/t/t4150-am.sh
-> +++ b/t/t4150-am.sh
-> @@ -290,4 +290,19 @@ test_expect_success 'am --ignore-date' '
->  	echo "$at" | grep "+0000"
->  '
->  
-> +test_expect_success 'am in an unborn branch' '
-> +	rm -fr subdir &&
-> +	mkdir -p subdir &&
-> +	git format-patch --numbered-files -o subdir -1 first &&
-> +	(
-> +		cd subdir &&
-> +		git init &&
-> +		git am 1
-> +	) &&
-> +	result=$(
-> +		cd subdir && git rev-parse HEAD^{tree}
-> +	) &&
-> +	test "z$result" = "z$(git rev-parse first^{tree})"
-> +'
-> +
-
-Looks good.
+diff --git a/strbuf.c b/strbuf.c
+index 6ed0684..bfbd816 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -139,14 +139,11 @@ void strbuf_list_free(struct strbuf **sbs)
+ 
+ int strbuf_cmp(const struct strbuf *a, const struct strbuf *b)
+ {
+-	int cmp;
+-	if (a->len < b->len) {
+-		cmp = memcmp(a->buf, b->buf, a->len);
+-		return cmp ? cmp : -1;
+-	} else {
+-		cmp = memcmp(a->buf, b->buf, b->len);
+-		return cmp ? cmp : a->len != b->len;
+-	}
++	int len = a->len < b->len ? a->len: b->len;
++	int cmp = memcmp(a->buf, b->buf, len);
++	if (cmp)
++		return cmp;
++	return a->len < b->len ? -1: a->len != b->len;
+ }
+ 
+ void strbuf_splice(struct strbuf *sb, size_t pos, size_t len,
+-- 
+1.6.2.1.237.g7206c6
