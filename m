@@ -1,125 +1,115 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 00/11] Test on Windows - prequel
-Date: Thu, 19 Mar 2009 21:58:46 +0100
-Message-ID: <200903192158.46680.j6t@kdbg.org>
-References: <cover.1237410682.git.j6t@kdbg.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: git am from scratch
+Date: Thu, 19 Mar 2009 17:02:14 -0400
+Message-ID: <20090319210214.GA17589@coredump.intra.peff.net>
+References: <200903191609.24812.agruen@suse.de> <20090319201817.GE17028@coredump.intra.peff.net> <200903192142.49754.agruen@suse.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 19 22:00:30 2009
+To: Andreas Gruenbacher <agruen@suse.de>
+X-From: git-owner@vger.kernel.org Thu Mar 19 22:03:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkPLn-0004PW-50
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 22:00:27 +0100
+	id 1LkPP9-0005fW-DG
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 22:03:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753399AbZCSU6z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Mar 2009 16:58:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752274AbZCSU6y
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 16:58:54 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:42535 "EHLO bsmtp.bon.at"
+	id S1752748AbZCSVCZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2009 17:02:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752541AbZCSVCZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 17:02:25 -0400
+Received: from peff.net ([208.65.91.99]:46121 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751066AbZCSU6x (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2009 16:58:53 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 3955E10028;
-	Thu, 19 Mar 2009 21:58:46 +0100 (CET)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id C31773A9C1;
-	Thu, 19 Mar 2009 21:58:46 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <cover.1237410682.git.j6t@kdbg.org>
+	id S1752137AbZCSVCY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2009 17:02:24 -0400
+Received: (qmail 3644 invoked by uid 107); 19 Mar 2009 21:02:32 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 19 Mar 2009 17:02:32 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Mar 2009 17:02:14 -0400
 Content-Disposition: inline
+In-Reply-To: <200903192142.49754.agruen@suse.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113828>
 
-On Mittwoch, 18. M=E4rz 2009, Johannes Sixt wrote:
-> I'm preparing a series of patches that adjust the test suite so that =
-it
-> passes on Windows (MinGW port). This is the initial part of it. Anoth=
-er
-> dozen or more are to follow. By splitting the series I hope to get
-> earlier feedback.
->
-> The series is also available from
->
->  git://repo.or.cz/git/mingw/j6t.git for-junio
->
->  http://repo.or.cz/w/git/mingw/j6t.git?a=3Dshortlog;h=3Drefs/heads/fo=
-r-junio
+On Thu, Mar 19, 2009 at 09:42:49PM +0100, Andreas Gruenbacher wrote:
 
-I've updated the series. Would you please pick up it up from the URL
-above?
+> > I don't think this has ever worked in any version of git.
+> I did find a way to help myself in the end. Still it was still a major, 
+> unnecessary annoyance.
 
-The changes in particular are:
+Sure, and that is why I suggested a patch for git-am might be welcome;
+it's not the right tool for the job, but it seems to be one that people
+naturally think of.
 
-- [PATCH 02/10] test suite: Use 'say' to say something instead of...
+> I ran into this problem when trying to reconstruct a project's history (after 
+> going RCS -> CVS -> git many things were still wrong like unrelated RCS files 
+> which ended up in the history, RCS files being moved to the Attic in the 
+> original tree to indicate deletes [which means they will happily live on from 
+> a CVS point of view], etc.).
 
-  Updated commit message.
+Yikes. Out of curiosity, what did you use to do the CVS import?
 
-- [PATCH 04/10] test-lib: Replace uses of $(expr ...) by POSIX...
 
-  No changes to t4013 and t5515 anymore; the next patch removes the
-  lines that this patch touched.
+Anyway, here is a not-very-well-tested patch to get "git am" to apply on
+top of an empty repository (i.e., it worked on my utterly simplistic
+test case and I didn't think too hard about what else might have been
+broken). Maybe it will give a good start to somebody who wants to work
+on this.
 
-- [PATCH 05/10] test-lib: Simplify test counting.
-
-  Do not use $test_count+1 in t4013 and t5515.
-
-- [PATCH 08/10] t2200, t7004: Avoid glob pattern that also...
-
-  Added path2 to the list.
-
-Below is the interdiff.
-
--- Hannes =20
-
-diff --git a/t/t2200-add-update.sh b/t/t2200-add-update.sh
-index 652801e..5a8d52f 100755
---- a/t/t2200-add-update.sh
-+++ b/t/t2200-add-update.sh
-@@ -150,7 +150,7 @@ test_expect_success 'add -u resolves unmerged paths=
-' '
- 	echo 2 >path3 &&
- 	echo 2 >path5 &&
- 	git add -u &&
--	git ls-files -s path1 path3 path4 path5 path6 >actual &&
-+	git ls-files -s path1 path2 path3 path4 path5 path6 >actual &&
- 	{
- 		echo "100644 $three 0	path1"
- 		echo "100644 $one 1	path3"
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index 9c30b29..426e64e 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -101,8 +101,7 @@ do
- 	'' | '#'*) continue ;;
- 	esac
- 	test=3D`echo "$cmd" | sed -e 's|[/ ][/ ]*|_|g'`
--	cnt=3D$(($test_count+1))
--	pfx=3D`printf "%04d" $cnt`
-+	pfx=3D`printf "%04d" $test_count`
- 	expect=3D"$TEST_DIRECTORY/t4013/diff.$test"
- 	actual=3D"$pfx-diff.$test"
-=20
-diff --git a/t/t5515-fetch-merge-logic.sh b/t/t5515-fetch-merge-logic.s=
-h
-index 0b39503..dbb927d 100755
---- a/t/t5515-fetch-merge-logic.sh
-+++ b/t/t5515-fetch-merge-logic.sh
-@@ -129,8 +129,7 @@ do
- 	'' | '#'*) continue ;;
- 	esac
- 	test=3D`echo "$cmd" | sed -e 's|[/ ][/ ]*|_|g'`
--	cnt=3D$(($test_count+1))
--	pfx=3D`printf "%04d" $cnt`
-+	pfx=3D`printf "%04d" $test_count`
- 	expect_f=3D"$TEST_DIRECTORY/t5515/fetch.$test"
- 	actual_f=3D"$pfx-fetch.$test"
- 	expect_r=3D"$TEST_DIRECTORY/t5515/refs.$test"
+---
+diff --git a/git-am.sh b/git-am.sh
+index d339075..bcc600d 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -290,17 +290,23 @@ else
+ 		: >"$dotest/rebasing"
+ 	else
+ 		: >"$dotest/applying"
+-		git update-ref ORIG_HEAD HEAD
++		if git rev-parse --quiet --verify HEAD; then
++			git update-ref ORIG_HEAD HEAD
++		else
++			rm -f "$GIT_DIR/ORIG_HEAD"
++		fi
+ 	fi
+ fi
+ 
+ case "$resolved" in
+ '')
+-	files=$(git diff-index --cached --name-only HEAD --) || exit
+-	if test "$files"
+-	then
+-		: >"$dotest/dirtyindex"
+-		die "Dirty index: cannot apply patches (dirty: $files)"
++	if git rev-parse --quiet --verify HEAD; then
++		files=$(git diff-index --cached --name-only HEAD --) || exit
++		if test "$files"
++		then
++			: >"$dotest/dirtyindex"
++			die "Dirty index: cannot apply patches (dirty: $files)"
++		fi
+ 	fi
+ esac
+ 
+@@ -541,7 +547,7 @@ do
+ 	fi
+ 
+ 	tree=$(git write-tree) &&
+-	parent=$(git rev-parse --verify HEAD) &&
++	parent=$(git rev-parse --quiet --verify HEAD)
+ 	commit=$(
+ 		if test -n "$ignore_date"
+ 		then
+@@ -552,7 +558,7 @@ do
+ 			GIT_COMMITTER_DATE="$GIT_AUTHOR_DATE"
+ 			export GIT_COMMITTER_DATE
+ 		fi &&
+-		git commit-tree $tree -p $parent <"$dotest/final-commit"
++		git commit-tree $tree ${parent:+-p $parent} <"$dotest/final-commit"
+ 	) &&
+ 	git update-ref -m "$GIT_REFLOG_ACTION: $FIRSTLINE" HEAD $commit $parent ||
+ 	stop_here $this
