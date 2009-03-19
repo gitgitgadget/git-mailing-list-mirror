@@ -1,69 +1,93 @@
-From: William Morgan <wmorgan-git@masanjin.net>
-Subject: question about conflict resolution across multiple branches
-Date: Thu, 19 Mar 2009 10:56:54 -0700
-Message-ID: <1237483813-sup-5631@entry>
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 19 19:33:53 2009
+From: Nicolas Sebrecht <nicolas.s-dev@laposte.net>
+Subject: [PATCH] Re: git-gui: various French translation fixes
+Date: Thu, 19 Mar 2009 19:38:39 +0100
+Message-ID: <20090319183839.GA12913@vidovic>
+References: <20090318205410.GA900@zoy.org> <200903190609.25344.chriscool@tuxfamily.org> <200903190714.25211.chriscool@tuxfamily.org> <20090319075855.GJ27280@zoy.org> <20090319124901.GM27280@zoy.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Git List <git@vger.kernel.org>,
+	Alexandre Bourget <alexandre.bourget@savoirfairelinux.com>
+To: Sam Hocevar <sam@zoy.org>
+X-From: git-owner@vger.kernel.org Thu Mar 19 19:40:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkN3x-0007M0-6U
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 19:33:53 +0100
+	id 1LkNAC-0001d3-1i
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 19:40:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754652AbZCSScV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2009 14:32:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754372AbZCSScU
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 14:32:20 -0400
-Received: from masanjin.net ([209.20.72.13]:59701 "EHLO entry.masanjin.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754299AbZCSScU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2009 14:32:20 -0400
-X-Greylist: delayed 2123 seconds by postgrey-1.27 at vger.kernel.org; Thu, 19 Mar 2009 14:32:20 EDT
-Received: from w by entry.masanjin.net with local (Exim 4.69)
-	(envelope-from <w@masanjin.net>)
-	id 1LkMUB-0005Tj-3L
-	for git@vger.kernel.org; Thu, 19 Mar 2009 10:56:55 -0700
-User-Agent: Sup/git
+	id S1755104AbZCSSiu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Mar 2009 14:38:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754235AbZCSSit
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 14:38:49 -0400
+Received: from out4.laposte.net ([193.251.214.121]:45252 "EHLO
+	out3.laposte.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753474AbZCSSit (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2009 14:38:49 -0400
+Received: from meplus.info (localhost [127.0.0.1])
+	by mwinf8311.laposte.net (SMTP Server) with ESMTP id D7F6F7000088;
+	Thu, 19 Mar 2009 19:38:40 +0100 (CET)
+Received: from ? (91-165-141-36.rev.libertysurf.net [91.165.141.36])
+	by mwinf8311.laposte.net (SMTP Server) with ESMTP id 3EC047000087;
+	Thu, 19 Mar 2009 19:38:40 +0100 (CET)
+X-ME-UUID: 20090319183840257.3EC047000087@mwinf8311.laposte.net
+Content-Disposition: inline
+In-Reply-To: <20090319124901.GM27280@zoy.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-me-spamlevel: not-spam
+X-me-spamrating: 40.000000
+X-me-spamcause: OK, (-200)(0000)gggruggvucftvghtrhhoucdtuddrvdekuddrvdelucetggdotefuucfrrhhofhhilhgvmecuoehnohhnvgeqnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucdlqddutddtmd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113806>
 
-Hi all,
 
-I have a git usage question about topic branches and conflicts.
+On Thu, Mar 19, 2009 at 01:49:02PM +0100, Sam Hocevar wrote:
+>=20
+> On Thu, Mar 19, 2009, Sam Hocevar wrote:
+> > On Thu, Mar 19, 2009, Christian Couder wrote:
+> > > > >  #: git-gui.sh:2484 lib/index.tcl:410
+> > > > >  msgid "Revert Changes"
+> > > > > -msgstr "Annuler les modifications (revert)"
+> > > > > +msgstr "R=E9voquer les modifications"
+> > > >
+> > > > I am not sure that "R=E9voquer" is better than "Annuler".
+> > >=20
+> > > Perhaps "Inverser"?
 
-I maintain a project that I believe follows the standard topic branch
-model. It has two "version" branches, master and next. When a new
-feature is introduced, I create a topic branch off of master, commit,
-and merge the topic into next. Users can check out next to play with all
-the latest goodies. If a topic branch has problems, I add bugfix commits
-to it, and re-merge into next. Once it seems stable, I merge it into
-master. (Branching topic branches from master is necessary in order to
-be able to merge them into master without pulling everything else that's
-in next.)
+[...]
 
-So this is nice, because I can pick and choose which features to have in
-master, more or less independently of each other. The one thing I
-haven't been able to figure out is this:
+>    Sorry, I misread the Wikipedia interface because I wasn't logged i=
+n
+> and only admins can truly revert edits.
 
-Sometimes those topic branches are remote branches on someone else's
-repo. What happens when merging a remote topic branch into next creates
-a conflict? Ideally I'd like for the topic branch author to deal with
-resolving the conflict, and leave me to my carefree maintainer existence
-of eating icecream on the couch. In the no-conflict case, I merge their
-remote branch directly into my local next. But in the case of conflicts,
-it seems like me only way to acquire their resolution is to merge their
-next branch entirely into mine. Is that true?
+I don't think that we have to conform to Wikip=E9dia.
 
-Likewise, what happens when someone sends a patch against master to the
-mailing list, and applying that patch to next creates a conflict? Is
-there any way for them to resolve the conflict, and pass that resolution
-to me?
+>                                         So it does have "revert" (to
+> cancel an edit) and "undo" (to perform the opposite edit of a given
+> edit), which get translated to "r=E9voquer" and "d=E9faire". I theref=
+ore
+> think "r=E9voquer" is just as good as the others.
 
-Thanks for any help.
--- 
-William <wmorgan-git@masanjin.net>
+I disagree here.
+
+"Annuler", "R=E9voquer", "Inverser" or "D=E9faire" usualy stands for th=
+e
+same thing but :=20
+- thoses words doesn't have stricly the same meanings ;
+- we are in a special case here because of the underlying technical
+  result.
+
+We should care that the revert operation does *not* remove a commit but
+add a new one (this makes sense to Git). As a consequence, we should av=
+oid
+"Annuler", "R=E9voquer" and "D=E9faire".
+
+"Inverser" looks like the best translation.
+
+--=20
+Nicolas Sebrecht
