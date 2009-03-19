@@ -1,78 +1,73 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Produce a nicer output in case of sha1_object_info
-	failures in ls-tree -l
-Date: Thu, 19 Mar 2009 21:30:02 +0100
-Message-ID: <20090319203002.GA31014@blimp.localdomain>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 08/10] t2200, t7004: Avoid glob pattern that also matches
+ files
+Date: Thu, 19 Mar 2009 13:34:31 -0700
+Message-ID: <7vd4cd8d60.fsf@gitster.siamese.dyndns.org>
+References: <cover.1237410682.git.j6t@kdbg.org>
+ <3827d7fab3e9e233a0ac528b84ab2d6a36658365.1237410682.git.j6t@kdbg.org>
+ <7v7i2mbap2.fsf@gitster.siamese.dyndns.org> <200903192052.43162.j6t@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 19 21:32:20 2009
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Thu Mar 19 21:36:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkOu8-0001zE-RF
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 21:31:53 +0100
+	id 1LkOyJ-0003oG-QW
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 21:36:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756817AbZCSUaT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2009 16:30:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755220AbZCSUaR
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 16:30:17 -0400
-Received: from mout0.freenet.de ([195.4.92.90]:36624 "EHLO mout0.freenet.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753081AbZCSUaQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2009 16:30:16 -0400
-Received: from [195.4.92.21] (helo=11.mx.freenet.de)
-	by mout0.freenet.de with esmtpa (ID alexander.riesen@freenet.de) (port 25) (Exim 4.69 #79)
-	id 1LkOsU-0006dg-Ks; Thu, 19 Mar 2009 21:30:10 +0100
-Received: from x62b3.x.pppool.de ([89.59.98.179]:53323 helo=tigra.home)
-	by 11.mx.freenet.de with esmtpa (ID alexander.riesen@freenet.de) (port 587) (Exim 4.69 #76)
-	id 1LkOsU-0005wX-Bv; Thu, 19 Mar 2009 21:30:10 +0100
-Received: from blimp.localdomain (blimp.home [192.168.1.28])
-	by tigra.home (Postfix) with ESMTP id 7B6DE277D8;
-	Thu, 19 Mar 2009 21:30:04 +0100 (CET)
-Received: by blimp.localdomain (Postfix, from userid 1000)
-	id B177C36D27; Thu, 19 Mar 2009 21:30:03 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1756327AbZCSUej (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2009 16:34:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753719AbZCSUei
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 16:34:38 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33296 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753474AbZCSUei (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2009 16:34:38 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 4FD3B7FEE;
+	Thu, 19 Mar 2009 16:34:35 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id AEF577FED; Thu,
+ 19 Mar 2009 16:34:32 -0400 (EDT)
+In-Reply-To: <200903192052.43162.j6t@kdbg.org> (Johannes Sixt's message of
+ "Thu, 19 Mar 2009 20:52:42 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 5C0D2B7A-14C5-11DE-95A9-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113825>
 
-Initialize the size with 0. The error message is already printed
-by sha1_object_info itself. Otherwise the uninitialized size is
-printed, which does not make any sense at all.
+Johannes Sixt <j6t@kdbg.org> writes:
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
+> No, it is still useful. There is a difference if I say
+>
+>    git add "*a*"
+>
+> from bash or from Windows's CMD. The latter passes the argument to git with 
+> the dquotes; the startup code removes them and does not expand the wildcard. 
+> But if bash invokes the command, bash removes the quotes, so that the startup 
+> code only sees *a* and does the expansion.
 
- builtin-ls-tree.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+I can only say "yuck" :-<.
 
-diff --git a/builtin-ls-tree.c b/builtin-ls-tree.c
-index fca4631..a8cdafb 100644
---- a/builtin-ls-tree.c
-+++ b/builtin-ls-tree.c
-@@ -60,7 +60,6 @@ static int show_tree(const unsigned char *sha1, const char *base, int baselen,
- {
- 	int retval = 0;
- 	const char *type = blob_type;
--	unsigned long size;
- 
- 	if (S_ISGITLINK(mode)) {
- 		/*
-@@ -91,6 +90,7 @@ static int show_tree(const unsigned char *sha1, const char *base, int baselen,
- 	if (!(ls_options & LS_NAME_ONLY)) {
- 		if (ls_options & LS_SHOW_SIZE) {
- 			if (!strcmp(type, blob_type)) {
-+				unsigned long size = 0;
- 				sha1_object_info(sha1, &size);
- 				printf("%06o %s %s %7lu\t", mode, type,
- 				       abbrev ? find_unique_abbrev(sha1, abbrev)
--- 
-1.6.2.1.250.ga1458
+>> > In t2200, not all names that the test case is interested in exist as
+>> > files at the time when 'git ls-files' is invoked. git expands "path?" to
+>> > only the subset of files the exist, and only that subset was listed, so
+>> > that the test failed.  We now list all interesting paths explicitly.
+>>
+>> But that conversion misses the whole point of that particular test,
+>> doesn't it?  It wants to see path2 that was unmerged and existed only in
+>> the index but not in the work tree has disappeared, while the similarly
+>> unmerged path1 resolved after "add -u".  IOW, you are not testing that
+>> "add -u" notices a removal of path2 from the work tree anymore.
+>
+> I see. Then I'll just add path2 to the list, OK? It still passes the test.
+
+Yeah, as we are not passing --error-unmatch to the command, it should be
+the right thing to do.
