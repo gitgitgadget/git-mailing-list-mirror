@@ -1,173 +1,159 @@
-From: Scott Chacon <schacon@gmail.com>
-Subject: Git Large Object Support Proposal
-Date: Thu, 19 Mar 2009 15:14:52 -0700
-Message-ID: <d411cc4a0903191514n1e524ebava5895d708a2927c4@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-am: teach git-am to apply a patch to an unborn
+ branch
+Date: Thu, 19 Mar 2009 15:21:17 -0700
+Message-ID: <7viqm56tnm.fsf@gitster.siamese.dyndns.org>
+References: <20090320071231.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 19 23:16:59 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Thu Mar 19 23:23:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkQXp-0007lp-NI
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 23:16:58 +0100
+	id 1LkQdc-0001Or-CM
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 23:22:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759509AbZCSWO4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Mar 2009 18:14:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759599AbZCSWOz
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 18:14:55 -0400
-Received: from rv-out-0506.google.com ([209.85.198.233]:6484 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759691AbZCSWOy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Mar 2009 18:14:54 -0400
-Received: by rv-out-0506.google.com with SMTP id f9so772100rvb.1
-        for <git@vger.kernel.org>; Thu, 19 Mar 2009 15:14:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=DyeIVXHBlikqdrv2PwdKz+1FskiFsn3qRv1sJx4acRU=;
-        b=FJ0B6qaVjjwHnpW0NBq3VlZNjVjpyulGRRpFKxL9jzM0QSVxhxwVSFkdpjiWvPDqYP
-         MgTtKNIyrTVvDQVVlY3Yzjaa8hti7Dpv2Vw/vfvgbEE/qE47grwb0P3eOkoTp1W28u6W
-         RiZLo0fuliuFaxs4M9WKqme/MgTbUn9OPaEsw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=BVm3VY3YEEyBXtw3ziajqOp/kJs7wf3im1HBa6JTfC2ojSrefskJCiOZMWBDnAQ3N3
-         EoTCBKuIOcWGxX4id02gcLTdqyIOYrMly6cBCpHjhAJb8Bspmw22iLzMRPDpV09qZWWL
-         QZhu8WVhD1muvQGPYimabBKLg1cFQzuLzfsQA=
-Received: by 10.141.48.10 with SMTP id a10mr989101rvk.250.1237500892738; Thu, 
-	19 Mar 2009 15:14:52 -0700 (PDT)
+	id S1760335AbZCSWVZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2009 18:21:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759952AbZCSWVY
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 18:21:24 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42548 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757452AbZCSWVX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2009 18:21:23 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B84B2779B;
+	Thu, 19 Mar 2009 18:21:21 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DEA85779A; Thu,
+ 19 Mar 2009 18:21:18 -0400 (EDT)
+In-Reply-To: <20090320071231.6117@nanako3.lavabit.com> (Nanako Shiraishi's
+ message of "Fri, 20 Mar 2009 07:12:31 +0900")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 46948234-14D4-11DE-89A3-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113850>
 
-I have been thinking about this for a while, so I wanted to get some
-feedback. I've been seeing a number of people interested in using Git
-for game development and whatnot, or otherwise committing huge files.
-This will occasionally wreak some havoc on our servers (GitHub)
-because of the memory mapping involved. =C2=A0Thus, we would really lik=
-e to
-see a nicer way for Git to handle big files.
+Nanako Shiraishi <nanako3@lavabit.com> writes:
 
-There are two proposals on the GSoC page to deal with this - the
-'remote alternates/lazy clone' idea and the 'sparse/narrow clone'
-idea. =C2=A0I'm wondering if instead it might be an interesting idea to
-concentrate on the 'stub objects' for large blobs that Jakub was
-talking about a few months ago:
+> Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
+> ---
+>  git-am.sh     |   33 ++++++++++++++++++++++++++++-----
+>  t/t4150-am.sh |   15 +++++++++++++++
+>  2 files changed, 43 insertions(+), 5 deletions(-)
+>
+> diff --git a/git-am.sh b/git-am.sh
+> index d339075..c21642b 100755
+> --- a/git-am.sh
+> +++ b/git-am.sh
+> @@ -36,6 +36,13 @@ cd_to_toplevel
+>  git var GIT_COMMITTER_IDENT >/dev/null ||
+>  	die "You need to set your committer info first"
+>  
+> +if git rev-parse --verify -q HEAD >/dev/null
+> +then
+> +	HAS_HEAD=yes
+> +else
+> +	HAS_HEAD=
+> +fi
+> +
 
-http://markmail.org/message/my4kvrhsza2yjmlt
+Probably nicer this way than Peff's as I suspect we would need to special
+case the unborn-branch case a lot more.  Have you tried --skip and --abort
+codepaths with your patch?
 
-But where Git instead stores a stub object and the large binary object
-is pulled in via a separate mechanism. I was thinking that the client
-could set a max file size and when a binary object larger than that is
-staged, Git instead writes a stub blob like:
+>  sq () {
+>  	for sqarg
+>  	do
+> @@ -290,16 +297,26 @@ else
+>  		: >"$dotest/rebasing"
+>  	else
+>  		: >"$dotest/applying"
+> -		git update-ref ORIG_HEAD HEAD
+> +		if test -n "$HAS_HEAD"
+> +		then
+> +			git update-ref ORIG_HEAD HEAD
+> +		else
+> +			git update-ref -d ORIG_HEAD >/dev/null 2>&1
+> +		fi
 
-=3D=3D
-blob [size]\0
-[sha of large blob]
-=3D=3D
+So is this part.
 
-Then in the tree, we give the stubbed large file a special mode or type=
-:
+>  	fi
+>  fi
+>  
+>  case "$resolved" in
+>  '')
+> -	files=$(git diff-index --cached --name-only HEAD --) || exit
+> +	if test -n "$HAS_HEAD"
+> +	then
+> +		files=$(git diff-index --cached --name-only HEAD --)
+> +	else
+> +		files=$(git ls-files)
+> +	fi || exit
+>  	if test "$files"
+>  	then
+> -		: >"$dotest/dirtyindex"
+> +		test -n "$HAS_HEAD" && : >"$dotest/dirtyindex"
+>  		die "Dirty index: cannot apply patches (dirty: $files)"
+>  	fi
+>  esac
 
-=3D=3D
-100644 blob 3bb0e8592a41ae3185ee32266c860714980dbed7 README
-040000 tree 557b70d2374ae77869711cb583e6d59b8aad5e8b lib
-150000 blob 502feb557e2097d38a643e336f722525bc7ea077 big-ass-file.mpeg
-=3D=3D
+And here...
 
-Sort of like a symlink, but instead of the blob it points to
-containing the link path, it just contains the SHA of the real blob.
-Then we can have a command like 'git media' or something that helps
-manage those, pull them down from a specified server (specified in a
-=2Egitmedia file) and transfer new ones up before a push is allowed,
-etc.  This makes it sort of a cross between a symlink and a submodule.
+> @@ -541,7 +558,13 @@ do
+>  	fi
+>  
+>  	tree=$(git write-tree) &&
+> -	parent=$(git rev-parse --verify HEAD) &&
+> +	if parent=$(git rev-parse --verify -q HEAD)
+> +	then
+> +		pparent="-p $parent"
+> +	else
+> +		echo >&2 "applying to an empty history"
+> +		parent= pparent=
+> +	fi &&
+>  	commit=$(
+>  		if test -n "$ignore_date"
+>  		then
+> @@ -552,7 +575,7 @@ do
+>  			GIT_COMMITTER_DATE="$GIT_AUTHOR_DATE"
+>  			export GIT_COMMITTER_DATE
+>  		fi &&
+> -		git commit-tree $tree -p $parent <"$dotest/final-commit"
+> +		git commit-tree $tree $pparent <"$dotest/final-commit"
 
-=3D=3D .git/config
-[media]
-    push-url =3D [aws/scp/sftp/etc server]
-    password =3D [write password]
-    token =3D [write token]
+Peff's ${a+something $a} trick looks more "expert" here ;-).
 
-=3D=3D .gitmedia
-[server]
-    pull-url =3D [aws/scp/sftp/etc read only url]
+> diff --git a/t/t4150-am.sh b/t/t4150-am.sh
+> index 5e65afa..b97d102 100755
+> --- a/t/t4150-am.sh
+> +++ b/t/t4150-am.sh
+> @@ -290,4 +290,19 @@ test_expect_success 'am --ignore-date' '
+>  	echo "$at" | grep "+0000"
+>  '
+>  
+> +test_expect_success 'am in an unborn branch' '
+> +	rm -fr subdir &&
+> +	mkdir -p subdir &&
+> +	git format-patch --numbered-files -o subdir -1 first &&
+> +	(
+> +		cd subdir &&
+> +		git init &&
+> +		git am 1
+> +	) &&
+> +	result=$(
+> +		cd subdir && git rev-parse HEAD^{tree}
+> +	) &&
+> +	test "z$result" = "z$(git rev-parse first^{tree})"
+> +'
+> +
 
-This might be nice because all the objects would be local, so most of
-the changes to tools should be rather small - we can't
-merge/diff/blame large binary stuff really anyhow, right?  Also, the
-really large files could be written and served over protocols that are
-better for large file transfer (scp, sftp, etc) - the media server
-could be different than the git server.  Then our servers can stop
-choking when someone tries to add and push a 2 gig file.
-
-If two users have different settings, one would simply have the stub
-and the other not, the 'git media update' could check the local db
-first before fetching.  If you change the max-file-size at some point,
-the trees would just either stop using the stubs (if you lowered it)
-for anything that now fits under the size limit, or start using stubs
-for files that are now over it.
-
-The workflow may go something like this:
-
-$ cd git-repo
-$ cp ~/huge-file.mpg .
-$ git media add s3://chacon-media
-# wrote new media server url to .gitmedia
-$ git add .
-# huge-file.mpg is larger than max-file-size (10M) and will be added
-as media (see 'git media')
-$ git status
-# On branch master
-#
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#	new file:   .gitmedia
-#	new media:   huge-file.mpg
-#
-$ git push
-Uploading new media to s3://chacon-media
-Uploading media files 100% (5/5), done.
-New media uploaded, pushing to Git server
-Counting objects: 14, done.
-Compressing objects: 100% (9/9), done.
-Writing objects: 100% (10/10), 1.04 KiB, done.
-Total 10 (delta 4), reused 0 (delta 0)
-To git@github.com:schacon/mediaproject.git
- + dbb5d00...9647674 master -> master
-
-
-On the client side we would have something like this:
-
-$ git clone git://github.com/schacon/mediaproject.git
-Initialized empty Git repository in /private/tmp/simplegit/.git/
-remote: Counting objects: 270, done.
-remote: Compressing objects: 100% (148/148), done.
-remote: Total 270 (delta 103), reused 198 (delta 77)
-Receiving objects: 100% (270/270), 24.31 KiB, done.
-Resolving deltas: 100% (103/103), done.
-# You have unfetched media, run 'git media update' to get large media f=
-iles
-$ git status
-# On branch master
-#
-# Media files to be fetched:
-#   (use "git media update <file>..." to fetch)
-#
-#	unfetched:   huge-file.mpg
-#
-$ git media update
-=46etching media from s3://chacon-media
-=46etching media files 100% (1/1), done.
-
-
-Anyhow, you get the picture.  I would be happy to try to get a proof
-of concept of this done, but I wanted to know if there are any serious
-objections to this approach to large media.
+Looks good.
