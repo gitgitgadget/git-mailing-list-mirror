@@ -1,63 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Google Summer of Code 2009: GIT
-Date: Thu, 19 Mar 2009 11:19:09 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903191118210.10279@pacific.mpi-cbg.de>
-References: <49B74373.3090609@gmail.com>  <alpine.DEB.1.10.0903121052310.16753@asgard.lang.hm>  <ab9fa62a0903121119j6c2a1d43kd9cda99db47b5e7c@mail.gmail.com>  <alpine.DEB.1.10.0903121148540.16753@asgard.lang.hm>  <ab9fa62a0903121200v73ec3522gcdebcd34122efc72@mail.gmail.com>
-  <alpine.DEB.1.10.0903121214390.16753@asgard.lang.hm>  <ab9fa62a0903121245m621643bfq3c58557ccc9b266f@mail.gmail.com>  <alpine.DEB.1.10.0903121255040.16753@asgard.lang.hm>  <ab9fa62a0903121303v5a6cbf0ax413cc440b9c32e77@mail.gmail.com> 
- <alpine.DEB.1.00.0903190003100.10279@pacific.mpi-cbg.de> <81bfc67a0903182330q786ef01ai9148e41664a3471a@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Advice wanted to set up GIT repository manually sync'ed form
+ SVN
+Date: Thu, 19 Mar 2009 11:16:49 +0100
+Message-ID: <49C21B91.40304@drmicha.warpmail.net>
+References: <79BA5EFC11BE4E06A78D39D06D1549AF@HPLAPTOP>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: saurabh gupta <saurabhgupta1403@gmail.com>, david@lang.hm,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Caleb Cushing <xenoterracide@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 19 11:18:55 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Aaron Gray <aaronngray.lists@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 19 11:18:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkFKw-0005GF-Ix
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 11:18:55 +0100
+	id 1LkFKv-0005GF-68
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 11:18:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753876AbZCSKRR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2009 06:17:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753451AbZCSKRR
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 06:17:17 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45383 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753343AbZCSKRQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2009 06:17:16 -0400
-Received: (qmail invoked by alias); 19 Mar 2009 10:17:13 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp010) with SMTP; 19 Mar 2009 11:17:13 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18WP5AcXNIWW9EDJrY1/EEj+bp1JPAQ83+fEKdQ4+
-	tCtYWkbpWPNpiw
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <81bfc67a0903182330q786ef01ai9148e41664a3471a@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.68
+	id S1753271AbZCSKRK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2009 06:17:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752541AbZCSKRI
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 06:17:08 -0400
+Received: from out4.smtp.messagingengine.com ([66.111.4.28]:59964 "EHLO
+	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752361AbZCSKRF (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Mar 2009 06:17:05 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id B6F512F496E;
+	Thu, 19 Mar 2009 06:17:03 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Thu, 19 Mar 2009 06:17:03 -0400
+X-Sasl-enc: uDExqUMcG4xdu12F7OWfR/6H05VP9prh8zeumzQsF+AI 1237457823
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 29C1145FDA;
+	Thu, 19 Mar 2009 06:17:03 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090319 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <79BA5EFC11BE4E06A78D39D06D1549AF@HPLAPTOP>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113745>
 
-Hi,
-
-On Thu, 19 Mar 2009, Caleb Cushing wrote:
-
-> On Wed, Mar 18, 2009 at 7:16 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
->
-> > In my humble opinion, we should focus on the data types we want to be 
-> > able to support at the end of the summer first.
+Aaron Gray venit, vidit, dixit 18.03.2009 21:46:
+> Hi,
 > 
-> my 2 cents don't support xml, support sgml start at the least common 
-> denominator and refine from there.
+> I am a realitive GIT newbie, ie I have not used GIT on a project but have 
+> read quite a lot of documentation on it, over the last year or so.
+> 
+> We are wanting to have a git and git-web repository that is synced to a main 
+> SVN repository, wh only want to read the SVN repository at this stage. I am 
+> planning on using git-svn raw, and do fetch'es by hand.
+> 
+> Is there any advice that I should know at this point before proceeding ?
 
-Sorry, by "data type" I tried to refer to the nature of the file.  I 
-should have said "file type".
+Read-only access should be mostly pain-free, unless the structure of the
+svn repo is unfriendly. If it exists already and is large I'd suggest to
+do a few test conversions with limited revision range first, adjust the
+config, optionally set up an author map and then go live.
 
-Ciao,
-Dscho
+Michael
