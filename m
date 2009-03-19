@@ -1,84 +1,94 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Add a fast version of fstat to cygwin port
-Date: Thu, 19 Mar 2009 16:14:31 +0100
-Message-ID: <81b0412b0903190814i254ee2d1yc39035e78d7ad3d8@mail.gmail.com>
-References: <81b0412b0903190730s40589291iea9a861ddeedcc0@mail.gmail.com>
-	 <49C25CAE.6000003@viscovery.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH v2] Introduce %<branch> as shortcut to the tracked   branch
+Date: Thu, 19 Mar 2009 16:17:52 +0100
+Message-ID: <49C26220.8050603@drmicha.warpmail.net>
+References: <200903181448.50706.agruen@suse.de> <20090318182603.GM8940@machine.or.cz> <alpine.DEB.1.00.0903182210310.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903182245280.10279@pacific.mpi-cbg.de> <7vr60ubgul.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0903182343580.10279@pacific.mpi-cbg.de> <49C25C4A.2010202@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Junio C Hamano <gitster@pobox.com>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Marius Storm-Olsen <marius@trolltech.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Mar 19 16:18:51 2009
+	Petr Baudis <pasky@suse.cz>,
+	Andreas Gruenbacher <agruen@suse.de>, git@vger.kernel.org
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Thu Mar 19 16:21:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkJyW-0000wO-2y
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 16:16:04 +0100
+	id 1LkK2O-0002YU-PQ
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 16:20:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754391AbZCSPOf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Mar 2009 11:14:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754218AbZCSPOf
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 11:14:35 -0400
-Received: from an-out-0708.google.com ([209.85.132.243]:61488 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754127AbZCSPOe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Mar 2009 11:14:34 -0400
-Received: by an-out-0708.google.com with SMTP id d14so430123and.1
-        for <git@vger.kernel.org>; Thu, 19 Mar 2009 08:14:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=dHzQ5nOQJdZ78mPkl7ev3An39RPDTfOODcRT8XwGvxU=;
-        b=KSVR85uIoCB/e6+Jg+9ZVvwT0hYcyFBMp553Rgq27cU2oL7plit1ejtbJQScmBdfcn
-         nvKtfHqfjjWZC94YRzSPa4edK7LgHrywD0ofX4Ues/dXJhdyK9/c4RVeReytFhwHsJIQ
-         8dSKKnjXR/zRFlLxme77y0Li6lCpbAg5XvArg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Uwl0xXfgv2Lkigm+xi24wexoS7JKKpgHWeQj+RkXjdeHjOCr9kc+Q8yVfGG3PGPLGk
-         woNEQo6Ottk1wm4G4FRpWatTRoqVkEQVFieBeHriVnB9e61xSIJeP2GKoT47ilAX3+UJ
-         W2Sbox21UI+HUFES/gV/6La4ZtPaP5ITdSLis=
-Received: by 10.100.142.15 with SMTP id p15mr407823and.20.1237475671630; Thu, 
-	19 Mar 2009 08:14:31 -0700 (PDT)
-In-Reply-To: <49C25CAE.6000003@viscovery.net>
+	id S1757045AbZCSPSN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2009 11:18:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757885AbZCSPSL
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 11:18:11 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:33553 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757045AbZCSPSJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Mar 2009 11:18:09 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id B9A8D2F70F8;
+	Thu, 19 Mar 2009 11:18:07 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Thu, 19 Mar 2009 11:18:07 -0400
+X-Sasl-enc: bvPf4JpJ2oQgGb1VumDM86JgQIgIuThdqPsXDxtHpOeg 1237475887
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 7C8D12A429;
+	Thu, 19 Mar 2009 11:18:06 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090319 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <49C25C4A.2010202@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113780>
 
-2009/3/19 Johannes Sixt <j.sixt@viscovery.net>:
-> Alex Riesen schrieb:
->> BTW, why do we have to #undef fstat, but not stat/lstat?
->
-> Because stat and lstat are #defined with an argument list, but in tho=
-se
-> instances where the cygwin version of stat/lstat is meant, they are u=
-sed
-> *without* argument list (see cygwin_stat/lstat_stub), and no macro
-> expansion happens, and therefore we don't need to #undef the macro.
->
-> OTOH, do_fstat calls into cygwin's fstat() if the file handle is not =
-a
-> file and uses an argument list that would cause a macro expansion if =
-it
-> were not #undef'd:
->
-=2E..
->> + =C2=A0 =C2=A0 /* direct non-file handles to cygwin's fstat() */
->> + =C2=A0 =C2=A0 if (GetFileType(fh) !=3D FILE_TYPE_DISK)
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return fstat(fd, buf);
->
-> We never do that for stat/lstat.
+Michael J Gruber venit, vidit, dixit 19.03.2009 15:52:
+> Johannes Schindelin venit, vidit, dixit 18.03.2009 23:46:
+>> Hi,
+>>
+>> On Wed, 18 Mar 2009, Junio C Hamano wrote:
+>>
+>>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>>
+>>>> Suggested by Pasky.
+>>>>
+>>>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>>>
+>>> In the longer term who suggested matters much less than why such a 
+>>> feature is desirable, how it is used, and without it what is impossible 
+>>> and/or cumbersome.  What's the motivation behind this?
+>>>
+>>> You do not have to explain it to me, but you should explain it to the 
+>>> history that records this commit, and to the users who read doccos.
+>>
+>> And that's not all... Documentation updates and tests for % and %<branch> 
+>> are missing, too.
+>>
+>> My main motivation to make this patch was to see how fast I could come up 
+>> with something working that does not hurt my eyes.
+>>
+>> But I do not have time to do more today: My main project as well as Git 
+>> got accepted into the Google Summer of Code program, so I am even more 
+>> swamped than usually.
+>>
+>> So... if anybody feels like it, I would be very thankful for a proper 
+>> commit message, documentation and tests...
+> 
+> Just a quick note that I'm feeling like it... Though it seems this does
+> not quite work with local branches, i.e. a branch created with
+> 
+> git checkout --track -b tracking tracked
+> 
+> with "tracked" being a local branch. I don't see why on first inspection
+> of the code (branch.tracking.merge = refs/heads/tracked, so what), but
+> maybe you will...
 
-I see. Not immediately obvious :)
-Thanks!
+So, for a local branch, branch_get() returns a branch without merge info
+even though it's in the config (the remote is "." here). "git branch
+--track" is specifically meant for (branching off a ) local branch,
+because it's the default for remote branches anyway. Right? Does not
+look right.
+
+Michael
