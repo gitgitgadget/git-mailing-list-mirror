@@ -1,88 +1,82 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Add a fast version of fstat to cygwin port
-Date: Thu, 19 Mar 2009 15:54:38 +0100
-Message-ID: <49C25CAE.6000003@viscovery.net>
-References: <81b0412b0903190730s40589291iea9a861ddeedcc0@mail.gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: t5505-remote fails on Windows
+Date: Thu, 19 Mar 2009 11:00:50 -0400
+Message-ID: <76718490903190800o4d82a037mb6fc5bf901c418d8@mail.gmail.com>
+References: <49C0DE23.8020809@viscovery.net>
+	 <20090319041837.GA32642@coredump.intra.peff.net>
+	 <20090319044313.GA341@coredump.intra.peff.net>
+	 <alpine.DEB.1.00.0903191135530.10279@pacific.mpi-cbg.de>
+	 <7vhc1pai84.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Marius Storm-Olsen <marius@trolltech.com>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 19 15:57:50 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 19 16:03:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkJfr-00010g-DR
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 15:56:47 +0100
+	id 1LkJlr-0003ai-CK
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 16:02:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755514AbZCSOyu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2009 10:54:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753624AbZCSOyu
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 10:54:50 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:32937 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754750AbZCSOyt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2009 10:54:49 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1LkJdo-0002oU-Tf; Thu, 19 Mar 2009 15:54:41 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id A34A2543; Thu, 19 Mar 2009 15:54:40 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
-In-Reply-To: <81b0412b0903190730s40589291iea9a861ddeedcc0@mail.gmail.com>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1754864AbZCSPAz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Mar 2009 11:00:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753937AbZCSPAz
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 11:00:55 -0400
+Received: from rv-out-0506.google.com ([209.85.198.228]:23196 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754127AbZCSPAy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Mar 2009 11:00:54 -0400
+Received: by rv-out-0506.google.com with SMTP id f9so603829rvb.1
+        for <git@vger.kernel.org>; Thu, 19 Mar 2009 08:00:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=bcWKHDeASUlrn9b/7R3RZ+iA2zRZbKf1TM4lU+twp8s=;
+        b=vTINU3KkQzd0kbOyfr2N1p4q68X/iiF3WxZbbQQRHcDNYQkgTTHXqBPXOFj5a61Jez
+         kvHKatah0PHCLOqmUnqwKg6V4SDQoVzjChpYFe/lPpVL02CYTqSet+AUtZG7+thVtlkM
+         HqOmZv1Et8O81CKowNzPe4zt29IlPQwKCXJeM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=JsT9EQqNICKexJxzKYQz2+WkAOWnBY3qch5MY0Y0KNEmZR3AmuDMMoIFRe9Ki4/kK1
+         OvWaAOEQFVg5OXoZZOe6frOKbYknDHYNfIWB4aOQ8caiWFiMet1Vm84bxkAbLZFK3BER
+         BzbefstIfF9+8vxEptAizY2rs9uuj7AJVYooM=
+Received: by 10.140.187.14 with SMTP id k14mr829896rvf.270.1237474850588; Thu, 
+	19 Mar 2009 08:00:50 -0700 (PDT)
+In-Reply-To: <7vhc1pai84.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113775>
 
-Alex Riesen schrieb:
-> Besides, the output of the fast stat and lstat is not compatible
-> with cygwin's fstat with regard to uid, gid and ctime fields.
+On Thu, Mar 19, 2009 at 7:02 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+>> Do we really want an API for that? =C2=A0Calling qsort() directly sh=
+ould be
+>> obvious enough, no?
+>
+> I think so. =C2=A0If it were done like this (notice the lack of doubl=
+e
+> indirection in the cmp_fn signature):
+>
+> =C2=A0 =C2=A0typedef int string_list_item_cmp_fn(const struct string_=
+list_item *, const struct string_list_item *);
+>
+> =C2=A0 =C2=A0void sort_string_list_with_fn(struct string_list *list, =
+string_list_item_cmp_fn *);
+>
+> it would have made more sense, though.
 
-Why do you need this? I don't think that fstat() is used in a critical
-path. Do you see problems with the incompatible fields?
+Oh, wow, sorry, I didn't even realize Jeff had just added that
+function. Somehow I missed that part of his patch.
 
-> This is not strictly related to the other stat patches. The fstat
-> code is shamelessly stolen from the mingw port, sorry.
-
-I wouldn't call it "stolen", but "copied". Because if you copy it, it
-becomes your responsibility and all copied bugs are yours ;)
-
-> BTW, why do we have to #undef fstat, but not stat/lstat?
-
-Because stat and lstat are #defined with an argument list, but in those
-instances where the cygwin version of stat/lstat is meant, they are used
-*without* argument list (see cygwin_stat/lstat_stub), and no macro
-expansion happens, and therefore we don't need to #undef the macro.
-
-OTOH, do_fstat calls into cygwin's fstat() if the file handle is not a
-file and uses an argument list that would cause a macro expansion if it
-were not #undef'd:
-
-> +#undef fstat
-> +static int cygwin_fstat(int fd, struct stat *buf)
-> +{
-> +	HANDLE fh = (HANDLE)_get_osfhandle(fd);
-> +	BY_HANDLE_FILE_INFORMATION fdata;
-> +
-> +	if (fh == INVALID_HANDLE_VALUE) {
-> +		errno = EBADF;
-> +		return -1;
-> +	}
-> +	/* direct non-file handles to cygwin's fstat() */
-> +	if (GetFileType(fh) != FILE_TYPE_DISK)
-> +		return fstat(fd, buf);
-
-We never do that for stat/lstat.
-
--- Hannes
+j.
