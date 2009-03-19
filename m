@@ -1,81 +1,105 @@
 From: Yann Simon <yann.simon.fr@gmail.com>
-Subject: [PATCH JGIT 4/5] Method fails to close stream
-Date: Thu, 19 Mar 2009 10:16:43 +0100
-Message-ID: <49C20D7B.1060702@gmail.com>
+Subject: [PATCH JGIT] Inefficient use of keySet iterator instead of entrySet
+ iterator
+Date: Thu, 19 Mar 2009 10:17:56 +0100
+Message-ID: <49C20DC4.1090600@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git <git@vger.kernel.org>
 To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Mar 19 10:18:23 2009
+X-From: git-owner@vger.kernel.org Thu Mar 19 10:19:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkEON-0002fY-5d
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 10:18:23 +0100
+	id 1LkEPU-0002zp-Ic
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 10:19:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755972AbZCSJQt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2009 05:16:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755970AbZCSJQt
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 05:16:49 -0400
-Received: from mail-ew0-f165.google.com ([209.85.219.165]:57450 "EHLO
+	id S1756903AbZCSJSG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2009 05:18:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756314AbZCSJSF
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 05:18:05 -0400
+Received: from mail-ew0-f165.google.com ([209.85.219.165]:33075 "EHLO
 	mail-ew0-f165.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755617AbZCSJQs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2009 05:16:48 -0400
-Received: by ewy9 with SMTP id 9so323676ewy.37
-        for <git@vger.kernel.org>; Thu, 19 Mar 2009 02:16:45 -0700 (PDT)
+	with ESMTP id S1755993AbZCSJSD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2009 05:18:03 -0400
+Received: by ewy9 with SMTP id 9so324027ewy.37
+        for <git@vger.kernel.org>; Thu, 19 Mar 2009 02:17:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from
          :user-agent:mime-version:to:cc:subject:content-type
          :content-transfer-encoding;
-        bh=11IlTeeiYR5BRFR5NmXhe70QBcHONxJo1Bepxbvs5kM=;
-        b=fiGLW1pbJromtCRjAcLTggpLG81wmYN/lrz5L+ygOSFLjvy2QEug95g0Up3t3vtvS7
-         BZPfS6as1fxwGCWQC6rsYxsGQGY5hXRkgT/fuR8+QiERyKsCuCN97PJ5Uds+XobQAsCx
-         Ku1zhX+iOT7sHSONMakYw2npTdPjHJFDkdfqk=
+        bh=rb/z7EVse7LbChYrooHSqYKB7h5dIoHISWVwg43WIAc=;
+        b=puU7Op4y6eOfpxJVLvLmGxJJUO8iCbD54VQyo7302hPejBrTFY5a6FMMI1hlpxykIZ
+         5BaG4sD8ApMT+vpmNYpux9+/8XowykQ5apaKkQfAjzp5yz3wfclVv+8RiHGuvggJVLvN
+         LxGMVPYJ9+PCdotc9V+J+CCKYjR3QcMlXOel0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
          :content-type:content-transfer-encoding;
-        b=k2O1+310/CoeIvprZ5JjaEacmc4JjQJdq/0+N1PSJyajITmWaj5TenW+8V4a5f9Rbk
-         dEAoTodGGwKDzTQ91d8zt2ZQeOxl8OSjDzu8qJEDah/JgVEvPgB3XTf/X99Uge5UzDdY
-         sTsOGmzz7fVfhTHLjzFjFXZWv9O3Mvh2fJD9k=
-Received: by 10.210.37.16 with SMTP id k16mr6244231ebk.0.1237454205448;
-        Thu, 19 Mar 2009 02:16:45 -0700 (PDT)
+        b=jcGFUuKHsL5vBykVujvFmw9S7925Wv8HuUvdPPg/4mZjU1t8S91qNqlXi6Xr2+glNs
+         +q/7nH70dqYofRU6z4sFn3Yeol1eIGrPZC2k22DhKwRf+MZNyh4qAA2FuIdsyUtPfTiz
+         y2DjALHzf4WyYtH0Z3MU/mEQf6kbinhiohyDU=
+Received: by 10.216.71.82 with SMTP id q60mr968982wed.169.1237454278924;
+        Thu, 19 Mar 2009 02:17:58 -0700 (PDT)
 Received: from ?10.11.2.21? (port-87-193-216-74.static.qsc.de [87.193.216.74])
-        by mx.google.com with ESMTPS id 28sm976662eye.4.2009.03.19.02.16.44
+        by mx.google.com with ESMTPS id 10sm978814eyz.19.2009.03.19.02.17.57
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 19 Mar 2009 02:16:45 -0700 (PDT)
+        Thu, 19 Mar 2009 02:17:57 -0700 (PDT)
 User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113741>
 
-The stream was only closed in case of an error.
-Use a finally block instead to ensure that the
-stream is closed.
+>From FindBugs:
+This method accesses the value of a Map entry, using a key that
+was retrieved from a keySet iterator. It is more efficient to use
+an iterator on the entrySet of the map, to avoid the Map.get(key)
+lookup.
 
 Signed-off-by: Yann Simon <yann.simon.fr@gmail.com>
 ---
- .../src/org/spearce/jgit/lib/Repository.java       |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ .../src/org/spearce/jgit/lib/ObjectIdMap.java      |    5 +++--
+ .../src/org/spearce/jgit/transport/AmazonS3.java   |    5 +++--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
-index 8132e27..cfd92b8 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
-@@ -152,7 +152,7 @@ public Repository(final File d) throws IOException {
- 				for (String alt=ar.readLine(); alt!=null; alt=ar.readLine()) {
- 					readObjectsDirs(FS.resolve(objectsDir, alt), ret);
- 				}
--			} catch (Exception e) {
-+			} finally {
- 				ar.close();
- 			}
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectIdMap.java b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectIdMap.java
+index d3c7f1d..10feaf9 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectIdMap.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectIdMap.java
+@@ -183,8 +183,9 @@ public V put(ObjectId key, V value) {
+ 	}
+ 
+ 	public void putAll(Map<? extends ObjectId, ? extends V> arg0) {
+-		for (ObjectId k : arg0.keySet()) {
+-			V v=arg0.get(k);
++		for (Map.Entry<? extends ObjectId, ? extends V> entry : arg0.entrySet()) {
++			ObjectId k = entry.getKey();
++			V v=entry.getValue();
+ 			put(k,v);
  		}
+ 	}
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/AmazonS3.java b/org.spearce.jgit/src/org/spearce/jgit/transport/AmazonS3.java
+index 59337f8..3d8bdca 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/AmazonS3.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/AmazonS3.java
+@@ -572,9 +572,10 @@ private HttpURLConnection open(final String method, final String bucket,
+ 	private void authorize(final HttpURLConnection c) throws IOException {
+ 		final Map<String, List<String>> reqHdr = c.getRequestProperties();
+ 		final SortedMap<String, String> sigHdr = new TreeMap<String, String>();
+-		for (final String hdr : reqHdr.keySet()) {
++		for (final Map.Entry<String, List<String>> entry : reqHdr.entrySet()) {
++			final String hdr = entry.getKey();
+ 			if (isSignedHeader(hdr))
+-				sigHdr.put(hdr.toLowerCase(), toCleanString(reqHdr.get(hdr)));
++				sigHdr.put(hdr.toLowerCase(), toCleanString(entry.getValue()));
+ 		}
+ 
+ 		final StringBuilder s = new StringBuilder();
 -- 
 1.6.1.2
