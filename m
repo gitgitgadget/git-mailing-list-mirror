@@ -1,75 +1,53 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 08/10] t2200, t7004: Avoid glob pattern that also matches
- files
-Date: Wed, 18 Mar 2009 17:47:21 -0700
-Message-ID: <7v7i2mbap2.fsf@gitster.siamese.dyndns.org>
-References: <cover.1237410682.git.j6t@kdbg.org>
- <3827d7fab3e9e233a0ac528b84ab2d6a36658365.1237410682.git.j6t@kdbg.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Local clone checks out wrong branch based on remote HEAD
+Date: Thu, 19 Mar 2009 00:04:02 -0400
+Message-ID: <20090319040402.GB32435@coredump.intra.peff.net>
+References: <b97024a40903171219k8841508p774d9dc4295a09bc@mail.gmail.com> <20090318005413.GC25454@coredump.intra.peff.net> <49C0C769.8020401@drmicha.warpmail.net> <76718490903181411p743382f1qb053363f28a800b1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Thu Mar 19 01:49:13 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Tom Preston-Werner <tom@github.com>, git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 19 05:06:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lk6RT-0006hm-PU
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 01:49:04 +0100
+	id 1Lk9WD-0007Ke-46
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 05:06:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755369AbZCSAr2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Mar 2009 20:47:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754383AbZCSAr2
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Mar 2009 20:47:28 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53031 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753636AbZCSAr1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Mar 2009 20:47:27 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C681B78EE;
-	Wed, 18 Mar 2009 20:47:25 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 32F6278EC; Wed,
- 18 Mar 2009 20:47:23 -0400 (EDT)
-In-Reply-To: <3827d7fab3e9e233a0ac528b84ab2d6a36658365.1237410682.git.j6t@kdbg.org>
- (Johannes Sixt's message of "Wed, 18 Mar 2009 22:27:10 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 83F3E512-141F-11DE-996E-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+	id S1751201AbZCSEEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2009 00:04:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751129AbZCSEEL
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 00:04:11 -0400
+Received: from peff.net ([208.65.91.99]:45834 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751104AbZCSEEL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2009 00:04:11 -0400
+Received: (qmail 29393 invoked by uid 107); 19 Mar 2009 04:04:18 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 19 Mar 2009 00:04:18 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Mar 2009 00:04:02 -0400
+Content-Disposition: inline
+In-Reply-To: <76718490903181411p743382f1qb053363f28a800b1@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113711>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+On Wed, Mar 18, 2009 at 05:11:25PM -0400, Jay Soffian wrote:
 
-> On Windows, there is an unfortunate interaction between the MSYS bash and
-> git's command line processing:
->
-> - Since Windows's CMD does not do the wildcard expansion, but passes
->   arguments like path* through to the programs, the programs must do the
->   expansion themselves. This happens in the startup code before main() is
->   entered.
->
-> - bash, however, passes the argument "path*" to git, assuming that git will
->   see the unquoted word unchanged as a single argument.
->
-> But actually git expands the unquoted word before main() is entered.
+> I think there are two reasonable paths forward:
+> 
+> 1) Address Jeff's concerns above so that the symref can be sent.
+> 2) In lieu of (1), have clone at least warn that multiple branches
+> match and that it just picked one.
 
-Doesn't this mean on Windows, the glob pathspec git supports is not useful
-at all?
+I think we should do (2) regardless. Even with an updated client,
+remote servers may have an older git which does not support (1) for some
+time.
 
-I am wondering if we want to treat any feature that involves globs as
-unusable like any feature that involves pathnames with a TAB in it.
+So I guess it's time to refactor guess_remote_head _again_. :)
 
-> In t2200, not all names that the test case is interested in exist as files
-> at the time when 'git ls-files' is invoked. git expands "path?" to only
-> the subset of files the exist, and only that subset was listed, so that the
-> test failed.  We now list all interesting paths explicitly.
-
-But that conversion misses the whole point of that particular test,
-doesn't it?  It wants to see path2 that was unmerged and existed only in
-the index but not in the work tree has disappeared, while the similarly
-unmerged path1 resolved after "add -u".  IOW, you are not testing that
-"add -u" notices a removal of path2 from the work tree anymore.
+-Peff
