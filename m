@@ -1,64 +1,76 @@
-From: Sam Hocevar <sam@zoy.org>
-Subject: Re: [PATCH] git-gui: various French translation fixes
-Date: Thu, 19 Mar 2009 08:58:55 +0100
-Message-ID: <20090319075855.GJ27280@zoy.org>
-References: <20090318205410.GA900@zoy.org> <200903190609.25344.chriscool@tuxfamily.org> <200903190714.25211.chriscool@tuxfamily.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Alexandre Bourget <alexandre.bourget@savoirfairelinux.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Thu Mar 19 09:00:52 2009
+From: Shaun Cutts <shaun@cuttshome.net>
+Subject: submodules for different deployment directories?
+Date: Thu, 19 Mar 2009 04:01:32 -0400
+Message-ID: <95262188-40D9-4A6F-8652-96070086376F@cuttshome.net>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 19 09:09:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkDBK-0005BL-8T
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 09:00:50 +0100
+	id 1LkDK5-0007cZ-5c
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 09:09:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752560AbZCSH66 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Mar 2009 03:58:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752450AbZCSH66
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 03:58:58 -0400
-Received: from poulet.zoy.org ([80.65.228.129]:34859 "EHLO poulet.zoy.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752150AbZCSH66 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2009 03:58:58 -0400
-Received: by poulet.zoy.org (Postfix, from userid 1000)
-	id 095511203D9; Thu, 19 Mar 2009 08:58:55 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <200903190714.25211.chriscool@tuxfamily.org>
-Mail-Copies-To: never
-X-No-CC: I read mailing-lists; do not CC me on replies.
-X-Snort: uid=0(root) gid=0(root)
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751819AbZCSIIZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2009 04:08:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751880AbZCSIIX
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 04:08:23 -0400
+Received: from mail8.sea5.speakeasy.net ([69.17.117.10]:60066 "EHLO
+	mail8.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751819AbZCSIIW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2009 04:08:22 -0400
+X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Thu, 19 Mar 2009 04:08:22 EDT
+Received: (qmail 18562 invoked from network); 19 Mar 2009 08:01:39 -0000
+Received: from dsl092-072-228.bos1.dsl.speakeasy.net (HELO [192.168.0.115]) (shaunc@[66.92.72.228])
+          (envelope-sender <shaun@cuttshome.net>)
+          by mail8.sea5.speakeasy.net (qmail-ldap-1.03) with SMTP
+          for <git@vger.kernel.org>; 19 Mar 2009 08:01:39 -0000
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113731>
 
-On Thu, Mar 19, 2009, Christian Couder wrote:
-> > >  #: git-gui.sh:2484 lib/index.tcl:410
-> > >  msgid "Revert Changes"
-> > > -msgstr "Annuler les modifications (revert)"
-> > > +msgstr "R=E9voquer les modifications"
-> >
-> > I am not sure that "R=E9voquer" is better than "Annuler".
->=20
-> Perhaps "Inverser"?
+Hello,
 
-   I suggested "r=E9voquer" because it was close enough to "revert" tha=
-t
-there was no need to specify "(revert)" in the translation itself.
-It's what the French Wikipedia interface used to say to revert edits.
-But I see they now use "d=E9faire" (undo), so apparently they deemed
-it inappropriate for some reason. I have no strong preference for
-"Inverser" or even "Annuler", I just want it to be consistent and to ge=
-t
-rid of the "(revert)" at the end of this message.
+We are currently migrating from svn....
 
-Cheers,
---=20
-Sam.
+We have a growing project that is deployed differently in various  
+places. The deployment-specific stuff is in a subdirectory called  
+"deployment".
+
+In svn, we used svn switch to point that subdirectory at a different  
+tag. Then "update" on the overall tree left alone the switched parts  
+at the various different installations. We could "push" changes in any  
+overall copy of the project and the differences between the switched  
+subdirectories would be immaterial.
+
+It would seem (to me at least) that the equivalent functionality is  
+provided by "submodule" in git.
+
+Accordingly I started a separate project with different branches  
+corresponding to the different deployment models.
+
+I added this a submodule to the main project. In fact, we are thinking  
+of organizing some other things that differ by install this way, so I  
+made the actual directory a subdirectory of the "deployment" project,  
+which I "submodule added" to the various installations as a submodule  
+off the root repository, then used "ln -s"  to link that subdirectory  
+into the appropriate place in the overall tree. (Is this a mistake?)
+
+However, I'm not sure its working right. It seems that the various  
+overall repositories differ, even if only really the submodule's  
+branch differs. Also a diff comes up with lots of differences between  
+the submodules's trees. (Aside: where is the branch of the submodule  
+written down in the overall module -- if you add with -b... is this  
+just "transient info"?) But I thought that the idea of submodules were  
+that they are opaque?
+
+I would enjoy help figuring out what is going on. I would be most  
+grateful, however, to learn how I'm *supposed* to do in this situation.
+
+-- Shaun Cutts
