@@ -1,105 +1,135 @@
-From: "David J. Mellor" <dmellor@whistlingcat.com>
-Subject: [PATCH] Documentation: reworded the "Description" section of git-bisect.txt.
-Date: Thu, 19 Mar 2009 00:00:12 -0700
-Message-ID: <1237446012-4533-1-git-send-email-dmellor@whistlingcat.com>
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Mar 19 08:01:56 2009
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] git-gui: various French translation fixes
+Date: Thu, 19 Mar 2009 08:02:46 +0100
+Message-ID: <20090319070246.GA6561@glandium.org>
+References: <20090318205410.GA900@zoy.org> <200903190609.25344.chriscool@tuxfamily.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sam Hocevar <sam@zoy.org>, Git List <git@vger.kernel.org>,
+	Alexandre Bourget <alexandre.bourget@savoirfairelinux.com>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Thu Mar 19 08:03:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkCGD-00076j-HK
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 08:01:49 +0100
+	id 1LkCHw-0007S1-O1
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 08:03:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754977AbZCSHAU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2009 03:00:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754246AbZCSHAS
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 03:00:18 -0400
-Received: from quartz.whistlingcat.com ([67.223.228.111]:59040 "EHLO
-	quartz.whistlingcat.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754096AbZCSHAR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2009 03:00:17 -0400
-Received: from whistlingcat.com (whistlingcat.com [99.12.234.57])
-	by quartz.whistlingcat.com (Postfix) with ESMTP id 3F631488007;
-	Thu, 19 Mar 2009 00:00:13 -0700 (PDT)
-Received: from sandstone.whistlingcat.com (sandstone.whistlingcat.com [192.168.0.2])
-	by whistlingcat.com (Postfix) with ESMTP id 0EE0938E74F4;
-	Thu, 19 Mar 2009 00:00:13 -0700 (PDT)
-Received: by sandstone.whistlingcat.com (Postfix, from userid 500)
-	id DA4F517A4B; Thu, 19 Mar 2009 00:00:12 -0700 (PDT)
-X-Mailer: git-send-email 1.6.2.1
+	id S1757302AbZCSHCI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Mar 2009 03:02:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755632AbZCSHCH
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 03:02:07 -0400
+Received: from vuizook.err.no ([85.19.221.46]:56379 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756629AbZCSHCF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2009 03:02:05 -0400
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <mh@glandium.org>)
+	id 1LkCGH-0002ZG-KN; Thu, 19 Mar 2009 08:01:56 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1LkCH8-0001i4-3S; Thu, 19 Mar 2009 08:02:46 +0100
+Content-Disposition: inline
+In-Reply-To: <200903190609.25344.chriscool@tuxfamily.org>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Status: (score 1.6): No, score=1.6 required=5.0 tests=RDNS_DYNAMIC,WEIRD_PORT autolearn=disabled version=3.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113723>
 
-Added fixes missing from 2364259.
+On Thu, Mar 19, 2009 at 06:09:25AM +0100, Christian Couder wrote:
+> Le mercredi 18 mars 2009, Sam Hocevar a =E9crit :
+> > Mostly grammar, spelling and typography fixes, but also a few wordi=
+ng
+> > enhancements here and there.
+>=20
+> It looks mostly good to me.
+>=20
+> > Signed-off-by: Sam Hocevar <sam@zoy.org>
+> > ---
+> >  po/fr.po |  196
+> > +++++++++++++++++++++++++++++++------------------------------- 1 fi=
+les
+> > changed, 98 insertions(+), 98 deletions(-)
+> >
+> >  #: git-gui.sh:2484 lib/index.tcl:410
+> >  msgid "Revert Changes"
+> > -msgstr "Annuler les modifications (revert)"
+> > +msgstr "R=E9voquer les modifications"
+>=20
+> I am not sure that "R=E9voquer" is better than "Annuler".
+>=20
+> [...]
+>=20
+> >  #: lib/index.tcl:326
+> >  msgid "Ready to commit."
+> > @@ -1719,18 +1719,18 @@ msgstr "Ajout de %s"
+> >  #: lib/index.tcl:396
+> >  #, tcl-format
+> >  msgid "Revert changes in file %s?"
+> > -msgstr "Annuler les modifications dans le fichier %s ? "
+> > +msgstr "R=E9voquer les modifications dans le fichier %s ? "
+> >
+> >  #: lib/index.tcl:398
+> >  #, tcl-format
+> >  msgid "Revert changes in these %i files?"
+> > -msgstr "Annuler les modifications dans ces %i fichiers ?"
+> > +msgstr "R=E9voquer les modifications dans ces %i fichiers ?"
+> >
+> >  #: lib/index.tcl:406
+> >  msgid "Any unstaged changes will be permanently lost by the revert=
+=2E"
+> >  msgstr ""
+> >  "Toutes les modifications non-index=E9es seront d=E9finitivement p=
+erdues par
+> > " -"l'annulation."
+> > +"la r=E9vocation."
+>=20
+> Same thing for the 3 strings above.
 
-Signed-off-by: David J. Mellor <dmellor@whistlingcat.com>
----
- Documentation/git-bisect.txt |   17 +++++++++--------
- 1 files changed, 9 insertions(+), 8 deletions(-)
+I'm not sure i like "non-index=E9es" for "unstaged"
 
-diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
-index 51d06c1..1a4a527 100644
---- a/Documentation/git-bisect.txt
-+++ b/Documentation/git-bisect.txt
-@@ -114,21 +114,22 @@ $ git bisect view --stat
- Bisect log and bisect replay
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
--The good/bad input is logged, and:
-+After having marked revisions as good or bad, then:
- 
- ------------
- $ git bisect log
- ------------
- 
--shows what you have done so far. You can truncate its output somewhere
--and save it in a file, and run:
-+shows what you have done so far. If you discover that you made a mistake
-+in specifying the status of a revision, you can save the output of this
-+command to a file, edit it to remove the incorrect entries, and then issue
-+the following commands to return to a corrected state:
- 
- ------------
-+$ git bisect reset
- $ git bisect replay that-file
- ------------
- 
--if you find later that you made a mistake specifying revisions as good/bad.
--
- Avoiding testing a commit
- ~~~~~~~~~~~~~~~~~~~~~~~~~
- 
-@@ -141,7 +142,7 @@ want to find a nearby commit and try that instead.
- For example:
- 
- ------------
--$ git bisect good/bad			# previous round was good/bad.
-+$ git bisect good/bad			# previous round was good or bad.
- Bisecting: 337 revisions left to test after this
- $ git bisect visualize			# oops, that is uninteresting.
- $ git reset --hard HEAD~3		# try 3 revisions before what
-@@ -149,7 +150,7 @@ $ git reset --hard HEAD~3		# try 3 revisions before what
- ------------
- 
- Then compile and test the chosen revision. Afterwards the revision
--is marked as good/bad in the usual manner.
-+is marked as good or bad in the usual manner.
- 
- Bisect skip
- ~~~~~~~~~~~~
-@@ -240,7 +241,7 @@ before compiling, run the real test, and afterwards decide if the
- revision (possibly with the needed patch) passed the test and then
- rewind the tree to the pristine state.  Finally the script should exit
- with the status of the real test to let the "git bisect run" command loop
--to determine the eventual outcome of the bisect session.
-+determine the eventual outcome of the bisect session.
- 
- EXAMPLES
- --------
--- 
-1.6.2.1
+> [...]
+>=20
+> >  #: lib/index.tcl:427
+> >  msgid "Reverting selected files"
+> > -msgstr "Annuler modifications dans fichiers selectionn=E9s"
+> > +msgstr "R=E9vocation en cours des fichiers selectionn=E9s"
+> >
+> >  #: lib/index.tcl:431
+> >  #, tcl-format
+> >  msgid "Reverting %s"
+> > -msgstr "Annulation des modifications dans %s"
+> > +msgstr "R=E9vocation en cours de %s"
+>=20
+> Same thing above.
+>=20
+> >  #: lib/remote_branch_delete.tcl:47
+> >  msgid "From Repository"
+> > @@ -2244,7 +2244,7 @@ msgid ""
+> >  "One or more of the merge tests failed because you have not fetche=
+d the
+> > " "necessary commits.  Try fetching from %s first."
+> >  msgstr ""
+> > -"Une ou plusieurs des tests de fusion ont =E9chou=E9s parce que vo=
+us n'avez
+> > pas "
+> > +"Un ou plusieurs des tests de fusion ont =E9chou=E9 parce que vous=
+=20
+> > n'avez pas "
+> > "r=E9cup=E9r=E9 les commits n=E9cessaires. Essayez de r=E9cup=E9r=E9=
+ =E0=20
+> > partir de %s d'abord."
+>=20
+> The last "r=E9cup=E9r=E9" should be changed to "r=E9cup=E9rer".
+
+No it shouldn't, it's "vous n'avez pas r=E9cup=E9r=E9"
+
+Mike
