@@ -1,67 +1,76 @@
-From: Pat Notz <patnotz@gmail.com>
-Subject: Re: Gnome chose Git
-Date: Thu, 19 Mar 2009 09:50:39 -0600
-Message-ID: <1cd1989b0903190850p1a08991y754904e7799c7879@mail.gmail.com>
-References: <877i2lbvt7.fsf@iki.fi> <49C249B9.7010001@drmicha.warpmail.net>
-	 <1cd1989b0903190643p19a40718yc4fd2730aab0a9a0@mail.gmail.com>
-	 <49C24D9B.1060301@drmicha.warpmail.net>
-	 <1cd1989b0903190701uac4602dl1d2c3cace45a9938@mail.gmail.com>
-	 <20090319151610.GO23521@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH JGIT] Method invokes inefficient new String(String)
+	constructor
+Date: Thu, 19 Mar 2009 09:01:02 -0700
+Message-ID: <20090319160102.GQ23521@spearce.org>
+References: <49C20D4E.5020203@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Git <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Mar 19 16:52:59 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	git <git@vger.kernel.org>
+To: Yann Simon <yann.simon.fr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 19 17:04:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkKXm-0001DR-6j
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 16:52:30 +0100
+	id 1LkKi7-000647-UY
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 17:03:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751851AbZCSPup (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2009 11:50:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751283AbZCSPuo
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 11:50:44 -0400
-Received: from yw-out-2324.google.com ([74.125.46.30]:6215 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750804AbZCSPun (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2009 11:50:43 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so569584ywb.1
-        for <git@vger.kernel.org>; Thu, 19 Mar 2009 08:50:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=XDkLW9I24ad9dCGvOF6B8F4gDqZ0pekFscWnGUNGj2k=;
-        b=Ntcp0h1XFM64OlJnj/+hgkA4QnnDEmq9sxewbMgNx4i9bKzTy6o5+NudCwcuMixWeV
-         ypbGwFP69A30EN/r10G6eKL/0rbDdmKE1Wzu7VMuRlfBSYefSKDx8mlm2TUr8du1h2Dr
-         eTIu683xliunOI5hPxV+uQ0diYhHAR4z0AEEg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=n4KS30QNVvpTt1Ud8iOR8RPNaUoXqBwKEUStvDa248Sxk7lUoq1GA+zagtWucI1msx
-         XQkArKsdrixuBhvdb+R3IqLGsOsLW1KrHh6CcXlxkweOmexkZcbJ2y3RQIDFm4X8wvFH
-         5ufmmGqYo+jyl0xemgQ3kqCKYC9SFTE1Rnw9M=
-Received: by 10.100.135.16 with SMTP id i16mr2886865and.99.1237477839943; Thu, 
-	19 Mar 2009 08:50:39 -0700 (PDT)
-In-Reply-To: <20090319151610.GO23521@spearce.org>
+	id S1752134AbZCSQBG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2009 12:01:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751261AbZCSQBF
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 12:01:05 -0400
+Received: from george.spearce.org ([209.20.77.23]:54108 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751066AbZCSQBE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2009 12:01:04 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 3C34738221; Thu, 19 Mar 2009 16:01:02 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <49C20D4E.5020203@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113787>
 
-On Thu, Mar 19, 2009 at 9:16 AM, Shawn O. Pearce <spearce@spearce.org> wrote:
->
-> Why are people reinventing the reflog, and core.logallrefupdates ?
->
+Yann Simon <yann.simon.fr@gmail.com> wrote:
+> From FindBugs:
+> Using the java.lang.String(String) constructor wastes memory because
+> the object so constructed will be functionally indistinguishable from
+> the String passed as a parameter. Just use the argument String directly.
+> 
+> Signed-off-by: Yann Simon <yann.simon.fr@gmail.com>
+> ---
+>  .../src/org/spearce/jgit/lib/RefDatabase.java      |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java b/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
+> index 87f26bf..49da538 100644
+> --- a/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
+> +++ b/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
+> @@ -447,7 +447,7 @@ private synchronized void refreshPackedRefs() {
+>  
+>  					final int sp = p.indexOf(' ');
+>  					final ObjectId id = ObjectId.fromString(p.substring(0, sp));
+> -					final String name = new String(p.substring(sp + 1));
+> +					final String name = p.substring(sp + 1);
+>  					last = new Ref(Ref.Storage.PACKED, name, name, id);
+>  					newPackedRefs.put(last.getName(), last);
 
-Hmmm, lack of awareness of core.logallrefupdates in my case.  Thanks
-for the pointer.
+I had a specific reason for forcing a new String object here.
 
-~ Pat
+The line in question, p, is from the packed-refs file and
+contains the entire SHA-1 in hex form at the beginning of it.
+We've converted that into binary as an ObjectId, it uses 1/4 the
+space of the string portion.
+
+The Ref object, its ObjectId, and its name string, are going to be
+cached in a Map, probably long-term.  We're better off shedding the
+80 bytes of memory used to hold the hex SHA-1 then risk substring()
+deciding its "faster" to reuse the char[] then to make a copy of it.
+
+-- 
+Shawn.
