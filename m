@@ -1,108 +1,63 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Microoptimize strbuf_cmp
-Date: Thu, 19 Mar 2009 22:09:32 +0100
-Message-ID: <20090319210931.GB31014@blimp.localdomain>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Derek Mahar <derek.mahar@gmail.com>
+Subject: Re: git-svn and incorrect working copy file timestamps?
+Date: Thu, 19 Mar 2009 17:31:43 -0400
+Message-ID: <5f4b18bf0903191431t20313bb4u14a717fecc27f18@mail.gmail.com>
+References: <1237492452300-2505059.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 19 22:13:29 2009
+X-From: git-owner@vger.kernel.org Thu Mar 19 22:33:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkPYE-00016V-5L
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 22:13:18 +0100
+	id 1LkPrY-000841-S1
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 22:33:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760951AbZCSVJo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2009 17:09:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759264AbZCSVJn
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 17:09:43 -0400
-Received: from mout2.freenet.de ([195.4.92.92]:39798 "EHLO mout2.freenet.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760818AbZCSVJm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2009 17:09:42 -0400
-Received: from [195.4.92.10] (helo=0.mx.freenet.de)
-	by mout2.freenet.de with esmtpa (ID alexander.riesen@freenet.de) (port 25) (Exim 4.69 #76)
-	id 1LkPUe-0006kc-Bl; Thu, 19 Mar 2009 22:09:36 +0100
-Received: from x62b3.x.pppool.de ([89.59.98.179]:49717 helo=tigra.home)
-	by 0.mx.freenet.de with esmtpa (ID alexander.riesen@freenet.de) (port 587) (Exim 4.69 #79)
-	id 1LkPUe-0000wc-4o; Thu, 19 Mar 2009 22:09:36 +0100
-Received: from blimp.localdomain (ubuntu.home [192.168.1.28])
-	by tigra.home (Postfix) with ESMTP id 030F3277D8;
-	Thu, 19 Mar 2009 22:09:32 +0100 (CET)
-Received: by blimp.localdomain (Postfix, from userid 1000)
-	id 7628036D27; Thu, 19 Mar 2009 22:09:32 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1759075AbZCSVbr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2009 17:31:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760743AbZCSVbq
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 17:31:46 -0400
+Received: from mail-gx0-f208.google.com ([209.85.217.208]:40089 "EHLO
+	mail-gx0-f208.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760665AbZCSVbp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2009 17:31:45 -0400
+Received: by gxk4 with SMTP id 4so2531445gxk.13
+        for <git@vger.kernel.org>; Thu, 19 Mar 2009 14:31:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=bMYPycT1ke0CCwBAADg0+mX50b/Dznp05a8zGgYCzjQ=;
+        b=JCGR9H8UY3ggXFNVnOwBa0BnX52nixuLAcAEgVkDg1BF+lrFTNjvpMFhI9zrNjPT7n
+         a3axt7sMkXPG1QJVymQh1pUT1sMk6++9oN285QlXsUUlCu3mJYLbNWwrQxtiAClu2lcl
+         Rg8mk5DH83OAcLXD0iDuJc9MCe//qablHPDgo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=TF/M8rEn7zQtijaqrVsCo+Q9NZHaHXqE4sCN8iosWqF/etAS4+PN1ObbJ2bE2PYs4B
+         as25GNl4LCoLZKdY4vCjoBbO7fG/vUpugTb3XgcEjl7/eH7vBKkGDJyUJjmPUxPRlfzA
+         Koma9EyiRM2c6yQe1KIqKEQV2Q5AAGKm7/AVI=
+Received: by 10.151.27.15 with SMTP id e15mr5053414ybj.207.1237498303093; Thu, 
+	19 Mar 2009 14:31:43 -0700 (PDT)
+In-Reply-To: <1237492452300-2505059.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113831>
 
-Make it inline and cleanup a bit. It is definitely less code
-including object code, but it is not always measurably faster
-(but mostly is).
+> Should "git svn" not preserve the file timestamps of the original commit tree
+> in the working copy?
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
+I learned from http://marc.info/?l=git&m=122783905206964&w=2 that all
+Git commands do not preserve file timestamps because Git, by design,
+does not record timestamps in the tree objects.  So, in order to see
+the last time a particular file changed, you must examine the commit
+log.  I guess I'll just have to get used to ignoring the working copy
+file timestamps.
 
-I have this patch for a long time in my tree and vaguely remember
-sending it once.
-
- strbuf.c |   12 ------------
- strbuf.h |    9 ++++++++-
- 2 files changed, 8 insertions(+), 13 deletions(-)
-
-diff --git a/strbuf.c b/strbuf.c
-index 6ed0684..e1f4db7 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -137,18 +137,6 @@ void strbuf_list_free(struct strbuf **sbs)
- 	free(sbs);
- }
- 
--int strbuf_cmp(const struct strbuf *a, const struct strbuf *b)
--{
--	int cmp;
--	if (a->len < b->len) {
--		cmp = memcmp(a->buf, b->buf, a->len);
--		return cmp ? cmp : -1;
--	} else {
--		cmp = memcmp(a->buf, b->buf, b->len);
--		return cmp ? cmp : a->len != b->len;
--	}
--}
--
- void strbuf_splice(struct strbuf *sb, size_t pos, size_t len,
- 				   const void *data, size_t dlen)
- {
-diff --git a/strbuf.h b/strbuf.h
-index 89bd36e..df95960 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -80,11 +80,18 @@ static inline void strbuf_setlen(struct strbuf *sb, size_t len) {
- extern void strbuf_trim(struct strbuf *);
- extern void strbuf_rtrim(struct strbuf *);
- extern void strbuf_ltrim(struct strbuf *);
--extern int strbuf_cmp(const struct strbuf *, const struct strbuf *);
- extern void strbuf_tolower(struct strbuf *);
- 
- extern struct strbuf **strbuf_split(const struct strbuf *, int delim);
- extern void strbuf_list_free(struct strbuf **);
-+static inline int strbuf_cmp(const struct strbuf *a, const struct strbuf *b)
-+{
-+	int len = a->len < b->len ? a->len: b->len;
-+	int cmp = memcmp(a->buf, b->buf, len);
-+	if (cmp)
-+		return cmp;
-+	return a->len < b->len ? -1: a->len != b->len;
-+}
- 
- /*----- add data in your buffer -----*/
- static inline void strbuf_addch(struct strbuf *sb, int c) {
--- 
-1.6.2.1.250.ga1458
+Derek
