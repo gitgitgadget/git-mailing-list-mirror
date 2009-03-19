@@ -1,93 +1,79 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Gnome chose Git
-Date: Thu, 19 Mar 2009 08:16:10 -0700
-Message-ID: <20090319151610.GO23521@spearce.org>
-References: <877i2lbvt7.fsf@iki.fi> <49C249B9.7010001@drmicha.warpmail.net> <1cd1989b0903190643p19a40718yc4fd2730aab0a9a0@mail.gmail.com> <49C24D9B.1060301@drmicha.warpmail.net> <1cd1989b0903190701uac4602dl1d2c3cace45a9938@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Git <git@vger.kernel.org>
-To: Pat Notz <patnotz@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 19 16:21:15 2009
+From: Michele Ballabio <barra_cuda@katamail.com>
+Subject: [PATCH v3 2/3] document --force-rebase
+Date: Thu, 19 Mar 2009 16:28:47 +0100
+Message-ID: <1237476528-6040-1-git-send-email-barra_cuda@katamail.com>
+References: <fabb9a1e0903190401k1127dc8ev7704c8a7bd381c99@mail.gmail.com>
+Cc: git@vger.kernel.org
+To: srabbelier@gmail.com, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Mar 19 16:24:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkK14-0001zR-7k
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 16:18:42 +0100
+	id 1LkK4P-0003bI-3R
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 16:22:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755869AbZCSPQO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2009 11:16:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755371AbZCSPQN
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 11:16:13 -0400
-Received: from george.spearce.org ([209.20.77.23]:39175 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755010AbZCSPQM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2009 11:16:12 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id C68D838221; Thu, 19 Mar 2009 15:16:10 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1cd1989b0903190701uac4602dl1d2c3cace45a9938@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1755963AbZCSPUd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2009 11:20:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755371AbZCSPUc
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 11:20:32 -0400
+Received: from smtp.katamail.com ([62.149.157.154]:55045 "HELO smtp2.aruba.it"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1753029AbZCSPUb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2009 11:20:31 -0400
+Received: (qmail 19365 invoked by uid 89); 19 Mar 2009 15:20:18 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp2-pc
+X-Spam-Level: **
+X-Spam-Status: No, score=2.3 required=5.0 tests=BAYES_50,HELO_LH_LD,RDNS_NONE
+	autolearn=no version=3.2.3
+Received: from unknown (HELO localhost.localdomain) (barra?cuda@katamail.com@80.104.56.113)
+  by smtp2-pc with SMTP; 19 Mar 2009 15:20:13 -0000
+X-Mailer: git-send-email 1.6.2.22.gc2ac
+In-Reply-To: <fabb9a1e0903190401k1127dc8ev7704c8a7bd381c99@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113782>
 
-Pat Notz <patnotz@gmail.com> wrote:
-> On Thu, Mar 19, 2009 at 7:50 AM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
-> > Pat Notz venit, vidit, dixit 19.03.2009 14:43:
-> >> On Thu, Mar 19, 2009 at 7:33 AM, Michael J Gruber
-> >> <git@drmicha.warpmail.net> wrote:
-> >>>
-> >>> Also, they need push tracking for pushing through ssh, which is a common
-> >>> requirement for many large projects. Do we have something to support
-> >>> that? git-notes comes to my mind.
-> >>>
-> >>> Their current approach is writing to a single log file (receive-hook).
-> >>> That may support a linear push history best, but looking up who pushed
-> >>> what, given "what"?
-> >>
-> >> That's also something we do. ?Since the post-receive hook gives you
-> >> the refname and the old and new refs you should have everything you
-> >> need. ?We basically record the user name, UTC timestamp and the ref
-> >> info. ?With a little bit more scripting you should be able to figure
-> >> everything else out (though post-receive isn't called for local
-> >> commits).
+Words by Junio.
 
-Why are people reinventing the reflog, and core.logallrefupdates ?
+Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
+---
 
-> > I know the info is there. It might just make more sense to have it in
-> > the git repo the way notes are/will be: It's public, it's connected to
-> > the commits, it's tamper proof (anyone would notice rewrites).
-> 
-> Ahh, yes.  We'd like that too.
+On Thursday 19 March 2009, Sverre Rabbelier wrote:
+> Awesome, thanks! Perhaps you could, for extra brownie points, add a
+> line to the --whitespace=fix documentation that it implies
+> --force-rebase?
 
-Eclipse is also talking about Git, and has a similar problem.
+You're right, I resent 3/3 for the same reason.
 
-Anytime you start talking about "who put what" though, you get into a
-"where, and why does it matter?"
+ Documentation/git-rebase.txt |    9 +++++++++
+ 1 files changed, 9 insertions(+), 0 deletions(-)
 
-Imagine you are Eclipse Foundation or GNOME, you need to know which
-authorized developer put the code on your servers.
-
-But imagine you are an ISV like Oracle or IBM and you consume
-code from the upstream project (Eclipse), put it on your servers,
-add some "extra sauce", and distribute the result in some form.
-Who put what on the Eclipse server isn't relevant, but what employee
-your clone to use 3.4.1 instead of 3.4.0 matters a whole lot more.
-For the most part, you just trust the upstream to do their own
-IP tracking and diligence, as they have the contributor license
-agreements, and you don't.
-
-Its a thorny problem.  We've talked about trying to add some sort
-of GnuPG signature into a push stream (for example) to allow the
-server to store a record of who-did-what-when and later distribute
-that back.
-
-  http://thread.gmane.org/gmane.comp.version-control.git/71849
-
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 57bd333..7ffeec8 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -258,10 +258,19 @@ OPTIONS
+ 	context exist they all must match.  By default no context is
+ 	ever ignored.
+ 
++-f::
++--force-rebase::
++	Force the rebase even if the current branch is a descendant
++	of the commit you are rebasing onto.  Normally the command will
++	exit with the message "Current branch is up to date" in such a
++	situation.
++
+ --whitespace=<option>::
+ 	This flag is passed to the 'git-apply' program
+ 	(see linkgit:git-apply[1]) that applies the patch.
+ 	Incompatible with the --interactive option.
++	If the option `fix` (or its equivalent `strip`) is used, it implies
++	--force-rebase.
+ 
+ -i::
+ --interactive::
 -- 
-Shawn.
+1.6.2.22.gc2ac
