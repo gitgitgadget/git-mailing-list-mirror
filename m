@@ -1,150 +1,101 @@
-From: Marcus Better <marcus@better.se>
-Subject: Re: [EGIT] assertion failure when renaming file
-Date: Thu, 19 Mar 2009 20:45:42 +0100
-Message-ID: <gpu8hc$v9n$1@ger.gmane.org>
-References: <gpnrcv$mla$1@ger.gmane.org> <200903171940.21617.robin.rosenberg.lists@dewire.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: question about conflict resolution across multiple branches
+Date: Thu, 19 Mar 2009 13:11:16 -0700
+Message-ID: <7viqm58e8r.fsf@gitster.siamese.dyndns.org>
+References: <1237483813-sup-5631@entry>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 19 21:07:26 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: William Morgan <wmorgan-git@masanjin.net>
+X-From: git-owner@vger.kernel.org Thu Mar 19 21:13:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkOVz-00019D-VS
-	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 21:06:56 +0100
+	id 1LkObq-0003Va-IR
+	for gcvg-git-2@gmane.org; Thu, 19 Mar 2009 21:12:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755719AbZCSUFY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2009 16:05:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755773AbZCSUFX
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 16:05:23 -0400
-Received: from main.gmane.org ([80.91.229.2]:44520 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755644AbZCSUFW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2009 16:05:22 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LkOUR-00028w-27
-	for git@vger.kernel.org; Thu, 19 Mar 2009 20:05:19 +0000
-Received: from 80.251.192.2 ([80.251.192.2])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 19 Mar 2009 20:05:19 +0000
-Received: from marcus by 80.251.192.2 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 19 Mar 2009 20:05:19 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-Followup-To: gmane.comp.version-control.git
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 80.251.192.2
-User-Agent: KNode/0.99.01
+	id S1752232AbZCSULY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2009 16:11:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752084AbZCSULY
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 16:11:24 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64443 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752022AbZCSULX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2009 16:11:23 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 91A0C7E3A;
+	Thu, 19 Mar 2009 16:11:20 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D1B797E37; Thu,
+ 19 Mar 2009 16:11:17 -0400 (EDT)
+In-Reply-To: <1237483813-sup-5631@entry> (William Morgan's message of "Thu,
+ 19 Mar 2009 10:56:54 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 1CBA180A-14C2-11DE-86F2-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113821>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+William Morgan <wmorgan-git@masanjin.net> writes:
 
-Robin Rosenberg wrote:
-> There  are some ways of corrupting a repo, i.e. the association between
-> the Git provider and the project that results in wierd behaviours. The
-> ones I know of are related to renaming and moving projects tracked by
-> EGit, which works minus-well.
+> Sometimes those topic branches are remote branches on someone else's
+> repo. What happens when merging a remote topic branch into next creates
+> a conflict? Ideally I'd like for the topic branch author to deal with
+> resolving the conflict, and leave me to my carefree maintainer existence
+> of eating icecream on the couch.
 
-Yes, I think I moved the project once.
+Well, merging, applying and managing the conflicts between contributors is
+what the maintainers do.  If you push that to your contributors, you do
+not have to exist ;-).
 
-I also get a message about a NPE "when scanning the repository for changes" shortly after starting Eclipse:
+> ... In the no-conflict case, I merge their
+> remote branch directly into my local next. But in the case of conflicts,
+> it seems like me only way to acquire their resolution is to merge their
+> next branch entirely into mine. Is that true?
 
-!ENTRY org.spearce.egit.core 4 0 2009-03-19 20:22:12.776
-!MESSAGE Git team provider configuration has gone missing.
-!STACK 0
-java.io.FileNotFoundException: /home/marcus/.workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/wrt-
-widget/org.spearce.egit.core/GitProjectData.properties (Filen eller katalogen finns inte)
-	at java.io.FileInputStream.open(Native Method)
-	at java.io.FileInputStream.<init>(FileInputStream.java:137)
-	at org.spearce.egit.core.project.GitProjectData.load(GitProjectData.java:398)
-	at org.spearce.egit.core.project.GitProjectData.get(GitProjectData.java:162)
-	at org.spearce.egit.core.GitProvider.getData(GitProvider.java:66)
-	at org.spearce.egit.core.project.RepositoryMapping.getMapping(RepositoryMapping.java:235)
-	at org.spearce.egit.ui.internal.decorators.GitLightweightDecorator.decorate(GitLightweightDecorator.java:161)
-	at org.eclipse.ui.internal.decorators.LightweightDecoratorDefinition.decorate(LightweightDecoratorDefinition.java:263)
-	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager$LightweightRunnable.run(LightweightDecoratorManager.java:72)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
-	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.decorate(LightweightDecoratorManager.java:356)
-	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.getDecorations(LightweightDecoratorManager.java:338)
-	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.ensureResultCached(DecorationScheduler.java:374)
-	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.run(DecorationScheduler.java:334)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+It is not clear what you mean by 'their next' as the only thing you told
+us is "some topic are from elsewhere".  Do you mean the originator of the
+topic also keeps an integration branch of his own, something similar to
+your 'next'?
 
-!ENTRY org.eclipse.ui.workbench 4 2 2009-03-19 20:22:12.777
-!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.ui.workbench".
-!STACK 0
-java.lang.NullPointerException
-	at org.spearce.egit.core.project.RepositoryMapping.getMapping(RepositoryMapping.java:235)
-	at org.spearce.egit.ui.internal.decorators.GitLightweightDecorator.decorate(GitLightweightDecorator.java:161)
-	at org.eclipse.ui.internal.decorators.LightweightDecoratorDefinition.decorate(LightweightDecoratorDefinition.java:263)
-	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager$LightweightRunnable.run(LightweightDecoratorManager.java:72)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
-	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.decorate(LightweightDecoratorManager.java:356)
-	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.getDecorations(LightweightDecoratorManager.java:338)
-	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.ensureResultCached(DecorationScheduler.java:374)
-	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.run(DecorationScheduler.java:334)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+If that is the case, I _think_ you can fetch their next and feed the merge
+you are interested in to rerere-train.sh (in contrib) before you attempt
+the merge yourself.  This is "I _think_" because I never used that script
+myself (and it wasn't even accepted to git.git by me---I was away back
+then).
 
-!ENTRY org.eclipse.ui 4 4 2009-03-19 20:22:12.777
-!MESSAGE Exception in Decorator
+> Likewise, what happens when someone sends a patch against master to the
+> mailing list, and applying that patch to next creates a conflict? Is
+> there any way for them to resolve the conflict, and pass that resolution
+> to me?
 
-!ENTRY org.eclipse.ui 4 4 2009-03-19 20:22:12.778
-!MESSAGE java.lang.NullPointerException
-!STACK 0
-java.lang.NullPointerException
-	at org.spearce.egit.core.project.RepositoryMapping.getMapping(RepositoryMapping.java:235)
-	at org.spearce.egit.ui.internal.decorators.GitLightweightDecorator.decorate(GitLightweightDecorator.java:161)
-	at org.eclipse.ui.internal.decorators.LightweightDecoratorDefinition.decorate(LightweightDecoratorDefinition.java:263)
-	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager$LightweightRunnable.run(LightweightDecoratorManager.java:72)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
-	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.decorate(LightweightDecoratorManager.java:356)
-	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.getDecorations(LightweightDecoratorManager.java:338)
-	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.ensureResultCached(DecorationScheduler.java:374)
-	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.run(DecorationScheduler.java:334)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+You can tell the contributor that the area the patch touches is under an
+active development that you expect to be ready soon, and ask him to redo
+the patch on a specific commit on the topic.
 
-!ENTRY org.spearce.egit.core 4 0 2009-03-19 20:22:23.667
-!MESSAGE Git team provider configuration has gone missing.
-!STACK 0
-java.io.FileNotFoundException: /home/marcus/.workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/wrt-
-widget/org.spearce.egit.core/GitProjectData.properties (Filen eller katalogen finns inte)
-	at java.io.FileInputStream.open(Native Method)
-	at java.io.FileInputStream.<init>(FileInputStream.java:137)
-	at org.spearce.egit.core.project.GitProjectData.load(GitProjectData.java:398)
-	at org.spearce.egit.core.project.GitProjectData.get(GitProjectData.java:162)
-	at org.spearce.egit.core.GitProvider.getData(GitProvider.java:66)
-	at org.spearce.egit.core.project.RepositoryMapping.getMapping(RepositoryMapping.java:235)
-	at org.spearce.egit.ui.Activator$RCS.run(Activator.java:321)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+Or you can ask the contributor to do this:
 
-!ENTRY org.spearce.egit.ui 4 0 2009-03-19 20:22:23.710
-!MESSAGE An error occurred while scanning for changes. Scanning aborted
-!STACK 0
-java.lang.NullPointerException
-	at org.spearce.egit.core.project.RepositoryMapping.getMapping(RepositoryMapping.java:235)
-	at org.spearce.egit.ui.Activator$RCS.run(Activator.java:321)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+    $ git fetch ;# from you
+    $ git checkout origin/master ;# detach to your master
+    $ git am the-patch
+    $ git merge origin/next ;# this will conflict you cannot resolve
+    $ edit to resolve conflicts
+    $ git commit ;# the resolution you cannot come up with yourself
+    $ git diff origin/next >fixup.patch
 
-> Could you try with a fresh workspace (you can keep the workdir as-is)?
+and send the fixup.patch to you.  You would do the reverse:
 
-Yes, that fixes it.
+    $ git checkout master
+    $ git am the-patch
+    $ git checkout next
+    $ git merge -s ours master
+    $ git apply --index fixup.patch
+    $ git commit --amend
+    $ git show ;# to review what the fix-up did
 
-Cheers,
-
-Marcus
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAknCoOYACgkQXjXn6TzcAQkbsgCfbRnEwiSjIo9yu9ipk9Tps6cn
-Y70An2sxhtz+xtd0wTP2PODAR7jxj4Qc
-=taeS
------END PGP SIGNATURE-----
+Needless to say, you need to be careful when accepting such a fixup
+patch.
