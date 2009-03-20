@@ -1,74 +1,106 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: ref name troubles, was Re: [PATCH v2] Introduce %<branch> as
- shortcut to the tracked branch
-Date: Fri, 20 Mar 2009 10:30:29 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903201029290.10279@pacific.mpi-cbg.de>
-References: <200903181448.50706.agruen@suse.de> <20090318182603.GM8940@machine.or.cz> <alpine.DEB.1.00.0903182210310.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903182245280.10279@pacific.mpi-cbg.de> <7vr60ubgul.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0903182343580.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903200121330.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903200137230.10279@pacific.mpi-cbg.de> <20090320004029.GX23521@spearce.org> <20090320060545.GB27008@coredump.intra.peff.net>
- <7vprgc4r6h.fsf@gitster.siamese.dyndns.org>
+From: Kristian Amlie <kristian.amlie@nokia.com>
+Subject: [PATCH] Add a test for checking whether gitattributes is honored by checkout.
+Date: Fri, 20 Mar 2009 10:32:09 +0100
+Message-ID: <1237541529-29477-1-git-send-email-kristian.amlie@nokia.com>
+References: <49C34FB1.4040100@nokia.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
-	Petr Baudis <pasky@suse.cz>,
-	Andreas Gruenbacher <agruen@suse.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 20 10:30:35 2009
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 8BIT
+Cc: Kristian Amlie <kristian.amlie@nokia.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 20 10:34:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lkb3i-0005aA-JU
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 10:30:35 +0100
+	id 1Lkb78-0006nN-6y
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 10:34:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751239AbZCTJ2f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2009 05:28:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752182AbZCTJ2f
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 05:28:35 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57515 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751898AbZCTJ2e (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2009 05:28:34 -0400
-Received: (qmail invoked by alias); 20 Mar 2009 09:28:31 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp047) with SMTP; 20 Mar 2009 10:28:31 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18zqDoL6oczhDaEFnMlZjNyWnUoXwBCiSyXQODMCv
-	dFs4QLAMLw4NvQ
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7vprgc4r6h.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.61
+	id S1752102AbZCTJch (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2009 05:32:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751974AbZCTJcf
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 05:32:35 -0400
+Received: from hoat.troll.no ([62.70.27.150]:49918 "EHLO hoat.troll.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751644AbZCTJce convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2009 05:32:34 -0400
+Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
+	by hoat.troll.no (Postfix) with SMTP id 5365A2118A;
+	Fri, 20 Mar 2009 10:32:30 +0100 (CET)
+Received: from sx01.troll.no (sx01.troll.no [62.70.27.21])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hoat.troll.no (Postfix) with ESMTP id 4C06721160;
+	Fri, 20 Mar 2009 10:32:30 +0100 (CET)
+Received: from sx01.troll.no (localhost.localdomain [127.0.0.1])
+	by sx01.troll.no (8.13.8/8.13.8) with ESMTP id n2K9WUNp028405;
+	Fri, 20 Mar 2009 10:32:30 +0100
+Received: from axis.localdomain ( [172.24.90.99])
+    by sx01.troll.no (Scalix SMTP Relay 11.4.1.11929)
+    via ESMTP; Fri, 20 Mar 2009 10:32:30 +0100 (CET)
+Received: by axis.localdomain (Postfix, from userid 1000)
+	id C7B1A36187BF; Fri, 20 Mar 2009 10:32:29 +0100 (CET)
+In-Reply-To: <49C34FB1.4040100@nokia.com>
+x-scalix-Hops: 1
+X-Mailer: git-send-email 1.6.2.1.222.g570cc.dirty
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113923>
 
-Hi,
+The original bug will not honor new entries in gitattributes if they
+are changed in the same checkout as the files they affect.
 
-On Thu, 19 Mar 2009, Junio C Hamano wrote:
+It will also keep using .gitattributes, even if it is deleted in the
+same commit as the files it affects.
+---
+ t/t0020-crlf.sh |   31 +++++++++++++++++++++++++++++++
+ 1 files changed, 31 insertions(+), 0 deletions(-)
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Thu, Mar 19, 2009 at 05:40:29PM -0700, Shawn O. Pearce wrote:
-> >
-> >> So yea, you can create a branch named "foo@{1}".
-> >
-> > But you can't actually refer to it:
-> >
-> >   $ git branch foo@{1}
-> >   $ git show foo@{1} --
-> >   fatal: bad revision 'foo@{1}'
-> >
-> > which implies that nobody is actually using it for anything.
-> 
-> I think you are right.  It is just "git branch" and perhaps "git
-> update-ref" are too loose in enforcing what can be created.
-
-"git branch" I agree with, but not "git update-ref".  As plumbing, the 
-latter should be much more allowing, feeding rope aplenty (but also 
-allowing cool tricks we do not think about yet).
-
-Ciao,
-Dscho
+diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
+index 1be7446..4e72b53 100755
+--- a/t/t0020-crlf.sh
++++ b/t/t0020-crlf.sh
+@@ -429,6 +429,37 @@ test_expect_success 'in-tree .gitattributes (4)' '
+ 	}
+ '
+ 
++test_expect_success 'checkout with existing .gitattributes' '
++
++	git config core.autocrlf true &&
++	git config --unset core.safecrlf &&
++	echo ".file2 -crlfQ" | q_to_cr >> .gitattributes &&
++	git add .gitattributes &&
++	git commit -m initial &&
++	echo ".file -crlfQ" | q_to_cr >> .gitattributes &&
++	echo "contents" > .file &&
++	git add .gitattributes .file &&
++	git commit -m second &&
++
++	git checkout master~1 &&
++	git checkout master &&
++	test "$(git diff-files --raw)" = ""
++
++'
++
++test_expect_success 'checkout when deleting .gitattributes' '
++
++	git rm .gitattributes &&
++	echo "contentsQ" | q_to_cr > .file2 &&
++	git add .file2 &&
++	git commit -m third
++
++	git checkout master~1 &&
++	git checkout master &&
++	remove_cr .file2 >/dev/null
++
++'
++
+ test_expect_success 'invalid .gitattributes (must not crash)' '
+ 
+ 	echo "three +crlf" >>.gitattributes &&
+-- 
+1.6.2.1.222.g570cc.dirty
