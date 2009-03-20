@@ -1,66 +1,81 @@
-From: Anders Kaseorg <andersk@MIT.EDU>
-Subject: [PATCH] rebase -p: Preserve --no-ff merges
-Date: Fri, 20 Mar 2009 16:38:22 -0400 (EDT)
-Message-ID: <alpine.DEB.2.00.0903201633440.4457@vinegar-pot.mit.edu>
+From: david@lang.hm
+Subject: Re: Google Summer of Code 2009: GIT
+Date: Fri, 20 Mar 2009 13:50:24 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0903201337060.16753@asgard.lang.hm>
+References: <49B74373.3090609@gmail.com>  <alpine.DEB.1.10.0903121052310.16753@asgard.lang.hm>  <ab9fa62a0903121119j6c2a1d43kd9cda99db47b5e7c@mail.gmail.com>  <alpine.DEB.1.10.0903121148540.16753@asgard.lang.hm>  <ab9fa62a0903121200v73ec3522gcdebcd34122efc72@mail.gmail.com>
+  <alpine.DEB.1.10.0903121214390.16753@asgard.lang.hm>  <ab9fa62a0903121245m621643bfq3c58557ccc9b266f@mail.gmail.com>  <alpine.DEB.1.10.0903121255040.16753@asgard.lang.hm>  <ab9fa62a0903121303v5a6cbf0ax413cc440b9c32e77@mail.gmail.com> 
+ <alpine.DEB.1.00.0903190003100.10279@pacific.mpi-cbg.de> <ab9fa62a0903191217t5d0e6d9cn4915a425ed8084ff@mail.gmail.com> <alpine.DEB.1.00.0903200034230.10279@pacific.mpi-cbg.de> <alpine.DEB.1.10.0903191652500.16753@asgard.lang.hm>
+ <alpine.DEB.1.00.0903200128020.10279@pacific.mpi-cbg.de> <alpine.DEB.1.10.0903191948050.4560@asgard.lang.hm> <alpine.DEB.1.00.0903201033310.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Mar 20 21:40:04 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: saurabh gupta <saurabhgupta1403@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 20 21:52:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LklVc-0003pX-75
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 21:40:04 +0100
+	id 1LklhF-000839-1F
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 21:52:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754235AbZCTUif (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2009 16:38:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753666AbZCTUif
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 16:38:35 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:52756 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753257AbZCTUie (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2009 16:38:34 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id n2KKcObe018211;
-	Fri, 20 Mar 2009 16:38:24 -0400 (EDT)
-Received: from localhost (VINEGAR-POT.MIT.EDU [18.181.0.51])
-	(authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id n2KKcMVk029135;
-	Fri, 20 Mar 2009 16:38:23 -0400 (EDT)
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S1752970AbZCTUue (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2009 16:50:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752565AbZCTUue
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 16:50:34 -0400
+Received: from mail.lang.hm ([64.81.33.126]:56014 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752505AbZCTUud (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2009 16:50:33 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n2KKoOmI031870;
+	Fri, 20 Mar 2009 12:50:24 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <alpine.DEB.1.00.0903201033310.10279@pacific.mpi-cbg.de>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114004>
 
-Previously, git rebase -p would turn some merges that had been constructed 
-with git merge --no-ff into fast-forwards.  Now it reconstructs those 
-merges using --no-ff as well.
+On Fri, 20 Mar 2009, Johannes Schindelin wrote:
 
-Signed-off-by: Anders Kaseorg <andersk@mit.edu>
----
- git-rebase--interactive.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> On Thu, 19 Mar 2009, david@lang.hm wrote:
+>
+>> On Fri, 20 Mar 2009, Johannes Schindelin wrote:
+>>
+>>> I'd rather have more file types supported that are useful for the
+>>> average user, than a generic XML merge driver that is useful to only a
+>>> handful of people.
+>>
+>> we are both after the same thing,
+>
+> Apparently not...
+>
+>> the most use to the average user.
+>>
+>> you look at SVG, ODF word, ODF spreadsheet, OOXML, etc as completely
+>> seperate things that should have support developed seperatly.
+>
+> No.  I look at SVG, ODF text, ODF spreadsheet, etc as things with
+> completely different user interfaces.
+>
+> And likewise, the merge _helper_, the very thing the user will get to see,
+> must have different user interfaces.
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 3dc659d..39545cc 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -275,7 +275,7 @@ pick_one_preserving_merges () {
- 			if ! GIT_AUTHOR_NAME="$GIT_AUTHOR_NAME" \
- 				GIT_AUTHOR_EMAIL="$GIT_AUTHOR_EMAIL" \
- 				GIT_AUTHOR_DATE="$GIT_AUTHOR_DATE" \
--				output git merge $STRATEGY -m "$msg" \
-+				output git merge --no-ff $STRATEGY -m "$msg" \
- 					$new_parents
- 			then
- 				printf "%s\n" "$msg" > "$GIT_DIR"/MERGE_MSG
--- 
-1.6.2
+I absolutly agree with this. the UI and merge _helper_ tools for these 
+different file formats are completely different.
+
+> And I see much more potential for this project to fail in those different
+> user interfaces than something as _trivial_ (in relation) as XML merging.
+
+and the key thing that I am saying is that a properly done XML merge may 
+eliminate the need to do _any_ development of a merge helper tool.
+
+so rather than focusing on what the merge helper tool is going to be and 
+what the UI for that is, I am focusing on the potential to eliminate any 
+need to hae a specific helper tool by making it so that the marked up 
+files can be manipulated with the existing tools for that file type.
+
+David Lang
