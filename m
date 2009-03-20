@@ -1,88 +1,98 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] Documentation/git-filter-branch.txt: Remove unnecessary URL quoting
-Date: Fri, 20 Mar 2009 16:19:50 +0100
-Message-ID: <200903201619.56600.trast@student.ethz.ch>
-References: <200903200012.10454.johan@herland.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Tracking of local branches
+Date: Fri, 20 Mar 2009 17:13:35 +0100
+Message-ID: <49C3C0AF.6090806@drmicha.warpmail.net>
+References: <49C3A6AE.7020104@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2896757.WYo4RRqq4M";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri Mar 20 16:22:28 2009
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Fri Mar 20 17:17:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkgY3-0003NR-Ht
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 16:22:16 +0100
+	id 1LkhNT-0003Gx-C1
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 17:15:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755046AbZCTPUd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2009 11:20:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756394AbZCTPUd
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 11:20:33 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:51926 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756213AbZCTPUc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2009 11:20:32 -0400
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 20 Mar 2009 16:20:29 +0100
-Received: from thomas.localnet ([77.56.223.244]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 20 Mar 2009 16:20:29 +0100
-User-Agent: KMail/1.11.1 (Linux/2.6.27.19-3.2-default; KDE/4.2.1; x86_64; ; )
-In-Reply-To: <200903200012.10454.johan@herland.net>
-X-OriginalArrivalTime: 20 Mar 2009 15:20:29.0287 (UTC) FILETIME=[67182770:01C9A96F]
+	id S1753773AbZCTQNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2009 12:13:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753190AbZCTQNw
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 12:13:52 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:60959 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752873AbZCTQNw (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2009 12:13:52 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 2E9042F7312;
+	Fri, 20 Mar 2009 12:13:50 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 20 Mar 2009 12:13:50 -0400
+X-Sasl-enc: 06o3ode0t1Rz44gg77GU8ASgl/jRDYWkkRwmRgDMLL/p 1237565629
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 6A41D2829F;
+	Fri, 20 Mar 2009 12:13:49 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090320 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <49C3A6AE.7020104@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113972>
 
---nextPart2896757.WYo4RRqq4M
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Michael J Gruber venit, vidit, dixit 20.03.2009 15:22:
+> Hi there,
+> 
+> me again. In connection with Dscho's recent patch which rang the bell on
+> tracked branches I noticed that local branches are treated somewhat
+> inconsistently by git. There are 2 ways to fix it, and I ask you for
+> your input on which one to choose.
+> 
+> First of all:
+> The documentation seems to imply that it's okay to follow local
+> branches, i.e. to have tracked local branches. Specifically, the option
+> --track allows setting up tracking info (branch.foo.merge) in cases
+> where it's not set up automatically (it is when you branch off a remote
+> tracking branch).
+> 
+> If it's not OK to say "git checkout -b newbranch --track local" when
+> local is a local branch you can stop reading here and tell me to stop
+> writing...
+> 
+> Now, assuming it's okay to have a local branch being tracked, the
+> current situation is:
+> 
+> git fetch/pull is okay (respects the setting)
+> git status/checkout/rev-parse BEL is not (acts as if there is no
+> tracking info)
+> 
+> I think I have tracked it down (pun intended) to the fact that one sort
+> of commands looks at the struct member branch->merge, the other at
+> branch->merge_name. The latter is set for branches which follow
+> something, the former only for followers of remote branches.
+> 
+> I semi-successfully messed around in remote.c (format_tracking_info(),
+> stat_tracking_info()) to make it use branch->merge_name rather than
+> branch->merge. This makes "git status" work as expected ("Your branch
+> is... severely screwed.") for tracked local branches. (It's messed up
+> for remote ones but hey it was a first shot; merge[0]->dst is really
+> needed here I guess.)
+> 
+> Now I could go after sha1_name.c and do the same,
+> 
+> OR
+> 
+> make it so that all branches have their merge member set up, uhm. Any
+> possible side effects?
+> 
+> What do you think?
+> Michael
 
-Johan Herland wrote:
-> Embedding the URL in '+++' causes AsciiDoc (v8.4.1) to generate invalid X=
-ML.
-> None of the other URLs in Git's documentation are quoted in this manner.
-> There's no reason to treat this URL differently.
->=20
-> Signed-off-by: Johan Herland <johan@herland.net>
-[...]
-> -* Clone it with `git clone +++file:///path/to/repo+++`.  The clone
-> +* Clone it with `git clone file:///path/to/repo`.  The clone
+OK, I think I got this working with approach 2 above. All existing tests
+pass. Now I'll cook up tests which only my new code passes ;) But that
+may take a few days.
 
-I deliberately wrote it that way because *not* quoting it, at least on
-my box, formats the entire paragraph in monospace.  Apparently it
-treats the ` as part of an autodetected URL or some such.  This is
-independent of my choice of ASCIIDOC8 or DOCBOOK_XSL_172 settings.  Am
-I missing another flag that avoids this problem?
-
-I have these packages installed from opensuse:
-
-  asciidoc-8.2.7-29.10
-  docbook_4-4.5-111.8
-  docbook-xsl-stylesheets-1.74.0-1.35
-
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
-
---nextPart2896757.WYo4RRqq4M
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAknDtBwACgkQqUud07tmzP0SVwCfU1SWr1KOwR9XqYqcqDfs227x
-h0YAnjIEFCbcX77sVyMkYjlSRqaqmU6B
-=Wyxq
------END PGP SIGNATURE-----
-
---nextPart2896757.WYo4RRqq4M--
+Michael
