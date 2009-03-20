@@ -1,98 +1,211 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Tracking of local branches
-Date: Fri, 20 Mar 2009 17:13:35 +0100
-Message-ID: <49C3C0AF.6090806@drmicha.warpmail.net>
-References: <49C3A6AE.7020104@drmicha.warpmail.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH v4] Introduce %<branch> as shortcut to the tracked branch
+Date: Fri, 20 Mar 2009 17:17:01 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903201714020.10279@pacific.mpi-cbg.de>
+References: <200903181448.50706.agruen@suse.de> <20090318182603.GM8940@machine.or.cz> <alpine.DEB.1.00.0903182210310.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903182245280.10279@pacific.mpi-cbg.de> <7vr60ubgul.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0903182343580.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903200121330.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903200137230.10279@pacific.mpi-cbg.de> <20090320004029.GX23521@spearce.org> <20090320004450.GY23521@spearce.org>
+ <alpine.DEB.1.00.0903201027450.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Fri Mar 20 17:17:00 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, Petr Baudis <pasky@suse.cz>,
+	Andreas Gruenbacher <agruen@suse.de>, B.Steinbrink@gmx.de,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Mar 20 17:18:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkhNT-0003Gx-C1
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 17:15:23 +0100
+	id 1LkhPA-00045o-Ul
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 17:17:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753773AbZCTQNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2009 12:13:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753190AbZCTQNw
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 12:13:52 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:60959 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752873AbZCTQNw (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2009 12:13:52 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 2E9042F7312;
-	Fri, 20 Mar 2009 12:13:50 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Fri, 20 Mar 2009 12:13:50 -0400
-X-Sasl-enc: 06o3ode0t1Rz44gg77GU8ASgl/jRDYWkkRwmRgDMLL/p 1237565629
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 6A41D2829F;
-	Fri, 20 Mar 2009 12:13:49 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090320 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <49C3A6AE.7020104@drmicha.warpmail.net>
+	id S1757352AbZCTQPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2009 12:15:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756515AbZCTQPI
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 12:15:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33357 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752603AbZCTQPG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2009 12:15:06 -0400
+Received: (qmail invoked by alias); 20 Mar 2009 16:15:03 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp039) with SMTP; 20 Mar 2009 17:15:03 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+XyD550sWXUKGh8ftnLjG967OQ844cjaI1Tv/ix0
+	3lJrARga/HDJHP
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <alpine.DEB.1.00.0903201027450.10279@pacific.mpi-cbg.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.46
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113973>
 
-Michael J Gruber venit, vidit, dixit 20.03.2009 15:22:
-> Hi there,
-> 
-> me again. In connection with Dscho's recent patch which rang the bell on
-> tracked branches I noticed that local branches are treated somewhat
-> inconsistently by git. There are 2 ways to fix it, and I ask you for
-> your input on which one to choose.
-> 
-> First of all:
-> The documentation seems to imply that it's okay to follow local
-> branches, i.e. to have tracked local branches. Specifically, the option
-> --track allows setting up tracking info (branch.foo.merge) in cases
-> where it's not set up automatically (it is when you branch off a remote
-> tracking branch).
-> 
-> If it's not OK to say "git checkout -b newbranch --track local" when
-> local is a local branch you can stop reading here and tell me to stop
-> writing...
-> 
-> Now, assuming it's okay to have a local branch being tracked, the
-> current situation is:
-> 
-> git fetch/pull is okay (respects the setting)
-> git status/checkout/rev-parse BEL is not (acts as if there is no
-> tracking info)
-> 
-> I think I have tracked it down (pun intended) to the fact that one sort
-> of commands looks at the struct member branch->merge, the other at
-> branch->merge_name. The latter is set for branches which follow
-> something, the former only for followers of remote branches.
-> 
-> I semi-successfully messed around in remote.c (format_tracking_info(),
-> stat_tracking_info()) to make it use branch->merge_name rather than
-> branch->merge. This makes "git status" work as expected ("Your branch
-> is... severely screwed.") for tracked local branches. (It's messed up
-> for remote ones but hey it was a first shot; merge[0]->dst is really
-> needed here I guess.)
-> 
-> Now I could go after sha1_name.c and do the same,
-> 
-> OR
-> 
-> make it so that all branches have their merge member set up, uhm. Any
-> possible side effects?
-> 
-> What do you think?
-> Michael
 
-OK, I think I got this working with approach 2 above. All existing tests
-pass. Now I'll cook up tests which only my new code passes ;) But that
-may take a few days.
+Often, it is quite interesting to inspect the branch tracked by a given
+branch.  This patch introduces a nice notation to get at the tracked
+branch: '%<branch>' can be used to access that tracked branch.
 
-Michael
+A special shortcut '%' refers to the branch tracked by the current branch.
+
+Suggested by Pasky.
+
+Even if a branch name can legally start with a '%' sign, we can use the
+special character '%' here, as you can always specify the full ref:
+refs/heads/%my-branch (pointed out by doener on IRC).
+
+This patch extends the function introduced to handle the nth-last branch
+(via the {-<n>} notation); therefore that function name was renamed to
+something more general.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+
+	Sometimes IRC is awesome.  Knowing that you can always access an
+	otherwise-hidden branch using the full name, I am now fully
+	comfortable with '%[<branch>]'.
+
+ Documentation/git-rev-parse.txt |    3 ++
+ sha1_name.c                     |   21 ++++++++++++---
+ t/t1506-rev-parse-tracked.sh    |   54 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 74 insertions(+), 4 deletions(-)
+ create mode 100755 t/t1506-rev-parse-tracked.sh
+
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+index 5ed2bc8..a4bcd5e 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -215,6 +215,9 @@ when you run 'git-merge'.
+ * The special construct '@\{-<n>\}' means the <n>th branch checked out
+   before the current one.
+ 
++* The prefix '%' to a ref means the branch tracked by that ref.  If no
++  ref was specified, it means the branch tracked by the current branch.
++
+ * A suffix '{caret}' to a revision parameter means the first parent of
+   that commit object.  '{caret}<n>' means the <n>th parent (i.e.
+   'rev{caret}'
+diff --git a/sha1_name.c b/sha1_name.c
+index 2f75179..cb4168d 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -5,6 +5,7 @@
+ #include "blob.h"
+ #include "tree-walk.h"
+ #include "refs.h"
++#include "remote.h"
+ 
+ static int find_short_object_filename(int len, const char *name, unsigned char *sha1)
+ {
+@@ -240,9 +241,10 @@ static int ambiguous_path(const char *path, int len)
+ 
+ /*
+  * *string and *len will only be substituted, and *string returned (for
+- * later free()ing) if the string passed in is of the form @{-<n>}.
++ * later free()ing) if the string passed in is of the form @{-<n>} or
++ * of the form %<branch>.
+  */
+-static char *substitute_nth_last_branch(const char **string, int *len)
++static char *substitute_branch(const char **string, int *len)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int ret = interpret_nth_last_branch(*string, &buf);
+@@ -254,12 +256,23 @@ static char *substitute_nth_last_branch(const char **string, int *len)
+ 		return (char *)*string;
+ 	}
+ 
++	if (**string == '%') {
++		struct branch *tracking = branch_get((*string)[1] ?
++			(*string) + 1 : NULL);
++
++		if (tracking->merge && tracking->merge[0]->dst) {
++			*string = xstrdup(tracking->merge[0]->dst);
++			*len = strlen(*string);
++			return (char *)*string;
++		}
++	}
++
+ 	return NULL;
+ }
+ 
+ int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
+ {
+-	char *last_branch = substitute_nth_last_branch(&str, &len);
++	char *last_branch = substitute_branch(&str, &len);
+ 	const char **p, *r;
+ 	int refs_found = 0;
+ 
+@@ -288,7 +301,7 @@ int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
+ 
+ int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
+ {
+-	char *last_branch = substitute_nth_last_branch(&str, &len);
++	char *last_branch = substitute_branch(&str, &len);
+ 	const char **p;
+ 	int logs_found = 0;
+ 
+diff --git a/t/t1506-rev-parse-tracked.sh b/t/t1506-rev-parse-tracked.sh
+new file mode 100755
+index 0000000..359f648
+--- /dev/null
++++ b/t/t1506-rev-parse-tracked.sh
+@@ -0,0 +1,54 @@
++#!/bin/sh
++
++test_description='test %<branch> syntax'
++
++. ./test-lib.sh
++
++
++test_expect_success 'setup' '
++
++	test_commit 1 &&
++	git checkout -b side &&
++	test_commit 2 &&
++	git checkout master &&
++	git clone . clone &&
++	test_commit 3 &&
++	(cd clone &&
++	 test_commit 4 &&
++	 git branch --track my-side origin/side)
++
++'
++
++full_name () {
++	(cd clone &&
++	 git rev-parse --symbolic-full-name "$@")
++}
++
++commit_subject () {
++	(cd clone &&
++	 git show -s --pretty=format:%s "$@")
++}
++
++test_expect_success '% resolves to correct full name' '
++
++	test refs/remotes/origin/master = "$(full_name %)"
++
++'
++
++test_expect_success '%my-side resolves to correct full name' '
++
++	test refs/remotes/origin/side = "$(full_name %my-side)"
++
++'
++
++test_expect_success '%my-side resolves to correct commit' '
++
++	git checkout side &&
++	test_commit 5 &&
++	(cd clone && git fetch) &&
++	test 2 = "$(commit_subject my-side)" &&
++	test 5 = "$(commit_subject %my-side)"
++
++'
++
++test_done
+-- 
+1.6.2.1.477.g74567
