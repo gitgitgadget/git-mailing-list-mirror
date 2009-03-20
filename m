@@ -1,60 +1,42 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: How to commit changes if remote repository changed directory
-	structure?
-Date: Fri, 20 Mar 2009 02:09:26 -0400
-Message-ID: <20090320060926.GC27008@coredump.intra.peff.net>
-References: <22612715.post@talk.nabble.com>
+From: "Madge " <vjygreek@landal.com>
+Subject: Have you heard about it?
+Date: Fri, 20 Mar 2009 01:35:52 -0500
+Message-ID: <20090320013552.1060505@landal.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: andholt <andholt@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 20 07:11:10 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 20 07:23:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkXwg-0002Ly-NO
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 07:11:07 +0100
+	id 1LkY8E-00057u-Oq
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 07:23:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752965AbZCTGJh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2009 02:09:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752762AbZCTGJh
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 02:09:37 -0400
-Received: from peff.net ([208.65.91.99]:54606 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752205AbZCTGJg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2009 02:09:36 -0400
-Received: (qmail 6872 invoked by uid 107); 20 Mar 2009 06:09:44 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 20 Mar 2009 02:09:44 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Mar 2009 02:09:26 -0400
-Content-Disposition: inline
-In-Reply-To: <22612715.post@talk.nabble.com>
+	id S1751949AbZCTGVS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2009 02:21:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751779AbZCTGVR
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 02:21:17 -0400
+Received: from cpe-71-67-170-155.neo.res.rr.com ([71.67.170.155]:2283 "HELO
+	cpe-71-67-170-155.neo.res.rr.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751583AbZCTGVR (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2009 02:21:17 -0400
+Received: from localhost.localdomain (riw [192.168.228.36])
+	by cpe-71-67-170-155.neo.res.rr.com (Postfix) with ESMTP id 79AB55A2B5D
+	for <git@vger.kernel.org>; Fri, 20 Mar 2009 01:35:52 -0500
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113900>
+X-Spam-Report: 8.2 points;
+ *  3.4 RATWARE_RCVD_PF Bulk email fingerprint (Received PF) found
+ *  3.0 RAZOR2_CF_RANGE_51_100 BODY: Razor2 gives confidence level above 50%
+ *      [cf: 100]
+ *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
+ *  0.8 URIBL_PH_SURBL Contains an URL listed in the PH SURBL blocklist
+ *      [URIs: globalantiterror.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113901>
 
-On Thu, Mar 19, 2009 at 06:17:15PM -0700, andholt wrote:
-
-> I have a lot of local changes to add, commit, and push. Right now our
-> directory structure is 1/2/3. Another developer decided to move everything
-> up one level, so used git move to move 3 to 2, and removed 3, so now the
-> level is 1/2. However, locally, all of my changes are in 1/2/3. 
-> 
-> I want to commit my changes and merge them into the new directory structure.
-> How would I go about doing that?
-
-First, commit your changes. Then merge the other developer's changes. :)
-
-This is exactly the sort of case that git's rename detection should
-handle; it should detect that the other side renamed files, and then
-consider your changes against the newly named files. The only thing it
-_won't_ handle is new files that you added in 1/2/3. You will have to
-manually move them to 1/2 as part of the merge (there has been
-discussion of "detect that this whole directory seems to have had its
-content moved and automatically move new files", but the patches have
-not been accepted).
-
--Peff
+I hope you haven.t been there http://isyxcz.globalantiterror.com
