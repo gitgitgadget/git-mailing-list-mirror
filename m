@@ -1,75 +1,55 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH 2/2] git-gui: some French translation enhancements
-Date: Fri, 20 Mar 2009 08:13:16 +0100
-Message-ID: <20090320071316.GB5693@glandium.org>
-References: <cd2d922d5257aac105de08fd90e6dbd389f0b6f0.1237506346.git.nicolas.s-dev@laposte.net> <5b4295c484a9659d1c5813e1859f192c34d6a99e.1237506346.git.nicolas.s-dev@laposte.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: How to commit changes if remote repository changed directory
+	structure?
+Date: Fri, 20 Mar 2009 03:13:19 -0400
+Message-ID: <20090320071319.GF27008@coredump.intra.peff.net>
+References: <22612715.post@talk.nabble.com> <20090320060926.GC27008@coredump.intra.peff.net> <7vljr04qnw.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Sam Hocevar <sam@zoy.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Alexandre Bourget <alexandre.bourget@savoirfairelinux.com>
-To: Nicolas Sebrecht <nicolas.s-dev@laposte.net>
-X-From: git-owner@vger.kernel.org Fri Mar 20 08:15:03 2009
+Content-Type: text/plain; charset=utf-8
+Cc: "J. Bruce Fields" <bfields@citi.umich.edu>,
+	andholt <andholt@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 20 08:15:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkYwI-0008R0-Gi
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 08:14:46 +0100
+	id 1LkYwa-0008WO-IE
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 08:15:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751763AbZCTHNR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Mar 2009 03:13:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751528AbZCTHNR
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 03:13:17 -0400
-Received: from vuizook.err.no ([85.19.221.46]:33454 "EHLO vuizook.err.no"
+	id S1751853AbZCTHNa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2009 03:13:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751807AbZCTHNa
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 03:13:30 -0400
+Received: from peff.net ([208.65.91.99]:54053 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751484AbZCTHNQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2009 03:13:16 -0400
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <mh@glandium.org>)
-	id 1LkYui-0007GK-Ls; Fri, 20 Mar 2009 08:13:11 +0100
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1LkYuq-0004fC-GL; Fri, 20 Mar 2009 08:13:16 +0100
+	id S1751689AbZCTHN3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2009 03:13:29 -0400
+Received: (qmail 7100 invoked by uid 107); 20 Mar 2009 07:13:37 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 20 Mar 2009 03:13:37 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Mar 2009 03:13:19 -0400
 Content-Disposition: inline
-In-Reply-To: <5b4295c484a9659d1c5813e1859f192c34d6a99e.1237506346.git.nicolas.s-dev@laposte.net>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Status: (score 1.6): No, score=1.6 required=5.0 tests=RDNS_DYNAMIC,WEIRD_PORT autolearn=disabled version=3.2.4
+In-Reply-To: <7vljr04qnw.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113907>
 
-On Fri, Mar 20, 2009 at 01:54:02AM +0100, Nicolas Sebrecht wrote:
->=20
->=20
-> Signed-off-by: Nicolas Sebrecht <nicolas.s-dev@laposte.net>
-> ---
->  po/fr.po |   21 ++++++++++-----------
->  1 files changed, 10 insertions(+), 11 deletions(-)
->=20
-> diff --git a/po/fr.po b/po/fr.po
-> index eb5f68e..2f96054 100644
-> --- a/po/fr.po
-> +++ b/po/fr.po
-> @@ -316,11 +316,11 @@ msgstr "Indexer toutes modifications"
-> =20
->  #: git-gui.sh:2479
->  msgid "Unstage From Commit"
-> -msgstr "D=C3=A9sindexer"
-> +msgstr "Retirer de l'index"
+On Fri, Mar 20, 2009 at 12:08:51AM -0700, Junio C Hamano wrote:
 
-IMHO, we should find a better way to say that than to use the "index"
-word at all. This obviously applies to all uses of "index" in french
-where we avoided it in english.
+> > First, commit your changes. Then merge the other developer's changes. :)
+> 
+> We should probably point out to new people that "first commit and then
+> worry about merges after your changes are safely committed" is always how
+> people would "go about" anything.
 
-OTOH, the best I can find for "staging area" is "zone de pr=E9paration"=
-,
-and that doesn't help finding a word for stage and unstage.
+Yes, absolutely.
 
-Mike
+Most of the current documentation focuses on being a reference to
+particular commands or tasks. But this is more of a "philosophy of
+working with git" item. I guess it should go in the user manual
+somewhere. Cc'ing Bruce, who may have some comments.
+
+-Peff
