@@ -1,95 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 1/2] Introduce config variable "diff.defaultOptions"
-Date: Fri, 20 Mar 2009 15:49:30 -0400
-Message-ID: <20090320194930.GB26934@coredump.intra.peff.net>
-References: <1233598855-1088-1-git-send-email-keith@cs.ucla.edu> <1233598855-1088-2-git-send-email-keith@cs.ucla.edu> <20090203071516.GC21367@sigill.intra.peff.net> <alpine.GSO.2.00.0903170825340.16242@kiwi.cs.ucla.edu> <20090320070148.GD27008@coredump.intra.peff.net> <alpine.GSO.2.00.0903200911530.16242@kiwi.cs.ucla.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Keith Cascio <keith@CS.UCLA.EDU>
-X-From: git-owner@vger.kernel.org Fri Mar 20 20:51:27 2009
+From: Alexander Lippling <lippling@googlemail.com>
+Subject: Multiple Projects in one SVN Repository
+Date: Fri, 20 Mar 2009 20:51:10 +0100
+Message-ID: <DE6E225C-CAB4-4051-A3B5-294FE69502F2@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=WINDOWS-1252;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 20 20:52:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkkkP-0002bu-EI
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 20:51:17 +0100
+	id 1Lkklt-0003Bl-4H
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 20:52:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757231AbZCTTto (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2009 15:49:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755109AbZCTTto
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 15:49:44 -0400
-Received: from peff.net ([208.65.91.99]:51189 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753279AbZCTTtn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2009 15:49:43 -0400
-Received: (qmail 10626 invoked by uid 107); 20 Mar 2009 19:49:51 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 20 Mar 2009 15:49:51 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Mar 2009 15:49:30 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.GSO.2.00.0903200911530.16242@kiwi.cs.ucla.edu>
+	id S1757300AbZCTTvT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Mar 2009 15:51:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755432AbZCTTvT
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 15:51:19 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:14153 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755264AbZCTTvT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2009 15:51:19 -0400
+Received: by fg-out-1718.google.com with SMTP id e12so231573fga.17
+        for <git@vger.kernel.org>; Fri, 20 Mar 2009 12:51:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to
+         :content-type:content-transfer-encoding:mime-version:subject:date
+         :x-mailer;
+        bh=wDCx9LzShicADeh1GO0fST5TnTT7EpdpQFOKm1hDUq8=;
+        b=NXbSG8iaijBBsL1XdCW2Cm8jMlhhqYZMlceMtxT+uEX/9nE7hASVt75o1CfVDKLWsG
+         lHdoS0lqOAE9iyzBYTlsOqFssEyz/b0grbYruR+r+dysSfPtO8BVtJl6aD9Yc36k8T7B
+         sfow3tLl8bh4xKjxBWq/hEP9+lk8FNfu5LV2Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:from:to:content-type:content-transfer-encoding
+         :mime-version:subject:date:x-mailer;
+        b=hObVcUtpV9s622sUuJVx1Uz4S95WLsWlUbSjxoqGCUPIK9lVX6a4ZNxs6ip1t18DEt
+         82GCiXU7S86rt8lmcJ2bEdc1McP/TTKXtFQjus2tzxIugd9nN3nabCfo4IV9tjFZ8NF5
+         f6p1iLRdCR7RjfYRiINsh0yoSX9a3CiV7Ezfw=
+Received: by 10.86.96.1 with SMTP id t1mr1805981fgb.35.1237578676295;
+        Fri, 20 Mar 2009 12:51:16 -0700 (PDT)
+Received: from ?192.168.1.202? (ip-78-94-173-187.unitymediagroup.de [78.94.173.187])
+        by mx.google.com with ESMTPS id 4sm81143fge.8.2009.03.20.12.51.15
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 20 Mar 2009 12:51:16 -0700 (PDT)
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113997>
 
-On Fri, Mar 20, 2009 at 10:11:27AM -0700, Keith Cascio wrote:
+Hi folks,
 
-> (a) numeric data (integers, chars, and floats): define magic value(s)
-> that represent pristineness.  Initialize all fields to PRISTINE.
-> Later, if a field has any value other than PRISTINE, we know there was
-> intent-to-change.
+I'm evaluating git and I'm wondering how to manage the following =20
+problem:
 
-Good point. Though we will need to make sure that existing code is never
-looking at PRISTINE values, which aren't likely to make much sense (I
-suspect most will be INT_MAX or -1, as 0 is a reasonable value for many
-of the options). This should be easy for most code, since the flattening
-will get rid of PRISTINE. But remember that there are pieces of code
-that do something like:
+We have a svn repository which contains all of our projects. They =20
+reference each other relatively (e.g. ../../../ProjectA.dll).
+The projects are each of the following structure:
+	=95 <project>
+		=95 trunk
+			=95 current (this is needed, because relative links wouldn't work =20
+without additionally changes when the trunk is branched)
+		=95 branches
+			=95 <branch name>
+		=95 tags
+			=95 <tag name>
 
-  if (some_diff_option_is_set)
-     set_some_other_related_diff_option;
+How can I use git svn to manage this situation?
 
-which will need to be PRISTINE-aware.
+It is important, that the projects are checked out in a way so that =20
+the relative links to other projects still work.
 
-> >   3. Introduce some mechanism to help future callers get it right
-> >   (since otherwise assigning directly is a subtle bug).
-> 
-> Yes, in the future, someone could write naughty code that sets a bit
-> flag directly rather than using one of the macros.  In C, we probably
-> can't make that impossible.  But generally speaking we can't protect
-> against all forms of gross negligence.
-
-I think you can safely ignore this complaint. I was worried we would
-need something like:
-
-  DIFF_SET(&opt, stat_name_width, 10);
-
-It is much easier to mistakenly write this as
-
-  opt.state_name_width = 10;
-
-than it is to accidentally do a bit-set when there is a DIFF_OPT_SET
-macro. That is, I think most people _want_ to use DIFF_OPT_SET because
-it is easier to read and less typing.
-
-So I saw this as a problem more for non-bit options, but you have
-already addressed that above.
-
-> All in all, turns out v3 requires surprisingly little modification of
-> existing code outside of diff.h/diff.c.  Actually, it only adds 3
-> lines, that's it!!
->
->  builtin-diff.c                  |    2 +
->  builtin-log.c                   |    1 +
->  diff.c                          |  112 ++++++++++++++++++++++++-
->  diff.h                          |   17 +++-
->
-> Shall I post v3?
-
-Yes, please. It is much better to be talking about actual code than
-hypotheticals.
-
--Peff
+- Alexander
