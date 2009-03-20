@@ -1,75 +1,74 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH v3] Introduce BEL<branch> as shortcut to the tracked  branch
-Date: Fri, 20 Mar 2009 14:05:37 +0100
-Message-ID: <vpqy6v0ny3i.fsf@bauges.imag.fr>
-References: <200903181448.50706.agruen@suse.de>
-	<alpine.DEB.1.00.0903201053280.10279@pacific.mpi-cbg.de>
-	<adf1fd3d0903200533s2be08ee7t58a22180b1c886c0@mail.gmail.com>
-	<200903201345.23864.agruen@suse.de>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 2/2] Allow http authentication via prompt for http push.
+Date: Fri, 20 Mar 2009 14:25:09 +0100
+Message-ID: <49C39935.5070707@drmicha.warpmail.net>
+References: <d8c371a80903190812w59febbd3qc6bc3d70ce85f76e@mail.gmail.com>	 <alpine.DEB.1.00.0903191755270.6357@intel-tinevez-2-302>	 <d8c371a80903191202v6fb974f4t2321761d0cf21a70@mail.gmail.com>	 <49C35891.7010004@drmicha.warpmail.net> <d8c371a80903200538t71adbca5hc11aae2ea1e36c9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Santi =?iso-8859-1?Q?B=E9jar?= <santi@agolina.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Wincent Colaiuta <win@wincent.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: Andreas Gruenbacher <agruen@suse.de>
-X-From: git-owner@vger.kernel.org Fri Mar 20 14:11:44 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Amos King <amos.l.king@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 20 14:27:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkeVf-0006g9-H2
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 14:11:40 +0100
+	id 1Lkeka-0004Ng-Aw
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 14:27:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756425AbZCTNKA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2009 09:10:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756614AbZCTNJ7
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 09:09:59 -0400
-Received: from imag.imag.fr ([129.88.30.1]:42055 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756482AbZCTNJ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2009 09:09:57 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n2KD5qnC022677
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 20 Mar 2009 14:05:52 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1LkePp-0004tL-IK; Fri, 20 Mar 2009 14:05:37 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1LkePp-0005vy-Fq; Fri, 20 Mar 2009 14:05:37 +0100
-In-Reply-To: <200903201345.23864.agruen@suse.de> (Andreas Gruenbacher's message of "Fri\, 20 Mar 2009 13\:45\:23 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 20 Mar 2009 14:05:53 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751586AbZCTNZ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2009 09:25:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750836AbZCTNZ0
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 09:25:26 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:53525 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751060AbZCTNZ0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2009 09:25:26 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 0A66D2F4422;
+	Fri, 20 Mar 2009 09:25:24 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 20 Mar 2009 09:25:24 -0400
+X-Sasl-enc: qjuGuVnYhYLuR5R9imGMcd3KNo4kdF7QSviaV8MZYlgd 1237555523
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 2802D267F2;
+	Fri, 20 Mar 2009 09:25:22 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090320 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <d8c371a80903200538t71adbca5hc11aae2ea1e36c9@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113955>
 
-Andreas Gruenbacher <agruen@suse.de> writes:
+Amos King venit, vidit, dixit 20.03.2009 13:38:
+> Where are the typos and I will fix them?
 
-> For me this defeats the purpose; I can just as well type origin/branch (or 
-> whatever it is) instead of branch^{origin}.  I'm really looking for something 
-> very short like % or %branch.
+I'll respond to this only, everything else has been said already.
 
-I was thinking of ../branch (so, replace % with ../ in your patch,
-roughly). The cool thing is that my fingers are used to ../ already.
-The bad things are 1) not sure the "analogy" with .. in filesystem is
-good, and 2) this interacts badly with ref..branch. ref..%branch was
-cool, ref..../branch is less cool.
+> There is now a faux remote created in order to
+> be passed to http_init.
+...
+> +	 * This is a faked remote so that http_init can
+> +	 * get the correct data for builidng out athorization.
 
-Or is //branch an idea?
+Obviously:
 
-My 2 cents,
+"builidng" -> "building"
+"athorization" -> "authorization"
 
--- 
-Matthieu
+Up for discussion:
+
+"out" -> "our"/"up"/""
+"build out" isn't that common and doesn't seem to apply here: In order
+to build something out that something must exist already. You can build
+up something from the ground.
+
+"faux" -> "fake"
+"faked" -> "fake"
+
+Both changes go for a more common, simplified wording. It's only a
+comment, though. No one would have cared about those.
+
+Michael
