@@ -1,61 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How to commit changes if remote repository changed directory
- structure?
-Date: Fri, 20 Mar 2009 00:08:51 -0700
-Message-ID: <7vljr04qnw.fsf@gitster.siamese.dyndns.org>
-References: <22612715.post@talk.nabble.com>
- <20090320060926.GC27008@coredump.intra.peff.net>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH 2/2] git-gui: some French translation enhancements
+Date: Fri, 20 Mar 2009 08:13:16 +0100
+Message-ID: <20090320071316.GB5693@glandium.org>
+References: <cd2d922d5257aac105de08fd90e6dbd389f0b6f0.1237506346.git.nicolas.s-dev@laposte.net> <5b4295c484a9659d1c5813e1859f192c34d6a99e.1237506346.git.nicolas.s-dev@laposte.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: andholt <andholt@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 20 08:10:45 2009
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Sam Hocevar <sam@zoy.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Alexandre Bourget <alexandre.bourget@savoirfairelinux.com>
+To: Nicolas Sebrecht <nicolas.s-dev@laposte.net>
+X-From: git-owner@vger.kernel.org Fri Mar 20 08:15:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkYsE-00072g-SG
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 08:10:35 +0100
+	id 1LkYwI-0008R0-Gi
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 08:14:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752205AbZCTHJD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2009 03:09:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752147AbZCTHJC
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 03:09:02 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40051 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752100AbZCTHJA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2009 03:09:00 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id AD2A976A2;
-	Fri, 20 Mar 2009 03:08:56 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 133427697; Fri,
- 20 Mar 2009 03:08:52 -0400 (EDT)
-In-Reply-To: <20090320060926.GC27008@coredump.intra.peff.net> (Jeff King's
- message of "Fri, 20 Mar 2009 02:09:26 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: FA672CF0-151D-11DE-A61E-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+	id S1751763AbZCTHNR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Mar 2009 03:13:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751528AbZCTHNR
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 03:13:17 -0400
+Received: from vuizook.err.no ([85.19.221.46]:33454 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751484AbZCTHNQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2009 03:13:16 -0400
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <mh@glandium.org>)
+	id 1LkYui-0007GK-Ls; Fri, 20 Mar 2009 08:13:11 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1LkYuq-0004fC-GL; Fri, 20 Mar 2009 08:13:16 +0100
+Content-Disposition: inline
+In-Reply-To: <5b4295c484a9659d1c5813e1859f192c34d6a99e.1237506346.git.nicolas.s-dev@laposte.net>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Status: (score 1.6): No, score=1.6 required=5.0 tests=RDNS_DYNAMIC,WEIRD_PORT autolearn=disabled version=3.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113906>
 
-Jeff King <peff@peff.net> writes:
+On Fri, Mar 20, 2009 at 01:54:02AM +0100, Nicolas Sebrecht wrote:
+>=20
+>=20
+> Signed-off-by: Nicolas Sebrecht <nicolas.s-dev@laposte.net>
+> ---
+>  po/fr.po |   21 ++++++++++-----------
+>  1 files changed, 10 insertions(+), 11 deletions(-)
+>=20
+> diff --git a/po/fr.po b/po/fr.po
+> index eb5f68e..2f96054 100644
+> --- a/po/fr.po
+> +++ b/po/fr.po
+> @@ -316,11 +316,11 @@ msgstr "Indexer toutes modifications"
+> =20
+>  #: git-gui.sh:2479
+>  msgid "Unstage From Commit"
+> -msgstr "D=C3=A9sindexer"
+> +msgstr "Retirer de l'index"
 
-> On Thu, Mar 19, 2009 at 06:17:15PM -0700, andholt wrote:
->
->> I have a lot of local changes to add, commit, and push. Right now our
->> directory structure is 1/2/3. Another developer decided to move everything
->> up one level, so used git move to move 3 to 2, and removed 3, so now the
->> level is 1/2. However, locally, all of my changes are in 1/2/3. 
->> 
->> I want to commit my changes and merge them into the new directory structure.
->> How would I go about doing that?
->
-> First, commit your changes. Then merge the other developer's changes. :)
+IMHO, we should find a better way to say that than to use the "index"
+word at all. This obviously applies to all uses of "index" in french
+where we avoided it in english.
 
-We should probably point out to new people that "first commit and then
-worry about merges after your changes are safely committed" is always how
-people would "go about" anything.
+OTOH, the best I can find for "staging area" is "zone de pr=E9paration"=
+,
+and that doesn't help finding a word for stage and unstage.
+
+Mike
