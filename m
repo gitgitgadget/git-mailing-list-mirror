@@ -1,49 +1,86 @@
-From: Steve <shrotty@gmx.ch>
-Subject: Re: git-push on packed refs via HTTP
-Date: Fri, 20 Mar 2009 12:31:04 +0000 (UTC)
-Message-ID: <loom.20090320T123018-838@post.gmane.org>
-References: <loom.20090320T094550-421@post.gmane.org> <be6fef0d0903200500u4d26d00fm653bc1e708a0c26b@mail.gmail.com>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: [PATCH v3] Introduce BEL<branch> as shortcut to the tracked 
+	branch
+Date: Fri, 20 Mar 2009 13:33:18 +0100
+Message-ID: <adf1fd3d0903200533s2be08ee7t58a22180b1c886c0@mail.gmail.com>
+References: <200903181448.50706.agruen@suse.de>
+	 <7vr60ubgul.fsf@gitster.siamese.dyndns.org>
+	 <alpine.DEB.1.00.0903182343580.10279@pacific.mpi-cbg.de>
+	 <alpine.DEB.1.00.0903200121330.10279@pacific.mpi-cbg.de>
+	 <alpine.DEB.1.00.0903200137230.10279@pacific.mpi-cbg.de>
+	 <20090320004029.GX23521@spearce.org>
+	 <20090320004450.GY23521@spearce.org>
+	 <alpine.DEB.1.00.0903201027450.10279@pacific.mpi-cbg.de>
+	 <3F6729A7-76FA-43F4-9538-D644B30576D7@wincent.com>
+	 <alpine.DEB.1.00.0903201053280.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 20 13:33:09 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Wincent Colaiuta <win@wincent.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Petr Baudis <pasky@suse.cz>,
+	Andreas Gruenbacher <agruen@suse.de>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 20 13:35:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkduD-0000wH-Jt
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 13:32:58 +0100
+	id 1Lkdw4-0001fH-Pl
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 13:34:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752189AbZCTMbZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2009 08:31:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751981AbZCTMbZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 08:31:25 -0400
-Received: from main.gmane.org ([80.91.229.2]:42399 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751720AbZCTMbZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2009 08:31:25 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Lkdsa-0003Vj-Jl
-	for git@vger.kernel.org; Fri, 20 Mar 2009 12:31:16 +0000
-Received: from 172.120.221.87.dynamic.jazztel.es ([87.221.120.172])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 20 Mar 2009 12:31:16 +0000
-Received: from shrotty by 172.120.221.87.dynamic.jazztel.es with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 20 Mar 2009 12:31:16 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 87.221.120.172 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.0.7) Gecko/2009021906 Firefox/3.0.7)
+	id S1754372AbZCTMdX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Mar 2009 08:33:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754148AbZCTMdW
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 08:33:22 -0400
+Received: from mail-bw0-f169.google.com ([209.85.218.169]:62168 "EHLO
+	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753439AbZCTMdW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2009 08:33:22 -0400
+Received: by bwz17 with SMTP id 17so871144bwz.37
+        for <git@vger.kernel.org>; Fri, 20 Mar 2009 05:33:19 -0700 (PDT)
+Received: by 10.103.169.18 with SMTP id w18mr1317292muo.73.1237552398922; Fri, 
+	20 Mar 2009 05:33:18 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0903201053280.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113948>
 
-> could you try running git update-server-info?
+2009/3/20 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> Hi,
+>
+> On Fri, 20 Mar 2009, Wincent Colaiuta wrote:
+>
+>> El 20/3/2009, a las 10:29, Johannes Schindelin escribi=F3:
+>>
+>> >
+>> >Often, it is quite interesting to inspect the branch tracked by a g=
+iven
+>> >branch.  This patch introduces a nice notation to get at the tracke=
+d
+>> >branch: 'BEL<branch>' can be used to access that tracked branch.
+>> >
+>> >A special shortcut 'BEL' refers to the branch tracked by the curren=
+t branch.
+>> >
+>> >Suggested by Pasky and Shawn.
+>>
+>> What does BEL actually stand for? I read Shawn's suggestion, but it'=
+s not
+>> immediately clear to me what "BEL" means.
+>
+> It is the ASCII "bell" character, 007 (I always wanted to write that
+> magic identifier into a patch).
+>
+> FWIW you could type it in a regular ANSI terminal using Control-v
+> Control-g.
 
-Forgot to mention that: I have tried git update-server-info, yet no luck.
+Can we use branch^{origin} instead? It is longer to type, but uses the
+same syntax as the ^{tree}, ^{commit}, ^{tag} and you don't have to
+know how to produce the bell character.
+
+2 cents,
+Santi
