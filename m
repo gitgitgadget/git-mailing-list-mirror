@@ -1,101 +1,141 @@
-From: bdowning@lavos.net (Brian Downing)
-Subject: Re: Git no longer reads attributes from the index properly
-Date: Fri, 20 Mar 2009 03:40:31 -0500
-Message-ID: <20090320084031.GD1037@lavos.net>
-References: <20090320073527.GC1037@lavos.net> <7vab7gk39o.fsf@gitster.siamese.dyndns.org>
-Reply-To: bdowning@lavos.net
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 2/2] Allow http authentication via prompt for http push.
+Date: Fri, 20 Mar 2009 09:49:21 +0100
+Message-ID: <49C35891.7010004@drmicha.warpmail.net>
+References: <d8c371a80903190812w59febbd3qc6bc3d70ce85f76e@mail.gmail.com>	 <alpine.DEB.1.00.0903191755270.6357@intel-tinevez-2-302> <d8c371a80903191202v6fb974f4t2321761d0cf21a70@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>, msysgit@googlegroups.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Fri Mar 20 09:42:29 2009
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from yx-out-2122.google.com ([74.125.44.26])
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Amos King <amos.l.king@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 20 09:51:11 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkaIp-0007aH-Bc
-	for gcvm-msysgit@m.gmane.org; Fri, 20 Mar 2009 09:42:07 +0100
-Received: by yx-out-2122.google.com with SMTP id 22so334296yxm.63
-        for <gcvm-msysgit@m.gmane.org>; Fri, 20 Mar 2009 01:40:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received-spf:authentication-results:received
-         :received:received:date:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent:from:reply-to:sender:precedence:x-google-loop
-         :mailing-list:list-id:list-post:list-help:list-unsubscribe
-         :x-beenthere-env:x-beenthere;
-        bh=3TxZwLghEKfRoKs19dGHGjyPcbue+T7f68dGhz0CEJQ=;
-        b=hI7Rw+jYES2VFcHYCRdTJVZJfFQDhtFe80U9Qv2RJBBLTqm+C82GG1POdnh8M0U87L
-         4aFaMdpm35hRBEIs/hAZ6dAdznjdWlT1ggJD2lg0+Dh4kb9CvDC3EsPUGVNxs+dWm0wV
-         eZiy1WMy/fU2YctdwZ2jsUmZI/vz8Tm7UvmuY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:date
-         :to:cc:subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent:from:reply-to:sender
-         :precedence:x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        b=cO+vg4RyIqvVPw/4O1DrDO98+ewRXPtKA4WQ0U4hZ4uKzGfgDaKSHdSPR6nfFHiqUq
-         9IurbjQsiD8DXMI17IhQRbJ0Q4GE1SHc1ou8JgoOoe1SAFYowKz+E5jQqB8InDsHEBx7
-         y/itzf8VAJiHoK69upt/Ff8h0/p0Pvb16QLxw=
-Received: by 10.100.216.12 with SMTP id o12mr557106ang.27.1237538433474;
-        Fri, 20 Mar 2009 01:40:33 -0700 (PDT)
-Received: by 10.177.37.21 with SMTP id p21gr4307yqj.0;
-	Fri, 20 Mar 2009 01:40:33 -0700 (PDT)
-X-Sender: bdowning@lavos.net
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.90.75.13 with SMTP id x13mr2412928aga.21.1237538432804; Fri, 20 Mar 2009 01:40:32 -0700 (PDT)
-Received: from QMTA04.westchester.pa.mail.comcast.net (qmta04.westchester.pa.mail.comcast.net [76.96.62.40]) by gmr-mx.google.com with ESMTP id 13si527873gxk.2.2009.03.20.01.40.32; Fri, 20 Mar 2009 01:40:32 -0700 (PDT)
-Received-SPF: neutral (google.com: 76.96.62.40 is neither permitted nor denied by best guess record for domain of bdowning@lavos.net) client-ip=76.96.62.40;
-Authentication-Results: gmr-mx.google.com; spf=neutral (google.com: 76.96.62.40 is neither permitted nor denied by best guess record for domain of bdowning@lavos.net) smtp.mail=bdowning@lavos.net
-Received: from OMTA07.westchester.pa.mail.comcast.net ([76.96.62.59]) by QMTA04.westchester.pa.mail.comcast.net with comcast id VLeG1b0011GhbT854LgZkw; Fri, 20 Mar 2009 08:40:33 +0000
-Received: from mnementh.lavos.net ([98.212.138.194]) by OMTA07.westchester.pa.mail.comcast.net with comcast id VLgY1b0084BqYqi3TLgZ31; Fri, 20 Mar 2009 08:40:33 +0000
-Received: by mnementh.lavos.net (Postfix, from userid 1000) id 87E39309F24; Fri, 20 Mar 2009 03:40:31 -0500 (CDT)
-Content-Disposition: inline
-In-Reply-To: <7vab7gk39o.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.9i
-Sender: msysgit@googlegroups.com
+	id 1LkaRY-0001vb-NU
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 09:51:09 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754355AbZCTIti (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2009 04:49:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754188AbZCTIti
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 04:49:38 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:46493 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752821AbZCTIth (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2009 04:49:37 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 45FAD2F6F38;
+	Fri, 20 Mar 2009 04:49:35 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Fri, 20 Mar 2009 04:49:35 -0400
+X-Sasl-enc: 9Bai4dSUnglncnCpmFU/UFyJFtDP4cm9MBYluDOGL2FM 1237538974
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 382264CEE3;
+	Fri, 20 Mar 2009 04:49:34 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090320 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <d8c371a80903191202v6fb974f4t2321761d0cf21a70@mail.gmail.com>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit+owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit+help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-X-BeenThere-Env: msysgit@googlegroups.com
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113917>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113918>
 
-
-On Fri, Mar 20, 2009 at 01:27:31AM -0700, Junio C Hamano wrote:
-> bdowning@lavos.net (Brian Downing) writes:
-> > As of 34110cd4e394e3f92c01a4709689b384c34645d8, (2008-03-06, just over a
-> > year ago), Git no longer reads attributes from the index properly in all
-> > cases....
+Amos King venit, vidit, dixit 19.03.2009 20:02:
+> The issue with calling it remote is that it conflicts with the remote
+> struct that is need for http_init, and is used in the rest of the
+> code.  So do you want me to make this small impact change or a larger
+> and more broad sweeping change by changing the name of the other
+> remote.  I don't believe fake is a better name.  I would hope that at
+> some point the 'repo' struct would go away and we can make http_push
+> work like all the other remote commands.
 > 
-> Perhaps you would want to try it on 06f33c1 (Read attributes from the
-> index that is being checked out, 2009-03-13) that is part of 'pu'?
+> I also believe that 'out' is the correct word.  It was not a typo, and
+> I appreciate your suggestion of assuming that I can't spell just
+> because I used a word that you didn't understand.  I'm not building
+> OUR authorization.  I am building OUT authorization.  Have you heard
+> of building something out?  Or even fleshing something out?
+> 
+> I appreciated your first responses to my other patch.  Even if your
+> tone was that of a person with low self-esteem who needs to pick
+> unimportant details apart in order to stroke their own ego.  Instead
+> of responding in the same tone I thought I would respond nicely and
+> get your feedback.  Responses like your first one don't cause people
+> to want to continue to contribute to the community.
+> 
+> I have a great idea.  Why don't you try using the 'nice' tense in your
+> next email instead of the high and mighty 'ass-hole' tense.  Then I
+> will gladly not use past tense in my commit messages, and others might
+> respond more positively to your criticisms.
+> 
+> Fiek Dich,
+> Amos
 
-I only tried it on next, groan.  Yes, it works there, thanks.
+We don't want these obscenities on this list, whether in plain English
+or wrong German!
 
-However, that commit looks like it's solving a different problem
-entirely (supporting changing between two branches where .gitattributes
-exists in both cases) and happens to fix the no .gitattributes -> read
-from index regression at the same time.  I don't know enough about the
-guts to tell, but does this also fix the core problem of the regression
-(I assume something about trying to read from the wrong index, given the
-commit that broke it), or does it just happen to work around it?
+In fact, Dscho's criticism was not only constructive but nice, and not
+only by his standards.
 
-Specifically, it would be nice to have a fix for the regression that
-could land on maint relatively soon, as the initial checkout case is
-breaking a real repository I use, whereas the switching branches case is
-something I don't care about as much at the moment.
+You managed to have at least 2 (3 by our count) typos in one line, and
+Dscho pointed that out correctly and nicely.
 
-Of course, I don't know how to fix it at the moment, and beggars can't
-be choosers.  :)
+Your second response (which I saw just before hitting send) doesn't show
+much new insight regarding the latter two points. I'll consider the
+first one dealt with by it.
 
--bcd
+Michael
+
+> On Thu, Mar 19, 2009 at 11:59 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+>> Hi,
+>>
+>> On Thu, 19 Mar 2009, Amos King wrote:
+>>
+>>> There is now a faux remote created in order to
+>>> be passed to http_init.
+>>>
+>>> Signed-off-by: Amos King <amos.l.king@gmail.com>
+>>> ---
+>>>  http-push.c |   11 ++++++++++-
+>>>  1 files changed, 10 insertions(+), 1 deletions(-)
+>>>
+>>> diff --git a/http-push.c b/http-push.c
+>>> index 9ac2664..468d5af 100644
+>>> --- a/http-push.c
+>>> +++ b/http-push.c
+>>> @@ -2195,7 +2195,16 @@ int main(int argc, char **argv)
+>>>
+>>>       memset(remote_dir_exists, -1, 256);
+>>>
+>>> -     http_init(NULL);
+>>> +     /*
+>>> +      * This is a faked remote so that http_init can
+>>> +      * get the correct data for builidng out athorization.
+>>> +      */
+>>
+>> You might want to pass this through aspell ;-)  Altough it will not
+>> suggest 'out ->our', I guess...
+>>
+>>> +     struct remote *remote;
+>>> +     remote = xcalloc(sizeof(*remote), 1);
+>>> +     ALLOC_GROW(remote->url, remote->url_nr + 1, remote->url_alloc);
+>>> +     remote->url[remote->url_nr++] = repo->url;
+>>> +
+>>> +     http_init(remote);
+>>
+>> Would 'fake' not be a more appropriate name than 'remote'?
+>>
+>> That would also make the patch 1/2 rather unnecessary (I also have to
+>> admit that I do not find 'repo' a better name, as we have a repository
+>> both locally and remotely, and this _is_ the remote repository, not the
+>> local one).
+>>
+>> Ciao,
+>> Dscho
+>>
+>>
+> 
+> 
+> 
