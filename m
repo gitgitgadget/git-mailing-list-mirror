@@ -1,141 +1,68 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH] Ensure RawParseUtils.lineMap last element is the buffer end
-Date: Fri, 20 Mar 2009 09:38:08 -0700
-Message-ID: <1237567088-31828-1-git-send-email-spearce@spearce.org>
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Fri Mar 20 17:39:50 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Tracking of local branches
+Date: Fri, 20 Mar 2009 09:46:02 -0700
+Message-ID: <7viqm4i1md.fsf@gitster.siamese.dyndns.org>
+References: <49C3A6AE.7020104@drmicha.warpmail.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Mar 20 17:48:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lkhl0-0006Up-T7
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 17:39:43 +0100
+	id 1Lkht1-0001kZ-03
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 17:47:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755205AbZCTQiM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2009 12:38:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754330AbZCTQiM
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 12:38:12 -0400
-Received: from george.spearce.org ([209.20.77.23]:35604 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753190AbZCTQiL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2009 12:38:11 -0400
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id 0DFA838222; Fri, 20 Mar 2009 16:38:09 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 68E07381D3;
-	Fri, 20 Mar 2009 16:38:08 +0000 (UTC)
-X-Mailer: git-send-email 1.6.2.1.352.gae594
+	id S1758906AbZCTQqN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2009 12:46:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757073AbZCTQqN
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 12:46:13 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36609 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758754AbZCTQqM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2009 12:46:12 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 59750A1768;
+	Fri, 20 Mar 2009 12:46:10 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id BEB63A1763; Fri,
+ 20 Mar 2009 12:46:04 -0400 (EDT)
+In-Reply-To: <49C3A6AE.7020104@drmicha.warpmail.net> (Michael J. Gruber's
+ message of "Fri, 20 Mar 2009 15:22:38 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 9DA9BCAC-156E-11DE-A958-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113977>
 
-Application code is easier to write when we can assume that for
-any given source line the last element of the IntList returned
-by lineMap contains the value of the end parameter.  This makes
-it easy to extract any line by saying:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-  RawParseUtils.decodeNoFallback(
-    Constants.CHARSET,
-    buf,
-	lineMap.get(lineNbr),
-    lineMap.get(lineNbr + 1));
+> I semi-successfully messed around in remote.c (format_tracking_info(),
+> stat_tracking_info()) to make it use branch->merge_name rather than
+> branch->merge. This makes "git status" work as expected ("Your branch
+> is... severely screwed.") for tracked local branches. (It's messed up
+> for remote ones but hey it was a first shot; merge[0]->dst is really
+> needed here I guess.)
+>
+> Now I could go after sha1_name.c and do the same,
+>
+> OR
+>
+> make it so that all branches have their merge member set up, uhm. Any
+> possible side effects?
 
-without needing to worry about bound checks, assuming of course
-that lineNbr is already bound-checked within the range of the file.
+My gut feeling is that the latter if works should be preferable for
+consistency if nothing else.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- .../jgit/util/RawParseUtils_LineMapTest.java       |   16 ++++++++++------
- .../src/org/spearce/jgit/util/RawParseUtils.java   |    4 ++++
- 2 files changed, 14 insertions(+), 6 deletions(-)
-
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/util/RawParseUtils_LineMapTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/util/RawParseUtils_LineMapTest.java
-index 3f562a4..312e3d8 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/util/RawParseUtils_LineMapTest.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/util/RawParseUtils_LineMapTest.java
-@@ -45,44 +45,48 @@
- 	public void testEmpty() {
- 		final IntList map = RawParseUtils.lineMap(new byte[] {}, 0, 0);
- 		assertNotNull(map);
--		assertEquals(1, map.size());
-+		assertEquals(2, map.size());
- 		assertEquals(Integer.MIN_VALUE, map.get(0));
-+		assertEquals(0, map.get(1));
- 	}
- 
- 	public void testOneBlankLine() {
- 		final IntList map = RawParseUtils.lineMap(new byte[] { '\n' }, 0, 1);
--		assertEquals(2, map.size());
-+		assertEquals(3, map.size());
- 		assertEquals(Integer.MIN_VALUE, map.get(0));
- 		assertEquals(0, map.get(1));
-+		assertEquals(1, map.get(2));
- 	}
- 
- 	public void testTwoLineFooBar() throws UnsupportedEncodingException {
- 		final byte[] buf = "foo\nbar\n".getBytes("ISO-8859-1");
- 		final IntList map = RawParseUtils.lineMap(buf, 0, buf.length);
--		assertEquals(3, map.size());
-+		assertEquals(4, map.size());
- 		assertEquals(Integer.MIN_VALUE, map.get(0));
- 		assertEquals(0, map.get(1));
- 		assertEquals(4, map.get(2));
-+		assertEquals(buf.length, map.get(3));
- 	}
- 
- 	public void testTwoLineNoLF() throws UnsupportedEncodingException {
- 		final byte[] buf = "foo\nbar".getBytes("ISO-8859-1");
- 		final IntList map = RawParseUtils.lineMap(buf, 0, buf.length);
--		assertEquals(3, map.size());
-+		assertEquals(4, map.size());
- 		assertEquals(Integer.MIN_VALUE, map.get(0));
- 		assertEquals(0, map.get(1));
- 		assertEquals(4, map.get(2));
-+		assertEquals(buf.length, map.get(3));
- 	}
- 
- 	public void testFourLineBlanks() throws UnsupportedEncodingException {
- 		final byte[] buf = "foo\n\n\nbar\n".getBytes("ISO-8859-1");
- 		final IntList map = RawParseUtils.lineMap(buf, 0, buf.length);
--		assertEquals(5, map.size());
-+		assertEquals(6, map.size());
- 		assertEquals(Integer.MIN_VALUE, map.get(0));
- 		assertEquals(0, map.get(1));
- 		assertEquals(4, map.get(2));
- 		assertEquals(5, map.get(3));
- 		assertEquals(6, map.get(4));
-+		assertEquals(buf.length, map.get(5));
- 	}
--
- }
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java b/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java
-index 0735ce6..79ebe41 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java
-@@ -329,6 +329,9 @@ public static final int nextLF(final byte[] b, int ptr, final char chrA) {
- 	 * Using a 1 indexed list means that line numbers can be directly accessed
- 	 * from the list, so <code>list.get(1)</code> (aka get line 1) returns
- 	 * <code>ptr</code>.
-+	 * <p>
-+	 * The last element (index <code>map.size()-1</code>) always contains
-+	 * <code>end</code>.
- 	 *
- 	 * @param buf
- 	 *            buffer to scan.
-@@ -348,6 +351,7 @@ public static final IntList lineMap(final byte[] buf, int ptr, int end) {
- 		map.fillTo(1, Integer.MIN_VALUE);
- 		for (; ptr < end; ptr = nextLF(buf, ptr))
- 			map.add(ptr);
-+		map.add(end);
- 		return map;
- 	}
- 
--- 
-1.6.2.1.352.gae594
+The "struct branch" hasn't changed ever since it was introduced by cf81834
+(Report information on branches from remote.h, 2007-09-10) and Daniel
+might know about some corner cases that rely on branch.merge not being set
+up for local ones, but honestly, I would think it would be a bug in the
+existing code if there were such cases.
