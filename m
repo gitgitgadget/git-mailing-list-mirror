@@ -1,73 +1,120 @@
-From: Sam Hocevar <sam@zoy.org>
-Subject: Re: git-p4 workflow suggestions?
-Date: Fri, 20 Mar 2009 11:31:25 +0100
-Message-ID: <20090320103125.GP27280@zoy.org>
-References: <20090309142108.GK12880@zoy.org> <20090311125805.GA28155@padd.com> <20090316180108.GE27280@zoy.org> <20090317151815.GA2451@padd.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] Document and test the new % shotcut for the tracked branch
+Date: Fri, 20 Mar 2009 11:38:56 +0100
+Message-ID: <49C37240.6070604@drmicha.warpmail.net>
+References: <alpine.DEB.1.00.0903201027450.10279@pacific.mpi-cbg.de> <1237543471-27248-1-git-send-email-git@drmicha.warpmail.net> <alpine.DEB.1.00.0903201128380.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Fri Mar 20 11:35:36 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Petr Baudis <pasky@suse.cz>,
+	Andreas Gruenbacher <agruen@suse.de>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 20 11:40:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lkc4Z-0002zk-Dh
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 11:35:31 +0100
+	id 1Lkc9k-0004l4-0D
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 11:40:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761786AbZCTKbf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2009 06:31:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758814AbZCTKbe
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 06:31:34 -0400
-Received: from poulet.zoy.org ([80.65.228.129]:32927 "EHLO poulet.zoy.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1763018AbZCTKbd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2009 06:31:33 -0400
-Received: by poulet.zoy.org (Postfix, from userid 1000)
-	id 28666120386; Fri, 20 Mar 2009 11:31:25 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20090317151815.GA2451@padd.com>
-Mail-Copies-To: never
-X-No-CC: I read mailing-lists; do not CC me on replies.
-X-Snort: uid=0(root) gid=0(root)
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1757285AbZCTKjQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2009 06:39:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752565AbZCTKjO
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 06:39:14 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:41045 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751715AbZCTKjN (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2009 06:39:13 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id A9BC52F3C6A;
+	Fri, 20 Mar 2009 06:39:11 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 20 Mar 2009 06:39:11 -0400
+X-Sasl-enc: 4xd06EQZ45ZnbarratInyz4XHh5KHXE459lRfcxslVjf 1237545551
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 838A528555;
+	Fri, 20 Mar 2009 06:39:10 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090320 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <alpine.DEB.1.00.0903201128380.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113937>
 
-On Tue, Mar 17, 2009, Pete Wyckoff wrote:
-
-> Can you take a look at the attached.  Its goal is purely to allow
-> you to clone a complex spec like yours above.  You may have to merge
-> this in with your perrformance changes.
+Johannes Schindelin venit, vidit, dixit 20.03.2009 11:31:
+> Hi,
 > 
-> Edit your ~/.gitconfig to add a section:
+> On Fri, 20 Mar 2009, Michael J Gruber wrote:
 > 
-> 	[git-p4]
-> 		useClientSpec = true
+>> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+>> ---
 > 
-> Then copy a good P4ENV from a p4 client that has a client spec
-> checked out as you like.  git-p4 clone will do "p4 client -o",
-> reading that spec, and use the results to import, hopefully as
-> you have things laid out in the spec.
+> That is brutal.  First shot, then cut.
+
+I'm sorry! But you're a tough guy, you'll recover...
+
 > 
-> If this seems to work for you, we can figure out how to clean up
-> the patch so it can be used generally by people with and without
-> client specs.
+>> Johannes Schindelin venit, vidit, dixit 20.03.2009 10:29:
+>>>
+>>> Often, it is quite interesting to inspect the branch tracked by a 
+>>> given branch.  This patch introduces a nice notation to get at the 
+>>> tracked branch: 'BEL<branch>' can be used to access that tracked 
+>>> branch.
+>>>
+>>> A special shortcut 'BEL' refers to the branch tracked by the current 
+>>> branch.
+>>>
+>>> Suggested by Pasky and Shawn.
+>>>
+>>> This patch extends the function introduced to handle the nth-last 
+>>> branch (via the {-<n>} notation); therefore that function name was 
+>>> renamed to something more general.
+>>>
+>>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>>
+>> I guess you beat me to it then, which is fine.
+> 
+> I had it ready yesterday!  But the real problem is not addressed by your 
+> patch, either: '%<branch>' is a legal branch name.
 
-   I am afraid I don't know what a "P4ENV" is. However, our P4
-repository is set up in such a way that "p4 client -o" shows the
-expected mappings, so I just commented out the P4ENV check and I finally
-managed to clone my gigantic repository.
+No, of course, I just added doc+test to your patch v2, since you seemed
+to encourage people to do so.
 
-   One concern: git-p4 clone creates .git in the current directory and
-it caused me to do at least one unfortunate "rm -rf .git". I would
-expect clone to create a subdirectory.
+I would have sent it out yesterday if my tests hadn't shown a problem.
+(Or did you misunderstand my doc notation? <branch> = ${branch} =
+"branch" placeholder for a generic branch name)
 
-   Apart from that, "clone" seems to work rather well. I haven't tried
-to submit a commit yet, though.
+> I briefly considered <branch>^{tracked}, but
+> 
+> - the ^{} codepath does not try to substitute branch _names_, so we'd have 
+>   to duplicate that ^{} detection, and,
+> 
+> - it is really cumbersome to write.
+> 
+>> But haven't you seen my note about the failing test either? The code 
+>> below tests with branches which track local branches. merge and remote 
+>> is set for the branch in question ("tracking"), it's just that remote is 
+>> ".". It seems that the remote.c code does not set up merge info for 
+>> these branches.
+> 
+> I have seen it, it's just not my itch, and I am busy enough as it is.
 
--- 
-Sam.
+If I'm not totally off-track (which I may well be) then that problem
+should show up with other uses of the merge/track setting as well. I
+guess it's just that everyone tracks remote branches, not local ones.
+
+I'll see if I have time...
+
+>> <Goes to figure out how to enter BEL...>
+> 
+> Ctrl-v Ctrl-g
+> 
+> Ciao,
+> Dscho
+
+Bing bing bing...
+
+Michael
