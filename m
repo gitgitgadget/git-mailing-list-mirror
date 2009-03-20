@@ -1,128 +1,128 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: git quiltimport and git apply fail importing the PREEMPT_RT patches
-Date: Fri, 20 Mar 2009 20:06:17 +0100
-Message-ID: <20090320190617.GA28784@pengutronix.de>
+From: Allan Caffee <allan.caffee@gmail.com>
+Subject: Re: [RFC] Colorization of log --graph
+Date: Fri, 20 Mar 2009 15:13:53 -0400
+Message-ID: <b2e43f8f0903201213o396de6c0sb52149ed1d889d1@mail.gmail.com>
+References: <20090318100512.GA7932@linux.vnet>
+	 <alpine.DEB.1.00.0903181228420.10279@pacific.mpi-cbg.de>
+	 <b2e43f8f0903190959if539048r19e972899bd2132d@mail.gmail.com>
+	 <alpine.DEB.1.00.0903191831590.6357@intel-tinevez-2-302>
+	 <20090320064813.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Dan Nicholson <dbn.lists@gmail.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Gerrit Pape <pape@smarden.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Pierre Habouzit <madcoder@debian.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 20 20:07:56 2009
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Fri Mar 20 20:15:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lkk4R-0002fe-CL
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 20:07:55 +0100
+	id 1LkkBj-0005R3-C2
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 20:15:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759770AbZCTTGY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Mar 2009 15:06:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759451AbZCTTGY
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 15:06:24 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:36215 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758974AbZCTTGX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2009 15:06:23 -0400
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Lkk2v-0003KI-Dq; Fri, 20 Mar 2009 20:06:21 +0100
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Lkk2r-0007bW-1k; Fri, 20 Mar 2009 20:06:17 +0100
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1757659AbZCTTN5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Mar 2009 15:13:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753352AbZCTTN5
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 15:13:57 -0400
+Received: from yx-out-2324.google.com ([74.125.44.29]:47659 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751689AbZCTTN4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2009 15:13:56 -0400
+Received: by yx-out-2324.google.com with SMTP id 31so1123134yxl.1
+        for <git@vger.kernel.org>; Fri, 20 Mar 2009 12:13:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=luLL+wYeWAjIL6BAPkIjtQJFzfFqP0FlWlwje9M+01I=;
+        b=cIzgxURKofYq7D7X58vR8zjEqqyvwj/ukB/ftRKIrwtr9Fn4e/KQi114gWD5zMU/Ud
+         g2IYyb8swpOdrBd4iqARcvMQfnOewAEo3EKON0K4yPsLGtg6Q6VR0MKnwk7S8RwIe1/n
+         ZKqRZWLXQu+kq9162oy6oBRdAtGHjnysVHD1g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Snh7DaPsW9W7MCq0pDHz25EfqRrzWWN+5EWylSxoZDjuLnVzLhFwVKe2jtLgPkYdj8
+         55XqzdVlJxJNdHIP+hOv22n/NxecMgKR/9VnLVmeBAMO4bSuuRrM8C+5rLv1NS2cePcu
+         VSfvzemcwzZ0Q/bC/MjLt5Owrty992//90b90=
+Received: by 10.220.72.205 with SMTP id n13mr1982764vcj.115.1237576433535; 
+	Fri, 20 Mar 2009 12:13:53 -0700 (PDT)
+In-Reply-To: <20090320064813.6117@nanako3.lavabit.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113991>
 
-Hello,
+On Thu, Mar 19, 2009 at 5:48 PM, Nanako Shiraishi <nanako3@lavabit.com>=
+ wrote:
+> Quoting Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+>
+>> I'd start like this:
+>>
+>> =A0 =A0 =A0 enum color_name {
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 COLOR_RESET,
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 COLOR_RED,
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 COLOR_GREEN,
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 COLOR_YELLOW,
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 COLOR_BLUE,
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 COLOR_MAGENTA,
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 COLOR_CYAN,
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 COLOR_WHITE
+>> =A0 =A0 =A0 };
+>
+> Looking for "COLOR_RED" in the archive gives:
+>
+> =A0http://article.gmane.org/gmane.comp.version-control.git/109676
+>
 
-	~/gsrc/linux-2.6$ git version
-	git version 1.5.6.5
+Duly noted.  Perhaps those #defines should be relocated to color.h?  If
+we still wanted to provide a color_name type we could use
+GIT_COLOR_NAME_RESET et al.  That would give us something like:
 
-(but with newer git I get the same)
+#define GIT_COLOR_NORMAL	""
+#define GIT_COLOR_RESET		"\033[m"
+#define GIT_COLOR_BOLD		"\033[1m"
+#define GIT_COLOR_RED		"\033[31m"
+#define GIT_COLOR_GREEN		"\033[32m"
+#define GIT_COLOR_YELLOW	"\033[33m"
+#define GIT_COLOR_BLUE		"\033[34m"
+#define GIT_COLOR_CYAN		"\033[36m"
+#define GIT_COLOR_BG_RED	"\033[41m"
 
-	~/gsrc/linux-2.6$ git checkout v2.6.29-rc8
-	Note: moving to "v2.6.29-rc8" which isn't a local branch
-	If you want to create a new branch from this checkout, you may do so
-	(now or later) by using -b with the checkout command again. Example:
-	  git checkout -b <new_branch_name>
+enum color_name {
+	GIT_COLOR_NAME_NORMAL
+	GIT_COLOR_NAME_RESET,
+	GIT_COLOR_NAME_RED,
+	GIT_COLOR_NAME_GREEN,
+	GIT_COLOR_NAME_YELLOW,
+	GIT_COLOR_NAME_BLUE,
+	GIT_COLOR_NAME_MAGENTA,
+	GIT_COLOR_NAME_CYAN,
+	GIT_COLOR_NAME_WHITE
+	GIT_COLOR_NAME_BG_RED
+};
 
-	~/gsrc/linux-2.6$ wget -O - http://www.kernel.org/pub/linux/kernel/pro=
-jects/rt/patch-2.6.29-rc8-rt2-broken-out.tar.bz2 | tar xjf -
+/*
+ * Map names to ANSI escape sequences.  Consider putting this in color.=
+c
+ * and providing color_name_get_ansi_code(enum color_name).
+ */
+const char* git_color_codes[] {
+	GIT_COLOR_RESET,
+	GIT_COLOR_BOLD,
+	GIT_COLOR_RED,
+	GIT_COLOR_GREEN,
+	GIT_COLOR_YELLOW,
+	GIT_COLOR_BLUE,
+	GIT_COLOR_CYAN,
+	GIT_COLOR_BG_RED,
+};
 
-	~/gsrc/linux-2.6$ git quiltimport --author=3D"do <nt@kn.ow>"
-	origin.patch.bz2
-	Patch is empty.  Was it split wrong?
+That conveniently offers clients access to both the raw escape codes an=
+d
+a clear type for storing/handling colors.
 
-hhmmm, quilt seems to support packed patches.
-
-After bunzip2 origin.patch.bz2 and editing series accordingly I get:
-
-	~/gsrc/linux-2.6$ git quiltimport --author=3D"do <nt@kn.ow>"
-	origin.patch
-	.dotest/patch:12188: space before tab in indent.
-			.platform_data  =3D &markeins_flash_data,
-	.dotest/patch:19521: trailing whitespace.
-	=09
-	.dotest/patch:20778: trailing whitespace.
-		[PERF_COUNT_BRANCH_INSTRUCTIONS] =3D 0x230e4,	/* BR_ISSUED */=20
-	.dotest/patch:21259: trailing whitespace.
-		[PERF_COUNT_BRANCH_INSTRUCTIONS] =3D 0x230e4,	/* BR_ISSUED */=20
-	.dotest/patch:21548: trailing whitespace.
-		[PERF_COUNT_BRANCH_INSTRUCTIONS] =3D 0x410a0,	/* BR_PRED */=20
-	error: cannot apply binary patch to 'Documentation/logo.gif' without f=
-ull index line
-	error: Documentation/logo.gif: patch does not apply
-
-The hunk for Documentation/logo.gif looks as follows:
-
-	diff --git a/Documentation/logo.gif b/Documentation/logo.gif
-	deleted file mode 100644
-	index 2eae75f..0000000
-	Binary files a/Documentation/logo.gif and /dev/null differ
-
-=46or me this looks complete enough to be applicable:
-
-	~/gsrc/linux-2.6$ git ls-tree HEAD:Documentation | grep logo.gif
-	100644 blob 2eae75fecfb965f49065c680063a40c594736ee5	logo.gif
-
-(For these who want to look into the 2nd issue, here is an easier
-reproduction recipe:
-
-	~/gsrc/linux-2.6$ git apply --index -C1 - << EOF
-	> diff --git a/Documentation/logo.gif b/Documentation/logo.gif
-	> deleted file mode 100644
-	> index 2eae75f..0000000
-	> Binary files a/Documentation/logo.gif and /dev/null differ
-	> EOF
-	error: cannot apply binary patch to 'Documentation/logo.gif' without f=
-ull index line
-	error: Documentation/logo.gif: patch does not apply
-
-)
-
-=46or the first issue I have a patch that I'll send as a reply to this
-mail.  Luckily this works around the second problem, too :-)
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
-       |
-Industrial Linux Solutions                    | http://www.pengutronix.=
-de/  |
+~Allan
