@@ -1,71 +1,76 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Tracking of local branches
-Date: Fri, 20 Mar 2009 14:10:46 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0903201358440.19665@iabervon.org>
-References: <49C3A6AE.7020104@drmicha.warpmail.net> <7viqm4i1md.fsf@gitster.siamese.dyndns.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 2/2] git-gui: some French translation enhancements
+Date: Fri, 20 Mar 2009 14:42:50 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0903201438570.30483@xanadu.home>
+References: <cd2d922d5257aac105de08fd90e6dbd389f0b6f0.1237506346.git.nicolas.s-dev@laposte.net>
+ <5b4295c484a9659d1c5813e1859f192c34d6a99e.1237506346.git.nicolas.s-dev@laposte.net>
+ <20090320071316.GB5693@glandium.org>
+ <1237559694.25283.46.camel@alexandre-desktop>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 20 19:12:27 2009
+Content-Type: multipart/mixed; boundary="Boundary_(ID_mXOzAn+61tyyRsXRBg7snA)"
+Cc: Mike Hommey <mh@glandium.org>,
+	Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
+	Git List <git@vger.kernel.org>, Sam Hocevar <sam@zoy.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Alexandre Bourget <alexandre.bourget@savoirfairelinux.com>
+X-From: git-owner@vger.kernel.org Fri Mar 20 19:45:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkjCd-0004wU-5C
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 19:12:19 +0100
+	id 1LkjiY-0001iY-Td
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 19:45:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756344AbZCTSKt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2009 14:10:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753878AbZCTSKt
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 14:10:49 -0400
-Received: from iabervon.org ([66.92.72.58]:58669 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752000AbZCTSKs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2009 14:10:48 -0400
-Received: (qmail 25664 invoked by uid 1000); 20 Mar 2009 18:10:46 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 20 Mar 2009 18:10:46 -0000
-In-Reply-To: <7viqm4i1md.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1759897AbZCTSm7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2009 14:42:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753061AbZCTSm7
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 14:42:59 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:42448 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759530AbZCTSm6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2009 14:42:58 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KGT00MCPINEA450@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 20 Mar 2009 14:42:51 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <1237559694.25283.46.camel@alexandre-desktop>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113989>
 
-On Fri, 20 Mar 2009, Junio C Hamano wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
+--Boundary_(ID_mXOzAn+61tyyRsXRBg7snA)
+Content-type: TEXT/PLAIN; charset=utf-8
+Content-transfer-encoding: 8BIT
+
+On Fri, 20 Mar 2009, Alexandre Bourget wrote:
+
+> Le vendredi 20 mars 2009 à 08:13 +0100, Mike Hommey a écrit :
+> > On Fri, Mar 20, 2009 at 01:54:02AM +0100, Nicolas Sebrecht wrote:
+> > IMHO, we should find a better way to say that than to use the "index"
+> > word at all. This obviously applies to all uses of "index" in french
+> > where we avoided it in english.
+> > 
+> > OTOH, the best I can find for "staging area" is "zone de préparation",
+> > and that doesn't help finding a word for stage and unstage.
 > 
-> > I semi-successfully messed around in remote.c (format_tracking_info(),
-> > stat_tracking_info()) to make it use branch->merge_name rather than
-> > branch->merge. This makes "git status" work as expected ("Your branch
-> > is... severely screwed.") for tracked local branches. (It's messed up
-> > for remote ones but hey it was a first shot; merge[0]->dst is really
-> > needed here I guess.)
-> >
-> > Now I could go after sha1_name.c and do the same,
-> >
-> > OR
-> >
-> > make it so that all branches have their merge member set up, uhm. Any
-> > possible side effects?
-> 
-> My gut feeling is that the latter if works should be preferable for
-> consistency if nothing else.
-> 
-> The "struct branch" hasn't changed ever since it was introduced by cf81834
-> (Report information on branches from remote.h, 2007-09-10) and Daniel
-> might know about some corner cases that rely on branch.merge not being set
-> up for local ones, but honestly, I would think it would be a bug in the
-> existing code if there were such cases.
+> "zone de préparation" sounds good to me.
 
-As long as the semantics for tracking local branches are the same as for 
-tracking remote ones, I'm pretty sure there's nothing that relies on 
-branch.merge not being something local.
+What about:
 
-	-Daniel
-*This .sig left intentionally blank*
+	"staging area" -> "zone de regroupement"
+	"to stage" -> "regrouper"
+	"to unstage" -> "dégrouper"
+
+But admitedly this doesn't convay the actual meaning perfectly either.
+
+
+Nicolas
+
+--Boundary_(ID_mXOzAn+61tyyRsXRBg7snA)--
