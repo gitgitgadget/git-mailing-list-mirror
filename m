@@ -1,74 +1,94 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 2/2] Allow http authentication via prompt for http push.
-Date: Fri, 20 Mar 2009 14:25:09 +0100
-Message-ID: <49C39935.5070707@drmicha.warpmail.net>
-References: <d8c371a80903190812w59febbd3qc6bc3d70ce85f76e@mail.gmail.com>	 <alpine.DEB.1.00.0903191755270.6357@intel-tinevez-2-302>	 <d8c371a80903191202v6fb974f4t2321761d0cf21a70@mail.gmail.com>	 <49C35891.7010004@drmicha.warpmail.net> <d8c371a80903200538t71adbca5hc11aae2ea1e36c9@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Define a version of lstat(2) with posix semantics
+Date: Fri, 20 Mar 2009 14:39:21 +0100
+Message-ID: <81b0412b0903200639v6d99067csb7715d9a5a3f0ba4@mail.gmail.com>
+References: <81b0412b0903190327l7745bf01i479fb84fae777af0@mail.gmail.com>
+	 <alpine.DEB.1.00.0903191155300.10279@pacific.mpi-cbg.de>
+	 <20090319214001.GA6253@blimp.localdomain>
+	 <alpine.DEB.1.00.0903200025170.10279@pacific.mpi-cbg.de>
+	 <81b0412b0903200130s594ce3beyae21eb0b5cc8fe0@mail.gmail.com>
+	 <alpine.DEB.1.00.0903201015270.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Amos King <amos.l.king@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 20 14:27:04 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Jeff King <peff@peff.net>, layer <layer@known.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 20 14:41:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lkeka-0004Ng-Aw
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 14:27:04 +0100
+	id 1Lkexz-0001Eu-Hh
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 14:40:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751586AbZCTNZ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2009 09:25:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750836AbZCTNZ0
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 09:25:26 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:53525 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751060AbZCTNZ0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2009 09:25:26 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 0A66D2F4422;
-	Fri, 20 Mar 2009 09:25:24 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Fri, 20 Mar 2009 09:25:24 -0400
-X-Sasl-enc: qjuGuVnYhYLuR5R9imGMcd3KNo4kdF7QSviaV8MZYlgd 1237555523
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 2802D267F2;
-	Fri, 20 Mar 2009 09:25:22 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090320 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <d8c371a80903200538t71adbca5hc11aae2ea1e36c9@mail.gmail.com>
+	id S1752052AbZCTNjZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Mar 2009 09:39:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751736AbZCTNjZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 09:39:25 -0400
+Received: from yw-out-2324.google.com ([74.125.46.30]:35698 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751715AbZCTNjZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2009 09:39:25 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so975724ywb.1
+        for <git@vger.kernel.org>; Fri, 20 Mar 2009 06:39:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=z/WP+a6G41eE8MTDlifoqPFx5xGuTxr3Hj0eWpxG7Rc=;
+        b=dqUe29qJ6ft3go3thN2c+pj7jDpPPMOqcuwzroPM0PYoyAjDi6wuhVpuB6QrYYpSXe
+         GcnS5zNuU0RlXllKRkL3iXunLlQ1endvz0AT+j2Gv4D29FcQwUqwOVqsNF5amdvFRCEf
+         K6kg/aNb+aMTZ9AbDmAEDAPq5wgCq+WvylAbg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=aYXcu88tIrIT1OJ3ya6Bbber12wjL0IhsEKQhtIcGM75RUt1JzLuIfNxJryZUTt6vB
+         W1QPBOJBzy4tozRKZ5NMuRtC9pcjRQXRKGwJ1CMRTxa3LavH0RuGMn01gD50Jp+X8iXz
+         uAPOPvjMMuLz+FoFo3uWEkp7ZP27j5nEBkmVI=
+Received: by 10.100.43.10 with SMTP id q10mr4028079anq.1.1237556361925; Fri, 
+	20 Mar 2009 06:39:21 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0903201015270.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113956>
 
-Amos King venit, vidit, dixit 20.03.2009 13:38:
-> Where are the typos and I will fix them?
+2009/3/20 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> On Fri, 20 Mar 2009, Alex Riesen wrote:
+>
+>> 2009/3/20 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+>> > Now, we _do_ have msysGit, you _do_ have shown the capability to f=
+ix
+>> > issues when they arise, so I do _not_ see any obstacle why you sho=
+uld
+>> > not go msysGit, rather than staying with the pain of trying to sta=
+y
+>> > POSIX-compatible, but not quite all the time.
+>>
+>> I understand. It is not pure POSIX compatibility I seek. I just can'=
+t
+>> use MinGW port, because I absolutely must use the cygwin environment
+>> (for "hysterical" reasons) and they don't play well together (tried,
+>> yes. Conflicting libraries, but you already know that).
+>
+> Maybe we can work on those conflicting libraries? =C2=A0After all, we=
+ do have a
+> "rebase.exe" tool now (for all those as puzzled by the naming as I wa=
+s:
+> the rebase.exe tool can shift the memory range used by a .dll so that=
+ it
+> does not overlap with that one of another .dll).
 
-I'll respond to this only, everything else has been said already.
+As long as they can be made to coexist I'm fine. Wasn't the problem
+that MinGW/MSYS used cygwin1.dll if it were in PATH? Or was it
+something else with their supporting libraries?
 
-> There is now a faux remote created in order to
-> be passed to http_init.
-...
-> +	 * This is a faked remote so that http_init can
-> +	 * get the correct data for builidng out athorization.
-
-Obviously:
-
-"builidng" -> "building"
-"athorization" -> "authorization"
-
-Up for discussion:
-
-"out" -> "our"/"up"/""
-"build out" isn't that common and doesn't seem to apply here: In order
-to build something out that something must exist already. You can build
-up something from the ground.
-
-"faux" -> "fake"
-"faked" -> "fake"
-
-Both changes go for a more common, simplified wording. It's only a
-comment, though. No one would have cared about those.
-
-Michael
+My other problem is that the cygwin programs, and the worst of all - a
+proprietary compiler based on cygwin, must be in PATH. AFAIR, the
+presence of cygwin in PATH broken shell scripting.
