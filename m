@@ -1,85 +1,107 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v4] Introduce %<branch> as shortcut to the tracked
- branch
-Date: Fri, 20 Mar 2009 18:32:25 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903201831420.6865@intel-tinevez-2-302>
-References: <200903181448.50706.agruen@suse.de> <20090318182603.GM8940@machine.or.cz> <alpine.DEB.1.00.0903182210310.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903182245280.10279@pacific.mpi-cbg.de> <7vr60ubgul.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0903182343580.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903200121330.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903200137230.10279@pacific.mpi-cbg.de> <20090320004029.GX23521@spearce.org> <20090320004450.GY23521@spearce.org>
- <alpine.DEB.1.00.0903201027450.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903201714020.10279@pacific.mpi-cbg.de> <7v7i2ki0sw.fsf@gitster.siamese.dyndns.org>
+From: Mike Ralphson <mike.ralphson@gmail.com>
+Subject: Minimum libCurl version for git
+Date: Fri, 20 Mar 2009 17:59:08 +0000
+Message-ID: <e2b179460903201059j20e37c1cr7ccfa4b42e45c9d9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Petr Baudis <pasky@suse.cz>,
-	Andreas Gruenbacher <agruen@suse.de>, B.Steinbrink@gmx.de,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 20 18:34:08 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git list <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Daniel Stenberg <daniel@haxx.se>,
+	Nick Hengeveld <nickh@reactrix.com>,
+	Mike Hommey <mh@glandium.org>,
+	Mike Gaffney
+X-From: git-owner@vger.kernel.org Fri Mar 20 19:00:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkibY-00064J-ON
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 18:34:01 +0100
+	id 1Lkj1R-0000Ib-OH
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 19:00:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757395AbZCTRcb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2009 13:32:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757454AbZCTRca
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 13:32:30 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51297 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755603AbZCTRc3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2009 13:32:29 -0400
-Received: (qmail invoked by alias); 20 Mar 2009 17:32:26 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp069) with SMTP; 20 Mar 2009 18:32:26 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18NITtzkUwNuSRXiSniUaXlv6Cpm260HINLUaPj43
-	JyoaHyaynihm3J
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <7v7i2ki0sw.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1752000AbZCTR7M convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Mar 2009 13:59:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757697AbZCTR7M
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 13:59:12 -0400
+Received: from mail-qy0-f118.google.com ([209.85.221.118]:45654 "EHLO
+	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752000AbZCTR7L convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2009 13:59:11 -0400
+Received: by qyk16 with SMTP id 16so1421597qyk.33
+        for <git@vger.kernel.org>; Fri, 20 Mar 2009 10:59:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=SkMglo44+bk/0Nm1DGov0P5gOQRtZtEXPTX3H18jvCQ=;
+        b=OJparSrN1f/PU+CqgMyt59TauJCE98bHQRSCMshCpO0bQ0oH7hzAFp0wMPUNew958u
+         DtnpulVGctTMECZrBEwk8dkTWmK3FrBdxHpwzkdXXFvx22VuEEkQ3EUhEL+41A5yM6IZ
+         V/sT/yOrwDYNeFVyjzg0t5Bv1ESdXK44et7Kc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=S2ksESdpEZ6dGV7JLS9NqX0+unqcFaT+JeYBRgq+N0NJg8PG1WZtBXW6p67uDhjVRt
+         yvManRndLRaYkM+amFb2FgzBO7SAZu+7y3CnpWIDu+HaQTRn4EzMZXSDR/ZF0HPedHCN
+         NejWConVl3JxLDtdwdfr1UrGFiZMHYwnC52Dk=
+Received: by 10.224.28.207 with SMTP id n15mr5588103qac.95.1237571948426; Fri, 
+	20 Mar 2009 10:59:08 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113985>
 
-Hi,
+See $gmane/112765 for background.
 
-On Fri, 20 Mar 2009, Junio C Hamano wrote:
+Git uses 31 CURL_, CURLINFO and CURLOPT symbols, two of these
+(CURLINFO_HTTP_CODE and CURLOPT_INFILE) are officially deprecated, but
+only because they have been renamed in 'recent' versions.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Often, it is quite interesting to inspect the branch tracked by a given
-> > branch.  This patch introduces a nice notation to get at the tracked
-> > branch: '%<branch>' can be used to access that tracked branch.
-> >
-> > A special shortcut '%' refers to the branch tracked by the current branch.
-> >
-> > Suggested by Pasky.
-> >
-> > Even if a branch name can legally start with a '%' sign, we can use the
-> > special character '%' here, as you can always specify the full ref:
-> > refs/heads/%my-branch (pointed out by doener on IRC).
-> 
-> That is not a good argument, as %<name> is (just like name@{-n} is) a
-> substitute way to spell the "name" of a branch, not just a random SHA-1,
-> and to some commands it makes a difference between <branchname> and
-> refs/heads/<branchname>.  The latter is not giving the name of the branch,
-> but merely a commit object name.
-> 
-> An most obvious one is that "git checkout branchname" and "git checkout
-> refs/heads/branchname" behave differently.  You cannot checkout a branch
-> called %master after this patch goes in.
-> 
-> Just be honest and say "You may have a branch whose name begins with a '%'
-> and you cannot refer to it anymore in certain contexts.  Too bad.  Don't
-> do it next time you create a new branch".  I _can_ buy that argument.
+We protect the usage of symbols introduced in version 7.9.2 and later
+with #ifdefs. These date back to some time in 2005 when those versions
+of libCurl were 3 or so years old.
 
-Be that as it may, at this point I kick the ball back to the interested 
-parties.  I did my duty.
+We use CURLOPT_FTP_USE_EPSV unprotected, which was introduced in
+version 7.9.2. This is something of a pity as it is an optional
+configuration item which is probably not widely used (I don't think I
+knew there was any support for git over ftp). Still, 7.9.2 was a long
+time ago (Dec 2001), and no-one is complaining. Disregarding this, we
+would be able to use libCurl versions as far back as 7.8.1 (Aug 2001),
+bugs, security fixes and performance notwithstanding.
 
-Ciao,
-Dscho
+According to Daniel's list [1], CURLOPT_SSLKEY was introduced in
+7.9.3, but we enable it in http.c if we see version >=3D 7.9.2. This
+could be a typo in the haxx.se list, or the option could have been
+available in (some) 7.9.2 releases, or it could be a git bug. Again,
+not one which appears to be biting anyone.
+
+Going forward there are various options:
+
+1. Do nothing - go with the status quo.
+
+2. Correct the #ifdefs for CURLOPT_SSLKEY
+
+3. Drop the #ifdefs for CURLOPT_SSLKEY entirely and make 7.9.3 our
+minimum supported version. I feel slightly embarrassed about that, as
+that's exactly the version I have here on AIX (unless I wrest it back
+from being sysadmin-installed to being user-supported). Add a check to
+the Makefile and error if libCurl is too old.
+
+4. Drop all current #ifdefs and one of the deprecated symbol names.
+Our minimum supported libCurl version would be 7.9.8 from Jun 2002.
+
+5. Drop all current #ifdefs and both of the deprecated symbol names.
+Our minimum supported libCurl version would be 7.10.8 from Nov 2003.
+
+6. Warn (not error) if libCurl is older than say the 3 years suggested
+by Daniel. This would seem to require periodic updates to the Makefile
+check.
+
+I'm happy to whip up a patch if required, but I thought a series of
+mutually-exclusive alternative patches would be confusing without
+prior agreement on the approach.
+
+Mike
+
+[1]=C2=A0 http://cool.haxx.se/cvs.cgi/curl/docs/libcurl/symbols-in-vers=
+ions?rev=3DHEAD&content-type=3Dtext/vnd.viewcvs-markup
