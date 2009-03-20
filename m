@@ -1,73 +1,81 @@
-From: david@lang.hm
-Subject: Re: Git Large Object Support Proposal
-Date: Thu, 19 Mar 2009 16:52:19 -0700 (PDT)
-Message-ID: <alpine.DEB.1.10.0903191650160.16753@asgard.lang.hm>
-References: <d411cc4a0903191514n1e524ebava5895d708a2927c4@mail.gmail.com> <7veiwt6t6a.fsf@gitster.siamese.dyndns.org> <d411cc4a0903191618x503db946n62d3132eece69175@mail.gmail.com> <7vzlfh5b7y.fsf@gitster.siamese.dyndns.org>
+From: skillzero@gmail.com
+Subject: Re: Push tag from shallow clone?
+Date: Thu, 19 Mar 2009 17:01:55 -0700
+Message-ID: <2729632a0903191701k4af0045clfb99dd28119e97b3@mail.gmail.com>
+References: <2729632a0903191056w4efdbec6hd1656d7b47d0d8a3@mail.gmail.com>
+	 <20090319180216.GT23521@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Scott Chacon <schacon@gmail.com>, git list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 20 00:55:07 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Mar 20 01:04:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkS4o-0005xM-Dr
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 00:55:06 +0100
+	id 1LkSCv-0008Sr-Op
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 01:03:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761475AbZCSXwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2009 19:52:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760650AbZCSXwY
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 19:52:24 -0400
-Received: from mail.lang.hm ([64.81.33.126]:49175 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757102AbZCSXwY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2009 19:52:24 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n2JNqJYo011510;
-	Thu, 19 Mar 2009 15:52:19 -0800
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <7vzlfh5b7y.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1751894AbZCTAB7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Mar 2009 20:01:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751670AbZCTAB6
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 20:01:58 -0400
+Received: from yx-out-2324.google.com ([74.125.44.29]:17261 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751484AbZCTAB6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Mar 2009 20:01:58 -0400
+Received: by yx-out-2324.google.com with SMTP id 31so769941yxl.1
+        for <git@vger.kernel.org>; Thu, 19 Mar 2009 17:01:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3o8T7GzcQoz5VlWtTBkwRVowNZJewG+TM1fH1yKnvUk=;
+        b=WVT1UyUWICXly/ESMpAf8HfUPrAFeSQc69cuOhdPMc3ozyQ4Rd6RmK0fBCZ4P9rrpn
+         l6gbsvm7fQwlPoEd8mVennkGT1UxJRz6nao0xkBubdUx4gvfWUCUaJ1hMxDRQgh6AfJw
+         g+MNO6HDi6cg+kh4sSzNalISbkCVnKXFUaDIs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=M+Mnnx4o/07UZ9CiUibS7tErHvT+kj/wxzkGPY4bhMKioUGEk+3H530+vYt+cXiggo
+         /tmta+6Uj5uQr3ViiB2/dwkEvIUt7ZwgWo6MxtpSU+Cz6+LEailaalrtxOM0Y18SWEs0
+         qMmOHxs8kjmKHRpTwcv2jyRtnmx3JM9y0UFSU=
+Received: by 10.90.80.18 with SMTP id d18mr60093agb.36.1237507315971; Thu, 19 
+	Mar 2009 17:01:55 -0700 (PDT)
+In-Reply-To: <20090319180216.GT23521@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113867>
 
-On Thu, 19 Mar 2009, Junio C Hamano wrote:
-
-> Scott Chacon <schacon@gmail.com> writes:
+On Thu, Mar 19, 2009 at 11:02 AM, Shawn O. Pearce <spearce@spearce.org>=
+ wrote:
+> skillzero@gmail.com wrote:
+>> The documentation for git clone says that if you use --depth=3D1 to =
+make
+>> a shallow clone that you can't push it. But I made a shallow clone,
+>> created a tag, then tried to push that tag and it worked. Am I just
+>> getting lucky or is it safe to push a tag with a shallow clone?
 >
->> The point is that we don't keep this data as 'blob's - we don't try to
->> compress them or add the header to them, they're too big and already
->> compressed, it's a waste of time and often outside the memory
->> tolerance of many systems. We keep only the stub in our db and stream
->> the large media content directly to and from disk.  If we do a
->> 'checkout' or something that would switch it out, we could store the
->> data in '.git/media' or the equivalent until it's uploaded elsewhere.
+> Yea, you are getting lucky. =C2=A0The tag is easily identified as one
+> object head of the current branch on the remote, and the client is
+> able to produce the pack and send it.
 >
-> Aha, that sounds like you can just maintain a set of out-of-tree symbolic
-> links that you keep track of, and let other people (e.g. rsync) deal with
-> the complexity of managing that side of the world.
+> If the remote branch gets modified in the interm, the builder may
+> not be able to deduce what it needs to send, and will attempt to
+> pack a lot more data, potentially finding the missing parents from
+> where it is shallow.
 >
-> And I think you can start experimenting it without any change to the core
-> datastructures.  In your single-page web site in which its sole html file
-> embeds an mpeg movie, you keep track of these two things in git:
->
-> 	porn-of-the-day.html
->        porn-of-the-day.mpg -> ../media/6066f5ae75ec.mpg
->
-> and any time you want to feed a new movie, you update the symlink to a
-> different one that lives outside the source-controlled tree, while
-> arranging the link target to be updated out-of-band.
+> Why not just have a central area on the build server that keeps
+> full clones of everything, and use "git clone -s" or "git clone
+> --reference" in order to create the new work area for the builder?
 
-that would work, but the proposed change has some advantages
-
-1. you store the sha1 of the real mpg in the 'large file' blob so you can 
-detect problems
-
-2. since it knows the sha1 of the real file, it can auto-create the real 
-file as needed, without wasting space on too many copies of it.
-
-David Lang
+Thanks for the info. As for using --reference, one of the things that
+the builder does is archive the build in its entirety so it can be
+reproduced later on a different machine. I'll probably just need to
+use a full clone (or do some kind of stripping after the build
+succeeds and before it archives).
