@@ -1,84 +1,83 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Git no longer reads attributes from the index properly
-Date: Fri, 20 Mar 2009 10:45:06 +0100
-Message-ID: <49C365A2.5070607@drmicha.warpmail.net>
-References: <20090320073527.GC1037@lavos.net> <7vab7gk39o.fsf@gitster.siamese.dyndns.org> <20090320084031.GD1037@lavos.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v3] Introduce BEL<branch> as shortcut to the tracked
+ branch
+Date: Fri, 20 Mar 2009 10:54:51 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903201053280.10279@pacific.mpi-cbg.de>
+References: <200903181448.50706.agruen@suse.de> <20090318182603.GM8940@machine.or.cz> <alpine.DEB.1.00.0903182210310.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903182245280.10279@pacific.mpi-cbg.de> <7vr60ubgul.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0903182343580.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903200121330.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903200137230.10279@pacific.mpi-cbg.de> <20090320004029.GX23521@spearce.org> <20090320004450.GY23521@spearce.org>
+ <alpine.DEB.1.00.0903201027450.10279@pacific.mpi-cbg.de> <3F6729A7-76FA-43F4-9538-D644B30576D7@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	msysgit@googlegroups.com
-To: bdowning@lavos.net
-X-From: git-owner@vger.kernel.org Fri Mar 20 10:47:22 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1596562044-1237542892=:10279"
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Petr Baudis <pasky@suse.cz>,
+	Andreas Gruenbacher <agruen@suse.de>, git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Fri Mar 20 10:55:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkbJn-00036E-AV
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 10:47:11 +0100
+	id 1LkbRQ-0005Xq-1Q
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 10:55:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752196AbZCTJpZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2009 05:45:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751283AbZCTJpZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 05:45:25 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:35839 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751058AbZCTJpX (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2009 05:45:23 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 687942F4D4F;
-	Fri, 20 Mar 2009 05:45:21 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Fri, 20 Mar 2009 05:45:21 -0400
-X-Sasl-enc: zZyPznBLKvBDdsrc6pxn11QgxJtErkLlp1dK0kqg9kTy 1237542321
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 50CB72855F;
-	Fri, 20 Mar 2009 05:45:20 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090320 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <20090320084031.GD1037@lavos.net>
+	id S1752182AbZCTJw5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2009 05:52:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751644AbZCTJw5
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 05:52:57 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48991 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751311AbZCTJw4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2009 05:52:56 -0400
+Received: (qmail invoked by alias); 20 Mar 2009 09:52:53 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp054) with SMTP; 20 Mar 2009 10:52:53 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19HHm0zmDlHUgVTxZalso7pfLSs/M7lJTROxYM2y9
+	05AYdwPPiqukPc
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <3F6729A7-76FA-43F4-9538-D644B30576D7@wincent.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113927>
 
-Brian Downing venit, vidit, dixit 20.03.2009 09:40:
-> 
-> On Fri, Mar 20, 2009 at 01:27:31AM -0700, Junio C Hamano wrote:
->> bdowning@lavos.net (Brian Downing) writes:
->>> As of 34110cd4e394e3f92c01a4709689b384c34645d8, (2008-03-06, just over a
->>> year ago), Git no longer reads attributes from the index properly in all
->>> cases....
->>
->> Perhaps you would want to try it on 06f33c1 (Read attributes from the
->> index that is being checked out, 2009-03-13) that is part of 'pu'?
-> 
-> I only tried it on next, groan.  Yes, it works there, thanks.
-> 
-> However, that commit looks like it's solving a different problem
-> entirely (supporting changing between two branches where .gitattributes
-> exists in both cases) and happens to fix the no .gitattributes -> read
-> from index regression at the same time.  I don't know enough about the
-> guts to tell, but does this also fix the core problem of the regression
-> (I assume something about trying to read from the wrong index, given the
-> commit that broke it), or does it just happen to work around it?
-> 
-> Specifically, it would be nice to have a fix for the regression that
-> could land on maint relatively soon, as the initial checkout case is
-> breaking a real repository I use, whereas the switching branches case is
-> something I don't care about as much at the moment.
-> 
-> Of course, I don't know how to fix it at the moment, and beggars can't
-> be choosers.  :)
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-You're testing whether a checkout without index and with empty work tree
-works, right?
+--8323328-1596562044-1237542892=:10279
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 
-In that case, the checkout needs to make sure that .gitattributes is
-checked out (or at least respected) before all other files, and that is
-exactly what the patch in pu does. [If I remember right that great
-simplification patch you bisected as bad played a role there, unless I'm
-mixing up threads...]
+Hi,
 
-Michael
+On Fri, 20 Mar 2009, Wincent Colaiuta wrote:
+
+> El 20/3/2009, a las 10:29, Johannes Schindelin escribió:
+> 
+> >
+> >Often, it is quite interesting to inspect the branch tracked by a given
+> >branch.  This patch introduces a nice notation to get at the tracked
+> >branch: 'BEL<branch>' can be used to access that tracked branch.
+> >
+> >A special shortcut 'BEL' refers to the branch tracked by the current branch.
+> >
+> >Suggested by Pasky and Shawn.
+> 
+> What does BEL actually stand for? I read Shawn's suggestion, but it's not
+> immediately clear to me what "BEL" means.
+
+It is the ASCII "bell" character, 007 (I always wanted to write that 
+magic identifier into a patch).
+
+FWIW you could type it in a regular ANSI terminal using Control-v 
+Control-g.
+
+Ciao,
+Dscho
+
+--8323328-1596562044-1237542892=:10279--
