@@ -1,54 +1,60 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: ref name troubles, was Re: [PATCH v2] Introduce %<branch> as
-	shortcut to the tracked branch
-Date: Fri, 20 Mar 2009 02:05:45 -0400
-Message-ID: <20090320060545.GB27008@coredump.intra.peff.net>
-References: <200903181448.50706.agruen@suse.de> <20090318182603.GM8940@machine.or.cz> <alpine.DEB.1.00.0903182210310.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903182245280.10279@pacific.mpi-cbg.de> <7vr60ubgul.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0903182343580.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903200121330.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903200137230.10279@pacific.mpi-cbg.de> <20090320004029.GX23521@spearce.org>
+Subject: Re: How to commit changes if remote repository changed directory
+	structure?
+Date: Fri, 20 Mar 2009 02:09:26 -0400
+Message-ID: <20090320060926.GC27008@coredump.intra.peff.net>
+References: <22612715.post@talk.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Petr Baudis <pasky@suse.cz>,
-	Andreas Gruenbacher <agruen@suse.de>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Mar 20 07:07:25 2009
+Cc: git@vger.kernel.org
+To: andholt <andholt@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 20 07:11:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkXt7-0001RP-6a
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 07:07:25 +0100
+	id 1LkXwg-0002Ly-NO
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 07:11:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752290AbZCTGF4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2009 02:05:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751838AbZCTGF4
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 02:05:56 -0400
-Received: from peff.net ([208.65.91.99]:54895 "EHLO peff.net"
+	id S1752965AbZCTGJh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2009 02:09:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752762AbZCTGJh
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 02:09:37 -0400
+Received: from peff.net ([208.65.91.99]:54606 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751583AbZCTGFz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2009 02:05:55 -0400
-Received: (qmail 6828 invoked by uid 107); 20 Mar 2009 06:06:03 -0000
+	id S1752205AbZCTGJg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2009 02:09:36 -0400
+Received: (qmail 6872 invoked by uid 107); 20 Mar 2009 06:09:44 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 20 Mar 2009 02:06:03 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Mar 2009 02:05:45 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 20 Mar 2009 02:09:44 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Mar 2009 02:09:26 -0400
 Content-Disposition: inline
-In-Reply-To: <20090320004029.GX23521@spearce.org>
+In-Reply-To: <22612715.post@talk.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113900>
 
-On Thu, Mar 19, 2009 at 05:40:29PM -0700, Shawn O. Pearce wrote:
+On Thu, Mar 19, 2009 at 06:17:15PM -0700, andholt wrote:
 
-> So yea, you can create a branch named "foo@{1}".
+> I have a lot of local changes to add, commit, and push. Right now our
+> directory structure is 1/2/3. Another developer decided to move everything
+> up one level, so used git move to move 3 to 2, and removed 3, so now the
+> level is 1/2. However, locally, all of my changes are in 1/2/3. 
+> 
+> I want to commit my changes and merge them into the new directory structure.
+> How would I go about doing that?
 
-But you can't actually refer to it:
+First, commit your changes. Then merge the other developer's changes. :)
 
-  $ git branch foo@{1}
-  $ git show foo@{1} --
-  fatal: bad revision 'foo@{1}'
-
-which implies that nobody is actually using it for anything.
+This is exactly the sort of case that git's rename detection should
+handle; it should detect that the other side renamed files, and then
+consider your changes against the newly named files. The only thing it
+_won't_ handle is new files that you added in 1/2/3. You will have to
+manually move them to 1/2 as part of the merge (there has been
+discussion of "detect that this whole directory seems to have had its
+content moved and automatically move new files", but the patches have
+not been accepted).
 
 -Peff
