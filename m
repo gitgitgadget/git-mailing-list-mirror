@@ -1,106 +1,76 @@
-From: Kristian Amlie <kristian.amlie@nokia.com>
-Subject: [PATCH] Add a test for checking whether gitattributes is honored by checkout.
-Date: Fri, 20 Mar 2009 10:32:09 +0100
-Message-ID: <1237541529-29477-1-git-send-email-kristian.amlie@nokia.com>
-References: <49C34FB1.4040100@nokia.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Google Summer of Code 2009: GIT
+Date: Fri, 20 Mar 2009 10:35:32 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903201033310.10279@pacific.mpi-cbg.de>
+References: <49B74373.3090609@gmail.com>  <alpine.DEB.1.10.0903121052310.16753@asgard.lang.hm>  <ab9fa62a0903121119j6c2a1d43kd9cda99db47b5e7c@mail.gmail.com>  <alpine.DEB.1.10.0903121148540.16753@asgard.lang.hm>  <ab9fa62a0903121200v73ec3522gcdebcd34122efc72@mail.gmail.com>
+  <alpine.DEB.1.10.0903121214390.16753@asgard.lang.hm>  <ab9fa62a0903121245m621643bfq3c58557ccc9b266f@mail.gmail.com>  <alpine.DEB.1.10.0903121255040.16753@asgard.lang.hm>  <ab9fa62a0903121303v5a6cbf0ax413cc440b9c32e77@mail.gmail.com> 
+ <alpine.DEB.1.00.0903190003100.10279@pacific.mpi-cbg.de> <ab9fa62a0903191217t5d0e6d9cn4915a425ed8084ff@mail.gmail.com> <alpine.DEB.1.00.0903200034230.10279@pacific.mpi-cbg.de> <alpine.DEB.1.10.0903191652500.16753@asgard.lang.hm>
+ <alpine.DEB.1.00.0903200128020.10279@pacific.mpi-cbg.de> <alpine.DEB.1.10.0903191948050.4560@asgard.lang.hm>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
-Content-Transfer-Encoding: 8BIT
-Cc: Kristian Amlie <kristian.amlie@nokia.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 20 10:34:06 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: saurabh gupta <saurabhgupta1403@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: david@lang.hm
+X-From: git-owner@vger.kernel.org Fri Mar 20 10:35:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lkb78-0006nN-6y
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 10:34:06 +0100
+	id 1Lkb87-00077l-Np
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 10:35:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752102AbZCTJch (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2009 05:32:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751974AbZCTJcf
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 05:32:35 -0400
-Received: from hoat.troll.no ([62.70.27.150]:49918 "EHLO hoat.troll.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751644AbZCTJce convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2009 05:32:34 -0400
-Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id 5365A2118A;
-	Fri, 20 Mar 2009 10:32:30 +0100 (CET)
-Received: from sx01.troll.no (sx01.troll.no [62.70.27.21])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hoat.troll.no (Postfix) with ESMTP id 4C06721160;
-	Fri, 20 Mar 2009 10:32:30 +0100 (CET)
-Received: from sx01.troll.no (localhost.localdomain [127.0.0.1])
-	by sx01.troll.no (8.13.8/8.13.8) with ESMTP id n2K9WUNp028405;
-	Fri, 20 Mar 2009 10:32:30 +0100
-Received: from axis.localdomain ( [172.24.90.99])
-    by sx01.troll.no (Scalix SMTP Relay 11.4.1.11929)
-    via ESMTP; Fri, 20 Mar 2009 10:32:30 +0100 (CET)
-Received: by axis.localdomain (Postfix, from userid 1000)
-	id C7B1A36187BF; Fri, 20 Mar 2009 10:32:29 +0100 (CET)
-In-Reply-To: <49C34FB1.4040100@nokia.com>
-x-scalix-Hops: 1
-X-Mailer: git-send-email 1.6.2.1.222.g570cc.dirty
-Content-Disposition: inline
+	id S1752298AbZCTJdj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2009 05:33:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752182AbZCTJdi
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 05:33:38 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47343 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751283AbZCTJdi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2009 05:33:38 -0400
+Received: (qmail invoked by alias); 20 Mar 2009 09:33:34 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp055) with SMTP; 20 Mar 2009 10:33:34 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18FeZQmJeIFmdw5dwv3/P05EbX+nI7s8CZMrMOgqh
+	/bbYWALOp16gMq
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <alpine.DEB.1.10.0903191948050.4560@asgard.lang.hm>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113924>
 
-The original bug will not honor new entries in gitattributes if they
-are changed in the same checkout as the files they affect.
+Hi,
 
-It will also keep using .gitattributes, even if it is deleted in the
-same commit as the files it affects.
----
- t/t0020-crlf.sh |   31 +++++++++++++++++++++++++++++++
- 1 files changed, 31 insertions(+), 0 deletions(-)
+On Thu, 19 Mar 2009, david@lang.hm wrote:
 
-diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
-index 1be7446..4e72b53 100755
---- a/t/t0020-crlf.sh
-+++ b/t/t0020-crlf.sh
-@@ -429,6 +429,37 @@ test_expect_success 'in-tree .gitattributes (4)' '
- 	}
- '
- 
-+test_expect_success 'checkout with existing .gitattributes' '
-+
-+	git config core.autocrlf true &&
-+	git config --unset core.safecrlf &&
-+	echo ".file2 -crlfQ" | q_to_cr >> .gitattributes &&
-+	git add .gitattributes &&
-+	git commit -m initial &&
-+	echo ".file -crlfQ" | q_to_cr >> .gitattributes &&
-+	echo "contents" > .file &&
-+	git add .gitattributes .file &&
-+	git commit -m second &&
-+
-+	git checkout master~1 &&
-+	git checkout master &&
-+	test "$(git diff-files --raw)" = ""
-+
-+'
-+
-+test_expect_success 'checkout when deleting .gitattributes' '
-+
-+	git rm .gitattributes &&
-+	echo "contentsQ" | q_to_cr > .file2 &&
-+	git add .file2 &&
-+	git commit -m third
-+
-+	git checkout master~1 &&
-+	git checkout master &&
-+	remove_cr .file2 >/dev/null
-+
-+'
-+
- test_expect_success 'invalid .gitattributes (must not crash)' '
- 
- 	echo "three +crlf" >>.gitattributes &&
--- 
-1.6.2.1.222.g570cc.dirty
+> On Fri, 20 Mar 2009, Johannes Schindelin wrote:
+> 
+> > I'd rather have more file types supported that are useful for the 
+> > average user, than a generic XML merge driver that is useful to only a 
+> > handful of people.
+> 
+> we are both after the same thing,
+
+Apparently not...
+
+> the most use to the average user.
+> 
+> you look at SVG, ODF word, ODF spreadsheet, OOXML, etc as completely 
+> seperate things that should have support developed seperatly.
+
+No.  I look at SVG, ODF text, ODF spreadsheet, etc as things with 
+completely different user interfaces.
+
+And likewise, the merge _helper_, the very thing the user will get to see, 
+must have different user interfaces.
+
+And I see much more potential for this project to fail in those different 
+user interfaces than something as _trivial_ (in relation) as XML merging.
+
+Ciao,
+Dscho
