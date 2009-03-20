@@ -1,72 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4] Introduce %<branch> as shortcut to the tracked
-	branch
-Date: Fri, 20 Mar 2009 15:36:50 -0400
-Message-ID: <20090320193650.GA26934@coredump.intra.peff.net>
-References: <7vr60ubgul.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0903182343580.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903200121330.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903200137230.10279@pacific.mpi-cbg.de> <20090320004029.GX23521@spearce.org> <20090320004450.GY23521@spearce.org> <alpine.DEB.1.00.0903201027450.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903201714020.10279@pacific.mpi-cbg.de> <7v7i2ki0sw.fsf@gitster.siamese.dyndns.org> <7vwsakgjie.fsf@gitster.siamese.dyndns.org>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH 2/2] git-gui: some French translation enhancements
+Date: Fri, 20 Mar 2009 20:43:56 +0100
+Message-ID: <20090320194356.GA17190@glandium.org>
+References: <cd2d922d5257aac105de08fd90e6dbd389f0b6f0.1237506346.git.nicolas.s-dev@laposte.net> <5b4295c484a9659d1c5813e1859f192c34d6a99e.1237506346.git.nicolas.s-dev@laposte.net> <20090320071316.GB5693@glandium.org> <1237559694.25283.46.camel@alexandre-desktop> <alpine.LFD.2.00.0903201438570.30483@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Petr Baudis <pasky@suse.cz>,
-	Andreas Gruenbacher <agruen@suse.de>, B.Steinbrink@gmx.de,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 20 20:38:54 2009
+Cc: Alexandre Bourget <alexandre.bourget@savoirfairelinux.com>,
+	Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
+	Git List <git@vger.kernel.org>, Sam Hocevar <sam@zoy.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Fri Mar 20 20:45:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkkYC-0006MH-He
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 20:38:40 +0100
+	id 1Lkkeu-0000Wv-AJ
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 20:45:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760306AbZCTThG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Mar 2009 15:37:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760252AbZCTThE
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 15:37:04 -0400
-Received: from peff.net ([208.65.91.99]:42037 "EHLO peff.net"
+	id S1755012AbZCTToI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Mar 2009 15:44:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753878AbZCTToF
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 15:44:05 -0400
+Received: from vuizook.err.no ([85.19.221.46]:52258 "EHLO vuizook.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760177AbZCTThD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2009 15:37:03 -0400
-Received: (qmail 10573 invoked by uid 107); 20 Mar 2009 19:37:11 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 20 Mar 2009 15:37:11 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Mar 2009 15:36:50 -0400
+	id S1753455AbZCTToE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2009 15:44:04 -0400
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <mh@glandium.org>)
+	id 1Lkkd8-0004ty-K4; Fri, 20 Mar 2009 20:43:49 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1LkkdI-0006nq-Q8; Fri, 20 Mar 2009 20:43:56 +0100
 Content-Disposition: inline
-In-Reply-To: <7vwsakgjie.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <alpine.LFD.2.00.0903201438570.30483@xanadu.home>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113995>
 
-On Fri, Mar 20, 2009 at 11:02:33AM -0700, Junio C Hamano wrote:
-
-> A na=C3=AFve question.
+On Fri, Mar 20, 2009 at 02:42:50PM -0400, Nicolas Pitre wrote:
+> On Fri, 20 Mar 2009, Alexandre Bourget wrote:
 >=20
-> Has nobody suggested to use a really illegal characters such as ':'
-> instead?  After all, we are not talking something that you can use in
-> refspecs but another way to spell branch names.
+> > Le vendredi 20 mars 2009 =E0 08:13 +0100, Mike Hommey a =E9crit :
+> > > On Fri, Mar 20, 2009 at 01:54:02AM +0100, Nicolas Sebrecht wrote:
+> > > IMHO, we should find a better way to say that than to use the "in=
+dex"
+> > > word at all. This obviously applies to all uses of "index" in fre=
+nch
+> > > where we avoided it in english.
+> > >=20
+> > > OTOH, the best I can find for "staging area" is "zone de pr=E9par=
+ation",
+> > > and that doesn't help finding a word for stage and unstage.
+> >=20
+> > "zone de pr=E9paration" sounds good to me.
+>=20
+> What about:
+>=20
+> 	"staging area" -> "zone de regroupement"
+> 	"to stage" -> "regrouper"
+> 	"to unstage" -> "d=E9grouper"
+>=20
+> But admitedly this doesn't convay the actual meaning perfectly either=
+=2E
 
-But if this goes into dwim_ref, then won't it be usable for refspecs? O=
-r
-even if it isn't, then imagine the user who doesn't know this and types
+It sounds kinda weird. Staging is not really close to gathering.
 
-  git push :foo
-
-unwittingly deleting the remote "foo".
-
-Yes, that is unlikely (since why would they push the tracking branch of
-foo?), but I don't think it makes sense to argue that it doesn't have
-confusing (and potentially dangerous) consequenses.
-
-> Alternatively, '~master' may have a nice connotation that means "wher=
-e
-> master calls its home".
-
-I think that is quite clever and doesn't have any meaning for a revisio=
-n
-specifier already. I like it.
-
--Peff
+Mike
