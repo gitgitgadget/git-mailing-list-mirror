@@ -1,167 +1,54 @@
-From: "David J. Mellor" <dmellor@whistlingcat.com>
-Subject: [PATCH] Documentation: Reworded example text in git-bisect.txt.
-Date: Thu, 19 Mar 2009 20:35:34 -0700
-Message-ID: <1237520134-18044-1-git-send-email-dmellor@whistlingcat.com>
-Cc: git@vger.kernel.org
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH 4/5] t7700-repack: repack -a now works properly, expect success from test
+Date: Thu, 19 Mar 2009 22:47:53 -0500
+Message-ID: <t_s5aa51o2kq_ePRWgLTEtCnzveAKdblNoXw2p9yc1N22fpuARDjOh9wRXpwEKvultyJoNzUWBY@cipher.nrlssc.navy.mil>
+References: <EblkEXbcYUWby1OEDup9n0l6lbwNL-4-jyt02Cjab2pqLqekAUji0w@cipher.nrlssc.navy.mil> <t_s5aa51o2kq_ePRWgLTEkVg4HqH1dQa6_mVq4djPPG4Vxylm2hNqmx7fPC2W5AsfcXg83DYbGc@cipher.nrlssc.navy.mil> <t_s5aa51o2kq_ePRWgLTEpak5ue1ZM7YICzIF-RsnmN68psiOC0Tnz9bsH5tTxgVEU0bxG-OtJ8@cipher.nrlssc.navy.mil> <t_s5aa51o2kq_ePRWgLTEg6KbvKii55gDA1y-1oKgx9KP4EKyrqg8sDFaph97G5MPoLgUx_vx48@cipher.nrlssc.navy.mil> <t_s5aa51o2kq_ePRWgLTEvwR8O51ATzGH2_NEfAeCgOx3i1IYGfgLg3-dTPOh68RhaeQgBB9s2g@cipher.nrlssc.navy.mil>
+Cc: git@vger.kernel.org, drafnel@gmail.com
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Mar 20 04:37:11 2009
+X-From: git-owner@vger.kernel.org Fri Mar 20 04:50:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkVXf-00077g-LX
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 04:37:08 +0100
+	id 1LkVk9-000158-47
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 04:50:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752668AbZCTDfi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Mar 2009 23:35:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751032AbZCTDfi
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 23:35:38 -0400
-Received: from quartz.whistlingcat.com ([67.223.228.111]:37873 "EHLO
-	quartz.whistlingcat.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751315AbZCTDfh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Mar 2009 23:35:37 -0400
-Received: from whistlingcat.com (whistlingcat.com [99.12.234.57])
-	by quartz.whistlingcat.com (Postfix) with ESMTP id 98979488006;
-	Thu, 19 Mar 2009 20:35:35 -0700 (PDT)
-Received: from sandstone.whistlingcat.com (sandstone.whistlingcat.com [192.168.0.2])
-	by whistlingcat.com (Postfix) with ESMTP id 4BD1638E755B;
-	Thu, 19 Mar 2009 20:35:35 -0700 (PDT)
-Received: by sandstone.whistlingcat.com (Postfix, from userid 500)
-	id 0B7B917A4B; Thu, 19 Mar 2009 20:35:34 -0700 (PDT)
-X-Mailer: git-send-email 1.6.2.1
+	id S1752339AbZCTDsX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Mar 2009 23:48:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753160AbZCTDsU
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 Mar 2009 23:48:20 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:60276 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752339AbZCTDsN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Mar 2009 23:48:13 -0400
+Received: by mail.nrlssc.navy.mil id n2K3m6KX019885; Thu, 19 Mar 2009 22:48:07 -0500
+In-Reply-To: <t_s5aa51o2kq_ePRWgLTEvwR8O51ATzGH2_NEfAeCgOx3i1IYGfgLg3-dTPOh68RhaeQgBB9s2g@cipher.nrlssc.navy.mil>
+X-OriginalArrivalTime: 20 Mar 2009 03:48:06.0824 (UTC) FILETIME=[ADDB5A80:01C9A90E]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113885>
 
-Reworded to avoid splitting sentences across examples of command usage.
-
-Signed-off-by: David J. Mellor <dmellor@whistlingcat.com>
+Thanks to Junio's rework of the --unpacked= option of pack-objects/rev-list
+git-repack now properly packs objects from alternate repositories even when
+the local repository contains packs.
 ---
- Documentation/git-bisect.txt |   44 ++++++++++++++++++++++-------------------
- 1 files changed, 24 insertions(+), 20 deletions(-)
+ t/t7700-repack.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
-index 1a4a527..93d9fc0 100644
---- a/Documentation/git-bisect.txt
-+++ b/Documentation/git-bisect.txt
-@@ -50,28 +50,29 @@ $ git bisect good v2.6.13-rc2    # v2.6.13-rc2 was the last version
- ------------------------------------------------
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index 31e6d22..28fc87a 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -69,7 +69,7 @@ test_expect_success 'packed obs in alt ODB are repacked even when local repo is
+ 	done
+ '
  
- When you have specified at least one bad and one good version, the
--command bisects the revision tree and outputs something similar to:
-+command bisects the revision tree and outputs something similar to
-+the following:
- 
- ------------------------------------------------
- Bisecting: 675 revisions left to test after this
- ------------------------------------------------
- 
--and then checks out the state in the middle. You would now compile
--that kernel and boot it. If the booted kernel works correctly, you
--would then issue the following command:
-+The state in the middle of the set of revisions is then checked out.
-+You would now compile that kernel and boot it. If the booted kernel
-+works correctly, you would then issue the following command:
- 
- ------------------------------------------------
- $ git bisect good			# this one is good
- ------------------------------------------------
- 
--which would then output something similar to:
-+The output of this command would be something similar to the following:
- 
- ------------------------------------------------
- Bisecting: 337 revisions left to test after this
- ------------------------------------------------
- 
--and you continue along, compiling that one, testing it, and depending
--on whether it is good or bad issuing the command "git bisect good"
-+You keep repeating this process, compiling the tree, testing it, and
-+depending on whether it is good or bad issuing the command "git bisect good"
- or "git bisect bad" to ask for the next bisection.
- 
- Eventually there will be no more revisions left to bisect, and you
-@@ -81,7 +82,7 @@ Bisect reset
- ~~~~~~~~~~~~
- 
- To return to the original head after a bisect session, you issue the
--command:
-+following command:
- 
- ------------------------------------------------
- $ git bisect reset
-@@ -94,14 +95,14 @@ the bisection state).
- Bisect visualize
- ~~~~~~~~~~~~~~~~
- 
--During the bisection process, you issue the command:
-+To see the currently remaining suspects in 'gitk', the following command
-+is issued during the bisection process:
- 
- ------------
- $ git bisect visualize
- ------------
- 
--to see the currently remaining suspects in 'gitk'.  `view` may also
--be used as a synonym for `visualize`.
-+`view` may also be used as a synonym for `visualize`.
- 
- If the 'DISPLAY' environment variable is not set, 'git log' is used
- instead.  You can also give command line options such as `-p` and
-@@ -114,16 +115,17 @@ $ git bisect view --stat
- Bisect log and bisect replay
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
--After having marked revisions as good or bad, then:
-+After having marked revisions as good or bad, you issue the following
-+command to show what has been done so far:
- 
- ------------
- $ git bisect log
- ------------
- 
--shows what you have done so far. If you discover that you made a mistake
--in specifying the status of a revision, you can save the output of this
--command to a file, edit it to remove the incorrect entries, and then issue
--the following commands to return to a corrected state:
-+If you discover that you made a mistake in specifying the status of a
-+revision, you can save the output of this command to a file, edit it to
-+remove the incorrect entries, and then issue the following commands to
-+return to a corrected state:
- 
- ------------
- $ git bisect reset
-@@ -173,8 +175,8 @@ using the "'<commit1>'..'<commit2>'" notation. For example:
- $ git bisect skip v2.5..v2.6
- ------------
- 
--would mean that no commit between `v2.5` excluded and `v2.6` included
--can be tested.
-+The effect of this would be that no commit between `v2.5` excluded and
-+`v2.6` included could be tested.
- 
- Note that if you also want to skip the first commit of the range you
- would issue the command:
-@@ -183,14 +185,16 @@ would issue the command:
- $ git bisect skip v2.5 v2.5..v2.6
- ------------
- 
--and the commit pointed to by `v2.5` would also be skipped.
-+This would cause the commits between `v2.5` included and `v2.6` included
-+to be skipped.
-+
- 
- Cutting down bisection by giving more parameters to bisect start
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
- You can further cut down the number of trials, if you know what part of
- the tree is involved in the problem you are tracking down, by specifying
--path parameters when issuing the `bisect start` command, like this:
-+path parameters when issuing the `bisect start` command:
- 
- ------------
- $ git bisect start -- arch/i386 include/asm-i386
+-test_expect_failure 'packed obs in alt ODB are repacked when local repo has packs' '
++test_expect_success 'packed obs in alt ODB are repacked when local repo has packs' '
+ 	rm -f .git/objects/pack/* &&
+ 	echo new_content >> file1 &&
+ 	git add file1 &&
 -- 
-1.6.2.1
+1.6.2.16.geb16e
