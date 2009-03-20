@@ -1,147 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Minimum libCurl version for git
-Date: Fri, 20 Mar 2009 14:44:16 -0700
-Message-ID: <7vy6uzg98v.fsf@gitster.siamese.dyndns.org>
-References: <e2b179460903201059j20e37c1cr7ccfa4b42e45c9d9@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: ref name troubles, was Re: [PATCH v2] Introduce %<branch> as
+ shortcut to the tracked branch
+Date: Fri, 20 Mar 2009 22:48:16 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903202246060.6865@intel-tinevez-2-302>
+References: <alpine.DEB.1.00.0903182210310.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903182245280.10279@pacific.mpi-cbg.de> <7vr60ubgul.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0903182343580.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903200121330.10279@pacific.mpi-cbg.de>
+ <alpine.DEB.1.00.0903200137230.10279@pacific.mpi-cbg.de> <20090320004029.GX23521@spearce.org> <20090320060545.GB27008@coredump.intra.peff.net> <7vprgc4r6h.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0903201029290.10279@pacific.mpi-cbg.de>
+ <20090320111238.GZ8940@machine.or.cz> <7vbprwi1ju.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0903201515490.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git list <git@vger.kernel.org>, Daniel Stenberg <daniel@haxx.se>,
-	Nick Hengeveld <nickh@reactrix.com>,
-	Mike Hommey <mh@glandium.org>
-To: Mike Ralphson <mike.ralphson@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 20 22:46:02 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, Petr Baudis <pasky@suse.cz>,
+	Jeff King <peff@peff.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Andreas Gruenbacher <agruen@suse.de>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Fri Mar 20 22:49:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkmXO-0001Bq-Ld
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 22:45:59 +0100
+	id 1Lkmb8-0002SQ-PG
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 22:49:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753773AbZCTVo3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Mar 2009 17:44:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753618AbZCTVo3
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 17:44:29 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55633 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753047AbZCTVo2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2009 17:44:28 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7EBF6A3110;
-	Fri, 20 Mar 2009 17:44:25 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 43CD5A310B; Fri,
- 20 Mar 2009 17:44:17 -0400 (EDT)
-In-Reply-To: <e2b179460903201059j20e37c1cr7ccfa4b42e45c9d9@mail.gmail.com>
- (Mike Ralphson's message of "Fri, 20 Mar 2009 17:59:08 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 48015560-1598-11DE-804B-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1753150AbZCTVsW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2009 17:48:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753047AbZCTVsW
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 17:48:22 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41512 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752988AbZCTVsV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2009 17:48:21 -0400
+Received: (qmail invoked by alias); 20 Mar 2009 21:48:18 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp041) with SMTP; 20 Mar 2009 22:48:18 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19ZkSc26dJZLRUlBXyWst3KmYBbuzI8AkONBmQybZ
+	qUJE1RwXcxm9jK
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <alpine.LNX.1.00.0903201515490.19665@iabervon.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114007>
 
-Mike Ralphson <mike.ralphson@gmail.com> writes:
+Hi,
 
-> Going forward there are various options:
->
-> 1. Do nothing - go with the status quo.
->
-> 2. Correct the #ifdefs for CURLOPT_SSLKEY
->
-> 3. Drop the #ifdefs for CURLOPT_SSLKEY entirely and make 7.9.3 our
-> minimum supported version. I feel slightly embarrassed about that, as
-> that's exactly the version I have here on AIX (unless I wrest it back
-> from being sysadmin-installed to being user-supported). Add a check t=
-o
-> the Makefile and error if libCurl is too old.
->
-> 4. Drop all current #ifdefs and one of the deprecated symbol names.
-> Our minimum supported libCurl version would be 7.9.8 from Jun 2002.
->
-> 5. Drop all current #ifdefs and both of the deprecated symbol names.
-> Our minimum supported libCurl version would be 7.10.8 from Nov 2003.
->
-> 6. Warn (not error) if libCurl is older than say the 3 years suggeste=
-d
-> by Daniel. This would seem to require periodic updates to the Makefil=
-e
-> check.
->
-> I'm happy to whip up a patch if required, but I thought a series of
-> mutually-exclusive alternative patches would be confusing without
-> prior agreement on the approach.
->
-> Mike
->
-> [1]=C2=A0 http://cool.haxx.se/cvs.cgi/curl/docs/libcurl/symbols-in-ve=
-rsions?rev=3DHEAD&content-type=3Dtext/vnd.viewcvs-markup
+On Fri, 20 Mar 2009, Daniel Barkalow wrote:
 
-Thanks for a detailed analysis.
+> On Fri, 20 Mar 2009, Junio C Hamano wrote:
+> 
+> > Petr Baudis <pasky@suse.cz> writes:
+> > 
+> > >> "git branch" I agree with, but not "git update-ref".  As plumbing, 
+> > >> the latter should be much more allowing, feeding rope aplenty (but 
+> > >> also allowing cool tricks we do not think about yet).
+> > >
+> > > We shouldn't allow creating insane ref names even with update-ref. 
+> > > That way porcelains cannot rely on update-ref to sanity check the 
+> > > user's crap. At most, maybe you might want to bypass this check with 
+> > > some force switch, though I really can't quite imagine why.
+> > 
+> > That's all nice and clean in theory, but it was more or less the same 
+> > reasoning as what was behind the tightening not to allow anything but 
+> > refs/heads pointed by HEAD, but you know what fell out of it.  
+> > "Insane" and "crap" are in the eye of the beholder.
+> 
+> I think there's no possible use to being able to use update-ref to 
+> create a ref that rev-parse can't be made to read. I think people will 
+> want to do all sorts of things that are insane (I'd personally like some 
+> refs with the basename "..."), but they're only likely to do insane 
+> things that happen to work, rather than insane things that aren't 
+> prevented but still don't work.
 
-My gut feeling is we should be able to do 3 safely.
+Of course, you are forgetting that rev-parse may well have been able to 
+grok such a ref at some stage.
 
-I am not sure if you are reading the "deprecated" column correctly,
-though:
+And at that stage, it becomes not a user error, but a _huge_ mistake by 
+us, the Git developers.
 
- Name                           Introduced  Deprecated  Removed
-CURLINFO_HTTP_CODE              7.4.1         7.10.8
-CURLOPT_INFILE                  7.1           7.9.7
+Don't blame the user 
+(http://www.schneier.com/blog/archives/2009/03/it_security_bla.html).
 
-These two symbols are what we do use in our code, so the
-deprecated/removed column would give us the upper bound of the versions=
-,
-not the lower bound.
-
-We can have these two macro definitions on our side
-
-	#if curl older than 7.10.8
-        #define CURLINFO_RESPONSE_CODE CURLINFO_HTTP_CODE
-	#endif
-
-	#if curl older than 7.9.7
-        #define CURLOPT_READDATA CURLOPT_INFILE
-	#endif
-
-for backward compatibility, while writing our code to the recent API by
-using CURLINFO_RESPONSE_CODE and CURLOPT_READDATA, and people with olde=
-r
-curl would not have to suffer a bit.
-
-So I think your 4 and 5 are non issues.
-
-But this is without having a handy tally of what releases of various
-distros shipped their libcurl with.  If we had a table like this...
-
-Distro			Last update		libcurl version
-----------------------------------------------------------------
-Debian 3.1 sarge	2005-06-06		???
-Debian 4.0 etch		2009-02-10 (4.0r7)	7.15.5
-Debian 5.0 lenny	2009-02-14		7.18.2
-
-=2E.. then we could say "This is git, a tool primarily for developers t=
-o
-keep track of sources; nobody would be running on a box that was update=
-d
-the last time four years ago, so we can safely assume libcurl more rece=
-nt
-than version ???".
-
-It would also be valid to argue that "4.0 etch may have been updated la=
-st
-month, but libcurl 7.15.5 has been available on the release a lot befor=
-e
-that, as of 200X-XX-XX, which is more than N years ago, which makes it
-safe to assume that assuming 7.15.5 or later is fine for Debian folks; =
-do
-not get fooled by the date of last update," in which case it would be g=
-ood
-to have entry for the original release date.
-
-=46or non-commercial Linux folks I think it should be Ok to assume not =
-too
-ancient libcurl, but I have no clue on how the table like the above wou=
-ld
-look like for things like AIX, IRIX, HPUX etc.  ... Oh, and SCO.
+Ciao,
+Dscho
