@@ -1,88 +1,82 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: ref name troubles, was Re: [PATCH v2] Introduce %<branch> as
- shortcut to the tracked branch
-Date: Fri, 20 Mar 2009 22:48:16 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903202246060.6865@intel-tinevez-2-302>
-References: <alpine.DEB.1.00.0903182210310.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903182245280.10279@pacific.mpi-cbg.de> <7vr60ubgul.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0903182343580.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903200121330.10279@pacific.mpi-cbg.de>
- <alpine.DEB.1.00.0903200137230.10279@pacific.mpi-cbg.de> <20090320004029.GX23521@spearce.org> <20090320060545.GB27008@coredump.intra.peff.net> <7vprgc4r6h.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0903201029290.10279@pacific.mpi-cbg.de>
- <20090320111238.GZ8940@machine.or.cz> <7vbprwi1ju.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0903201515490.19665@iabervon.org>
+Subject: Re: [PATCH] rebase -p: Preserve --no-ff merges
+Date: Fri, 20 Mar 2009 23:04:25 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903202300360.6865@intel-tinevez-2-302>
+References: <alpine.DEB.2.00.0903201633440.4457@vinegar-pot.mit.edu>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, Petr Baudis <pasky@suse.cz>,
-	Jeff King <peff@peff.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Andreas Gruenbacher <agruen@suse.de>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Fri Mar 20 22:49:52 2009
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Anders Kaseorg <andersk@MIT.EDU>
+X-From: git-owner@vger.kernel.org Fri Mar 20 23:06:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lkmb8-0002SQ-PG
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 22:49:51 +0100
+	id 1Lkmqm-0007UF-TY
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 23:06:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753150AbZCTVsW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2009 17:48:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753047AbZCTVsW
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 17:48:22 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41512 "HELO mail.gmx.net"
+	id S1751754AbZCTWEb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2009 18:04:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751689AbZCTWEb
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 18:04:31 -0400
+Received: from mail.gmx.net ([213.165.64.20]:53848 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752988AbZCTVsV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2009 17:48:21 -0400
-Received: (qmail invoked by alias); 20 Mar 2009 21:48:18 -0000
+	id S1751060AbZCTWEa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2009 18:04:30 -0400
+Received: (qmail invoked by alias); 20 Mar 2009 22:04:27 -0000
 Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp041) with SMTP; 20 Mar 2009 22:48:18 +0100
+  by mail.gmx.net (mp023) with SMTP; 20 Mar 2009 23:04:27 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19ZkSc26dJZLRUlBXyWst3KmYBbuzI8AkONBmQybZ
-	qUJE1RwXcxm9jK
+X-Provags-ID: V01U2FsdGVkX19JfR0wBhxJifEb7jDNSk8MtTpU616nUTikoYGrBu
+	e+fOvokxvYH7TC
 X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <alpine.LNX.1.00.0903201515490.19665@iabervon.org>
+In-Reply-To: <alpine.DEB.2.00.0903201633440.4457@vinegar-pot.mit.edu>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114008>
 
 Hi,
 
-On Fri, 20 Mar 2009, Daniel Barkalow wrote:
+On Fri, 20 Mar 2009, Anders Kaseorg wrote:
 
-> On Fri, 20 Mar 2009, Junio C Hamano wrote:
+> Previously, git rebase -p would turn some merges that had been constructed 
+> with git merge --no-ff into fast-forwards.  Now it reconstructs those 
+> merges using --no-ff as well.
 > 
-> > Petr Baudis <pasky@suse.cz> writes:
-> > 
-> > >> "git branch" I agree with, but not "git update-ref".  As plumbing, 
-> > >> the latter should be much more allowing, feeding rope aplenty (but 
-> > >> also allowing cool tricks we do not think about yet).
-> > >
-> > > We shouldn't allow creating insane ref names even with update-ref. 
-> > > That way porcelains cannot rely on update-ref to sanity check the 
-> > > user's crap. At most, maybe you might want to bypass this check with 
-> > > some force switch, though I really can't quite imagine why.
-> > 
-> > That's all nice and clean in theory, but it was more or less the same 
-> > reasoning as what was behind the tightening not to allow anything but 
-> > refs/heads pointed by HEAD, but you know what fell out of it.  
-> > "Insane" and "crap" are in the eye of the beholder.
-> 
-> I think there's no possible use to being able to use update-ref to 
-> create a ref that rev-parse can't be made to read. I think people will 
-> want to do all sorts of things that are insane (I'd personally like some 
-> refs with the basename "..."), but they're only likely to do insane 
-> things that happen to work, rather than insane things that aren't 
-> prevented but still don't work.
+> Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+> ---
 
-Of course, you are forgetting that rev-parse may well have been able to 
-grok such a ref at some stage.
+First, could I ask you to hold off with patches for rebase -p for a little 
+while?  I did a _lot_ of work on rebase -p recently, but it has not 
+reached a state that I can submit yet without being ashamed.
 
-And at that stage, it becomes not a user error, but a _huge_ mistake by 
-us, the Git developers.
+Another thing to keep in mind is that some merges do _not_ want to be 
+preserved.  IOW if you have a history like this:
 
-Don't blame the user 
-(http://www.schneier.com/blog/archives/2009/03/it_security_bla.html).
+- A - B
+    \   \
+      C - D - E
+
+And your upstream cherry-picked B, after a rebase you are most likely to 
+want
+
+- A' - C' - E'
+
+as a result (rather than
+
+- A' - --
+     \    \
+       C' - D' - E'
+
+which would be rather awkward).
 
 Ciao,
 Dscho
+
+P.S.: FWIW you can see my work as part of my 'master' in 
+http://repo.or.cz/w/git/dscho.git/
