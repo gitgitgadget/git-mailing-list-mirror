@@ -1,117 +1,62 @@
-From: Alexandre Bourget <alexandre.bourget@savoirfairelinux.com>
-Subject: Re: [PATCH 2/2] git-gui: some French translation enhancements
-Date: Fri, 20 Mar 2009 10:34:54 -0400
-Organization: Savoir-faire Linux
-Message-ID: <1237559694.25283.46.camel@alexandre-desktop>
-References: <cd2d922d5257aac105de08fd90e6dbd389f0b6f0.1237506346.git.nicolas.s-dev@laposte.net>
-	 <5b4295c484a9659d1c5813e1859f192c34d6a99e.1237506346.git.nicolas.s-dev@laposte.net>
-	 <20090320071316.GB5693@glandium.org>
-Reply-To: alexandre.bourget@savoirfairelinux.com
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: ref name troubles, was Re: [PATCH v2] Introduce %<branch> as  
+ shortcut to the tracked branch
+Date: Fri, 20 Mar 2009 16:01:44 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903201600500.6865@intel-tinevez-2-302>
+References: <7vr60ubgul.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0903182343580.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903200121330.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903200137230.10279@pacific.mpi-cbg.de> <20090320004029.GX23521@spearce.org>
+ <20090320060545.GB27008@coredump.intra.peff.net> <7vprgc4r6h.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0903201029290.10279@pacific.mpi-cbg.de> <20090320111238.GZ8940@machine.or.cz> <alpine.DEB.1.00.0903201245140.6865@intel-tinevez-2-302>
+ <20090320115043.GB8940@machine.or.cz> <alpine.DEB.1.00.0903201255230.6865@intel-tinevez-2-302> <49C3A8D7.1040509@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
-	Git List <git@vger.kernel.org>, Sam Hocevar <sam@zoy.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Fri Mar 20 16:01:37 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Andreas Gruenbacher <agruen@suse.de>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Mar 20 16:03:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkgE3-00023t-DG
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 16:01:35 +0100
+	id 1LkgFh-0002oa-33
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 16:03:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751981AbZCTPAF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Mar 2009 11:00:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751974AbZCTPAE
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 11:00:04 -0400
-Received: from mail.savoirfairelinux.net ([69.28.212.163]:53703 "EHLO
-	open-xchange.savoirfairelinux.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751060AbZCTPAB (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2009 11:00:01 -0400
-X-Greylist: delayed 1621 seconds by postgrey-1.27 at vger.kernel.org; Fri, 20 Mar 2009 11:00:01 EDT
-Received: from localhost (unknown [127.0.0.1])
-	by open-xchange.savoirfairelinux.net (Postfix) with ESMTP id 67E1B46174E;
-	Fri, 20 Mar 2009 14:32:54 +0000 (UTC)
-Received: from open-xchange.savoirfairelinux.net ([127.0.0.1])
-	by localhost (open-xchange.savoirfairelinux.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id L4eFCP9ZgkTA; Fri, 20 Mar 2009 10:32:51 -0400 (EDT)
-Received: from [192.168.50.166] (IP-208-88-110-46.mtl.fibrenoire.ca [208.88.110.46])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by open-xchange.savoirfairelinux.net (Postfix) with ESMTP id 78F9846174D;
-	Fri, 20 Mar 2009 10:32:51 -0400 (EDT)
-In-Reply-To: <20090320071316.GB5693@glandium.org>
-X-Mailer: Evolution 2.22.3.1 
+	id S1754731AbZCTPBt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2009 11:01:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754647AbZCTPBs
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 11:01:48 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50883 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752325AbZCTPBs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2009 11:01:48 -0400
+Received: (qmail invoked by alias); 20 Mar 2009 15:01:45 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp052) with SMTP; 20 Mar 2009 16:01:45 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1935MgrTNh34JtZRO467PlBMg7wkrud9YMyX786Hj
+	5HVpHHMhF3LCTm
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <49C3A8D7.1040509@drmicha.warpmail.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.72
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/113967>
 
-Le vendredi 20 mars 2009 =C3=A0 08:13 +0100, Mike Hommey a =C3=A9crit :
-> On Fri, Mar 20, 2009 at 01:54:02AM +0100, Nicolas Sebrecht wrote:
-> IMHO, we should find a better way to say that than to use the "index"
-> word at all. This obviously applies to all uses of "index" in french
-> where we avoided it in english.
->=20
-> OTOH, the best I can find for "staging area" is "zone de pr=C3=A9para=
-tion",
-> and that doesn't help finding a word for stage and unstage.
+Hi,
 
-"zone de pr=C3=A9paration" sounds good to me.
+On Fri, 20 Mar 2009, Michael J Gruber wrote:
 
+> Do we have ^ as a prefix yet?
 
--------------
+Yes, it means "not".  IOW '^bla blub' is the same as 'bla..blub'.
 
-> [from another e-mail]
-> > We should care that the revert operation does *not* remove a commit=
- but
-> > add a new one (this makes sense to Git). As a consequence, we shoul=
-d
-> > avoid "Annuler", "R=C3=A9voquer" and "D=C3=A9faire".
-> >
-> > "Inverser" looks like the best translation.
+> Also, I don't think people would use @@ much in branch names.
 
-> Yeah, I agree with that reasoning.
+Whoa...
 
-Hmm.. if you look at the git-gui program, when we use "Revert", it's no=
-t
-always the usage of the git-revert command that is invoked.
-
-Most of the time, it's the equivalent of running "git reset --hard", or
-"git checkout path/filename.ext" (in fact, it uses git-checkout-index,
-see git-gui/lib/index.tcl::revert_helper..).
-
-That is true for example in the "Commit" menu, 3rd to last item, which
-reads in french "Inverser les modifications" or "R=C3=A9voker les
-modifications" as I modified it at some point.
-
-What happens here, is really not inversion of modifications; we're just
-wiping out all changes from the working dir, back to HEAD. Several of
-the translated messages are used in *that* context.=20
-
-
-So, considering this, which one of: "Annuler", "R=C3=A9voquer", "D=C3=A9=
-faire",
-"Effacer", "Restaurer l'original", "Scrapper", "Trucider", "Supprimer" =
-+
-"les modifications" would be best ?
-
-It should be obvious that it's going to affect the blue icons, and that
-those modifications will dissapear forever.
-
-Also note that "svn revert" does like git-checkout-index, and not like
-git-revert, so the terms must be clear here, even in English.
-
-
-Alexandre
-
---=20
-Alexandre Bourget
-Directeur adjoint au d=C3=A9veloppement
-Consultant en Logiciel Libre
-Savoir-faire Linux Inc.
-alexandre.bourget@savoirfairelinux.com
-514-276-5468 poste 124
+Ciao,
+Dscho
