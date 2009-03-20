@@ -1,62 +1,147 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4] Introduce %<branch> as shortcut to the tracked
-	branch
-Date: Fri, 20 Mar 2009 16:50:27 -0400
-Message-ID: <20090320205027.GA28804@coredump.intra.peff.net>
-References: <alpine.DEB.1.00.0903200121330.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903200137230.10279@pacific.mpi-cbg.de> <20090320004029.GX23521@spearce.org> <20090320004450.GY23521@spearce.org> <alpine.DEB.1.00.0903201027450.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903201714020.10279@pacific.mpi-cbg.de> <7v7i2ki0sw.fsf@gitster.siamese.dyndns.org> <7vwsakgjie.fsf@gitster.siamese.dyndns.org> <20090320193650.GA26934@coredump.intra.peff.net> <alpine.LNX.2.00.0903202022560.12211@reaper.quantumfyre.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Minimum libCurl version for git
+Date: Fri, 20 Mar 2009 14:44:16 -0700
+Message-ID: <7vy6uzg98v.fsf@gitster.siamese.dyndns.org>
+References: <e2b179460903201059j20e37c1cr7ccfa4b42e45c9d9@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Petr Baudis <pasky@suse.cz>,
-	Andreas Gruenbacher <agruen@suse.de>, B.Steinbrink@gmx.de,
-	git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Fri Mar 20 21:52:37 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git list <git@vger.kernel.org>, Daniel Stenberg <daniel@haxx.se>,
+	Nick Hengeveld <nickh@reactrix.com>,
+	Mike Hommey <mh@glandium.org>
+To: Mike Ralphson <mike.ralphson@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 20 22:46:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lklhc-0008DF-O0
-	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 21:52:29 +0100
+	id 1LkmXO-0001Bq-Ld
+	for gcvg-git-2@gmane.org; Fri, 20 Mar 2009 22:45:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751060AbZCTUum (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2009 16:50:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753150AbZCTUul
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 16:50:41 -0400
-Received: from peff.net ([208.65.91.99]:37433 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753018AbZCTUuk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2009 16:50:40 -0400
-Received: (qmail 10888 invoked by uid 107); 20 Mar 2009 20:50:49 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 20 Mar 2009 16:50:49 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Mar 2009 16:50:27 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LNX.2.00.0903202022560.12211@reaper.quantumfyre.co.uk>
+	id S1753773AbZCTVo3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Mar 2009 17:44:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753618AbZCTVo3
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 17:44:29 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55633 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753047AbZCTVo2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Mar 2009 17:44:28 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7EBF6A3110;
+	Fri, 20 Mar 2009 17:44:25 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 43CD5A310B; Fri,
+ 20 Mar 2009 17:44:17 -0400 (EDT)
+In-Reply-To: <e2b179460903201059j20e37c1cr7ccfa4b42e45c9d9@mail.gmail.com>
+ (Mike Ralphson's message of "Fri, 20 Mar 2009 17:59:08 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 48015560-1598-11DE-804B-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114006>
 
-On Fri, Mar 20, 2009 at 08:28:28PM +0000, Julian Phillips wrote:
+Mike Ralphson <mike.ralphson@gmail.com> writes:
 
->> I think that is quite clever and doesn't have any meaning for a revision
->> specifier already. I like it.
+> Going forward there are various options:
 >
-> I considered suggesting this earlier, but didn't as the behaviour is not  
-> consistent.  If you have a user named master then you have to type  
-> '~master' (including quotes), if you don't you can type ~master, and you  
-> always have to type '~' instead of ~.  I didn't particularly fancy typing  
-> all those quotes, and certainly not explaining the behaviour to people not 
-> overly familiar with unix shell behaviour.
+> 1. Do nothing - go with the status quo.
+>
+> 2. Correct the #ifdefs for CURLOPT_SSLKEY
+>
+> 3. Drop the #ifdefs for CURLOPT_SSLKEY entirely and make 7.9.3 our
+> minimum supported version. I feel slightly embarrassed about that, as
+> that's exactly the version I have here on AIX (unless I wrest it back
+> from being sysadmin-installed to being user-supported). Add a check t=
+o
+> the Makefile and error if libCurl is too old.
+>
+> 4. Drop all current #ifdefs and one of the deprecated symbol names.
+> Our minimum supported libCurl version would be 7.9.8 from Jun 2002.
+>
+> 5. Drop all current #ifdefs and both of the deprecated symbol names.
+> Our minimum supported libCurl version would be 7.10.8 from Nov 2003.
+>
+> 6. Warn (not error) if libCurl is older than say the 3 years suggeste=
+d
+> by Daniel. This would seem to require periodic updates to the Makefil=
+e
+> check.
+>
+> I'm happy to whip up a patch if required, but I thought a series of
+> mutually-exclusive alternative patches would be confusing without
+> prior agreement on the approach.
+>
+> Mike
+>
+> [1]=C2=A0 http://cool.haxx.se/cvs.cgi/curl/docs/libcurl/symbols-in-ve=
+rsions?rev=3DHEAD&content-type=3Dtext/vnd.viewcvs-markup
 
-Oh, good point. I wasn't thinking it through. My initial thought was
-that there is no problem conflicting with a file ~master/foo, since you
-generally don't want to use absolute paths that are likely outside your
-git repository. But of course the shell doesn't know this and will screw
-you, which I failed to consider.
+Thanks for a detailed analysis.
 
--Peff
+My gut feeling is we should be able to do 3 safely.
+
+I am not sure if you are reading the "deprecated" column correctly,
+though:
+
+ Name                           Introduced  Deprecated  Removed
+CURLINFO_HTTP_CODE              7.4.1         7.10.8
+CURLOPT_INFILE                  7.1           7.9.7
+
+These two symbols are what we do use in our code, so the
+deprecated/removed column would give us the upper bound of the versions=
+,
+not the lower bound.
+
+We can have these two macro definitions on our side
+
+	#if curl older than 7.10.8
+        #define CURLINFO_RESPONSE_CODE CURLINFO_HTTP_CODE
+	#endif
+
+	#if curl older than 7.9.7
+        #define CURLOPT_READDATA CURLOPT_INFILE
+	#endif
+
+for backward compatibility, while writing our code to the recent API by
+using CURLINFO_RESPONSE_CODE and CURLOPT_READDATA, and people with olde=
+r
+curl would not have to suffer a bit.
+
+So I think your 4 and 5 are non issues.
+
+But this is without having a handy tally of what releases of various
+distros shipped their libcurl with.  If we had a table like this...
+
+Distro			Last update		libcurl version
+----------------------------------------------------------------
+Debian 3.1 sarge	2005-06-06		???
+Debian 4.0 etch		2009-02-10 (4.0r7)	7.15.5
+Debian 5.0 lenny	2009-02-14		7.18.2
+
+=2E.. then we could say "This is git, a tool primarily for developers t=
+o
+keep track of sources; nobody would be running on a box that was update=
+d
+the last time four years ago, so we can safely assume libcurl more rece=
+nt
+than version ???".
+
+It would also be valid to argue that "4.0 etch may have been updated la=
+st
+month, but libcurl 7.15.5 has been available on the release a lot befor=
+e
+that, as of 200X-XX-XX, which is more than N years ago, which makes it
+safe to assume that assuming 7.15.5 or later is fine for Debian folks; =
+do
+not get fooled by the date of last update," in which case it would be g=
+ood
+to have entry for the original release date.
+
+=46or non-commercial Linux folks I think it should be Ok to assume not =
+too
+ancient libcurl, but I have no clue on how the table like the above wou=
+ld
+look like for things like AIX, IRIX, HPUX etc.  ... Oh, and SCO.
