@@ -1,62 +1,86 @@
 From: Nicolas Sebrecht <nicolas.s-dev@laposte.net>
 Subject: [PATCH 2/2] Re: git-gui: some French translation enhancements
-Date: Sat, 21 Mar 2009 10:33:36 +0100
-Message-ID: <20090321093336.GA12971@vidovic>
-References: <20090318205410.GA900@zoy.org> <5b4295c484a9659d1c5813e1859f192c34d6a99e.1237506346.git.nicolas.s-dev@laposte.net> <200903200841.02052.chriscool@tuxfamily.org> <20090320150336.GA23521@spearce.org>
+Date: Sat, 21 Mar 2009 11:14:26 +0100
+Message-ID: <20090321101426.GB12971@vidovic>
+References: <cd2d922d5257aac105de08fd90e6dbd389f0b6f0.1237506346.git.nicolas.s-dev@laposte.net> <5b4295c484a9659d1c5813e1859f192c34d6a99e.1237506346.git.nicolas.s-dev@laposte.net> <20090320071316.GB5693@glandium.org> <1237559694.25283.46.camel@alexandre-desktop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Mike Hommey <mh@glandium.org>,
+	Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
 	Git List <git@vger.kernel.org>, Sam Hocevar <sam@zoy.org>,
-	Alexandre Bourget <alexandre.bourget@savoirfairelinux.com>,
-	Nicolas Sebrecht <nicolas.s-dev@laposte.net>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Mar 21 10:35:38 2009
+	Christian Couder <chriscool@tuxfamily.org>
+To: Alexandre Bourget <alexandre.bourget@savoirfairelinux.com>
+X-From: git-owner@vger.kernel.org Sat Mar 21 11:16:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lkxc8-0000Yx-TF
-	for gcvg-git-2@gmane.org; Sat, 21 Mar 2009 10:35:37 +0100
+	id 1LkyFL-00034p-Pn
+	for gcvg-git-2@gmane.org; Sat, 21 Mar 2009 11:16:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753576AbZCUJdr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Mar 2009 05:33:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752996AbZCUJdq
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Mar 2009 05:33:46 -0400
-Received: from out2.laposte.net ([193.251.214.119]:46517 "EHLO
-	out1.laposte.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753166AbZCUJdp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Mar 2009 05:33:45 -0400
+	id S1754089AbZCUKOi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Mar 2009 06:14:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753863AbZCUKOi
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Mar 2009 06:14:38 -0400
+Received: from out6.laposte.net ([193.251.214.123]:58085 "EHLO
+	out5.laposte.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753576AbZCUKOi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Mar 2009 06:14:38 -0400
 Received: from meplus.info (localhost [127.0.0.1])
-	by mwinf8214.laposte.net (SMTP Server) with ESMTP id EE6307000087;
-	Sat, 21 Mar 2009 10:33:37 +0100 (CET)
+	by mwinf8402.laposte.net (SMTP Server) with ESMTP id 13E3E700008B;
+	Sat, 21 Mar 2009 11:14:28 +0100 (CET)
 Received: from ? (91-164-138-157.rev.libertysurf.net [91.164.138.157])
-	by mwinf8214.laposte.net (SMTP Server) with ESMTP id 3E1F77000083;
-	Sat, 21 Mar 2009 10:33:37 +0100 (CET)
-X-ME-UUID: 20090321093337254.3E1F77000083@mwinf8214.laposte.net
+	by mwinf8402.laposte.net (SMTP Server) with ESMTP id 6FCD87000086;
+	Sat, 21 Mar 2009 11:14:27 +0100 (CET)
+X-ME-UUID: 20090321101427458.6FCD87000086@mwinf8402.laposte.net
 Content-Disposition: inline
-In-Reply-To: <20090320150336.GA23521@spearce.org>
+In-Reply-To: <1237559694.25283.46.camel@alexandre-desktop>
 User-Agent: Mutt/1.5.18 (2008-05-17)
 X-me-spamlevel: not-spam
 X-me-spamrating: 40.000000
-X-me-spamcause: OK, (-200)(0000)gggruggvucftvghtrhhoucdtuddrvdekuddrfedtucetggdotefuucfrrhhofhhilhgvmecuoehnohhnvgeqnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucdlqddutddtmd
+X-me-spamcause: OK, (-250)(0000)gggruggvucftvghtrhhoucdtuddrvdekuddrfeduucetggdotefuucfrrhhofhhilhgvmecuoehnohhnvgeqnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucdlqddutddtmdenvhgvnhgurhgvughiucdlqdehtddm
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114033>
 
 
-On Fri, Mar 20, 2009 at 08:03:36AM -0700, Shawn O. Pearce wrote:
+On Fri, Mar 20, 2009 at 10:34:54AM -0400, Alexandre Bourget wrote:     =
+                                                                       =
+                              =20
+>
+> Le vendredi 20 mars 2009 =E0 08:13 +0100, Mike Hommey a =E9crit :
+> > On Fri, Mar 20, 2009 at 01:54:02AM +0100, Nicolas Sebrecht wrote:
+> > IMHO, we should find a better way to say that than to use the "inde=
+x"
+> > word at all. This obviously applies to all uses of "index" in frenc=
+h
+> > where we avoided it in english.
+> >
+> > OTOH, the best I can find for "staging area" is "zone de pr=E9parat=
+ion",
+> > and that doesn't help finding a word for stage and unstage.
+>
+> "zone de pr=E9paration" sounds good to me.
 
-> It would really help me if translation patches didn't require me
-> to hand-edit them.  My email client mangles them bad enough as
-> it is, and I can only read English, so its very likely I'd wind
-> up mangling a translation of "revert" into "your cow ate my pig,
-> please give me your truck as payment".
+I'm not sure we are doing more good than bad. The "index" is a
+technical's Git word which has its own sense in Git.
 
-Yes, I'm going to work that way. I'll provide a new (complete) version
-of this topic when most french people here will agree with proposed
-patches.
+We could provide a pure "only french terms" translation but I'm not sur=
+e
+it's the best way to work in software translation.
 
--- 
+"Index" is a one of theses terms having a "special meaning in place".
+It stands in English for "staging area" and could have the same meaning
+in french mainly because we don't have a good french word to that
+special use case.
+
+"Index" as-is in the french po is NOT a non-sense. Also, french people
+newbie in Git would easily find help for the index (most websites are i=
+n
+english).
+
+--=20
 Nicolas Sebrecht
