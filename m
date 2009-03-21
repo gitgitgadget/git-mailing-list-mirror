@@ -1,42 +1,42 @@
 From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: [PATCH] documenation: Makefile accounts for SHELL_PATH setting
-Date: Fri, 20 Mar 2009 22:04:33 -0400
-Message-ID: <1237601073-22670-1-git-send-email-bwalton@artsci.utoronto.ca>
+Subject: [PATCH] documentation: Makefile accounts for SHELL_PATH setting
+Date: Fri, 20 Mar 2009 22:40:20 -0400
+Message-ID: <1237603220-22897-1-git-send-email-bwalton@artsci.utoronto.ca>
 Cc: Ben Walton <bwalton@artsci.utoronto.ca>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 21 03:06:21 2009
+X-From: git-owner@vger.kernel.org Sat Mar 21 03:45:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lkqb7-0002xh-2h
-	for gcvg-git-2@gmane.org; Sat, 21 Mar 2009 03:06:05 +0100
+	id 1LkrD2-0001ja-9P
+	for gcvg-git-2@gmane.org; Sat, 21 Mar 2009 03:45:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753150AbZCUCEg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Mar 2009 22:04:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752860AbZCUCEg
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 22:04:36 -0400
-Received: from www.cquest.utoronto.ca ([192.82.128.5]:55838 "EHLO
+	id S1752974AbZCUCkX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Mar 2009 22:40:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752553AbZCUCkX
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 Mar 2009 22:40:23 -0400
+Received: from www.cquest.utoronto.ca ([192.82.128.5]:55886 "EHLO
 	www.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752490AbZCUCEf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Mar 2009 22:04:35 -0400
+	with ESMTP id S1752722AbZCUCkW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Mar 2009 22:40:22 -0400
 Received: from ntdws12.chass.utoronto.ca ([128.100.160.253] ident=93)
 	by www.cquest.utoronto.ca with esmtp (Exim 4.43)
-	id 1LkqZd-0002wt-B9; Fri, 20 Mar 2009 22:04:33 -0400
+	id 1Lkr8G-000336-Kf; Fri, 20 Mar 2009 22:40:20 -0400
 Received: from localhost
 	([127.0.0.1] helo=ntdws12.chass.utoronto.ca ident=505)
 	by ntdws12.chass.utoronto.ca with esmtp (Exim 4.63)
 	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1LkqZd-0005uC-8i; Fri, 20 Mar 2009 22:04:33 -0400
+	id 1Lkr8G-0005y4-I6; Fri, 20 Mar 2009 22:40:20 -0400
 Received: (from bwalton@localhost)
-	by ntdws12.chass.utoronto.ca (8.13.8/8.13.8/Submit) id n2L24Xwb022700;
-	Fri, 20 Mar 2009 22:04:33 -0400
+	by ntdws12.chass.utoronto.ca (8.13.8/8.13.8/Submit) id n2L2eKNm022940;
+	Fri, 20 Mar 2009 22:40:20 -0400
 X-Mailer: git-send-email 1.6.2.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114023>
 
 Take SHELL_PATH into account, if set, in Documentation/Makefile.  This
 allows the caller to provide a shell capable of running the install
