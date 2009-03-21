@@ -1,95 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Change double quotes to single quotes in message
-Date: Sat, 21 Mar 2009 14:07:20 -0700
-Message-ID: <7v3ad6egaf.fsf@gitster.siamese.dyndns.org>
-References: <877i2j6y6b.fsf@jondo.cante.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Sat Mar 21 22:08:57 2009
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH 04/16] t0050: Check whether git init detected symbolic link support correctly
+Date: Sat, 21 Mar 2009 22:26:27 +0100
+Message-ID: <64e61f2d173b0172d9dbaa9667486764224568fb.1237667830.git.j6t@kdbg.org>
+References: <cover.1237667830.git.j6t@kdbg.org>
+Cc: Johannes Sixt <j6t@kdbg.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 21 22:28:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ll8R7-0006o6-13
-	for gcvg-git-2@gmane.org; Sat, 21 Mar 2009 22:08:57 +0100
+	id 1Ll8kF-0003u8-IH
+	for gcvg-git-2@gmane.org; Sat, 21 Mar 2009 22:28:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753034AbZCUVH2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Mar 2009 17:07:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752526AbZCUVH1
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Mar 2009 17:07:27 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55022 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752284AbZCUVH0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Mar 2009 17:07:26 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id EF83280DA;
-	Sat, 21 Mar 2009 17:07:24 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 40B1C80D8; Sat,
- 21 Mar 2009 17:07:22 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 46E20F98-165C-11DE-A00E-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+	id S1754396AbZCUV1A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Mar 2009 17:27:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754117AbZCUV07
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Mar 2009 17:26:59 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:27920 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751399AbZCUV07 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Mar 2009 17:26:59 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 1DEBE1001D;
+	Sat, 21 Mar 2009 22:26:55 +0100 (CET)
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id D9DEA427B8;
+	Sat, 21 Mar 2009 22:26:54 +0100 (CET)
+X-Mailer: git-send-email 1.6.2.1.224.g2225f
+In-Reply-To: <cover.1237667830.git.j6t@kdbg.org>
+In-Reply-To: <cover.1237667830.git.j6t@kdbg.org>
+References: <cover.1237667830.git.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114058>
 
-Jari Aalto <jari.aalto@cante.net> writes:
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ t/t0050-filesystem.sh |   28 ++++++++++++++++++++++++++--
+ 1 files changed, 26 insertions(+), 2 deletions(-)
 
-> From 6daec692a39a1ecf0452f1ad1eb7ba6fbf5661c9 Mon Sep 17 00:00:00 2001
-> From: Jari Aalto <jari.aalto@cante.net>
-> Date: Sat, 21 Mar 2009 11:00:54 +0200
-> Subject: [PATCH] Change double quotes to single quotes in message
->
-> This helps selecting the text inside quotes by using mouse double-click
-> action (e.g. in Putty). Functions affected: update_refs_for_switch(),
-> update_refs_for_switch() and cmd_checkout().
-> ---
-
-The patch is good.
-
-Lacks sign-off, has extra header lines in body, and the justification can
-be a lot stronger.  The three you identified are the only ones among 30
-hits from:
-
-    $ git grep -n -e "printf(.*\".*['\"]%s" -- '*.c'
-
-that use dq around the path-like things, while all others use sq.  There
-also are a few similar constructs using strbuf_addf all of which use sq.
-Consistency is good.
-
->  builtin-checkout.c |    6 +++---
->  1 files changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/builtin-checkout.c b/builtin-checkout.c
-> index 9fdfc58..49daade 100644
-> --- a/builtin-checkout.c
-> +++ b/builtin-checkout.c
-> @@ -503,10 +503,10 @@ static void update_refs_for_switch(struct checkout_opts *opts,
->  		create_symref("HEAD", new->path, msg.buf);
->  		if (!opts->quiet) {
->  			if (old->path && !strcmp(new->path, old->path))
-> -				fprintf(stderr, "Already on \"%s\"\n",
-> +				fprintf(stderr, "Already on '%s'\n",
->  					new->name);
->  			else
-> -				fprintf(stderr, "Switched to%s branch \"%s\"\n",
-> +				fprintf(stderr, "Switched to%s branch '%s'\n",
->  					opts->new_branch ? " a new" : "",
->  					new->name);
->  		}
-> @@ -515,7 +515,7 @@ static void update_refs_for_switch(struct checkout_opts *opts,
->  			   REF_NODEREF, DIE_ON_ERR);
->  		if (!opts->quiet) {
->  			if (old->path)
-> -				fprintf(stderr, "Note: moving to \"%s\" which isn't a local branch\nIf you want to create a new branch from this checkout, you may do so\n(now or later) by using -b with the checkout command again. Example:\n  git checkout -b <new_branch_name>\n", new->name);
-> +				fprintf(stderr, "Note: moving to '%s' which isn't a local branch\nIf you want to create a new branch from this checkout, you may do so\n(now or later) by using -b with the checkout command again. Example:\n  git checkout -b <new_branch_name>\n", new->name);
->  			describe_detached_head("HEAD is now at", new->commit);
->  		}
->  	}
-> -- 
-> 1.6.1.3
+diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
+index a449580..89282cc 100755
+--- a/t/t0050-filesystem.sh
++++ b/t/t0050-filesystem.sh
+@@ -9,7 +9,8 @@ aumlcdiar=`printf '\x61\xcc\x88'`
+ 
+ case_insensitive=
+ unibad=
+-test_expect_success 'see if we expect ' '
++no_symlinks=
++test_expect_success 'see what we expect' '
+ 
+ 	test_case=test_expect_success
+ 	test_unicode=test_expect_success
+@@ -31,13 +32,21 @@ test_expect_success 'see if we expect ' '
+ 		;;
+ 	*)	;;
+ 	esac &&
+-	rm -fr junk
++	rm -fr junk &&
++	{
++		ln -s x y 2> /dev/null &&
++		test -h y 2> /dev/null ||
++		no_symlinks=1
++		rm -f y
++	}
+ '
+ 
+ test "$case_insensitive" &&
+ 	say "will test on a case insensitive filesystem"
+ test "$unibad" &&
+ 	say "will test on a unicode corrupting filesystem"
++test "$no_symlinks" &&
++	say "will test on a filesystem lacking symbolic links"
+ 
+ if test "$case_insensitive"
+ then
+@@ -53,6 +62,21 @@ test_expect_success "detection of case insensitive filesystem during repo init"
+ '
+ fi
+ 
++if test "$no_symlinks"
++then
++test_expect_success "detection of filesystem w/o symlink support during repo init" '
++
++	v=$(git config --bool core.symlinks) &&
++	test "$v" = false
++'
++else
++test_expect_success "detection of filesystem w/o symlink support during repo init" '
++
++	test_must_fail git config --bool core.symlinks ||
++	test "$(git config --bool core.symlinks)" = true
++'
++fi
++
+ test_expect_success "setup case tests" '
+ 
+ 	git config core.ignorecase true &&
+-- 
+1.6.2.1.224.g2225f
