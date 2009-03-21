@@ -1,31 +1,31 @@
 From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH 06/16] t3600: Use test prerequisite tags
-Date: Sat, 21 Mar 2009 22:26:29 +0100
-Message-ID: <70f789fecee6955c362391b33272223c7ba74cc6.1237667830.git.j6t@kdbg.org>
+Subject: [PATCH 08/16] t5302: Use prerequisite tags to skip 64-bit offset tests
+Date: Sat, 21 Mar 2009 22:26:31 +0100
+Message-ID: <8b7aae1a054a86ae7984386bc8e061a408534873.1237667830.git.j6t@kdbg.org>
 References: <cover.1237667830.git.j6t@kdbg.org>
 Cc: Johannes Sixt <j6t@kdbg.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 21 22:28:51 2009
+X-From: git-owner@vger.kernel.org Sat Mar 21 22:28:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ll8kI-0003u8-AE
-	for gcvg-git-2@gmane.org; Sat, 21 Mar 2009 22:28:46 +0100
+	id 1Ll8kG-0003u8-8C
+	for gcvg-git-2@gmane.org; Sat, 21 Mar 2009 22:28:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755306AbZCUV1Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Mar 2009 17:27:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755147AbZCUV1N
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Mar 2009 17:27:13 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:27926 "EHLO bsmtp.bon.at"
+	id S1754732AbZCUV1D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Mar 2009 17:27:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754199AbZCUV1A
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Mar 2009 17:27:00 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:27934 "EHLO bsmtp.bon.at"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752737AbZCUV07 (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751417AbZCUV07 (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 21 Mar 2009 17:26:59 -0400
 Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 4DB78CDF82;
+	by bsmtp.bon.at (Postfix) with ESMTP id 9B49C2C400B;
 	Sat, 21 Mar 2009 22:26:55 +0100 (CET)
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 1B8055BC07;
+	by dx.sixt.local (Postfix) with ESMTP id 52BB7427B8;
 	Sat, 21 Mar 2009 22:26:55 +0100 (CET)
 X-Mailer: git-send-email 1.6.2.1.224.g2225f
 In-Reply-To: <cover.1237667830.git.j6t@kdbg.org>
@@ -35,109 +35,60 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114062>
 
-The are two prerequisites.
+The effects of this patch can be tested on Linux by commenting out
 
-- The filesystem support names with tabs or new-lines.
+  #define _FILE_OFFSET_BITS 64
 
-- Files cannot be removed if their containing directory is read-only.
-
-Previously, whether these preconditions are satisified was tested inside
-test_expect_success. We move these tests outside because, strictly
-speaking, they are not part of the tests.
+in git-compat-util.h.
 
 Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
- t/t3600-rm.sh |   58 +++++++++++++++++++++++++++++---------------------------
- 1 files changed, 30 insertions(+), 28 deletions(-)
+ t/t5302-pack-index.sh |   15 +++++----------
+ 1 files changed, 5 insertions(+), 10 deletions(-)
 
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index 2aefbcf..76b1bb4 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -12,31 +12,37 @@ test_expect_success \
-     'Initialize test directory' \
-     "touch -- foo bar baz 'space embedded' -q &&
-      git add -- foo bar baz 'space embedded' -q &&
--     git commit -m 'add normal files' &&
--     test_tabs=y &&
--     if touch -- 'tab	embedded' 'newline
--embedded'
--     then
-+     git commit -m 'add normal files'"
-+
-+if touch -- 'tab	embedded' 'newline
-+embedded' 2>/dev/null
-+then
-+	test_set_prereq FUNNYNAMES
-+else
-+	say 'Your filesystem does not allow tabs in filenames.'
-+fi
-+
-+test_expect_success FUNNYNAMES 'add files with funny names' "
-      git add -- 'tab	embedded' 'newline
- embedded' &&
-      git commit -m 'add files with tabs and newlines'
--     else
--         test_tabs=n
--     fi"
--
--test "$test_tabs" = n && say 'Your filesystem does not allow tabs in filenames.'
-+"
+diff --git a/t/t5302-pack-index.sh b/t/t5302-pack-index.sh
+index 77982cd..4360e77 100755
+--- a/t/t5302-pack-index.sh
++++ b/t/t5302-pack-index.sh
+@@ -69,32 +69,27 @@ test_expect_success \
+     'index v2: force some 64-bit offsets with pack-objects' \
+     'pack3=$(git pack-objects --index-version=2,0x40000 test-3 <obj-list)'
  
-+# Determine rm behavior
- # Later we will try removing an unremovable path to make sure
- # git rm barfs, but if the test is run as root that cannot be
- # arranged.
+-have_64bits=
+ if msg=$(git verify-pack -v "test-3-${pack3}.pack" 2>&1) ||
+ 	! (echo "$msg" | grep "pack too large .* off_t")
+ then
+-	have_64bits=t
++	test_set_prereq OFF64_T
+ else
+ 	say "skipping tests concerning 64-bit offsets"
+ fi
+ 
+-test "$have_64bits" &&
 -test_expect_success \
--    'Determine rm behavior' \
--    ': >test-file
--     chmod a-w .
--     rm -f test-file
--     test -f test-file && test_failed_remove=y
--     chmod 775 .
--     rm -f test-file'
-+: >test-file
-+chmod a-w .
-+rm -f test-file 2>/dev/null
-+if test -f test-file
-+then
-+	test_set_prereq RO_DIR
-+else
-+	say 'skipping removal failure test (perhaps running as root?)'
-+fi
-+chmod 775 .
-+rm -f test-file
++test_expect_success OFF64_T \
+     'index v2: verify a pack with some 64-bit offsets' \
+     'git verify-pack -v "test-3-${pack3}.pack"'
  
- test_expect_success \
-     'Pre-check that foo exists and is in index before git rm foo' \
-@@ -101,20 +107,16 @@ test_expect_success \
-     'Test that "git rm -- -q" succeeds (remove a file that looks like an option)' \
-     'git rm -- -q'
- 
--test "$test_tabs" = y && test_expect_success \
-+test_expect_success FUNNYNAMES \
-     "Test that \"git rm -f\" succeeds with embedded space, tab, or newline characters." \
-     "git rm -f 'space embedded' 'tab	embedded' 'newline
- embedded'"
- 
--if test "$test_failed_remove" = y; then
--chmod a-w .
+-test "$have_64bits" &&
 -test_expect_success \
--    'Test that "git rm -f" fails if its rm fails' \
--    'test_must_fail git rm -f baz'
--chmod 775 .
--else
--    say 'skipping removal failure test (perhaps running as root?)'
--fi
-+test_expect_success RO_DIR 'Test that "git rm -f" fails if its rm fails' '
-+	chmod a-w . &&
-+	test_must_fail git rm -f baz &&
-+	chmod 775 .
-+'
++test_expect_success OFF64_T \
+     '64-bit offsets: should be different from previous index v2 results' \
+     '! cmp "test-2-${pack2}.idx" "test-3-${pack3}.idx"'
  
- test_expect_success \
-     'When the rm in "git rm -f" fails, it should not remove the file from the index' \
+-test "$have_64bits" &&
+-test_expect_success \
++test_expect_success OFF64_T \
+     'index v2: force some 64-bit offsets with index-pack' \
+     'git index-pack --index-version=2,0x40000 -o 3.idx "test-1-${pack1}.pack"'
+ 
+-test "$have_64bits" &&
+-test_expect_success \
++test_expect_success OFF64_T \
+     '64-bit offsets: index-pack result should match pack-objects one' \
+     'cmp "test-3-${pack3}.idx" "3.idx"'
+ 
 -- 
 1.6.2.1.224.g2225f
