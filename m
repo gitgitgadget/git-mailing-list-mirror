@@ -1,120 +1,140 @@
-From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: Re: [PATCH] documentation: Makefile accounts for SHELL_PATH setting
-Date: Sat, 21 Mar 2009 07:38:35 -0400
-Message-ID: <1237635198-sup-2111@ntdws12.chass.utoronto.ca>
-References: <1237603220-22897-1-git-send-email-bwalton@artsci.utoronto.ca> <20090321032240.GA31547@coredump.intra.peff.net>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH] Respect core.autocrlf when preparing temporary files for
+ external diff
+Date: Sat, 21 Mar 2009 12:42:52 +0100 (CET)
+Message-ID: <8cb424b16f21164ddc26d0be3f6f7727254b3506.1237635609u.git.johannes.schindelin@gmx.de>
+References: <cover.1237635609u.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; boundary="=-1237635520-431584-28712-1057-26-="; micalg="pgp-sha1"
-Cc: GIT List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Mar 21 12:40:15 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Sebastian Schuberth <sschuberth@gmail.com>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Mar 21 12:43:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LkzYj-0007lz-Av
-	for gcvg-git-2@gmane.org; Sat, 21 Mar 2009 12:40:13 +0100
+	id 1Lkzbj-0000I6-6K
+	for gcvg-git-2@gmane.org; Sat, 21 Mar 2009 12:43:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753655AbZCULip (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Mar 2009 07:38:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752737AbZCULio
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Mar 2009 07:38:44 -0400
-Received: from www.cquest.utoronto.ca ([192.82.128.5]:56324 "EHLO
-	www.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751496AbZCULin (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Mar 2009 07:38:43 -0400
-Received: from ntdws12.chass.utoronto.ca ([128.100.160.253] ident=93)
-	by www.cquest.utoronto.ca with esmtp (Exim 4.43)
-	id 1LkzXF-00046w-7w; Sat, 21 Mar 2009 07:38:41 -0400
-Received: from localhost
-	([127.0.0.1] helo=ntdws12.chass.utoronto.ca ident=505)
-	by ntdws12.chass.utoronto.ca with esmtp (Exim 4.63)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1LkzXF-0006tx-5Q; Sat, 21 Mar 2009 07:38:41 -0400
-Received: (from bwalton@localhost)
-	by ntdws12.chass.utoronto.ca (8.13.8/8.13.8/Submit) id n2LBcejt026529;
-	Sat, 21 Mar 2009 07:38:40 -0400
-In-Reply-To: <20090321032240.GA31547@coredump.intra.peff.net>
-User-Agent: Sup/git
+	id S1754193AbZCULkz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Mar 2009 07:40:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753863AbZCULkz
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Mar 2009 07:40:55 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35403 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750871AbZCULky (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Mar 2009 07:40:54 -0400
+Received: (qmail invoked by alias); 21 Mar 2009 11:40:51 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp054) with SMTP; 21 Mar 2009 12:40:51 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19N4AE7PgVNhAyNADQBLS6E0xj1rB+8QEfnKDMIea
+	tXXdxs6XnPhd8H
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <cover.1237635609u.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.42
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114036>
 
+When preparing temporary files for an external diff, the files should be
+handled as if they were worktree files.
 
---=-1237635520-431584-28712-1057-26-=
-Content-Type: text/plain; charset=UTF-8
+This makes things consistent for the case when one side of the diff was
+found in the current working directory (and therefore creating a temporary
+file could be avoided altogether).
 
-Excerpts from Jeff King's message of Fri Mar 20 23:22:40 -0400 2009:
-> > +#retain original (but broken) behaviour if SHELL_PATH isn't overridden
-> > +ifndef SHELL_PATH
-> > +    SHELL_PATH = sh
-> > +endif
-> 
-> The Makefile in t/Makefile does:
-> 
->   SHELL_PATH ?= $(SHELL)
-> 
-> which I think makes more sense (and yes, yours actually keeps the
-> existing behavior, but it's probably better to inherit from SHELL in
-> case it is set to something more useful).
+This fixes msysGit issue 177.
 
-I used the ifndef/endif setup becuase that's how the PERL_PATH was set
-and also becuase I think it's slightly more explicit.  I'm ok with ?=
-though too.  I had considered using $(SHELL), but discarded it because
-it veered from the current behaviour.  I agree that $(SHELL) is likely
-better than sh though.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ diff.c                   |   13 ++++++++++---
+ t/t4020-diff-external.sh |   16 ++++++++++++++++
+ 2 files changed, 26 insertions(+), 3 deletions(-)
 
-> >  install-html: html
-> > -    sh ./install-webdoc.sh $(DESTDIR)$(htmldir)
-> > +    $(SHELL_PATH) ./install-webdoc.sh $(DESTDIR)$(htmldir)
-> 
-> You need a SHELL_PATH_SQ to handle paths with spaces; see t/Makefile for
-> an example.
-
-Ok.  I'll look at this and implement the _SQ bits too to make it safer
-and more general.
-
-> I wonder if both subdirs should simply be pulling from
-> GIT-BUILD-OPTIONS, though, which would allow this to use the specified
-> SHELL_PATH:
-> 
->   $ make SHELL_PATH=whatever
->   $ cd Documentation && make
-> 
-> but maybe it is not worth caring about (since it may complicate building
-> Documentation if you _haven't_ build the actual code).
-
-In my case, I'm using the configure script and then running make,
-which sees the Documentation/Makefile source in the ../config.mak
-files, so there may be some variance between pure make and make +
-autoconf in this respect.  I hadn't looked at it in that light.
-Should this be reconciled too?
-
-I'm away today, but will try to correct this patch when I get home.
-
-Thanks
--Ben
+diff --git a/diff.c b/diff.c
+index 75d9fab..699ae6a 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1946,17 +1946,23 @@ void diff_free_filespec_data(struct diff_filespec *s)
+ 	s->cnt_data = NULL;
+ }
+ 
+-static void prep_temp_blob(struct diff_tempfile *temp,
++static void prep_temp_blob(const char *path, struct diff_tempfile *temp,
+ 			   void *blob,
+ 			   unsigned long size,
+ 			   const unsigned char *sha1,
+ 			   int mode)
+ {
+ 	int fd;
++	struct strbuf buf = STRBUF_INIT;
+ 
+ 	fd = git_mkstemp(temp->tmp_path, PATH_MAX, ".diff_XXXXXX");
+ 	if (fd < 0)
+ 		die("unable to create temp-file: %s", strerror(errno));
++	if (convert_to_working_tree(path,
++			(const char *)blob, (size_t)size, &buf)) {
++		blob = buf.buf;
++		size = buf.len;
++	}
+ 	if (write_in_full(fd, blob, size) != size)
+ 		die("unable to write temp-file");
+ 	close(fd);
+@@ -1964,6 +1970,7 @@ static void prep_temp_blob(struct diff_tempfile *temp,
+ 	strcpy(temp->hex, sha1_to_hex(sha1));
+ 	temp->hex[40] = 0;
+ 	sprintf(temp->mode, "%06o", mode);
++	strbuf_release(&buf);
+ }
+ 
+ static struct diff_tempfile *prepare_temp_file(const char *name,
+@@ -2004,7 +2011,7 @@ static struct diff_tempfile *prepare_temp_file(const char *name,
+ 				die("readlink(%s)", name);
+ 			if (ret == sizeof(buf))
+ 				die("symlink too long: %s", name);
+-			prep_temp_blob(temp, buf, ret,
++			prep_temp_blob(name, temp, buf, ret,
+ 				       (one->sha1_valid ?
+ 					one->sha1 : null_sha1),
+ 				       (one->sha1_valid ?
+@@ -2030,7 +2037,7 @@ static struct diff_tempfile *prepare_temp_file(const char *name,
+ 	else {
+ 		if (diff_populate_filespec(one, 0))
+ 			die("cannot read data blob for %s", one->path);
+-		prep_temp_blob(temp, one->data, one->size,
++		prep_temp_blob(name, temp, one->data, one->size,
+ 			       one->sha1, one->mode);
+ 	}
+ 	return temp;
+diff --git a/t/t4020-diff-external.sh b/t/t4020-diff-external.sh
+index 281680d..f8c99f1 100755
+--- a/t/t4020-diff-external.sh
++++ b/t/t4020-diff-external.sh
+@@ -136,4 +136,20 @@ test_expect_success 'GIT_EXTERNAL_DIFF with more than one changed files' '
+ 	GIT_EXTERNAL_DIFF=echo git diff
+ '
+ 
++echo "#!$SHELL_PATH" >fake-diff.sh
++cat >> fake-diff.sh <<\EOF
++cat $2 >> crlfed.txt
++EOF
++chmod a+x fake-diff.sh
++
++keep_only_cr () {
++	tr -dc '\015'
++}
++
++test_expect_success 'external diff with autocrlf = true' '
++	git config core.autocrlf true &&
++	GIT_EXTERNAL_DIFF=./fake-diff.sh git diff &&
++	test $(wc -l < crlfed.txt) = $(cat crlfed.txt | keep_only_cr | wc -c)
++'
++
+ test_done
 -- 
-Ben Walton
-Systems Programmer - CHASS
-University of Toronto
-C:416.407.5610 | W:416.978.4302
-
-GPG Key Id: 8E89F6D2; Key Server: pgp.mit.edu
-Contact me to arrange for a CAcert assurance meeting.
-
---=-1237635520-431584-28712-1057-26-=
-Content-Disposition: attachment; filename="signature.asc"
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
-
-iD8DBQFJxNHA8vuMHY6J9tIRAm48AKCWUGIR1atlcEw+KKb/dcPiNJq7vQCg6SWS
-sJJnFApxhqm3+c2eMqHSptA=
-=0QH1
------END PGP SIGNATURE-----
-
---=-1237635520-431584-28712-1057-26-=--
+1.6.2.1.493.g67cf3
