@@ -1,123 +1,90 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: What's cooking in git.git (Mar 2009, #06; Sat, 21)
-Date: Sat, 21 Mar 2009 23:21:18 +0100
-Message-ID: <200903212321.18283.j6t@kdbg.org>
-References: <7vk56jfgt2.fsf@gitster.siamese.dyndns.org>
+From: Brandon Casey <drafnel@gmail.com>
+Subject: [PATCH 1/2] t7700: demonstrate repack flaw which may loosen objects 
+	unnecessarily
+Date: Sat, 21 Mar 2009 17:22:30 -0500
+Message-ID: <ee63ef30903211522k5694b936ma558513d35ac98d9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 21 23:22:56 2009
+X-From: git-owner@vger.kernel.org Sat Mar 21 23:24:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ll9ae-0000wH-Au
-	for gcvg-git-2@gmane.org; Sat, 21 Mar 2009 23:22:52 +0100
+	id 1Ll9bm-0001Fk-Jp
+	for gcvg-git-2@gmane.org; Sat, 21 Mar 2009 23:24:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755185AbZCUWVX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Mar 2009 18:21:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753738AbZCUWVW
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Mar 2009 18:21:22 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:41516 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752581AbZCUWVW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Mar 2009 18:21:22 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 13A872C400D;
-	Sat, 21 Mar 2009 23:21:18 +0100 (CET)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 63B0E4000D;
-	Sat, 21 Mar 2009 23:21:18 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vk56jfgt2.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1753801AbZCUWWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Mar 2009 18:22:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753151AbZCUWWd
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Mar 2009 18:22:33 -0400
+Received: from yx-out-2324.google.com ([74.125.44.28]:57817 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752144AbZCUWWd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Mar 2009 18:22:33 -0400
+Received: by yx-out-2324.google.com with SMTP id 31so1562676yxl.1
+        for <git@vger.kernel.org>; Sat, 21 Mar 2009 15:22:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=akEC/312X735jL0bNoCLEn2E7zfQy0nCIgeH87D2bcA=;
+        b=SfH3UJegK1lNXdiW2ifiMOx/oPaAJd4zdNOAaGkOk+lGamQ0B1qMMae8JpflZMcxsX
+         Nzhb7PkvaNYpsK+i+9EqHSkgILLtF2CMquihV9m0RnnUI66VWI6/eaBfXvDLRe5nhl/H
+         DPp+acjpfXCEuG124CL+cey8LaO3HUqPPWur8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=bwhSVSk7bZl4RkuyrhOPSVAGx8W1ZGZ/RPbGxZb2kwrH5uvNgXQ4bvzZMbAM+5eIyY
+         4wXniYYyWluhzW3jkY7Ci58mK7ZroqlJiDWDYPpu9FmFV0XTFwRp9s6E1XDYDoRwYgD8
+         6QB/mg5Lp4b/moyhH0VDlLtQRg4g6B0BSae7I=
+Received: by 10.150.58.5 with SMTP id g5mr8766938yba.86.1237674150942; Sat, 21 
+	Mar 2009 15:22:30 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114085>
 
-On Samstag, 21. M=E4rz 2009, Junio C Hamano wrote:
-> * js/maint-1.6.0-exec-path-env (Wed Mar 18 08:42:53 2009 +0100) 1 com=
-mit
->  - export GIT_EXEC_PATH when git is run with --exec-path
-
-Here is the patch again with a commit message that explains what's goin=
-g on.
-
-But notice that this is probably not a complete solution: As you can se=
-e
-(below) from the analysis, a git-repack that was taken from $prefix wou=
-ld
-invoke a git that is not from $prefix, but from the initial command's
---exec-path. I think this can be solved by installing the git executabl=
-e
-in $prefix/libexec/git-core as well.
-
--- Hannes
-
--- 8< --
-Subject: [PATCH] Propagate --exec-path setting to external commands via=
- GIT_EXEC_PATH
-
-Let PATH0=3D$PATH that was set before the invocation.
-Let /foo be a build directory.
-Let /pfx be the installation prefix.
-Let pfxexecpath=3D/pfx/libexec/git-core.
-
-The following is going on when 'git --exec-path=3D/foo gc' is invoked:
-
-1. git sets PATH=3D/foo:$PATH0 using the path from --exec-path
-
-2. gc execs 'git repack' (note: no dash).
-
-3. Since there is a git in /foo (it's a build directory), /foo/git is
-   taken.
-
-4. No explicit exec-path is set this time, hence, this secondary git se=
-ts
-   PATH=3D$pfxexecpath:/foo:$PATH
-
-5. Since 'repack' is not a built-in, execv_dashed_external execs
-   'git-repack' (note: dash).
-
-6. There is a $pfxexecpath/git-repack, and it is taken.
-
-7. This git-repack runs 'git pack-objects' (note: no dash).
-
-8. There is no git in $pfxexecpath, but there is one in /foo. Hence,
-   /foo/git is run.
-
-9. pack-objects is a builtin, hence, in effect /foo/git-pack-objects
-   is run.
-
-As you can see, the way in which we previously set the PATH allowed to
-mix gits of different vintage.  By setting GIT_EXEC_PATH when --exec-pa=
-th
-was given on the command line, we reduce the confusion.
-
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+If an unreferenced object exists in both a local pack and in either a pack
+residing in an alternate object database or a local kept pack, then the
+pack-objects call made by repack will loosen that object only to have it
+immediately pruned by repack's call to prune-packed.
 ---
- exec_cmd.c |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+ t/t7700-repack.sh |   17 +++++++++++++++++
+ 1 files changed, 17 insertions(+), 0 deletions(-)
 
-diff --git a/exec_cmd.c b/exec_cmd.c
-index 217c125..408e4e5 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -61,6 +61,10 @@ const char *git_extract_argv0_path(const char *argv0=
-)
- void git_set_argv_exec_path(const char *exec_path)
- {
- 	argv_exec_path =3D exec_path;
-+	/*
-+	 * Propagate this setting to external programs.
-+	 */
-+	setenv(EXEC_PATH_ENVIRONMENT, exec_path, 1);
- }
-=20
-=20
---=20
-1.6.2.1.224.g2225f
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index 1ef3892..013e488 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -113,5 +113,22 @@ test_expect_success 'packed unreachable obs in
+alternate ODB are not loosened' '
+ 	test_must_fail git show $csha1
+ '
+
++test_expect_failure 'local packed unreachable obs that exist in
+alternate ODB are not loosened' '
++	echo `pwd`/alt_objects > .git/objects/info/alternates &&
++	echo "$csha1" | git pack-objects --non-empty --all --reflog pack &&
++	rm -f .git/objects/pack/* &&
++	mv pack-* .git/objects/pack/ &&
++	# The pack-objects call on the next line is equivalent to
++	# git repack -A -d without the call to prune-packed
++	git pack-objects --honor-pack-keep --non-empty --all --reflog \
++	    --unpack-unreachable </dev/null pack &&
++	rm -f .git/objects/pack/* &&
++	mv pack-* .git/objects/pack/ &&
++	test 0 = $(git verify-pack -v -- .git/objects/pack/*.idx |
++		egrep "^$csha1 " | sort | uniq | wc -l) &&
++	echo > .git/objects/info/alternates &&
++	test_must_fail git show $csha1
++'
++
+ test_done
+
+-- 
+1.6.2.12.g83676
