@@ -1,84 +1,45 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: [PATCH v2 1/2] t7700: demonstrate repack flaw which may loosen 
-	objects unnecessarily
-Date: Sat, 21 Mar 2009 18:16:58 -0500
-Message-ID: <ee63ef30903211616pdf9fdal51dda518dd3cfec@mail.gmail.com>
-References: <ee63ef30903211525q4a95a27eoa4e95c7954e5cc93@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Invoke "git gc --auto" when a commit is successful.
+Date: Sat, 21 Mar 2009 16:26:57 -0700
+Message-ID: <7viqm2bgou.fsf@gitster.siamese.dyndns.org>
+References: <1237674894-8151-1-git-send-email-dmellor@whistlingcat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 22 00:18:38 2009
+To: "David J. Mellor" <dmellor@whistlingcat.com>
+X-From: git-owner@vger.kernel.org Sun Mar 22 00:30:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlASY-0006bZ-3H
-	for gcvg-git-2@gmane.org; Sun, 22 Mar 2009 00:18:34 +0100
+	id 1LlAe5-0000r6-3Q
+	for gcvg-git-2@gmane.org; Sun, 22 Mar 2009 00:30:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754149AbZCUXRC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Mar 2009 19:17:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754132AbZCUXRB
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Mar 2009 19:17:01 -0400
-Received: from mail-gx0-f208.google.com ([209.85.217.208]:55430 "EHLO
-	mail-gx0-f208.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753825AbZCUXRA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Mar 2009 19:17:00 -0400
-Received: by gxk4 with SMTP id 4so4351012gxk.13
-        for <git@vger.kernel.org>; Sat, 21 Mar 2009 16:16:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=o7F4nC204TUo5mkM4PX/HQq60ojYqH2z6kRW6cWUbIs=;
-        b=nTphDvS84Btrqf67lT1XlNMg4dO5+X2FVpsjtCz34EQNct2PgUZcOmCAmxEpItgRXc
-         sXAKq9K8Tr/hN3vQf66tBrZ4aabFjR70IPgXPkXKnb+wQCv5NiJwSHl2FCL9SWpdzdFU
-         mW+Imt76+YwekgHyO3OLgbP5rQQZAAXTPLsDc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=fHFW3XFMp+CB25H1FKxAeDmEdTWt9g1tmAW6+Y405sRpEODwYduqJ6uSH4sGzI14CP
-         lkiWGnT4kWw1Dk7VyWaEYeLU1N4Da4qPPTWxAtZ/3Bir2ypAWQYxKRysGTScV9TisiOn
-         OuAZjscu1NdFWgNPo2RmVXKbPoSlO50t5WzxA=
-Received: by 10.150.217.14 with SMTP id p14mr293812ybg.209.1237677418353; Sat, 
-	21 Mar 2009 16:16:58 -0700 (PDT)
-In-Reply-To: <ee63ef30903211525q4a95a27eoa4e95c7954e5cc93@mail.gmail.com>
+	id S1753738AbZCUX1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Mar 2009 19:27:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752928AbZCUX1I
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Mar 2009 19:27:08 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64312 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752790AbZCUX1F (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Mar 2009 19:27:05 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8C45BA3513;
+	Sat, 21 Mar 2009 19:27:02 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9AD97A3511; Sat,
+ 21 Mar 2009 19:26:59 -0400 (EDT)
+In-Reply-To: <1237674894-8151-1-git-send-email-dmellor@whistlingcat.com>
+ (David J. Mellor's message of "Sat, 21 Mar 2009 15:34:54 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: C84F4C0E-166F-11DE-AA2A-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114096>
 
-Man I just can't seem to get a patch off without issues.  I meant to
-put these two comments in the patch emails.
+I do not think situation has changed since the previous round:
 
-1) Junio, these two patches are on top of 4d6acb70 which was the tip
-of your jc/maint-1.6.0-keep-pack branch.
-
-2) Also, note that this issue affects --keep-unreachable too, but the
-fix is different since add_objects_in_unpacked_packs() just calls
-add_object_entry() to add the unreachable objects to the list of
-objects to pack and it (add_object_entry) already iterates on the pack
-list.  One way to fix it, which feels very kludgy to me, is to
-temporarily set 'local' to one before calling add_object_entry, so
-that it will do nothing if the object is found in any non-local pack.
-Unless I'm convinced it is worth it, I don't plan on fixing it.  I
-doubt anyone uses --keep-unreachable manually.  It was invented to
-make git-gc safe and has now been replaced by --unpack-unreachable.
-So, --keep-unreachable may pack objects that it doesn't really need to
-pack.  I can live with it.
-
--brandon
-
-
-On Sat, Mar 21, 2009 at 5:25 PM, Brandon Casey <drafnel@gmail.com> wrote:
-> If an unreferenced object exists in both a local pack and in either a pack
-> residing in an alternate object database or a local kept pack, then the
-> pack-objects call made by repack will loosen that object only to have it
-> immediately pruned by repack's call to prune-packed.
->
-> Signed-off-by: Brandon Casey <drafnel@gmail.com>
-> ---
+    http://thread.gmane.org/gmane.comp.version-control.git/78524/focus=82130
