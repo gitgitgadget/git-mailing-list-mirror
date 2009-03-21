@@ -1,108 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 7/7] checkout -: make "-" to mean "previous branch"
- everywhere
-Date: Sat, 21 Mar 2009 15:13:39 -0700
-Message-ID: <1237673619-12608-8-git-send-email-gitster@pobox.com>
-References: <1237673619-12608-1-git-send-email-gitster@pobox.com>
- <1237673619-12608-2-git-send-email-gitster@pobox.com>
- <1237673619-12608-3-git-send-email-gitster@pobox.com>
- <1237673619-12608-4-git-send-email-gitster@pobox.com>
- <1237673619-12608-5-git-send-email-gitster@pobox.com>
- <1237673619-12608-6-git-send-email-gitster@pobox.com>
- <1237673619-12608-7-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 21 23:16:18 2009
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: What's cooking in git.git (Mar 2009, #06; Sat, 21)
+Date: Sat, 21 Mar 2009 23:21:18 +0100
+Message-ID: <200903212321.18283.j6t@kdbg.org>
+References: <7vk56jfgt2.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 21 23:22:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ll9U8-0007f9-Ac
-	for gcvg-git-2@gmane.org; Sat, 21 Mar 2009 23:16:08 +0100
+	id 1Ll9ae-0000wH-Au
+	for gcvg-git-2@gmane.org; Sat, 21 Mar 2009 23:22:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755574AbZCUWOE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Mar 2009 18:14:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755481AbZCUWOB
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Mar 2009 18:14:01 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52639 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755268AbZCUWN7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Mar 2009 18:13:59 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 680ADA3180
-	for <git@vger.kernel.org>; Sat, 21 Mar 2009 18:13:57 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C6FF4A317F for
- <git@vger.kernel.org>; Sat, 21 Mar 2009 18:13:56 -0400 (EDT)
-X-Mailer: git-send-email 1.6.2.1.299.gda643a
-In-Reply-To: <1237673619-12608-7-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 928EA600-1665-11DE-B92C-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1755185AbZCUWVX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Mar 2009 18:21:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753738AbZCUWVW
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Mar 2009 18:21:22 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:41516 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752581AbZCUWVW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Mar 2009 18:21:22 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 13A872C400D;
+	Sat, 21 Mar 2009 23:21:18 +0100 (CET)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 63B0E4000D;
+	Sat, 21 Mar 2009 23:21:18 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vk56jfgt2.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114084>
 
-This is iffy, in that it teaches the very low level machinery to interpret
-it as "the tip of the previous branch" when "-" is fed to it, and may have
-a high risk of unintended side effects.
+On Samstag, 21. M=E4rz 2009, Junio C Hamano wrote:
+> * js/maint-1.6.0-exec-path-env (Wed Mar 18 08:42:53 2009 +0100) 1 com=
+mit
+>  - export GIT_EXEC_PATH when git is run with --exec-path
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Here is the patch again with a commit message that explains what's goin=
+g on.
+
+But notice that this is probably not a complete solution: As you can se=
+e
+(below) from the analysis, a git-repack that was taken from $prefix wou=
+ld
+invoke a git that is not from $prefix, but from the initial command's
+--exec-path. I think this can be solved by installing the git executabl=
+e
+in $prefix/libexec/git-core as well.
+
+-- Hannes
+
+-- 8< --
+Subject: [PATCH] Propagate --exec-path setting to external commands via=
+ GIT_EXEC_PATH
+
+Let PATH0=3D$PATH that was set before the invocation.
+Let /foo be a build directory.
+Let /pfx be the installation prefix.
+Let pfxexecpath=3D/pfx/libexec/git-core.
+
+The following is going on when 'git --exec-path=3D/foo gc' is invoked:
+
+1. git sets PATH=3D/foo:$PATH0 using the path from --exec-path
+
+2. gc execs 'git repack' (note: no dash).
+
+3. Since there is a git in /foo (it's a build directory), /foo/git is
+   taken.
+
+4. No explicit exec-path is set this time, hence, this secondary git se=
+ts
+   PATH=3D$pfxexecpath:/foo:$PATH
+
+5. Since 'repack' is not a built-in, execv_dashed_external execs
+   'git-repack' (note: dash).
+
+6. There is a $pfxexecpath/git-repack, and it is taken.
+
+7. This git-repack runs 'git pack-objects' (note: no dash).
+
+8. There is no git in $pfxexecpath, but there is one in /foo. Hence,
+   /foo/git is run.
+
+9. pack-objects is a builtin, hence, in effect /foo/git-pack-objects
+   is run.
+
+As you can see, the way in which we previously set the PATH allowed to
+mix gits of different vintage.  By setting GIT_EXEC_PATH when --exec-pa=
+th
+was given on the command line, we reduce the confusion.
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
- builtin-checkout.c |    8 +++++---
- sha1_name.c        |   21 +++++++++++++--------
- 2 files changed, 18 insertions(+), 11 deletions(-)
+ exec_cmd.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-diff --git a/builtin-checkout.c b/builtin-checkout.c
-index 66df0c0..6b3b450 100644
---- a/builtin-checkout.c
-+++ b/builtin-checkout.c
-@@ -666,9 +666,11 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 		arg = argv[0];
- 		has_dash_dash = (argc > 1) && !strcmp(argv[1], "--");
- 
--		if (!strcmp(arg, "-"))
--			arg = "@{-1}";
--
-+		{
-+			struct strbuf sb = STRBUF_INIT;
-+			strbuf_branchname(&sb, arg);
-+			arg = strbuf_detach(&sb, NULL);
-+		}
- 		if (get_sha1(arg, rev)) {
- 			if (has_dash_dash)          /* case (1) */
- 				die("invalid reference: %s", arg);
-diff --git a/sha1_name.c b/sha1_name.c
-index 904bcd9..3972f4c 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -758,14 +758,19 @@ int interpret_branch_name(const char *name, struct strbuf *buf)
- 	const char *brace;
- 	char *num_end;
- 
--	if (name[0] != '@' || name[1] != '{' || name[2] != '-')
--		return -1;
--	brace = strchr(name, '}');
--	if (!brace)
--		return -1;
--	nth = strtol(name+3, &num_end, 10);
--	if (num_end != brace)
--		return -1;
-+	if (name[0] == '-' && !name[1]) {
-+		nth = 1;
-+		brace = name; /* "end of branch name expression" */
-+	} else {
-+		if (name[0] != '@' || name[1] != '{' || name[2] != '-')
-+			return -1;
-+		brace = strchr(name, '}');
-+		if (!brace)
-+			return -1;
-+		nth = strtol(name+3, &num_end, 10);
-+		if (num_end != brace)
-+			return -1;
-+	}
- 	if (nth <= 0)
- 		return -1;
- 	cb.alloc = nth;
--- 
-1.6.2.1.299.gda643a
+diff --git a/exec_cmd.c b/exec_cmd.c
+index 217c125..408e4e5 100644
+--- a/exec_cmd.c
++++ b/exec_cmd.c
+@@ -61,6 +61,10 @@ const char *git_extract_argv0_path(const char *argv0=
+)
+ void git_set_argv_exec_path(const char *exec_path)
+ {
+ 	argv_exec_path =3D exec_path;
++	/*
++	 * Propagate this setting to external programs.
++	 */
++	setenv(EXEC_PATH_ENVIRONMENT, exec_path, 1);
+ }
+=20
+=20
+--=20
+1.6.2.1.224.g2225f
