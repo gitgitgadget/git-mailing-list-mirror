@@ -1,140 +1,73 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH] Respect core.autocrlf when preparing temporary files for
- external diff
-Date: Sat, 21 Mar 2009 12:42:52 +0100 (CET)
-Message-ID: <8cb424b16f21164ddc26d0be3f6f7727254b3506.1237635609u.git.johannes.schindelin@gmx.de>
-References: <cover.1237635609u.git.johannes.schindelin@gmx.de>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: [PATCH v4] Introduce %<branch> as shortcut to the tracked
+ branch
+Date: Sat, 21 Mar 2009 13:24:33 +0000 (GMT)
+Message-ID: <alpine.LNX.2.00.0903211323010.20272@reaper.quantumfyre.co.uk>
+References: <200903181448.50706.agruen@suse.de> <7v7i2ki0sw.fsf@gitster.siamese.dyndns.org> <alpine.LNX.2.00.0903202300330.13726@reaper.quantumfyre.co.uk> <200903210135.33729.agruen@suse.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sebastian Schuberth <sschuberth@gmail.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Mar 21 12:43:20 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Petr Baudis <pasky@suse.cz>, B.Steinbrink@gmx.de,
+	git@vger.kernel.org
+To: Andreas Gruenbacher <agruen@suse.de>
+X-From: git-owner@vger.kernel.org Sat Mar 21 14:27:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lkzbj-0000I6-6K
-	for gcvg-git-2@gmane.org; Sat, 21 Mar 2009 12:43:19 +0100
+	id 1Ll1EL-0002fJ-2g
+	for gcvg-git-2@gmane.org; Sat, 21 Mar 2009 14:27:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754193AbZCULkz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Mar 2009 07:40:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753863AbZCULkz
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Mar 2009 07:40:55 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35403 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750871AbZCULky (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Mar 2009 07:40:54 -0400
-Received: (qmail invoked by alias); 21 Mar 2009 11:40:51 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp054) with SMTP; 21 Mar 2009 12:40:51 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19N4AE7PgVNhAyNADQBLS6E0xj1rB+8QEfnKDMIea
-	tXXdxs6XnPhd8H
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <cover.1237635609u.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.42
+	id S1753474AbZCUNZr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Mar 2009 09:25:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752963AbZCUNZr
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Mar 2009 09:25:47 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:35884 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752737AbZCUNZq (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 Mar 2009 09:25:46 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.quantumfyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id F0522C6389
+	for <git@vger.kernel.org>; Sat, 21 Mar 2009 13:25:43 +0000 (GMT)
+Received: (qmail 17455 invoked by uid 103); 21 Mar 2009 13:24:33 +0000
+Received: from darkphoton.datavampyre.co.uk by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-2.05st 
+ (clamdscan: 0.94.2/9146. spamassassin: 3.2.1. perlscan: 2.05st.  
+ Clear:RC:1(212.159.54.234):. 
+ Processed in 0.025534 secs); 21 Mar 2009 13:24:33 -0000
+Received: from darkphoton.datavampyre.co.uk (212.159.54.234)
+  by neutron.quantumfyre.co.uk with SMTP; 21 Mar 2009 13:24:33 +0000
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
+In-Reply-To: <200903210135.33729.agruen@suse.de>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114037>
 
-When preparing temporary files for an external diff, the files should be
-handled as if they were worktree files.
+On Sat, 21 Mar 2009, Andreas Gruenbacher wrote:
 
-This makes things consistent for the case when one side of the diff was
-found in the current working directory (and therefore creating a temporary
-file could be avoided altogether).
+> On Saturday, 21 March 2009 0:08:42 Julian Phillips wrote:
+>> How about adding a generic escape hatch, that would cover this and
+>> future extensions?
+>>
+>> Let a ref that starts with a single quote be taken as given and not
+>> processed.  You have to escape it to get it past the shell, but that makes
+>> it rather unlikely that anyone has used a name that starts with a quote -
+>> and if they have you can still use this mechanism to rename it.
+>
+> To me the most obvious escape sequence would be \x for disabling whatever
+> special meaning x has (for non-alphabetic x). With quoting you likely
+> eventually end up needing  \' in some cases anyway...
 
-This fixes msysGit issue 177.
+Except that \ is the escape character for the shell too ... and that can 
+get very confusing.  Haven't you ever spent too long trying to figure out 
+how many \s you needed to get the command to work properly?
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- diff.c                   |   13 ++++++++++---
- t/t4020-diff-external.sh |   16 ++++++++++++++++
- 2 files changed, 26 insertions(+), 3 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index 75d9fab..699ae6a 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1946,17 +1946,23 @@ void diff_free_filespec_data(struct diff_filespec *s)
- 	s->cnt_data = NULL;
- }
- 
--static void prep_temp_blob(struct diff_tempfile *temp,
-+static void prep_temp_blob(const char *path, struct diff_tempfile *temp,
- 			   void *blob,
- 			   unsigned long size,
- 			   const unsigned char *sha1,
- 			   int mode)
- {
- 	int fd;
-+	struct strbuf buf = STRBUF_INIT;
- 
- 	fd = git_mkstemp(temp->tmp_path, PATH_MAX, ".diff_XXXXXX");
- 	if (fd < 0)
- 		die("unable to create temp-file: %s", strerror(errno));
-+	if (convert_to_working_tree(path,
-+			(const char *)blob, (size_t)size, &buf)) {
-+		blob = buf.buf;
-+		size = buf.len;
-+	}
- 	if (write_in_full(fd, blob, size) != size)
- 		die("unable to write temp-file");
- 	close(fd);
-@@ -1964,6 +1970,7 @@ static void prep_temp_blob(struct diff_tempfile *temp,
- 	strcpy(temp->hex, sha1_to_hex(sha1));
- 	temp->hex[40] = 0;
- 	sprintf(temp->mode, "%06o", mode);
-+	strbuf_release(&buf);
- }
- 
- static struct diff_tempfile *prepare_temp_file(const char *name,
-@@ -2004,7 +2011,7 @@ static struct diff_tempfile *prepare_temp_file(const char *name,
- 				die("readlink(%s)", name);
- 			if (ret == sizeof(buf))
- 				die("symlink too long: %s", name);
--			prep_temp_blob(temp, buf, ret,
-+			prep_temp_blob(name, temp, buf, ret,
- 				       (one->sha1_valid ?
- 					one->sha1 : null_sha1),
- 				       (one->sha1_valid ?
-@@ -2030,7 +2037,7 @@ static struct diff_tempfile *prepare_temp_file(const char *name,
- 	else {
- 		if (diff_populate_filespec(one, 0))
- 			die("cannot read data blob for %s", one->path);
--		prep_temp_blob(temp, one->data, one->size,
-+		prep_temp_blob(name, temp, one->data, one->size,
- 			       one->sha1, one->mode);
- 	}
- 	return temp;
-diff --git a/t/t4020-diff-external.sh b/t/t4020-diff-external.sh
-index 281680d..f8c99f1 100755
---- a/t/t4020-diff-external.sh
-+++ b/t/t4020-diff-external.sh
-@@ -136,4 +136,20 @@ test_expect_success 'GIT_EXTERNAL_DIFF with more than one changed files' '
- 	GIT_EXTERNAL_DIFF=echo git diff
- '
- 
-+echo "#!$SHELL_PATH" >fake-diff.sh
-+cat >> fake-diff.sh <<\EOF
-+cat $2 >> crlfed.txt
-+EOF
-+chmod a+x fake-diff.sh
-+
-+keep_only_cr () {
-+	tr -dc '\015'
-+}
-+
-+test_expect_success 'external diff with autocrlf = true' '
-+	git config core.autocrlf true &&
-+	GIT_EXTERNAL_DIFF=./fake-diff.sh git diff &&
-+	test $(wc -l < crlfed.txt) = $(cat crlfed.txt | keep_only_cr | wc -c)
-+'
-+
- test_done
 -- 
-1.6.2.1.493.g67cf3
+Julian
+
+  ---
+I'm still waiting for the advent of the computer science groupie.
