@@ -1,73 +1,63 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH] builtin-fast-export.c: add default case to avoid crash on
- corrupt repo
-Date: Sat, 21 Mar 2009 22:37:31 +0000
-Message-ID: <1237675051-6688-1-git-send-email-kusmabite@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Respect core.autocrlf when preparing temporary files
+ for external diff
+Date: Sun, 22 Mar 2009 00:54:43 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903220053260.10279@pacific.mpi-cbg.de>
+References: <cover.1237635609u.git.johannes.schindelin@gmx.de> <8cb424b16f21164ddc26d0be3f6f7727254b3506.1237635609u.git.johannes.schindelin@gmx.de> <7vocvuekjb.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN
-Content-Transfer-Encoding: 7BIT
-Cc: Erik Faye-Lund <kusmabite@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 22 00:39:09 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Sebastian Schuberth <sschuberth@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 22 00:54:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlAmT-0002rK-0P
-	for gcvg-git-2@gmane.org; Sun, 22 Mar 2009 00:39:09 +0100
+	id 1LlB19-0006Sc-9a
+	for gcvg-git-2@gmane.org; Sun, 22 Mar 2009 00:54:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754117AbZCUXhb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Mar 2009 19:37:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754099AbZCUXhb
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Mar 2009 19:37:31 -0400
-Received: from mx.getmail.no ([84.208.15.66]:43531 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753750AbZCUXha (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Mar 2009 19:37:30 -0400
-X-Greylist: delayed 3601 seconds by postgrey-1.27 at vger.kernel.org; Sat, 21 Mar 2009 19:37:30 EDT
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KGV00FP9O6EMSD0@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Sat, 21 Mar 2009 23:37:26 +0100 (MET)
-Received: from localhost.localdomain ([84.215.140.47])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KGV003JCO6CGM00@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Sat, 21 Mar 2009 23:37:26 +0100 (MET)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.3.21.222221
-X-Mailer: git-send-email 1.6.2.GIT
+	id S1754396AbZCUXwq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Mar 2009 19:52:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754271AbZCUXwp
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Mar 2009 19:52:45 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43176 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754243AbZCUXwp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Mar 2009 19:52:45 -0400
+Received: (qmail invoked by alias); 21 Mar 2009 23:52:42 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp048) with SMTP; 22 Mar 2009 00:52:42 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+oc2UasW+oQ5Tjp2WNt5HDPSIcHI6qKRFiezdinx
+	2OjmmM/e7/nDKJ
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7vocvuekjb.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6899999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114100>
 
-This small issue was discovered by Benjamin Kramers Clang-runs on the git
-code-base. If a tag object points to an object that is not a commit or a blob,
-an invalid pointer is dereferenced in the code that followed.
+Hi,
 
-This patch fixes this issue, by giving an error instead. This should also be
-more useful when debugging corrupted repos.
+On Sat, 21 Mar 2009, Junio C Hamano wrote:
 
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
----
- builtin-fast-export.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > When preparing temporary files for an external diff, the files should 
+> > be handled as if they were worktree files.
+> 
+> I do not think so.  convert_to_working_tree() aka "smudge" means you 
+> would be feeding crap like $Id$ expansion to the external diff, which we 
+> chose not to do quite on purpose.
 
-diff --git a/builtin-fast-export.c b/builtin-fast-export.c
-index fdf4ae9..26b2a93 100644
---- a/builtin-fast-export.c
-+++ b/builtin-fast-export.c
-@@ -375,6 +375,9 @@ static void get_tags_and_duplicates(struct object_array *pending,
- 			case OBJ_BLOB:
- 				handle_object(tag->object.sha1);
- 				continue;
-+			default:
-+				die ("Unexpected object of type %s",
-+				     typename(tag->object.type));
- 			}
- 			break;
- 		default:
--- 
-1.6.2.1.215.gf786.dirty
+You might have missed me mentioning that we often can do without temporary 
+files, taking the working directory copies right away?
+
+And if you think about it, it makes complete sense.
+
+Ciao,
+Dscho
