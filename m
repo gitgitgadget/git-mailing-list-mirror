@@ -1,86 +1,90 @@
-From: Arto Jonsson <ajonsson@kapsi.fi>
-Subject: [PATCH] bash completion: add options for 'git fsck'
-Date: Sun, 22 Mar 2009 20:49:07 +0200
-Message-ID: <20090322184907.GA31350@lakka.kapsi.fi>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [RFC/PATCH] git-shortlog: respect i18n.logOutputEncoding
+	config setting
+Date: Sun, 22 Mar 2009 20:47:08 +0100
+Message-ID: <20090322194708.GP27459@genesis.frugalware.org>
+References: <1235092358-6895-1-git-send-email-vmiklos@frugalware.org> <20090322113438.GK27459@genesis.frugalware.org> <7v7i2h5pfh.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="ai3I8gwHc37+ASRI"
 Cc: git@vger.kernel.org
-To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Sun Mar 22 20:45:53 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 22 20:48:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlTbq-0006Df-59
-	for gcvg-git-2@gmane.org; Sun, 22 Mar 2009 20:45:26 +0100
+	id 1LlTf6-0007NS-Nm
+	for gcvg-git-2@gmane.org; Sun, 22 Mar 2009 20:48:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756834AbZCVTm7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Mar 2009 15:42:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756807AbZCVTm6
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 15:42:58 -0400
-Received: from mail.kapsi.fi ([217.30.184.167]:58282 "EHLO mail.kapsi.fi"
+	id S1755719AbZCVTrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Mar 2009 15:47:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755452AbZCVTrM
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 15:47:12 -0400
+Received: from virgo.iok.hu ([212.40.97.103]:40495 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755876AbZCVTm5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Mar 2009 15:42:57 -0400
-X-Greylist: delayed 3217 seconds by postgrey-1.27 at vger.kernel.org; Sun, 22 Mar 2009 15:42:56 EDT
-Received: from kapsi.fi ([217.30.184.161] helo=lakka.kapsi)
-	by mail.kapsi.fi with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <ajonsson@kapsi.fi>)
-	id 1LlSjV-00089F-M4; Sun, 22 Mar 2009 20:49:17 +0200
-Received: from ajonsson by lakka.kapsi with local (Exim 4.63)
-	(envelope-from <ajonsson@lakka.kapsi.fi>)
-	id 1LlSjL-0000II-K1; Sun, 22 Mar 2009 20:49:07 +0200
-Mail-Followup-To: spearce@spearce.org, git@vger.kernel.org
+	id S1755451AbZCVTrL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Mar 2009 15:47:11 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id BE995580E6;
+	Sun, 22 Mar 2009 20:47:08 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id AD0E944783;
+	Sun, 22 Mar 2009 20:47:08 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 826FA11B80AE; Sun, 22 Mar 2009 20:47:08 +0100 (CET)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: 217.30.184.161
-X-SA-Exim-Mail-From: ajonsson@kapsi.fi
-X-SA-Exim-Scanned: No (on mail.kapsi.fi); SAEximRunCond expanded to false
+In-Reply-To: <7v7i2h5pfh.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114169>
 
-Signed-off-by: Arto Jonsson <ajonsson@kapsi.fi>
----
- contrib/completion/git-completion.bash |   16 ++++++++++++++++
- 1 files changed, 16 insertions(+), 0 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index ed235f7..e738830 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -952,6 +952,21 @@ _git_format_patch ()
- 	__git_complete_revlist
- }
- 
-+_git_fsck ()
-+{
-+	local cur="${COMP_WORDS[COMP_CWORD]}"
-+	case "$cur" in
-+	--*)
-+		__gitcomp "
-+			--tags --root --unreachable --cache --no-reflogs --full
-+			--strict --verbose --lost-found
-+			"
-+		return
-+		;;
-+	esac
-+	COMPREPLY=()
-+}
-+
- _git_gc ()
- {
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
-@@ -1880,6 +1895,7 @@ _git ()
- 	diff)        _git_diff ;;
- 	fetch)       _git_fetch ;;
- 	format-patch) _git_format_patch ;;
-+	fsck)        _git_fsck ;;
- 	gc)          _git_gc ;;
- 	grep)        _git_grep ;;
- 	help)        _git_help ;;
--- 
-1.6.2.GIT
+--ai3I8gwHc37+ASRI
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+On Sun, Mar 22, 2009 at 12:26:58PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> It is unclear what you want to say in these for lines.  Do you mean "when
+> used to generate logs by itself this patch improves the behaviour by
+> making the output consistent with what "git log" does, but it does the
+> same mangling when used as a filter without knowing the log encoding and
+> potentially screw people over who have been depending on it not to convert
+> the encoding"?  Or something else?
+
+Not exactly - let me rephrase:
+
+Normally we can do a reencode_string() because we know the encoding of
+the commit and we know the wished output encoding.  Given that
+git-shortlog can be a filter as well, we don't know the encoding of the
+input, but we know the wished output encoding. So what we can do is to
+_try_ to encode from utf8 to the wished encoding, and if that fails,
+just don't convert anything. The result is correct, because:
+
+1) If git-shortlog is a filter, then git-log already does the encoding,
+the encoding will fail in git-shortlog so the original input will be
+shown.
+
+2) In the other case git-shoftlog can just do the converion.
+
+At least I tested the case with utf8 author names and a latin2 terminal
+and both the 'git log rev.. | git shortlog' and the 'git shortlog rev..'
+output was correct, while git.git's master shows the correct output only
+in the first case.
+
+--ai3I8gwHc37+ASRI
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAknGlbwACgkQe81tAgORUJbZZwCdEZuU16CIyl3mPJonmvVHW2qn
+mosAn15UU/72a9bPYIId0k309m6LDOqo
+=B/fF
+-----END PGP SIGNATURE-----
+
+--ai3I8gwHc37+ASRI--
