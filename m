@@ -1,78 +1,42 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Respect core.autocrlf when preparing temporary files for
-  external diff
-Date: Sun, 22 Mar 2009 14:59:07 -0700
-Message-ID: <7vljqxcj84.fsf@gitster.siamese.dyndns.org>
-References: <cover.1237635609u.git.johannes.schindelin@gmx.de>
- <8cb424b16f21164ddc26d0be3f6f7727254b3506.1237635609u.git.johannes.schindelin@gmx.de> <7vocvuekjb.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0903220053260.10279@pacific.mpi-cbg.de> <7v8wmybf06.fsf@gitster.siamese.dyndns.org> <7vzlfe9ynj.fsf@gitster.siamese.dyndns.org> <20090322061046.GA14765@coredump.intra.peff.net> <7v63i281py.fsf@gitster.siamese.dyndns.org> <20090322074643.GA4826@coredump.intra.peff.net> <bdca99240903220830u50999dfcnee0f0091b4dec835@mail.gmail.com>
+Subject: Re: [PATCH v2] githooks documentation: post-checkout hook is also
+ called after clone
+Date: Sun, 22 Mar 2009 14:59:14 -0700
+Message-ID: <7vfxh5cj7x.fsf@gitster.siamese.dyndns.org>
+References: <49C6878E.8060509@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 22 23:01:06 2009
+Cc: git@vger.kernel.org, patnotz@gmail.com, peff@peff.net
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Sun Mar 22 23:01:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlVj8-0002KW-3T
-	for gcvg-git-2@gmane.org; Sun, 22 Mar 2009 23:01:06 +0100
+	id 1LlVj8-0002KW-PB
+	for gcvg-git-2@gmane.org; Sun, 22 Mar 2009 23:01:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756284AbZCVV7S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Mar 2009 17:59:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756266AbZCVV7R
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 17:59:17 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39872 "EHLO
+	id S1756383AbZCVV7X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Mar 2009 17:59:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756327AbZCVV7X
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 17:59:23 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48286 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756041AbZCVV7Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Mar 2009 17:59:16 -0400
+	with ESMTP id S1756041AbZCVV7W (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Mar 2009 17:59:22 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id AD3D4A4635;
-	Sun, 22 Mar 2009 17:59:14 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 53BC289D4;
+	Sun, 22 Mar 2009 17:59:21 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 34094A4631; Sun,
- 22 Mar 2009 17:59:08 -0400 (EDT)
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 247D589D3; Sun,
+ 22 Mar 2009 17:59:16 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: AED4AB94-172C-11DE-A3AA-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: B2CAEC5E-172C-11DE-8B4B-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114184>
 
-Sebastian Schuberth <sschuberth@gmail.com> writes:
-
-> Me being the reporter of the original msysGit issue #177, I'd like to
-> clarify that my intention not necessarily was to make
-> "core.autocrlf=true" affect temporary files (i.e. to "smudge" them),
-> but to ensure that the files fed into "git diff" are always generated
-> / acquired in a consistent way, so that they are in fact comparable.
-
-Thanks.  I think everybody involved in the thread is in agreement with
-that.
-
-> I'd also be happy with a solution that always feeds clean files into
-> "git diff", although that would probably mean that we could not reuse
-> working tree files if "core.autocrlf=true" is set.
-
-When we generate diff internally, even when we borrow from the work tree,
-we clean it before using.  See diff_populate_filespec(), ll.1900-1915.
-
-Borrowing done by diff_tempfile(), which currently does not run clean, and
-the call to prep_temp_blob() in ll.2030-2035 that gives a temporary file
-without convert_to_working_tree() are inconsistent, as pointed out by you
-and Dscho.
-
-If you run "git diff <filename>" after cloning, I expect that no temporary
-files are involved, _unless_ you have some settings that force "git diff"
-not to use the internal diff.  Do you use GIT_EXTERNAL_DIFF?  Do you use
-"textconv" attribute?  What external program do you invoke from these
-mechanisms, and what does it expect to see as its input?
-
-The discussion in the last few messages in this thread speculates that the
-external programs are more likely to expect representations suitable in
-the work tree, aka "smudged", than "clean" one.  It would be nice to get a
-datapoint from you as the original reporter to confirm or refute that
-speculation.
+Thanks, both.
