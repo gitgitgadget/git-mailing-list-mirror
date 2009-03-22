@@ -1,97 +1,110 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] remote: improve sorting of "configure for git push" list
-Date: Sun, 22 Mar 2009 10:47:07 -0400
-Message-ID: <76718490903220747p74cf3704vbbbc085c28a105b2@mail.gmail.com>
-References: <20090319200308.GB17028@coredump.intra.peff.net>
-	 <20090322085920.GA5201@coredump.intra.peff.net>
+From: Brandon Casey <drafnel@gmail.com>
+Subject: Re: [PATCH v2 2/2] pack-objects: don't loosen objects available in 
+	alternate or kept packs
+Date: Sun, 22 Mar 2009 09:48:15 -0500
+Message-ID: <ee63ef30903220748q4e78e626t2ea3930809a670d6@mail.gmail.com>
+References: <ee63ef30903211526n47c40052mc40dc018f25c99fd@mail.gmail.com>
+	 <7vbpru9nh9.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Mar 22 15:48:51 2009
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>, nico@cam.org
+X-From: git-owner@vger.kernel.org Sun Mar 22 15:50:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlOyg-00008M-H1
-	for gcvg-git-2@gmane.org; Sun, 22 Mar 2009 15:48:42 +0100
+	id 1LlOzy-0000U2-4B
+	for gcvg-git-2@gmane.org; Sun, 22 Mar 2009 15:50:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754148AbZCVOrM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Mar 2009 10:47:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754100AbZCVOrL
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 10:47:11 -0400
-Received: from mail-gx0-f208.google.com ([209.85.217.208]:45234 "EHLO
-	mail-gx0-f208.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753941AbZCVOrK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 Mar 2009 10:47:10 -0400
-Received: by gxk4 with SMTP id 4so4686622gxk.13
-        for <git@vger.kernel.org>; Sun, 22 Mar 2009 07:47:07 -0700 (PDT)
+	id S1754584AbZCVOsS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Mar 2009 10:48:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754262AbZCVOsS
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 10:48:18 -0400
+Received: from yx-out-2324.google.com ([74.125.44.28]:49401 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753613AbZCVOsR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Mar 2009 10:48:17 -0400
+Received: by yx-out-2324.google.com with SMTP id 31so1765210yxl.1
+        for <git@vger.kernel.org>; Sun, 22 Mar 2009 07:48:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=PKCjFbKsZxzvVBdxcwn6GlnzamAvcqwOGahAP1O4gvc=;
-        b=UBV4MEo8DimXn3scgwNvah13brjxT2epD78BZM/LsId2PhwfPyvDe17zXSaVQFRLwU
-         ODAX498zgvIbgDFTQbltR0Q7Q8GecN7XA+qwetk3z8QkSu9ibGiOap0Kke22qC0TfvaV
-         TACUFdOGS1yc0lGQ8fJhKK82hoOb5muXDtsos=
+        bh=AxlsaVoqB+kSP1aAK83TEA16gp47+uuOBh3ZS+7eDUU=;
+        b=w4/WOTwVL8eopbPvyVVVjlC8OJZM1YCU67tz2YQejxQmL2UU+2zBhw4joiKIkMR9O+
+         JBRejn4bTGoJIEQwG+YOBTBaK6yhfm09mtHA/1FIj1ZUsyBYEWIvSu4AYzykUI0bJdm9
+         B0QxctWUOnKYYrg6rnHqkNPbp3PSpFSGq6LnI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=F9zxezx2dqKGFtk5EfoRuyRvg/PZb/Fpsoo4Ba0WheCN3BQHJuYKRNQetWtXOH286X
-         pVXz7GSJgb7qAdk2Tqo8O/95S7T+TOSfGI9Nt5RptAJLsVvpi0nGJk/D4EesjC3+FC5M
-         tJwzgT+uQ+bSd269JqskpDMjoOZefn0ahXVEU=
-Received: by 10.151.110.9 with SMTP id n9mr10823293ybm.215.1237733227559; Sun, 
-	22 Mar 2009 07:47:07 -0700 (PDT)
-In-Reply-To: <20090322085920.GA5201@coredump.intra.peff.net>
+        b=mLufHr/29tC/3lzOU3No76QWY1O+U+cBhImEoGNVEpd9UFRukR3RK3lbCwqXXxwxla
+         n/EGVJhIKeRBL4zdaHsukZzcP4RTdd4KXTofN/6NYFvTPabFXaxLjqF5QMkspwbgud9/
+         +Q19wiPR7t1Z84m31Oc+Y4dqxnjwDugVIKd4k=
+Received: by 10.150.201.2 with SMTP id y2mr10840360ybf.124.1237733295219; Sun, 
+	22 Mar 2009 07:48:15 -0700 (PDT)
+In-Reply-To: <7vbpru9nh9.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114144>
 
-On Sun, Mar 22, 2009 at 4:59 AM, Jeff King <peff@peff.net> wrote:
-> The data structure used to store this list is a string_list
-> of sources with the destination in the util member. The
-> current code just sorts on the source; if a single source is
-> pushed to two different destination refs at a remote, then
-> the order in which they are printed is non-deterministic.
+On Sat, Mar 21, 2009 at 11:43 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Brandon Casey <drafnel@gmail.com> writes:
+
+> Both patches are whitespace damaged, but I can cope.
+
+I just retrieved one of the patches from gmane and some long lines
+were wrapped.  I tried out the gmail imap instructions from
+SubmittingPatches for sending these patches.  Those instructions say
+that it is possible to send properly formatted patches through gmail,
+and seem to instruct to use the web interface for actually sending the
+patches.  I wonder if there is some way to instruct gmail to not wrap
+long lines? Or whether I did something else wrong?
+
+Previously, I have used gmail's pop interface indirectly through my
+phone provider which strips out the "From" field and replaces it with
+one that only has my email address and not my name.
+
+> =C2=A0But I am not sure about one thing...
 >
-> This patch implements a comparison using both fields.
-> Besides being a little nicer on the eyes, giving a stable
-> sort prevents false negatives in the test suite when
-> comparing output.
+>> diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+>> index 6222f19..3f477c5 100644
+>> --- a/builtin-pack-objects.c
+>> +++ b/builtin-pack-objects.c
+>> @@ -1944,6 +1944,29 @@ static void
+>> add_objects_in_unpacked_packs(struct rev_info *revs)
+>> =C2=A0 =C2=A0 =C2=A0 free(in_pack.array);
+>> =C2=A0}
+>>
+>> +static int has_sha1_pack_kept_or_nonlocal(const unsigned char *sha1=
+)
+>> +{
+>> + =C2=A0 =C2=A0 static struct packed_git *last_found =3D (void *)1;
+>> + =C2=A0 =C2=A0 struct packed_git *p;
+>> +
+>> + =C2=A0 =C2=A0 p =3D (last_found =3D=3D (void *)1) ? packed_git : l=
+ast_found;
 >
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> The discussion of the proper interface to the one-line wrapper to qso=
-rt
-> didn't really resolve anything. It seems that the constraints of C ma=
-ke
-> a nice wrapper a little painful, so let's just use a bare qsort. Once
-> again, I really don't care what it looks like, so feel free to mark i=
-t
-> up if you prefer differently; I just want it off my todo list, and to
-> let JSixt run his tests in peace.
+> Why (void *)1, not like:
 >
-> I did have one somewhat sick thought for an API: have string_list's
-> cmp_items (or an alternate cmp_items_with_util) treat a non-NULL util
-> member as a pointer to a string, and use it as a secondary key in the
-> sort. It works here because the first member of the push_info struct =
-is
-> the secondary key. =C2=A0But I think it is a bit too subtle for my ta=
-ste.
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0static struct packed_git *last_found;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct packed_git *p =3D last_found ? last=
+_found : packed_git;
+>
+> Am I missing something?
 
-Ack. There is one thing I wonder though. Is this even a sane config?
-It's accepted, but is that intentional or just an accident? Would
-anyone notice if the push parsing were changed to only accept a single
-dest for a given source branch?
+Heh, I am missing something too.  Maybe I should have _thought_ more
+about this code that I copied from sha1_file.c: find_pack_entry() and
+I would have asked the same question about _that_ code.
 
-Thanks for the patch Jeff.
+Maybe Nico has some idea?
 
-j.
+I'll send a new patch, unless Nico has some thoughts.
+
+-brandon
