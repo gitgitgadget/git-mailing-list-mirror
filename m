@@ -1,68 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/7] check_ref_format(): tighten refname rules
-Date: Sun, 22 Mar 2009 16:19:21 -0700
-Message-ID: <7vocvtb0xy.fsf@gitster.siamese.dyndns.org>
-References: <1237673619-12608-1-git-send-email-gitster@pobox.com>
- <1237673619-12608-2-git-send-email-gitster@pobox.com>
- <alpine.DEB.1.00.0903221539060.10279@pacific.mpi-cbg.de>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH] Documentation/git-filter-branch.txt: Remove unnecessary
+ URL quoting
+Date: Mon, 23 Mar 2009 00:20:10 +0100
+Message-ID: <200903230020.10128.johan@herland.net>
+References: <200903200012.10454.johan@herland.net>
+ <200903201619.56600.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Mar 23 00:21:19 2009
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Mar 23 00:21:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlWyg-0006Zw-Ct
-	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 00:21:14 +0100
+	id 1LlWzE-0006hs-HT
+	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 00:21:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756740AbZCVXTc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Mar 2009 19:19:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756607AbZCVXTa
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 19:19:30 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:62331 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756526AbZCVXTa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Mar 2009 19:19:30 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4404EA4AC9;
-	Sun, 22 Mar 2009 19:19:27 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5C011A4AC8; Sun,
- 22 Mar 2009 19:19:22 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0903221539060.10279@pacific.mpi-cbg.de>
- (Johannes Schindelin's message of "Sun, 22 Mar 2009 15:41:11 +0100 (CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: E3585770-1737-11DE-BE29-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1756733AbZCVXUQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Mar 2009 19:20:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756607AbZCVXUP
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 19:20:15 -0400
+Received: from mx.getmail.no ([84.208.15.66]:36969 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1756597AbZCVXUO (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Mar 2009 19:20:14 -0400
+Content-disposition: inline
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KGX006JCKTNA310@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 23 Mar 2009 00:20:11 +0100 (MET)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KGX00A9MKTMD580@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 23 Mar 2009 00:20:11 +0100 (MET)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.3.22.230720
+User-Agent: KMail/1.11.1 (Linux/2.6.28-ARCH; KDE/4.2.1; x86_64; ; )
+In-reply-to: <200903201619.56600.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114202>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> On Sat, 21 Mar 2009, Junio C Hamano wrote:
+On Friday 20 March 2009, Thomas Rast wrote:
+> Johan Herland wrote:
+> > Embedding the URL in '+++' causes AsciiDoc (v8.4.1) to generate invalid
+> > XML. None of the other URLs in Git's documentation are quoted in this
+> > manner. There's no reason to treat this URL differently.
 >
->> Yes, I know that tightening rules retroactively is bad, but this changes 
->> the rules for refnames to forbid:
+> [...]
 >
-> Tightening rules retroactively is not only bad (if sometimes necessary), 
-> but tightening rules without giving the user a chance to recover is really 
-> bad.
+> > -* Clone it with `git clone +++file:///path/to/repo+++`.  The clone
+> > +* Clone it with `git clone file:///path/to/repo`.  The clone
 >
-> 'git branch -m' uses check_ref_format() to check the old name.
+> I deliberately wrote it that way because *not* quoting it, at least on
+> my box, formats the entire paragraph in monospace.  Apparently it
+> treats the ` as part of an autodetected URL or some such.  This is
+> independent of my choice of ASCIIDOC8 or DOCBOOK_XSL_172 settings.  Am
+> I missing another flag that avoids this problem?
 
-Because "git branch -d" still allows a malformed funny branch to be
-removed with this patch, I would say it is Ok as long as release notes
-clearly says what we are tightening the rule for.
+No, I think this is due to version differences in AsciiDoc.
 
-It is very probable that some people may have "master@{24}" in their
-repositories, but such a branch cannot be accessed with or without this
-patch anyway, and it is unlikely they created it because they wanted to.
+> I have these packages installed from opensuse:
+>   asciidoc-8.2.7-29.10
 
-"git branch wtf-dot wtf." followed by "git branch -d wtf." also works; for
-this one, it might make sense to allow "git branch -m" to rename it, but
-I do not think it is worth it.
+I use AsciiDoc v8.4.1 (from Arch Linux), and according to 
+http://www.methods.co.nz/asciidoc/CHANGELOG.html there are some regression 
+issues regarding backtick quoting and "inline literal passthrough"s when 
+upgrading to v8.4.1. According to the changelog I should be able to revert 
+AsciiDoc to the old behaviour by putting
+
+  [attributes]
+  no-inline-literal=
+
+in my Documentation/asciidoc.conf. However, with this in place, I _still_ 
+get invalid XML generated for git-filter-branch.txt... :(
+
+So, it seems to be an AsciiDoc versioning issue. I'm not sure which of these 
+AsciiDoc versions are preferable, of if it is possible to format the text in 
+such a manner that it'll work in both versions.
+
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
