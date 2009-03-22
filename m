@@ -1,58 +1,64 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] git gui doesn't call post-checkout hook on checkout or
-	clone
-Date: Sun, 22 Mar 2009 18:33:09 -0400
-Message-ID: <20090322223309.GA22428@sigill.intra.peff.net>
-References: <49C65DF1.8030608@web.de>
+Subject: Re: [PATCH/RFD] builtin-revert.c: release index lock when
+	cherry-picking an empty commit
+Date: Sun, 22 Mar 2009 18:38:34 -0400
+Message-ID: <20090322223834.GB22428@sigill.intra.peff.net>
+References: <1236418251-16947-1-git-send-email-chris_johnsen@pobox.com> <20090308144240.GA30794@coredump.intra.peff.net> <7v8wnflrws.fsf@gitster.siamese.dyndns.org> <20090310181730.GD26351@sigill.intra.peff.net> <AA6A171F-70CE-4CB3-9AE1-27CD69C3202C@pobox.com> <20090311003022.GA22273@coredump.intra.peff.net> <e2b179460903110408i4ab3c9cg3c863b89a2f57cba@mail.gmail.com> <20090322094139.GA10599@coredump.intra.peff.net> <7veiwpdxtg.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com, spearce@spearce.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sun Mar 22 23:38:16 2009
+Cc: Mike Ralphson <mike.ralphson@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 22 23:40:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlWJ3-0004bD-HM
-	for gcvg-git-2@gmane.org; Sun, 22 Mar 2009 23:38:13 +0100
+	id 1LlWKt-0004xK-63
+	for gcvg-git-2@gmane.org; Sun, 22 Mar 2009 23:40:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755593AbZCVWdL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Mar 2009 18:33:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754943AbZCVWdL
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 18:33:11 -0400
-Received: from peff.net ([208.65.91.99]:44327 "EHLO peff.net"
+	id S1755908AbZCVWif (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Mar 2009 18:38:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754929AbZCVWif
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 18:38:35 -0400
+Received: from peff.net ([208.65.91.99]:59744 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752303AbZCVWdL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Mar 2009 18:33:11 -0400
-Received: (qmail 16608 invoked by uid 107); 22 Mar 2009 22:33:19 -0000
+	id S1752830AbZCVWif (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Mar 2009 18:38:35 -0400
+Received: (qmail 16633 invoked by uid 107); 22 Mar 2009 22:38:45 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 22 Mar 2009 18:33:19 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 22 Mar 2009 18:33:09 -0400
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 22 Mar 2009 18:38:45 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 22 Mar 2009 18:38:34 -0400
 Content-Disposition: inline
-In-Reply-To: <49C65DF1.8030608@web.de>
+In-Reply-To: <7veiwpdxtg.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114190>
 
-On Sun, Mar 22, 2009 at 04:49:05PM +0100, Jens Lehmann wrote:
+On Sun, Mar 22, 2009 at 02:58:35PM -0700, Junio C Hamano wrote:
 
-> When checking out or cloning via git gui, the post-checkout
-> hook is not called. This is a bit unexpected ...
+> > Junio, do you want to put anything in the release notes warning people
+> > who build from source that this is a potential issue? Do you want
+> > something in the Makefile detecting that the shell is broken?
 > 
-> The reason is that git gui uses git read-tree with the -u
-> option and not git checkout and git clone. I changed git
-> read-tree to call the post-checkout hook when called with
-> -u and it seems to solve the problem. I would make a patch
-> for that if you want.
+> A sentence or two in INSTALL will not hurt.
 > 
-> But is this the right way to do this? Seems like we could
-> surprise some users of git read-tree with this change in
-> behaviour.
+> I would not worry too much about the test scripts, but I would worry more
+> about getting phantom bug reports for our shell script Porcelains that get
+> hit by this.  Earlier I mentioned bisect is the only heavy user, but the
+> issue is more severe with filter-branch that is designed to eval end user
+> scripts (calls to 'eval "$filter_frotz"' check the exit status and die on
+> failure---with trailing blank lines the failure the filter reports will
+> not get caught).
 
-No, I think plumbing should not generally call hooks. The right solution
-would be to have git-gui call the post-checkout hook.
+Agreed. The good news is that the /bin/sh people are treating it like a
+bug:
+
+  http://lists.freebsd.org/pipermail/freebsd-standards/2009-March/001721.html
+
+so it will hopefully be fixed soon. It might still be worth warning
+users of older releases in INSTALL, though.
 
 -Peff
