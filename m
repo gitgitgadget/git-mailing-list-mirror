@@ -1,107 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/2] pack-objects: don't loosen objects available in 
- alternate or kept packs
-Date: Sat, 21 Mar 2009 21:43:14 -0700
-Message-ID: <7vbpru9nh9.fsf@gitster.siamese.dyndns.org>
-References: <ee63ef30903211526n47c40052mc40dc018f25c99fd@mail.gmail.com>
+Subject: Re: [PATCHv2 1/3] format-patch: create patch filename in one
+ function
+Date: Sat, 21 Mar 2009 22:31:47 -0700
+Message-ID: <7vwsai86nw.fsf@gitster.siamese.dyndns.org>
+References: <1237696363-6819-1-git-send-email-bebarino@gmail.com>
+ <1237696363-6819-2-git-send-email-bebarino@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Brandon Casey <drafnel@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 22 05:44:54 2009
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 22 06:33:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlFYL-0005WN-Jk
-	for gcvg-git-2@gmane.org; Sun, 22 Mar 2009 05:44:54 +0100
+	id 1LlGJP-0005Rf-1K
+	for gcvg-git-2@gmane.org; Sun, 22 Mar 2009 06:33:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751160AbZCVEnY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Mar 2009 00:43:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750924AbZCVEnY
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 00:43:24 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:39018 "EHLO
+	id S1751208AbZCVFb4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Mar 2009 01:31:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751160AbZCVFbz
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 01:31:55 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40527 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750817AbZCVEnX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Mar 2009 00:43:23 -0400
+	with ESMTP id S1750958AbZCVFbz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Mar 2009 01:31:55 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 9516881DB;
-	Sun, 22 Mar 2009 00:43:20 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2F55E83AC;
+	Sun, 22 Mar 2009 01:31:53 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C027781DA; Sun,
- 22 Mar 2009 00:43:15 -0400 (EDT)
-In-Reply-To: <ee63ef30903211526n47c40052mc40dc018f25c99fd@mail.gmail.com>
- (Brandon Casey's message of "Sat, 21 Mar 2009 17:26:11 -0500")
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9507483AB; Sun,
+ 22 Mar 2009 01:31:48 -0400 (EDT)
+In-Reply-To: <1237696363-6819-2-git-send-email-bebarino@gmail.com> (Stephen
+ Boyd's message of "Sat, 21 Mar 2009 21:32:41 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F814E440-169B-11DE-9AB4-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C024C72E-16A2-11DE-9AB4-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114118>
 
-Brandon Casey <drafnel@gmail.com> writes:
+Stephen Boyd <bebarino@gmail.com> writes:
 
-> If pack-objects is called with the --unpack-unreachable option then it will
-> unpack (i.e. loosen) all unreferenced objects from local not-kept packs,
-> including those that also exist in packs residing in an alternate object
-> database or a local kept pack.  The primary(sole?) user of this option is
-> git-repack.  In this case, repack will follow the call to pack-objects with
-> a call to prune-packed which will delete these newly loosened objects,
-> making the act of loosening a waste of time.  The unnecessary loosening can
-> be avoided by checking whether an object exists in a non-local pack or a
-> local kept pack before loosening it.
->
-> This fixes the 'local packed unreachable obs that exist in alternate ODB
-> are not loosened' test in t7700.
->
-> Signed-off-by: Brandon Casey <drafnel@gmail.com>
+> reopen_stdout() usually takes the oneline description of a commit,
+> appends the patch suffix, prepends the output directory (if any) and
+> then reopens stdout as the resulting file. Now the patch filename (the
+> oneline description and the patch suffix) is created in
+> get_patch_filename() and passed to reopen_stdout() which prepends the
+> output directory and reopens stdout as that file.
 
-Thanks.
+The renaming is a good idea even without any change in the feature.
+Naming functions after what their result is used _for_ is never a good
+idea, and we should name them after what they do.
 
-Both patches are whitespace damaged, but I can cope.  But I am not sure
-about one thing...
+Does it still make sense to pass "keep_subject" to the function?  After
+all what it does is to retain "[PATCH.." prefix that is useless for the
+purpose of making each patch easily identifiable.  Because people almost
+always use patch acceptance tools in non-keep mode to strip the
+"[PATCH..]"  prefix when creating the commits these days anyway, it may
+make more sense to lose the parameter altogether and simplify the
+processing.
 
->  builtin-pack-objects.c |   26 +++++++++++++++++++++++++-
->  t/t7700-repack.sh      |    2 +-
->  2 files changed, 26 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-> index 6222f19..3f477c5 100644
-> --- a/builtin-pack-objects.c
-> +++ b/builtin-pack-objects.c
-> @@ -1944,6 +1944,29 @@ static void
-> add_objects_in_unpacked_packs(struct rev_info *revs)
->  	free(in_pack.array);
->  }
->
-> +static int has_sha1_pack_kept_or_nonlocal(const unsigned char *sha1)
-> +{
-> +	static struct packed_git *last_found = (void *)1;
-> +	struct packed_git *p;
-> +
-> +	p = (last_found == (void *)1) ? packed_git : last_found;
+> -static const char *get_oneline_for_filename(struct commit *commit,
+> -					    int keep_subject)
+> +static const char *get_patch_filename(char* sol, int keep_subject, int nr)
 
-Why (void *)1, not like:
+Asterisk sticks to the variable name, not type name.
 
-	static struct packed_git *last_found;
-	struct packed_git *p = last_found ? last_found : packed_git;
+I also wonder if it makes sense to move what this function does into a
+user format; especially the logic that sanitizes the oneline string into
+filename friendly one may be something Porcelains may want an access to
+from outside.
 
-Am I missing something?
-
-> +	while (p) {
-> +		if ((!p->pack_local || p->pack_keep) &&
-> +			find_pack_entry_one(sha1, p)) {
-> +			last_found = p;
-> +			return 1;
-> +		}
-> +		if (p == last_found)
-> +			p = packed_git;
-> +		else
-> +			p = p->next;
-> +		if (p == last_found)
-> +			p = p->next;
-> +	}
-> +	return 0;
-> +}
+IOW, you can introduce a new format specifier (say, "%f") to
+format_commit_message() and the implemention of get_patch_filename() would
+just prepare a strbuf and call format_commit_message() on it, no?
