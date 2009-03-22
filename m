@@ -1,111 +1,75 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [RFC/PATCH 7/8] user-manual: add global config section
-Date: Sun, 22 Mar 2009 20:05:20 +0200
-Message-ID: <1237745121-6325-8-git-send-email-felipe.contreras@gmail.com>
-References: <1237745121-6325-1-git-send-email-felipe.contreras@gmail.com>
- <1237745121-6325-2-git-send-email-felipe.contreras@gmail.com>
- <1237745121-6325-3-git-send-email-felipe.contreras@gmail.com>
- <1237745121-6325-4-git-send-email-felipe.contreras@gmail.com>
- <1237745121-6325-5-git-send-email-felipe.contreras@gmail.com>
- <1237745121-6325-6-git-send-email-felipe.contreras@gmail.com>
- <1237745121-6325-7-git-send-email-felipe.contreras@gmail.com>
-Cc: Felipe Contreras <felipe.contreras@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH v2] githooks documentation: post-checkout hook is also called
+ after clone
+Date: Sun, 22 Mar 2009 19:46:38 +0100
+Message-ID: <49C6878E.8060509@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: patnotz@gmail.com, gitster@pobox.com, peff@peff.net
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 22 19:08:24 2009
+X-From: git-owner@vger.kernel.org Sun Mar 22 19:48:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlS5h-0000xY-Cs
-	for gcvg-git-2@gmane.org; Sun, 22 Mar 2009 19:08:09 +0100
+	id 1LlSic-0004TC-By
+	for gcvg-git-2@gmane.org; Sun, 22 Mar 2009 19:48:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755460AbZCVSGG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Mar 2009 14:06:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755466AbZCVSF7
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 14:05:59 -0400
-Received: from mail-bw0-f169.google.com ([209.85.218.169]:40481 "EHLO
-	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755447AbZCVSFy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Mar 2009 14:05:54 -0400
-Received: by mail-bw0-f169.google.com with SMTP id 17so1470067bwz.37
-        for <git@vger.kernel.org>; Sun, 22 Mar 2009 11:05:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=qgmxhO3vUsbgWUOCKHSUDr7zyNcxpNlKco/0b+T97QE=;
-        b=q9XR54tzkRRDxqs5RfYtR1wSwfqV7IoIed5uS1TwrjpxdvaCdOMKKu339HNtsaDzNP
-         T4yRfn36yR7sc4VvkoV+K4IK+WDkiy9z/+iNU/EWdTxi1RyFrVsk8C1K3U30wG4CU5rx
-         TmrUm7vmQtI9VPJtf55i2hA5leMDVlLjkXIeU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=FtsGQiyaojnZ/8jIfOqKcI3AMjaRcwFq4JJLY6iv9acId4on870QITiyMHgESu80+A
-         HdEk+sG4RbuPVmoqS0NnJ9I+LG3wMmuIL3TwqK2yQRsefBeQCRwMFjja7Nz2JdoYAkuE
-         hvXMY9OG0EVQd0EaGLJ5XMHHmup1g0h5Yg8Ys=
-Received: by 10.223.122.70 with SMTP id k6mr5262540far.26.1237745152275;
-        Sun, 22 Mar 2009 11:05:52 -0700 (PDT)
-Received: from localhost (a91-153-251-222.elisa-laajakaista.fi [91.153.251.222])
-        by mx.google.com with ESMTPS id 13sm7456374fks.27.2009.03.22.11.05.51
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 22 Mar 2009 11:05:51 -0700 (PDT)
-X-Mailer: git-send-email 1.6.2.1.352.gae594
-In-Reply-To: <1237745121-6325-7-git-send-email-felipe.contreras@gmail.com>
+	id S1753319AbZCVSqu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Mar 2009 14:46:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751944AbZCVSqu
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 14:46:50 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:51748 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750699AbZCVSqt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Mar 2009 14:46:49 -0400
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 9E8B3FBF129B;
+	Sun, 22 Mar 2009 19:46:47 +0100 (CET)
+Received: from [80.128.99.176] (helo=[192.168.178.26])
+	by smtp08.web.de with asmtp (WEB.DE 4.110 #277)
+	id 1LlSh2-0003De-00; Sun, 22 Mar 2009 19:46:45 +0100
+User-Agent: Thunderbird 2.0.0.21 (X11/20090302)
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX18smiDQb/AF7Y+J3xLUGVmeoTT4W/JfYFWvW71r
+	Jml1UNJAdJOdc8RzDPPj3hkjMxSE00hvhdtWvaJtd0bvhWxyKe
+	XbPWOCqdA/+kySAMkRTg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114164>
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+The documentation of the post-checkout hook just talks
+about git-checkout. But recently git-clone was changed to
+call it too, unless the -no-checkout (-n) option is used.
+
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
 ---
- Documentation/user-manual.txt |   34 ++++++++++++++++++++++++++++++++++
- 1 files changed, 34 insertions(+), 0 deletions(-)
 
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 3278aa7..b7678aa 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -40,6 +40,40 @@ without any explanation.
- Finally, see <<todo>> for ways that you can help make this manual more
- complete.
+
+Thanks to Pat Notz for noticing that the hook is not called
+on clone when the --no-checkout (-n) option is used.
+
+
+ Documentation/githooks.txt |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index 1fd512b..1c73673 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -151,6 +151,10 @@ indicating whether the checkout was a branch checkout (changing branches,
+ flag=1) or a file checkout (retrieving a file from the index, flag=0).
+ This hook cannot affect the outcome of 'git-checkout'.
  
-+[[getting-started]]
-+Getting started
-+=============
++It is also run after 'git-clone', unless the --no-checkout (-n) option is
++used. The first parameter given to the hook is the null-ref, the second the
++ref of the new HEAD and the flag is always 1.
 +
-+You can skip this section safely, however, configuring git at an early stage
-+would probably make your overall experience with it more pleasant. Also many
-+parts on this manual would be easier to grasp.
-+
-+Git's configuration is distributed on different locations: 'system', 'global', and
-+'repository'. Variables are stored in the form of 'foo.bar', and the precedence
-+order is 'repository' > 'global' > 'system'.
-+
-+You would probably want to start setting up something useful:
-+------------------------------------------------
-+$ git config --global color.ui auto
-+------------------------------------------------
-+
-+This will make prettier the output of certain commands such as `git diff`, but
-+that's not important; what is important here is that `color.ui` has been
-+stored in the 'global' (for the user) configuration.
-+
-+You can take a look and manually modify the configuration with the `--edit`
-+option (will use '$EDITOR'):
-+------------------------------------------------
-+$ git config --global --edit
-+[color]
-+        ui = auto
-+------------------------------------------------
-+
-+Or you can manually edit the file which is located in `~/.gitconfig`. Other
-+locations are `/etc/gitconfig` (system), and `.git/config` (repository).
-+
-+Other git configurations will be covered in the rest of the manual, if you
-+want to learn more look at linkgit:git-config[1] for details.
- 
- [[repositories-and-branches]]
- Repositories and Branches
+ This hook can be used to perform repository validity checks, auto-display
+ differences from the previous HEAD if different, or set working dir metadata
+ properties.
 -- 
-1.6.2.1.352.gae594
+1.6.2.1.275.ga797b
