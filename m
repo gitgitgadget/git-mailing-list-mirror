@@ -1,79 +1,85 @@
-From: Kjetil Barvik <barvik@broadpark.no>
-Subject: Re: [PATCH] Makefile: turn on USE_ST_TIMESPEC for FreeBSD
-Date: Sun, 22 Mar 2009 15:15:57 +0100
-Organization: private
-Message-ID: <86skl5d4o2.fsf@broadpark.no>
-References: <20090322080847.GA9075@coredump.intra.peff.net>
+From: Peter Harris <git@peter.is-a-geek.org>
+Subject: Re: Disallow amending published commits?
+Date: Sun, 22 Mar 2009 10:19:41 -0400
+Message-ID: <eaa105840903220719g6af88db1xccf9fba20c573570@mail.gmail.com>
+References: <885649360903211056u38ff6cabxbe1a17d57faaa0c4@mail.gmail.com>
+	 <eaa105840903211146s4ff398e3qa8b570a8d29a83f4@mail.gmail.com>
+	 <885649360903211549h751c19e6sbaa0e07a14413d19@mail.gmail.com>
+	 <eaa105840903211853p65327ffdvebbe28da5f256871@mail.gmail.com>
+	 <885649360903212109v316f441fvea3f498e91c0059e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Mar 22 15:17:53 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git ML <git@vger.kernel.org>
+To: James Pickens <jepicken@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 22 15:21:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlOUq-0008KD-PC
-	for gcvg-git-2@gmane.org; Sun, 22 Mar 2009 15:17:53 +0100
+	id 1LlOY5-0000v6-BH
+	for gcvg-git-2@gmane.org; Sun, 22 Mar 2009 15:21:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753239AbZCVOQE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Mar 2009 10:16:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752970AbZCVOQE
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 10:16:04 -0400
-Received: from osl1smout1.broadpark.no ([80.202.4.58]:33665 "EHLO
-	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752611AbZCVOQD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Mar 2009 10:16:03 -0400
-Received: from osl1sminn1.broadpark.no ([80.202.4.59])
- by osl1smout1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KGW00G94VMMNV30@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Sun, 22 Mar 2009 15:15:58 +0100 (CET)
-Received: from localhost ([80.202.166.137]) by osl1sminn1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KGW00IRNVML9X90@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Sun, 22 Mar 2009 15:15:58 +0100 (CET)
-In-reply-to: <20090322080847.GA9075@coredump.intra.peff.net>
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
+	id S1753344AbZCVOTo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Mar 2009 10:19:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753291AbZCVOTo
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 10:19:44 -0400
+Received: from yx-out-2324.google.com ([74.125.44.29]:37651 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752895AbZCVOTn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Mar 2009 10:19:43 -0400
+Received: by yx-out-2324.google.com with SMTP id 31so1758708yxl.1
+        for <git@vger.kernel.org>; Sun, 22 Mar 2009 07:19:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=2rmgiSlwQ305BYTwW3VoAJCeIwWDLq9xguohyyQysKI=;
+        b=Veh2Be1tONLEr8LUgo+UJ4c66lMq6ukO5NnTM5q3IC92rtDYUzPUQTg7f6eIqgMen0
+         twOisYkcLBcEk7eIJjtlQ1se+lph2RM9xXR6WTRDeDuChFA/ftWOfHp5wYQtQqYSR0aa
+         aM7fWA3bIkiiEfmUf4qNnF8uX4cNOFsme8gn0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=TX7nDywcXiwnztDFJflmwd4rvr2hg9HRkcvrZ411PSJRJPwSIEx780V01/vQy5Xe2/
+         77kIUOj8iVeyBOhxyzHZY70VfFm19oYT5gS8P5PasTVcyxeT/FtWGCtYQ8eF9TYkiw+T
+         qYCDaYwYHN1HrrbizbzzswcRGvsQ8ml6Ws+8U=
+Received: by 10.90.78.14 with SMTP id a14mr278719agb.43.1237731581331; Sun, 22 
+	Mar 2009 07:19:41 -0700 (PDT)
+In-Reply-To: <885649360903212109v316f441fvea3f498e91c0059e@mail.gmail.com>
+X-Google-Sender-Auth: 5c66d955bd3a3602
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114141>
 
-Jeff King <peff@peff.net> writes:
-
-> Fixes broken compilation on FreeBSD 6.1.
+On Sun, Mar 22, 2009 at 12:09 AM, James Pickens wrote:
+> I think you understood the question perfectly, and your comments all =
+make
+> sense. =A0Perhaps I'm just being paranoid and this won't be a problem=
+ at all.
 >
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> No idea if older versions support this, or if they just need NO_NSEC
-> instead.
+> A bit of background might help explain my paranoia: I'm about to pilo=
+t Git
+> on a fairly large project, where none of the users have Git experienc=
+e, and
+> many of them don't have much experience with any other version contro=
+l
+> system either. =A0I had to fight hard to get this pilot approved, and=
+ a lot
+> of people will be watching to see how it goes, so I'm trying to do an=
+ything
+> I can to make sure it will be successful.
 
-  I google'd a litle and found this:
+Ah, yes. I can understand your paranoia.
 
-    http://fuse4bsd.creo.hu/localcgi/man-cgi.cgi?lstat+2
-    http://www.nabble.com/st_mtimespec-or-st_mtime--td21217981.html
+Most new users will stick to your 'cheat sheet', and never even do
+enough research to learn that you can amend existing history, much
+less try it. A few will dig through the docs and try everything at
+least once. I admit it; I fall into the latter category. :-)
 
-  So, at least FreeBSD 6.2 also seems to need this.  And I suspect that
-  OpenBSD and/or NetBSD maybe need a simmilar patch.  Anybody who can
-  test this?
-
-  -- kjetil
-
->  Makefile |    1 +
->  1 files changed, 1 insertions(+), 0 deletions(-)
->
-> diff --git a/Makefile b/Makefile
-> index aae3b09..320c897 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -713,6 +713,7 @@ ifeq ($(uname_S),FreeBSD)
->  	BASIC_CFLAGS += -I/usr/local/include
->  	BASIC_LDFLAGS += -L/usr/local/lib
->  	DIR_HAS_BSD_GROUP_SEMANTICS = YesPlease
-> +	USE_ST_TIMESPEC = YesPlease
->  	THREADED_DELTA_SEARCH = YesPlease
->  	ifeq ($(shell expr "$(uname_R)" : '4\.'),2)
->  		PTHREAD_LIBS = -pthread
+Peter Harris
