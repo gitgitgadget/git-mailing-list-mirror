@@ -1,110 +1,97 @@
 From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: [PATCH v2 2/2] pack-objects: don't loosen objects available in 
-	alternate or kept packs
-Date: Sun, 22 Mar 2009 09:48:15 -0500
-Message-ID: <ee63ef30903220748q4e78e626t2ea3930809a670d6@mail.gmail.com>
-References: <ee63ef30903211526n47c40052mc40dc018f25c99fd@mail.gmail.com>
-	 <7vbpru9nh9.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH] git-branch: display "was sha1" on branch deletion rather 
+	than just "sha1"
+Date: Sun, 22 Mar 2009 10:11:43 -0500
+Message-ID: <ee63ef30903220811m69c45e9cna0af52a3b5a851fe@mail.gmail.com>
+References: <ee63ef30903211709s24f8294dq9ea52bcae72b755a@mail.gmail.com>
+	 <20090322061320.GB14765@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>, nico@cam.org
-X-From: git-owner@vger.kernel.org Sun Mar 22 15:50:06 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Mar 22 16:13:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlOzy-0000U2-4B
-	for gcvg-git-2@gmane.org; Sun, 22 Mar 2009 15:50:02 +0100
+	id 1LlPMS-0007KP-0s
+	for gcvg-git-2@gmane.org; Sun, 22 Mar 2009 16:13:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754584AbZCVOsS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Mar 2009 10:48:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754262AbZCVOsS
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 10:48:18 -0400
-Received: from yx-out-2324.google.com ([74.125.44.28]:49401 "EHLO
+	id S1754757AbZCVPLq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Mar 2009 11:11:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754749AbZCVPLq
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 11:11:46 -0400
+Received: from yx-out-2324.google.com ([74.125.44.28]:55404 "EHLO
 	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753613AbZCVOsR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 Mar 2009 10:48:17 -0400
-Received: by yx-out-2324.google.com with SMTP id 31so1765210yxl.1
-        for <git@vger.kernel.org>; Sun, 22 Mar 2009 07:48:15 -0700 (PDT)
+	with ESMTP id S1754335AbZCVPLp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Mar 2009 11:11:45 -0400
+Received: by yx-out-2324.google.com with SMTP id 31so1771037yxl.1
+        for <git@vger.kernel.org>; Sun, 22 Mar 2009 08:11:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=AxlsaVoqB+kSP1aAK83TEA16gp47+uuOBh3ZS+7eDUU=;
-        b=w4/WOTwVL8eopbPvyVVVjlC8OJZM1YCU67tz2YQejxQmL2UU+2zBhw4joiKIkMR9O+
-         JBRejn4bTGoJIEQwG+YOBTBaK6yhfm09mtHA/1FIj1ZUsyBYEWIvSu4AYzykUI0bJdm9
-         B0QxctWUOnKYYrg6rnHqkNPbp3PSpFSGq6LnI=
+        bh=wOUPIFxKF8ffe+WHRVKEl0zRU4T4JkSN6YBMBMxWu50=;
+        b=SHzbvtM1EQ9RgT+9d9IglKxmjtu/JoGb3WlsXpaGXi2R6Uu/09Z8gay1fKWfu3aiY/
+         kt8yfW7F94nPhLmtWoeCfs2sYzO69uJ4WFDAQj+OL2muOGEcgQHViAznjMPQifT7flO2
+         +V5YmFuJuvqViegDSKXKu6Sl/b88oZGoxhwX8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=mLufHr/29tC/3lzOU3No76QWY1O+U+cBhImEoGNVEpd9UFRukR3RK3lbCwqXXxwxla
-         n/EGVJhIKeRBL4zdaHsukZzcP4RTdd4KXTofN/6NYFvTPabFXaxLjqF5QMkspwbgud9/
-         +Q19wiPR7t1Z84m31Oc+Y4dqxnjwDugVIKd4k=
-Received: by 10.150.201.2 with SMTP id y2mr10840360ybf.124.1237733295219; Sun, 
-	22 Mar 2009 07:48:15 -0700 (PDT)
-In-Reply-To: <7vbpru9nh9.fsf@gitster.siamese.dyndns.org>
+        b=hdWRCphcHTb53baVLGfHb2OfUTi4mAQWououQcWobuzJIXVtV5KH6Oh8B9N4MltA4w
+         oGEg4x9LDJPHCwPg3Hoz0aq0Sf0MCssY3BlIIWg8hvk2WdoBoR7HySh2oiAKJYDgaQJP
+         ZpPg3T2zxbUnMkma5Mep0qVCjbz6M8SnQ2zIY=
+Received: by 10.151.108.5 with SMTP id k5mr10896684ybm.194.1237734703525; Sun, 
+	22 Mar 2009 08:11:43 -0700 (PDT)
+In-Reply-To: <20090322061320.GB14765@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114145>
 
-On Sat, Mar 21, 2009 at 11:43 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Brandon Casey <drafnel@gmail.com> writes:
-
-> Both patches are whitespace damaged, but I can cope.
-
-I just retrieved one of the patches from gmane and some long lines
-were wrapped.  I tried out the gmail imap instructions from
-SubmittingPatches for sending these patches.  Those instructions say
-that it is possible to send properly formatted patches through gmail,
-and seem to instruct to use the web interface for actually sending the
-patches.  I wonder if there is some way to instruct gmail to not wrap
-long lines? Or whether I did something else wrong?
-
-Previously, I have used gmail's pop interface indirectly through my
-phone provider which strips out the "From" field and replaces it with
-one that only has my email address and not my name.
-
-> =C2=A0But I am not sure about one thing...
+On Sun, Mar 22, 2009 at 1:13 AM, Jeff King <peff@peff.net> wrote:
+> On Sat, Mar 21, 2009 at 07:09:17PM -0500, Brandon Casey wrote:
 >
->> diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
->> index 6222f19..3f477c5 100644
->> --- a/builtin-pack-objects.c
->> +++ b/builtin-pack-objects.c
->> @@ -1944,6 +1944,29 @@ static void
->> add_objects_in_unpacked_packs(struct rev_info *revs)
->> =C2=A0 =C2=A0 =C2=A0 free(in_pack.array);
->> =C2=A0}
->>
->> +static int has_sha1_pack_kept_or_nonlocal(const unsigned char *sha1=
-)
->> +{
->> + =C2=A0 =C2=A0 static struct packed_git *last_found =3D (void *)1;
->> + =C2=A0 =C2=A0 struct packed_git *p;
->> +
->> + =C2=A0 =C2=A0 p =3D (last_found =3D=3D (void *)1) ? packed_git : l=
-ast_found;
+>> Make it more pleasant to read about a branch deletion by adding "was=
+".
+>> Jeff King suggested this, and I ignored it. =C2=A0He was right.
 >
-> Why (void *)1, not like:
+> Heh. While I am tempted to dance in a circle shouting "I told you so"=
+, I
+> actually find that after getting used to it, I do not mind the curren=
+t
+> output. ;)
 >
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0static struct packed_git *last_found;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct packed_git *p =3D last_found ? last=
-_found : packed_git;
->
-> Am I missing something?
+> Out of curiosity, what prompted your change of heart? Did you hear fr=
+om
+> somebody who found it confusing, or did you just change your mind?
 
-Heh, I am missing something too.  Maybe I should have _thought_ more
-about this code that I copied from sha1_file.c: find_pack_entry() and
-I would have asked the same question about _that_ code.
+I just changed my mind.
 
-Maybe Nico has some idea?
+My original opinion was based on the output from 'git stash drop'.  It
+has the full sha1 in the message and looks like:
 
-I'll send a new patch, unless Nico has some thoughts.
+  $git stash drop
+  Dropped refs/stash@{0} (58fa28fddd951deb782e3300b2d059f95544f6f1)
+
+I like it. I like the full sha1.
+
+=46or some reason, the partial sha1 in the branch delete message irrita=
+ted me.
+
+  $ git branch -d mybranch
+  Deleted branch mybranch (455f59b).
+
+I don't think it was because it was a partial sha1.  Maybe it was
+because the message seemed to imply that what was referenced by the
+sha1 was being deleted.  The branch is just a pointer, so deleting it
+does not mean that what it pointed at was lost in any way.  I think
+adding "was" makes it seem more like a pointer to me.  Or maybe it has
+something to do with my mother, any psychology majors in the audience?
+:)
 
 -brandon
