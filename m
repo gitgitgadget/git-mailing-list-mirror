@@ -1,79 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git for Windows 1.6.2.1-preview20090322
-Date: Mon, 23 Mar 2009 00:25:57 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903230015020.10279@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0903080132470.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903222149330.10279@pacific.mpi-cbg.de> <20090322225315.GC22428@sigill.intra.peff.net>
+From: Nicolas Sebrecht <nicolas.s-dev@laposte.net>
+Subject: Re: Newbie: Do I need to download the entire repo to work on just
+	1 file?
+Date: Mon, 23 Mar 2009 00:31:20 +0100
+Message-ID: <20090322233120.GC12974@vidovic>
+References: <BLU121-W15DB0E5CEBC1DA697E5ED8B4950@phx.gbl> <fabb9a1e0903221600j22cf028fl903aef8076e53777@mail.gmail.com> <20090322231002.GA12974@vidovic> <fabb9a1e0903221610p3b11f09ctc6a9f4d38b1bda3e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	msysgit@googlegroups.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Mar 23 00:25:31 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Sebrecht <nicolas.s-dev@laposte.net>, git@vger.kernel.org,
+	Anthony Rasmussen <evoluenta@hotmail.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 23 00:33:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlX2m-0007VL-3J
-	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 00:25:28 +0100
+	id 1LlXA7-0000r6-7n
+	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 00:33:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756746AbZCVXX7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Mar 2009 19:23:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756719AbZCVXX6
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 19:23:58 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51092 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756371AbZCVXX5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Mar 2009 19:23:57 -0400
-Received: (qmail invoked by alias); 22 Mar 2009 23:23:54 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp004) with SMTP; 23 Mar 2009 00:23:54 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX183b5l3cUk3twm3G44qM7n3v3+3BhYoPe3WLdxlW9
-	AQ4AEO1Xn2f/+x
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20090322225315.GC22428@sigill.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+	id S1756612AbZCVXb3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Mar 2009 19:31:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755853AbZCVXb3
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 19:31:29 -0400
+Received: from out2.laposte.net ([193.251.214.119]:9635 "EHLO out1.laposte.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753326AbZCVXb2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Mar 2009 19:31:28 -0400
+Received: from meplus.info (localhost [127.0.0.1])
+	by mwinf8211.laposte.net (SMTP Server) with ESMTP id C91937000096;
+	Mon, 23 Mar 2009 00:31:21 +0100 (CET)
+Received: from ? (91-165-135-230.rev.libertysurf.net [91.165.135.230])
+	by mwinf8211.laposte.net (SMTP Server) with ESMTP id 56D817000086;
+	Mon, 23 Mar 2009 00:31:21 +0100 (CET)
+X-ME-UUID: 20090322233121355.56D817000086@mwinf8211.laposte.net
+Content-Disposition: inline
+In-Reply-To: <fabb9a1e0903221610p3b11f09ctc6a9f4d38b1bda3e@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-me-spamlevel: not-spam
+X-me-spamrating: 40.000000
+X-me-spamcause: OK, (-200)(0000)gggruggvucftvghtrhhoucdtuddrvdekuddrfeduucetggdotefuucfrrhhofhhilhgvmecuoehnohhnvgeqnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucdlqddutddtmd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114204>
 
-Hi,
 
-On Sun, 22 Mar 2009, Jeff King wrote:
-
-> On Sun, Mar 22, 2009 at 10:17:23PM +0100, Johannes Schindelin wrote:
+On Mon, Mar 23, 2009 at 12:10:48AM +0100, Sverre Rabbelier wrote:
 > 
-> > - Some commands are not yet supported on Windows and excluded from the 
-> >   installation; namely: git archimport, git cvsexportcommit, git 
-> >   cvsimport, git cvsserver, git filter-branch, git instaweb, git 
-> >   send-email, git shell.
+> Heya,
 > 
-> A few people have asked about filter-branch on Windows recently;
-
-I am not aware of any.  But then, I think nobody mentioned it on the 
-msysgit list (which would be the correct place), and I am likely to have 
-missed it if it was sent elsewhere.
-
-> JSixt indicated that it works from his built version:
+> On Mon, Mar 23, 2009 at 00:10, Nicolas Sebrecht
+> <nicolas.s-dev@laposte.net> wrote:
+> > No, you don't. Why not use the '--depth <depth>' option of 'git clone' ?
 > 
->   http://article.gmane.org/gmane.comp.version-control.git/112103
-> 
-> Is it time to include it?
+> That depends on if he wants to push back to the original repo or not, right?
 
-Actually, not only Hannes' version runs the test t7003 okay, but also 
-4msysgit's version.
+It depends of what the OP means by "entire repository". You can't
+"cherry-pick" one single file without download the entire tree of the
+working directory.
 
-But let's reduce the differences between git.git and 4msysgit.git further 
-first.
+You can push with a truncated history. What you can't do is checkout
+from the history you don't have in your local repository.
 
-I'll wait with the next Git for Windows release until the next official 
-Git version is released, anyway.  Or if Steffen wants to take msysGit over 
-again when he comes back, he will wait until the next official Git 
-versions is released, anyway.
-
-Ciao,
-Dscho
+-- 
+Nicolas Sebrecht
