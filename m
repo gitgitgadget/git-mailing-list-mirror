@@ -1,73 +1,92 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [Gittogether] Re: GitTogether '09
-Date: Mon, 23 Mar 2009 11:00:06 +1300
-Message-ID: <49C6B4E6.8030000@vilain.net>
-References: <20090310001613.GL11989@spearce.org>	<200903180651.33381.chriscool@tuxfamily.org>	<fabb9a1e0903172346j74b9992r1b0a8d6eb523103c@mail.gmail.com>	<200903180805.32440.chriscool@tuxfamily.org>	<fabb9a1e0903180254u5569e9f5u5e1aa43fa2d1d178@mail.gmail.com>	<20090318143532.GD23521@spearce.org> <alpine.DEB.1.00.0903181551380.10279@pacific.mpi-cbg.de>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Improve error message about fetch into current branch
+Date: Sun, 22 Mar 2009 23:07:33 +0100
+Message-ID: <20090322220732.GA6736@blimp.localdomain>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	gittogether@lists.utsl.gen.nz
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Mar 22 23:08:19 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 22 23:09:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlVq5-0004Vn-BT
-	for gcvg-git-2@gmane.org; Sun, 22 Mar 2009 23:08:17 +0100
+	id 1LlVrH-0004tX-Hv
+	for gcvg-git-2@gmane.org; Sun, 22 Mar 2009 23:09:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756528AbZCVWGo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Mar 2009 18:06:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756390AbZCVWGo
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 18:06:44 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:57925 "EHLO mail.utsl.gen.nz"
+	id S1756192AbZCVWHo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Mar 2009 18:07:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755940AbZCVWHo
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 18:07:44 -0400
+Received: from mout4.freenet.de ([195.4.92.94]:43093 "EHLO mout4.freenet.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756460AbZCVWGn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Mar 2009 18:06:43 -0400
-X-Greylist: delayed 387 seconds by postgrey-1.27 at vger.kernel.org; Sun, 22 Mar 2009 18:06:43 EDT
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id 1D18221C4A8; Mon, 23 Mar 2009 11:01:56 +1300 (NZDT)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.5 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 677CF21C49D;
-	Mon, 23 Mar 2009 11:01:50 +1300 (NZDT)
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-In-Reply-To: <alpine.DEB.1.00.0903181551380.10279@pacific.mpi-cbg.de>
-X-Enigmail-Version: 0.94.2.0
+	id S1752484AbZCVWHn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Mar 2009 18:07:43 -0400
+Received: from [195.4.92.13] (helo=3.mx.freenet.de)
+	by mout4.freenet.de with esmtpa (ID alexander.riesen@freenet.de) (port 25) (Exim 4.69 #76)
+	id 1LlVpR-0002If-F2; Sun, 22 Mar 2009 23:07:37 +0100
+Received: from x5a0c.x.pppool.de ([89.59.90.12]:36051 helo=tigra.home)
+	by 3.mx.freenet.de with esmtpa (ID alexander.riesen@freenet.de) (port 587) (Exim 4.69 #79)
+	id 1LlVpR-00041S-85; Sun, 22 Mar 2009 23:07:37 +0100
+Received: from blimp.localdomain (blimp.home [192.168.1.28])
+	by tigra.home (Postfix) with ESMTP id 9B2EE277D8;
+	Sun, 22 Mar 2009 23:07:33 +0100 (CET)
+Received: by blimp.localdomain (Postfix, from userid 1000)
+	id 4A0A936D27; Sun, 22 Mar 2009 23:07:33 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114186>
 
-Johannes Schindelin wrote:
->>> Last year Google provided two international airplane tickets and was 
->>> able to host us, we can at least ask them to host us again this year 
->>> (if that is what we decide on).
->>>       
->> Did Google do two international tickets last year for Git?
->>     
->
-> I do not think so.  Mugwump got the international airplane ticket, AFAIR, 
-> and warthog the local "ticket".
->   
+Otherwise, it is hard to guess why the fetch failed.
+Make sure we at least mention that the repository must be bare.
+Also the current branch is printed.
 
-Right, and we decided to give Christian back his air fare with some of
-the Mentor treasure, so that was the second international ticket
-essentially paid by Google.
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
 
-Speaking of spoils, I'm now on Vendor number 3 for the T-Shirts which
-are apparently in a print queue now. It's a depressing that it's now
-longer since the conference than til the next one :(
+In particular, a repository not marked bare with core.bare is, for
+some reason, considered non-bare even if there is no work tree nor
+index. I found about the message while trying to run git remote,
+in an essentially bare repository without core.bare set. Funny,
+git --bare fetch worked properly, but git --bare remote update failed:
 
-I'll be contacting everyone off-line asking for their size requirements
-and following up those who didn't send me addresses yet..
+    $ GIT_TRACE=1 ~/projects/git/git --bare remote -v update
+    trace: built-in: git 'remote' '-v' 'update'
+    Updating origin
+    trace: run_command: 'fetch' '-v' 'origin'
+    trace: exec: 'git' 'fetch' '-v' 'origin'
+    trace: built-in: git 'fetch' '-v' 'origin'
+    fatal: Refusing to fetch into current branch refs/heads/master
+    error: Could not fetch origin
+    $ git --bare fetch -v origin
+    From git://git.kernel.org/pub/scm/linux/hotplug/udev
+     = [up to date]      master     -> master
+    $
 
-Sam.
+Looks like --bare is lost somewhere.
+
+ builtin-fetch.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/builtin-fetch.c b/builtin-fetch.c
+index 7fb35fc..7293146 100644
+--- a/builtin-fetch.c
++++ b/builtin-fetch.c
+@@ -544,7 +544,8 @@ static void check_not_current_branch(struct ref *ref_map)
+ 	for (; ref_map; ref_map = ref_map->next)
+ 		if (ref_map->peer_ref && !strcmp(current_branch->refname,
+ 					ref_map->peer_ref->name))
+-			die("Refusing to fetch into current branch");
++			die("Refusing to fetch into current branch %s "
++			    "of non-bare repository", current_branch->refname);
+ }
+ 
+ static int do_fetch(struct transport *transport,
+-- 
+1.6.2.1.316.g4241
