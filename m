@@ -1,63 +1,85 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] builtin-fast-export.c: add default case to avoid crash
- on corrupt repo
-Date: Sat, 21 Mar 2009 16:54:06 -0700
-Message-ID: <7vd4cabffl.fsf@gitster.siamese.dyndns.org>
-References: <1237675051-6688-1-git-send-email-kusmabite@gmail.com>
+Subject: Re: [PATCH] Respect core.autocrlf when preparing temporary files for
+ external diff
+Date: Sat, 21 Mar 2009 17:03:21 -0700
+Message-ID: <7v8wmybf06.fsf@gitster.siamese.dyndns.org>
+References: <cover.1237635609u.git.johannes.schindelin@gmx.de>
+ <8cb424b16f21164ddc26d0be3f6f7727254b3506.1237635609u.git.johannes.schindelin@gmx.de> <7vocvuekjb.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0903220053260.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 22 00:55:46 2009
+Cc: git@vger.kernel.org, Sebastian Schuberth <sschuberth@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Mar 22 01:05:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlB2X-0006nu-4Q
-	for gcvg-git-2@gmane.org; Sun, 22 Mar 2009 00:55:45 +0100
+	id 1LlBBU-0000WB-EM
+	for gcvg-git-2@gmane.org; Sun, 22 Mar 2009 01:05:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754569AbZCUXyQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Mar 2009 19:54:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754437AbZCUXyP
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 Mar 2009 19:54:15 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61225 "EHLO
+	id S1753825AbZCVADa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Mar 2009 20:03:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752144AbZCVADa
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 Mar 2009 20:03:30 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37169 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754147AbZCUXyO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Mar 2009 19:54:14 -0400
+	with ESMTP id S1752023AbZCVAD3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Mar 2009 20:03:29 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B5A9B876F;
-	Sat, 21 Mar 2009 19:54:12 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 60C0EA3713;
+	Sat, 21 Mar 2009 20:03:27 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 08F86876C; Sat,
- 21 Mar 2009 19:54:07 -0400 (EDT)
-In-Reply-To: <1237675051-6688-1-git-send-email-kusmabite@gmail.com> (Erik
- Faye-Lund's message of "Sat, 21 Mar 2009 22:37:31 +0000")
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 1AFA5A3712; Sat,
+ 21 Mar 2009 20:03:22 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0903220053260.10279@pacific.mpi-cbg.de>
+ (Johannes Schindelin's message of "Sun, 22 Mar 2009 00:54:43 +0100 (CET)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 93F9822C-1673-11DE-8308-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: DE908CBC-1674-11DE-B759-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114103>
 
-Erik Faye-Lund <kusmabite@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> This small issue was discovered by Benjamin Kramers Clang-runs on the
-> git code-base. If a tag object points to an object that is not a commit
-> or a blob, an invalid pointer is dereferenced in the code that followed.
+> On Sat, 21 Mar 2009, Junio C Hamano wrote:
+>
+>> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+>> 
+>> > When preparing temporary files for an external diff, the files should 
+>> > be handled as if they were worktree files.
+>> 
+>> I do not think so.  convert_to_working_tree() aka "smudge" means you 
+>> would be feeding crap like $Id$ expansion to the external diff, which we 
+>> chose not to do quite on purpose.
+>
+> You might have missed me mentioning that we often can do without temporary 
+> files, taking the working directory copies right away?
+>
+> And if you think about it, it makes complete sense.
 
-A tag can point at anything, so this is not an issue about "crash on a
-_corrupt_ repository".
+Not "complete".
 
-I am not very familiar with this program, but the codepath involved should
-be prepared to _see_ any type of object instead of dying.
+What is at issue is how consistent the codepath that calls out to an
+external diff should be with the rest of git that solely work with the
+"clean" version of blob contents.  If you value consistency, I would say
+that it is valid to argue that letting it borrow from a work tree is a
+bug.  It should be always feeding a clean version.
 
-What to do after _seeing_ a type of object is a different matter.  It
-appears that there is no way to feed a tree object to fast-import, but I
-think the fast-import language can represent a tag that points at another
-tag just fine.  So the best you can do is perhaps to issue a warning
-"skipping a tag that points at a tree object" and impoement a proper
-handling of a tag that points at a tag.
+But if you think that we do not care really about the correctness of the
+external diff codepath, because it is a mechanism used mostly for giving
+output to humans (as opposed to feeding the output of the external diff
+program back to programs to be processed further) , I can understand why
+you think it is easier to the external programs if "smudged" version is
+fed to them.
+
+Not just I can _understand_, but I think I could be pursuaded to agree
+with that position, iff you try harder.
+
+But the assumption/rationale behind this change needs to be spelled out.
+In essence, we are sacrificing purity and correctness because we consider
+ease of building external diff filter is more important.
+
+Or something like that.
