@@ -1,71 +1,100 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFC/PATCH 2/8] docbook: improve css style
-Date: Mon, 23 Mar 2009 16:20:15 +0100
-Message-ID: <49C7A8AF.9080500@drmicha.warpmail.net>
-References: <1237745121-6325-1-git-send-email-felipe.contreras@gmail.com>	 <1237745121-6325-2-git-send-email-felipe.contreras@gmail.com>	 <1237745121-6325-3-git-send-email-felipe.contreras@gmail.com>	 <20090323064242.GB1119@coredump.intra.peff.net> <94a0d4530903230331g3b620f80h77e317a09dc5273f@mail.gmail.com>
+From: Benny Halevy <bhalevy@panasas.com>
+Subject: Re: git rebase + fuzz = possible bad merge
+Date: Mon, 23 Mar 2009 17:36:24 +0200
+Message-ID: <49C7AC78.5070801@panasas.com>
+References: <49C7675E.9000309@panasas.com> <200903231454.48600.trast@student.ethz.ch> <49C79780.20105@panasas.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 23 16:23:39 2009
+Cc: Git List <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Mar 23 16:39:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lllz7-0007VT-4B
-	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 16:22:41 +0100
+	id 1LlmF1-0005r3-LZ
+	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 16:39:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758775AbZCWPUg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Mar 2009 11:20:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758744AbZCWPUf
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 11:20:35 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:50572 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758765AbZCWPUd (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Mar 2009 11:20:33 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id A86502F73F3;
-	Mon, 23 Mar 2009 11:20:31 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Mon, 23 Mar 2009 11:20:31 -0400
-X-Sasl-enc: Vb0QtcObCR40iTYr6zsyWxpja4UfldIra2QvGIWfvVQp 1237821631
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id EC793246D9;
-	Mon, 23 Mar 2009 11:20:30 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090323 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <94a0d4530903230331g3b620f80h77e317a09dc5273f@mail.gmail.com>
+	id S1755028AbZCWPgc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Mar 2009 11:36:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752244AbZCWPgc
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 11:36:32 -0400
+Received: from qw-out-2122.google.com ([74.125.92.27]:17773 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751660AbZCWPgb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Mar 2009 11:36:31 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so1775227qwh.37
+        for <git@vger.kernel.org>; Mon, 23 Mar 2009 08:36:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=QEALW3Y5DsGFu4IjZGKonoW1AsHyRkWVH6S+toKubq8=;
+        b=xZCmwwB7ul6j7Loc/pTWGDuYtwpjvpht5OrFSpAoSzm7Y0b3PZgCUfs1AtKkstN8Vd
+         NTGwLVDnetJ18Pbf2ktDzrRuC9fcWUH7X0DBrfpleZBgGA0P0Z+mVj0B9k8lVFNl6f6w
+         i182mBDUC8S+1HKVqFJjFXEbrKybkTljCl5dA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=rR4lkxa+HhC/tIx69Fwz5N1E3RQgRdTMyjdDL24qc7j2rZYDYy+c8iBkToYvZOmZyO
+         rYZIw9an5VcOGSQiJPDVZEg15b+3yqf0ukZaPr3vBcNPPNyLEnnrUbO6cHBZwb0yUmnk
+         9msHMAmUZzi7xAcl3gexiNMLZbJP3bhkVvI68=
+Received: by 10.220.87.18 with SMTP id u18mr2531423vcl.102.1237822588675;
+        Mon, 23 Mar 2009 08:36:28 -0700 (PDT)
+Received: from fs1.bhalevy.com (DSL212-235-53-3.bb.netvision.net.il [212.235.53.3])
+        by mx.google.com with ESMTPS id 4sm8202082yxq.43.2009.03.23.08.36.26
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 23 Mar 2009 08:36:27 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.1b3pre) Gecko/20090223 Thunderbird/3.0b2
+In-Reply-To: <49C79780.20105@panasas.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114326>
 
-Felipe Contreras venit, vidit, dixit 23.03.2009 11:31:
-> On Mon, Mar 23, 2009 at 8:42 AM, Jeff King <peff@peff.net> wrote:
->> On Sun, Mar 22, 2009 at 08:05:15PM +0200, Felipe Contreras wrote:
+On Mar. 23, 2009, 16:06 +0200, Benny Halevy <bhalevy@panasas.com> wrote:
+> On Mar. 23, 2009, 15:54 +0200, Thomas Rast <trast@student.ethz.ch> wrote:
+>> Benny Halevy wrote:
+>>> I'm hitting bad merges with (non interactive) git rebase
+>>> when a hunk is merged pre-maturely into an inexact match
+>>> when there's fuzz.
+>> [...]
+>>> { for i in {1..10}; do echo fuzz $i; done; echo; cat test_file; } > fuzz_file
+>> [...]
+>>> git rebase --onto test_branch master^ master
+>> git-am, and by extension rebase, by default doesn't take history into
+>> account.  It just applies the patches "blindly".  ...
+
+git am, in contrast to git rebase, errs on fuzz and you'll need to
+apply the patch manually.  It might be annoying, but it'd be safer
+if git rebase would either stop on fuzz too or revert to using
+merge strategies (same as using git rebase -m) by default.
+
+>> ...  Thus, there's no way
+>> to know which series of 'line N' you really wanted it to go onto.
+
+Well, there's the hunk header.
+
+Benny
+
 >>
->>>  tt.literal, code.literal {
->>>    color: navy;
->>> +  font-size: 1em;
->>> +}
+>> To avoid this issue, use the -m option to git-rebase so that it uses a
+>> "real" merge.  (You can achieve similar effects for git-am with the -3
+>> option.)
 >>
->> Isn't 1em already the default size? Or are you trying to override some
->> other size specification elsewhere? It's hard to tell what the goal is
->> because your commit message merely says "improve".
 > 
-> That's correct.
+> OK. -m indeed helps and I'm certainly going to adopt it for my rebase scripts.
+> git rebase -i does too, BTW.
 > 
-> The problem is that when the user has a different size for the
-> sans-serif and monospace fonts it looks horrible when they are on the
-> same paragraph. I thought 1em did the trick, but you are right, it
-> doesn't.
+> I would expect though that the default mode for automatic rebase would be
+> the strictest and safest...
 > 
-> It looks like the only way to fix this is to set absolute sizes.
-> 
-
-Also, it seems that everything which is not black is blue, except for
-terms, which are green and slanted. I don't think that looks nice
-together. How about slanted blue?
-
-Michael
+> Benny
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
