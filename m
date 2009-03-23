@@ -1,113 +1,66 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH] Add the --merged option to goto
-Date: Mon, 23 Mar 2009 09:45:07 +0100
-Message-ID: <20090323084507.GA6447@diana.vm.bytemark.co.uk>
-References: <20090320161233.28989.82497.stgit@pc1117.cambridge.arm.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Merge format documented?
+Date: Mon, 23 Mar 2009 10:17:07 +0100
+Message-ID: <49C75393.3030700@viscovery.net>
+References: <200903230419.50000.agruen@suse.de> <7vtz5k99tr.fsf@gitster.siamese.dyndns.org> <200903230818.20044.agruen@suse.de> <7viqm08ymb.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 23 09:47:15 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Andreas Gruenbacher <agruen@suse.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 23 10:19:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlfoM-00071k-QW
-	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 09:47:11 +0100
+	id 1LlgJN-0008LU-MA
+	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 10:19:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755618AbZCWIpU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Mar 2009 04:45:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753499AbZCWIpR
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 04:45:17 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:52666 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755460AbZCWIpQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Mar 2009 04:45:16 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1LlfmN-0001kD-00; Mon, 23 Mar 2009 08:45:07 +0000
-Content-Disposition: inline
-In-Reply-To: <20090320161233.28989.82497.stgit@pc1117.cambridge.arm.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1757366AbZCWJRK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Mar 2009 05:17:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756713AbZCWJRI
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 05:17:08 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:54391 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753981AbZCWJRH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Mar 2009 05:17:07 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LlgHF-0001mE-F1; Mon, 23 Mar 2009 10:17:02 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 7F8216C4; Mon, 23 Mar 2009 10:17:01 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <7viqm08ymb.fsf@gitster.siamese.dyndns.org>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114267>
 
-On 2009-03-20 16:15:45 +0000, Catalin Marinas wrote:
+Junio C Hamano schrieb:
+> Andreas Gruenbacher <agruen@suse.de> writes:
+> 
+>> On Monday, 23 March 2009 4:50:24 Junio C Hamano wrote:
+>>> Andreas Gruenbacher <agruen@suse.de> writes:
+>>>> is the format that git normally uses for indicating merge conflicts in
+>>>> files (the <<< === >>> markers) documented somewhere?  How exactly does
+>>>> it differ from the diff3 format (<<< ||| === >>>)?  Diff3's -m mode seems
+>>>> to come close to what git does, except that git doesn't produce the |||
+>>>> section:
+>>> It is an imitation of output from "merge" program of RCS suite Paul you
+>>> know maintains ;-)
+>> So it's the same format except that diff3's ||| section isn't shown. I was 
+>> wondering if there are any additional tricks.
+> 
+> No additional tricks.
 
-> This patch adds support for checking which patches were already
-> merged upstream. This checking is done by trying to reverse-apply
-> the patches in the index before pushing them onto the stack. The
-> trivial merge cases in Index.merge() are ignored when performing
-> this operation otherwise the results could be wrong (e.g. a patch
-> adding a hunk and a subsequent patch canceling the previous change
-> would both be considered merged).
->
-> Signed-off-by: Catalin Marinas <catalin.marinas@gmail.com>
-> ---
->
-> This is in preparation for the updating of the push command where we
-> have this functionality (I think we had it for goto as well but was
-> lost with the update to stgit.lib). Test cases with --merged are
-> already done for the push command, so I haven't added any for goto
-> (but I'll push this patch only after push is updated).
+I think there's one additional trick: git moves common parts of the
+conflict section outside of the conflict markers, and it even splits the
+sections into two if there are common parts between two conflicting lines.
 
-Looks good, except for a few things:
+(But that doesn't change how the conflict markers look.)
 
-> @@ -732,7 +732,7 @@ class Index(RunWithEnv):
->          # to use --binary.
->          self.apply(self.__repository.diff_tree(tree1, tree2, ['--ful=
-l-index']),
->                     quiet)
-> -    def merge(self, base, ours, theirs, current =3D None):
-> +    def merge(self, base, ours, theirs, current =3D None, check_triv=
-ial =3D True):
->          """Use the index (and only the index) to do a 3-way merge of=
- the
->          L{Tree}s C{base}, C{ours} and C{theirs}. The merge will eith=
-er
->          succeed (in which case the first half of the return value is
-
-Please update the documentation with your new option. :-)
-
-> @@ -752,12 +752,13 @@ class Index(RunWithEnv):
->          assert current =3D=3D None or isinstance(current, Tree)
-> =20
->          # Take care of the really trivial cases.
-> -        if base =3D=3D ours:
-> -            return (theirs, current)
-> -        if base =3D=3D theirs:
-> -            return (ours, current)
-> -        if ours =3D=3D theirs:
-> -            return (ours, current)
-> +        if check_trivial:
-> +            if base =3D=3D ours:
-> +                return (theirs, current)
-> +            if base =3D=3D theirs:
-> +                return (ours, current)
-> +            if ours =3D=3D theirs:
-> +                return (ours, current)
-
-Uh, what? What's the point of not doing this unconditionally?
-
-> @@ -379,3 +385,25 @@ class StackTransaction(object):
->          assert set(self.unapplied + self.hidden) =3D=3D set(unapplie=
-d + hidden)
->          self.unapplied =3D unapplied
->          self.hidden =3D hidden
-> +
-> +    def check_merged(self, patches):
-> +        """Return a subset of patches already merged."""
-> +        merged =3D []
-> +        temp_index =3D self.__stack.repository.temp_index()
-> +        temp_index_tree =3D None
-
-There's no need to create a new temp index here. The transaction
-object already has one.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-- Hannes
