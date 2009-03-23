@@ -1,68 +1,103 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [PATCH 3/4] builtin-fast-export.c: fix crash on tagged trees
-Date: Mon, 23 Mar 2009 02:01:03 +0100
-Message-ID: <40aa078e0903221801o1ffd9fa2l3f7939d702440c3a@mail.gmail.com>
-References: <1237758620-6116-1-git-send-email-kusmabite@gmail.com>
-	 <1237758620-6116-2-git-send-email-kusmabite@gmail.com>
-	 <1237758620-6116-3-git-send-email-kusmabite@gmail.com>
-	 <7vab7d9in4.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Erik Faye-Lund <kusmabite@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 23 02:03:02 2009
+From: "David J. Mellor" <dmellor@whistlingcat.com>
+Subject: [PATCH 4/5] Documentation: minor grammatical fixes in git-check-attr.txt.
+Date: Sun, 22 Mar 2009 18:00:16 -0700
+Message-ID: <1237770017-7168-5-git-send-email-dmellor@whistlingcat.com>
+References: <1237770017-7168-1-git-send-email-dmellor@whistlingcat.com>
+ <1237770017-7168-2-git-send-email-dmellor@whistlingcat.com>
+ <1237770017-7168-3-git-send-email-dmellor@whistlingcat.com>
+ <1237770017-7168-4-git-send-email-dmellor@whistlingcat.com>
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Mar 23 02:03:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlYZA-0004Ed-D9
-	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 02:03:00 +0100
+	id 1LlYZ8-0004Ed-B6
+	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 02:02:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757083AbZCWBBK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Mar 2009 21:01:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756979AbZCWBBI
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 21:01:08 -0400
-Received: from ey-out-2122.google.com ([74.125.78.27]:36433 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756864AbZCWBBG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Mar 2009 21:01:06 -0400
-Received: by ey-out-2122.google.com with SMTP id 4so464548eyf.37
-        for <git@vger.kernel.org>; Sun, 22 Mar 2009 18:01:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=90ngshFD7A4TVIk4s3qcFtS+pPnTM6Bk/oB4WV9SogI=;
-        b=KpioEIPhFmFXUhozgMGtXt6fMQS8UUIwcT2OJHJZpUdxzDmiMsCWuvBTtRCFsVmwQZ
-         0qhzJ7ufekHM/ovfyD29vYCBMT+AQoMezZ3kwXBdRkWkGgmbOgSFl1Yl95VFw+MKrbtz
-         1FF7DaAlhGQ1ydkyZY2RcMWE5TIbkY3C1UVzg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=K0uQXkJ1gcmK0DI9lHVY6/XMOgXNjlF9RC6SvsfRZyJGJsMJYzySV9dsGlieriyTDO
-         Ya/ASgQ6lIcg32+8cApl0fH6vDGsOCh+DWbysPvZ1nG1WhrcilaA1Gq2ZsaN68f+arxa
-         MiQA4aorbxRb76c6PnU5TeZ3bYKABzzJbchis=
-Received: by 10.210.54.15 with SMTP id c15mr666315eba.16.1237770063849; Sun, 
-	22 Mar 2009 18:01:03 -0700 (PDT)
-In-Reply-To: <7vab7d9in4.fsf@gitster.siamese.dyndns.org>
+	id S1757269AbZCWBAb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Mar 2009 21:00:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757265AbZCWBA3
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 21:00:29 -0400
+Received: from quartz.whistlingcat.com ([67.223.228.111]:42007 "EHLO
+	quartz.whistlingcat.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757160AbZCWBAV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Mar 2009 21:00:21 -0400
+Received: from whistlingcat.com (whistlingcat.com [99.12.234.57])
+	by quartz.whistlingcat.com (Postfix) with ESMTP id 646F3488008;
+	Sun, 22 Mar 2009 18:00:19 -0700 (PDT)
+Received: from sandstone.whistlingcat.com (sandstone.whistlingcat.com [192.168.0.2])
+	by whistlingcat.com (Postfix) with ESMTP id 7CA1038E7584;
+	Sun, 22 Mar 2009 18:00:18 -0700 (PDT)
+Received: by sandstone.whistlingcat.com (Postfix, from userid 500)
+	id 1AEB117A62; Sun, 22 Mar 2009 18:00:18 -0700 (PDT)
+X-Mailer: git-send-email 1.6.2.1
+In-Reply-To: <1237770017-7168-4-git-send-email-dmellor@whistlingcat.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114222>
-
-> The comment is good but only if you make this the last patch that comes
-> after the one that actually fixes the tag-to-tag (currently 4/4), no?
-
-Ah, good catch! I'll reorder the commits. The order of the last two
-patches isn't really important, so if it makes the comment more
-senseful, I'm all for it ;)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114223>
 
 
+Signed-off-by: David J. Mellor <dmellor@whistlingcat.com>
+---
+ Documentation/git-check-attr.txt |   16 ++++++++--------
+ 1 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/Documentation/git-check-attr.txt b/Documentation/git-check-attr.txt
+index 8c2ac12..50824e3 100644
+--- a/Documentation/git-check-attr.txt
++++ b/Documentation/git-check-attr.txt
+@@ -14,7 +14,7 @@ SYNOPSIS
+ 
+ DESCRIPTION
+ -----------
+-For every pathname, this command will list if each attr is 'unspecified',
++For every pathname, this command will list if each attribute is 'unspecified',
+ 'set', or 'unset' as a gitattribute on that pathname.
+ 
+ OPTIONS
+@@ -23,11 +23,11 @@ OPTIONS
+ 	Read file names from stdin instead of from the command-line.
+ 
+ -z::
+-	Only meaningful with `--stdin`; paths are separated with
+-	NUL character instead of LF.
++	Only meaningful with `--stdin`; paths are separated with a
++	NUL character instead of a linefeed character.
+ 
+ \--::
+-	Interpret all preceding arguments as attributes, and all following
++	Interpret all preceding arguments as attributes and all following
+ 	arguments as path names. If not supplied, only the first argument will
+ 	be treated as an attribute.
+ 
+@@ -37,12 +37,12 @@ OUTPUT
+ The output is of the form:
+ <path> COLON SP <attribute> COLON SP <info> LF
+ 
+-Where <path> is the path of a file being queried, <attribute> is an attribute
++<path> is the path of a file being queried, <attribute> is an attribute
+ being queried and <info> can be either:
+ 
+ 'unspecified';; when the attribute is not defined for the path.
+-'unset';;	when the attribute is defined to false.
+-'set';;		when the attribute is defined to true.
++'unset';;	when the attribute is defined as false.
++'set';;		when the attribute is defined as true.
+ <value>;;	when a value has been assigned to the attribute.
+ 
+ EXAMPLES
+@@ -69,7 +69,7 @@ org/example/MyClass.java: diff: java
+ org/example/MyClass.java: myAttr: set
+ ---------------
+ 
+-* Listing attribute for multiple files:
++* Listing an attribute for multiple files:
+ ---------------
+ $ git check-attr myAttr -- org/example/MyClass.java org/example/NoMyAttr.java
+ org/example/MyClass.java: myAttr: set
 -- 
-Erik "kusma" Faye-Lund
-kusmabite@gmail.com
-(+47) 986 59 656
+1.6.2.1
