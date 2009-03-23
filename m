@@ -1,65 +1,69 @@
-From: Benny Halevy <bhalevy@panasas.com>
-Subject: Re: git rebase + fuzz = possible bad merge
-Date: Mon, 23 Mar 2009 16:06:56 +0200
-Message-ID: <49C79780.20105@panasas.com>
-References: <49C7675E.9000309@panasas.com> <200903231454.48600.trast@student.ethz.ch>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: Importing Bzr revisions
+Date: Mon, 23 Mar 2009 16:07:03 +0200
+Message-ID: <87zlfcz62g.fsf@iki.fi>
+References: <90DBD254-1810-4B11-AA9F-C5661A028FA5@gmail.com>
+	<7veiwo8xz7.fsf@gitster.siamese.dyndns.org>
+	<03AC7EDA-2A9F-4626-A67B-CE9F2A88FC7D@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Mar 23 15:08:38 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	bazaar@lists.canonical.com
+To: David Reitter <david.reitter@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 23 15:08:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlkpP-0006CB-8u
-	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 15:08:35 +0100
+	id 1Llkpg-0006HY-Gx
+	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 15:08:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754404AbZCWOHF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Mar 2009 10:07:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753047AbZCWOHF
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 10:07:05 -0400
-Received: from gw-ca.panasas.com ([209.116.51.66]:25659 "EHLO
-	laguna.int.panasas.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752853AbZCWOHE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Mar 2009 10:07:04 -0400
-Received: from daytona.int.panasas.com ([172.17.28.41]) by laguna.int.panasas.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 23 Mar 2009 07:07:02 -0700
-Received: from fs1.bhalevy.com ([172.17.28.140]) by daytona.int.panasas.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 23 Mar 2009 10:06:57 -0400
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.1b3pre) Gecko/20090223 Thunderbird/3.0b2
-In-Reply-To: <200903231454.48600.trast@student.ethz.ch>
-X-OriginalArrivalTime: 23 Mar 2009 14:06:57.0977 (UTC) FILETIME=[A0FCEA90:01C9ABC0]
+	id S1754693AbZCWOHW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Mar 2009 10:07:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754643AbZCWOHV
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 10:07:21 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:41941 "EHLO kirsi1.inet.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754543AbZCWOHU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Mar 2009 10:07:20 -0400
+Received: from mithlond.arda.local (80.220.180.181) by kirsi1.inet.fi (8.5.014)
+        id 49B910AD006AE9C5; Mon, 23 Mar 2009 16:07:04 +0200
+Received: from dtw by mithlond.arda.local with local (Exim 4.69)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1Llknv-0000t5-3D; Mon, 23 Mar 2009 16:07:03 +0200
+In-Reply-To: <03AC7EDA-2A9F-4626-A67B-CE9F2A88FC7D@gmail.com> (David Reitter's message of "Mon\, 23 Mar 2009 09\:27\:24 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114308>
 
-On Mar. 23, 2009, 15:54 +0200, Thomas Rast <trast@student.ethz.ch> wrote:
-> Benny Halevy wrote:
->> I'm hitting bad merges with (non interactive) git rebase
->> when a hunk is merged pre-maturely into an inexact match
->> when there's fuzz.
-> [...]
->> { for i in {1..10}; do echo fuzz $i; done; echo; cat test_file; } > fuzz_file
-> [...]
->> git rebase --onto test_branch master^ master
-> 
-> git-am, and by extension rebase, by default doesn't take history into
-> account.  It just applies the patches "blindly".  Thus, there's no way
-> to know which series of 'line N' you really wanted it to go onto.
-> 
-> To avoid this issue, use the -m option to git-rebase so that it uses a
-> "real" merge.  (You can achieve similar effects for git-am with the -3
-> option.)
-> 
+[I'll Cc to Bazaar list too because this subject is half-Git and
+half-Bazaar and we may need help from both sides.]
 
-OK. -m indeed helps and I'm certainly going to adopt it for my rebase scripts.
-git rebase -i does too, BTW.
 
-I would expect though that the default mode for automatic rebase would be
-the strictest and safest...
+On 2009-03-23 09:27 (-0400), David Reitter wrote:
 
-Benny
+> I'm just experimenting with "bzr fast-export", which converts to git,
+> and it seems to take about 4 minutes for 1000 revisions on our
+> (modern) server. That would be around 7 hours for my emacs repository;
+> I can't do that daily.
+>
+> I wonder if there's a way for (bzr) fast-export / (git) fast-import to
+> work incrementally, i.e. for selected or most recent revisions.
+
+They can or should work incrementally, and actually I have succesfully
+done that. The idea is to use --import-marks and --export-marks options
+with "git fast-import" and --marks option with "bzr fast-export.
+
+I noticed some problems with newer versions of "bzr fast-export", though
+(since it was converted to a proper Bzr command). It seems to corrupt
+the marks file when doing the first incremental export after the initial
+export. At least the revisions are not in right order in the marks file
+anymore. "git fast-import" can't continue to import from the same
+revision where it left last time and it seems to create alternative
+history -- or something.
+
+Really I don't know if this is a bug in Bzr or in Git and haven't
+figured out how to file a useful bug report.
