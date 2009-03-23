@@ -1,84 +1,59 @@
 From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH 3/3] completion: add --thread=deep/shallow to format-patch
-Date: Mon, 23 Mar 2009 03:26:51 -0700
-Message-ID: <1237804011-15419-4-git-send-email-bebarino@gmail.com>
-References: <1237804011-15419-1-git-send-email-bebarino@gmail.com>
- <1237804011-15419-2-git-send-email-bebarino@gmail.com>
- <1237804011-15419-3-git-send-email-bebarino@gmail.com>
+Subject: [PATCH 0/3] completion updates
+Date: Mon, 23 Mar 2009 03:26:48 -0700
+Message-ID: <1237804011-15419-1-git-send-email-bebarino@gmail.com>
 Cc: git@vger.kernel.org
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Mar 23 11:28:36 2009
+X-From: git-owner@vger.kernel.org Mon Mar 23 11:28:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlhOV-0003Bn-1W
-	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 11:28:35 +0100
+	id 1LlhOS-0003Bn-NK
+	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 11:28:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754167AbZCWK1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Mar 2009 06:27:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754064AbZCWK1H
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 06:27:07 -0400
-Received: from wf-out-1314.google.com ([209.85.200.168]:30790 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753793AbZCWK1E (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Mar 2009 06:27:04 -0400
-Received: by wf-out-1314.google.com with SMTP id 29so2759505wff.4
-        for <git@vger.kernel.org>; Mon, 23 Mar 2009 03:27:02 -0700 (PDT)
+	id S1753766AbZCWK05 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Mar 2009 06:26:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753550AbZCWK04
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 06:26:56 -0400
+Received: from rv-out-0506.google.com ([209.85.198.226]:62623 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753429AbZCWK0z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Mar 2009 06:26:55 -0400
+Received: by rv-out-0506.google.com with SMTP id f9so1710380rvb.1
+        for <git@vger.kernel.org>; Mon, 23 Mar 2009 03:26:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references;
-        bh=5fLYjwpsSJXYaSXNSQoxuhizXLlmx80X4aADbHhaVm0=;
-        b=rpmkvhCzD0Vs1u+5dSzLVm5+HnP0FCTM+SfQGR5ZUg/nRWyx50IS17X14ALylJUCgH
-         OR24D894vKZLdFvVChtC9BKwILw2Mfzvbim8bJBvaO+9nwKDcESyHtSpzdHH4qJ20V9M
-         hSQrk8CKLOt6pfXQiHVGWayrnZY/SaFUQNT0s=
+         :date:message-id:x-mailer;
+        bh=WoA7zMrX/1FhzGgga5oJuxv5PaRNzPic6Z28oHbReHc=;
+        b=kCoXwDdmVKGEK2s3IK6WMiiG5/rjWgk+8kSW2q4/ba3flV3MrBMJmoWa48PbuhFXo5
+         CP3j1pl+/xPUW/tCMSpuWtEagPtMt+GHbgCyEJ9e3WVNu8iA56yHBj2xbQHRfERijP/8
+         bxUaEQi/kw0oz8d2SGIZF3EgA141RNCOfyges=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=w6OWH/TyMRwwkhdFNEXAZaL+2bIbLKrK7OqkuTepnZY8+133qau2dtxi19zUlRxuOp
-         sm7UzGdKSme2TocQTg2d3bsEb/ymb4HiemEgz75ya42AoJWvizfUSemsjowWDns/SCVo
-         c1tXjvrBjeF/yHCDUf6OFpll78zKalV3tQhc4=
-Received: by 10.142.68.5 with SMTP id q5mr2797912wfa.12.1237804022275;
-        Mon, 23 Mar 2009 03:27:02 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=AHaBKAUHT7NYXykEhWu/Q4ww7BQ+w6uDzwhQEtEYHLxsAjNx2qWv4WdnhN2fm6ggJn
+         KMP+AVru2d96tgxoFcNZH4nVhq1b4cKC7lDPZ39G74KMAM7se3gzcYAoWN85qF6mBwq8
+         UoqmtOQcFL+rytuB4OV4jqByiytv0XFLGmz+U=
+Received: by 10.114.106.13 with SMTP id e13mr4704253wac.52.1237804014160;
+        Mon, 23 Mar 2009 03:26:54 -0700 (PDT)
 Received: from earth ([76.89.212.195])
-        by mx.google.com with ESMTPS id 28sm11236939wfd.5.2009.03.23.03.27.00
+        by mx.google.com with ESMTPS id m34sm5183299waf.1.2009.03.23.03.26.52
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 23 Mar 2009 03:27:01 -0700 (PDT)
-Received: by earth (sSMTP sendmail emulation); Mon, 23 Mar 2009 03:26:59 -0700
+        Mon, 23 Mar 2009 03:26:53 -0700 (PDT)
+Received: by earth (sSMTP sendmail emulation); Mon, 23 Mar 2009 03:26:51 -0700
 X-Mailer: git-send-email 1.6.2
-In-Reply-To: <1237804011-15419-3-git-send-email-bebarino@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114275>
 
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
----
- contrib/completion/git-completion.bash |    8 +++++++-
- 1 files changed, 7 insertions(+), 1 deletions(-)
+Stephen Boyd (3):
+  completion: add --annotate option to send-email
+  completion: add --cc and --no-attachment option to format-patch
+  completion: add --thread=deep/shallow to format-patch
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index b96458f..1c6b0e2 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -930,9 +930,15 @@ _git_format_patch ()
- {
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
- 	case "$cur" in
-+	--thread=*)
-+		__gitcomp "
-+			deep shallow
-+			" "" "${cur##--thread=}"
-+		return
-+		;;
- 	--*)
- 		__gitcomp "
--			--stdout --attach --no-attach --thread
-+			--stdout --attach --no-attach --thread --thread=
- 			--output-directory
- 			--numbered --start-number
- 			--numbered-files
--- 
-1.6.2
+ contrib/completion/git-completion.bash |   14 ++++++++++----
+ 1 files changed, 10 insertions(+), 4 deletions(-)
