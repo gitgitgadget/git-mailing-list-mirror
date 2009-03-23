@@ -1,60 +1,131 @@
-From: Rostislav Svoboda <rostislav.svoboda@gmail.com>
-Subject: Re: Git for Windows 1.6.2.1-preview20090322
-Date: Tue, 24 Mar 2009 00:07:14 +0100
-Message-ID: <286817520903231607hcad2db6wcf97fe0d8b90f62e@mail.gmail.com>
-References: <alpine.DEB.1.00.0903080132470.10279@pacific.mpi-cbg.de>
-	 <alpine.DEB.1.00.0903222149330.10279@pacific.mpi-cbg.de>
-	 <4285cd450903231503x5d332bfft17b01e598d11bc09@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Chris Johnsen <chris_johnsen@pobox.com>
+Subject: Re: [RFC/WIP 0/2] Documentation clean-up: git commands
+Date: Mon, 23 Mar 2009 18:13:11 -0500
+Message-ID: <37FD43AD-E43A-4565-8085-95E606E0B868@pobox.com>
+References: <1237818533-31577-1-git-send-email-git@drmicha.warpmail.net>
+ <7vwsag5hva.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v753.1)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org, msysgit@googlegroups.com
-X-From: git-owner@vger.kernel.org Tue Mar 24 00:08:59 2009
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 24 00:15:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LltGE-0005gL-GE
-	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 00:08:50 +0100
+	id 1LltMC-0007Pz-O7
+	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 00:15:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754406AbZCWXHV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Mar 2009 19:07:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754750AbZCWXHT
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 19:07:19 -0400
-Received: from fk-out-0910.google.com ([209.85.128.191]:54946 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754243AbZCWXHS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Mar 2009 19:07:18 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so905286fkq.5
-        for <git@vger.kernel.org>; Mon, 23 Mar 2009 16:07:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=uphMIohaMl4P/Wl7LqnWqQJbMoTAzBXu/l7DQfoPQN8=;
-        b=gqgFElt2tCGUgtlHWRF3pLYqwS9kA2zEO/lKOIHVRcUGB5X65vkHy1a1Cvs5crgVg6
-         mHJWClxDGcA6L/0AKvWfZm0SrTpZgK+Awr92kD36xcqtJpR1uwmAw5V+tBJaiXmNZR3G
-         avQX7q8UTMhWP2fdLab95zmws3hXUtPZT2Fvc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=fRPG37q6UvGa4fKywy0IS6HEKM4aCMT88xgIQwQrwlFnrDDxNGEE3VJE8tV67sNSIw
-         TOEgFLG7Jd4iCjKp5YgvwVRXFCo8wmzKTMFHhweqtMpR9RF/KrN4YqnHP0oFDoic7ky8
-         nVmvGLjYU5O88rSsQKp3jOgaGIyskxt13fgFc=
-Received: by 10.204.53.143 with SMTP id m15mr2676902bkg.112.1237849634610; 
-	Mon, 23 Mar 2009 16:07:14 -0700 (PDT)
-In-Reply-To: <4285cd450903231503x5d332bfft17b01e598d11bc09@mail.gmail.com>
+	id S1754750AbZCWXNb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Mar 2009 19:13:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754406AbZCWXNa
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 19:13:30 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34679 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751063AbZCWXNa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Mar 2009 19:13:30 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 8EBE6870D;
+	Mon, 23 Mar 2009 19:13:27 -0400 (EDT)
+Received: from [192.168.1.241] (unknown [76.203.162.168]) (using TLSv1 with
+ cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 571BB8702; Mon,
+ 23 Mar 2009 19:13:22 -0400 (EDT)
+In-Reply-To: <7vwsag5hva.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.753.1)
+X-Pobox-Relay-ID: 375F45D6-1800-11DE-9F39-C5D912508E2D-07245699!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114358>
 
-Hi
-I use the new msysgit 1.6.2.1-preview20090322 exactly one day but it
-seems to be significantly slower than the previous version...
-Am I the only one who observes it?
+On 2009 Mar 23, at 11:22, Junio C Hamano wrote:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>
+>> - Do we want it this way (`git command`)?
+>
+> That's my personal preference but other people may differ; wasn't  
+> there an
+> issue with "man" backend losing the typesetting information?
 
-Bost
+An issue that came up recently was that the backticks seem to have no  
+typeset representation in the official kernel.org manpages.
+
+In my recent fumbling with the documentation generation, I have often  
+been using git-init.txt as a "test bed". It shows clearly enough that  
+backticks, by themselves, are not represented in the official manpages:
+
+$ git grep core/templates Documentation/git-init.txt
+  Documentation/git-init.txt:directory is `/usr/share/git-core/ 
+templates`.
+
+There we see the path in backticks with a period outside the  
+backticks. If any inline typesetting were to come between "core/ 
+templates" and ".", I think this command would turn it up:
+
+$ git log -p -Score/templates. origin/man -- man1/git-init.1
+
+It gets two hits. The first where the sentence is introduced, and a  
+second where the period is escaped:
+
+43e513c (Autogenerated man pages for v1.5.0-rc1, 2007-01-12)
+2cbdf46 (Autogenerated manpages for v1.5.6.2-212-g08b5, 2008-07-06)
+
+The last one leaves us with "core/templates\.". So search again to  
+see if that has changed since the last one:
+
+git log -p -Score/templates\\. origin/man -- man1/git-init.1
+
+Nope, that only shows the one hit (2cbdf46). In case I made an error  
+using the `git log` to do the searching, I also checked by hand by  
+loading the diffs from <http://git.kernel.org/?p=git/ 
+git.git;a=history;f=man1/git-init.1;hb=man> (they agree, no  
+formatting around that path in any of the generated git-init.1).
+
+When I generate the manpage on my machine (asciidoc 8.3.1; docbook- 
+xsl 1.74.0), I do get some formatting for backticks:
+
+$ grep core/templates Documentation/git-init.1
+Provide the directory from which templates will be used\&. The  
+default template directory is \FC/usr/share/git\-core/templates\F[]\&.
+
+ From what I can tell the \FC is supposed to introduce monospace type  
+and \F[] is to reset to the previous type. When I run it through  
+groff -man -Tps, it  does come out in a monospaced font. The change  
+in font is not obvious when viewing the manpage in a tty-based  
+manpage viewer (which was my original "gripe"), but there is some  
+typesetting info there for pages I generate.
+
+I suspect the main difference between my generated pages and the  
+official pages (at least for typesetting of literal text) is the  
+docbook-xsl version (though I have not dug into previous versions of  
+dcobook-xsl to bolster this hypothesis).
+
+I have a series of patches prepared to "cleanup" and modify  
+{callout,manpage-1.72}.xsl and asciidoc.conf, but I am still running  
+a series of "make doc" runs across the changes to try to make sure  
+they are sane. Here is a preview:
+
+Documentation: move callouts.xsl to manpage-{base,normal}.xsl
+Documentation: use parametrized manpage-base.xsl with manpage- 
+{1.72,normal}.xsl
+Documentation: rename docbook-xsl-172 attribute to git-asciidoc-no-roff
+Documentation: move quieting params into manpage-base.xsl
+Documentation: move "spurious .sp" code into manpage-base.xsl
+Documentation: asciidoc.conf: always use <literallayout> for [blocktext]
+Documentation: asciidoc.conf: fix verse block with block titles
+Documentation: option to render literal text as italic for manpages
+
+The first three restructure things a bit. The next three make some  
+cleanups that could be dropped if they are deemed inappropriate. The  
+last one add an option that changes the manpage formatting used  
+around asciidoc backticked strings (literal text).
+
+I plan on sending the patches along after my trial doc-generations  
+finish and I have reviewed the results (my machine is slow, it may  
+not be until tomorrow).
+
+-- 
+Chris
