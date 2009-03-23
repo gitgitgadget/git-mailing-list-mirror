@@ -1,83 +1,59 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: git rebase + fuzz = possible bad merge
-Date: Mon, 23 Mar 2009 14:54:43 +0100
-Message-ID: <200903231454.48600.trast@student.ethz.ch>
-References: <49C7675E.9000309@panasas.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH v2 6/7] check_ref_format(): tighten refname rules
+Date: Mon, 23 Mar 2009 06:59:01 -0700
+Message-ID: <20090323135901.GB9732@spearce.org>
+References: <cover.1237791716.git.gitster@pobox.com> <345e795e1891c628ad8356b730fade9f7a81e2f6.1237791716.git.gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart3789119.u2Lek9ZNTh";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Benny Halevy <bhalevy@panasas.com>
-X-From: git-owner@vger.kernel.org Mon Mar 23 14:57:50 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 23 15:00:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Llkee-0002Ir-Bw
-	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 14:57:28 +0100
+	id 1Llkhm-0003NW-01
+	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 15:00:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753610AbZCWNz1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Mar 2009 09:55:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751779AbZCWNz1
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 09:55:27 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:32436 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756781AbZCWNzZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Mar 2009 09:55:25 -0400
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 23 Mar 2009 14:55:21 +0100
-Received: from thomas.localnet ([129.132.153.233]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 23 Mar 2009 14:55:21 +0100
-User-Agent: KMail/1.11.1 (Linux/2.6.27.19-3.2-default; KDE/4.2.1; x86_64; ; )
-In-Reply-To: <49C7675E.9000309@panasas.com>
-X-OriginalArrivalTime: 23 Mar 2009 13:55:21.0625 (UTC) FILETIME=[01EE0890:01C9ABBF]
+	id S1756698AbZCWN7H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Mar 2009 09:59:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756557AbZCWN7G
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 09:59:06 -0400
+Received: from george.spearce.org ([209.20.77.23]:51139 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752095AbZCWN7E (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Mar 2009 09:59:04 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 346D738211; Mon, 23 Mar 2009 13:59:01 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <345e795e1891c628ad8356b730fade9f7a81e2f6.1237791716.git.gitster@pobox.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114304>
 
---nextPart3789119.u2Lek9ZNTh
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Junio C Hamano <gitster@pobox.com> wrote:
+> This changes the rules for refnames to forbid:
+> 
+>  (1) a refname that contains "@{" in it.
+>  (2) a refname that ends with a dot.
 
-Benny Halevy wrote:
-> I'm hitting bad merges with (non interactive) git rebase
-> when a hunk is merged pre-maturely into an inexact match
-> when there's fuzz.
-[...]
-> { for i in {1..10}; do echo fuzz $i; done; echo; cat test_file; } > fuzz_=
-file
-[...]
-> git rebase --onto test_branch master^ master
+How about also "that end in .lock" ?
 
-git-am, and by extension rebase, by default doesn't take history into
-account.  It just applies the patches "blindly".  Thus, there's no way
-to know which series of 'line N' you really wanted it to go onto.
+  $ git branch foo.lock
+  $ git branch foo
+  fatal: Unable to create '.git/refs/heads/foo.lock': File exists.
 
-To avoid this issue, use the -m option to git-rebase so that it uses a
-"real" merge.  (You can achieve similar effects for git-am with the -3
-option.)
+  If no other git process is currently running, this probably means a
+  git process crashed in this repository earlier. Make sure no other git
+  process is running and remove the file manually to contin
 
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Oh, apparently there is also something wrong with the error message...
 
---nextPart3789119.u2Lek9ZNTh
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+$ git version
+git version 1.6.2.1.433.g0cbc
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAknHlKgACgkQqUud07tmzP33PwCfcVxUcR4oG2OORulKVbjrdcT5
-+nQAn2XkCBuABIJvpXyoKFjZJvVc0f4p
-=/WgE
------END PGP SIGNATURE-----
-
---nextPart3789119.u2Lek9ZNTh--
+-- 
+Shawn.
