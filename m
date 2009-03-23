@@ -1,69 +1,50 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Merge format documented?
-Date: Mon, 23 Mar 2009 00:52:28 -0700
-Message-ID: <7viqm08ymb.fsf@gitster.siamese.dyndns.org>
-References: <200903230419.50000.agruen@suse.de>
- <7vtz5k99tr.fsf@gitster.siamese.dyndns.org>
- <200903230818.20044.agruen@suse.de>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] remote: improve sorting of "configure for git push" list
+Date: Mon, 23 Mar 2009 08:56:09 +0100
+Message-ID: <49C74099.3090806@viscovery.net>
+References: <20090322085920.GA5201@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andreas Gruenbacher <agruen@suse.de>
-X-From: git-owner@vger.kernel.org Mon Mar 23 08:54:08 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 23 08:58:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Llez0-0001mK-VP
-	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 08:54:07 +0100
+	id 1Llf2a-0002bw-SI
+	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 08:57:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752173AbZCWHwg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Mar 2009 03:52:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752009AbZCWHwg
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 03:52:36 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:56668 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750972AbZCWHwf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Mar 2009 03:52:35 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 696C2A456C;
-	Mon, 23 Mar 2009 03:52:33 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 7242AA456B; Mon,
- 23 Mar 2009 03:52:30 -0400 (EDT)
-In-Reply-To: <200903230818.20044.agruen@suse.de> (Andreas Gruenbacher's
- message of "Mon, 23 Mar 2009 08:18:19 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 9152604A-177F-11DE-892E-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1753376AbZCWH4S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Mar 2009 03:56:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752734AbZCWH4R
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 03:56:17 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:10936 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752385AbZCWH4R (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Mar 2009 03:56:17 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Llf10-0006uU-A4; Mon, 23 Mar 2009 08:56:10 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 13A866C4; Mon, 23 Mar 2009 08:56:10 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <20090322085920.GA5201@coredump.intra.peff.net>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114251>
 
-Andreas Gruenbacher <agruen@suse.de> writes:
+Tested-by: Johannes Sixt <j6t@kdbg.org>
 
-> On Monday, 23 March 2009 4:50:24 Junio C Hamano wrote:
->> Andreas Gruenbacher <agruen@suse.de> writes:
->> > is the format that git normally uses for indicating merge conflicts in
->> > files (the <<< === >>> markers) documented somewhere?  How exactly does
->> > it differ from the diff3 format (<<< ||| === >>>)?  Diff3's -m mode seems
->> > to come close to what git does, except that git doesn't produce the |||
->> > section:
->>
->> It is an imitation of output from "merge" program of RCS suite Paul you
->> know maintains ;-)
->
-> So it's the same format except that diff3's ||| section isn't shown. I was 
-> wondering if there are any additional tricks.
-
-No additional tricks.
-
-As far as I can remember, the format was not really chosen, but simply
-fell out as a natural consequence of using "merge" rather than "diff3" as
-a merge backend (we originally used to invoke "merge" from RCS suite
-instead of performing file-level merges ourselves), but we could say we
-chose "merge" over "diff3 -m" because the output format should be more
-familiar than the diff3-m format with |||, especially to anybody who came
-from subversion or CVS background.
+Thanks,
+-- Hannes
