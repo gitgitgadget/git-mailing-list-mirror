@@ -1,81 +1,66 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [RFC/PATCH 2/8] docbook: improve css style
-Date: Mon, 23 Mar 2009 12:31:04 +0200
-Message-ID: <94a0d4530903230331g3b620f80h77e317a09dc5273f@mail.gmail.com>
-References: <1237745121-6325-1-git-send-email-felipe.contreras@gmail.com>
-	 <1237745121-6325-2-git-send-email-felipe.contreras@gmail.com>
-	 <1237745121-6325-3-git-send-email-felipe.contreras@gmail.com>
-	 <20090323064242.GB1119@coredump.intra.peff.net>
+From: Guennadi Liakhovetski <g.liakhovetski@gmx.de>
+Subject: [bug?] git-format-patch produces a 0-byte long patch for the first
+ commit
+Date: Mon, 23 Mar 2009 11:34:07 +0100 (CET)
+Message-ID: <Pine.LNX.4.64.0903231119110.4871@axis700.grange>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Mar 23 11:32:48 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 23 11:35:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlhSU-0004Qh-CQ
-	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 11:32:42 +0100
+	id 1LlhVI-0005Ik-By
+	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 11:35:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754585AbZCWKbL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Mar 2009 06:31:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754437AbZCWKbJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 06:31:09 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:27874 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754379AbZCWKbH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Mar 2009 06:31:07 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so346515fgg.17
-        for <git@vger.kernel.org>; Mon, 23 Mar 2009 03:31:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=am7xGU9vDwN+2wd9+12bDcmSvIONRrvrU+chMq33Atg=;
-        b=lxCF2D2WCL1QwSnK7AFtrNgFCkLx4yfsNo3asu1umXebCHwwYKIeqrJXZ7KGXECh91
-         ggNVpgzBQJxFRi8ilmG8ht2/gr2IpyoApOcOAQWFFpmIjtvnkx7XWTx2YyrjeG63e0qm
-         CydSTTNzhA9UBpD6JiP5QawhdJXVpj/MfzBl4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ByBTh+O2z3IodZhNdi8FBrBb1Znvqy4KTs0qW4beJVXHF7GvIfz6uG09YBM455JpzA
-         T3sd0zSY5IzC1fTszPJJhZo6LfBtPttlGXnC3ifO5YV2nmdYjNqLou0otohNoI8vasTV
-         2ZHb1AuVEtlQc773rVszu4SifLo0bXkV3FjQY=
-Received: by 10.86.76.16 with SMTP id y16mr3517372fga.18.1237804264787; Mon, 
-	23 Mar 2009 03:31:04 -0700 (PDT)
-In-Reply-To: <20090323064242.GB1119@coredump.intra.peff.net>
+	id S1753376AbZCWKeH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Mar 2009 06:34:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753536AbZCWKeF
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 06:34:05 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47863 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753042AbZCWKeC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Mar 2009 06:34:02 -0400
+Received: (qmail invoked by alias); 23 Mar 2009 10:33:59 -0000
+Received: from p57BD2C84.dip0.t-ipconnect.de (EHLO axis700.grange) [87.189.44.132]
+  by mail.gmx.net (mp006) with SMTP; 23 Mar 2009 11:33:59 +0100
+X-Authenticated: #20450766
+X-Provags-ID: V01U2FsdGVkX19UPkVKot9UWqX1Wi8UhR0sdQOtX6L0OEQjiIIIxG
+	L4zGLwNW/5qMc5
+Received: from lyakh (helo=localhost)
+	by axis700.grange with local-esmtp (Exim 4.63)
+	(envelope-from <g.liakhovetski@gmx.de>)
+	id 1LlhTs-0001We-0Y
+	for git@vger.kernel.org; Mon, 23 Mar 2009 11:34:08 +0100
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114277>
 
-On Mon, Mar 23, 2009 at 8:42 AM, Jeff King <peff@peff.net> wrote:
-> On Sun, Mar 22, 2009 at 08:05:15PM +0200, Felipe Contreras wrote:
->
->> =C2=A0tt.literal, code.literal {
->> =C2=A0 =C2=A0color: navy;
->> + =C2=A0font-size: 1em;
->> +}
->
-> Isn't 1em already the default size? Or are you trying to override som=
-e
-> other size specification elsewhere? It's hard to tell what the goal i=
-s
-> because your commit message merely says "improve".
+Hi,
 
-That's correct.
+I noticed some special "features" of the first git commit, which seem at 
+least inconsistent to me, even though I've got some explanations on IRC.
 
-The problem is that when the user has a different size for the
-sans-serif and monospace fonts it looks horrible when they are on the
-same paragraph. I thought 1em did the trick, but you are right, it
-doesn't.
+E.g., the sequence
 
-It looks like the only way to fix this is to set absolute sizes.
+mkdir x
+cd x
+git-init
+echo hi > greating
+git-commit -a
+git-format-patch -1
 
---=20
-=46elipe Contreras
+produces a 0-byte long patch. git-format-patch HEAD^ produces an error, 
+whereas with more than one commit it produces tha last patch. Yes, I know 
+about "--root" and that it does allow to extract the very first commit.
+
+Thanks
+Guennadi
+---
+Guennadi Liakhovetski, Ph.D.
+Freelance Open-Source Software Developer
