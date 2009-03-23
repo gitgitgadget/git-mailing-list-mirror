@@ -1,90 +1,203 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] difftool: add support for an extended revision syntax
-Date: Mon, 23 Mar 2009 16:22:44 -0700
-Message-ID: <7vhc1j6czf.fsf@gitster.siamese.dyndns.org>
-References: <1237803348-9329-1-git-send-email-davvid@gmail.com>
- <49C7A20E.7060503@drmicha.warpmail.net> <20090323163343.GB16258@gmail.com>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: [PATCH] gitk: make use of themed widgets where available
+Date: Tue, 24 Mar 2009 00:28:25 +0100
+Message-ID: <49C81B19.2000706@users.sourceforge.net>
+References: <87ljrre7nr.fsf@users.sourceforge.net> <18887.8064.114036.850741@drongo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 24 00:24:56 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Tue Mar 24 00:30:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LltVJ-0002CS-A9
-	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 00:24:25 +0100
+	id 1Lltav-00044r-8o
+	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 00:30:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751398AbZCWXW4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Mar 2009 19:22:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751208AbZCWXWz
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 19:22:55 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52001 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750906AbZCWXWz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Mar 2009 19:22:55 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A4DEBA449A;
-	Mon, 23 Mar 2009 19:22:50 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 20388A4498; Mon,
- 23 Mar 2009 19:22:45 -0400 (EDT)
-In-Reply-To: <20090323163343.GB16258@gmail.com> (David Aguilar's message of
- "Mon, 23 Mar 2009 09:33:44 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 86FDCA26-1801-11DE-B8E1-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1751639AbZCWX2n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Mar 2009 19:28:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751448AbZCWX2n
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 19:28:43 -0400
+Received: from smtp-out5.blueyonder.co.uk ([195.188.213.8]:49213 "EHLO
+	smtp-out5.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750906AbZCWX2m (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Mar 2009 19:28:42 -0400
+Received: from [172.23.170.145] (helo=anti-virus03-08)
+	by smtp-out5.blueyonder.co.uk with smtp (Exim 4.52)
+	id 1LltZO-0007CJ-UR; Mon, 23 Mar 2009 23:28:38 +0000
+Received: from [92.238.221.8] (helo=badger.patthoyts.tk)
+	by asmtp-out6.blueyonder.co.uk with esmtp (Exim 4.52)
+	id 1LltZJ-0007m3-Kk; Mon, 23 Mar 2009 23:28:38 +0000
+Received: from [192.168.0.25] (pc025.patthoyts.tk [192.168.0.25])
+	by badger.patthoyts.tk (Postfix) with ESMTP id F085C5182B;
+	Mon, 23 Mar 2009 23:28:32 +0000 (GMT)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <18887.8064.114036.850741@drongo.ozlabs.ibm.com>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114361>
 
-David Aguilar <davvid@gmail.com> writes:
+Paul Mackerras wrote:
+> Pat Thoyts writes:
+> 
+>>     This patch improves the appearence of gitk on Windows XP and Vista
+>>     by making use of the themed widgets that are provided in Tk 8.5
+>>     and above. For good Vista support 8.6 will be needed.
+>>
+>> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+> 
+> Thanks for the patch.  It does seem to do a bit more than the commit
+> description says, though:
+> 
+> - It adds a toggle-fullscreen function.  I'd prefer that was done in a
+>   separate patch.
 
-> Keep in mind that the syntax that this patch added does not have file~3
-> = HEAD~3.  file~3 means finding file as it existed 3 changes-to-file
-> ago, which is != to HEAD~3 if file did not change in the last 3 commits.
+Sure. This seems to be a recurring issue that I need to take care of.
 
-If your motive is to introduce inconsistency to the UI by adding this kind
-of new notation _only to difftool_, I have to reconsider moving it out of
-contrib/ area.
+> - It makes various changes to the layout in the non-ttk case - in
+>   particular various message widgets get turned into label widgets.
+>   Are label widgets entirely equivalent to message widgets?
 
-While I do not fundamentally oppose to add convenient notations for useful
-concepts, you need to start at making sure if this "three changes ago" is
-a well defined concept to begin with.
+It depends on how the message widget is being used - but for simple cases
+they are equivalent. The message widget has some more options for placing
+the text within but is no themed equivalent for message.
 
-And it is not a well defined concept in a merge-heavy environment, unless
-you define what you mean by "three changes ago".
+> Also, the patch has been corrupted by your mailer: on lines containing
+> only a "+", the "+" has been deleted.
 
-If you consider this history:
+Damn - I'm surprised Gnus mashed anything in a patch file.
 
- ---Y---o---X---M---o mainline = HEAD
-               /
-   ---A---B---C topic
+> I have a few questions about specific things you've done in the patch:
+> 
+>> +proc ttk_toplevel {w args} {
+>> +    variable use_ttk
+>> +    eval [linsert $args 0 ::toplevel $w]
+>> +    if {$use_ttk} {
+>> +        place [ttk::frame $w._toplevel_background] -x 0 -y 0 -relwidth 1 -relheight 1
+> 
+> What is the effect of this line, or what would happen if it wasn't
+> there?
 
-where A, B, C and X, Y are the only commits that touched the file you are
-interested in, how do you define 3-changes-ago?
+A 'toplevel' widget is not themed so it picks up the default Tk options
+for the current platform. Where the theme background colour for a frame
+is significantly different to the Tk background colour this becomes
+obvious. For instance:
+ package require Tk 8.5
+ ttk::style theme use clam
+ pack [ttk::frame .f -height 100 -width 100] -padx 10 -pady 10
+will show a different 10 pixel border around the frame in the Tk default
+colour. On some themes the difference is not too noticable, on others
+its significant.
 
-Maybe X was just a totally uninteresting typofix to a comment, while A, B
-and C were adding a very interesting new feature.  Don't forget that M
-also changes the file from either of its parents (X or C).  Does M count
-as the last change?  Or does it not count because it is just a mechanical
-unconflicting merge?  Which one of X or C is the penultimate change?  The
-one with an earlier committer timestamp?  Tiebreaking with timestamps is
-known to be flawed in the presense of clock skew.
+>>  proc show_error {w top msg} {
+>> +    variable use_ttk
+>> +    set ttk [expr {$use_ttk ? "ttk" : ""}]
+> 
+> Is there a strong reason for using variable here rather than global,
+> or is it just habit?
 
-For the consistency of the UI, "starting at HEAD, following first-parent
-ancestry, find N-th commit that touches the path, ignoring all the side
-branches" MUST be the semantics of a notation that uses tilde followed by
-number (so file~3 must mean Y in the above picture), because HEAD~3 is
-defined as "three parents ago, only following the first parent ancestry".
-Anything else will invite user confusion.
+habit.
 
-But I do not think it is necessarily useful to follow only the first
-parent ancestry to find "three-changes ago" (if such a concept exists).
-If you want a notation that means something else, such as X (because
-chronologically the commits that touched the file are M, C and X in the
-ideal world that everybody has well synchronized clock), you shouldn't use
-tilde-number notation but use something else.
+> It looks to me as though $ttk might as well be a global variable,
+> rather than computing it from $use_ttk everywhere that we need it.
+
+Agreed
+
+>> @@ -1945,8 +1975,10 @@ proc makewindow {} {
+>>      }
+>>      . configure -menu .bar
+>>  
+>> +    place [${ttk}::frame ._main_background] -x 0 -y 0 -relwidth 1 -relheight 1
+> 
+> Once again, what's the reason for using place and the extra frame?
+
+As above. The other alternative would be to pack or grid a ttk::frame
+and then make all the other widgets children of this and pack/grid them
+inside. This is a simpler option.
+
+> 
+>> +    if {$use_ttk} {
+>> +        #set p1 [expr {[winfo screenwidth .] - (40 * $charspc)}]
+>> +        #set p0 [expr {[winfo screenwidth .] - (100 * $charspc)}]
+>> +        #.tf.histframe.pwclist sashpos 0 585
+>> +        #.tf.histframe.pwclist sashpos 1 868
+>> +     } else {
+>> +        eval .tf.histframe.pwclist sash place 0 $geometry(pwsash0)
+>> +        eval .tf.histframe.pwclist sash place 1 $geometry(pwsash1)
+>> +    }
+>
+> Looks like that could be cleaned up a bit.
+
+Doh. I have this fixed properly locally (I'll comment at the end).
+
+>> -    set gm [tk_optionMenu .tf.lbar.gdttype gdttype \
+>> -		[mc "containing:"] \
+>> -		[mc "touching paths:"] \
+>> -		[mc "adding/removing string:"]]
+>> +    if {$use_ttk} {
+>> +        set values [list [mc "containing:"] [mc "touching paths:"] \
+>> +                        [mc "adding/removing string:"]]
+>> +        set gm [ttk::combobox .tf.lbar.gdttype -width 10\
+>> +                    -values $values -textvariable gdtype]
+>> +    } else {
+>> +        set gm [tk_optionMenu .tf.lbar.gdttype gdttype \
+>> +                    [mc "containing:"] \
+>> +                    [mc "touching paths:"] \
+>> +                    [mc "adding/removing string:"]]
+>> +    }
+> 
+> We could profitably use a helper function here that would take the
+> list of alternatives and make the combobox/optionMenu.
+> 
+>> -    $top.tohead conf -state readonly
+>> +    $top.tohead configure -state readonly
+> 
+> Do all the other instances of conf need to be changed to configure,
+> and if so, why?
+
+Using abbreviated subcommand or option names should really be restricted
+to interactive code. In script files its better to write it out in full
+as you never know in some future version Tk might get more subcommands
+added and the abbreviation may no longer be unique.
+However, such changes should be put in a separate style patch.
+
+> 
+>> -    checkbutton $top.showlocal -text [mc "Show local changes"] \
+>> -	-font optionfont -variable showlocalchanges
+>> +    ${ttk}::checkbutton $top.showlocal -text [mc "Show local changes"] \
+>> +	-variable showlocalchanges
+> 
+> Why do we lose the -font optionfont?
+
+The point to the ttk widgets is that the visual style of the widget
+becomes dictated by the theme and it should no longer be necessary to
+specify lots of options on each widget to get it looking reasonable.
+When running on Windows, the graphical elements should be drawn using
+the system configured fonts and in Tk 8.5+ this is read from the system
+parameters info. So if a user configures her system to use large fonts
+via the system display properties control panel, then large fonts is
+what she will now get.
+
+In fact the ttk::checkbutton doesn't accept a -font option to discourage
+people from overriding the users chosen system settings. If you really
+need to set the font for a checkbutton then you create a new style and
+set the font for that style. Or cheat and use a tk::checkbutton which
+provides all the same options it has always done.
+
+For instance:
+ ttk::style configure Fat.Checkbutton -font {Arial 12 bold}
+ pack [ttk::checkbutton .check -text Emboldened -style Fat.Checkbutton]
+
+
+I will redo the ttk patch on top of the new commits and take better care
+to isolate them into descrete chunks of work. I have noticed since
+posting the patch that it broke the preferences dialog on Linux and the
+positions of the panedwindow splitters stopped being saved so these need
+rolling into a new patch as well.
+
+Pat Thoyts
