@@ -1,174 +1,177 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 5/7] strbuf_check_branch_ref(): a helper to check a
- refname for a branch
-Date: Mon, 23 Mar 2009 00:58:38 -0700
-Message-ID: <a2fab531bbb00ff64335906e22854365be2eb5c7.1237791716.git.gitster@pobox.com>
+Subject: [PATCH v2 1/7] Rename interpret/substitute nth_last_branch functions
+Date: Mon, 23 Mar 2009 00:58:34 -0700
+Message-ID: <431b1969fcde69959a23355fba6894fb69c8fa0c.1237791716.git.gitster@pobox.com>
 References: <cover.1237791716.git.gitster@pobox.com>
- <431b1969fcde69959a23355fba6894fb69c8fa0c.1237791716.git.gitster@pobox.com>
- <a552de75eb01f78046feaf7dc88e5e4833624ad5.1237791716.git.gitster@pobox.com>
- <a31dca0393fefae894b7a155ae24000107bcc383.1237791716.git.gitster@pobox.com>
- <03d3aada5a2a68a7acdb6286fd72155f01626e41.1237791716.git.gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 23 09:01:23 2009
+X-From: git-owner@vger.kernel.org Mon Mar 23 09:01:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Llf5w-0003W2-CM
-	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 09:01:16 +0100
+	id 1Llf5r-0003W2-3a
+	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 09:01:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756915AbZCWH7P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Mar 2009 03:59:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756912AbZCWH7N
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 03:59:13 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:57649 "EHLO
+	id S1756506AbZCWH6v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Mar 2009 03:58:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756655AbZCWH6t
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 03:58:49 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:47508 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756843AbZCWH7C (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Mar 2009 03:59:02 -0400
+	with ESMTP id S1756528AbZCWH6q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Mar 2009 03:58:46 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CEAE7A45BA
-	for <git@vger.kernel.org>; Mon, 23 Mar 2009 03:58:59 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id ACE4E8681
+	for <git@vger.kernel.org>; Mon, 23 Mar 2009 03:58:44 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B50C2A45B9 for
- <git@vger.kernel.org>; Mon, 23 Mar 2009 03:58:58 -0400 (EDT)
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 1936F8680 for
+ <git@vger.kernel.org>; Mon, 23 Mar 2009 03:58:43 -0400 (EDT)
 X-Mailer: git-send-email 1.6.2.1.349.ga64c
-In-Reply-To: <03d3aada5a2a68a7acdb6286fd72155f01626e41.1237791716.git.gitster@pobox.com>
+In-Reply-To: <cover.1237791716.git.gitster@pobox.com>
 In-Reply-To: <cover.1237791716.git.gitster@pobox.com>
 References: <cover.1237791716.git.gitster@pobox.com>
-X-Pobox-Relay-ID: 7796F944-1780-11DE-83C7-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 6EA0F1E6-1780-11DE-89E2-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114253>
 
-This allows a common calling sequence
-
-	strbuf_branchname(&ref, name);
-	strbuf_splice(&ref, 0, 0, "refs/heads/", 11);
-	if (check_ref_format(ref.buf))
-		die(...);
-
-to be refactored into
-
-	if (strbuf_check_branch_ref(&ref, name))
-		die(...);
+These allow you to say "git checkout @{-2}" to switch to the branch two
+"branch switching" ago by pretending as if you typed the name of that
+branch.  As it is likely that we will be introducing more short-hands to
+write the name of a branch without writing it explicitly, rename the
+functions from "nth_last_branch" to more generic "branch_name", to prepare
+for different semantics.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- branch.c                   |    5 +----
- builtin-branch.c           |    8 ++------
- builtin-check-ref-format.c |    5 ++---
- builtin-checkout.c         |    7 +++----
- strbuf.c                   |    8 ++++++++
- strbuf.h                   |    1 +
- 6 files changed, 17 insertions(+), 17 deletions(-)
+ branch.c           |    2 +-
+ builtin-branch.c   |    2 +-
+ builtin-checkout.c |    2 +-
+ builtin-merge.c    |    2 +-
+ cache.h            |    2 +-
+ sha1_name.c        |   12 ++++++------
+ 6 files changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/branch.c b/branch.c
-index 558f092..62030af 100644
+index 5f889fe..313bcf1 100644
 --- a/branch.c
 +++ b/branch.c
-@@ -135,10 +135,7 @@ void create_branch(const char *head,
- 	struct strbuf ref = STRBUF_INIT;
- 	int forcing = 0;
+@@ -137,7 +137,7 @@ void create_branch(const char *head,
+ 	int len;
  
--	strbuf_branchname(&ref, name);
--	strbuf_splice(&ref, 0, 0, "refs/heads/", 11);
--
--	if (check_ref_format(ref.buf))
-+	if (strbuf_check_branch_ref(&ref, name))
- 		die("'%s' is not a valid branch name.", name);
- 
- 	if (resolve_ref(ref.buf, sha1, 1, NULL)) {
+ 	len = strlen(name);
+-	if (interpret_nth_last_branch(name, &ref) != len) {
++	if (interpret_branch_name(name, &ref) != len) {
+ 		strbuf_reset(&ref);
+ 		strbuf_add(&ref, name, len);
+ 	}
 diff --git a/builtin-branch.c b/builtin-branch.c
-index 0df82bf..afeed68 100644
+index 14d4b91..cacd7da 100644
 --- a/builtin-branch.c
 +++ b/builtin-branch.c
-@@ -468,14 +468,10 @@ static void rename_branch(const char *oldname, const char *newname, int force)
- 	if (!oldname)
- 		die("cannot rename the current branch while not on any.");
+@@ -123,7 +123,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds)
+ 	for (i = 0; i < argc; i++, strbuf_release(&bname)) {
+ 		int len = strlen(argv[i]);
  
--	strbuf_branchname(&oldref, oldname);
--	strbuf_splice(&oldref, 0, 0, "refs/heads/", 11);
--	if (check_ref_format(oldref.buf))
-+	if (strbuf_check_branch_ref(&oldref, oldname))
- 		die("Invalid branch name: '%s'", oldname);
+-		if (interpret_nth_last_branch(argv[i], &bname) != len)
++		if (interpret_branch_name(argv[i], &bname) != len)
+ 			strbuf_add(&bname, argv[i], len);
  
--	strbuf_branchname(&newref, newname);
--	strbuf_splice(&newref, 0, 0, "refs/heads/", 11);
--	if (check_ref_format(newref.buf))
-+	if (strbuf_check_branch_ref(&newref, newname))
- 		die("Invalid branch name: '%s'", newname);
- 
- 	if (resolve_ref(newref.buf, sha1, 1, NULL) && !force)
-diff --git a/builtin-check-ref-format.c b/builtin-check-ref-format.c
-index 39db6cb..f9381e0 100644
---- a/builtin-check-ref-format.c
-+++ b/builtin-check-ref-format.c
-@@ -11,9 +11,8 @@ int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
- {
- 	if (argc == 3 && !strcmp(argv[1], "--branch")) {
- 		struct strbuf sb = STRBUF_INIT;
--		strbuf_branchname(&sb, argv[2]);
--		strbuf_splice(&sb, 0, 0, "refs/heads/", 11);
--		if (check_ref_format(sb.buf))
-+
-+		if (strbuf_check_branch_ref(&sb, argv[2]))
- 			die("'%s' is not a valid branch name", argv[2]);
- 		printf("%s\n", sb.buf + 11);
- 		exit(0);
+ 		if (kinds == REF_LOCAL_BRANCH && !strcmp(head, bname.buf)) {
 diff --git a/builtin-checkout.c b/builtin-checkout.c
-index b268046..66df0c0 100644
+index 9fdfc58..a8d9d97 100644
 --- a/builtin-checkout.c
 +++ b/builtin-checkout.c
-@@ -733,12 +733,11 @@ no_reference:
+@@ -355,7 +355,7 @@ static void setup_branch_path(struct branch_info *branch)
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int ret;
  
- 	if (opts.new_branch) {
- 		struct strbuf buf = STRBUF_INIT;
--		strbuf_addstr(&buf, "refs/heads/");
--		strbuf_addstr(&buf, opts.new_branch);
-+		if (strbuf_check_branch_ref(&buf, opts.new_branch))
-+			die("git checkout: we do not like '%s' as a branch name.",
-+			    opts.new_branch);
- 		if (!get_sha1(buf.buf, rev))
- 			die("git checkout: branch %s already exists", opts.new_branch);
--		if (check_ref_format(buf.buf))
--			die("git checkout: we do not like '%s' as a branch name.", opts.new_branch);
- 		strbuf_release(&buf);
- 	}
+-	if ((ret = interpret_nth_last_branch(branch->name, &buf))
++	if ((ret = interpret_branch_name(branch->name, &buf))
+ 	    && ret == strlen(branch->name)) {
+ 		branch->name = xstrdup(buf.buf);
+ 		strbuf_splice(&buf, 0, 0, "refs/heads/", 11);
+diff --git a/builtin-merge.c b/builtin-merge.c
+index 4c11935..e94ea7c 100644
+--- a/builtin-merge.c
++++ b/builtin-merge.c
+@@ -361,7 +361,7 @@ static void merge_name(const char *remote, struct strbuf *msg)
+ 	int len, early;
  
-diff --git a/strbuf.c b/strbuf.c
-index a60b0ad..a884960 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -1,4 +1,5 @@
- #include "cache.h"
-+#include "refs.h"
+ 	len = strlen(remote);
+-	if (interpret_nth_last_branch(remote, &bname) == len)
++	if (interpret_branch_name(remote, &bname) == len)
+ 		remote = bname.buf;
  
- int prefixcmp(const char *str, const char *prefix)
+ 	memset(branch_head, 0, sizeof(branch_head));
+diff --git a/cache.h b/cache.h
+index 39789ee..d28fd74 100644
+--- a/cache.h
++++ b/cache.h
+@@ -671,7 +671,7 @@ extern int read_ref(const char *filename, unsigned char *sha1);
+ extern const char *resolve_ref(const char *path, unsigned char *sha1, int, int *);
+ extern int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref);
+ extern int dwim_log(const char *str, int len, unsigned char *sha1, char **ref);
+-extern int interpret_nth_last_branch(const char *str, struct strbuf *);
++extern int interpret_branch_name(const char *str, struct strbuf *);
+ 
+ extern int refname_match(const char *abbrev_name, const char *full_name, const char **rules);
+ extern const char *ref_rev_parse_rules[];
+diff --git a/sha1_name.c b/sha1_name.c
+index 2f75179..904bcd9 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -242,10 +242,10 @@ static int ambiguous_path(const char *path, int len)
+  * *string and *len will only be substituted, and *string returned (for
+  * later free()ing) if the string passed in is of the form @{-<n>}.
+  */
+-static char *substitute_nth_last_branch(const char **string, int *len)
++static char *substitute_branch_name(const char **string, int *len)
  {
-@@ -366,3 +367,10 @@ int strbuf_branchname(struct strbuf *sb, const char *name)
- 	strbuf_add(sb, name, len);
- 	return len;
- }
-+
-+int strbuf_check_branch_ref(struct strbuf *sb, const char *name)
-+{
-+	strbuf_branchname(sb, name);
-+	strbuf_splice(sb, 0, 0, "refs/heads/", 11);
-+	return check_ref_format(sb->buf);
-+}
-diff --git a/strbuf.h b/strbuf.h
-index 68923e1..9ee908a 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -132,5 +132,6 @@ extern void stripspace(struct strbuf *buf, int skip_comments);
- extern int launch_editor(const char *path, struct strbuf *buffer, const char *const *env);
+ 	struct strbuf buf = STRBUF_INIT;
+-	int ret = interpret_nth_last_branch(*string, &buf);
++	int ret = interpret_branch_name(*string, &buf);
  
- extern int strbuf_branchname(struct strbuf *sb, const char *name);
-+extern int strbuf_check_branch_ref(struct strbuf *sb, const char *name);
+ 	if (ret == *len) {
+ 		size_t size;
+@@ -259,7 +259,7 @@ static char *substitute_nth_last_branch(const char **string, int *len)
  
- #endif /* STRBUF_H */
+ int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
+ {
+-	char *last_branch = substitute_nth_last_branch(&str, &len);
++	char *last_branch = substitute_branch_name(&str, &len);
+ 	const char **p, *r;
+ 	int refs_found = 0;
+ 
+@@ -288,7 +288,7 @@ int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
+ 
+ int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
+ {
+-	char *last_branch = substitute_nth_last_branch(&str, &len);
++	char *last_branch = substitute_branch_name(&str, &len);
+ 	const char **p;
+ 	int logs_found = 0;
+ 
+@@ -355,7 +355,7 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
+ 		struct strbuf buf = STRBUF_INIT;
+ 		int ret;
+ 		/* try the @{-N} syntax for n-th checkout */
+-		ret = interpret_nth_last_branch(str+at, &buf);
++		ret = interpret_branch_name(str+at, &buf);
+ 		if (ret > 0) {
+ 			/* substitute this branch name and restart */
+ 			return get_sha1_1(buf.buf, buf.len, sha1);
+@@ -750,7 +750,7 @@ static int grab_nth_branch_switch(unsigned char *osha1, unsigned char *nsha1,
+  * If the input was ok but there are not N branch switches in the
+  * reflog, it returns 0.
+  */
+-int interpret_nth_last_branch(const char *name, struct strbuf *buf)
++int interpret_branch_name(const char *name, struct strbuf *buf)
+ {
+ 	long nth;
+ 	int i, retval;
 -- 
 1.6.2.1.349.ga64c
