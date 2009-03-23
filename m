@@ -1,55 +1,62 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Summer of Code - Cached Packs/Object Lists
-Date: Sun, 22 Mar 2009 19:52:44 -0700
-Message-ID: <20090323025244.GO23521@spearce.org>
-References: <20090323015936.GM23521@spearce.org> <fsmk86y8vqj4f56b08UYAxe124vaj_firegpg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git for Windows 1.6.2.1-preview20090322
+Date: Sun, 22 Mar 2009 22:53:58 -0400
+Message-ID: <20090323025358.GA19717@coredump.intra.peff.net>
+References: <alpine.DEB.1.00.0903080132470.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903222149330.10279@pacific.mpi-cbg.de> <20090322225315.GC22428@sigill.intra.peff.net> <alpine.DEB.1.00.0903230015020.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Thomas Coppi <thisnukes4u@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 23 03:54:17 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+	msysgit@googlegroups.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 23 03:55:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlaIp-0007sD-VO
-	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 03:54:16 +0100
+	id 1LlaK6-00086k-19
+	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 03:55:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755456AbZCWCwr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Mar 2009 22:52:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755398AbZCWCwr
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 22:52:47 -0400
-Received: from george.spearce.org ([209.20.77.23]:43643 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755390AbZCWCwq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Mar 2009 22:52:46 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id ECB1638211; Mon, 23 Mar 2009 02:52:44 +0000 (UTC)
+	id S1755472AbZCWCyF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Mar 2009 22:54:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755398AbZCWCyF
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 22:54:05 -0400
+Received: from peff.net ([208.65.91.99]:37950 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755350AbZCWCyE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Mar 2009 22:54:04 -0400
+Received: (qmail 18366 invoked by uid 107); 23 Mar 2009 02:54:12 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 22 Mar 2009 22:54:12 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 22 Mar 2009 22:53:58 -0400
 Content-Disposition: inline
-In-Reply-To: <fsmk86y8vqj4f56b08UYAxe124vaj_firegpg@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <alpine.DEB.1.00.0903230015020.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114236>
 
-Thomas Coppi <thisnukes4u@gmail.com> wrote:
-> On Sun, Mar 22, 2009 at 7:59 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
->> You could do both. ??But I think most people on the list will argue
->> that doing both is overkill and only one is necessary, and further,
->> that only the one that offers the "biggest bank for the buck"
->> should be implemented.
->
-> Alright, that seems reasonable.  Given that I think I would lean
-> towards implementing an object list caching mechanism, since that seems
-> to be more generally applicable.  The logic for this would then need to
-> be in the rev-list code(as mentioned in the JGit discussion), correct?
+On Mon, Mar 23, 2009 at 12:25:57AM +0100, Johannes Schindelin wrote:
 
-Probably.  IIRC upload-pack forks a rev-list to produce the
-object list, and pipes that into the forked pack-objects' stdin.
-Thus rev-list is probably what would need to know how to include
-the cached list to its output.
+> > A few people have asked about filter-branch on Windows recently;
+> 
+> I am not aware of any.  But then, I think nobody mentioned it on the 
+> msysgit list (which would be the correct place), and I am likely to have 
+> missed it if it was sent elsewhere.
 
--- 
-Shawn.
+They were less feature request and more mentioned in the middle of other
+discussions. I am thinking specifically of:
+
+  http://thread.gmane.org/gmane.comp.version-control.git/112253/focus=112439
+  http://thread.gmane.org/gmane.comp.version-control.git/111722/focus=112103
+
+> Actually, not only Hannes' version runs the test t7003 okay, but also 
+> 4msysgit's version.
+> 
+> But let's reduce the differences between git.git and 4msysgit.git further 
+> first.
+
+OK. I just wanted to make you aware of the existing threads and Hannes'
+message, since as you mentioned they _weren't_ on the msysgit list.
+
+-Peff
