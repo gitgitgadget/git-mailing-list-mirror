@@ -1,97 +1,70 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] Documentation: Reworded example text in git-bisect.txt.
-Date: Sun, 22 Mar 2009 20:23:49 -0400
-Message-ID: <20090323002349.GA21069@fieldses.org>
-References: <1237520134-18044-1-git-send-email-dmellor@whistlingcat.com> <200903210528.32392.chriscool@tuxfamily.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] builtin-fast-export.c: add default case to avoid crash
+	on corrupt repo
+Date: Sun, 22 Mar 2009 17:26:36 -0700
+Message-ID: <20090323002636.GI23521@spearce.org>
+References: <1237675051-6688-1-git-send-email-kusmabite@gmail.com> <7vd4cabffl.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "David J. Mellor" <dmellor@whistlingcat.com>, gitster@pobox.com,
-	git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Mar 23 01:25:30 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Erik Faye-Lund <kusmabite@gmail.com>, git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 23 01:28:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlXyr-0005FX-2X
-	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 01:25:29 +0100
+	id 1LlY1Q-0005mw-Up
+	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 01:28:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753531AbZCWAX7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Mar 2009 20:23:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753332AbZCWAX7
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 20:23:59 -0400
-Received: from mail.fieldses.org ([141.211.133.115]:50812 "EHLO
-	pickle.fieldses.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753228AbZCWAX6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Mar 2009 20:23:58 -0400
-Received: from bfields by pickle.fieldses.org with local (Exim 4.69)
-	(envelope-from <bfields@fieldses.org>)
-	id 1LlXxF-0005UD-Ot; Sun, 22 Mar 2009 20:23:49 -0400
+	id S1753939AbZCWA0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Mar 2009 20:26:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753698AbZCWA0j
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 20:26:39 -0400
+Received: from george.spearce.org ([209.20.77.23]:41958 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753645AbZCWA0i (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Mar 2009 20:26:38 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id D6EB138211; Mon, 23 Mar 2009 00:26:36 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <200903210528.32392.chriscool@tuxfamily.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <7vd4cabffl.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114211>
 
-On Sat, Mar 21, 2009 at 05:28:32AM +0100, Christian Couder wrote:
-> Le vendredi 20 mars 2009, David J. Mellor a =C3=A9crit :
->=20
-> [...]
->=20
-> > @@ -94,14 +95,14 @@ the bisection state).
-> >  Bisect visualize
-> >  ~~~~~~~~~~~~~~~~
-> >
-> > -During the bisection process, you issue the command:
-> > +To see the currently remaining suspects in 'gitk', the following c=
-ommand
-> > +is issued during the bisection process:
->=20
-> I think it's better to avoid the passive tone, for example like this:
->=20
-> "To see the currently remaining suspects in 'gitk', you issue the fol=
-lowing=20
-> command during the bisection process:"
+Junio C Hamano <gitster@pobox.com> wrote:
+> It
+> appears that there is no way to feed a tree object to fast-import, but I
+> think the fast-import language can represent a tag that points at another
+> tag just fine.
 
-Agreed, but drop the "you" too.
+Correct.
 
---b.
+This area of the langauge was built around the basic CVS->Git sort
+of conversion, where we just wanted to attach the CVS "tag" symbol
+onto a Git snapshot that seemed to match it.  Annotated tags were
+used only because tools like git fetch and git describe prefer to
+work with them, and these were (at some point in time) meaningful
+labels for these revisions so the project post-conversion should
+retain those same labels.
 
->=20
-> >  ------------
-> >  $ git bisect visualize
-> >  ------------
->=20
-> [...]
->=20
-> > @@ -173,8 +175,8 @@ using the "'<commit1>'..'<commit2>'" notation. =
-=46or
-> > example: $ git bisect skip v2.5..v2.6
-> >  ------------
-> >
-> > -would mean that no commit between `v2.5` excluded and `v2.6` inclu=
-ded
-> > -can be tested.
-> > +The effect of this would be that no commit between `v2.5` excluded=
- and
-> > +`v2.6` included could be tested.
->=20
-> I'd prefer something like:
->=20
-> "This tells the bisect process that no commit between `v2.5` excluded=
- and=20
-> `v2.6` included can be tested."
->=20
-> Otherwise it looks good to me.
->=20
-> Thanks,
-> Christian.
->=20
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+In hindsight, parts of the fast-import langauge are problematic as
+they don't fully represent the Git object graph, and this is one
+of those areas.  It wasn't designed to represent the same range
+of structures as Git can represent.
+
+> So the best you can do is perhaps to issue a warning
+> "skipping a tag that points at a tree object" and impoement a proper
+> handling of a tag that points at a tag.
+
+Or, patch fast-import to expand its language.  You could relax
+the "from <committish>" rule to be "from <objectish>" and then
+create tag a tree using a temporary branch and a from line of
+"from temp-branch^{tree}".
+
+-- 
+Shawn.
