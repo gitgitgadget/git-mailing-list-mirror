@@ -1,114 +1,80 @@
-From: Andreas Gruenbacher <agruen@suse.de>
-Subject: GNU patch: new alpha release
-Date: Mon, 23 Mar 2009 00:49:56 +0100
-Organization: SUSE Labs / Novell
-Message-ID: <200903230049.56549.agruen@suse.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 8/8] user-manual: simplify the user configuration
+Date: Sun, 22 Mar 2009 17:00:23 -0700
+Message-ID: <7viqm1az1k.fsf@gitster.siamese.dyndns.org>
+References: <1237745121-6325-1-git-send-email-felipe.contreras@gmail.com>
+ <1237745121-6325-2-git-send-email-felipe.contreras@gmail.com>
+ <1237745121-6325-3-git-send-email-felipe.contreras@gmail.com>
+ <1237745121-6325-4-git-send-email-felipe.contreras@gmail.com>
+ <1237745121-6325-5-git-send-email-felipe.contreras@gmail.com>
+ <1237745121-6325-6-git-send-email-felipe.contreras@gmail.com>
+ <1237745121-6325-7-git-send-email-felipe.contreras@gmail.com>
+ <1237745121-6325-8-git-send-email-felipe.contreras@gmail.com>
+ <1237745121-6325-9-git-send-email-felipe.contreras@gmail.com>
+ <0A3F8ECD-EEFA-4DB0-AFED-AEE7DAFE8DB3@wincent.com>
+ <94a0d4530903221601hb3bf8aelf98b22ee560dfb7b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 23 00:56:14 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 23 01:02:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlXWO-0006Bn-Am
-	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 00:56:04 +0100
+	id 1LlXc9-0007lT-8f
+	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 01:02:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756856AbZCVXyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Mar 2009 19:54:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755877AbZCVXyN
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 19:54:13 -0400
-Received: from cantor2.suse.de ([195.135.220.15]:59435 "EHLO mx2.suse.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756156AbZCVXyM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Mar 2009 19:54:12 -0400
-Received: from Relay2.suse.de (relay-ext.suse.de [195.135.221.8])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mx2.suse.de (Postfix) with ESMTP id E64D386391
-	for <git@vger.kernel.org>; Mon, 23 Mar 2009 00:54:04 +0100 (CET)
-User-Agent: KMail/1.9.9
-Content-Disposition: inline
-X-Length: 3598
-X-UID: 12537
+	id S1756658AbZCWAAd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Mar 2009 20:00:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756153AbZCWAAc
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 Mar 2009 20:00:32 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38622 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755877AbZCWAAb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Mar 2009 20:00:31 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A2357A4D06;
+	Sun, 22 Mar 2009 20:00:29 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 73B53A4D05; Sun,
+ 22 Mar 2009 20:00:25 -0400 (EDT)
+In-Reply-To: <94a0d4530903221601hb3bf8aelf98b22ee560dfb7b@mail.gmail.com>
+ (Felipe Contreras's message of "Mon, 23 Mar 2009 01:01:08 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 9F0AA072-173D-11DE-AE90-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114207>
 
-Hello,
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-I am pleased to announce my first alpha release of GNU patch,
-available by anonymouns FTP from:
+>> See this lengthy thread:
+>>
+>> http://article.gmane.org/gmane.comp.version-control.git/106634
+>
+> I've obviously seen that thread because I started it.
+>
+> Can you write more than one line to explain your point?
 
-  ftp://alpha.gnu.org/gnu/patch/
+The "lengthy thread" look lengthier than necessary because it has a
+more-or-less unrelated side topic ("where is $HOME on Windows"), but I
+think the main point by WIncent is that onus lies on whoever repeats the
+previous discussion to provide what is different in this round to convince
+others to read the patch.  For example, this
 
-The purpose of this release is to allow people to test changes which will 
-eventually end up in the next stable release.
+    http://article.gmane.org/gmane.comp.version-control.git/106657
 
-The last release dates back to June 2004 with version 2.5.9.  I would like to 
-thank Paul Eggert for his work on GNU patch, and for making his code 
-repository available for import.  A new project has been created on Savannah 
-with the new code repository and the bug-patch@gnu.org mailing list archive:
+was not answered by you in the previous round, and I do not think this
+round is any different.
 
-  http://savannah.gnu.org/projects/patch
+I personally find that between what Wincent presented in
 
-A lot of things have accumulated since version 2.5.9.  I am in the process of 
-reviewing more bug reports to bug-gnu-utils@gnu.org and bug-patch@gnu.org.  
-Meanwhile, several issues have already been addressed, and the following user 
-visible changes have been made:
+    http://article.gmane.org/gmane.comp.version-control.git/106673
 
-* A regression test suite has been added ("make check").
-
-* Unless a filename has been specified on the command line, look only
-  for filenames in the patch until one has been found.  Start looking
-  for hunks only after that.  This prevents patch from tripping over
-  garbage that isn't a patch.  When conforming to POSIX, this behavior
-  is turned off and patch will ask for a filename when none is found.
-
-* Reject more malformed normal format commands and check for trailing
-  garbage.  Recognize ed commands without addresses.
-
-* All reject files have file name headers, which allows to use them
-  as regular patches.
-
-* When a patch file modifies the same file more than once, patch makes
-  sure it backs up the original version of the file, rather than any
-  intermediary versions.
-
-* In the above situation, if there are rejects in more than one of those
-  patches, the rejects are appended to the same reject file (rather then
-  overwriting themselves).
-
-* The -r option works correctly even there are rejects in more than one
-  file.  Use the - argument to discard rejects.
-
-* Rejected hunks come out in unified diff format if the input patch was of
-  that format, otherwise in ordinary context diff form.  Use the
-  --reject-format option to enforce either "context" or "unified" format.
-  The "diff -p" (--show-c-function) output is preserved.
-  Changed lines in context format reject files are correctly indicated
-  with '!' markers as the format defines.  Added and removed lines are
-  still marked with '+' and '-', respectively.
-
-* The file permissions of reject files are no longer set to match the files
-  they modify.  Instead, they retain the default permissions.  This is
-  consistent with reject files to which rejects of multiple files may be
-  written (-r option).
-
-* The --binary option disables the heuristic for stripping CRs from
-  line endings in patches.  This allows to preserve CRs even in mangled
-  patches, or in patches generated without the --binary option on non-POSIX
-  systems.
-
-More fixes and improvements are pending.  Please see the project's bug tracker 
-for a (so far incomplete) list of known issues before reporting those things 
-again on the mailing list.
-
-Please email bugs or suggestions to <bug-patch@gnu.org>.
-
-Thanks,
-Andreas
+as "Something like either ... or ...", the first one that shows the actual
+configuration file contents and then mention 'git config' a good enough
+compromise.
