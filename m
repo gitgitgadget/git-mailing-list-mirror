@@ -1,115 +1,53 @@
-From: "Aaron Gray" <aaronngray.lists@googlemail.com>
-Subject: Re: git svn teething problems - initial clone okay - fetches not working
-Date: Mon, 23 Mar 2009 20:02:25 -0000
-Message-ID: <A8BADC6827F1425795889EC684D1C75C@HPLAPTOP>
-References: <2BACA6CC2F9647C19C0463120219E694@HPLAPTOP> <c115fd3c0903231243n1cddf1f1ra88b00ca8db83044@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
+From: Pieter de Bie <pieter@frim.nl>
+Subject: Re: Importing Bzr revisions
+Date: Mon, 23 Mar 2009 20:15:47 +0000
+Message-ID: <CF094EC6-72B6-4523-92ED-6582ADC4C1EE@frim.nl>
+References: <90DBD254-1810-4B11-AA9F-C5661A028FA5@gmail.com> <7veiwo8xz7.fsf@gitster.siamese.dyndns.org> <03AC7EDA-2A9F-4626-A67B-CE9F2A88FC7D@gmail.com> <4123DB23-39C4-4651-A3B5-C7876A781365@frim.nl> <D05262B5-9B18-49C9-8312-E69926F967AF@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Tim Visher" <tim.visher@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 23 21:04:23 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: David Reitter <david.reitter@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 23 21:17:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlqNT-0008R7-Eb
-	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 21:04:07 +0100
+	id 1Llqab-0004at-VA
+	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 21:17:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756906AbZCWUCi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Mar 2009 16:02:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756383AbZCWUCh
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 16:02:37 -0400
-Received: from mail-ew0-f165.google.com ([209.85.219.165]:40370 "EHLO
-	mail-ew0-f165.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755034AbZCWUCg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Mar 2009 16:02:36 -0400
-Received: by ewy9 with SMTP id 9so1798407ewy.37
-        for <git@vger.kernel.org>; Mon, 23 Mar 2009 13:02:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to:cc
-         :references:subject:date:mime-version:content-type
-         :content-transfer-encoding:x-priority:x-msmail-priority:x-mailer
-         :x-mimeole;
-        bh=LbIE2QajkKyVr6bu/KPU5szQe/BkIpa7JUFCAxPVfQk=;
-        b=r9pO6oSNh3vM0bYbLJYSm0b/ihPs8epphFrPM080R6GRBQnoCTUxYafJpvHO/QlOJd
-         qWijLAYWy6cD2duCcmFSTKlaZlBQvzihkseUmnssMFQnp6FS5TYb/KjRSyK1r7AQ5ixb
-         t446QlW1+2CucDgPQJ9BkcU6+ZOQrTFsmaViU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:from:to:cc:references:subject:date:mime-version
-         :content-type:content-transfer-encoding:x-priority:x-msmail-priority
-         :x-mailer:x-mimeole;
-        b=RoC/IzPOqGq8plesWpCfTb7kdCORUWZvbLm/lM+n4uXB0Zdczq7yxpb8jEo4P0kcXU
-         SswTSm71nAeDMeE/qUnhfpKnEzQ/IGt/xNeUHjHRHkHrMfYV/IITGyJosiRo7cSVSsCP
-         J40GJknIggSQQR2qwjGhZkYGhzF0Y0ZGPlsjE=
-Received: by 10.216.25.82 with SMTP id y60mr2816576wey.4.1237838552838;
-        Mon, 23 Mar 2009 13:02:32 -0700 (PDT)
-Received: from HPLAPTOP (aarongray.demon.co.uk [80.177.163.94])
-        by mx.google.com with ESMTPS id i3sm5574085nfh.33.2009.03.23.13.02.30
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 23 Mar 2009 13:02:32 -0700 (PDT)
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5512
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
+	id S1753266AbZCWUQK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Mar 2009 16:16:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753122AbZCWUQJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 16:16:09 -0400
+Received: from frim.nl ([87.230.85.232]:58402 "EHLO
+	lvps87-230-85-232.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752301AbZCWUQJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Mar 2009 16:16:09 -0400
+Received: from 82-41-227-224.cable.ubr11.sgyl.blueyonder.co.uk ([82.41.227.224] helo=[192.168.50.100])
+	by lvps87-230-85-232.dedicated.hosteurope.de with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <pieter@frim.nl>)
+	id 1LlqYs-000482-53; Mon, 23 Mar 2009 21:15:54 +0100
+In-Reply-To: <D05262B5-9B18-49C9-8312-E69926F967AF@gmail.com>
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114346>
-
->I had a lot of success when I was more actively using `git svn` with
->`git svn rebase`.  Just be sure that you're doing your work in local
->branches and then merging back into the main trunk branches that are
->tracking the svn repo, that way you can always get the latest changes
->from your clean trunk branch.
-
-I tried a rebase and filenames with 'needs update' after them flew by then 
-an error message  :-
-
-update-index --refresh: command returned error: 1
-
-Aaron
-
-On Mon, Mar 23, 2009 at 3:30 PM, Aaron Gray
-<aaronngray.lists@googlemail.com> wrote:
-> Hi,
->
-> I am a newbie to git, so be warned :)
->
-> I have installed git-daemon, and gitweb on an F10 server.
->
-> Basically managed to do a 'git svn clone' on LLVM, it took 11 hours !
->
-> Anyway I am having the problem that I can do a 'git svn fetch' and I see
-> changes coming in. But the gitweb and another git clone from it do not
-> reflect those changes. The repository is still showing its two days old.
->
-> I am obviously missing something. The only documentation I could find on
-> 'git svn' was the command line help and 'man git-svn'.
->
-> Hope you can help,
->
-> Aaron
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at http://vger.kernel.org/majordomo-info.html
->
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114347>
 
 
+On 23 mrt 2009, at 15:18, David Reitter wrote:
 
--- 
+> Could you update the documentation as to how to install the git-bzr  
+> script?
+> (I searched for "plugin" in the git user manual, and google, and  
+> didn't find anything.  I haven't used git much, so I'm a bit naive  
+> as regards to such a question.)
 
-In Christ,
-
-Timmy V.
-
-http://burningones.com/
-http://five.sentenc.es/ - Spend less time on e-mail 
+There's nothing to install, just call the script.. if you run it  
+without commands it should give some usage information. The README in  
+the repository should tell the rest. If you'd like to call it using  
+'git bzr' rather than 'git-bzr', you have to put it somewhere in your  
+PATH
