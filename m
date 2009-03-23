@@ -1,99 +1,115 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [RFC/PATCH 1/8] user-manual: remove some git-foo usage
-Date: Mon, 23 Mar 2009 12:54:30 +0200
-Message-ID: <94a0d4530903230354x3a37cf56oe3862c2b7c37a8d4@mail.gmail.com>
-References: <1237745121-6325-1-git-send-email-felipe.contreras@gmail.com>
-	 <1237745121-6325-2-git-send-email-felipe.contreras@gmail.com>
-	 <20090323063141.GA1119@coredump.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Git for Windows 1.6.2.1-preview20090322
+Date: Mon, 23 Mar 2009 11:59:52 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903231157270.6659@intel-tinevez-2-302>
+References: <alpine.DEB.1.00.0903080132470.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903222149330.10279@pacific.mpi-cbg.de> <20090322225315.GC22428@sigill.intra.peff.net> <alpine.DEB.1.00.0903230015020.10279@pacific.mpi-cbg.de> <20090323025358.GA19717@coredump.intra.peff.net>
+Reply-To: Johannes.Schindelin@gmx.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,  msysgit@googlegroups.com
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Mar 23 11:56:18 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Mon Mar 23 12:01:29 2009
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from yx-out-2122.google.com ([74.125.44.24])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlhpG-00030a-0T
-	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 11:56:14 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754243AbZCWKyf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Mar 2009 06:54:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754123AbZCWKye
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 06:54:34 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:56265 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753439AbZCWKyd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Mar 2009 06:54:33 -0400
-Received: by fxm2 with SMTP id 2so1730326fxm.37
-        for <git@vger.kernel.org>; Mon, 23 Mar 2009 03:54:30 -0700 (PDT)
+	id 1LlhuK-0004Sh-9E
+	for gcvm-msysgit@m.gmane.org; Mon, 23 Mar 2009 12:01:28 +0100
+Received: by yx-out-2122.google.com with SMTP id 22so810654yxm.63
+        for <gcvm-msysgit@m.gmane.org>; Mon, 23 Mar 2009 04:00:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=DT5VXqDWdZ+3T6WoU1oHhNUBLSBet+Tsl91/V3kl53M=;
-        b=bjbDzrOzJLGD/8Ib7KSdsazHP+rskLKV3xEet8KpicXAJr2cpBqzCTR+q31yu2QXaN
-         RFvA260xO3PC3l588qgn8JE8R3o/35cOO9q0HxBL2M+ztc6SimoNPifipeSCGU0Np8WI
-         UAq1uwi/x2vRsNHHAeKql35kZOnSv3a9au2jM=
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received-spf:authentication-results:received
+         :received:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc
+         :subject:in-reply-to:message-id:references:user-agent:mime-version
+         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        bh=wekRKH+9qlzWvcfJZPkZAwhiIqH7XC1KgiBYXZQl2lg=;
+        b=YiCGNH5A5DBMpcGqfCLYR7xgAdjobGEJp41E5JlAlkqedJ+dXYsNJTMy/KZl25xx+2
+         Vhiob0EoQGGzf4V4CysZgA/CgQ7YNX2qbRkj+mIf8woIBhNLh6lXA9klpAuJLb4TytUY
+         OD+JD1nyi0x8jLmlLImzApffZfpWdjHB54Hy0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Zrjx/K9wX3qNlCZBt9tIufgG3jWz4t3gNVMxuaao9UBnZxb44DPY9aX9g2aZBuuGGS
-         BBZDXYAzZ8feKKr2LZzeHoNoWDqmfGU3uv+0kK5CDIwRNLsfd45KuIJ7+dkd1Van45nT
-         QjAQJDT2tZ3gTYaaYb7F/qATimjtRyK5oCdA4=
-Received: by 10.86.94.11 with SMTP id r11mr3524004fgb.11.1237805670485; Mon, 
-	23 Mar 2009 03:54:30 -0700 (PDT)
-In-Reply-To: <20090323063141.GA1119@coredump.intra.peff.net>
-Sender: git-owner@vger.kernel.org
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject
+         :in-reply-to:message-id:references:user-agent:mime-version
+         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        b=a26lTii6UGMMISisQavefrXFsxob0eZQENXbA5qSVTGv6OdkVig4V+KeSlGmiHaapg
+         RH8uu97apfuQn3NeaOqdVrZhR7aq7rrVPGFb1cDPFpPJQPDB1fLuLOLpV7zPCE9ltcKQ
+         Y+NJCGzcp1bLQTTw06j3RL5ff3yiKVYBbwjoA=
+Received: by 10.150.11.14 with SMTP id 14mr1140494ybk.13.1237805993969;
+        Mon, 23 Mar 2009 03:59:53 -0700 (PDT)
+Received: by 10.177.2.5 with SMTP id e5gr4362yqi.0;
+	Mon, 23 Mar 2009 03:59:53 -0700 (PDT)
+X-Sender: Johannes.Schindelin@gmx.de
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.86.89.20 with SMTP id m20mr45354fgb.26.1237805993343; Mon, 23 Mar 2009 03:59:53 -0700 (PDT)
+Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by gmr-mx.google.com with SMTP id 5si271243fge.7.2009.03.23.03.59.53; Mon, 23 Mar 2009 03:59:53 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
+Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Received: (qmail invoked by alias); 23 Mar 2009 10:59:52 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5] by mail.gmx.net (mp071) with SMTP; 23 Mar 2009 11:59:52 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18a6WYKp6Ua1fyF6C4f/08teqtxc0tNSvFDrJq/0q 3v9Eu45ZNDl4a7
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <20090323025358.GA19717@coredump.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.61
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114285>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114286>
 
-On Mon, Mar 23, 2009 at 8:31 AM, Jeff King <peff@peff.net> wrote:
-> On Sun, Mar 22, 2009 at 08:05:14PM +0200, Felipe Contreras wrote:
->
->> =C2=A0Every commit has a 40-hexdigit id, sometimes called the "objec=
-t name" or the
->> -"SHA1 id", shown on the first line of the "git-show" output. =C2=A0=
-You can usually
->> +"SHA1 id", shown on the first line of the "git show" output. =C2=A0=
-You can usually
->
-> I think some of these were intentionally left in the original mass
-> dashes to spaces conversion. The intent was that one could use the
-> git-show form in talking about the command in text.
->
-> However, I think I actually prefer the version given by your patch. I
-> just wanted to point out that this is a decision to change how we
-> mention these in the documentation and not simply a fix for things th=
-at
-> got missed in the conversion. Others may disagree on how it looks.
->
-> It seems like you added monospace backticks in most locations. Is the=
-re
-> a reason not to standardize on that and use `git show` here?
->
->> =C2=A0[[Updating-a-repository-With-git-fetch]]
->> -Updating a repository with git-fetch
->> +Updating a repository with git fetch
->> =C2=A0------------------------------------
->
-> I think this one should probably be `git fetch`.
 
-A subsequent patch is adding the monospace backticks and a lot more
-quotation stuff.
+Hi,
 
-In this patch I tried to focus on git-foo, and add the backticks only
-when there are no delimiters, so I replaced "git-foo" with "git foo"
-and git-foo with `git foo`. I also didn't add backticks on the titles
-because I thought it was a bit controversial and was probably better
-in a separate patch.
+On Sun, 22 Mar 2009, Jeff King wrote:
 
-Cheers.
+> On Mon, Mar 23, 2009 at 12:25:57AM +0100, Johannes Schindelin wrote:
+> 
+> > > A few people have asked about filter-branch on Windows recently;
+> > 
+> > I am not aware of any.  But then, I think nobody mentioned it on the 
+> > msysgit list (which would be the correct place), and I am likely to 
+> > have missed it if it was sent elsewhere.
+> 
+> They were less feature request and more mentioned in the middle of other 
+> discussions. I am thinking specifically of:
+> 
+>   http://thread.gmane.org/gmane.comp.version-control.git/112253/focus=112439
+>   http://thread.gmane.org/gmane.comp.version-control.git/111722/focus=112103
 
---=20
-=46elipe Contreras
+Well, I will miss such in-the-middle-of-unrelated-discussions remarks.  
+Even if some people think I ridicule them when I say that I do not have 
+much time, it is a fact.  If I did not like Git as much as I do, I would 
+have stopped long time ago for sanity reasons.
+
+> > Actually, not only Hannes' version runs the test t7003 okay, but also 
+> > 4msysgit's version.
+> > 
+> > But let's reduce the differences between git.git and 4msysgit.git 
+> > further first.
+> 
+> OK. I just wanted to make you aware of the existing threads and Hannes' 
+> message, since as you mentioned they _weren't_ on the msysgit list.
+
+FWIW I ran the test while replying to your mail yesterday, and created the 
+'filter-branch' branch in msysgit.git.  I'll probably just merge it into 
+our 'master' later today.
+
+Ciao,
+Dscho
