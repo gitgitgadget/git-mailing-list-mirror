@@ -1,73 +1,83 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Importing Bzr revisions
-Date: Mon, 23 Mar 2009 06:55:04 -0700
-Message-ID: <20090323135504.GA9732@spearce.org>
-References: <90DBD254-1810-4B11-AA9F-C5661A028FA5@gmail.com> <7veiwo8xz7.fsf@gitster.siamese.dyndns.org> <03AC7EDA-2A9F-4626-A67B-CE9F2A88FC7D@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: git rebase + fuzz = possible bad merge
+Date: Mon, 23 Mar 2009 14:54:43 +0100
+Message-ID: <200903231454.48600.trast@student.ethz.ch>
+References: <49C7675E.9000309@panasas.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: David Reitter <david.reitter@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 23 14:56:42 2009
+Content-Type: multipart/signed;
+  boundary="nextPart3789119.u2Lek9ZNTh";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+To: Benny Halevy <bhalevy@panasas.com>
+X-From: git-owner@vger.kernel.org Mon Mar 23 14:57:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Llkds-00023Z-IR
-	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 14:56:41 +0100
+	id 1Llkee-0002Ir-Bw
+	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 14:57:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757352AbZCWNzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Mar 2009 09:55:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755989AbZCWNzH
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 09:55:07 -0400
-Received: from george.spearce.org ([209.20.77.23]:52476 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756957AbZCWNzF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Mar 2009 09:55:05 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 3960938211; Mon, 23 Mar 2009 13:55:04 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <03AC7EDA-2A9F-4626-A67B-CE9F2A88FC7D@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753610AbZCWNz1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Mar 2009 09:55:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751779AbZCWNz1
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 09:55:27 -0400
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:32436 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756781AbZCWNzZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Mar 2009 09:55:25 -0400
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 23 Mar 2009 14:55:21 +0100
+Received: from thomas.localnet ([129.132.153.233]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 23 Mar 2009 14:55:21 +0100
+User-Agent: KMail/1.11.1 (Linux/2.6.27.19-3.2-default; KDE/4.2.1; x86_64; ; )
+In-Reply-To: <49C7675E.9000309@panasas.com>
+X-OriginalArrivalTime: 23 Mar 2009 13:55:21.0625 (UTC) FILETIME=[01EE0890:01C9ABBF]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114303>
 
-David Reitter <david.reitter@gmail.com> wrote:
->
-> I'm just experimenting with "bzr fast-export", which converts to git,  
-> and it seems to take about 4 minutes for 1000 revisions on our (modern) 
-> server.  That would be around 7 hours for my emacs repository; I can't do 
-> that daily.
+--nextPart3789119.u2Lek9ZNTh
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-No, you'd want to incrementally do that...
+Benny Halevy wrote:
+> I'm hitting bad merges with (non interactive) git rebase
+> when a hunk is merged pre-maturely into an inexact match
+> when there's fuzz.
+[...]
+> { for i in {1..10}; do echo fuzz $i; done; echo; cat test_file; } > fuzz_=
+file
+[...]
+> git rebase --onto test_branch master^ master
 
-> I wonder if there's a way for (bzr) fast-export / (git) fast-import to  
-> work incrementally, i.e. for selected or most recent revisions.
+git-am, and by extension rebase, by default doesn't take history into
+account.  It just applies the patches "blindly".  Thus, there's no way
+to know which series of 'line N' you really wanted it to go onto.
 
-fast-import supports incremental use; git-p4 does it from Perforce.
-The trick is the application writing the stream (bzr fast-export
-in this case) needs to do something to pick up the prior revisions.
-It might do that by using the same mark numbers, and requiring you
-to use --import-marks and --export-marks on the git side to save the
-mark database between runs.  I don't know, I haven't looked at it.
+To avoid this issue, use the -m option to git-rebase so that it uses a
+"real" merge.  (You can achieve similar effects for git-am with the -3
+option.)
 
-> Or, one could do something like  bzr diff -r $REV.. $BBRANCH |  (cd  
-> $GBRANCH; patch -p0; git commit), plus preserving authors and log  
-> messages.   Is this roughly what the fast-export format does anyways?
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
 
-Eh, sort of.
+--nextPart3789119.u2Lek9ZNTh
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-The fast-import format works on whole files, not patches.  So we
-have to get the entire file from bzr each time it is modified.
-If the file is a small source file, you almost can't tell the
-difference in performance.  If its a huge binary that changes often,
-it hurts to keep dumping the entire thing over the stream.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
-But at the commit level, yes, it preserves authorship and log
-messages, assuming the bzr fast-export program incldued that data.
-And I'm rather certain it does.
+iEYEABECAAYFAknHlKgACgkQqUud07tmzP33PwCfcVxUcR4oG2OORulKVbjrdcT5
++nQAn2XkCBuABIJvpXyoKFjZJvVc0f4p
+=/WgE
+-----END PGP SIGNATURE-----
 
--- 
-Shawn.
+--nextPart3789119.u2Lek9ZNTh--
