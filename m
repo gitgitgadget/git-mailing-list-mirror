@@ -1,65 +1,115 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: .gitk should created hidden in windows
-Date: Mon, 23 Mar 2009 21:37:51 +1100
-Message-ID: <18887.26239.115820.450313@cargo.ozlabs.ibm.com>
-References: <49BFA97A.1030203@lanwin.de>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [RFC/PATCH 8/8] user-manual: simplify the user configuration
+Date: Mon, 23 Mar 2009 13:02:23 +0200
+Message-ID: <94a0d4530903230402y402daf8fw822f87feb6e9fd8c@mail.gmail.com>
+References: <1237745121-6325-1-git-send-email-felipe.contreras@gmail.com>
+	 <1237745121-6325-4-git-send-email-felipe.contreras@gmail.com>
+	 <1237745121-6325-5-git-send-email-felipe.contreras@gmail.com>
+	 <1237745121-6325-6-git-send-email-felipe.contreras@gmail.com>
+	 <1237745121-6325-7-git-send-email-felipe.contreras@gmail.com>
+	 <1237745121-6325-8-git-send-email-felipe.contreras@gmail.com>
+	 <1237745121-6325-9-git-send-email-felipe.contreras@gmail.com>
+	 <0A3F8ECD-EEFA-4DB0-AFED-AEE7DAFE8DB3@wincent.com>
+	 <94a0d4530903221601hb3bf8aelf98b22ee560dfb7b@mail.gmail.com>
+	 <7viqm1az1k.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Steve Wagner <lists@lanwin.de>
-X-From: git-owner@vger.kernel.org Mon Mar 23 12:03:06 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 23 12:04:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Llhvi-0004uR-4o
-	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 12:02:54 +0100
+	id 1Llhx7-0005Gq-L6
+	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 12:04:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757243AbZCWLAK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Mar 2009 07:00:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754377AbZCWLAI
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 07:00:08 -0400
-Received: from bilbo.ozlabs.org ([203.10.76.25]:44351 "EHLO bilbo.ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757243AbZCWLAC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Mar 2009 07:00:02 -0400
-Received: by bilbo.ozlabs.org (Postfix, from userid 1003)
-	id 895E7B7066; Mon, 23 Mar 2009 22:00:00 +1100 (EST)
-In-Reply-To: <49BFA97A.1030203@lanwin.de>
-X-Mailer: VM 8.0.9 under Emacs 22.2.1 (i486-pc-linux-gnu)
+	id S1755904AbZCWLC3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Mar 2009 07:02:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755386AbZCWLC1
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 07:02:27 -0400
+Received: from fg-out-1718.google.com ([72.14.220.158]:42166 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753498AbZCWLC1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Mar 2009 07:02:27 -0400
+Received: by fg-out-1718.google.com with SMTP id 16so350527fgg.17
+        for <git@vger.kernel.org>; Mon, 23 Mar 2009 04:02:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=kyjcBH0pMPdcnnTzP4th7FVUshUHhpGfpReFDU5h/pc=;
+        b=dlBAOW7/Gm8oKLW54wShrL2TC6TatuPXQlmr0bXckA2odrsW6jSzp1cMWP0fvUv+L9
+         nv6o8jT6AyBpaShM8QBDOWMbHQO8s4PPaonyOJ6am4tMYxngVZlj0YnpNbYQiZYMG5os
+         ZXuw/1PUaNrrcnXcs4Et6AgkS+u24jwbBGiaw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=NWNv6jA3iXgadcZT/M5vovRyDdbDYCvk51OeYMTSpwYP3+mYwWsHzaRvPmrZGxsDmr
+         QBAbkHeNUjil827uLnUM3tkq7d1EzigpHswz4AlNlg0H0YkJUVXQE3Zzz8joEHHir75j
+         9POG79z9degVl7BnmoVbI40jxZNQ7H1ALRHb8=
+Received: by 10.86.65.9 with SMTP id n9mr3507975fga.55.1237806143965; Mon, 23 
+	Mar 2009 04:02:23 -0700 (PDT)
+In-Reply-To: <7viqm1az1k.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114289>
 
-Steve Wagner writes:
+On Mon, Mar 23, 2009 at 2:00 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>>> See this lengthy thread:
+>>>
+>>> http://article.gmane.org/gmane.comp.version-control.git/106634
+>>
+>> I've obviously seen that thread because I started it.
+>>
+>> Can you write more than one line to explain your point?
+>
+> The "lengthy thread" look lengthier than necessary because it has a
+> more-or-less unrelated side topic ("where is $HOME on Windows"), but =
+I
+> think the main point by WIncent is that onus lies on whoever repeats =
+the
+> previous discussion to provide what is different in this round to con=
+vince
+> others to read the patch. =C2=A0For example, this
+>
+> =C2=A0 =C2=A0http://article.gmane.org/gmane.comp.version-control.git/=
+106657
+>
+> was not answered by you in the previous round, and I do not think thi=
+s
+> round is any different.
 
-> The problem is that windows dose not hides files beginning with a dot as
-> it is in unix. So the .gitk file is created as visible in the windows
-> user profile. Problematic too is that i can no set the hidden attribute
-> to this file, because it is recreated every time i start gitk, so the
-> hidden attribute gets lost.
-> 
-> Can you control this and create the file with the hidden attribute on
-> windows?
+Was I supposed to answer it? I am trying to address the points raised
+in those discussions in this patch series.
 
-Please try this patch and let me know if it does what you want.
+> I personally find that between what Wincent presented in
+>
+> =C2=A0 =C2=A0http://article.gmane.org/gmane.comp.version-control.git/=
+106673
+>
+> as "Something like either ... or ...", the first one that shows the a=
+ctual
+> configuration file contents and then mention 'git config' a good enou=
+gh
+> compromise.
 
-Paul.
+Except that in the previous patch[1] (#7) I'm adding a new global
+section that explains how to configure git in different ways:
 
-diff --git a/gitk b/gitk
-index d7de27e..54f3f2b 100755
---- a/gitk
-+++ b/gitk
-@@ -2487,6 +2487,9 @@ proc savestuff {w} {
-     if {![winfo viewable .]} return
-     catch {
- 	set f [open "~/.gitk-new" w]
-+	if {$::tcl_platform(platform) eq {windows}} {
-+	    file attributes "~/.gitk-new" -hidden true
-+	}
- 	puts $f [list set mainfont $mainfont]
- 	puts $f [list set textfont $textfont]
- 	puts $f [list set uifont $uifont]
+I don't think it makes sense to explain "either ... or ..." each time
+we deal with 'git config' in the manual if it's explained in the very
+beginning.
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/114163
+
+--=20
+=46elipe Contreras
