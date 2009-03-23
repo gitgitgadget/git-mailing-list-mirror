@@ -1,98 +1,90 @@
-From: Adam Heath <doogie@brainfood.com>
-Subject: large(25G) repository in git
-Date: Mon, 23 Mar 2009 16:10:11 -0500
-Message-ID: <49C7FAB3.7080301@brainfood.com>
+From: "Aaron Gray" <aaronngray.lists@googlemail.com>
+Subject: Re: git svn teething problems - initial clone okay - fetches not working
+Date: Mon, 23 Mar 2009 21:31:22 -0000
+Message-ID: <0381B9A616514FC2A05BACAB07EE3117@HPLAPTOP>
+References: <2BACA6CC2F9647C19C0463120219E694@HPLAPTOP> <49C7F92A.5050809@obry.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 23 22:19:51 2009
+Content-Type: text/plain; charset=iso-8859-1;
+	format=flowed	reply-type=original
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: <pascal@obry.net>
+X-From: git-owner@vger.kernel.org Mon Mar 23 22:33:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlrYf-0002BT-V0
-	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 22:19:46 +0100
+	id 1LlrlW-00070x-EZ
+	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 22:33:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757861AbZCWVRv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Mar 2009 17:17:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757089AbZCWVRv
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 17:17:51 -0400
-Received: from newmail.brainfood.com ([70.103.162.5]:43774 "EHLO
-	newmail.brainfood.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751660AbZCWVRu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Mar 2009 17:17:50 -0400
-X-Greylist: delayed 452 seconds by postgrey-1.27 at vger.kernel.org; Mon, 23 Mar 2009 17:17:50 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by newmail.brainfood.com (Postfix) with ESMTP id A842FF88A9
-	for <git@vger.kernel.org>; Mon, 23 Mar 2009 16:10:16 -0500 (CDT)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: 0.101
-X-Spam-Level: 
-X-Spam-Status: No, score=0.101 tagged_above=-10 required=6.6
-	tests=[BAYES_50=0.001, RDNS_DYNAMIC=0.1]
-Received: from newmail.brainfood.com ([127.0.0.1])
-	by localhost (newmail.brainfood.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 2Gqu-1m9Y-PK for <git@vger.kernel.org>;
-	Mon, 23 Mar 2009 16:10:12 -0500 (CDT)
-Received: from [192.168.2.49] (70-103-162-249.brainfood.com [70.103.162.249])
-	by newmail.brainfood.com (Postfix) with ESMTP id 26ED1F885E
-	for <git@vger.kernel.org>; Mon, 23 Mar 2009 16:10:11 -0500 (CDT)
-User-Agent: Mozilla-Thunderbird 2.0.0.17 (X11/20081018)
-X-Enigmail-Version: 0.95.7
+	id S1756435AbZCWVbf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Mar 2009 17:31:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752982AbZCWVbe
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 17:31:34 -0400
+Received: from mail-ew0-f165.google.com ([209.85.219.165]:60242 "EHLO
+	mail-ew0-f165.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757803AbZCWVbd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Mar 2009 17:31:33 -0400
+Received: by ewy9 with SMTP id 9so1832248ewy.37
+        for <git@vger.kernel.org>; Mon, 23 Mar 2009 14:31:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to:cc
+         :references:subject:date:mime-version:content-type
+         :content-transfer-encoding:x-priority:x-msmail-priority:x-mailer
+         :x-mimeole;
+        bh=OKrUdisDCo0rPVvH/JCC4y4WK6ZexctaJSoDqD1wcmM=;
+        b=tgd331SaaC1/LRJS0depiKegXu8lo9P7TJ0jlqcN6IwVpKY47PFPlSRradbPsu63pd
+         HTMzwEbPBJJuXH+6mYW+SwIBeJjGL/09w54l47wiOH3WMx7wPZYtZjp76PT3EO5Dm56T
+         kr02c3JCCwZUHTsg2iMRhLmmD7dUiJp1dHn6M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:from:to:cc:references:subject:date:mime-version
+         :content-type:content-transfer-encoding:x-priority:x-msmail-priority
+         :x-mailer:x-mimeole;
+        b=cftxkrVJSxGAzmlWjq0D9vXU49Q5iTZbcjzwtZbtcjJwsbOCo3Dmoj/mIKamHP8Cqp
+         5dd3k5DN1sHRZ2RZAUFoHv1BaFMHt2/uW/vJeVx3TTiRjM22CPdN5WbRntXqe3SOykPS
+         LcgbwX15goIL+mTtC9c5IP3kVGggaO6Lk6vlo=
+Received: by 10.216.10.82 with SMTP id 60mr2824774weu.180.1237843890224;
+        Mon, 23 Mar 2009 14:31:30 -0700 (PDT)
+Received: from HPLAPTOP (aarongray.demon.co.uk [80.177.163.94])
+        by mx.google.com with ESMTPS id 6sm5640501nfv.24.2009.03.23.14.31.28
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 23 Mar 2009 14:31:29 -0700 (PDT)
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5512
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114352>
 
-We maintain a website in git.  This website has a bunch of backend
-server code, and a bunch of data files.  Alot of these files are full
-videos.
+> Aaron Gray a =E9crit :
+>> Anyway I am having the problem that I can do a 'git svn fetch' and I=
+ see
+>> changes coming in. But the gitweb and another git clone from it do n=
+ot
+>> reflect those changes. The repository is still showing its two days =
+old.
+>
+> You need a:
+>
+>   $ git svn rebase
 
-We use git, so that the distributed nature of website development can
-be supported.  Quite often, you'll have a production server, with
-online changes occurring(we support in-browser editting of content), a
-preview server, where large-scale code changes can be previewed, then
-a development server, one per programmer(or more).
+I tried that.
 
-Last friday, I was doing a checkin on the production server, and found
-1.6G of new files.  git was quite able at committing that.  However,
-pushing was problematic.  I was pushing over ssh; so, a new ssh
-connection was open to the preview server.  After doing so, git tried
-to create a new pack file.  This took *ages*, and the ssh connection
-died.  So did git, when it finally got done with the new pack, and
-discovered the ssh connection was gone.
+> to fetch *and* merge the changes into the local tracking branch (mast=
+er
+> by default).
 
-So, to work around that, I ran git gc.  When done, I discovered that
-git repacked the *entire* repository.  While not something I care for,
-I can understand that, and live with it.  It just took *hours* to do so.
+Pascal,
 
-Then, what really annoys me, is that when I finally did the push, it
-tried sending the single 27G pack file, when the remote already had
-25G of the repository in several different packs(the site was an
-hg->git conversion).  This part is just unacceptable.
+Could you give me a full set of instructions for importing :-
 
-So, here are my questions/observations:
+    http://llvm.org/svn/llvm-project/llvm
 
-1: Handle the case of the ssh connection dying during git push(seems
-simple).
+Thanks,
 
-2: Is there an option to tell git to *not* be so thorough when trying
-to find similiar files.  videos/doc/pdf/etc aren't always very
-deltafiable, so I'd be happy to just do full content compares.
-
-3: delta packs seem to be poorly done.  it seems that if one repo gets
-repacked completely, that the entire new pack gets sent, when the
-target has most of the objects already.
-
-4: Are there any config options I can set to help in this?  There are
-tons of options, and some documentation as to what each one does, but
-no recommended practices type doc, that describes what should be done
-for different kinds of workflows.
-
-ps: Thank you for your time.  I hope that someone has answers for me.
-
-pps: I'm not subscribed, please cc me.  If I need to be subscribed,
-I'll do so, if told.
+Aaron
