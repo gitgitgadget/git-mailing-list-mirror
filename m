@@ -1,116 +1,83 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [RFC/PATCH 8/8] user-manual: simplify the user configuration
-Date: Mon, 23 Mar 2009 12:09:30 +0100
-Message-ID: <52360AC9-EAE8-4DC3-9368-7220A034E0B5@wincent.com>
-References: <1237745121-6325-1-git-send-email-felipe.contreras@gmail.com> <1237745121-6325-4-git-send-email-felipe.contreras@gmail.com> <1237745121-6325-5-git-send-email-felipe.contreras@gmail.com> <1237745121-6325-6-git-send-email-felipe.contreras@gmail.com> <1237745121-6325-7-git-send-email-felipe.contreras@gmail.com> <1237745121-6325-8-git-send-email-felipe.contreras@gmail.com> <1237745121-6325-9-git-send-email-felipe.contreras@gmail.com> <0A3F8ECD-EEFA-4DB0-AFED-AEE7DAFE8DB3@wincent.com> <94a0d4530903221601hb3bf8aelf98b22ee560dfb7b@mail.gmail.com> <984D312E-12B8-4A8C-B567-EF5AF1DDD3D6@wincent.com> <94a0d4530903230407i2c858a5dk2c2e0703608e42d3@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
+From: Mike Ralphson <mike.ralphson@gmail.com>
+Subject: Re: Minimum libCurl version for git
+Date: Mon, 23 Mar 2009 11:24:57 +0000
+Message-ID: <e2b179460903230424v1c98d73ci1f41918807fb2d5c@mail.gmail.com>
+References: <e2b179460903201059j20e37c1cr7ccfa4b42e45c9d9@mail.gmail.com>
+	 <7vy6uzg98v.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 23 12:11:21 2009
+Cc: git list <git@vger.kernel.org>, Daniel Stenberg <daniel@haxx.se>,
+	Nick Hengeveld <nickh@reactrix.com>,
+	Mike Hommey <mh@glandium.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 23 12:26:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lli3j-0007Ws-KN
-	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 12:11:12 +0100
+	id 1LliIg-0003pF-9q
+	for gcvg-git-2@gmane.org; Mon, 23 Mar 2009 12:26:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754633AbZCWLJn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Mar 2009 07:09:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754547AbZCWLJm
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 07:09:42 -0400
-Received: from wincent1.inetu.net ([209.235.192.161]:55526 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752245AbZCWLJl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Mar 2009 07:09:41 -0400
-Received: from cuzco.lan (207.pool85-53-9.dynamic.orange.es [85.53.9.207])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id n2NB9U3g003053
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Mon, 23 Mar 2009 07:09:36 -0400
-In-Reply-To: <94a0d4530903230407i2c858a5dk2c2e0703608e42d3@mail.gmail.com>
-X-Mailer: Apple Mail (2.930.3)
+	id S1755050AbZCWLZA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Mar 2009 07:25:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753715AbZCWLZA
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 07:25:00 -0400
+Received: from qw-out-2122.google.com ([74.125.92.27]:22447 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753276AbZCWLY7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Mar 2009 07:24:59 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so1679300qwh.37
+        for <git@vger.kernel.org>; Mon, 23 Mar 2009 04:24:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Yrd1xkxbbABkNwtK+3qONRhgNWEGXZn9kgxaa8yZ+DU=;
+        b=N5l3syBaDSKtjn1Lw7oTWPJEFhBXZtGmRpGvrKUzl4Oab9vcT3OT7/6Flmk5SPoBbi
+         xm59OMxj3JJVGKWmnV5gFCd6v5Y5p2545z0pRRVsonxAntHu7DJxO4jbYwUiIG81mWJa
+         KJ8rVe+EUgMzzUTz46Pur6j5ZiafjJPxaD7Tg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=oLgPASGJfUhV2i0s7jUUt1AK6t4YwBzUvoRuvZlDfd3PKwSYBeW9/gjzYFFtKFpKFE
+         o8yuob2HoakeaVpH5opSlXqmrExZqeMjtn4+kvZPHFh1e7hB5e4KeR43rVoCp9JO9dUa
+         O+PrePhHpFmeHr1KZXMcZE2TEDXSn+6OghIQI=
+Received: by 10.224.60.74 with SMTP id o10mr8602040qah.229.1237807497376; Mon, 
+	23 Mar 2009 04:24:57 -0700 (PDT)
+In-Reply-To: <7vy6uzg98v.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114292>
 
-El 23/3/2009, a las 12:07, Felipe Contreras escribi=F3:
-
-> On Mon, Mar 23, 2009 at 2:07 AM, Wincent Colaiuta <win@wincent.com> =20
-> wrote:
->>
->> El 23/3/2009, a las 0:01, Felipe Contreras escribi=F3:
->>
->>> On Mon, Mar 23, 2009 at 12:42 AM, Wincent Colaiuta <win@wincent.com=
+2009/3/20 Junio C Hamano <gitster@pobox.com>:
+> We can have these two macro definitions on our side
 >
->>> wrote:
->>>>
->>>> El 22/3/2009, a las 19:05, Felipe Contreras escribi=F3:
->>>>
->>>>> This is shorter, avoids the burder to think about the format of =20
->>>>> the
->>>>> configuration file, and git config is already used in other =20
->>>>> places in
->>>>> the manual.
->>>>>
->>>>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->>>>> ---
->>>>> Documentation/user-manual.txt |    8 +++-----
->>>>> 1 files changed, 3 insertions(+), 5 deletions(-)
->>>>>
->>>>> diff --git a/Documentation/user-manual.txt
->>>>> b/Documentation/user-manual.txt
->>>>> index b7678aa..c6ed940 100644
->>>>> --- a/Documentation/user-manual.txt
->>>>> +++ b/Documentation/user-manual.txt
->>>>> @@ -1015,13 +1015,11 @@ Telling git your name
->>>>> ---------------------
->>>>>
->>>>> Before creating any commits, you should introduce yourself to =20
->>>>> git.  The
->>>>> -easiest way to do so is to make sure the following lines appear =
-=20
->>>>> in a
->>>>> -file named `.gitconfig` in your home directory:
->>>>> +easiest way is to use the linkgit:git-config[1] command:
->>>>>
->>>>> ------------------------------------------------
->>>>> -[user]
->>>>> -       name =3D Your Name Comes Here
->>>>> -       email =3D you@yourdomain.example.com
->>>>> +$ git config --global user.name "Your Name Comes Here"
->>>>> +$ git config --global user.email you@yourdomain.example.com
->>>>> ------------------------------------------------
->>>>>
->>>>> (See the '"CONFIGURATION FILE"' section of linkgit:git-config[1] =
-=20
->>>>> for
->>>>> --
->>>>> 1.6.2.1.352.gae594
->>>>
->>>> See this lengthy thread:
->>>>
->>>> http://article.gmane.org/gmane.comp.version-control.git/106634
->>>
->>> I've obviously seen that thread because I started it.
->>
->> Yeah, I noticed that only after sending my message. I hadn't =20
->> realised at
->> first because the patch really looked like it was written by =20
->> someone who
->> hadn't ever seen the thread, as it doesn't address the points =20
->> raised in the
->> thread at all.
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0#if curl older than 7.10.8
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0#define CURLINFO_RESPONSE_CODE CURLINFO_HT=
+TP_CODE
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0#endif
 >
-> I am addressing the points.
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0#if curl older than 7.9.7
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0#define CURLOPT_READDATA CURLOPT_INFILE
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0#endif
+>
+> for backward compatibility, while writing our code to the recent API =
+by
+> using CURLINFO_RESPONSE_CODE and CURLOPT_READDATA, and people with ol=
+der
+> curl would not have to suffer a bit.
 
-Sorry for not noticing the other patch in the series. I fired off the =20
-email because when I read 8/8 I thought, "This looks almost exactly =20
-like a patch that was previously rejected".
+See? That's why they pay you the big maintainer-bucks... 8-)
 
-Cheers,
-Wincent
+> Mike, I'd say we declare 7.9.3 as the floor and go from there.  That'=
+s
+> your #3, I think.
+
+Short patch series to follow, though maybe not today.
+
+Mike
