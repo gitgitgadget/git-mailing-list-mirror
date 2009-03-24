@@ -1,84 +1,86 @@
-From: Mike Ralphson <mike.ralphson@gmail.com>
-Subject: Re: [PATCH] git-cget: prints elements of C code in the git repository
-Date: Tue, 24 Mar 2009 16:37:36 +0000
-Message-ID: <e2b179460903240937p58dff7e8u238fbe06785cdb77@mail.gmail.com>
-References: <49C8B159.2040600@gmail.com>
-	 <alpine.DEB.1.00.0903241257430.7493@intel-tinevez-2-302>
-	 <49C8E074.4030808@gmail.com>
-	 <20090324135906.GA10644@coredump.intra.peff.net>
-	 <e2b179460903240738x272c884q62a666931ce99c2f@mail.gmail.com>
-	 <alpine.DEB.1.00.0903241555360.7493@intel-tinevez-2-302>
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: Project With Reusable Libraries
+Date: Tue, 24 Mar 2009 12:40:06 -0400
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E70A5597A8@EXCHANGE.trad.tradestation.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Roel Kluin <roel.kluin@gmail.com>,
-	git@vger.kernel.org, Ping Yin <pkufranky@gmail.com>,
-	Steven Tweed <orthochronous@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 24 17:39:22 2009
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 24 17:43:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lm9en-0006y2-Tj
-	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 17:39:18 +0100
+	id 1Lm9hy-0008VC-BB
+	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 17:42:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763447AbZCXQhp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Mar 2009 12:37:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763444AbZCXQhn
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Mar 2009 12:37:43 -0400
-Received: from mail-qy0-f118.google.com ([209.85.221.118]:50023 "EHLO
-	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763442AbZCXQhj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Mar 2009 12:37:39 -0400
-Received: by qyk16 with SMTP id 16so3421161qyk.33
-        for <git@vger.kernel.org>; Tue, 24 Mar 2009 09:37:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=GE80QnsnS3I8NcMoChc2Swk7Qwkbc2lIfmL9ObVxbrM=;
-        b=uDxfHknLZqmNH65IqkftBYItS7JjoYXt32YCYaDy1saR9ZNz6hvyZgckH1qU+8hfpD
-         soQJ/JKX/gz2zpN9+aKRgMU7kJycUTMwGJnOcpY1NL18tOimkVpkCU2OB2e3xjtEFK2Y
-         uUCpWAxTmEW71K1U/8NdgzvM0xm9nOVySkwTI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Vfd7nFJFeayGE0uheTRJX98Ai+W7CcTdQGwMrSSCzN+FVThFUVXvhnH13512Q05dMR
-         Jkz+WI2CPwQrtXGPUssct3WWEJZ/O9bI6nDrQJNPJxx+/fQ4npRj2iUZSvApV2El3UKY
-         +ZgOcajLaDbJi7r9YBdlhMeOkHvT9XkonOwIM=
-Received: by 10.224.89.76 with SMTP id d12mr10916087qam.382.1237912656283; 
-	Tue, 24 Mar 2009 09:37:36 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0903241555360.7493@intel-tinevez-2-302>
+	id S1763030AbZCXQlA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Mar 2009 12:41:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762344AbZCXQk7
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Mar 2009 12:40:59 -0400
+Received: from mail2.tradestation.com ([63.99.207.80]:40556 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762008AbZCXQkz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Mar 2009 12:40:55 -0400
+X-ASG-Debug-ID: 1237912851-272101bb0000-QuoKaX
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
+Received: from mail5.tradestation.com (localhost [127.0.0.1])
+	by mail2.tradestation.com (Spam Firewall) with ESMTP id BD09922FA67
+	for <git@vger.kernel.org>; Tue, 24 Mar 2009 12:40:51 -0400 (EDT)
+Received: from mail5.tradestation.com ([192.168.51.76]) by mail2.tradestation.com with ESMTP id F5hw5nh2XF9aHYVa for <git@vger.kernel.org>; Tue, 24 Mar 2009 12:40:51 -0400 (EDT)
+X-ASG-Whitelist: Client
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 24 Mar 2009 12:40:51 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-ASG-Orig-Subj: Project With Reusable Libraries
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Project With Reusable Libraries
+Thread-Index: AcmsnzBqmBk8I3MKQKeJAaX6ULPUCg==
+X-OriginalArrivalTime: 24 Mar 2009 16:40:51.0271 (UTC) FILETIME=[4ADF8570:01C9AC9F]
+X-Barracuda-Connect: UNKNOWN[192.168.51.76]
+X-Barracuda-Start-Time: 1237912851
+X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114473>
 
-2009/3/24 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
->> This kind of pipeline has the benefit that it can actually work on the
->> *repository*, and not just the working copy (as per the posted script).
->
-> Did I miss something?  git ls-files pipes only the names to xargs, not the
-> full contents, right?
+Consider a directory tree something like this:
 
-See where I wrote "this kind of pipeline" vs "git ls-files" which was
-just quoting Peff? 8-)
+	...
+	foo\
+	  bar\
+	   project-root\
+	     app1\
+	         contents of app1
+	     app2\
+	         contents of app2
+	     lib1\
+	         contents of library 1
+	     lib2\
+	         contents of library 2
 
-I dunno, maybe C folk using git would only be interested in the
-index/working copy, but that tells me this script is even more
-tenuously linked to git. We don't bundle a compiler just because it
-can use git ls-files to work out what to compile...
 
-The script might be best as a standalone tool which just happened to
-take advantage of the VCS in use by reacting to its surroundings. Then
-it would also be useful by hg, svn, cvs people etc.
+Each project, whether application or library, has its own git repository
+already.  A program, say app1, is now dependant on the libraries.  The
+libraries are meant to be used in multiple applications.
 
-If it actually used the information in the repository to be able to
-run git blame on the definitions, or show a git log -p style list of
-changes in the definition, that might be different.
+This is not like what is described under subprojects, since the libs are
+not "under" the application, but are peers in the directory structure.
+It would be wrong to put lib1 and lib2 as subdirectories of app1 because
+they are also used by app2, right?
 
-Mike
+Then again... if app1 and app2 are not always built as part of the same
+set, they might have different versions of the libs specified.  I
+understand that the newer versions of msysgit do hard linking so having
+multiple repositories for the same thing won't waste disk space, but
+still requires fetching to keep them in sync?
+
+Anyway, how would you do it?
+
+TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
+  If you received this in error, please contact the sender and delete the material from any computer.
