@@ -1,155 +1,155 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH] Add the --merged option to goto
-Date: Tue, 24 Mar 2009 14:16:40 +0100
-Message-ID: <20090324131640.GB4040@diana.vm.bytemark.co.uk>
-References: <20090320161233.28989.82497.stgit@pc1117.cambridge.arm.com> <20090323084507.GA6447@diana.vm.bytemark.co.uk> <b0943d9e0903230933n5b71a53elcfaa13f00883861d@mail.gmail.com>
+From: Roel Kluin <roel.kluin@gmail.com>
+Subject: Re: [PATCH] git-cget: prints elements of C code in the git repository
+Date: Tue, 24 Mar 2009 14:30:28 +0100
+Message-ID: <49C8E074.4030808@gmail.com>
+References: <49C8B159.2040600@gmail.com> <alpine.DEB.1.00.0903241257430.7493@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 24 14:18:30 2009
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 24 14:32:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lm6WL-0005wd-8J
-	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 14:18:21 +0100
+	id 1Lm6jc-0002dc-FA
+	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 14:32:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758092AbZCXNQu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Mar 2009 09:16:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755782AbZCXNQu
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Mar 2009 09:16:50 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:49675 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754203AbZCXNQt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Mar 2009 09:16:49 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1Lm6Ui-0001eq-00; Tue, 24 Mar 2009 13:16:40 +0000
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0903230933n5b71a53elcfaa13f00883861d@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1759192AbZCXNae (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Mar 2009 09:30:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758862AbZCXNae
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Mar 2009 09:30:34 -0400
+Received: from mail-ew0-f165.google.com ([209.85.219.165]:61393 "EHLO
+	mail-ew0-f165.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758958AbZCXNac (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Mar 2009 09:30:32 -0400
+Received: by ewy9 with SMTP id 9so2070836ewy.37
+        for <git@vger.kernel.org>; Tue, 24 Mar 2009 06:30:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=5OFNrClCvdiHzlFM2PJAE8J/wZ32vfFdFf+L1cu8uYQ=;
+        b=HVx7512c+smdPKmB2kZZpFulQXdVLe1BZyaiYNMPaKkVeu1q9Le3JRRt+VcDzXR678
+         cb69/HazPxPpPAFZjHHM32IvVBfqHHOuT2Xe742IUfhVuyEyUzG33RU3NbdVoA+POUjq
+         jt1hsNm/yQdMizfzRqEe8G0AEElN4rIU+gVOA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=oqoacIKhdOaus+Rfx1bTJLG7RP+S4Gz7LyMBu9vy28ys5VOKGq0GNli5xQ+aCb43Ev
+         3j93RGGYR7dCE4oSiHKuOKPoXUAbkuyTM1Ic+6J9PnHrjW/uLt06Wjd60WyiA6zIbmgq
+         laf4grCCthInXvqY5zSYjjy8bc08GwPmo+5FE=
+Received: by 10.216.72.83 with SMTP id s61mr3082054wed.79.1237901428150;
+        Tue, 24 Mar 2009 06:30:28 -0700 (PDT)
+Received: from ?192.168.1.115? (d133062.upc-d.chello.nl [213.46.133.62])
+        by mx.google.com with ESMTPS id 10sm5082968eyd.23.2009.03.24.06.30.27
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 24 Mar 2009 06:30:27 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.19 (X11/20081209)
+In-Reply-To: <alpine.DEB.1.00.0903241257430.7493@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114457>
 
-On 2009-03-23 16:33:04 +0000, Catalin Marinas wrote:
+Hi Johannes,
 
-> 2009/3/23 Karl Hasselstr=F6m <kha@treskal.com>:
->
-> > On 2009-03-20 16:15:45 +0000, Catalin Marinas wrote:
-> >> @@ -752,12 +752,13 @@ class Index(RunWithEnv):
-> >> =A0 =A0 =A0 =A0 =A0assert current =3D=3D None or isinstance(curren=
-t, Tree)
-> >>
-> >> =A0 =A0 =A0 =A0 =A0# Take care of the really trivial cases.
-> >> - =A0 =A0 =A0 =A0if base =3D=3D ours:
-> >> - =A0 =A0 =A0 =A0 =A0 =A0return (theirs, current)
-> >> - =A0 =A0 =A0 =A0if base =3D=3D theirs:
-> >> - =A0 =A0 =A0 =A0 =A0 =A0return (ours, current)
-> >> - =A0 =A0 =A0 =A0if ours =3D=3D theirs:
-> >> - =A0 =A0 =A0 =A0 =A0 =A0return (ours, current)
-> >> + =A0 =A0 =A0 =A0if check_trivial:
-> >> + =A0 =A0 =A0 =A0 =A0 =A0if base =3D=3D ours:
-> >> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0return (theirs, current)
-> >> + =A0 =A0 =A0 =A0 =A0 =A0if base =3D=3D theirs:
-> >> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0return (ours, current)
-> >> + =A0 =A0 =A0 =A0 =A0 =A0if ours =3D=3D theirs:
-> >> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0return (ours, current)
-> >
-> > Uh, what? What's the point of not doing this unconditionally?
->
-> There are a few cases where my algorithm failed because the reverse
-> applying of patches fell on one of those special cases (otherwise
-> they wouldn't apply). The check_merged() function assumes that if a
-> patch can be reversed in a given tree, it was already included in
-> that tree.
->
-> Let's assume that the tree corresponding to the top patch is T1. We
-> have the following cases for reverse-applying a patch which fall
-> under the trivial cases above (patch expressed as
-> bottom_tree..top_tree):
->
-> The empty patch cases should be ignored from such test (not done
-> currently):
->
-> T1..T1 =3D> merge(T1, T1, T1) =3D=3D T1
-> T2..T2 =3D> merge(T2, T1, T2) =3D=3D T1
->
-> The non-empty patch situations:
->
-> T1..T2 =3D> merge(T2, T1, T1) =3D=3D T1
-> T2..T1 =3D> merge(T1, T1, T2) =3D=3D T2
->
-> The T1..T2 is pretty common and happens when the base of a patch
-> wasn't modified. Reverse-applying such patch should not normally
-> succeed but the merge() here uses one of those special cases. The
-> merge() result is correct since we want two trees merged, T1 and T1,
-> with a common base, T2, used a helper.
->
-> The T2..T1 cases would succeed with both trivial checks and
-> apply_treediff() and that's probably OK since if a patch generates
-> the same tree when applied, the changes it makes were probably
-> already included.
->
-> Now I understand it better :-). Reading my explanation above, it
-> seems that only the T1..T2 case matters and it can be taken care of
-> in the check_merged() function. Checking whether the tree returned
-> by merge() is different than "ours" should be enough for all the
-> above cases.
+thanks for your pointers.
 
-Hmm. If the tip of the branch is T1, and we reverse-apply the patch
-T1..T2, we get the merge (base T2, ours T1, theirs T1) ... yeah, I see
-what you mean. The problem isn't that we give T1 as the result of this
-merge -- that's actually the right thing to do -- the problem is that
-you don't actually want a merge. What you want is patch application.
-Maybe the apply_treediff method would do? See my other comment below.
+> - the name is not expressive enough,
 
-> >> @@ -379,3 +385,25 @@ class StackTransaction(object):
-> >> =A0 =A0 =A0 =A0 =A0assert set(self.unapplied + self.hidden) =3D=3D=
- set(unapplied + hidden)
-> >> =A0 =A0 =A0 =A0 =A0self.unapplied =3D unapplied
-> >> =A0 =A0 =A0 =A0 =A0self.hidden =3D hidden
-> >> +
-> >> + =A0 =A0def check_merged(self, patches):
-> >> + =A0 =A0 =A0 =A0"""Return a subset of patches already merged."""
-> >> + =A0 =A0 =A0 =A0merged =3D []
-> >> + =A0 =A0 =A0 =A0temp_index =3D self.__stack.repository.temp_index=
-()
-> >> + =A0 =A0 =A0 =A0temp_index_tree =3D None
-> >
-> > There's no need to create a new temp index here. The transaction
-> > object already has one.
->
-> I had the impression that an Index object would hold some state and
-> didn't want to break it. It seems OK to use as long as I don't touch
-> self.temp_index_tree. See below for an updated patch:
+How about get-def? If it's too long it will become tiresome to type.
 
-Yes, an Index object owns a git index file.
+> - the commit message is severely lacking (I had to apply it and run it to 
+>   find out what problem it tries to solve),
 
-And no, not quite. temp_index_tree is set to the tree we know is
-stored in temp_index right now (or None if we don't know). The idea is
-that we'll often want to read a tree into the index that's already
-there, and by keeping track of this we'll get better performance.
-(This works very well in practice.) Apologies if there aren't comments
-explaining this ... the merge method has some docs on the subject.
+This is probably better:
 
-I think what you should do is something like what merge() does:
+This script shows where elements of C code are defined in the git-repository.
+It is still experimental, although it should work in most cases.
 
-  if temp_index_tree !=3D branch_tip:
-      temp_index.read_tree(branch_tip)
-      temp_index_tree =3D branch_tip
-  try:
-      temp_index.apply_treediff(patch_bottom, patch_top, quiet =3D True=
-)
-      temp_index_tree =3D temp_index.write_tree()
-      return True
-  except MergeException:
-      return False
+As invoking it with -? will tell:
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+USAGE: git get-def [OPTION]... PATTERN [FILE]...
+print elements of C code with name PATTERN in the git repository,
+where PATTERN is an extended regular expression
+
+Options to specify which element(s) should be printed:
+        -f      function
+        -s      struct
+        -d      definition
+        -m      macro
+        -e      enum
+        -u      union
+
+Options to alter the output:
+        -b      only print body
+        -n      only print file and lineranges
+
+The pattern is required.
+
+If no files are specified it will search the entire repository for
+the specified elements with name PATTERN.
+
+If no element is specified, it will search for any of the above
+elements and print these when found.
+
+> - it still uses dashed git commands,
+
+Should be fixed in my next version
+
+> - it might be better to put it into contrib/, otherwise it needs 
+>   documentation with examples, and tests,
+
+Ok.
+
+> - it misdetects functions: trying
+> 
+> 	$ ./git-cget -f get_sha1.*
+> 
+>   shows this, amongst others:
+> 
+> -- snip --
+> // vi sha1_name.c +59
+>                 return get_sha1_hex(hex, sha1) == 0;
+>         return found;
+> }
+> 
+> static int match_sha(unsigned len, const unsigned char *a, const unsigned 
+> char *b)
+> {
+>         do {
+>                 if (*a != *b)
+>                         return 0;
+>                 a++;
+>                 b++;
+>                 len -= 2;
+>         } while (len > 1);
+>         if (len)
+>                 if ((*a ^ *b) & 0xf0)
+>                         return 0;
+>         return 1;
+> }
+> -- snap --
+
+Yes, it doesn't always work yet, I'll try to fix this in my next version.
+
+> - maybe it would be nicer to integrate this into git grep itself?  Maybe 
+>   by allowing multi-line matches and default patterns, or pattern 
+>   templates?
+
+I did attempt to program it in C, but I am more comfortable with bash. Also,
+what would be more appropriate for this purpose, I think, is a git sed.
+
+However, allowing multi-line matches may be an option, I'll look into it.
+
+> Ciao,
+> Dscho
+
+Thanks,
+
+Roel
