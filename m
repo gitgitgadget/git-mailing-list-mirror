@@ -1,126 +1,96 @@
-From: Chris Johnsen <chris_johnsen@pobox.com>
-Subject: [PATCH 8/8] Documentation: option to render literal text as bold for
- manpages
-Date: Tue, 24 Mar 2009 03:04:26 -0500
-Message-ID: <1237881866-5497-9-git-send-email-chris_johnsen@pobox.com>
-References: <1237881866-5497-1-git-send-email-chris_johnsen@pobox.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Chris Johnsen <chris_johnsen@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 24 09:09:10 2009
+From: Jeff King <peff@peff.net>
+Subject: Re: How to go to git from svn without checkout
+Date: Tue, 24 Mar 2009 04:10:50 -0400
+Message-ID: <20090324081050.GA660@coredump.intra.peff.net>
+References: <22640020.post@talk.nabble.com> <20090322032008.GA9526@coredump.intra.peff.net> <FB1F526D99571D4DBF84F456D358792901CC7F6F@leasrv003.imagitek.local>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: "Samman, Bassel" <Bsamman@imagitekltd.com>
+X-From: git-owner@vger.kernel.org Tue Mar 24 09:12:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lm1h2-00072O-39
-	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 09:09:04 +0100
+	id 1Lm1kP-0007xg-Bi
+	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 09:12:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756772AbZCXIFo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Mar 2009 04:05:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753553AbZCXIFn
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Mar 2009 04:05:43 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64046 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753927AbZCXIFl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Mar 2009 04:05:41 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7977EA4BE8;
-	Tue, 24 Mar 2009 04:05:39 -0400 (EDT)
-Received: from localhost.localdomain (unknown [75.53.43.147]) (using TLSv1
- with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate
- requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id
- C65CEA4BE4; Tue, 24 Mar 2009 04:05:33 -0400 (EDT)
-X-Mailer: git-send-email 1.6.2.1.214.ge986c
-In-Reply-To: <1237881866-5497-1-git-send-email-chris_johnsen@pobox.com>
-X-Pobox-Relay-ID: 90448CFC-184A-11DE-8414-32B0EBB1AA3C-07245699!a-sasl-fastnet.pobox.com
+	id S1753631AbZCXILB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Mar 2009 04:11:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753285AbZCXILA
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Mar 2009 04:11:00 -0400
+Received: from peff.net ([208.65.91.99]:47911 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753088AbZCXIK7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Mar 2009 04:10:59 -0400
+Received: (qmail 27969 invoked by uid 107); 24 Mar 2009 08:11:09 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 24 Mar 2009 04:11:09 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Mar 2009 04:10:50 -0400
+Content-Disposition: inline
+In-Reply-To: <FB1F526D99571D4DBF84F456D358792901CC7F6F@leasrv003.imagitek.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114422>
 
-This allows manpages viewed on a tty to render inline literal
-text in a manner that is distinct from the surrounding text.
+On Mon, Mar 23, 2009 at 10:21:41AM -0500, Samman, Bassel wrote:
 
-Testing done with asciidoc 8.3.1 and docbook-xsl 1.74.0.
+> Yes, unfortunately they do change occasionally and they grow with
+> time.  It's a product catalogue, so new products are added all the
+> time, just not daily.  That's part of why I want to move to Git, SVN
 
-Signed-off-by: Chris Johnsen <chris_johnsen@pobox.com>
+Well, I would first try just importing _one_ repo into git and seeing
+how it behaves. I suspect you may run into assumptions that a 50G repo
+breaks.
 
----
+In theory, I think you could pack all of the large files once into a
+single pack, mark it with .keep, and then not have it negatively impact
+further repacks.
 
-Since dobcook-xsl 1.74.0 seems to introduce using a monospace
-font for literal text (asciidoc backticks), this patch may not be
-so important for end users that can install their own
-docbook-xsl.
+> has been giving me lots of trouble when adding files at deep levels
+> and I like how Git does adding files and how each repository is really
+> it's own repository.  Also, I'm not really concerned about history as
+> the main purpose of the repository is really to make the syncing job
+> easier.  The code is very minimal and I do the majority of the
 
-But this patch, or something like it, might be useful for
-introducing some kind of typesetting for literal text in the
-official manpages (since it would not require upgrading
-docbook-xsl). It could probably even be changed/extended to
-provide monospacing without using a new docbook-xsl.
+Well, if you're not too concerned about the history, then I would
+suggest setting up something like this:
 
-The functionality is optional and defaults to "off", so there
-probably is not too much harm in including it, even if it is not
-used for the official manpages.
----
- Documentation/Makefile                 |    6 +++++-
- Documentation/manpage-bold-literal.xsl |   17 +++++++++++++++++
- 2 files changed, 22 insertions(+), 1 deletions(-)
- create mode 100644 Documentation/manpage-bold-literal.xsl
+  - all of the big files get a unique name; new versions of the same
+    file have names unique from their previous version (you can do this
+    either with human-readable names, or just using the sha-1 of the
+    file contents)
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 11b26aa..238ff83 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -42,6 +42,7 @@ man7dir=$(mandir)/man7
- ASCIIDOC=asciidoc
- ASCIIDOC_EXTRA =
- MANPAGE_XSL = manpage-normal.xsl
-+XMLTO_EXTRA =
- INSTALL?=install
- RM ?= rm -f
- DOC_REF = origin/man
-@@ -93,6 +94,9 @@ else
- 	ASCIIDOC_EXTRA += -a git-asciidoc-no-roff
- 	endif
- endif
-+ifdef MAN_BOLD_LITERAL
-+XMLTO_EXTRA += -m manpage-bold-literal.xsl
-+endif
- 
- #
- # Please note that there is a minor bug in asciidoc.
-@@ -192,7 +196,7 @@ $(MAN_HTML): %.html : %.txt
- 
- %.1 %.5 %.7 : %.xml
- 	$(RM) $@
--	xmlto -m $(MANPAGE_XSL) -m manpage-base.xsl man $<
-+	xmlto -m $(MANPAGE_XSL) $(XMLTO_EXTRA) -m manpage-base.xsl man $<
- 
- %.xml : %.txt
- 	$(RM) $@+ $@
-diff --git a/Documentation/manpage-bold-literal.xsl b/Documentation/manpage-bold-literal.xsl
-new file mode 100644
-index 0000000..608eb5d
---- /dev/null
-+++ b/Documentation/manpage-bold-literal.xsl
-@@ -0,0 +1,17 @@
-+<!-- manpage-bold-literal.xsl:
-+     special formatting for manpages rendered from asciidoc+docbook -->
-+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-+		version="1.0">
-+
-+<!-- render literal text as bold (instead of plain or monospace);
-+     this makes literal text easier to distinguish in manpages
-+     viewed on a tty -->
-+<xsl:template match="literal">
-+	<xsl:value-of select="$git.docbook.backslash"/>
-+	<xsl:text>fB</xsl:text>
-+	<xsl:apply-templates/>
-+	<xsl:value-of select="$git.docbook.backslash"/>
-+	<xsl:text>fR</xsl:text>
-+</xsl:template>
-+
-+</xsl:stylesheet>
--- 
-1.6.2.1.214.ge986c
+  - make all of the big files available through rsync, http, ftp, or
+    whatever
+
+  - the git (or svn) repo contains a list of all desired files, and a
+    script that checks what you have versus what is desired (deleting
+    any that aren't wanted, and pulling any that are missing)
+
+Your repository of big files will grow, but each file within it is
+immutable. The git repository points to the files by name, but doesn't
+contain them. So updating from a client is just:
+
+  git pull && ./update-script
+
+but you can still go back to a snapshot in history if you want to:
+
+  git checkout HEAD@{3.weeks.ago} && ./update-script
+
+Make sense?
+
+> can be crazy at times, but what can we do.  Also, this is a far fetch,
+> since all the projects are installed under the same directories and
+> are really exact clones of each other in every way, can I copy the
+> .git directory and hope to God that it will magically work.  I really
+> doubt it, but I figure it's worth asking.
+
+I'm not sure what you mean by that. You can copy the .git directory to a
+new working tree, yes. It will be a new repo, and you can see how what
+it thinks should be checked out differs from what is in the new working
+tree by running "git diff".
+
+-Peff
