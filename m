@@ -1,58 +1,138 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH 2/8] docbook: improve css style
-Date: Tue, 24 Mar 2009 04:18:47 -0400
-Message-ID: <20090324081846.GB660@coredump.intra.peff.net>
-References: <1237745121-6325-1-git-send-email-felipe.contreras@gmail.com> <1237745121-6325-2-git-send-email-felipe.contreras@gmail.com> <1237745121-6325-3-git-send-email-felipe.contreras@gmail.com> <20090323064242.GB1119@coredump.intra.peff.net> <94a0d4530903230331g3b620f80h77e317a09dc5273f@mail.gmail.com> <49C7A8AF.9080500@drmicha.warpmail.net> <94a0d4530903231721i2a2a6fc1yf54d4303283ec415@mail.gmail.com> <7vwsaf4qqx.fsf@gitster.siamese.dyndns.org> <94a0d4530903240052x2c6b882aub7de6d46e9949ddb@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFC/WIP 0/2] Documentation clean-up: git commands
+Date: Tue, 24 Mar 2009 09:24:30 +0100
+Message-ID: <49C898BE.4020205@drmicha.warpmail.net>
+References: <1237818533-31577-1-git-send-email-git@drmicha.warpmail.net> <7vwsag5hva.fsf@gitster.siamese.dyndns.org> <37FD43AD-E43A-4565-8085-95E606E0B868@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 24 09:20:34 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Chris Johnsen <chris_johnsen@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 24 09:27:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lm1s5-0001Pi-DF
-	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 09:20:29 +0100
+	id 1Lm1yK-0003Cc-Dg
+	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 09:26:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754199AbZCXIS6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Mar 2009 04:18:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753378AbZCXIS4
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Mar 2009 04:18:56 -0400
-Received: from peff.net ([208.65.91.99]:42253 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753285AbZCXIS4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Mar 2009 04:18:56 -0400
-Received: (qmail 27999 invoked by uid 107); 24 Mar 2009 08:19:06 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 24 Mar 2009 04:19:06 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 24 Mar 2009 04:18:47 -0400
-Content-Disposition: inline
-In-Reply-To: <94a0d4530903240052x2c6b882aub7de6d46e9949ddb@mail.gmail.com>
+	id S1753743AbZCXIYw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Mar 2009 04:24:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754690AbZCXIYv
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Mar 2009 04:24:51 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:42648 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753743AbZCXIYt (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Mar 2009 04:24:49 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 4CBE62FA0E6;
+	Tue, 24 Mar 2009 04:24:46 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Tue, 24 Mar 2009 04:24:46 -0400
+X-Sasl-enc: R5lJikg59mSHJbe+qntN4XH0BMJzW+iA00oAPdIsSAZc 1237883085
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 5DA81176BF;
+	Tue, 24 Mar 2009 04:24:45 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090324 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <37FD43AD-E43A-4565-8085-95E606E0B868@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114424>
 
-On Tue, Mar 24, 2009 at 09:52:33AM +0200, Felipe Contreras wrote:
+Chris Johnsen venit, vidit, dixit 24.03.2009 00:13:
+> On 2009 Mar 23, at 11:22, Junio C Hamano wrote:
+>> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>>
+>>> - Do we want it this way (`git command`)?
+>>
+>> That's my personal preference but other people may differ; wasn't  
+>> there an
+>> issue with "man" backend losing the typesetting information?
+> 
+> An issue that came up recently was that the backticks seem to have no  
+> typeset representation in the official kernel.org manpages.
 
-> > By the way, are you using a font that is a bit smaller than the bod=
-y text
-> > to render the examples? =C2=A0I find it harder to read.
->=20
-> Why do people have problems reading small fonts? That's exactly the
-> same font-size you'll see on Wikipedia, Google, and many other sites:
-> 'small'. Do you have problems reading Wikipedia?
+The man backend seems to handle ` and ' differently, that's true. But
+that's an issue of the asciidoc configuration in combination with the
+docbook stylesheets. In any case, backticks are for commands.
 
-Really? They look very different. Here's a screenshot of the user-manua=
-l
-with patches 2 and 3 from your series applied, next to Wikipedia. Your
-text is smaller, and the line-spacing makes it look more scrunched:
+I'm grateful if you look into the asciidoc/docbook issues. We also have
+compatibility issues going on there between different asciidoc 8
+versions, as well as docbook versions.
 
-  http://peff.net/wikipedia-git-textsize.png
-
--Peff
+> In my recent fumbling with the documentation generation, I have often  
+> been using git-init.txt as a "test bed". It shows clearly enough that  
+> backticks, by themselves, are not represented in the official manpages:
+> 
+> $ git grep core/templates Documentation/git-init.txt
+>   Documentation/git-init.txt:directory is `/usr/share/git-core/ 
+> templates`.
+> 
+> There we see the path in backticks with a period outside the  
+> backticks. If any inline typesetting were to come between "core/ 
+> templates" and ".", I think this command would turn it up:
+> 
+> $ git log -p -Score/templates. origin/man -- man1/git-init.1
+> 
+> It gets two hits. The first where the sentence is introduced, and a  
+> second where the period is escaped:
+> 
+> 43e513c (Autogenerated man pages for v1.5.0-rc1, 2007-01-12)
+> 2cbdf46 (Autogenerated manpages for v1.5.6.2-212-g08b5, 2008-07-06)
+> 
+> The last one leaves us with "core/templates\.". So search again to  
+> see if that has changed since the last one:
+> 
+> git log -p -Score/templates\\. origin/man -- man1/git-init.1
+> 
+> Nope, that only shows the one hit (2cbdf46). In case I made an error  
+> using the `git log` to do the searching, I also checked by hand by  
+> loading the diffs from <http://git.kernel.org/?p=git/ 
+> git.git;a=history;f=man1/git-init.1;hb=man> (they agree, no  
+> formatting around that path in any of the generated git-init.1).
+> 
+> When I generate the manpage on my machine (asciidoc 8.3.1; docbook- 
+> xsl 1.74.0), I do get some formatting for backticks:
+> 
+> $ grep core/templates Documentation/git-init.1
+> Provide the directory from which templates will be used\&. The  
+> default template directory is \FC/usr/share/git\-core/templates\F[]\&.
+> 
+>  From what I can tell the \FC is supposed to introduce monospace type  
+> and \F[] is to reset to the previous type. When I run it through  
+> groff -man -Tps, it  does come out in a monospaced font. The change  
+> in font is not obvious when viewing the manpage in a tty-based  
+> manpage viewer (which was my original "gripe"), but there is some  
+> typesetting info there for pages I generate.
+> 
+> I suspect the main difference between my generated pages and the  
+> official pages (at least for typesetting of literal text) is the  
+> docbook-xsl version (though I have not dug into previous versions of  
+> dcobook-xsl to bolster this hypothesis).
+> 
+> I have a series of patches prepared to "cleanup" and modify  
+> {callout,manpage-1.72}.xsl and asciidoc.conf, but I am still running  
+> a series of "make doc" runs across the changes to try to make sure  
+> they are sane. Here is a preview:
+> 
+> Documentation: move callouts.xsl to manpage-{base,normal}.xsl
+> Documentation: use parametrized manpage-base.xsl with manpage- 
+> {1.72,normal}.xsl
+> Documentation: rename docbook-xsl-172 attribute to git-asciidoc-no-roff
+> Documentation: move quieting params into manpage-base.xsl
+> Documentation: move "spurious .sp" code into manpage-base.xsl
+> Documentation: asciidoc.conf: always use <literallayout> for [blocktext]
+> Documentation: asciidoc.conf: fix verse block with block titles
+> Documentation: option to render literal text as italic for manpages
+> 
+> The first three restructure things a bit. The next three make some  
+> cleanups that could be dropped if they are deemed inappropriate. The  
+> last one add an option that changes the manpage formatting used  
+> around asciidoc backticked strings (literal text).
+> 
+> I plan on sending the patches along after my trial doc-generations  
+> finish and I have reviewed the results (my machine is slow, it may  
+> not be until tomorrow).
+> 
