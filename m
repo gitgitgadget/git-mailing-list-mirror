@@ -1,103 +1,64 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Add warning about known issues to documentation of
-	cvsimport
-Date: Mon, 23 Mar 2009 23:14:48 -0400
-Message-ID: <20090324031448.GA12829@coredump.intra.peff.net>
-References: <20090323195304.GC26678@macbook.lan>
+Subject: Re: [RFC/WIP 0/2] Documentation clean-up: git commands
+Date: Mon, 23 Mar 2009 23:34:11 -0400
+Message-ID: <20090324033410.GB12829@coredump.intra.peff.net>
+References: <1237818533-31577-1-git-send-email-git@drmicha.warpmail.net> <7vwsag5hva.fsf@gitster.siamese.dyndns.org> <37FD43AD-E43A-4565-8085-95E606E0B868@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Tue Mar 24 04:16:36 2009
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: Chris Johnsen <chris_johnsen@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 24 04:36:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Llx7u-0000Ez-28
-	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 04:16:30 +0100
+	id 1LlxR7-0003rl-8u
+	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 04:36:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755757AbZCXDO6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Mar 2009 23:14:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755567AbZCXDO5
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 23:14:57 -0400
-Received: from peff.net ([208.65.91.99]:48931 "EHLO peff.net"
+	id S1752992AbZCXDeU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Mar 2009 23:34:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751735AbZCXDeU
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 23:34:20 -0400
+Received: from peff.net ([208.65.91.99]:37605 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755513AbZCXDO5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Mar 2009 23:14:57 -0400
-Received: (qmail 26032 invoked by uid 107); 24 Mar 2009 03:15:06 -0000
+	id S1751408AbZCXDeT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Mar 2009 23:34:19 -0400
+Received: (qmail 26099 invoked by uid 107); 24 Mar 2009 03:34:29 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 23 Mar 2009 23:15:06 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Mar 2009 23:14:48 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 23 Mar 2009 23:34:29 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Mar 2009 23:34:11 -0400
 Content-Disposition: inline
-In-Reply-To: <20090323195304.GC26678@macbook.lan>
+In-Reply-To: <37FD43AD-E43A-4565-8085-95E606E0B868@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114399>
 
-On Mon, Mar 23, 2009 at 08:53:05PM +0100, Heiko Voigt wrote:
+On Mon, Mar 23, 2009 at 06:13:11PM -0500, Chris Johnsen wrote:
 
-> The described issues are compiled from the tests by Michael Haggerty =
-and me.
-> Because it is not apparent that these can be fixed anytime soon at le=
-ast warn
-> unwary users not to rely on the inbuilt cvsimport to much.
+> I have a series of patches prepared to "cleanup" and modify  
+> {callout,manpage-1.72}.xsl and asciidoc.conf, but I am still running a 
+> series of "make doc" runs across the changes to try to make sure they are 
+> sane. Here is a preview:
+>
+> Documentation: move callouts.xsl to manpage-{base,normal}.xsl
+> Documentation: use parametrized manpage-base.xsl with manpage- 
+> {1.72,normal}.xsl
+> Documentation: rename docbook-xsl-172 attribute to git-asciidoc-no-roff
+> Documentation: move quieting params into manpage-base.xsl
+> Documentation: move "spurious .sp" code into manpage-base.xsl
+> Documentation: asciidoc.conf: always use <literallayout> for [blocktext]
+> Documentation: asciidoc.conf: fix verse block with block titles
+> Documentation: option to render literal text as italic for manpages
 
-I think this change is good in concept.
+Oh, good, thanks for working on this. I was actually about to start
+looking at it tonight.
 
-> +[[issues]]
-> +ISSUES
-> +------
-> +Problems related to timestamps:
-> +
-> + * If timestamps of commits in the cvs repository are not stable eno=
-ugh
-> +   to be used for ordering commits
-> + * If any files were ever "cvs import"ed more than once (e.g., impor=
-t of
-> +   more than one vendor release)
-> + * If the timestamp order of different files cross the revision orde=
-r
-> +   within the commit matching time window
-
-Reading this, I kept waiting for the "then" to your "if". I think the
-implication is "your import will be incorrect". But it would be nice to
-say _how_, even if it's something as simple as "changes may show up in
-the wrong commit, the wrong branch, be omitted" or whatever. Just give =
-a
-general idea of what can happen.
-
-Also, this renders somewhat poorly in the manpage version. I get:
-
-<quote>
-ISSUES
-       Problems related to timestamps:
-
-
-       =C2=B7   If timestamps of commits in the cvs repository are not =
-stable
-           enough to be used for ordering commits
-
-       =C2=B7   If any files were ever "cvs import"ed more than once (e=
-=2Eg., import
-           of more than one vendor release)
-
-       =C2=B7   If the timestamp order of different files cross the rev=
-ision order
-           within the commit matching time window
-       Problems related to branches:
-
-
-       =C2=B7   Branches on which no commits have been made are not imp=
-orted
-</quote>
-
-Note the extra blank line between each heading and its list, and the
-lack of a blank line between the end of the first list and the heading
-of the second. Your source is very readable, so it really is just
-asciidoc being silly, but I wonder if there is a way to work around
-that.
+For the final one, italicized or emphasized text will often end up
+underlined in most terminals. Peeking at other manpages led me to the
+conclusion that bolding literal text is the most common convention.
 
 -Peff
