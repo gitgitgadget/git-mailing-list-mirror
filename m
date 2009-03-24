@@ -1,148 +1,66 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: Git for Windows 1.6.2.1-preview20090322
-Date: Tue, 24 Mar 2009 02:35:24 +0100
-Message-ID: <200903240235.25192.markus.heidelberg@web.de>
-References: <alpine.DEB.1.00.0903080132470.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903222149330.10279@pacific.mpi-cbg.de>
-Reply-To: markus.heidelberg@web.de
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: .gitk should created hidden in windows
+Date: Tue, 24 Mar 2009 02:39:40 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903240238440.10279@pacific.mpi-cbg.de>
+References: <49BFA97A.1030203@lanwin.de> <18887.26239.115820.450313@cargo.ozlabs.ibm.com> <49C82377.40101@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 24 02:37:43 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Paul Mackerras <paulus@samba.org>, Steve Wagner <lists@lanwin.de>,
+	git@vger.kernel.org
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Tue Mar 24 02:39:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlvaI-0004Qu-E4
-	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 02:37:42 +0100
+	id 1Llvbh-0004i3-5K
+	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 02:39:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755506AbZCXBfc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Mar 2009 21:35:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755461AbZCXBfc
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 21:35:32 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:53316 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755345AbZCXBfb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Mar 2009 21:35:31 -0400
-Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 3FE62FBFE0FE;
-	Tue, 24 Mar 2009 02:35:26 +0100 (CET)
-Received: from [89.59.75.248] (helo=.)
-	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1LlvY6-0001Aj-00; Tue, 24 Mar 2009 02:35:26 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.DEB.1.00.0903222149330.10279@pacific.mpi-cbg.de>
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX1/H+kXSYYF1jivrW8asu8T6gAq1LNJxK7JyMnOv
-	glGSD9M0jIreufwjzws4zwngHQt+jkQBKCK9CA27M3MWGecQw2
-	kk4PD6ham/WQppLZp0bg==
+	id S1753763AbZCXBhk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Mar 2009 21:37:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752259AbZCXBhk
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 21:37:40 -0400
+Received: from mail.gmx.net ([213.165.64.20]:53797 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751130AbZCXBhj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Mar 2009 21:37:39 -0400
+Received: (qmail invoked by alias); 24 Mar 2009 01:37:36 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp007) with SMTP; 24 Mar 2009 02:37:36 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+X/7A/vziX3zCUwYnjGrESyxCv/5wdA5EP86Psky
+	tvBQrzaF/1f56w
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <49C82377.40101@users.sourceforge.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6899999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114389>
 
 Hi,
 
-the company I'm working for plans to switch from our current commercial
-VCS, now I have the job to compare different tools (svn, git). Our
-clients run on Windows and probably our offices in foreign countries
-should work on our repository, too.
+On Tue, 24 Mar 2009, Pat Thoyts wrote:
 
-Johannes Schindelin, 22.03.2009:
-> Disclaimer: Git for Windows is still in a state where I do _not_ recommend 
-> using it unless you have the means to fix issues.  Unlike the git.git 
-> developer community, the msysGit team is heavily undermanned.
+> Paul Mackerras wrote:
+> > Please try this patch and let me know if it does what you want.
+> > 
+> [snip]
 > 
-> Known issues 
+> This patch works fine on my Vista installation. The .gitk file is now 
+> hidden.
+> 
+> An alternative that was discussed was to move it rather than hide it so 
+> that it ends up in the Application Data folder along with settings for 
+> other applications. The following patch does this but hits rather more 
+> lines of code and ends up needing to check the original location as 
+> well.
 
-I favor git, but I have to be objective and if there are serious issues,
-this will obviously influence the decision. Since the list below is not
-complete, I guess these are just the most serious issues, and then it
-doesn't sound too scary for the everyday use. Let me comment on them for
-our workflow:
+While I see your point, keep in mind that this patch would make Git for 
+Windows even more incompatible with Git "In The Rest Of The World"...
 
-> - Some commands are not yet supported on Windows and excluded from the 
->   installation; namely: git archimport, git cvsexportcommit, git 
->   cvsimport, git cvsserver, git filter-branch, git instaweb, git 
->   send-email, git shell.
-
-Not necessary.
-
-> - The Logitec QuickCam software can cause spurious crashes. See "Why does 
->   make often crash creating a sh.exe.stackdump file when I try to compile 
->   my source code?" on the MinGW Wiki 
->   (http://www.mingw.org/wiki/Environment_issues)
-
-Not plugged-in.
-
-> - The Quick Launch icon will only be installed for the user running setup 
->   (typically the Administrator). This is a technical restriction and will 
->   not change.
-
-Never mind.
-
-> - Git Bash launched through the Explorer shell extension does not have the 
->   git icon in its taskbar. This is a technical restriction and will not 
->   change.
-
-Never mind. Probably I would be the only one using the CLI anyway.
-
-> - git send-mail does not work properly (Issue 27).
-
-Not necessary.
-
-> - curl uses $HOME/_netrc instead of $HOME/.netrc.
-
-Never mind.
-
-> - If you want to specify a different location for --upload-pack, you have 
->   to start the absolute path with two slashes. Otherwise MSys will mangle 
->   the path.
-
-Only for msysgit on the server side, right? Then, never mind.
-
-> - git and bash have serious problems with non-ASCII file names (Issue 80, 
->   108, 149, 159, 188).
-
-This may be a problem.
-
-> - If configured to use plink, you will have to connect with putty first, 
->   as you cannot accept the host key due to the console window being 
->   blocked (Issue 96).
-
-Just use OpenSSH?
-Problem in GUIs or only CLI?
-
-> - MinGW does not support IPv6 yet (Issue 182).
-
-Not necessary.
-
-> - When run from cmd.exe instead of Git Bash, some characters seem to be 
->   "swallowed" from Git's output (Issue 192).
-
-Never mind.
-
-> - There are a few issues with ssh hanging (Issue 197), permission denied 
->   on renaming pack files (mentioned in Issue 194), and spurious write 
->   errors during rebase (Issue 200) that seem not to be reproducible on 
->   most computers.
-
-OK, strange and not reproducible errors are a little bit scary.
-
-So, most of these issues I don't consider to be serious for us, but I
-guess the remaining "real" issues let you stay at your opinion, not to
-recommend using it, don't they?
-
-I suppose there are already people using msysgit productive at work,
-are these only people who know how to fix such problems?
-
-Regardless of git's Windows problems, another problem will probably be
-finding a decent GUI that suits my colleagues.
-
-Markus
+Ciao,
+Dscho
