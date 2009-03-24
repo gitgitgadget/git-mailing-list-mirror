@@ -1,92 +1,93 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] Don't permit ref/branch names to end with ".lock"
-Date: Tue, 24 Mar 2009 16:31:01 -0700
-Message-ID: <20090324233101.GU23521@spearce.org>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH] Documentation: git-format-patch.txt rewordings and 
+	cleanups
+Date: Tue, 24 Mar 2009 16:36:15 -0700
+Message-ID: <780e0a6b0903241636j4749daf3xddb6e4c200c00820@mail.gmail.com>
+References: <1237803683-14939-1-git-send-email-bebarino@gmail.com>
+	 <20090324220913.GN19389@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 25 00:32:40 2009
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Wed Mar 25 00:37:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmG6j-0003pG-Gj
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 00:32:34 +0100
+	id 1LmGBo-0005KN-8o
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 00:37:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755048AbZCXXbG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Mar 2009 19:31:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754555AbZCXXbF
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Mar 2009 19:31:05 -0400
-Received: from george.spearce.org ([209.20.77.23]:41128 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753715AbZCXXbD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Mar 2009 19:31:03 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 16FD238211; Tue, 24 Mar 2009 23:31:01 +0000 (UTC)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1754555AbZCXXgT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Mar 2009 19:36:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753229AbZCXXgS
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Mar 2009 19:36:18 -0400
+Received: from wf-out-1314.google.com ([209.85.200.169]:47766 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753888AbZCXXgR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Mar 2009 19:36:17 -0400
+Received: by wf-out-1314.google.com with SMTP id 29so3691941wff.4
+        for <git@vger.kernel.org>; Tue, 24 Mar 2009 16:36:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=dDrKfyKYFYulM6JzECiJ5LeF+VpoRdNE3ZjOi8OYfGo=;
+        b=LsV8ngaO3hSMwEyg3Z5VAvhdtIQf+S3d/9VfFRVZpY2YZRHUnXBFXbOlrwL57I0uhV
+         i/O/JUFQ8EVWcmBIFEDu10VP6npqNitBY19QCRuBN7/to+rl+gwxL4hj9XCRrK4K5M/g
+         +U0Y8snGuqhArVQTesC2hC+Zis4lSu0T/WsPE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=obutiTtVRXJj73qBeY1RF1YklciHQiMs5jzy5XYNh+ew03cUOCzEhxYWsokf7IysKZ
+         L494kYe1YF9XIuDEEEs52jgArJMBa4hs1U1nWULrNR/+UO4hkhULHoP85+wMhfjrpRFO
+         ROVT+/jdVAY/DPEOrkBG9pS32P1LZhD1tW/I4=
+Received: by 10.143.15.11 with SMTP id s11mr3605355wfi.283.1237937775669; Tue, 
+	24 Mar 2009 16:36:15 -0700 (PDT)
+In-Reply-To: <20090324220913.GN19389@fieldses.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114515>
 
-We already skip over loose refs under $GIT_DIR/refs if the name
-ends with ".lock", so creating a branch named "foo.lock" will not
-appear in the output of "git branch", "git for-each-ref", nor will
-its commit be considered reachable by "git rev-list --all".
+On Tue, Mar 24, 2009 at 3:09 PM, J. Bruce Fields <bfields@fieldses.org>=
+ wrote:
+> On Mon, Mar 23, 2009 at 03:21:23AM -0700, Stephen Boyd wrote:
+>> =C2=A0+
+>> -Note that you would need to include the leading dot `.` if you
+>> -want a filename like `0001-description-of-my-change.patch`, and
+>> -the first letter does not have to be a dot. =C2=A0Leaving it empty =
+would
+>> -not add any suffix.
+>> +Note the first letter is not required to be a dot, you will need to
+>> +include the leading dot `.` if you want a filename like
+>> +`0001-description-of-my-change.patch`.
+>
+> That's a comma-splice, trivially fixed by changing "dot, you" to "dot=
+;
+> you".
+>
+> Better?: "Note that the leading dot isn't actually required if you do=
+n't
+> want a dot between the patch name and the suffix."
+>
+> (Though personally I'd strike the whole sentence, since a) probably
+> nobody cares, and b) the 1 in a million person that does actually wan=
+t
+> to do this can figure it out easily enough on their own with a quick
+> test.)
+>
+> --b.
+>
 
-In the latter case this is especially evil, as it may cause
-repository corruption when objects reachable only through such a
-ref are deleted by "git prune".
+I don't think documentation is meant to point the user to trial and
+error. Even if the error is fairly harmless. Although you could be
+right that nobody cares.
 
-It should be reasonably safe to deny use of ".lock" as a ref suffix.
-In prior versions of Git such branches would be "phantom branches";
-you can create it, but you can't see it in "git branch" output.
+How about a sentence with no negation?
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
-
- This goes on top of your jc/name-branch-iffy currently in pu.
-
- Documentation/git-check-ref-format.txt |    2 ++
- refs.c                                 |    3 +++
- 2 files changed, 5 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/git-check-ref-format.txt b/Documentation/git-check-ref-format.txt
-index d23fd21..9b707a7 100644
---- a/Documentation/git-check-ref-format.txt
-+++ b/Documentation/git-check-ref-format.txt
-@@ -34,6 +34,8 @@ imposes the following rules on how refs are named:
- 
- . They cannot end with a slash `/` nor a dot `.`.
- 
-+. They cannot end with the sequence `.lock`.
-+
- . They cannot contain a sequence `@{`.
- 
- These rules makes it easy for shell script based tools to parse
-diff --git a/refs.c b/refs.c
-index e355489..f3fdcbd 100644
---- a/refs.c
-+++ b/refs.c
-@@ -676,6 +676,7 @@ int for_each_rawref(each_ref_fn fn, void *cb_data)
-  * - it has double dots "..", or
-  * - it has ASCII control character, "~", "^", ":" or SP, anywhere, or
-  * - it ends with a "/".
-+ * - it ends with ".lock"
-  */
- 
- static inline int bad_ref_char(int ch)
-@@ -737,6 +738,8 @@ int check_ref_format(const char *ref)
- 				return CHECK_REF_FORMAT_ERROR;
- 			if (level < 2)
- 				return CHECK_REF_FORMAT_ONELEVEL;
-+			if (has_extension(ref, ".lock"))
-+				return CHECK_REF_FORMAT_ERROR;
- 			return ret;
- 		}
- 	}
--- 
-1.6.2.1.471.g682837
+"Note that the leading dot is required if you want a dot between the
+patch name and the suffix."
