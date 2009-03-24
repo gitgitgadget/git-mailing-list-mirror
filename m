@@ -1,149 +1,81 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] Documentation: git-format-patch.txt rewordings and
-	cleanups
-Date: Tue, 24 Mar 2009 18:09:13 -0400
-Message-ID: <20090324220913.GN19389@fieldses.org>
-References: <1237803683-14939-1-git-send-email-bebarino@gmail.com>
+From: Magnus =?iso-8859-1?Q?B=E4ck?= <baeck@swipnet.se>
+Subject: Re: Implementing stat() with FindFirstFile()
+Date: Tue, 24 Mar 2009 22:54:16 +0100
+Message-ID: <20090324215416.GB27249@jeeves.jpl.local>
+References: <20090321154738.GA27249@jeeves.jpl.local> <200903212055.15026.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 24 23:11:00 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 24 23:16:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmEpZ-0001f8-SK
-	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 23:10:46 +0100
+	id 1LmEuv-0003lG-ED
+	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 23:16:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752303AbZCXWJR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Mar 2009 18:09:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752179AbZCXWJP
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Mar 2009 18:09:15 -0400
-Received: from mail.fieldses.org ([141.211.133.115]:42689 "EHLO
-	pickle.fieldses.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752147AbZCXWJP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Mar 2009 18:09:15 -0400
-Received: from bfields by pickle.fieldses.org with local (Exim 4.69)
-	(envelope-from <bfields@fieldses.org>)
-	id 1LmEo5-0006NG-9S; Tue, 24 Mar 2009 18:09:13 -0400
+	id S1752323AbZCXWOq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Mar 2009 18:14:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752030AbZCXWOq
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Mar 2009 18:14:46 -0400
+Received: from proxy1.bredband.net ([195.54.101.71]:43875 "EHLO
+	proxy1.bredband.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752009AbZCXWOp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Mar 2009 18:14:45 -0400
+X-Greylist: delayed 1222 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Mar 2009 18:14:45 EDT
+Received: from ironport2.bredband.com (195.54.101.122) by proxy1.bredband.net (7.3.139)
+        id 49C91729000142FA for git@vger.kernel.org; Tue, 24 Mar 2009 22:54:20 +0100
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AikzACPzyElT4/BMPGdsb2JhbACBUJQOAQEBAR4XC70Mg3YG
+X-IronPort-AV: E=Sophos;i="4.38,415,1233529200"; 
+   d="scan'208";a="466271091"
+Received: from ua-83-227-240-76.cust.bredbandsbolaget.se (HELO elwood.jpl.local) ([83.227.240.76])
+  by ironport2.bredband.com with ESMTP; 24 Mar 2009 22:54:20 +0100
+Received: from jeeves.jpl.local (jeeves.jpl.local [192.168.7.3])
+	by elwood.jpl.local (Postfix) with ESMTP id 5A0324229F
+	for <git@vger.kernel.org>; Tue, 24 Mar 2009 22:54:19 +0100 (CET)
+Received: by jeeves.jpl.local (Postfix, from userid 100)
+	id D40E33C2D; Tue, 24 Mar 2009 22:54:16 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <1237803683-14939-1-git-send-email-bebarino@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <200903212055.15026.j6t@kdbg.org>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114500>
 
-On Mon, Mar 23, 2009 at 03:21:23AM -0700, Stephen Boyd wrote:
-> Clarify --no-binary description using some words from the original
-> commit 37c22a4b (add --no-binary, 2008-05-9). Cleanup --suffix and
-> --thread descriptions. Add --thread style option to synopsis. Clarify
-> renaming patches example.
-> 
-> Signed-off-by: Stephen Boyd <bebarino@gmail.com>
-> ---
-> Is the synopsis getting too heavy? Maybe it should be changed to:
-> 
->     git format-patch [<options>] [<common diff options>] [<revision range>]
-> 
->  Documentation/git-format-patch.txt |   34 +++++++++++++++++-----------------
->  1 files changed, 17 insertions(+), 17 deletions(-)
-> 
-> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-> index c2eb5fa..f31098b 100644
-> --- a/Documentation/git-format-patch.txt
-> +++ b/Documentation/git-format-patch.txt
-> @@ -9,9 +9,9 @@ git-format-patch - Prepare patches for e-mail submission
->  SYNOPSIS
->  --------
->  [verse]
-> -'git format-patch' [-k] [-o <dir> | --stdout] [--thread]
-> +'git format-patch' [-k] [-o <dir> | --stdout] [--thread[=<style>]]
->  		   [--attach[=<boundary>] | --inline[=<boundary>] |
-> -		     [--no-attach]]
-> +		    --no-attach]
->  		   [-s | --signoff] [<common diff options>]
->  		   [-n | --numbered | -N | --no-numbered]
->  		   [--start-number <n>] [--numbered-files]
-> @@ -132,9 +132,9 @@ include::diff-options.txt[]
->  	the Message-Id header to reference.
->  +
->  The optional <style> argument can be either `shallow` or `deep`.
-> -'Shallow' threading makes every mail a reply to the head of the
-> +'shallow' threading makes every mail a reply to the head of the
->  series, where the head is chosen from the cover letter, the
-> -`\--in-reply-to`, and the first patch mail, in this order.  'Deep'
-> +`\--in-reply-to`, and the first patch mail, in this order.  'deep'
->  threading makes every mail a reply to the previous one.  If not
->  specified, defaults to the 'format.thread' configuration, or `shallow`
->  if that is not set.
-> @@ -169,24 +169,24 @@ if that is not set.
->  --suffix=.<sfx>::
->  	Instead of using `.patch` as the suffix for generated
->  	filenames, use specified suffix.  A common alternative is
-> -	`--suffix=.txt`.
-> +	`--suffix=.txt`.  Leaving this empty will remove the `.patch`
-> +	suffix.
->  +
-> -Note that you would need to include the leading dot `.` if you
-> -want a filename like `0001-description-of-my-change.patch`, and
-> -the first letter does not have to be a dot.  Leaving it empty would
-> -not add any suffix.
-> +Note the first letter is not required to be a dot, you will need to
-> +include the leading dot `.` if you want a filename like
-> +`0001-description-of-my-change.patch`.
+On Saturday, March 21, 2009 at 20:55 CET,
+     Johannes Sixt <j6t@kdbg.org> wrote:
 
-That's a comma-splice, trivially fixed by changing "dot, you" to "dot;
-you".
+> On Samstag, 21. M=E4rz 2009, Magnus B=E4ck wrote:
+>
+> > Is there any reason why compat/win32.h uses GetFileAttributesEx()
+> > instead of FindFirstFile() to implement the stat() call on Windows?
+> > The current implementation requires each queried file to be opened
+> > and closed while FindFirstFile() only reads the directory.
+>=20
+> There is: File times are extremely important for git. Unfortunately,
+> MS's implementation of stat and utime are broken, and they do use
+> FindFirstFile(). Read up on the topic here:
+>=20
+> http://search.cpan.org/~shay/Win32-UTCFileTime-1.50/lib/Win32/UTCFile=
+Time.pm
 
-Better?: "Note that the leading dot isn't actually required if you don't
-want a dot between the patch name and the suffix."
+Quite interesting, thanks. As it often is, "obvious" changes that
+haven't been made aren't that obvious after all.
 
-(Though personally I'd strike the whole sentence, since a) probably
-nobody cares, and b) the 1 in a million person that does actually want
-to do this can figure it out easily enough on their own with a quick
-test.)
+=46rom what I gather the problematic conversion takes place in the Win3=
+2
+layer, in which case we might be able to call the ZwQueryDirectoryFile(=
+)
+kernel routine directly via ntdll.dll to obtain the file times straight
+from the file system. Has anyone explored that path, and would it be
+acceptable to make such a change?
 
---b.
+[...]
 
->  
->  --no-binary::
-> -	Don't output contents of changes in binary files, just take note
-> -	that they differ.  Note that this disable the patch to be properly
-> -	applied.  By default the contents of changes in those files are
-> -	encoded in the patch.
-> +	Do not output contents of changes in binary files, instead
-> +	display a notice that those files changed.  Patches generated
-> +	using this option cannot be applied properly, but they are
-> +	still useful for code review.
->  
->  CONFIGURATION
->  -------------
->  You can specify extra mail header lines to be added to each message
-> -in the repository configuration, new defaults for the subject prefix
-> -and file suffix, control attachements, and number patches when outputting
-> +in the repository configuration, defaults for the subject prefix
-> +and file suffix, configure attachments, and number patches when outputting
->  more than one.
->  
->  ------------
-> @@ -234,8 +234,8 @@ $ git format-patch -M -B origin
->  +
->  Additionally, it detects and handles renames and complete rewrites
->  intelligently to produce a renaming patch.  A renaming patch reduces
-> -the amount of text output, and generally makes it easier to review it.
-> -Note that the "patch" program does not understand renaming patches, so
-> +the amount of text output, and generally makes it easier to review.
-> +Note that non-git "patch" programs won't understand renaming patches, so
->  use it only when you know the recipient uses git to apply your patch.
->  
->  * Extract three topmost commits from the current branch and format them
-> -- 
-> 1.6.2
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+--=20
+Magnus B=E4ck
+baeck@swipnet.se
