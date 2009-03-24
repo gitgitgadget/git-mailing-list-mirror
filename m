@@ -1,75 +1,84 @@
-From: Ping Yin <pkufranky@gmail.com>
-Subject: Re: [PATCH] git-cget: prints elements of C code in the git repository
-Date: Tue, 24 Mar 2009 23:08:01 +0800
-Message-ID: <46dff0320903240808p5ad287d8j9245ee9f79ff6851@mail.gmail.com>
-References: <49C8B159.2040600@gmail.com>
-	 <alpine.DEB.1.00.0903241257430.7493@intel-tinevez-2-302>
-	 <49C8E074.4030808@gmail.com>
-	 <alpine.DEB.1.00.0903241449200.7493@intel-tinevez-2-302>
+From: Irene Ros <imirene@gmail.com>
+Subject: branch ahead in commits but push claims all up to date
+Date: Tue, 24 Mar 2009 11:22:45 -0400
+Message-ID: <7001b7a00903240822w70a57349xcc66a02cef62dc70@mail.gmail.com>
+References: <7001b7a00903240821v2155d234x6a10c80a3e987acb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Roel Kluin <roel.kluin@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 24 16:09:54 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 24 16:24:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lm8G1-0000Zn-Nl
-	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 16:09:38 +0100
+	id 1Lm8Uo-0007J7-Ef
+	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 16:24:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753716AbZCXPII (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Mar 2009 11:08:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753086AbZCXPIF
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Mar 2009 11:08:05 -0400
-Received: from rv-out-0506.google.com ([209.85.198.231]:12006 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753081AbZCXPIE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Mar 2009 11:08:04 -0400
-Received: by rv-out-0506.google.com with SMTP id f9so2340105rvb.1
-        for <git@vger.kernel.org>; Tue, 24 Mar 2009 08:08:01 -0700 (PDT)
+	id S1757041AbZCXPWt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Mar 2009 11:22:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756648AbZCXPWs
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Mar 2009 11:22:48 -0400
+Received: from mail-gx0-f208.google.com ([209.85.217.208]:42337 "EHLO
+	mail-gx0-f208.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756369AbZCXPWs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Mar 2009 11:22:48 -0400
+Received: by gxk4 with SMTP id 4so6560943gxk.13
+        for <git@vger.kernel.org>; Tue, 24 Mar 2009 08:22:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+         :date:message-id:subject:from:to:content-type
          :content-transfer-encoding;
-        bh=vX2ZNh6m1NUeesxLOwjXU3SVumwOuQi/AJ0TnjYHidM=;
-        b=pM1dHh81/w7jyhL6cW66dMgpWt0DllocNI2wTrgsPlml8PEXt2dSN0caHpDpKxOxhS
-         w765YXIIkly+dXh0V/a8O2gRjwoP5pn9WB5TXu1qKhKRJNAxhSiPDK0ck2hQDHGFFyfv
-         Q/h8b1VIRYkuz5TBoKv1mTvG7EBewtQU3MdlM=
+        bh=hLeUYC1UQ7yTaK2CwVpVtDVXmd9SJix1lQOH54Y+Jhg=;
+        b=CfhxYMgSLBsTH2VVZSpHUQbIxSv+OUad2424AuYxVpyPqLM7q9EHs6WYKxA1smZeCc
+         e7nCK/ZGs52TSBVtCAzV23Foj3qTjH7AWKlMcTtj+FM4whLBhFuTrDc4i04M8DN16zMP
+         IP9QC3UI3lrz5UzeYiIr1doF0YgZGGTDiSRew=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=m8EBC0aGmupVmbvMEj9g1e/aapEdGRowm1eDso+qxKv3mnPovdaPOkTYC032CCzQzR
-         geSMjS/iVZR8i94trCAt4XTB/rzZuI/fcdoIEhVsEn/W2QSX9dlCudnPN5VYZbWHZujx
-         T7s/gsLUNZeWxvHoSp0wq/WlVjdvpy0nI4nxw=
-Received: by 10.114.67.2 with SMTP id p2mr5648015waa.208.1237907281721; Tue, 
-	24 Mar 2009 08:08:01 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0903241449200.7493@intel-tinevez-2-302>
+         :content-type:content-transfer-encoding;
+        b=H9LgOKLaKazljjqYSpD9g0wA/osfAuBH/HICby3anst3pl0a/3/x3RtuPgoWmaPy/B
+         gdGRxYlPlWge+giZc5IegyW4dBJ+YY+YU2XpLLXwdGOT7e7dDKsAXjQ+e6anRQy0YOPU
+         ocpVe5A3Z38i9T2lPUOtZCNM8xifFvr9WZB/I=
+Received: by 10.100.144.11 with SMTP id r11mr4321363and.45.1237908165839; Tue, 
+	24 Mar 2009 08:22:45 -0700 (PDT)
+In-Reply-To: <7001b7a00903240821v2155d234x6a10c80a3e987acb@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114466>
 
-On Tue, Mar 24, 2009 at 9:52 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+Hi all,
 
->> Also, what would be more appropriate for this purpose, I think, is a git
->> sed.
->
-> Just as it happens, this is a toy I am working on and off these days...
-> strbuf_regsub() is already done, and half the needed code is in my version
-> git grep.
->
+I've been using git for some time now and haven't run into this issue
+before, perhaps someone else here has:
 
-this is my version
+I have a branch that is ahead of its origin by a few commits:
 
-[alias]
-sed = !git ls-files --stage | grep ^100 | awk '{print $4}' | xargs sed
+$ git status
+# On branch myBranch
+# Your branch is ahead of 'origin/myBranch' by 10 commits.
 
-Then i can do
+Oddly, when I try to do a push, I get a message saying that everything
+is up to date:
+$ git push origin myBranch
+Everything up-to-date
 
-git sed -i 's/A/B/g'
+Looking at the log for origin/myBranch I can tell those commits are
+missing, but I can't push them up, even with a --force flag. Any
+ideas?
+Here's the config entry for this branch:
+
+[branch "myBranch"]
+=A0=A0=A0 remote =3D origin
+=A0=A0=A0 merge =3D refs/heads/myBranch
+
+There's also nothing to pull from this branch, I'm the only one working=
+ on it.
+I use many other branches in this particular repo, and its just this
+one that's giving me trouble.
+
+Thanks so much!
+-- Irene
