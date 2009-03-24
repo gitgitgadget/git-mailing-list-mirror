@@ -1,60 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/9] fprintf(stderr, "warning: ") -> warning() patches
-Date: Tue, 24 Mar 2009 01:01:33 -0700
-Message-ID: <7vr60n2vtu.fsf@gitster.siamese.dyndns.org>
-References: <7v3ad5dxt5.fsf@gitster.siamese.dyndns.org>
- <cover.1237856682.git.vmiklos@frugalware.org>
- <20090324073513.GA32400@coredump.intra.peff.net>
+From: Guennadi Liakhovetski <g.liakhovetski@gmx.de>
+Subject: Re: [bug?] git-format-patch produces a 0-byte long patch for the
+ first commit
+Date: Tue, 24 Mar 2009 09:02:43 +0100 (CET)
+Message-ID: <Pine.LNX.4.64.0903240901570.4451@axis700.grange>
+References: <Pine.LNX.4.64.0903231119110.4871@axis700.grange>
+ <20090324075424.GC32400@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	John Tapsell <johnflux@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 24 09:03:17 2009
+X-From: git-owner@vger.kernel.org Tue Mar 24 09:04:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lm1bQ-0005jA-NX
-	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 09:03:17 +0100
+	id 1Lm1cL-0005vs-B0
+	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 09:04:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753929AbZCXIBr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Mar 2009 04:01:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753807AbZCXIBq
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Mar 2009 04:01:46 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63241 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753234AbZCXIBq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Mar 2009 04:01:46 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id ACE9DA4B93;
-	Tue, 24 Mar 2009 04:01:43 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id BAC3BA4B90; Tue,
- 24 Mar 2009 04:01:37 -0400 (EDT)
-In-Reply-To: <20090324073513.GA32400@coredump.intra.peff.net> (Jeff King's
- message of "Tue, 24 Mar 2009 03:35:13 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 03B9CC8E-184A-11DE-BE4E-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1754690AbZCXICn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Mar 2009 04:02:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754434AbZCXICm
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Mar 2009 04:02:42 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48833 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753807AbZCXICk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Mar 2009 04:02:40 -0400
+Received: (qmail invoked by alias); 24 Mar 2009 08:02:37 -0000
+Received: from p57BD2955.dip0.t-ipconnect.de (EHLO axis700.grange) [87.189.41.85]
+  by mail.gmx.net (mp047) with SMTP; 24 Mar 2009 09:02:37 +0100
+X-Authenticated: #20450766
+X-Provags-ID: V01U2FsdGVkX1/kHe184NHksRDIhZWuAJyaPOaGCIuA6hFgtJ4eJA
+	mbCjIUwCEgzv67
+Received: from lyakh (helo=localhost)
+	by axis700.grange with local-esmtp (Exim 4.63)
+	(envelope-from <g.liakhovetski@gmx.de>)
+	id 1Lm1at-0001EL-TR; Tue, 24 Mar 2009 09:02:43 +0100
+In-Reply-To: <20090324075424.GC32400@coredump.intra.peff.net>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114412>
 
-Jeff King <peff@peff.net> writes:
+On Tue, 24 Mar 2009, Jeff King wrote:
 
-> On Tue, Mar 24, 2009 at 02:09:08AM +0100, Miklos Vajna wrote:
->
->> Okay, here it is, applies on top of master. All, except the http-push
->> one, applies cleanly on top of next as well here.
->
-> I manually scanned the patches and they all look sane to me.
-> Thanks.
+> On Mon, Mar 23, 2009 at 11:34:07AM +0100, Guennadi Liakhovetski wrote:
+> 
+> > mkdir x
+> > cd x
+> > git-init
+> > echo hi > greating
+> > git-commit -a
+> > git-format-patch -1
+> > 
+> > produces a 0-byte long patch. git-format-patch HEAD^ produces an error, 
+> > whereas with more than one commit it produces tha last patch. Yes, I know 
+> > about "--root" and that it does allow to extract the very first commit.
+> 
+> What version of git are you using? I believe the 0-byte diff has been
+> fixed since git 1.6.1.1.
 
-Thanks; I've done the same and three sets of eyeballs give me a warm fuzzy
-feeling ;-)
+Mine is still 1.5.4, if it's already fixed in the meantime - all the 
+better!
 
-Applied.
+Thanks
+Guennadi
+---
+Guennadi Liakhovetski, Ph.D.
+Freelance Open-Source Software Developer
