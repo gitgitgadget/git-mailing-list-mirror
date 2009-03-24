@@ -1,90 +1,79 @@
-From: Tim Visher <tim.visher@gmail.com>
-Subject: Re: git svn teething problems - initial clone okay - fetches not 
-	working
-Date: Tue, 24 Mar 2009 07:45:26 -0400
-Message-ID: <c115fd3c0903240445s2dd91d57wb2e0905aad8d4d56@mail.gmail.com>
-References: <2BACA6CC2F9647C19C0463120219E694@HPLAPTOP>
-	 <49C7F92A.5050809@obry.net>
-	 <0381B9A616514FC2A05BACAB07EE3117@HPLAPTOP>
-	 <c115fd3c0903231458t7ac8ac69if6b7bdb3a7d8861b@mail.gmail.com>
-	 <D9560AEA971144C99A0540C08AAFC3D1@HPLAPTOP>
-	 <49C880B7.1030307@obry.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [bug?] git-format-patch produces a 0-byte long patch for the
+ first commit
+Date: Tue, 24 Mar 2009 12:46:28 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903241244380.7493@intel-tinevez-2-302>
+References: <Pine.LNX.4.64.0903231119110.4871@axis700.grange> <20090324075424.GC32400@coredump.intra.peff.net> <Pine.LNX.4.64.0903240901570.4451@axis700.grange>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Aaron Gray <aaronngray.lists@googlemail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: pascal@obry.net
-X-From: git-owner@vger.kernel.org Tue Mar 24 12:47:17 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Guennadi Liakhovetski <g.liakhovetski@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 24 12:48:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lm55s-0007ux-47
-	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 12:46:56 +0100
+	id 1Lm571-0008Nt-9G
+	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 12:48:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755856AbZCXLpa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Mar 2009 07:45:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754952AbZCXLpa
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Mar 2009 07:45:30 -0400
-Received: from mail-gx0-f208.google.com ([209.85.217.208]:57581 "EHLO
-	mail-gx0-f208.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753871AbZCXLp3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Mar 2009 07:45:29 -0400
-Received: by gxk4 with SMTP id 4so6352672gxk.13
-        for <git@vger.kernel.org>; Tue, 24 Mar 2009 04:45:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=PMl5exp6YctvcG6aRwv4jlcHOClrwYyDdivEojzwKzI=;
-        b=WlsZtoSGY4ugwpL9QbIulJ9ydgOgTvmz1++mafXAiH8cLSBnchANzamIudolhfe0Ry
-         qqtztDEskgWJOCkFppt6exCdnHddgXrpVXn+wT3W/YhDm2Ht15eR4n04kXwCWdylgu1z
-         fk5/pglwiAA9j9UYbR0oBwylzbIfD6QMcSatg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=QfHyPfljbRDdzqHmPkQE7ae7KSgJyQE2Nhc+6Cd1sOuSam2BCF4rn+O0L3tPutCOeX
-         Ezcjd0txMd5ZZ4bd3RQPzj1rXHmMJbkxmcWsowJIEzcBC86T6P2j8tefn1kXyAYF2R6p
-         f/Q7jijBsxOvzLc4vRB1pB2PIExhKAsilqJVk=
-Received: by 10.100.173.18 with SMTP id v18mr5080812ane.120.1237895127165; 
-	Tue, 24 Mar 2009 04:45:27 -0700 (PDT)
-In-Reply-To: <49C880B7.1030307@obry.net>
+	id S1754952AbZCXLqe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Mar 2009 07:46:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753856AbZCXLqd
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Mar 2009 07:46:33 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50663 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754027AbZCXLqd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Mar 2009 07:46:33 -0400
+Received: (qmail invoked by alias); 24 Mar 2009 11:46:29 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp011) with SMTP; 24 Mar 2009 12:46:29 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18qcxtLuAoqd7SX6TLVWKu2/ofIzJFhNpZ+GOrH0L
+	4l3J+o9oUOYO3M
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <Pine.LNX.4.64.0903240901570.4451@axis700.grange>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114453>
 
-On Tue, Mar 24, 2009 at 2:41 AM, Pascal Obry <pascal@obry.net> wrote:
-> Aaron Gray a =C3=A9crit :
->> Probably. I am getting an error on doing 'git svn rebase' :-
->>
->> many filenames * : needs update
->> update---index --refresh: command returned error: 1
->
-> So before the rebase try:
->
->   $ git reset --hard HEAD
->
-> then
->
->   $ git svn rebase
->
+Hi,
 
-To be clear, this will destroy any non-committed changes in your
-working copy so if you in fact are erroneously getting those errors
-because you forgot to do a `git add .; git commit` on files you've
-changed that you _meant_ to change, then you will lose those changes.
-What's the output of `git status`?
+On Tue, 24 Mar 2009, Guennadi Liakhovetski wrote:
 
---=20
+> On Tue, 24 Mar 2009, Jeff King wrote:
+> 
+> > On Mon, Mar 23, 2009 at 11:34:07AM +0100, Guennadi Liakhovetski wrote:
+> > 
+> > > mkdir x
+> > > cd x
+> > > git-init
+> > > echo hi > greating
+> > > git-commit -a
+> > > git-format-patch -1
+> > > 
+> > > produces a 0-byte long patch. git-format-patch HEAD^ produces an 
+> > > error, whereas with more than one commit it produces tha last patch. 
+> > > Yes, I know about "--root" and that it does allow to extract the 
+> > > very first commit.
+> > 
+> > What version of git are you using? I believe the 0-byte diff has been 
+> > fixed since git 1.6.1.1.
+> 
+> Mine is still 1.5.4, if it's already fixed in the meantime - all the 
+> better!
 
-In Christ,
+There is the off-chance that somewhere in those 3127 commits between 
+v1.5.4 and v1.6.1.1, not only this bug is fixed.  You might be surprised 
+;-)
 
-Timmy V.
+Seriously again, in a project that moves as fast as Git, you should always 
+test with a recent version, and v1.5.1 -- being over one year old -- does 
+not account for recent.
 
-http://burningones.com/
-http://five.sentenc.es/ - Spend less time on e-mail
+Ciao,
+Dscho
