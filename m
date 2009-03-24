@@ -1,22 +1,22 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Git for Windows 1.6.2.1-preview20090322
-Date: Tue, 24 Mar 2009 03:04:14 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903240259460.10279@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0903080132470.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903222149330.10279@pacific.mpi-cbg.de> <200903240235.25192.markus.heidelberg@web.de>
+Date: Tue, 24 Mar 2009 03:06:01 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903240304480.10279@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.0903080132470.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0903222149330.10279@pacific.mpi-cbg.de> <4285cd450903231503x5d332bfft17b01e598d11bc09@mail.gmail.com>
 Reply-To: Johannes.Schindelin@gmx.de
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-588557393-1237860361=:10279"
 Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: Markus Heidelberg <markus.heidelberg@web.de>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Tue Mar 24 03:03:44 2009
+To: Ludvig Strigeus <strigeus@gmail.com>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Tue Mar 24 03:06:07 2009
 Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
 Received: from mail-qy0-f163.google.com ([209.85.221.163])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LlvzU-0001Ze-7O
-	for gcvm-msysgit@m.gmane.org; Tue, 24 Mar 2009 03:03:44 +0100
-Received: by qyk35 with SMTP id 35so3684824qyk.3
-        for <gcvm-msysgit@m.gmane.org>; Mon, 23 Mar 2009 19:02:18 -0700 (PDT)
+	id 1Llw1E-0001rq-8I
+	for gcvm-msysgit@m.gmane.org; Tue, 24 Mar 2009 03:05:53 +0100
+Received: by qyk35 with SMTP id 35so3685463qyk.3
+        for <gcvm-msysgit@m.gmane.org>; Mon, 23 Mar 2009 19:04:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=beta;
         h=domainkey-signature:received:received:x-sender:x-apparently-to
@@ -26,10 +26,10 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
          :x-google-loop:mailing-list:list-id:list-post:list-help
          :list-unsubscribe:x-beenthere-env:x-beenthere;
-        bh=ry59SafamYj8TJ068wGW1n/r7pP3x/ka9w9+m75MLqQ=;
-        b=1RY1wUvDGnAE6rcRt9dNDS6enxzp97ktZ8CL/6qNbzZpl7NYVJSnFOuDxU7La9keck
-         +RAFz7LbgyRiZXBIbzpHWnNhqH83BE9BE+JFw3K01Dxfx672PQm6sa95BIEu0mbHXqlH
-         p9aF1mN9f7iHNJZZF5a5kgsBV2r+QEq1m7G38=
+        bh=c2Shw2szZhA5EHg4K0V54BOVx6P7oI+/ZEf1DDchkoY=;
+        b=5DZOt+RQpYrQDepCUUCyehUNyFvfrv2cRcIGx8A+meEBtSe/r69Gsn58B+aPCNRxDq
+         o/tTrhtldnTgUQY068NoOzjExYHchevylenPw6qkdEKYhEKHqxwyCa8inj28MqF+1mGi
+         Pz1gpE9rPrYwTClujzGwIaajzc0rzHmJ/PyDk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlegroups.com; s=beta;
         h=x-sender:x-apparently-to:received-spf:authentication-results
@@ -38,28 +38,28 @@ DomainKey-Signature: a=rsa-sha1; c=nofws;
          :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
          :x-google-loop:mailing-list:list-id:list-post:list-help
          :list-unsubscribe:x-beenthere-env:x-beenthere;
-        b=ypreZwqvAwbHjupAvT8NOFG4UqWtn/fa44ywRKWpPTdvCAYx5+VqBTdRqcfgr70kPA
-         lvXnr5egM3Ao8qDXxDDTk5UDUicvJnTh35YNve6ZXnh/DNAnPlHayNNT7tY9W9+/oe6G
-         ZM/1BdXL5G2JZp0B1iHZNdS0nJ3AB2mNcUW9g=
-Received: by 10.224.20.13 with SMTP id d13mr1019457qab.24.1237860129644;
-        Mon, 23 Mar 2009 19:02:09 -0700 (PDT)
-Received: by 10.176.92.38 with SMTP id p38gr4392yqb.0;
-	Mon, 23 Mar 2009 19:02:09 -0700 (PDT)
+        b=R0w5a5dxmb89lNFF0GbrGFyqObiJnOww40n2bilsmSRc48EIQUfGS3jR8g5truYbnY
+         OywIL72dBV65d5IOlH4UyLUmiEAtUOyULsDeuYWo2Ka/6LHf/WEbLUVUNwHLrf3chnbk
+         TYVMxM+UPeYZ6lLjqo4TJZU4MighbAdQo3hX4=
+Received: by 10.224.19.196 with SMTP id c4mr1024726qab.18.1237860237141;
+        Mon, 23 Mar 2009 19:03:57 -0700 (PDT)
+Received: by 10.230.110.92 with SMTP id m28gr4393vbp.0;
+	Mon, 23 Mar 2009 19:03:57 -0700 (PDT)
 X-Sender: Johannes.Schindelin@gmx.de
 X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.204.77.75 with SMTP id f11mr187582bkk.12.1237860128923; Mon, 23 Mar 2009 19:02:08 -0700 (PDT)
-Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by gmr-mx.google.com with SMTP id 15si367764bwz.6.2009.03.23.19.02.08; Mon, 23 Mar 2009 19:02:08 -0700 (PDT)
+Received: by 10.204.76.67 with SMTP id b3mr188119bkk.6.1237860235930; Mon, 23 Mar 2009 19:03:55 -0700 (PDT)
+Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by gmr-mx.google.com with SMTP id 13si529683bwz.3.2009.03.23.19.03.55; Mon, 23 Mar 2009 19:03:55 -0700 (PDT)
 Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
 Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
-Received: (qmail invoked by alias); 24 Mar 2009 02:02:08 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38] by mail.gmx.net (mp053) with SMTP; 24 Mar 2009 03:02:08 +0100
+Received: (qmail invoked by alias); 24 Mar 2009 02:03:55 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38] by mail.gmx.net (mp069) with SMTP; 24 Mar 2009 03:03:55 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+U3uwDf0mUsuNtJIvDUt2Od4QwxJCe09tlYTN89f K7SNMfbY4gYUsY
+X-Provags-ID: V01U2FsdGVkX18itxRiJikiZ/vqX8bpWQuwkkvDEdjxrMHsVRpYUD muwv4//BGcWj5E
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <200903240235.25192.markus.heidelberg@web.de>
+In-Reply-To: <4285cd450903231503x5d332bfft17b01e598d11bc09@mail.gmail.com>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+X-FuHaFi: 0.6899999999999999
 Sender: msysgit@googlegroups.com
 Precedence: bulk
 X-Google-Loop: groups
@@ -72,83 +72,36 @@ List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
 	<mailto:msysgit+unsubscribe@googlegroups.com>
 X-BeenThere-Env: msysgit@googlegroups.com
 X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114391>
 
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-588557393-1237860361=:10279
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 
 Hi,
 
-On Tue, 24 Mar 2009, Markus Heidelberg wrote:
+On Mon, 23 Mar 2009, Ludvig Strigeus wrote:
 
-> the company I'm working for plans to switch from our current commercial 
-> VCS, now I have the job to compare different tools (svn, git). Our 
-> clients run on Windows and probably our offices in foreign countries 
-> should work on our repository, too.
-
-This...
-
-> Johannes Schindelin, 22.03.2009:
-> > Disclaimer: Git for Windows is still in a state where I do _not_ 
-> > recommend using it unless you have the means to fix issues.  Unlike 
-> > the git.git developer community, the msysGit team is heavily 
-> > undermanned.
-
-... and this make me believe that Git for Windows is not at all what you 
-want.  You seem to want to purely _use_ Git, and at this time, it is just 
-not there.
-
-It would be different if you/your company were willing to pay for support, 
-but I just do not see from your mail that you are willing to contribute to 
-Git for Windows.
-
-> > - If you want to specify a different location for --upload-pack, you 
-> >   have to start the absolute path with two slashes. Otherwise MSys 
-> >   will mangle the path.
 > 
-> Only for msysgit on the server side, right? Then, never mind.
-
-Nope.  There is no msysgit on the server side.  So no, it applies to the 
-client side.
-
-> > - git and bash have serious problems with non-ASCII file names (Issue 
-> >   80, 108, 149, 159, 188).
-> 
-> This may be a problem.
-
-Indeed.  I mean, 5 issues, and none of them resolved.
-
-> > - If configured to use plink, you will have to connect with putty 
-> >   first, as you cannot accept the host key due to the console window 
-> >   being blocked (Issue 96).
-> 
-> Just use OpenSSH?
-> Problem in GUIs or only CLI?
-
-See the issue if you want to know more.
-
+> On Sun, Mar 22, 2009 at 10:17 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
 > > - There are a few issues with ssh hanging (Issue 197), permission 
-> >   denied on renaming pack files (mentioned in Issue 194), and spurious 
-> >   write errors during rebase (Issue 200) that seem not to be 
-> >   reproducible on most computers.
+> >   denied  on renaming pack files (mentioned in Issue 194), and 
+> >   spurious write  errors during rebase (Issue 200) that seem not to be 
+> >   reproducible on  most computers.
 > 
-> OK, strange and not reproducible errors are a little bit scary.
+> I had this problem with write errors during rebase. I tracked it down
+> to having the files open in Visual Studio while doing the rebase.
 
-A little scary?  No.  _Very_ scary.
+It seems pretty clear from the original report (or at least from the 
+following comments) that the files haven't been opened anywhere.
 
-Especially since the involved parties either do not have the time or the 
-willingness to investigate in detail.
-
-As these issues are not reproducible on my side, it also does not make me 
-think more highly of that particular Operating System.
-
-> I suppose there are already people using msysgit productive at work, are 
-> these only people who know how to fix such problems?
-
-Yes.
-
-> Regardless of git's Windows problems, another problem will probably be 
-> finding a decent GUI that suits my colleagues.
-
-Yes.
+But thanks for your help!
 
 Ciao,
 Dscho
+--8323328-588557393-1237860361=:10279--
