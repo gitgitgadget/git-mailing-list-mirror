@@ -1,67 +1,144 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: GIT BUG? GIT occasionally redownloads its entire data set
-Date: Tue, 24 Mar 2009 05:53:26 +0300
-Message-ID: <37fcd2780903231953pdfaa679r8a680f64ee692c8d@mail.gmail.com>
-References: <28707.1237855543@redhat.com>
-	 <7vskl34qc9.fsf@gitster.siamese.dyndns.org>
+From: Daniel Cheng <j16sdiz+freenet@gmail.com>
+Subject: [JGit] Mismatch CRC in packed objects from `jgit push`
+Date: Tue, 24 Mar 2009 10:53:40 +0800
+Message-ID: <ff6a9c820903231953q29a5ccbk8e5b54c9afdb8abd@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: David Howells <dhowells@redhat.com>, git@vger.kernel.org,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 24 03:55:01 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 24 03:55:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Llwn6-0004DM-Po
-	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 03:55:01 +0100
+	id 1LlwnQ-0004Gh-Bb
+	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 03:55:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753343AbZCXCx3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Mar 2009 22:53:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753045AbZCXCx3
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 22:53:29 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:18838 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752748AbZCXCx2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Mar 2009 22:53:28 -0400
-Received: by fg-out-1718.google.com with SMTP id e12so608490fga.17
-        for <git@vger.kernel.org>; Mon, 23 Mar 2009 19:53:26 -0700 (PDT)
+	id S1753553AbZCXCxp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Mar 2009 22:53:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753542AbZCXCxo
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 22:53:44 -0400
+Received: from yw-out-2324.google.com ([74.125.46.30]:4637 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753045AbZCXCxn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Mar 2009 22:53:43 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so2401075ywb.1
+        for <git@vger.kernel.org>; Mon, 23 Mar 2009 19:53:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:mime-version:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type
          :content-transfer-encoding;
-        bh=it7VBP75t3/6sHINVrkazwuRyF/K12zQzA8MVMD+GzM=;
-        b=jThXi9be7KLHlc0yMMNGmoRyJCqMDMyysaybXgu8OoEdFy3B9CmSGh3im39Uh4pUCB
-         OpVkKGWgoBkKlTfZq08UyzJiUDAfM6QjoDcYY1Hn8/Iouod6O7ffhKjI0xYA9TJKfo1A
-         25arvyu9HOLyI54VkVr29+Ejw8xpXwkgqCnLc=
+        bh=I+5WyrkNfwhzTPONK25hWvcYYd4LDhU4W6CiTu+GUi8=;
+        b=ufnynX9hXilNYrztQQp2HMBHOuFYyf+19pUJwzn/TR0Z9HjD6l4aIor3LRNcG+QsuT
+         vvG1RFF83z+tazh57K5ze4s+AJXYahgthipoQwbNc7xfjvgkiOagHRUMrBTqAvOwfQqF
+         Tzt6D1P6nKRfIBHTFIubgqydDBI0Udwg74OPk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=u/aXzlkPWFEPkRb7W62FpDEZWAOJhT+8Z64mHwctEuABZa04A3O7d+Trom0q2PMuIg
-         CkBBgI3xjDVAPUL8eBGdJAsILfDGJoHUDS3b5uMwPh0mk6Ma1QQmoSJdlfZ0zflk74vs
-         HJNeiiqYXguT4I6vKYcM07+aG+Coc5XzL3hoo=
-Received: by 10.86.54.3 with SMTP id c3mr4210862fga.63.1237863206078; Mon, 23 
-	Mar 2009 19:53:26 -0700 (PDT)
-In-Reply-To: <7vskl34qc9.fsf@gitster.siamese.dyndns.org>
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        b=UDiyyyJmmqHWWE++SprmSjFCbPbhypujcmX9YTF6ngZa/OR6o1y88xj1yWuxvX4WPA
+         lTRDGwVu8Gg8ZrIkbXyqslV94mI3PGgcsubl7d8rvBOvjhITfx9oKagss1axUdbditW3
+         FsSCglcqlNbVapYHsL2b2T8T0Xkv8giXFvrGg=
+Received: by 10.231.14.196 with SMTP id h4mr2030102iba.15.1237863220278; Mon, 
+	23 Mar 2009 19:53:40 -0700 (PDT)
+X-Google-Sender-Auth: de05e4ad4cde51ef
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114397>
 
-On Tue, Mar 24, 2009 at 5:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Rings a bell, anybody?
+Hi list,
 
-Maybe this:
-http://article.gmane.org/gmane.comp.version-control.git/75201
+When I working with jgit-over-freenet, I found the pack files as
+generated by `jgit push` give CRC error in `git fsck` and `git clone`,
+but they are perfectly okay if I do a `git unpack-objects` manually.
 
-It was fixed in Git 1.5.5 if I am not mistaken.
+You can download the pack file here:
+ http://sdiz.net/temp/pack-fcedfaa7130866c884e208769661360563a3081f.idx
+ http://sdiz.net/temp/pack-fcedfaa7130866c884e208769661360563a3081f.pack
 
 
-Dmitry
+Here is the diagnose session:
+
+sdiz@sp2:/tmp$ git clone --verbose http://........
+[...]
+Getting index for pack fcedfaa7130866c884e208769661360563a3081f
+Getting pack fcedfaa7130866c884e208769661360563a3081f
+ which contains f197d4578a1b8ed195981d1e1ad4c390875c353a
+error: index CRC mismatch for object
+f197d4578a1b8ed195981d1e1ad4c390875c353a from
+/tmp/egit-freenet/.git/objects/pack/pack-fcedfaa7130866c884e208769661360563a3081f.pack
+at offset 12
+error: index CRC mismatch for object
+0b2cb180fef969e0da259765564f9bf8bcd8cf25 from
+/tmp/egit-freenet/.git/objects/pack/pack-fcedfaa7130866c884e208769661360563a3081f.pack
+at offset 183
+error: index CRC mismatch for object
+d88f5a430841925629c30199e666473d201bdf5a from
+/tmp/egit-freenet/.git/objects/pack/pack-fcedfaa7130866c884e208769661360563a3081f.pack
+at offset 379
+error: index CRC mismatch for object
+40d3204c679fc5d25281331b981d968016030930 from
+/tmp/egit-freenet/.git/objects/pack/pack-fcedfaa7130866c884e208769661360563a3081f.pack
+at offset 558
+[...]
+sdiz@sp2:/tmp$ git --version
+git version 1.6.2
+
+
+// Using the pack file directly seems okay, but fsck give the CRC error :
+
+sdiz@sp2:/tmp/z$ git init
+Initialized empty Git repository in /tmp/z/.git/
+sdiz@sp2:/tmp/z$ cp ../pack-* .git/objects/pack/
+sdiz@sp2:/tmp/z$ git checkout f197d4578a1b8ed195981d1e1ad4c390875c353a
+warning: You appear to be on a branch yet to be born.
+warning: Forcing checkout of f197d4578a1b8ed195981d1e1ad4c390875c353a.
+Note: moving to "f197d4578a1b8ed195981d1e1ad4c390875c353a" which isn't
+a local branch
+If you want to create a new branch from this checkout, you may do so
+(now or later) by using -b with the checkout command again. Example:
+  git checkout -b <new_branch_name>
+HEAD is now at f197d45... Instruction for cloning with git+fproxy
+sdiz@sp2:/tmp/z$ ls
+0x7494252.asc  activelink.png  freenet-bunny.svg  index.html  jgit
+jgit.jar  jgit_src.zip
+sdiz@sp2:/tmp/z$
+sdiz@sp2:/tmp/z$ git fsck f197d4578a1b8ed195981d1e1ad4c390875c353a
+error: index CRC mismatch for object
+f197d4578a1b8ed195981d1e1ad4c390875c353a from
+.git/objects/pack/pack-fcedfaa7130866c884e208769661360563a3081f.pack
+at offset 12
+error: index CRC mismatch for object
+0b2cb180fef969e0da259765564f9bf8bcd8cf25 from
+.git/objects/pack/pack-fcedfaa7130866c884e208769661360563a3081f.pack
+at offset 183
+error: index CRC mismatch for object
+d88f5a430841925629c30199e666473d201bdf5a from
+.git/objects/pack/pack-fcedfaa7130866c884e208769661360563a3081f.pack
+at offset 379
+[...]
+
+// unpack the objects manually seems to fix the issue
+sdiz@sp2:/tmp/z$ rm -f .git/objects/*/*
+sdiz@sp2:/tmp/z$ git unpack-objects --strict -r <
+../pack-fcedfaa7130866c884e208769661360563a3081f.pack
+Unpacking objects: 100% (26/26), done.
+sdiz@sp2:/tmp/z$ git fsck --full f197d4578a1b8ed195981d1e1a
+sdiz@sp2:/tmp/z$
+
+// diff'ing the checkout with the original repository is also okay
+sdiz@sp2:/tmp/z$ diff -Nau ~/build/egit/ .
+Common subdirectories: /home/sdiz/build/egit/.git and ./.git
+sdiz@sp2:/tmp/z$
+
+// Fsck'ing in original repository is perfectly okay:
+
+sdiz@sp2:~/build/egit$ git fsck --full f197d4
+dangling commit 9900ac0df33e046c2f3f77ad8e084d535d3c023d
+dangling commit 2e12ce6571923190124e86cc6b877ccb3ace9219
+dangling commit f8150b71a352176f672270ffced6958682b215f3
+dangling commit 101ae6bff9ca647c7c8297556314757162fbc2f2
+[..]
