@@ -1,104 +1,112 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: .gitk should created hidden in windows
-Date: Tue, 24 Mar 2009 01:04:07 +0100
-Message-ID: <49C82377.40101@users.sourceforge.net>
-References: <49BFA97A.1030203@lanwin.de> <18887.26239.115820.450313@cargo.ozlabs.ibm.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [RFC/PATCH 2/8] docbook: improve css style
+Date: Tue, 24 Mar 2009 02:20:13 +0200
+Message-ID: <94a0d4530903231720r620e44fu90dd77a3231bd4d1@mail.gmail.com>
+References: <1237745121-6325-1-git-send-email-felipe.contreras@gmail.com>
+	 <1237745121-6325-2-git-send-email-felipe.contreras@gmail.com>
+	 <1237745121-6325-3-git-send-email-felipe.contreras@gmail.com>
+	 <20090323064242.GB1119@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Steve Wagner <lists@lanwin.de>, git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Tue Mar 24 01:07:26 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 24 01:21:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Llu9Q-0006nP-8J
-	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 01:05:52 +0100
+	id 1LluOq-0003FN-Gx
+	for gcvg-git-2@gmane.org; Tue, 24 Mar 2009 01:21:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753335AbZCXAEU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Mar 2009 20:04:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752218AbZCXAEU
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 20:04:20 -0400
-Received: from smtp-out5.blueyonder.co.uk ([195.188.213.8]:52448 "EHLO
-	smtp-out5.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752171AbZCXAET (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Mar 2009 20:04:19 -0400
-Received: from [172.23.170.147] (helo=anti-virus03-10)
-	by smtp-out5.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1Llu7s-0002Me-R3; Tue, 24 Mar 2009 00:04:16 +0000
-Received: from [92.238.221.8] (helo=badger.patthoyts.tk)
-	by asmtp-out3.blueyonder.co.uk with esmtp (Exim 4.52)
-	id 1Llu7s-000864-Ai; Tue, 24 Mar 2009 00:04:16 +0000
-Received: from [192.168.0.25] (pc025.patthoyts.tk [192.168.0.25])
-	by badger.patthoyts.tk (Postfix) with ESMTP id CF7035182B;
-	Tue, 24 Mar 2009 00:04:15 +0000 (GMT)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <18887.26239.115820.450313@cargo.ozlabs.ibm.com>
-X-Enigmail-Version: 0.95.7
+	id S1754850AbZCXAUS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Mar 2009 20:20:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753290AbZCXAUS
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 Mar 2009 20:20:18 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:46606 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753487AbZCXAUQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Mar 2009 20:20:16 -0400
+Received: by fg-out-1718.google.com with SMTP id e12so594584fga.17
+        for <git@vger.kernel.org>; Mon, 23 Mar 2009 17:20:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=S7i9Q60ksFgCB6bHXR1z8DKYrdAfsWaKhY8dPY6AoWs=;
+        b=WsqbTTz6SH0HZ3QRQPJ74o1mwgJKmL3wYCKZ15MYQKFWIftcnHDpOCQukGoFmFPvFh
+         qNhWVORm2E7+pk4o33/BO/bfi4e7mfE7RgGpPVxolheyNMSkL0+CzQrwjWn4Dn/R07nE
+         EhJLPbNovvlWPS/5XOQPVRTVsW2MBhjUP8HSw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=bFqpVwceCleCh5XRpQsEEI22XfhHTjUQ3w+ZKsZ5PD9+Dua0Ac7oIRJhT/DIhQJW/l
+         7wUibBoHBfRpal1L7bAyBRPOCsy0zX8HG+tZi11+t9SQuZTPYC8UFLfNHtGAFmKe0I+/
+         gK2WiBtjP3cjUJqE6q1kIjT/SBq2rgb4X5eWQ=
+Received: by 10.86.70.3 with SMTP id s3mr4138935fga.65.1237854013277; Mon, 23 
+	Mar 2009 17:20:13 -0700 (PDT)
+In-Reply-To: <20090323064242.GB1119@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114369>
 
-Paul Mackerras wrote:
-> Please try this patch and let me know if it does what you want.
-> 
-[snip]
+On Mon, Mar 23, 2009 at 8:42 AM, Jeff King <peff@peff.net> wrote:
+> On Sun, Mar 22, 2009 at 08:05:15PM +0200, Felipe Contreras wrote:
+>
+>> =C2=A0tt.literal, code.literal {
+>> =C2=A0 =C2=A0color: navy;
+>> + =C2=A0font-size: 1em;
+>> +}
+>
+> Isn't 1em already the default size? Or are you trying to override som=
+e
+> other size specification elsewhere? It's hard to tell what the goal i=
+s
+> because your commit message merely says "improve".
 
-This patch works fine on my Vista installation. The .gitk file is now
-hidden.
+I've updated the CSS. Can you take a look again?
 
-An alternative that was discussed was to move it rather than hide it so
-that it ends up in the Application Data folder along with settings for
-other applications. The following patch does this but hits rather more
-lines of code and ends up needing to check the original location as well.
+I changed the font-size to normal, except for the code chunks. Also, I
+changed the font of the in-paragrah code tags to sans-serif, that's
+the most sane way I can think to fix the problem with different
+font-size configured for monospace font.
 
-diff --git a/gitk b/gitk
-index a7294a1..5ec6e7b 100755
---- a/gitk
-+++ b/gitk
-@@ -2509,12 +2509,13 @@ proc savestuff {w} {
-     global viewname viewfiles viewargs viewargscmd viewperm nextviewnum
-     global cmitmode wrapcomment datetimeformat limitdiffs
-     global colors bgcolor fgcolor diffcolors diffcontext selectbgcolor
--    global autoselect extdifftool perfile_attrs markbgcolor
-+    global autoselect extdifftool perfile_attrs markbgcolor rcfile
+I also reverted the line-height change.
 
-     if {$stuffsaved} return
-     if {![winfo viewable .]} return
--    catch {
--	set f [open "~/.gitk-new" w]
-+    set tmpfile "${rcfile}-new"
-+    if {[catch {
-+	set f [open $tmpfile {CREAT WRONLY}]
- 	puts $f [list set mainfont $mainfont]
- 	puts $f [list set textfont $textfont]
- 	puts $f [list set uifont $uifont]
-@@ -2555,7 +2556,10 @@ proc savestuff {w} {
- 	}
- 	puts $f "}"
- 	close $f
--	file rename -force "~/.gitk-new" "~/.gitk"
-+	file rename -force $tmpfile $rcfile
-+    } err]} {
-+        tk_messageBox -icon error -message $err \
-+            -title "Failed to save preferences"
-     }
-     set stuffsaved 1
+--- a/Documentation/docbook-xsl.css
++++ b/Documentation/docbook-xsl.css
+@@ -15,9 +15,8 @@ body blockquote {
+
+ html body {
+   margin: 1em 5% 1em 5%;
+-  line-height: 1em;
++  line-height: 1.2;
+   font-family: sans-serif;
+-  font-size: small;
  }
-@@ -10790,7 +10794,13 @@ namespace import ::msgcat::mc
- ## And eventually load the actual message catalog
- ::msgcat::mcload $gitk_msgsdir
 
--catch {source ~/.gitk}
-+set rcfile ~/.gitk
-+if {$::tcl_platform(platform) eq "windows"} {
-+    # Load old settings file if present
-+    if {[file exists ~/.gitk]} {catch {source ~/.gitk}}
-+    set rcfile [file join $env(APPDATA) gitk.settings]
-+}
-+catch {source $rcfile}
+ body div {
+@@ -130,7 +129,7 @@ body pre {
 
- font create optionfont -family sans-serif -size -12
+ tt.literal, code.literal {
+   color: navy;
+-  font-size: 1em;
++  font-family: sans-serif;
+ }
+
+ code.literal:before { content: "'"; }
+@@ -148,6 +147,7 @@ div.literallayout p {
+
+ div.literallayout {
+   font-family: monospace;
++  font-size: small;
+   margin: 0em;
+   color: navy;
+   border: 1px solid silver;
+
+--=20
+=46elipe Contreras
