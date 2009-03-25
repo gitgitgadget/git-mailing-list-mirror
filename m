@@ -1,84 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Grammar fixes to "merge" and "patch-id" docs
-Date: Wed, 25 Mar 2009 11:33:52 -0700
-Message-ID: <7vocvp310v.fsf@gitster.siamese.dyndns.org>
-References: <1238005422-7647-1-git-send-email-win@wincent.com>
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: reverting initial commit
+Date: Wed, 25 Mar 2009 19:36:10 +0100
+Organization: Home - http://www.obry.net
+Message-ID: <49CA799A.6020807@obry.net>
+References: <49CA7428.70400@obry.net> <7v1vsl4fxo.fsf@gitster.siamese.dyndns.org>
+Reply-To: pascal@obry.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Wed Mar 25 19:35:37 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 25 19:37:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmXwm-0007tr-DE
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 19:35:28 +0100
+	id 1LmXyq-0000MF-A4
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 19:37:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753592AbZCYSeC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 14:34:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752327AbZCYSeB
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 14:34:01 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40736 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751313AbZCYSeA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2009 14:34:00 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6C120A5E5A;
-	Wed, 25 Mar 2009 14:33:57 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2A65AA5E56; Wed,
- 25 Mar 2009 14:33:53 -0400 (EDT)
-In-Reply-To: <1238005422-7647-1-git-send-email-win@wincent.com> (Wincent
- Colaiuta's message of "Wed, 25 Mar 2009 19:23:42 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 8067AC02-196B-11DE-8A79-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1758634AbZCYSgD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Mar 2009 14:36:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754346AbZCYSgC
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 14:36:02 -0400
+Received: from mail-bw0-f169.google.com ([209.85.218.169]:55393 "EHLO
+	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757397AbZCYSgA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2009 14:36:00 -0400
+Received: by bwz17 with SMTP id 17so172553bwz.37
+        for <git@vger.kernel.org>; Wed, 25 Mar 2009 11:35:57 -0700 (PDT)
+Received: by 10.103.172.7 with SMTP id z7mr4314836muo.129.1238006156737;
+        Wed, 25 Mar 2009 11:35:56 -0700 (PDT)
+Received: from ?192.168.0.100? (AVelizy-154-1-49-205.w82-124.abo.wanadoo.fr [82.124.151.205])
+        by mx.google.com with ESMTPS id 25sm15025436mul.51.2009.03.25.11.35.55
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 25 Mar 2009 11:35:56 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; fr-FR; rv:1.8.1.21) Gecko/20090302 Thunderbird/2.0.0.21 Mnenhy/0.7.5.0
+In-Reply-To: <7v1vsl4fxo.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114642>
 
-Wincent Colaiuta <win@wincent.com> writes:
+Junio C Hamano a =E9crit :
+> That's not even an revert. =20
 
->  If you tried a merge which resulted in a complex conflicts and
-> -would want to start over, you can recover with 'git-reset'.
-> +want to start over, you can recover with 'git-reset'.
+Right.
 
-Reads Ok to me either way...
+> Can't you simply amend it away?
+>=20
+> 	$ git rm not-this-file
+>         $ git commit --amend
 
-> diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-strategies.txt
-> index 1276f85..ee7f754 100644
-> --- a/Documentation/merge-strategies.txt
-> +++ b/Documentation/merge-strategies.txt
-> @@ -3,15 +3,15 @@ MERGE STRATEGIES
->  
->  resolve::
->  	This can only resolve two heads (i.e. the current branch
-> -	and another branch you pulled from) using 3-way merge
-> +	and another branch you pulled from) using a 3-way merge
->  	algorithm.  It tries to carefully detect criss-cross
+Right, I've done that. But the fact that un-committing the initial
+commit was not possible seemed strange to me. At least the error messag=
+e
+should be clearer, don't you think?
 
-Hmph, would that be an 'a' or 'the'?
+Thanks.
+Pascal.
 
->  recursive::
-> -	This can only resolve two heads using 3-way merge
-> -	algorithm.  When there are more than one common
-> -	ancestors that can be used for 3-way merge, it creates a
-> +	This can only resolve two heads using a 3-way merge
-> +	algorithm.  When there is more than one common
-> +	ancestor that can be used for 3-way merge, it creates a
+--=20
 
-Do you need an article before the latter "3-way merge", perhaps "the"?
-
-> @@ -22,11 +22,11 @@ recursive::
->  	pulling or merging one branch.
->  
->  octopus::
-> -	This resolves more than two-head case, but refuses to do
-> -	complex merge that needs manual resolution.  It is
-> +	This resolves the more than two-heads case, but refuses to do
-> +	a complex merge that needs manual resolution.  It is
-
-Perhaps "resolves cases with more than two heads" is easier to read?
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|    http://www.obry.net  -  http://v2p.fr.eu.org
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver keys.gnupg.net --recv-key F949BD3B
