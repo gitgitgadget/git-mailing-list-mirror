@@ -1,48 +1,65 @@
-From: Mike Gaffney <mr.gaffo@gmail.com>
-Subject: Question: Is it possible to host a writable git repo over both http
- and ssh?
-Date: Wed, 25 Mar 2009 12:29:59 -0500
-Message-ID: <49CA6A17.6050903@gmail.com>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: .git/index
+Date: Wed, 25 Mar 2009 17:52:34 +0000 (GMT)
+Message-ID: <alpine.LNX.2.00.0903251749270.11062@reaper.quantumfyre.co.uk>
+References: <9e4733910903251016n117c37fdp94f91b2862cd7bf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 25 18:52:52 2009
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 25 18:54:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmXHV-00066K-HK
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 18:52:50 +0100
+	id 1LmXJ2-0006j4-Lk
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 18:54:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756035AbZCYRvS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 13:51:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754873AbZCYRvS
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 13:51:18 -0400
-Received: from pp0.asolutions.com ([66.236.120.143]:44458 "EHLO
-	pp0.asolutions.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754885AbZCYRvR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2009 13:51:17 -0400
-X-Greylist: delayed 1264 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Mar 2009 13:51:17 EDT
-Received: from acews3.asolutions.com (acews3.asolutions.com [192.168.2.179])
-	by pp0.asolutions.com (8.14.1/8.14.1) with ESMTP id n2PHU8MB018174
-	for <git@vger.kernel.org>; Wed, 25 Mar 2009 12:30:08 -0500
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=1.12.7400:2.4.4,1.2.40,4.0.166 definitions=2009-03-25_08:2009-03-25,2009-03-25,2009-03-25 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 ipscore=0 phishscore=0 bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx engine=5.0.0-0811170000 definitions=main-0903250100
+	id S1753507AbZCYRwv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 13:52:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754526AbZCYRwu
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 13:52:50 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:32958 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755266AbZCYRwt (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Mar 2009 13:52:49 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.quantumfyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 64EF12802F4
+	for <git@vger.kernel.org>; Wed, 25 Mar 2009 17:52:47 +0000 (GMT)
+Received: (qmail 31449 invoked by uid 103); 25 Mar 2009 17:52:34 +0000
+Received: from darkphoton.datavampyre.co.uk by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-2.05st 
+ (clamdscan: 0.94.2/9162. spamassassin: 3.2.1. perlscan: 2.05st.  
+ Clear:RC:1(212.159.54.234):. 
+ Processed in 0.025994 secs); 25 Mar 2009 17:52:34 -0000
+Received: from darkphoton.datavampyre.co.uk (212.159.54.234)
+  by neutron.quantumfyre.co.uk with SMTP; 25 Mar 2009 17:52:34 +0000
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
+In-Reply-To: <9e4733910903251016n117c37fdp94f91b2862cd7bf@mail.gmail.com>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114629>
 
-I am trying to setup a git repo internally at my work. I would like to 
-make the repo accessable via https for both read and write so that we 
-may access it from customer locations which don't allow anything but 
-https. I would also like to host it via SSH because that protocol is 
-much faster. I know that when you push with http it runs 'git 
-update-server-info', would I have to make the ssh pushes do the same? 
-Will this even work?
+On Wed, 25 Mar 2009, Jon Smirl wrote:
 
-Thanks, 
-    Mike Gaffney
+> I pushed a repo up to my server. I want to view this repo with gitweb
+> but it is not visible in my project list like my other projects. I
+> suspect this is because the newly pushed repo is missing .git/index. I
+> ran update-server-info on the repo and that didn't create .git/index.
+> What command builds this index?
+
+.git/index is the default name used for what is commonly referred to as 
+the staging area these days.  It's only needed when you have a work tree, 
+and is expected to be absent from a bare repository.
+
+A more likely cause for a repository to not be picked up by gitweb is 
+file permissions.
+
+-- 
+Julian
+
+  ---
+<MFGolfBal> rit/ara:  There's something really demented about UNIX
+             underwear...
