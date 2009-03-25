@@ -1,115 +1,141 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH] git-filter-branch: avoid collisions with variables in 
-	eval'ed commands
-Date: Wed, 25 Mar 2009 15:33:31 -0600
-Message-ID: <51419b2c0903251433s75775206x556fc2d65a347d7d@mail.gmail.com>
-References: <1238015581-12801-1-git-send-email-newren@gmail.com>
-	 <20090325212403.GU8940@machine.or.cz>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH/RFC 0/7] Restricting repository access (Was: [BUG?] How to make
+ a shared/restricted repo?)
+Date: Wed, 25 Mar 2009 22:36:02 +0100
+Message-ID: <200903252236.03010.johan@herland.net>
+References: <200903250105.05808.johan@herland.net>
+ <200903250311.56300.johan@herland.net>
+ <7v63hybaqd.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de, gitster@pobox.com
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed Mar 25 22:35:14 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 25 22:37:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lmakd-0004QU-Ph
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 22:35:08 +0100
+	id 1LmanF-0005QZ-23
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 22:37:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752849AbZCYVdg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Mar 2009 17:33:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752685AbZCYVdf
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 17:33:35 -0400
-Received: from yw-out-2324.google.com ([74.125.46.31]:38173 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752391AbZCYVde convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Mar 2009 17:33:34 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so232775ywb.1
-        for <git@vger.kernel.org>; Wed, 25 Mar 2009 14:33:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=FILfpkDfDpsgiBqO/scfinwLoOz8uBTs8szEnpSGbYA=;
-        b=C2h+md4pqjFQzwzQuH7FXlisjdJQRey8uTTQ0RYH2NPscQPU9oCfAHuICioo0bqTyF
-         NrQHoaotJx1NVOAcLHXkvXBBeknW8JbxoiiWa58ceXso7u9e3TUgp0TGjTXxwOrFeFYy
-         4/fygE4bPi9Lw9nTTKAvTmQCzOAtA9n7V612E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=YpJU4ClRUzAlqNk/U3nmpRDAcfESuePUpFeEV67ya/5ZRvszBefFGob+yyvUzuTarg
-         dRiFoRoicq/GulKQbWfyob1fQud5txQkLMDPS59tH74rq+thXu49iXYEUklMV5dJopMC
-         cmgZxPWBJgG7rOCuwNhwm22QXRUhvWz4srOeU=
-Received: by 10.231.20.2 with SMTP id d2mr16193ibb.27.1238016811636; Wed, 25 
-	Mar 2009 14:33:31 -0700 (PDT)
-In-Reply-To: <20090325212403.GU8940@machine.or.cz>
+	id S1752098AbZCYVgM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 17:36:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751889AbZCYVgK
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 17:36:10 -0400
+Received: from mx.getmail.no ([84.208.15.66]:37677 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751601AbZCYVgI (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Mar 2009 17:36:08 -0400
+Content-disposition: inline
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KH300M7B004LI00@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 25 Mar 2009 22:36:05 +0100 (MET)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KH300034003F4G0@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 25 Mar 2009 22:36:04 +0100 (MET)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.3.25.212528
+User-Agent: KMail/1.11.1 (Linux/2.6.28-ARCH; KDE/4.2.1; x86_64; ; )
+In-reply-to: <7v63hybaqd.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114671>
 
-Hi,
+On Wednesday 25 March 2009, Junio C Hamano wrote:
+> Johan Herland <johan@herland.net> writes:
+> > On Wednesday 25 March 2009, Junio C Hamano wrote:
+> >> You might like to try a patch like this (untested).
+> >>
+> >>  path.c |   17 +++++------------
+> >>  1 files changed, 5 insertions(+), 12 deletions(-)
+> >
+> > Thanks!
+> >
+> > This works much better :)
+> >
+> > However, there are still some questions/issues:
+> >
+> > - t1301-shared-repo.sh fails:
+> >     Oops, .git/HEAD is not 0664 but -rw-rw---- [...]
+> >     * FAIL 3: shared=1 does not clear bits preset by umask 022
+> >   (I guess this is expected, as your patch changes the assumptions)
+>
+> I'd rather say the patch breaks people's expectations.
 
-On Wed, Mar 25, 2009 at 3:24 PM, Petr Baudis <pasky@suse.cz> wrote:
-> On Wed, Mar 25, 2009 at 03:13:01PM -0600, newren@gmail.com wrote:
->> From: Elijah Newren <newren@gmail.com>
->>
->> Avoid using simple variable names like 'i', since user commands are =
-eval'ed
->> and may clash with and overwrite our values.
->>
->> Signed-off-by: Elijah Newren <newren@gmail.com>
->
-> Almost-acked-by: Petr Baudis <pasky@suse.cz>
->
-> But:
->
->>-i=3D0
->>+git_filter_branch_count=3D0
->
-> Why branch_count? It counts commits, not branches, doesn't it?
+I thought some more about the current semantics, and came up with this
+patch series, which replaces your original suggestion.
 
-Oh, I was just changing i->git_filter_branch_i, then thought as long
-as it was long I might as well use a word instead of "i".  Didn't
-think about the combined meaning.  How about
-"git_filter_branch_commit_count"?  Maybe a double underscore between
-the "namespace" and the "variable"?
+In short, I leave the core.sharedRepository semantics as is (i.e. it is
+only used to _loosen_ repository permissions), and introduce a new
+variable - core.restrictedRepository - that takes care of _tightening_
+repository permissions. Its value is a permission mask that is applied
+to the file mode in adjust_shared_perm()
 
->> I discovered this a few months ago, but apparently never got around =
-to
->> sending it earlier. =C2=A0Anyway, without this patch in a repository=
- with a
->> file called 'world' I see the following behavior:
->
-> Some hints:
->
->> $ git filter-branch --tree-filter '
->> =C2=A0 =C2=A0for i in $(find . -type f); do
->
-> This won't work right if your filenames contain $IFS.
+The patch series is based on recent 'next', and the testsuite passes
+after each individual patch.
 
-Yeah, luckily for me, my repository didn't have any filenames with
-whitespace.  :-)
+Here is a short rundown of the individual patches:
 
->> =C2=A0 =C2=A0 =C2=A0if ( file $i | grep "\btext\b" > /dev/null ); th=
-en
->
-> if [[ "$(file $i)" =3D=3D *text* ]] might run noticeably faster (thou=
-gh is
-> slightly less precise). Having a filename-keyed cache of file types e=
-ven
-> more so.
->
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0perl -i -ple "s/\\\$(Id|Date|Source|Heade=
-r|CVSHeader|Author|Revision):[^\
->> \$]*\\$/\\$\1\\$/" $i;
->
-> Using '\'' instead of " could save you quite a few backslashes in net
-> count.
+1. Clarify existing documentation to reflect the current semantics of
+   core.sharedRepository and "git init --shared". Even if the rest of
+   the series is rejected, I hope this can make it in some form.
 
-Cool, thanks for the tips.
+2. Minor cleanup in path.c:adjust_shared_perm(). This is pretty much
+   your original patch with any functional changes removed.
+
+3. Introduce core.restrictedRepository. Adds git_config_perm_mask()
+   for parsing the config value, and changes adjust_shared_perm() to
+   apply the permission mask. Includes documentation of the new config
+   variable.
+
+4. Add "--restricted" to "git init". Heavily modeled on the existing
+   "--shared" option. Includes documentation of the new option.
+
+5. Add tests for the functionality introduced in #3 and #4.
+
+6. Apply adjusted repository permissions in "git init" when copying
+   templates into the new repo.
+
+7. Apply restricted permissions to loose objects and pack files. This
+   ensures that loose objects and pack files do not get permissions
+   that are more liberal than the rest of the repository.
+
+
+Have fun!
+
+...Johan
+
+
+Johan Herland (7):
+  Clarify documentation on permissions in shared repositories
+  Cleanup: Remove unnecessary if-else clause
+  Introduce core.restrictedRepository for restricting repository
+    permissions
+  git-init: Introduce --restricted for restricting repository access
+  Add tests for "core.restrictedRepository" and "git init --restricted"
+  git-init: Apply correct mode bits to template files in
+    shared/restricted repo
+  Apply restricted permissions to loose objects and pack files
+
+ Documentation/config.txt   |   41 ++++++++++++-
+ Documentation/git-init.txt |   50 +++++++++++++++--
+ builtin-init-db.c          |   31 +++++++++-
+ cache.h                    |    8 +++
+ environment.c              |    1 +
+ fast-import.c              |    4 +-
+ http-push.c                |    2 +-
+ http-walker.c              |    2 +-
+ index-pack.c               |    4 +-
+ path.c                     |   22 +++----
+ setup.c                    |   36 ++++++++++++
+ sha1_file.c                |    2 +-
+ t/t0001-init.sh            |   24 +++++++-
+ t/t1304-restricted-repo.sh |  132 ++++++++++++++++++++++++++++++++++++++++++++
+ 14 files changed, 323 insertions(+), 36 deletions(-)
+ create mode 100755 t/t1304-restricted-repo.sh
