@@ -1,93 +1,54 @@
-From: Chris Johnsen <chris_johnsen@pobox.com>
-Subject: [PATCH 2/2] Documentation/Makefile: break up texi pipeline
-Date: Tue, 24 Mar 2009 23:21:40 -0500
-Message-ID: <1237954900-21161-2-git-send-email-chris_johnsen@pobox.com>
-References: <20090324091836.GD1799@coredump.intra.peff.net>
- <1237954900-21161-1-git-send-email-chris_johnsen@pobox.com>
-Cc: Jeff King <peff@peff.net>, Chris Johnsen <chris_johnsen@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 25 05:24:30 2009
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-cget: prints elements of C code in the git
+	repository
+Date: Wed, 25 Mar 2009 00:23:43 -0400
+Message-ID: <20090325042343.GA15498@coredump.intra.peff.net>
+References: <49C8B159.2040600@gmail.com> <alpine.DEB.1.00.0903241257430.7493@intel-tinevez-2-302> <49C8E074.4030808@gmail.com> <20090324135906.GA10644@coredump.intra.peff.net> <e2b179460903240738x272c884q62a666931ce99c2f@mail.gmail.com> <d9c1caea0903240933n6dea7ddcl90a5e105c2a45b52@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Mike Ralphson <mike.ralphson@gmail.com>,
+	Roel Kluin <roel.kluin@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Steven Tweed <orthochronous@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 25 05:25:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmKfE-0006CG-UN
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 05:24:29 +0100
+	id 1LmKg9-0006MQ-96
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 05:25:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752158AbZCYEWA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 00:22:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751522AbZCYEWA
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 00:22:00 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35398 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751221AbZCYEV7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2009 00:21:59 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C08DE9C21;
-	Wed, 25 Mar 2009 00:21:57 -0400 (EDT)
-Received: from localhost.localdomain (unknown [75.53.43.147]) (using TLSv1
- with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate
- requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id
- 324989C20; Wed, 25 Mar 2009 00:21:54 -0400 (EDT)
-X-Mailer: git-send-email 1.6.2.1.315.g33192
-In-Reply-To: <1237954900-21161-1-git-send-email-chris_johnsen@pobox.com>
-X-Pobox-Relay-ID: 7AB7AA5E-18F4-11DE-9DA8-C5D912508E2D-07245699!a-sasl-quonix.pobox.com
+	id S1751591AbZCYEXy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 00:23:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751374AbZCYEXx
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 00:23:53 -0400
+Received: from peff.net ([208.65.91.99]:45731 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751308AbZCYEXx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2009 00:23:53 -0400
+Received: (qmail 3127 invoked by uid 107); 25 Mar 2009 04:24:04 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 25 Mar 2009 00:24:04 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Mar 2009 00:23:43 -0400
+Content-Disposition: inline
+In-Reply-To: <d9c1caea0903240933n6dea7ddcl90a5e105c2a45b52@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114559>
 
-Most shells define the exit value of a pipeline as the exit value
-of the last process. For each texi rule, run the DOCBOOK2X_TEXI
-tool and the "fixup" script in their own non-pipeline commands so
-that make will notice an error exit code.
+On Tue, Mar 24, 2009 at 04:33:13PM +0000, Steven Tweed wrote:
 
-Signed-off-by: Chris Johnsen <chris_johnsen@pobox.com>
+> Speaking of wanting things to work with the actual repository , one
+> thing that I've been meaning to continue work on if I get the time is
+> basically a 'show me any commit diff's that involve string s' (ie, the
+> locations in which a change involving s occurs rather than just
+> 'current file contains s (in exactly the same ways the previous
+> version did). I'm extremely unlikely to actually produce anything
 
----
+How about "git log -S", or does that somehow not meet your needs (and if
+not, how)?
 
-This textually depends on my "quiet doc gen" patch as it modifies
-a couple of the same lines.
----
- Documentation/Makefile |   11 +++++++----
- 1 files changed, 7 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 3f9bc01..372a2cc 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -177,7 +177,7 @@ cmd-list.made: cmd-list.perl ../command-list.txt $(MAN1_TXT)
- 
- clean:
- 	$(RM) *.xml *.xml+ *.html *.html+ *.1 *.5 *.7
--	$(RM) *.texi *.texi+ git.info gitman.info
-+	$(RM) *.texi *.texi+ *.texi++ git.info gitman.info
- 	$(RM) howto-index.txt howto/*.html doc.dep
- 	$(RM) technical/api-*.html technical/api-index.txt
- 	$(RM) $(cmds_txt) *.made
-@@ -220,8 +220,9 @@ git.info: user-manual.texi
- 
- user-manual.texi: user-manual.xml
- 	$(QUIET_DB2TEXI)$(RM) $@+ $@ && \
--	$(DOCBOOK2X_TEXI) user-manual.xml --encoding=UTF-8 --to-stdout | \
--		$(PERL_PATH) fix-texi.perl >$@+ && \
-+	$(DOCBOOK2X_TEXI) user-manual.xml --encoding=UTF-8 --to-stdout >$@++ && \
-+	$(PERL_PATH) fix-texi.perl <$@++ >$@+ && \
-+	rm $@++ && \
- 	mv $@+ $@
- 
- user-manual.pdf: user-manual.xml
-@@ -232,7 +233,9 @@ user-manual.pdf: user-manual.xml
- gitman.texi: $(MAN_XML) cat-texi.perl
- 	$(QUIET_DB2TEXI)$(RM) $@+ $@ && \
- 	($(foreach xml,$(MAN_XML),$(DOCBOOK2X_TEXI) --encoding=UTF-8 \
--		--to-stdout $(xml);)) | $(PERL_PATH) cat-texi.perl $@ >$@+ && \
-+		--to-stdout $(xml) &&) true) > $@++
-+	$(PERL_PATH) cat-texi.perl $@ <$@++ >$@+ && \
-+	rm $@++ && \
- 	mv $@+ $@
- 
- gitman.info: gitman.texi
--- 
-1.6.2.1.315.g33192
+-Peff
