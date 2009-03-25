@@ -1,67 +1,48 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: git + eclipse on windows
-Date: Wed, 25 Mar 2009 18:44:25 +0100
-Message-ID: <200903251844.25580.robin.rosenberg.lists@dewire.com>
-References: <22700038.post@talk.nabble.com>
+From: Mike Gaffney <mr.gaffo@gmail.com>
+Subject: Question: Is it possible to host a writable git repo over both http
+ and ssh?
+Date: Wed, 25 Mar 2009 12:29:59 -0500
+Message-ID: <49CA6A17.6050903@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="windows-1252"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Native <enc-music@narod.ru>
-X-From: git-owner@vger.kernel.org Wed Mar 25 18:46:58 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 25 18:52:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmXBg-0003ah-Ud
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 18:46:49 +0100
+	id 1LmXHV-00066K-HK
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 18:52:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764104AbZCYRoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 13:44:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764110AbZCYRoc
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 13:44:32 -0400
-Received: from mail.dewire.com ([83.140.172.130]:11488 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1764009AbZCYRob (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2009 13:44:31 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 5B354139A476;
-	Wed, 25 Mar 2009 18:44:27 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ZRhcVjRUt6V7; Wed, 25 Mar 2009 18:44:26 +0100 (CET)
-Received: from sleipner.localnet (unknown [10.9.0.4])
-	by dewire.com (Postfix) with ESMTP id AF558802E18;
-	Wed, 25 Mar 2009 18:44:26 +0100 (CET)
-User-Agent: KMail/1.11.1 (Linux/2.6.27-14-generic; KDE/4.2.1; i686; ; )
-In-Reply-To: <22700038.post@talk.nabble.com>
-Content-Disposition: inline
+	id S1756035AbZCYRvS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 13:51:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754873AbZCYRvS
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 13:51:18 -0400
+Received: from pp0.asolutions.com ([66.236.120.143]:44458 "EHLO
+	pp0.asolutions.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754885AbZCYRvR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2009 13:51:17 -0400
+X-Greylist: delayed 1264 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Mar 2009 13:51:17 EDT
+Received: from acews3.asolutions.com (acews3.asolutions.com [192.168.2.179])
+	by pp0.asolutions.com (8.14.1/8.14.1) with ESMTP id n2PHU8MB018174
+	for <git@vger.kernel.org>; Wed, 25 Mar 2009 12:30:08 -0500
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=1.12.7400:2.4.4,1.2.40,4.0.166 definitions=2009-03-25_08:2009-03-25,2009-03-25,2009-03-25 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 ipscore=0 phishscore=0 bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx engine=5.0.0-0811170000 definitions=main-0903250100
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114628>
 
-onsdag 25 mars 2009 12:50:09 skrev Native <enc-music@narod.ru>:
-> 
-> Hello!
-> 
-> I try clone the repository via Eclipse plugin on Windows. After successful
-> connecting and choosing of branch, I obtain such message:
-> 
-> D:\EclipseProjects\example\exapp\:q (The filename, directory name, or volume
-> label syntax is incorrect)
-> D:\EclipseProjects\example\exapp\:q (The filename, directory name, or volume
-> label syntax is incorrect)
-> 
-> Help, pls
+I am trying to setup a git repo internally at my work. I would like to 
+make the repo accessable via https for both read and write so that we 
+may access it from customer locations which don't allow anything but 
+https. I would also like to host it via SSH because that protocol is 
+much faster. I know that when you push with http it runs 'git 
+update-server-info', would I have to make the ssh pushes do the same? 
+Will this even work?
 
-Too little input. Cannot compute. 
-
-Please tell us what the name you give to eclipse for the source, targets etc and
-exactly when this message occurs.  Looking into the workspace .metadata/.log
-might yield useful information too.
-
--- robin
+Thanks, 
+    Mike Gaffney
