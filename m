@@ -1,123 +1,90 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: large(25G) repository in git
-Date: Tue, 24 Mar 2009 21:21:19 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0903241709090.26337@xanadu.home>
-References: <49C7FAB3.7080301@brainfood.com>
- <alpine.LFD.2.00.0903232056520.26337@xanadu.home>
- <49C91F87.3050105@brainfood.com>
- <alpine.LFD.2.00.0903241404080.26337@xanadu.home>
- <49C948C1.2070404@brainfood.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: branch ahead in commits but push claims all up to date
+Date: Tue, 24 Mar 2009 21:24:45 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0903242118270.19665@iabervon.org>
+References: <7001b7a00903240821v2155d234x6a10c80a3e987acb@mail.gmail.com>  <7001b7a00903240822w70a57349xcc66a02cef62dc70@mail.gmail.com>  <43d8ce650903240918q2ffdba44w241e0f378a11fd3d@mail.gmail.com>  <alpine.LNX.1.00.0903241304090.19665@iabervon.org>
+ <43d8ce650903241726s122cc468q4ea9188e1561832@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Adam Heath <doogie@brainfood.com>
-X-From: git-owner@vger.kernel.org Wed Mar 25 02:23:13 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-47945306-1237944285=:19665"
+Cc: Irene Ros <imirene@gmail.com>, git@vger.kernel.org
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 25 02:26:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmHpo-0000Kv-ST
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 02:23:13 +0100
+	id 1LmHsq-00019D-0W
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 02:26:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757321AbZCYBV3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Mar 2009 21:21:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756871AbZCYBV2
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Mar 2009 21:21:28 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:25571 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757231AbZCYBV1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Mar 2009 21:21:27 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KH100I0SFPV05Z0@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 24 Mar 2009 21:20:20 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <49C948C1.2070404@brainfood.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1754089AbZCYBYt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Mar 2009 21:24:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753444AbZCYBYt
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Mar 2009 21:24:49 -0400
+Received: from iabervon.org ([66.92.72.58]:48507 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752866AbZCYBYs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Mar 2009 21:24:48 -0400
+Received: (qmail 2625 invoked by uid 1000); 25 Mar 2009 01:24:45 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 25 Mar 2009 01:24:45 -0000
+In-Reply-To: <43d8ce650903241726s122cc468q4ea9188e1561832@mail.gmail.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114534>
 
-On Tue, 24 Mar 2009, Adam Heath wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Nicolas Pitre wrote:
-> > As much as I would like to believe you, this doesn't help fixing the 
-> > problem if you don't provide more information about this.  For example, 
-> > the output from git during the whole operation might give us the 
-> > beginning of a clue.  Otherwise, all I can tell you is that such thing 
-> > is not supposed to happen.
+--1547844168-47945306-1237944285=:19665
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+
+On Wed, 25 Mar 2009, John Tapsell wrote:
+
+> 2009/3/24 Daniel Barkalow <barkalow@iabervon.org>:
+> > On Tue, 24 Mar 2009, John Tapsell wrote:
+> >
+> >> 2009/3/24 Irene Ros <imirene@gmail.com>:
+> >> > Hi all,
+> >> >
+> >> > I've been using git for some time now and haven't run into this issue
+> >> > before, perhaps someone else here has:
+> >> >
+> >> > I have a branch that is ahead of its origin by a few commits:
+> >> >
+> >> > $ git status
+> >> > # On branch myBranch
+> >> > # Your branch is ahead of 'origin/myBranch' by 10 commits.
+> >>
+> >> Tried running: git fetch   ?
+> >>
+> >> For some weird reason  "git push origin mybranch"  doesn't actually
+> >> update origin/mybranch.  It's more annoying :-)
+> >
+> > It should, so long as you're using the native transport and
+> > origin/mybranch actually tracks mybranch on origin.
+> >
+> > "git push" doesn't update it, but the code that implements the native
+> > transport does update it if it succeeds.
+> >
+> > (Actually, I'm not 100% sure that, if you update origin through some other
+> > channel with exactly the commit that you now have in mybranch locally, and
+> > then try the push, it will update the local tracking for that branch; is
+> > that what you've hit?)
 > 
-> First off, you've put a bad tone on this.  It appears that you are
-> saying I'm mistaken, and it didn't send all that data.  "It can't
-> happen, so it didn't happen."  Believe me, if it hadn't resent all
-> this data, I wouldn't have even sent the email.
+> I update via http - maybe that's why?  origin/mybranch is never
+> updated when I push.  It's not just a once-off quirk.
 
-I don't know you.  All I had is the information you provided which was 
-rather incomplete.  So don't be offended if I ask for more.  I'm trying 
-to help you after all.
+Yup, http doesn't have it. One of my series currently in next moves it 
+from the git-specific protocol to the common code, but there's still work 
+to be done to allow the http push transport to report back to the common 
+code what got updated successfully, which is largely a matter of making 
+the http-push code run in-process instead of as a command run by 
+transport.c, and using the just-added API.
 
-And especially in this case, the problem seems not to be about 
-packing...
-
-> In any event, we got lucky.  I *do* have a log of the push side of
-> this problem.  I doubt it's enough to figure out the actual cause tho.
-
-Well, I think it might.
-
-> ==
-> Counting objects: 96637, done.
-> Compressing objects: 100% (29670/29670), done.
-> Writing objects: 100% (96637/96637), 25.49 GiB | 226 KiB/s, done.
-> Total 96637 (delta 48713), reused 96637 (delta 48713)
-> To ssh://bf-yum/@anon-site@
->  * [new branch]      master -> lnxwww10
-
-Was that branch really new on the remote side?  If no, then this is 
-highly suspicious.  If somehow the previously aborted push attempt 
-screwed the remote refs, then the local client would think that the 
-remote is empty and conclude that all commits have to be pushed.
-
-> >> After I ran git push, ssh timed out, the temp pack that was created
-> >> was then removed, as git complained about the connection being gone.
-> > 
-> > On a push, there is no creation of a temp pack.  It is always produced 
-> > on the fly and pushed straight via the ssh connection.
-> 
-> No.  I saw a temp file in strace.  It *was* created on the local disk,
-> and *not* sent on the fly.
-
-A temp pack is created on the receiving side, not the sending side 
-though.  The sending side is piping the pack data on its standard output 
-which is connected to ssh's standard input.
-
-> >> Um, if it's missing documentation, then how am I supposed to know
-> >> about it?
-> > 
-> > Asking on the list, like you did.  However this attribute should be 
-> > documented as well of course.  I even think that someone posted a patch 
-> > for it a while ago which might have been dropped.
-> 
-> What I'd like, is a way to say a certain pattern of files should only
-> be deduped, and not deltafied.  This would handle the case of exact
-> copies, or renames, which would still be a win for us, but generally
-> when a new video(or doc or pdf) is uploaded, it's alot of work to try
-> and deltafy, for very little benefit.
-
-Renamed/duplicated files are always stored uniquely by design.  Git 
-store file data into objects which are named after the SHA1 of their 
-content.
-
-In order to not attempt any delta on PDF files for example, you need to 
-add a negative delta attribute line such as:
-
-*.pdf	-delta
-
-either in a file called .gitattributes which gets versionned 
-and distributed, or in .git/info/attributes in which case it'll remain 
-local.  Any file matching *.pdf won't be delta compressed.
-
-
-Nicolas
+	-Daniel
+*This .sig left intentionally blank*
+--1547844168-47945306-1237944285=:19665--
