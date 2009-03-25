@@ -1,76 +1,64 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: branch ahead in commits but push claims all up to date
-Date: Wed, 25 Mar 2009 18:32:37 +0100
-Message-ID: <adf1fd3d0903251032kba19d27gc066b04081a88082@mail.gmail.com>
-References: <7001b7a00903240821v2155d234x6a10c80a3e987acb@mail.gmail.com>
-	 <7001b7a00903240822w70a57349xcc66a02cef62dc70@mail.gmail.com>
-	 <43d8ce650903240918q2ffdba44w241e0f378a11fd3d@mail.gmail.com>
-	 <alpine.LNX.1.00.0903241304090.19665@iabervon.org>
-	 <43d8ce650903241726s122cc468q4ea9188e1561832@mail.gmail.com>
-	 <alpine.LNX.1.00.0903242118270.19665@iabervon.org>
-	 <7001b7a00903241901w107e2973i9912eab114c9cde0@mail.gmail.com>
-	 <alpine.LNX.1.00.0903242304530.19665@iabervon.org>
-	 <7001b7a00903251023r1ce5cc0dnb29b7f9379408c42@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/5] Draft of API for git-vcs-*, transport.c code to use
+ it.
+Date: Wed, 25 Mar 2009 10:42:58 -0700
+Message-ID: <7vocvp7b31.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LNX.1.00.0903242303410.19665@iabervon.org>
+ <7vskl284bt.fsf@gitster.siamese.dyndns.org>
+ <alpine.LNX.1.00.0903251050430.19665@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	John Tapsell <johnflux@gmail.com>, git@vger.kernel.org
-To: Irene Ros <imirene@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 25 18:34:30 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Mar 25 18:44:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmWzk-0006l4-2f
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 18:34:28 +0100
+	id 1LmX9f-0002iX-Bv
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 18:44:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759188AbZCYRcm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 13:32:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757868AbZCYRcm
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 13:32:42 -0400
-Received: from mail-bw0-f169.google.com ([209.85.218.169]:42667 "EHLO
-	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756772AbZCYRcl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2009 13:32:41 -0400
-Received: by bwz17 with SMTP id 17so145775bwz.37
-        for <git@vger.kernel.org>; Wed, 25 Mar 2009 10:32:38 -0700 (PDT)
-Received: by 10.103.175.8 with SMTP id c8mr4296220mup.117.1238002357916; Wed, 
-	25 Mar 2009 10:32:37 -0700 (PDT)
-In-Reply-To: <7001b7a00903251023r1ce5cc0dnb29b7f9379408c42@mail.gmail.com>
+	id S1764010AbZCYRnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 13:43:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763994AbZCYRnH
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 13:43:07 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34831 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763935AbZCYRnG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2009 13:43:06 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A5616A599E;
+	Wed, 25 Mar 2009 13:43:03 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id AF606A599D; Wed,
+ 25 Mar 2009 13:43:00 -0400 (EDT)
+In-Reply-To: <alpine.LNX.1.00.0903251050430.19665@iabervon.org> (Daniel
+ Barkalow's message of "Wed, 25 Mar 2009 12:20:13 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 64385FCE-1964-11DE-ACFD-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114626>
 
-2009/3/25 Irene Ros <imirene@gmail.com>:
-> Hi Daniel,
+Daniel Barkalow <barkalow@iabervon.org> writes:
+
+>> > +'import'::
+>> > +	Takes the remote name and a list of names of refs, and imports
+>> > +	whatever it describes, by outputting it in git-fast-import
+>> > +	format.
+>> > +
+>> > +'export'::
+>> > +	Sends the branch to the foreign system and reimports it in
+>> > +	fast-import format.
+>> 
+>> The above two description is inconsistent; say "git-fast-import" for both.
 >
-> Thank you for the explanation, doing a git fetch actually did do the
-> trick although I still don't quite see the difference between
-> git pull origin myBranch
+> Not "fast-import" for both, now that other systems have adopted the format 
+> as input?
 
-This fetches myBranch from origin, and merges with the current branch.
-
-> and
-> git fetch
-
-This fetches and *saves* the configured branches (all by default) from
-the configured remote (origin by default).
-
->
-> When I push to origin myBranch it's clear that it actually pushes my
-> changes to our remote repository since others can then pull and get
-> them. So is it the case that:
->
-> git push ==> actual remote repository
-> while
-> git pull <== local copy of remote repository for this branch ?
-
-I don't know if I understand correctly, but pull always uses the
-branches from the remote repository, but depending on how you call it
-it will also update the local copy (origin/*).
-
-HTH,
-Santi
+I did not mean anything deeper than just pointing out that one sentence
+calls the format "git-fast-import format" and the other one calls
+"fast-import format".
