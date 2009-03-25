@@ -1,114 +1,113 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] difftool: add a -y shortcut for --no-prompt
-Date: Tue, 24 Mar 2009 23:29:59 -0700
-Message-ID: <1237962599-29625-1-git-send-email-davvid@gmail.com>
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Mar 25 07:30:52 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/5] Document details of transport function APIs
+Date: Tue, 24 Mar 2009 23:47:06 -0700
+Message-ID: <7v63hy9k0l.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LNX.1.00.0903242303250.19665@iabervon.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Mar 25 07:48:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmMdX-0005QM-2B
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 07:30:51 +0100
+	id 1LmMuw-00014F-R3
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 07:48:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754591AbZCYG3V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 02:29:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754525AbZCYG3V
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 02:29:21 -0400
-Received: from rv-out-0506.google.com ([209.85.198.237]:32293 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754446AbZCYG3U (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2009 02:29:20 -0400
-Received: by rv-out-0506.google.com with SMTP id f9so2688268rvb.1
-        for <git@vger.kernel.org>; Tue, 24 Mar 2009 23:29:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=s/vWC9vVmuN7/eTwQP1hE2YmKtNv5ct9UkDQ1H1YVCs=;
-        b=hy1aaa8giZq06UdkJYLEywOldbCtRRSu11o405erSjvkf+Pakc6DjiF6q83huZ/Vww
-         p9uyfL1JzsAvzm68YmgPKl2pxXeeWOHEwNfoySCif292UtoQ/zwvrMzeu0QF/xuaLhS3
-         MwLS2GMxZ9QbqmWmiuKA2Ov3Lr6oImNAMugT8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=C/tug4N2hFHqUR1gAL++7DeKqI4lM5dJEMbm+qwpE3WprwLSv9DJERP1B/zCjV9wKo
-         aeSP/ffOLo4duvIm+qw8bmqBXGlgEsV9HRKolZIEPZwZtB9dbaYaGa6SK1OjxmtWSYXG
-         B/qKnvnZ7MR99u5huqXtU4PnvQVHjgRVxJhOQ=
-Received: by 10.114.234.13 with SMTP id g13mr6243443wah.64.1237962557917;
-        Tue, 24 Mar 2009 23:29:17 -0700 (PDT)
-Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id m17sm7213668waf.31.2009.03.24.23.29.17
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 24 Mar 2009 23:29:17 -0700 (PDT)
-X-Mailer: git-send-email 1.6.2.1.303.g63699
+	id S1757505AbZCYGrQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 02:47:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757594AbZCYGrQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 02:47:16 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37651 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757041AbZCYGrP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2009 02:47:15 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F0C32A4D66;
+	Wed, 25 Mar 2009 02:47:10 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B4DE8A4D65; Wed,
+ 25 Mar 2009 02:47:07 -0400 (EDT)
+In-Reply-To: <alpine.LNX.1.00.0903242303250.19665@iabervon.org> (Daniel
+ Barkalow's message of "Tue, 24 Mar 2009 23:04:10 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: C4305172-1908-11DE-9656-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114570>
 
-This is another consistency cleanup to make git-difftool's options
-match git-mergetool.
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
+> In particular, explain which of the fields of struct ref is used for
+> what purpose in the input to and output from each function.
+>
+> Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+> ---
+>  transport.h |   38 ++++++++++++++++++++++++++++++++++++++
+>  1 files changed, 38 insertions(+), 0 deletions(-)
+>
+> diff --git a/transport.h b/transport.h
+> index 489e96a..2e1650a 100644
+> --- a/transport.h
+> +++ b/transport.h
+> @@ -18,11 +18,49 @@ struct transport {
+>  	int (*set_option)(struct transport *connection, const char *name,
+>  			  const char *value);
+>  
+> +	/**
+> +	 * Returns a list of the remote side's refs. In order to allow
+> +	 * the transport to try to share connections, for_push is a
+> +	 * hint as to whether the ultimate operation is a push or a fetch.
+> +	 *
 
-This also fixes the style used for the -h option which I should
-have caught in my previous patch.  Doh!
+It is unclear what this "hint" is intended to be used for, what the
+transport is and isn't allowed to use it for, and what existing transports
+typically use it for.
 
- Documentation/git-difftool.txt |    3 ++-
- git-difftool.perl              |    6 +++---
- 2 files changed, 5 insertions(+), 4 deletions(-)
+> +	/**
+> +	 * Push the objects and refs. Send the necessary objects, and
+> +	 * then tell the remote side to update each ref in the list
+> +	 * from old_sha1 to new_sha1.
+> +	 *
+> +	 * Where possible, set the status for each ref appropriately.
+> +	 *
+> +	 * If, in the process, the transport determines that the
+> +	 * remote side actually responded to the push by updating the
+> +	 * ref to a different value, the transport should modify the
+> +	 * new_sha1 in the ref. (Note that this is a matter of the
+> +	 * remote accepting but rewriting the change, not rejecting it
+> +	 * and reporting that a different update had already taken
+> +	 * place)
+> +	 **/
 
-diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
-index 23070c1..be1020d 100644
---- a/Documentation/git-difftool.txt
-+++ b/Documentation/git-difftool.txt
-@@ -7,7 +7,7 @@ git-difftool - Show changes using common diff tools
- 
- SYNOPSIS
- --------
--'git difftool' [--tool=<tool>] [--no-prompt] [<'git diff' options>]
-+'git difftool' [--tool=<tool>] [-y|--no-prompt] [<'git diff' options>]
- 
- DESCRIPTION
- -----------
-@@ -17,6 +17,7 @@ to 'git-diff' and accepts the same options and arguments.
- 
- OPTIONS
- -------
-+-y::
- --no-prompt::
- 	Do not prompt before launching a diff tool.
- 
-diff --git a/git-difftool.perl b/git-difftool.perl
-index 207dd50..5bc64d5 100755
---- a/git-difftool.perl
-+++ b/git-difftool.perl
-@@ -18,7 +18,7 @@ my $DIR = abs_path(dirname($0));
- sub usage
- {
- 	print << 'USAGE';
--usage: git difftool [--tool=<tool>] [--no-prompt] ["git diff" options]
-+usage: git difftool [--tool=<tool>] [-y|--no-prompt] ["git diff" options]
- USAGE
- 	exit 1;
- }
-@@ -60,11 +60,11 @@ sub generate_command
- 			$ENV{GIT_DIFF_TOOL} = substr($arg, 7);
- 			next;
- 		}
--		if ($arg eq '--no-prompt') {
-+		if ($arg eq '-y' || '--no-prompt') {
- 			$ENV{GIT_DIFFTOOL_NO_PROMPT} = 'true';
- 			next;
- 		}
--		if ($arg eq '-h' or $arg eq '--help') {
-+		if ($arg eq '-h' || $arg eq '--help') {
- 			usage();
- 		}
- 		push @command, $arg;
--- 
-1.6.2.1.303.g63699
+It this even a sane thing to allow?  How would it interact with the
+"pretend we immediately turned around and fetched them into the remote
+tracking branches" local updates we usually do?
+
+>  	int (*push_refs)(struct transport *transport, struct ref *refs, int flags);
+>  	int (*push)(struct transport *connection, int refspec_nr, const char **refspec, int flags);
+>  
+> +	/** get_refs_list(), fetch(), and push_refs() can keep
+> +	 * resources (such as a connection) reserved for futher
+> +	 * use. disconnect() releases these resources.
+> +	 **/
+>  	int (*disconnect)(struct transport *connection);
+>  	char *pack_lockfile;
+>  	signed verbose : 2;
+
+It is just a style thing, but all of our multi-line comments are
+
+   /*
+    * of
+    * this
+    * form
+    */
+
+and these new comments are formatted slightly differently with double
+asterisks on only the first and the last lines.  In addition, th last
+comment block uses a yet another different style, which is a bit of
+eyesore.
