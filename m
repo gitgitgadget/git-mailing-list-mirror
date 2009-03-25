@@ -1,108 +1,100 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/5] Add option for using a foreign VCS
-Date: Tue, 24 Mar 2009 23:49:38 -0700
-Message-ID: <7v1vsm9jwd.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LNX.1.00.0903242303330.19665@iabervon.org>
+Subject: Re: [PATCH 4/5] Draft of API for git-vcs-*, transport.c code to use
+ it.
+Date: Wed, 25 Mar 2009 00:11:18 -0700
+Message-ID: <7vskl284bt.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LNX.1.00.0903242303410.19665@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Mar 25 07:51:18 2009
+X-From: git-owner@vger.kernel.org Wed Mar 25 08:12:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmMxI-0001Wo-FQ
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 07:51:16 +0100
+	id 1LmNIG-0006KD-NP
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 08:12:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755656AbZCYGtr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 02:49:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754928AbZCYGtq
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 02:49:46 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37942 "EHLO
+	id S1755575AbZCYHL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 03:11:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754951AbZCYHL1
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 03:11:27 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43443 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754000AbZCYGtq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2009 02:49:46 -0400
+	with ESMTP id S1753471AbZCYHL0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2009 03:11:26 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A3AABA4D80;
-	Wed, 25 Mar 2009 02:49:43 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id C39EDA4F1B;
+	Wed, 25 Mar 2009 03:11:23 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 22F79A4D7E; Wed,
- 25 Mar 2009 02:49:39 -0400 (EDT)
-In-Reply-To: <alpine.LNX.1.00.0903242303330.19665@iabervon.org> (Daniel
- Barkalow's message of "Tue, 24 Mar 2009 23:04:12 -0400 (EDT)")
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 963B0A4F1A; Wed,
+ 25 Mar 2009 03:11:20 -0400 (EDT)
+In-Reply-To: <alpine.LNX.1.00.0903242303410.19665@iabervon.org> (Daniel
+ Barkalow's message of "Tue, 24 Mar 2009 23:04:15 -0400 (EDT)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 1F1DCFCE-1909-11DE-9D9C-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 2621C0C0-190C-11DE-930F-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114572>
 
 Daniel Barkalow <barkalow@iabervon.org> writes:
 
-> This simply configures the remote to use a transport that doesn't have
-> any methods at all and is therefore unable to do anything yet.
->
-> Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
-> ---
->  Documentation/config.txt |    4 ++++
->  remote.c                 |    2 ++
->  remote.h                 |    2 ++
->  transport.c              |    3 ++-
->  4 files changed, 10 insertions(+), 1 deletions(-)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 089569a..14b0e07 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1305,6 +1305,10 @@ remote.<name>.tagopt::
->  	Setting this value to \--no-tags disables automatic tag following when
->  	fetching from remote <name>
->  
-> +remote.<name>.vcs::
-> +	Setting this to a value <vcs> will cause git to interact with
-> +	the remote with the git-vcs-<vcs> helper.
+> +'capabilities'::
+> +	Prints the capabilities of the helper, one per line. These are:
+> +	 - import: the basic import command
+> +	 - marks: import should be done with a saved marks file
+> +	 - find-new-branches: detect new branches
+> +	 - export: the general export command
+> +	 - fork: create a new branch and export to it
+> +	 - anonymous-fork: make commits on a branch without an inherent name
+> +	 - merge: merge branches (of whatever type the system supports)
 > +
-
-Nice.
-
-> diff --git a/remote.h b/remote.h
-> index de3d21b..e77dc1b 100644
-> --- a/remote.h
-> +++ b/remote.h
-> @@ -11,6 +11,8 @@ struct remote {
->  	const char *name;
->  	int origin;
->  
-> +	const char *foreign_vcs;
+> +	If the helper doesn't support "merge", the default for pull is
+> +	to rebase instead of merging.
 > +
->  	const char **url;
->  	int url_nr;
->  	int url_alloc;
+> +'list'::
+> +	Takes the remote name, and outputs the names of refs. These
+> +	may be followed, after a single space, by "changed" or
+> +	"unchanged", indicating whether the foreign repository has
+> +	changed from the state in the ref. If the helper doesn't know,
+> +	it doesn't have to provide a value. (In particular, it
+> +	shouldn't do expensive operations, such as importing the
+> +	content, to see whether it matches.)
 
-What are these extra blank lines for?  Isn't it pretty much part of the
-URL group that immediately follows it?
+Does this roughly corresponds to get_remote_refs(), with "unchanged"
+return turned into the current value of the ref while "changed" returned
+as 0{40} in old_sha1 value?
 
-> diff --git a/transport.c b/transport.c
-> index 26c578e..8a37db5 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -939,7 +939,8 @@ struct transport *transport_get(struct remote *remote, const char *url)
->  	ret->remote = remote;
->  	ret->url = url;
->  
-> -	if (!prefixcmp(url, "rsync:")) {
-> +	if (remote && remote->foreign_vcs) {
-> +	} else if (!prefixcmp(url, "rsync:")) {
+For a vcs backend that lacks find-new-branches capability, when does the
+set of refnames returned by this operation change?  Can the end user
+request an expensive operation to make the list up-to-date?  Does the end
+user need to?
 
-	if (...) {
-        	; /* empty */
-	} else ...
+> +'import'::
+> +	Takes the remote name and a list of names of refs, and imports
+> +	whatever it describes, by outputting it in git-fast-import
+> +	format.
+> +
+> +'export'::
+> +	Sends the branch to the foreign system and reimports it in
+> +	fast-import format.
 
->  		ret->get_refs_list = get_refs_via_rsync;
->  		ret->fetch = fetch_objs_via_rsync;
->  		ret->push = rsync_transport_push;
-> -- 
-> 1.6.2.1.476.g9bf04b
+The above two description is inconsistent; say "git-fast-import" for both.
+
+This seems to follow the model of git-svn in that we treat our history as
+throw-away, export the history and give the authority to the other system
+by discarding and replacing our history with whatever the other end gives
+back to us by re-importing.  Because git is more flexible than anything
+else, we could afford to do so, but I wonder if it is the right model and
+mentality.
+
+One downside is that you end up rebasing the git side by operating this
+way, and a topology where multiple developers use one git repository as a
+synchronization point and use that git repository to interface with the
+foreign system becomes impossible.  Instead, these multiple developers
+need to treat the foreign system as the central repository, and interface
+with it individually.
