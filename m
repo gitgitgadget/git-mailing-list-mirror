@@ -1,65 +1,108 @@
-From: Eric Raible <raible@gmail.com>
-Subject: Re: reverting initial commit
-Date: Wed, 25 Mar 2009 21:06:40 +0000 (UTC)
-Message-ID: <loom.20090325T205905-856@post.gmane.org>
-References: <49CA7428.70400@obry.net> <7v1vsl4fxo.fsf@gitster.siamese.dyndns.org> <8c9a060903251133x33749041oc2a5152097da0ae8@mail.gmail.com> <gqe1kf$pg1$1@ger.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+From: newren@gmail.com
+Subject: [PATCH] git-filter-branch: avoid collisions with variables in eval'ed commands
+Date: Wed, 25 Mar 2009 15:13:01 -0600
+Message-ID: <1238015581-12801-1-git-send-email-newren@gmail.com>
+Cc: Johannes.Schindelin@gmx.de, gitster@pobox.com, pasky@suse.cz,
+	Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 25 22:08:27 2009
+X-From: git-owner@vger.kernel.org Wed Mar 25 22:15:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmaKo-00030z-6Q
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 22:08:26 +0100
+	id 1LmaRz-0005mH-AS
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 22:15:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754343AbZCYVG7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 17:06:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753468AbZCYVG6
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 17:06:58 -0400
-Received: from main.gmane.org ([80.91.229.2]:40580 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755237AbZCYVG4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2009 17:06:56 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LmaJI-0001Yh-1j
-	for git@vger.kernel.org; Wed, 25 Mar 2009 21:06:52 +0000
-Received: from adsl-75-24-106-84.dsl.pltn13.sbcglobal.net ([75.24.106.84])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 25 Mar 2009 21:06:52 +0000
-Received: from raible by adsl-75-24-106-84.dsl.pltn13.sbcglobal.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 25 Mar 2009 21:06:52 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 75.24.106.84 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Chrome/1.0.154.48 Safari/525.19)
+	id S1752332AbZCYVOT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 17:14:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751909AbZCYVOT
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 17:14:19 -0400
+Received: from wf-out-1314.google.com ([209.85.200.175]:6117 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751988AbZCYVOS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2009 17:14:18 -0400
+Received: by wf-out-1314.google.com with SMTP id 29so249615wff.4
+        for <git@vger.kernel.org>; Wed, 25 Mar 2009 14:14:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=BL2MGlTs2CJdOkoqE4zk3ic5i2ocum1irv1/KLEnhNI=;
+        b=Et+pPPQRYzre1oJSnIowxJItExQOxzYZMJHws/y87VVTZ4scGlIKbsZE9eITOSQ7+4
+         lCBRuxtctFn9lPWvC1UraW3UOPb+xJEa+RyvdDYt1qjxusKcOdVk2zZ2OiCm4Y3wRFGV
+         cJjV7YAboGXsLMZTS6IZk29suQbeJYKts4I9o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=fcPd2UtqgNeKbkPsg1DsRURkeGvL5AcGnt5+sypQEnn89e9qkBSzYq4qc89Y+DQKYu
+         teBQ5RpAizuHy+wLKlVrvSzVkXN7m9AFfKAB3cG88L+3MRufV39AAsHYgcBK1YyB82tO
+         7XpFD/3CA9Tvp/FoGRXS8MRrS0GipmLw+4O4Y=
+Received: by 10.142.165.21 with SMTP id n21mr21031wfe.56.1238015656312;
+        Wed, 25 Mar 2009 14:14:16 -0700 (PDT)
+Received: from localhost.localdomain (c-69-254-130-124.hsd1.nm.comcast.net [69.254.130.124])
+        by mx.google.com with ESMTPS id 29sm16601315wfg.53.2009.03.25.14.14.14
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 25 Mar 2009 14:14:15 -0700 (PDT)
+X-Mailer: git-send-email 1.6.2.1.317.g3d051
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114664>
 
-Giuseppe Bilotta <giuseppe.bilotta <at> gmail.com> writes:
+From: Elijah Newren <newren@gmail.com>
 
-> Actually, rebase --interactive cannot be used to amend the first commit.
-> This is something that has hit me a couple of times when I realised, after
-> the second or third commit, that I needed to fix the first one. I found
-> the fastest way in this case to be to just format-patch all but the first
-> commit, reset --hard to the first commit, amend, and git am what I format-
-> patched.
-> 
-> I wish there was a way to tell rebase -i to go back to the first commit,
-> inclusive, but the two or three times I've tried hacking at it I never
-> managed to come to anything useful 8-/
+Avoid using simple variable names like 'i', since user commands are eval'ed
+and may clash with and overwrite our values.
 
-I like to be able to rebase -i back to the first commit as well,
-which is why I generally start off with:
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
 
-git init && git commit --allow-empty -m'initial commit'
+I discovered this a few months ago, but apparently never got around to
+sending it earlier.  Anyway, without this patch in a repository with a
+file called 'world' I see the following behavior:
 
-- Eric
+$ git filter-branch --tree-filter '
+   for i in $(find . -type f); do
+     if ( file $i | grep "\btext\b" > /dev/null ); then
+       perl -i -ple "s/\\\$(Id|Date|Source|Header|CVSHeader|Author|Revision):[^\
+\$]*\\$/\\$\1\\$/" $i;
+     fi;
+   done ' -- --all
+
+Rewrite 7a78604e90b9debfaa6a755019b5d3df541abcba (1/6)/usr/bin/git-filter-branch
+: line 249: ./world+1: syntax error: operand expected (error token is "./world+1
+")
+
+
+In case anyone is wondering: This isn't the right way to nuke CVS keywords.
+It's a good start, but it'll miss a few files (particularly with older
+versions of the 'file' program) due to some types such as 'FORTRAN program
+source' not containing 'text'.  Also, it's incredibly slow to the point
+that I dropped filter-branch entirely and wrote a 'git_fast_filter' helper
+(serving as a pipe between fast-export and fast-import) that I'll soon be
+making available.
+
+ git-filter-branch.sh |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 20f6f51..5da63b1 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -272,10 +272,10 @@ test $commits -eq 0 && die "Found nothing to rewrite"
+ 
+ # Rewrite the commits
+ 
+-i=0
++git_filter_branch_count=0
+ while read commit parents; do
+-	i=$(($i+1))
+-	printf "\rRewrite $commit ($i/$commits)"
++	git_filter_branch_count=$(($git_filter_branch_count+1))
++	printf "\rRewrite $commit ($git_filter_branch_count/$commits)"
+ 
+ 	case "$filter_subdir" in
+ 	"")
+-- 
+1.6.0.6
