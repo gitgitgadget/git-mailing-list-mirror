@@ -1,8 +1,8 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCH/RFC 4/7] git-init: Introduce --restricted for restricting
- repository access
-Date: Wed, 25 Mar 2009 22:39:53 +0100
-Message-ID: <200903252239.53864.johan@herland.net>
+Subject: [PATCH/RFC 5/7] Add tests for "core.restrictedRepository" and
+ "git init --restricted"
+Date: Wed, 25 Mar 2009 22:40:43 +0100
+Message-ID: <200903252240.44049.johan@herland.net>
 References: <200903250105.05808.johan@herland.net>
  <7v63hybaqd.fsf@gitster.siamese.dyndns.org>
  <200903252236.03010.johan@herland.net>
@@ -11,32 +11,32 @@ Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: 7BIT
 Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 25 22:41:32 2009
+X-From: git-owner@vger.kernel.org Wed Mar 25 22:42:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lmaqj-0006pn-Dz
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 22:41:25 +0100
+	id 1Lmars-0007Mj-1P
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 22:42:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754497AbZCYVj7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 17:39:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753716AbZCYVj7
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 17:39:59 -0400
-Received: from mx.getmail.no ([84.208.15.66]:41351 "EHLO
+	id S1755609AbZCYVkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 17:40:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754907AbZCYVkt
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 17:40:49 -0400
+Received: from mx.getmail.no ([84.208.15.66]:42191 "EHLO
 	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753550AbZCYVj6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Mar 2009 17:39:58 -0400
+	by vger.kernel.org with ESMTP id S1754858AbZCYVks (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Mar 2009 17:40:48 -0400
 Content-disposition: inline
 Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KH300M8E06JMZ00@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Wed, 25 Mar 2009 22:39:55 +0100 (MET)
+ with ESMTP id <0KH300M8C07XLI00@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 25 Mar 2009 22:40:45 +0100 (MET)
 Received: from alpha.localnet ([84.215.102.95])
  by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KH300BSO06HR300@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Wed, 25 Mar 2009 22:39:55 +0100 (MET)
+ with ESMTP id <0KH300BN107WPK00@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 25 Mar 2009 22:40:45 +0100 (MET)
 X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
  Antispam-Data: 2009.3.25.212528
 User-Agent: KMail/1.11.1 (Linux/2.6.28-ARCH; KDE/4.2.1; x86_64; ; )
@@ -45,163 +45,207 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114676>
 
-"--restricted" does for "core.restrictedRepository" what "--shared" does for
-"core.sharedRepository".
+These tests are based on - and analogous to - the existing tests for
+"core.sharedRepository" and "git init --shared"
 
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- Documentation/config.txt   |    2 +-
- Documentation/git-init.txt |   38 +++++++++++++++++++++++++++++++++++++-
- builtin-init-db.c          |   22 ++++++++++++++++++----
- 3 files changed, 56 insertions(+), 6 deletions(-)
+ t/t0001-init.sh            |   24 +++++++-
+ t/t1304-restricted-repo.sh |  132 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 153 insertions(+), 3 deletions(-)
+ create mode 100755 t/t1304-restricted-repo.sh
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 0f2dd5c..08f8068 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -331,7 +331,7 @@ core.restrictedRepository::
- 	Example: To set up a group-shared repository that is inaccessible to
- 	all non-members, set both "core.sharedRepository" and
- 	"core.restrictedRepository" to "group".
--	False by default.
-+	See linkgit:git-init[1]. False by default.
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index 5ac0a27..639a88d 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -167,7 +167,7 @@ test_expect_success 'init with --template (blank)' '
+ 	! test -f template-blank/.git/info/exclude
+ '
  
- core.warnAmbiguousRefs::
- 	If true, git will warn you if the ref name you passed it is ambiguous
-diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
-index bddc01b..2a431c2 100644
---- a/Documentation/git-init.txt
-+++ b/Documentation/git-init.txt
-@@ -8,7 +8,7 @@ git-init - Create an empty git repository or reinitialize an existing one
+-test_expect_success 'init --bare/--shared overrides system/global config' '
++test_expect_success 'init --bare/--shared/--restricted overrides system/global config' '
+ 	(
+ 		HOME="`pwd`" &&
+ 		export HOME &&
+@@ -175,13 +175,16 @@ test_expect_success 'init --bare/--shared overrides system/global config' '
+ 		unset GIT_CONFIG_NOGLOBAL &&
+ 		git config -f "$test_config" core.bare false &&
+ 		git config -f "$test_config" core.sharedRepository 0640 &&
++		git config -f "$test_config" core.restrictedRepository 0027 &&
+ 		mkdir init-bare-shared-override &&
+ 		cd init-bare-shared-override &&
+-		git init --bare --shared=0666
++		git init --bare --shared=0644 --restricted=0022
+ 	) &&
+ 	check_config init-bare-shared-override true unset &&
+-	test x0666 = \
++	test x0644 = \
+ 	x`git config -f init-bare-shared-override/config core.sharedRepository`
++	test x0022 = \
++	x`git config -f init-bare-shared-override/config core.restrictedRepository`
+ '
  
- SYNOPSIS
- --------
--'git init' [-q | --quiet] [--bare] [--template=<template_directory>] [--shared[=<permissions>]]
-+'git init' [-q | --quiet] [--bare] [--template=<template_directory>] [--shared[=<permissions>]] [--restricted[=<permissions>]]
+ test_expect_success 'init honors global core.sharedRepository' '
+@@ -199,4 +202,19 @@ test_expect_success 'init honors global core.sharedRepository' '
+ 	x`git config -f shared-honor-global/.git/config core.sharedRepository`
+ '
  
- 
- OPTIONS
-@@ -72,6 +72,42 @@ By default, the configuration flag receive.denyNonFastForwards is enabled
- in shared repositories, so that you cannot force a non fast-forwarding push
- into it.
- 
-+--restricted[={false|true|umask|group|user|0xxx}]::
++test_expect_success 'init honors global core.restrictedRepository' '
++	(
++		HOME="`pwd`" &&
++		export HOME &&
++		test_config="$HOME"/.gitconfig &&
++		unset GIT_CONFIG_NOGLOBAL &&
++		git config -f "$test_config" core.restrictedRepository 0077 &&
++		mkdir restricted-honor-global &&
++		cd restricted-honor-global &&
++		git init
++	) &&
++	test x0077 = \
++	x`git config -f restricted-honor-global/.git/config core.restrictedRepository`
++'
 +
-+Specify that the git repository is to be restricted according to the given
-+permission mask.  This allows you to more finely control access to the
-+repository.  When specified, the config variable "core.restrictedRepository"
-+is set so that files and directories under `$GIT_DIR` are created with the
-+restrictions in the given mask.  When not specified, git will use permissions
-+reported by umask(2). When specified, the permissions will still be no more
-+lenient than the umask allows.
+ test_done
+diff --git a/t/t1304-restricted-repo.sh b/t/t1304-restricted-repo.sh
+new file mode 100755
+index 0000000..012cdf1
+--- /dev/null
++++ b/t/t1304-restricted-repo.sh
+@@ -0,0 +1,132 @@
++#!/bin/sh
++#
++# Copied and modified from t1301-shared-repo.sh
++#
 +
-+The option can have the following values, defaulting to 'user' if no value
-+is given:
++test_description='Test restricted repository initialization'
 +
-+ - 'umask' (or 'false'): Use permissions reported by umask(2). The default,
-+   when `--restricted` is not specified.
++. ./test-lib.sh
 +
-+ - 'group': Make the repository accessible only to members of the group
-+   owning the repository.
++# Remove a default ACL from the test dir if possible.
++setfacl -k . 2>/dev/null
 +
-+ - 'user' (or 'true'): Make the repository inaccessible to anybody but the
-+   repository owner.
++# User must have r/w permissions to the repo -> failure on --restricted=0600
++test_expect_success 'restricted = 0600 (faulty permission u-rw)' '
++	mkdir sub && (
++		cd sub && git init --restricted=0600
++	)
++	ret="$?"
++	rm -rf sub
++	test $ret != "0"
++'
 +
-+ - '0xxx': '0xxx' is an octal number and each file will have (at least) these
-+   mode bits masked off the repository permission. '0xxx' will override a
-+   more lenient umask(2) value (but not a stricter/safer umask), and thus,
-+   users with a lenient umask (e.g. 0022) can use this option to tighten
-+   repository permissions. '0000' is equivalent to 'umask', '0007' is
-+   equivalent to 'group', and '0077' is equivalent to 'user'.
-+   '0027' will create a repository which is group-readable (unless overridden
-+   by the current umask), but not group-writable, and inaccessible to others.
++modebits () {
++	ls -l "$1" | sed -e 's|^\(..........\).*|\1|'
++}
 +
-+You can combine `--shared` and `--restricted` to finely control the access to
-+the repository. For example, specifying `--shared=group --restricted=group`
-+will ensure that the repository is group-readable and group-writable, and
-+also non world-readable and non world-writable.
++for u in 0007 0077
++do
++	test_expect_success POSIXPERM "restricted=group does not clear bits preset by umask $u" '
++		mkdir sub && (
++			cd sub &&
++			umask $u &&
++			git init --restricted=group &&
++			test "0007" = "$(git config core.restrictedrepository)"
++		) &&
++		actual=$(ls -l sub/.git/HEAD)
++		case "$u$actual" in
++		0007-rw-rw----*)
++			: happy
++			;;
++		0077-rw-------*)
++			: happy
++			;;
++		*)
++			echo Oops, .git/HEAD is not 06x0 but $actual
++			false
++			;;
++		esac
++	'
++	rm -rf sub
++done
 +
- --
- 
- 
-diff --git a/builtin-init-db.c b/builtin-init-db.c
-index fc63d0f..8e7fa2d 100644
---- a/builtin-init-db.c
-+++ b/builtin-init-db.c
-@@ -19,6 +19,7 @@
- 
- static int init_is_bare_repository = 0;
- static int init_shared_repository = -1;
-+static int init_restricted_repository = -1;
- 
- static void safe_create_dir(const char *dir, int share)
- {
-@@ -29,7 +30,7 @@ static void safe_create_dir(const char *dir, int share)
- 		}
- 	}
- 	else if (share && adjust_shared_perm(dir))
--		die("Could not make %s writable by group", dir);
-+		die("Could not set proper permissions on %s", dir);
- }
- 
- static void copy_templates_1(char *path, int baselen,
-@@ -196,12 +197,14 @@ static int create_default_files(const char *template_path)
- 	is_bare_repository_cfg = init_is_bare_repository;
- 	if (init_shared_repository != -1)
- 		shared_repository = init_shared_repository;
-+	if (init_restricted_repository != -1)
-+		restricted_repository = init_restricted_repository;
- 
- 	/*
- 	 * We would have created the above under user's umask -- under
- 	 * shared-repository settings, we would need to fix them up.
- 	 */
--	if (shared_repository) {
-+	if (shared_repository || restricted_repository) {
- 		adjust_shared_perm(get_git_dir());
- 		adjust_shared_perm(git_path("refs"));
- 		adjust_shared_perm(git_path("refs/heads"));
-@@ -321,11 +324,17 @@ int init_db(const char *template_dir, unsigned int flags)
- 		git_config_set("core.sharedrepository", buf);
- 		git_config_set("receive.denyNonFastforwards", "true");
- 	}
-+	if (restricted_repository) {
-+		char buf[5];
-+		sprintf(buf, "%04o", restricted_repository);
-+		git_config_set("core.restrictedrepository", buf);
-+	}
- 
- 	if (!(flags & INIT_DB_QUIET))
--		printf("%s%s Git repository in %s/\n",
-+		printf("%s%s%s Git repository in %s/\n",
- 		       reinit ? "Reinitialized existing" : "Initialized empty",
- 		       shared_repository ? " shared" : "",
-+		       restricted_repository ? " restricted" : "",
- 		       get_git_dir());
- 
- 	return 0;
-@@ -363,7 +372,7 @@ static int guess_repository_type(const char *git_dir)
- }
- 
- static const char init_db_usage[] =
--"git init [-q | --quiet] [--bare] [--template=<template-directory>] [--shared[=<permissions>]]";
-+"git init [-q | --quiet] [--bare] [--template=<template-directory>] [--shared[=<permissions>]] [--restricted[=<permissions>]]";
- 
- /*
-  * If you want to, you can share the DB area with any number of branches.
-@@ -391,6 +400,11 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
- 			init_shared_repository = PERM_GROUP;
- 		else if (!prefixcmp(arg, "--shared="))
- 			init_shared_repository = git_config_perm("arg", arg+9);
-+		else if (!strcmp(arg, "--restricted"))
-+			init_restricted_repository = PERM_MASK_USER;
-+		else if (!prefixcmp(arg, "--restricted="))
-+			init_restricted_repository =
-+				git_config_perm_mask("arg", arg+13);
- 		else if (!strcmp(arg, "-q") || !strcmp(arg, "--quiet"))
- 			flags |= INIT_DB_QUIET;
- 		else
++test_expect_success 'restricted=user' '
++	mkdir sub &&
++	cd sub &&
++	git init --restricted=user &&
++	test "0077" = "$(git config core.restrictedrepository)"
++'
++
++test_expect_success POSIXPERM 'update-server-info honors core.restrictedRepository' '
++	: > a1 &&
++	git add a1 &&
++	test_tick &&
++	git commit -m a1 &&
++	umask 0277 &&
++	git update-server-info &&
++	actual="$(ls -l .git/info/refs)" &&
++	case "$actual" in
++	-r--------*)
++		: happy
++		;;
++	*)
++		echo Oops, .git/info/refs is not 0400
++		false
++		;;
++	esac
++'
++
++for u in	0000:rw-rw-rw- \
++		0002:rw-rw-r-- \
++		0007:rw-rw---- \
++		0027:rw-r----- \
++		0077:rw-------
++do
++	x=$(expr "$u" : ".*:\([rw-]*\)") &&
++	y=$(echo "$x" | sed -e "s/w/-/g") &&
++	u=$(expr "$u" : "\([0-7]*\)"); test $? -le 1 &&
++	git config core.restrictedrepository "$u" &&
++	umask 0222 &&
++	test_expect_success POSIXPERM "shared = $u ($y) ro" '
++
++		rm -f .git/info/refs &&
++		git update-server-info &&
++		actual="$(modebits .git/info/refs)" &&
++		test "x$actual" = "x-$y" || {
++			ls -lt .git/info
++			false
++		}
++	'
++
++	umask 0000 &&
++	test_expect_success POSIXPERM "shared = $u ($x) rw" '
++
++		rm -f .git/info/refs &&
++		git update-server-info &&
++		actual="$(modebits .git/info/refs)" &&
++		test "x$actual" = "x-$x" || {
++			ls -lt .git/info
++			false
++		}
++
++	'
++
++done
++
++test_expect_success POSIXPERM 'git reflog expire honors core.restrictedRepository' '
++	umask 0000
++	git config core.restrictedRepository group &&
++	git reflog expire --all &&
++	actual="$(ls -l .git/logs/refs/heads/master)" &&
++	case "$actual" in
++	-rw-rw----*)
++		: happy
++		;;
++	*)
++		echo Ooops, .git/logs/refs/heads/master is not 0660 [$actual]
++		false
++		;;
++	esac
++'
++
++test_done
 -- 
 1.6.2.1.473.g92672
