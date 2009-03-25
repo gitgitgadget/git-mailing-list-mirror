@@ -1,63 +1,77 @@
-From: Jay Soffian <jaysoffian@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
 Subject: Re: [BUG] Infinite loop in git send-email if ran non-interactively.
-Date: Wed, 25 Mar 2009 12:23:56 -0400
-Message-ID: <76718490903250923u5f7a84e8ma6093b1434b36172@mail.gmail.com>
+Date: Wed, 25 Mar 2009 17:23:55 +0100
+Message-ID: <vpq4oxh8tb8.fsf@bauges.imag.fr>
 References: <vpqiqlyj64o.fsf@bauges.imag.fr>
-	 <76718490903250903t530983abi8a641e6b7aee6c0@mail.gmail.com>
+	<76718490903250904q3ca9f20ak7288e49e226bb9fb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Wed Mar 25 17:25:58 2009
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 25 17:30:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmVv5-0000Lg-IK
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 17:25:36 +0100
+	id 1LmVzP-0002NE-CQ
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 17:30:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755426AbZCYQYE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 12:24:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752879AbZCYQYD
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 12:24:03 -0400
-Received: from mail-gx0-f160.google.com ([209.85.217.160]:32786 "EHLO
-	mail-gx0-f160.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751323AbZCYQYA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2009 12:24:00 -0400
-Received: by gxk4 with SMTP id 4so268946gxk.13
-        for <git@vger.kernel.org>; Wed, 25 Mar 2009 09:23:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=0PaoPGKDWo4R6mhZW29gJvzOQsSzU3aNO0TiFHTWeYI=;
-        b=svEKJQV6yqDkIkXWfvqiFPqr2VYfS95jSgxWEWwlFFiSL3Yinlfqiiz9y52Sn7USMU
-         8pposw246KOGLY2MI/K2Q8iUaWmRfOCc+Xu5r6dOp1QgRfhfu3wbxAV/+ThcTicgTWQy
-         5Fi9tBQbcniHJqWCNP3PmeBFxOePuLAu87TJ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=gq9xpXJ6UCkJ0L9Fp7V+zw+j6ikqhKXG2/9i9dEk2e1yc/na0cDbgp9LymvZBNF5AW
-         PbxryRi2TFNJXPbMBfmJJTLuJOy2RD14ZPqsbEpcv6n7n9+EahjGUpg8xXZDLgL+eW81
-         19mRbA2FbrYJ3PHgkON0XKbqAECir6WiF/xdk=
-Received: by 10.151.48.20 with SMTP id a20mr139110ybk.197.1237998236917; Wed, 
-	25 Mar 2009 09:23:56 -0700 (PDT)
-In-Reply-To: <76718490903250903t530983abi8a641e6b7aee6c0@mail.gmail.com>
+	id S1761800AbZCYQ1d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 12:27:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760882AbZCYQ1c
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 12:27:32 -0400
+Received: from imag.imag.fr ([129.88.30.1]:64905 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758145AbZCYQ1b (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2009 12:27:31 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n2PGNtmB001905
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 25 Mar 2009 17:23:56 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1LmVtT-00051Q-70; Wed, 25 Mar 2009 17:23:55 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1LmVtT-0007Mt-4a; Wed, 25 Mar 2009 17:23:55 +0100
+In-Reply-To: <76718490903250904q3ca9f20ak7288e49e226bb9fb@mail.gmail.com> (Jay Soffian's message of "Wed\, 25 Mar 2009 12\:04\:41 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 25 Mar 2009 17:23:56 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114619>
 
-On Wed, Mar 25, 2009 at 12:03 PM, Jay Soffian <jaysoffian@gmail.com> wrote:
-> Actually, FakeTerm is only triggered if Term::ReadLine is not
-> available. The "going non-interactive" message is misleading in this
-> case, as it has nothing to do with whether stdin is a tty or not.
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-Sorry, that's not true. Apparently the non-interactive test is not
-working properly in this case.
+> On Wed, Mar 25, 2009 at 5:36 AM, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+>> Hi,
+>>
+>> I've been hit by c1f2aa45b (send-email: add --confirm option and
+>> configuration setting) running git send-email from a cron job.
+>
+> BTW, can you provide the details on how you are invoking send-email?
 
-j.
+patches=$(git format-patch [...])
+[...]
+git send-email --to "$to" --from "$from" $patches
+
+> Have stdin/stdout/stderr been redirected?
+
+stdout and stderr are redirected to a file. stdin is not (I don't know
+exactly what cron sets it to).
+
+> What arguments are you giving it? And is this Vixie cron?
+
+The "cron" package in Debian etch (oldstable now).
+
+Thanks,
+
+-- 
+Matthieu
