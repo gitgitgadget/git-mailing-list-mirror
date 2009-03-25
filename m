@@ -1,67 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: git-format-patch.txt rewordings and 
- cleanups
-Date: Wed, 25 Mar 2009 00:26:42 -0700
-Message-ID: <7vhc1i83m5.fsf@gitster.siamese.dyndns.org>
-References: <1237803683-14939-1-git-send-email-bebarino@gmail.com>
- <20090324220913.GN19389@fieldses.org>
- <780e0a6b0903241636j4749daf3xddb6e4c200c00820@mail.gmail.com>
- <7vskl2tr00.fsf@gitster.siamese.dyndns.org>
- <780e0a6b0903242321q252c4b44k3909bd79003ded6b@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Project With Reusable Libraries
+Date: Wed, 25 Mar 2009 09:13:39 +0100
+Message-ID: <49C9E7B3.2090206@op5.se>
+References: <450196A1AAAE4B42A00A8B27A59278E70A5597A8@EXCHANGE.trad.tradestation.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 25 08:28:37 2009
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: John Dlugosz <JDlugosz@TradeStation.com>
+X-From: git-owner@vger.kernel.org Wed Mar 25 09:15:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmNXO-0001GU-MP
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 08:28:35 +0100
+	id 1LmOGx-0005C9-Oe
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 09:15:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756812AbZCYH0z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 03:26:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756655AbZCYH0z
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 03:26:55 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:46958 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755168AbZCYH0y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2009 03:26:54 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CC1E7A401C;
-	Wed, 25 Mar 2009 03:26:51 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 1AD75A401B; Wed,
- 25 Mar 2009 03:26:43 -0400 (EDT)
-In-Reply-To: <780e0a6b0903242321q252c4b44k3909bd79003ded6b@mail.gmail.com>
- (Stephen Boyd's message of "Tue, 24 Mar 2009 23:21:22 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4F48B0EC-190E-11DE-BDDB-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1753486AbZCYINo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 04:13:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754246AbZCYINm
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 04:13:42 -0400
+Received: from spsmtp02oc.mail2world.com ([74.202.142.148]:1984 "EHLO
+	spsmtp02oc.mail2world.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751752AbZCYINk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2009 04:13:40 -0400
+Received: from mail pickup service by spsmtp02oc.mail2world.com with Microsoft SMTPSVC;
+	 Wed, 25 Mar 2009 01:12:00 -0700
+auth-sender: exon@home.se
+Received: from 212.112.174.166 unverified ([212.112.174.166]) by spsmtp02oc.mail2world.com with Mail2World SMTP Server; 
+	Wed, 25 Mar 2009 01:11:59 -0700
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
+In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E70A5597A8@EXCHANGE.trad.tradestation.com>
+X-OriginalArrivalTime: 25 Mar 2009 08:12:00.0626 (UTC) FILETIME=[5F9A8D20:01C9AD21]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114575>
 
-Stephen Boyd <bebarino@gmail.com> writes:
+John Dlugosz wrote:
+> Consider a directory tree something like this:
+> 
+> 	...
+> 	foo\
+> 	  bar\
+> 	   project-root\
+> 	     app1\
+> 	         contents of app1
+> 	     app2\
+> 	         contents of app2
+> 	     lib1\
+> 	         contents of library 1
+> 	     lib2\
+> 	         contents of library 2
+> 
+> 
+> Each project, whether application or library, has its own git repository
+> already.  A program, say app1, is now dependant on the libraries.  The
+> libraries are meant to be used in multiple applications.
+> 
+> This is not like what is described under subprojects, since the libs are
+> not "under" the application, but are peers in the directory structure.
+> It would be wrong to put lib1 and lib2 as subdirectories of app1 because
+> they are also used by app2, right?
+> 
+> Then again... if app1 and app2 are not always built as part of the same
+> set, they might have different versions of the libs specified.  I
+> understand that the newer versions of msysgit do hard linking so having
+> multiple repositories for the same thing won't waste disk space, but
+> still requires fetching to keep them in sync?
+> 
+> Anyway, how would you do it?
+> 
 
-> On Tue, Mar 24, 2009 at 4:55 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Stephen Boyd <bebarino@gmail.com> writes:
->>
->>> How about a sentence with no negation?
->>>
->>> "Note that the leading dot is required if you want a dot between the
->>> patch name and the suffix."
->>
->> How about a sentence that does not sound requirement but freedom?
->>
->> "The leading character does not have to be a dot; for example, you
->> can use --suffix=-patch to get 0001-description-of-my-change-patch".
->
-> Looks even better. Do we still want to start off by saying "Note that the..." ?
+If app1 and app2 requires different versions of the same library, I'd
+make them separate git projects entirely.
 
-Perhaps; I wasn't paying much attention to the whole sentence, but was
-primarily interested about giving the description less negative
-connotation.
+If they have to stay in the same project, I'd put their respective
+libraries as a submodule under each app. You could get away without
+having to fetch them if you stash the lib projects in the super
+project and then link the app project's lib-submodules to the one
+in the super-project, but it gets messy when you try to explain
+that without some simple means of drawing things, so if you can't
+write a "sync-submodules" script, I guess it's not really worth
+the problem. Especially if the lib-repositories aren't huge.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
