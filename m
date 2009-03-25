@@ -1,67 +1,115 @@
-From: Thomas Koch <thomas@koch.ro>
-Subject: Use alternate GIT servers to share traffic
-Date: Wed, 25 Mar 2009 21:45:29 +0100
-Organization: Young Media Concepts
-Message-ID: <200903252145.30226.thomas@koch.ro>
+From: Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] git-filter-branch: avoid collisions with variables in 
+	eval'ed commands
+Date: Wed, 25 Mar 2009 15:33:31 -0600
+Message-ID: <51419b2c0903251433s75775206x556fc2d65a347d7d@mail.gmail.com>
+References: <1238015581-12801-1-git-send-email-newren@gmail.com>
+	 <20090325212403.GU8940@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 25 22:34:40 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de, gitster@pobox.com
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Wed Mar 25 22:35:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lmak5-0004Eh-7n
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 22:34:33 +0100
+	id 1Lmakd-0004QU-Ph
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 22:35:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752142AbZCYVdB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 17:33:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752391AbZCYVdA
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 17:33:00 -0400
-Received: from koch.ro ([93.90.184.107]:47599 "EHLO
-	ve825703057.providerbox.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752361AbZCYVc7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Mar 2009 17:32:59 -0400
-X-Greylist: delayed 2837 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Mar 2009 17:32:59 EDT
-Received: from 32-18.78-83.cust.bluewin.ch ([83.78.18.32] helo=jona.localnet)
-	by ve825703057.providerbox.net with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <thomas@koch.ro>)
-	id 1LmZyk-0006gM-3H
-	for git@vger.kernel.org; Wed, 25 Mar 2009 21:45:38 +0100
-User-Agent: KMail/1.11.1 (Linux/2.6.28-1-amd64; KDE/4.2.1; x86_64; ; )
-X-Face: ##Diipbu!WHqpJ%Eb+k:m;]n%VcrM\f\MJ-:0\<0.r?ULf7g"kC!"Cg,o;D]
-Content-Disposition: inline
+	id S1752849AbZCYVdg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Mar 2009 17:33:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752685AbZCYVdf
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 17:33:35 -0400
+Received: from yw-out-2324.google.com ([74.125.46.31]:38173 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752391AbZCYVde convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Mar 2009 17:33:34 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so232775ywb.1
+        for <git@vger.kernel.org>; Wed, 25 Mar 2009 14:33:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=FILfpkDfDpsgiBqO/scfinwLoOz8uBTs8szEnpSGbYA=;
+        b=C2h+md4pqjFQzwzQuH7FXlisjdJQRey8uTTQ0RYH2NPscQPU9oCfAHuICioo0bqTyF
+         NrQHoaotJx1NVOAcLHXkvXBBeknW8JbxoiiWa58ceXso7u9e3TUgp0TGjTXxwOrFeFYy
+         4/fygE4bPi9Lw9nTTKAvTmQCzOAtA9n7V612E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=YpJU4ClRUzAlqNk/U3nmpRDAcfESuePUpFeEV67ya/5ZRvszBefFGob+yyvUzuTarg
+         dRiFoRoicq/GulKQbWfyob1fQud5txQkLMDPS59tH74rq+thXu49iXYEUklMV5dJopMC
+         cmgZxPWBJgG7rOCuwNhwm22QXRUhvWz4srOeU=
+Received: by 10.231.20.2 with SMTP id d2mr16193ibb.27.1238016811636; Wed, 25 
+	Mar 2009 14:33:31 -0700 (PDT)
+In-Reply-To: <20090325212403.GU8940@machine.or.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114670>
 
 Hi,
 
-we host a public GIT repository on our high availability company
-cluster. Cloning the repo causes a trafic volume of 326 MB. We'd like to
-avoid that much trafic while still leaving the GIT repo where it is.
+On Wed, Mar 25, 2009 at 3:24 PM, Petr Baudis <pasky@suse.cz> wrote:
+> On Wed, Mar 25, 2009 at 03:13:01PM -0600, newren@gmail.com wrote:
+>> From: Elijah Newren <newren@gmail.com>
+>>
+>> Avoid using simple variable names like 'i', since user commands are =
+eval'ed
+>> and may clash with and overwrite our values.
+>>
+>> Signed-off-by: Elijah Newren <newren@gmail.com>
+>
+> Almost-acked-by: Petr Baudis <pasky@suse.cz>
+>
+> But:
+>
+>>-i=3D0
+>>+git_filter_branch_count=3D0
+>
+> Why branch_count? It counts commits, not branches, doesn't it?
 
-I could imagine the following conversation between the GIT client and
-server:
+Oh, I was just changing i->git_filter_branch_i, then thought as long
+as it was long I might as well use a word instead of "i".  Didn't
+think about the combined meaning.  How about
+"git_filter_branch_commit_count"?  Maybe a double underscore between
+the "namespace" and the "variable"?
 
-Client: Wanna clone!
-Server: You're welcome. Please note, that while I serve the most current
-state, you can get objects much faster from my collegue Server
-CHEAPHOST.
-Client: Thank you. Will take all the objects I can get from CHEAPHOST
-and come back if I should need anything else!
+>> I discovered this a few months ago, but apparently never got around =
+to
+>> sending it earlier. =C2=A0Anyway, without this patch in a repository=
+ with a
+>> file called 'world' I see the following behavior:
+>
+> Some hints:
+>
+>> $ git filter-branch --tree-filter '
+>> =C2=A0 =C2=A0for i in $(find . -type f); do
+>
+> This won't work right if your filenames contain $IFS.
 
-The enduser should not need to specify anything, but only the regular
-git clone EXPENSIVEHOST line.
+Yeah, luckily for me, my repository didn't have any filenames with
+whitespace.  :-)
 
-Your thoughts?
+>> =C2=A0 =C2=A0 =C2=A0if ( file $i | grep "\btext\b" > /dev/null ); th=
+en
+>
+> if [[ "$(file $i)" =3D=3D *text* ]] might run noticeably faster (thou=
+gh is
+> slightly less precise). Having a filename-keyed cache of file types e=
+ven
+> more so.
+>
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0perl -i -ple "s/\\\$(Id|Date|Source|Heade=
+r|CVSHeader|Author|Revision):[^\
+>> \$]*\\$/\\$\1\\$/" $i;
+>
+> Using '\'' instead of " could save you quite a few backslashes in net
+> count.
 
-Best regards,
--- 
-Thomas Koch, http://www.koch.ro
-YMC AG, http://www.ymc.ch
+Cool, thanks for the tips.
