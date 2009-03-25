@@ -1,55 +1,117 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: Memory of past repositories in git remote?
-Date: Wed, 25 Mar 2009 13:05:21 +0100
-Message-ID: <adf1fd3d0903250505o38e0ac54jcf07f4425eee0a6@mail.gmail.com>
-References: <784F93DB-2D7C-4F48-88E8-BF56F01CD1E2@dinechin.org>
+From: Kjetil Barvik <barvik@broadpark.no>
+Subject: Re: [PATCH] avoid possible overflow in delta size filtering computation
+Date: Wed, 25 Mar 2009 13:15:14 +0100
+Organization: private
+Message-ID: <86hc1hdcj1.fsf@broadpark.no>
+References: <alpine.LFD.2.00.0903241535010.26337@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Christophe de Dinechin <christophe@dinechin.org>
-To: Christophe de Dinechin <christophe.de.dinechin@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 25 13:07:04 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed Mar 25 13:16:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmRsl-0006ZM-JG
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 13:06:56 +0100
+	id 1LmS2O-0001eh-RE
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 13:16:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758354AbZCYMF0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 08:05:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756349AbZCYMFZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 08:05:25 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:35859 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755338AbZCYMFZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2009 08:05:25 -0400
-Received: by fxm2 with SMTP id 2so2718757fxm.37
-        for <git@vger.kernel.org>; Wed, 25 Mar 2009 05:05:22 -0700 (PDT)
-Received: by 10.103.221.5 with SMTP id y5mr4151417muq.66.1237982721877; Wed, 
-	25 Mar 2009 05:05:21 -0700 (PDT)
-In-Reply-To: <784F93DB-2D7C-4F48-88E8-BF56F01CD1E2@dinechin.org>
+	id S1753664AbZCYMPX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 08:15:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753094AbZCYMPW
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 08:15:22 -0400
+Received: from osl1smout1.broadpark.no ([80.202.4.58]:45451 "EHLO
+	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751546AbZCYMPW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2009 08:15:22 -0400
+Received: from osl1sminn1.broadpark.no ([80.202.4.59])
+ by osl1smout1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KH200ILQA1IEL30@osl1smout1.broadpark.no> for
+ git@vger.kernel.org; Wed, 25 Mar 2009 13:15:18 +0100 (CET)
+Received: from localhost ([80.202.166.137]) by osl1sminn1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KH200I39A1E1E30@osl1sminn1.broadpark.no> for
+ git@vger.kernel.org; Wed, 25 Mar 2009 13:15:18 +0100 (CET)
+In-reply-to: <alpine.LFD.2.00.0903241535010.26337@xanadu.home>
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114595>
 
-2009/3/25 Christophe de Dinechin <christophe.de.dinechin@gmail.com>:
-> Here are the details. I created a git repository in /home/ddd/vmm, impored
-> some Subversion history, and started working with that. I created a few
-> branches, e.g. one called "perrier". Then, I realized that there was a
-> better way to track Subversion changes, and so I moved the old repository as
-> /home/ddd/vmm.git, and created a new one that I populated with "git svn
-> clone svn+ssh://path/to/repot -T trunk -b branches -t users". That new
-> repository has no branch named "perrier" in it.
+Nicolas Pitre <nico@cam.org> writes:
 
-Git tries different url: $url/.git, $url.git and $url (I'm not sure
-about the order).
+> On a 32-bit system, the maximum possible size for an object is less than 
+> 4GB, while 64-bit systems may cope with larger objects.  Due to this 
+> limitation, variables holding object sizes are using an unsigned long 
+> type (32 bits on 32-bit systems, or 64 bits on 64-bit systems).
+>
+> When large objects are encountered, and/or people play with large delta 
+> depth values, it is possible for the maximum allowed delta size 
+> computation to overflow, especially on a 32-bit system.  When this 
+> occurs, surviving result bits may represent a value much smaller than 
+> what it is supposed to be, or even zero.  This prevents some objects 
+> from being deltified although they do get deltified when a smaller depth 
+> limit is used.  Fix this by always performing a 64-bit multiplication.
+>
+> Signed-off-by: Nicolas Pitre <nico@cam.org>
 
-So having $url and $url.git is asking for problems. I don't know if it
-is documented somewhere.
+  I added this patch and rerun the 2 test cases form the table where
+  --depth is 20000 and 95000, and got the following result:
 
-HTH,
-Santi
+    --depth=20000 => file size: 19126077  delta: 73814
+    --depth=95000 => file size: 19126087  delta: 73814
+
+  So, it seems that this patch almost fixed the issue.  But notice that
+  the pack file was 10 bytes larger for the --depth=95000 case.
+
+  I made a small perl script to compare the output from 'git verify-pack
+  -v' of the 2 idx/pack files, and found the following difference(1)
+  (first line from --depth=20000 case, second from --depth=95000):
+
+  fe0a6f3e971373590714dbafd087b235ea60ac00  tree   9  19  18921247  731  96a3ec5789504e6d0f90c99fb1937af1ebd58e2d
+  fe0a6f3e971373590714dbafd087b235ea60ac00  tree  20  29  18921247  730  12e560f7fb28558b15e3a2008fba860f9a4b2222
+
+  'git show fe0a6f3e971373590714dbafd087b235ea60ac00' =>
+
+tree fe0a6f3e971373590714dbafd087b235ea60ac00
+
+Makefile
+t0000-basic.sh
+test-lib.sh
+
+  'git show 96a3ec5789504e6d0f90c99fb1937af1ebd58e2d' =>
+
+tree 96a3ec5789504e6d0f90c99fb1937af1ebd58e2d
+
+Makefile
+t0000-basic.sh
+t0100-environment-names.sh
+t0200-update-cache.sh
+t0400-ls-files.sh
+t0500-ls-files.sh
+t1000-checkout-cache.sh
+t1001-checkout-cache.sh
+test-lib.sh
+
+  'git show 12e560f7fb28558b15e3a2008fba860f9a4b2222' =>
+
+tree 12e560f7fb28558b15e3a2008fba860f9a4b2222
+
+Makefile
+t0000-basic.sh
+t0100-environment-names.sh
+t0200-update-cache.sh
+t0400-ls-files.sh
+t0500-ls-files.sh
+t1000-checkout-cache.sh
+t1001-checkout-cache.sh
+test-lib.sh
+
+  -- kjetil
+
+  1) there was lots of lines with different offsets, all of which was 10
+     larger in the --depth=95000 case.
