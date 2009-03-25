@@ -1,69 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/5] Document details of transport function APIs
-Date: Wed, 25 Mar 2009 11:03:09 -0700
-Message-ID: <7vmyb95vky.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LNX.1.00.0903242303250.19665@iabervon.org>
- <7v63hy9k0l.fsf@gitster.siamese.dyndns.org>
- <alpine.LNX.1.00.0903251142470.19665@iabervon.org>
+From: Jon Smirl <jonsmirl@gmail.com>
+Subject: Re: .git/index
+Date: Wed, 25 Mar 2009 14:03:43 -0400
+Message-ID: <9e4733910903251103m7c78b2e7lee21a25a140bbeca@mail.gmail.com>
+References: <9e4733910903251016n117c37fdp94f91b2862cd7bf@mail.gmail.com>
+	 <alpine.LNX.2.00.0903251749270.11062@reaper.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Mar 25 19:06:02 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Wed Mar 25 19:06:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmXTg-0002oK-KE
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 19:05:51 +0100
+	id 1LmXUB-0002oK-59
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 19:05:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756326AbZCYSDR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 14:03:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755673AbZCYSDQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 14:03:16 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40981 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755575AbZCYSDQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2009 14:03:16 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 46778A5B90;
-	Wed, 25 Mar 2009 14:03:14 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 44F5FA5B8D; Wed,
- 25 Mar 2009 14:03:10 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 35CD0EF2-1967-11DE-AB67-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1758459AbZCYSDs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Mar 2009 14:03:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757829AbZCYSDr
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 14:03:47 -0400
+Received: from mail-qy0-f118.google.com ([209.85.221.118]:37323 "EHLO
+	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757746AbZCYSDq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Mar 2009 14:03:46 -0400
+Received: by qyk16 with SMTP id 16so324156qyk.33
+        for <git@vger.kernel.org>; Wed, 25 Mar 2009 11:03:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=U15wKYUYsnlZnyjKq7UVBA+v8fY3Dbcw+1Ghhdlmvns=;
+        b=CHTtN/wAEbrEgmoPVLywvGC1p1sk94l4SwEBcB9760tCCeaMQk5G26ifgMQrjHnF17
+         E/V22Jmx/wC2h1PZGnT4rzKy/lFdAvQxhnEyz5Tw36a1IQDgphklY9Kw068TM2JeNGlZ
+         K2XWC2BP7QitzNCHGbuNvcPXCzMGBL337AZLs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=SJYvjUhQY05TL5Vrh18yiAZHxiGB4Q9RU/2JVjau8pKPwzvju+Kq/VG2Ud4N/FYlN1
+         /aQuW+uMLZ5N4SNXqhS1Gkd1HAFTJ84FAottNhm1mkbOp8VhOsMjBZHpHPEH0eK7czjT
+         NtvEIFwusW3n1xQHGurzqIfZ+5SZ28jyIt++s=
+Received: by 10.220.45.135 with SMTP id e7mr3205537vcf.7.1238004223486; Wed, 
+	25 Mar 2009 11:03:43 -0700 (PDT)
+In-Reply-To: <alpine.LNX.2.00.0903251749270.11062@reaper.quantumfyre.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114633>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
-
->> > +	 * If, in the process, the transport determines that the
->> > +	 * remote side actually responded to the push by updating the
->> > +	 * ref to a different value, the transport should modify the
->> > +	 * new_sha1 in the ref. (Note that this is a matter of the
->> > +	 * remote accepting but rewriting the change, not rejecting it
->> > +	 * and reporting that a different update had already taken
->> > +	 * place)
->> > +	 **/
->> 
->> It this even a sane thing to allow?  How would it interact with the
->> "pretend we immediately turned around and fetched them into the remote
->> tracking branches" local updates we usually do?
+On Wed, Mar 25, 2009 at 1:52 PM, Julian Phillips
+<julian@quantumfyre.co.uk> wrote:
+> On Wed, 25 Mar 2009, Jon Smirl wrote:
 >
-> We already allow a git server to rewrite refs with a hook when it gets 
-> them, and we record the pre-rewriting value. This allows the transport to 
-> propagate the post-rewriting value back (if it can get it), and we'd 
-> update the tracking branches with what the server actually did instead of 
-> what we asked it to (i.e., we do what we would do if we really did turn 
-> around and fetch them immediately).
+>> I pushed a repo up to my server. I want to view this repo with gitwe=
+b
+>> but it is not visible in my project list like my other projects. I
+>> suspect this is because the newly pushed repo is missing .git/index.=
+ I
+>> ran update-server-info on the repo and that didn't create .git/index=
+=2E
+>> What command builds this index?
+>
+> .git/index is the default name used for what is commonly referred to =
+as the
+> staging area these days. =A0It's only needed when you have a work tre=
+e, and is
+> expected to be absent from a bare repository.
+>
+> A more likely cause for a repository to not be picked up by gitweb is=
+ file
+> permissions.
 
-But how are you guaranteeing that objects necessary to complete the
-history the remote end re-written are already available on the local end?
-Do you have a reverse object transfer phase now in send-pack protocol?
+It needed to be added to the gitweb projects file.
 
-Otherwise I am afraid that you are corrupting the local repository.
+>
+> --
+> Julian
+>
+> =A0---
+> <MFGolfBal> rit/ara: =A0There's something really demented about UNIX
+> =A0 =A0 =A0 =A0 =A0 =A0underwear...
+>
+
+
+
+--=20
+Jon Smirl
+jonsmirl@gmail.com
