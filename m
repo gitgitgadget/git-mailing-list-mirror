@@ -1,90 +1,82 @@
-From: Raman Gupta <rocketraman@fastmail.fm>
-Subject: Re: Reference for git.git release process
-Date: Wed, 25 Mar 2009 18:03:02 -0400
-Message-ID: <49CAAA16.1080401@fastmail.fm>
-References: <49CA78BF.2020101@fastmail.fm> <7viqlxz9go.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] fast-export: Avoid dropping files from commits
+Date: Wed, 25 Mar 2009 23:13:23 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903252312460.26370@intel-tinevez-2-302>
+References: <1238014519-11683-1-git-send-email-newren@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 25 23:11:26 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 25 23:15:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmbJl-0000go-Jp
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 23:11:26 +0100
+	id 1LmbNF-0001r9-NK
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 23:15:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754395AbZCYWJx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 18:09:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753901AbZCYWJw
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 18:09:52 -0400
-Received: from smtp123.rog.mail.re2.yahoo.com ([206.190.53.28]:39728 "HELO
-	smtp123.rog.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1754322AbZCYWJv (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Mar 2009 18:09:51 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Mar 2009 18:09:51 EDT
-Received: (qmail 6128 invoked from network); 25 Mar 2009 22:03:09 -0000
-Received: from unknown (HELO apollo.rocketraman.com) (rocketraman@99.224.155.40 with login)
-  by smtp123.rog.mail.re2.yahoo.com with SMTP; 25 Mar 2009 22:03:09 -0000
-X-YMail-OSG: I1wo7noVM1m85i.XeAeS7X4dK5Ow_hun1yekB12ldLfuhdNrUOieflxJ5B0HEJ5RnA--
-X-Yahoo-Newman-Property: ymail-3
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by apollo.rocketraman.com (Postfix) with ESMTP id 7AC9921C051A;
-	Wed, 25 Mar 2009 18:03:08 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at rocketraman.com
-Received: from apollo.rocketraman.com ([127.0.0.1])
-	by localhost (apollo.rocketraman.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 4pd2Nt1mnrv4; Wed, 25 Mar 2009 18:03:02 -0400 (EDT)
-Received: from [192.168.1.5] (zeus.rocketraman.com [192.168.1.5])
-	by apollo.rocketraman.com (Postfix) with ESMTP id C58BB21C0519;
-	Wed, 25 Mar 2009 18:03:02 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <7viqlxz9go.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.2
+	id S1752970AbZCYWN3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 18:13:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752734AbZCYWN3
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 18:13:29 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46951 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752261AbZCYWN2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2009 18:13:28 -0400
+Received: (qmail invoked by alias); 25 Mar 2009 22:13:26 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp071) with SMTP; 25 Mar 2009 23:13:26 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19wRwIYnYpw5+fzwOBYakVJ/7kwsWGYT5VWkhpsEK
+	88sBCSInXM2u5G
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <1238014519-11683-1-git-send-email-newren@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114686>
 
-Junio C Hamano wrote:
->> "After a feature release is made from "master", however, "next" will
->> be rebuilt from the tip of "master" using the surviving topics"
->>
->> Does this mean:
->>
->> git branch -d next
->> git checkout -b next master
->> git merge ai/topic1_to_cook_in_next
->> git merge ai/topic2_to_cook_in_next
-> 
-> That is more-or-less correct, even though I'd actually do either
-> 
-> 	git branch -f next master
-> 
-> or
-> 
-> 	git checkout next
->         git reset --hard master
-> 
-> instead of deleting and recreating.
+Hi,
 
-Is that a stylistic preference or does your approach have some
-advantage over the delete/create? Doesn't git branch -f internally
-delete and re-create?
+On Wed, 25 Mar 2009, newren@gmail.com wrote:
 
-This whole approach seems really workable and powerful -- the only
-concern I had with this workflow was the difficult to understand
-visualization of the history. So to repeat my earlier question: Are
-there some canned gitk invocations, or other tips/tricks/approaches,
-that can be used to make the visualization of the integration and
-topic branches more intuitive?
+> From: Elijah Newren <newren@gmail.com>
+> 
+> When exporting a subset of commits on a branch that do not go back to a
+> root commit (e.g. master~2..master), we still want each exported commit to
+> have the same files in the exported tree as in the original tree.
+> 
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
 
-Within the next couple of days I will probably submit a patch to
-maintain-git.txt that includes the information you have relayed to me
-here, as I think it may be useful to others.
+Makes sense.
 
-Cheers,
-Raman
+>  builtin-fast-export.c  |    3 ++-
+>  t/t9301-fast-export.sh |    7 +++++--
+>  2 files changed, 7 insertions(+), 3 deletions(-)
+> 
+> diff --git a/builtin-fast-export.c b/builtin-fast-export.c
+> index fdf4ae9..34a419c 100644
+> --- a/builtin-fast-export.c
+> +++ b/builtin-fast-export.c
+> @@ -221,7 +221,8 @@ static void handle_commit(struct commit *commit, struct rev_info *rev)
+>  	if (message)
+>  		message += 2;
+>  
+> -	if (commit->parents) {
+> +	if (commit->parents &&
+> +	    get_object_mark(&commit->parents->item->object) != 0) {
+>  		parse_commit(commit->parents->item);
+>  		diff_tree_sha1(commit->parents->item->tree->object.sha1,
+>  			       commit->tree->object.sha1, "", &rev->diffopt);
+
+I do not understand that change.
+
+A good explanation in the commit message might help this stupid developer.
+
+Ciao,
+Dscho
