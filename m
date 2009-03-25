@@ -1,108 +1,73 @@
-From: Chris Johnsen <chris_johnsen@pobox.com>
-Subject: Re: [PATCH 1/2] Documentation/Makefile: make most operations "quiet"
-Date: Wed, 25 Mar 2009 04:55:19 -0500
-Message-ID: <1237974919-3020-1-git-send-email-chris_johnsen@pobox.com>
-References: <20090325042842.GB15498@coredump.intra.peff.net>
-Cc: git@vger.kernel.org, Chris Johnsen <chris_johnsen@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 25 10:57:28 2009
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] Documentation: minor consistency fixes in   git-difftool.txt.
+Date: Wed, 25 Mar 2009 11:21:38 +0100
+Message-ID: <49CA05B2.7020207@drmicha.warpmail.net>
+References: <1237961655-29147-1-git-send-email-davvid@gmail.com> <7vocvq842a.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 25 11:23:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmPrN-0002rJ-8z
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 10:57:21 +0100
+	id 1LmQGV-0003Hp-0l
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 11:23:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752261AbZCYJzs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 05:55:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752099AbZCYJzs
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 05:55:48 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58841 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751275AbZCYJzr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2009 05:55:47 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 4EBCB9C57;
-	Wed, 25 Mar 2009 05:55:45 -0400 (EDT)
-Received: from localhost.localdomain (unknown [75.53.43.147]) (using TLSv1
- with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate
- requested) by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id
- 090149C53; Wed, 25 Mar 2009 05:55:39 -0400 (EDT)
-X-Mailer: git-send-email 1.6.2.1.315.g33192
-In-Reply-To: <20090325042842.GB15498@coredump.intra.peff.net>
-X-Pobox-Relay-ID: 1C1125BE-1923-11DE-A4C8-C5D912508E2D-07245699!a-sasl-quonix.pobox.com
+	id S1753611AbZCYKVs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 06:21:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753281AbZCYKVs
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 06:21:48 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:43166 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752597AbZCYKVr (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Mar 2009 06:21:47 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 28A8F2FC4FB;
+	Wed, 25 Mar 2009 06:21:45 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Wed, 25 Mar 2009 06:21:45 -0400
+X-Sasl-enc: 8JgGCgQGiiJuRuwWQ73nhVHCPEYK2BLRf9LLZV0e4xir 1237976504
+Received: from localhost.localdomain (p4FC63420.dip0.t-ipconnect.de [79.198.52.32])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 53B0B53C60;
+	Wed, 25 Mar 2009 06:21:44 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090324 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <7vocvq842a.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114579>
 
-On 2009 Mar 24, at 23:28, Jeff King wrote:
-> On Tue, Mar 24, 2009 at 11:21:39PM -0500, Chris Johnsen wrote:
->
-> >  technical/api-index.txt: technical/api-index-skel.txt \
-> > -	technical/api-index.sh $(patsubst %,%.txt,$(API_DOCS))
-> > +	$(QUIET_GEN)technical/api-index.sh $(patsubst %,%.txt,$(API_DOCS)) && \
-> >  	cd technical && sh ./api-index.sh
->
-> What's going on here? The line you remove is part of the dependencies,
-> but you replace it with a line of build instructions (and make barfs, of
-> course).
+Junio C Hamano venit, vidit, dixit 25.03.2009 08:17:
+> David Aguilar <davvid@gmail.com> writes:
+> 
+>> Signed-off-by: David Aguilar <davvid@gmail.com>
+>> ---
+>>  Documentation/git-difftool.txt |    6 +++---
+>>  1 files changed, 3 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
+>> index 5ae02f8..23070c1 100644
+>> --- a/Documentation/git-difftool.txt
+>> +++ b/Documentation/git-difftool.txt
+>> @@ -12,7 +12,7 @@ SYNOPSIS
+>>  DESCRIPTION
+>>  -----------
+>>  'git-difftool' is a git command that allows you to compare and edit files
+>> -between revisions using common diff tools.  'git difftool' is a frontend
+>> +between revisions using common diff tools.  'git-difftool' is a frontend
+> 
+> I thought that the recent trend is to spell these as 'git difftool' (two
+> separate words), although I didn't follow the discussion on quoting styles
+> closely, so I do not know which of sq, dq or backtick is preferred.
+> 
+> Can somebody help me out here?
+> 
 
-Yes, I botched that one. The QUIET_GEN should have been on the
-next line. Thanks for catching it. I fixed it along with error
-propagation and initially-also-botched "&& chaining" for
-gitman.texi. I also added QUIET_XSLTPROC for user-manual.html.
+I'd say it's backticks for commands/code, but I think discussion about a
+style guide is still on.
 
-I tested the man, html, info, and git-add.texi targets
-(previously I only ran man and info targets; git-add.texi
-exercises a rule not otherwise used in the usual targets).
-
-An interdiff from "v1" to what I have now follows (it include
-parts that would be in 1/2 and 2/2 from "v1").
-
--- >8 --
- Documentation/Makefile |    9 +++++----
- 1 files changed, 5 insertions(+), 4 deletions(-)
-
-diff --git c/Documentation/Makefile w/Documentation/Makefile
-index 373a2cc..d145372 100644
---- c/Documentation/Makefile
-+++ w/Documentation/Makefile
-@@ -92,6 +92,7 @@ ifndef V
- 	QUIET_DB2TEXI	= @echo '   ' DB2TEXI $@;
- 	QUIET_MAKEINFO	= @echo '   ' MAKEINFO $@;
- 	QUIET_DBLATEX	= @echo '   ' DBLATEX $@;
-+	QUIET_XSLTPROC	= @echo '   ' XSLTPROC $@;
- 	QUIET_GEN	= @echo '   ' GEN $@;
- 	QUIET_STDERR	= 2> /dev/null
- 	QUIET_SUBDIR0	= +@subdir=
-@@ -202,8 +203,8 @@ user-manual.xml: user-manual.txt user-manual.conf
- 	$(QUIET_ASCIIDOC)$(ASCIIDOC) -b docbook -d book $<
- 
- technical/api-index.txt: technical/api-index-skel.txt \
--	$(QUIET_GEN)technical/api-index.sh $(patsubst %,%.txt,$(API_DOCS)) && \
--	cd technical && sh ./api-index.sh
-+	technical/api-index.sh $(patsubst %,%.txt,$(API_DOCS))
-+	$(QUIET_GEN)cd technical && sh ./api-index.sh
- 
- $(patsubst %,%.html,$(API_DOCS) technical/api-index): %.html : %.txt
- 	$(QUIET_ASCIIDOC)$(ASCIIDOC) -b xhtml11 -f asciidoc.conf \
-@@ -213,7 +214,7 @@ XSLT = docbook.xsl
- XSLTOPTS = --xinclude --stringparam html.stylesheet docbook-xsl.css
- 
- user-manual.html: user-manual.xml
--	xsltproc $(XSLTOPTS) -o $@ $(XSLT) $<
-+	$(QUIET_XSLTPROC)xsltproc $(XSLTOPTS) -o $@ $(XSLT) $<
- 
- git.info: user-manual.texi
- 	$(QUIET_MAKEINFO)$(MAKEINFO) --no-split -o $@ user-manual.texi
-@@ -233,7 +234,7 @@ user-manual.pdf: user-manual.xml
- gitman.texi: $(MAN_XML) cat-texi.perl
- 	$(QUIET_DB2TEXI)$(RM) $@+ $@ && \
- 	($(foreach xml,$(MAN_XML),$(DOCBOOK2X_TEXI) --encoding=UTF-8 \
--		--to-stdout $(xml) &&) true) > $@++
-+		--to-stdout $(xml) &&) true) > $@++ && \
- 	$(PERL_PATH) cat-texi.perl $@ <$@++ >$@+ && \
- 	rm $@++ && \
- 	mv $@+ $@
+Michael
