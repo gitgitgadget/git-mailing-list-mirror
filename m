@@ -1,104 +1,81 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Reference for git.git release process
-Date: Wed, 25 Mar 2009 12:30:31 -0700
-Message-ID: <7viqlxz9go.fsf@gitster.siamese.dyndns.org>
-References: <49CA78BF.2020101@fastmail.fm>
+Subject: Re: [PATCH 4/5] Draft of API for git-vcs-*, transport.c code to use
+ it.
+Date: Wed, 25 Mar 2009 12:40:52 -0700
+Message-ID: <7vskl1xuez.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LNX.1.00.0903242303410.19665@iabervon.org>
+ <7vskl284bt.fsf@gitster.siamese.dyndns.org>
+ <alpine.LNX.1.00.0903251050430.19665@iabervon.org>
+ <7vbprp5vko.fsf@gitster.siamese.dyndns.org>
+ <alpine.LNX.1.00.0903251446180.19665@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Raman Gupta <rocketraman@fastmail.fm>
-X-From: git-owner@vger.kernel.org Wed Mar 25 20:32:25 2009
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Mar 25 20:42:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmYpi-00072U-Fp
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 20:32:14 +0100
+	id 1LmYzi-0002ny-0I
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 20:42:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755075AbZCYTaj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 15:30:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754873AbZCYTai
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 15:30:38 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57295 "EHLO
+	id S1753653AbZCYTk7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 15:40:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753619AbZCYTk7
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 15:40:59 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58387 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753696AbZCYTai (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2009 15:30:38 -0400
+	with ESMTP id S1753104AbZCYTk7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2009 15:40:59 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2A10C9962;
-	Wed, 25 Mar 2009 15:30:36 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id E46369A44;
+	Wed, 25 Mar 2009 15:40:56 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 694049961; Wed,
- 25 Mar 2009 15:30:33 -0400 (EDT)
-In-Reply-To: <49CA78BF.2020101@fastmail.fm> (Raman Gupta's message of "Wed,
- 25 Mar 2009 14:32:31 -0400")
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 428059A43; Wed,
+ 25 Mar 2009 15:40:54 -0400 (EDT)
+In-Reply-To: <alpine.LNX.1.00.0903251446180.19665@iabervon.org> (Daniel
+ Barkalow's message of "Wed, 25 Mar 2009 15:28:23 -0400 (EDT)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 6A371D98-1973-11DE-BCC3-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: DC381F9A-1974-11DE-9AF0-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114653>
 
-Raman Gupta <rocketraman@fastmail.fm> writes:
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-> One question about the dev process:
+> On Wed, 25 Mar 2009, Junio C Hamano wrote:
 >
-> 1) I don't see any topic branches available in git.git. Are these
-> generally kept in a private repo and/or shared between individual
-> developer's public repositories?
-
-I do not answer "generally" part, but in git.git, I do not publish heads
-of individual topic branches.  I could, but simply I don't, because that
-has been the way I've operated so far, and I am too lazy to change my
-configuration.  Also I suspect it would make my life more cumbersome
-because I have to prune stale topics from the public repositories from
-time to time.
-
-> Some questions about the release process:
+>> Suppose a project used to use subversion, but it migrated to git (not an
+>> unheard-of scenario these days, I hope).  The git repository now is the
+>> authoritative one, all the development happens on this side.
+>> 
+>> But in order to help:
+>> 
+>>  - people who have established their workflow to follow the project
+>>    (e.g. not necessarily contributing anything back, but just doing
+>>    regular "svn update");
+>> 
+>>  - people who have leftover local changes from the subversion days; and
+>> 
+>>  - other project infrastracture (e.g. trac) that the project hasn't
+>>    managed to interface to the new git repository yet;
+>> 
+>> the project decides to keep feeding recent updates to the subversion
+>> repository that used to be authoritative, even though it is now declared
+>> read-only (i.e. the only update comes from the git end).
 >
-> 1) After a release is made (master is tagged with vX.Y.Z), is the
-> maint branch deleted and recreated from the new release tag? e.g.
->
-> git branch -d maint
-> git branch maint master
+> Actually, this is easy: just configure the git repo to not fetch anything 
+> from the no-longer-authoritative subversion repository. git-vcs-svn would 
+> waste a bunch of time reimporting what it exported, but it wouldn't 
+> actually do anything with it (since it doesn't even have tracking refs to 
+> update). It could, of course, be optimized to avoid reimporting if it 
+> doesn't need to.
 
-It is rather:
-
-        git checkout maint
-        git merge master
-
-which should be the same because the merge should fast-forward, but an
-advantage is that it would keep the reflog of 'maint'.
-
-In addition, you can keep older maintenance track around, i.e.
-
-	git branch maint-X.Y.(Z-1) maint
-        git checkout maint
-        git merge master
-
-so that maintenance releases for even older codebase _could_ be issued
-_if_ necessary.
-
-> 2) MaintNotes states:
->
-> "After a feature release is made from "master", however, "next" will
-> be rebuilt from the tip of "master" using the surviving topics"
->
-> Does this mean:
->
-> git branch -d next
-> git checkout -b next master
-> git merge ai/topic1_to_cook_in_next
-> git merge ai/topic2_to_cook_in_next
-
-That is more-or-less correct, even though I'd actually do either
-
-	git branch -f next master
-
-or
-
-	git checkout next
-        git reset --hard master
-
-instead of deleting and recreating.
+I am afraid that won't fly; my comment that started this subthread was not
+about your "import" but was about your "export" part.  It is about sending
+the git branch to the other end, which is allowed to rewrite what we send
+and force us to modify our history.
