@@ -1,69 +1,105 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: reverting initial commit
-Date: Wed, 25 Mar 2009 21:40:46 +0100
-Message-ID: <fabb9a1e0903251340x637a21dav6e304aa6d2825958@mail.gmail.com>
-References: <49CA7428.70400@obry.net> <7v1vsl4fxo.fsf@gitster.siamese.dyndns.org> 
-	<8c9a060903251133x33749041oc2a5152097da0ae8@mail.gmail.com> 
-	<gqe1kf$pg1$1@ger.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 25 21:42:58 2009
+From: newren@gmail.com
+Subject: [PATCH] fast-export: Avoid dropping files from commits
+Date: Wed, 25 Mar 2009 14:55:19 -0600
+Message-ID: <1238014519-11683-1-git-send-email-newren@gmail.com>
+Cc: Johannes.Schindelin@gmx.de, gitster@pobox.com,
+	Elijah Newren <newren@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 25 21:58:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmZvs-0001LI-9u
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 21:42:40 +0100
+	id 1LmaAr-0007F1-L3
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 21:58:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752800AbZCYUlJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 16:41:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752337AbZCYUlH
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 16:41:07 -0400
-Received: from mail-bw0-f169.google.com ([209.85.218.169]:59991 "EHLO
-	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751520AbZCYUlF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2009 16:41:05 -0400
-Received: by bwz17 with SMTP id 17so231326bwz.37
-        for <git@vger.kernel.org>; Wed, 25 Mar 2009 13:41:01 -0700 (PDT)
+	id S1752092AbZCYU4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 16:56:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751467AbZCYU4h
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 16:56:37 -0400
+Received: from rv-out-0506.google.com ([209.85.198.226]:43938 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750915AbZCYU4g (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2009 16:56:36 -0400
+Received: by rv-out-0506.google.com with SMTP id f9so217360rvb.1
+        for <git@vger.kernel.org>; Wed, 25 Mar 2009 13:56:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=iu+wx0whYJrplojqENK9QcC2BCXFWBJheke3A8bSRm4=;
-        b=KMWYSzWpuEhWCBF7HTbD//9NmdllNVvCLq7YwdZCrPNEq0qi4PWU9NgdZVbUWjOjIP
-         gNSATyLYj2vZ1YJXiuBry9ctZ8LXycYlPmFcYfgfolATSgzV3XJ9U4s13JfskWZ8fzFe
-         bPWMBV7v4SRVIR6q4CXskdIF3aqyAawD59CFY=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=/1TmsJB5zQTfMn+LQ1o48cggOKw3DJwDDGBd9wc24wU=;
+        b=srdP9mcsrA9OxSF4swCZpCc/Mo4aCTX9KvGiPu3tltbtb1iKnlFNUT7ZvEGwyLqvQf
+         zuy+PHxE73TukyAhkcsDynKWAHCPjzG2/za+i3nGQHa2sHfU0F16Jgh2xI0TtOAmIoTk
+         wZDszZ0RXbJqIEyhIKZzM702HG6DFUWjc/LSg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=M9OpVH2GlPDG8ZLosjLuSUZ0/bWztzJuyVBzGP6YJSHVb9ZKPffTWUzbYPV4F0Ks3m
-         U6of+D7T18KnA33TcMFD3w+rcdPB4kL1D8jWVTZwVkocAo4/dLt9xp6ChRl9baU6hhu1
-         yQ/waIBW06IA1tusw/CEdFWw4XxxCRHgrPiKM=
-In-Reply-To: <gqe1kf$pg1$1@ger.gmane.org>
-Received: by 10.103.172.9 with SMTP id z9mr4376278muo.109.1238013661482; Wed, 
-	25 Mar 2009 13:41:01 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=YfqNdHchCuxKmik6bCqyofcLAXC3msmg6ANeqYHd4qqm/0X4ncfXo/k9rRNwnDpW4+
+         X0ZAFvATfNzdeDVzQWR1zOYj3OqqS8cLqmssphpt1kUc+ghbpbaNkK6NnWmZhvCzNA3V
+         ocRAqKVHNCqyEXDsBVNihzIwe9FtVSdf2weRM=
+Received: by 10.140.127.13 with SMTP id z13mr23670rvc.30.1238014594384;
+        Wed, 25 Mar 2009 13:56:34 -0700 (PDT)
+Received: from localhost.localdomain (c-69-254-130-124.hsd1.nm.comcast.net [69.254.130.124])
+        by mx.google.com with ESMTPS id f21sm17959929rvb.25.2009.03.25.13.56.32
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 25 Mar 2009 13:56:33 -0700 (PDT)
+X-Mailer: git-send-email 1.6.2.1.317.g3d051
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114662>
 
-Heya,
+From: Elijah Newren <newren@gmail.com>
 
-On Wed, Mar 25, 2009 at 20:45, Giuseppe Bilotta
-<giuseppe.bilotta@gmail.com> wrote:
-> I wish there was a way to tell rebase -i to go back to the first commit,
-> inclusive, but the two or three times I've tried hacking at it I never
-> managed to come to anything useful 8-/
+When exporting a subset of commits on a branch that do not go back to a
+root commit (e.g. master~2..master), we still want each exported commit to
+have the same files in the exported tree as in the original tree.
 
-Wasn't --root added to rebase -i recently?
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ builtin-fast-export.c  |    3 ++-
+ t/t9301-fast-export.sh |    7 +++++--
+ 2 files changed, 7 insertions(+), 3 deletions(-)
 
+diff --git a/builtin-fast-export.c b/builtin-fast-export.c
+index fdf4ae9..34a419c 100644
+--- a/builtin-fast-export.c
++++ b/builtin-fast-export.c
+@@ -221,7 +221,8 @@ static void handle_commit(struct commit *commit, struct rev_info *rev)
+ 	if (message)
+ 		message += 2;
+ 
+-	if (commit->parents) {
++	if (commit->parents &&
++	    get_object_mark(&commit->parents->item->object) != 0) {
+ 		parse_commit(commit->parents->item);
+ 		diff_tree_sha1(commit->parents->item->tree->object.sha1,
+ 			       commit->tree->object.sha1, "", &rev->diffopt);
+diff --git a/t/t9301-fast-export.sh b/t/t9301-fast-export.sh
+index 86c3760..b860626 100755
+--- a/t/t9301-fast-export.sh
++++ b/t/t9301-fast-export.sh
+@@ -8,6 +8,9 @@ test_description='git fast-export'
+ 
+ test_expect_success 'setup' '
+ 
++	echo break it > file0 &&
++	git add file0 &&
++	test_tick &&
+ 	echo Wohlauf > file &&
+ 	git add file &&
+ 	test_tick &&
+@@ -57,8 +60,8 @@ test_expect_success 'fast-export master~2..master' '
+ 		(cd new &&
+ 		 git fast-import &&
+ 		 test $MASTER != $(git rev-parse --verify refs/heads/partial) &&
+-		 git diff master..partial &&
+-		 git diff master^..partial^ &&
++		 git diff --exit-code master partial &&
++		 git diff --exit-code master^ partial^ &&
+ 		 test_must_fail git rev-parse partial~2)
+ 
+ '
 -- 
-Cheers,
-
-Sverre Rabbelier
+1.6.0.6
