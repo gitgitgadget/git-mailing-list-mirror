@@ -1,78 +1,70 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: branch ahead in commits but push claims all up to date
-Date: Tue, 24 Mar 2009 23:19:47 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0903242304530.19665@iabervon.org>
-References: <7001b7a00903240821v2155d234x6a10c80a3e987acb@mail.gmail.com>  <7001b7a00903240822w70a57349xcc66a02cef62dc70@mail.gmail.com>  <43d8ce650903240918q2ffdba44w241e0f378a11fd3d@mail.gmail.com>  <alpine.LNX.1.00.0903241304090.19665@iabervon.org> 
- <43d8ce650903241726s122cc468q4ea9188e1561832@mail.gmail.com>  <alpine.LNX.1.00.0903242118270.19665@iabervon.org> <7001b7a00903241901w107e2973i9912eab114c9cde0@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] init-db: support --import to add all files and commit
+ right after init
+Date: Wed, 25 Mar 2009 04:51:22 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903250450240.10279@pacific.mpi-cbg.de>
+References: <1237946996-5287-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: John Tapsell <johnflux@gmail.com>, git@vger.kernel.org
-To: Irene Ros <imirene@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 25 04:22:13 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-791588615-1237953082=:10279"
+Cc: git@vger.kernel.org
+To: =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 25 04:51:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmJgt-00015w-EU
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 04:22:07 +0100
+	id 1LmK8n-0008UR-Vk
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 04:50:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754674AbZCYDTv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Mar 2009 23:19:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754130AbZCYDTu
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Mar 2009 23:19:50 -0400
-Received: from iabervon.org ([66.92.72.58]:51031 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753470AbZCYDTu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Mar 2009 23:19:50 -0400
-Received: (qmail 12443 invoked by uid 1000); 25 Mar 2009 03:19:47 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 25 Mar 2009 03:19:47 -0000
-In-Reply-To: <7001b7a00903241901w107e2973i9912eab114c9cde0@mail.gmail.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1754710AbZCYDtT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Mar 2009 23:49:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754981AbZCYDtS
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 Mar 2009 23:49:18 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35722 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754730AbZCYDtR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Mar 2009 23:49:17 -0400
+Received: (qmail invoked by alias); 25 Mar 2009 03:49:14 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp031) with SMTP; 25 Mar 2009 04:49:14 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18Pgw1HYcAPyz0L1nkhE1R2fIEU/gpn01ofSbLIlK
+	A57Ndj3vLcdCuX
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1237946996-5287-1-git-send-email-pclouds@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6899999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114552>
 
-On Tue, 24 Mar 2009, Irene Ros wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Hi All,
+--8323328-791588615-1237953082=:10279
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+
+Hi,
+
+On Wed, 25 Mar 2009, Nguyễn Thái Ngọc Duy wrote:
+
+> This is equivalent to "git init;git add .;git commit -q -m blah".
+> I find myself doing that too many times, hence this shortcut.
 > 
-> Thank you for the good advice. I may be the case I am somehow misusing
-> git... I couldn't resolve the issue and so I created a new project off
-> of the same repo. Switching to the same branch in question yielded an
-> even stranger result: In this new project, the commits were there (I
-> could see them in git log and in git log origin/myBranch) whereas in
-> the previous older project I did not... does that make sense? Our
-> origin branches are located on a central server so can't quite figure
-> out why viewing the log of the same remote branch from two different
-> projects would yield different results. Any suggestions? At this
-> point, I'm just really curious.
+> In future, --fast-import support would also be nice if the import
+> directory has a lot of files.
+> 
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 
-origin/* is a copy of what git saw the last time it talked to the remote 
-repository. This may be different from what the remote repository now 
-contains. (Also, there are a few cases in which pushing to a remote 
-repository doesn't count as talking to it; fetching with a configured 
-remote always counts.) The local copies are handy for being able to 
-compare the work you've done locally with what is in the remote repository 
-when you don't necessarily have a network connection, don't expect 
-constant updates remotely, or don't want to be distracted by remote 
-changes. For example, you might have your local work, and you might want 
-to compare it with what other people have done. You want to avoid having 
-additional changes that other people make while you're making this 
-comparison show up in the middle.
+I wanted to have this for a _long_ time!
 
-Of course, when you make a new clone of the same repository, this clone 
-will look at the repository when you make the clone, and will have the 
-latest information (as of that time). 
+But could you please say "init" in the subject instead of "init-db"?  The 
+latter is just a historical wart we have to carry around.
 
-In order to get an existing repository to see changes to a remote 
-repository, use "git fetch <remote>" (you can leave off the <remote> to 
-get the oone you gave to "clone", which is configured as "origin"). 
-Alternatively, you can use "git pull" to get the data and also merge it in 
-the same command, which may or may not be a useful addition depending on 
-your workflow.
-
-	-Daniel
-*This .sig left intentionally blank*
+Thanks,
+Dscho
+--8323328-791588615-1237953082=:10279--
