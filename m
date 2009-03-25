@@ -1,57 +1,70 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: [PATCH] builtin-push.c: Fix typo: "anythig" -> "anything"
-Date: Wed, 25 Mar 2009 13:14:03 -0700
-Message-ID: <1238012043-1900-1-git-send-email-kevin@sb.org>
-Cc: Kevin Ballard <kevin@sb.org>, Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 25 21:18:03 2009
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH 1/2] t7005-editor: Use $SHELL_PATH in the editor scripts
+Date: Wed, 25 Mar 2009 21:31:26 +0100
+Message-ID: <200903252131.26561.j6t@kdbg.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 25 21:33:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmZX8-0007qJ-MK
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 21:17:07 +0100
+	id 1LmZmc-00063p-VY
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 21:33:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752242AbZCYUPR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 16:15:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751891AbZCYUPQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 16:15:16 -0400
-Received: from hapkido.dreamhost.com ([66.33.216.122]:50947 "EHLO
-	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750846AbZCYUPP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2009 16:15:15 -0400
-Received: from randymail-a1.g.dreamhost.com (caiajhbdcahe.dreamhost.com [208.97.132.74])
-	by hapkido.dreamhost.com (Postfix) with ESMTP id 7BFCA185A15
-	for <git@vger.kernel.org>; Wed, 25 Mar 2009 13:15:14 -0700 (PDT)
-Received: from localhost.localdomain (c-67-188-36-106.hsd1.ca.comcast.net [67.188.36.106])
-	by randymail-a1.g.dreamhost.com (Postfix) with ESMTP id C9D7F18CE1B;
-	Wed, 25 Mar 2009 13:14:05 -0700 (PDT)
-X-Mailer: git-send-email 1.6.2.1.471.g682837
+	id S1753094AbZCYUbf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 16:31:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751949AbZCYUbf
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 16:31:35 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:13020 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751795AbZCYUbe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2009 16:31:34 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 13CBB2C4013;
+	Wed, 25 Mar 2009 21:31:27 +0100 (CET)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 254E61D1D5;
+	Wed, 25 Mar 2009 21:31:27 +0100 (CET)
+User-Agent: KMail/1.9.9
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114658>
 
-Signed-off-by: Kevin Ballard <kevin@sb.org>
+The test sets up various shell scripts and uses them as commit message
+editors.  On Windows, we need a shebang line in order to recognize the
+files as executable shell scripts.  This adds it.
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
-I forgot to add the Signed-off-by on my previous email.
+ This one and the next patch can go on top of js/windows-tests.
+ Or you again pull from
 
- builtin-push.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+   git://repo.or.cz/git/mingw/j6t.git for-junio
 
-diff --git a/builtin-push.c b/builtin-push.c
-index 97db700..2eabcd3 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -73,7 +73,7 @@ static const char *warn_unconfigured_push_msg[] = {
- 	"",
- 	"You can specify what action you want to take in this case, and",
- 	"avoid seeing this message again, by configuring 'push.default' to:",
--	"  'nothing'  : Do not push anythig",
-+	"  'nothing'  : Do not push anything",
- 	"  'matching' : Push all matching branches (default)",
- 	"  'tracking' : Push the current branch to whatever it is tracking",
- 	"  'current'  : Push the current branch"
+ -- Hannes
+
+ t/t7005-editor.sh |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/t/t7005-editor.sh b/t/t7005-editor.sh
+index 2f8404a..e83bc8f 100755
+--- a/t/t7005-editor.sh
++++ b/t/t7005-editor.sh
+@@ -7,6 +7,7 @@ test_description='GIT_EDITOR, core.editor, and stuff'
+ for i in GIT_EDITOR core_editor EDITOR VISUAL vi
+ do
+ 	cat >e-$i.sh <<-EOF
++	#!$SHELL_PATH
+ 	echo "Edited by $i" >"\$1"
+ 	EOF
+ 	chmod +x e-$i.sh
 -- 
-1.6.2.1.471.g682837
+1.6.2.1.224.g2225f
