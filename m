@@ -1,88 +1,69 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 4/5] Draft of API for git-vcs-*, transport.c code to use
- it.
-Date: Wed, 25 Mar 2009 16:38:37 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0903251611140.19665@iabervon.org>
-References: <alpine.LNX.1.00.0903242303410.19665@iabervon.org> <7vskl284bt.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0903251050430.19665@iabervon.org> <7vbprp5vko.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0903251446180.19665@iabervon.org>
- <7vskl1xuez.fsf@gitster.siamese.dyndns.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: reverting initial commit
+Date: Wed, 25 Mar 2009 21:40:46 +0100
+Message-ID: <fabb9a1e0903251340x637a21dav6e304aa6d2825958@mail.gmail.com>
+References: <49CA7428.70400@obry.net> <7v1vsl4fxo.fsf@gitster.siamese.dyndns.org> 
+	<8c9a060903251133x33749041oc2a5152097da0ae8@mail.gmail.com> 
+	<gqe1kf$pg1$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 25 21:40:12 2009
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 25 21:42:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmZtT-0000NF-Sq
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 21:40:12 +0100
+	id 1LmZvs-0001LI-9u
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 21:42:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752370AbZCYUil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 16:38:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752173AbZCYUik
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 16:38:40 -0400
-Received: from iabervon.org ([66.92.72.58]:41749 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750711AbZCYUik (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2009 16:38:40 -0400
-Received: (qmail 14777 invoked by uid 1000); 25 Mar 2009 20:38:37 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 25 Mar 2009 20:38:37 -0000
-In-Reply-To: <7vskl1xuez.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752800AbZCYUlJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 16:41:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752337AbZCYUlH
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 16:41:07 -0400
+Received: from mail-bw0-f169.google.com ([209.85.218.169]:59991 "EHLO
+	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751520AbZCYUlF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2009 16:41:05 -0400
+Received: by bwz17 with SMTP id 17so231326bwz.37
+        for <git@vger.kernel.org>; Wed, 25 Mar 2009 13:41:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=iu+wx0whYJrplojqENK9QcC2BCXFWBJheke3A8bSRm4=;
+        b=KMWYSzWpuEhWCBF7HTbD//9NmdllNVvCLq7YwdZCrPNEq0qi4PWU9NgdZVbUWjOjIP
+         gNSATyLYj2vZ1YJXiuBry9ctZ8LXycYlPmFcYfgfolATSgzV3XJ9U4s13JfskWZ8fzFe
+         bPWMBV7v4SRVIR6q4CXskdIF3aqyAawD59CFY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=M9OpVH2GlPDG8ZLosjLuSUZ0/bWztzJuyVBzGP6YJSHVb9ZKPffTWUzbYPV4F0Ks3m
+         U6of+D7T18KnA33TcMFD3w+rcdPB4kL1D8jWVTZwVkocAo4/dLt9xp6ChRl9baU6hhu1
+         yQ/waIBW06IA1tusw/CEdFWw4XxxCRHgrPiKM=
+In-Reply-To: <gqe1kf$pg1$1@ger.gmane.org>
+Received: by 10.103.172.9 with SMTP id z9mr4376278muo.109.1238013661482; Wed, 
+	25 Mar 2009 13:41:01 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114661>
 
-On Wed, 25 Mar 2009, Junio C Hamano wrote:
+Heya,
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > On Wed, 25 Mar 2009, Junio C Hamano wrote:
-> >
-> >> Suppose a project used to use subversion, but it migrated to git (not an
-> >> unheard-of scenario these days, I hope).  The git repository now is the
-> >> authoritative one, all the development happens on this side.
-> >> 
-> >> But in order to help:
-> >> 
-> >>  - people who have established their workflow to follow the project
-> >>    (e.g. not necessarily contributing anything back, but just doing
-> >>    regular "svn update");
-> >> 
-> >>  - people who have leftover local changes from the subversion days; and
-> >> 
-> >>  - other project infrastracture (e.g. trac) that the project hasn't
-> >>    managed to interface to the new git repository yet;
-> >> 
-> >> the project decides to keep feeding recent updates to the subversion
-> >> repository that used to be authoritative, even though it is now declared
-> >> read-only (i.e. the only update comes from the git end).
-> >
-> > Actually, this is easy: just configure the git repo to not fetch anything 
-> > from the no-longer-authoritative subversion repository. git-vcs-svn would 
-> > waste a bunch of time reimporting what it exported, but it wouldn't 
-> > actually do anything with it (since it doesn't even have tracking refs to 
-> > update). It could, of course, be optimized to avoid reimporting if it 
-> > doesn't need to.
-> 
-> I am afraid that won't fly; my comment that started this subthread was not
-> about your "import" but was about your "export" part.  It is about sending
-> the git branch to the other end, which is allowed to rewrite what we send
-> and force us to modify our history.
+On Wed, Mar 25, 2009 at 20:45, Giuseppe Bilotta
+<giuseppe.bilotta@gmail.com> wrote:
+> I wish there was a way to tell rebase -i to go back to the first commit,
+> inclusive, but the two or three times I've tried hacking at it I never
+> managed to come to anything useful 8-/
 
-It can rewrite what we send, but if we're not reimporting it, we don't 
-care what it's done. All we care about is that when we ignore the 
-rewriting, git-vcs-* can still export more changes from our version of the 
-history.
+Wasn't --root added to rebase -i recently?
 
-That is, if we push X, which gets rewritten to X' (but we ignore that), 
-and we then push Y, whose parent is X (not X'), a high-quality git-vcs 
-backend will be reliably able to accept the second push, just as if we'd 
-created a Y' based on X'. And by "high-quality", I mean some testable 
-capability with a better name.
+-- 
+Cheers,
 
-	-Daniel
-*This .sig left intentionally blank*
+Sverre Rabbelier
