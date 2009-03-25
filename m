@@ -1,109 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Mar 2009, #06; Sat, 21)
-Date: Wed, 25 Mar 2009 11:06:19 -0700
-Message-ID: <7vzlf94gv8.fsf@gitster.siamese.dyndns.org>
-References: <7vk56jfgt2.fsf@gitster.siamese.dyndns.org>
- <20090323144650.GA20058@pvv.org> <7v4oxk6wk2.fsf@gitster.siamese.dyndns.org>
- <7vljqv2t05.fsf@gitster.siamese.dyndns.org>
- <7vhc1j2si9.fsf@gitster.siamese.dyndns.org> <20090324111645.GA6084@pvv.org>
+From: Pascal Obry <pascal@obry.net>
+Subject: reverting initial commit
+Date: Wed, 25 Mar 2009 19:12:56 +0100
+Organization: Home - http://www.obry.net
+Message-ID: <49CA7428.70400@obry.net>
+Reply-To: pascal@obry.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Finn Arne Gangstad <finnag@pvv.org>
-X-From: git-owner@vger.kernel.org Wed Mar 25 19:08:06 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Mar 25 19:14:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmXWC-000477-Mu
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 19:08:01 +0100
+	id 1LmXcG-0007Fd-Qi
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 19:14:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760854AbZCYSG3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 14:06:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759206AbZCYSG3
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 14:06:29 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48116 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759236AbZCYSG2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2009 14:06:28 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 45CF791B7;
-	Wed, 25 Mar 2009 14:06:23 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 83B2191B4; Wed,
- 25 Mar 2009 14:06:20 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A675E1C4-1967-11DE-9E87-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+	id S1753730AbZCYSMq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 14:12:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753220AbZCYSMp
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 14:12:45 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:54959 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750863AbZCYSMp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2009 14:12:45 -0400
+Received: by fg-out-1718.google.com with SMTP id e12so74869fga.17
+        for <git@vger.kernel.org>; Wed, 25 Mar 2009 11:12:42 -0700 (PDT)
+Received: by 10.86.78.13 with SMTP id a13mr178699fgb.79.1238004761503;
+        Wed, 25 Mar 2009 11:12:41 -0700 (PDT)
+Received: from ?192.168.0.100? (AVelizy-154-1-49-205.w82-124.abo.wanadoo.fr [82.124.151.205])
+        by mx.google.com with ESMTPS id 4sm6320167fgg.0.2009.03.25.11.12.40
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 25 Mar 2009 11:12:41 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; fr-FR; rv:1.8.1.21) Gecko/20090302 Thunderbird/2.0.0.21 Mnenhy/0.7.5.0
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114636>
 
-Finn Arne Gangstad <finnag@pvv.org> writes:
 
-> On Tue, Mar 24, 2009 at 02:13:18AM -0700, Junio C Hamano wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->> 
->> >   $ git push --dry-run sf.net
->> >   warning: ...
->> >   warning: You can specify what action you want to take in this case, and
->> >   warning: avoid seeing this message again, by configuring 'push.default' to:
->> >...
->> >   warning:   'current'  : Push the current branch
->> >   fatal: 'sf.net' does not appear to be a git repository
->> >   fatal: The remote end hung up unexpectedly
->> >
->> > The final, most important error messages are dwarfed out by the warning
->> > that talks about setting configuration on the remote that does not even
->> > exist.
->
-> I actually agree, but that final error is printed in a very ugly
-> place! It would require some surgery to pause the warning until we
-> figure out that sf.net is not a valid remote in the current setup.
->
-> get_refs_via_connect->connect_setup->git_connect-> .. fork()s .., runs
->    "sh -c git-receive-pack 'sf.net'" (which prints the first error)
-> and get_remote_heads->packet_read_line->safe_read() dumps the final error
-> and dies.
->
-> Is there any reason why remote_get needs to return a valid remote for
-> a value like "sf.net"?  If it didn't, the error message would be even
-> better, and not complain about a "remote end".
+Starting a new project I create a new repo and added some files for the
+initial revision of the project, something like:
 
-Yeah, you could work around by special casing colon-less ones as you
-suggested, but I do not think it is worth it.
+mkdir repo.git
+cd repo.git
+git init
+touch file
+git add file
+git ci -m "initial revision"
 
-Instead of "sf.net", the example could have been
+Now one file was not meant to be committed, I wanted to revert this commit:
 
-	git-core.git.sourceforge.net:/gitroot/gut-core
+git reset HEAD^
 
-which looks like a perfectly valid push destination, but it has a typo in
-the pathname, and the remote end will hang up unexpectedly in such a case,
-too.  I do not think remote_get() is a wrong thing to blame; in that
-codepath you simply do not know.
+fatal: ambiguous argument 'HEAD^': unknown revision or path not in the
+working tree.
+Use '--' to separate paths from revisions
 
-If you want to remove warning when we will eventually go "fatal", the way
-to do so is to remember you need to issue a warning but defer it until you
-actually start telling the other end in do_send_pack(), or something like
-that.
+I understand that HEAD^ does not exist, is there a way to do that?
 
-I do not think we would want nor need to go that route.  This warning is
-about a local configuration that applies to _all_ remotes, and setting the
-configuration once will squelch it for future push to any remotes.  Giving
-the warning even for an _incorrect_ remote is not wrong per-se.
+Thanks,
+Pascal.
 
-Issuing the warning at first looked incorrect to me, but it warns exactly
-about what the patch that added the warning messages wanted to warn about:
+-- 
 
-    If you did not misspell the name of the remote or the URL, you would
-    have triggered the default "matching refs" semantics, but you may not
-    have meant to do so, hence we are warning.  If you want to change the
-    default, here is how.  If you find this message irritating, you can
-    squelch it this way.
-
-In this particular case, I _did_ want the default matching refs semantics,
-so it was irritating whether I had the last two "fatal" lines or not.  But
-the point of your patch was to help new people for the cost of irritating
-people like me (once), so...
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|    http://www.obry.net  -  http://v2p.fr.eu.org
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver keys.gnupg.net --recv-key F949BD3B
