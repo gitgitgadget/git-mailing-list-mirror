@@ -1,60 +1,55 @@
 From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: [PATCH 1/2] init: support --import to add all files and commit 
-	right after init
-Date: Wed, 25 Mar 2009 12:56:02 +0100
-Message-ID: <adf1fd3d0903250456l3c14a863pd6ee00c0025100c4@mail.gmail.com>
-References: <1237978720-2500-1-git-send-email-pclouds@gmail.com>
+Subject: Re: Memory of past repositories in git remote?
+Date: Wed, 25 Mar 2009 13:05:21 +0100
+Message-ID: <adf1fd3d0903250505o38e0ac54jcf07f4425eee0a6@mail.gmail.com>
+References: <784F93DB-2D7C-4F48-88E8-BF56F01CD1E2@dinechin.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 25 12:58:15 2009
+	Christophe de Dinechin <christophe@dinechin.org>
+To: Christophe de Dinechin <christophe.de.dinechin@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 25 13:07:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmRkB-0003KU-Lu
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 12:58:04 +0100
+	id 1LmRsl-0006ZM-JG
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 13:06:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760977AbZCYL4J convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Mar 2009 07:56:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759671AbZCYL4H
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 07:56:07 -0400
-Received: from mail-bw0-f169.google.com ([209.85.218.169]:51871 "EHLO
-	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757678AbZCYL4F convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Mar 2009 07:56:05 -0400
-Received: by bwz17 with SMTP id 17so2640419bwz.37
-        for <git@vger.kernel.org>; Wed, 25 Mar 2009 04:56:02 -0700 (PDT)
-Received: by 10.103.24.11 with SMTP id b11mr4145786muj.76.1237982162646; Wed, 
-	25 Mar 2009 04:56:02 -0700 (PDT)
-In-Reply-To: <1237978720-2500-1-git-send-email-pclouds@gmail.com>
+	id S1758354AbZCYMF0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 08:05:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756349AbZCYMFZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 08:05:25 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:35859 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755338AbZCYMFZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2009 08:05:25 -0400
+Received: by fxm2 with SMTP id 2so2718757fxm.37
+        for <git@vger.kernel.org>; Wed, 25 Mar 2009 05:05:22 -0700 (PDT)
+Received: by 10.103.221.5 with SMTP id y5mr4151417muq.66.1237982721877; Wed, 
+	25 Mar 2009 05:05:21 -0700 (PDT)
+In-Reply-To: <784F93DB-2D7C-4F48-88E8-BF56F01CD1E2@dinechin.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114594>
 
-2009/3/25 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>=
-:
-> +-m <message>::
-> +--import <message>::
-> +
-> +Commit everything to the newly initialized repository. This is equiv=
-alent to:
-> +
-> +----------------
-> +$ git init
-> +$ git add .
-> +$ git commit -q -m <message>
-> +----------------
-> +
-> +If no message is given, "Initial commit" will be used.
+2009/3/25 Christophe de Dinechin <christophe.de.dinechin@gmail.com>:
+> Here are the details. I created a git repository in /home/ddd/vmm, impored
+> some Subversion history, and started working with that. I created a few
+> branches, e.g. one called "perrier". Then, I realized that there was a
+> better way to track Subversion changes, and so I moved the old repository as
+> /home/ddd/vmm.git, and created a new one that I populated with "git svn
+> clone svn+ssh://path/to/repot -T trunk -b branches -t users". That new
+> repository has no branch named "perrier" in it.
 
-Why a default message and not running the editor?
+Git tries different url: $url/.git, $url.git and $url (I'm not sure
+about the order).
 
+So having $url and $url.git is asking for problems. I don't know if it
+is documented somewhere.
+
+HTH,
 Santi
