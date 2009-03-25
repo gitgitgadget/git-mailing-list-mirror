@@ -1,169 +1,104 @@
-From: Marek Zawirski <marek.zawirski@gmail.com>
-Subject: Re: [PATCH JGIT 1/2] Calculate CRC32 on Pack Index v2
-Date: Wed, 25 Mar 2009 14:31:04 +0100
-Message-ID: <49CA3218.9090202@gmail.com>
-References: <ff6a9c820903231953q29a5ccbk8e5b54c9afdb8abd@mail.gmail.com> <1237962115-22709-1-git-send-email-j16sdiz+freenet@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Memory of past repositories in git remote?
+Date: Wed, 25 Mar 2009 15:22:13 +0100
+Message-ID: <49CA3E15.9020107@drmicha.warpmail.net>
+References: <784F93DB-2D7C-4F48-88E8-BF56F01CD1E2@dinechin.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: "Daniel Cheng (aka SDiZ)" <j16sdiz+freenet@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 25 14:33:33 2009
+Cc: git@vger.kernel.org,
+	Christophe de Dinechin <christophe@dinechin.org>,
+	=?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+To: Christophe de Dinechin <christophe.de.dinechin@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 25 15:26:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmTEX-0006mT-Lg
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 14:33:30 +0100
+	id 1LmU3V-0005Y1-FG
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 15:26:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759473AbZCYNbN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 09:31:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757215AbZCYNbM
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 09:31:12 -0400
-Received: from mu-out-0910.google.com ([209.85.134.190]:42838 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757526AbZCYNbL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2009 09:31:11 -0400
-Received: by mu-out-0910.google.com with SMTP id g7so17676muf.1
-        for <git@vger.kernel.org>; Wed, 25 Mar 2009 06:31:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=qleUWCVxKIBlvHr40JBIyi0ktdWWMvK9Ray6J/H0gZk=;
-        b=r/f0rXPOeCcBHG5fWvm5m0xhpu9kNYCe6ZgytsQ41rjex5pIChEZI4J99UB/1TGSY+
-         rSNLyFK8enmeYY+D0Vw57XSylMV4pUhOVw10KL4jYkIfg/8RT80X4XxXr/W5EUqKEtWJ
-         Sc4/cCR2i0X4QyB40hlE55uMlk6MshyEuJ4jE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=qfRpWIDhTZDfXvsiAL8S6Cu4JUqX5PvMLSNUSdOgUgV5PmbUQeOb/51uOscQd7XIP1
-         IcGXabaWNJwyOXeuI6LLmiL5xKXD0V/FmAibaY0pYI0rqtItuzY5cdXrYMs1KPl3n+Mh
-         76wTfz6yOGQ4ZeR3RmnVZpm+Vo5ZCXul98Xno=
-Received: by 10.102.228.10 with SMTP id a10mr4195767muh.26.1237987866960;
-        Wed, 25 Mar 2009 06:31:06 -0700 (PDT)
-Received: from ?193.51.208.217? (vis217.inria.fr [193.51.208.217])
-        by mx.google.com with ESMTPS id g1sm14196727muf.12.2009.03.25.06.31.05
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 25 Mar 2009 06:31:06 -0700 (PDT)
-User-Agent: Mozilla-Thunderbird 2.0.0.17 (X11/20081018)
-In-Reply-To: <1237962115-22709-1-git-send-email-j16sdiz+freenet@gmail.com>
+	id S1760435AbZCYOWZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 10:22:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762771AbZCYOWY
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 10:22:24 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:59027 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1762782AbZCYOWW (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Mar 2009 10:22:22 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 542432FC3BB;
+	Wed, 25 Mar 2009 10:22:20 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Wed, 25 Mar 2009 10:22:20 -0400
+X-Sasl-enc: pflPzsuS6AdXH7VP3/J14v2wn5YRXzB6PEwQO4V3qx33 1237990939
+Received: from localhost.localdomain (p4FC63420.dip0.t-ipconnect.de [79.198.52.32])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 528432B8FF;
+	Wed, 25 Mar 2009 10:22:19 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090324 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <784F93DB-2D7C-4F48-88E8-BF56F01CD1E2@dinechin.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114603>
 
-Hi,
+Christophe de Dinechin venit, vidit, dixit 25.03.2009 12:47:
+> I ran into a peculiar issue running git 1.6.1.2 on HP-UX: it looks  
+> like something has remembered an old repository and insists on  
+> providing that to "git fetch" instead of the new repository. Appending  
+> "/." at the end of the remote repository fixes the problem.
+> 
+> Here are the details. I created a git repository in /home/ddd/vmm,  
+> impored some Subversion history, and started working with that. I  
+> created a few branches, e.g. one called "perrier". Then, I realized  
+> that there was a better way to track Subversion changes, and so I  
+> moved the old repository as /home/ddd/vmm.git, and created a new one  
+> that I populated with "git svn clone svn+ssh://path/to/repot -T trunk - 
+> b branches -t users". That new repository has no branch named  
+> "perrier" in it.
+> 
+> Now, when I'm on another machine, create a new repository with the  
+> same "git svn clone", then do a "git remote add ddd ssh://name@mymachine/home/ddd/vmm 
+> ", I would expect to pick up the repository that is actually under / 
+> home/ddd/vmm on mymachine. But when I do a "git svn fetch", the output  
+> contains:
+> 
+> warning: no common commits
+> remote: Counting objects: 66874, done.
+> remote: Compressing objects: 100% (14626/14626), done.
+> remote: Total 66874 (delta 51668), reused 66589 (delta 51418)
+> Receiving objects: 100% (66874/66874), 96.41 MiB | 187 KiB/s, done
+> Resolving deltas: 100% (51668/51668), done.
+>  From ssh://name@mymachine/home/ddd/vmm
+> * [new branch] perrier -> ddd/perrier
+> ...
+> 
+> as well as all branches from /home/ddd/vmm.git (not /home/ddd/vmm). I  
+> tried doing an "ssh name@mymachine ls /home/ddd/vmm" to check that  
+> this was indeed the new repository. If instead of "/home/ddd/vmm", I  
+> specify "/home/ddd/vmm/.", then I do get the branches in the new  
+> repository, e.g in that case I get:
+> 
+>   * [new branch] tot -> ddd-good/tot
+> 
+> This is not just a name dependency, though, because if I specify / 
+> home/./ddd/vmm, then I get the old repository again. So what seems to  
+> matter is the dot at the end of the repository name.
+> 
+> I'm really puzzled by this behavior, and I have been unable to find  
+> anything in the git documentation explaining it. I tried to find  
+> references to vmm.git anywhere on either machines, but I couldn't.
+> 
+> This is easily reproduced, so I'm willing to run experiments to try  
+> and debug the problem.
 
-Thanks for spotting this bug.
+Given %s, git looks for existence of "%s.git/.git",
+ * "%s/.git", "%s.git", "%s" in this order. So it's intentional
+behavior, not a bug.
 
-Daniel Cheng (aka SDiZ) wrote:
+The idea is that non-bare repos should be chosen over bare ones, and
+bare ones are usually named something.git. One may argue whether %s/.git
+should come before %s.git/.git.
 
-(...)
-
-> diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/PackWriter.java b/org.spearce.jgit/src/org/spearce/jgit/lib/PackWriter.java
-> index 601ce71..d8b50e6 100644
-> --- a/org.spearce.jgit/src/org/spearce/jgit/lib/PackWriter.java
-> +++ b/org.spearce.jgit/src/org/spearce/jgit/lib/PackWriter.java
-> @@ -687,11 +687,13 @@ public class PackWriter {
->  
->  		assert !otp.isWritten();
->  
-> +		countingOut.resetCRC32();
->  		otp.setOffset(countingOut.getCount());
->  		if (otp.isDeltaRepresentation())
->  			writeDeltaObject(otp);
->  		else
->  			writeWholeObject(otp);
-> +		otp.setCRC((int) countingOut.getCRC32());
->
->   
-Huh, now it appears that you made CRC32 really computed;)
-I just wonder if it is sensible to compute it always regardless of used 
-index version (outputVersion) - for index v1 we don't really need CRC32 
-to be computed. I don't have a good idea how can it be avoided in truly 
-elegant way, as we cannot rely on the outputVersion checking in this 
-code - currently it may became changed after writing pack, but before 
-writing index.  But maybe it's not so important issue, as AFAIR v2 is 
-already default version for index.
-
-> }
-> diff --git a/org.spearce.jgit/src/org/spearce/jgit/util/CountingOutputStream.java b/org.spearce.jgit/src/org/spearce/jgit/util/CountingOutputStream.java
-> index b0b5f7d..b4ae915 100644
-> --- a/org.spearce.jgit/src/org/spearce/jgit/util/CountingOutputStream.java
-> +++ b/org.spearce.jgit/src/org/spearce/jgit/util/CountingOutputStream.java
-> @@ -40,12 +40,16 @@ package org.spearce.jgit.util;
->  import java.io.FilterOutputStream;
->  import java.io.IOException;
->  import java.io.OutputStream;
-> +import java.util.zip.CRC32;
->  
->  /**
-> - * Counting output stream decoration. Counts bytes written to stream.
-> + * Counting output stream decoration. Counts bytes written to stream and 
-> + * calculate CRC32 checksum.
->   
-IMO it would be better to make CRC32 computation in another decorator 
-class, but that's just me.
-
->   */
->  public class CountingOutputStream extends FilterOutputStream {
->  	private long count;
-> +	
-> +	private CRC32 crc;
->  
->  	/**
->  	 * Create counting stream being decorated to provided real output stream.
-> @@ -55,6 +59,7 @@ public class CountingOutputStream extends FilterOutputStream {
->  	 */
->  	public CountingOutputStream(OutputStream out) {
->  		super(out);
-> +		crc = new CRC32();
->  	}
->  
->  	@Override
-> @@ -79,10 +84,35 @@ public class CountingOutputStream extends FilterOutputStream {
->  		return count;
->  	}
->  
-> +    /**
-> +     * Resets CRC-32 to initial value.
-> +     */
-> +	public void resetCRC32() {
-> +		crc.reset();
-> +	}
-> +
-> +    /**
-> +     * Returns CRC-32 value.
-> +     * @return CRC32
-> +     */
-> +	public long getCRC32() {
-> +		return crc.getValue();
-> +	}
-> +
-> +
->  	/**
->  	 * Reset counter to zero value.
->  	 */
->  	public void reset() {
->  		count = 0;
-> +		crc.reset();
-> +	}
-> +	
-> +	/**
-> +	 * {@inheritDoc}
-> +	 */
-> +	public void close() throws IOException {
-> +		crc = null;
-> +		super.close();
->  	}
->  }
->   
-Have you tested that code? It seems that CRC32 updates is  missing in 
-write() method... or did I slept too short this night?:)
-
-Best,
-Marek
+Michael
