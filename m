@@ -1,111 +1,109 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: [PATCH] Grammar fixes to "merge" and "patch-id" docs
-Date: Wed, 25 Mar 2009 19:23:42 +0100
-Message-ID: <1238005422-7647-1-git-send-email-win@wincent.com>
-Cc: gitster@pobox.com, Wincent Colaiuta <win@wincent.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 25 19:25:24 2009
+From: Jacob Helwig <jacob.helwig@gmail.com>
+Subject: Re: reverting initial commit
+Date: Wed, 25 Mar 2009 11:20:23 -0700
+Message-ID: <8c9a060903251120j3e757e94o96b2b77669c16c61@mail.gmail.com>
+References: <49CA7428.70400@obry.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git list <git@vger.kernel.org>
+To: pascal@obry.net
+X-From: git-owner@vger.kernel.org Wed Mar 25 19:27:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmXn1-0003jg-9p
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 19:25:23 +0100
+	id 1LmXpV-0004pP-EC
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 19:27:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755677AbZCYSXv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 14:23:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754871AbZCYSXu
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 14:23:50 -0400
-Received: from wincent1.inetu.net ([209.235.192.161]:50342 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753507AbZCYSXt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2009 14:23:49 -0400
-Received: from localhost.localdomain (179.pool85-53-16.dynamic.orange.es [85.53.16.179])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id n2PINgaI020827
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 25 Mar 2009 14:23:43 -0400
-X-Mailer: git-send-email 1.6.2.1
+	id S1757757AbZCYS01 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Mar 2009 14:26:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755043AbZCYS01
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 14:26:27 -0400
+Received: from wf-out-1314.google.com ([209.85.200.172]:42282 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752879AbZCYS00 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Mar 2009 14:26:26 -0400
+Received: by wf-out-1314.google.com with SMTP id 29so171259wff.4
+        for <git@vger.kernel.org>; Wed, 25 Mar 2009 11:26:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=5ob9rrUzfwncPx6OSM8lO3Gg/6CXBCzQk7IsVdyIKng=;
+        b=FdI+vO8pmXRPkrWi7UtkFbEY8w9qLeGlYuep06/AHCnsnyvDyqkfbGcCXOP6IXliSO
+         MO7s7+HMutookP07mgQfmNgzSihNKuirHyNLjiodr4Xb4rF+KYa6JCmbdPI0ZVWPuDIA
+         YZsC29TsA62rKZY7+VvzpvA929XLjKCaax+bo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=FsLjkZLXj1VDuOSFjy4/8M6PFtFJWV1ZuR7ep0B0CtwpqbQ1MijJiYTXXFiWMX98HX
+         xxnblmPbkxu2UwcnUkUHQVhLWJZEf2h0JrA5B8eGFGKOodqSUDWERyMzGyuzpVm/t/Db
+         KVkTpZPG9nWKuKammFmdi0D/WMqiIpbc5K6Kc=
+In-Reply-To: <49CA7428.70400@obry.net>
+Received: by 10.143.29.17 with SMTP id g17mr4037923wfj.109.1238005238244; Wed, 
+	25 Mar 2009 11:20:38 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114638>
 
-Signed-off-by: Wincent Colaiuta <win@wincent.com>
----
-Just a few grammar glitches that caught my eye while
-perusing some man pages.
+On Wed, Mar 25, 2009 at 11:12, Pascal Obry <pascal@obry.net> wrote:
+>
+> Starting a new project I create a new repo and added some files for t=
+he
+> initial revision of the project, something like:
+>
+> mkdir repo.git
+> cd repo.git
+> git init
+> touch file
+> git add file
+> git ci -m "initial revision"
+>
+> Now one file was not meant to be committed, I wanted to revert this c=
+ommit:
+>
+> git reset HEAD^
+>
+> fatal: ambiguous argument 'HEAD^': unknown revision or path not in th=
+e
+> working tree.
+> Use '--' to separate paths from revisions
+>
+> I understand that HEAD^ does not exist, is there a way to do that?
+>
+> Thanks,
+> Pascal.
+>
+> --
+>
+> --|------------------------------------------------------
+> --| Pascal Obry =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Team-Ada Member
+> --| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+> --|------------------------------------------------------
+> --| =C2=A0 =C2=A0http://www.obry.net =C2=A0- =C2=A0http://v2p.fr.eu.o=
+rg
+> --| "The best way to travel is by means of imagination"
+> --|
+> --| gpg --keyserver keys.gnupg.net --recv-key F949BD3B
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
+ml
+>
 
- Documentation/git-merge.txt        |    2 +-
- Documentation/git-patch-id.txt     |    2 +-
- Documentation/merge-strategies.txt |   14 +++++++-------
- 3 files changed, 9 insertions(+), 9 deletions(-)
+You want "git filter-branch".  Probably something like:
 
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index cc0d30f..427ad90 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -41,7 +41,7 @@ include::merge-strategies.txt[]
- 
- 
- If you tried a merge which resulted in a complex conflicts and
--would want to start over, you can recover with 'git-reset'.
-+want to start over, you can recover with 'git-reset'.
- 
- CONFIGURATION
- -------------
-diff --git a/Documentation/git-patch-id.txt b/Documentation/git-patch-id.txt
-index 477785e..253fc0f 100644
---- a/Documentation/git-patch-id.txt
-+++ b/Documentation/git-patch-id.txt
-@@ -20,7 +20,7 @@ IOW, you can use this thing to look for likely duplicate commits.
- 
- When dealing with 'git-diff-tree' output, it takes advantage of
- the fact that the patch is prefixed with the object name of the
--commit, and outputs two 40-byte hexadecimal string.  The first
-+commit, and outputs two 40-byte hexadecimal strings.  The first
- string is the patch ID, and the second string is the commit ID.
- This can be used to make a mapping from patch ID to commit ID.
- 
-diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-strategies.txt
-index 1276f85..ee7f754 100644
---- a/Documentation/merge-strategies.txt
-+++ b/Documentation/merge-strategies.txt
-@@ -3,15 +3,15 @@ MERGE STRATEGIES
- 
- resolve::
- 	This can only resolve two heads (i.e. the current branch
--	and another branch you pulled from) using 3-way merge
-+	and another branch you pulled from) using a 3-way merge
- 	algorithm.  It tries to carefully detect criss-cross
- 	merge ambiguities and is considered generally safe and
- 	fast.
- 
- recursive::
--	This can only resolve two heads using 3-way merge
--	algorithm.  When there are more than one common
--	ancestors that can be used for 3-way merge, it creates a
-+	This can only resolve two heads using a 3-way merge
-+	algorithm.  When there is more than one common
-+	ancestor that can be used for 3-way merge, it creates a
- 	merged tree of the common ancestors and uses that as
- 	the reference tree for the 3-way merge.  This has been
- 	reported to result in fewer merge conflicts without
-@@ -22,11 +22,11 @@ recursive::
- 	pulling or merging one branch.
- 
- octopus::
--	This resolves more than two-head case, but refuses to do
--	complex merge that needs manual resolution.  It is
-+	This resolves the more than two-heads case, but refuses to do
-+	a complex merge that needs manual resolution.  It is
- 	primarily meant to be used for bundling topic branch
- 	heads together.  This is the default merge strategy when
--	pulling or merging more than one branches.
-+	pulling or merging more than one branch.
- 
- ours::
- 	This resolves any number of heads, but the result of the
--- 
-1.6.2.1
+git filter-branch --index-filter 'git rm --cached --ignore-unmatched
+=46ILE_TO_REMOVE' -- --all
+
+This will remove FILE_TO_REMOVE from all commits across all branches.
+
+-Jacob
