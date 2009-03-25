@@ -1,87 +1,77 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [TopGit PATCH] hooks/pre-commit.sh: fix it again
-Date: Wed, 25 Mar 2009 13:24:08 +0100
-Message-ID: <36ca99e90903250524g3549b629g8ce1947f741878f7@mail.gmail.com>
-References: <1237981384-7857-1-git-send-email-bert.wesarg@googlemail.com>
-	 <20090325122027.GB30873@pengutronix.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] init: support --import to add all files and commit
+  right after init
+Date: Wed, 25 Mar 2009 13:38:30 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903251338130.26370@intel-tinevez-2-302>
+References: <1237978720-2500-1-git-send-email-pclouds@gmail.com> <adf1fd3d0903250456l3c14a863pd6ee00c0025100c4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org,
-	martin f krafft <madduck@debian.org>
-To: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Wed Mar 25 13:25:43 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-467259834-1237984711=:26370"
+Cc: =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>
+To: =?ISO-8859-15?Q?Santi_B=E9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Wed Mar 25 13:40:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmSAw-0004va-Lv
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 13:25:43 +0100
+	id 1LmSPH-00021f-PZ
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 13:40:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757868AbZCYMYM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Mar 2009 08:24:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754787AbZCYMYM
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 08:24:12 -0400
-Received: from yx-out-2324.google.com ([74.125.44.28]:38204 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754536AbZCYMYL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Mar 2009 08:24:11 -0400
-Received: by yx-out-2324.google.com with SMTP id 31so5710yxl.1
-        for <git@vger.kernel.org>; Wed, 25 Mar 2009 05:24:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=K5X22zQjIBuLzf9TR6yXZhD64t4Tt4zjjPJkdY3FCrk=;
-        b=WETmIT3HnEOxM9LwaqRaKSkvID/NBFzp+MH96lP7xll/9U+BDteIW56nBXKzYd2AZh
-         433VR5pN627VRxaQcr5vmp5k4GWyvjJFy/G1LLspI7oRZXEalQO8ZybCQhiKalZZfvP4
-         rd8POV8J8cLuTtSGlyM6RhvMfYyLlFhmc6zak=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=oRa4DUB8Vn0W/hvKqH6Mc0mRtGhqDTDX3VOOYRF8zbClhfscN/WcD8DTuhWe+3LAeZ
-         foXKwaHE+haDCiRfYKhfgr5Apdr23SWPtL6xbIpQWXAMloLs4F9i3Q/go+XZs6eXLDER
-         pLdwaRbGC12584n0uL0QFD2WzFWMt7ws7wuAM=
-Received: by 10.151.41.21 with SMTP id t21mr15820069ybj.71.1237983848348; Wed, 
-	25 Mar 2009 05:24:08 -0700 (PDT)
-In-Reply-To: <20090325122027.GB30873@pengutronix.de>
+	id S1758146AbZCYMih (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 08:38:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754674AbZCYMih
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 08:38:37 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47672 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754482AbZCYMig (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2009 08:38:36 -0400
+Received: (qmail invoked by alias); 25 Mar 2009 12:38:33 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp042) with SMTP; 25 Mar 2009 13:38:33 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/VybZQ/HrVOUWa0RFvltg7b3dNwrwtkcM4bTwlS5
+	gO6glIIUTPflx0
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <adf1fd3d0903250456l3c14a863pd6ee00c0025100c4@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114598>
 
-2009/3/25 Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>:
-> On Wed, Mar 25, 2009 at 12:43:04PM +0100, Bert Wesarg wrote:
->> First I think the '#' is a leftover, second this is now a bashism.
-> according to bash(1):
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0If pattern begins with #, it must match at=
- the beginning of the
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0expanded value of parameter.
-That is obviously true, I first removed this # and than switch to bash
-(after it stills failed), so this was just thinking not testing.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
->
-> And I noticed, too, that this is a bashism. =C2=A0Using dash it fails=
-, even
-> with your patch.
->
-> I would prefer to really fix it now.
-Thanks. I intended this patch as a bug report.
+--8323329-467259834-1237984711=:26370
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-Bert
->
-> Best regards
-> Uwe
->
-> --
-> Pengutronix e.K. =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| Uwe Kleine-K=C3=B6=
-nig =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|
-> Industrial Linux Solutions =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0| http://www.pengutronix.de/ =C2=A0|
->
+Hi,
+
+On Wed, 25 Mar 2009, Santi Béjar wrote:
+
+> 2009/3/25 Nguyễn Thái Ngọc Duy <pclouds@gmail.com>:
+> > +-m <message>::
+> > +--import <message>::
+> > +
+> > +Commit everything to the newly initialized repository. This is equivalent to:
+> > +
+> > +----------------
+> > +$ git init
+> > +$ git add .
+> > +$ git commit -q -m <message>
+> > +----------------
+> > +
+> > +If no message is given, "Initial commit" will be used.
+> 
+> Why a default message and not running the editor?
+
+Because I would say "Initial commit" anyway.
+
+Ciao,
+Dscho
+
+--8323329-467259834-1237984711=:26370--
