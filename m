@@ -1,54 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-cget: prints elements of C code in the git
-	repository
-Date: Wed, 25 Mar 2009 00:23:43 -0400
-Message-ID: <20090325042343.GA15498@coredump.intra.peff.net>
-References: <49C8B159.2040600@gmail.com> <alpine.DEB.1.00.0903241257430.7493@intel-tinevez-2-302> <49C8E074.4030808@gmail.com> <20090324135906.GA10644@coredump.intra.peff.net> <e2b179460903240738x272c884q62a666931ce99c2f@mail.gmail.com> <d9c1caea0903240933n6dea7ddcl90a5e105c2a45b52@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] init-db: support --import to add all files and commit 
+	right after init
+Date: Wed, 25 Mar 2009 15:25:44 +1100
+Message-ID: <fcaeb9bf0903242125kf6281acp9f1289a1c0e3e79b@mail.gmail.com>
+References: <1237946996-5287-1-git-send-email-pclouds@gmail.com> 
+	<alpine.DEB.1.00.0903250450240.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Mike Ralphson <mike.ralphson@gmail.com>,
-	Roel Kluin <roel.kluin@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Steven Tweed <orthochronous@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 25 05:25:27 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Mar 25 05:27:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmKg9-0006MQ-96
-	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 05:25:25 +0100
+	id 1LmKiD-0006qp-Jp
+	for gcvg-git-2@gmane.org; Wed, 25 Mar 2009 05:27:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751591AbZCYEXy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 00:23:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751374AbZCYEXx
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 00:23:53 -0400
-Received: from peff.net ([208.65.91.99]:45731 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751308AbZCYEXx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2009 00:23:53 -0400
-Received: (qmail 3127 invoked by uid 107); 25 Mar 2009 04:24:04 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 25 Mar 2009 00:24:04 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Mar 2009 00:23:43 -0400
-Content-Disposition: inline
-In-Reply-To: <d9c1caea0903240933n6dea7ddcl90a5e105c2a45b52@mail.gmail.com>
+	id S1753174AbZCYE0E convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Mar 2009 00:26:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752512AbZCYE0D
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 00:26:03 -0400
+Received: from wf-out-1314.google.com ([209.85.200.174]:26005 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751943AbZCYE0B convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Mar 2009 00:26:01 -0400
+Received: by wf-out-1314.google.com with SMTP id 29so3818216wff.4
+        for <git@vger.kernel.org>; Tue, 24 Mar 2009 21:25:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=44zm9E14G2Uf9SJojyW2Y/tNi1qMp8A0+MrU/KRVY9Q=;
+        b=AbmpM50ft1wEX52HFkS58e2uYlqPKizj1f2cOJsJGScHYFiQ9ao4SDxpWoxgP14aHh
+         hVjXBRPXMLTx1W7q4oBBy1guzSuMtGmlWtP0bgE2QD4LvXWCRWNU2BXjTBC2g+KG/Dhv
+         9PjIrjfxFp+0D+WMIVevZ8zwrfYrzb5GdsS4k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Ij3EkZCRzxD1sClGJahRS+0YcVmzKUqDW/eSddYY8xYTKEcbT2c5FXLpVWphofO1Kk
+         X0BuzbtW/KE4HM7Ho8kcf2DB9lspVworw3wNE6Bl7ipNtg3sjYzoIqy6rsItl67XzF3p
+         0sPoBoadnaRz2b60askNCLJVkbcvDt8+hrT6E=
+In-Reply-To: <alpine.DEB.1.00.0903250450240.10279@pacific.mpi-cbg.de>
+Received: by 10.142.214.11 with SMTP id m11mr3733081wfg.57.1237955159191; Tue, 
+	24 Mar 2009 21:25:59 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114560>
 
-On Tue, Mar 24, 2009 at 04:33:13PM +0000, Steven Tweed wrote:
+2009/3/25 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> But could you please say "init" in the subject instead of "init-db"? =
+=C2=A0The
+> latter is just a historical wart we have to carry around.
 
-> Speaking of wanting things to work with the actual repository , one
-> thing that I've been meaning to continue work on if I get the time is
-> basically a 'show me any commit diff's that involve string s' (ie, the
-> locations in which a change involving s occurs rather than just
-> 'current file contains s (in exactly the same ways the previous
-> version did). I'm extremely unlikely to actually produce anything
-
-How about "git log -S", or does that somehow not meet your needs (and if
-not, how)?
-
--Peff
+OK. No problem.
+--=20
+Duy
