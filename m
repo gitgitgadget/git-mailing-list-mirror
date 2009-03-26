@@ -1,91 +1,100 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: [PATCH TopGit] hooks/pre-commit.sh: fix bashism
-Date: Thu, 26 Mar 2009 10:00:09 +0100
-Message-ID: <20090326090009.GA7570@pengutronix.de>
-References: <1237981384-7857-1-git-send-email-bert.wesarg@googlemail.com>
+From: Daniel Pittman <daniel@rimspace.net>
+Subject: Re: Test that every revision builds before pushing changes?
+Date: Thu, 26 Mar 2009 20:10:52 +1100
+Organization: I know I put it down here, somewhere.
+Message-ID: <87ljqs7ioz.fsf@rimspace.net>
+References: <87myb8aja1.fsf@rimspace.net> <49CB39E5.5060000@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org,
-	martin f krafft <madduck@debian.org>,
-	Marc Kleine-Budde <m.kleine-budde@pengutronix.de>
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 26 10:02:35 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 26 10:19:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmlTm-0002Qb-Fr
-	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 10:02:26 +0100
+	id 1LmlkY-0007tu-Sq
+	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 10:19:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756351AbZCZJAT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Mar 2009 05:00:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755906AbZCZJAT
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 05:00:19 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:59128 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754425AbZCZJAQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Mar 2009 05:00:16 -0400
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1LmlRb-0005wx-EE; Thu, 26 Mar 2009 10:00:11 +0100
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1LmlRZ-0001zl-CH; Thu, 26 Mar 2009 10:00:09 +0100
-Content-Disposition: inline
-In-Reply-To: <1237981384-7857-1-git-send-email-bert.wesarg@googlemail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1753079AbZCZJSQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Mar 2009 05:18:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752504AbZCZJSQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 05:18:16 -0400
+Received: from main.gmane.org ([80.91.229.2]:52275 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751061AbZCZJSP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Mar 2009 05:18:15 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Lmlj0-0002um-PU
+	for git@vger.kernel.org; Thu, 26 Mar 2009 09:18:10 +0000
+Received: from ppp59-167-189-244.static.internode.on.net ([59.167.189.244])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 26 Mar 2009 09:18:10 +0000
+Received: from daniel by ppp59-167-189-244.static.internode.on.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 26 Mar 2009 09:18:10 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: ppp59-167-189-244.static.internode.on.net
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/23.0.60 (gnu/linux)
+Cancel-Lock: sha1:FvQrUd7Xu+gcpQxfLfiehxPkKxM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114754>
 
-This was introduced in fcb488d51e72c7414f9beb40ad06bf529b8b38dc.
-A similar fix was suggested by martin f krafft, too.
+Andreas Ericsson <ae@op5.se> writes:
+> Daniel Pittman wrote:
+>>
+>> I would like to ensure that my commits are fully bisectable before I
+>> commit them to an upstream repository, at least to the limits of an
+>> automatic tool for testing them.
+>>
+>> 'git bisect run' is similar: it can automatically locate the breakin=
+g in
+>> a test suite, for example, but that doesn't help me in the case of t=
+hree
+>> commits, A (good), B (bad) and C (good, fixing B).
+>>
+>> I would much rather, in this case, use rebase to fix B so that it, t=
+oo,
+>> builds before I push the changes and pollute a public repository wit=
+h a
+>> broken changeset =E2=80=94 and make bisect that much harder to use i=
+n future.
+>
+> You can do that, but it requires manual work too. The trick is to mak=
+e
+> the release branch immutable on the public repository and use topic
+> branches with per-developer namespaces. The per-developer namespace
+> thing is actually important, as it leaves the freedom to rewind and
+> recreate topics to the developers (which shared branches do not).
+>
+> The manual step comes at merge-time; Someone has to be responsible fo=
+r
+> merging all the topics that are to be included in the release branch
+> and make sure it builds and passes all tests after each merge.
 
-Reported-by: Bert Wesarg <bert.wesarg@googlemail.com>
-Signed-off-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
----
-Hello,
+Ah.  You have not quite grasped what I was looking for: I was after a
+tool to help automate that step, rather than a workflow around it.
 
-this should fix the issue now.
+=46or example, the responsible person for that testing could use the
+hypothetical (until someone tells me where to find it):
 
-If I don't get negative feed back I will push this change later today.
-I'm open for acks, too.
+    git test public..test make test
 
-Best regards and thanks
-Uwe
+Which would then effectively wrap:
 
- hooks/pre-commit.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+    for each revision between public and private:
+         git checkout revision
+         make test
+         # report if that fails, allow fixing the commit or whatever
+         # then 'git test continue' to carry on...
 
-diff --git a/hooks/pre-commit.sh b/hooks/pre-commit.sh
-index a12cfa6..9d677e9 100644
---- a/hooks/pre-commit.sh
-+++ b/hooks/pre-commit.sh
-@@ -20,7 +20,7 @@ tg_util
- if head_=3D$(git symbolic-ref -q HEAD); then
- 	case "$head_" in
- 		refs/heads/*)
--			git rev-parse -q --verify "${head_/#refs\/heads/refs\/top-bases}" >=
-/dev/null || exit 0;;
-+			git rev-parse -q --verify "refs/top-bases${head_#refs/heads}" >/dev=
-/null || exit 0;;
- 		*)
- 			exit 0;;
- 	esac
---=20
-1.6.2
+That turn the process from a manual one to an automated one: it runs
+that command for every revision until it fails, or until they all pass.
 
---=20
-Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
-       |
-Industrial Linux Solutions                    | http://www.pengutronix.=
-de/  |
+Regards,
+        Daniel
