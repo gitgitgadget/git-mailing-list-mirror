@@ -1,89 +1,143 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCH 0/2] chmod cleanup (Was: [BUG?] How to make a shared/restricted repo?)
-Date: Thu, 26 Mar 2009 16:02:37 +0100
-Message-ID: <200903261602.37857.johan@herland.net>
-References: <200903250105.05808.johan@herland.net> <200903261044.58140.johan@herland.net> <49CB51E2.9010903@viscovery.net>
+Subject: [PATCH 1/2] Move chmod(foo, 0444) into move_temp_to_file()
+Date: Thu, 26 Mar 2009 16:16:47 +0100
+Message-ID: <200903261616.47185.johan@herland.net>
+References: <200903250105.05808.johan@herland.net> <49CB51E2.9010903@viscovery.net> <200903261602.37857.johan@herland.net>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
 Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 26 16:18:05 2009
+X-From: git-owner@vger.kernel.org Thu Mar 26 16:18:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmrLH-0000mh-L7
-	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 16:18:04 +0100
+	id 1LmrLw-000158-Ad
+	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 16:18:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752848AbZCZPQR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Mar 2009 11:16:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752650AbZCZPQR
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 11:16:17 -0400
-Received: from sam.opera.com ([213.236.208.81]:48497 "EHLO smtp.opera.com"
+	id S1754179AbZCZPQz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Mar 2009 11:16:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753770AbZCZPQy
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 11:16:54 -0400
+Received: from sam.opera.com ([213.236.208.81]:48539 "EHLO smtp.opera.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752206AbZCZPQQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Mar 2009 11:16:16 -0400
-X-Greylist: delayed 784 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Mar 2009 11:16:16 EDT
+	id S1753553AbZCZPQx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Mar 2009 11:16:53 -0400
 Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
 	(authenticated bits=0)
-	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id n2QF2cfL008417
+	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id n2QFGlMH009199
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 26 Mar 2009 15:02:47 GMT
+	Thu, 26 Mar 2009 15:16:47 GMT
 User-Agent: KMail/1.9.9
-In-Reply-To: <49CB51E2.9010903@viscovery.net>
+In-Reply-To: <200903261602.37857.johan@herland.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114788>
 
-On Thursday 26 March 2009, Johannes Sixt wrote:
-> Johan Herland schrieb:
-> > In the above patch, I've passed mode == -1 to finalize_temp_file()
-> > from all callsites where there was no corresponding (f)chmod(foo,
-> > 0444). However, after looking at the context (these are all either
-> > packs or loose objects), I'm wondering if we shouldn't pass mode ==
-> > 0444 for all of these. At which point we could replace the above
-> > patch with this much simpler version:
->
-> Indeed!
->
-> > (We could also add an optional "mode" argument to
-> > adjust_shared_perm(), to get rid of the double chmod().)
->
-> And I think you should do that, otherwise you have a short time
-> window where the permissions of a pack or loose object is less
-> restrictive than you want.
+When writing out a loose object or a pack (index), move_temp_to_file() is
+called to finalize the resulting file. These files (loose files and packs)
+should all have permission mode 0444 (modulo adjust_shared_perm()).
+Therefore, instead of doing chmod(foo, 0444) explicitly from each callsite
+(or even forgetting to chmod() at all), do the chmod() call from within
+move_temp_to_file().
 
-Ok, here's a cleaned-up series on top of Junio's patch. It should resolve
-the chmod()-after-adjust_shared_perm() issue in Junio's patch, as well as
-the rename-after-chmod Windows issue reported by Hannes.
-
-The first patch is the second alternative I sent in an earlier mail.
-The second patch resolves the double chmod() left by the first patch.
-
-
-Johan Herland (2):
-  Move chmod(foo, 0444) into move_temp_to_file()
-  Resolve double chmod() in move_temp_to_file()
-
- cache.h       |    1 +
+Signed-off-by: Johan Herland <johan@herland.net>
+---
  fast-import.c |    3 ---
  http-push.c   |    1 -
  http-walker.c |    1 -
  index-pack.c  |    7 +++----
- path.c        |   26 +++++++++++++++++++-------
  sha1_file.c   |    3 +--
- 7 files changed, 24 insertions(+), 18 deletions(-)
+ 5 files changed, 4 insertions(+), 11 deletions(-)
 
-
-Have fun! :)
-
-...Johan
-
+diff --git a/fast-import.c b/fast-import.c
+index db44da3..23c496d 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -903,9 +903,6 @@ static char *keep_pack(char *curr_index_name)
+ 	static const char *keep_msg = "fast-import";
+ 	int keep_fd;
+ 
+-	chmod(pack_data->pack_name, 0444);
+-	chmod(curr_index_name, 0444);
+-
+ 	keep_fd = odb_pack_keep(name, sizeof(name), pack_data->sha1);
+ 	if (keep_fd < 0)
+ 		die("cannot create keep file");
+diff --git a/http-push.c b/http-push.c
+index 6ce5a1d..e465b20 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -748,7 +748,6 @@ static void finish_request(struct transfer_request *request)
+ 			aborted = 1;
+ 		}
+ 	} else if (request->state == RUN_FETCH_LOOSE) {
+-		fchmod(request->local_fileno, 0444);
+ 		close(request->local_fileno); request->local_fileno = -1;
+ 
+ 		if (request->curl_result != CURLE_OK &&
+diff --git a/http-walker.c b/http-walker.c
+index 0dbad3c..c5a3ea3 100644
+--- a/http-walker.c
++++ b/http-walker.c
+@@ -231,7 +231,6 @@ static void finish_object_request(struct object_request *obj_req)
+ {
+ 	struct stat st;
+ 
+-	fchmod(obj_req->local, 0444);
+ 	close(obj_req->local); obj_req->local = -1;
+ 
+ 	if (obj_req->http_code == 416) {
+diff --git a/index-pack.c b/index-pack.c
+index 7546822..6e93ee6 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -823,8 +823,7 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+ 		}
+ 		if (move_temp_to_file(curr_pack_name, final_pack_name))
+ 			die("cannot store pack file");
+-	}
+-	if (from_stdin)
++	} else if (from_stdin)
+ 		chmod(final_pack_name, 0444);
+ 
+ 	if (final_index_name != curr_index_name) {
+@@ -835,8 +834,8 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+ 		}
+ 		if (move_temp_to_file(curr_index_name, final_index_name))
+ 			die("cannot store index file");
+-	}
+-	chmod(final_index_name, 0444);
++	} else
++		chmod(final_index_name, 0444);
+ 
+ 	if (!from_stdin) {
+ 		printf("%s\n", sha1_to_hex(sha1));
+diff --git a/sha1_file.c b/sha1_file.c
+index 12e0dfd..87ac53b 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2252,7 +2252,7 @@ int move_temp_to_file(const char *tmpfile, const char *filename)
+ 		/* FIXME!!! Collision check here ? */
+ 	}
+ 
+-	if (adjust_shared_perm(filename))
++	if (chmod(filename, 0444) || adjust_shared_perm(filename))
+ 		return error("unable to set permission to '%s'", filename);
+ 	return 0;
+ }
+@@ -2278,7 +2278,6 @@ static void close_sha1_file(int fd)
+ {
+ 	if (fsync_object_files)
+ 		fsync_or_die(fd, "sha1 file");
+-	fchmod(fd, 0444);
+ 	if (close(fd) != 0)
+ 		die("error when closing sha1 file (%s)", strerror(errno));
+ }
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+1.6.1.2.461.g5bad6
