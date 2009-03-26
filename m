@@ -1,88 +1,77 @@
-From: "Kelly F. Hickel" <kfh@mqsoftware.com>
-Subject: problems with multipl hosts access git-cvsserver after a git push
-Date: Thu, 26 Mar 2009 12:31:32 -0500
-Message-ID: <63BEA5E623E09F4D92233FB12A9F794302E0FBD1@emailmn.mqsoftware.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 3/8] Documentation: rename docbook-xsl-172 attribute to
+   git-asciidoc-no-roff
+Date: Thu, 26 Mar 2009 19:49:02 +0100
+Message-ID: <49CBCE1E.8070408@drmicha.warpmail.net>
+References: <1237881866-5497-1-git-send-email-chris_johnsen@pobox.com> <1237881866-5497-4-git-send-email-chris_johnsen@pobox.com> <20090324090440.GC1799@coredump.intra.peff.net> <B70DE0F1-8CDA-46FC-9EF8-41B0FAC39631@pobox.com> <20090326094322.GB14292@coredump.intra.peff.net> <7vocvop6x2.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 26 18:33:20 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Chris Johnsen <chris_johnsen@pobox.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 26 19:50:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmtS6-0004hz-QI
-	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 18:33:15 +0100
+	id 1Lmuf6-00048W-8a
+	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 19:50:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755576AbZCZRbg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Mar 2009 13:31:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755232AbZCZRbg
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 13:31:36 -0400
-Received: from emailmn.mqsoftware.com ([66.192.70.108]:38908 "EHLO
-	emailmn.mqsoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755193AbZCZRbf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Mar 2009 13:31:35 -0400
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: problems with multipl hosts access git-cvsserver after a git push
-Thread-Index: AcmuOLSuSFKD09t5SvuYqp5+EAmLsA==
+	id S1758872AbZCZStN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Mar 2009 14:49:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758080AbZCZStM
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 14:49:12 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:47553 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756289AbZCZStM (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Mar 2009 14:49:12 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 07DA72FE735;
+	Thu, 26 Mar 2009 14:49:10 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Thu, 26 Mar 2009 14:49:10 -0400
+X-Sasl-enc: 8nZ6Q6fPrrx2bh6wiiyLekwlUB9Dtn7QnVsG2aimWnoo 1238093349
+Received: from localhost.localdomain (p4FC63417.dip0.t-ipconnect.de [79.198.52.23])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 0EF331C856;
+	Thu, 26 Mar 2009 14:49:08 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090326 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <7vocvop6x2.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114808>
 
-Hi,  I'm looking at moving from cvs to git and I'm working on our build
-process. There are a few machines where we don't have git and were
-hoping to use git-cvsserver to provide read only access for the builds,
-but I've run into a bit of a snag.
+Junio C Hamano venit, vidit, dixit 26.03.2009 17:47:
+> Jeff King <peff@peff.net> writes:
+> 
+>> On Tue, Mar 24, 2009 at 02:48:52PM -0500, Chris Johnsen wrote:
+>>
+>>> I am not opposed to providing more version-specific controls, but I am not 
+>>> sure which versions are important enough to justify their own variables. 
+>>> Are you indicating that 1.73 is important enough because it was a "return 
+>>> to sanity" after 1.72?
+>>
+>> No, mainly because it is what is shipped in the last version of Debian,
+>> which means it is a major enough version that there will be a lot of
+>> people using it.
+>>
+>> But let's just start with adding the tweakable knobs (which your series
+>> is already doing), and see in what ways they need to be tweaked for
+>> popular platforms before going overboard.
+> 
+> When I was trying out the series yesterday, I was wondering if this is
+> something we can autodetect.
+> 
+> Output from "asciidoc --version" is easily machine parsable for giving
+> asciidoc7compatible aka ASCIIDOC8, but I couldn't come up with anything
+> simpler than probing a few hardcoded paths under /usr/share/sgml; that
+> approach is unacceptable because would not work if your stylesheets are in
+> somewhere we do not know about.  Ideally, we should be able to ask the
+> tools we invoke (e.g. xmlto) to get that information.
 
-The build process begins a checkout on all the build machines
-simultaneously, it looks as though when this happens have changes have
-been pushed, the first cvs pull is updating the database to reflect the
-git repo, other cvs clients are blocked and give up after awhile.....
+Maybe run asciidoc/xmlto on a minimal test file and check the output?
+"autoconf lite", so to say.
 
-Any thoughts how to "fix" this?  I suppose I could just stop doing the
-simultaneous pulls for cvs but that's a bigger change than I wanted to
-make.  The only other idea I've come up with is to run a separate
-git-cvsserver for each host that must use cvs (there's only a few), that
-way it can't be blocked by another host, but that's kind of clunky to
-manage....
-
-cvs checkout: warning: unrecognized response `DBD::SQLite::st execute
-failed: database is locked(5) at dbdimp.c line 403 at
-/usr/local/bin/git-cvsserver line 3253, <FILELIST> chunk 2.' from cvs
-server
-cvs checkout: warning: unrecognized response `DBD::SQLite::st execute
-failed: database is locked(5) at dbdimp.c line 403 at
-/usr/local/bin/git-cvsserver line 3326.' from cvs server 
-
-... (message repeated many times with only small variations) ...
-
-cvs checkout: warning: unrecognized response `DBD::SQLite::st execute
-failed: database is locked(21) at dbdimp.c line 376 at
-/usr/local/bin/git-cvsserver line 3326.' from cvs server
-cvs checkout: warning: unrecognized response `DBD::SQLite::st execute
-failed: database is locked(21) at dbdimp.c line 376 at
-/usr/local/bin/git-cvsserver line 3331.' from cvs server
-cvs [checkout aborted]: end of file from server (consult above messages
-if any)
-
-Thanks,
-
-
---
-
-Kelly F. Hickel
-Senior Product Architect
-MQSoftware, Inc.
-952-345-8677 Office
-952-345-8721 Fax
-kfh@mqsoftware.com
-www.mqsoftware.com
-Certified IBM SOA Specialty
-Your Full Service Provider for IBM WebSphere
-Learn more at www.mqsoftware.com 
+Michael
