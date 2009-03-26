@@ -1,131 +1,71 @@
-From: Johan Herland <johan@herland.net>
-Subject: [PATCH 2/2] Resolve double chmod() in move_temp_to_file()
-Date: Thu, 26 Mar 2009 16:17:48 +0100
-Message-ID: <200903261617.48362.johan@herland.net>
-References: <200903250105.05808.johan@herland.net> <49CB51E2.9010903@viscovery.net> <200903261602.37857.johan@herland.net>
+From: Ping Yin <pkufranky@gmail.com>
+Subject: [RFC] Interactive difftool
+Date: Thu, 26 Mar 2009 23:29:07 +0800
+Message-ID: <46dff0320903260829j34d8c613wf9b4fcc954c8519a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 26 16:20:01 2009
+To: Git Mailing List <git@vger.kernel.org>, davvid@gmail.com
+X-From: git-owner@vger.kernel.org Thu Mar 26 16:30:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmrMv-0001Wm-Vc
-	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 16:19:46 +0100
+	id 1LmrXX-0006eJ-UB
+	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 16:30:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753012AbZCZPSO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Mar 2009 11:18:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752768AbZCZPSM
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 11:18:12 -0400
-Received: from sam.opera.com ([213.236.208.81]:48598 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752360AbZCZPSM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Mar 2009 11:18:12 -0400
-Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
-	(authenticated bits=0)
-	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id n2QFHmuF009270
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 26 Mar 2009 15:17:48 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <200903261602.37857.johan@herland.net>
-Content-Disposition: inline
+	id S1752737AbZCZP3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Mar 2009 11:29:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752206AbZCZP3K
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 11:29:10 -0400
+Received: from wa-out-1112.google.com ([209.85.146.177]:19695 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750976AbZCZP3J (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Mar 2009 11:29:09 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so383988wah.21
+        for <git@vger.kernel.org>; Thu, 26 Mar 2009 08:29:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=a4LZ7Eim/dzDJoghgNHyKeDM4wOM+Usomfbi+pm8+as=;
+        b=ZjpHqgNoYFa7WVHfBGabG9JMtp6Fi/bWOSfYp/Eia2UsDNLcjHvYnjHUPkB036pnLP
+         jdUSq+Dglm+nw4PIWJO0p2aU/sjY9UseWQ/w0jZtXP6MZb5C51sxYJWOvT3432sJTFJg
+         xhjKounOBz73FaX+dybWF00Mj7aaW954M6jiw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=GD4AOty5xS6Zj2tm7MRsRYptcBvZ9o11zsUzdkELRUSFoeEwM6hMWNNyfUhEpTHLdJ
+         mt02Mmkq2e2Oxza1TNDl9ArYfT6YkO5wlD6azmrtQ9gz56ocKYjBEBdZKJ5ojivDV/b7
+         eZXlZz3D4kAqxwQuxA1ZNmgr5evRcr1aEi72k=
+Received: by 10.115.50.5 with SMTP id c5mr690509wak.7.1238081347434; Thu, 26 
+	Mar 2009 08:29:07 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114790>
 
-move_temp_to_file() used to chmod(foo, 0444) immediately before calling
-adjust_shared_perm() which potentially does another call to chmod().
+Before git-difftool goes to master, i want to propose a new feature to
+add to or replace the current behaviour of difftool. With current
+difftool, we can only see the diff one by one. However, sometimes what
+we want is to see the diff of selected files, or in a different order,
+just like what we can do in the gui. So here is what i propose
 
-This patch splits a new function (called get_shared_perm()) out of
-adjust_shared_perm(). The new function adjusts a given file mode value
-according to the shared_repository setting, and returns the resulting
-mode. It is used in move_temp_file() to generate the correct and final
-permissions to pass to chmod() in a single call.
+$ git difftool --interactive [options]
+[1] diff.c                   |   10 +++++++++-
+[2] t/t4020-diff-external.sh |    8 ++++++++
+Choose the file you want to see the diff of: 2
 
-Signed-off-by: Johan Herland <johan@herland.net>
----
- cache.h     |    1 +
- path.c      |   26 +++++++++++++++++++-------
- sha1_file.c |    2 +-
- 3 files changed, 21 insertions(+), 8 deletions(-)
+When the user types 2 and then <enter>, the external diff program is called
 
-diff --git a/cache.h b/cache.h
-index 9cf5a13..b24eb3a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -623,6 +623,7 @@ enum sharedrepo {
- 	PERM_EVERYBODY      = 0664,
- };
- int git_config_perm(const char *var, const char *value);
-+int get_shared_perm(int mode);
- int adjust_shared_perm(const char *path);
- int safe_create_leading_directories(char *path);
- int safe_create_leading_directories_const(const char *path);
-diff --git a/path.c b/path.c
-index 42898e0..497db19 100644
---- a/path.c
-+++ b/path.c
-@@ -311,16 +311,13 @@ char *enter_repo(char *path, int strict)
- 	return NULL;
- }
- 
--int adjust_shared_perm(const char *path)
-+int get_shared_perm(int mode)
- {
--	struct stat st;
--	int mode, tweak, shared;
-+	int tweak, shared;
- 
- 	if (!shared_repository)
--		return 0;
--	if (lstat(path, &st) < 0)
--		return -1;
--	mode = st.st_mode;
-+		return mode;
-+
- 	if (shared_repository < 0)
- 		shared = -shared_repository;
- 	else
-@@ -343,6 +340,21 @@ int adjust_shared_perm(const char *path)
- 		mode |= FORCE_DIR_SET_GID;
- 	}
- 
-+	return mode;
-+}
-+
-+int adjust_shared_perm(const char *path)
-+{
-+	struct stat st;
-+	int mode, tweak, shared;
-+
-+	if (!shared_repository)
-+		return 0;
-+	if (lstat(path, &st) < 0)
-+		return -1;
-+
-+	mode = get_shared_perm(st.st_mode);
-+
- 	if (((shared_repository < 0
- 	      ? (st.st_mode & (FORCE_DIR_SET_GID | 0777))
- 	      : (st.st_mode & mode)) != mode) &&
-diff --git a/sha1_file.c b/sha1_file.c
-index 87ac53b..05af3c5 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2252,7 +2252,7 @@ int move_temp_to_file(const char *tmpfile, const char *filename)
- 		/* FIXME!!! Collision check here ? */
- 	}
- 
--	if (chmod(filename, 0444) || adjust_shared_perm(filename))
-+	if (chmod(filename, get_shared_perm(0444)))
- 		return error("unable to set permission to '%s'", filename);
- 	return 0;
- }
--- 
-1.6.1.2.461.g5bad6
+Further more, instead of just type a number, a letter can be prepended
+to the number to represent different ways of diff. For example
+
+t2 (tool 2): see the diff for file 2 with the configured diff tool
+p2 (patch 2): see the diff for file 2 in the patch format
+
+What do you think?
+
+Ping Yin
