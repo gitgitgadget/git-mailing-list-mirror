@@ -1,103 +1,132 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Test that every revision builds before pushing changes?
-Date: Thu, 26 Mar 2009 09:16:37 +0100
-Message-ID: <49CB39E5.5060000@op5.se>
-References: <87myb8aja1.fsf@rimspace.net>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [BUG?] How to make a shared/restricted repo?
+Date: Thu, 26 Mar 2009 09:29:58 +0100
+Message-ID: <200903260929.58321.johan@herland.net>
+References: <200903250105.05808.johan@herland.net>
+ <200903260122.24770.johan@herland.net>
+ <7vprg4rbmp.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Daniel Pittman <daniel@rimspace.net>
-X-From: git-owner@vger.kernel.org Thu Mar 26 09:18:19 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 26 09:31:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lmkn4-00066V-5o
-	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 09:18:18 +0100
+	id 1Lml01-0001dA-K0
+	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 09:31:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755087AbZCZIQs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Mar 2009 04:16:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754790AbZCZIQp
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 04:16:45 -0400
-Received: from mail.op5.se ([193.201.96.20]:57540 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755336AbZCZIQo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Mar 2009 04:16:44 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 6F35224B0D22;
-	Thu, 26 Mar 2009 09:16:47 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id UxADmqt87lLU; Thu, 26 Mar 2009 09:16:46 +0100 (CET)
-Received: from clix.int.op5.se (unknown [172.27.78.6])
-	by mail.op5.se (Postfix) with ESMTP id 93C0724B0D2E;
-	Thu, 26 Mar 2009 09:16:44 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <87myb8aja1.fsf@rimspace.net>
+	id S1751167AbZCZIaL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Mar 2009 04:30:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755086AbZCZIaK
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 04:30:10 -0400
+Received: from mx.getmail.no ([84.208.15.66]:55977 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1755010AbZCZIaF (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Mar 2009 04:30:05 -0400
+Content-disposition: inline
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KH300MMXU9ZL610@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 26 Mar 2009 09:29:59 +0100 (MET)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KH300AJ9U9YZJ40@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 26 Mar 2009 09:29:59 +0100 (MET)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.3.26.81641
+User-Agent: KMail/1.11.1 (Linux/2.6.28-ARCH; KDE/4.2.1; x86_64; ; )
+In-reply-to: <7vprg4rbmp.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114750>
 
-Daniel Pittman wrote:
-> G'day.
->=20
-> I would like to ensure that my commits are fully bisectable before I
-> commit them to an upstream repository, at least to the limits of an
-> automatic tool for testing them.
->=20
-> 'git bisect run' is similar: it can automatically locate the breaking=
- in
-> a test suite, for example, but that doesn't help me in the case of th=
-ree
-> commits, A (good), B (bad) and C (good, fixing B).
->=20
-> I would much rather, in this case, use rebase to fix B so that it, to=
-o,
-> builds before I push the changes and pollute a public repository with=
- a
-> broken changeset =E2=80=94 and make bisect that much harder to use in=
- future.
->=20
+On Thursday 26 March 2009, Junio C Hamano wrote:
+> To fix the loose object codepath, the earlier patch added a call to
+> adjust_shared_perm() to write_loose_object() function, but after looking
+> at your 7th patch, I realized that the pattern of file creation inside
+> $GIT_DIR typically is to first create a temporary file, write to it, and
+> then finish it off by calling move_temp_to_file().  The true purpose of
+> the function is to "finalize the file being created", and it is misnamed
+> in that it describes how its implementation does it currently (i.e. by
+> renaming the temporary file to its final name), but it makes perfect
+> sense to call adjust_shared_perm() inside it as a part of finalization. 
+> I think this should cover the codepaths your 7th patch fixed without
+> actually touching them.
 
-You can do that, but it requires manual work too. The trick is to make
-the release branch immutable on the public repository and use topic
-branches with per-developer namespaces. The per-developer namespace
-thing is actually important, as it leaves the freedom to rewind and
-recreate topics to the developers (which shared branches do not).
+Yes, with one exception:
 
-The manual step comes at merge-time; Someone has to be responsible for
-merging all the topics that are to be included in the release branch
-and make sure it builds and passes all tests after each merge.
+For the two cases index-pack.c, the chmod(foo, 0444) happens AFTER the
+corresponding call to move_temp_to_file(xyzzy, foo). The chmod() in
+adjust_shared_perms() would thus be overridden by the chmod(foo, 0444),
+which is not what we want. In both cases, I think the chmod(foo, 0444)
+can safely be moved up above the call to move_temp_to_file(). Something
+like this (although I'm not sure about the semantics of 'from_stdin'):
 
-This workflow is a bit cumbersome. NASA uses something like this but
-with an extra step for multiple peer reviews on every feature/fix for
-software they send to satellites. Or so I've heard anyways.
+diff --git a/index-pack.c b/index-pack.c
+index 7546822..d289b6a 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -815,6 +815,8 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+ 		}
+ 	}
+ 
++	if (from_stdin)
++		chmod(final_pack_name, 0444);
+ 	if (final_pack_name != curr_pack_name) {
+ 		if (!final_pack_name) {
+ 			snprintf(name, sizeof(name), "%s/pack/pack-%s.pack",
+@@ -824,9 +826,8 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+ 		if (move_temp_to_file(curr_pack_name, final_pack_name))
+ 			die("cannot store pack file");
+ 	}
+-	if (from_stdin)
+-		chmod(final_pack_name, 0444);
+ 
++	chmod(final_index_name, 0444);
+ 	if (final_index_name != curr_index_name) {
+ 		if (!final_index_name) {
+ 			snprintf(name, sizeof(name), "%s/pack/pack-%s.idx",
+@@ -836,7 +837,6 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+ 		if (move_temp_to_file(curr_index_name, final_index_name))
+ 			die("cannot store index file");
+ 	}
+-	chmod(final_index_name, 0444);
+ 
+ 	if (!from_stdin) {
+ 		printf("%s\n", sha1_to_hex(sha1));
 
-If you're thinking of a staging area that should queue all commits
-and lock the repo while testing is in progress, you need to think
-again, I'm afraid, as that locks up developer time in such huge
-amounts that it isn't really worth it. Without the locking, you
-get the problem of trying to automate merges (which may conflict
-and need a manual resolution). Although I guess a merge conflict
-could result in a delayed push error, so perhaps that could work
-too. If you manage to cook up a solution for this, please make a
-small writeup on this list how you went about achieving it.
 
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+> Could you eyeball and re-test it?
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+Tested-by: Johan Herland <johan@herland.net>
+
+> --- a/builtin-init-db.c
+> +++ b/builtin-init-db.c
+> @@ -195,6 +195,8 @@ static int create_default_files(const char
+> *template_path)
+>
+>  	git_config(git_default_config, NULL);
+>  	is_bare_repository_cfg = init_is_bare_repository;
+> +
+> +	/* reading existing config may have overwrote it */
+
+s/overwrote/overwritten/
+
+Otherwise OK, AFAICS.
+
+
+Have fun! :)
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
