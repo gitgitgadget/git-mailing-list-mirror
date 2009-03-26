@@ -1,75 +1,73 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH TopGit] hooks/pre-commit.sh: fix bashism
-Date: Thu, 26 Mar 2009 15:21:58 +0100
-Message-ID: <36ca99e90903260721l128efcbep1a45d7639733e49d@mail.gmail.com>
-References: <1237981384-7857-1-git-send-email-bert.wesarg@googlemail.com>
-	 <20090326090009.GA7570@pengutronix.de>
-	 <49CB4B12.3020408@pengutronix.de>
+From: Raman Gupta <rocketraman@fastmail.fm>
+Subject: Re: Reference for git.git release process
+Date: Thu, 26 Mar 2009 10:29:45 -0400
+Message-ID: <49CB9159.6030606@fastmail.fm>
+References: <49CA78BF.2020101@fastmail.fm> <7viqlxz9go.fsf@gitster.siamese.dyndns.org> <49CB3766.5090109@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>, Petr Baudis <pasky@suse.cz>,
-	git@vger.kernel.org, martin f krafft <madduck@debian.org>,
-	Marc Kleine-Budde <m.kleine-budde@pengutronix.de>
-To: Marc Kleine-Budde <mkl@pengutronix.de>
-X-From: git-owner@vger.kernel.org Thu Mar 26 15:24:17 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Thu Mar 26 15:31:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmqVE-0001Hd-Fs
-	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 15:24:16 +0100
+	id 1LmqcE-0004S7-8B
+	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 15:31:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757510AbZCZOWE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Mar 2009 10:22:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757005AbZCZOWD
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 10:22:03 -0400
-Received: from mail-ew0-f165.google.com ([209.85.219.165]:56654 "EHLO
-	mail-ew0-f165.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756863AbZCZOWB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Mar 2009 10:22:01 -0400
-Received: by ewy9 with SMTP id 9so587485ewy.37
-        for <git@vger.kernel.org>; Thu, 26 Mar 2009 07:21:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=iXnuR+T04sXOsYYpcpOhzqBs65L/1dTGACL3vHsUF8M=;
-        b=oeDcoAyT49th9V8P+odcyhB8OIJg4EOIqLUJ/Ac7CF63WzmwmWc/CYu9QWsYcdSUGb
-         q/I/knGritZ0FWpt0CaM6EKayJrtC+kAMUuHVrFEFAbpjsW5VhIhNzxUPewZODdFCp/W
-         c+R/wXKdZojADNY0OIz2BuecWTsGyDPT5vkQQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=h6GIGjJrNYAXBH2JZ2i87q3ZyAtCSSCXXu4DCJHWOugkjvitfKfKbjOJ9rS+La4/BE
-         CLK++A3MQZ/MtkJZGNMp53PccQ5hQ49nWxR3R/Jp6/3juBlECkciwVYaBfkxMwGwfBBR
-         HtQzJ4JDYFCkxzytNoHFEiwzVlskAgGzjWLtU=
-Received: by 10.210.35.17 with SMTP id i17mr681105ebi.77.1238077318793; Thu, 
-	26 Mar 2009 07:21:58 -0700 (PDT)
-In-Reply-To: <49CB4B12.3020408@pengutronix.de>
+	id S1757271AbZCZO34 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Mar 2009 10:29:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757136AbZCZO3z
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 10:29:55 -0400
+Received: from smtp123.rog.mail.re2.yahoo.com ([206.190.53.28]:34693 "HELO
+	smtp123.rog.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1756863AbZCZO3z (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Mar 2009 10:29:55 -0400
+Received: (qmail 49316 invoked from network); 26 Mar 2009 14:29:52 -0000
+Received: from unknown (HELO apollo.rocketraman.com) (rocketraman@99.224.155.40 with login)
+  by smtp123.rog.mail.re2.yahoo.com with SMTP; 26 Mar 2009 14:29:52 -0000
+X-YMail-OSG: P0bMIuEVM1nX.Ks.PXVvqmvhexBOO4xbcbTe2j3udvOvcHLcFkIwsiHXUHt_PlDQjA--
+X-Yahoo-Newman-Property: ymail-3
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by apollo.rocketraman.com (Postfix) with ESMTP id 9D82621C051B;
+	Thu, 26 Mar 2009 10:29:51 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at rocketraman.com
+Received: from apollo.rocketraman.com ([127.0.0.1])
+	by localhost (apollo.rocketraman.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id VLXMLkYVQ7ML; Thu, 26 Mar 2009 10:29:45 -0400 (EDT)
+Received: from [192.168.1.5] (zeus.rocketraman.com [192.168.1.5])
+	by apollo.rocketraman.com (Postfix) with ESMTP id AA00721C051A;
+	Thu, 26 Mar 2009 10:29:45 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <49CB3766.5090109@op5.se>
+X-Enigmail-Version: 0.95.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114782>
 
-2009/3/26 Marc Kleine-Budde <mkl@pengutronix.de>:
-> Uwe Kleine-K=C3=B6nig wrote:
->> This was introduced in fcb488d51e72c7414f9beb40ad06bf529b8b38dc.
->> A similar fix was suggested by martin f krafft, too.
->
-> Works here on ubuntu bin /bin/sh is a link to /bin/dash
->
->> Reported-by: Bert Wesarg <bert.wesarg@googlemail.com>
->> Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de=
->
-> Tested-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Acked-by: Bert Wesarg <bert.wesarg@googlemail.com>
-Tested-by: Bert Wesarg <bert.wesarg@googlemail.com>
+Andreas Ericsson wrote:
+> Junio C Hamano wrote:
+>>
+>> In addition, you can keep older maintenance track around, i.e.
+>>
+>>     git branch maint-X.Y.(Z-1) maint
+>>         git checkout maint
+>>         git merge master
+>>
+>> so that maintenance releases for even older codebase _could_ be issued
+>> _if_ necessary.
+>>
+> 
+> Assuming one tags ones releases (which one should, and git.git does),
+> creating maint-X.Y.Z when it's actually needed is a far better approach.
 
-Thanks Uwe.
+This is only correct if the current tip of the maint branch is in fact
+the last tagged release i.e. that there is nothing pending on the
+maint branch that is intended for a maintenance release on the older
+codebase.
 
-Bert
+Cheers,
+Raman
