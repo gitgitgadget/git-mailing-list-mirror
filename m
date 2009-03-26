@@ -1,80 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: Remove spurious uses of "you" in
- git-bisect.txt.
-Date: Wed, 25 Mar 2009 20:48:01 -0700
-Message-ID: <7vprg5t05q.fsf@gitster.siamese.dyndns.org>
-References: <20090324220201.GM19389@fieldses.org>
- <1238039084-4810-1-git-send-email-dmellor@whistlingcat.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Reference for git.git release process
+Date: Wed, 25 Mar 2009 23:49:09 -0400
+Message-ID: <20090326034909.GB8031@coredump.intra.peff.net>
+References: <49CA78BF.2020101@fastmail.fm> <7viqlxz9go.fsf@gitster.siamese.dyndns.org> <20090326022757.GC5835@coredump.intra.peff.net> <7vtz5hugc6.fsf@gitster.siamese.dyndns.org> <20090326031521.GA7984@coredump.intra.peff.net> <7v8wmtufn4.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org, bfields@fieldses.org
-To: "David J. Mellor" <dmellor@whistlingcat.com>
-X-From: git-owner@vger.kernel.org Thu Mar 26 04:50:21 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Raman Gupta <rocketraman@fastmail.fm>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 26 04:50:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lmgbe-0008C9-4d
-	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 04:50:14 +0100
+	id 1LmgcG-0008Oe-Pl
+	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 04:50:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755231AbZCZDsN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 23:48:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754162AbZCZDsM
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 23:48:12 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52238 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755008AbZCZDsL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2009 23:48:11 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 632A6A5558;
-	Wed, 25 Mar 2009 23:48:08 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D752DA5555; Wed,
- 25 Mar 2009 23:48:02 -0400 (EDT)
-In-Reply-To: <1238039084-4810-1-git-send-email-dmellor@whistlingcat.com>
- (David J. Mellor's message of "Wed, 25 Mar 2009 20:44:44 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: EB866C06-19B8-11DE-9963-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1755023AbZCZDtV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 23:49:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754766AbZCZDtV
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 23:49:21 -0400
+Received: from peff.net ([208.65.91.99]:46701 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754495AbZCZDtU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2009 23:49:20 -0400
+Received: (qmail 11772 invoked by uid 107); 26 Mar 2009 03:49:32 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 25 Mar 2009 23:49:32 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Mar 2009 23:49:09 -0400
+Content-Disposition: inline
+In-Reply-To: <7v8wmtufn4.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114720>
 
-"David J. Mellor" <dmellor@whistlingcat.com> writes:
+On Wed, Mar 25, 2009 at 08:28:15PM -0700, Junio C Hamano wrote:
 
-> These were added by accident in a42dea3.
->
-> This patch also rewords the description of how ranges of commits can be
-> skipped.
->
-> Signed-off-by: David J. Mellor <dmellor@whistlingcat.com>
-> ---
->  Documentation/git-bisect.txt |    6 +++---
->  1 files changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
-> index a356a2b..ffc02c7 100644
-> --- a/Documentation/git-bisect.txt
-> +++ b/Documentation/git-bisect.txt
-> @@ -151,7 +151,7 @@ $ git reset --hard HEAD~3		# try 3 revisions before what
->  					# was suggested
->  ------------
->  
-> -Then you compile and test the chosen revision. Afterwards you mark
-> +Then compile and test the chosen revision, and afterwards mark
->  the revision as good or bad in the usual manner.
->  
->  Bisect skip
-> @@ -175,8 +175,8 @@ using the "'<commit1>'..'<commit2>'" notation. For example:
->  $ git bisect skip v2.5..v2.6
->  ------------
->  
-> -This tells the bisect process that no commit between `v2.5` excluded and
-> -`v2.6` included should be tested.
-> +This tells the bisect process that no commit after `v2.5`, up to and
-> +including `v2.6`, should be tested.
+> > So if I understand correctly, you would actually like "push matching,
+> > delete missing" behavior?
+> 
+> Hmm, that would be good.  That would allow me to start publishing the
+> individual topics with ease.
+> 
+> I never thought of that.
 
-Thanks; this part is much easier to read now.  These 'excluded/included'
-have always bothered me.
+I'm not sure of the best way to implement it. Is it a new behavior on
+par with matching, tracking, current, etc; or is "delete missing"
+orthogonal to what is being pushed? Should "delete missing" attempt to
+match according to your refspecs, or according to the whole repo (like
+mirror)?
+
+I was thinking "orthogonal, limited to your refspec". So configure via
+
+  git config remote.origin.prune-push true
+
+and then you can
+
+  # pseudo-mirror following your refspec or matching behavior
+  git push origin
+
+  # push foo if it exists, or delete it if it doesn't
+  git push origin foo
+
+  # sync some subset of your refs
+  git push origin refs/heads/jk/*:refs/heads/jk/*
+
+-Peff
