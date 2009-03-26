@@ -1,106 +1,54 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: branch ahead in commits but push claims all up to date
-Date: Thu, 26 Mar 2009 02:05:21 +0000
-Message-ID: <43d8ce650903251905p6f9798f5u79be7dff3b118d5c@mail.gmail.com>
-References: <7001b7a00903240821v2155d234x6a10c80a3e987acb@mail.gmail.com>
-	 <7001b7a00903240822w70a57349xcc66a02cef62dc70@mail.gmail.com>
-	 <43d8ce650903240918q2ffdba44w241e0f378a11fd3d@mail.gmail.com>
-	 <alpine.LNX.1.00.0903241304090.19665@iabervon.org>
-	 <43d8ce650903241726s122cc468q4ea9188e1561832@mail.gmail.com>
-	 <alpine.LNX.1.00.0903242118270.19665@iabervon.org>
-	 <7001b7a00903241901w107e2973i9912eab114c9cde0@mail.gmail.com>
-	 <alpine.LNX.1.00.0903242304530.19665@iabervon.org>
-	 <7001b7a00903251023r1ce5cc0dnb29b7f9379408c42@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Question: Is it possible to host a writable git repo over both
+	http and ssh?
+Date: Wed, 25 Mar 2009 22:12:59 -0400
+Message-ID: <20090326021259.GA5835@coredump.intra.peff.net>
+References: <49CA6A17.6050903@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Irene Ros <imirene@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 26 03:06:59 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Mike Gaffney <mr.gaffo@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 26 03:14:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lmezd-0003ek-Pa
-	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 03:06:54 +0100
+	id 1Lmf7E-0005Mn-OS
+	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 03:14:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754618AbZCZCFY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 22:05:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754109AbZCZCFY
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 22:05:24 -0400
-Received: from wf-out-1314.google.com ([209.85.200.175]:58468 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753336AbZCZCFX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2009 22:05:23 -0400
-Received: by wf-out-1314.google.com with SMTP id 29so380271wff.4
-        for <git@vger.kernel.org>; Wed, 25 Mar 2009 19:05:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=zt2smcvt/JVRkUhAi9uVrPbyeSfpUEHOaRd5hRE4/AY=;
-        b=FVWHGmK1R9cfdeaB/bpyo8zjVUw3UJJljrLm38VOhefiAJvy9jbV7qa8HoWnpE2Vc9
-         bb6vkRKx3Utzzz4ds7yiPoAcE+6E9NATol1I/LPSqi/e0kSvMHWLGR9MId0LYYz7petg
-         T7siWRFvfcOrbVt2gk+sspve6MUTsicBj3fmw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=pVPXPeCwcKw531Qav62zm+rzAh4eFTBSp2/X080mQLFIFr3Tpklo0IJpCOz3o8ca7K
-         SCdVC1uIwlBap8qY10bpET82oqdukicC6LuClhk9kxHtzFljwVLFkX9REO1EOv0xycdw
-         tT/cSg+pOCXIpRqPCuWOzUK84+lJ7Mb9hh504=
-Received: by 10.143.33.19 with SMTP id l19mr131834wfj.30.1238033121216; Wed, 
-	25 Mar 2009 19:05:21 -0700 (PDT)
-In-Reply-To: <7001b7a00903251023r1ce5cc0dnb29b7f9379408c42@mail.gmail.com>
+	id S1755872AbZCZCNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 22:13:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752074AbZCZCNM
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 22:13:12 -0400
+Received: from peff.net ([208.65.91.99]:59287 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754754AbZCZCNL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2009 22:13:11 -0400
+Received: (qmail 10266 invoked by uid 107); 26 Mar 2009 02:13:22 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 25 Mar 2009 22:13:22 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Mar 2009 22:12:59 -0400
+Content-Disposition: inline
+In-Reply-To: <49CA6A17.6050903@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114706>
 
-2009/3/25 Irene Ros <imirene@gmail.com>:
-> Hi Daniel,
->
-> Thank you for the explanation, doing a git fetch actually did do the
-> trick although I still don't quite see the difference between
-> git pull origin myBranch
-> and
-> git fetch
+On Wed, Mar 25, 2009 at 12:29:59PM -0500, Mike Gaffney wrote:
 
-git pull origin myBranch    is equivalent to two commands:
+> I am trying to setup a git repo internally at my work. I would like to  
+> make the repo accessable via https for both read and write so that we may 
+> access it from customer locations which don't allow anything but https. I 
+> would also like to host it via SSH because that protocol is much faster. I 
+> know that when you push with http it runs 'git update-server-info', would 
+> I have to make the ssh pushes do the same? Will this even work?
 
-git fetch
-git merge origin/myBranch
+Yes, it should work just fine. All pushes, no matter how they arrive at
+the repository, will need to run "git update-server-info", which is what
+allows "dumb" protocols like http to read from the repository. The
+default post-update hook does this; you just need to enable it by "cd
+.git/hooks && mv post-update.sample post-update".
 
-(so fetch actual remote repository to local remote repository.  Then
-do the merge)
-
->
-> When I push to origin myBranch it's clear that it actually pushes my
-> changes to our remote repository since others can then pull and get
-> them. So is it the case that:
->
-> git push ==> actual remote repository
-Yes
-
-> while
-> git pull <== local copy of remote repository for this branch ?
-
-git pull <== actual remote repository copied to local copy of remote
-repository.  Then local copy of remote repository merged into your
-branch.
-
-
-> In that case why is it that in all branches that I have, besides this
-> one, doing a 'git pull origin whateverBranch' actually pulls from the
-> remote branch and not the local copy? This case has been quite unique
-> given dozens of branches that we constantly switch to and from. We've
-> never actually used (or clearly saw the need for) git fetch until now.
-
-
-If you always git pull  after git push, then you'll have no problem,
-since git pull also does a git fetch.
-
-git is sometimes a bit too bare bones :-/  It would be nice to try to
-hide these implementation details better
+-Peff
