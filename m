@@ -1,70 +1,66 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [PATCH 1/2] init: support --import to add all files and commit  right after init
-Date: Thu, 26 Mar 2009 22:23:27 +0100
-Message-ID: <200903262223.28546.markus.heidelberg@web.de>
-References: <1237978720-2500-1-git-send-email-pclouds@gmail.com> <20090325124219.GA5307@coredump.intra.peff.net> <adf1fd3d0903250549l60e4a2d1j8bd57ba66d24a678@mail.gmail.com>
-Reply-To: markus.heidelberg@web.de
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?utf-8?q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= 
-	<pclouds@gmail.com>, git@vger.kernel.org
-To: Santi =?iso-8859-1?q?B=E9jar?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Thu Mar 26 22:25:04 2009
+From: Ferry Huberts <ferry.huberts@pelagic.nl>
+Subject: [EGIT] [PATCH RFC v1 4/5] Do not set .git as a Team ignore pattern
+Date: Thu, 26 Mar 2009 22:34:26 +0100
+Message-ID: <6b4495184b92d42059a12af17c54f1951337338a.1238102327.git.ferry.huberts@pelagic.nl>
+References: <cover.1238102327.git.ferry.huberts@pelagic.nl>
+ <213427d4111185ae3a094a3cd578be8e6c3d5ffb.1238102327.git.ferry.huberts@pelagic.nl>
+ <77afc036be3e7704333130c1cd2ab28466a91e67.1238102327.git.ferry.huberts@pelagic.nl>
+ <e9605b0b1bda26f568009a42b31220d60692fce6.1238102327.git.ferry.huberts@pelagic.nl>
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Ferry Huberts <ferry.huberts@pelagic.nl>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 26 22:36:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lmx4F-0003aw-Sv
-	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 22:24:52 +0100
+	id 1LmxF9-0007np-Sx
+	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 22:36:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755572AbZCZVXU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Mar 2009 17:23:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752205AbZCZVXU
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 17:23:20 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:55512 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751766AbZCZVXT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Mar 2009 17:23:19 -0400
-Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 7CAC4F99B536;
-	Thu, 26 Mar 2009 22:23:15 +0100 (CET)
-Received: from [89.59.78.67] (helo=.)
-	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1Lmx2h-00034o-00; Thu, 26 Mar 2009 22:23:15 +0100
-User-Agent: KMail/1.9.9
-In-Reply-To: <adf1fd3d0903250549l60e4a2d1j8bd57ba66d24a678@mail.gmail.com>
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX19dGSoR3g+IYDwHmxxzzb+xTBYTYNk9AnPO791f
-	gpb4I2lZUVH5f6/GMA7ZJFvU0XgsLWZbsVnxDoarvkdfMiFup4
-	L4Ez51WQJgfy8OIXMdKg==
+	id S1756458AbZCZVef (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Mar 2009 17:34:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755987AbZCZVed
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 17:34:33 -0400
+Received: from hupie.xs4all.nl ([82.95.241.251]:46236 "EHLO
+	Lighthouse.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751766AbZCZVed (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Mar 2009 17:34:33 -0400
+Received: from localhost.localdomain (unknown [192.168.0.51])
+	by Lighthouse.internal.Hupie.com (Postfix) with ESMTP id 466F658BDD4;
+	Thu, 26 Mar 2009 22:34:28 +0100 (CET)
+X-Mailer: git-send-email 1.6.0.6
+In-Reply-To: <e9605b0b1bda26f568009a42b31220d60692fce6.1238102327.git.ferry.huberts@pelagic.nl>
+In-Reply-To: <cover.1238102327.git.ferry.huberts@pelagic.nl>
+References: <cover.1238102327.git.ferry.huberts@pelagic.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114823>
 
-Santi B=E9jar, 25.03.2009:
-> 2009/3/25 Jeff King <peff@peff.net>:
-> > On Wed, Mar 25, 2009 at 01:38:30PM +0100, Johannes Schindelin wrote=
-:
-> >
-> >> > > +If no message is given, "Initial commit" will be used.
-> >> >
-> >> > Why a default message and not running the editor?
-> >>
-> >> Because I would say "Initial commit" anyway.
->=20
-> And I would say "Commit inicial".
+The .git ignore pattern is only valid in the context that it matches
+a .git directory that is actually a repository.
 
-And I would describe the current state in a few words.
+Signed-off-by: Ferry Huberts <ferry.huberts@pelagic.nl>
+---
+ org.spearce.egit.core/plugin.xml |    6 ------
+ 1 files changed, 0 insertions(+), 6 deletions(-)
 
-Invoking an editor is more universal and I don't think the majority
-would be contented with "Initial commit".
-
-Markus
+diff --git a/org.spearce.egit.core/plugin.xml b/org.spearce.egit.core/plugin.xml
+index 77ecebf..ff24ac7 100644
+--- a/org.spearce.egit.core/plugin.xml
++++ b/org.spearce.egit.core/plugin.xml
+@@ -11,10 +11,4 @@
+ 		id="org.spearce.egit.core.GitProvider">
+ 	</repository>
+   </extension>
+-  <extension
+-        point="org.eclipse.team.core.ignore">
+-     <ignore
+-           enabled="true"
+-           pattern=".git"/>
+-  </extension>   
+ </plugin>
+-- 
+1.6.0.6
