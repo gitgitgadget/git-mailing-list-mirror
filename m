@@ -1,50 +1,79 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Reference for git.git release process
-Date: Wed, 25 Mar 2009 23:15:21 -0400
-Message-ID: <20090326031521.GA7984@coredump.intra.peff.net>
-References: <49CA78BF.2020101@fastmail.fm> <7viqlxz9go.fsf@gitster.siamese.dyndns.org> <20090326022757.GC5835@coredump.intra.peff.net> <7vtz5hugc6.fsf@gitster.siamese.dyndns.org>
+Date: Wed, 25 Mar 2009 20:26:12 -0700
+Message-ID: <7vd4c5ufqj.fsf@gitster.siamese.dyndns.org>
+References: <49CA78BF.2020101@fastmail.fm>
+ <7viqlxz9go.fsf@gitster.siamese.dyndns.org> <49CAAA16.1080401@fastmail.fm>
+ <7vocvpw4q1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Raman Gupta <rocketraman@fastmail.fm>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 26 04:17:09 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Raman Gupta <rocketraman@fastmail.fm>
+X-From: git-owner@vger.kernel.org Thu Mar 26 04:27:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lmg5a-0001hg-6Z
-	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 04:17:06 +0100
+	id 1LmgG1-0003eb-3j
+	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 04:27:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753882AbZCZDPd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 23:15:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753826AbZCZDPd
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 23:15:33 -0400
-Received: from peff.net ([208.65.91.99]:45175 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753690AbZCZDPc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Mar 2009 23:15:32 -0400
-Received: (qmail 11510 invoked by uid 107); 26 Mar 2009 03:15:44 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 25 Mar 2009 23:15:44 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Mar 2009 23:15:21 -0400
-Content-Disposition: inline
-In-Reply-To: <7vtz5hugc6.fsf@gitster.siamese.dyndns.org>
+	id S1754133AbZCZD0U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 23:26:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753369AbZCZD0U
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 23:26:20 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47421 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751226AbZCZD0T (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2009 23:26:19 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6AD54A53D9;
+	Wed, 25 Mar 2009 23:26:17 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5941BA53D8; Wed,
+ 25 Mar 2009 23:26:14 -0400 (EDT)
+In-Reply-To: <7vocvpw4q1.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed, 25 Mar 2009 16:41:10 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: DE2064AC-19B5-11DE-9DBB-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114712>
 
-On Wed, Mar 25, 2009 at 08:13:13PM -0700, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Incidentally, that is why I usually favor the current 'matching' default.
-> If I decide to push something to the other repository, the other
-> repository remembers my wish, so I do not have to keep track (of course,
-> for that to work effectively, you have to _own_ the other side; it does
-> not work well for a shared public repository and that is why we had a
-> lengthy discussion on push.default).
+> Raman Gupta <rocketraman@fastmail.fm> writes:
+> ...
+>> ... The only
+>> concern I had with this workflow was the difficult to understand
+>> visualization of the history. So to repeat my earlier question: Are
+>> there some canned gitk invocations, or other tips/tricks/approaches,...
+>
+> I do not share the difficulty, and there is no answer from me to your
+> "earlier" question.  Perhaps other people have some tips.
 
-So if I understand correctly, you would actually like "push matching,
-delete missing" behavior?
+This may deserve a but more explanation as to why I do not share that
+difficulty.  In short, I never look at gitk output to see how next is
+doing, and that is why many repeated merges to next does not bother me.
 
--Peff
+On my main integration branches ('master' and 'maint'), new development
+never happens directly (I do apply trivially correct patches to them, but
+they are exceptions).  Because of this, you can get a pretty good overview
+by running "git log --oneline --first-parent" starting from the tip of
+these branches to see what topics have graduated.
+
+My primary gitk replacement is the periodical "What's in git" and "What's
+cooking in git" messages.  I use a few custom scripts (Meta/WC,
+Meta/git-topic.perl and Meta/UWC) to manage the latter (the production of
+the former is merely "git shortlog --no-merges <last-issue>..master").
+
+After accumulating new patches on top of topics and merging more topics to
+integration branches (such as master and next), I run Meta/WC which in
+turn runs Meta/UWC to read the last issue of "What's cooking", and the raw
+material that should go in the next issue of the message (generated by
+Meta/git-topic.perl), and the comments on each topic in the last issue is
+merged to produce the draft of the next issue.  I add further text to it
+to describe new deveolopment to existing topics and comment on new topics
+before sending it out, and another cycle begins.
