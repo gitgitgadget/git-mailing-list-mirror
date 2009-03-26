@@ -1,74 +1,60 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3] init: support --import to add all files and commit
-	right after init
-Date: Thu, 26 Mar 2009 05:57:16 -0400
-Message-ID: <20090326095716.GD14292@coredump.intra.peff.net>
-References: <1238060943-4694-1-git-send-email-pclouds@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [BUG?] How to make a shared/restricted repo?
+Date: Thu, 26 Mar 2009 10:58:58 +0100
+Message-ID: <49CB51E2.9010903@viscovery.net>
+References: <200903250105.05808.johan@herland.net> <200903260929.58321.johan@herland.net> <49CB3FA0.8030408@viscovery.net> <200903261044.58140.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 26 10:59:13 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu Mar 26 11:00:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmmMb-0003VS-PF
-	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 10:59:06 +0100
+	id 1LmmO4-0003z8-DH
+	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 11:00:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757937AbZCZJ5a convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Mar 2009 05:57:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757721AbZCZJ5a
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 05:57:30 -0400
-Received: from peff.net ([208.65.91.99]:60007 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757886AbZCZJ53 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Mar 2009 05:57:29 -0400
-Received: (qmail 13270 invoked by uid 107); 26 Mar 2009 09:57:40 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 26 Mar 2009 05:57:40 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Mar 2009 05:57:16 -0400
-Content-Disposition: inline
-In-Reply-To: <1238060943-4694-1-git-send-email-pclouds@gmail.com>
+	id S1756550AbZCZJ7I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Mar 2009 05:59:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752292AbZCZJ7G
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 05:59:06 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:8504 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751304AbZCZJ7G (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Mar 2009 05:59:06 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LmmMV-0001hd-C6; Thu, 26 Mar 2009 10:58:59 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 227B14E4; Thu, 26 Mar 2009 10:58:59 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <200903261044.58140.johan@herland.net>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114765>
 
-On Thu, Mar 26, 2009 at 08:49:03PM +1100, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
-=BB=8Dc Duy wrote:
+Johan Herland schrieb:
+> In the above patch, I've passed mode == -1 to finalize_temp_file() from all
+> callsites where there was no corresponding (f)chmod(foo, 0444). However,
+> after looking at the context (these are all either packs or loose objects),
+> I'm wondering if we shouldn't pass mode == 0444 for all of these. At which
+> point we could replace the above patch with this much simpler version:
 
-> This is equivalent to "git init;git add .;git commit -q -m blah".
-> I find myself doing that too many times, hence this shortcut.
+Indeed!
 
-This version looks OK to me, but I have a few comments:
+> (We could also add an optional "mode" argument to adjust_shared_perm(), to
+> get rid of the double chmod().)
 
->  Hopefully I don't make any mistake this time. -m will not take any a=
-rgument
->  for two reasons:
->=20
->   - optional argument for short options does not appear anywhere in g=
-it AFAIK.
->     let's not make parse-opt migration more difficult with -mfoo or -=
-m=3Dfoo
+And I think you should do that, otherwise you have a short time window
+where the permissions of a pack or loose object is less restrictive than
+you want.
 
-shortlog's -w has optional arguments (and is the option that spawned th=
-e
-discussion that led to Pierre writing the gitcli(7) text, IIRC). So
-parse-options does handle it, but you _cannot_ say "-m foo" anymore.
-
-> +-m::
-> +--import[=3D<message>]::
-
-Nit: -m made sense when it specified a message. But now that it doesn't
-take a message, maybe "-i" would be more appropriate?
-
-> +If `-m` is used or no message is given to `--import`, "Initial commi=
-t" will be used.
-
-Style nit: long line.
-
--Peff
+-- Hannes
