@@ -1,92 +1,50 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Add feature release instructions to MaintNotes
- addendum
-Date: Thu, 26 Mar 2009 13:28:38 -0700
-Message-ID: <7vprg4m3k9.fsf@gitster.siamese.dyndns.org>
-References: <1238032575-10987-1-git-send-email-rocketraman@fastmail.fm>
- <20090326121017.6117@nanako3.lavabit.com> <49CB8871.2020605@fastmail.fm>
+Subject: Re: [PATCH] format-patch: add arbitrary email headers
+Date: Thu, 26 Mar 2009 13:29:34 -0700
+Message-ID: <7viqlwm3ip.fsf@gitster.siamese.dyndns.org>
+References: <1237996712-61859-1-git-send-email-michael@ndrix.org>
+ <7v3ad11kqh.fsf@gitster.siamese.dyndns.org>
+ <20090326164212.GF29569@ginosko.ndrix.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Raman Gupta <rocketraman@fastmail.fm>
-X-From: git-owner@vger.kernel.org Thu Mar 26 21:30:35 2009
+Cc: git@vger.kernel.org
+To: Michael Hendricks <michael@ndrix.org>
+X-From: git-owner@vger.kernel.org Thu Mar 26 21:31:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmwDX-0007xJ-TP
-	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 21:30:24 +0100
+	id 1LmwEL-0008Jr-Mb
+	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 21:31:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756289AbZCZU2u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Mar 2009 16:28:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755562AbZCZU2t
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 16:28:49 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59331 "EHLO
+	id S1758869AbZCZU3l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Mar 2009 16:29:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758052AbZCZU3k
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 16:29:40 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59529 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752414AbZCZU2s (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Mar 2009 16:28:48 -0400
+	with ESMTP id S1757164AbZCZU3k (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Mar 2009 16:29:40 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3FDC896CE;
-	Thu, 26 Mar 2009 16:28:44 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 96D4596ED;
+	Thu, 26 Mar 2009 16:29:38 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 72B5D96C7; Thu,
- 26 Mar 2009 16:28:40 -0400 (EDT)
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0AB1496EC; Thu,
+ 26 Mar 2009 16:29:35 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B3B106D8-1A44-11DE-99EE-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D4173082-1A44-11DE-89E7-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114815>
 
-Raman Gupta <rocketraman@fastmail.fm> writes:
+Michael Hendricks <michael@ndrix.org> writes:
 
-> Nanako Shiraishi wrote:
->> Quoting rocketraman@fastmail.fm:
->> 
->>> + - The 'maint' branch is updated to the new release.
->>> +
->>> +     $ git checkout maint
->>> +     $ git merge master
->>> +
->>> +   This is equivalent to deleting maint and recreating it from
->>> +   master, but it preserves the maint reflog.
->> 
->> After giving a recipe that is better than an alternative, what's
->> the point of describing an inferior alternative as "equivalent",
->> when it is obviously not "equivalent"?
->
-> Is this better:
->
-> The resulting maint tree is equivalent to deleting maint and
-> recreating it from the tip of master, but merging from master
-> preserves the maint reflog.
+> Perhaps --add-header is a better name for this argument.  That name at
+> least makes it clear that headers specified on the command line are
+> cumulative.  If someone has a use case for --no-extra-headers, they
+> can add it later and --add-header retains the same meaning.
 
-It is unclear what you are trying to explain with these two (in your
-original) or three (your rewrite) lines.  As an explanation for the two
-command sequence, I would expect to see:
-
-    "This merges the tip of the master into maint".
-
-But that is literally what the command sequence does, so it goes without
-saying.
-
-If there is anything that needs to be said further, I think it is not how
-delete-then-recreate is inappropriate (I do not think it is even worth
-teaching).  But you may want to explain the reason _why_ maint gets this
-update from master.  I thought the explanation "... is updated to the new
-release" already covers that motivation, but if you want to make the
-description really novice-friendly, you _could_ say something like:
-
-    Now a new release X.Y.Z is out, the 'maint' branch will be used to
-    manage the fixes to it.  The branch used to be used for managing the
-    fixes to X.Y.(Z-1), and does not have any feature development that
-    happened between X.Y.(Z-1) and X.Y.Z.  Because these changes are
-    contained in the 'master' branch, we can merge 'master' to 'maint' to
-    have the latter have them, which prepares it to be used for managing
-    the fixes to X.Y.Z.
-
-I personally would not want to see somebody who needs the above to be
-explained to take over git maintenance after I get hit by a wayward bus,
-by the way ;-)
+Sounds very sane.  Thanks.
