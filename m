@@ -1,85 +1,140 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH] fast-export: Avoid dropping files from commits
-Date: Wed, 25 Mar 2009 18:06:46 -0600
-Message-ID: <51419b2c0903251706n7cfa053eheff542d20ca9a753@mail.gmail.com>
-References: <1238014519-11683-1-git-send-email-newren@gmail.com>
-	 <alpine.DEB.1.00.0903252312460.26370@intel-tinevez-2-302>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [BUG?] How to make a shared/restricted repo?
+Date: Thu, 26 Mar 2009 01:22:24 +0100
+Message-ID: <200903260122.24770.johan@herland.net>
+References: <200903250105.05808.johan@herland.net>
+ <7v63hybaqd.fsf@gitster.siamese.dyndns.org>
+ <7vwsadw5pz.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Mar 26 01:08:22 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 26 01:24:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lmd8v-0006j9-Up
-	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 01:08:22 +0100
+	id 1LmdO6-0002QE-1J
+	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 01:24:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752990AbZCZAGu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Mar 2009 20:06:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752861AbZCZAGu
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 20:06:50 -0400
-Received: from an-out-0708.google.com ([209.85.132.249]:10464 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751004AbZCZAGt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Mar 2009 20:06:49 -0400
-Received: by an-out-0708.google.com with SMTP id d14so251937and.1
-        for <git@vger.kernel.org>; Wed, 25 Mar 2009 17:06:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=MjwwKczcBMsS2ZDZ9/+5k+Y9arVWs94OkAgoC4dsMOA=;
-        b=AX3ZLjJYIgW+fvLtIwZDFzhWeUHT9KPLFn3TebUYbKNKYArQyfzM2LUlguNgg2GxAP
-         Woy/mlTvSIBfiQqLo/KYOHjXsSRsG0uMy55JgHIOKkpGzUYa3R9pC+jbVddQYpi8QzvI
-         XLQcfXPj3p+tMAkg703jhbyBhD/lLS3//tdPs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=oGwogVSP6cSW4uwcI43O5tKT6IXxhbj+5u6pMXKg9dESp3nvJZP2wOg5PDD7+q/Z2U
-         fmeec/RuafWHRwg7h5kt0GvCQt4n8VaeIR/dAzQ2LU1FA/Nf69aNpBjUD1SF+FINq7w5
-         DFzn/tuffapD919l334BG94x4+XyandABZ3eY=
-Received: by 10.231.19.70 with SMTP id z6mr47787iba.29.1238026007091; Wed, 25 
-	Mar 2009 17:06:47 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0903252312460.26370@intel-tinevez-2-302>
+	id S1753795AbZCZAWb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 20:22:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752970AbZCZAWa
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 20:22:30 -0400
+Received: from mx.getmail.no ([84.208.15.66]:56715 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751897AbZCZAW3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Mar 2009 20:22:29 -0400
+Content-disposition: inline
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KH3009UZ7PE8V00@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 26 Mar 2009 01:22:26 +0100 (MET)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KH300E8A7PDVR50@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 26 Mar 2009 01:22:26 +0100 (MET)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.3.26.1034
+User-Agent: KMail/1.11.1 (Linux/2.6.28-ARCH; KDE/4.2.1; x86_64; ; )
+In-reply-to: <7vwsadw5pz.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114695>
 
-Hi,
+On Thursday 26 March 2009, Junio C Hamano wrote:
+> How about doing it like this, instead?
 
-On Wed, Mar 25, 2009 at 4:13 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->> - =C2=A0 =C2=A0 if (commit->parents) {
->> + =C2=A0 =C2=A0 if (commit->parents &&
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 get_object_mark(&commit->parents->item=
-->object) !=3D 0) {
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 parse_commit(commit=
-->parents->item);
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 diff_tree_sha1(comm=
-it->parents->item->tree->object.sha1,
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0commit->tree->object.sha1, "", &rev-=
->diffopt);
->
-> I do not understand that change.
->
-> A good explanation in the commit message might help this stupid devel=
-oper.
+Looks good, and is obviously much less intrusive than my attempt.
 
-I resent the patch in another email (sorry for the duplication, but I
-don't trust gmail to preserve patches, and responding inline to
-comments via git-send-email isn't so great either).  Let me know if
-the explanation is missing anything, is too detailed, or is using
-incorrect terminology.  In two cases I was sufficiently unsure about
-my wording that I provided extra wording to try to make it clear what
-I was talking about.
+There's still one issue as compared to my series: Hook scripts in
+.git/hooks lose their executable bit when copied from template dir.
+You probably need to do some kind of special x-bit handling, similar
+to what's already done for directories.
 
-Thanks,
-Elijah
+Other than that:
+Tested-by: Johan Herland <johan@herland.net>
+
+> I think there are more places you could sprinkle adjust_shared_perm() for
+> packfiles and other things.  I didn't check, not because I wasn't
+> uninterested, but because I am more interested in getting what
+> adjust_shared_perm() itself does right.
+
+Here is my #7 patch, re-rolled on top of your patch to call
+adjust_shared_perm():
+
+---
+ fast-import.c |    2 ++
+ http-push.c   |    1 +
+ http-walker.c |    1 +
+ index-pack.c  |    2 ++
+ 4 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/fast-import.c b/fast-import.c
+index beeac0d..d73ee71 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -903,7 +903,9 @@ static char *keep_pack(char *curr_index_name)
+        int keep_fd;
+ 
+        chmod(pack_data->pack_name, 0444);
++       adjust_shared_perm(pack_data->pack_name);
+        chmod(curr_index_name, 0444);
++       adjust_shared_perm(curr_index_name);
+ 
+        keep_fd = odb_pack_keep(name, sizeof(name), pack_data->sha1);
+        if (keep_fd < 0)
+diff --git a/http-push.c b/http-push.c
+index 6ce5a1d..a5acabf 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -750,6 +750,7 @@ static void finish_request(struct transfer_request *request)
+        } else if (request->state == RUN_FETCH_LOOSE) {
+                fchmod(request->local_fileno, 0444);
+                close(request->local_fileno); request->local_fileno = -1;
++               adjust_shared_perm(request->tmpfile);
+ 
+                if (request->curl_result != CURLE_OK &&
+                    request->http_code != 416) {
+diff --git a/http-walker.c b/http-walker.c
+index 0dbad3c..24cfc45 100644
+--- a/http-walker.c
++++ b/http-walker.c
+@@ -233,6 +233,7 @@ static void finish_object_request(struct object_request *obj_req)
+ 
+        fchmod(obj_req->local, 0444);
+        close(obj_req->local); obj_req->local = -1;
++       adjust_shared_perm(obj_req->tmpfile);
+ 
+        if (obj_req->http_code == 416) {
+                fprintf(stderr, "Warning: requested range invalid; we may already have all the data.\n");
+diff --git a/index-pack.c b/index-pack.c
+index 7546822..7abe3f0 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -826,6 +826,7 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+        }
+        if (from_stdin)
+                chmod(final_pack_name, 0444);
++               adjust_shared_perm(final_pack_name);
+ 
+        if (final_index_name != curr_index_name) {
+                if (!final_index_name) {
+@@ -837,6 +838,7 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+                        die("cannot store index file");
+        }
+        chmod(final_index_name, 0444);
++       adjust_shared_perm(final_index_name);
+ 
+        if (!from_stdin) {
+                printf("%s\n", sha1_to_hex(sha1));
+-- 
+1.6.2.1.473.g92672
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
