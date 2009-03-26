@@ -1,75 +1,75 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 01/10] refs: add "for_each_bisect_ref" function
-Date: Thu, 26 Mar 2009 08:48:41 +0100
-Message-ID: <200903260848.42104.chriscool@tuxfamily.org>
-References: <20090326055509.1bc16b28.chriscool@tuxfamily.org> <fabb9a1e0903252320j2edf4a8ct39f784c4319c3cb0@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Reference for git.git release process
+Date: Thu, 26 Mar 2009 09:05:58 +0100
+Message-ID: <49CB3766.5090109@op5.se>
+References: <49CA78BF.2020101@fastmail.fm> <7viqlxz9go.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	John Tapsell <johnflux@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 26 08:51:19 2009
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Raman Gupta <rocketraman@fastmail.fm>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 26 09:16:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmkMu-0007Wl-B2
-	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 08:51:16 +0100
+	id 1Lmkkw-0005S9-F8
+	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 09:16:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752341AbZCZHtp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Mar 2009 03:49:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751004AbZCZHtp
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 03:49:45 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:56322 "EHLO smtp3-g21.free.fr"
+	id S1751061AbZCZIOe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Mar 2009 04:14:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751591AbZCZIOd
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 04:14:33 -0400
+Received: from mail.op5.se ([193.201.96.20]:57316 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750911AbZCZHtp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Mar 2009 03:49:45 -0400
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id DDE78818186;
-	Thu, 26 Mar 2009 08:49:34 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id C30648181AC;
-	Thu, 26 Mar 2009 08:49:31 +0100 (CET)
-User-Agent: KMail/1.9.9
-In-Reply-To: <fabb9a1e0903252320j2edf4a8ct39f784c4319c3cb0@mail.gmail.com>
-Content-Disposition: inline
+	id S1751173AbZCZIOb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Mar 2009 04:14:31 -0400
+X-Greylist: delayed 501 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Mar 2009 04:14:31 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 4EB111B80CB9;
+	Thu, 26 Mar 2009 09:06:12 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Me4zOzyf2SyH; Thu, 26 Mar 2009 09:06:10 +0100 (CET)
+Received: from clix.int.op5.se (unknown [172.27.78.6])
+	by mail.op5.se (Postfix) with ESMTP id D4F3A1B80076;
+	Thu, 26 Mar 2009 09:06:05 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <7viqlxz9go.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114748>
 
-Hi Sverre,
+Junio C Hamano wrote:
+> 
+> In addition, you can keep older maintenance track around, i.e.
+> 
+> 	git branch maint-X.Y.(Z-1) maint
+>         git checkout maint
+>         git merge master
+> 
+> so that maintenance releases for even older codebase _could_ be issued
+> _if_ necessary.
+> 
 
-Le jeudi 26 mars 2009, Sverre Rabbelier a =E9crit :
-> Heya
->
-> On Thu, Mar 26, 2009 at 05:55, Christian Couder <chriscool@tuxfamily.=
-org>=20
-wrote:
-> > Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
->
-> A 10 patches series with no cover letter?=20
+Assuming one tags ones releases (which one should, and git.git does),
+creating maint-X.Y.Z when it's actually needed is a far better approach.
 
-I am not a big fan of cover letters. Usually I prefer adding comments i=
-n the=20
-patches.
+No morning coffee yet, Junio? ;-)
 
-> And no description of the=20
-> individual patches either!=20
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-There is a commit message in each patch. And many of the patches are ve=
-ry=20
-small.
-
-> C'mon Christian, you know better than that=20
-> ;).
-
-If some commit messages are not clear enough, please tell me and I will=
- try=20
-to improve them ;)
-
-Regards,
-Christian.
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
