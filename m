@@ -1,113 +1,75 @@
-From: "Gilbert Liddell" <gliddell@totalrepair.co.uk>
-Subject: RE: svn clone Checksum mismatch question
-Date: Thu, 26 Mar 2009 14:18:00 -0000
-Message-ID: <D92CD911394B11428C65AFB4222835AE01255587@mercury.totalrepair.co.uk>
-References: <22719363.post@talk.nabble.com> <20090326130213.GC3114@atjola.homenet> <D92CD911394B11428C65AFB4222835AE01255586@mercury.totalrepair.co.uk> <fabb9a1e0903260654n5e682c49hbad3d2ece093af3f@mail.gmail.com>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH TopGit] hooks/pre-commit.sh: fix bashism
+Date: Thu, 26 Mar 2009 15:21:58 +0100
+Message-ID: <36ca99e90903260721l128efcbep1a45d7639733e49d@mail.gmail.com>
+References: <1237981384-7857-1-git-send-email-bert.wesarg@googlemail.com>
+	 <20090326090009.GA7570@pengutronix.de>
+	 <49CB4B12.3020408@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?iso-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
-	<git@vger.kernel.org>
-To: "Sverre Rabbelier" <srabbelier@gmail.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Johannes Sixt" <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Mar 26 15:19:48 2009
+Cc: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>, Petr Baudis <pasky@suse.cz>,
+	git@vger.kernel.org, martin f krafft <madduck@debian.org>,
+	Marc Kleine-Budde <m.kleine-budde@pengutronix.de>
+To: Marc Kleine-Budde <mkl@pengutronix.de>
+X-From: git-owner@vger.kernel.org Thu Mar 26 15:24:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmqQk-0007km-RK
-	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 15:19:39 +0100
+	id 1LmqVE-0001Hd-Fs
+	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 15:24:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756455AbZCZOSI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Mar 2009 10:18:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755592AbZCZOSH
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 10:18:07 -0400
-Received: from [194.73.118.11] ([194.73.118.11]:48055 "EHLO
-	mail.totalrepair.co.uk" rhost-flags-FAIL-FAIL-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1755391AbZCZOSF convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Mar 2009 10:18:05 -0400
-Received: from totalrepair.co.uk [10.0.100.85] by mail.totalrepair.co.uk - SurfControl E-mail Filter (6.0.1); Thu, 26 Mar 2009 14:18:00 +0000
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-In-Reply-To: <fabb9a1e0903260654n5e682c49hbad3d2ece093af3f@mail.gmail.com>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: svn clone Checksum mismatch question
-thread-index: AcmuGnhx+lFPY6gOQJmU3OqlbMNr5QAANvVA
-X-SEF-7853D99-ADF1-478E-8894-213D316B8FFA: 1
-X-SEF-Processed: 6_0_1_111__2009_03_26_14_18_01
+	id S1757510AbZCZOWE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Mar 2009 10:22:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757005AbZCZOWD
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 10:22:03 -0400
+Received: from mail-ew0-f165.google.com ([209.85.219.165]:56654 "EHLO
+	mail-ew0-f165.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756863AbZCZOWB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Mar 2009 10:22:01 -0400
+Received: by ewy9 with SMTP id 9so587485ewy.37
+        for <git@vger.kernel.org>; Thu, 26 Mar 2009 07:21:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=iXnuR+T04sXOsYYpcpOhzqBs65L/1dTGACL3vHsUF8M=;
+        b=oeDcoAyT49th9V8P+odcyhB8OIJg4EOIqLUJ/Ac7CF63WzmwmWc/CYu9QWsYcdSUGb
+         q/I/knGritZ0FWpt0CaM6EKayJrtC+kAMUuHVrFEFAbpjsW5VhIhNzxUPewZODdFCp/W
+         c+R/wXKdZojADNY0OIz2BuecWTsGyDPT5vkQQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=h6GIGjJrNYAXBH2JZ2i87q3ZyAtCSSCXXu4DCJHWOugkjvitfKfKbjOJ9rS+La4/BE
+         CLK++A3MQZ/MtkJZGNMp53PccQ5hQ49nWxR3R/Jp6/3juBlECkciwVYaBfkxMwGwfBBR
+         HtQzJ4JDYFCkxzytNoHFEiwzVlskAgGzjWLtU=
+Received: by 10.210.35.17 with SMTP id i17mr681105ebi.77.1238077318793; Thu, 
+	26 Mar 2009 07:21:58 -0700 (PDT)
+In-Reply-To: <49CB4B12.3020408@pengutronix.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114781>
 
->2009/3/26 Gilbert Liddell <gliddell@totalrepair.co.uk>:=0D
->>2009/3/26 Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>:=0D
->>> On 2009.03.26 03:31:53 -0700, Gilbert Liddell wrote:=0D
->>>> This morning i decided to test the clone with the full project i'm=
- working=0D
->>>> on (11,000 files) and I get the error message Checksum mismatch: v=
-n2.sln=0D
->>>> 0f7a82f1d38b819 expected: fde799e5ba0d1d07e6b539016bea3260=0D
->>>> got: e71db1010a0da06ea76d4163c452df72=0D
->>>>=0D
->>>> Can someone help with why this error is happening? Is there an iss=
-ue with=0D
->>>> the GIT clone and large repositories?=0D
->>>=0D
->>> Which git version is that? There was some bug in git-svn that cause=
-d it=0D
->>> to fill the disk with temporary files, without noticing that those =
-files=0D
->>> get truncated when the disk is full. That was fixed in some 1.6.0.x=
-=0D
->>> release IIRC.=0D
->>=0D
->> Thanks for the reply, i'm using git version 1.6.2.msysgit.0.186.gf75=
-12=0D
->=0D
->Seems like it could be one of the known bugs of git-svn on windows?=0D
-> (ccing Dscho and J6t)=0D
->=0D
->-- =0D
->Cheers,=0D
->=0D
->Sverre Rabbelier=0D
-=0D
-Hi,=0D
-=0D
-Apologies for the Top Posting.=0D
-I've not been able to find any info about this being a but with git-svn=
- on Windows. I stumbled across this post that appears to be the same/si=
-milar issue - =0D
-http://lists-archives.org/git/668493-git-svn-checksum-mismatch-importin=
-g-large-file.html=0D
-=0D
-Gilbert.=0D
-=0D
-=0D
-=0D
-=0D
-Registered in Scotland=0D
-32 Fountain Drive=0D
-Inchinnan Business Park=0D
-Renfrewshire,PA4 9RF.=0D
-Company number:SC112872=0D
-=0D
-This e-mail and any files transmitted with it are confidential and=0D
-intended solely for the use of the individual or entity to whom=0D
-they are addressed.=0D
-If you have received this e-mail in error please notify the=0D
-originator of the message. This footer also confirms that this=0D
-e-mail message has been scanned for the presence of computer viruses.=0D
-=0D
-Any views expressed in this message are those of the individual=0D
-sender, except where the sender specifies and with authority,=0D
-states them to be the views of Total Repair Solutions.=0D
-=0D
-Scanning of this message and addition of this footer is performed=0D
-by SurfControl E-mail Filter software in conjunction with =0D
-virus detection software.=0D
+2009/3/26 Marc Kleine-Budde <mkl@pengutronix.de>:
+> Uwe Kleine-K=C3=B6nig wrote:
+>> This was introduced in fcb488d51e72c7414f9beb40ad06bf529b8b38dc.
+>> A similar fix was suggested by martin f krafft, too.
+>
+> Works here on ubuntu bin /bin/sh is a link to /bin/dash
+>
+>> Reported-by: Bert Wesarg <bert.wesarg@googlemail.com>
+>> Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de=
+>
+> Tested-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Acked-by: Bert Wesarg <bert.wesarg@googlemail.com>
+Tested-by: Bert Wesarg <bert.wesarg@googlemail.com>
+
+Thanks Uwe.
+
+Bert
