@@ -1,78 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 09/10] bisect: implement "read_bisect_paths" to read
- paths in "$GIT_DIR/BISECT_NAMES"
-Date: Wed, 25 Mar 2009 23:49:26 -0700
-Message-ID: <7vwsacrd6x.fsf@gitster.siamese.dyndns.org>
-References: <20090326055559.743cb502.chriscool@tuxfamily.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Implementing stat() with FindFirstFile()
+Date: Thu, 26 Mar 2009 08:15:49 +0100
+Message-ID: <49CB2BA5.1070100@viscovery.net>
+References: <20090321154738.GA27249@jeeves.jpl.local> <200903212055.15026.j6t@kdbg.org> <20090324215416.GB27249@jeeves.jpl.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, John Tapsell <johnflux@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Thu Mar 26 07:51:16 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?Q?Magnus_B=E4ck?= <baeck@swipnet.se>
+X-From: git-owner@vger.kernel.org Thu Mar 26 08:17:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmjQm-0000dz-Ft
-	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 07:51:12 +0100
+	id 1LmjqI-0006lX-Cv
+	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 08:17:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752770AbZCZGth (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Mar 2009 02:49:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752475AbZCZGtg
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 02:49:36 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37041 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752669AbZCZGtf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Mar 2009 02:49:35 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 222DBA5F69;
-	Thu, 26 Mar 2009 02:49:34 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 6B8CBA5F68; Thu,
- 26 Mar 2009 02:49:28 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 43ED797A-19D2-11DE-9ECE-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1752597AbZCZHP5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Mar 2009 03:15:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752430AbZCZHP5
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 03:15:57 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:32796 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752280AbZCZHP4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Mar 2009 03:15:56 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Lmjob-0007yC-GZ; Thu, 26 Mar 2009 08:15:49 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 470BE4E4; Thu, 26 Mar 2009 08:15:49 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <20090324215416.GB27249@jeeves.jpl.local>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114743>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Magnus B=E4ck schrieb:
+> From what I gather the problematic conversion takes place in the Win3=
+2
+> layer, in which case we might be able to call the ZwQueryDirectoryFil=
+e()
+> kernel routine directly via ntdll.dll to obtain the file times straig=
+ht
+> from the file system. Has anyone explored that path, and would it be
+> acceptable to make such a change?
 
-> This is needed because  "git bisect--helper" must read bisect paths
-> in "$GIT_DIR/BISECT_NAMES", so that a bisection can be performed only
-> on commits that touches paths in this file.
->
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+It depends.
 
-Again, very nice.
+The disadvantages are that this function is only available on Windows X=
+P
+and later and that it is not present in the header files of MinGW gcc.
+It's on you to prove that there are advantages that clearly outweigh th=
+ese
+disadvantages.
 
->  bisect.c |   56 +++++++++++++++++++++++++++++++++++++++++++++++---------
->  1 files changed, 47 insertions(+), 9 deletions(-)
->
-> diff --git a/bisect.c b/bisect.c
-> index ce62696..a6fd826 100644
-> --- a/bisect.c
-> +++ b/bisect.c
-> @@ -4,6 +4,7 @@
->  #include "revision.h"
->  #include "refs.h"
->  #include "list-objects.h"
-> +#include "quote.h"
->  #include "bisect.h"
->  
->  
-> @@ -424,6 +425,33 @@ static int read_bisect_refs(void)
->  	return for_each_bisect_ref(register_ref, NULL);
->  }
->  
-> +void read_bisect_paths()
-> +{
-> +	struct strbuf str = STRBUF_INIT;
-> +	const char *filename = git_path("BISECT_NAMES");
-> +	FILE *fp = fp = fopen(filename, "r");
-
-s/= fp //;
+-- Hannes
