@@ -1,98 +1,106 @@
-From: rocketraman@fastmail.fm
-Subject: [PATCH 1/2] Add feature release instructions to MaintNotes addendum
-Date: Wed, 25 Mar 2009 21:56:14 -0400
-Message-ID: <1238032575-10987-1-git-send-email-rocketraman@fastmail.fm>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 26 03:04:35 2009
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: branch ahead in commits but push claims all up to date
+Date: Thu, 26 Mar 2009 02:05:21 +0000
+Message-ID: <43d8ce650903251905p6f9798f5u79be7dff3b118d5c@mail.gmail.com>
+References: <7001b7a00903240821v2155d234x6a10c80a3e987acb@mail.gmail.com>
+	 <7001b7a00903240822w70a57349xcc66a02cef62dc70@mail.gmail.com>
+	 <43d8ce650903240918q2ffdba44w241e0f378a11fd3d@mail.gmail.com>
+	 <alpine.LNX.1.00.0903241304090.19665@iabervon.org>
+	 <43d8ce650903241726s122cc468q4ea9188e1561832@mail.gmail.com>
+	 <alpine.LNX.1.00.0903242118270.19665@iabervon.org>
+	 <7001b7a00903241901w107e2973i9912eab114c9cde0@mail.gmail.com>
+	 <alpine.LNX.1.00.0903242304530.19665@iabervon.org>
+	 <7001b7a00903251023r1ce5cc0dnb29b7f9379408c42@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: Irene Ros <imirene@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 26 03:06:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmexO-00033h-4A
-	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 03:04:34 +0100
+	id 1Lmezd-0003ek-Pa
+	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 03:06:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754230AbZCZCDB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Mar 2009 22:03:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754174AbZCZCDB
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 22:03:01 -0400
-Received: from smtp105.rog.mail.re2.yahoo.com ([206.190.36.83]:23306 "HELO
-	smtp105.rog.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1753739AbZCZCDA (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Mar 2009 22:03:00 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Mar 2009 22:03:00 EDT
-Received: (qmail 84200 invoked from network); 26 Mar 2009 01:56:17 -0000
-Received: from unknown (HELO apollo.rocketraman.com) (rocketraman@99.224.155.40 with login)
-  by smtp105.rog.mail.re2.yahoo.com with SMTP; 26 Mar 2009 01:56:17 -0000
-X-YMail-OSG: 672x46QVM1lR_kztOWlUReluSwi7AK2uWZoMQ.Sim1ksvAdpSTdUMTR9wQ_GPa9tdA--
-X-Yahoo-Newman-Property: ymail-3
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by apollo.rocketraman.com (Postfix) with ESMTP id E901D21C051C
-	for <git@vger.kernel.org>; Wed, 25 Mar 2009 21:56:16 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at rocketraman.com
-Received: from apollo.rocketraman.com ([127.0.0.1])
-	by localhost (apollo.rocketraman.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id h4IvXyKiHqhU for <git@vger.kernel.org>;
-	Wed, 25 Mar 2009 21:56:16 -0400 (EDT)
-Received: from zeus (zeus.rocketraman.com [192.168.1.5])
-	by apollo.rocketraman.com (Postfix) with SMTP id ABAA721C051A
-	for <git@vger.kernel.org>; Wed, 25 Mar 2009 21:56:15 -0400 (EDT)
-Received: by zeus (sSMTP sendmail emulation); Wed, 25 Mar 2009 21:56:15 -0400
-X-Mailer: git-send-email 1.6.2
+	id S1754618AbZCZCFY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Mar 2009 22:05:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754109AbZCZCFY
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 Mar 2009 22:05:24 -0400
+Received: from wf-out-1314.google.com ([209.85.200.175]:58468 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753336AbZCZCFX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Mar 2009 22:05:23 -0400
+Received: by wf-out-1314.google.com with SMTP id 29so380271wff.4
+        for <git@vger.kernel.org>; Wed, 25 Mar 2009 19:05:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=zt2smcvt/JVRkUhAi9uVrPbyeSfpUEHOaRd5hRE4/AY=;
+        b=FVWHGmK1R9cfdeaB/bpyo8zjVUw3UJJljrLm38VOhefiAJvy9jbV7qa8HoWnpE2Vc9
+         bb6vkRKx3Utzzz4ds7yiPoAcE+6E9NATol1I/LPSqi/e0kSvMHWLGR9MId0LYYz7petg
+         T7siWRFvfcOrbVt2gk+sspve6MUTsicBj3fmw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=pVPXPeCwcKw531Qav62zm+rzAh4eFTBSp2/X080mQLFIFr3Tpklo0IJpCOz3o8ca7K
+         SCdVC1uIwlBap8qY10bpET82oqdukicC6LuClhk9kxHtzFljwVLFkX9REO1EOv0xycdw
+         tT/cSg+pOCXIpRqPCuWOzUK84+lJ7Mb9hh504=
+Received: by 10.143.33.19 with SMTP id l19mr131834wfj.30.1238033121216; Wed, 
+	25 Mar 2009 19:05:21 -0700 (PDT)
+In-Reply-To: <7001b7a00903251023r1ce5cc0dnb29b7f9379408c42@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114705>
 
-From: Raman Gupta <raman@rocketraman.com>
+2009/3/25 Irene Ros <imirene@gmail.com>:
+> Hi Daniel,
+>
+> Thank you for the explanation, doing a git fetch actually did do the
+> trick although I still don't quite see the difference between
+> git pull origin myBranch
+> and
+> git fetch
 
-Based on a mailing list discussion, add the operations for creating a
-feature release.
+git pull origin myBranch    is equivalent to two commands:
 
-Signed-off-by: Raman Gupta <raman@rocketraman.com>
----
- Documentation/howto/maintain-git.txt |   29 +++++++++++++++++++++++++++++
- 1 files changed, 29 insertions(+), 0 deletions(-)
+git fetch
+git merge origin/myBranch
 
-diff --git a/Documentation/howto/maintain-git.txt b/Documentation/howto/maintain-git.txt
-index 4357e26..f6ee0c5 100644
---- a/Documentation/howto/maintain-git.txt
-+++ b/Documentation/howto/maintain-git.txt
-@@ -244,6 +244,35 @@ by doing the following:
-    repo.or.cz
- 
- 
-+A feature release of git is made by tagging 'master' with a tag
-+matching vX.Y.Z, where X.Y.Z is the feature release version.
-+
-+ - Optionally, track the current 'maint' branch to support
-+   new releases for the older codebase if necessary.
-+
-+     $ git branch maint-X.Y.(Z-1) maint
-+
-+ - The 'maint' branch is updated to the new release.
-+
-+     $ git checkout maint
-+     $ git merge master
-+
-+   This is equivalent to deleting maint and recreating it from
-+   master, but it preserves the maint reflog.
-+
-+ - The 'next' branch may be rebuilt from the tip of 'master'
-+   using the surviving topics on 'next'.
-+
-+     $ git branch -f next master
-+
-+   (Again, this approach preserves the reflog and per-branch
-+   configuration of 'next')
-+
-+     $ git merge ai/topic_in_next1
-+     $ git merge ai/topic_in_next2
-+     ...
-+
-+
- Some observations to be made.
- 
-  * Each topic is tested individually, and also together with
--- 
-1.6.2
+(so fetch actual remote repository to local remote repository.  Then
+do the merge)
+
+>
+> When I push to origin myBranch it's clear that it actually pushes my
+> changes to our remote repository since others can then pull and get
+> them. So is it the case that:
+>
+> git push ==> actual remote repository
+Yes
+
+> while
+> git pull <== local copy of remote repository for this branch ?
+
+git pull <== actual remote repository copied to local copy of remote
+repository.  Then local copy of remote repository merged into your
+branch.
+
+
+> In that case why is it that in all branches that I have, besides this
+> one, doing a 'git pull origin whateverBranch' actually pulls from the
+> remote branch and not the local copy? This case has been quite unique
+> given dozens of branches that we constantly switch to and from. We've
+> never actually used (or clearly saw the need for) git fetch until now.
+
+
+If you always git pull  after git push, then you'll have no problem,
+since git pull also does a git fetch.
+
+git is sometimes a bit too bare bones :-/  It would be nice to try to
+hide these implementation details better
