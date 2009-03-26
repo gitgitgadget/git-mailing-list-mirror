@@ -1,68 +1,72 @@
-From: Daniel Cheng <j16sdiz+freenet@gmail.com>
-Subject: Re: [JGIT PATCH 3/5] Test case for pack index CRC32 when written
- by PackWriter
-Date: Thu, 26 Mar 2009 23:35:20 +0800
-Message-ID: <49CBA0B8.7070908@gmail.com>
-References: <1238030515-31768-1-git-send-email-spearce@spearce.org> <1238030515-31768-2-git-send-email-spearce@spearce.org> <1238030515-31768-3-git-send-email-spearce@spearce.org>
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: RE: Help designing work flow
+Date: Thu, 26 Mar 2009 11:38:28 -0400
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E70A55A05D@EXCHANGE.trad.tradestation.com>
+References: <450196A1AAAE4B42A00A8B27A59278E709F07D30@EXCHANGE.trad.tradestation.com> <49B4F5A9.5060304@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Mar 26 16:37:35 2009
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "Andreas Ericsson" <ae@op5.se>
+X-From: git-owner@vger.kernel.org Thu Mar 26 16:40:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lmrdp-0001BR-Dt
-	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 16:37:13 +0100
+	id 1Lmrh9-0002lj-Fz
+	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 16:40:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753760AbZCZPfm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Mar 2009 11:35:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752737AbZCZPfm
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 11:35:42 -0400
-Received: from wa-out-1112.google.com ([209.85.146.176]:19136 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752532AbZCZPfl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Mar 2009 11:35:41 -0400
-Received: by wa-out-1112.google.com with SMTP id j5so385523wah.21
-        for <git@vger.kernel.org>; Thu, 26 Mar 2009 08:35:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=tz7nA/eb4zrjeyJ/Yihw4busqVTXKza9G0s0/G1V8EA=;
-        b=hMCZkZQFqADMHKoVYkU7MP/knYGfiLrAEnetP51wS4fjN1vqf9eGBknqFXBAgHQ0Qx
-         6Mt8is/yd94ixO2FN0X16y5I00Q1Sf/odVy7nQByvKqZIXZo7TGq2M5XeYMzyr13hXdW
-         6AsuF6INxee+CIjDgaDpxliCwbi8u+cczyIDo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=lNStKM8lnZaNCZcRsITC7bGjrAE5E4LreZ2yi8E4AMhELrCxEqU/UI2Pmt8700Uohw
-         +7OEHmVhVqysnlWdUfSw1JpR5q+IPYzSD8x4wuCsdXTQcuOD0kcX5zC/NegbJ2Nh7rTm
-         fKKU36x+DGU2JeDNrs6GxXehmuQU14byjjGAs=
-Received: by 10.114.74.18 with SMTP id w18mr654234waa.205.1238081739553;
-        Thu, 26 Mar 2009 08:35:39 -0700 (PDT)
-Received: from ?192.168.0.100? ([116.49.49.110])
-        by mx.google.com with ESMTPS id j31sm295703waf.61.2009.03.26.08.35.37
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 26 Mar 2009 08:35:39 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <1238030515-31768-3-git-send-email-spearce@spearce.org>
+	id S1755310AbZCZPjK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Mar 2009 11:39:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753667AbZCZPjH
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 11:39:07 -0400
+Received: from mail2.tradestation.com ([63.99.207.80]:50136 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752532AbZCZPjG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Mar 2009 11:39:06 -0400
+X-ASG-Debug-ID: 1238081943-1a24024f0000-QuoKaX
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
+Received: from mail5.tradestation.com (localhost [127.0.0.1])
+	by mail2.tradestation.com (Spam Firewall) with ESMTP
+	id 49BF3237746; Thu, 26 Mar 2009 11:39:03 -0400 (EDT)
+Received: from mail5.tradestation.com ([192.168.51.76]) by mail2.tradestation.com with ESMTP id DKLlMq4Pdy3Un9C8; Thu, 26 Mar 2009 11:39:03 -0400 (EDT)
+X-ASG-Whitelist: Client
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 26 Mar 2009 11:39:02 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-ASG-Orig-Subj: RE: Help designing work flow
+In-Reply-To: <49B4F5A9.5060304@op5.se>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Help designing work flow
+Thread-Index: AcmgpZiIOpQWTB8lRt6C7jZxLJ6UmgNgwuYw
+X-OriginalArrivalTime: 26 Mar 2009 15:39:02.0779 (UTC) FILETIME=[FD440CB0:01C9AE28]
+X-Barracuda-Connect: UNKNOWN[192.168.51.76]
+X-Barracuda-Start-Time: 1238081943
+X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114792>
 
-Shawn O. Pearce wrote:
-> Suggested-by: Daniel Cheng (aka SDiZ) <j16sdiz+freenet@gmail.com>
-> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-> ---
->  .../tst/org/spearce/jgit/lib/PackWriterTest.java   |   33 ++++++++++++++++++++
->  1 files changed, 33 insertions(+), 0 deletions(-)
+> You can tell "git log" to only show one line of history too, but
+> besides
+> that, micro-details are good. You definitely want to be able to search
+> the micro-details when things go awry (and they will), so you see
+> exactly
+> why some particular algorithm changed later.
 > 
 
-Thanks.
+I misread that the first time.  I thought you meant that you can tell
+git log to follow down the left parents only.
+
+So, how would you do that?  List the completed merged topic nodes only,
+not the detailed nodes that make it up?
+
+--John
+
+TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
+  If you received this in error, please contact the sender and delete the material from any computer.
