@@ -1,139 +1,111 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Improve tags
-Date: Thu, 26 Mar 2009 17:02:27 +0100
-Message-ID: <49CBA713.4040605@drmicha.warpmail.net>
-References: <49CB798B.4090107@gmail.com>
+From: Adam Heath <doogie@brainfood.com>
+Subject: Re: large(25G) repository in git
+Date: Thu, 26 Mar 2009 11:35:17 -0500
+Message-ID: <49CBAEC5.6070606@brainfood.com>
+References: <49C7FAB3.7080301@brainfood.com> <49CBA2AB.30304@oak.homeunix.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Etienne Vallette d'Osia <dohzya@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 26 17:04:18 2009
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Marcel M. Cary" <marcel@oak.homeunix.org>
+X-From: git-owner@vger.kernel.org Thu Mar 26 17:37:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lms3r-0004nC-OA
-	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 17:04:08 +0100
+	id 1LmsZk-0003TU-6R
+	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 17:37:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752848AbZCZQCg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Mar 2009 12:02:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752583AbZCZQCg
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 12:02:36 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:48753 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751675AbZCZQCf (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Mar 2009 12:02:35 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id 838772FE6D5;
-	Thu, 26 Mar 2009 12:02:33 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Thu, 26 Mar 2009 12:02:33 -0400
-X-Sasl-enc: 9gf4Ryh5vDziG04LmAjkfdSM+sgBzj3yNEUAeun1zofZ 1238083352
-Received: from localhost.localdomain (p4FC63417.dip0.t-ipconnect.de [79.198.52.23])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 72C09B0AE;
-	Thu, 26 Mar 2009 12:02:32 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090326 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <49CB798B.4090107@gmail.com>
+	id S1755906AbZCZQf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Mar 2009 12:35:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756677AbZCZQfZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 12:35:25 -0400
+Received: from newmail.brainfood.com ([70.103.162.5]:57502 "EHLO
+	newmail.brainfood.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755176AbZCZQfY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Mar 2009 12:35:24 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by newmail.brainfood.com (Postfix) with ESMTP id 14E8CF885E;
+	Thu, 26 Mar 2009 11:35:23 -0500 (CDT)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: 0.101
+X-Spam-Level: 
+X-Spam-Status: No, score=0.101 tagged_above=-10 required=6.6
+	tests=[BAYES_50=0.001, RDNS_DYNAMIC=0.1]
+Received: from newmail.brainfood.com ([127.0.0.1])
+	by localhost (newmail.brainfood.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 5b4k06egft1y; Thu, 26 Mar 2009 11:35:18 -0500 (CDT)
+Received: from [192.168.2.49] (70-103-162-249.brainfood.com [70.103.162.249])
+	by newmail.brainfood.com (Postfix) with ESMTP id 3104FF8847;
+	Thu, 26 Mar 2009 11:35:18 -0500 (CDT)
+User-Agent: Mozilla-Thunderbird 2.0.0.17 (X11/20081018)
+In-Reply-To: <49CBA2AB.30304@oak.homeunix.org>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114797>
 
-Etienne Vallette d'Osia venit, vidit, dixit 26.03.2009 13:48:
-> Hi,
-> 
-> I search a way to track commits in function of their aim.
-> 
-> I tried to use branches (test, debugger, etc).
-> For example if I search the commits related to tests,
-> I can search all commits what are in branch test and not in branch debugger,
-> but it's boring (I need to exclude all other branches than test)
-> Moreover, if I remove a branch, it will complicate the search.
-> 
-> In addition, branches are a way to specify streams,
-> not a way to specify an aim for a commit.
-> (like in ruby a class is a method container, not a type)
-> So branch names are often like next, pu, dev, test, stupid-idea, etc.
-> They are totally useless for tracking aims.
-> 
-> The method used in every repositories I looked into
-> is to use the "aim: subject" form in their commit messages.
-> So search all commits related to a specific aim is equivalent
-> to grep "my-aim:" in commit messages.
-> The problem is that this method is not used in all commits
-> ("aim - subject" or just "subject" are used too),
-> so I can't assume to find all commits with a such method...
-> And if a search a more generic form ("test"), I might find
-> useless commits that will pollute my results...
-> 
-> The last method I can find, is to use tags.
-> But, as CVS and many others do, tags are unique.
-> It is usefull for tagging a software version number,
-> but not for tracking.
-> 
-> So, we have branches, which are not stable,
-> tags, which are unique,
-> and commit messages, which are not normalized.
-> 
-> What can we do ?
-> 
-> In my mind, the good ways are to improve the commit message way,
-> or, better, to change the current tag concept.
-> 
-> One improvement could be to add a mechanism similar to "signed-off-by:"
-> message: add an option in git-commit to facilitate the creation of "tags"
-> and make sure these "tags" will be normalized...
-> example: `git commit -t test,debugger -m "add test for debugger"`
->          this will create a commit and add automatically
->          "test: debugger:" at begin or
->          "tags: test, debugger" at end of the message
->            (like the "signed-off-by: xxx" lines)
-> It's not really better this current solution,
-> but it's a first step to normalization.
-> 
-> There is still a big problem with this solution : this tags are immutable,
-> as they are stored inside the commit.
-> 
-> An other improvement would be to create new version of tags.
-> `git tag v1.6.3` would create a unique tag, and
-> `git tag --no-unique test` would create a simple tag.
-> (until we can change the default)
-> The -t option of git-commit is still possible,
-> but it will call the new git-tag.
-> 
-> Note: Theses tags may be treated like refs (git log fault-tolerance),
-> but they can't be stored in $GIT_DIR/refs directory,
-> as they reference a list a commits...
-> 
-> So, I see 2 solutions:
-> - Normalize the way to write tags but keep them into commit message:
->   (-) There will be 2 sorts of tags: static immutable and dynamic unique
->   (+) This way is totally retro-compatible
-> - Change the tags concept:
->   (-) Need to change the tag object format (ouch)
->   (+) More powerful
-> 
-> Maybe I have missed a better tool to do my job ?
-> Or there is a better improvement which is more simple ?
-> 
-> 
-> Best regards,
-> 
-> 
-> Etienne Vallette d'Osia
-> 
-> ps: I'm really sorry if my message is full of English errors...
+Marcel M. Cary wrote:
+> My company manages code in a similar way, except we avoid this kind of
+> issue (with 100 gigabytes of user-uploaded images and other data) by not
+> checking in the data.  We even went so far is as to halve the size of
+> our repository by removing 2GB of non-user-supplied images -- rounded
+> corners, background gradients, logos, etc, etc.  This made Git
+> noticeably faster.
 
-You described your motivation and use case very clearly!
+Disk space is cheap.
 
-Maybe "label" would be an appropriate name for "non-unique tags". I
-assume they should be local and non-versioned. It sounds as if a file
-storing a list of sha1s could be the simplest approach (one file per
-label in a new subdir of .git), although this may not scale well. A
-first step could be implementing a command "git label" in shell which
-sets and displays labels. Later on, various builtins would need to be
-taught about it if you want labels displayed in log etc.
+> While I'd love to be able to handle your kind of use case and data size
+> with Git in that way, it's a little beyond the intended usage to handle
+> hundreds of gigabytes of binary data, I think.
+> 
+> I imagine as your web site grows, which I'm assuming is your goal, your
+> problems with scaling Git will continue to be a challenge.
+> 
+> Maybe you can find a way to:
+> 
+> * Get along with less data in your non-production environments; we're
+> hoping to be able to do this eventually
 
-Michael
+We do that by only cloning/checking out certain modules.
+
+However, as is always the case, sometimes a bug occurs with production
+data, and you need to use the real data to track it down.
+
+> * Find other ways to copy it; we use rsync even though it does take
+> forever to crawl over the file system
+> 
+> * Put your data files in a separate Git repository, at least, assuming
+> your checkin, update, and release code more often than your video files.
+>  That way you'll experience pain less often, and maybe even be able to
+> tune your repository differently.
+
+As already mentioned, our sub-sites *are* in separate repos.  There's
+a base repository, that has just the event/backend code.  Then 32
+*other* repositories, where the actual websites are.
+
+We want to use *some* kind of versioning system.  Being able to have
+history of *all* changes is extremely useful.  Not to mention being
+able to track what each separate user does as they modify their files
+thru their browser.
+
+subversion is just right out.  It's centralized.  It leaves poop all
+over the place.
+
+mercurial is just right out.  If you do several *separate* commits of
+*separate* files, but don't push for some time period, then eventually
+do a push/pull, where the sum total of the changes is larger than some
+value, mercurial will fail when it tries to then update the local
+directory.  This limit is based on 2G, a hard-coded python limit(even
+on a 64-bit host), because mercurial reads the entire set of changes
+into a python string.
+
+git mmaps files, does window scanning of the pack files.  It *might*
+read a single file all into memory, for compression purposes; I'm not
+certain on this.  We certainly haven't hit any limits that cause it to
+fail outright.
+
+I haven't tried any others.
