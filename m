@@ -1,65 +1,68 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: Question: Is it possible to host a writable git repo over both http and ssh?
-Date: Thu, 26 Mar 2009 06:18:32 +0100
-Message-ID: <200903260618.33019.robin.rosenberg.lists@dewire.com>
-References: <49CA6A17.6050903@gmail.com> <49CB0AC1.2070006@gmail.com> <20090326045650.GA13628@coredump.intra.peff.net>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 01/10] refs: add "for_each_bisect_ref" function
+Date: Thu, 26 Mar 2009 07:20:25 +0100
+Message-ID: <fabb9a1e0903252320j2edf4a8ct39f784c4319c3cb0@mail.gmail.com>
+References: <20090326055509.1bc16b28.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Mike Gaffney <mr.gaffo@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 26 07:03:29 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	John Tapsell <johnflux@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Thu Mar 26 07:25:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lmiga-0007uq-O8
-	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 07:03:29 +0100
+	id 1Lmj2D-0003z1-99
+	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 07:25:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751522AbZCZGAe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Mar 2009 02:00:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751034AbZCZGAe
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 02:00:34 -0400
-Received: from mail.dewire.com ([83.140.172.130]:14999 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750848AbZCZGAd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Mar 2009 02:00:33 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 479261391418;
-	Thu, 26 Mar 2009 07:00:26 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id sf9o-F2TiYUh; Thu, 26 Mar 2009 07:00:25 +0100 (CET)
-Received: from sleipner.localnet (unknown [10.9.0.4])
-	by dewire.com (Postfix) with ESMTP id 3673F80284C;
-	Thu, 26 Mar 2009 07:00:25 +0100 (CET)
-User-Agent: KMail/1.11.1 (Linux/2.6.27-14-generic; KDE/4.2.1; i686; ; )
-In-Reply-To: <20090326045650.GA13628@coredump.intra.peff.net>
-Content-Disposition: inline
+	id S1751169AbZCZGUo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Mar 2009 02:20:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751072AbZCZGUo
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 02:20:44 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:47523 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750848AbZCZGUn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Mar 2009 02:20:43 -0400
+Received: by fxm2 with SMTP id 2so380530fxm.37
+        for <git@vger.kernel.org>; Wed, 25 Mar 2009 23:20:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=smJfixdr67gy8Xw5ztfOjZ8x0I7ycTmPmYJnGojbWpY=;
+        b=fZei3HfDLQmcqKYHLWnu2lMyl09IrwBrAAKH9VQQ/Y4DbQU2rs6mh/MItecb0V5dWU
+         a/vFNhBQ4L4Btdb2/JC4aM1BQ4WoywqN8LOEcVbPVr/33lVb+4vObs4kwO8wD2KRpfdF
+         Yib6IEfJD7BZSpIeNob1bW8zTp5KY4muyE/GU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ELrg6eWQFiTW2AN7AZEKHa+D49UtDActmQU+TYMZqzbuwAFgGPYmicYVTTb65kKPe8
+         fO6Bf6bVGZGM2uVVl66D7v/n2iPCev/kjrSTF+4ATyHSo2ovBvYT+lOXKnzHU6QrPNTf
+         5teAiTHUdAaKJff2PtMiOukcG57SQaS5TcrTk=
+In-Reply-To: <20090326055509.1bc16b28.chriscool@tuxfamily.org>
+Received: by 10.103.241.5 with SMTP id t5mr203537mur.127.1238048440313; Wed, 
+	25 Mar 2009 23:20:40 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114737>
 
-torsdag 26 mars 2009 05:56:51 skrev Jeff King <peff@peff.net>:
-> On Wed, Mar 25, 2009 at 11:55:29PM -0500, Mike Gaffney wrote:
-> 
-> > I'm actually trying to take what Sean did with gerrit and extract a
-> > full Java/MinaSSHD based server that doesn't require a real user
-> > account and is configurable by spring. So yes, I'm using JGit on the
-> > server.
-> 
-> Ah. In that case, I don't know whether JGit respects all hooks. You
-> should ask Shawn (Shawn, we are talking about a post-update to run
-> update-server-info). :)
+Heya
 
-Arguably it should. but it doesn't. Then there is a question as to what
-format those hooks should be. Shell scripts would run into platform
-issues and jgit based stuff should have as little as possible of that, but
-a similar mechanism should exist.
+On Thu, Mar 26, 2009 at 05:55, Christian Couder <chriscool@tuxfamily.org> wrote:
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 
--- robin
+A 10 patches series with no cover letter? And no description of the
+individual patches either! C'mon Christian, you know better than that
+;).
+
+-- 
+Cheers,
+
+Sverre Rabbelier
