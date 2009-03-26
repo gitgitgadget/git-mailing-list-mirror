@@ -1,87 +1,138 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 01/10] refs: add "for_each_bisect_ref" function
-Date: Thu, 26 Mar 2009 13:37:14 +0100
-Message-ID: <fabb9a1e0903260537r61647d82t4ffb6b8b67d5c2f1@mail.gmail.com>
-References: <20090326055509.1bc16b28.chriscool@tuxfamily.org> 
-	<fabb9a1e0903252320j2edf4a8ct39f784c4319c3cb0@mail.gmail.com> 
-	<200903260848.42104.chriscool@tuxfamily.org>
+From: "Etienne Vallette d'Osia" <dohzya@gmail.com>
+Subject: Improve tags
+Date: Thu, 26 Mar 2009 13:48:11 +0100
+Message-ID: <49CB798B.4090107@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	John Tapsell <johnflux@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Thu Mar 26 13:39:03 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 26 13:50:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmorP-000762-4B
-	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 13:39:03 +0100
+	id 1Lmp29-0002ru-4h
+	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 13:50:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754034AbZCZMhd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Mar 2009 08:37:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753610AbZCZMhd
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 08:37:33 -0400
-Received: from mu-out-0910.google.com ([209.85.134.189]:38061 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751175AbZCZMhc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Mar 2009 08:37:32 -0400
-Received: by mu-out-0910.google.com with SMTP id g7so234072muf.1
-        for <git@vger.kernel.org>; Thu, 26 Mar 2009 05:37:29 -0700 (PDT)
+	id S1755512AbZCZMsR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Mar 2009 08:48:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754368AbZCZMsR
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 08:48:17 -0400
+Received: from mail-bw0-f169.google.com ([209.85.218.169]:53526 "EHLO
+	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753476AbZCZMsQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Mar 2009 08:48:16 -0400
+Received: by bwz17 with SMTP id 17so517297bwz.37
+        for <git@vger.kernel.org>; Thu, 26 Mar 2009 05:48:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :received:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:content-type
          :content-transfer-encoding;
-        bh=8U6zAiFHaCPsKiDbD0f6QHs1TH0lpWZAkh192PRTOM8=;
-        b=pPA9wJAyfxyNB54hy64ZIufDieaA+4PPPwp7sM8N/susNa6SKypXzX3jQMb3b6ILGF
-         rUXNFudeAM86m7pZElq86hgtYo7f6NPQFX/D1aCMeULFFeSb856VByjhbQchwIoPVsvj
-         wSR7B83npXEYNbmSHGyIPY1ry8GGA6vjjY1vc=
+        bh=Lj1js7oWwV5mmY1ytiKL4zICd6Vdt/Xkm3HqaPu3/bI=;
+        b=i3M6DHw+/yZkVriV5xixffp+hT5dS0KDH3SzTPyqPWsRwgQU/OsHr7vQ0sbeEDJPKN
+         ui6VTBf+xrU8wUDanyFYI1+vxlz5jO1Hxs/2u1q2/54AcbrVLsG6rZ5qz7jDYQplpXJw
+         bWNrbchm6phkrNzxhN0icgkxSBrW/Azub7kcE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=nylxDDIQnvNPJIH+qGsrAMDCdyuRHsFbhBNepPPVuAsjC9tKXR36GyzxYyoTwDeflw
-         9qhKOkAs+o8R1gSRSB2ncaz/AeeLAYSy5iXeFSwuCKMF01KMmCmGA+zRWGJ6o9f0Hv+q
-         jOO+ctHLtIl5hlT7D5ht+14SgrKiLZM2p1DNw=
-In-Reply-To: <200903260848.42104.chriscool@tuxfamily.org>
-Received: by 10.103.173.15 with SMTP id a15mr379070mup.59.1238071049227; Thu, 
-	26 Mar 2009 05:37:29 -0700 (PDT)
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=KzeFVG+41TWOhV/ME+PwUYDGKFzqP3dcttSKB+qlsXdYjjp+mGs4/H82T6iNWbQ/5v
+         CAcDktodRlejqM+WLg+98+S4vOgaqU4oITL5cTb7UqZsYxLONdFZ33PvFvIudYX9ndCj
+         cXfVV62DhalX50XiRGEjqyqj64PhduYACM98o=
+Received: by 10.103.244.19 with SMTP id w19mr368691mur.134.1238071693145;
+        Thu, 26 Mar 2009 05:48:13 -0700 (PDT)
+Received: from schubby.inria.fr (schubby.inria.fr [138.96.218.89])
+        by mx.google.com with ESMTPS id j6sm468126mue.4.2009.03.26.05.48.12
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 26 Mar 2009 05:48:12 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114773>
 
-Heya,
+Hi,
 
-On Thu, Mar 26, 2009 at 08:48, Christian Couder <chriscool@tuxfamily.org> wrote:
-> I am not a big fan of cover letters. Usually I prefer adding comments in the
-> patches.
+I search a way to track commits in function of their aim.
 
-The downside of that is that it makes it harder to quickly scan the
-series; now I have to go through each patch (which involves trying
-finding which patch is next, as my MUA is retarded and doesn't
-understand proper threading).
+I tried to use branches (test, debugger, etc).
+For example if I search the commits related to tests,
+I can search all commits what are in branch test and not in branch debugger,
+but it's boring (I need to exclude all other branches than test)
+Moreover, if I remove a branch, it will complicate the search.
 
->> And no description of the
->> individual patches either!
->
-> There is a commit message in each patch. And many of the patches are very
-> small.
+In addition, branches are a way to specify streams,
+not a way to specify an aim for a commit.
+(like in ruby a class is a method container, not a type)
+So branch names are often like next, pu, dev, test, stupid-idea, etc.
+They are totally useless for tracking aims.
 
-Hehe, my bad; the first one didn't have a commit message, which is the
-one I looked at first.
+The method used in every repositories I looked into
+is to use the "aim: subject" form in their commit messages.
+So search all commits related to a specific aim is equivalent
+to grep "my-aim:" in commit messages.
+The problem is that this method is not used in all commits
+("aim - subject" or just "subject" are used too),
+so I can't assume to find all commits with a such method...
+And if a search a more generic form ("test"), I might find
+useless commits that will pollute my results...
 
-> If some commit messages are not clear enough, please tell me and I will try
-> to improve them ;)
+The last method I can find, is to use tags.
+But, as CVS and many others do, tags are unique.
+It is usefull for tagging a software version number,
+but not for tracking.
 
-The rest of the series is nicely readable, I guess I shouldn't send
-whine mails before reading the entire series next time :).
+So, we have branches, which are not stable,
+tags, which are unique,
+and commit messages, which are not normalized.
 
--- 
-Cheers,
+What can we do ?
 
-Sverre Rabbelier
+In my mind, the good ways are to improve the commit message way,
+or, better, to change the current tag concept.
+
+One improvement could be to add a mechanism similar to "signed-off-by:"
+message: add an option in git-commit to facilitate the creation of "tags"
+and make sure these "tags" will be normalized...
+example: `git commit -t test,debugger -m "add test for debugger"`
+         this will create a commit and add automatically
+         "test: debugger:" at begin or
+         "tags: test, debugger" at end of the message
+           (like the "signed-off-by: xxx" lines)
+It's not really better this current solution,
+but it's a first step to normalization.
+
+There is still a big problem with this solution : this tags are immutable,
+as they are stored inside the commit.
+
+An other improvement would be to create new version of tags.
+`git tag v1.6.3` would create a unique tag, and
+`git tag --no-unique test` would create a simple tag.
+(until we can change the default)
+The -t option of git-commit is still possible,
+but it will call the new git-tag.
+
+Note: Theses tags may be treated like refs (git log fault-tolerance),
+but they can't be stored in $GIT_DIR/refs directory,
+as they reference a list a commits...
+
+So, I see 2 solutions:
+- Normalize the way to write tags but keep them into commit message:
+  (-) There will be 2 sorts of tags: static immutable and dynamic unique
+  (+) This way is totally retro-compatible
+- Change the tags concept:
+  (-) Need to change the tag object format (ouch)
+  (+) More powerful
+
+Maybe I have missed a better tool to do my job ?
+Or there is a better improvement which is more simple ?
+
+
+Best regards,
+
+
+Etienne Vallette d'Osia
+
+ps: I'm really sorry if my message is full of English errors...
