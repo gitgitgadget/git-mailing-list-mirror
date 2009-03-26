@@ -1,78 +1,87 @@
-From: Mauro Carvalho Chehab <mchehab@infradead.org>
-Subject: git fsk is reporting problems that don't exist
-Date: Thu, 26 Mar 2009 08:51:08 -0300
-Message-ID: <20090326085108.0fbc489d@pedra.chehab.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 01/10] refs: add "for_each_bisect_ref" function
+Date: Thu, 26 Mar 2009 13:37:14 +0100
+Message-ID: <fabb9a1e0903260537r61647d82t4ffb6b8b67d5c2f1@mail.gmail.com>
+References: <20090326055509.1bc16b28.chriscool@tuxfamily.org> 
+	<fabb9a1e0903252320j2edf4a8ct39f784c4319c3cb0@mail.gmail.com> 
+	<200903260848.42104.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 26 12:53:14 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	John Tapsell <johnflux@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Thu Mar 26 13:39:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lmo92-0007l0-CB
-	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 12:53:12 +0100
+	id 1LmorP-000762-4B
+	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 13:39:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752009AbZCZLvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Mar 2009 07:51:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751583AbZCZLvP
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 07:51:15 -0400
-Received: from bombadil.infradead.org ([18.85.46.34]:37135 "EHLO
-	bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751294AbZCZLvP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Mar 2009 07:51:15 -0400
-Received: from 200.220.139.66.nipcable.com ([200.220.139.66] helo=pedra.chehab.org)
-	by bombadil.infradead.org with esmtpsa (Exim 4.69 #1 (Red Hat Linux))
-	id 1Lmo76-0003GG-Kw
-	for git@vger.kernel.org; Thu, 26 Mar 2009 11:51:13 +0000
-X-Mailer: Claws Mail 3.3.1 (GTK+ 2.10.4; x86_64-redhat-linux-gnu)
-X-SRS-Rewrite: SMTP reverse-path rewritten from <mchehab@infradead.org> by bombadil.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S1754034AbZCZMhd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Mar 2009 08:37:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753610AbZCZMhd
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 08:37:33 -0400
+Received: from mu-out-0910.google.com ([209.85.134.189]:38061 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751175AbZCZMhc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Mar 2009 08:37:32 -0400
+Received: by mu-out-0910.google.com with SMTP id g7so234072muf.1
+        for <git@vger.kernel.org>; Thu, 26 Mar 2009 05:37:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=8U6zAiFHaCPsKiDbD0f6QHs1TH0lpWZAkh192PRTOM8=;
+        b=pPA9wJAyfxyNB54hy64ZIufDieaA+4PPPwp7sM8N/susNa6SKypXzX3jQMb3b6ILGF
+         rUXNFudeAM86m7pZElq86hgtYo7f6NPQFX/D1aCMeULFFeSb856VByjhbQchwIoPVsvj
+         wSR7B83npXEYNbmSHGyIPY1ry8GGA6vjjY1vc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=nylxDDIQnvNPJIH+qGsrAMDCdyuRHsFbhBNepPPVuAsjC9tKXR36GyzxYyoTwDeflw
+         9qhKOkAs+o8R1gSRSB2ncaz/AeeLAYSy5iXeFSwuCKMF01KMmCmGA+zRWGJ6o9f0Hv+q
+         jOO+ctHLtIl5hlT7D5ht+14SgrKiLZM2p1DNw=
+In-Reply-To: <200903260848.42104.chriscool@tuxfamily.org>
+Received: by 10.103.173.15 with SMTP id a15mr379070mup.59.1238071049227; Thu, 
+	26 Mar 2009 05:37:29 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114772>
 
-git  fsck (version 1.6.1.1) is reporting a nonexistent troubles on some of
-my trees.
+Heya,
 
-For example, those are the results for my
-kernel.org /pub/scm/linux/kernel/git/mchehab/linux-2.6.git tree:
+On Thu, Mar 26, 2009 at 08:48, Christian Couder <chriscool@tuxfamily.org> wrote:
+> I am not a big fan of cover letters. Usually I prefer adding comments in the
+> patches.
 
-$ git fsck
-missing tree 3afa5c9eace50837f3c31238102358cf67b8a1ff
-missing commit 87c3a86e1c220121d0ced59d1a71e78ed9abc6dd
+The downside of that is that it makes it harder to quickly scan the
+series; now I have to go through each patch (which involves trying
+finding which patch is next, as my MUA is retarded and doesn't
+understand proper threading).
 
-Both objects exist on this tree.
+>> And no description of the
+>> individual patches either!
+>
+> There is a commit message in each patch. And many of the patches are very
+> small.
 
-Also, if we run fsck with --full, those missing objects disappear:
+Hehe, my bad; the first one didn't have a commit message, which is the
+one I looked at first.
 
-$ git fsck --full
-dangling tag b65a80a5ee7923355cbca669cead08e067fc7ada
-dangling tag 6fa7003fe34e9a8a31fb91754f3c289cc045564b
-dangling tag 8be00154b8e949bf4b89ac198aef9a247532ac2d
-dangling tag b503092a16bdba0a418e155fe592521fc20855af
-dangling tag 5eb14db1f80df4eb0ecb0976e47e8e287e3175fc
-dangling tag 31cb515c75388d457c2f318a0ee9606b3527852f
-dangling tag 0715562512ca6cf14c1b8f08e09d5907118deaf0
-dangling tag 68185b00cf91c1c4dcc761a2f3a1631562ed52f3
-dangling tag 7d4b1bcc5e7411fc9e63f610c16e5de8fe6dfde8
-dangling tag 7a3862d6e9934ffe107fe7ddfbe2c63dba321793
-dangling tag 1dcda2df87ba4ecc7988be7a45d01645e11c9f4c
-dangling tag 8a38e7fd7a30cd44be954f9a3b062e607cec5d41
-dangling tag d31ce8060b0e875179ba5ca1d40475dc2a082cc7
-dangling tag 87c16e9e8bb74f14f4504305957e4346e7fc46ea
-dangling tag b21232ea962bbaf0e909365f4964f6cceb2ba8ce
-dangling tag 5dfd736f95b3d84a18b5bb8e50ac71f245438acf
-dangling tag cb50773491b0066d0e55f31f8875d5678fa3f8ad
-dangling tag 73e37758f6b500a67d918528204832cc8f256516
-dangling tag 1a0bff987b27da5181f112bcc60f34d6fbb7e67e
+> If some commit messages are not clear enough, please tell me and I will try
+> to improve them ;)
 
-Could this be fixed? It is very annoying to have it reporting a nonexistent
-problem.
+The rest of the series is nicely readable, I guess I shouldn't send
+whine mails before reading the entire series next time :).
 
-
+-- 
 Cheers,
-Mauro
+
+Sverre Rabbelier
