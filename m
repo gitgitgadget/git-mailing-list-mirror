@@ -1,73 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/8] Documentation: rename docbook-xsl-172 attribute to
- git-asciidoc-no-roff
-Date: Thu, 26 Mar 2009 09:47:53 -0700
-Message-ID: <7vocvop6x2.fsf@gitster.siamese.dyndns.org>
-References: <1237881866-5497-1-git-send-email-chris_johnsen@pobox.com>
- <1237881866-5497-4-git-send-email-chris_johnsen@pobox.com>
- <20090324090440.GC1799@coredump.intra.peff.net>
- <B70DE0F1-8CDA-46FC-9EF8-41B0FAC39631@pobox.com>
- <20090326094322.GB14292@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Chris Johnsen <chris_johnsen@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 26 17:50:35 2009
+From: Michael Hendricks <michael@ndrix.org>
+Subject: [PATCH] format-patch: add arbitrary email headers
+Date: Thu, 26 Mar 2009 10:51:05 -0600
+Message-ID: <1238086265-71476-1-git-send-email-michael@ndrix.org>
+References: <20090326164212.GF29569@ginosko.ndrix.org>
+Cc: Michael Hendricks <michael@ndrix.org>
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 26 17:53:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LmsmX-0002Gl-Pj
-	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 17:50:18 +0100
+	id 1LmspE-0003bC-Fl
+	for gcvg-git-2@gmane.org; Thu, 26 Mar 2009 17:53:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758961AbZCZQsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Mar 2009 12:48:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758359AbZCZQsE
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 12:48:04 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34916 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756945AbZCZQsB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Mar 2009 12:48:01 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 6447691F1;
-	Thu, 26 Mar 2009 12:47:59 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 90BBF91EC; Thu,
- 26 Mar 2009 12:47:55 -0400 (EDT)
-In-Reply-To: <20090326094322.GB14292@coredump.intra.peff.net> (Jeff King's
- message of "Thu, 26 Mar 2009 05:43:22 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: DD253CE2-1A25-11DE-9C48-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+	id S1756423AbZCZQvf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Mar 2009 12:51:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755906AbZCZQve
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 12:51:34 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:54936 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752583AbZCZQvd (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Mar 2009 12:51:33 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 230E72FE3DD;
+	Thu, 26 Mar 2009 12:51:29 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Thu, 26 Mar 2009 12:51:29 -0400
+X-Sasl-enc: mqc2B1QzgD9UDdsJUFx9g0sI+u0gLDMZQQZiBavT+WDG 1238086288
+Received: from ginosko.ndrix.org (unknown [166.230.131.80])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 9F49E14E5E;
+	Thu, 26 Mar 2009 12:51:28 -0400 (EDT)
+Received: by ginosko.ndrix.org (Postfix, from userid 501)
+	id 9066CF8D93F; Thu, 26 Mar 2009 10:51:17 -0600 (MDT)
+X-Mailer: git-send-email 1.6.2.1.317.ga1cbc
+In-Reply-To: <20090326164212.GF29569@ginosko.ndrix.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114800>
 
-Jeff King <peff@peff.net> writes:
+format-patch supports the format.headers configuration for adding
+arbitrary email headers to the patches it outputs.  This patch adds
+support for an --add-header argument which makes the same feature
+available from the command line.  This is useful when the content of
+custom email headers must change from branch to branch.
 
-> On Tue, Mar 24, 2009 at 02:48:52PM -0500, Chris Johnsen wrote:
->
->> I am not opposed to providing more version-specific controls, but I am not 
->> sure which versions are important enough to justify their own variables. 
->> Are you indicating that 1.73 is important enough because it was a "return 
->> to sanity" after 1.72?
->
-> No, mainly because it is what is shipped in the last version of Debian,
-> which means it is a major enough version that there will be a lot of
-> people using it.
->
-> But let's just start with adding the tweakable knobs (which your series
-> is already doing), and see in what ways they need to be tweaked for
-> popular platforms before going overboard.
+This patch has been sponsored by Grant Street Group
 
-When I was trying out the series yesterday, I was wondering if this is
-something we can autodetect.
+Signed-off-by: Michael Hendricks <michael@ndrix.org>
+---
+ Documentation/git-format-patch.txt |    5 +++++
+ builtin-log.c                      |    2 ++
+ t/t4014-format-patch.sh            |   15 +++++++++++++++
+ 3 files changed, 22 insertions(+), 0 deletions(-)
 
-Output from "asciidoc --version" is easily machine parsable for giving
-asciidoc7compatible aka ASCIIDOC8, but I couldn't come up with anything
-simpler than probing a few hardcoded paths under /usr/share/sgml; that
-approach is unacceptable because would not work if your stylesheets are in
-somewhere we do not know about.  Ideally, we should be able to ask the
-tools we invoke (e.g. xmlto) to get that information.
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index c2eb5fa..51fd716 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -161,6 +161,11 @@ if that is not set.
+ 	Add a "Cc:" header to the email headers. This is in addition
+ 	to any configured headers, and may be used multiple times.
+ 
++--add-header=<header>::
++	Add an arbitrary header to the email headers.  This is in addition
++	to any configured headers, and may be used multiple times.
++	For example, --add-header="Organization: git-foo"
++
+ --cover-letter::
+ 	In addition to the patches, generate a cover letter file
+ 	containing the shortlog and the overall diffstat.  You can
+diff --git a/builtin-log.c b/builtin-log.c
+index c7a5772..27bc0dc 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -918,6 +918,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 			cover_letter = 1;
+ 		else if (!strcmp(argv[i], "--no-binary"))
+ 			no_binary_diff = 1;
++		else if (!prefixcmp(argv[i], "--add-header="))
++			add_header(argv[i] + 13);
+ 		else
+ 			argv[j++] = argv[i];
+ 	}
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index f187d15..11061dd 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -128,6 +128,21 @@ test_expect_success 'additional command line cc' '
+ 	grep "^ *S. E. Cipient <scipient@example.com>$" patch5
+ '
+ 
++test_expect_success 'command line headers' '
++
++	git config --unset-all format.headers &&
++	git format-patch --add-header="Cc: R. E. Cipient <rcipient@example.com>" --stdout master..side | sed -e "/^$/q" >patch6 &&
++	grep "^Cc: R. E. Cipient <rcipient@example.com>$" patch6
++'
++
++test_expect_success 'configuration headers and command line headers' '
++
++	git config --replace-all format.headers "Cc: R. E. Cipient <rcipient@example.com>" &&
++	git format-patch --add-header="Cc: S. E. Cipient <scipient@example.com>" --stdout master..side | sed -e "/^$/q" >patch7 &&
++	grep "^Cc: R. E. Cipient <rcipient@example.com>,$" patch7 &&
++	grep "^ *S. E. Cipient <scipient@example.com>$" patch7
++'
++
+ test_expect_success 'multiple files' '
+ 
+ 	rm -rf patches/ &&
+-- 
+1.6.2.1.317.ga1cbc
