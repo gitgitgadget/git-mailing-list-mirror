@@ -1,91 +1,120 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 2/2] Make local branches behave like remote branches when
- --tracked
-Date: Fri, 27 Mar 2009 17:52:16 +0100
-Message-ID: <49CD0440.6010304@drmicha.warpmail.net>
-References: <alpine.LNX.1.00.0903201358440.19665@iabervon.org> <1238100805-19619-1-git-send-email-git@drmicha.warpmail.net> <1238100805-19619-2-git-send-email-git@drmicha.warpmail.net> <1238100805-19619-3-git-send-email-git@drmicha.warpmail.net> <7vprg3fkw8.fsf@gitster.siamese.dyndns.org> <49CC9285.407@drmicha.warpmail.net> <7v1vsjey3s.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: David Reitter <david.reitter@gmail.com>
+Subject: Re: How to merge by subtree while preserving history?
+Date: Fri, 27 Mar 2009 12:56:43 -0400
+Message-ID: <BA69E81F-C93F-4AD8-8486-A27B0A284D9A@gmail.com>
+References: <A5C2B218-4E4F-4C05-959D-5B6E9C619DDB@gmail.com> <20090327073847.GE27459@genesis.frugalware.org>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 27 17:54:26 2009
+Cc: git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Fri Mar 27 17:58:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LnFJx-00027Z-1N
-	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 17:54:17 +0100
+	id 1LnFOE-000485-UW
+	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 17:58:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758643AbZC0Qw1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Mar 2009 12:52:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757500AbZC0Qw0
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 12:52:26 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:35791 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755797AbZC0QwZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Mar 2009 12:52:25 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 31A762FF92A;
-	Fri, 27 Mar 2009 12:52:23 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Fri, 27 Mar 2009 12:52:23 -0400
-X-Sasl-enc: REuEv12W/zgfTiExEVWevxiF7DpLAzHdkcJ+h4D0sE71 1238172742
-Received: from localhost.localdomain (p4FC63422.dip0.t-ipconnect.de [79.198.52.34])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 07814AAF5;
-	Fri, 27 Mar 2009 12:52:21 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090326 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <7v1vsjey3s.fsf@gitster.siamese.dyndns.org>
+	id S1754407AbZC0Q4v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Mar 2009 12:56:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751014AbZC0Q4u
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 12:56:50 -0400
+Received: from yw-out-2324.google.com ([74.125.46.31]:16843 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753917AbZC0Q4t (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Mar 2009 12:56:49 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so989669ywb.1
+        for <git@vger.kernel.org>; Fri, 27 Mar 2009 09:56:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:cc:message-id:from:to
+         :in-reply-to:content-type:content-transfer-encoding:mime-version
+         :subject:date:references:x-mailer;
+        bh=6/qL0Ov2DaDLnC5hd9NndYgbUsOgBp7e/vWRSHs015c=;
+        b=SB3QnBietGI6E7xRjboiCCRfEc6yJ/ja2HQGvjdu0YJmzJI7NWoIH3MFv+U7/TswhR
+         6KiTAtxcgB6i2vu5VmFM4orKy7/kvinyiJMYX9N1RaKrsaF9EsAgWU8vPDqLefzUlZDn
+         yLqLULTIzCHNsEtP1au3BJqbxeIo9dFb5ssl4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=cc:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:mime-version:subject:date:references
+         :x-mailer;
+        b=XZt009N+n06ApWqwP8/jtDMGv17bCUPPz8+fBEDb2ElzfFJJL5zoc0AkFHPpBCxROl
+         VDpSqKW48rqkcqF1TiW4xYxUwYeXjOZDH+pdGmAw6Rlx5UiMSivi+2j52VLreEvFddcV
+         l/S7Udsbm+fa8t/3LnKWb3G+o/HhWIUuiRw+Y=
+Received: by 10.100.46.10 with SMTP id t10mr568850ant.151.1238173007156;
+        Fri, 27 Mar 2009 09:56:47 -0700 (PDT)
+Received: from SCARLETT.PSY.CMU.EDU (SCARLETT.PSY.CMU.EDU [128.2.249.106])
+        by mx.google.com with ESMTPS id c29sm2437321anc.23.2009.03.27.09.56.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 27 Mar 2009 09:56:46 -0700 (PDT)
+In-Reply-To: <20090327073847.GE27459@genesis.frugalware.org>
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114912>
 
-Junio C Hamano venit, vidit, dixit 27.03.2009 17:20:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> Junio C Hamano venit, vidit, dixit 27.03.2009 09:08:
->> ...
->>> After calling r-f-t, because this new code assumes that for the "." remote
->>> (aka "local repository"), r-f-t lies and does not give back what it
->>> expects, fixes what it got back from r-f-t.  Shouldn't we be fixing this
->>> inside r-f-t?
->>
->> The technical reason is that there is no local remote, i.e. no remote
->> struct for '.', and I don't think we want it, because it would show up
->> in all places where the list of remotes is searched/displayed/...
->>
->> With ret being the branch we talk about, r-f-t is passed ret->remote and
->> ret->merge[i] only. In the local case, r-f-t cannot use the remote
->> struct for '.' (there is none) to find what it needs, and it has no easy
->> access to ret->merge_names[i] which is that info.
->>
->> branch_get(), on the other hand, has all needed info in place.
-> 
-> Thanks for a detailed explanation.  Would it deserve to be in the commit
-> log justification in a summarized form?
+On Mar 27, 2009, at 3:38 AM, Miklos Vajna wrote:
 
-You tell me :)
-I'm still unsure at times how detailed commit messages should be, but I
-take it I should put a shortened version of the above in there.
+> Now do a 'git log f474c52..52b8ea9' and you'll see the merged commits.
 
-> 
->> ..., even worse: if foo is
->> ambiguous because refs/heads/foo and refs/remotes/foo exist then
->> refs/heads/foo would win, i.e. we used to output the *wrong* ref. The
->> above disambiguates. But I'll see if I can simplify the output based on
->> the necessity of disambiguation.
-> 
-> Thanks.
+Sure :)
+Needless to say, this is not practical and doesn't support people's  
+workflow.
 
-I thought about doing the following:
-- remove occurences of refs/remotes (like before the patch) and of
-refs/heads. That way the output format stays the same, the amiguity
-problem is not worsened
-- think later/harder about doing this more cleverly. I guess I need to
-check the output of dwim_ref, but have to figure out all the input
-parameters first...
+For simple renames,  "git log --follow" helps, but as soon as you want  
+to do a "diff" in one of the listed revisions, filtering for just this  
+one file, then history becomes invisible again.   Concretely, this  
+breaks the common workflow with C-x C-v l, then "d" in Emacs.
 
-Michael
+I'm aware of the content-tracking vs. file-tracking discussion; it's  
+all fine, except that file names are meaningful meta-data for some  
+content, at least in some projects.  Is there a command that gives me  
+the diff  for a revision pair, restricted to what happened to content  
+in a given file in the current tree?
+
+
+> But you are right about that 'git log -- path' will find the merge
+> commits only (which is right, as the tree objects are not modified  
+> when
+> merging, just the resulting tree has the original tree in a
+> subdirectory).
+>
+> If this is a one-time operation then I would just use git filter- 
+> branch
+> to move the code to a subdir.
+
+
+For the record:
+
+In the meantime, I managed to move the original file in the CVS  
+repository (by just moving all the ",v" files and getting rid of  
+CVSROOT/history, which doesn't seem needed).  The I re-ran cvsimport,  
+mitigating a bunch of problems with "cvsps".  For the record, cvsps /  
+cvsimport could not handle the case where my repository named "foo"  
+had a subdirectory also called "foo", in which I moved all the  
+stuff.   I had to rename the directory to "bar".   I also had to  
+delete cvsps's cache file with the -x argument (or delete it from the  
+surprising location ~/.cvsps).
+
+Then, I merged with "git pull", noting the rev ID before the merge.
+
+Next, I used "git filter-branch" to rename the directory again from  
+BAR to FOO as follows:
+
+git filter-branch --index-filter \
+         'git ls-files -s | sed "s-BAR/-FOO/-" |
+                 GIT_INDEX_FILE=$GIT_INDEX_FILE.new \
+                         git update-index --index-info &&
+          mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' <last-rev-before- 
+merge>..
+
+Finally, I had to "git gc" to prune a 200MB worth of objects (it told  
+me I had 500k objects overall).
+
+
+--
+http://aquamacs.org -- Aquamacs: Emacs on Mac OS X
