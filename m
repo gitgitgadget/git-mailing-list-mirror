@@ -1,88 +1,121 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] init: support --import to add all files and commit
-  right after init
-Date: Fri, 27 Mar 2009 03:03:07 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.0903270259470.10279@pacific.mpi-cbg.de>
-References: <1237978720-2500-1-git-send-email-pclouds@gmail.com> <20090325124219.GA5307@coredump.intra.peff.net> <adf1fd3d0903250549l60e4a2d1j8bd57ba66d24a678@mail.gmail.com> <200903262223.28546.markus.heidelberg@web.de>
+Subject: Re: [PATCH 01/10] refs: add "for_each_bisect_ref" function
+Date: Fri, 27 Mar 2009 03:08:55 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903270305340.10279@pacific.mpi-cbg.de>
+References: <20090326055509.1bc16b28.chriscool@tuxfamily.org> <49CBA42D.3000404@drmicha.warpmail.net> <alpine.DEB.1.00.0903261748280.12753@intel-tinevez-2-302> <200903270141.57426.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1220136861-1238119388=:10279"
-Cc: =?ISO-8859-15?Q?Santi_B=E9jar?= <santi@agolina.net>,
-	Jeff King <peff@peff.net>,
-	=?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c?= <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Markus Heidelberg <markus.heidelberg@web.de>
-X-From: git-owner@vger.kernel.org Fri Mar 27 03:02:33 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-802119745-1238119736=:10279"
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	John Tapsell <johnflux@gmail.com>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Fri Mar 27 03:09:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ln1Oz-000276-1h
-	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 03:02:33 +0100
+	id 1Ln1VQ-0003hg-1T
+	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 03:09:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758565AbZC0CBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Mar 2009 22:01:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757188AbZC0CBA
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 22:01:00 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50039 "HELO mail.gmx.net"
+	id S932671AbZC0CGt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Mar 2009 22:06:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758997AbZC0CGt
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 22:06:49 -0400
+Received: from mail.gmx.net ([213.165.64.20]:53826 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756871AbZC0CA7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Mar 2009 22:00:59 -0400
-Received: (qmail invoked by alias); 27 Mar 2009 02:00:56 -0000
+	id S1753551AbZC0CGs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Mar 2009 22:06:48 -0400
+Received: (qmail invoked by alias); 27 Mar 2009 02:06:44 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp045) with SMTP; 27 Mar 2009 03:00:56 +0100
+  by mail.gmx.net (mp014) with SMTP; 27 Mar 2009 03:06:44 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18RwGQaFxUR3BJdATEeSxNnaiL5jVQr2xBI8X0JqO
-	rx2A+5CF2NUGvR
+X-Provags-ID: V01U2FsdGVkX1/95pgzI5v9hrGqis0kiDJLHQXJjgvdMi74wBJrWO
+	1BDEKGVz4viel6
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <200903262223.28546.markus.heidelberg@web.de>
+In-Reply-To: <200903270141.57426.chriscool@tuxfamily.org>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+X-FuHaFi: 0.5600000000000001
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114840>
 
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1220136861-1238119388=:10279
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
+--8323328-802119745-1238119736=:10279
+Content-Type: TEXT/PLAIN; charset=iso-8859-15
 Content-Transfer-Encoding: 8BIT
 
 Hi,
 
-On Thu, 26 Mar 2009, Markus Heidelberg wrote:
+On Fri, 27 Mar 2009, Christian Couder wrote:
 
-> Santi Béjar, 25.03.2009:
-> > 2009/3/25 Jeff King <peff@peff.net>:
-> > > On Wed, Mar 25, 2009 at 01:38:30PM +0100, Johannes Schindelin wrote:
+> Le jeudi 26 mars 2009, Johannes Schindelin a écrit :
+>
+> > On Thu, 26 Mar 2009, Michael J Gruber wrote:
+> > > Christian Couder venit, vidit, dixit 26.03.2009 08:48:
+> > > > Le jeudi 26 mars 2009, Sverre Rabbelier a écrit :
+> > > >> A 10 patches series with no cover letter?
+> > > >
+> > > > I am not a big fan of cover letters. Usually I prefer adding 
+> > > > comments in the patches.
 > > >
-> > >> > > +If no message is given, "Initial commit" will be used.
-> > >> >
-> > >> > Why a default message and not running the editor?
-> > >>
-> > >> Because I would say "Initial commit" anyway.
-> > 
-> > And I would say "Commit inicial".
+> > > I'm sorry I have to say that, but your individual preferences don't 
+> > > matter. Many of us would do things differently, each in their own 
+> > > way, but people adjust to the list's preferences. It's a matter of 
+> > > attitude. So, please...
+> >
+> > Actually, a better way to ask for a cover letter would have been to 
+> > convince Christian.  So I'll try that.
 > 
-> And I would describe the current state in a few words.
+> Thanks.
 > 
-> Invoking an editor is more universal and I don't think the majority
-> would be contented with "Initial commit".
+> As you know, I have been sending patches since nearly 3 years ago to 
+> this list. And it's only since a few weeks ago that I am asked to send 
+> cover letters...
 
-_Again_, as Peff pointed out, you are welcome to use the current method of 
-git init && git add . && git commit, which _does_ launch an editor.
+Heh, I have the feeling that your patch series were much shorter, and did 
+not have many revisions, until a few weeks ago ;-)
 
-The fact that you want to spend much time (anyway) doing your initial 
-commit does not allow you to inconvenience others.
+> > From the patch series' titles (especially when they are cropped due to 
+> > the text window being too small to fit the indented thread), it is not 
+> > all that obvious what you want to achieve with those 10 patches.
+> >
+> > From recent discussions, I seem to remember that you wanted to have 
+> > some cute way to mark commits as non-testable during a bisect, and I 
+> > further seem to remember that Junio said that very method should be 
+> > usable outside of bisect, too.
+> 
+> Well, we want to move "git bisect skip" code from shell (in 
+> "git-bisect.sh") to C. So this patch series does that by creating a new 
+> "git bisect--helper" command in C that contains the new code and using 
+> that new command in "git-bisect.sh".
 
-Others who want to have a quick way to work safely with something they 
-might need to change, and might then want to use the full power of Git to 
-see what they changed.  Without any need for a "nice" first commit.
+Oh?  I _completely_ missed that.  And that's being one of the original 
+Cc:ed persons...
+
+> > Unfortunately, that does not reveal to me, quickly, what is the 
+> > current state of affairs, and what you changed since the last time.
+> 
+> Yeah, I should have at least put something in the comment section of my 
+> first patch in this series.
+
+No.  I would still have missed it.
+
+The cover letter is outside of any patch, because it describes the purpose 
+of the _whole_ patch series, not just one patch.
+
+So, it would have been nice to get a heads-up that this is not your 
+bisect-skip-a-whole-bunch-of-commits series, but a new animal.
+
+This way, I decided I do not have time for something I do not need, and 
+deleted it without having a look.
 
 Ciao,
 Dscho
 
---8323328-1220136861-1238119388=:10279--
+--8323328-802119745-1238119736=:10279--
