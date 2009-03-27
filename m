@@ -1,352 +1,121 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: sending patch sets (was: Re: [PATCH 01/10] refs: add "for_each_bisect_ref"
- function)
-Date: Fri, 27 Mar 2009 01:32:10 +0000 (GMT)
-Message-ID: <alpine.LNX.2.00.0903270126210.25399@reaper.quantumfyre.co.uk>
-References: <20090326055509.1bc16b28.chriscool@tuxfamily.org> <49CBA42D.3000404@drmicha.warpmail.net> <alpine.DEB.1.00.0903261748280.12753@intel-tinevez-2-302> <200903270141.57426.chriscool@tuxfamily.org>
+From: Daniel Pittman <daniel@rimspace.net>
+Subject: Re: Test that every revision builds before pushing changes?
+Date: Fri, 27 Mar 2009 12:30:07 +1100
+Organization: I know I put it down here, somewhere.
+Message-ID: <8763hviwgw.fsf@rimspace.net>
+References: <87myb8aja1.fsf@rimspace.net> <49CB39E5.5060000@op5.se>
+	<87ljqs7ioz.fsf@rimspace.net> <49CB4ED8.4060205@op5.se>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1463811584-158616118-1238117530=:25399"
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	John Tapsell <johnflux@gmail.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Mar 27 02:35:54 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 27 02:54:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ln0zA-0003bI-Od
-	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 02:35:53 +0100
+	id 1Ln1GY-00083t-HH
+	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 02:53:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761768AbZC0BeP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Mar 2009 21:34:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763251AbZC0BeN
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 21:34:13 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:60726 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1763248AbZC0BeK (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Mar 2009 21:34:10 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.quantumfyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id D71122A6B30
-	for <git@vger.kernel.org>; Fri, 27 Mar 2009 01:34:00 +0000 (GMT)
-Received: (qmail 5617 invoked by uid 103); 27 Mar 2009 01:32:10 +0000
-Received: from darkphoton.datavampyre.co.uk by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-2.05st 
- (clamdscan: 0.94.2/9168. spamassassin: 3.2.1. perlscan: 2.05st.  
- Clear:RC:1(212.159.54.234):. 
- Processed in 0.081073 secs); 27 Mar 2009 01:32:10 -0000
-Received: from darkphoton.datavampyre.co.uk (212.159.54.234)
-  by neutron.quantumfyre.co.uk with SMTP; 27 Mar 2009 01:32:10 +0000
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <200903270141.57426.chriscool@tuxfamily.org>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1759221AbZC0BwN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Mar 2009 21:52:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934062AbZC0BwJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 21:52:09 -0400
+Received: from main.gmane.org ([80.91.229.2]:60234 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933866AbZC0BwG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Mar 2009 21:52:06 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Ln1Eq-0007oc-2t
+	for git@vger.kernel.org; Fri, 27 Mar 2009 01:52:04 +0000
+Received: from sdcarl02.strategicdata.com.au ([203.214.67.82])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 27 Mar 2009 01:52:04 +0000
+Received: from daniel by sdcarl02.strategicdata.com.au with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 27 Mar 2009 01:52:04 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sdcarl02.strategicdata.com.au
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/23.0.60 (gnu/linux)
+Cancel-Lock: sha1:THMDmn1T1mRiCjJHL/XEM/YDnsg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114838>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Andreas Ericsson <ae@op5.se> writes:
+> Daniel Pittman wrote:
+>> Andreas Ericsson <ae@op5.se> writes:
+>>> Daniel Pittman wrote:
+>>>> I would like to ensure that my commits are fully bisectable before=
+ I
+>>>> commit them to an upstream repository, at least to the limits of a=
+n
+>>>> automatic tool for testing them.
 
----1463811584-158616118-1238117530=:25399
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+[...]
 
-On Fri, 27 Mar 2009, Christian Couder wrote:
+>>> The manual step comes at merge-time; Someone has to be responsible =
+for
+>>> merging all the topics that are to be included in the release branc=
+h
+>>> and make sure it builds and passes all tests after each merge.
+>>
+>> Ah.  You have not quite grasped what I was looking for: I was after =
+a
+>> tool to help automate that step, rather than a workflow around it.
+>
+> Oh right. Sorry, I'm stuck in continuous-integration land where peopl=
+e
+> tend to want the server to take care of such things.
 
-> If someone knows some other tools that can easily send a threaded patch
-> series, I will try to see if I can use them...
+We have that also; I am primarily motivated by avoiding trivial breakag=
+e
+in the CI server, as well as bisection.
 
-I long ago gave up on send-email, as it seemed to cumbersome for what I 
-wanted, and my perl had got so rusty I really couldn't face trying to 
-improve it.
+>> For example, the responsible person for that testing could use the
+>> hypothetical (until someone tells me where to find it):
+>>
+>>     git test public..test make test
 
-So I wrote a replacement in Python (attached), which I have subsequently 
-used for all patches I've sent.  It calls format-patch, passing through 
-arguments (and you can use -- to let it pass options too).
+[...]
 
-(the only setting it reads from git config atm is mail-commit.to)
+> Something like this?
+> --%<--%<--
+> #!/bin/sh
+>
+> git stash
+> revspec=3D"$1"
+> shift
+> for rev in $(git rev-list "$revspec"); do
+> 	git checkout $rev
+> 	"$@" || break
+> done
+> --%<--%<--
+>
+> Run it as such:
+> ./git-test.sh public..test make test
 
-I find it much easier to use than send-email, but as usual YMMV ...
+Thank you, that points me in the right direction, and I can obviously
+season the rest of it to taste =E2=80=94 reverse that revision list, fo=
+r
+example.
 
--- 
-Julian
+Thank you also to Wincent Colaiuta, who provided a similar script albie=
+t
+with significantly more detail.
 
-  ---
-Have you seen the latest Japanese camera?  Apparently it is so fast it can
-photograph an American with his mouth shut!
----1463811584-158616118-1238117530=:25399
-Content-Type: TEXT/PLAIN; charset=US-ASCII; name=git-mail-commits
-Content-Transfer-Encoding: BASE64
-Content-ID: <alpine.LNX.2.00.0903270132100.25399@reaper.quantumfyre.co.uk>
-Content-Description: git-mail-commits
-Content-Disposition: attachment; filename=git-mail-commits
+[...]
 
-IyEvdXNyL2Jpbi9weXRob24NCg0KaW1wb3J0IG9wdHBhcnNlDQppbXBvcnQg
-b3MNCmltcG9ydCByYW5kb20NCmltcG9ydCByZQ0KaW1wb3J0IHNtdHBsaWIN
-CmltcG9ydCBzb2NrZXQNCmltcG9ydCBzeXMNCmltcG9ydCB0ZW1wZmlsZQ0K
-aW1wb3J0IHRpbWUNCg0KZnJvbSBjU3RyaW5nSU8gaW1wb3J0IFN0cmluZ0lP
-DQpmcm9tIGVtYWlsLkdlbmVyYXRvciBpbXBvcnQgR2VuZXJhdG9yDQpmcm9t
-IGVtYWlsLk1lc3NhZ2UgaW1wb3J0IE1lc3NhZ2UNCmZyb20gZW1haWwuUGFy
-c2VyIGltcG9ydCBGZWVkUGFyc2VyLCBQYXJzZXINCmZyb20gZW1haWwuVXRp
-bHMgaW1wb3J0IHBhcnNlYWRkciwgcGFyc2VkYXRlLCBmb3JtYXRkYXRlLCBc
-DQogICAgICAgICAgICAgICAgICAgICAgICBnZXRhZGRyZXNzZXMsIGZvcm1h
-dGFkZHINCg0KbXlfdmVyc2lvbiA9ICIwLjEiDQpteV9uYW1lID0gImdpdC1t
-YWlsLWNvbW1pdHMiDQp0aGlzX3NjcmlwdCA9ICIlcyB2JXMiICUgKG15X25h
-bWUsIG15X3ZlcnNpb24pDQoNCmdjaV9yZSA9IHJlLmNvbXBpbGUoIl4oP1A8
-ZW1haWw+KC4qKSA8KC4qKT4pIChcZCsgWystXVxkezR9KSQiKQ0KDQpzbXRw
-X3NlcnZlciA9ICJuZXV0cm9uIg0KDQojIC0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tDQpkZWYgZ2V0X21lc3NhZ2VfdGV4dChtZXNzYWdlKToN
-CiAgICB0ZXh0X21zZyA9IFN0cmluZ0lPKCkNCiAgICBnZW4gPSBHZW5lcmF0
-b3IodGV4dF9tc2csIG1hbmdsZV9mcm9tXz1GYWxzZSkNCiAgICBnZW4uZmxh
-dHRlbihtZXNzYWdlKQ0KICAgIHJldHVybiB0ZXh0X21zZy5nZXR2YWx1ZSgp
-DQojIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQoNCiMgLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCmRlZiBzZW5kX21lc3Nh
-Z2UobXNnKToNCiAgICBzZW50ID0gKE5vbmUsICdObyBkZXN0aW5hdGlvbiBh
-ZGRyZXNzIGdpdmVuJykNCg0KICAgIChhLCBmcm9tYWRkcikgPSBwYXJzZWFk
-ZHIobXNnLmdldCgnRnJvbScpKQ0KICAgIHRvYWRkcl9saXN0ID0gbXNnLmdl
-dF9hbGwoJ1RvJywgW10pDQogICAgY2NhZGRyX2xpc3QgPSBtc2cuZ2V0X2Fs
-bCgnQ0MnLCBbXSkNCiAgICBiY2NhZGRyX2xpc3QgPSBtc2cuZ2V0X2FsbCgn
-QkNDJywgW10pDQogICAgYWxsX3JlY2lwcyA9IGdldGFkZHJlc3Nlcyh0b2Fk
-ZHJfbGlzdCArIGNjYWRkcl9saXN0ICsgYmNjYWRkcl9saXN0KQ0KICAgIHRv
-X2xpc3QgPSBbIGVtYWlsIGZvciAobmFtZSwgZW1haWwpIGluIGFsbF9yZWNp
-cHMgXQ0KDQogICAgaWYgbGVuKHRvX2xpc3QpID4gMDoNCiAgICAgICAgc2Vy
-dmVyID0gc210cGxpYi5TTVRQKHNtdHBfc2VydmVyKQ0KICAgICAgICB0cnk6
-DQogICAgICAgICAgICBlcnJvcnMgPSBzZXJ2ZXIuc2VuZG1haWwoZnJvbWFk
-ZHIsIHRvX2xpc3QsIGdldF9tZXNzYWdlX3RleHQobXNnKSkNCiAgICAgICAg
-ICAgIHNlbnQgPSAoZXJyb3JzLCAiRmFpbGVkIHRvIHNlbmQgdG8gb25lIG9y
-IG1vcmUgcmVjaXBpZW50cyIpDQogICAgICAgIGV4Y2VwdCBzbXRwbGliLlNN
-VFBSZWNpcGllbnRzUmVmdXNlZCwgcnI6DQogICAgICAgICAgICBzZW50ID0g
-KHJyLnJlY2lwaWVudHMsICJGYWlsZWQgdG8gc2VuZCB0byBhbGwgcmVjaXBp
-ZW50cyIpDQogICAgICAgIHNlcnZlci5xdWl0KCkNCg0KICAgIHJldHVybiBz
-ZW50DQojIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQoNCiMg
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCmRlZiBnZXRfbXNn
-aWQoaWRzdHJpbmc9Tm9uZSwgaWRob3N0PXNvY2tldC5nZXRmcWRuKCksIGVt
-YWlsPU5vbmUpOg0KICAgICIiIlJldHVybnMgYSBzdHJpbmcgc3VpdGFibGUg
-Zm9yIFJGQyAyODIyIGNvbXBsaWFudCBNZXNzYWdlLUlELCBlLmc6DQoNCiAg
-ICA8MjAwMjAyMDExOTU2MjcuMzM1MzkuOTY2NzFAbmlnaHRzaGFkZS5sYS5t
-YXN0YWxlci5jb20+DQoNCiAgICBPcHRpb25hbCBpZHN0cmluZyBpZiBnaXZl
-biBpcyBhIHN0cmluZyB1c2VkIHRvIHN0cmVuZ3RoZW4gdGhlDQogICAgdW5p
-cXVlbmVzcyBvZiB0aGUgbWVzc2FnZSBpZC4NCg0KICAgIEJhc2VkIG9uIGVt
-YWlsLlV0aWxzLm1ha2VfbXNnaWQNCiAgICAiIiINCiAgICB0aW1ldmFsID0g
-dGltZS50aW1lKCkNCiAgICB1dGNkYXRlID0gdGltZS5zdHJmdGltZSgnJVkl
-bSVkJUglTSVTJywgdGltZS5nbXRpbWUodGltZXZhbCkpDQogICAgcGlkID0g
-b3MuZ2V0cGlkKCkNCiAgICByYW5kaW50ID0gcmFuZG9tLnJhbmRyYW5nZSgx
-MDAwMDApDQogICAgaWYgZW1haWwgaXMgbm90IE5vbmU6DQogICAgICAgIGlk
-cyA9ICIuJXMiICUgKGVtYWlsKQ0KICAgIGVsc2U6DQogICAgICAgIGlmIGlk
-c3RyaW5nIGlzIE5vbmU6DQogICAgICAgICAgICBpZHN0cmluZyA9ICcnDQog
-ICAgICAgIGVsc2U6DQogICAgICAgICAgICBpZHN0cmluZyA9ICcuJyArIGlk
-c3RyaW5nDQogICAgICAgIGlkcyA9ICIlc0AlcyIgJSAoaWRzdHJpbmcsIGlk
-aG9zdCkNCiAgICBtc2dpZCA9ICc8JXMuJXMuJXMlcz4nICUgKHV0Y2RhdGUs
-IHBpZCwgcmFuZGludCwgaWRzKQ0KICAgIHJldHVybiBtc2dpZA0KIyAtLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQpkZWYgZ2V0X3BhdGNo
-ZXMoYXJncywgbnVtYmVyZWQ9VHJ1ZSwgc2lnbm9mZj1UcnVlKToNCiAgICBw
-YXRjaGVzID0gW10NCiAgICBjdXJfcGF0Y2ggPSBOb25lDQojICAgIHByaW50
-IGFyZ3MNCiAgICBvcHRzID0gWyctTSddDQogICAgaWYgbnVtYmVyZWQ6DQog
-ICAgICAgIG9wdHMuYXBwZW5kKCItbiIpDQogICAgaWYgc2lnbm9mZjoNCiAg
-ICAgICAgb3B0cy5hcHBlbmQoIi1zIikNCiAgICBmcCA9IG9zLnBvcGVuKCJn
-aXQgZm9ybWF0LXBhdGNoIC0tc3Rkb3V0ICVzICVzIiAlICgnICcuam9pbihv
-cHRzKSwNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAnICcuam9pbihhcmdzKSkpDQogICAgZm9yIGxp
-bmUgaW4gZnAucmVhZGxpbmVzKCk6DQogICAgICAgIGlmIGxpbmVbOjVdID09
-ICJGcm9tICI6DQogICAgICAgICAgICBpZiBjdXJfcGF0Y2ggaXMgbm90IE5v
-bmU6DQogICAgICAgICAgICAgICAgcGF0Y2hlcy5hcHBlbmQoY3VyX3BhdGNo
-LmNsb3NlKCkpDQogICAgICAgICAgICBjdXJfcGF0Y2ggPSBGZWVkUGFyc2Vy
-KCkNCiAgICAgICAgY3VyX3BhdGNoLmZlZWQobGluZSkNCiAgICBmcC5jbG9z
-ZSgpDQogICAgaWYgY3VyX3BhdGNoIGlzIG5vdCBOb25lOg0KICAgICAgICBw
-YXRjaGVzLmFwcGVuZChjdXJfcGF0Y2guY2xvc2UoKSkNCiAgICByZXR1cm4g
-cGF0Y2hlcw0KDQpkZWYgZm9ybWF0X3BhdGNoZXMocGF0Y2hlcywgdG8sIGlu
-aXRpYWxfbXNnX2lkPU5vbmUsDQogICAgICAgICAgICAgICAgICAgYWRkcj1O
-b25lLCBjY19saXN0PVtdKToNCiAgICByZWZzID0gW10NCiAgICBpZiBpbml0
-aWFsX21zZ19pZCBpcyBub3QgTm9uZToNCiAgICAgICAgcmVmcy5hcHBlbmQo
-aW5pdGlhbF9tc2dfaWQpDQogICAgZm9yIHBhdGNoIGluIHBhdGNoZXM6DQog
-ICAgICAgIGlmIGFkZHIgaXMgbm90IE5vbmU6DQogICAgICAgICAgICBwYXRj
-aC5yZXBsYWNlX2hlYWRlcigiRnJvbSIsIGFkZHIpDQogICAgICAgIGlmIGxl
-bihjY19saXN0KSA+IDA6DQogICAgICAgICAgICBjYyA9IFt4LnN0cmlwKCkg
-Zm9yIHggaW4gcGF0Y2guZ2V0KCJDQyIsICIiKS5zcGxpdCgiLCIpXQ0KICAg
-ICAgICAgICAgaWYgbGVuKGNjKSA9PSAxIGFuZCBjY1swXSA9PSAiIjoNCiAg
-ICAgICAgICAgICAgICBjYyA9IGNjX2xpc3QNCiAgICAgICAgICAgIGVsc2U6
-DQogICAgICAgICAgICAgICAgY2MuZXh0ZW5kKGNjX2xpc3QpDQogICAgICAg
-ICAgICBkZWwgcGF0Y2hbJ0NDJ10NCiAgICAgICAgICAgIHByaW50IGNjDQog
-ICAgICAgICAgICBwYXRjaC5hZGRfaGVhZGVyKCJDQyIsICIsIi5qb2luKGNj
-KSkNCiAgICAgICAgc3ViamVjdCA9IHBhdGNoLmdldCgiU3ViamVjdCIpDQog
-ICAgICAgIChuYW1lLCBlbWFpbCkgPSBwYXJzZWFkZHIocGF0Y2guZ2V0KCJG
-cm9tIikpDQogICAgICAgIHNoYTEgPSBwYXRjaC5nZXRfdW5peGZyb20oKVs1
-OjQ2XQ0KICAgICAgICBtc2dfaWQgPSBnZXRfbXNnaWQoZW1haWw9ZW1haWwp
-DQogICAgICAgIHBhdGNoLmFkZF9oZWFkZXIoIlRvIiwgdG8pDQogICAgICAg
-IGRlbCBwYXRjaFsnTWVzc2FnZS1JZCddDQogICAgICAgIHBhdGNoLmFkZF9o
-ZWFkZXIoIk1lc3NhZ2UtSWQiLCBtc2dfaWQpDQogICAgICAgIHBhdGNoLmFk
-ZF9oZWFkZXIoIlgtZ2l0LXNoYTEiLCBzaGExKQ0KICAgICAgICBkZWwgcGF0
-Y2hbJ1gtTWFpbGVyJ10NCiAgICAgICAgcGF0Y2guYWRkX2hlYWRlcigiWC1N
-YWlsZXIiLCB0aGlzX3NjcmlwdCkNCiAgICAgICAgaWYgbGVuKHJlZnMpID4g
-MDoNCiAgICAgICAgICAgIGRlbCBwYXRjaFsnSW4tUmVwbHktVG8nXQ0KICAg
-ICAgICAgICAgZGVsIHBhdGNoWydSZWZlcmVuY2VzJ10NCiAgICAgICAgICAg
-IHBhdGNoLmFkZF9oZWFkZXIoIkluLVJlcGx5LVRvIiwgcmVmc1stMV0pDQog
-ICAgICAgICAgICBwYXRjaC5hZGRfaGVhZGVyKCJSZWZlcmVuY2VzIiwgJyAn
-LmpvaW4ocmVmcykpDQogICAgICAgIHJlZnMuYXBwZW5kKG1zZ19pZCkNCiMg
-ICAgICAgIHByaW50ICIlcyAtICVzIiAlKHNoYTFbMDo3XSwgc3ViamVjdCkN
-CiMgICAgICAgIHByaW50IHBhdGNoDQoNCmRlZiBnZXRfZ2l0X2NvbW1pdHRl
-cl9lbWFpbCgpOg0KICAgIGd2ID0gb3MucG9wZW4oImdpdCB2YXIgR0lUX0NP
-TU1JVFRFUl9JREVOVCIpDQogICAgZ2NpID0gZ3YucmVhZGxpbmUoKQ0KICAg
-IGd2LmNsb3NlKCkNCiMgICAgcHJpbnQgZ2NpDQogICAgZ2NpX20gPSBnY2lf
-cmUuc2VhcmNoKGdjaSkNCiAgICBpZiBnY2lfbToNCiAgICAgICAgcmV0dXJu
-IGdjaV9tLmdyb3VwKCdlbWFpbCcpDQogICAgZWxzZToNCiAgICAgICAgcHJp
-bnQgIlVuYWJsZSB0byBnZXQvcGFyc2UgR0lUX0NPTU1JVFRFUl9JREVOVCIN
-CiAgICAgICAgc3lzLmV4aXQoLTEpDQoNCmRlZiBnZXRfaW50cm9fbXNnKHRv
-LCBmcm1fYWRkciwgY291bnQsIGZpbGVuYW1lPU5vbmUpOg0KICAgIGlmIGZp
-bGVuYW1lIGlzIE5vbmU6DQogICAgICAgIGlmICdFRElUT1InIG5vdCBpbiBv
-cy5lbnZpcm9uOg0KICAgICAgICAgICAgcHJpbnQgIiRFRElUT1Igbm90IHNl
-dCwgcGxlYXNlIHNldC4iDQogICAgICAgICAgICBzeXMuZXhpdCgtMSkNCiAg
-ICAgICAgKGZkLCBmbmFtZSkgPSB0ZW1wZmlsZS5ta3N0ZW1wKCkNCiAgICAg
-ICAgZiA9IG9zLmZkb3BlbihmZCkNCiAgICAgICAgcmV0ID0gb3Muc3lzdGVt
-KCIlcyAlcyIgJSAob3MuZW52aXJvblsnRURJVE9SJ10sIGZuYW1lKSkNCiAg
-ICAgICAgaWYgbm90IChvcy5XSUZFWElURUQocmV0KSBhbmQgb3MuV0VYSVRT
-VEFUVVMocmV0KSA9PSAwKToNCiAgICAgICAgICAgIHByaW50ICJGYWlsZWQg
-dG8gZWRpdCBpbnRybyBtZXNzYWdlLiINCiAgICAgICAgICAgIHN5cy5leGl0
-KC0xKQ0KICAgIGVsc2U6DQogICAgICAgIGYgPSBvcGVuKGZpbGVuYW1lKQ0K
-ICAgIHNsaXN0ID0gW10NCiAgICBibGlzdCA9IFtdDQogICAgY3VyID0gc2xp
-c3QNCiAgICBmb3IgbGluZSBpbiBmLnJlYWRsaW5lcygpOg0KICAgICAgICBp
-ZiBsaW5lID09ICJcbiI6DQogICAgICAgICAgICBjdXIgPSBibGlzdA0KICAg
-ICAgICAgICAgY29udGludWUNCiAgICAgICAgY3VyLmFwcGVuZChsaW5lKQ0K
-ICAgIGYuY2xvc2UoKQ0KICAgIGlmIGZpbGVuYW1lIGlzIE5vbmU6DQogICAg
-ICAgIG9zLnJlbW92ZShmbmFtZSkNCiAgICBzdWJqZWN0ID0gJycuam9pbihz
-bGlzdCkucmVwbGFjZSgnXG4nLCAnICcpDQogICAgYm9keSA9ICcnLmpvaW4o
-Ymxpc3QpDQogICAgaWYgc3ViamVjdCA9PSAiIjoNCiAgICAgICAgcHJpbnQg
-Ik5vIHN1YmplY3QgZm9yIGludHJvIG1lc3NhZ2UsIGFib3J0aW5nLiINCiAg
-ICAgICAgc3lzLmV4aXQoLTEpDQogICAgbXNnID0gTWVzc2FnZSgpDQogICAg
-bXNnLmFkZF9oZWFkZXIoJ0Zyb20nLCBmcm1fYWRkcikNCiAgICBtc2cuYWRk
-X2hlYWRlcignVG8nLCB0bykNCiAgICAobmFtZSwgZW1haWwpID0gcGFyc2Vh
-ZGRyKG1zZy5nZXQoIkZyb20iKSkNCiAgICBtc2cuYWRkX2hlYWRlcignTWVz
-c2FnZS1JZCcsIGdldF9tc2dpZChlbWFpbD1lbWFpbCkpDQogICAgbXNnLnNl
-dF9wYXlsb2FkKGJvZHkpDQogICAgbXNnLmFkZF9oZWFkZXIoJ1N1YmplY3Qn
-LCAiW1BBVENIIDAvJWRdICVzIiAlIChjb3VudCwgc3ViamVjdCkpDQogICAg
-bXNnLmFkZF9oZWFkZXIoIlgtTWFpbGVyIiwgdGhpc19zY3JpcHQpDQogICAg
-cmV0dXJuIG1zZw0KDQpkZWYgcmVwbHlfdG8oZm5hbWUpOg0KICAgIHAgPSBQ
-YXJzZXIoKQ0KICAgIGYgPSBvcGVuKGZuYW1lKQ0KICAgIG1zZyA9IHAucGFy
-c2UoZikNCiAgICBmLmNsb3NlKCkNCiAgICBjYyA9IFt4LnN0cmlwKCkgZm9y
-IHggaW4gbXNnWydDQyddLnNwbGl0KCcsJyldDQogICAgcmV0dXJuIChtc2db
-J0Zyb20nXSwgbXNnWydNZXNzYWdlLUlEJ10sIGNjKQ0KDQpkZWYgbWFpbigp
-Og0KICAgIGRlc2NyaXB0aW9uID0gInNlbmQgdGhlIGdpdmVuIGNvbW1pdHMg
-YXMgcGF0Y2ggZW1haWxzIHRvIHRoZSBzcGVjaWZpZWQgIiBcDQogICAgICAg
-ICAgICAgICAgICAiYWRkcmVzcywgYWxsIG5vbi1vcHRpb24gYXJndW1lbnRz
-IGFyZSBwYXNzZWQgdG8gIiBcDQogICAgICAgICAgICAgICAgICAiZ2l0LWZv
-cm1hdC1wYXRjaCAoXCItLVwiIGNhbiBiZSB1c2VkIHRvIGluZGljYXRlIHRo
-ZSBlbmQgIiBcDQogICAgICAgICAgICAgICAgICAib2YgdGhlIG9wdGlvbnMg
-Zm9yIHRoaXMgc2NyaXB0KS4iDQogICAgDQogICAgcGFyc2VyID0gb3B0cGFy
-c2UuT3B0aW9uUGFyc2VyKGRlc2NyaXB0aW9uPWRlc2NyaXB0aW9uKQ0KICAg
-IHBhcnNlci5kaXNhYmxlX2ludGVyc3BlcnNlZF9hcmdzKCkNCg0KICAgIHBh
-cnNlci5hZGRfb3B0aW9uKCIiLCAiLS10byIsIGFjdGlvbj0ic3RvcmUiLCBk
-ZWZhdWx0PU5vbmUsDQogICAgICAgICAgICAgICAgICAgICAgaGVscD0idGhl
-IGFkZHJlc3MgdG8gc2VuZCB0aGUgbWFpbHMgdG8iKQ0KDQogICAgcGFyc2Vy
-LmFkZF9vcHRpb24oIiIsICItLWNjIiwgYWN0aW9uPSJhcHBlbmQiLCBkZWZh
-dWx0PVtdLA0KICAgICAgICAgICAgICAgICAgICAgIGhlbHA9ImNvcHkgdGhl
-IG1haWxzIHRvIHRoaXMgYWRkcmVzcyIpDQoNCiAgICBwYXJzZXIuYWRkX29w
-dGlvbigiIiwgIi0tcmVwbHktdG8iLCBhY3Rpb249InN0b3JlIiwgZGVmYXVs
-dD1Ob25lLA0KICAgICAgICAgICAgICAgICAgICAgIGhlbHA9InJlcGx5IHRv
-IHRoZSBnaXZlbiBtYWlsIChyYXRoZXIgdGhhbiB1c2UgYW4gaW50cm8pIikN
-Cg0KICAgIHBhcnNlci5hZGRfb3B0aW9uKCItbiIsICItLW51bWJlcmVkIiwg
-YWN0aW9uPSJzdG9yZV90cnVlIiwgZGVmYXVsdD1GYWxzZSwNCiAgICAgICAg
-ICAgICAgICAgICAgICBoZWxwPSJzZW5kIG51bWJlcmVkIHBhdGNoZXMgKGFk
-ZHMgLW4gdG8gdGhlICINCiAgICAgICAgICAgICAgICAgICAgICAiZ2l0LWZv
-cm1hdC1wYXRjaCBvcHRpb25zKSIpDQoNCiAgICBwYXJzZXIuYWRkX29wdGlv
-bigiLWYiLCAiLS1mcm9tIiwgZGVzdD0iZnJtX2FkZHIiLCBhY3Rpb249InN0
-b3JlIiwNCiAgICAgICAgICAgICAgICAgICAgICBkZWZhdWx0PU5vbmUsDQog
-ICAgICAgICAgICAgICAgICAgICAgaGVscD0ic2V0IEZST00gYXMgdGhlIGZy
-b20gYWRkcmVzcywgb3RoZXJ3aXNlIHVzZSAiDQogICAgICAgICAgICAgICAg
-ICAgICAgIkdJVF9DT01NSVRURVJfSURFTlQiKQ0KDQogICAgcGFyc2VyLmFk
-ZF9vcHRpb24oIi1pIiwgIi0taW50cm8iLCBkZXN0PSJpbnRybyIsIGFjdGlv
-bj0ic3RvcmVfdHJ1ZSIsDQogICAgICAgICAgICAgICAgICAgICAgaGVscD0i
-c3RhcnQgd2l0aCBhIDAvbiBpbnRybyBtZXNzYWdlIHVzaW5nICRFRElUT1Ig
-dG8gIg0KICAgICAgICAgICAgICAgICAgICAgICJ3cml0ZSB0aGUgbWVzc2Fn
-ZSAoaW1wbGllcyAtbikuIikNCiAgICBwYXJzZXIuYWRkX29wdGlvbigiLUki
-LCAiLS1pbnRyby1maWxlIiwgZGVzdD0iaW50cm8iLCBhY3Rpb249InN0b3Jl
-IiwNCiAgICAgICAgICAgICAgICAgICAgICBoZWxwPSJzdGFydCB3aXRoIGEg
-MC9uIGludHJvIG1lc3NhZ2UgcmVhZCBmcm9tIElOVFJPICINCiAgICAgICAg
-ICAgICAgICAgICAgICAiKGltcGxpZXMgLW4pLiIpDQogICAgcGFyc2VyLnNl
-dF9kZWZhdWx0cyhpbnRybz1Ob25lKQ0KDQogICAgcGFyc2VyLmFkZF9vcHRp
-b24oIi1lIiwgIi0tZWRpdCIsIGFjdGlvbj0ic3RvcmVfdHJ1ZSIsIGRlZmF1
-bHQ9RmFsc2UsDQogICAgICAgICAgICAgICAgICAgICAgaGVscD0iZWRpdCB0
-aGUgcGF0Y2hlcyBiZWZvcmUgc2VuZGluZyIpDQoNCiAgICBwYXJzZXIuYWRk
-X29wdGlvbigiLVMiLCAiLS1uby1zaWdub2ZmIiwgZGVzdD0ic2lnbm9mZiIs
-DQogICAgICAgICAgICAgICAgICAgICAgYWN0aW9uPSJzdG9yZV9mYWxzZSIs
-IGRlZmF1bHQ9VHJ1ZSwNCiAgICAgICAgICAgICAgICAgICAgICBoZWxwPSJE
-b24ndCBzaWdub2ZmIHRoZSBwYXRjaGVzIikNCg0KICAgIChvcHRpb25zLCBh
-cmdzKSA9IHBhcnNlci5wYXJzZV9hcmdzKCkNCg0KICAgIGlmIGxlbihhcmdz
-KSA8IDE6DQogICAgICAgIHByaW50ICJZb3UgbXVzdCBzcGVjaWZ5IGF0IGxl
-YXN0IG9uZSBjb21taXQgdG8gc2VuZCAuLi4iDQogICAgICAgIHN5cy5leGl0
-KC0xKQ0KDQogICAgaWYgb3B0aW9ucy50byBpcyBOb25lOg0KICAgICAgICBn
-YyA9IG9zLnBvcGVuKCJnaXQgY29uZmlnIG1haWwtY29tbWl0cy50byIpDQog
-ICAgICAgIHRvID0gZ2MucmVhZCgpDQogICAgICAgIGdjLmNsb3NlKCkNCiAg
-ICAgICAgaWYgdG8gPT0gIiI6DQogICAgICAgICAgICBwcmludCAieW91IG11
-c3Qgc3BlY2lmeSB0aGUgZGVzdGluYXRpb24gdXNpbmcgLS10byINCiAgICAg
-ICAgICAgIHN5cy5leGl0KC0xKQ0KICAgICAgICBlbHNlOg0KICAgICAgICAg
-ICAgb3B0aW9ucy50byA9IHRvLnN0cmlwKCkNCg0KICAgIHByaW50ICJTZW5k
-aW5nIHRvOiAlc1xuIiAlIG9wdGlvbnMudG8NCg0KICAgIGlmIG9wdGlvbnMu
-ZnJtX2FkZHIgaXMgbm90IE5vbmU6DQogICAgICAgIGZybV9hZGRyID0gb3B0
-aW9ucy5mcm1fYWRkcg0KICAgIGVsc2U6ICAgICAgICANCiAgICAgICAgZnJt
-X2FkZHIgPSBnZXRfZ2l0X2NvbW1pdHRlcl9lbWFpbCgpDQoNCiAgICBpZiBv
-cHRpb25zLmludHJvIGlzIG5vdCBOb25lOg0KICAgICAgICBvcHRpb25zLm51
-bWJlcmVkID0gVHJ1ZQ0KDQogICAgcGF0Y2hlcyA9IGdldF9wYXRjaGVzKGFy
-Z3MsIG9wdGlvbnMubnVtYmVyZWQsIHNpZ25vZmY9b3B0aW9ucy5zaWdub2Zm
-KQ0KDQogICAgaW50cm9fbXNnID0gTm9uZQ0KICAgIGludHJvX21zZ19pZCA9
-IE5vbmUNCiAgICBpZiBvcHRpb25zLmludHJvIGlzIG5vdCBOb25lOg0KICAg
-ICAgICBmbmFtZSA9IE5vbmUNCiAgICAgICAgaWYgb3B0aW9ucy5pbnRybyBp
-cyBub3QgVHJ1ZToNCiAgICAgICAgICAgIGZuYW1lID0gb3B0aW9ucy5pbnRy
-bw0KICAgICAgICBpbnRyb19tc2cgPSBnZXRfaW50cm9fbXNnKG9wdGlvbnMu
-dG8sIGZybV9hZGRyLCBsZW4ocGF0Y2hlcyksDQogICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgZmlsZW5hbWU9Zm5hbWUpDQogICAgICAgIGlu
-dHJvX21zZ19pZCA9IGludHJvX21zZy5nZXQoJ01lc3NhZ2UtSWQnKQ0KDQog
-ICAgaWYgb3B0aW9ucy5yZXBseV90byBpcyBub3QgTm9uZToNCiAgICAgICAg
-KG9wdGlvbnMudG8sIGludHJvX21zZ19pZCwgY2MpID0gcmVwbHlfdG8ob3B0
-aW9ucy5yZXBseV90bykNCiAgICAgICAgb3B0aW9ucy5jYy5leHRlbmQoY2Mp
-DQoNCiMgICAgcHJpbnQgaW50cm9fbXNnDQoNCiAgICBmb3JtYXRfcGF0Y2hl
-cyhwYXRjaGVzLCB0bz1vcHRpb25zLnRvLCBjY19saXN0PW9wdGlvbnMuY2Ms
-DQogICAgICAgICAgICAgICAgICAgaW5pdGlhbF9tc2dfaWQ9aW50cm9fbXNn
-X2lkLA0KICAgICAgICAgICAgICAgICAgIGFkZHI9ZnJtX2FkZHIpDQoNCiAg
-ICBpZiBvcHRpb25zLmVkaXQ6DQogICAgICAgIG5ld19wYXRjaGVzID0gW10N
-CiAgICAgICAgZm9yIHBhdGNoIGluIHBhdGNoZXM6DQogICAgICAgICAgICAo
-ZmQsIGZuYW1lKSA9IHRlbXBmaWxlLm1rc3RlbXAoKQ0KICAgICAgICAgICAg
-ZiA9IG9zLmZkb3BlbihmZCwgIncrIikNCiAgICAgICAgICAgIGYud3JpdGUo
-Z2V0X21lc3NhZ2VfdGV4dChwYXRjaCkpDQogICAgICAgICAgICBmLmNsb3Nl
-KCkNCiAgICAgICAgICAgIGlmICdFRElUT1InIG5vdCBpbiBvcy5lbnZpcm9u
-Og0KICAgICAgICAgICAgICAgIHByaW50ICIkRURJVE9SIG5vdCBzZXQsIHBs
-ZWFzZSBzZXQuIg0KICAgICAgICAgICAgICAgIHN5cy5leGl0KC0xKQ0KICAg
-ICAgICAgICAgcmV0ID0gb3Muc3lzdGVtKCIlcyAlcyIgJSAob3MuZW52aXJv
-blsnRURJVE9SJ10sIGZuYW1lKSkNCiAgICAgICAgICAgIGlmIG5vdCAob3Mu
-V0lGRVhJVEVEKHJldCkgYW5kIG9zLldFWElUU1RBVFVTKHJldCkgPT0gMCk6
-DQogICAgICAgICAgICAgICAgcHJpbnQgIkZhaWxlZCB0byBlZGl0IHBhdGNo
-ICglZCkuIiAlIHJldA0KICAgICAgICAgICAgICAgIHN5cy5leGl0KC0xKQ0K
-ICAgICAgICAgICAgcCA9IEZlZWRQYXJzZXIoKQ0KICAgICAgICAgICAgZiA9
-IG9wZW4oZm5hbWUpDQogICAgICAgICAgICBmb3IgbGluZSBpbiBmOg0KICAg
-ICAgICAgICAgICAgIHAuZmVlZChsaW5lKQ0KICAgICAgICAgICAgbSA9IHAu
-Y2xvc2UoKQ0KICAgICAgICAgICAgaWYgbToNCiAgICAgICAgICAgICAgICBu
-ZXdfcGF0Y2hlcy5hcHBlbmQobSkNCiAgICAgICAgICAgIGYuY2xvc2UoKQ0K
-ICAgICAgICAgICAgb3MucmVtb3ZlKGZuYW1lKQ0KICAgICAgICBwYXRjaGVz
-ID0gbmV3X3BhdGNoZXMNCg0KICAgIGlmIGludHJvX21zZzoNCiAgICAgICAg
-cHJpbnQgaW50cm9fbXNnWydTdWJqZWN0J10NCiAgICBmb3IgcGF0Y2ggaW4g
-cGF0Y2hlczoNCiAgICAgICAgcHJpbnQgcGF0Y2hbJ1N1YmplY3QnXQ0KICAg
-IHByaW50DQogICAgcHJpbnQgIlByZXNzIFtFbnRlcl0gdG8gc2VuZCBwYXRj
-aGVzLCBDdHJsLUMgdG8gY2FuY2VsLiINCiAgICB0cnk6DQogICAgICAgIHJh
-d19pbnB1dCgpDQogICAgZXhjZXB0IEtleWJvYXJkSW50ZXJydXB0Og0KICAg
-ICAgICBwcmludCAiTm90IHNlbmRpbmcgcGF0Y2hlcy4iDQogICAgICAgIHN5
-cy5leGl0KC0xKQ0KDQogICAgcHJpbnQgIlNlbmRpbmcgcGF0Y2hlcyAuLi5c
-biINCg0KICAgIG1zZ3M9W2ludHJvX21zZ10NCiAgICBtc2dzLmV4dGVuZChw
-YXRjaGVzKQ0KICAgIGZvciBtc2cgaW4gbXNnczoNCiAgICAgICAgaWYgbXNn
-IGlzIE5vbmU6DQogICAgICAgICAgICBjb250aW51ZQ0KICAgICAgICAoZXJy
-b3JzLCBlcnJtc2cpID0gc2VuZF9tZXNzYWdlKG1zZykNCiAgICAgICAgaWYg
-bGVuKGVycm9ycykgPT0gMDoNCiAgICAgICAgICAgIHByaW50ICJzZW50ICVz
-IiAlIG1zZ1snU3ViamVjdCddDQogICAgICAgIGVsc2U6DQogICAgICAgICAg
-ICBwcmludCAiZXJyb3Igc2VuZGluZyAlcyIgJSBtc2dbJ1N1YmplY3QnXQ0K
-ICAgICAgICAgICAgZm9yIChuYW1lLCAoZWNvZGUsIGVtc2cpKSBpbiBlcnJv
-cnMuaXRlbXMoKToNCiAgICAgICAgICAgICAgICBwcmludCAiICAlczogJXMg
-JXMiICUgKG5hbWUsIGVjb2RlLCBlbXNnKQ0KDQppZiBfX25hbWVfXyA9PSAi
-X19tYWluX18iOg0KICAgIG1haW4oKQ0K
+> It doesn't handle merges very nicely, btw, but I guess this should be
+> run prior to merging anyways.
 
----1463811584-158616118-1238117530=:25399--
+Once I have the framework I can quietly work my way through fixing nast=
+y
+issues one way or another.  Thanks.
+
+Regards,
+        Daniel
