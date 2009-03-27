@@ -1,73 +1,74 @@
-From: Lachlan Deck <lachlan.deck@gmail.com>
-Subject: git svn clone failure
-Date: Sat, 28 Mar 2009 08:18:47 +1100
-Message-ID: <A5DCF978-5D10-4A6C-BE4B-1024FA475E2F@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: Git Download/Bootstrap Suggestion
+Date: Sat, 28 Mar 2009 00:21:19 +0100
+Message-ID: <fabb9a1e0903271621g392eefdeu85b46c655c1ad067@mail.gmail.com>
+References: <49CD0841.9000602@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 27 22:20:29 2009
+Cc: git@vger.kernel.org
+To: Mike Gaffney <mr.gaffo@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 28 00:23:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LnJTW-0007tA-UI
-	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 22:20:27 +0100
+	id 1LnLOG-0006d2-Dx
+	for gcvg-git-2@gmane.org; Sat, 28 Mar 2009 00:23:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754182AbZC0VSz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Mar 2009 17:18:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754727AbZC0VSz
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 17:18:55 -0400
-Received: from ti-out-0910.google.com ([209.85.142.187]:3720 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753567AbZC0VSy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Mar 2009 17:18:54 -0400
-Received: by ti-out-0910.google.com with SMTP id i7so904402tid.23
-        for <git@vger.kernel.org>; Fri, 27 Mar 2009 14:18:51 -0700 (PDT)
+	id S1752756AbZC0XVi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Mar 2009 19:21:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752300AbZC0XVi
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 19:21:38 -0400
+Received: from mu-out-0910.google.com ([209.85.134.185]:9860 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751645AbZC0XVh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Mar 2009 19:21:37 -0400
+Received: by mu-out-0910.google.com with SMTP id g7so525660muf.1
+        for <git@vger.kernel.org>; Fri, 27 Mar 2009 16:21:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to
-         :content-type:content-transfer-encoding:mime-version:subject:date
-         :x-mailer;
-        bh=Riz17TBcHB02UtvLtzUz1YEBNYHYouGe6snm3QMIhh8=;
-        b=E7oYX7zK69rlq4mnc8G1gals/xU+6OcIHxaMNZZzrQpCr19xA+hNRT7zKf6kUxQZNn
-         kTlpSDy2DQ9yIEAjdFoeKzVpBYXYSm6eLt5ajNZ1jCo3+mmthZpABp01fe5aezfozD5q
-         8jszPNr7084p7BkL96Fkmirgrc20G64Afq/OQ=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Q4XXQou/2gX4EkmCyJzNUOjTFzKIgTzgcDoab1bf0OM=;
+        b=Dnzkt1A24yYxD9MDn3b7ORgynq91vXM5vXfJga0MOc8Fj738Wf5LUuRmfXzPmWjYoX
+         6P2IZkQHzN5FDkwQ4PIdOdSR8gDWAyxZFjijSpmcw053s+JWk/DGPi1PbJihMnbFdAt+
+         no6XqdhL6bZzMCPQcIy10nYmnn7UcemDz8W0k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:from:to:content-type:content-transfer-encoding
-         :mime-version:subject:date:x-mailer;
-        b=LoudWFz7mRLH9q/KiS5mNECFmEka7af+CHwgEA5YdGIAE2Db2sJKum3bpkV8J66DGt
-         PiKyUx+VCPREfTlc88J+jNHC5q/BlmOJv5wHuDwm2dxvCgsDJ6QygNjYKAUyPzZbzmeE
-         wK5aqE6NIHPhvkwxbN9RE4Gh2zeca3Tl1mMUc=
-Received: by 10.110.3.15 with SMTP id 15mr3489269tic.43.1238188731823;
-        Fri, 27 Mar 2009 14:18:51 -0700 (PDT)
-Received: from ?10.0.1.200? (208.198.233.220.exetel.com.au [220.233.198.208])
-        by mx.google.com with ESMTPS id d4sm2149527tib.8.2009.03.27.14.18.50
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 27 Mar 2009 14:18:51 -0700 (PDT)
-X-Mailer: Apple Mail (2.930.3)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=VkLAFbsDR/gnhOFrc9LcMu5HbHTqVh58DoCcZa/+lMbkEDPrGxICZHqIPUzQoiU6TM
+         a3a3wZE9CGhvmXvvV2H/O9ba7PsCFai9j+XqHVBYqMkxlYiuzJ109XsGBEb6CcFSKcya
+         r1BUzGf5FX8CzVdJrlFpqPaN1Op9R0ChbURsM=
+In-Reply-To: <49CD0841.9000602@gmail.com>
+Received: by 10.103.49.12 with SMTP id b12mr666897muk.98.1238196094721; Fri, 
+	27 Mar 2009 16:21:34 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114926>
 
-Hi there,
+Heya,
 
-I'm trying to clone an existing svn repository with git (just getting  
-started with git) and it keeps failing with:
-...
-r604 = 6428e63734a21ee5fcb4593274747e2758578a91 (git-svn)
-fatal: unable to run 'git-svn'
+On Fri, Mar 27, 2009 at 18:09, Mike Gaffney <mr.gaffo@gmail.com> wrote:
+> I have to do is
+> - download the source tarball (or the rpm)
+> - make it
+> - install it
 
-I'm using git version 1.6.2
-Mac OS X 10.5.6. git installed via macports with svn support.
+Nah, you don't need to do all that ;).
 
-Any ideas? How do I find out why it's failing?
-Thanks.
 
-with regards,
---
+> It'd be a lot cooler if I could just wget a full get repo on the latest tag
 
-Lachlan Deck
+You mean like, this?
+
+http://repo.or.cz/w/git.git?a=snapshot;h=master;sf=tgz
+
+-- 
+Cheers,
+
+Sverre Rabbelier
