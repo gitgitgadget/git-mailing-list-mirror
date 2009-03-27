@@ -1,77 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Make local branches behave like remote branches when
- --tracked
-Date: Fri, 27 Mar 2009 09:20:39 -0700
-Message-ID: <7v1vsjey3s.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LNX.1.00.0903201358440.19665@iabervon.org>
- <1238100805-19619-1-git-send-email-git@drmicha.warpmail.net>
- <1238100805-19619-2-git-send-email-git@drmicha.warpmail.net>
- <1238100805-19619-3-git-send-email-git@drmicha.warpmail.net>
- <7vprg3fkw8.fsf@gitster.siamese.dyndns.org>
- <49CC9285.407@drmicha.warpmail.net>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] difftool: add support for an extended revision syntax
+Date: Fri, 27 Mar 2009 09:28:49 -0700
+Message-ID: <20090327162849.GA2853@gmail.com>
+References: <1237803348-9329-1-git-send-email-davvid@gmail.com> <m33acz2byv.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Mar 27 17:22:37 2009
+Cc: gitster@pobox.com, git@vger.kernel.org, spearce@spearce.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 27 17:30:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LnEp5-0004TF-Qo
-	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 17:22:24 +0100
+	id 1LnEwD-00082I-B0
+	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 17:29:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758495AbZC0QUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Mar 2009 12:20:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755941AbZC0QUu
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 12:20:50 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:50707 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758138AbZC0QUt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Mar 2009 12:20:49 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2D4C9A51D4;
-	Fri, 27 Mar 2009 12:20:47 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A6414A51D3; Fri,
- 27 Mar 2009 12:20:41 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 3AAAEE96-1AEB-11DE-BADE-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1755374AbZC0Q2N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Mar 2009 12:28:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754371AbZC0Q2N
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 12:28:13 -0400
+Received: from wa-out-1112.google.com ([209.85.146.183]:33935 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754140AbZC0Q2M (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Mar 2009 12:28:12 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so727411wah.21
+        for <git@vger.kernel.org>; Fri, 27 Mar 2009 09:28:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=XS2ozywrz7afLKRWi2/wkOaVBzww4STninjAXEhs1+I=;
+        b=FWkP84EvLlr5yBy4Bi9gqnTsojeAZVC5Zj+MnI4rCBE83mvpqAxwGmuh6qxMkZSOoG
+         xhQr8mtxFIBp+trThHY1thjKvquX1bcr0WzM9Op8l38gr7mR3pNPUHMMMCc5DZtBRAbn
+         DByWOAGixLLvnvCJxfsKfKeIC4sccfogxuCIY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=MTTSL5oj3T+siOcalv72c+3/WT+d0pCRERLoDGfzSy0HKNW1DJ0jOMdl0EsgnO8RL0
+         jcG2uznJwYPu1gwcX5u8vvkSbkwrDO6fo+u6X1R7fRgp8/iUU5zVuv/VwLGQ0t0LrpHe
+         QSZwqWKO8JgAU9XDzG3QERU9CW2FJ4Smluii0=
+Received: by 10.115.79.1 with SMTP id g1mr1543212wal.80.1238171290393;
+        Fri, 27 Mar 2009 09:28:10 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id c26sm1725400waa.15.2009.03.27.09.28.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 27 Mar 2009 09:28:10 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <m33acz2byv.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114910>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+On  0, Jakub Narebski <jnareb@gmail.com> wrote:
+> David Aguilar <davvid@gmail.com> writes:
+> 
+> > This adds an extended revision syntax to git-difftool.
+> > Users often ask "how do I compare a file against its
+> > previous version" and the answer is typically a combination
+> > of 'git log <file>' and 'git difftool <sha1> <sha1> <file>'.
+> > 
+> > [snip]
+> > 
+> > The extended revision syntax also expands revisions
+> > that are suffixed with '!' as a convenient way to
+> > see commit diffs.  Specifying only '!' is equivalent
+> > to specifying 'HEAD!'.
+> > 
+> > This makes the following statements equivalent:
+> > 
+> > 	$ git difftool !
+> > 	$ git difftool HEAD!
+> > 	$ git difftool HEAD~ HEAD
+> 
+> Errr... there already exists such syntax, and it is called HEAD^!
 
-> Junio C Hamano venit, vidit, dixit 27.03.2009 09:08:
-> ...
->> After calling r-f-t, because this new code assumes that for the "." remote
->> (aka "local repository"), r-f-t lies and does not give back what it
->> expects, fixes what it got back from r-f-t.  Shouldn't we be fixing this
->> inside r-f-t?
->
-> The technical reason is that there is no local remote, i.e. no remote
-> struct for '.', and I don't think we want it, because it would show up
-> in all places where the list of remotes is searched/displayed/...
->
-> With ret being the branch we talk about, r-f-t is passed ret->remote and
-> ret->merge[i] only. In the local case, r-f-t cannot use the remote
-> struct for '.' (there is none) to find what it needs, and it has no easy
-> access to ret->merge_names[i] which is that info.
->
-> branch_get(), on the other hand, has all needed info in place.
 
-Thanks for a detailed explanation.  Would it deserve to be in the commit
-log justification in a summarized form?
+Yup, this patch was a mistake ;)
 
-> ..., even worse: if foo is
-> ambiguous because refs/heads/foo and refs/remotes/foo exist then
-> refs/heads/foo would win, i.e. we used to output the *wrong* ref. The
-> above disambiguates. But I'll see if I can simplify the output based on
-> the necessity of disambiguation.
+^! does exactly what I needed and difftool supports it since
+git-diff does.
 
-Thanks.
+I'm still interested in the file~<n> idea [though maybe not
+that exact syntax] and have been reading revision.c (as Junio
+suggested) to see if it can be done in a good way.
+
+I'm still not sure if it is a good idea since the types of
+users who would want it are probably better off with tighter
+integration between gitk and difftool as opposed to a
+convenient command-line syntax (tho I do see how it would be
+useful every now and then).  Ideally, we'd want to select two
+commits in gitk and compare them.  I think qgit can do that,
+but it doesn't yet know about difftool (since, of course,
+difftool is not in master yet).
+
+I noticed that my patches for "add tests to difftool" and "add
+the -y shortcut for --no-prompt" were in git.git's pu branch
+the other day but aren't there anymore.  Was that intentional?
+
+
+
+> (if git-difftool can accept a..b revision specification)... or not,
+> as git-rev-parse(1) states:
+> 
+>   r1^! includes commit r1 but excludes all of its parents.
+> 
+> So depending on how "r1 --not r1^" and "r1 --not r1^1 r1^2" is
+> interpreted by diff (which accpets points, not ranges) it might be, or
+> might be not what you wanted by introducying '!' / <rev>:!
+> specification...
+> 
+> -- 
+> Jakub Narebski
+> Poland
+> ShadeHawk on #git
+
+-- 
+
+	David
