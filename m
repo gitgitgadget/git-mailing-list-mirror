@@ -1,89 +1,73 @@
-From: "Etienne Vallette d'Osia" <dohzya@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
 Subject: Re: On git 1.6 (novice's opinion)
-Date: Fri, 27 Mar 2009 14:47:59 +0100
-Message-ID: <49CCD90F.6090707@gmail.com>
-References: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>, <49CCAF5D.21814.24B4DE63@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>, <37fcd2780903270524y39456c5fre0a2f8f9c5f4d160@mail.gmail.com> <49CCE520.17260.2586E134@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+Date: Fri, 27 Mar 2009 14:44:13 +0100
+Message-ID: <vpq63hvdqs2.fsf@bauges.imag.fr>
+References: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+	<37fcd2780903270524x1987a622wb9e693be41fc02c4@mail.gmail.com>
+	<49CCE421.16918.2582FE84@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Dmitry Potapov <dpotapov@gmail.com>,
-	"H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
-To: Ulrich Windl <ulrich.windl@rz.uni-regensburg.de>
-X-From: git-owner@vger.kernel.org Fri Mar 27 14:49:51 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Dmitry Potapov <dpotapov@gmail.com>, git@vger.kernel.org
+To: "Ulrich Windl" <ulrich.windl@rz.uni-regensburg.de>
+X-From: git-owner@vger.kernel.org Fri Mar 27 14:50:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LnCRS-00069j-DI
-	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 14:49:50 +0100
+	id 1LnCRT-00069j-52
+	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 14:49:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752819AbZC0NsJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Mar 2009 09:48:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752362AbZC0NsH
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 09:48:07 -0400
-Received: from mail-bw0-f169.google.com ([209.85.218.169]:63493 "EHLO
-	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751864AbZC0NsF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Mar 2009 09:48:05 -0400
-Received: by bwz17 with SMTP id 17so1006334bwz.37
-        for <git@vger.kernel.org>; Fri, 27 Mar 2009 06:48:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:newsgroups:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=0sYUGwU2dEotdNFqKfETaI+RPZA/geYC9BMOVPpdlfQ=;
-        b=am/d697gJALbNBTdAiJkbFQPOsbjh1G9OyBIrJoV+7rx4EnQapuiGyne2cB4gIcAwB
-         xd4E7HtSGvXY20GqBp9Rdx7Iwwqqa8maIBvGm00W2BWIVFojd7P/nkg5sx5TCtpnRBnH
-         cU72Lr2K3tDX51OsUrQvu33Ytgy8S70yIqKlQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        b=P70uGq4rTMUV6zQSP6LENW8PYOR4GZiZrex/rBN8fzIxloluS9KsL0jjLRTjpMMGA1
-         S1eGewtMKt6IgR7D9NrxLM9JZqbq97Drvf+NeyY88NCXBxpNsYHj2RVZV0AUpIFBIfpn
-         vw2axHBfmJzS0XLaUBiGQNmpMV6StLvSjVSLw=
-Received: by 10.103.137.12 with SMTP id p12mr442166mun.94.1238161682013;
-        Fri, 27 Mar 2009 06:48:02 -0700 (PDT)
-Received: from schubby.inria.fr (schubby.inria.fr [138.96.218.89])
-        by mx.google.com with ESMTPS id e8sm3095315muf.48.2009.03.27.06.48.01
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 27 Mar 2009 06:48:01 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090302)
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <49CCE520.17260.2586E134@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+	id S1753417AbZC0NsM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Mar 2009 09:48:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752362AbZC0NsK
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 09:48:10 -0400
+Received: from harmonie.imag.fr ([147.171.130.40]:56894 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752757AbZC0NsI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Mar 2009 09:48:08 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id n2RDiEnF012158;
+	Fri, 27 Mar 2009 14:44:14 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1LnCM1-0001iS-NL; Fri, 27 Mar 2009 14:44:13 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1LnCM1-0003v0-Kt; Fri, 27 Mar 2009 14:44:13 +0100
+In-Reply-To: <49CCE421.16918.2582FE84@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de> (Ulrich Windl's message of "Fri\, 27 Mar 2009 14\:35\:13 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Fri, 27 Mar 2009 14:44:14 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114891>
 
-Ulrich Windl a =E9crit :
-> AFAIK, "committing" in git is "kind of publishing your work" (others =
-may pull it).=20
-> I don't like publishing my mistakes ;-) Even if no-one pulls the comm=
-it, your=20
-> "undo" refers to "committing a fix for the last committed mistake", r=
-ight? Again,=20
-> I don't really want to document/archive (i.e. commit) my mistake. Or =
-did I miss=20
-> something here?
-> I know: Other's opinions are quite different on these issues.
+"Ulrich Windl" <ulrich.windl@rz.uni-regensburg.de> writes:
 
-commit is local.
-The good way is to commit in your local and private repository.
-Then you can do anything, reset commit you have just done, etc
-When all is ok, you push in a public repository.
+> I don't understand:
+> If I modify files, then do a make, then do check-in/check-out (and the file times 
+> are unchanged), how would that affect make?
 
-With this workflow, no one see your local work and you can commit very=20
-often, undo commit, rebase a lot etc.
+>From "make"'s point of view, chechout is just a modification of the
+file (as any other modification you would do with a text editor). If
+you compile foo.c to foo.o, then checkout another version of foo.c,
+then you want foo.c to be recompiled. If checkout modifies the
+timestamp to pretend it was modified before foo.o, then make thinks
+the file is up to date.
 
-The only result of a such job is a large number of useless objects in=20
-your local repository. They will be delete automatically by git, so it'=
-s=20
-not a problem.
+> If I do an "update/merge from remote" (there is no total ordering of release 
+> numbers anyway) without a "make clean" before, I'm having a problem
+> anyway.
 
-Regard,
-Etienne
+No, you don't have a problem. Recompiling files after they're modified
+is the job of make, and it just does it. make doesn't know about
+revision numbers or identifiers, just timestamps.
+
+-- 
+Matthieu
