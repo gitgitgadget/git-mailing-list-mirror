@@ -1,61 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] init: support --import to add all files and commit
-	right after init
-Date: Fri, 27 Mar 2009 01:08:28 -0400
-Message-ID: <20090327050828.GA23568@coredump.intra.peff.net>
-References: <1237978720-2500-1-git-send-email-pclouds@gmail.com> <20090325124219.GA5307@coredump.intra.peff.net> <adf1fd3d0903250549l60e4a2d1j8bd57ba66d24a678@mail.gmail.com> <200903262223.28546.markus.heidelberg@web.de> <alpine.DEB.1.00.0903270259470.10279@pacific.mpi-cbg.de> <20090327050626.GA23512@coredump.intra.peff.net>
+From: Geoffrey Lee <geoffreyj.lee@gmail.com>
+Subject: Re: Problem Creating Commit Messages
+Date: Thu, 26 Mar 2009 22:18:26 -0700
+Message-ID: <83d7aaa40903262218m17866090iece805b454d4462@mail.gmail.com>
+References: <22735968.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Markus Heidelberg <markus.heidelberg@web.de>,
-	Santi =?utf-8?B?QsOpamFy?= <santi@agolina.net>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Mar 27 06:11:08 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 27 06:20:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ln4LT-0006ly-Kv
-	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 06:11:08 +0100
+	id 1Ln4U6-0008Rp-CN
+	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 06:20:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761149AbZC0FIt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Mar 2009 01:08:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760889AbZC0FIs
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 01:08:48 -0400
-Received: from peff.net ([208.65.91.99]:58229 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761359AbZC0FIr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Mar 2009 01:08:47 -0400
-Received: (qmail 18326 invoked by uid 107); 27 Mar 2009 05:08:54 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 27 Mar 2009 01:08:54 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 27 Mar 2009 01:08:28 -0400
-Content-Disposition: inline
-In-Reply-To: <20090327050626.GA23512@coredump.intra.peff.net>
+	id S1755773AbZC0FS2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Mar 2009 01:18:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754134AbZC0FS2
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 01:18:28 -0400
+Received: from wf-out-1314.google.com ([209.85.200.168]:27555 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752802AbZC0FS1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Mar 2009 01:18:27 -0400
+Received: by wf-out-1314.google.com with SMTP id 29so1118236wff.4
+        for <git@vger.kernel.org>; Thu, 26 Mar 2009 22:18:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=pC5sz3zQubqI8IMYMRB9TMPsDD7bvSLdunDGsBNfMCI=;
+        b=kCPESv1pmjjT/u11OK+34B3zgz/p7UNUGDMUec0cpr2GhtWrPEYSvT7wxaBt4242uN
+         NQoDZTkzJSi0YJMh34Q+KABWfu8lXZcciIfuE/XEqAamk0DW9+6oKessYL47yvhEn8r0
+         MCxrM/InbcBBJ7mh4g0vCz1A4gH3vosIZs0fs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=MXLSqpbANT6RY8tAvtrGes1kaOtjQ0zEs27Xev1DtuBOnClfDdrxAMLdQwxWGq4WxK
+         XSsZluputtyHJ0rcFJvgMXzR/+9TqnS7m9BpiGCw/8TLdkvYJB3T4gcRbe3CS0IMYCCf
+         DEF1ebFohboL82XgUhySK7TjtfhaTl0+UXWLc=
+Received: by 10.143.156.12 with SMTP id i12mr715264wfo.320.1238131106203; Thu, 
+	26 Mar 2009 22:18:26 -0700 (PDT)
+In-Reply-To: <22735968.post@talk.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114851>
 
-On Fri, Mar 27, 2009 at 01:06:26AM -0400, Jeff King wrote:
+On Thu, Mar 26, 2009 at 9:44 PM, bggy <balishaggy@yahoo.com> wrote:
+> I am not familiar with VIM, can change modes, but none of the key combos I
+> tried worked.
 
-> Another option would be a patch on top of the original to allow
-> 
->   git config --global init.importmessage 'Commit inicial'
-> 
-> or
-> 
->   git config --global init.importeditor true
-> 
-> I have no interest in writing such a patch, but I don't see a reason to
-> reject it.
+1) Press "i" to enter Insert mode
+2) Type in some text on the first line
+3) Press "esc" to leave Insert mode
+4) Press Shift + ; (or in other words, the colon character)
+5) Enter the characters "wq" without the quotes, and press Enter. ("w"
+for write, "q" for quit)
 
-Actually, there is one possible reason to reject it: scripts could not
-rely on the behavior of "--import" without it. But I think it is OK to
-make a conscious decision that this is a feature for _humans_, and that
-scripts can use "init && add && commit" (or they can be happy with
-dealing with the human's choice of editor or not).
-
--Peff
+-Geoffrey Lee
