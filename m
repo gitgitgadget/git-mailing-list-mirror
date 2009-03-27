@@ -1,96 +1,123 @@
-From: Chris Johnsen <chris_johnsen@pobox.com>
-Subject: [PATCH v2 2/2] Documentation/Makefile: break up texi pipeline
-Date: Fri, 27 Mar 2009 01:49:39 -0500
-Message-ID: <1238136579-23166-2-git-send-email-chris_johnsen@pobox.com>
-References: <1238136579-23166-1-git-send-email-chris_johnsen@pobox.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Chris Johnsen <chris_johnsen@pobox.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] log-tree: fix patch filename computation in "git format-patch"
+Date: Fri, 27 Mar 2009 08:15:11 +0100
+Message-ID: <200903270815.11888.chriscool@tuxfamily.org>
+References: <20090327011301.a5185805.chriscool@tuxfamily.org> <7v3acziot0.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Stephen Boyd <bebarino@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 27 07:51:22 2009
+X-From: git-owner@vger.kernel.org Fri Mar 27 08:17:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ln5uU-0000bb-3x
-	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 07:51:22 +0100
+	id 1Ln6K2-0006BY-Kq
+	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 08:17:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751175AbZC0Gtu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Mar 2009 02:49:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751164AbZC0Gtu
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 02:49:50 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35116 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751020AbZC0Gtt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Mar 2009 02:49:49 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0FA5DA5453;
-	Fri, 27 Mar 2009 02:49:48 -0400 (EDT)
-Received: from localhost.localdomain (unknown [75.53.43.147]) (using TLSv1
- with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate
- requested) by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id
- 52F28A5450; Fri, 27 Mar 2009 02:49:41 -0400 (EDT)
-X-Mailer: git-send-email 1.6.2.1.401.gc048
-In-Reply-To: <1238136579-23166-1-git-send-email-chris_johnsen@pobox.com>
-X-Pobox-Relay-ID: 76A3CB02-1A9B-11DE-99B2-32B0EBB1AA3C-07245699!a-sasl-fastnet.pobox.com
+	id S1751318AbZC0HQP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Mar 2009 03:16:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751253AbZC0HQP
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 03:16:15 -0400
+Received: from smtp6-g21.free.fr ([212.27.42.6]:32832 "EHLO smtp6-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751175AbZC0HQO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Mar 2009 03:16:14 -0400
+Received: from smtp6-g21.free.fr (localhost [127.0.0.1])
+	by smtp6-g21.free.fr (Postfix) with ESMTP id 3321AE080FF;
+	Fri, 27 Mar 2009 08:16:04 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp6-g21.free.fr (Postfix) with ESMTP id 3EA09E08124;
+	Fri, 27 Mar 2009 08:16:02 +0100 (CET)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7v3acziot0.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114864>
 
-Most shells define the exit value of a pipeline as the exit value
-of the last process. For each texi rule, run the DOCBOOK2X_TEXI
-tool and the "fixup" script in their own non-pipeline commands so
-that make will notice an error exit code.
+Le vendredi 27 mars 2009, Junio C Hamano a =E9crit :
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> > When using "git format-patch", "get_patch_filename" in
+> > "log-tree.c" calls "strbuf_splice" that could die with
+> > the following message:
+> >
+> > "`pos + len' is too far after the end of the buffer"
+> >
+> > if you have:
+> >
+> > 	buf->len < start_len + FORMAT_PATCH_NAME_MAX
+> >
+> > but:
+> >
+> > 	buf->len + suffix_len > start_len + FORMAT_PATCH_NAME_MAX
+> >
+> > This patch tries to get rid of that bug.
+>
+> hmm, tries to?
 
-Signed-off-by: Chris Johnsen <chris_johnsen@pobox.com>
+Yeah, I was tired last night, when I created and sent this patch so I k=
+new=20
+that it could be wrong.
 
----
+>
+> > diff --git a/log-tree.c b/log-tree.c
+> > index 56a3488..ade79ab 100644
+> > --- a/log-tree.c
+> > +++ b/log-tree.c
+> > @@ -187,16 +187,17 @@ void get_patch_filename(struct commit *commit=
+,
+> > int nr, const char *suffix,
+> >
+> >  	strbuf_addf(buf, commit ? "%04d-" : "%d", nr);
+> >  	if (commit) {
+> > +		int max_len =3D start_len + FORMAT_PATCH_NAME_MAX;
+> >  		format_commit_message(commit, "%f", buf, DATE_NORMAL);
+> >  		/*
+> >  		 * Replace characters at the end with the suffix if the
+> >  		 * filename is too long
+> >  		 */
+> > +		if (buf->len + suffix_len > max_len) {
+> > +			int base =3D (max_len > buf->len) ? buf->len : max_len;
+> > +			strbuf_splice(buf, base - suffix_len, suffix_len,
+> > +				      suffix, suffix_len);
+> > +		} else
+> >  			strbuf_addstr(buf, suffix);
+>
+> Your third argument to splice does not look right; if the existing le=
+ngth
+> is very very long, you would need to remove a lot, and if the existin=
+g
+> length is slightly long, you would need to remove just a little bit, =
+but
+> you always seem to remove the fixed amount, to splice the suffix in.
+>
+> In any case, why does this have to be so complex?
+>
+> In your buffer, you originally have start_len, and would want to end =
+up
+> with "%f" expansion, plus the suffix, but you are not allowed to exce=
+ed
+> FORMAT_PATCH_NAME_MAX to store what you add, and are only allowed to =
+chop
+> the "%f" expansion if you are short of room.
+>
+> Shouldn't it be just:
+>
+> 	size_t max_len =3D start_len + FORMAT_PATCH_NAME_MAX - suffix_len;
+>         if (max_len < buf->len)
+>                 strbuf_setlen(buf, max_len);
+> 	strbuf_addstr(buf, suffix);
+>
+> The caller must make sure that suffix_len is sufficiently shorter tha=
+n
+> FORMAT_PATCH_NAME_MAX; I do not know if the current code does that,
+> though.
 
-Change since "v1": Fix incompletely introduced, "&& chain" in
-  gitman.texi rule.
+Yes, this looks better.
 
-This textually depends on my "quiet doc gen" patch as it modifies
-a couple of the same lines.
----
- Documentation/Makefile |   11 +++++++----
- 1 files changed, 7 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 3e1d175..d145372 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -178,7 +178,7 @@ cmd-list.made: cmd-list.perl ../command-list.txt $(MAN1_TXT)
- 
- clean:
- 	$(RM) *.xml *.xml+ *.html *.html+ *.1 *.5 *.7
--	$(RM) *.texi *.texi+ git.info gitman.info
-+	$(RM) *.texi *.texi+ *.texi++ git.info gitman.info
- 	$(RM) howto-index.txt howto/*.html doc.dep
- 	$(RM) technical/api-*.html technical/api-index.txt
- 	$(RM) $(cmds_txt) *.made
-@@ -221,8 +221,9 @@ git.info: user-manual.texi
- 
- user-manual.texi: user-manual.xml
- 	$(QUIET_DB2TEXI)$(RM) $@+ $@ && \
--	$(DOCBOOK2X_TEXI) user-manual.xml --encoding=UTF-8 --to-stdout | \
--		$(PERL_PATH) fix-texi.perl >$@+ && \
-+	$(DOCBOOK2X_TEXI) user-manual.xml --encoding=UTF-8 --to-stdout >$@++ && \
-+	$(PERL_PATH) fix-texi.perl <$@++ >$@+ && \
-+	rm $@++ && \
- 	mv $@+ $@
- 
- user-manual.pdf: user-manual.xml
-@@ -233,7 +234,9 @@ user-manual.pdf: user-manual.xml
- gitman.texi: $(MAN_XML) cat-texi.perl
- 	$(QUIET_DB2TEXI)$(RM) $@+ $@ && \
- 	($(foreach xml,$(MAN_XML),$(DOCBOOK2X_TEXI) --encoding=UTF-8 \
--		--to-stdout $(xml) &&) true) | $(PERL_PATH) cat-texi.perl $@ >$@+ && \
-+		--to-stdout $(xml) &&) true) > $@++ && \
-+	$(PERL_PATH) cat-texi.perl $@ <$@++ >$@+ && \
-+	rm $@++ && \
- 	mv $@+ $@
- 
- gitman.info: gitman.texi
--- 
-1.6.2.1.401.gc048
+Thanks,
+Christian.
