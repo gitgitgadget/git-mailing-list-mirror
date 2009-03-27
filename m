@@ -1,121 +1,88 @@
-From: Daniel Pittman <daniel@rimspace.net>
-Subject: Re: Test that every revision builds before pushing changes?
-Date: Fri, 27 Mar 2009 12:30:07 +1100
-Organization: I know I put it down here, somewhere.
-Message-ID: <8763hviwgw.fsf@rimspace.net>
-References: <87myb8aja1.fsf@rimspace.net> <49CB39E5.5060000@op5.se>
-	<87ljqs7ioz.fsf@rimspace.net> <49CB4ED8.4060205@op5.se>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] init: support --import to add all files and commit
+  right after init
+Date: Fri, 27 Mar 2009 03:03:07 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903270259470.10279@pacific.mpi-cbg.de>
+References: <1237978720-2500-1-git-send-email-pclouds@gmail.com> <20090325124219.GA5307@coredump.intra.peff.net> <adf1fd3d0903250549l60e4a2d1j8bd57ba66d24a678@mail.gmail.com> <200903262223.28546.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 27 02:54:00 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1220136861-1238119388=:10279"
+Cc: =?ISO-8859-15?Q?Santi_B=E9jar?= <santi@agolina.net>,
+	Jeff King <peff@peff.net>,
+	=?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c?= <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Markus Heidelberg <markus.heidelberg@web.de>
+X-From: git-owner@vger.kernel.org Fri Mar 27 03:02:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ln1GY-00083t-HH
-	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 02:53:51 +0100
+	id 1Ln1Oz-000276-1h
+	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 03:02:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759221AbZC0BwN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Mar 2009 21:52:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934062AbZC0BwJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 21:52:09 -0400
-Received: from main.gmane.org ([80.91.229.2]:60234 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933866AbZC0BwG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Mar 2009 21:52:06 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Ln1Eq-0007oc-2t
-	for git@vger.kernel.org; Fri, 27 Mar 2009 01:52:04 +0000
-Received: from sdcarl02.strategicdata.com.au ([203.214.67.82])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 27 Mar 2009 01:52:04 +0000
-Received: from daniel by sdcarl02.strategicdata.com.au with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 27 Mar 2009 01:52:04 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sdcarl02.strategicdata.com.au
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/23.0.60 (gnu/linux)
-Cancel-Lock: sha1:THMDmn1T1mRiCjJHL/XEM/YDnsg=
+	id S1758565AbZC0CBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Mar 2009 22:01:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757188AbZC0CBA
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 Mar 2009 22:01:00 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50039 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756871AbZC0CA7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Mar 2009 22:00:59 -0400
+Received: (qmail invoked by alias); 27 Mar 2009 02:00:56 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp045) with SMTP; 27 Mar 2009 03:00:56 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18RwGQaFxUR3BJdATEeSxNnaiL5jVQr2xBI8X0JqO
+	rx2A+5CF2NUGvR
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <200903262223.28546.markus.heidelberg@web.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114839>
 
-Andreas Ericsson <ae@op5.se> writes:
-> Daniel Pittman wrote:
->> Andreas Ericsson <ae@op5.se> writes:
->>> Daniel Pittman wrote:
->>>> I would like to ensure that my commits are fully bisectable before=
- I
->>>> commit them to an upstream repository, at least to the limits of a=
-n
->>>> automatic tool for testing them.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-[...]
+--8323328-1220136861-1238119388=:10279
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: 8BIT
 
->>> The manual step comes at merge-time; Someone has to be responsible =
-for
->>> merging all the topics that are to be included in the release branc=
-h
->>> and make sure it builds and passes all tests after each merge.
->>
->> Ah.  You have not quite grasped what I was looking for: I was after =
-a
->> tool to help automate that step, rather than a workflow around it.
->
-> Oh right. Sorry, I'm stuck in continuous-integration land where peopl=
-e
-> tend to want the server to take care of such things.
+Hi,
 
-We have that also; I am primarily motivated by avoiding trivial breakag=
-e
-in the CI server, as well as bisection.
+On Thu, 26 Mar 2009, Markus Heidelberg wrote:
 
->> For example, the responsible person for that testing could use the
->> hypothetical (until someone tells me where to find it):
->>
->>     git test public..test make test
+> Santi Béjar, 25.03.2009:
+> > 2009/3/25 Jeff King <peff@peff.net>:
+> > > On Wed, Mar 25, 2009 at 01:38:30PM +0100, Johannes Schindelin wrote:
+> > >
+> > >> > > +If no message is given, "Initial commit" will be used.
+> > >> >
+> > >> > Why a default message and not running the editor?
+> > >>
+> > >> Because I would say "Initial commit" anyway.
+> > 
+> > And I would say "Commit inicial".
+> 
+> And I would describe the current state in a few words.
+> 
+> Invoking an editor is more universal and I don't think the majority
+> would be contented with "Initial commit".
 
-[...]
+_Again_, as Peff pointed out, you are welcome to use the current method of 
+git init && git add . && git commit, which _does_ launch an editor.
 
-> Something like this?
-> --%<--%<--
-> #!/bin/sh
->
-> git stash
-> revspec=3D"$1"
-> shift
-> for rev in $(git rev-list "$revspec"); do
-> 	git checkout $rev
-> 	"$@" || break
-> done
-> --%<--%<--
->
-> Run it as such:
-> ./git-test.sh public..test make test
+The fact that you want to spend much time (anyway) doing your initial 
+commit does not allow you to inconvenience others.
 
-Thank you, that points me in the right direction, and I can obviously
-season the rest of it to taste =E2=80=94 reverse that revision list, fo=
-r
-example.
+Others who want to have a quick way to work safely with something they 
+might need to change, and might then want to use the full power of Git to 
+see what they changed.  Without any need for a "nice" first commit.
 
-Thank you also to Wincent Colaiuta, who provided a similar script albie=
-t
-with significantly more detail.
+Ciao,
+Dscho
 
-[...]
-
-> It doesn't handle merges very nicely, btw, but I guess this should be
-> run prior to merging anyways.
-
-Once I have the framework I can quietly work my way through fixing nast=
-y
-issues one way or another.  Thanks.
-
-Regards,
-        Daniel
+--8323328-1220136861-1238119388=:10279--
