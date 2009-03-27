@@ -1,123 +1,136 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] log-tree: fix patch filename computation in "git format-patch"
-Date: Fri, 27 Mar 2009 08:15:11 +0100
-Message-ID: <200903270815.11888.chriscool@tuxfamily.org>
-References: <20090327011301.a5185805.chriscool@tuxfamily.org> <7v3acziot0.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH 01/10] refs: add "for_each_bisect_ref" function
+Date: Fri, 27 Mar 2009 08:21:03 +0100
+Message-ID: <200903270821.03521.chriscool@tuxfamily.org>
+References: <20090326055509.1bc16b28.chriscool@tuxfamily.org> <200903270141.57426.chriscool@tuxfamily.org> <alpine.DEB.1.00.0903270305340.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stephen Boyd <bebarino@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 27 08:17:48 2009
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	John Tapsell <johnflux@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 27 08:23:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ln6K2-0006BY-Kq
-	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 08:17:47 +0100
+	id 1Ln6Pk-0007SO-26
+	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 08:23:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751318AbZC0HQP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Mar 2009 03:16:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751253AbZC0HQP
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 03:16:15 -0400
-Received: from smtp6-g21.free.fr ([212.27.42.6]:32832 "EHLO smtp6-g21.free.fr"
+	id S1751390AbZC0HWL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Mar 2009 03:22:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751175AbZC0HWJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 03:22:09 -0400
+Received: from smtp1-g21.free.fr ([212.27.42.1]:59437 "EHLO smtp1-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751175AbZC0HQO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Mar 2009 03:16:14 -0400
-Received: from smtp6-g21.free.fr (localhost [127.0.0.1])
-	by smtp6-g21.free.fr (Postfix) with ESMTP id 3321AE080FF;
-	Fri, 27 Mar 2009 08:16:04 +0100 (CET)
+	id S1750964AbZC0HWI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Mar 2009 03:22:08 -0400
+Received: from smtp1-g21.free.fr (localhost [127.0.0.1])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id 775E69400FD;
+	Fri, 27 Mar 2009 08:21:55 +0100 (CET)
 Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp6-g21.free.fr (Postfix) with ESMTP id 3EA09E08124;
-	Fri, 27 Mar 2009 08:16:02 +0100 (CET)
+	by smtp1-g21.free.fr (Postfix) with ESMTP id 6FED794012C;
+	Fri, 27 Mar 2009 08:21:53 +0100 (CET)
 User-Agent: KMail/1.9.9
-In-Reply-To: <7v3acziot0.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <alpine.DEB.1.00.0903270305340.10279@pacific.mpi-cbg.de>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114865>
 
-Le vendredi 27 mars 2009, Junio C Hamano a =E9crit :
-> Christian Couder <chriscool@tuxfamily.org> writes:
-> > When using "git format-patch", "get_patch_filename" in
-> > "log-tree.c" calls "strbuf_splice" that could die with
-> > the following message:
-> >
-> > "`pos + len' is too far after the end of the buffer"
-> >
-> > if you have:
-> >
-> > 	buf->len < start_len + FORMAT_PATCH_NAME_MAX
-> >
-> > but:
-> >
-> > 	buf->len + suffix_len > start_len + FORMAT_PATCH_NAME_MAX
-> >
-> > This patch tries to get rid of that bug.
+Le vendredi 27 mars 2009, Johannes Schindelin a =E9crit :
+> Hi,
 >
-> hmm, tries to?
+> On Fri, 27 Mar 2009, Christian Couder wrote:
+> > Le jeudi 26 mars 2009, Johannes Schindelin a =E9crit :
+> > > On Thu, 26 Mar 2009, Michael J Gruber wrote:
+> > > > Christian Couder venit, vidit, dixit 26.03.2009 08:48:
+> > > > > Le jeudi 26 mars 2009, Sverre Rabbelier a =E9crit :
+> > > > >> A 10 patches series with no cover letter?
+> > > > >
+> > > > > I am not a big fan of cover letters. Usually I prefer adding
+> > > > > comments in the patches.
+> > > >
+> > > > I'm sorry I have to say that, but your individual preferences d=
+on't
+> > > > matter. Many of us would do things differently, each in their o=
+wn
+> > > > way, but people adjust to the list's preferences. It's a matter=
+ of
+> > > > attitude. So, please...
+> > >
+> > > Actually, a better way to ask for a cover letter would have been =
+to
+> > > convince Christian.  So I'll try that.
+> >
+> > Thanks.
+> >
+> > As you know, I have been sending patches since nearly 3 years ago t=
+o
+> > this list. And it's only since a few weeks ago that I am asked to s=
+end
+> > cover letters...
+>
+> Heh, I have the feeling that your patch series were much shorter, and=
+ did
+> not have many revisions, until a few weeks ago ;-)
 
-Yeah, I was tired last night, when I created and sent this patch so I k=
-new=20
-that it could be wrong.
+Please try to look for a 9 patch long series that you reviewed around=20
+october 2007 with "dunno" or "skip" in the title ;-)
 
->
-> > diff --git a/log-tree.c b/log-tree.c
-> > index 56a3488..ade79ab 100644
-> > --- a/log-tree.c
-> > +++ b/log-tree.c
-> > @@ -187,16 +187,17 @@ void get_patch_filename(struct commit *commit=
-,
-> > int nr, const char *suffix,
+> > > From the patch series' titles (especially when they are cropped d=
+ue
+> > > to the text window being too small to fit the indented thread), i=
+t is
+> > > not all that obvious what you want to achieve with those 10 patch=
+es.
+> > >
+> > > From recent discussions, I seem to remember that you wanted to ha=
+ve
+> > > some cute way to mark commits as non-testable during a bisect, an=
+d I
+> > > further seem to remember that Junio said that very method should =
+be
+> > > usable outside of bisect, too.
 > >
-> >  	strbuf_addf(buf, commit ? "%04d-" : "%d", nr);
-> >  	if (commit) {
-> > +		int max_len =3D start_len + FORMAT_PATCH_NAME_MAX;
-> >  		format_commit_message(commit, "%f", buf, DATE_NORMAL);
-> >  		/*
-> >  		 * Replace characters at the end with the suffix if the
-> >  		 * filename is too long
-> >  		 */
-> > +		if (buf->len + suffix_len > max_len) {
-> > +			int base =3D (max_len > buf->len) ? buf->len : max_len;
-> > +			strbuf_splice(buf, base - suffix_len, suffix_len,
-> > +				      suffix, suffix_len);
-> > +		} else
-> >  			strbuf_addstr(buf, suffix);
+> > Well, we want to move "git bisect skip" code from shell (in
+> > "git-bisect.sh") to C. So this patch series does that by creating a=
+ new
+> > "git bisect--helper" command in C that contains the new code and us=
+ing
+> > that new command in "git-bisect.sh".
 >
-> Your third argument to splice does not look right; if the existing le=
-ngth
-> is very very long, you would need to remove a lot, and if the existin=
-g
-> length is slightly long, you would need to remove just a little bit, =
-but
-> you always seem to remove the fixed amount, to splice the suffix in.
+> Oh?  I _completely_ missed that.  And that's being one of the origina=
+l
+> Cc:ed persons...
 >
-> In any case, why does this have to be so complex?
+> > > Unfortunately, that does not reveal to me, quickly, what is the
+> > > current state of affairs, and what you changed since the last tim=
+e.
+> >
+> > Yeah, I should have at least put something in the comment section o=
+f my
+> > first patch in this series.
 >
-> In your buffer, you originally have start_len, and would want to end =
-up
-> with "%f" expansion, plus the suffix, but you are not allowed to exce=
-ed
-> FORMAT_PATCH_NAME_MAX to store what you add, and are only allowed to =
-chop
-> the "%f" expansion if you are short of room.
+> No.  I would still have missed it.
 >
-> Shouldn't it be just:
+> The cover letter is outside of any patch, because it describes the
+> purpose of the _whole_ patch series, not just one patch.
 >
-> 	size_t max_len =3D start_len + FORMAT_PATCH_NAME_MAX - suffix_len;
->         if (max_len < buf->len)
->                 strbuf_setlen(buf, max_len);
-> 	strbuf_addstr(buf, suffix);
+> So, it would have been nice to get a heads-up that this is not your
+> bisect-skip-a-whole-bunch-of-commits series, but a new animal.
 >
-> The caller must make sure that suffix_len is sufficiently shorter tha=
-n
-> FORMAT_PATCH_NAME_MAX; I do not know if the current code does that,
-> though.
+> This way, I decided I do not have time for something I do not need, a=
+nd
+> deleted it without having a look.
 
-Yes, this looks better.
+Well as I said in my previous email I am willing to improve. So perhaps=
+ next=20
+time.
 
-Thanks,
+Best regards,
 Christian.
