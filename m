@@ -1,86 +1,102 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Merge format documented?
-Date: Fri, 27 Mar 2009 09:05:31 -0700 (PDT)
-Message-ID: <m3y6ur0x4m.fsf@localhost.localdomain>
-References: <200903230419.50000.agruen@suse.de>
+From: Niels Basjes <niels@basjes.nl>
+Subject: Re: [PATCH] Two RPM building improvements
+Date: Fri, 27 Mar 2009 17:07:25 +0100 (CET)
+Message-ID: <18535782.631238170045741.JavaMail.root@webmail.basjes.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andreas Gruenbacher <agruen@suse.de>
-X-From: git-owner@vger.kernel.org Fri Mar 27 17:09:05 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 27 17:18:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LnEbM-0006A0-Rd
-	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 17:08:13 +0100
+	id 1LnElA-0002bX-Tq
+	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 17:18:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755230AbZC0QFg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Mar 2009 12:05:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754597AbZC0QFg
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 12:05:36 -0400
-Received: from mail-ew0-f165.google.com ([209.85.219.165]:63521 "EHLO
-	mail-ew0-f165.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754153AbZC0QFf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Mar 2009 12:05:35 -0400
-Received: by ewy9 with SMTP id 9so1122918ewy.37
-        for <git@vger.kernel.org>; Fri, 27 Mar 2009 09:05:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=ZxbaFmLTW9pLSnAoxs4K9+9xcj6CT/FYYbtSWcFa2rA=;
-        b=bFFNZtdKqy3tywmy0Lr+yi5l+RAbKbCKZBN8Z8mmCmb+Dx45sRDnBsLfDp3jqs9Sbe
-         GOM7fP4XQrhdIkwul4fd7x0enzreF6RePUIQZPuFRetfvIBGQgCSDm7EYnhF5QMGFACV
-         LMEI0+EDvk6iq6QZu4aG8pNO3iEjnp7XhZpJA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=wasBhuKhH9rtJ1uaxENfsqlWQxtH7Md8jpjnWWDSFeoFzH2A26bzSSGG0Xpdt37KTD
-         s7S3HNh7eg2L6AH9emkRzEsRkTevKb5eF4hBbC4B0YC2C/DEhQwRR80nYdrenS+l56pw
-         3MgLOsacnPG2+VrdVyF7e+KG+wQ3gLP6y/+VQ=
-Received: by 10.216.54.83 with SMTP id h61mr882336wec.69.1238169932097;
-        Fri, 27 Mar 2009 09:05:32 -0700 (PDT)
-Received: from localhost.localdomain (abvq19.neoplus.adsl.tpnet.pl [83.8.214.19])
-        by mx.google.com with ESMTPS id j8sm2458875gvb.21.2009.03.27.09.05.31
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 27 Mar 2009 09:05:31 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n2RG5T3R009784;
-	Fri, 27 Mar 2009 17:05:30 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n2RG5TAA009781;
-	Fri, 27 Mar 2009 17:05:29 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <200903230419.50000.agruen@suse.de>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1754597AbZC0QQt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Mar 2009 12:16:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753961AbZC0QQt
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 12:16:49 -0400
+Received: from smtp-vbr10.xs4all.nl ([194.109.24.30]:1471 "EHLO
+	smtp-vbr10.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752483AbZC0QQs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Mar 2009 12:16:48 -0400
+X-Greylist: delayed 554 seconds by postgrey-1.27 at vger.kernel.org; Fri, 27 Mar 2009 12:16:48 EDT
+Received: from webmail.basjes.nl (nicoenans.demon.nl [83.160.8.251])
+	by smtp-vbr10.xs4all.nl (8.13.8/8.13.8) with ESMTP id n2RG7VfB091843
+	for <git@vger.kernel.org>; Fri, 27 Mar 2009 17:07:32 +0100 (CET)
+	(envelope-from niels@basjes.nl)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by webmail.basjes.nl (Postfix) with ESMTP id 24BC9A693A
+	for <git@vger.kernel.org>; Fri, 27 Mar 2009 17:07:31 +0100 (CET)
+Received: from webmail.basjes.nl ([127.0.0.1])
+ by localhost (webmail.basjes.nl [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 13695-08 for <git@vger.kernel.org>;
+ Fri, 27 Mar 2009 17:07:30 +0100 (CET)
+Received: from webmail.basjes.nl (webmail.basjes.nl [172.19.3.101])
+	by webmail.basjes.nl (Postfix) with ESMTP id 70CEDA6939
+	for <git@vger.kernel.org>; Fri, 27 Mar 2009 17:07:27 +0100 (CET)
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114907>
 
-Andreas Gruenbacher <agruen@suse.de> writes:
+Hi Jakub,
 
-> Hello,
+----- Jakub Narebski <jnareb@gmail.com> wrote:
+> Niels Basjes <Niels@Basjes.nl> writes:
 > 
-> is the format that git normally uses for indicating merge conflicts in files 
-> (the <<< === >>> markers) documented somewhere?  How exactly does it differ 
-> from the diff3 format (<<< ||| === >>>)?  Diff3's -m mode seems to come close 
-> to what git does, except that git doesn't produce the ||| section:
+> > Two RPM building improvements:
+> Two _unrelated_ RPM building improvements squashed in one commit.
 
-It is rcmerge / merge from RCS / CVS output format (and I think it is
-also format used for other VCS), and IIRC it is equivalent to "diff3
--E" format
+Hmm, well, ok. You're right.
 
-> Does git ever output a ||| section?
+> >   - Building the RPMs can now be done by a non-root user.
+> 
+> It was always possible, you only have to configure rpm / rpmbuild,
+> namely put path to where you want your RPM_BUILDING directory in
+> ~/.rpmmacros as %_topdir, for example:
+> 
+>   $ cat ~/.rpmmacros
+>   %_topdir        /home/local/builddir
 
-You can ask for it with merge.conflictstyle configuration variable, or
---conflict=<style> option to git-checkout.
+Yes, you're right. It has always been possible.
+That works fine if you want all RPMS of multiple project to be thrown 
+in one heap and have to spent time figuring out which rpms were built by 
+which project.
+I've always preferred forcing the rpmbuilding to be done in a subdirectory 
+of the current source checkout. That way I can easily remove all old stuff 
+of _this_ project (simply remove the entire subdirectory) and easily know 
+what has been created by this project.
+
+> Please RTFM first, 
+
+I read the RTFM (really I did).
+
+> before going to solve non-problem in (ugh) fairly complicated way.
+
+What makes this complicated? 
+It's only different from what you're used to.
+
+> >   - The additional target all-rpms now builds the RPMs for a
+> > multitude of target platforms.
+> 
+> Please wrap commit messages at 72-76 columns, at most at 80 columns.
+> No such overly long lines, please.
+
+Ok.
+
+> But the all-rpms target looks like a good idea
+
+Ok, discard this patch. I'll submit new (splitout) patches.
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Met vriendelijke groeten,
+
+Niels Basjes
+
+ir. drs. Niels Basjes  -  http://niels.basj.es/  -  VCV 20000302
+mailto:`echo 'Niels Basjes'|sed 's/\(.*\)\(..\)/\1.\2/g;s/ /@/g'`
