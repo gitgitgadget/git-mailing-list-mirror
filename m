@@ -1,64 +1,57 @@
-From: Michele Ballabio <barra_cuda@katamail.com>
-Subject: Re: [PATCH 1/3] rebase: fix typo (force_rebas -> force-rebas)
-Date: Fri, 27 Mar 2009 19:58:00 +0100
-Message-ID: <200903271958.00795.barra_cuda@katamail.com>
-References: <1237399558-27289-1-git-send-email-barra_cuda@katamail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+From: Lachlan Deck <lachlan.deck@gmail.com>
+Subject: (unknown)
+Date: Sat, 28 Mar 2009 07:39:25 +1100
+Message-ID: <B991EE9F-7B27-46CD-8986-4E02886EEB82@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Mar 27 21:13:01 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 27 21:41:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LnIQ8-0007JY-DZ
-	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 21:12:52 +0100
+	id 1LnIs8-0001Qv-5o
+	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 21:41:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762077AbZC0UJh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Mar 2009 16:09:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761932AbZC0UJg
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 16:09:36 -0400
-Received: from smtp.katamail.com ([62.149.157.154]:60376 "HELO smtp1.aruba.it"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1760110AbZC0UJf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Mar 2009 16:09:35 -0400
-Received: (qmail 16014 invoked by uid 89); 27 Mar 2009 20:09:21 -0000
-X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp1-pc
-X-Spam-Level: *
-X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_50,RDNS_NONE
-	autolearn=no version=3.2.3
-Received: from unknown (HELO host98-56-dynamic.104-80-r.retail.telecomitalia.it) (barra?cuda@katamail.com@80.104.56.98)
-  by smtp1-pc with SMTP; 27 Mar 2009 20:09:18 -0000
-User-Agent: KMail/1.9.10
-In-Reply-To: <1237399558-27289-1-git-send-email-barra_cuda@katamail.com>
-Content-Disposition: inline
+	id S1757378AbZC0Ujg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Mar 2009 16:39:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756185AbZC0Ujf
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 16:39:35 -0400
+Received: from ti-out-0910.google.com ([209.85.142.188]:59666 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754484AbZC0Ujf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Mar 2009 16:39:35 -0400
+Received: by ti-out-0910.google.com with SMTP id i7so898686tid.23
+        for <git@vger.kernel.org>; Fri, 27 Mar 2009 13:39:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to
+         :content-type:content-transfer-encoding:mime-version:subject:date
+         :x-mailer;
+        bh=bIkL3j1SUti+mxRknWXsGzjEHfZ++LfAOrCAj6OvBfk=;
+        b=jGy9kf7KgkLbM2OTGolwI+nbWVTLwpLGK78fitv6LoG0fZawAYpmDyhG6+Zp2hRPmy
+         8ZcwdPvcyBO92TUbebuJgAGjJdcfQ/oBvTxxoFR0RlN2Khas51W341wmU6d+8fPa33Hk
+         fa5dqXPhLOdqTRuuRa38Tmp4CRE4G25NvEB94=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:from:to:content-type:content-transfer-encoding
+         :mime-version:subject:date:x-mailer;
+        b=lgS7KVdqXdpRA+PWn+LAzKmm6D1cLIPEcvOKj9Nubw5Gl+N1Ct2hOPSPysLTfZ5lh9
+         +CLtO5AtT0aKxBdr/IvqHvQDS7zHQfyH7633HT8F7AmOlwOHPc0SPDIlE7ntkW5BlKv/
+         UF7YWL3qR2bex++oisw8MUsUZWBXwsVBsdkqI=
+Received: by 10.110.52.5 with SMTP id z5mr3507763tiz.11.1238186372253;
+        Fri, 27 Mar 2009 13:39:32 -0700 (PDT)
+Received: from ?10.0.1.200? (208.198.233.220.exetel.com.au [220.233.198.208])
+        by mx.google.com with ESMTPS id 2sm1408796tif.26.2009.03.27.13.39.29
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 27 Mar 2009 13:39:30 -0700 (PDT)
+Subject: 
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114924>
 
-Just a reminder, since this patch was probably dropped.
-
-On Wednesday 18 March 2009, Michele Ballabio wrote:
-> Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
-> ---
->  git-rebase.sh |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/git-rebase.sh b/git-rebase.sh
-> index d38ab0b..e38d68a 100755
-> --- a/git-rebase.sh
-> +++ b/git-rebase.sh
-> @@ -315,7 +315,7 @@ do
->  	--root)
->  		rebase_root=t
->  		;;
-> -	-f|--f|--fo|--for|--forc|force|--force-r|--force-re|--force-reb|--force-reba|--force_rebas|--force-rebase)
-> +	-f|--f|--fo|--for|--forc|force|--force-r|--force-re|--force-reb|--force-reba|--force-rebas|--force-rebase)
->  		force_rebase=t
->  		;;
->  	-*)
+subscribe
