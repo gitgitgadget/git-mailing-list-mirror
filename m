@@ -1,93 +1,82 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Two RPM building improvements
-Date: Fri, 27 Mar 2009 06:50:36 -0700 (PDT)
-Message-ID: <m3k56b2hy2.fsf@localhost.localdomain>
-References: <1238157134-27558-1-git-send-email-Niels@Basjes.nl>
+From: Jeff Brown <jeff@jeffandbetsy.net>
+Subject: Re: problems syncing with svn
+Date: Fri, 27 Mar 2009 09:58:43 -0400
+Message-ID: <bbd12f0f0903270658o73e9305dj15903f4c50278952@mail.gmail.com>
+References: <bbd12f0f0903270617m3c2233b2g6c6e8c3d9a9b50a4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Niels Basjes <Niels@Basjes.nl>
-X-From: git-owner@vger.kernel.org Fri Mar 27 14:53:16 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 27 15:00:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LnCUe-0007Yg-JT
-	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 14:53:09 +0100
+	id 1LnCbw-00020Y-03
+	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 15:00:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757523AbZC0Nun (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Mar 2009 09:50:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757427AbZC0Num
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 09:50:42 -0400
-Received: from wa-out-1112.google.com ([209.85.146.177]:24143 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757362AbZC0Nul (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Mar 2009 09:50:41 -0400
-Received: by wa-out-1112.google.com with SMTP id j5so687951wah.21
-        for <git@vger.kernel.org>; Fri, 27 Mar 2009 06:50:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=jEZw0we48McPiU3Vdt4eLE/Brmjbp+DOlwmKUt9s2uw=;
-        b=pBJMuVgJ2hZAviOBl4yTqvdDh00tDyqBU43aDLntpCZ9wUFw3+COzbPQFCoQTpytkr
-         vxbmBYTlMdN+MCpNIVxyTK5RW1rHXkRi24nul80LXUk8uumhkv8v3HDcywibpDSqg/nN
-         hjOSjH5RzJgQ6/PxG33H9SX5NgSAa+AwHea4U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=l7oNUu8NgBQOrPuL9cbRAQeT2oz1uhAKHxNKzSQioTLX3DQmeVybBP7EHM0vfbpCn4
-         F23q8r8BChX/MBRqlCzjwcJpJ4QpEDCWKNPgoLUsGPth4Pb/yrLEajOFq2wnXBOshjjj
-         ZhJWuUQbdVPz8zd6O9CfgOdxlJ7vfRoP012GQ=
-Received: by 10.114.183.1 with SMTP id g1mr1442692waf.140.1238161837830;
-        Fri, 27 Mar 2009 06:50:37 -0700 (PDT)
-Received: from localhost.localdomain (abvq19.neoplus.adsl.tpnet.pl [83.8.214.19])
-        by mx.google.com with ESMTPS id q20sm6763841pog.8.2009.03.27.06.50.34
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 27 Mar 2009 06:50:36 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n2RDoVps007961;
-	Fri, 27 Mar 2009 14:50:31 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n2RDoTNS007958;
-	Fri, 27 Mar 2009 14:50:29 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1238157134-27558-1-git-send-email-Niels@Basjes.nl>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752947AbZC0N6r convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Mar 2009 09:58:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751313AbZC0N6r
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 09:58:47 -0400
+Received: from fk-out-0910.google.com ([209.85.128.188]:44090 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752483AbZC0N6q convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Mar 2009 09:58:46 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so456411fkq.5
+        for <git@vger.kernel.org>; Fri, 27 Mar 2009 06:58:43 -0700 (PDT)
+Received: by 10.204.53.1 with SMTP id k1mr719178bkg.22.1238162323290; Fri, 27 
+	Mar 2009 06:58:43 -0700 (PDT)
+In-Reply-To: <bbd12f0f0903270617m3c2233b2g6c6e8c3d9a9b50a4@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114895>
 
-Niels Basjes <Niels@Basjes.nl> writes:
+On Fri, Mar 27, 2009 at 9:17 AM, Jeff Brown <jeff@jeffandbetsy.net> wro=
+te:
+> I have found numerous folks having a similar problem but have not
+> found a solution that works for me. =A0This is what I have:
+>
+> I have svn clone'd a repo. =A0I have added a git remote to the projec=
+t.
+> I have pulled from the git repo. =A0When I attempt to "svn dcommit", =
+the
+> commit fails with...
+>
+> Unable to extract revision information from commit
+> 26c8e90f67d40d9193fe276f3bcbfdd4e9161730~1
+>
+> What I really want to do is move our primary development support to
+> git (github in particular right now). =A0I want to setup a job that w=
+ill
+> periodically grab the latest code from github and push those changes
+> to our svn repo. =A0These will be the only commits made to svn.
+> Developers will no longer be committing to svn. =A0We need the svn re=
+po
+> kept up to date for a few reasons but do not want to do development
+> against svn directly.
+>
+> Any advice would be much appreciated.
+>
+> Thanks in advance.
+>
 
-> Two RPM building improvements:
+If repo details will help, the git repo is at
+http://github.com/grails/grails/tree/master and the original svn repo
+which that came from is at https://svn.codehaus.org/grails/trunk/.
 
-Two _unrelated_ RPM building improvements squashed in one commit.
+Thanks again.
 
->   - Building the RPMs can now be done by a non-root user.
 
-It was always possible, you only have to configure rpm / rpmbuild,
-namely put path to where you want your RPM_BUILDING directory in
-~/.rpmmacros as %_topdir, for example:
 
-  $ cat ~/.rpmmacros
-  %_topdir        /home/local/builddir
+Jeff
+--=20
+Jeff Brown
+SpringSource
+http://www.springsource.com/
 
-Please RTFM first, before going to solve non-problem in (ugh) fairly
-complicated way.
-
->   - The additional target all-rpms now builds the RPMs for a multitude of target platforms.
-
-Please wrap commit messages at 72-76 columns, at most at 80 columns.
-No such overly long lines, please.
-
-But the all-rpms target looks like a good idea
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Autism Strikes 1 in 166
+=46ind The Cause ~ Find The Cure
+http://www.autismspeaks.org/
