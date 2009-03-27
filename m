@@ -1,74 +1,71 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Git Download/Bootstrap Suggestion
-Date: Sat, 28 Mar 2009 00:21:19 +0100
-Message-ID: <fabb9a1e0903271621g392eefdeu85b46c655c1ad067@mail.gmail.com>
-References: <49CD0841.9000602@gmail.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: patch series starting with [JGIT PATCH 1/5] Remove dead/unused reset method from CountingOutputStream
+Date: Sat, 28 Mar 2009 00:53:24 +0100
+Message-ID: <200903280053.25070.robin.rosenberg.lists@dewire.com>
+References: <1238030515-31768-1-git-send-email-spearce@spearce.org> <200903270911.54571.robin.rosenberg.lists@dewire.com> <20090327145550.GN23521@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Mike Gaffney <mr.gaffo@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 28 00:23:21 2009
+Cc: Marek Zawirski <marek.zawirski@gmail.com>,
+	Daniel Cheng <j16sdiz+freenet@gmail.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Mar 28 00:56:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LnLOG-0006d2-Dx
-	for gcvg-git-2@gmane.org; Sat, 28 Mar 2009 00:23:08 +0100
+	id 1LnLuA-0007Kl-6a
+	for gcvg-git-2@gmane.org; Sat, 28 Mar 2009 00:56:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752756AbZC0XVi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Mar 2009 19:21:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752300AbZC0XVi
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 19:21:38 -0400
-Received: from mu-out-0910.google.com ([209.85.134.185]:9860 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751645AbZC0XVh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Mar 2009 19:21:37 -0400
-Received: by mu-out-0910.google.com with SMTP id g7so525660muf.1
-        for <git@vger.kernel.org>; Fri, 27 Mar 2009 16:21:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Q4XXQou/2gX4EkmCyJzNUOjTFzKIgTzgcDoab1bf0OM=;
-        b=Dnzkt1A24yYxD9MDn3b7ORgynq91vXM5vXfJga0MOc8Fj738Wf5LUuRmfXzPmWjYoX
-         6P2IZkQHzN5FDkwQ4PIdOdSR8gDWAyxZFjijSpmcw053s+JWk/DGPi1PbJihMnbFdAt+
-         no6XqdhL6bZzMCPQcIy10nYmnn7UcemDz8W0k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=VkLAFbsDR/gnhOFrc9LcMu5HbHTqVh58DoCcZa/+lMbkEDPrGxICZHqIPUzQoiU6TM
-         a3a3wZE9CGhvmXvvV2H/O9ba7PsCFai9j+XqHVBYqMkxlYiuzJ109XsGBEb6CcFSKcya
-         r1BUzGf5FX8CzVdJrlFpqPaN1Op9R0ChbURsM=
-In-Reply-To: <49CD0841.9000602@gmail.com>
-Received: by 10.103.49.12 with SMTP id b12mr666897muk.98.1238196094721; Fri, 
-	27 Mar 2009 16:21:34 -0700 (PDT)
+	id S1759276AbZC0Xxf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Mar 2009 19:53:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764371AbZC0Xxe
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 19:53:34 -0400
+Received: from mail.dewire.com ([83.140.172.130]:6258 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1765132AbZC0Xxd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Mar 2009 19:53:33 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id A8CB21484DA5;
+	Sat, 28 Mar 2009 00:53:26 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id eEawAaRhUyGo; Sat, 28 Mar 2009 00:53:25 +0100 (CET)
+Received: from sleipner.localnet (unknown [10.9.0.4])
+	by dewire.com (Postfix) with ESMTP id DF634800784;
+	Sat, 28 Mar 2009 00:53:25 +0100 (CET)
+User-Agent: KMail/1.11.1 (Linux/2.6.27-14-generic; KDE/4.2.1; i686; ; )
+In-Reply-To: <20090327145550.GN23521@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114927>
 
-Heya,
+fredag 27 mars 2009 15:55:50 skrev "Shawn O. Pearce" <spearce@spearce.org>:
+> Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+> > Seems fine. While verifying this I got this error.
+> > 
+> > jgit push sftp://me@calhost/home/me/tmp/cb/.git master:master
+> > 
+> > Counting objects:       20464
+> > Compressing objects:    100% (20464/20464)
+> > Writing objects:        100% (20464/20464)
+> > fatal: Can't write /home/me/tmp/cb/.git/objects/../HEAD: Failure
+> > fatal: sftp://me@localhost/home/me/tmp/cb/.git: cannot create HEAD
+> 
+> I can't reproduce this error with sftp://.
+> 
+> At first, it failed to push because my target directory didn't exist.
+Same here.
 
-On Fri, Mar 27, 2009 at 18:09, Mike Gaffney <mr.gaffo@gmail.com> wrote:
-> I have to do is
-> - download the source tarball (or the rpm)
-> - make it
-> - install it
+> After I made the target directory, I also had to create below it
+> "refs", "objects", "objects/pack" in order to get the push to
+> succeed, and then it went through clean.
 
-Nah, you don't need to do all that ;).
+hm, I git init'd the repo on the server, that's cheating I suppose.
 
-
-> It'd be a lot cooler if I could just wget a full get repo on the latest tag
-
-You mean like, this?
-
-http://repo.or.cz/w/git.git?a=snapshot;h=master;sf=tgz
-
--- 
-Cheers,
-
-Sverre Rabbelier
+-- robin
