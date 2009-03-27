@@ -1,167 +1,363 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] difftool: add support for an extended revision syntax
-Date: Fri, 27 Mar 2009 10:36:15 -0700
-Message-ID: <7vvdpudg1c.fsf@gitster.siamese.dyndns.org>
-References: <1237803348-9329-1-git-send-email-davvid@gmail.com>
- <m33acz2byv.fsf@localhost.localdomain> <20090327162849.GA2853@gmail.com>
+From: =?utf-8?q?Tor=20Arne=20Vestb=C3=B8?= <tor.arne.vestbo@nokia.com>
+Subject: [PATCH v3 2/2] git-clone: Add new option --branch to override initial branch
+Date: Fri, 27 Mar 2009 18:45:13 +0100
+Message-ID: <1238175913-19175-3-git-send-email-tor.arne.vestbo@nokia.com>
+References: <1238175913-19175-1-git-send-email-tor.arne.vestbo@nokia.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	spearce@spearce.org, Christian Couder <chriscool@tuxfamily.org>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 27 18:38:15 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Mar 27 18:46:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LnG0R-0003a3-A3
-	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 18:38:12 +0100
+	id 1LnG8R-00070A-JQ
+	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 18:46:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755068AbZC0Rgl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Mar 2009 13:36:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753643AbZC0Rgk
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 13:36:40 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45077 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752649AbZC0Rgj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Mar 2009 13:36:39 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 4C63E9982;
-	Fri, 27 Mar 2009 13:36:33 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 01F4F997E; Fri,
- 27 Mar 2009 13:36:26 -0400 (EDT)
-In-Reply-To: <20090327162849.GA2853@gmail.com> (David Aguilar's message of
- "Fri, 27 Mar 2009 09:28:49 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: D061306C-1AF5-11DE-82EC-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+	id S1754371AbZC0Ro4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Mar 2009 13:44:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752714AbZC0Ro4
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 13:44:56 -0400
+Received: from smtp.nokia.com ([192.100.122.233]:25356 "EHLO
+	mgw-mx06.nokia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752649AbZC0Roz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Mar 2009 13:44:55 -0400
+Received: from esebh106.NOE.Nokia.com (esebh106.ntc.nokia.com [172.21.138.213])
+	by mgw-mx06.nokia.com (Switch-3.2.6/Switch-3.2.6) with ESMTP id n2RHiL1r000387;
+	Fri, 27 Mar 2009 19:44:40 +0200
+Received: from esebh102.NOE.Nokia.com ([172.21.138.183]) by esebh106.NOE.Nokia.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 27 Mar 2009 19:44:34 +0200
+Received: from mgw-int01.ntc.nokia.com ([172.21.143.96]) by esebh102.NOE.Nokia.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 27 Mar 2009 19:44:34 +0200
+Received: from localhost.localdomain (olwst90124.europe.nokia.com [172.24.90.124])
+	by mgw-int01.ntc.nokia.com (Switch-3.2.5/Switch-3.2.5) with ESMTP id n2RHiSXx032239;
+	Fri, 27 Mar 2009 19:44:33 +0200
+X-Mailer: git-send-email 1.6.2.GIT
+In-Reply-To: <1238175913-19175-1-git-send-email-tor.arne.vestbo@nokia.com>
+X-OriginalArrivalTime: 27 Mar 2009 17:44:34.0545 (UTC) FILETIME=[B0F61610:01C9AF03]
+X-Nokia-AV: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114917>
 
-David Aguilar <davvid@gmail.com> writes:
+The option '--branch' (short -b) allows the user to override the initia=
+l
+branch created and checked out by git-clone (normally this is the activ=
+e
+branch of the remote repository).
 
-> I'm still interested in the file~<n> idea [though maybe not
-> that exact syntax] and have been reading revision.c (as Junio
-> suggested) to see if it can be done in a good way.
+If the selected branch is not found the operation aborts.
 
-Modern git programs use setup_revisions() to parse object names and range
-notation given on the command line, and leave results in revs->pending
-array.  This array holds pointers to "struct object" instances, and they
-are often (always?) already parsed.  This gives the caller an easy access
-to the parse results.
+The rationale for this option is to allow new users to Git, who might
+not be familiar with the concepts of tracking branches versus normal
+branches (or even branches at all), to easily clone a repository and
+start working on a branch other than the remote's active branch.
 
-Recently there have been two topics that made me suspect that solving them
-cleanly may require breaking this model.  I haven't thought things through
-for the second one yet, so please do not take this as a criticism or
-pointing-out-concrete-problems in the latter series.  At least for the
-latter one, it is still an unsubstantiated fear.
+Signed-off-by: Tor Arne Vestb=C3=B8 <tor.arne.vestbo@nokia.com>
+---
 
-(1) "The commit that touched this path the last time"
+The above situation can be found in projects which keep a master branch
+for active development, as well as one or more maintenance branches for
+released versions of the project. If a user would like to fix a bug for
+a released version, he could use the proposed new option and simply do:
 
-The objective of this extension is to accept a pathspec and come up with
-the name of the commit object that touched the given pathspec recently.
-There can be some variations to the parameter the feature could take, and
-in the most generic form, the query would be:
+  $ git clone git://git.foo.com/project.git --branch 1.6
 
- * set of commits: start digging from these;
- * pathspecs: find commits whose change touches some path that matches them;
- * N: do not stop at the latest change, but find the Nth one.
+The manual steps to achieve the same thing would be something like:
 
-I am not good at coming up with a notation, so I'll leave the actual
-syntax to other people, but you can say things like:
+  $ git clone -n git://git.foo.com/project.git        # (1)
+  $ cd project                                        # (2)
+  $ git checkout -t origin/1.6                        # (3)
+  $ git branch -D master                              # (4)
 
-	git diff <<--all, Documentation t, 4>>
-	git log <<master, Makefile, 10>>..next -- Makefile
+A new user to Git might find this list of commands a bit daunting. It
+is also somewhat fragile, as running 'git status' after step (2) will
+create an index and hence prevent a checkout due to merge conflicts.
 
-The problem with this feature is this.  In order to come up with the
-answer, you need to internally run:
-
-	git rev-list --all -- Documentation t
-	git rev-list master -- Makefile
-
-and in order to compute this, the revision traversal machinery has to
-not only open and parse commit objects but _rewrite_ the parent field of
-these commits for history simplification purposes.  This is a destructive
-operation, and after it comes back, we would need to clean them up by
-unparsing these commits so that the original command that asked for its
-command line arguments to be parsed can operate correctly.
-
-At least, this can be fixed by unparsing all the objects parsed so far
-when the revision command line parser finishes each such argument, and
-force the caller parse them again when they read from rev->pending.
+(The reason for deleting the master branch in step (4) is to prevent
+errors when the user tries to push his changes to the (rebased) 1.6
+branch without also rebasing his master branch against origin/master)
 
 
-(2) "refs/replace/SHA-1 holds name of the object that replaces SHA-1"
+ Documentation/git-clone.txt |    5 +++
+ builtin-clone.c             |   71 +++++++++++++++++++++++++----------=
+-------
+ t/t5702-clone-options.sh    |   70 +++++++++++++++++++++++++++++++++++=
++++++--
+ 3 files changed, 114 insertions(+), 32 deletions(-)
 
-The objective of this extension is to generalize the graft mechanism, so
-that they can be shared across the usual object transfer mechanism, the
-ordinary revision traversal mechanism can honor the replacement just like
-they honor grafts file, while reachability machinery used by object
-transfer, fsck and prune can ignore the replacement.  When refs/replace/A
-has value B, a commit C that records A as its parent would behave as if B
-is its parent (so "git log C" will show B as the second entry in its
-output), while pushing C will notice C's true parent is A and sends A to
-the other end.  By pushing refs/replace/A to the other end, you can share
-the same "fake" history across repositories.
-
-This feature has similar problem as (1).  If you say
-
-	git rev-list master..next^^
-
-how should next^^ be interpreted?  Because it is an input coming from the
-user, we may want to honor the "graft/replace", and we need to read and
-parse next, next^, and next^^ while possibly reading from refs/replace/
-hiearchy.  But after getting the end result, the name of the commit object
-the notation refers to, we would need to unparse the objects involved so
-that the main parts of the command can start from the clean slate.
-
-There are three issues with this:
-
- (1) When you ask for the data for a concrete SHA-1 (i.e. not "next^", but
-     something like "9856dd811ee0f256d067b89cbccb58d944aa9c8c"), with and
-     without grafts/replacements, the actual object data changes.
-
-     This again needs at least unparsing of all the objects as in the
-     <<commits, pathspecs, Nth>> case above to deal with.
-
- (2) Depending on the use of grafts/replacements, the interpretation of
-     "next^^" changes; should we follow the true parenthood, or the
-     replaced one?
-
-     In order to give Porcelains the same freedom to honor or ignore the
-     replacements, we would eventually need to expose --ignore-replace
-     option to "git rev-list":
-
-	git rev-list --ignore-replace master..next^^
-
-     It gets tricky when --ignore-replace should take effect.  Before or
-     after master..next^^ is interpreted?
-
- (3) Depending on the use of replacements, even the type of the object an
-     extended SHA-1 expression refers to can change.  tag-foo may point at
-     an object 9856dd811ee0f256d067b89cbccb58d944aa9c8c, and without
-     replacements it may be a commit but the replacement mechanism is
-     allowed to say it is another tag that points at a commit.
-
-Not that the "replacement" feature is bad, it is just that the feature is
-too flexible for the current codebase to handle sanely.
-
-In order to solve these issues safely (not necessarily efficiently nor
-cleanly), I think we might need to change the setup_revisions() to:
-
- (1) operate the way it currently does, leaving the parsed objects in
-     revs->pending;
-
- (2) remember the objects' SHA-1 and flags in the revs->pending array;
-
- (3) discard all parsed objects, as revision traversals may have rewritten
-     commits for history simplification purposes; and
-
- (4) rebuild revs->pending list by parsing the objects again, using the
-     SHA-1 values we remembered in step (2)
-
-or something like that.
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 95f08b9..e7feb4d 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -119,6 +119,11 @@ then the cloned repository will become corrupt.
+ 	Instead of using the remote name 'origin' to keep track
+ 	of the upstream repository, use <name> instead.
+=20
++--branch <name>::
++-b <name>::
++	Instead of using the remote repository's active branch as the
++	initial branch, use <name> instead.
++
+ --upload-pack <upload-pack>::
+ -u <upload-pack>::
+ 	When given, and the repository to clone from is accessed
+diff --git a/builtin-clone.c b/builtin-clone.c
+index 0031b5f..0d03c87 100644
+--- a/builtin-clone.c
++++ b/builtin-clone.c
+@@ -41,6 +41,7 @@ static int option_quiet, option_no_checkout, option_b=
+are, option_mirror;
+ static int option_local, option_no_hardlinks, option_shared;
+ static char *option_template, *option_reference, *option_depth;
+ static char *option_origin =3D NULL;
++static char *option_branch;
+ static char *option_upload_pack =3D "git-upload-pack";
+ static int option_verbose;
+=20
+@@ -69,6 +70,8 @@ static struct option builtin_clone_options[] =3D {
+ 		   "path to git-upload-pack on the remote"),
+ 	OPT_STRING(0, "depth", &option_depth, "depth",
+ 		    "create a shallow clone of that depth"),
++	OPT_STRING('b', "branch", &option_branch, "branch",
++		    "initial remote branch to check out"),
+=20
+ 	OPT_END()
+ };
+@@ -323,7 +326,9 @@ int cmd_clone(int argc, const char **argv, const ch=
+ar *prefix)
+ 	const char *repo_name, *repo, *work_tree, *git_dir;
+ 	char *path, *dir;
+ 	int dest_exists;
+-	const struct ref *refs, *head_points_at, *remote_head, *mapped_refs;
++	const struct ref *refs, *mapped_refs;
++	const struct ref *remote_head =3D NULL, *remote_head_points_at =3D NU=
+LL;
++	const struct ref *initial_branch =3D NULL;
+ 	struct strbuf key =3D STRBUF_INIT, value =3D STRBUF_INIT;
+ 	struct strbuf branch_top =3D STRBUF_INIT, reflog_msg =3D STRBUF_INIT;
+ 	struct transport *transport =3D NULL;
+@@ -495,46 +500,35 @@ int cmd_clone(int argc, const char **argv, const =
+char *prefix)
+ 		mapped_refs =3D write_remote_refs(refs, refspec, reflog_msg.buf);
+=20
+ 		remote_head =3D find_ref_by_name(refs, "HEAD");
+-		head_points_at =3D guess_remote_head(remote_head, mapped_refs, 0);
+-	}
+-	else {
++		remote_head_points_at =3D guess_remote_head(remote_head, mapped_refs=
+, 0);
++
++		if (option_branch) {
++			initial_branch =3D find_ref_by_name_abbrev(refs, option_branch);
++			if (!initial_branch)
++				die("remote has no branch named '%s'.", option_branch);
++		} else {
++			initial_branch =3D remote_head_points_at;
++		}
++	} else {
+ 		warning("You appear to have cloned an empty repository.");
+-		head_points_at =3D NULL;
+-		remote_head =3D NULL;
+ 		option_no_checkout =3D 1;
+ 		if (!option_bare)
+ 			install_branch_config(0, "master", option_origin,
+ 					      "refs/heads/master");
+ 	}
+=20
+-	if (head_points_at) {
+-		/* Local default branch link */
+-		create_symref("HEAD", head_points_at->name, NULL);
+-
++	/* Set up remote HEAD */
++	if (remote_head_points_at) {
+ 		if (!option_bare) {
+ 			struct strbuf head_ref =3D STRBUF_INIT;
+-			const char *head =3D head_points_at->name;
+-
+-			if (!prefixcmp(head, "refs/heads/"))
+-				head +=3D 11;
+-
+-			/* Set up the initial local branch */
+-
+-			/* Local branch initial value */
+-			update_ref(reflog_msg.buf, "HEAD",
+-				   head_points_at->old_sha1,
+-				   NULL, 0, DIE_ON_ERR);
+=20
+ 			strbuf_addstr(&head_ref, branch_top.buf);
+ 			strbuf_addstr(&head_ref, "HEAD");
+=20
+ 			/* Remote branch link */
+ 			create_symref(head_ref.buf,
+-				      head_points_at->peer_ref->name,
++				      remote_head_points_at->peer_ref->name,
+ 				      reflog_msg.buf);
+-
+-			install_branch_config(0, head, option_origin,
+-					      head_points_at->name);
+ 		}
+ 	} else if (remote_head) {
+ 		/* Source had detached HEAD pointing somewhere. */
+@@ -542,7 +536,26 @@ int cmd_clone(int argc, const char **argv, const c=
+har *prefix)
+ 			update_ref(reflog_msg.buf, "HEAD",
+ 				   remote_head->old_sha1,
+ 				   NULL, REF_NODEREF, DIE_ON_ERR);
+-	} else {
++	}
++
++	/* Set up intitial branch and HEAD */
++	if (initial_branch) {
++		create_symref("HEAD", initial_branch->name, NULL);
++
++		if (!option_bare) {
++			const char *head =3D initial_branch->name;
++
++			if (!prefixcmp(head, "refs/heads/"))
++				head +=3D 11;
++
++			update_ref(reflog_msg.buf, "HEAD",
++				   initial_branch->old_sha1,
++				   NULL, 0, DIE_ON_ERR);
++
++			install_branch_config(0, head, option_origin,
++					      initial_branch->name);
++		}
++	} else if (!remote_head) {
+ 		/* Nothing to checkout out */
+ 		if (!option_no_checkout)
+ 			warning("remote HEAD refers to nonexistent ref, "
+@@ -554,6 +567,7 @@ int cmd_clone(int argc, const char **argv, const ch=
+ar *prefix)
+ 		transport_unlock_pack(transport);
+=20
+ 	if (!option_no_checkout) {
++		const struct ref *checkout_ref =3D initial_branch ? initial_branch :=
+ remote_head;
+ 		struct lock_file *lock_file =3D xcalloc(1, sizeof(struct lock_file))=
+;
+ 		struct unpack_trees_options opts;
+ 		struct tree *tree;
+@@ -572,8 +586,7 @@ int cmd_clone(int argc, const char **argv, const ch=
+ar *prefix)
+ 		opts.verbose_update =3D !option_quiet;
+ 		opts.src_index =3D &the_index;
+ 		opts.dst_index =3D &the_index;
+-
+-		tree =3D parse_tree_indirect(remote_head->old_sha1);
++		tree =3D parse_tree_indirect(checkout_ref->old_sha1);
+ 		parse_tree(tree);
+ 		init_tree_desc(&t, tree->buffer, tree->size);
+ 		unpack_trees(1, &t, &opts);
+@@ -583,7 +596,7 @@ int cmd_clone(int argc, const char **argv, const ch=
+ar *prefix)
+ 			die("unable to write new index file");
+=20
+ 		err |=3D run_hook(NULL, "post-checkout", sha1_to_hex(null_sha1),
+-				sha1_to_hex(remote_head->old_sha1), "1", NULL);
++				sha1_to_hex(checkout_ref->old_sha1), "1", NULL);
+ 	}
+=20
+ 	strbuf_release(&reflog_msg);
+diff --git a/t/t5702-clone-options.sh b/t/t5702-clone-options.sh
+index 27825f5..08cd8bd 100755
+--- a/t/t5702-clone-options.sh
++++ b/t/t5702-clone-options.sh
+@@ -6,9 +6,14 @@ test_description=3D'basic clone options'
+ test_expect_success 'setup' '
+=20
+ 	mkdir parent &&
+-	(cd parent && git init &&
+-	 echo one >file && git add file &&
+-	 git commit -m one)
++	(
++		cd parent && git init &&
++		echo one >file && git add file && git commit -m one &&
++		echo two >file && git add file && git commit -m two &&
++		git checkout -b topic &&
++		echo thee >topic-file && git add topic-file && git commit -m three &=
+&
++		git checkout master
++	)
+=20
+ '
+=20
+@@ -32,4 +37,63 @@ test_expect_success 'redirected clone -v' '
+=20
+ '
+=20
++test_expect_success 'clone --branch sets up the correct remote HEAD' '
++
++	git clone --branch=3Drefs/heads/topic parent clone-topic-remote-head =
+&&
++	(cd clone-topic-remote-head && grep master .git/refs/remotes/origin/H=
+EAD)
++
++'
++
++test_expect_success 'clone --branch sets up the correct local branch' =
+'
++
++	git clone --branch=3Drefs/heads/topic parent clone-topic-name &&
++	(cd clone-topic-name && git rev-parse --verify refs/heads/topic)
++
++'
++
++test_expect_success 'clone --branch sets up the correct local HEAD' '
++
++	git clone --branch=3Drefs/heads/topic parent clone-topic-head &&
++	(cd clone-topic-head && grep topic .git/HEAD)
++
++'
++
++test_expect_success 'clone --branch checks out the correct branch' '
++
++	git clone --branch=3Drefs/heads/topic parent clone-topic-checkout &&
++	test -f clone-topic-checkout/topic-file
++
++'
++
++test_expect_success 'clone --branch works with -n' '
++
++	git clone -n --branch=3Drefs/heads/topic parent clone-topic-checkout-=
+n &&
++	! test -f clone-topic-checkout-n/topic-file
++
++'
++
++test_expect_success 'clone --branch works with detatched remote HEAD' =
+'
++
++	(cd parent && git checkout master~1) &&
++	git clone --branch=3Drefs/heads/topic parent clone-topic-checkout-det=
+atched &&
++	test -f clone-topic-checkout-detatched/topic-file &&
++	(cd parent && git checkout master)
++
++'
++
++test_expect_success 'clone --branch works with invalid remote HEAD' '
++
++	(cd parent && echo "ref: refs/heads/nonexistent" > .git/HEAD) &&
++	git clone --branch=3Drefs/heads/topic parent clone-topic-checkout-non=
+existent &&
++	test -f clone-topic-checkout-nonexistent/topic-file  &&
++	(cd parent && git checkout master)
++'
++
++test_expect_success 'clone --branch works with abbreviated ref name' '
++
++	git clone --branch=3Dtopic parent clone-topic-abbreviated-name &&
++	(cd clone-topic-abbreviated-name && git rev-parse --verify refs/heads=
+/topic)
++
++'
++
+ test_done
+--=20
+1.6.2.GIT
