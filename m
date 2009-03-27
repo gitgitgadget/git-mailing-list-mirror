@@ -1,72 +1,74 @@
-From: "Etienne Vallette d'Osia" <dohzya@gmail.com>
+From: Dmitry Potapov <dpotapov@gmail.com>
 Subject: Re: On git 1.6 (novice's opinion)
-Date: Fri, 27 Mar 2009 12:30:32 +0100
-Message-ID: <49CCB8D8.2040603@gmail.com>
-References: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>, <20090327090554.5d6160f2@pc09.procura.nl> <49CCAF5D.21814.24B4DE63@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de> <49CCB129.1070606@gmail.com>
+Date: Fri, 27 Mar 2009 15:24:02 +0300
+Message-ID: <37fcd2780903270524x1987a622wb9e693be41fc02c4@mail.gmail.com>
+References: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "H.Merijn Brand" <h.m.brand@xs4all.nl>
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Fri Mar 27 12:32:20 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Ulrich Windl <ulrich.windl@rz.uni-regensburg.de>
+X-From: git-owner@vger.kernel.org Fri Mar 27 13:25:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LnAIB-0006nL-JH
-	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 12:32:08 +0100
+	id 1LnB80-0007xB-K8
+	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 13:25:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751600AbZC0Lai convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Mar 2009 07:30:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751136AbZC0Lah
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 07:30:37 -0400
-Received: from fk-out-0910.google.com ([209.85.128.187]:31233 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750812AbZC0Lah (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Mar 2009 07:30:37 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so429706fkq.5
-        for <git@vger.kernel.org>; Fri, 27 Mar 2009 04:30:34 -0700 (PDT)
+	id S1751945AbZC0MYK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Mar 2009 08:24:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751808AbZC0MYH
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 08:24:07 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:42577 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751317AbZC0MYF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Mar 2009 08:24:05 -0400
+Received: by fg-out-1718.google.com with SMTP id 16so21130fgg.17
+        for <git@vger.kernel.org>; Fri, 27 Mar 2009 05:24:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:newsgroups:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=WB9qGzekWls/VyVTyV/sqQGXGSZ14mAwjG5/Oj0Q8Ps=;
-        b=aEvl5El85xCbydB7tSKd5xcj1a0YfEmAFLe98g96KMtPJwJjaFG7f/Xgb5Ggz47Q4H
-         rGDPqBdo7Xq5vZVI8C5oF8LKYhKJc6jm8e8iTRY+ne9YhJWzZbiRo+wAKKv69EG/7ue4
-         X/ESw4wZVidDOvod6nLRnCIJIs/YtzJUAYGw8=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ClpQw3Vyz9O0O6+a/GTUPVZhcerfaLZWmsiySvqjXo8=;
+        b=Jd7DBNA/eB5kArqgWOjhxFFQAJSvPO9uhujLAfT8Y1/42TDBhzMnRmiJffqqR5Y9aX
+         yiLiEj1TWU+GI8GgDKQuAE8zzSh+UtX91ZJzBljmwO4hpHeZ8QZ1Q//iyLc2X0CUoLIg
+         g5TucXMcKz9LAuOYTTYcW+NIk7K0WgbXPFq9w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=rFrVBNJKSIUnM02iP2inVP1jmSc49RQ8xk5Ct6S6r0hkZvGD9SmIMoWeD2MNO9YzhD
-         Fj0tnko3cyjTdRLQAwlZCfGZzLRrtwIW0XDPG3lZTwIaq2xc4BVPEbQGHKhDa++Q/sAZ
-         o+l4L3kM5ZUAIwE15pe1xg2si8xrXs2y48oe0=
-Received: by 10.103.250.1 with SMTP id c1mr381700mus.64.1238153434176;
-        Fri, 27 Mar 2009 04:30:34 -0700 (PDT)
-Received: from schubby.inria.fr (schubby.inria.fr [138.96.218.89])
-        by mx.google.com with ESMTPS id 14sm2934875muo.50.2009.03.27.04.30.33
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 27 Mar 2009 04:30:33 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.19 (X11/20081209)
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <49CCB129.1070606@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=vIaJGYbZbS5OTUJ2XVlaA34lfOTAwrVxW+5QWOjNLcVBBy171UR/GESe6VY+sZJUS/
+         J992+yq5StSqsMUhemMVb02jvvJAxc65KBjveNcwhMx3sfNNZKBuRjje0SH+acO3zPpM
+         oJ4Y1l7cE2an6IkUQdsMIPyKLDjDDjlK3gSEs=
+Received: by 10.86.61.13 with SMTP id j13mr367458fga.65.1238156642420; Fri, 27 
+	Mar 2009 05:24:02 -0700 (PDT)
+In-Reply-To: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114883>
 
-Etienne Vallette d'Osia a =E9crit :
-> Ulrich Windl a =E9crit :
->>>> 3) "git undo": If possible undo the effects of the last command.
->>
->> If impossible, add confirmations for some "dangerous" (non-obvious)=20
->> commands before doing possibly harmful things. Maybe adding a kind o=
-f=20
->> "user-level setting" (novice, expert, guro) could control such=20
->> confirmations.
->>
-> Why ?
-Oops, I have readed "it is impossible"
+On Fri, Mar 27, 2009 at 10:21 AM, Ulrich Windl
+<ulrich.windl@rz.uni-regensburg.de> wrote:
+>
+> 1) The ability to use the file's time at the time of add/commit instead of the
+> current time, and the ability tho check outfiles with the times stored in the
+> repository.
+
+To check out with the times stored in repository is a a bad idea, because it
+will screw up 'make'.
+
+>
+> 2) Keyword substitution. I know it's controverse (dealing with binary files),
+> but I'd like to have some automatic version numbering keyword at least:
+> Initial idea is that every commit with a change increments the number by one,
+> and when merging numbers a and b, the resulting number is max(a, b) + 1.
+
+I am not sure what you want to achieve by having this number. Also, take
+a look at "git describe", it may be close to what you want (or may be not).
+
+
+Dmitry
