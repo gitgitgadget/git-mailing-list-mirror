@@ -1,106 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] log-tree: fix patch filename computation in "git
- format-patch"
-Date: Thu, 26 Mar 2009 21:15:39 -0700
-Message-ID: <7v3acziot0.fsf@gitster.siamese.dyndns.org>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH] log-tree: fix patch filename computation in "git 
+	format-patch"
+Date: Thu, 26 Mar 2009 21:31:05 -0700
+Message-ID: <780e0a6b0903262131l26e9ea6ua3289925fd322d93@mail.gmail.com>
 References: <20090327011301.a5185805.chriscool@tuxfamily.org>
+	 <7v3acziot0.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stephen Boyd <bebarino@gmail.com>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Mar 27 05:17:21 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 27 05:32:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ln3VQ-0005Ah-Pa
-	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 05:17:21 +0100
+	id 1Ln3kG-0008Bf-EF
+	for gcvg-git-2@gmane.org; Fri, 27 Mar 2009 05:32:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751346AbZC0EPu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Mar 2009 00:15:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750938AbZC0EPt
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 00:15:49 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60048 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751332AbZC0EPt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Mar 2009 00:15:49 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id B2214A5B60;
-	Fri, 27 Mar 2009 00:15:45 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 45ED4A5B5C; Fri,
- 27 Mar 2009 00:15:40 -0400 (EDT)
-In-Reply-To: <20090327011301.a5185805.chriscool@tuxfamily.org> (Christian
- Couder's message of "Fri, 27 Mar 2009 01:13:01 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F1C1F8EC-1A85-11DE-B0F8-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1751372AbZC0EbL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Mar 2009 00:31:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751081AbZC0EbI
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 00:31:08 -0400
+Received: from wf-out-1314.google.com ([209.85.200.168]:19571 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750883AbZC0EbH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Mar 2009 00:31:07 -0400
+Received: by wf-out-1314.google.com with SMTP id 29so1096931wff.4
+        for <git@vger.kernel.org>; Thu, 26 Mar 2009 21:31:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Sg6tLgw3naiX4pW+2IhDv7VtsKlAZfCdHVYg7CfQQdA=;
+        b=ADSA/deNwqOyvCsMRiDG0Ovam16zEvZKZNw1cnKSU+qvrDajyV/bAnBbHbgslM6rHL
+         gZ4cVra160r/IqoEBRHHVWoa7OTrZAH3XKgqcydcYER0SD3G+0aNo12M4+pFVFkOog6C
+         nzxn/FSEsjlh/s8bt1+46rWfDwyRDY07h8rlw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=U6KO4ZZvTM6SSYaKfO8v0KHxrpsJyMYzA6Ch3SJY1wEYm6HyaVsllpRGVBi6ZcabFk
+         ctV07SmfG3vI99ergb+rtKcZgMurar229G1BJNBQVFfFsujGMeQcA271RaXMW1QrcJgb
+         gORAO7BoYdCkX0Qgoncb58ChdVPSmqo1pMoD8=
+Received: by 10.142.142.14 with SMTP id p14mr703550wfd.188.1238128265184; Thu, 
+	26 Mar 2009 21:31:05 -0700 (PDT)
+In-Reply-To: <7v3acziot0.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114847>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
-
-> When using "git format-patch", "get_patch_filename" in
-> "log-tree.c" calls "strbuf_splice" that could die with
-> the following message:
+On Thu, Mar 26, 2009 at 9:15 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
 >
-> "`pos + len' is too far after the end of the buffer"
+> Shouldn't it be just:
 >
-> if you have:
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0size_t max_len =3D start_len + FORMAT_PATC=
+H_NAME_MAX - suffix_len;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (max_len < buf->len)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0strbuf_setlen(=
+buf, max_len);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0strbuf_addstr(buf, suffix);
+
+Yes, this is good.
+
 >
-> 	buf->len < start_len + FORMAT_PATCH_NAME_MAX
+> The caller must make sure that suffix_len is sufficiently shorter tha=
+n
+> FORMAT_PATCH_NAME_MAX; I do not know if the current code does that,
+> though.
 >
-> but:
->
-> 	buf->len + suffix_len > start_len + FORMAT_PATCH_NAME_MAX
->
-> This patch tries to get rid of that bug.
 
-hmm, tries to?
+The original code never did this. What should happen in this case?
 
-> diff --git a/log-tree.c b/log-tree.c
-> index 56a3488..ade79ab 100644
-> --- a/log-tree.c
-> +++ b/log-tree.c
-> @@ -187,16 +187,17 @@ void get_patch_filename(struct commit *commit, int nr, const char *suffix,
->  
->  	strbuf_addf(buf, commit ? "%04d-" : "%d", nr);
->  	if (commit) {
-> +		int max_len = start_len + FORMAT_PATCH_NAME_MAX;
->  		format_commit_message(commit, "%f", buf, DATE_NORMAL);
->  		/*
->  		 * Replace characters at the end with the suffix if the
->  		 * filename is too long
->  		 */
-> +		if (buf->len + suffix_len > max_len) {
-> +			int base = (max_len > buf->len) ? buf->len : max_len;
-> +			strbuf_splice(buf, base - suffix_len, suffix_len,
-> +				      suffix, suffix_len);
-> +		} else
->  			strbuf_addstr(buf, suffix);
+I am away on travel this week, so I won't be able to update this until =
+Monday.
 
-Your third argument to splice does not look right; if the existing length
-is very very long, you would need to remove a lot, and if the existing
-length is slightly long, you would need to remove just a little bit, but
-you always seem to remove the fixed amount, to splice the suffix in.
-
-In any case, why does this have to be so complex?
-
-In your buffer, you originally have start_len, and would want to end up
-with "%f" expansion, plus the suffix, but you are not allowed to exceed
-FORMAT_PATCH_NAME_MAX to store what you add, and are only allowed to chop
-the "%f" expansion if you are short of room.
-
-Shouldn't it be just:
-
-	size_t max_len = start_len + FORMAT_PATCH_NAME_MAX - suffix_len;
-        if (max_len < buf->len)
-                strbuf_setlen(buf, max_len);
-	strbuf_addstr(buf, suffix);
-
-The caller must make sure that suffix_len is sufficiently shorter than
-FORMAT_PATCH_NAME_MAX; I do not know if the current code does that,
-though.
+Thanks,
+Stephen
