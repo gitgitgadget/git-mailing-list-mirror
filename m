@@ -1,122 +1,89 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH 2/2] Resolve double chmod() in move_temp_to_file()
-Date: Sat, 28 Mar 2009 12:01:35 +0100
-Message-ID: <200903281201.35409.johan@herland.net>
-References: <200903250105.05808.johan@herland.net>
- <200903261617.48362.johan@herland.net>
- <7viqlu1837.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] init: support --import to add all files and commit
+ right after init
+Date: Sat, 28 Mar 2009 13:39:07 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.0903281334490.12669@intel-tinevez-2-302>
+References: <1237978720-2500-1-git-send-email-pclouds@gmail.com> <200903262223.28546.markus.heidelberg@web.de> <alpine.DEB.1.00.0903270259470.10279@pacific.mpi-cbg.de> <200903281158.51012.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 28 12:03:30 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: =?ISO-8859-15?Q?Santi_B=E9jar?= <santi@agolina.net>,
+	Jeff King <peff@peff.net>,
+	=?ISO-8859-15?Q?Nguydn_Th=E1i_Ngdc?= <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Markus Heidelberg <markus.heidelberg@web.de>
+X-From: git-owner@vger.kernel.org Sat Mar 28 13:41:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LnWJx-0004J6-Al
-	for gcvg-git-2@gmane.org; Sat, 28 Mar 2009 12:03:25 +0100
+	id 1LnXqQ-0004LX-Cb
+	for gcvg-git-2@gmane.org; Sat, 28 Mar 2009 13:41:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754894AbZC1LBl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Mar 2009 07:01:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753738AbZC1LBl
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Mar 2009 07:01:41 -0400
-Received: from mx.getmail.no ([84.208.15.66]:45201 "EHLO
-	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1754177AbZC1LBk (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 Mar 2009 07:01:40 -0400
-Content-disposition: inline
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KH700952QMPNGD0@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Sat, 28 Mar 2009 12:01:37 +0100 (MET)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KH700CL3QMNPS50@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Sat, 28 Mar 2009 12:01:37 +0100 (MET)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.3.28.104615
-User-Agent: KMail/1.11.1 (Linux/2.6.28-ARCH; KDE/4.2.1; x86_64; ; )
-In-reply-to: <7viqlu1837.fsf@gitster.siamese.dyndns.org>
+	id S1753215AbZC1MjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Mar 2009 08:39:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753753AbZC1MjP
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Mar 2009 08:39:15 -0400
+Received: from mail.gmx.net ([213.165.64.20]:58291 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752882AbZC1MjP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Mar 2009 08:39:15 -0400
+Received: (qmail invoked by alias); 28 Mar 2009 12:39:11 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp013) with SMTP; 28 Mar 2009 13:39:11 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19ZJZYaWlxZmXrFgYv5f9w77SQM6HOhxt4zc487a6
+	dMATdb2aRwgnBt
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <200903281158.51012.markus.heidelberg@web.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114951>
 
-On Saturday 28 March 2009, Junio C Hamano wrote:
-> Johan Herland <johan@herland.net> writes:
-> > -	if (chmod(filename, 0444) || adjust_shared_perm(filename))
-> > +	if (chmod(filename, get_shared_perm(0444)))
->
-> Your get_shared_perm() will end up feeding 0444 to S_ISDIR(), which would
-> most likely say "no" and cause real harm, but there is no guarantee that
-> we won't start checking S_ISREG() or other things in get_shared_perm()
-> later.  I do not like this.
+Hi,
 
-You are right.
+On Sat, 28 Mar 2009, Markus Heidelberg wrote:
 
-> How about doing it this way instead?
->
-> One thing to note is that we seem to have been passing what we read from
-> st.st_mode, together with S_IFMT bits, to chmod(2); I do not think I've
-> seen any breakage reports on exotic systems (glibc on Linux seems to
-> ignore the higher bits), but from my reading of POSIX, I would not be
-> surprised if somebody's chmod(2) returned EINVAL.
+> Johannes Schindelin, 27.03.2009:
+> > Others who want to have a quick way to work safely with something they 
+> > might need to change, and might then want to use the full power of Git 
+> > to see what they changed.  Without any need for a "nice" first commit.
+> 
+> What's the difference between the first commit and the others? I don't 
+> see the reason, not to have a short description for it.
 
-Agreed.
+Maybe you can learn a new trick here:
 
-> -- >8 --
-> set_shared_perm(): sometimes we know what the final mode bits should look
-> like
->
-> adjust_shared_perm() first obtains the mode bits from lstat(2), expecting
-> to find what the result of applying user's umask is, and then tweaked it
+$ tar xf /some/random/project.tar
+$ git init
+$ git add .
+$ git commit -m initial
 
-s/tweaked/tweaks/
+and now one of two work flows:
 
-> as necessary.  When the file to be adjusted is created with mkstemp(3),
-> however, the mode thusly obtained does not have anything to do with
-> usre's umask, and we would need to start from 0444 in such a case and
+# get the thing to work properly, or add a new feature, or clean up...
+$ git diff > diff.patch
+# send the diff to the maintainer, without ever committing
 
-s/usre/user/
+or
 
-> there is no point running lstat(2) for such a path.
->
-> This introduces a new API set_shared_perm() to bypass the lstat(2) and
-> instead force setting the mode bits to the desired value directly.
-> adjust_shared_perm() becomes a thin wrapper to the function.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
+# make a patch series, use rebase -i to clean up after it
+# send the patch series to the maintainer of the random project
 
-[...]
+See?  The initial commit does not matter at all.
 
-> diff --git a/sha1_file.c b/sha1_file.c
-> index 8869488..5bfc36c 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -2263,7 +2263,7 @@ int move_temp_to_file(const char *tmpfile, const
-> char *filename) *
->  	 * The same holds for FAT formatted media.
->  	 *
-> -	 * When this succeeds, we just return 0. We have nothing
-> +	 * When this succeeds, we just return; we have nothing
+I do this so often that it stops being funny having to type three 
+commands.
 
-Small nit: This belongs in the previous patch, doesn't it?
+And having to edit a commit message I do not care about anyway everytime, 
+just to please you, would not make it any funnier ;-)
 
+I'll just repeat one of my favorite mantras: optimize for the common case, 
+not for the uncommon case.
 
-All in all, this looks very good. Please drop my second patch, and use this 
-instead.
-
-
-Have fun! :)
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Ciao,
+Dscho
