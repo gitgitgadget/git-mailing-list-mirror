@@ -1,75 +1,74 @@
-From: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
-Subject: Re: [EGIT] How to deal with important modifications
-Date: Sat, 28 Mar 2009 23:44:49 +0100
-Message-ID: <49CEA861.4070700@pelagic.nl>
-References: <1238261528.6971.10.camel@localhost>
+From: =?utf-8?q?Santi=20B=C3=A9jar?= <santi@agolina.net>
+Subject: [PATCH 0/4] push.default and branch.<name>.{remote,merge} changes
+Date: Sun, 29 Mar 2009 00:10:00 +0100
+Message-ID: <1238281804-30290-1-git-send-email-santi@agolina.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git <git@vger.kernel.org>
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Sat Mar 28 23:46:31 2009
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 29 00:11:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LnhIL-000527-7O
-	for gcvg-git-2@gmane.org; Sat, 28 Mar 2009 23:46:29 +0100
+	id 1Lnhgr-0002uR-2D
+	for gcvg-git-2@gmane.org; Sun, 29 Mar 2009 00:11:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752944AbZC1Wo5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Mar 2009 18:44:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751857AbZC1Wo5
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Mar 2009 18:44:57 -0400
-Received: from hupie.xs4all.nl ([82.95.241.251]:51155 "EHLO
-	Lighthouse.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751119AbZC1Wo4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 Mar 2009 18:44:56 -0400
-Received: from [192.168.0.51] (unknown [192.168.0.51])
-	by Lighthouse.internal.Hupie.com (Postfix) with ESMTP id 13BCE58BD89;
-	Sat, 28 Mar 2009 23:44:50 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <1238261528.6971.10.camel@localhost>
+	id S1752906AbZC1XKR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Mar 2009 19:10:17 -0400
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752265AbZC1XKR
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Mar 2009 19:10:17 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:59133 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752110AbZC1XKQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Mar 2009 19:10:16 -0400
+Received: by fxm2 with SMTP id 2so1483335fxm.37
+        for <git@vger.kernel.org>; Sat, 28 Mar 2009 16:10:13 -0700 (PDT)
+Received: by 10.103.91.2 with SMTP id t2mr1004575mul.52.1238281813105;
+        Sat, 28 Mar 2009 16:10:13 -0700 (PDT)
+Received: from localhost (p5B0D7403.dip.t-dialin.net [91.13.116.3])
+        by mx.google.com with ESMTPS id t10sm6245424muh.29.2009.03.28.16.10.12
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 28 Mar 2009 16:10:12 -0700 (PDT)
+X-Mailer: git-send-email 1.6.1.258.g7ff14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114987>
 
-Yann Simon wrote:
-> Hi,
-> 
-> I am working on the synchronization view. It is not 100% functional yet.
-> The view is not updated when a local file is modified for example.
-> As the modifications are getting important, I was wondering how to deal
-> with it. Should I continue my work an send all the patches when
-> finished?
-> 
-> To have an overview of the modifications:
-> http://github.com/yanns/egit/commit/18c4a928d53345802a8c9641dcb2d457ebbe2cbc
-> http://github.com/yanns/egit/commit/9fab398fa1b7b6efa9532b3c09e5bcfcc8bb9419
-> 
-> Or should I begin to send patches, but by not activating the function
-> yet?
-> (It could be a way to have other people to help contributing.)
-> 
-> Yann
-Yann,
+Hi *,
 
-I was asking myself the same questions about my work on ignores and
-chose to send it out early, being half completed. Don't know if that was
-right, did not receive feedback yet, but it's only been 2 days with
-Eclipsecon wrapping up on friday.
+  the four patches are independent, but I've send them in a series beca=
+use
+their topic is related. Well, there is a textual dependency between the=
+ 3rd
+and the 4th.
 
-If you keep a seperate changeset in which you activate your work and
-split up the changesets in manageable pieces it's easier for others to
-review your work and comment on it.
+  The 1st one can also be applied to 'maint' while the rest is on top o=
+f 'next'
+because the 'push.default' is only there.
 
-Love to see your work though. Having the sync view available for git
-would be a major plus. I proposed something simpler on the wiki: a
-'pending changes' window. But if you have the complete sync view that's
-wonderful.
+Santi B=C3=A9jar (4):
+  Documentation: enhance branch.<name>.{remote,merge}
+  Documentation: push.default applies to all remotes
+  Documentation: branch.*.merge can also afect 'git-push'
+  Rename push.default to push.style
 
-my 2 cents  :-)
-
-Ferry
+ Documentation/RelNotes-1.6.3.txt |    2 +-
+ Documentation/config.txt         |   21 ++++++++++-----------
+ builtin-push.c                   |   16 ++++++++--------
+ cache.h                          |   14 +++++++-------
+ config.c                         |   10 +++++-----
+ environment.c                    |    2 +-
+ 6 files changed, 32 insertions(+), 33 deletions(-)
