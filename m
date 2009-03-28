@@ -1,73 +1,86 @@
-From: "Aaron Gray" <aaronngray.lists@googlemail.com>
-Subject: git svn fails to work
-Date: Sat, 28 Mar 2009 17:48:39 -0000
-Message-ID: <EA1460555FA0423EB6C233B3B0F4F098@HPLAPTOP>
+From: Jacob Helwig <jacob.helwig@gmail.com>
+Subject: Re: Fork of abandoned SVN mirror - how to keep up to date with the 
+	SVN
+Date: Sat, 28 Mar 2009 11:02:07 -0700
+Message-ID: <8c9a060903281102r3eae26edta34899485feb884b@mail.gmail.com>
+References: <22756729.post@talk.nabble.com> <8c9a060903280922r6514de83mea4dea84c4116225@mail.gmail.com> 
+	<1238258794470-2549665.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 28 18:50:20 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: jamespetts <jamespetts@yahoo.com>
+X-From: git-owner@vger.kernel.org Sat Mar 28 19:04:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lncfi-0006c9-8Z
-	for gcvg-git-2@gmane.org; Sat, 28 Mar 2009 18:50:18 +0100
+	id 1Lncsw-0002Ty-VK
+	for gcvg-git-2@gmane.org; Sat, 28 Mar 2009 19:03:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753097AbZC1Rst (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Mar 2009 13:48:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752987AbZC1Rss
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Mar 2009 13:48:48 -0400
-Received: from mail-ew0-f165.google.com ([209.85.219.165]:41245 "EHLO
-	mail-ew0-f165.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752888AbZC1Rsr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Mar 2009 13:48:47 -0400
-Received: by ewy9 with SMTP id 9so1488261ewy.37
-        for <git@vger.kernel.org>; Sat, 28 Mar 2009 10:48:45 -0700 (PDT)
+	id S1753024AbZC1SCZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Mar 2009 14:02:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751637AbZC1SCZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Mar 2009 14:02:25 -0400
+Received: from wf-out-1314.google.com ([209.85.200.174]:49854 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751551AbZC1SCY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 28 Mar 2009 14:02:24 -0400
+Received: by wf-out-1314.google.com with SMTP id 29so1889314wff.4
+        for <git@vger.kernel.org>; Sat, 28 Mar 2009 11:02:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to:subject
-         :date:mime-version:content-type:content-transfer-encoding:x-priority
-         :x-msmail-priority:x-mailer:x-mimeole;
-        bh=t/e5YCrXrHO5Cxei3c7OT1LiBEmmzu9wNKeEOdTOLxw=;
-        b=HZKk2KPe1TSB6Uy4BWrQkNSrRlzCTAQ79scCTNO2VSjNrNUTVgmdDCiMkP8qf5bAry
-         1EaqL1Utq4P9oM9wBP2hm11RZiWRhsa1vyBz2BDnYUgweh/btGkrZhh8hg3e3QfWjqHJ
-         QcV48126hypynNB9l1gbVKOHx+Ld4mhyaTtGw=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=s7rRc70g46PZl0VT3LlIDwEd/JNsA6PkcOIZ1ZAzIiY=;
+        b=OmjG3rOYdWqsiLM9LsfdEmhVAnjAnIiYajPqCGe/2QVdNVi6SBzxiY+MtyXhUgwMLf
+         98bCmVbJO49ltKNntJRPqOtISIfqhIeelItgMaBtAoaKQSpvpL+7ppEvkxsrYDwtczVF
+         WIsVvlVNIQAmVhcw1a4d3c16f6pwYDSO0kxWI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:from:to:subject:date:mime-version:content-type
-         :content-transfer-encoding:x-priority:x-msmail-priority:x-mailer
-         :x-mimeole;
-        b=e+4HcNMY4vlmLP69qcDFX2E27KYXN1LF4pNT2RFny3ZVffz9CflymmhlCfG6WoheZ4
-         2lu0qjDTbufC+Uyti8eYCJeySbCX52Ua4xKNToeX8mbAeW50lEEAP4CoockUURKJF7nw
-         IOG+miCKasAg2+/edtfCWnjgLuxBbFztNmOBU=
-Received: by 10.210.53.5 with SMTP id b5mr1158504eba.90.1238262525079;
-        Sat, 28 Mar 2009 10:48:45 -0700 (PDT)
-Received: from HPLAPTOP (mwgray.force9.co.uk [212.159.110.144])
-        by mx.google.com with ESMTPS id 23sm3404688eya.16.2009.03.28.10.48.43
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 28 Mar 2009 10:48:44 -0700 (PDT)
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5512
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=dkL0+HQQLamgybS+Z8hcNkZ6H/1kOT4G9NkV/GuuEKsdNpNvAA0sTocRfpEYWykf5h
+         xYIOl7/ETiosTx2dqxN3yfFcjfxWqjis9DH41KeFETSwFZN4m6uuFSbVtaIdCFvLPRHf
+         6TIY750r0ijqy/nsyU0qVk3K8FWMRvGf+LcMg=
+In-Reply-To: <1238258794470-2549665.post@n2.nabble.com>
+Received: by 10.142.171.3 with SMTP id t3mr1410415wfe.195.1238263342215; Sat, 
+	28 Mar 2009 11:02:22 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114972>
 
-I have been tying for a week to get git svn to work. If i do a 'git clone' 
-and if falls over 'git svn fetch' picks up from where it left off, but on 
-completion I can only see the older stuff if at all and a 'git clone rebase' 
-eithr shoud up unreconsilable differences or refuses to execute the command 
-at all, gust giving uphelpfull help afaics.
+The GitHub "Import a Subversion Repository" page does mention that you
+should try to avoid "svn://example.com/project/svn" style URLs (which
+SimuTrans uses).  Maybe it's having trouble with needing a username &
+empty password?
 
-Does anyone have a real work how to for git svn ?
+Unfortunately, I've never actually used the "Import from SVN" on
+GitHub.  I see you've already posted to http://support.github.com/
+about this.  Have you tried asking in the GitHub IRC channel?
 
-Otherwise I am giving up and either going back to svn or over to mercurial.
-
-Aaron
+On Sat, Mar 28, 2009 at 09:46, jamespetts <jamespetts@yahoo.com> wrote:
+>
+>
+>
+> I just tried cloning this repo using the command below, and it appear=
+s
+> to be working just fine. (Hasn't finished, yet. =C2=A0Up to rev 465.)=
+ =C2=A0What
+> is the full command you're using when it will hang?
+>
+> I was not using the command line - I was using the GUI on the Github =
+website.
+> --
+> View this message in context: http://n2.nabble.com/Fork-of-abandoned-=
+SVN-mirror---how-to-keep-up-to-date-with-the-SVN-tp2548952p2549665.html
+> Sent from the git mailing list archive at Nabble.com.
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
+ml
+>
