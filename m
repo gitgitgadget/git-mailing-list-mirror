@@ -1,107 +1,67 @@
-From: "Aaron Gray" <aaronngray.lists@googlemail.com>
-Subject: Re: git svn fails to work
-Date: Sat, 28 Mar 2009 21:43:04 -0000
-Message-ID: <AE2ECDC6B332479293D910D9352DCF21@HPLAPTOP>
-References: <EA1460555FA0423EB6C233B3B0F4F098@HPLAPTOP> <37fcd2780903281351w6f77a647kd44a9afe4d2ee953@mail.gmail.com>
+From: jamespetts <jamespetts@yahoo.com>
+Subject: Re: Fork of abandoned SVN mirror - how to keep up to date with the
+  SVN
+Date: Sat, 28 Mar 2009 14:46:49 -0700 (PDT)
+Message-ID: <1238276809892-2550565.post@n2.nabble.com>
+References: <22756729.post@talk.nabble.com> <8c9a060903280922r6514de83mea4dea84c4116225@mail.gmail.com> <1238258794470-2549665.post@n2.nabble.com> <8c9a060903281102r3eae26edta34899485feb884b@mail.gmail.com> <1238263580197-2549943.post@n2.nabble.com> <8c9a060903281327j33056807j78a2cd03b8151979@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 28 22:44:47 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 28 22:48:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LngKc-0003y1-1S
-	for gcvg-git-2@gmane.org; Sat, 28 Mar 2009 22:44:46 +0100
+	id 1LngO8-0004ze-AY
+	for gcvg-git-2@gmane.org; Sat, 28 Mar 2009 22:48:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757735AbZC1VnN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Mar 2009 17:43:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755094AbZC1VnN
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Mar 2009 17:43:13 -0400
-Received: from mail-ew0-f165.google.com ([209.85.219.165]:38590 "EHLO
-	mail-ew0-f165.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751052AbZC1VnL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Mar 2009 17:43:11 -0400
-Received: by ewy9 with SMTP id 9so1541148ewy.37
-        for <git@vger.kernel.org>; Sat, 28 Mar 2009 14:43:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to:references
-         :subject:date:mime-version:content-type:content-transfer-encoding
-         :x-priority:x-msmail-priority:x-mailer:x-mimeole;
-        bh=Qe5jLNLw/dHuq2jfzohVOX129BvnWo3iLqWM6WfJVis=;
-        b=k0MlcW+HfpT6mw8w6EhEGoGq8OcyD1dmecIhqwNh1Jh7wATFeu3n8mL2GPkdNpZ/n7
-         F9mdJKCsL7x6m95kMtAy0EzdVaOFULK3HUGv4Df8DDjR4poGI0QS9H299c/8lIpXw4Nx
-         2xufXc585w0BbtJ/xAkM0z6XFBAi9TpoRcK+M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:from:to:references:subject:date:mime-version
-         :content-type:content-transfer-encoding:x-priority:x-msmail-priority
-         :x-mailer:x-mimeole;
-        b=jo0jIAiLzkP7X48pT2ZNGl1a1osN9Pi9UcxdfUgN+EhpwRzEjG6q+E4NQ5Izw58p/U
-         A5Cp1pcuJa6/LSaQxkHhlkFjLTawOO5BcJPlGLs++og9YyWZOQ8S1p4MPGFe0QSSZSF8
-         0okpXzGTDCUzRcyYD7yYphmp/ANXAcEow1uzU=
-Received: by 10.210.16.10 with SMTP id 10mr1326062ebp.21.1238276588862;
-        Sat, 28 Mar 2009 14:43:08 -0700 (PDT)
-Received: from HPLAPTOP (mwgray.force9.co.uk [212.159.110.144])
-        by mx.google.com with ESMTPS id 5sm3643311eyf.2.2009.03.28.14.43.08
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 28 Mar 2009 14:43:08 -0700 (PDT)
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5512
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
+	id S1758554AbZC1Vqy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Mar 2009 17:46:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757789AbZC1Vqx
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Mar 2009 17:46:53 -0400
+Received: from kuber.nabble.com ([216.139.236.158]:33597 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751444AbZC1Vqw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Mar 2009 17:46:52 -0400
+Received: from tervel.nabble.com ([192.168.236.150])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
+	id 1LngMc-00033M-28
+	for git@vger.kernel.org; Sat, 28 Mar 2009 14:46:50 -0700
+In-Reply-To: <8c9a060903281327j33056807j78a2cd03b8151979@mail.gmail.com>
+X-Nabble-From: jamespetts@yahoo.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114978>
 
-> On Sat, Mar 28, 2009 at 8:48 PM, Aaron Gray
-> <aaronngray.lists@googlemail.com> wrote:
->> I have been tying for a week to get git svn to work. If i do a 'git
->> clone'
->> and if falls over 'git svn fetch' picks up from where it left off, but on
->> completion I can only see the older stuff if at all and a 'git clone
->> rebase'
->> eithr shoud up unreconsilable differences or refuses to execute the
->> command
->> at all, gust giving uphelpfull help afaics.
+
+Thank you for your reply. Unfortunately, I cannot for the life of me get git-svn to work. It refuses to recognise "git svn" as a valid command, and "svn" does not appear in the list of commands when I type, "svn --help" in Git Bash (I am using Git in Windows, if that makes any difference). I tried to look for svn2git, but the homepage linked from the link that you gave me produced a 404. 
+
+Also, once I have managed to create a Git clone of the SVN repository myself, how do I synchronise that properly with the branch of the other mirror of the SVN repository that I have been using as the trunk so far, such that I can continue to download updates and have [i]just[/i] the changes since the previous versions applied?
+
+
+On Sat, Mar 28, 2009 at 11:06, jamespetts <jamespetts@yahoo.com> wrote:
 >
-> I am afraid if you expect anyone to help you with you, you have to spend
-> a little more time to describe your problem. You have not mentioned what
-> version of Git you use, what operating system, what is layout of your SVN
-> repo, what commands and with what options you used and what was their
-> output. Without that information no one will be able to help you...
+> Thank you very much for your reply :-) Ahh, I didn't realise that that sort of SVN URL should be avoided. Is there any way around that when the project itself uses that sort of URL? And I think that it does require a username and empty password. I haven't tried the Github IRC channel - I must confess - I did not know that there was one.
 >
->> Otherwise I am giving up and either going back to svn or over to
->> mercurial.
+> Any suggestions about how to deal with the other problem?
 >
-> Yeah, right... These kind of threats will make people who want to help to
-> come running....
 
-Sorry, but I am very frustrated with the whole thing, there is not real user
-guides for git-svn other that third party ones which seem to be wrong.
+It looks like GitHub won't keep the project in sync for you, so you're
+probably best off doing the git-svn clone yourself, and maintaining it
+that way.
 
-I am using Fedora 10, GIT 1.6.0.6, the svn repo is standard layout although
-I only want trunk, it here :-
+http://github.com/guides/import-from-subversion
+--
+To unsubscribe from this list: send the line "unsubscribe git" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-    svn co http://llvm.org/svn/llvm-project/llvm/trunk llvm
 
-This is quite a big repository 65000 or more revisions.
 
-The commands
-
-    git svn clone http://llvm.org/svn/llvm-project/llvm/trunk
-
-when connection fails I do a :-
-
-    git svn fetch
-
-gitweb is not updating at all to show any change in the repository.
-
-Aaron
+-- 
+View this message in context: http://n2.nabble.com/Fork-of-abandoned-SVN-mirror---how-to-keep-up-to-date-with-the-SVN-tp2548952p2550565.html
+Sent from the git mailing list archive at Nabble.com.
