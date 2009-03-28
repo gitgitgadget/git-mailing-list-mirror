@@ -1,68 +1,76 @@
-From: "Angus Monro" <angusmonro@people.net.au>
-Subject: Newbie installation problem: non 7-zip archive
-Date: Sat, 28 Mar 2009 12:13:08 +1100
-Message-ID: <7BF674E8656F4DA1A97DA952A4CD50EC@NEOAREOPAGUS>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: On git 1.6 (novice's opinion)
+Date: Fri, 27 Mar 2009 18:30:36 -0700
+Message-ID: <7veiwi5t8j.fsf@gitster.siamese.dyndns.org>
+References: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 28 02:14:47 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Ulrich Windl" <ulrich.windl@rz.uni-regensburg.de>
+X-From: git-owner@vger.kernel.org Sat Mar 28 02:32:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LnN8D-0002IP-Mv
-	for gcvg-git-2@gmane.org; Sat, 28 Mar 2009 02:14:42 +0100
+	id 1LnNPo-0006Xf-Vu
+	for gcvg-git-2@gmane.org; Sat, 28 Mar 2009 02:32:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754620AbZC1BNM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Mar 2009 21:13:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752332AbZC1BNK
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 21:13:10 -0400
-Received: from smtp.mel.people.net.au ([218.214.17.98]:53860 "HELO
-	smtp.mel.people.net.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751737AbZC1BNJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Mar 2009 21:13:09 -0400
-Received: (qmail 5412 invoked from network); 28 Mar 2009 01:12:59 -0000
-Received: from unknown (HELO NEOAREOPAGUS) (218.214.25.233)
-  by smtp.mel.people.net.au with SMTP; 28 Mar 2009 01:12:59 -0000
-X-Mailer: Microsoft Office Outlook 11
-Thread-Index: AcmvQFQ8gYV+5fCuRweWPlMRj/M48gAAeJGg
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
+	id S1752890AbZC1Bap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Mar 2009 21:30:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752401AbZC1Bap
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 21:30:45 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58398 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751204AbZC1Bao (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Mar 2009 21:30:44 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 10D2DA555F;
+	Fri, 27 Mar 2009 21:30:42 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0B8CEA555E; Fri,
+ 27 Mar 2009 21:30:38 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 0D26C218-1B38-11DE-A058-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114929>
 
-Hi,
+"Ulrich Windl" <ulrich.windl@rz.uni-regensburg.de> writes:
 
-I=92m just looking at GIT for the first time, but can=92t get past firs=
-t base.
+> ... Also some seemingly dangerous commands that cannot easily be undone
+> should ask safety questions ("cvs merge (-j)" would also fall into that
+> category.
 
-I=92m working on Win XP 2002 SP3. =A0
+This is slightly an interesting point.
 
-When I download & run PortableGit-1.6.2.1-preview20090322.exe, it asks =
-for
-the installation location, but after I=92ve confirmed that location & p=
-ressed
-OK, it gives me an error message window:
-=A0=A0=A0=A0 Title bar: =A0=A0=93WinGit: MinGW Git + minimal MSys insta=
-llation: error=94
-=A0=A0=A0=A0 Message:=A0=A0=A0=A0=A0=93Non 7-Zip archive.=94
+In CVS and Subversion, "merge" (rather "update") can be a dangerous
+operation.  You start working, you keep building, and you eventually
+accumulate quite a lot of changes but you still cannot see the end of the
+tunnel.  Your changes are incomplete and you will upset others if you
+commit.  Your changes are extensive enough that it can conflict heavily
+with what others have done already, and there is a high chance that you
+can screw up the merging but there is no easy way (unless you tar-up the
+whole work tree before attempting to update) to get back to the state
+before your merge.  Damned if you commit, damned if you don't.  You lose
+either way.
 
-When I download & run Git-1.6.2.1-preview20090322.exe, it immediately
-complains
-=A0=A0=A0=A0 Title bar:   =93Error=94
-=A0=A0=A0=A0 Message:=A0=A0=A0=A0=A0=93The setup files are corrupted. =A0=
-Please obtain a new copy
-of the program.=94
+This is because you cannot have a local commit.  The problem is inherent
+to the centralized nature of these systems.
 
-In both cases, I=92ve downloaded from
-http://code.google.com/p/msysgit/downloads/list, and have tried
-re-downloading & re-running, still without success.
+Distributed systems are different.  Unlike CVS/Subversion's
 
-Any thoughts?
+	work work work; then
 
-Thanks,
+        update to merge, risk screwing up the work in progress (or almost
+	finished work); then
 
-Angus Monro.
+        commit
+
+workflow, in a distributed system, you first commit and then merge,
+preferably from a clean slate.  You will not have to worry about screwing
+up the conflict resolution, because both states (what the other guy did,
+and what you did) are committed safely away and you can reset back to the
+state before you start your merge.
