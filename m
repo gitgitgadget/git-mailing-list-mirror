@@ -1,74 +1,73 @@
-From: Yann Simon <yann.simon.fr@gmail.com>
-Subject: [EGIT] How to deal with important modifications
-Date: Sat, 28 Mar 2009 18:32:08 +0100
-Message-ID: <1238261528.6971.10.camel@localhost>
+From: "Aaron Gray" <aaronngray.lists@googlemail.com>
+Subject: git svn fails to work
+Date: Sat, 28 Mar 2009 17:48:39 -0000
+Message-ID: <EA1460555FA0423EB6C233B3B0F4F098@HPLAPTOP>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Mar 28 18:34:37 2009
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Mar 28 18:50:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LncQ9-0001B7-RA
-	for gcvg-git-2@gmane.org; Sat, 28 Mar 2009 18:34:14 +0100
+	id 1Lncfi-0006c9-8Z
+	for gcvg-git-2@gmane.org; Sat, 28 Mar 2009 18:50:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753508AbZC1RcN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Mar 2009 13:32:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753309AbZC1RcM
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Mar 2009 13:32:12 -0400
-Received: from mail-bw0-f169.google.com ([209.85.218.169]:57559 "EHLO
-	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751842AbZC1RcL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Mar 2009 13:32:11 -0400
-Received: by mail-bw0-f169.google.com with SMTP id 17so1382838bwz.37
-        for <git@vger.kernel.org>; Sat, 28 Mar 2009 10:32:09 -0700 (PDT)
+	id S1753097AbZC1Rst (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Mar 2009 13:48:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752987AbZC1Rss
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Mar 2009 13:48:48 -0400
+Received: from mail-ew0-f165.google.com ([209.85.219.165]:41245 "EHLO
+	mail-ew0-f165.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752888AbZC1Rsr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Mar 2009 13:48:47 -0400
+Received: by ewy9 with SMTP id 9so1488261ewy.37
+        for <git@vger.kernel.org>; Sat, 28 Mar 2009 10:48:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:cc
-         :content-type:date:message-id:mime-version:x-mailer
-         :content-transfer-encoding;
-        bh=5XJ7XJrrhkuyC7GcXRah07LIemeKOkq5dGSEpWh/daw=;
-        b=Fug6rwo1thOB5thLSc/D17bNyutS0g0SX0w2rVc0fH8thPI55Xl1di8kgOD4hVG7V/
-         W+j7wxWK/tc9+PWY4AKTlU5ivd7jeXkwHsxk7FMDBc0K0BEYqJH5vn5SACmO3kVs6mKr
-         hNITe8RgsbH87Ezgn8OhblvzSgRAFw/VqXf6I=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to:subject
+         :date:mime-version:content-type:content-transfer-encoding:x-priority
+         :x-msmail-priority:x-mailer:x-mimeole;
+        bh=t/e5YCrXrHO5Cxei3c7OT1LiBEmmzu9wNKeEOdTOLxw=;
+        b=HZKk2KPe1TSB6Uy4BWrQkNSrRlzCTAQ79scCTNO2VSjNrNUTVgmdDCiMkP8qf5bAry
+         1EaqL1Utq4P9oM9wBP2hm11RZiWRhsa1vyBz2BDnYUgweh/btGkrZhh8hg3e3QfWjqHJ
+         QcV48126hypynNB9l1gbVKOHx+Ld4mhyaTtGw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:cc:content-type:date:message-id:mime-version
-         :x-mailer:content-transfer-encoding;
-        b=N0jT5YaI8X94LRN3doUc+tk3J10MnVQW5vKoZ72J5knANOJ46j+88iXRmPhqSJeTZ1
-         MpRmbmB+RN8lWN1cIG+UGoBRrGDBN+mM4Ml1WA0q+ATYRsR1IDc8LpTOGxuVvn5190YR
-         EAtXmrUImoaGxZi5EMYMuhlR7gcMshoGc1nx8=
-Received: by 10.103.240.5 with SMTP id s5mr904336mur.133.1238261529713;
-        Sat, 28 Mar 2009 10:32:09 -0700 (PDT)
-Received: from ?85.178.115.172? (e178115172.adsl.alicedsl.de [85.178.115.172])
-        by mx.google.com with ESMTPS id s10sm5480166muh.22.2009.03.28.10.32.08
+        d=googlemail.com; s=gamma;
+        h=message-id:from:to:subject:date:mime-version:content-type
+         :content-transfer-encoding:x-priority:x-msmail-priority:x-mailer
+         :x-mimeole;
+        b=e+4HcNMY4vlmLP69qcDFX2E27KYXN1LF4pNT2RFny3ZVffz9CflymmhlCfG6WoheZ4
+         2lu0qjDTbufC+Uyti8eYCJeySbCX52Ua4xKNToeX8mbAeW50lEEAP4CoockUURKJF7nw
+         IOG+miCKasAg2+/edtfCWnjgLuxBbFztNmOBU=
+Received: by 10.210.53.5 with SMTP id b5mr1158504eba.90.1238262525079;
+        Sat, 28 Mar 2009 10:48:45 -0700 (PDT)
+Received: from HPLAPTOP (mwgray.force9.co.uk [212.159.110.144])
+        by mx.google.com with ESMTPS id 23sm3404688eya.16.2009.03.28.10.48.43
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 28 Mar 2009 10:32:09 -0700 (PDT)
-X-Mailer: Evolution 2.22.3.1 
+        Sat, 28 Mar 2009 10:48:44 -0700 (PDT)
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5512
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114972>
 
-Hi,
+I have been tying for a week to get git svn to work. If i do a 'git clone' 
+and if falls over 'git svn fetch' picks up from where it left off, but on 
+completion I can only see the older stuff if at all and a 'git clone rebase' 
+eithr shoud up unreconsilable differences or refuses to execute the command 
+at all, gust giving uphelpfull help afaics.
 
-I am working on the synchronization view. It is not 100% functional yet.
-The view is not updated when a local file is modified for example.
-As the modifications are getting important, I was wondering how to deal
-with it. Should I continue my work an send all the patches when
-finished?
+Does anyone have a real work how to for git svn ?
 
-To have an overview of the modifications:
-http://github.com/yanns/egit/commit/18c4a928d53345802a8c9641dcb2d457ebbe2cbc
-http://github.com/yanns/egit/commit/9fab398fa1b7b6efa9532b3c09e5bcfcc8bb9419
+Otherwise I am giving up and either going back to svn or over to mercurial.
 
-Or should I begin to send patches, but by not activating the function
-yet?
-(It could be a way to have other people to help contributing.)
-
-Yann
+Aaron
