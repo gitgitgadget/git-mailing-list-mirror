@@ -1,63 +1,53 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: First round of UGFWIINI results
-Date: Sat, 28 Mar 2009 03:42:05 -0400
-Message-ID: <20090328074205.GB9013@coredump.intra.peff.net>
-References: <alpine.DEB.1.00.0902171745320.6185@intel-tinevez-2-302> <m37i2b2ecu.fsf@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] difftool: add a -y shortcut for --no-prompt
+Date: Sat, 28 Mar 2009 01:56:02 -0700
+Message-ID: <7veiwivxel.fsf@gitster.siamese.dyndns.org>
+References: <1237962599-29625-1-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 28 08:47:16 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 28 10:00:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LnTG7-0002rp-FN
-	for gcvg-git-2@gmane.org; Sat, 28 Mar 2009 08:47:15 +0100
+	id 1LnUPP-0001FX-Fv
+	for gcvg-git-2@gmane.org; Sat, 28 Mar 2009 10:00:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753054AbZC1HmL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Mar 2009 03:42:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752327AbZC1HmL
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Mar 2009 03:42:11 -0400
-Received: from peff.net ([208.65.91.99]:51605 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751137AbZC1HmK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Mar 2009 03:42:10 -0400
-Received: (qmail 25227 invoked by uid 107); 28 Mar 2009 07:42:23 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 28 Mar 2009 03:42:23 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 28 Mar 2009 03:42:05 -0400
-Content-Disposition: inline
-In-Reply-To: <m37i2b2ecu.fsf@localhost.localdomain>
+	id S1751284AbZC1I4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Mar 2009 04:56:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751227AbZC1I4L
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Mar 2009 04:56:11 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64928 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751102AbZC1I4K (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Mar 2009 04:56:10 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 730D0A5F0B;
+	Sat, 28 Mar 2009 04:56:07 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 7AC20A5F06; Sat,
+ 28 Mar 2009 04:56:04 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 46BB4DDA-1B76-11DE-955E-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114941>
 
-On Fri, Mar 27, 2009 at 08:08:04AM -0700, Jakub Narebski wrote:
+David Aguilar <davvid@gmail.com> writes:
 
-> Not exactly UGFWIINI yet, but:
-> 
->   "Music collaboration via git?"
->   http://www.37signals.com/svn/posts/1655-music-collaboration-via-git
->   (sharing LilyPond source files for music notation).
+> This is another consistency cleanup to make git-difftool's options
+> match git-mergetool.
+> ...
+> @@ -60,11 +60,11 @@ sub generate_command
+>  			$ENV{GIT_DIFF_TOOL} = substr($arg, 7);
+>  			next;
+>  		}
+> -		if ($arg eq '--no-prompt') {
+> +		if ($arg eq '-y' || '--no-prompt') {
 
-I do something similar, though I am usually not writing in lilypond but
-rather in ABC or human-readable chord charts with accompanying lyrics.
-However, my band-mates are not git-literate, so I usually end up pulling
-their versions directly from email into the working tree, and then
-committing to git myself.
-
-For added UGFWIINI, I also keep multitrack recording projects in the
-same repo. Live single tracks are kept as pristine "source", and then
-are mixed down (with filters and effects added) into a final product.
-It's even driven by make. ;)
-
-However, the source files are annoyingly large to work with in git, so I
-keep them outside of the repo as immutable source and refer to them by
-unique name. Only the ways in which they are filtered or combined are in
-the repo.
-
--Peff
+This was the typo that broke 'pu'; I fixed it up and re-queued the series.
