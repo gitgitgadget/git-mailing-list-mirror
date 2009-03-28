@@ -1,83 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How do I force git to forget about merging a binary file that is
-  to stay deleted on the target branch?
-Date: Sat, 28 Mar 2009 08:07:24 -0700
-Message-ID: <7viqltvg7n.fsf@gitster.siamese.dyndns.org>
-References: <e38bce640903272226l3facf47br9b1849bf708c3881@mail.gmail.com>
- <51419b2c0903280547y1bb5664dj70e4e6aa939bd015@mail.gmail.com>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: git svn clone failure
+Date: Sat, 28 Mar 2009 16:20:29 +0100
+Message-ID: <200903281620.29564.markus.heidelberg@web.de>
+References: <A5DCF978-5D10-4A6C-BE4B-1024FA475E2F@gmail.com> <200903281359.34412.markus.heidelberg@web.de> <F76E6356-60EB-4FDE-B97E-CB34FF2D7017@gmail.com>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Brent Goodrick <bgoodr@gmail.com>, git@vger.kernel.org
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 28 16:09:07 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Lachlan Deck <lachlan.deck@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 28 16:22:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lna9h-0003pJ-IE
-	for gcvg-git-2@gmane.org; Sat, 28 Mar 2009 16:09:06 +0100
+	id 1LnaMG-0007f7-Rq
+	for gcvg-git-2@gmane.org; Sat, 28 Mar 2009 16:22:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755858AbZC1PHe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Mar 2009 11:07:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755426AbZC1PHd
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Mar 2009 11:07:33 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63969 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755242AbZC1PHd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 Mar 2009 11:07:33 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id D4059ADFD;
-	Sat, 28 Mar 2009 11:07:30 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E835FADFC; Sat,
- 28 Mar 2009 11:07:25 -0400 (EDT)
-In-Reply-To: <51419b2c0903280547y1bb5664dj70e4e6aa939bd015@mail.gmail.com>
- (Elijah Newren's message of "Sat, 28 Mar 2009 06:47:38 -0600")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 28AE2C3E-1BAA-11DE-A0E0-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+	id S1756741AbZC1PUe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Mar 2009 11:20:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755137AbZC1PUd
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Mar 2009 11:20:33 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:40019 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754018AbZC1PUd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Mar 2009 11:20:33 -0400
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 8C06AFC31162;
+	Sat, 28 Mar 2009 16:20:30 +0100 (CET)
+Received: from [89.59.72.204] (helo=.)
+	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1LnaKk-0007Fl-00; Sat, 28 Mar 2009 16:20:30 +0100
+User-Agent: KMail/1.9.9
+In-Reply-To: <F76E6356-60EB-4FDE-B97E-CB34FF2D7017@gmail.com>
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX1/JHe22jW49Juh1ENlJ8Vn+wQEIanFvYjOT3zwv
+	zpNrJYVehzaLo7+QXodV7Yysf6cwADeHssws8xZRAkMJhsbg1b
+	ZPjmSE4fTjtm8w53rsOA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114961>
 
-Elijah Newren <newren@gmail.com> writes:
+Lachlan Deck, 28.03.2009:
+> On 28/03/2009, at 11:59 PM, Markus Heidelberg wrote:
+> 
+> > Lachlan Deck, 27.03.2009:
+> >> Hi there,
+> >>
+> >> I'm trying to clone an existing svn repository with git (just getting
+> >> started with git) and it keeps failing with:
+> >> ...
+> >> r604 = 6428e63734a21ee5fcb4593274747e2758578a91 (git-svn)
+> >> fatal: unable to run 'git-svn'
+> >
+> > Are you sure r604 isn't the latest svn revision?
+> 
+> A few thousand out, yes.
+> 
+> > I always get this error when doing "git svn fetch" with an http URL,  
+> > it
+> > doesn't occur with an svn URL. But everything seems to work fine,
+> > though.
+> 
+> Interesting. Yes, it's from an https url. I'll try svn+ssh://..
+> But are you saying there's no way to get more info about the error?
 
-> On Fri, Mar 27, 2009 at 11:26 PM, Brent Goodrick <bgoodr@gmail.com> w=
-rote:
->> How do I commit a merge but force git to forget about merging one fi=
-le
->> that I don't want on the target branch, when it is binary, and when =
-it
->> was changed on the source branch, but was deleted on the target bran=
-ch
->> (and should stay deleted on the target branch)?
->>
->> The details: I am merging a "work" branch into a "home" branch. =C2=A0=
-There
->> is one file called "TimeSheets/Timesheet Exempt.XLS" that is binary.
->> I don't want that file on the "home" branch, but do want it on the
->> "work" branch. =C2=A0I had made an editing change to that file on th=
-e
->> "work" branch, along with a bunch of other changes I do want to merg=
-e
->> into the "home" branch. But no matter what I do, I can't force git t=
-o
->> forget about that "TimeSheets/Timesheet Exempt.XLS" file.
->>
->> I've tried various flavors of git-checkout and git-reset to no
->> avail. This is what I see at the very last before I gave up:
->
-> You can resolve this merge conflict by running
-> $ git rm TimeSheets/Timesheet\ Exempt.XLS
->
-> which will make git delete the file from your working copy and the
-> index, at which point you can then make a commit that does not includ=
-e
-> this file.
+At least I don't have more info about it except for this:
+I use Gentoo Linux and the git ebuild (I have the distribution package
+installed, but use the self-compiled git) says
 
-But is this what you really want to do?  After doing such a "remove it"
-merge resolution at Home, wouldn't merging it back to Work remove the
-file?
+    "Per Gentoo bugs #223747, #238586, when subversion is built"
+    "with USE=dso, there may be weird crashes in git-svn. You"
+    "have been warned."
+
+I have subversion compiled with dso (Enable runtime module search), it's
+enabled per default. And since it worked, I didn't change it. But it
+would be interesting to see, if this error has something to do with it.
+Maybe I'll try it out.
+
+Markus
