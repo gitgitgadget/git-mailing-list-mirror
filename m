@@ -1,93 +1,68 @@
-From: jamespetts <jamespetts@yahoo.com>
-Subject: Re: Fork of abandoned SVN mirror - how to keep up to date with the
-  SVN
-Date: Sat, 28 Mar 2009 11:06:20 -0700 (PDT)
-Message-ID: <1238263580197-2549943.post@n2.nabble.com>
-References: <22756729.post@talk.nabble.com> <8c9a060903280922r6514de83mea4dea84c4116225@mail.gmail.com> <1238258794470-2549665.post@n2.nabble.com> <8c9a060903281102r3eae26edta34899485feb884b@mail.gmail.com>
+From: Jacob Helwig <jacob.helwig@gmail.com>
+Subject: Re: Fork of abandoned SVN mirror - how to keep up to date with the 
+	SVN
+Date: Sat, 28 Mar 2009 13:27:07 -0700
+Message-ID: <8c9a060903281327j33056807j78a2cd03b8151979@mail.gmail.com>
+References: <22756729.post@talk.nabble.com> <8c9a060903280922r6514de83mea4dea84c4116225@mail.gmail.com> 
+	<1238258794470-2549665.post@n2.nabble.com> <8c9a060903281102r3eae26edta34899485feb884b@mail.gmail.com> 
+	<1238263580197-2549943.post@n2.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 28 19:08:20 2009
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: jamespetts <jamespetts@yahoo.com>
+X-From: git-owner@vger.kernel.org Sat Mar 28 21:28:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lncwj-00042S-1e
-	for gcvg-git-2@gmane.org; Sat, 28 Mar 2009 19:07:53 +0100
+	id 1Lnf9E-0005it-KW
+	for gcvg-git-2@gmane.org; Sat, 28 Mar 2009 21:28:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753392AbZC1SGW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Mar 2009 14:06:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753312AbZC1SGW
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 Mar 2009 14:06:22 -0400
-Received: from kuber.nabble.com ([216.139.236.158]:39507 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753116AbZC1SGW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 Mar 2009 14:06:22 -0400
-Received: from tervel.nabble.com ([192.168.236.150])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
-	id 1LncvE-0003HY-6V
-	for git@vger.kernel.org; Sat, 28 Mar 2009 11:06:20 -0700
-In-Reply-To: <8c9a060903281102r3eae26edta34899485feb884b@mail.gmail.com>
-X-Nabble-From: jamespetts@yahoo.com
+	id S1752888AbZC1U1Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Mar 2009 16:27:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752802AbZC1U1Y
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 Mar 2009 16:27:24 -0400
+Received: from wf-out-1314.google.com ([209.85.200.170]:3006 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751211AbZC1U1X convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 28 Mar 2009 16:27:23 -0400
+Received: by wf-out-1314.google.com with SMTP id 29so1924104wff.4
+        for <git@vger.kernel.org>; Sat, 28 Mar 2009 13:27:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=2rQ/GgIK3b60yKPlfEg0PMXtv2DqNbUydB697YI4AkY=;
+        b=kJjrl/BU018/xRQpsvOVpW2Ot4vqRIaT0CRle0OuV4r/3JLfCDfnsgKrJFHbMLwysq
+         oVN/jIUhYQCedz0N/KLaF/eeI76+eL908896bnRrs2sNKTKZruSEzrFAqb26zbtkWX1c
+         Zotp0Qy50ugpS5KO6eIGOVXgv90fHVdr05GqI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=BaUDV8CnSVdVav5vTK6w8FZpR3KLxKJ3gBd0bdEjF2Z1vB60mw/TjDxQ34mt0ioF5T
+         WKsJ2xx+85xHiEdHjpPfyKaau4873zUidgS86KJOpTjuDht4X2ZDtAeCNGvjBhVe9FmR
+         JBVFQgWNV4dtAZnh9mKMnfMZMKlPIFwkWtwZU=
+In-Reply-To: <1238263580197-2549943.post@n2.nabble.com>
+Received: by 10.142.214.11 with SMTP id m11mr1451041wfg.183.1238272042245; 
+	Sat, 28 Mar 2009 13:27:22 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114975>
 
-
-Thank you very much for your reply :-) Ahh, I didn't realise that that =
-sort of SVN URL should be avoided. Is there any way around that when th=
-e project itself uses that sort of URL? And I think that it does requir=
-e a username and empty password. I haven't tried the Github IRC channel=
- - I must confess - I did not know that there was one.=20
-
-Any suggestions about how to deal with the other problem?
-
-
-
-The GitHub "Import a Subversion Repository" page does mention that you
-should try to avoid "svn://example.com/project/svn" style URLs (which
-SimuTrans uses).  Maybe it's having trouble with needing a username &
-empty password?
-
-Unfortunately, I've never actually used the "Import from SVN" on
-GitHub.  I see you've already posted to http://support.github.com/
-about this.  Have you tried asking in the GitHub IRC channel?
-
-On Sat, Mar 28, 2009 at 09:46, jamespetts <jamespetts@yahoo.com> wrote:
+On Sat, Mar 28, 2009 at 11:06, jamespetts <jamespetts@yahoo.com> wrote:
 >
+> Thank you very much for your reply :-) Ahh, I didn't realise that that sort of SVN URL should be avoided. Is there any way around that when the project itself uses that sort of URL? And I think that it does require a username and empty password. I haven't tried the Github IRC channel - I must confess - I did not know that there was one.
 >
+> Any suggestions about how to deal with the other problem?
 >
-> I just tried cloning this repo using the command below, and it appear=
-s
-> to be working just fine. (Hasn't finished, yet. =C2=A0Up to rev 465.)=
- =C2=A0What
-> is the full command you're using when it will hang?
->
-> I was not using the command line - I was using the GUI on the Github =
-website.
-> --
-> View this message in context: http://n2.nabble.com/Fork-of-abandoned-=
-SVN-mirror---how-to-keep-up-to-date-with-the-SVN-tp2548952p2549665.html
-> Sent from the git mailing list archive at Nabble.com.
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
->
---
-To unsubscribe from this list: send the line "unsubscribe git" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
+It looks like GitHub won't keep the project in sync for you, so you're
+probably best off doing the git-svn clone yourself, and maintaining it
+that way.
 
-
---=20
-View this message in context: http://n2.nabble.com/Fork-of-abandoned-SV=
-N-mirror---how-to-keep-up-to-date-with-the-SVN-tp2548952p2549943.html
-Sent from the git mailing list archive at Nabble.com.
+http://github.com/guides/import-from-subversion
