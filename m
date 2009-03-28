@@ -1,71 +1,68 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: patch series starting with [JGIT PATCH 1/5] Remove dead/unused reset method from CountingOutputStream
-Date: Sat, 28 Mar 2009 00:53:24 +0100
-Message-ID: <200903280053.25070.robin.rosenberg.lists@dewire.com>
-References: <1238030515-31768-1-git-send-email-spearce@spearce.org> <200903270911.54571.robin.rosenberg.lists@dewire.com> <20090327145550.GN23521@spearce.org>
+From: "Angus Monro" <angusmonro@people.net.au>
+Subject: Newbie installation problem: non 7-zip archive
+Date: Sat, 28 Mar 2009 12:13:08 +1100
+Message-ID: <7BF674E8656F4DA1A97DA952A4CD50EC@NEOAREOPAGUS>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Marek Zawirski <marek.zawirski@gmail.com>,
-	Daniel Cheng <j16sdiz+freenet@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Mar 28 00:56:06 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Mar 28 02:14:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LnLuA-0007Kl-6a
-	for gcvg-git-2@gmane.org; Sat, 28 Mar 2009 00:56:06 +0100
+	id 1LnN8D-0002IP-Mv
+	for gcvg-git-2@gmane.org; Sat, 28 Mar 2009 02:14:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759276AbZC0Xxf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Mar 2009 19:53:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764371AbZC0Xxe
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 19:53:34 -0400
-Received: from mail.dewire.com ([83.140.172.130]:6258 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1765132AbZC0Xxd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Mar 2009 19:53:33 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id A8CB21484DA5;
-	Sat, 28 Mar 2009 00:53:26 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id eEawAaRhUyGo; Sat, 28 Mar 2009 00:53:25 +0100 (CET)
-Received: from sleipner.localnet (unknown [10.9.0.4])
-	by dewire.com (Postfix) with ESMTP id DF634800784;
-	Sat, 28 Mar 2009 00:53:25 +0100 (CET)
-User-Agent: KMail/1.11.1 (Linux/2.6.27-14-generic; KDE/4.2.1; i686; ; )
-In-Reply-To: <20090327145550.GN23521@spearce.org>
-Content-Disposition: inline
+	id S1754620AbZC1BNM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Mar 2009 21:13:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752332AbZC1BNK
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 Mar 2009 21:13:10 -0400
+Received: from smtp.mel.people.net.au ([218.214.17.98]:53860 "HELO
+	smtp.mel.people.net.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1751737AbZC1BNJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Mar 2009 21:13:09 -0400
+Received: (qmail 5412 invoked from network); 28 Mar 2009 01:12:59 -0000
+Received: from unknown (HELO NEOAREOPAGUS) (218.214.25.233)
+  by smtp.mel.people.net.au with SMTP; 28 Mar 2009 01:12:59 -0000
+X-Mailer: Microsoft Office Outlook 11
+Thread-Index: AcmvQFQ8gYV+5fCuRweWPlMRj/M48gAAeJGg
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/114928>
 
-fredag 27 mars 2009 15:55:50 skrev "Shawn O. Pearce" <spearce@spearce.org>:
-> Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-> > Seems fine. While verifying this I got this error.
-> > 
-> > jgit push sftp://me@calhost/home/me/tmp/cb/.git master:master
-> > 
-> > Counting objects:       20464
-> > Compressing objects:    100% (20464/20464)
-> > Writing objects:        100% (20464/20464)
-> > fatal: Can't write /home/me/tmp/cb/.git/objects/../HEAD: Failure
-> > fatal: sftp://me@localhost/home/me/tmp/cb/.git: cannot create HEAD
-> 
-> I can't reproduce this error with sftp://.
-> 
-> At first, it failed to push because my target directory didn't exist.
-Same here.
+Hi,
 
-> After I made the target directory, I also had to create below it
-> "refs", "objects", "objects/pack" in order to get the push to
-> succeed, and then it went through clean.
+I=92m just looking at GIT for the first time, but can=92t get past firs=
+t base.
 
-hm, I git init'd the repo on the server, that's cheating I suppose.
+I=92m working on Win XP 2002 SP3. =A0
 
--- robin
+When I download & run PortableGit-1.6.2.1-preview20090322.exe, it asks =
+for
+the installation location, but after I=92ve confirmed that location & p=
+ressed
+OK, it gives me an error message window:
+=A0=A0=A0=A0 Title bar: =A0=A0=93WinGit: MinGW Git + minimal MSys insta=
+llation: error=94
+=A0=A0=A0=A0 Message:=A0=A0=A0=A0=A0=93Non 7-Zip archive.=94
+
+When I download & run Git-1.6.2.1-preview20090322.exe, it immediately
+complains
+=A0=A0=A0=A0 Title bar:   =93Error=94
+=A0=A0=A0=A0 Message:=A0=A0=A0=A0=A0=93The setup files are corrupted. =A0=
+Please obtain a new copy
+of the program.=94
+
+In both cases, I=92ve downloaded from
+http://code.google.com/p/msysgit/downloads/list, and have tried
+re-downloading & re-running, still without success.
+
+Any thoughts?
+
+Thanks,
+
+Angus Monro.
