@@ -1,76 +1,104 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
-X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 3/3] clone: always fetch remote HEAD
-Date: Fri, 3 Jun 2011 00:36:50 -0500
-Message-ID: <BANLkTim03_3DLdDkc3QgFrcUa0Fqhhqnbw@mail.gmail.com>
-References: <20110603050901.GA883@sigill.intra.peff.net> <20110603051805.GC1008@sigill.intra.peff.net>
+X-Spam-ASN: AS31976 209.132.176.0/21
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] git-svn: fix ls-tree usage with dash-prefixed paths
+Date: Sat, 28 Mar 2009 23:10:45 -0700
+Message-ID: <20090329061045.GA29721@dcvr.yhbt.net>
+References: <22719363.post@talk.nabble.com> <20090326130213.GC3114@atjola.homenet> <83dfc36c0903260735q3231ce96h5949d1123858995f@mail.gmail.com> <83dfc36c0903270418q59a81290xcb8043b8c037be18@mail.gmail.com> <20090329060858.GB15773@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-NNTP-Posting-Date: Fri, 3 Jun 2011 05:40:14 +0000 (UTC)
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Dmitry Ivankov <divanorama@gmail.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 29 Mar 2009 06:11:02 +0000 (UTC)
+Cc: git@vger.kernel.org, Anton Gyllenberg <anton@iki.fi>
+To: Junio C Hamano <gitster@pobox.com>
 Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=/rF9Xt5MViB6hvyzQnpssPmGKryqhWL/uWEgvi2Okvg=;
-        b=O6Z3Hxy1iNqdUNS7bZdfEMZbUt2d3SiNrmosnglPnspo0sBhCd7S0CqeTmcvuY4s79
-         eXKMJo1TBWrN2arVbP2Cvb/k09F0Imb0kQ1JiqfOFUBpvMiP2euvUlxNcTlg9hDSuyOP
-         1iVPsxo+PDK/dMTXAQnUcfNsCFxsvC1bVA57Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=blMD7VHEcyTQ4Pr35YdUV89cBGyfHxYJ9cg+sHVaEv3D2du6nVmOtYfVhVMZs8eOTg
-         orDB6s3Ue2sXP8ChwcARKhPfIV+iO04o3zl88r75HBDG+Fe4C82b8vjT0AHa2AVv5xS9
-         O/kxKixXjVuzADmwYat4S2Bfius5fYIreBqVI=
-In-Reply-To: <20110603051805.GC1008@sigill.intra.peff.net>
+Envelope-to: gcvg-git-2@gmane.org
+Content-Disposition: inline
+In-Reply-To: <20090329060858.GB15773@dcvr.yhbt.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/175000>
-Received: from vger.kernel.org ([209.132.180.67]) by lo.gmane.org with esmtp
- (Exim 4.69) (envelope-from <git-owner@vger.kernel.org>) id 1QSN75-0000iI-FP
- for gcvg-git-2@lo.gmane.org; Fri, 03 Jun 2011 07:40:03 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115000>
+Received: from vger.kernel.org ([209.132.176.167]) by lo.gmane.org with esmtp
+ (Exim 4.50) id 1LnoFm-0007wJ-J6 for gcvg-git-2@gmane.org; Sun, 29 Mar 2009
+ 08:12:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751256Ab1FCFhb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Jun 2011
- 01:37:31 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:43061 "EHLO
- mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1750890Ab1FCFhb (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Jun
- 2011 01:37:31 -0400
-Received: by qwk3 with SMTP id 3so678623qwk.19 for <git@vger.kernel.org>;
- Thu, 02 Jun 2011 22:37:30 -0700 (PDT)
-Received: by 10.229.140.195 with SMTP id j3mr1225004qcu.5.1307079450117; Thu,
- 02 Jun 2011 22:37:30 -0700 (PDT)
-Received: by 10.229.20.6 with HTTP; Thu, 2 Jun 2011 22:36:50 -0700 (PDT)
+ S1751928AbZC2GKs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Mar 2009
+ 02:10:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751416AbZC2GKr
+ (ORCPT <rfc822;git-outgoing>); Sun, 29 Mar 2009 02:10:47 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:38060 "EHLO dcvr.yhbt.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1751404AbZC2GKr
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Mar 2009 02:10:47 -0400
+Received: from localhost (unknown [127.0.2.5]) by dcvr.yhbt.net (Postfix)
+ with ESMTP id C2722113088; Sun, 29 Mar 2009 06:10:45 +0000 (UTC)
 Sender: git-owner@vger.kernel.org
 
-Heya,
+To find the blob object name given a tree and pathname, we were
+incorrectly calling "git ls-tree" with a "--" argument followed
+by the pathname of the file we wanted to get.
 
-On Fri, Jun 3, 2011 at 00:18, Jeff King <peff@peff.net> wrote:
-> So I guess it doesn't like us asking for HEAD. But the fact that it
-> sends weird data to fast-import instead of saying "hey, HEAD doesn't
-> exist" has me confused. I'm not sure if this is something one should not
-> be doing with remote helpers, or if the testgit helper is simply buggy
-> or incomplete.
+  git ls-tree <TREE> -- --dashed/path/name.c
 
-Definitely the latter, quite possibly the former. I don't know if
-asking for "HEAD" makes much sense in a remote-helper context though.
-In Mercurial it does (e.g., tip), and in svn sort of, but I don't know
-about other vcs-es. Perhaps it should be guarded by a capability?
+Unlike many command-line interfaces, the "--" alone does not
+symbolize the end of non-option arguments on the command-line.
 
+ls-tree interprets the "--" as a prefix to match against, thus
+the entire contents of the --dashed/* hierarchy would be
+returned because the "--" matches "--dashed" and every path
+under it.
+
+Thanks to Anton Gyllenberg for pointing me toward the
+Twisted repository as a real-world example of this case.
+
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+
+ Junio: This can go to maint.  Thanks
+
+ git-svn.perl |   15 +++++++++------
+ 1 files changed, 9 insertions(+), 6 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 8be6be0..f21cfb4 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -3387,15 +3387,18 @@ sub delete_entry {
+ 	return undef if ($gpath eq '');
+ 
+ 	# remove entire directories.
+-	if (command('ls-tree', $self->{c}, '--', $gpath) =~ /^040000 tree/) {
++	my ($tree) = (command('ls-tree', '-z', $self->{c}, "./$gpath")
++	                 =~ /\A040000 tree ([a-f\d]{40})\t\Q$gpath\E\0/);
++	if ($tree) {
+ 		my ($ls, $ctx) = command_output_pipe(qw/ls-tree
+ 		                                     -r --name-only -z/,
+-				                     $self->{c}, '--', $gpath);
++				                     $tree);
+ 		local $/ = "\0";
+ 		while (<$ls>) {
+ 			chomp;
+-			$self->{gii}->remove($_);
+-			print "\tD\t$_\n" unless $::_q;
++			my $rmpath = "$gpath/$_";
++			$self->{gii}->remove($rmpath);
++			print "\tD\t$rmpath\n" unless $::_q;
+ 		}
+ 		print "\tD\t$gpath/\n" unless $::_q;
+ 		command_close_pipe($ls, $ctx);
+@@ -3414,8 +3417,8 @@ sub open_file {
+ 	goto out if is_path_ignored($path);
+ 
+ 	my $gpath = $self->git_path($path);
+-	($mode, $blob) = (command('ls-tree', $self->{c}, '--', $gpath)
+-	                     =~ /^(\d{6}) blob ([a-f\d]{40})\t/);
++	($mode, $blob) = (command('ls-tree', '-z', $self->{c}, "./$gpath")
++	                     =~ /\A(\d{6}) blob ([a-f\d]{40})\t\Q$gpath\E\0/);
+ 	unless (defined $mode && defined $blob) {
+ 		die "$path was not found in commit $self->{c} (r$rev)\n";
+ 	}
 -- 
-Cheers,
-
