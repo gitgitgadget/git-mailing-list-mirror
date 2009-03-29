@@ -1,114 +1,102 @@
-From: Scott Chacon <schacon@gmail.com>
-Subject: Re: Git Download/Bootstrap Suggestion
-Date: Sun, 29 Mar 2009 16:29:38 +0100
-Message-ID: <d411cc4a0903290829p7e7ad14aob62e222877956ba5@mail.gmail.com>
-References: <49CD0841.9000602@gmail.com>
-	 <fabb9a1e0903271621g392eefdeu85b46c655c1ad067@mail.gmail.com>
-	 <49CE4BD2.4060808@drmicha.warpmail.net>
-	 <fabb9a1e0903280915l512374ebt8a1f804666dfe87b@mail.gmail.com>
-	 <8c9a060903280924h62f4d7aq47819bf3264e6ad6@mail.gmail.com>
+From: Marcin Owsiany <porridge@debian.org>
+Subject: git-svn stubbornly re-creating branch "master"
+Date: Sun, 29 Mar 2009 18:13:47 +0100
+Message-ID: <20090329171347.GA26866@beczulka>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Mike Gaffney <mr.gaffo@gmail.com>, git@vger.kernel.org
-To: Jacob Helwig <jacob.helwig@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 29 17:31:23 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 29 19:35:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lnwyl-0004Vu-OM
-	for gcvg-git-2@gmane.org; Sun, 29 Mar 2009 17:31:20 +0200
+	id 1Lnyuf-0002et-BE
+	for gcvg-git-2@gmane.org; Sun, 29 Mar 2009 19:35:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758654AbZC2P3m convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Mar 2009 11:29:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757810AbZC2P3m
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Mar 2009 11:29:42 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:51673 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757775AbZC2P3l convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 Mar 2009 11:29:41 -0400
-Received: by fxm2 with SMTP id 2so1633816fxm.37
-        for <git@vger.kernel.org>; Sun, 29 Mar 2009 08:29:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=qZPhyoKHNNnAVaBeJvve84sFLZLekuxfbZfcddGqrIk=;
-        b=H148WOYIKirCDVtGZJhuCnkydoMAHJUbLB2WhniPrZ7dHkQW2zze3t8Q/9/ymfY4KQ
-         ixaj8BoVTzRBiQTKUdZunox6dESfUq8VU2zQDqY7GAlR5kVjSUoJ0zYPQtQUrLGrDpwd
-         3jiNSszf2Ab/Wu5icGP5IX/emGxOiSyFM9+z0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ciw7h6nL6WWu+og/xHXixWRDGbhOou/oBvORIK/vPfLzcGJdTgXLD5heSRDKCeRaDt
-         HpJe5LG4p/cyIKy0rhvS9Wci0qIcXOm6fdPe5jslXIGU0wM1sbM/816h3hia28mNNh0N
-         1P27CyBkPwBcA9jnkHfKs/69+d6HHIvxMdZNY=
-Received: by 10.223.112.202 with SMTP id x10mr3156502fap.68.1238340578456; 
-	Sun, 29 Mar 2009 08:29:38 -0700 (PDT)
-In-Reply-To: <8c9a060903280924h62f4d7aq47819bf3264e6ad6@mail.gmail.com>
+	id S1752233AbZC2Rdm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Mar 2009 13:33:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751436AbZC2Rdl
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Mar 2009 13:33:41 -0400
+Received: from mail0.vicoop.com ([85.17.210.107]:59922 "EHLO mail.vicoop.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751390AbZC2Rdl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Mar 2009 13:33:41 -0400
+X-Greylist: delayed 1185 seconds by postgrey-1.27 at vger.kernel.org; Sun, 29 Mar 2009 13:33:40 EDT
+Received: from localhost (dsl-49-57.dsl.netsource.ie [213.79.49.57])
+	(Authenticated sender: porridge@sl.owsiany.pl)
+	by mail.vicoop.com (Postfix) with ESMTP id 4745E1E8EE
+	for <git@vger.kernel.org>; Sun, 29 Mar 2009 19:13:50 +0200 (CEST)
+Received: from mowsiany by localhost with local (Exim 4.67)
+	(envelope-from <marcin@owsiany.pl>)
+	id 1LnyZv-00076f-6s
+	for git@vger.kernel.org; Sun, 29 Mar 2009 18:13:47 +0100
+Content-Disposition: inline
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115030>
 
-On Sat, Mar 28, 2009 at 5:24 PM, Jacob Helwig <jacob.helwig@gmail.com> =
-wrote:
-> So he can compile git from a git repo, and not have to download it
-> (again) after compiling from a work tree. =C2=A0Saving a step, and
-> re-compiling a bunch of files when he upgrades.
->
+Hello,
 
-I'm a bit unclear why you would compile/install the second time - if
-it's the latest tag, it should be the same as you got from the archive
-on the website, the second step should just be re-installing the exact
-same Git.  Why not just build it from source the first time and then
-pull down the full source for the subsequent times - you're losing
-seconds total in the process.  Unless you're doing this all the time,
-in which case it seems like it makes more sense to just keep one repo,
-build a package of some sort (rpm, deb, etc) and distribute that to
-all the computers you're using.
+I created my git repository by cloning it with git-svn from an upstream SVN
+repository. When I did that, a branch "master" was created. Afterwards I
+renamed that branch to "upstream". However every time I "git-svn fetch", it
+recreates the "master" branch, pointing it at the newest upstream commit.
 
-I mean, if you really, really want it then you can :
+Ideally, I'd like it to just forget about "master" and do the same to my
+"upstream" branch. Is it possible?
 
-a) clone the website source : git://github.com/schacon/gitscm
-b) write the script that would do it on each release (scripts/ dir)
-c) test it
-d) write some code that would dynamically link that in the downloads
-page at the bottom
+If not, then is it at least possible to have it not recreate the "master"
+branch? It clutters my view.
 
-If that works then I'll probably pull it in for you.
 
-Scott
+Here's a typescript (with git 1:1.5.6.3-1.1ubuntu2):
 
-> On Sat, Mar 28, 2009 at 09:15, Sverre Rabbelier <srabbelier@gmail.com=
-> wrote:
->> Heya,
->>
->> On Sat, Mar 28, 2009 at 17:09, Michael J Gruber
->> <git@drmicha.warpmail.net> wrote:
->>> No, I think he meant repo, not work tree.
->>
->> Why would he need the repo to bootstrap?
->>
->> --
->> Cheers,
->>
->> Sverre Rabbelier
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.h=
-tml
->>
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
->
+$ svnadmin create svn-repo
+$ r=`pwd`/svn-repo
+$ svn co file://$r svn
+Checked out revision 0.
+$ (cd svn && echo one >> file && svn add file && svn ci -m one file)
+A         file
+Adding         file
+Transmitting file data .
+Committed revision 1.
+$ git-svn clone file://$r git
+Initialized empty Git repository in /home/mowsiany/tmp/gs/git/.git/
+        A       file
+r1 = 66e7199fe089b1e626efb5f2f3106189d992d288 (git-svn)
+Checked out HEAD:
+  file:///home/mowsiany/tmp/gs/svn-repo r1
+$ (cd git && git show-ref )
+66e7199fe089b1e626efb5f2f3106189d992d288 refs/heads/master
+66e7199fe089b1e626efb5f2f3106189d992d288 refs/remotes/git-svn
+$ (cd git && git branch mystuff )
+$ (cd git && git show-ref )
+66e7199fe089b1e626efb5f2f3106189d992d288 refs/heads/master
+66e7199fe089b1e626efb5f2f3106189d992d288 refs/heads/mystuff
+66e7199fe089b1e626efb5f2f3106189d992d288 refs/remotes/git-svn
+$ (cd git && git branch -m master upstream )
+$ (cd git && git show-ref )
+66e7199fe089b1e626efb5f2f3106189d992d288 refs/heads/mystuff
+66e7199fe089b1e626efb5f2f3106189d992d288 refs/heads/upstream
+66e7199fe089b1e626efb5f2f3106189d992d288 refs/remotes/git-svn
+$ (cd svn && echo two >> file  && svn ci -m two file)
+Sending        file
+Transmitting file data .
+Committed revision 2.
+$ (cd git && git-svn fetch  )
+        M       file
+r2 = c2f8e7fd146e0e9f1223f20bf3c2105f71632c4b (git-svn)
+$ (cd git && git show-ref )
+c2f8e7fd146e0e9f1223f20bf3c2105f71632c4b refs/heads/master
+66e7199fe089b1e626efb5f2f3106189d992d288 refs/heads/mystuff
+66e7199fe089b1e626efb5f2f3106189d992d288 refs/heads/upstream
+c2f8e7fd146e0e9f1223f20bf3c2105f71632c4b refs/remotes/git-svn
+
+As you can see, "master" sprang back to life after the last command.
+
+-- 
+Marcin Owsiany <porridge@debian.org>             http://marcin.owsiany.pl/
+GnuPG: 1024D/60F41216  FE67 DA2D 0ACA FC5E 3F75  D6F6 3A0D 8AA0 60F4 1216
