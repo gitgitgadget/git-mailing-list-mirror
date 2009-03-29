@@ -1,60 +1,78 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn stubbornly re-creating branch "master"
-Date: Sun, 29 Mar 2009 15:28:27 -0700
-Message-ID: <20090329222827.GA32199@dcvr.yhbt.net>
-References: <20090329171347.GA26866@beczulka>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: [PATCH] git-gui: make "Git GUI Here" Explorer extension more robust
+Date: Mon, 30 Mar 2009 00:30:03 +0200
+Message-ID: <200903300030.03733.markus.heidelberg@web.de>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Marcin Owsiany <porridge@debian.org>
-X-From: git-owner@vger.kernel.org Mon Mar 30 00:30:03 2009
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: msysgit@googlegroups.com
+X-From: git-owner@vger.kernel.org Mon Mar 30 00:33:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lo3Vy-0002tz-Qt
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 00:30:03 +0200
+	id 1Lo3ZD-0003kE-4p
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 00:33:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753266AbZC2W2a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Mar 2009 18:28:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753172AbZC2W2a
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Mar 2009 18:28:30 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:34845 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752251AbZC2W2a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Mar 2009 18:28:30 -0400
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87E991F79C;
-	Sun, 29 Mar 2009 22:28:28 +0000 (UTC)
+	id S1753466AbZC2Wby (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Mar 2009 18:31:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753449AbZC2Wbx
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Mar 2009 18:31:53 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:53834 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753007AbZC2Wbw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Mar 2009 18:31:52 -0400
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 8082CFC39202;
+	Mon, 30 Mar 2009 00:31:49 +0200 (CEST)
+Received: from [89.59.99.140] (helo=.)
+	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1Lo3Xh-0005XY-00; Mon, 30 Mar 2009 00:31:49 +0200
+User-Agent: KMail/1.9.9
+Jabber-ID: markus.heidelberg@web.de
 Content-Disposition: inline
-In-Reply-To: <20090329171347.GA26866@beczulka>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX1/WRjhPRtAyZfVr5+8O5wB6xyotlBmEVdlS103r
+	ocENcHABcCS3dUbm7n2DGMavmL3Il1kQunMMd5GnRbaBxwbfvI
+	LzEUYyg9q3O7leXH5xVw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115044>
 
-Marcin Owsiany <porridge@debian.org> wrote:
-> Hello,
-> 
-> I created my git repository by cloning it with git-svn from an upstream SVN
-> repository. When I did that, a branch "master" was created. Afterwards I
-> renamed that branch to "upstream". However every time I "git-svn fetch", it
-> recreates the "master" branch, pointing it at the newest upstream commit.
-> 
-> Ideally, I'd like it to just forget about "master" and do the same to my
-> "upstream" branch. Is it possible?
-> 
-> If not, then is it at least possible to have it not recreate the "master"
-> branch? It clutters my view.
+Starting git-gui via Windows Explorer shell extension caused problems
+when not started from the project directory, but from a directory within
+the project: starting the Explorer from the git-gui menu "Explore
+Working Copy" didn't work then.
 
-"master" has been a git convention since the earliest days of git and
-it's less confusing to new users following documentation if it always
-exists (and a lot of users' first git experience is with git svn).
+Starting git-gui via Explorer shell extension from the .git directory
+didn't work at all.
 
-Why not just use "master" as one of your branches?  It won't bite you.
-"git svn fetch" will never clobber your "master" if it already exists.
+To make these things possible, "cd .." until we see .git/
 
+Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+---
+ windows/git-gui.sh |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/windows/git-gui.sh b/windows/git-gui.sh
+index 53c3a94..16c4a2a 100644
+--- a/windows/git-gui.sh
++++ b/windows/git-gui.sh
+@@ -4,6 +4,9 @@ exec wish "$0" -- "$@"
+ 
+ if { $argc >=2 && [lindex $argv 0] == "--working-dir" } {
+ 	cd [lindex $argv 1]
++	while { ![file isdirectory .git] } {
++		cd ..
++	}
+ 	set argv [lrange $argv 2 end]
+ 	incr argc -2
+ }
 -- 
-Eric Wong
+1.6.2.1.409.gad7bf.dirty
