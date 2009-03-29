@@ -1,72 +1,128 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Resolve double chmod() in move_temp_to_file()
-Date: Sun, 29 Mar 2009 13:31:32 -0700
-Message-ID: <7vfxgwqdej.fsf@gitster.siamese.dyndns.org>
-References: <200903250105.05808.johan@herland.net>
- <200903261617.48362.johan@herland.net>
- <7viqlu1837.fsf@gitster.siamese.dyndns.org>
- <200903281201.35409.johan@herland.net>
+Subject: Re: [PATCH] git-svn: fix ls-tree usage with dash-prefixed paths
+Date: Sun, 29 Mar 2009 13:33:02 -0700
+Message-ID: <7v8wmoqdc1.fsf@gitster.siamese.dyndns.org>
+References: <22719363.post@talk.nabble.com>
+ <20090326130213.GC3114@atjola.homenet>
+ <83dfc36c0903260735q3231ce96h5949d1123858995f@mail.gmail.com>
+ <83dfc36c0903270418q59a81290xcb8043b8c037be18@mail.gmail.com>
+ <20090329060858.GB15773@dcvr.yhbt.net> <20090329061045.GA29721@dcvr.yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Sun Mar 29 22:34:01 2009
+Cc: git@vger.kernel.org, Anton Gyllenberg <anton@iki.fi>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun Mar 29 22:34:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lo1hZ-00011U-3j
-	for gcvg-git-2@gmane.org; Sun, 29 Mar 2009 22:33:53 +0200
+	id 1Lo1iO-0001HZ-C7
+	for gcvg-git-2@gmane.org; Sun, 29 Mar 2009 22:34:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754404AbZC2Ubm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Mar 2009 16:31:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753170AbZC2Ubm
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Mar 2009 16:31:42 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40819 "EHLO
+	id S1752620AbZC2UdM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Mar 2009 16:33:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753803AbZC2UdL
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Mar 2009 16:33:11 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36279 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753007AbZC2Ubl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Mar 2009 16:31:41 -0400
+	with ESMTP id S1752256AbZC2UdL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Mar 2009 16:33:11 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8FCE6A6E97;
-	Sun, 29 Mar 2009 16:31:38 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1B422A49D;
+	Sun, 29 Mar 2009 16:33:08 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 605EEA6E96; Sun,
- 29 Mar 2009 16:31:34 -0400 (EDT)
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 4530BA49A; Sun,
+ 29 Mar 2009 16:33:03 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 9AD47D9E-1CA0-11DE-A4CC-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: D032A768-1CA0-11DE-93D3-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115036>
 
-Johan Herland <johan@herland.net> writes:
+Eric Wong <normalperson@yhbt.net> writes:
 
-> On Saturday 28 March 2009, Junio C Hamano wrote:
->> Johan Herland <johan@herland.net> writes:
->> > -	if (chmod(filename, 0444) || adjust_shared_perm(filename))
->> > +	if (chmod(filename, get_shared_perm(0444)))
->>
->> Your get_shared_perm() will end up feeding 0444 to S_ISDIR(), which would
->> most likely say "no" and cause real harm, but there is no guarantee that
->> we won't start checking S_ISREG() or other things in get_shared_perm()
->> later.  I do not like this.
-
-... should have been s/and cause/and cause no/; I think you read it correctly, though...
-
-> ...
->> diff --git a/sha1_file.c b/sha1_file.c
->> index 8869488..5bfc36c 100644
->> --- a/sha1_file.c
->> +++ b/sha1_file.c
->> @@ -2263,7 +2263,7 @@ int move_temp_to_file(const char *tmpfile, const
->> char *filename) *
->>  	 * The same holds for FAT formatted media.
->>  	 *
->> -	 * When this succeeds, we just return 0. We have nothing
->> +	 * When this succeeds, we just return; we have nothing
+> To find the blob object name given a tree and pathname, we were
+> incorrectly calling "git ls-tree" with a "--" argument followed
+> by the pathname of the file we wanted to get.
 >
-> Small nit: This belongs in the previous patch, doesn't it?
+>   git ls-tree <TREE> -- --dashed/path/name.c
+>
+> Unlike many command-line interfaces, the "--" alone does not
+> symbolize the end of non-option arguments on the command-line.
+>
+> ls-tree interprets the "--" as a prefix to match against, thus
+> the entire contents of the --dashed/* hierarchy would be
+> returned because the "--" matches "--dashed" and every path
+> under it.
 
-Thanks for all the above fixes.
+The above makes only half a sense to me.  In an empty directory:
+
+    $ git init
+    Initialized empty Git repository in /tmp/empty/.git
+    $ mkdir -p ./--dashed/path
+    $ >./--dashed/path/name
+    $ git add .
+    $ git ls-files
+    --dashed/path/name
+    $ git commit -a -m initial
+    [master (root-commit) cd44284] initial
+     0 files changed, 0 insertions(+), 0 deletions(-)
+     create mode 100644 --dashed/path/name
+    $ git ls-tree HEAD^{tree} --
+    $ git ls-tree HEAD^{tree} -- --dashed/path/name
+    100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391	--dashed/path/name
+    $ mkdir ./--
+    $ >./--/eman
+    $ git add .
+    $ git commit -m second
+    [master 80f8ef9] second
+     0 files changed, 0 insertions(+), 0 deletions(-)
+     create mode 100644 --/eman
+    $ git ls-tree HEAD^{tree} -- --dashed/path
+    100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391	--/eman
+    040000 tree 23e59e0c91294c39ac7c5a2e39efb01d878de9a0	--dashed/path
+    $ exit
+
+Perhaps the problem repository had a pathname that is exactly -- (in
+addition to --dashed/), and ls-tree emitted everything under --/
+hierarchy?  In other words, your fix to git-svn may be correct and I am
+reading your problem description above incorrectly?
+
+As the command always takes exactly one tree, it could be argued that it
+is not a bug that it does not honour the usual -- convention, even though
+I am tempted to think it is of a very dark shade of gray.  It is certainly
+something that we would have done differently if we were implementing the
+command today.
+
+"Fixing" ls-tree would be trivial to ignore the first "--" if it precedes
+other pathspecs (see below), but the command is a plumbing, and such a
+change will break existing scripts that have relied on the existing
+behaviour since 2005, so I do not think it is worth the risk of causing
+such silent breakages to them.  Besides, with such a "fix", fixing of user
+scripts will become much more cumbersome, as they need to detect the
+version of git and drive ls-tree differently.
+
+
+ builtin-ls-tree.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/builtin-ls-tree.c b/builtin-ls-tree.c
+index 22008df..08c4307 100644
+--- a/builtin-ls-tree.c
++++ b/builtin-ls-tree.c
+@@ -186,6 +186,12 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
+ 	if (get_sha1(argv[1], sha1))
+ 		die("Not a valid object name %s", argv[1]);
+ 
++	if (3 < argc && !strcmp(argv[2], "--")) {
++		/* ls-tree <tree> -- pathspec */
++		argc--;
++		argv++;
++		warning("ignoring -- in 'ls-tree <tree> -- <pathspec>'");
++	}
+ 	pathspec = get_pathspec(prefix, argv + 2);
+ 	tree = parse_tree_indirect(sha1);
+ 	if (!tree)
