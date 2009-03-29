@@ -1,60 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/8] Documentation: XSLT/asciidoc.conf cleanup; tty
-	literals
-Date: Sun, 29 Mar 2009 07:50:52 -0400
-Message-ID: <20090329115052.GA31649@coredump.intra.peff.net>
-References: <1238136245-22853-1-git-send-email-chris_johnsen@pobox.com>
+From: jamespetts <jamespetts@yahoo.com>
+Subject: Re: Fork of abandoned SVN mirror - how to keep up to date with the
+  SVN
+Date: Sun, 29 Mar 2009 04:52:44 -0700 (PDT)
+Message-ID: <1238327564546-2552334.post@n2.nabble.com>
+References: <22756729.post@talk.nabble.com> <8c9a060903280922r6514de83mea4dea84c4116225@mail.gmail.com> <1238258794470-2549665.post@n2.nabble.com> <8c9a060903281102r3eae26edta34899485feb884b@mail.gmail.com> <1238263580197-2549943.post@n2.nabble.com> <8c9a060903281327j33056807j78a2cd03b8151979@mail.gmail.com> <1238276809892-2550565.post@n2.nabble.com> <8c9a060903281504qd1b66hefb70e60c3f624d2@mail.gmail.com> <1238278694146-2550633.post@n2.nabble.com> <fabb9a1e0903281521y2e6785f1w5dde3c73be404327@mail.gmail.com> <1238323876827-2552153.post@n2.nabble.com> <fabb9a1e0903290403s2b0bbe1al57ac448a16d05070@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Chris Johnsen <chris_johnsen@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Mar 29 13:52:37 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 29 13:54:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LntZ6-0002C7-Nl
-	for gcvg-git-2@gmane.org; Sun, 29 Mar 2009 13:52:37 +0200
+	id 1Lntb9-0002Yo-Jq
+	for gcvg-git-2@gmane.org; Sun, 29 Mar 2009 13:54:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752413AbZC2LvE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Mar 2009 07:51:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752234AbZC2LvD
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Mar 2009 07:51:03 -0400
-Received: from peff.net ([208.65.91.99]:35655 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751620AbZC2LvB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Mar 2009 07:51:01 -0400
-Received: (qmail 30730 invoked by uid 107); 29 Mar 2009 11:51:14 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 29 Mar 2009 07:51:14 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 29 Mar 2009 07:50:52 -0400
-Content-Disposition: inline
-In-Reply-To: <1238136245-22853-1-git-send-email-chris_johnsen@pobox.com>
+	id S1753429AbZC2Lwr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Mar 2009 07:52:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753307AbZC2Lwr
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Mar 2009 07:52:47 -0400
+Received: from kuber.nabble.com ([216.139.236.158]:51599 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750738AbZC2Lwq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Mar 2009 07:52:46 -0400
+Received: from tervel.nabble.com ([192.168.236.150])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
+	id 1LntZE-0004rW-Hp
+	for git@vger.kernel.org; Sun, 29 Mar 2009 04:52:44 -0700
+In-Reply-To: <fabb9a1e0903290403s2b0bbe1al57ac448a16d05070@mail.gmail.com>
+X-Nabble-From: jamespetts@yahoo.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115019>
 
-On Fri, Mar 27, 2009 at 01:43:57AM -0500, Chris Johnsen wrote:
 
-> "v1" of this series can be found here: <http://thread.gmane.org/gmane.comp.version-control.git/114417>.
-> 
-> Change since "v1":
-> 
->   1/8: No content change from "v1". This time -C -M was used to
->        show copy/rename of callouts.xsl (thanks to Peff for
->        pointing to diff.renames config option).
-> 
->   2/8: Use <xsl:import> instead of xmlto command line to reuse
->        manpage-base.xsl. In commit message, move discussion of
->        --stringparm to 8/8.
-> 
->   8/8: No content change from "v1" (though context is changed due
->        to content change in 2/8). In commit message, add some of
->        --stringparm discussion from "v1" 2/8.
+Thank you again for your reply :-) Ahh, yes, that makes sense about the local repository. However, on checking, the local repository that I set up has no files except in .git directories - is that to be expected at this stage?
 
-Thanks. This version (and its output) look sane to me (I am now building
-with ASCIIDOC_NO_ROFF).
+Also, when I tried "git svn rebase", I got the following error:
 
--Peff
+"Migrating from a git-svn v1 layout...
+
+"Data from a previous version exists, but .git/svn (required for this version (1.6.2 msysgit.0.186.gf7512) of git-svn) does not exist. Done migrating from a git-svn v1 layout
+
+"Unable to determine upstream SVN information from working tree history"
+
+And the local directories for the repositories are still empty. Am I doing something wrong...?
+
+
+Heya,
+
+On Sun, Mar 29, 2009 at 12:51, jamespetts <jamespetts@yahoo.com> wrote:
+> However, after several hours of downloading (I left it overnight), it gave the error, "The connection was aborted: Can't read from connection: The connection was aborted at C:\Program Files\Git/libexec/git-core/git-svn/ line 2490".
+
+You can continue downloading, just issue' git svn rebase' again, and
+it will continue where it left of.
+
+> When I look at my repository on Github, it is still empty, apart
+> from the empty README file that I created just to initialise it.
+> Why would it be going wrong? How do I deal with that?
+
+You would have to push the repository to github regardless of whether
+'git svn rebase' finished in one go. Keep in mind that' git svn
+rebase' is the way to get changes _into_ your _local_ repository.
+You'll need to use 'git push' to get your changes up to github.
+
+-- 
+Cheers,
+
+Sverre Rabbelier
+--
+To unsubscribe from this list: send the line "unsubscribe git" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+
+
+-- 
+View this message in context: http://n2.nabble.com/Fork-of-abandoned-SVN-mirror---how-to-keep-up-to-date-with-the-SVN-tp2548952p2552334.html
+Sent from the git mailing list archive at Nabble.com.
