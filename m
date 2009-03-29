@@ -1,93 +1,73 @@
-From: Lachlan Deck <lachlan.deck@gmail.com>
-Subject: Re: git svn init --username ignored
-Date: Mon, 30 Mar 2009 10:50:49 +1100
-Message-ID: <FB93BF8D-836A-4A40-8B82-E32561007A52@gmail.com>
-References: <9FB623A2-03A6-4B35-B631-DF4745971DB9@gmail.com> <20090329224137.GA20675@dcvr.yhbt.net>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: "Aaron Gray" <aaronngray.lists@googlemail.com>
+Subject: git-web and .git and working directories
+Date: Mon, 30 Mar 2009 00:58:15 +0100
+Message-ID: <5275A78FCB394B609E270F3E4E69B549@HPLAPTOP>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Mar 30 01:52:29 2009
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 30 01:59:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lo4nk-0006XH-Vk
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 01:52:29 +0200
+	id 1Lo4uw-0007yj-BL
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 01:59:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754308AbZC2Xu6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Mar 2009 19:50:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754012AbZC2Xu5
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Mar 2009 19:50:57 -0400
-Received: from ti-out-0910.google.com ([209.85.142.191]:27875 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753838AbZC2Xu5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Mar 2009 19:50:57 -0400
-Received: by ti-out-0910.google.com with SMTP id i7so1444141tid.23
-        for <git@vger.kernel.org>; Sun, 29 Mar 2009 16:50:53 -0700 (PDT)
+	id S1753984AbZC2X6Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Mar 2009 19:58:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753631AbZC2X6Y
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Mar 2009 19:58:24 -0400
+Received: from mail-ew0-f165.google.com ([209.85.219.165]:58741 "EHLO
+	mail-ew0-f165.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753507AbZC2X6X (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Mar 2009 19:58:23 -0400
+Received: by ewy9 with SMTP id 9so1846910ewy.37
+        for <git@vger.kernel.org>; Sun, 29 Mar 2009 16:58:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:cc:message-id:from:to
-         :in-reply-to:content-type:content-transfer-encoding:mime-version
-         :subject:date:references:x-mailer;
-        bh=SHgIHi9x2FJTwOhJODrEgFbYfZlBqfbAQq/BVQd4iGw=;
-        b=R/petWztUPyk0ksOdlJ1qD1jYXyxIFuVXcJPrwMQj6sVyJErZlvrFRLqIV6I/2iRdi
-         s+GNR4PnebK8Vyin/0zrGGV3mZHAvz4gOy8adl6HUrchFia2qiDV7H2xHMiG/iDX6vZf
-         AgAcA+b5bKexHvgCERRCT6Yrjs+unfSLBW4rE=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to:subject
+         :date:mime-version:content-type:content-transfer-encoding:x-priority
+         :x-msmail-priority:x-mailer:x-mimeole;
+        bh=fD4Qrl5NA+L5RjUoILXGGMlBc4SNhDc4hwrT/oMLhJc=;
+        b=CLN/hpQDsWuuQlA8PTnfvZvoC+jxzkXeC75Y8SwIx/tXmj/Cxen9K37hkCC9B2rHHn
+         kUdGFqAlPHwO4LY8FH7M9xFji/PASfXEVnZxLy147b0Xi52PjJTjdzlfmwgu1+2MbBqJ
+         UTPFQzJ8odB/sx0YlO2GjMlBlwDhC5oh8KO6E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        b=lsoSdVRXtFrgybMDDW120QQSEXHCFprXABFMRHP5uEKkwxIhuUKgzHaNHAxC1XTdSm
-         7+jF4WYP0vDEGRO3U77VfJ6JU6LG1q4xdPfmiXvr5aaYnaKoPqRREJHRGYoMPENmevcS
-         ZSUz1FfUjeZJ+07FcbeIMt9HU8+Qn80xt/ltQ=
-Received: by 10.110.62.4 with SMTP id k4mr6166812tia.54.1238370653798;
-        Sun, 29 Mar 2009 16:50:53 -0700 (PDT)
-Received: from ip-144.ish.com.au (ip-144.ish.com.au [203.29.62.144])
-        by mx.google.com with ESMTPS id i6sm7080170tid.19.2009.03.29.16.50.52
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 29 Mar 2009 16:50:53 -0700 (PDT)
-In-Reply-To: <20090329224137.GA20675@dcvr.yhbt.net>
-X-Mailer: Apple Mail (2.930.3)
+        d=googlemail.com; s=gamma;
+        h=message-id:from:to:subject:date:mime-version:content-type
+         :content-transfer-encoding:x-priority:x-msmail-priority:x-mailer
+         :x-mimeole;
+        b=NGWSK1vp8P/F8l9cprfhFiSj2umO1/OZGZQkJbzPWMfv9tG+m36lAxNRiBWDLDPvfJ
+         DWQJv6PMmBFWq6aFqaEOtOmAQ1aaGLasP+OeZoQkrS6xV6i8Yy8BOrbCjccPL4vkh4zd
+         qHzqFmNgbB84EY8kB8oNdWSVZi6AzkHp9U3NE=
+Received: by 10.210.78.16 with SMTP id a16mr792652ebb.38.1238371100679;
+        Sun, 29 Mar 2009 16:58:20 -0700 (PDT)
+Received: from HPLAPTOP (aarongray.demon.co.uk [80.177.163.94])
+        by mx.google.com with ESMTPS id 10sm800586eyz.49.2009.03.29.16.58.20
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 29 Mar 2009 16:58:20 -0700 (PDT)
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5512
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115049>
 
-On 30/03/2009, at 9:41 AM, Eric Wong wrote:
+Hi,
 
-> Lachlan Deck <lachlan.deck@gmail.com> wrote:
->> Hi there,
->>
->> Is it a bug that the when specifying --username=foo for either git- 
->> svn
->> init or git-svn clone  that this isn't stored in .git/config?
->>
->> It means that for http[s] urls you need to specify it each time for
->> git-svn fetch, for example.
->>
->> Is there any way to specify it manually in the config file - or would
->> that have some bad consequences?
->
-> Subversion already stores credential information in ~/.subversion/  
-> which
-> git svn should respect and use if available and allowed to.  Did you
-> disable set "store-auth-creds = no" in your ~/.subversion/config ?
+Is there a proper way to configure GIT so the '.git' suffix does not appear 
+in git-web and also is it possible to disable the working directory so 
+things are more self contained.
 
-No, it's still commented out.
+Anyway I have git-daemon, git-svn with a SELinux policy all running on F10.
 
-I simply started by doing:
-git svn clone https://somedomain/repo repo --username=lachlan -s
-cd repo
-git svn fetch // failed without --username
+Thanks for bearing with me,
 
-In case the initial passing of --username is tripping it up, I'm  
-trying again without specifying it.
-
-with regards,
---
-
-Lachlan Deck
+Aaron
