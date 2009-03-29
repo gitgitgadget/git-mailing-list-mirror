@@ -1,76 +1,65 @@
-From: Simon Arlott <simon@fire.lp0.eu>
-Subject: [PATCH] git-svn: don't output git commits in quiet mode
-Date: Sun, 29 Mar 2009 20:34:50 +0100
-Message-ID: <49CFCD5A.1080801@simon.arlott.org.uk>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: git-svn stubbornly re-creating branch "master"
+Date: Sun, 29 Mar 2009 22:52:59 +0300
+Message-ID: <37fcd2780903291252i19bba8ccx9dfb73e763d95b15@mail.gmail.com>
+References: <20090329171347.GA26866@beczulka>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Mar 29 21:44:58 2009
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Marcin Owsiany <porridge@debian.org>
+X-From: git-owner@vger.kernel.org Sun Mar 29 21:54:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lo0wE-0002pP-8T
-	for gcvg-git-2@gmane.org; Sun, 29 Mar 2009 21:44:58 +0200
+	id 1Lo15X-0005gq-PS
+	for gcvg-git-2@gmane.org; Sun, 29 Mar 2009 21:54:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753047AbZC2TnZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Mar 2009 15:43:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752936AbZC2TnZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Mar 2009 15:43:25 -0400
-Received: from proxima.lp0.eu ([81.187.201.134]:50140 "EHLO proxima.lp0.eu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752715AbZC2TnY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Mar 2009 15:43:24 -0400
-X-Greylist: delayed 509 seconds by postgrey-1.27 at vger.kernel.org; Sun, 29 Mar 2009 15:43:24 EDT
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=exim; d=fire.lp0.eu;
-	h=Received:Message-ID:Date:From:User-Agent:MIME-Version:To:CC:Subject:Content-Type:Content-Transfer-Encoding;
-	b=LN1j79wNn7VnEScslJSSLMCrH10ObWHa1BZMXmIi3Dar1+NGwwGnJ8R87JEeNcy5Ktju0msofBUByuFOLjLf+PEnXeFQAFQ33w+b9G7P1xJLJpXIgkzDdBvfF0BQMVh9;
-Received: from redrum.lp0.eu ([2001:8b0:ffea:0:2e0:81ff:fe4d:2bec]:44227)
-	by proxima.lp0.eu ([2001:8b0:ffea:0:205:b4ff:fe12:530]:465) with esmtpsav (TLSv1:AES256-SHA:256/CN=Simon Arlott)
-	id 1Lo0mQ-0005Fp-UI; Sun, 29 Mar 2009 20:34:50 +0100
-User-Agent: Thunderbird 2.0.0.21 (X11/20090328)
+	id S1752960AbZC2TxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Mar 2009 15:53:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752665AbZC2TxE
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Mar 2009 15:53:04 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:58011 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752636AbZC2TxC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Mar 2009 15:53:02 -0400
+Received: by fxm2 with SMTP id 2so1698169fxm.37
+        for <git@vger.kernel.org>; Sun, 29 Mar 2009 12:52:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=gfz9wvwvyKf5NtscXk3fdd8JZ1+9omyJUiiD475AXBM=;
+        b=SBs+tjhBDYUPhoLc42P59lI1W7x1HRVX1PM4GYpLspuxR7Lnnj9zuetsH9jSUQjA0B
+         BCzic6tL8jyCdAXPl+UofvEM2Ipy6t7DYfK7wEPOPJochbUCR487loia+6E0phB+UXeY
+         sQ14Ka8FyYTZFXjEGZoKyQv3XuJW0EphzUd9A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=XGfOCHVvNCWBOD7FtHeqvyYNFmS+mfmOqQpvTuV0sV9qQ33dIrrgEkE1CZ3sF8iqhW
+         /omEQcg3STjM1a+59ADbQz4iWQYf6XnpO5epmUpDHI30vXliA/IuSGycQek0+UaaBle9
+         xwHTZwE07lL+enau4YYKMkYkgEqdIIU7Y1lqE=
+Received: by 10.86.31.18 with SMTP id e18mr3686794fge.72.1238356379827; Sun, 
+	29 Mar 2009 12:52:59 -0700 (PDT)
+In-Reply-To: <20090329171347.GA26866@beczulka>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115032>
 
-Ideally only errors should be output in this mode so fetch
-can be run from cron and normally produce no output. Without
-this change it would output a single line on each git commit,
-e.g.
-r1909 = 32ef87860662526d4a62f903949ed21e0341079e (u2_10_12_branch)
+On Sun, Mar 29, 2009 at 18:13:47 +0100, Marcin Owsiany
+<porridge@debian.org> wrote:
+>
+> As you can see, "master" sprang back to life after the last command.
 
-Signed-off-by: Simon Arlott <simon@fire.lp0.eu>
----
- git-svn.perl |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+It looks like git-svn does not like a repo without 'master'. It seems
+the problem was caused by this patch:
+http://git.kernel.org/?p=git/git.git;a=commit;h=1e889ef36c45b5554f7e317493ed3f4f901f8d9f
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 8be6be0..e100b69 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -2331,13 +2331,13 @@ sub do_git_commit {
- 
- 	$self->{last_rev} = $log_entry->{revision};
- 	$self->{last_commit} = $commit;
--	print "r$log_entry->{revision}";
-+	print "r$log_entry->{revision}" unless $::_q;
- 	if (defined $log_entry->{svm_revision}) {
--		 print " (\@$log_entry->{svm_revision})";
-+		 print " (\@$log_entry->{svm_revision})" unless $::_q;
- 		 $self->rev_map_set($log_entry->{svm_revision}, $commit,
- 		                   0, $self->svm_uuid);
- 	}
--	print " = $commit ($self->{ref_id})\n";
-+	print " = $commit ($self->{ref_id})\n" unless $::_q;
- 	if (--$_gc_nr == 0) {
- 		$_gc_nr = $_gc_period;
- 		gc();
--- 
-1.6.2
+I have added Eric to CC...
 
--- 
-Simon Arlott
+Dmitry
