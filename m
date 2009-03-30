@@ -1,79 +1,143 @@
-From: Michele Ballabio <barra_cuda@katamail.com>
-Subject: [PATCH] gitk: Mark some strings for translation
-Date: Mon, 30 Mar 2009 21:17:25 +0200
-Message-ID: <200903302117.25371.barra_cuda@katamail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH v2] git-gui: run post-checkout hook on checkout
+Date: Mon, 30 Mar 2009 21:46:17 +0200
+Message-ID: <49D12189.5070409@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: paulus@samba.org
-X-From: git-owner@vger.kernel.org Mon Mar 30 21:21:51 2009
+Cc: git@vger.kernel.org, gitster@pobox.com, peff@peff.net
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Mar 30 21:48:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoN2R-0001L8-0O
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 21:20:51 +0200
+	id 1LoNSk-0005h3-UP
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 21:48:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759775AbZC3TSq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 15:18:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759665AbZC3TSp
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 15:18:45 -0400
-Received: from smtp.katamail.com ([62.149.157.154]:57873 "HELO smtp2.aruba.it"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1759760AbZC3TSo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2009 15:18:44 -0400
-Received: (qmail 4830 invoked by uid 89); 30 Mar 2009 19:18:33 -0000
-X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp2-pc
-X-Spam-Level: *
-X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_50,RDNS_NONE
-	autolearn=no version=3.2.3
-Received: from unknown (HELO host177-57-dynamic.104-80-r.retail.telecomitalia.it) (barra?cuda@katamail.com@80.104.57.177)
-  by smtp2-pc with SMTP; 30 Mar 2009 19:18:33 -0000
-User-Agent: KMail/1.9.10
-Content-Disposition: inline
+	id S1756999AbZC3Tq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2009 15:46:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756476AbZC3Tq3
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 15:46:29 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:46945 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756345AbZC3Tq2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2009 15:46:28 -0400
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate03.web.de (Postfix) with ESMTP id E2B48F9C0F9A;
+	Mon, 30 Mar 2009 21:46:25 +0200 (CEST)
+Received: from [80.128.74.92] (helo=[192.168.178.26])
+	by smtp08.web.de with asmtp (WEB.DE 4.110 #277)
+	id 1LoNRB-0003sj-00; Mon, 30 Mar 2009 21:46:25 +0200
+User-Agent: Thunderbird 2.0.0.21 (X11/20090302)
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1+0JiY14O+bkp+Vf+xY5s1uwX5pc0zC48E2SSjr
+	mdfPngz42QamptyhX3QKcEQ4/onCPxMlVgoqy9iaW+HZCFQtF7
+	P0Yq2o2KRKy2NVuykqVQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115189>
 
-Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
+git-gui is using "git-read-tree -u" for checkout which doesn't
+invoke the post-checkout hook as a plain git-checkout would.
+So git-gui must call the hook itself.
+
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
 ---
- gitk |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/gitk b/gitk
-index 3835a51..8b61d0d 100755
---- a/gitk
-+++ b/gitk
-@@ -521,7 +521,7 @@ proc updatecommits {} {
-     incr viewactive($view)
-     set viewcomplete($view) 0
-     reset_pending_select {}
--    nowbusy $view "Reading"
-+    nowbusy $view [mc "Reading"]
-     if {$showneartags} {
- 	getallcommits
-     }
-@@ -3766,7 +3766,7 @@ proc editview {} {
-     set newviewopts($curview,perm) $viewperm($curview)
-     set newviewopts($curview,cmd)  $viewargscmd($curview)
-     decode_view_opts $curview $viewargs($curview)
--    vieweditor $top $curview "Gitk: edit view $viewname($curview)"
-+    vieweditor $top $curview "[mc "Gitk: edit view"] $viewname($curview)"
- }
+
+Thanks to Shawn for the review of the first version, this one
+tries to address all the issues raised.
+
+
+ git-gui/lib/checkout_op.tcl |   43 +++++++++++++++++++++++++++++++++++++++----
+ 1 files changed, 39 insertions(+), 4 deletions(-)
+
+diff --git a/git-gui/lib/checkout_op.tcl b/git-gui/lib/checkout_op.tcl
+index caca888..9e7412c 100644
+--- a/git-gui/lib/checkout_op.tcl
++++ b/git-gui/lib/checkout_op.tcl
+@@ -9,6 +9,7 @@ field w_cons   {}; # embedded console window object
+ field new_expr   ; # expression the user saw/thinks this is
+ field new_hash   ; # commit SHA-1 we are switching to
+ field new_ref    ; # ref we are updating/creating
++field old_hash   ; # commit SHA-1 that was checked out when we started
  
- proc vieweditor {top n title} {
-@@ -10227,7 +10227,7 @@ proc doprefs {} {
- proc choose_extdiff {} {
-     global extdifftool
+ field parent_w      .; # window that started us
+ field merge_type none; # type of merge to apply to existing branch
+@@ -280,11 +281,11 @@ method _start_checkout {} {
  
--    set prog [tk_getOpenFile -title "External diff tool" -multiple false]
-+    set prog [tk_getOpenFile -title [mc "External diff tool"] -multiple false]
-     if {$prog ne {}} {
- 	set extdifftool $prog
-     }
+ 	# -- Our in memory state should match the repository.
+ 	#
+-	repository_state curType curHEAD curMERGE_HEAD
++	repository_state curType old_hash curMERGE_HEAD
+ 	if {[string match amend* $commit_type]
+ 		&& $curType eq {normal}
+-		&& $curHEAD eq $HEAD} {
+-	} elseif {$commit_type ne $curType || $HEAD ne $curHEAD} {
++		&& $old_hash eq $HEAD} {
++	} elseif {$commit_type ne $curType || $HEAD ne $old_hash} {
+ 		info_popup [mc "Last scanned state does not match repository state.
+ 
+ Another Git program has modified this repository since the last scan.  A rescan must be performed before the current branch can be changed.
+@@ -297,7 +298,7 @@ The rescan will be automatically started now.
+ 		return
+ 	}
+ 
+-	if {$curHEAD eq $new_hash} {
++	if {$old_hash eq $new_hash} {
+ 		_after_readtree $this
+ 	} elseif {[is_config_true gui.trustmtime]} {
+ 		_readtree $this
+@@ -453,13 +454,47 @@ method _after_readtree {} {
+ If you wanted to be on a branch, create one now starting from 'This Detached Checkout'."]
+ 	}
+ 
++	# -- Run the post-checkout hook.
++	#
++	set fd_ph [githook_read post-checkout $old_hash $new_hash 1]
++	if {$fd_ph ne {}} {
++		global pch_error
++		set pch_error {}
++		fconfigure $fd_ph -blocking 0 -translation binary -eofchar {}
++		fileevent $fd_ph readable [cb _postcheckout_wait $fd_ph]
++	} else {
++		_update_repo_state $this
++	}
++}
++
++method _postcheckout_wait {fd_ph} {
++	global pch_error
++
++	append pch_error [read $fd_ph]
++	fconfigure $fd_ph -blocking 1
++	if {[eof $fd_ph]} {
++		if {[catch {close $fd_ph}]} {
++			hook_failed_popup post-checkout $pch_error 0
++		}
++		unset pch_error
++		_update_repo_state $this
++		return
++	}
++	fconfigure $fd_ph -blocking 0
++}
++
++method _update_repo_state {} {
+ 	# -- Update our repository state.  If we were previously in
+ 	#    amend mode we need to toss the current buffer and do a
+ 	#    full rescan to update our file lists.  If we weren't in
+ 	#    amend mode our file lists are accurate and we can avoid
+ 	#    the rescan.
+ 	#
++	global selected_commit_type commit_type HEAD MERGE_HEAD PARENT
++	global ui_comm
++
+ 	unlock_index
++	set name [_name $this]
+ 	set selected_commit_type new
+ 	if {[string match amend* $commit_type]} {
+ 		$ui_comm delete 0.0 end
 -- 
-1.6.2.22.gc2ac
+1.6.2.1.414.g2daa3
