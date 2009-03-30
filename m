@@ -1,76 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Add feature release instructions to gitworkflows man
- page
-Date: Mon, 30 Mar 2009 11:14:43 -0700
-Message-ID: <7vljqmdgj0.fsf@gitster.siamese.dyndns.org>
-References: <1238391319-4953-1-git-send-email-rocketraman@fastmail.fm>
- <1238391319-4953-2-git-send-email-rocketraman@fastmail.fm>
- <7vk567ijlf.fsf@gitster.siamese.dyndns.org> <49D10875.2060008@fastmail.fm>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: Re: [Q] merging from one (kernel) stable to another?
+Date: Mon, 30 Mar 2009 20:23:45 +0200
+Message-ID: <20090330182345.GC10030@pengutronix.de>
+References: <200903301024.08848.brian.foster@innova-card.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Raman Gupta <rocketraman@fastmail.fm>
-X-From: git-owner@vger.kernel.org Mon Mar 30 20:16:45 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git mailing list <git@vger.kernel.org>
+To: Brian Foster <brian.foster@innova-card.com>
+X-From: git-owner@vger.kernel.org Mon Mar 30 20:30:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoM29-0008Kd-Q6
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 20:16:30 +0200
+	id 1LoMFh-00055X-Ec
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 20:30:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752689AbZC3SOu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 14:14:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751192AbZC3SOu
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 14:14:50 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59533 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750962AbZC3SOt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2009 14:14:49 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 4A559A0C9;
-	Mon, 30 Mar 2009 14:14:47 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9A37BA0C8; Mon,
- 30 Mar 2009 14:14:44 -0400 (EDT)
-In-Reply-To: <49D10875.2060008@fastmail.fm> (Raman Gupta's message of "Mon,
- 30 Mar 2009 13:59:17 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A6F14416-1D56-11DE-AEBA-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+	id S1758306AbZC3SXv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Mar 2009 14:23:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758408AbZC3SXu
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 14:23:50 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:37877 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758450AbZC3SXs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2009 14:23:48 -0400
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1LoM9B-0003Lt-OG; Mon, 30 Mar 2009 20:23:45 +0200
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1LoM9B-0002ck-E6; Mon, 30 Mar 2009 20:23:45 +0200
+Content-Disposition: inline
+In-Reply-To: <200903301024.08848.brian.foster@innova-card.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115184>
 
-Raman Gupta <rocketraman@fastmail.fm> writes:
+On Mon, Mar 30, 2009 at 10:24:08AM +0200, Brian Foster wrote:
+>   Whilst this question involves linux(-mips) kernel tree,
+>  it's a git(-related?) question, not a kernel question ....
+>=20
+>   We are currently in the process of upgrading our embedded
+>  system from kernel 2.6.21(-ish) to at least 2.6.26.8;  and
+>  later, at some time in the future on to 2.6.3x or something.
+>  Going from 2.6.21 to .22 to .23 and so on to .26, then to
+>  .26.1 and so on to .26.8 is =E2=80=9Ceasy=E2=80=9D in the sense ther=
+e are
+>  very few conflicts with our existing baseline (e.g., just
+>  2 or 3 in 2 or 3 files).
+>=20
+>   .21 --> me --> .22 --> .23 ... --> .26 --> .27 --> master
+>      \              \       \           \      \
+>      .21-stable  .22-stable .23-stable   \     .27-stable
+>                                         .26.8
+>                                            \
+>                                            .26-stable
+>=20
+>   But (using 2.6.21-stable and 2.6.22-stable as proxies),
+>  tests indicate that going from .26.8 to .27 or anything
+>  later will have numerous conflicts (100s? in more than
+>  30 files).  Thinking about it, this isn't too surprising
+>  since the -stable branches cherry-pick important/benign
+>  fixes from later revisions.
+Assuming you have your master on top of .21-stable and want to go to
+=2E26-stable, the following might work better for you:
 
-> Junio C Hamano wrote:
-> ...
-> If you wish to remove discussion of 'next' from this document, that is
-> probably better done in a separate followup change. Though personally
-> I think its a useful concept for readers to learn about as they are
-> setting up their own workflows.
+	$ git checkout -b mydot26stable .26-stable
+	$ git merge -s ours .21-stable
+	$ git checkout master
+	$ git merge mydot26stable=09
 
-I do not have a particularly strong feeling about 'next' either way.
+Note this is not tested, just came to my mind...
 
-As the document states at the top, it lists ingredients from git.git
-management and it is left up to the readers to adopt parts that suit their
-needs, while not using others.  In that spirit, the description of 'next'
-as "ahead of master that is supposed to be rock solid" may be a good thing
-to keep.  It is orthogonal if the project wants to rewind and rebuild
-'next' after every feature release---they do not need to (and we didn't do
-so for quite some time).  One valid choice by readers is to adopt the
-concept of 'next' in their project but never rewind and rebuild it, and
-you made that clear that it is optional.  So I think this part of your
-patch is good as-is.
+Best regards
+Uwe
 
->> Other parts (except for the "branch -f" bit I've already told you
->> about in the other message) looked good.
->
-> I'll add some discussion about the branch -f bit -- I hope you agree
-> that in this document that is distributed with git, some
-> beginner-level explanation of the difference between the branch -f and
-> the merge approach is warranted?
-
-Surely and thanks.
+--=20
+Pengutronix e.K.                              | Uwe Kleine-K=C3=B6nig  =
+          |
+Industrial Linux Solutions                    | http://www.pengutronix.=
+de/  |
