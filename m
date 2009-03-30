@@ -1,137 +1,69 @@
-From: Nicolas Sebrecht <nicolas.s-dev@laposte.net>
-Subject: Re: newb questions: post-cherry-pick status cleanup, shared local
-	repository permissions
-Date: Mon, 30 Mar 2009 06:22:26 +0200
-Message-ID: <20090330042226.GA12907@vidovic>
-References: <c4e763ac0903292003j22934e7ax9f9ae986bdcd6abb@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [EGIT] [PATCH RFC v1 0/5] Add (static) ignore functionality to
+	EGit
+Date: Sun, 29 Mar 2009 21:27:32 -0700
+Message-ID: <20090330042732.GS23521@spearce.org>
+References: <cover.1238102327.git.ferry.huberts@pelagic.nl> <200903291123.24433.robin.rosenberg@dewire.com> <49CF50CC.10400@pelagic.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Aaron Davies <aaron.davies@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 30 06:24:13 2009
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
+To: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
+X-From: git-owner@vger.kernel.org Mon Mar 30 06:29:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lo92c-0006B1-7a
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 06:24:06 +0200
+	id 1Lo97R-00076r-UD
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 06:29:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750928AbZC3EWg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 00:22:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750922AbZC3EWf
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 00:22:35 -0400
-Received: from out4.laposte.net ([193.251.214.121]:35481 "EHLO
-	out3.laposte.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750872AbZC3EWe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2009 00:22:34 -0400
-Received: from meplus.info (localhost [127.0.0.1])
-	by mwinf8306.laposte.net (SMTP Server) with ESMTP id F2ABA7000088;
-	Mon, 30 Mar 2009 06:22:26 +0200 (CEST)
-Received: from ? (88-121-127-66.rev.libertysurf.net [88.121.127.66])
-	by mwinf8306.laposte.net (SMTP Server) with ESMTP id 9DEB47000087;
-	Mon, 30 Mar 2009 06:22:26 +0200 (CEST)
-X-ME-UUID: 20090330042226646.9DEB47000087@mwinf8306.laposte.net
+	id S1751077AbZC3E1e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2009 00:27:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750872AbZC3E1e
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 00:27:34 -0400
+Received: from george.spearce.org ([209.20.77.23]:36555 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750770AbZC3E1e (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2009 00:27:34 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 542A238211; Mon, 30 Mar 2009 04:27:32 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <c4e763ac0903292003j22934e7ax9f9ae986bdcd6abb@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-me-spamlevel: not-spam
-X-me-spamrating: 31.600000
-X-me-spamcause: OK, (-210)(0000)gggruggvucftvghtrhhoucdtuddrvdekuddrfeeiucetggdotefuucfrrhhofhhilhgvmecuoehnohhnvgeqnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucdlqddutddtmdenlhhinhhugiculddquddtmd
+In-Reply-To: <49CF50CC.10400@pelagic.nl>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115061>
 
+"Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl> wrote:
+> Robin Rosenberg wrote:
+> > A quick reply (I might come up with more later): Ignore support should be mostly
+> > in jgit, with only extensions into egit.
+> > 
+> I discussed this with shawn and proposed to first implement it in egit
+> and when we have it right then move it into jgit. I think shawn agreed
+> with that.
 
-On Mon, Mar 30, 2009 at 11:03:28AM +0800, Aaron Davies wrote:
-> 
-> hi, i'm new to git, and have a couple questions which are probably
-> very stupid and/or indicate that i've been doing it wrong.
-> 
-> first, a couple words about my setup/workflow: i'm currently sole
-> developer on a project which may at some point get some other coders.
-> the environment is three linux boxes, one for development and two for
-> production, and three accounts, mine, dev, and prod. all homedirs are
-> hosted on the network and are accessible from all three boxen.
-> 
-> i have a "central" (i.e. bare) repository stored in dev's homedir, and
-> regular copies in all three homedirs. the language involved is
-> interpreted, so the code tree is the deployment.
-> 
-> my main workflow is to hack on a branch in my homedir, then merge and
-> push when i have a feature ready. then i go to the dev account and
-> pull, which constitutes dev deployment. once it's thoroughly tested, i
-> do the same in the prod account.
+I may have agreed with it.  My memory isn't *that* good.  :-)
 
-Looks sane. 
+In general principal I agree with Robin, Git specific handling
+should be in JGit as much as possible so we can reuse the logic in
+more applications than just EGit.
 
-That said, you could also work on branches (all in "homedir") for the
-    'working on feature' -> testing (dev) -> ready (prod) 
-workflow.
+But it may have been easier to get a first working prototype by doing
+the code in EGit, and later pulling some of it down into JGit as we
+identity what isn't EGit specific.
 
-> now, the questions: an exception to this workflow occurred a couple
-> months ago, when i made some urgent bugfixes that needed to move to
-> prod before other stuff that was currently being tested in dev. this
-> was done via cherry-picking some specific commits into prod. now, in
-> prod, when i do "git status", it says "# Your branch is ahead of
-> 'origin/master' by 8 commits." is there an easy way to get rid of
-> this?
+The problem with that is the dual licenses; code in EGit can't
+be pulled down to JGit without relicensing it under the BSD.
+Only the original author of the code can do that.  So if you
+contribute ignore support to EGit under the EPL which is better
+placed in JGit, Robin or myself can't pull it down ourselves,
+we'd have to rewrite it.
 
-What I would do is working on "TOPIC" branches. By this way, the bare,
-dev and prod repositories would not "know" of all the commits from mine
-but only the urgent fixes.
-
-in "mine":
-- step 1
-    $ git checkout -b bugfixes master
-
-- step 2
-    $ git cherry-pick blabla
-    (and/or <hack, hack, hack>)
-
-- step 3
-    $ git checkout master
-    $ git merge bugfixes
-
-- step 4
-    $ git push origin master:master (to the bare repo)
-
-- step 5
-    $ git branch -d bugfixes
-    $ git checkout myworking
-    $ git rebase myworking master
-
-
-At step 1, we create the new bugfixes branch from master:
-      (bugfixes)
-     /
-o-o-o          (master)
-     \
-      a-b-c-d  (myworking)
-
-At step 2, we fix the bugs (cherry-picking and hack):
-      a-c-y-z  (bugfixes)
-     /
-o-o-o          (master)
-     \
-      a-b-c-d  (myworking)
-
-At step 3, we merge the urgent fixes into master:
-      a-c-y-z  (bugfixes)
-     /
-o-o-o-a-c-y-z  (master)
-     \
-      a-b-c-d  (myworking)
-
-At step 4, we push the urgent work as usual pushes.
-At step 5, we come back to the usual work:
-
-o-o-o-a-c-y-z  (master)
-             \
-              b'-d'  (myworking)
-
->From here, you update dev and prod as usual.
+But even rewriting may be difficult, as the rewrite may be too close
+to the original (same language, same surrounding code, likely going
+to produce a similar result).
 
 -- 
-Nicolas Sebrecht
+Shawn.
