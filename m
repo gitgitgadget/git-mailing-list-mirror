@@ -1,88 +1,72 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH 1/8] mergetool: use tabs consistently
-Date: Mon, 30 Mar 2009 02:22:27 -0700
-Message-ID: <20090330092226.GB18953@gmail.com>
-References: <1238389428-69328-1-git-send-email-davvid@gmail.com> <1238389428-69328-2-git-send-email-davvid@gmail.com> <7vzlf3flim.fsf@gitster.siamese.dyndns.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Getting GIT+git-daemon+gitweb working properly on Fedora 10
+Date: Mon, 30 Mar 2009 11:24:15 +0200
+Message-ID: <49D08FBF.709@op5.se>
+References: <EA1460555FA0423EB6C233B3B0F4F098@HPLAPTOP> <37fcd2780903281351w6f77a647kd44a9afe4d2ee953@mail.gmail.com> <AE2ECDC6B332479293D910D9352DCF21@HPLAPTOP> <8c9a060903281501t268897d1pe2afa2f82fd2fd3a@mail.gmail.com> <12F76915BCBF4FAAB0E3C18BCC2528D5@HPLAPTOP>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Charles Bailey <charles@hashpling.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 30 11:25:36 2009
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Aaron Gray <aaronngray.lists@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 30 11:27:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoDik-0006RU-PG
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 11:23:55 +0200
+	id 1LoDkV-0007CR-5u
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 11:25:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755565AbZC3JVu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 05:21:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755129AbZC3JVu
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 05:21:50 -0400
-Received: from qw-out-2122.google.com ([74.125.92.26]:59955 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754898AbZC3JVt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2009 05:21:49 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so2409692qwh.37
-        for <git@vger.kernel.org>; Mon, 30 Mar 2009 02:21:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=6ewK9NG642gLJLb9VcwlJhzd5yMgdpIYEWBdc5YiJwU=;
-        b=PcCUd1u51PqJBF5yUdgC4zAwlaOL2qDV1lVwmQabP0hKJ9mEr2OtyFpTOA+AI/IKcS
-         CmALNVK1e7tHopKl3zXl1w1Jzx+my3KlGekVbmXlU3f98b3LITPO1Nz4bPiIVOaRvLfh
-         +yC2A/GX91GZgqhd9VtbEUu2vMA4g7v2dlKss=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=pRYSWVZ/DWtCcR+IDRSZLACCp9u4QAmo4aa0/sA6FzFAXwlRGQ+ATzKxy1HBPTAsDA
-         VkyclsIfWUr3/xMc2oSEaTix1wvZdfZ4AlCOduW2RFNks6GioR8sBfuYylaLpolL1NP6
-         rMGsWrWnJpjeJ3tE4tTeMRVnZiqTv7lNoigi0=
-Received: by 10.224.89.74 with SMTP id d10mr5809961qam.202.1238404906711;
-        Mon, 30 Mar 2009 02:21:46 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id 6sm5605330qwk.27.2009.03.30.02.21.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 30 Mar 2009 02:21:45 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vzlf3flim.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1756410AbZC3JYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2009 05:24:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756239AbZC3JYM
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 05:24:12 -0400
+Received: from mail.op5.se ([193.201.96.20]:40464 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752429AbZC3JYM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2009 05:24:12 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 1BA7C1B80074;
+	Mon, 30 Mar 2009 11:01:31 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id YpXJpvW00C+R; Mon, 30 Mar 2009 11:01:29 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id 4AF101B80049;
+	Mon, 30 Mar 2009 11:01:29 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <12F76915BCBF4FAAB0E3C18BCC2528D5@HPLAPTOP>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115118>
 
-On  0, Junio C Hamano <gitster@pobox.com> wrote:
-> Thanks.
+Aaron Gray wrote:
+> gitweb is showing a repository last changed on the front page 2 days ago 
+> but in the summary is showing a change 3 hours ago.
 > 
-> Even though this [1/8] is obviously regression free, and I think the
-> overall direction in which the series is going is good, I'll wait until I
-> hear Acks from Charles Bailey for the parts that involve mergetool.  I do
-> not use either mergetool nor difftool myself, and going over every single
-> line of this series to spot potential regression is beyond my bandwidth
-> right now.
+> I am getting different behaviours from different repositories. on gitweb 
+> and in their base directories some have file some donot. The ones with 
+> files have not been checked out and will not commit either.
 > 
-> I do not think bits only common between mergetool and difftool should be
-> called with a very generic name "sh-tools".  We didn't call the result of
-> a similar refactoring for launching web browser from help and instaweb
-> context with such a generic name (it is called git-web--browse).
+> What I need is a well written set of instructions on how to import both 
+> small and large SVN repositories and how to serve them and how to get 
+> gitweb to reflect actually what is going on.
+> 
 
-I also felt iffy about the name.
-Maybe...
-	git-interactive--tools ?
-	git-merge-diff--tools ?
-	git-mergetool--lib ?
-	(i'm pretty bad with this naming stuff ;))
-
-(I have --interactive on my brain thanks to Ping's patch ;))
-
-I can rebase as needed once we get more feedback, particularly
-notes from Charles.
+What does google provide on the subject? What search-terms did you try?
 
 -- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-	David
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
