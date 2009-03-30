@@ -1,116 +1,202 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [PATCH] git-gui: make "Git GUI Here" Explorer extension
- more robust
-Date: Mon, 30 Mar 2009 22:20:44 +0200
-Message-ID: <200903302220.44564.markus.heidelberg@web.de>
-References: <200903300030.03733.markus.heidelberg@web.de> <200903300851.43164.markus.heidelberg@web.de> <alpine.DEB.1.00.0903301001090.7534@intel-tinevez-2-302>
-Reply-To: markus.heidelberg@web.de
+From: Charles Bailey <charles@hashpling.org>
+Subject: Re: [PATCH 1/8] mergetool: use tabs consistently
+Date: Mon, 30 Mar 2009 22:35:30 +0100
+Message-ID: <20090330213530.GA7091@hashpling.org>
+References: <1238389428-69328-1-git-send-email-davvid@gmail.com> <1238389428-69328-2-git-send-email-davvid@gmail.com> <7vzlf3flim.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: msysgit@googlegroups.com, git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Mon Mar 30 22:22:48 2009
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qy0-f163.google.com ([209.85.221.163])
+Content-Type: text/plain; charset=us-ascii
+Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 30 23:37:38 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoO01-0002Yj-Tk
-	for gcvm-msysgit@m.gmane.org; Mon, 30 Mar 2009 22:22:26 +0200
-Received: by qyk35 with SMTP id 35so3466920qyk.3
-        for <gcvm-msysgit@m.gmane.org>; Mon, 30 Mar 2009 13:20:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received-spf:authentication-results:received
-         :received:from:reply-to:to:subject:date:user-agent:cc:references
-         :in-reply-to:jabber-id:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id:x-sender
-         :x-provags-id:sender:precedence:x-google-loop:mailing-list:list-id
-         :list-post:list-help:list-unsubscribe:x-beenthere-env:x-beenthere;
-        bh=t6OBgY4KqygaEW54Gok5RpBTTSDybEEGuR6k0pNcly0=;
-        b=bZaZj4WIaDBni8yo8HhCmh+z+zpqwWk+rT0JPP5wyre9QjjgRq8j/h3AZMPkLBytSA
-         AimyHVOLk/UFvwnkO9j4XpbubXEF547pneUs/whObplLeYOddygDOep0yomxILK2BjUZ
-         ihvl0DzlPh1l+Lv2yqAdSX+KGaENSsIs2lLWU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:from
-         :reply-to:to:subject:date:user-agent:cc:references:in-reply-to
-         :jabber-id:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id:x-provags-id:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        b=HpiF183tM5YFiDnBPUXNYTohZRZE3DxxsKFJxW76AFiPN3UGQsd7UePgZ3mHLpifgz
-         fwqeJFhi9PHmJXg2ggOuLFmfue42fCHQRlG5QLjGTNhFaQgGOxTyZnj1rX3NoLy5i+gh
-         wlZvotF5WXl0hn24bUJ9qHGDoY3Z6nttppkTI=
-Received: by 10.224.19.147 with SMTP id a19mr756566qab.6.1238444445936;
-        Mon, 30 Mar 2009 13:20:45 -0700 (PDT)
-Received: by 10.176.203.19 with SMTP id a19gr4549yqg.0;
-	Mon, 30 Mar 2009 13:20:45 -0700 (PDT)
-X-Sender: markus.heidelberg@web.de
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.210.11.13 with SMTP id 13mr214931ebk.13.1238444445207; Mon, 30 Mar 2009 13:20:45 -0700 (PDT)
-Received: from fmmailgate02.web.de (fmmailgate02.web.de [217.72.192.227]) by gmr-mx.google.com with ESMTP id 15si740167ewy.0.2009.03.30.13.20.45; Mon, 30 Mar 2009 13:20:45 -0700 (PDT)
-Received-SPF: pass (google.com: domain of markus.heidelberg@web.de designates 217.72.192.227 as permitted sender) client-ip=217.72.192.227;
-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of markus.heidelberg@web.de designates 217.72.192.227 as permitted sender) smtp.mail=markus.heidelberg@web.de
-Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166]) by fmmailgate02.web.de (Postfix) with ESMTP id 14685FC43970; Mon, 30 Mar 2009 22:20:45 +0200 (CEST)
-Received: from [89.59.73.72] (helo=.) by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256) (WEB.DE 4.110 #277) id 1LoNyO-0004wi-00; Mon, 30 Mar 2009 22:20:44 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.DEB.1.00.0903301001090.7534@intel-tinevez-2-302>
-Jabber-ID: markus.heidelberg@web.de
+	id 1LoPAL-00085M-Nd
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 23:37:10 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1759404AbZC3Vfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2009 17:35:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758545AbZC3Vfi
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 17:35:38 -0400
+Received: from relay.ptn-ipout01.plus.net ([212.159.7.35]:34088 "EHLO
+	relay.ptn-ipout01.plus.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757047AbZC3Vfh (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Mar 2009 17:35:37 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ApoEAFrY0EnUnw6S/2dsb2JhbADLeIN6Bg
+Received: from ptb-relay02.plus.net ([212.159.14.146])
+  by relay.ptn-ipout01.plus.net with ESMTP; 30 Mar 2009 22:35:31 +0100
+Received: from [212.159.69.125] (helo=hashpling.plus.com)
+	 by ptb-relay02.plus.net with esmtp (Exim) id 1LoP8l-0000hl-4p; Mon, 30 Mar 2009 22:35:31 +0100
+Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
+	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id n2ULZUFS008020
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 30 Mar 2009 22:35:30 +0100
+Received: (from charles@localhost)
+	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id n2ULZUr4008019;
+	Mon, 30 Mar 2009 22:35:30 +0100
 Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX19tHZ2LtMWh5+gOtuxVW3dWx01Ft5CFuJx44l6D lo7jOee2bQz5eqyeMJ2sdC4YDZeN0Cehx4H4N4sNUnpyhNinTM WkmBuP55cQan6QxLHy5A==
-Sender: msysgit@googlegroups.com
+In-Reply-To: <7vzlf3flim.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Plusnet-Relay: b25bd3ab70e847cdb9f03bff8fcc361f
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit+owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit+help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-X-BeenThere-Env: msysgit@googlegroups.com
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115191>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115192>
 
-
-Johannes Schindelin, 30.03.2009:
-> Hi,
+On Mon, Mar 30, 2009 at 01:44:01AM -0700, Junio C Hamano wrote:
+> Thanks.
 > 
-> On Mon, 30 Mar 2009, Markus Heidelberg wrote:
+> Even though this [1/8] is obviously regression free, and I think the
+> overall direction in which the series is going is good, I'll wait until I
+> hear Acks from Charles Bailey for the parts that involve mergetool.  I do
+> not use either mergetool nor difftool myself, and going over every single
+> line of this series to spot potential regression is beyond my bandwidth
+> right now.
 > 
-> > Johannes Schindelin, 30.03.2009:
-> > 
-> > > On Mon, 30 Mar 2009, Markus Heidelberg wrote:
-> > > 
-> > > > Starting git-gui via Windows Explorer shell extension caused 
-> > > > problems when not started from the project directory, but from a 
-> > > > directory within the project: starting the Explorer from the git-gui 
-> > > > menu "Explore Working Copy" didn't work then.
-> > > > 
-> > > > Starting git-gui via Explorer shell extension from the .git 
-> > > > directory didn't work at all.
-> > > > 
-> > > > To make these things possible, "cd .." until we see .git/
-> > > 
-> > > How does this interact with GIT_WORK_TREE?
-> > 
-> > Not sure. What's the use case for a globally set GIT_WORK_TREE, how is 
-> > it used?
-> 
-> You can call git gui with a non-global GIT_WORK_TREE by something like 
-> this, even on Windows (which your patch does not special case, anyway):
-> 
-> 	$ GIT_WORK_TREE=/bla/blub git gui
+> I do not think bits only common between mergetool and difftool should be
+> called with a very generic name "sh-tools".  We didn't call the result of
+> a similar refactoring for launching web browser from help and instaweb
+> context with such a generic name (it is called git-web--browse).
 
-The patch only affected git-gui started via Explorer, i.e. invoked with
---working-dir. But it's right that core.worktree can be set in the
-repository.
-However, git-gui currently doesn't support the gitdir outside of the
-working directory, but it may not be wise to build up on this!?
+OK, I've just had a very quick review of the patch series and, in
+general, I like it.
 
-Hmm, more complicated than I initially thought.
+I don't much like [1/8] though. I'm all in favour of consistency, but
+this patch touches most of the lines in git-mergetool and tries to go
+the opposite way to the consistency drive that we were trying to
+introduce gradually (i.e. only through lines materially affected by
+subsequent patches) in:
 
-Markus
+commit 0eea345111a9b9fea4dd2841b80bc7d62964e812
+Author: Charles Bailey <charles@hashpling.org>
+Date:   Thu Nov 13 12:41:13 2008 +0000
+
+    Fix some tab/space inconsistencies in git-mergetool.sh
+
+If you'd gone the other way the patch to consistency would only affect
+23 lines rather than 347 lines and all bar 3 of these lines you
+subsequently remove from git-mergetool.sh in later patches anyway.
+
+[2/8] - looks good.
+
+[3/8] - no mergetool impact.
+
+[4/8] - Hmmm, OK. Even so at this point, I'm getting slightly iffy
+feelings about the whole init_merge_tool_path sets a variable needed
+by the calling script. I know it's only scripting and not programming,
+but it seemed less bad to set (global) variables in sh functions when
+they were all in the same sh script.
+
+[5/8] - no mergtool impact.
+
+[6/8] - ditto
+
+[7/8] - OK, here's where my uneasiness about global script variables
+vs. parameters really gets going. Why is merge_tool a parameter when
+it's setup once and doesn't change in the invocation of a script, yet
+base_present is a script global but can vary between sets of paths to
+be merged?
+
+I fully appreciate that this is just inheriting the way things are
+and that they weren't beautiful before, but it somehow seems even
+worse when the variables are set in one script and used from a
+function in a separate sourced script. We're definitely setting up a
+very strong coupling between the two scripts which will make it harder
+to change either in the future.
+
+[8/8] - no mergetool impact here.
+
+On the plus side, I really like the introduction and function of the
+run_mergetool function. It's exactly the split that will make
+extending mergetool resolves of file vs. symlink vs. directory easier
+in the future. I have a similar split in some slow brewing patches
+myself.
+
+I think that [1/8] is the only patch that I'd relucatant to ack, as it
+seems like unnecessary churn and change of direction. Here's a sample
+patch for consistency 'the other way'. As I mentioned before, the
+first to hunks are made redundant by your subsequent changes anyway,
+so I only counted 3 lines that are currently inconsistent in
+git-mergetool as it stands at the moment.
+
+Sample patch fixing consistent whitespace 'the other way'.
+---
+ git-mergetool.sh |   46 +++++++++++++++++++++++-----------------------
+ 1 files changed, 23 insertions(+), 23 deletions(-)
+
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index 87fa88a..1588b5f 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -344,29 +344,29 @@ valid_custom_tool()
+ }
+ 
+ valid_tool() {
+-	case "$1" in
+-		kdiff3 | tkdiff | xxdiff | meld | opendiff | emerge | vimdiff | gvimdiff | ecmerge)
+-			;; # happy
+-		*)
+-			if ! valid_custom_tool "$1"; then
+-				return 1
+-			fi
+-			;;
+-	esac
++    case "$1" in
++	kdiff3 | tkdiff | xxdiff | meld | opendiff | emerge | vimdiff | gvimdiff | ecmerge)
++	    ;; # happy
++	*)
++	    if ! valid_custom_tool "$1"; then
++		return 1
++	    fi
++	    ;;
++    esac
+ }
+ 
+ init_merge_tool_path() {
+-	merge_tool_path=`git config mergetool.$1.path`
+-	if test -z "$merge_tool_path" ; then
+-		case "$1" in
+-			emerge)
+-				merge_tool_path=emacs
+-				;;
+-			*)
+-				merge_tool_path=$1
+-				;;
+-		esac
+-	fi
++    merge_tool_path=`git config mergetool.$1.path`
++    if test -z "$merge_tool_path" ; then
++	case "$1" in
++	    emerge)
++		merge_tool_path=emacs
++		;;
++	    *)
++		merge_tool_path=$1
++		;;
++	esac
++    fi
+ }
+ 
+ prompt_after_failed_merge() {
+@@ -389,9 +389,9 @@ prompt_after_failed_merge() {
+ if test -z "$merge_tool"; then
+     merge_tool=`git config merge.tool`
+     if test -n "$merge_tool" && ! valid_tool "$merge_tool"; then
+-	    echo >&2 "git config option merge.tool set to unknown tool: $merge_tool"
+-	    echo >&2 "Resetting to default..."
+-	    unset merge_tool
++	echo >&2 "git config option merge.tool set to unknown tool: $merge_tool"
++	echo >&2 "Resetting to default..."
++	unset merge_tool
+     fi
+ fi
+ 
+-- 
+1.6.2.323.geaf6e
+
+-- 
+Charles Bailey
+http://ccgi.hashpling.plus.com/blog/
