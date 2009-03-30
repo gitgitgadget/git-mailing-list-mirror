@@ -1,124 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 3/4] Documentation: branch.*.merge can also afect
- 'git-push'
-Date: Mon, 30 Mar 2009 09:47:17 -0700
-Message-ID: <7vd4bzdkkq.fsf@gitster.siamese.dyndns.org>
-References: <1238407903-28020-1-git-send-email-santi@agolina.net>
- <1238407903-28020-4-git-send-email-santi@agolina.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [Q] merging from one (kernel) stable to another?
+Date: Mon, 30 Mar 2009 13:31:18 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0903301311230.19665@iabervon.org>
+References: <200903301024.08848.brian.foster@innova-card.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Santi =?utf-8?Q?B=C3=A9jar?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Mon Mar 30 18:49:20 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-955355923-1238434278=:19665"
+Cc: git mailing list <git@vger.kernel.org>
+To: Brian Foster <brian.foster@innova-card.com>
+X-From: git-owner@vger.kernel.org Mon Mar 30 19:35:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoKfl-0001VR-HK
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 18:49:18 +0200
+	id 1LoLM9-00050i-Fb
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 19:33:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753061AbZC3QrZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Mar 2009 12:47:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752218AbZC3QrZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 12:47:25 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37986 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752101AbZC3QrY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Mar 2009 12:47:24 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id CA30EA65A9;
-	Mon, 30 Mar 2009 12:47:22 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A706FA65A6; Mon,
- 30 Mar 2009 12:47:19 -0400 (EDT)
-In-Reply-To: <1238407903-28020-4-git-send-email-santi@agolina.net> (Santi
- =?utf-8?Q?B=C3=A9jar's?= message of "Mon, 30 Mar 2009 12:11:42 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 70FC2116-1D4A-11DE-A250-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1753811AbZC3RbW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2009 13:31:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753540AbZC3RbV
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 13:31:21 -0400
+Received: from iabervon.org ([66.92.72.58]:56265 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753096AbZC3RbV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2009 13:31:21 -0400
+Received: (qmail 9054 invoked by uid 1000); 30 Mar 2009 17:31:18 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 30 Mar 2009 17:31:18 -0000
+In-Reply-To: <200903301024.08848.brian.foster@innova-card.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115176>
 
-Santi B=C3=A9jar <santi@agolina.net> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Signed-off-by: Santi B=C3=A9jar <santi@agolina.net>
-> ---
->  Documentation/config.txt |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 7ae584f..38ab785 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -480,7 +480,7 @@ branch.<name>.remote::
->  branch.<name>.merge::
->  	It defines, together with branch.<name>.remote, the upstream branch
->  	for the given branch. It tells 'git-fetch'/'git-pull' which
-> -	branch to merge.
-> +	branch to merge and can also afect 'git-push' (see push.default).
->  	When in branch <name>, it tells 'git-fetch' the default
->  	refspec to be marked for merging in FETCH_HEAD. The value is
->  	handled like the remote part of a refspec, and must match a
+--1547844168-955355923-1238434278=:19665
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
-I'll take [1/4] and [2/4] with minor rewording, and I think [4/4] is no=
-t
-necessary (push.default is clear enough---and defaultMode won't make it
-any clearer to the first time readers anyway as it is unspecified what
-kind of "mode" it is talking about).
+On Mon, 30 Mar 2009, Brian Foster wrote:
 
-I do not understand this [3/4].  I did look at push.default but it is
-unclear how this variable is involved.
+>   Whilst this question involves linux(-mips) kernel tree,
+>  it's a git(-related?) question, not a kernel question ....
+> 
+>   We are currently in the process of upgrading our embedded
+>  system from kernel 2.6.21(-ish) to at least 2.6.26.8;  and
+>  later, at some time in the future on to 2.6.3x or something.
+>  Going from 2.6.21 to .22 to .23 and so on to .26, then to
+>  .26.1 and so on to .26.8 is “easy” in the sense there are
+>  very few conflicts with our existing baseline (e.g., just
+>  2 or 3 in 2 or 3 files).
+> 
+>   .21 --> me --> .22 --> .23 ... --> .26 --> .27 --> master
+>      \              \       \           \      \
+>      .21-stable  .22-stable .23-stable   \     .27-stable
+>                                         .26.8
+>                                            \
+>                                            .26-stable
+> 
+>   But (using 2.6.21-stable and 2.6.22-stable as proxies),
+>  tests indicate that going from .26.8 to .27 or anything
+>  later will have numerous conflicts (100s? in more than
+>  30 files).  Thinking about it, this isn't too surprising
+>  since the -stable branches cherry-pick important/benign
+>  fixes from later revisions.
 
-Perhaps it is because the word "tracking" in the description "push the
-current branch to the branch it is tracking" is used without explainati=
-on.
-I think the author meant to say if your local branch frotz by default
-merges changes made to the branch nitfol of the remote repository, "fro=
-tz
-tracks nitfol", but the use of the word "track" for that meaning appear=
-s
-nowhere in Documentation/glossary-content.txt
+Why are you going from .26.8 to .27? Based on the -stable policy, there 
+should be no reason not to skip .26.x between .26 and .27. In fact, it's 
+not unlikely that merging both .26.8 and .27 will introduce bugs when the 
+same issue was fixed in different places in the two branches: a narrow 
+patch to paper over the identified problem in -stable and an intrusive 
+patch to change some API to make simpler code correct in the mainline.
 
-When you have:
+That is, the correct way of merging changes from -stable with the latest 
+mainline series is always to take the mainline version, even if the 
+-stable changes don't conflict at all.
 
-        [branch "frotz"]
-                remote =3D xyzzy
-                merge =3D nitfol
-        [remote "xyzzy"]
-                url =3D ...
-                fetch =3D refs/heads/*:refs/remotes/xyzzy/*
+It should actually be ideal to just merge your local changes directly with 
+the mainline kernel you want to end up using. But you might want to merge 
+first with earlier mainline kernels in order to get fewer or easier 
+conflicts per step.
 
-we can learn from the glossary the following:
-
- * refs/remotes/xyzzy/nitfol is a (remote) tracking branch and is used =
-to
-   follow changes made on "nitfol" branch in another repository "xyzzy"=
-=2E
-
- * refs/heads/*:refs/remotes/xyzzy/* is a refspec.  It shows refs under
-   refs/heads/ (aka "local branches") of the "xyzzy" repository are cop=
-ied
-   to our refs/remotes/xyzzy/ hierarchy.
-
-There is no word defined to describe what "nitfol" is to "frotz".  It i=
-s
-what "frotz" merges from.  So perhaps the description of push.default
-should say that, instead of using the word "track" in a confusing way t=
-o
-describe unrelated concept.  Saying "merge" might confuse people who wa=
-nt
-to use "branch.<name>.rebase", so it might be a good idea to say:
-
-	frotz updates with nitfol
-
-To "track" is pretty much about one-way communication.  You track the
-other guy, but you do not have to (and often you cannot) update the
-upstream with what you do.  branch.<name>.merge may have been "tracking=
-"
-in that sense, but with the push.default set to tracking, suddenly the
-communication becomes bidirectional and it is not about tracking anymor=
-e.
+	-Daniel
+*This .sig left intentionally blank*
+--1547844168-955355923-1238434278=:19665--
