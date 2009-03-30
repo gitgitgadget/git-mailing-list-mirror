@@ -1,142 +1,106 @@
-From: Nicolas Sebrecht <nicolas.s-dev@laposte.net>
-Subject: Re: newb questions: post-cherry-pick status cleanup, shared local
-	repository permissions
-Date: Mon, 30 Mar 2009 06:30:09 +0200
-Message-ID: <20090330043009.GB12907@vidovic>
-References: <c4e763ac0903292003j22934e7ax9f9ae986bdcd6abb@mail.gmail.com> <20090330042226.GA12907@vidovic>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] Add diffuse as merge and diff tool
+Date: Sun, 29 Mar 2009 21:55:23 -0700
+Message-ID: <20090330045522.GA8308@gmail.com>
+References: <49CEA3E2.9020805@hartwork.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Aaron Davies <aaron.davies@gmail.com>, git@vger.kernel.org
-To: Nicolas Sebrecht <nicolas.s-dev@laposte.net>
-X-From: git-owner@vger.kernel.org Mon Mar 30 06:32:03 2009
+Cc: git@vger.kernel.org
+To: Sebastian Pipping <webmaster@hartwork.org>
+X-From: git-owner@vger.kernel.org Mon Mar 30 06:56:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lo9AI-0007aj-2r
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 06:32:02 +0200
+	id 1Lo9Xr-0003Eo-1n
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 06:56:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751293AbZC3EaV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 00:30:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751131AbZC3EaT
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 00:30:19 -0400
-Received: from out2.laposte.net ([193.251.214.119]:41810 "EHLO
-	out1.laposte.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751110AbZC3EaS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2009 00:30:18 -0400
-Received: from meplus.info (localhost [127.0.0.1])
-	by mwinf8209.laposte.net (SMTP Server) with ESMTP id 7F94D7000084;
-	Mon, 30 Mar 2009 06:30:10 +0200 (CEST)
-Received: from ? (88-121-127-66.rev.libertysurf.net [88.121.127.66])
-	by mwinf8209.laposte.net (SMTP Server) with ESMTP id 11E5F7000083;
-	Mon, 30 Mar 2009 06:30:09 +0200 (CEST)
-X-ME-UUID: 20090330043010733.11E5F7000083@mwinf8209.laposte.net
+	id S1751433AbZC3Eyu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2009 00:54:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751252AbZC3Eyt
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 00:54:49 -0400
+Received: from mail-qy0-f118.google.com ([209.85.221.118]:41091 "EHLO
+	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751020AbZC3Eys (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2009 00:54:48 -0400
+Received: by qyk16 with SMTP id 16so3304806qyk.33
+        for <git@vger.kernel.org>; Sun, 29 Mar 2009 21:54:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=OZcgb2eOo+hXBbJoeZrD3SsTaGejEjop0ZA1OhDvCDE=;
+        b=l/sA8cYWGH88khqeD2v7rwqXQCDV8vLQX20iOQYQtmHaSJhzzbND6eurtx50vRt6CH
+         jKHAASzi32w2MwWJmQksFOU//E1kwETeOGuKwPVyFeLMff9XKJs6N/Patt8cZDNTp+67
+         68RdIwMi4KvOFlEIshpK8tX1QNZEJRfZwaxJM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=dzoZoJzrmEZVxx9F3nHkqhGIaZ1T0ty73V9QrVFHiywGoCvoKJGV81IsPAcH6J//Gj
+         PPVhIu9GyLU26y9EsCZtiiDYzYlay9SKnd640300m8n6DXlvkwHE2xWRj+bZljkdCzu1
+         2vlPoqwfcNvk8Wnv+py2eyAEBlCKdnItC3VCQ=
+Received: by 10.224.74.9 with SMTP id s9mr5528445qaj.321.1238388885754;
+        Sun, 29 Mar 2009 21:54:45 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id 26sm5383192qwa.42.2009.03.29.21.54.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 29 Mar 2009 21:54:44 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20090330042226.GA12907@vidovic>
+In-Reply-To: <49CEA3E2.9020805@hartwork.org>
 User-Agent: Mutt/1.5.18 (2008-05-17)
-X-me-spamlevel: not-spam
-X-me-spamrating: 31.600000
-X-me-spamcause: OK, (-210)(0000)gggruggvucftvghtrhhoucdtuddrvdekuddrfeeiucetggdotefuucfrrhhofhhilhgvmecuoehnohhnvgeqnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucdlqddutddtmdenlhhinhhugiculddquddtmd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115064>
 
 
-On Mon, Mar 30, 2009 at 06:22:26AM +0200, Nicolas Sebrecht wrote:
-> 
-> 
-> On Mon, Mar 30, 2009 at 11:03:28AM +0800, Aaron Davies wrote:
-> > 
-> > hi, i'm new to git, and have a couple questions which are probably
-> > very stupid and/or indicate that i've been doing it wrong.
-> > 
-> > first, a couple words about my setup/workflow: i'm currently sole
-> > developer on a project which may at some point get some other coders.
-> > the environment is three linux boxes, one for development and two for
-> > production, and three accounts, mine, dev, and prod. all homedirs are
-> > hosted on the network and are accessible from all three boxen.
-> > 
-> > i have a "central" (i.e. bare) repository stored in dev's homedir, and
-> > regular copies in all three homedirs. the language involved is
-> > interpreted, so the code tree is the deployment.
-> > 
-> > my main workflow is to hack on a branch in my homedir, then merge and
-> > push when i have a feature ready. then i go to the dev account and
-> > pull, which constitutes dev deployment. once it's thoroughly tested, i
-> > do the same in the prod account.
-> 
-> Looks sane. 
-> 
-> That said, you could also work on branches (all in "homedir") for the
->     'working on feature' -> testing (dev) -> ready (prod) 
-> workflow.
-> 
-> > now, the questions: an exception to this workflow occurred a couple
-> > months ago, when i made some urgent bugfixes that needed to move to
-> > prod before other stuff that was currently being tested in dev. this
-> > was done via cherry-picking some specific commits into prod. now, in
-> > prod, when i do "git status", it says "# Your branch is ahead of
-> > 'origin/master' by 8 commits." is there an easy way to get rid of
-> > this?
-> 
-> What I would do is working on "TOPIC" branches. By this way, the bare,
-> dev and prod repositories would not "know" of all the commits from mine
-> but only the urgent fixes.
-> 
-> in "mine":
-> - step 1
->     $ git checkout -b bugfixes master
-> 
-> - step 2
->     $ git cherry-pick blabla
->     (and/or <hack, hack, hack>)
-> 
-> - step 3
->     $ git checkout master
->     $ git merge bugfixes
-> 
-> - step 4
->     $ git push origin master:master (to the bare repo)
-> 
-> - step 5
->     $ git branch -d bugfixes
->     $ git checkout myworking
->     $ git rebase myworking master
+Hi
 
-My bad:
-     $ git rebase master
+On  0, Sebastian Pipping <webmaster@hartwork.org> wrote:
+> 
 
-> At step 1, we create the new bugfixes branch from master:
->       (bugfixes)
->      /
-> o-o-o          (master)
->      \
->       a-b-c-d  (myworking)
+> From e54c153a67cef9b162eb51f4b7cefb65e59c3a13 Mon Sep 17 00:00:00 2001
+> From: Sebastian Pipping <sebastian@pipping.org>
+> Date: Thu, 26 Mar 2009 20:42:31 +0100
+> Subject: [PATCH] Add diffuse as merge and diff tool
 > 
-> At step 2, we fix the bugs (cherry-picking and hack):
->       a-c-y-z  (bugfixes)
->      /
-> o-o-o          (master)
->      \
->       a-b-c-d  (myworking)
-> 
-> At step 3, we merge the urgent fixes into master:
->       a-c-y-z  (bugfixes)
->      /
-> o-o-o-a-c-y-z  (master)
->      \
->       a-b-c-d  (myworking)
-> 
-> At step 4, we push the urgent work as usual pushes.
-> At step 5, we come back to the usual work:
-> 
-> o-o-o-a-c-y-z  (master)
->              \
->               b'-d'  (myworking)
+> ---
+>  Documentation/git-mergetool.txt        |    3 ++-
+>  Documentation/merge-config.txt         |    7 ++++---
+>  contrib/completion/git-completion.bash |    3 ++-
+>  contrib/difftool/git-difftool-helper   |   12 ++++++++----
+>  contrib/difftool/git-difftool.txt      |    4 ++--
+>  git-gui/lib/mergetool.tcl              |    7 +++++++
+>  git-mergetool.sh                       |   15 ++++++++++++---
+>  7 files changed, 37 insertions(+), 14 deletions(-)
 
-Then, you update dev and prod as usual from bare.
+
+Hey, thanks for the patch.
+Ouch.. too many places with duplicated information, huh?
+
+I'm in the middle of refactoring git-(diff|merge)tool so that
+there is less duplication of code.
+
+Junio also has a number of difftool-related patches in his
+proposed-updates "pu" branch.
+
+Sebastian, would you mind if I rebased your patch on top of my
+work (once I send it out) so that it makes things easier on
+our kind maintainer?  I have a big patch series coming down that
+does away with the redundancies so I think it'd be best if we
+transfered your changes on top of it.  Would you mind if I
+rebased your patch and sent it out to the list?
+
+It wouldn't be until much later tonight (or tomorrow) at the
+earliest since I have some unpacking to take care of but if
+that's cool with you just let me know.
+
+You should see the refactoring patches from me shortly...
+
+
 
 -- 
-Nicolas Sebrecht
+		David
