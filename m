@@ -1,73 +1,75 @@
 From: =?utf-8?q?Santi=20B=C3=A9jar?= <santi@agolina.net>
-Subject: [PATCHv2 0/4] push.default and branch.<name>.{remote,merge} changes
-Date: Mon, 30 Mar 2009 12:11:39 +0200
-Message-ID: <1238407903-28020-1-git-send-email-santi@agolina.net>
+Subject: [PATCHv2 1/4] Documentation: enhance branch.<name>.{remote,merge}
+Date: Mon, 30 Mar 2009 12:11:40 +0200
+Message-ID: <1238407903-28020-2-git-send-email-santi@agolina.net>
+References: <1238407903-28020-1-git-send-email-santi@agolina.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 30 12:14:10 2009
+X-From: git-owner@vger.kernel.org Mon Mar 30 12:15:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoEUi-0006ps-UH
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 12:13:29 +0200
+	id 1LoEVz-0007Mz-QW
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 12:14:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758389AbZC3KL6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 06:11:58 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758286AbZC3KL6
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 06:11:58 -0400
-Received: from mail-bw0-f169.google.com ([209.85.218.169]:44348 "EHLO
-	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753002AbZC3KL5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2009 06:11:57 -0400
-Received: by bwz17 with SMTP id 17so1837526bwz.37
-        for <git@vger.kernel.org>; Mon, 30 Mar 2009 03:11:54 -0700 (PDT)
-Received: by 10.223.117.1 with SMTP id o1mr3752257faq.96.1238407913980;
-        Mon, 30 Mar 2009 03:11:53 -0700 (PDT)
+	id S1758470AbZC3KMG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Mar 2009 06:12:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758205AbZC3KME
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 06:12:04 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:57772 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758286AbZC3KMD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2009 06:12:03 -0400
+Received: by fxm2 with SMTP id 2so1882493fxm.37
+        for <git@vger.kernel.org>; Mon, 30 Mar 2009 03:11:59 -0700 (PDT)
+Received: by 10.223.111.71 with SMTP id r7mr3772192fap.59.1238407919583;
+        Mon, 30 Mar 2009 03:11:59 -0700 (PDT)
 Received: from localhost (p5B0D60BE.dip.t-dialin.net [91.13.96.190])
-        by mx.google.com with ESMTPS id f31sm2233595fkf.15.2009.03.30.03.11.53
+        by mx.google.com with ESMTPS id b17sm2246913fka.4.2009.03.30.03.11.58
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 30 Mar 2009 03:11:53 -0700 (PDT)
+        Mon, 30 Mar 2009 03:11:59 -0700 (PDT)
 X-Mailer: git-send-email 1.6.1.258.g7ff14
+In-Reply-To: <1238407903-28020-1-git-send-email-santi@agolina.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115128>
 
-Hi *,
+The documentation for branch.*.merge is very dense, so add a simple
+explanation on top of it.
 
-  the four patches are conceptually independent, but they have textual
-dependency.
+And branch.*.remote also afects 'git push'. Text taken from
+'push.default'.
 
-  The 1st one can also be applied to 'maint'.
+Signed-off-by: Santi B=C3=A9jar <santi@agolina.net>
+---
+ Documentation/config.txt |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
 
-Changes from v1:
-  rename "tracking branch" to "upstream branch"
-  rename push.default to push.mode instead of push.style
-
-Santi B=C3=A9jar (4):
-  Documentation: enhance branch.<name>.{remote,merge}
-  Documentation: push.default applies to all remotes
-  Documentation: branch.*.merge can also afect 'git-push'
-  Rename push.default to push.mode
-
- Documentation/RelNotes-1.6.3.txt |    2 +-
- Documentation/config.txt         |   21 ++++++++++-----------
- builtin-push.c                   |   16 ++++++++--------
- cache.h                          |   14 +++++++-------
- config.c                         |   10 +++++-----
- environment.c                    |    2 +-
- 6 files changed, 32 insertions(+), 33 deletions(-)
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 089569a..fa2595b 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -473,10 +473,14 @@ branch.autosetuprebase::
+ 	This option defaults to never.
+=20
+ branch.<name>.remote::
+-	When in branch <name>, it tells 'git-fetch' which remote to fetch.
+-	If this option is not given, 'git-fetch' defaults to remote "origin".
++	When in branch <name>, it tells 'git-fetch' and 'git-push' which
++	remote to fetch/push, and defaults to `origin` if no remote is
++	configured. `origin` is also used if you are not on any branch.
+=20
+ branch.<name>.merge::
++	It defines, together with branch.<name>.remote, the upstream branch
++	for the given branch. It tells 'git-fetch'/'git-pull' which
++	branch to merge.
+ 	When in branch <name>, it tells 'git-fetch' the default
+ 	refspec to be marked for merging in FETCH_HEAD. The value is
+ 	handled like the remote part of a refspec, and must match a
+--=20
+1.6.1.258.g7ff14
