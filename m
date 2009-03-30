@@ -1,71 +1,64 @@
-From: Pieter de Bie <pdebie@ai.rug.nl>
-Subject: Detached HEAD warning (again)
-Date: Mon, 30 Mar 2009 17:09:12 +0100
-Message-ID: <9099EAF5-6B43-4F15-A905-9E21B45B7AE9@ai.rug.nl>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 30 18:12:31 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] graph.c: avoid compile warnings
+Date: Mon, 30 Mar 2009 09:14:50 -0700
+Message-ID: <7v1vsff0n9.fsf@gitster.siamese.dyndns.org>
+References: <20090330141322.GA6221@linux.vnet>
+ <cover.1238428115u.git.johannes.schindelin@gmx.de>
+ <7ee8d1c4ca806ce964356a1fe78efac19d56c29b.1238428115u.git.johannes.schindelin@gmx.de> <7vd4bzf1e5.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Allan Caffee <allan.caffee@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Nanako Shiraishi <nanako3@lavabit.com>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 30 18:17:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoK4f-0001dt-7c
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 18:10:57 +0200
+	id 1LoKAB-0004dB-Uh
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 18:16:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751966AbZC3QJY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 12:09:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751599AbZC3QJY
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 12:09:24 -0400
-Received: from frim.nl ([87.230.85.232]:58360 "EHLO
-	lvps87-230-85-232.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751451AbZC3QJX (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Mar 2009 12:09:23 -0400
-Received: from 82-41-227-224.cable.ubr11.sgyl.blueyonder.co.uk ([82.41.227.224] helo=[192.168.50.101])
-	by lvps87-230-85-232.dedicated.hosteurope.de with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <pdebie@ai.rug.nl>)
-	id 1LoK35-0007z5-RA
-	for git@vger.kernel.org; Mon, 30 Mar 2009 17:09:20 +0100
-X-Mailer: Apple Mail (2.930.3)
+	id S1753443AbZC3QPF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2009 12:15:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752745AbZC3QPE
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 12:15:04 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59253 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753191AbZC3QPB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2009 12:15:01 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id EEEF1A627B;
+	Mon, 30 Mar 2009 12:14:58 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3B66CA6278; Mon,
+ 30 Mar 2009 12:14:51 -0400 (EDT)
+In-Reply-To: <7vd4bzf1e5.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 30 Mar 2009 08:58:42 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: EA5C1D90-1D45-11DE-B2EE-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115173>
 
-Hi all,
+Junio C Hamano <gitster@pobox.com> writes:
 
-I strongly remember there being a discussion about this a few weeks  
-ago, but I
-can't find it. Basically, someone wanted to introduce a warning every  
-time
-someone commits on a detached HEAD. This was shot down because there  
-already
-is a big warning when you detach your HEAD (with which I agree).
+>> diff --git a/graph.c b/graph.c
+>> index 2929c8b..5e2f224 100644
+>> --- a/graph.c
+>> +++ b/graph.c
+>> @@ -701,8 +701,8 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
+>>  	for (i = 0; i < graph->num_columns; i++) {
+>>  		struct column *col = &graph->columns[i];
+>>  		if (col->commit == graph->commit) {
+>> -			seen_this = 1;
+>>  			struct strbuf tmp = STRBUF_INIT;
+>> +			seen_this = 1;
+>
+> Which codebase are you working on top of?
 
-However, someone here: http://news.ycombinator.com/item?id=538619  
-pointed to
-an example here: http://book.git-scm.com/5_submodules.html , which  
-works with
-submodules:
-
-	$ git submodule update --init
-	# sub/ is created
-	$ (cd sub && touch a && git add a && git commit -am "Add new file")
-	[detached HEAD 8641889] Add new file
-	 0 files changed, 0 insertions(+), 0 deletions(-)
-	 create mode 100644 a
-
-	$ git submodule update
-	$ ls sub/a
-	ls: sub/a: No such file or directory
-
-Now, it DOES say 'detached HEAD', but I still think this is something  
-easily
-missed and something that can cause a lot of confusion. Perhaps a  
-warning in
-such cases wouldn't hurt?
-
-- Pieter
+Nevermind.  I didn't realize it was "here are to help whipping your series
+into shape" meant for Allan.
