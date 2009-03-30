@@ -1,63 +1,98 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH 1/2] send-email: refactor and ensure prompting doesn't 
-	loop forever
-Date: Mon, 30 Mar 2009 10:18:59 -0400
-Message-ID: <76718490903300718m7d172a12y4aab63f0ff75f286@mail.gmail.com>
-References: <1238290751-57461-1-git-send-email-jaysoffian@gmail.com>
-	 <vpqd4bzjlk1.fsf@bauges.imag.fr>
-	 <76718490903300717x5cc5e33ax1cf91471efd242bd@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] git-gui: run post-checkout hook on checkout
+Date: Mon, 30 Mar 2009 07:34:35 -0700
+Message-ID: <20090330143435.GA23521@spearce.org>
+References: <49CAB4C1.6070004@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Mar 30 16:20:38 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com, peff@peff.net
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Mar 30 16:36:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoILs-0003sY-P3
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 16:20:37 +0200
+	id 1LoIax-0001qo-LT
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 16:36:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753631AbZC3OTF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 10:19:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753542AbZC3OTE
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 10:19:04 -0400
-Received: from mail-gx0-f160.google.com ([209.85.217.160]:60166 "EHLO
-	mail-gx0-f160.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753480AbZC3OTD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2009 10:19:03 -0400
-Received: by gxk4 with SMTP id 4so4318805gxk.13
-        for <git@vger.kernel.org>; Mon, 30 Mar 2009 07:19:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=cBZQeFht0YFOw9mUIBiYAzbUDJfXN69uoxlkRIbdbUE=;
-        b=azSQcuMKWxvSe2AifveuMGYOfywSuDMd+A3KK0VOssTkjNr7ktbnJnjtw1I1bjftqo
-         CtP+qng7bHiunHOSCooqmfJnfA/zmIABtoi/uSCfvXrVtBfuAPgXpMWd8WDkKlGcI91t
-         GlJMJrSMC1WIEtkRoPYz/brt8d41KP5JFZrLU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=MUSJlJHVaY+y4JC6mbVexgIcTp8z+CNpvGye535IdjjcWr2XGGRj1SqsoGVyvz8TSL
-         4rXGlnI6iV9P4TTOLg+kC/OuB3j5awe0CUyJvScVEW6q9/LQEt2bMbwiOr5WEy/s3i0i
-         ky13dUILOUnecrS4HXimyEgpkM+fam+QkymAE=
-Received: by 10.150.225.17 with SMTP id x17mr10524530ybg.223.1238422739721; 
-	Mon, 30 Mar 2009 07:18:59 -0700 (PDT)
-In-Reply-To: <76718490903300717x5cc5e33ax1cf91471efd242bd@mail.gmail.com>
+	id S1753095AbZC3Oei (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2009 10:34:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752233AbZC3Oei
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 10:34:38 -0400
+Received: from george.spearce.org ([209.20.77.23]:34289 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751850AbZC3Oeh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2009 10:34:37 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id BE7EF38211; Mon, 30 Mar 2009 14:34:35 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <49CAB4C1.6070004@web.de>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115158>
 
-On Mon, Mar 30, 2009 at 10:17 AM, Jay Soffian <jaysoffian@gmail.com> wrote:
-> perl send-email ... 2>/dev/null :-)
+Jens Lehmann <Jens.Lehmann@web.de> wrote:
+> It's been a while since i deeply touched tcl/tk code ... i basically
+> adapted the code for calling the post-commit hook here.
 
-Hmfph, perl on the mind. That should of course be "git send-email ...
-2>/dev/null" but it was only a half-serious suggestion anyway.
+Not bad for not having touched tcl/tk in a long time... :-)
+ 
+> +	# -- Run the post-checkout hook.
+> +	#
+> +	set fd_ph [githook_read post-checkout $old_hash $new_hash 1]
+> +	if {$fd_ph ne {}} {
+> +		upvar #0 pch_error pc_err
 
-j.
+I'd rather spell this "global pch_error".
+
+> +		set pc_err {}
+> +		fconfigure $fd_ph -blocking 0 -translation binary -eofchar {}
+> +		fileevent $fd_ph readable \
+> +			[list checkout_postcheckout_wait $fd_ph $this]
+
+The callback should be "[cb _postcheckout_wait $fd_ph]".  This is
+a git-gui macro which returns a handle to invoke a "method" named
+"_postcheckout_wait", passing in $this as the first parameter.
+
+> +proc checkout_postcheckout_wait {fd_ph t} {
+
+This should be "method _postcheckout_wait {fd_ph} {" to use the
+cb macro above, and have $this automatically carry through.
+
+> +	upvar #0 pch_error pch_error
+
+"global pch_error"
+
+> +	append pch_error [read $fd_ph]
+> +	fconfigure $fd_ph -blocking 1
+> +	if {[eof $fd_ph]} {
+> +		if {[catch {close $fd_ph}]} {
+> +			hook_failed_popup post-checkout $pch_error 0
+> +		}
+> +		unset pch_error
+> +		delete_this $t
+> +		return
+> +	}
+> +	fconfigure $fd_ph -blocking 0
+
+Also, I'm wondering about the UI state semantics here.  Back on
+line 462 (in the preimage) we unlock_index, which means that the
+user can start to push buttons again, and then later on around
+line 474 you start up the post-checkout hook.
+
+I think we'd want to defer the unlock_index call until after the
+hook has terminated, if we are going to run a hook at all.  In fact,
+we probably need to move that entire block 462-474 (the unlock_index
+... delete_this block) to a new method which we invoke if there is
+no hook, or after the hook subprocess terminates.
+
+By waiting until after the hook to do the rescan, we also ensure
+that the hook has a chance to update the working directory, perhaps
+by dirtying a file, and the user seeing the result of that dirtying
+immediately.
+
+-- 
+Shawn.
