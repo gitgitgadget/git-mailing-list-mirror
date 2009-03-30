@@ -1,83 +1,145 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH 6/8] sh-tools: add a run_merge_tool function
-Date: Mon, 30 Mar 2009 00:46:26 -0700
-Message-ID: <20090330074625.GA11769@gmail.com>
-References: <1238389428-69328-1-git-send-email-davvid@gmail.com> <1238389428-69328-6-git-send-email-davvid@gmail.com> <1238389428-69328-7-git-send-email-davvid@gmail.com> <200903300932.29870.markus.heidelberg@web.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Segfault on merge with 1.6.2.1
+Date: Mon, 30 Mar 2009 09:48:35 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0903300944350.7534@intel-tinevez-2-302>
+References: <op.urifmtkkso3nzr@sulidor.mdjohnson.us> <20090329121700.GN22446@genesis.frugalware.org> <op.urk20nanso3nzr@sulidor.mdjohnson.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Markus Heidelberg <markus.heidelberg@web.de>
-X-From: git-owner@vger.kernel.org Mon Mar 30 09:47:32 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Michael Johnson <redbeard@mdjohnson.us>
+X-From: git-owner@vger.kernel.org Mon Mar 30 09:50:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoCDK-0003vV-1V
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 09:47:22 +0200
+	id 1LoCG2-0004bH-Sd
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 09:50:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751425AbZC3Hpw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 03:45:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751204AbZC3Hpv
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 03:45:51 -0400
-Received: from mail-qy0-f118.google.com ([209.85.221.118]:62901 "EHLO
-	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750872AbZC3Hpv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2009 03:45:51 -0400
-Received: by qyk16 with SMTP id 16so3350107qyk.33
-        for <git@vger.kernel.org>; Mon, 30 Mar 2009 00:45:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=I/S2an/TqoCmqRp/3cWHjDmCnz6T4hm2Asu6ciupohA=;
-        b=SDGH1+HqqRco7548+LAWtuNTTiGeWy5LC3mqbLr6Zrsc81AHsrJsZlQV9aRrJI2wi6
-         8bNCTgXMHELLDdo4/bSoR45lVZRG3VC/3TpwfC5e33caB5RwGLBpur1uodY1/x6GVIcy
-         6ClPXDMSE3kOM3l6vfzWayGOvoi57v5wiRS0M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=FYwtHEyWvGLmCr94Ezop2LLi/IxBlOvhWidEBm2BmKwg0WIPHAPpZcYhP8Z9IyNDQH
-         TVTxuI7qUnVibWs963dHRO2Q5VKIOE6IFxnGl5ip5eQUcRihLwuQNtR/jb9klypQodNp
-         2p+cf8iLzJVfUfzIF2Ls0+ELQaSzwuZZP9N4Q=
-Received: by 10.224.11.72 with SMTP id s8mr5712139qas.185.1238399148932;
-        Mon, 30 Mar 2009 00:45:48 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id 26sm5513167qwa.12.2009.03.30.00.45.46
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 30 Mar 2009 00:45:48 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <200903300932.29870.markus.heidelberg@web.de>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752434AbZC3Hsl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2009 03:48:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752413AbZC3Hsj
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 03:48:39 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57104 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752256AbZC3Hsj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2009 03:48:39 -0400
+Received: (qmail invoked by alias); 30 Mar 2009 07:48:36 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp020) with SMTP; 30 Mar 2009 09:48:36 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+HCjpbQ6CHLv2oAlwR70zu7UmJWjZPvos1SfRJpM
+	RjCGO5tdi/qGmn
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <op.urk20nanso3nzr@sulidor.mdjohnson.us>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.42
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115098>
 
-On  0, Markus Heidelberg <markus.heidelberg@web.de> wrote:
-> David Aguilar, 30.03.2009:
-> > +# Runs a side-by-side merge tool
-> > +run_merge_tool()
-> > +{
-> > +	merge_tool="$1"
-> > +
-> > +	# base_present is always false when !mergetool_mode
-> > +	case "$merge_tool" in
-> > +	kdiff3)
-> > [...]
+Hi,
+
+On Sun, 29 Mar 2009, Michael Johnson wrote:
+
+> On Sun, 29 Mar 2009 07:17:00 -0500, Miklos Vajna <vmiklos@frugalware.org>
+> wrote:
 > 
-> Kompare is missing here. Note, that this is only diff tool, not for
-> merges.
+> >On Sat, Mar 28, 2009 at 11:19:31AM -0500, Michael Johnson
+> ><redbeard@mdjohnson.us> wrote:
+> > >The 1.6.2.1 version just segfaults, but 1.5.6.5 says:
+> > >
+> > >/usr/bin/git-merge: line 438: 32335 Segmentation fault
+> > >git-merge-$strategy $common -- "$head_arg" "$@"
+> > >Merge with strategy recursive failed.
+> > >
+> > >In all cases, .git/index.lock is left behind.
+> >
+> >That's because 1.6.2.1 has git-merge in C and it calls merge-recursive
+> >directly without a fork. Could you try it in gdb and provide a
+> >backtrace, please?
 > 
-> Markus
+> Well, I've got a backtrace, but I don't have debugging symbols, apparently.
+> There is not a Debian package I can find that has them. I checked
+> debug.debian.net, as well as the standard sid repository. So I will have to
+> rebuild the package with debugging turned on. I will not be able to do that
+> tonight, unfortunately. I will probably have a chance tomorrow evening.
 > 
+> Just in case it might be useful, though, here's the backtrace, without
+> symbols.
+> 
+> Starting program: /usr/bin/git merge origin/dojo-1.3
+> (no debugging symbols found)
+> ... repeated multiple times ...
+> [Thread debugging using libthread_db enabled]
+> (no debugging symbols found)
+> ... repeated multiple times
+> [New Thread 0xb7a73b30 (LWP 21505)]
+> 
+> Program received signal SIGSEGV, Segmentation fault.
+> [Switching to Thread 0xb7a73b30 (LWP 21505)]
+> 0x080e5a6f in ?? ()
+> (gdb) backtrace
+> #0  0x080e5a6f in ?? ()
+> #1  0x0893e000 in ?? ()
+> #2  0x000f0000 in ?? ()
+> #3  0xbf949098 in ?? ()
+> #4  0x080e63ad in ?? ()
+> #5  0x08977fcf in ?? ()
+> #6  0x000f0000 in ?? ()
+> #7  0xfff0ffff in ?? ()
+> #8  0x08945dd8 in ?? ()
+> #9  0x00000000 in ?? ()
 
-Thanks, will fixup asap.
-I botched the --cover letter too ;)
-note to self: no more refactoring while sleepy on plane.
+This segfault sounds vaguely like something I tried to fix.  
+Unfortunately, I cannot spend time on it right now, except send you the 
+patch that could help the issue:
 
--- 
+-- snipsnap --
 
-	David
+>From 084909acbb576be4c4815e047ee4247b95c70cda Mon Sep 17 00:00:00 2001
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Date: Mon, 10 Nov 2008 23:25:31 +0100
+Subject: [PATCH] merge-recursive: fail gracefully with directory/submodule conflicts
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ merge-recursive.c         |   15 ++++++++-------
+
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 3e1bc3e..8ada5a9 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -519,14 +519,14 @@ static void update_file_flags(struct merge_options *o,
+ 		void *buf;
+ 		unsigned long size;
+ 
+-		if (S_ISGITLINK(mode))
+-			die("cannot read object %s '%s': It is a submodule!",
+-			    sha1_to_hex(sha), path);
+-
+-		buf = read_sha1_file(sha, &type, &size);
++		if (S_ISGITLINK(mode)) {
++			buf = xstrdup(sha1_to_hex(sha));
++			size = strlen(buf);
++		} else
++			buf = read_sha1_file(sha, &type, &size);
+ 		if (!buf)
+ 			die("cannot read object %s '%s'", sha1_to_hex(sha), path);
+-		if (type != OBJ_BLOB)
++		if (!S_ISGITLINK(mode) && type != OBJ_BLOB)
+ 			die("blob expected for %s '%s'", sha1_to_hex(sha), path);
+ 		if (S_ISREG(mode)) {
+ 			struct strbuf strbuf = STRBUF_INIT;
+@@ -542,7 +542,8 @@ static void update_file_flags(struct merge_options *o,
+ 			free(buf);
+ 			goto update_index;
+ 		}
+-		if (S_ISREG(mode) || (!has_symlinks && S_ISLNK(mode))) {
++		if (S_ISGITLINK(mode) || S_ISREG(mode) ||
++				(!has_symlinks && S_ISLNK(mode))) {
+ 			int fd;
+ 			if (mode & 0100)
+ 				mode = 0777;
