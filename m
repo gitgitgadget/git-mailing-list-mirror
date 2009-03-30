@@ -1,116 +1,88 @@
-From: Simon Arlott <simon@fire.lp0.eu>
-Subject: [PATCH] git-svn: add a double quiet option to hide git commits
-Date: Mon, 30 Mar 2009 19:31:41 +0100
-Message-ID: <49D1100D.8010206@simon.arlott.org.uk>
-References: <49CFCD5A.1080801@simon.arlott.org.uk> <20090329224324.GB20675@dcvr.yhbt.net> <7vvdprjyrc.fsf@gitster.siamese.dyndns.org>
+From: Raman Gupta <rocketraman@fastmail.fm>
+Subject: Re: [PATCH 2/2] Add feature release instructions to gitworkflows
+ man page
+Date: Mon, 30 Mar 2009 14:40:11 -0400
+Message-ID: <49D1120B.8060601@fastmail.fm>
+References: <1238391319-4953-1-git-send-email-rocketraman@fastmail.fm> <1238391319-4953-2-git-send-email-rocketraman@fastmail.fm> <7vk567ijlf.fsf@gitster.siamese.dyndns.org> <49D10875.2060008@fastmail.fm> <7vljqmdgj0.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org,
-	mdpoole@troilus.org
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 30 20:36:44 2009
+X-From: git-owner@vger.kernel.org Mon Mar 30 20:42:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoMLj-0007Vr-R2
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 20:36:44 +0200
+	id 1LoMR4-0001gv-Kg
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 20:42:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753246AbZC3Sbt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 14:31:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752317AbZC3Sbt
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 14:31:49 -0400
-Received: from proxima.lp0.eu ([81.187.201.134]:59732 "EHLO proxima.lp0.eu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751436AbZC3Sbs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2009 14:31:48 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=exim; d=fire.lp0.eu;
-	h=Received:Message-ID:Date:From:User-Agent:MIME-Version:To:CC:Subject:References:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	b=KRL4g423XY4TYTIRsY4KobjBeIXviXRQTMEFHW7PPbQpHrA08kDOWLWBIAXv0ffs/8YFTCA6wZVumrbpHgmile0MlDU3efFakAPpy6UGxRzjx0HQ8urb+r2SEWPdy6HB;
-Received: from redrum.lp0.eu ([2001:8b0:ffea:0:2e0:81ff:fe4d:2bec]:33015)
-	by proxima.lp0.eu ([2001:8b0:ffea:0:205:b4ff:fe12:530]:465) with esmtpsav (TLSv1:AES256-SHA:256/CN=Simon Arlott)
-	id 1LoMGr-0003an-8m; Mon, 30 Mar 2009 19:31:41 +0100
-User-Agent: Thunderbird 2.0.0.21 (X11/20090328)
-In-Reply-To: <7vvdprjyrc.fsf@gitster.siamese.dyndns.org>
+	id S1756770AbZC3SkW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2009 14:40:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756718AbZC3SkV
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 14:40:21 -0400
+Received: from smtp104.rog.mail.re2.yahoo.com ([206.190.36.82]:48190 "HELO
+	smtp104.rog.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1755205AbZC3SkU (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Mar 2009 14:40:20 -0400
+Received: (qmail 15558 invoked from network); 30 Mar 2009 18:40:17 -0000
+Received: from unknown (HELO apollo.rocketraman.com) (rocketraman@99.224.155.40 with login)
+  by smtp104.rog.mail.re2.yahoo.com with SMTP; 30 Mar 2009 18:40:17 -0000
+X-YMail-OSG: cvCTlysVM1mCWByt5zEyLqIaKDHeUXKYbR2aVxsbQLeMYqCsRNt0xqO7HA5fRZfesg--
+X-Yahoo-Newman-Property: ymail-3
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by apollo.rocketraman.com (Postfix) with ESMTP id 336AB638E38;
+	Mon, 30 Mar 2009 14:40:17 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at rocketraman.com
+Received: from apollo.rocketraman.com ([127.0.0.1])
+	by localhost (apollo.rocketraman.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 9-g4K0SC8nFB; Mon, 30 Mar 2009 14:40:11 -0400 (EDT)
+Received: from [192.168.1.5] (zeus.rocketraman.com [192.168.1.5])
+	by apollo.rocketraman.com (Postfix) with ESMTP id 706AB21C0519;
+	Mon, 30 Mar 2009 14:40:11 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <7vljqmdgj0.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115186>
 
-People may expect/prefer -q to still show git commits,
-so this change allows a second -q to hide them.
+Junio C Hamano wrote:
+> Raman Gupta <rocketraman@fastmail.fm> writes:
+> 
+>> Junio C Hamano wrote:
+>> ...
+>> If you wish to remove discussion of 'next' from this document, that is
+>> probably better done in a separate followup change. Though personally
+>> I think its a useful concept for readers to learn about as they are
+>> setting up their own workflows.
+> 
+> I do not have a particularly strong feeling about 'next' either way.
+> 
+> As the document states at the top, it lists ingredients from git.git
+> management and it is left up to the readers to adopt parts that suit their
+> needs, while not using others.  In that spirit, the description of 'next'
+> as "ahead of master that is supposed to be rock solid" may be a good thing
+> to keep.  It is orthogonal if the project wants to rewind and rebuild
+> 'next' after every feature release---they do not need to (and we didn't do
+> so for quite some time).  One valid choice by readers is to adopt the
+> concept of 'next' in their project but never rewind and rebuild it, and
+> you made that clear that it is optional.  So I think this part of your
+> patch is good as-is.
 
-Signed-off-by: Michael Poole <mdpoole@troilus.org>
-Signed-off-by: Simon Arlott <simon@fire.lp0.eu>
----
-On 30/03/09 07:44, Junio C Hamano wrote:
-> Eric Wong <normalperson@yhbt.net> writes:
->> Simon Arlott <simon@fire.lp0.eu> wrote:
->>> Ideally only errors should be output in this mode so fetch
->>> can be run from cron and normally produce no output. Without
->>> this change it would output a single line on each git commit,
->>> e.g.
->>> r1909 = 32ef87860662526d4a62f903949ed21e0341079e (u2_10_12_branch)
+It might be useful to add some explanation of why one would want to
+rewind and rebuild vs simply continue as is.
 
- Documentation/git-svn.txt |    3 ++-
- git-svn.perl              |    9 +++++----
- 2 files changed, 7 insertions(+), 5 deletions(-)
+I guess the advantage is that the history for next starts out nice and
+clean for the next release, without any cruft from repeated merging of
+topic branches.
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index cda3389..8163a19 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -385,7 +385,8 @@ config key: svn.authorsfile
- 
- -q::
- --quiet::
--	Make 'git-svn' less verbose.
-+	Make 'git-svn' less verbose. Specify a second time to make it
-+	even less verbose.
- 
- --repack[=<n>]::
- --repack-flags=<flags>::
-diff --git a/git-svn.perl b/git-svn.perl
-index e5c3dfe..d919798 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -68,6 +68,7 @@ my ($_stdin, $_help, $_edit,
- 	$_prefix, $_no_checkout, $_url, $_verbose,
- 	$_git_format, $_commit_url, $_tag);
- $Git::SVN::_follow_parent = 1;
-+$_q ||= 0;
- my %remote_opts = ( 'username=s' => \$Git::SVN::Prompt::_username,
-                     'config-dir=s' => \$Git::SVN::Ra::config_dir,
-                     'no-auth-cache' => \$Git::SVN::Prompt::_no_auth_cache,
-@@ -80,7 +81,7 @@ my %fc_opts = ( 'follow-parent|follow!' => \$Git::SVN::_follow_parent,
- 		'useSvnsyncProps' => \$Git::SVN::_use_svnsync_props,
- 		'log-window-size=i' => \$Git::SVN::Ra::_log_window_size,
- 		'no-checkout' => \$_no_checkout,
--		'quiet|q' => \$_q,
-+		'quiet|q+' => \$_q,
- 		'repack-flags|repack-args|repack-opts=s' =>
- 		   \$Git::SVN::_repack_flags,
- 		'use-log-author' => \$Git::SVN::_use_log_author,
-@@ -2331,13 +2332,13 @@ sub do_git_commit {
- 
- 	$self->{last_rev} = $log_entry->{revision};
- 	$self->{last_commit} = $commit;
--	print "r$log_entry->{revision}" unless $::_q;
-+	print "r$log_entry->{revision}" unless $::_q > 1;
- 	if (defined $log_entry->{svm_revision}) {
--		 print " (\@$log_entry->{svm_revision})" unless $::_q;
-+		 print " (\@$log_entry->{svm_revision})" unless $::_q > 1;
- 		 $self->rev_map_set($log_entry->{svm_revision}, $commit,
- 		                   0, $self->svm_uuid);
- 	}
--	print " = $commit ($self->{ref_id})\n" unless $::_q;
-+	print " = $commit ($self->{ref_id})\n" unless $::_q > 1;
- 	if (--$_gc_nr == 0) {
- 		$_gc_nr = $_gc_period;
- 		gc();
--- 
-1.6.2
--- 
-Simon Arlott
+The disadvantage is that one must publish the operation and all forks
+must deal with the rebase.
+
+Any other thoughts?
+
+Cheers,
+Raman
