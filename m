@@ -1,83 +1,186 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH 1/2] send-email: refactor and ensure prompting doesn't 
-	loop forever
-Date: Mon, 30 Mar 2009 12:04:50 -0400
-Message-ID: <76718490903300904k7e8c1054m99edb92d8d582387@mail.gmail.com>
-References: <1238290751-57461-1-git-send-email-jaysoffian@gmail.com>
-	 <vpqd4bzjlk1.fsf@bauges.imag.fr>
-	 <76718490903300717x5cc5e33ax1cf91471efd242bd@mail.gmail.com>
-	 <vpqwsa7gjlh.fsf@bauges.imag.fr>
-	 <76718490903300845x14897599jc73f50a16b21605d@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC/PATCH] graph API: Added logic for colored edges.
+Date: Mon, 30 Mar 2009 18:04:27 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0903301749590.7534@intel-tinevez-2-302>
+References: <20090318100512.GA7932@linux.vnet> <alpine.DEB.1.00.0903181228420.10279@pacific.mpi-cbg.de> <b2e43f8f0903190959if539048r19e972899bd2132d@mail.gmail.com> <alpine.DEB.1.00.0903191831590.6357@intel-tinevez-2-302> <20090320064813.6117@nanako3.lavabit.com>
+ <b2e43f8f0903201213o396de6c0sb52149ed1d889d1@mail.gmail.com> <20090320195806.GC26934@coredump.intra.peff.net> <20090321175726.GA6677@linux.vnet> <20090330141322.GA6221@linux.vnet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Nanako Shiraishi <nanako3@lavabit.com>
+To: Allan Caffee <allan.caffee@gmail.com>
 X-From: git-owner@vger.kernel.org Mon Mar 30 18:08:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoK0D-0007qA-NE
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 18:06:22 +0200
+	id 1LoJzv-0007g1-Uj
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 18:06:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754368AbZC3QEz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 12:04:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753870AbZC3QEy
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 12:04:54 -0400
-Received: from mail-gx0-f160.google.com ([209.85.217.160]:48981 "EHLO
-	mail-gx0-f160.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753810AbZC3QEx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2009 12:04:53 -0400
-Received: by gxk4 with SMTP id 4so4435727gxk.13
-        for <git@vger.kernel.org>; Mon, 30 Mar 2009 09:04:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Ka/MYZBNIq+vEGYJ2o+OO0fs70A1WhPFS59+W5XcSOU=;
-        b=nWS6Kzb+TwX35j8rMp0f9oSj5SJRPAVZo/7f9+EfZ77pZk+gybTgFrNhrGryFXWYjg
-         0s3lDC1+8Vg/eqgKFDd0NFRzSbfd5GVxIEWgpSuNa2ih18guSSB6ECWUFTQ2VJVR5NBd
-         s313g5XzC5jmGPRIA1NIDZNG0N+EvRe7JFtD8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=C+EZrBZWHgS5aJMAts27zYDJMyy4g37ddzMkGTemGWIifxXtBV9vShJ9/qwQL59Pc4
-         a15tvk9VpI81aw4N9TWLMeXXkXDzKsy1oBcO7BE0q0G3D/oWBtygvAYBXfUgbC7ZeJwD
-         N72GI5qemNDCD9r5s7UGWszuEOdukuBJ06azU=
-Received: by 10.150.190.18 with SMTP id n18mr10416063ybf.157.1238429090794; 
-	Mon, 30 Mar 2009 09:04:50 -0700 (PDT)
-In-Reply-To: <76718490903300845x14897599jc73f50a16b21605d@mail.gmail.com>
+	id S1753318AbZC3QEc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2009 12:04:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753250AbZC3QEc
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 12:04:32 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60006 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753029AbZC3QEb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2009 12:04:31 -0400
+Received: (qmail invoked by alias); 30 Mar 2009 16:04:28 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp066) with SMTP; 30 Mar 2009 18:04:28 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+KL9BJ2+uKQ5dvEXJhzC6qZWSnpMur33b9cdQSs/
+	2KrVC0o8LKS6H2
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <20090330141322.GA6221@linux.vnet>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.44
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115171>
 
-On Mon, Mar 30, 2009 at 11:45 AM, Jay Soffian <jaysoffian@gmail.com> wrote:
-> Okay, well, I figured out how to work the polish. Term::ReadLine is
-> attempting to use /dev/tty for input/output, which is closed. And
-> because send-email enables warnings, its attempt to do so emits the
-> messages you are seeing. Can you confirm that this patch squelches the
-> warnings?
+Hi,
 
-Ugh, not that. This:
+On Mon, 30 Mar 2009, Allan Caffee wrote:
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index f0405c8..81240ef 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -612,6 +612,9 @@ sub ask {
-        my $default = $arg{default};
-        my $resp;
-        my $i = 0;
-+       return defined $default ? $default : undef
-+               unless defined $term->IN and defined fileno($term->IN) and
-+                      defined $term->OUT and defined fileno($term->OUT);
-        while ($i++ < 10) {
-                $resp = $term->readline($prompt);
-                if (!defined $resp) { # EOF
+> Modified the graph drawing logic to colorize edges based on parent-child 
+> relationships similiarly to gitk.
+> 
+> Signed-off-by: Allan Caffee <allan.caffee@gmail.com>
 
-j.
+Nice!
+
+> I havn't gotten the chance to do any of the color clean up that's been 
+> discussed on this thread.  I'll try to throw something together in a 
+> seperate patch series.
+> 
+> Also this patch isn't respecting the --no-color option which I imagine 
+> means that diff_use_color_default isn't the right variable to be 
+> checking.  Johannes mentioned using diff_use_color but the only instance 
+> I see is a parameter to diff_get_color.  What am I missing?
+
+The patch I sent you should work...
+
+> diff --git a/graph.c b/graph.c
+> index 162a516..2929c8b 100644
+> --- a/graph.c
+> +++ b/graph.c
+> @@ -72,11 +74,22 @@ struct column {
+>  	 */
+>  	struct commit *commit;
+>  	/*
+> -	 * XXX: Once we add support for colors, struct column could also
+> -	 * contain the color of its branch line.
+> +	 * The color to (optionally) print this column in.
+>  	 */
+> +	char *color;
+>  };
+>  
+> +static void strbuf_write_column(struct strbuf *sb, const struct column *c,
+> +		const char *s);
+> +
+> +static char* get_current_column_color (const struct git_graph* graph);
+> +
+> +/*
+> + * Update the default column color and return the new value.
+> + */
+> +static char* get_next_column_color(struct git_graph* graph);
+> +
+> +
+
+Please just insert the definitions here, instead of using a forward 
+declaration.
+
+> @@ -86,6 +99,24 @@ enum graph_state {
+>  	GRAPH_COLLAPSING
+>  };
+>  
+> +/*
+> + * The list of available column colors.
+> + */
+> +static char column_colors[][COLOR_MAXLEN] = {
+> +	GIT_COLOR_RED,
+> +	GIT_COLOR_GREEN,
+> +	GIT_COLOR_YELLOW,
+> +	GIT_COLOR_BLUE,
+> +	GIT_COLOR_MAGENTA,
+> +	GIT_COLOR_CYAN,
+> +	GIT_COLOR_BOLD GIT_COLOR_RED,
+> +	GIT_COLOR_BOLD GIT_COLOR_GREEN,
+> +	GIT_COLOR_BOLD GIT_COLOR_YELLOW,
+> +	GIT_COLOR_BOLD GIT_COLOR_BLUE,
+> +	GIT_COLOR_BOLD GIT_COLOR_MAGENTA,
+> +	GIT_COLOR_BOLD GIT_COLOR_CYAN,
+> +};
+> +
+>  struct git_graph {
+>  	/*
+>  	 * The commit currently being processed
+
+I imagine that this is a good start.  Whether to make a patch that moves 
+this into color.[ch] before or after this patch is up to Junio, I guess 
+(even if I would prefer it to be done before, so that it gets done).
+
+> @@ -317,6 +354,14 @@ static void graph_insert_into_new_columns(struct git_graph *graph,
+>  					  int *mapping_index)
+>  {
+>  	int i;
+> +	char *color = get_current_column_color(graph);
+> +
+> +	for (i = 0; i < graph->num_columns; i++) {
+> +		if (graph->columns[i].commit == commit) {
+> +			color = graph->columns[i].color;
+> +			break;
+> +		}
+> +	}
+
+I imagine that this would be better done using a struct decorate mapping 
+commits to the color strings.
+
+Also, I'd only call get_current_column_color() if there was no color 
+assigned to the commit (instead of calling it all the time).
+
+It might not be a performance bottleneck here, but I guess it is better 
+not to get used to that pattern anyway.
+
+> @@ -334,6 +379,8 @@ static void graph_insert_into_new_columns(struct git_graph *graph,
+>  	 * This commit isn't already in new_columns.  Add it.
+>  	 */
+>  	graph->new_columns[graph->num_new_columns].commit = commit;
+> +/*         fprintf(stderr,"adding the %scommit%s\n", color, GIT_COLOR_RESET); */
+
+Please remove this line.
+
+> @@ -649,7 +702,10 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
+>  		struct column *col = &graph->columns[i];
+>  		if (col->commit == graph->commit) {
+>  			seen_this = 1;
+> -			strbuf_addf(sb, "| %*s", graph->expansion_row, "");
+> +			struct strbuf tmp = STRBUF_INIT;
+> +			strbuf_addf(&tmp, "| %*s", graph->expansion_row, "");
+> +			strbuf_write_column(sb, col, tmp.buf);
+> +			strbuf_release(&tmp);
+
+Maybe it would be better to add functions
+
+const char *column_color(struct column *c)
+{
+	return c->color ? c->color : "";
+}
+
+const char *column_color_reset(struct column *c)
+{
+	return c->color ? GIT_COLOR_RESET : "";
+}
+
+?
+
+Sorry, I have to stop the review here, ran out of time...
+
+If nobody beats me to it, I will continue here later.
+
+Thanks!
+Dscho
