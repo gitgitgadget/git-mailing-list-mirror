@@ -1,82 +1,68 @@
-From: "Daniel Cheng (aka SDiZ)" <j16sdiz+freenet@gmail.com>
-Subject: [PATCH] Fix bash completion in path with spaces
-Date: Mon, 30 Mar 2009 19:27:37 +0800
-Message-ID: <1238412457-29674-1-git-send-email-j16sdiz+freenet@gmail.com>
-Cc: git@vger.kernel.org,
-	"Daniel Cheng (aka SDiZ)" <j16sdiz+freenet@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Mar 30 13:29:17 2009
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH 1/2] send-email: refactor and ensure prompting doesn't loop forever
+Date: Mon, 30 Mar 2009 13:29:34 +0200
+Message-ID: <vpqd4bzjlk1.fsf@bauges.imag.fr>
+References: <1238290751-57461-1-git-send-email-jaysoffian@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 30 13:35:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoFg4-0005Yv-Aq
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 13:29:16 +0200
+	id 1LoFlc-0007DI-H5
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 13:35:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756440AbZC3L1p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 07:27:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754638AbZC3L1p
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 07:27:45 -0400
-Received: from wf-out-1314.google.com ([209.85.200.168]:8515 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753445AbZC3L1o (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2009 07:27:44 -0400
-Received: by wf-out-1314.google.com with SMTP id 29so2532394wff.4
-        for <git@vger.kernel.org>; Mon, 30 Mar 2009 04:27:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:from:to:cc:subject
-         :date:message-id:x-mailer;
-        bh=eh8YThjY+TarxwjCMGmaWN9/9Mwx/+dpKATIIiWwmaI=;
-        b=Pir4ho5Q+XYqJVFzA5n9sf8RlGtLnBWCCW3ccgRP5VAsTS6muaJClfg6EWcWI1l+iZ
-         rYdtz//Ei+e3DFgecBNDJb4h/IryaySSJpo3pkFvc1nMm9QktPqKSLgAtdhvsG2L95Mh
-         kHs+sWBylDfuZKPI5/mE7eJn8nbueLS9Uopp8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer;
-        b=GMpW1lzUyUKg2rynQnMbsbtZTHhg0BX5QKxPkPdo/zl4i2Veox4aTuoArflvU7dnez
-         6Xr5j7OzxdoSvWSN0Vt+UtNmqFzIfFTggRQvhCQ1FaFL/zbCM+AbEQifiYV2xMGnrVxR
-         xFid/Bmw6F/Xhn+23w1uMICpoUFNnhRUjZEaM=
-Received: by 10.143.162.8 with SMTP id p8mr2095933wfo.34.1238412462449;
-        Mon, 30 Mar 2009 04:27:42 -0700 (PDT)
-Received: from localhost.localdomain ([116.49.56.87])
-        by mx.google.com with ESMTPS id 24sm8423740wff.42.2009.03.30.04.27.40
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 30 Mar 2009 04:27:41 -0700 (PDT)
-X-Mailer: git-send-email 1.6.2
+	id S1755596AbZC3Ldb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2009 07:33:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754638AbZC3Ld3
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 07:33:29 -0400
+Received: from imag.imag.fr ([129.88.30.1]:64001 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753445AbZC3Ld3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2009 07:33:29 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n2UBTYtd003490
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 30 Mar 2009 13:29:34 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1LoFgM-0008Pm-Mb; Mon, 30 Mar 2009 13:29:34 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1LoFgM-0006V5-KT; Mon, 30 Mar 2009 13:29:34 +0200
+In-Reply-To: <1238290751-57461-1-git-send-email-jaysoffian@gmail.com> (Jay Soffian's message of "Sat\, 28 Mar 2009 21\:39\:10 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 30 Mar 2009 13:29:35 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115137>
 
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-Signed-off-by: Daniel Cheng (aka SDiZ) <j16sdiz+freenet@gmail.com>
----
- contrib/completion/git-completion.bash |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+> Several places in send-email prompt for input, and will do so forever
+> when the input is EOF. This is poor behavior when send-email is run
+> unattended (say from cron).
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 1c6b0e2..e72ce24 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1103,7 +1103,7 @@ _git_log ()
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
- 	local g="$(git rev-parse --git-dir 2>/dev/null)"
- 	local merge=""
--	if [ -f $g/MERGE_HEAD ]; then
-+	if [ -f "$g/MERGE_HEAD" ]; then
- 		merge="--merge"
- 	fi
- 	case "$cur" in
-@@ -1943,7 +1943,7 @@ _gitk ()
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
- 	local g="$(__gitdir)"
- 	local merge=""
--	if [ -f $g/MERGE_HEAD ]; then
-+	if [ -f "$g/MERGE_HEAD" ]; then
- 		merge="--merge"
- 	fi
- 	case "$cur" in
+Thanks a lot for the patch, it does fix the problem I reported in
+http://article.gmane.org/gmane.comp.version-control.git/114577 .
+
+Minor problem: I still (harmless) get error messages in my log:
+
+  print() on closed filehandle FOUT at /usr/share/perl/5.8/Term/ReadLine.pm line 193.
+  readline() on closed filehandle FIN at /usr/share/perl/5.8/Term/ReadLine.pm line 395.
+  print() on closed filehandle FOUT at /usr/share/perl/5.8/Term/ReadLine.pm line 203.
+  
+But I can very well live with them!
+
 -- 
-1.6.2
+Matthieu
