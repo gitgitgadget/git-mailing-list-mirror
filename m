@@ -1,98 +1,99 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Implementing stat() with FindFirstFile()
-Date: Tue, 31 Mar 2009 01:29:17 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0903310128410.10279@pacific.mpi-cbg.de>
-References: <20090321154738.GA27249@jeeves.jpl.local> <200903212055.15026.j6t@kdbg.org> <20090324215416.GB27249@jeeves.jpl.local> <49CB2BA5.1070100@viscovery.net> <20090326213907.GC27249@jeeves.jpl.local> <alpine.DEB.1.00.0903270320020.10279@pacific.mpi-cbg.de>
- <20090329224803.GD27249@jeeves.jpl.local> <alpine.DEB.1.00.0903300245080.6454@intel-tinevez-2-302> <20090330051118.GA2681@atjola.homenet> <20090330220709.GA68118@macbook.lan>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH] git-gui: make "Git GUI Here" Explorer extension
+ more robust
+Date: Tue, 31 Mar 2009 00:49:07 +0200
+Message-ID: <43168.7221433551$1238455980@news.gmane.org>
+References: <200903300030.03733.markus.heidelberg@web.de> <alpine.DEB.1.00.0903300243050.6454@intel-tinevez-2-302> <200903300851.43164.markus.heidelberg@web.de> <20090330141510.GW23521@spearce.org>
+Reply-To: giuseppe.bilotta@gmail.com
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1049516874-1238455758=:10279"
-Cc: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
-	=?ISO-8859-15?Q?Magnus_B=E4ck?= <baeck@swipnet.se>,
-	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Tue Mar 31 01:30:43 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7Bit
+To: "Shawn O. Pearce" <spearce@spearce.org>, msysgit@googlegroups.com, git@vger.kernel.org,Markus Heidelberg <markus.heidelberg@web.de>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Tue Mar 31 01:32:53 2009
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qy0-f163.google.com ([209.85.221.163])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoQub-00028Q-Oz
-	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 01:29:02 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756765AbZC3X1G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 19:27:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755325AbZC3X1E
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 19:27:04 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39637 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754120AbZC3X1D (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2009 19:27:03 -0400
-Received: (qmail invoked by alias); 30 Mar 2009 23:26:58 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp034) with SMTP; 31 Mar 2009 01:26:58 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/bF38SiefbM3lm6Alk2vbfE2GIX6QHIjGbccDLKD
-	9raEY//dICpGDS
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20090330220709.GA68118@macbook.lan>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.54
-Sender: git-owner@vger.kernel.org
+	id 1LoQwY-0002w7-70
+	for gcvm-msysgit@m.gmane.org; Tue, 31 Mar 2009 01:31:02 +0200
+Received: by qyk35 with SMTP id 35so3601371qyk.3
+        for <gcvm-msysgit@m.gmane.org>; Mon, 30 Mar 2009 16:29:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received-spf:authentication-results:received
+         :message-id:from:subject:to:date:references:lines:user-agent
+         :mime-version:content-type:content-transfer-encoding:x-face
+         :x-google-approved:reply-to:sender:precedence:x-google-loop
+         :mailing-list:list-id:list-post:list-help:list-unsubscribe
+         :x-beenthere-env:x-beenthere;
+        bh=FtaFSem9EkdCBV2kR+XyP11gQaPZjqll0NQh0SyF5E0=;
+        b=ptOR7rOe1KFG8Z/W9fUm5nKA5DSnpfXooL0njAVniqFmW3I6LVoDF5bK0bdXNkIwVN
+         CiGSlvKaZMABYQYfRXBmXYaXDlU8SvqkZqoXqROvyBMXRg5VC8AWcBcOJi5WcbgE7BR4
+         7lxjSHkTno2f2d48kthwTuPZy8TYsx8JnPcqQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :message-id:from:subject:to:date:references:lines:user-agent
+         :mime-version:content-type:content-transfer-encoding:x-face
+         :x-google-approved:reply-to:sender:precedence:x-google-loop
+         :mailing-list:list-id:list-post:list-help:list-unsubscribe
+         :x-beenthere-env:x-beenthere;
+        b=3CU6cuA9+hIdF4yst9t4ajbwNqP62UwGu1NnlYwxM2FAEhcIFdY6I5dYLdBGE/7Gd8
+         VmYgXO8zmlYMh70SMoVhz+Wewx9HwiOHvsJurZrUeZruLM2/Mjn5usLN6eBkKxprb4fG
+         FkHn9YVeVF8VvBQbr7ZBo61HsrdESjLwxKezs=
+Received: by 10.224.19.146 with SMTP id a18mr786749qab.8.1238455767069;
+        Mon, 30 Mar 2009 16:29:27 -0700 (PDT)
+Received: by 10.176.167.11 with SMTP id p11gr4554yqe.0;
+	Mon, 30 Mar 2009 16:29:27 -0700 (PDT)
+X-Sender: giuseppe.bilotta@gmail.com
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.204.69.6 with SMTP id x6mr141125bki.28.1238453353648; Mon, 30 Mar 2009 15:49:13 -0700 (PDT)
+Received: from joe.mail.tiscali.it (joe.mail.tiscali.it [213.205.33.54]) by gmr-mx.google.com with ESMTP id 13si501883bwz.7.2009.03.30.15.49.13; Mon, 30 Mar 2009 15:49:13 -0700 (PDT)
+Received-SPF: neutral (google.com: 213.205.33.54 is neither permitted nor denied by domain of giuseppe.bilotta@gmail.com) client-ip=213.205.33.54;
+Authentication-Results: gmr-mx.google.com; spf=neutral (google.com: 213.205.33.54 is neither permitted nor denied by domain of giuseppe.bilotta@gmail.com) smtp.mail=giuseppe.bilotta@gmail.com
+Received: from oblomov.local (78.13.53.34) by joe.mail.tiscali.it (8.0.022) id 499F039601E4A981; Tue, 31 Mar 2009 00:49:12 +0200
+User-Agent: KNode/0.10.9
+X-Face: ::w9}R^l{WGM\{y)C0QF@4^U,',W3Mk^X0HP)=:bKM^Z]A9+6bY6fe3}O*]fH{l<j1/9RTp  `KR0idy]Im#9^%}P5Dga'>AViT_'?&>&ufo2_X5Vs3C^tPO@drZRuu&6iK}x}~9`F\-dNZ>(p|V7`4
+X-Google-Approved: johannes.schindelin@googlemail.com via web at 2009-03-30 23:29:26
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115200>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115201>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1049516874-1238455758=:10279
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+On Monday 30 March 2009 16:15, Shawn O. Pearce wrote:
 
-Hi,
-
-On Tue, 31 Mar 2009, Heiko Voigt wrote:
-
-> On Mon, Mar 30, 2009 at 07:11:18AM +0200, Björn Steinbrink wrote:
-> > On 2009.03.30 02:52:47 +0200, Johannes Schindelin wrote:
-> > > On Mon, 30 Mar 2009, Magnus Bäck wrote:
-> > > > On Friday, March 27, 2009 at 03:25 CET, Johannes Schindelin 
-> > > > <Johannes.Schindelin@gmx.de> wrote:
-> > > > > On Thu, 26 Mar 2009, Magnus Bäck wrote:
-> > > > > > I'd be very surprised if ZwQueryDirectoryFile() hasn't always 
-> > > > > > been around (I just verified ntdll.dll from NT 4.0), so that's 
-> > > > > > not a worry. Don't know why MSDN reports it as introduced in 
-> > > > > > XP.
-> > > > >
-> > > > > As the current maintainer of msysGit, I refuse to have something 
-> > > > > in the installer I ship that relies on not-at-all guaranteed 
-> > > > > interfaces.
-> > > > 
-> > > > Although I do appreciate the importance of guaranteed interfaces, 
-> > > > I am also pragmatic. An incompatible change in ntdll.dll would 
-> > > > break vast amounts of programs, including cygwin. There is a lot 
-> > > > to be said about Microsoft and their APIs, but I don't think they 
-> > > > have a habit of changing ABIs or function semantics for userland 
-> > > > libraries that have been around for 15 years.
-> > > 
-> > > Had you pointed to some document that states that the function has 
-> > > been in all NT-based versions, that would have done the trick.
-> > 
-> > Not official documentation, but at least from some MS guy it seems: 
-> > http://www.osronline.com/showThread.cfm?link=73086 (last message).
-> > 
-> > Apparently, it was in NT3.x, but they document only what's actually 
-> > defined in the header.
+> Markus Heidelberg <markus.heidelberg@web.de> wrote:
+>> 
+>> But I just noticed, that it will obviously "cd .." forever, if no .git/
+>> was found. Somehow the root directory has to be catched.
 > 
-> How about runtime checking? You could do GetProcAddress(...) and if you 
-> don't get it use the old behaviour. I mean if it really is faster why 
-> not let Users of recent systems benefit from it.
+> Yup.  I'm dropping this patch for now because of this issue, but
+> I'll look at it again if its addressed in another version.  :-)
 
-While my first reaction was negative, I have to admit that thinking about 
-it longer, it does seem to make a whole lot of sense.
+I have a couple of pending patches to fix git gui handling of repositories,
+including support for nonstandard repository locations and bare repositories.
+You can find them at
 
-Thanks,
-Dscho
+http://git.oblomov.eu/git
 
---8323328-1049516874-1238455758=:10279--
+and specifically
+
+http://git.oblomov.eu/git/patches/b2e4c32e13df1b7f18e7b4a9f746650471a3122e..a63526bf3238cf25d9a5521f7ee35ed1bd11cb16
+
+I got distracted by real-life issue and forgot to resend them. I'll try
+to find the time again later on this week. I'm not entirely sure these
+solve Markus' problem though.
+
+-- 
+Giuseppe "Oblomov" Bilotta
