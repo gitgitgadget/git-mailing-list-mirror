@@ -1,61 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv2 4/4] Rename push.default to push.mode
-Date: Mon, 30 Mar 2009 09:45:45 -0400
-Message-ID: <20090330134544.GA31827@coredump.intra.peff.net>
-References: <1238407903-28020-1-git-send-email-santi@agolina.net> <1238407903-28020-5-git-send-email-santi@agolina.net> <49D0A1FE.60300@drmicha.warpmail.net> <adf1fd3d0903300537i41d4aef3g49ab6bde9343cbc5@mail.gmail.com> <49D0C3B8.2050801@drmicha.warpmail.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [Q] merging from one (kernel) stable to another?
+Date: Mon, 30 Mar 2009 15:52:21 +0200
+Message-ID: <49D0CE95.6020407@op5.se>
+References: <200903301024.08848.brian.foster@innova-card.com> <200903301358.48864.brian.foster@innova-card.com> <49D0B8BF.2000502@op5.se> <200903301451.33956.brian.foster@innova-card.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Santi =?utf-8?B?QsOpamFy?= <santi@agolina.net>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Mar 30 15:47:56 2009
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	git mailing list <git@vger.kernel.org>
+To: Brian Foster <brian.foster@innova-card.com>
+X-From: git-owner@vger.kernel.org Mon Mar 30 15:54:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoHpp-0007si-BA
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 15:47:29 +0200
+	id 1LoHvz-0001q8-Oi
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 15:53:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752427AbZC3Np5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 09:45:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752162AbZC3Np5
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 09:45:57 -0400
-Received: from peff.net ([208.65.91.99]:49858 "EHLO peff.net"
+	id S1751386AbZC3NwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2009 09:52:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751327AbZC3NwV
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 09:52:21 -0400
+Received: from mail.op5.se ([193.201.96.20]:57141 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752063AbZC3Np5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2009 09:45:57 -0400
-Received: (qmail 4389 invoked by uid 107); 30 Mar 2009 13:46:09 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 30 Mar 2009 09:46:09 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 30 Mar 2009 09:45:45 -0400
-Content-Disposition: inline
-In-Reply-To: <49D0C3B8.2050801@drmicha.warpmail.net>
+	id S1750962AbZC3NwU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2009 09:52:20 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 8ECF61B8004E;
+	Mon, 30 Mar 2009 15:29:40 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id sxZdRBVKrfmZ; Mon, 30 Mar 2009 15:29:35 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id 9DB8E1B80049;
+	Mon, 30 Mar 2009 15:29:35 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <200903301451.33956.brian.foster@innova-card.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115150>
 
-On Mon, Mar 30, 2009 at 03:06:00PM +0200, Michael J Gruber wrote:
-
-> > I don't see the quoted-printable characters, I see them in utf-8 and 8bit.
-> > 
-> > Content-Type: text/plain; charset=utf-8
-> > Content-Transfer-Encoding: 8bit
-> > 
-> > Maybe some server in between is recoding it.
+Brian Foster wrote:
+> On Monday 30 March 2009 14:19:11 Andreas Ericsson wrote:
+>> Brian Foster wrote:
 > 
-> That's weird. I read through gmane/nntp, but others' posts are fine.
-> Yours have
+>>>   (4)  Tag the result `like-this';
+>>>   (5)  Checkout our.21;  and
+>>>   (6)  Merge with `like-this'.
+>> Merge is not necessary.
 > 
-> Content-Type: text/plain; charset=utf-8
-> Content-Transfer-Encoding: QUOTED-PRINTABLE
+>   <Shrugs/>  I'll going to try in both ways (with and without
+>  merging) to better understand just what the results are like.
 
-If a subscriber's mailserver does not support the 8BITMIME SMTP
-extension, then vger will (correctly) encode an 8bit message as QP.
-Gmane's mailservers do not seem to support 8BITMIME.
+If you get the tree into the state you want and simply want to
+connect the histories, you can do
 
-You see it only with Santi's message because most messages are already
-7bit clean; however, the accent in his name requires git to mark it as
-8-bit.
+  git merge -s ours $other_branch
 
--Peff
+which will record the tree from the current commit as the tree
+for the merge-commit (ie, all changes from $other_branch are
+thrown away, and the merge always succeeds without conflicts).
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
