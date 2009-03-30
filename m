@@ -1,117 +1,62 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: On git 1.6 (novice's opinion)
-Date: Mon, 30 Mar 2009 11:06:19 +0200
-Message-ID: <49D08B8B.1000309@op5.se>
-References: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: [PATCH 4/4] Rename push.default to push.style
+Date: Mon, 30 Mar 2009 11:07:10 +0200
+Message-ID: <adf1fd3d0903300207j479b6e91gc6ed00695a00e157@mail.gmail.com>
+References: <1238281804-30290-1-git-send-email-santi@agolina.net>
+	 <1238281804-30290-5-git-send-email-santi@agolina.net>
+	 <20090330080115.GA19142@pvv.org>
+	 <alpine.DEB.1.00.0903301021540.7534@intel-tinevez-2-302>
+	 <adf1fd3d0903300200v65393b1bif0050392aa44652e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Ulrich Windl <ulrich.windl@rz.uni-regensburg.de>
-X-From: git-owner@vger.kernel.org Mon Mar 30 11:07:48 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Finn Arne Gangstad <finnag@pvv.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 30 11:09:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoDT9-0000xD-68
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 11:07:47 +0200
+	id 1LoDUp-0001SX-UD
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 11:09:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754449AbZC3JGR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 05:06:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753751AbZC3JGQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 05:06:16 -0400
-Received: from mail.op5.se ([193.201.96.20]:55342 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754127AbZC3JGP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2009 05:06:15 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id D67951B80049;
-	Mon, 30 Mar 2009 10:43:34 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1Cj1CPQX4d9E; Mon, 30 Mar 2009 10:43:33 +0200 (CEST)
-Received: from clix.int.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id C2DC31B80074;
-	Mon, 30 Mar 2009 10:43:32 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+	id S1755962AbZC3JHO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Mar 2009 05:07:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755609AbZC3JHN
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 05:07:13 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:35097 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754550AbZC3JHN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Mar 2009 05:07:13 -0400
+Received: by fxm2 with SMTP id 2so1855075fxm.37
+        for <git@vger.kernel.org>; Mon, 30 Mar 2009 02:07:10 -0700 (PDT)
+Received: by 10.103.2.14 with SMTP id e14mr1591815mui.41.1238404030443; Mon, 
+	30 Mar 2009 02:07:10 -0700 (PDT)
+In-Reply-To: <adf1fd3d0903300200v65393b1bif0050392aa44652e@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115112>
 
-Ulrich Windl wrote:
-> 
-> 1) The ability to use the file's time at the time of add/commit instead of the
-> current time, and the ability tho check outfiles with the times stored in the
-> repository.
-> 
+2009/3/30 Santi B=E9jar <santi@agolina.net>:
+> 2009/3/30 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+>> On Mon, 30 Mar 2009, Finn Arne Gangstad wrote:
+>>> Some people may have started setting push.default already, so chang=
+ing
+>>> the name may cause additional grief.
+>>
+>> ... indeed, it is too late now. =A0The milk has boiled already.
+>
+> I have it configured, but I think we can fix these type of things
+> while they are in 'next'.
+>
 
-You can set the time manually for each commit. I suppose it's not quite the
-same as doing it by taking the timestamp of a single file. Personally, I've
-never quite understood the point of it, since I always have to do at least
-*some* testing (even if it's only a compile-test) after I'm done editing so
-I know what I'm committing isn't totally broken.
+Now that I've recheck it, it seems to be in 'master', it's less clear,
+but I still think we can fix these type of things while they are not
+in a relased version.
 
-Can you describe a use-case where this would be handy?
+The people with that setting is following the development version, and
+can easily notice/change it.
 
-> 2) Keyword substitution. I know it's controverse (dealing with binary files),
-> but I'd like to have some automatic version numbering keyword at least:
-> Initial idea is that every commit with a change increments the number by one,
-> and when merging numbers a and b, the resulting number is max(a, b) + 1.
-> 
-
-This has been discussed to death, and it's much, much harier than just
-handling binary files. Browse the list archives for the (many, lengthy and
-sometimes heated) discussions on this topic. A quick recap of the outcome
-of *ALL* such discussions is as follows, though:
-1 It would potentially make git horribly slow at switching branches.
-2 It's rarely interesting to version a single file, but always interesting
-  to version the entire project (what do I care if README was v1,1 in CVS
-  when what I *really* want to know is which version of the program I should
-  file my bug-report against).
-3 It's far better to set the version number in the release-process. Usually
-  this can be done automatically by one invocation of "git describe", just
-  as git.git does it.
-
-We've adopted "3" full out at $dayjob. Our build-machinery gets the version
-number from the git tag (releases can only be built from signed tags), and
-it updates macros and whatnot used for informing the user which version he
-or she is running. This makes a lot more sense both from a bug-reporting
-and from a release process view than having generated version-numbers in
-files. On a side-note; When I told my co-workers I'd like us to switch to
-git, two of them asked about autoversioning features. I said there weren't
-any and asked them to name a single time when we've actually used them for
-anything *at all*. In a team of eight, having been programming for three
-years with 12 releases and about 800 bugreports + feature-requests, noone
-could mention a single time when the autogenerated version numbers had
-actually been used for anything.
-
-Otoh, having the entire repository locally makes it painless to view the
-commit-log for an entire project (or parts of it) and see who changed what
-when and why, which is information that's actually *useful*.
-
-> 3) "git undo": If possible undo the effects of the last command.
-> 
-
-Immensely complex to create, and the command would almost certainly cause
-more confusion than order before it can handle every single operation that
-a user would want to undo. Instead, the most common operations that require
-some form of user-interaction have an "--abort" switch which does roughly
-what a "git undo" command would.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Santi
