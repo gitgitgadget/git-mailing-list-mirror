@@ -1,138 +1,98 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Implementing stat() with FindFirstFile()
-Date: Mon, 30 Mar 2009 02:52:47 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0903300245080.6454@intel-tinevez-2-302>
-References: <20090321154738.GA27249@jeeves.jpl.local> <200903212055.15026.j6t@kdbg.org> <20090324215416.GB27249@jeeves.jpl.local> <49CB2BA5.1070100@viscovery.net> <20090326213907.GC27249@jeeves.jpl.local> <alpine.DEB.1.00.0903270320020.10279@pacific.mpi-cbg.de>
- <20090329224803.GD27249@jeeves.jpl.local>
+From: "Michael Johnson" <redbeard@mdjohnson.us>
+Subject: Re: Segfault on merge with 1.6.2.1
+Date: Sun, 29 Mar 2009 21:39:49 -0500
+Message-ID: <op.urk20nanso3nzr@sulidor.mdjohnson.us>
+References: <op.urifmtkkso3nzr@sulidor.mdjohnson.us>
+ <20090329121700.GN22446@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1723227639-1238374367=:6454"
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: =?ISO-8859-15?Q?Magnus_B=E4ck?= <baeck@swipnet.se>
-X-From: git-owner@vger.kernel.org Mon Mar 30 02:57:19 2009
+Content-Type: text/plain; format=flowed; delsp=yes; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Miklos Vajna" <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Mon Mar 30 04:41:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lo5oT-00035W-8V
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 02:57:17 +0200
+	id 1Lo7RK-0005ae-JO
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 04:41:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754840AbZC3Aww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Mar 2009 20:52:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753631AbZC3Awv
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 Mar 2009 20:52:51 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46276 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751958AbZC3Awv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Mar 2009 20:52:51 -0400
-Received: (qmail invoked by alias); 30 Mar 2009 00:52:48 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp071) with SMTP; 30 Mar 2009 02:52:48 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18NSQFCP4kNUTXIVSBamiohmL16r1F1HnhkMrMpIQ
-	f+UM9T2JbGlKZH
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <20090329224803.GD27249@jeeves.jpl.local>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1756522AbZC3Cj4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Mar 2009 22:39:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752218AbZC3Cj4
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 Mar 2009 22:39:56 -0400
+Received: from caibbdcaaaaf.dreamhost.com ([208.113.200.5]:36264 "EHLO
+	looneymail-a5.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1756245AbZC3Cjz (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Mar 2009 22:39:55 -0400
+Received: from sulidor.mdjohnson.us (216.49.248-IP-55.ckt.net [216.49.248.55])
+	by looneymail-a5.g.dreamhost.com (Postfix) with ESMTP id ECA80122082;
+	Sun, 29 Mar 2009 19:39:52 -0700 (PDT)
+In-Reply-To: <20090329121700.GN22446@genesis.frugalware.org>
+User-Agent: Opera Mail/9.64 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115053>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Sun, 29 Mar 2009 07:17:00 -0500, Miklos Vajna <vmiklos@frugalware.org>  
+wrote:
 
---8323329-1723227639-1238374367=:6454
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+> On Sat, Mar 28, 2009 at 11:19:31AM -0500, Michael Johnson  
+> <redbeard@mdjohnson.us> wrote:
+>> The 1.6.2.1 version just segfaults, but 1.5.6.5 says:
+>>
+>> /usr/bin/git-merge: line 438: 32335 Segmentation fault
+>> git-merge-$strategy $common -- "$head_arg" "$@"
+>> Merge with strategy recursive failed.
+>>
+>> In all cases, .git/index.lock is left behind.
+>
+> That's because 1.6.2.1 has git-merge in C and it calls merge-recursive
+> directly without a fork. Could you try it in gdb and provide a
+> backtrace, please?
 
-Hi,
+Well, I've got a backtrace, but I don't have debugging symbols,  
+apparently. There is not a Debian package I can find that has them. I  
+checked debug.debian.net, as well as the standard sid repository. So I  
+will have to rebuild the package with debugging turned on. I will not be  
+able to do that tonight, unfortunately. I will probably have a chance  
+tomorrow evening.
 
-On Mon, 30 Mar 2009, Magnus Bäck wrote:
+Just in case it might be useful, though, here's the backtrace, without  
+symbols.
 
-> On Friday, March 27, 2009 at 03:25 CET,
->      Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> 
-> > Magnus, it is the official policy to reply-to-all on this list.  This
-> > has been mentioned in the past quite often, and it will be mentioned
-> > in the future, too.
-> 
-> Sorry, I was not aware. Doesn't seem to have been mentioned in the last
-> month or so. Perhaps it could be included in the list introduction
-> message? All people obviously won't read it, but some will.
-> 
-> > You actually forced me to manually look up and re-add Hannes' address.
-> > I do not appreciate having to waste my time like that.
-> >
-> > If that sounds negative, please understand that I am used to the ways
-> > of this list, and when I am annoyed by somebody not fitting in, then
-> > it is not totally _my_ mistake.
-> 
-> A plain "please use reply all" would've sufficed.
+Starting program: /usr/bin/git merge origin/dojo-1.3
+(no debugging symbols found)
+... repeated multiple times ...
+[Thread debugging using libthread_db enabled]
+(no debugging symbols found)
+... repeated multiple times
+[New Thread 0xb7a73b30 (LWP 21505)]
 
-I do recognize that I was too harsh: I apologize!
+Program received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 0xb7a73b30 (LWP 21505)]
+0x080e5a6f in ?? ()
+(gdb) backtrace
+#0  0x080e5a6f in ?? ()
+#1  0x0893e000 in ?? ()
+#2  0x000f0000 in ?? ()
+#3  0xbf949098 in ?? ()
+#4  0x080e63ad in ?? ()
+#5  0x08977fcf in ?? ()
+#6  0x000f0000 in ?? ()
+#7  0xfff0ffff in ?? ()
+#8  0x08945dd8 in ?? ()
+#9  0x00000000 in ?? ()
 
-> > On Thu, 26 Mar 2009, Magnus Bäck wrote:
-> >
-> > > I'd be very surprised if ZwQueryDirectoryFile() hasn't always been
-> > > around (I just verified ntdll.dll from NT 4.0), so that's not a
-> > > worry. Don't know why MSDN reports it as introduced in XP.
-> >
-> > As the current maintainer of msysGit, I refuse to have something in
-> > the installer I ship that relies on not-at-all guaranteed interfaces.
-> 
-> Although I do appreciate the importance of guaranteed interfaces,
-> I am also pragmatic. An incompatible change in ntdll.dll would break
-> vast amounts of programs, including cygwin. There is a lot to be said
-> about Microsoft and their APIs, but I don't think they have a habit of
-> changing ABIs or function semantics for userland libraries that have
-> been around for 15 years.
+Thanks for the continuing help.
 
-That does not give me the warm and fuzzy feeling I want to have when 
-shipping a new Git for Windows.
+Michael
 
-Had you pointed to some document that states that the function has been in 
-all NT-based versions, that would have done the trick.
+-- 
+Michael D Johnson   <redbeard@mdjohnson.us>    
+redbeardcreator.deviantart.com
 
-> > > All right, I'll see if I can find time to take a look at this. I 
-> > > just wanted to check that it wasn't a project policy or whatever to 
-> > > bypass Win32.
-> >
-> > You can do whatever you want... This is Open Source.
-> >
-> > However, I will try to stay with the officially supported functionality,
-> > even if that makes msysGit slower -- Windows will never reach the
-> > performance levels of Linux anyway.
-> 
-> Okay, thanks. Just like you I hate wasting time, in my case with patches
-> that'll be refused.
-
-Sorry, that was not at all what I meant.
-
-Of course, I wanted to avoid having time wasted: yours and mine.  But if 
-you find said document, or another proof that the function was not 
-introduced by pure chance in some of NT's service packs, then that's 
-perfectly fine with me.
-
-But if it is, say, only in NT when upgrading to Explorer 6 or newer, I do 
-not want to take it: I personally know a machine running NT without 
-service packs, and with Internet Explorer 5.5, because every attempt at 
-upgrading freezes the complete machine 10 seconds into the login screen.  
-And no, the machine cannot run with another setup, because there is a 
-6-figure microscope plugged in that refuses to be controlled by anything 
-else than the proprietary software that just happens to run only on said 
-NT4, with said IE5.5.
-
-Again, I am sorry for my harsh reaction, but please understand that I 
-_need_ better proof that nobody will be bitten by your change (chances are 
-that I'd have to clean it up...).
-
-After all, in the short time since the release of 1.6.2.1, we had over 
-4000 downloads already.
-
-Ciao,
-Dscho
-
---8323329-1723227639-1238374367=:6454--
+"Marketing research...[has] shown that energy weapons that make sounds sell
+  better..." - Kevin Siembieda (Rifts Game Master Guide, pg 111)
