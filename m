@@ -1,73 +1,60 @@
 From: =?utf-8?q?Santi=20B=C3=A9jar?= <santi@agolina.net>
-Subject: [PATCHv2 1/4] Documentation: enhance branch.<name>.{remote,merge}
-Date: Mon, 30 Mar 2009 12:11:40 +0200
-Message-ID: <1238407903-28020-2-git-send-email-santi@agolina.net>
+Subject: [PATCHv2 3/4] Documentation: branch.*.merge can also afect 'git-push'
+Date: Mon, 30 Mar 2009 12:11:42 +0200
+Message-ID: <1238407903-28020-4-git-send-email-santi@agolina.net>
 References: <1238407903-28020-1-git-send-email-santi@agolina.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 30 12:15:02 2009
+X-From: git-owner@vger.kernel.org Mon Mar 30 12:15:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoEVz-0007Mz-QW
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 12:14:48 +0200
+	id 1LoEW1-0007Mz-B4
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 12:14:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758470AbZC3KMG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Mar 2009 06:12:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758205AbZC3KME
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 06:12:04 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:57772 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758286AbZC3KMD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2009 06:12:03 -0400
-Received: by fxm2 with SMTP id 2so1882493fxm.37
-        for <git@vger.kernel.org>; Mon, 30 Mar 2009 03:11:59 -0700 (PDT)
-Received: by 10.223.111.71 with SMTP id r7mr3772192fap.59.1238407919583;
-        Mon, 30 Mar 2009 03:11:59 -0700 (PDT)
+	id S1757601AbZC3KMO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Mar 2009 06:12:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758590AbZC3KMN
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 06:12:13 -0400
+Received: from mail-bw0-f169.google.com ([209.85.218.169]:44348 "EHLO
+	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758693AbZC3KML (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2009 06:12:11 -0400
+Received: by mail-bw0-f169.google.com with SMTP id 17so1837526bwz.37
+        for <git@vger.kernel.org>; Mon, 30 Mar 2009 03:12:09 -0700 (PDT)
+Received: by 10.223.108.74 with SMTP id e10mr3785897fap.35.1238407928949;
+        Mon, 30 Mar 2009 03:12:08 -0700 (PDT)
 Received: from localhost (p5B0D60BE.dip.t-dialin.net [91.13.96.190])
-        by mx.google.com with ESMTPS id b17sm2246913fka.4.2009.03.30.03.11.58
+        by mx.google.com with ESMTPS id z15sm2241694fkz.11.2009.03.30.03.12.08
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 30 Mar 2009 03:11:59 -0700 (PDT)
+        Mon, 30 Mar 2009 03:12:08 -0700 (PDT)
 X-Mailer: git-send-email 1.6.1.258.g7ff14
 In-Reply-To: <1238407903-28020-1-git-send-email-santi@agolina.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115129>
 
-The documentation for branch.*.merge is very dense, so add a simple
-explanation on top of it.
-
-And branch.*.remote also afects 'git push'. Text taken from
-'push.default'.
 
 Signed-off-by: Santi B=C3=A9jar <santi@agolina.net>
 ---
- Documentation/config.txt |    8 ++++++--
- 1 files changed, 6 insertions(+), 2 deletions(-)
+ Documentation/config.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 089569a..fa2595b 100644
+index 7ae584f..38ab785 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -473,10 +473,14 @@ branch.autosetuprebase::
- 	This option defaults to never.
-=20
- branch.<name>.remote::
--	When in branch <name>, it tells 'git-fetch' which remote to fetch.
--	If this option is not given, 'git-fetch' defaults to remote "origin".
-+	When in branch <name>, it tells 'git-fetch' and 'git-push' which
-+	remote to fetch/push, and defaults to `origin` if no remote is
-+	configured. `origin` is also used if you are not on any branch.
-=20
+@@ -480,7 +480,7 @@ branch.<name>.remote::
  branch.<name>.merge::
-+	It defines, together with branch.<name>.remote, the upstream branch
-+	for the given branch. It tells 'git-fetch'/'git-pull' which
-+	branch to merge.
+ 	It defines, together with branch.<name>.remote, the upstream branch
+ 	for the given branch. It tells 'git-fetch'/'git-pull' which
+-	branch to merge.
++	branch to merge and can also afect 'git-push' (see push.default).
  	When in branch <name>, it tells 'git-fetch' the default
  	refspec to be marked for merging in FETCH_HEAD. The value is
  	handled like the remote part of a refspec, and must match a
