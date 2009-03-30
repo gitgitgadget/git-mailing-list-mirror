@@ -1,154 +1,185 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH 8/8] difftool: refactor git-difftool-helper to use run_merge_tool
-Date: Sun, 29 Mar 2009 22:03:48 -0700
-Message-ID: <1238389428-69328-9-git-send-email-davvid@gmail.com>
-References: <1238389428-69328-1-git-send-email-davvid@gmail.com>
- <1238389428-69328-2-git-send-email-davvid@gmail.com>
- <1238389428-69328-3-git-send-email-davvid@gmail.com>
- <1238389428-69328-4-git-send-email-davvid@gmail.com>
- <1238389428-69328-5-git-send-email-davvid@gmail.com>
- <1238389428-69328-6-git-send-email-davvid@gmail.com>
- <1238389428-69328-7-git-send-email-davvid@gmail.com>
- <1238389428-69328-8-git-send-email-davvid@gmail.com>
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Mar 30 07:06:36 2009
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v2 2/2] bisect--helper: string output variables together
+ with "&&"
+Date: Mon, 30 Mar 2009 07:06:42 +0200
+Message-ID: <20090330070642.e775edf4.chriscool@tuxfamily.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, John Tapsell <johnflux@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 30 07:09:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lo9hB-0004he-Un
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 07:06:02 +0200
+	id 1Lo9kN-0005Ti-LI
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 07:09:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754559AbZC3FEc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 01:04:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755455AbZC3FE3
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 01:04:29 -0400
-Received: from mail-qy0-f118.google.com ([209.85.221.118]:39536 "EHLO
-	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754164AbZC3FE2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2009 01:04:28 -0400
-Received: by mail-qy0-f118.google.com with SMTP id 16so3307690qyk.33
-        for <git@vger.kernel.org>; Sun, 29 Mar 2009 22:04:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=EHmJfVpOlfRAOjLI6fI3n/3oIzBxOunnLf/6IpdeK0o=;
-        b=OBLCiz5E9IHbZPVjxDB7SaKol9aMDA8Qmrud+db9kxluWExRF6hDwwsJOD0tvrKau1
-         ot87GfzFsgEPIwNztWQT/7jelgp9v6X0z/IVW41dHrBNm3+VzAmapyMHna5joM/6G1+o
-         RJfKqfLWOcLdGG9gMTlYZ9rdvWhc5xOuy15E8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=dKMXIzsRWyfiiHZiA9Sgus6VQtlqflb/2Y5vf1mp874Yny/vxJIC4Bu53n2dnWa9Mc
-         aCQsL9+o7e4MUkS0oV3Vm4pTuCKVkSPhPPVlazhscXg8iGfLYexmsQY7Tl6x5Yo1b3NG
-         dbQxReNoOY1M6bo5kpTv74X1yg6w50cJ89CLs=
-Received: by 10.224.28.70 with SMTP id l6mr2867465qac.72.1238389466498;
-        Sun, 29 Mar 2009 22:04:26 -0700 (PDT)
-Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id 6sm5411846qwk.27.2009.03.29.22.04.25
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 29 Mar 2009 22:04:25 -0700 (PDT)
-X-Mailer: git-send-email 1.6.2.1.404.gb0085
-In-Reply-To: <1238389428-69328-8-git-send-email-davvid@gmail.com>
+	id S1755204AbZC3FHt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2009 01:07:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753488AbZC3FHs
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 01:07:48 -0400
+Received: from smtp4-g21.free.fr ([212.27.42.4]:49372 "EHLO smtp4-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753743AbZC3FHs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2009 01:07:48 -0400
+Received: from smtp4-g21.free.fr (localhost [127.0.0.1])
+	by smtp4-g21.free.fr (Postfix) with ESMTP id 661714C8034;
+	Mon, 30 Mar 2009 07:07:38 +0200 (CEST)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp4-g21.free.fr (Postfix) with SMTP id 12A7F4C8038;
+	Mon, 30 Mar 2009 07:07:36 +0200 (CEST)
+X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.12; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115078>
 
-This removes most of the duplicated code in git-difftool-helper.
+When doing:
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
+eval "git bisect--helper --next-vars" | {
+        while read line
+        do
+                echo "$line &&"
+        done
+        echo ':'
+}
+
+the result code comes from the last "echo ':'", not from running
+"git bisect--helper --next-vars".
+
+This patch get rid of the need to string the line from the output
+of "git bisect--helper" by making "git bisect--helper --next-vars"
+return output variables stringed together with "&&".
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- git-difftool-helper.sh |   67 ++++-------------------------------------------
- 1 files changed, 6 insertions(+), 61 deletions(-)
+ bisect.c           |    3 ++-
+ bisect.h           |    1 +
+ builtin-rev-list.c |   29 +++++++++++++++++++----------
+ git-bisect.sh      |   15 +--------------
+ 4 files changed, 23 insertions(+), 25 deletions(-)
 
-diff --git a/git-difftool-helper.sh b/git-difftool-helper.sh
-index 2051a35..d90277b 100755
---- a/git-difftool-helper.sh
-+++ b/git-difftool-helper.sh
-@@ -10,6 +10,11 @@
- TOOL_MODE=diff
- . git-sh-tools
+	Sorry, I forgot to put "v2" between "PATH" and "2/2" so
+	I am resending it.
+
+diff --git a/bisect.c b/bisect.c
+index 64a5ad5..df0ab4d 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -554,5 +554,6 @@ int bisect_next_vars(const char *prefix)
+ 	revs.commits = find_bisection(revs.commits, &reaches, &all,
+ 				      !!skipped_sha1_nr);
  
-+base_present()
-+{
-+	return 1
-+}
-+
- # difftool.prompt controls the default prompt/no-prompt behavior
- # and is overridden with $GIT_DIFFTOOL*_PROMPT.
- should_prompt () {
-@@ -42,67 +47,7 @@ launch_merge_tool () {
- 	fi
+-	return show_bisect_vars(&revs, reaches, all, SHOW_TRIED);
++	return show_bisect_vars(&revs, reaches, all,
++				SHOW_TRIED | SHOW_STRINGED);
+ }
+diff --git a/bisect.h b/bisect.h
+index 4cff2ba..2e4b2af 100644
+--- a/bisect.h
++++ b/bisect.h
+@@ -12,6 +12,7 @@ extern struct commit_list *filter_skipped(struct commit_list *list,
+ /* show_bisect_vars flags */
+ #define SHOW_ALL	1
+ #define SHOW_TRIED	2
++#define SHOW_STRINGED	4
  
- 	# Run the appropriate merge tool command
--	case "$merge_tool" in
--	kdiff3)
--		basename=$(basename "$MERGED")
--		"$merge_tool_path" --auto \
--			--L1 "$basename (A)" \
--			--L2 "$basename (B)" \
--			-o "$MERGED" "$LOCAL" "$REMOTE" \
--			> /dev/null 2>&1
--		;;
--
--	kompare)
--		"$merge_tool_path" "$LOCAL" "$REMOTE"
--		;;
--
--	tkdiff)
--		"$merge_tool_path" -o "$MERGED" "$LOCAL" "$REMOTE"
--		;;
--
--	meld)
--		"$merge_tool_path" "$LOCAL" "$REMOTE"
--		;;
--
--	vimdiff)
--		"$merge_tool_path" -c "wincmd l" "$LOCAL" "$REMOTE"
--		;;
--
--	gvimdiff)
--		"$merge_tool_path" -c "wincmd l" -f "$LOCAL" "$REMOTE"
--		;;
--
--	xxdiff)
--		"$merge_tool_path" \
--			-X \
--			-R 'Accel.SaveAsMerged: "Ctrl-S"' \
--			-R 'Accel.Search: "Ctrl+F"' \
--			-R 'Accel.SearchForward: "Ctrl-G"' \
--			--merged-file "$MERGED" \
--			"$LOCAL" "$REMOTE"
--		;;
--
--	opendiff)
--		"$merge_tool_path" "$LOCAL" "$REMOTE" \
--			-merge "$MERGED" | cat
--		;;
--
--	ecmerge)
--		"$merge_tool_path" "$LOCAL" "$REMOTE" \
--			--default --mode=merge2 --to="$MERGED"
--		;;
--
--	emerge)
--		"$merge_tool_path" -f emerge-files-command \
--			"$LOCAL" "$REMOTE" "$(basename "$MERGED")"
--		;;
--
--	*)
--		if test -n "$merge_tool_cmd"; then
--			( eval $merge_tool_cmd )
--		fi
--		;;
--	esac
-+	run_merge_tool "$merge_tool"
+ /*
+  * The flag SHOW_ALL should not be set if this function is called
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index c1c4a18..330f7f0 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -226,20 +226,20 @@ static int estimate_bisect_steps(int all)
+ 	return (e < 3 * x) ? n : n - 1;
  }
  
- # Allow GIT_DIFF_TOOL and GIT_MERGE_TOOL to provide default values
+-static void show_tried_revs(struct commit_list *tried)
++static void show_tried_revs(struct commit_list *tried, int stringed)
+ {
+ 	printf("bisect_tried='");
+ 	for (;tried; tried = tried->next) {
+ 		char *format = tried->next ? "%s|" : "%s";
+ 		printf(format, sha1_to_hex(tried->item->object.sha1));
+ 	}
+-	printf("'\n");
++	printf(stringed ? "' &&\n" : "'\n");
+ }
+ 
+ int show_bisect_vars(struct rev_info *revs, int reaches, int all, int flags)
+ {
+ 	int cnt;
+-	char hex[41] = "";
++	char hex[41] = "", *format;
+ 	struct commit_list *tried;
+ 
+ 	if (!revs->commits && !(flags & SHOW_TRIED))
+@@ -269,13 +269,22 @@ int show_bisect_vars(struct rev_info *revs, int reaches, int all, int flags)
+ 	}
+ 
+ 	if (flags & SHOW_TRIED)
+-		show_tried_revs(tried);
+-	printf("bisect_rev=%s\n"
+-	       "bisect_nr=%d\n"
+-	       "bisect_good=%d\n"
+-	       "bisect_bad=%d\n"
+-	       "bisect_all=%d\n"
+-	       "bisect_steps=%d\n",
++		show_tried_revs(tried, flags & SHOW_STRINGED);
++	format = (flags & SHOW_STRINGED) ?
++		"bisect_rev=%s &&\n"
++		"bisect_nr=%d &&\n"
++		"bisect_good=%d &&\n"
++		"bisect_bad=%d &&\n"
++		"bisect_all=%d &&\n"
++		"bisect_steps=%d\n"
++		:
++		"bisect_rev=%s\n"
++		"bisect_nr=%d\n"
++		"bisect_good=%d\n"
++		"bisect_bad=%d\n"
++		"bisect_all=%d\n"
++		"bisect_steps=%d\n";
++	printf(format,
+ 	       hex,
+ 	       cnt - 1,
+ 	       all - reaches - 1,
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 0f7590d..5074dda 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -279,18 +279,6 @@ bisect_auto_next() {
+ 	bisect_next_check && bisect_next || :
+ }
+ 
+-eval_and_string_together() {
+-	_eval="$1"
+-
+-	eval "$_eval" | {
+-		while read line
+-		do
+-			echo "$line &&"
+-		done
+-		echo ':'
+-	}
+-}
+-
+ exit_if_skipped_commits () {
+ 	_tried=$1
+ 	_bad=$2
+@@ -429,8 +417,7 @@ bisect_next() {
+ 	test "$?" -eq "1" && return
+ 
+ 	# Get bisection information
+-	eval="git bisect--helper --next-vars" &&
+-	eval=$(eval_and_string_together "$eval") &&
++	eval=$(eval "git bisect--helper --next-vars") &&
+ 	eval "$eval" || exit
+ 
+ 	if [ -z "$bisect_rev" ]; then
 -- 
-1.6.1.3
+1.6.2.1.404.gb0085.dirty
