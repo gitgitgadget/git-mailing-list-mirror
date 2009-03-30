@@ -1,66 +1,78 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 0/5] Header includes cleanup
-Date: Mon, 30 Mar 2009 12:50:07 +0200
-Message-ID: <49D0A3DF.4000203@viscovery.net>
-References: <1238406925-15907-1-git-send-email-nathaniel.dawson@gmail.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: Segfault on merge with 1.6.2.1
+Date: Mon, 30 Mar 2009 13:03:35 +0200
+Message-ID: <20090330110335.GF22446@genesis.frugalware.org>
+References: <op.urifmtkkso3nzr@sulidor.mdjohnson.us> <20090329121700.GN22446@genesis.frugalware.org> <op.urk20nanso3nzr@sulidor.mdjohnson.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="WYfJCIN5rqlfy3K0"
 Cc: git@vger.kernel.org
-To: Nathaniel P Dawson <nathaniel.dawson@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 30 12:51:42 2009
+To: Michael Johnson <redbeard@mdjohnson.us>
+X-From: git-owner@vger.kernel.org Mon Mar 30 13:06:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoF5b-0002SS-4m
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 12:51:35 +0200
+	id 1LoFJe-0006RN-5T
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 13:06:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752303AbZC3KuB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 06:50:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751708AbZC3KuB
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 06:50:01 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:65197 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751009AbZC3KuA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2009 06:50:00 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1LoF42-0002po-3o; Mon, 30 Mar 2009 12:49:58 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id DC7F969F; Mon, 30 Mar 2009 12:49:57 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <1238406925-15907-1-git-send-email-nathaniel.dawson@gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1752401AbZC3LDj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2009 07:03:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752101AbZC3LDj
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 07:03:39 -0400
+Received: from virgo.iok.hu ([212.40.97.103]:35004 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752045AbZC3LDj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2009 07:03:39 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 60036580F0;
+	Mon, 30 Mar 2009 13:03:36 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 4CFAB44783;
+	Mon, 30 Mar 2009 13:03:35 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 4D45911F0824; Mon, 30 Mar 2009 13:03:35 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <op.urk20nanso3nzr@sulidor.mdjohnson.us>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115135>
 
-Please wrap your lines at ca. 75 columns.
 
-Nathaniel P Dawson schrieb:
-> This is just the beginning for this project. I'm slowly cleaning up
-> the header includes one chunk at a time. I hope my patches aren't too
-> messy, I've learned how to better utilize git to make patches and
-> organize my commits logically so I'll submit neater chunks henceforth.
-> You can expect patches from me nightly until I've finished this project.
+--WYfJCIN5rqlfy3K0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-You have removed includes that are implied by other includes, i.e. if
-foo.h includes bar.h, then you removed #include "bar.h" from *.c if there
-is #include "foo.h".
+On Sun, Mar 29, 2009 at 09:39:49PM -0500, Michael Johnson <redbeard@mdjohns=
+on.us> wrote:
+> Well, I've got a backtrace, but I don't have debugging symbols, =20
+> apparently. There is not a Debian package I can find that has them. I =20
+> checked debug.debian.net, as well as the standard sid repository. So I =
+=20
+> will have to rebuild the package with debugging turned on. I will not be =
+=20
+> able to do that tonight, unfortunately. I will probably have a chance =20
+> tomorrow evening.
 
-IMO, this is not a good guiding principle to reduce includes. A better
-principle is to keep #include "bar.h" in a source or header file iff a
-feature that is declared or defined in bar.h is *used* *directly* in that
-source or header file, regardless of whether bar.h is included in foo.h
-that is itself included in that source or header file.
+Okay, no rush. In case Dscho's patch does not fix your problem, please
+rebuild git with debug symbols enabled and send a normal trace.
 
-If this latter principle is obeyed, then the build won't break by removing
-the include of foo.h (for the reason that nothing of foo.h is *use*
-*directly* anymore).
+Thanks.
 
--- Hannes
+--WYfJCIN5rqlfy3K0
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAknQpwcACgkQe81tAgORUJZQvgCcC6hdD7K/DDTNcShf5URSxmYx
+J18AoKciPD0RL6g7CdjsPSoUYohoztoy
+=FUYS
+-----END PGP SIGNATURE-----
+
+--WYfJCIN5rqlfy3K0--
