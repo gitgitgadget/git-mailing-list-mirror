@@ -1,114 +1,117 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [POC PATCH] diff options: Introduce --interactive
-Date: Mon, 30 Mar 2009 02:04:39 -0700
-Message-ID: <20090330090438.GA18953@gmail.com>
-References: <1238391670-4421-1-git-send-email-pkufranky@gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: On git 1.6 (novice's opinion)
+Date: Mon, 30 Mar 2009 11:06:19 +0200
+Message-ID: <49D08B8B.1000309@op5.se>
+References: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 30 11:06:15 2009
+To: Ulrich Windl <ulrich.windl@rz.uni-regensburg.de>
+X-From: git-owner@vger.kernel.org Mon Mar 30 11:07:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoDRP-0008TB-Sw
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 11:06:00 +0200
+	id 1LoDT9-0000xD-68
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 11:07:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756098AbZC3JEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 05:04:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753002AbZC3JEG
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 05:04:06 -0400
-Received: from mail-qy0-f118.google.com ([209.85.221.118]:53602 "EHLO
-	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752413AbZC3JEE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2009 05:04:04 -0400
-Received: by qyk16 with SMTP id 16so3369865qyk.33
-        for <git@vger.kernel.org>; Mon, 30 Mar 2009 02:04:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=WogrSp/iZLUJHIfogSmYnkDV5D2SycZbYeqTRLbxZ2A=;
-        b=Xe4yIfHZVv4U9fYg41DYLtMC3FtU/RGVZyNXNqQLHEAnNb+MEy3IjbsHKUvrn1m1iE
-         b+9jI+JaKZL7pAysRbXyFkzREb6/qZadROCEjIIZw+CBFnHu1xss8FzPf/KXdHo6qLqP
-         UH8JhuJjcm287KFZbiQyKauX1qdFAM9FMSoeo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=xCLJJ5Zv6aREItD2PTw0PLczXP263r0/96LuX1SB7EnRW4slC/PGk5H6Z8Vo3nqo9x
-         Hirsf1AS4PjRz7sqfVwsSDWK7lT29oGrBNXMtQfnfRAkqWsrEBxvX82PMELOX3ne5B1p
-         XWJ3w4kkeOKfXy3QPHDiJMdD0UmameLYoVEoA=
-Received: by 10.224.2.200 with SMTP id 8mr5738700qak.341.1238403841012;
-        Mon, 30 Mar 2009 02:04:01 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id 6sm5584454qwd.38.2009.03.30.02.03.59
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 30 Mar 2009 02:04:00 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1238391670-4421-1-git-send-email-pkufranky@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1754449AbZC3JGR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2009 05:06:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753751AbZC3JGQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 05:06:16 -0400
+Received: from mail.op5.se ([193.201.96.20]:55342 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754127AbZC3JGP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2009 05:06:15 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id D67951B80049;
+	Mon, 30 Mar 2009 10:43:34 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 1Cj1CPQX4d9E; Mon, 30 Mar 2009 10:43:33 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id C2DC31B80074;
+	Mon, 30 Mar 2009 10:43:32 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115111>
 
-On  0, Ping Yin <pkufranky@gmail.com> wrote:
-> The new option --interactive introduces an interactive diff mode. Now we
-> can choose to see the diff for a selected file.
-
-I just tried it out.  Very cool.
-It's exactly the functionality users have asked me about.
-
-I just sent a for-the-future patch that teaches difftool
-to tell difftool-helper that it shouldn't prompt when
-you're using --interactive.
-
-I noticed git-diff doesn't have a -i flag yet,
-perhaps it could be the shorthand for --interactive?
-
-(I'd have to change that for-the-future patch I just sent
- too since it also only checks for the long form...)
-
-I like it.
-
+Ulrich Windl wrote:
 > 
-> This is a preparation to introduce the --tool option to launch the
-> external diff tool for a selected file.
+> 1) The ability to use the file's time at the time of add/commit instead of the
+> current time, and the ability tho check outfiles with the times stored in the
+> repository.
+> 
 
-With both of our latest patches:
+You can set the time manually for each commit. I suppose it's not quite the
+same as doing it by taking the timestamp of a single file. Personally, I've
+never quite understood the point of it, since I always have to do at least
+*some* testing (even if it's only a compile-test) after I'm done editing so
+I know what I'm committing isn't totally broken.
 
-	git difftool --interactive <revargs>
+Can you describe a use-case where this would be handy?
 
-does exactly what one would expect it to.
+> 2) Keyword substitution. I know it's controverse (dealing with binary files),
+> but I'd like to have some automatic version numbering keyword at least:
+> Initial idea is that every commit with a change increments the number by one,
+> and when merging numbers a and b, the resulting number is max(a, b) + 1.
+> 
 
+This has been discussed to death, and it's much, much harier than just
+handling binary files. Browse the list archives for the (many, lengthy and
+sometimes heated) discussions on this topic. A quick recap of the outcome
+of *ALL* such discussions is as follows, though:
+1 It would potentially make git horribly slow at switching branches.
+2 It's rarely interesting to version a single file, but always interesting
+  to version the entire project (what do I care if README was v1,1 in CVS
+  when what I *really* want to know is which version of the program I should
+  file my bug-report against).
+3 It's far better to set the version number in the release-process. Usually
+  this can be done automatically by one invocation of "git describe", just
+  as git.git does it.
 
-How are you envisioning --tool?  It'd be great if we didn't
-need the perl wrapper, though something does need to set
-GIT_EXTERNAL_DIFF/GIT_PAGER/etc... (that is, unless you have a
-better way =))
+We've adopted "3" full out at $dayjob. Our build-machinery gets the version
+number from the git tag (releases can only be built from signed tags), and
+it updates macros and whatnot used for informing the user which version he
+or she is running. This makes a lot more sense both from a bug-reporting
+and from a release process view than having generated version-numbers in
+files. On a side-note; When I told my co-workers I'd like us to switch to
+git, two of them asked about autoversioning features. I said there weren't
+any and asked them to name a single time when we've actually used them for
+anything *at all*. In a team of eight, having been programming for three
+years with 12 releases and about 800 bugreports + feature-requests, noone
+could mention a single time when the autogenerated version numbers had
+actually been used for anything.
 
+Otoh, having the entire repository locally makes it painless to view the
+commit-log for an entire project (or parts of it) and see who changed what
+when and why, which is information that's actually *useful*.
 
-> >> When the user types a number,  git-difftool-helper is launched to show
-> >> the diff for the corresponding file.
-> >
-> > Cool.
-> > I had two patches that I sent to the list for
-> > git-difftool.perl.  If you're going to patch it then you might
-> > want to base it on top of those.
-> >
-> When i try to code on git-difftool.perl, i find it is more appropriate to add
-> the --interactive and then --tool options to git-diff itself. So here is a
-> proof of concept patch based on next. What we should do next is to try to
-> design a good UI.
+> 3) "git undo": If possible undo the effects of the last command.
+> 
 
-I'll see if I can come up with any suggestions.
-I liked it on the first test drive.
-
+Immensely complex to create, and the command would almost certainly cause
+more confusion than order before it can handle every single operation that
+a user would want to undo. Instead, the most common operations that require
+some form of user-interaction have an "--abort" switch which does roughly
+what a "git undo" command would.
 
 -- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-	David
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
