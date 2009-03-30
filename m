@@ -1,81 +1,83 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: [PATCHv2 3/4] Documentation: branch.*.merge can also afect 
-	'git-push'
-Date: Tue, 31 Mar 2009 00:06:30 +0200
-Message-ID: <adf1fd3d0903301506r65bd9b9bv6bf76c652a051400@mail.gmail.com>
-References: <1238407903-28020-1-git-send-email-santi@agolina.net>
-	 <1238407903-28020-4-git-send-email-santi@agolina.net>
-	 <7vd4bzdkkq.fsf@gitster.siamese.dyndns.org>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Implementing stat() with FindFirstFile()
+Date: Tue, 31 Mar 2009 00:07:10 +0200
+Message-ID: <20090330220709.GA68118@macbook.lan>
+References: <20090321154738.GA27249@jeeves.jpl.local> <200903212055.15026.j6t@kdbg.org> <20090324215416.GB27249@jeeves.jpl.local> <49CB2BA5.1070100@viscovery.net> <20090326213907.GC27249@jeeves.jpl.local> <alpine.DEB.1.00.0903270320020.10279@pacific.mpi-cbg.de> <20090329224803.GD27249@jeeves.jpl.local> <alpine.DEB.1.00.0903300245080.6454@intel-tinevez-2-302> <20090330051118.GA2681@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 31 00:08:11 2009
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Magnus =?iso-8859-1?Q?B=E4ck?= <baeck@swipnet.se>,
+	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+To: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 31 00:08:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoPeL-0002hx-A6
-	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 00:08:09 +0200
+	id 1LoPf1-0002vr-45
+	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 00:08:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754926AbZC3WGh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Mar 2009 18:06:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753941AbZC3WGg
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 18:06:36 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:62693 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753836AbZC3WGf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Mar 2009 18:06:35 -0400
-Received: by fxm2 with SMTP id 2so2166440fxm.37
-        for <git@vger.kernel.org>; Mon, 30 Mar 2009 15:06:30 -0700 (PDT)
-Received: by 10.103.173.5 with SMTP id a5mr1924521mup.57.1238450790605; Mon, 
-	30 Mar 2009 15:06:30 -0700 (PDT)
-In-Reply-To: <7vd4bzdkkq.fsf@gitster.siamese.dyndns.org>
+	id S1757423AbZC3WHR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Mar 2009 18:07:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757232AbZC3WHQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 18:07:16 -0400
+Received: from darksea.de ([83.133.111.250]:53634 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755642AbZC3WHO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2009 18:07:14 -0400
+Received: (qmail 12563 invoked from network); 31 Mar 2009 00:07:10 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 31 Mar 2009 00:07:10 +0200
+Content-Disposition: inline
+In-Reply-To: <20090330051118.GA2681@atjola.homenet>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115194>
 
-2009/3/30 Junio C Hamano <gitster@pobox.com>:
-> I'll take [1/4] and [2/4] with minor rewording, and I think [4/4] is =
-not
-> necessary (push.default is clear enough---and defaultMode won't make =
-it
-> any clearer to the first time readers anyway as it is unspecified wha=
-t
-> kind of "mode" it is talking about).
+On Mon, Mar 30, 2009 at 07:11:18AM +0200, Bj=F6rn Steinbrink wrote:
+> On 2009.03.30 02:52:47 +0200, Johannes Schindelin wrote:
+> > On Mon, 30 Mar 2009, Magnus B=E4ck wrote:
+> > > On Friday, March 27, 2009 at 03:25 CET,
+> > > Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > > > On Thu, 26 Mar 2009, Magnus B=E4ck wrote:
+> > > > > I'd be very surprised if ZwQueryDirectoryFile() hasn't always=
+ been
+> > > > > around (I just verified ntdll.dll from NT 4.0), so that's not=
+ a
+> > > > > worry. Don't know why MSDN reports it as introduced in XP.
+> > > >
+> > > > As the current maintainer of msysGit, I refuse to have somethin=
+g in
+> > > > the installer I ship that relies on not-at-all guaranteed inter=
+faces.
+> > >=20
+> > > Although I do appreciate the importance of guaranteed interfaces,
+> > > I am also pragmatic. An incompatible change in ntdll.dll would br=
+eak
+> > > vast amounts of programs, including cygwin. There is a lot to be =
+said
+> > > about Microsoft and their APIs, but I don't think they have a hab=
+it of
+> > > changing ABIs or function semantics for userland libraries that h=
+ave
+> > > been around for 15 years.
+> >=20
+> > Had you pointed to some document that states that the function has =
+been in=20
+> > all NT-based versions, that would have done the trick.
+>=20
+> Not official documentation, but at least from some MS guy it seems:
+> http://www.osronline.com/showThread.cfm?link=3D73086 (last message).
+>=20
+> Apparently, it was in NT3.x, but they document only what's actually
+> defined in the header.
 
-At least to me, mode in the context of 'push' suggest behavior. But
-maybe only for second time readers...
+How about runtime checking? You could do GetProcAddress(...) and if you
+don't get it use the old behaviour. I mean if it really is faster why
+not let Users of recent systems benefit from it.
 
->
-> I do not understand this [3/4]. =A0I did look at push.default but it =
-is
-> unclear how this variable is involved.
->
-> Perhaps it is because the word "tracking" in the description "push th=
-e
-> current branch to the branch it is tracking" is used without explaina=
-tion.
-
-Maybe the push.default description needs some enhancements, but this
-[3/4] is true.
-
-> I think the author meant to say if your local branch frotz by default
-> merges changes made to the branch nitfol of the remote repository, "f=
-rotz
-> tracks nitfol", but the use of the word "track" for that meaning appe=
-ars
-> nowhere in Documentation/glossary-content.txt
-
-So we can define:
-
-push.default =3D "tracking" =3D "push the current branch to its upstrea=
-m branch"
-
-The "upstream branch" is defined in branch.name.merge and could also
-be added to glossary-content.
-
-Santi
+cheers Heiko
