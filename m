@@ -1,116 +1,103 @@
-From: Nathaniel P Dawson <nathaniel.dawson@gmail.com>
-Subject: Re: [PATCH 0/5] Header includes cleanup
-Date: Mon, 30 Mar 2009 10:33:19 -0700
-Message-ID: <20090330173319.GC25950@eiku.org>
-References: <1238406925-15907-1-git-send-email-nathaniel.dawson@gmail.com> <49D0A3DF.4000203@viscovery.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: fix ls-tree usage with dash-prefixed paths
+Date: Mon, 30 Mar 2009 10:41:51 -0700
+Message-ID: <20090330174151.GA32728@dcvr.yhbt.net>
+References: <22719363.post@talk.nabble.com> <20090326130213.GC3114@atjola.homenet> <83dfc36c0903260735q3231ce96h5949d1123858995f@mail.gmail.com> <83dfc36c0903270418q59a81290xcb8043b8c037be18@mail.gmail.com> <20090329060858.GB15773@dcvr.yhbt.net> <20090329061045.GA29721@dcvr.yhbt.net> <7v8wmoqdc1.fsf@gitster.siamese.dyndns.org> <20090329215651.GA4355@dcvr.yhbt.net> <7v3acvldc7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="XWOWbaMNXpFDWE00"
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Mar 30 19:39:57 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Anton Gyllenberg <anton@iki.fi>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 30 19:43:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoLOR-00067Q-ON
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 19:35:28 +0200
+	id 1LoLWA-0001t9-TK
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 19:43:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754040AbZC3RdZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 13:33:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751036AbZC3RdZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 13:33:25 -0400
-Received: from wf-out-1314.google.com ([209.85.200.168]:6298 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751454AbZC3RdY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2009 13:33:24 -0400
-Received: by wf-out-1314.google.com with SMTP id 29so2687303wff.4
-        for <git@vger.kernel.org>; Mon, 30 Mar 2009 10:33:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=03YTSHN4lzYYBkTDTXeMvxLyegxpK4weglPNnspMCTs=;
-        b=O6DFUhOg3T2ywCOYaaOs1vtB1Yt2V3h+z5GLba+wMt4UFRrt0ZKYQizrSFxaJ7CDAq
-         nDorTMkxejmNnIR7G+ATl0KH2oUZEHkqCMf/E5zvYGpSXtgNTwPSAQtdkcmgTpOdQ01o
-         16MO7FdfDt3oHUW99sk4UmraOqgiCPkExykzM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=hkNt5Ry7EzFedRnTR8I31kJuAwR020JLjGJwB5NETrRhQQ+tpxq7s6KNRvMuGgWyif
-         dMc7tKBbN/OHyt7G5pzCdEXsoC8YzOjI6ov7YxwBbsYsOujjwkh6bUjeyZpVjUmceSH4
-         jz8vi7NosQo9iZ0rvMks4Ia2MAQQJfXo1zx9k=
-Received: by 10.140.157.4 with SMTP id f4mr2414833rve.3.1238434402508;
-        Mon, 30 Mar 2009 10:33:22 -0700 (PDT)
-Received: from localhost (ip68-98-113-49.ph.ph.cox.net [68.98.113.49])
-        by mx.google.com with ESMTPS id f42sm14481786rvb.41.2009.03.30.10.33.21
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 30 Mar 2009 10:33:21 -0700 (PDT)
+	id S1753972AbZC3Rly (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2009 13:41:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753698AbZC3Rly
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 13:41:54 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:37936 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753192AbZC3Rlx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2009 13:41:53 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8783B1F43E;
+	Mon, 30 Mar 2009 17:41:51 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <49D0A3DF.4000203@viscovery.net>
+In-Reply-To: <7v3acvldc7.fsf@gitster.siamese.dyndns.org>
 User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115178>
 
+Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Wong <normalperson@yhbt.net> writes:
+> 
+> > Junio C Hamano <gitster@pobox.com> wrote:
+> >> Eric Wong <normalperson@yhbt.net> writes:
+> >> 
+> >> > To find the blob object name given a tree and pathname, we were
+> >> > incorrectly calling "git ls-tree" with a "--" argument followed
+> >> > by the pathname of the file we wanted to get.
+> >> >
+> >> >   git ls-tree <TREE> -- --dashed/path/name.c
+> >> >
+> >> > Unlike many command-line interfaces, the "--" alone does not
+> >> > symbolize the end of non-option arguments on the command-line.
+> >> >
+> >> > ls-tree interprets the "--" as a prefix to match against, thus
+> >> > the entire contents of the --dashed/* hierarchy would be
+> >> > returned because the "--" matches "--dashed" and every path
+> >> > under it.
+> >> 
+> >> The above makes only half a sense to me.  In an empty directory:
+> >
+> > Ah, I think you missed this line:
+> >
+> > "the entire contents of the --dashed/* hierarchy would be"
+> 
+> Actually, that was what I was trying to demonstrate to be false.  Notice
+> the empty output from the first ls-tree with only -- and no other pathspec
+> on the command line.  "--" should not match "--dashed/*" anything (but
+> also notice that I said "should" here).
+> 
+> >>     $ git init
+> >>     Initialized empty Git repository in /tmp/empty/.git
+> >>     $ mkdir -p ./--dashed/path
+> >>     $ >./--dashed/path/name
+> >
+> > # Add a second file
+> > 	>./--dashed/path/ame
+> 
+> I think that is an independent bug.  Not just "--" but it appears "--d"
+> seems to hit it (and this is an ancient bug---even v1.0.0 seems to have
+> it).
 
---XWOWbaMNXpFDWE00
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I suspect that ls-tree needs a fix, not about "--" but about the pathspec
+> filtering.  It appears that the part that decides if a subtree is worth
+> traversing into uses the correct "is a pathspec pattern match leading path
+> components?" semantics (i.e. "--dashed" matches but "--" doesn't), but
+> after traversing into subtrees, the part that emits the output uses a
+> broken semantics "does the path have any pathspec patter as its prefix?"
+> It shouldn't check for "prefix", but for "leading path components", in
+> other words, the match must happen at directory boundaries.
+> 
+> And I do not think *this* bug is too late to fix.  We should fix it.
 
-I'm sorry, I must have misunderstood the task on the janitor
-list. Could you explain it a bit better so I would be able to do it
-properly?
+>From the ls-tree documentation, I was under the impression that "--"
+matching "--dashed" was intended:
 
-And as for line wrapping I apologize, emacs on my laptop was
-apparently not turning on auto-fill but has been rectified.
+  When paths are given, show them (note that this isn't really raw
+  pathnames, but rather a list of patterns to match).
 
-Regards,
-Nathaniel P Dawson
+It doesn't make sense to me match like this, either; but I do think it
+was intended and it will break things if people depend on the
+existing behavior.
 
-On Mon, Mar 30, 2009 at 12:50:07PM +0200, Johannes Sixt wrote:
-> Please wrap your lines at ca. 75 columns.
->=20
-> Nathaniel P Dawson schrieb:
-> > This is just the beginning for this project. I'm slowly cleaning up
-> > the header includes one chunk at a time. I hope my patches aren't too
-> > messy, I've learned how to better utilize git to make patches and
-> > organize my commits logically so I'll submit neater chunks henceforth.
-> > You can expect patches from me nightly until I've finished this project.
->=20
-> You have removed includes that are implied by other includes, i.e. if
-> foo.h includes bar.h, then you removed #include "bar.h" from *.c if there
-> is #include "foo.h".
->=20
-> IMO, this is not a good guiding principle to reduce includes. A better
-> principle is to keep #include "bar.h" in a source or header file iff a
-> feature that is declared or defined in bar.h is *used* *directly* in that
-> source or header file, regardless of whether bar.h is included in foo.h
-> that is itself included in that source or header file.
->=20
-> If this latter principle is obeyed, then the build won't break by removing
-> the include of foo.h (for the reason that nothing of foo.h is *use*
-> *directly* anymore).
->=20
-> -- Hannes
->=20
-
---XWOWbaMNXpFDWE00
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEAREKAAYFAknRAl8ACgkQJPz5XkJJCtC9CwCfRmlnG9KNmIaIDNg0KXeigwux
-bGAAn3NMAx0cPWwjaTiM/17XlAUTlrCo
-=PuKP
------END PGP SIGNATURE-----
-
---XWOWbaMNXpFDWE00--
+-- 
+Eric Wong
