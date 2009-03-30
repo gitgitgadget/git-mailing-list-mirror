@@ -1,88 +1,88 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH 3/4] builtin-fast-export.c: fix crash on tagged trees
-Date: Mon, 30 Mar 2009 11:08:56 +0200
-Message-ID: <1238404137-6693-3-git-send-email-kusmabite@gmail.com>
-References: <1238404137-6693-1-git-send-email-kusmabite@gmail.com>
- <1238404137-6693-2-git-send-email-kusmabite@gmail.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH 1/8] mergetool: use tabs consistently
+Date: Mon, 30 Mar 2009 02:22:27 -0700
+Message-ID: <20090330092226.GB18953@gmail.com>
+References: <1238389428-69328-1-git-send-email-davvid@gmail.com> <1238389428-69328-2-git-send-email-davvid@gmail.com> <7vzlf3flim.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN
-Content-Transfer-Encoding: 7BIT
-Cc: gitster@pobox.com, Erik Faye-Lund <kusmabite@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 30 11:11:25 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Charles Bailey <charles@hashpling.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 30 11:25:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoDVv-0001sG-7r
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 11:10:39 +0200
+	id 1LoDik-0006RU-PG
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 11:23:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756779AbZC3JJK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 05:09:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757752AbZC3JJJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 05:09:09 -0400
-Received: from mx.getmail.no ([84.208.15.66]:35517 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1756764AbZC3JJE (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Mar 2009 05:09:04 -0400
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KHB00J61AR0J440@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Mon, 30 Mar 2009 11:09:00 +0200 (MEST)
-Received: from localhost.localdomain ([84.215.187.169])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KHB000Q8AQYPG60@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Mon, 30 Mar 2009 11:09:00 +0200 (MEST)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.3.30.84610
-X-Mailer: git-send-email 1.6.2.1
-In-reply-to: <1238404137-6693-2-git-send-email-kusmabite@gmail.com>
+	id S1755565AbZC3JVu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2009 05:21:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755129AbZC3JVu
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 05:21:50 -0400
+Received: from qw-out-2122.google.com ([74.125.92.26]:59955 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754898AbZC3JVt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2009 05:21:49 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so2409692qwh.37
+        for <git@vger.kernel.org>; Mon, 30 Mar 2009 02:21:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=6ewK9NG642gLJLb9VcwlJhzd5yMgdpIYEWBdc5YiJwU=;
+        b=PcCUd1u51PqJBF5yUdgC4zAwlaOL2qDV1lVwmQabP0hKJ9mEr2OtyFpTOA+AI/IKcS
+         CmALNVK1e7tHopKl3zXl1w1Jzx+my3KlGekVbmXlU3f98b3LITPO1Nz4bPiIVOaRvLfh
+         +yC2A/GX91GZgqhd9VtbEUu2vMA4g7v2dlKss=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=pRYSWVZ/DWtCcR+IDRSZLACCp9u4QAmo4aa0/sA6FzFAXwlRGQ+ATzKxy1HBPTAsDA
+         VkyclsIfWUr3/xMc2oSEaTix1wvZdfZ4AlCOduW2RFNks6GioR8sBfuYylaLpolL1NP6
+         rMGsWrWnJpjeJ3tE4tTeMRVnZiqTv7lNoigi0=
+Received: by 10.224.89.74 with SMTP id d10mr5809961qam.202.1238404906711;
+        Mon, 30 Mar 2009 02:21:46 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id 6sm5605330qwk.27.2009.03.30.02.21.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 30 Mar 2009 02:21:45 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vzlf3flim.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115117>
 
-If a tag object points to a tree (or another unhandled type), the commit-
-pointer is left uninitialized and later dereferenced. This patch adds a default
-case to the switch that issues a warning and skips the object.
+On  0, Junio C Hamano <gitster@pobox.com> wrote:
+> Thanks.
+> 
+> Even though this [1/8] is obviously regression free, and I think the
+> overall direction in which the series is going is good, I'll wait until I
+> hear Acks from Charles Bailey for the parts that involve mergetool.  I do
+> not use either mergetool nor difftool myself, and going over every single
+> line of this series to spot potential regression is beyond my bandwidth
+> right now.
+> 
+> I do not think bits only common between mergetool and difftool should be
+> called with a very generic name "sh-tools".  We didn't call the result of
+> a similar refactoring for launching web browser from help and instaweb
+> context with such a generic name (it is called git-web--browse).
 
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
----
- builtin-fast-export.c  |    4 ++++
- t/t9301-fast-export.sh |    4 ++--
- 2 files changed, 6 insertions(+), 2 deletions(-)
+I also felt iffy about the name.
+Maybe...
+	git-interactive--tools ?
+	git-merge-diff--tools ?
+	git-mergetool--lib ?
+	(i'm pretty bad with this naming stuff ;))
 
-diff --git a/builtin-fast-export.c b/builtin-fast-export.c
-index 027c4aa..2070288 100644
---- a/builtin-fast-export.c
-+++ b/builtin-fast-export.c
-@@ -376,6 +376,10 @@ static void get_tags_and_duplicates(struct object_array *pending,
- 			case OBJ_BLOB:
- 				handle_object(tag->object.sha1);
- 				continue;
-+			default:
-+				warning("Tag points to object of unexpected type %s, skipping.",
-+				        typename(tag->object.type));
-+				continue;
- 			}
- 			break;
- 		default:
-diff --git a/t/t9301-fast-export.sh b/t/t9301-fast-export.sh
-index 763dde5..b587feb 100755
---- a/t/t9301-fast-export.sh
-+++ b/t/t9301-fast-export.sh
-@@ -274,8 +274,8 @@ test_expect_success 'set-up a few more tags for tag export tests' '
- '
- 
- # NEEDSWORK: not just check return status, but validate the output
--test_expect_failure 'tree_tag'        'git fast-export tree_tag'
--test_expect_failure 'tree_tag-obj'    'git fast-export tree_tag-obj'
-+test_expect_success 'tree_tag'        'git fast-export tree_tag'
-+test_expect_success 'tree_tag-obj'    'git fast-export tree_tag-obj'
- test_expect_failure 'tag-obj_tag'     'git fast-export tag-obj_tag'
- test_expect_failure 'tag-obj_tag-obj' 'git fast-export tag-obj_tag-obj'
- 
+(I have --interactive on my brain thanks to Ping's patch ;))
+
+I can rebase as needed once we get more feedback, particularly
+notes from Charles.
+
 -- 
-1.6.2.1
+
+	David
