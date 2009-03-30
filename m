@@ -1,89 +1,116 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [Q] merging from one (kernel) stable to another?
-Date: Mon, 30 Mar 2009 13:31:18 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0903301311230.19665@iabervon.org>
-References: <200903301024.08848.brian.foster@innova-card.com>
+From: Nathaniel P Dawson <nathaniel.dawson@gmail.com>
+Subject: Re: [PATCH 0/5] Header includes cleanup
+Date: Mon, 30 Mar 2009 10:33:19 -0700
+Message-ID: <20090330173319.GC25950@eiku.org>
+References: <1238406925-15907-1-git-send-email-nathaniel.dawson@gmail.com> <49D0A3DF.4000203@viscovery.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-955355923-1238434278=:19665"
-Cc: git mailing list <git@vger.kernel.org>
-To: Brian Foster <brian.foster@innova-card.com>
-X-From: git-owner@vger.kernel.org Mon Mar 30 19:35:53 2009
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="XWOWbaMNXpFDWE00"
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Mar 30 19:39:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoLM9-00050i-Fb
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 19:33:06 +0200
+	id 1LoLOR-00067Q-ON
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 19:35:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753811AbZC3RbW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 13:31:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753540AbZC3RbV
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 13:31:21 -0400
-Received: from iabervon.org ([66.92.72.58]:56265 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753096AbZC3RbV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2009 13:31:21 -0400
-Received: (qmail 9054 invoked by uid 1000); 30 Mar 2009 17:31:18 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 30 Mar 2009 17:31:18 -0000
-In-Reply-To: <200903301024.08848.brian.foster@innova-card.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1754040AbZC3RdZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2009 13:33:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751036AbZC3RdZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 13:33:25 -0400
+Received: from wf-out-1314.google.com ([209.85.200.168]:6298 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751454AbZC3RdY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2009 13:33:24 -0400
+Received: by wf-out-1314.google.com with SMTP id 29so2687303wff.4
+        for <git@vger.kernel.org>; Mon, 30 Mar 2009 10:33:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=03YTSHN4lzYYBkTDTXeMvxLyegxpK4weglPNnspMCTs=;
+        b=O6DFUhOg3T2ywCOYaaOs1vtB1Yt2V3h+z5GLba+wMt4UFRrt0ZKYQizrSFxaJ7CDAq
+         nDorTMkxejmNnIR7G+ATl0KH2oUZEHkqCMf/E5zvYGpSXtgNTwPSAQtdkcmgTpOdQ01o
+         16MO7FdfDt3oHUW99sk4UmraOqgiCPkExykzM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=hkNt5Ry7EzFedRnTR8I31kJuAwR020JLjGJwB5NETrRhQQ+tpxq7s6KNRvMuGgWyif
+         dMc7tKBbN/OHyt7G5pzCdEXsoC8YzOjI6ov7YxwBbsYsOujjwkh6bUjeyZpVjUmceSH4
+         jz8vi7NosQo9iZ0rvMks4Ia2MAQQJfXo1zx9k=
+Received: by 10.140.157.4 with SMTP id f4mr2414833rve.3.1238434402508;
+        Mon, 30 Mar 2009 10:33:22 -0700 (PDT)
+Received: from localhost (ip68-98-113-49.ph.ph.cox.net [68.98.113.49])
+        by mx.google.com with ESMTPS id f42sm14481786rvb.41.2009.03.30.10.33.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 30 Mar 2009 10:33:21 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <49D0A3DF.4000203@viscovery.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115177>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---1547844168-955355923-1238434278=:19665
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+--XWOWbaMNXpFDWE00
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, 30 Mar 2009, Brian Foster wrote:
+I'm sorry, I must have misunderstood the task on the janitor
+list. Could you explain it a bit better so I would be able to do it
+properly?
 
->   Whilst this question involves linux(-mips) kernel tree,
->  it's a git(-related?) question, not a kernel question ....
-> 
->   We are currently in the process of upgrading our embedded
->  system from kernel 2.6.21(-ish) to at least 2.6.26.8;  and
->  later, at some time in the future on to 2.6.3x or something.
->  Going from 2.6.21 to .22 to .23 and so on to .26, then to
->  .26.1 and so on to .26.8 is “easy” in the sense there are
->  very few conflicts with our existing baseline (e.g., just
->  2 or 3 in 2 or 3 files).
-> 
->   .21 --> me --> .22 --> .23 ... --> .26 --> .27 --> master
->      \              \       \           \      \
->      .21-stable  .22-stable .23-stable   \     .27-stable
->                                         .26.8
->                                            \
->                                            .26-stable
-> 
->   But (using 2.6.21-stable and 2.6.22-stable as proxies),
->  tests indicate that going from .26.8 to .27 or anything
->  later will have numerous conflicts (100s? in more than
->  30 files).  Thinking about it, this isn't too surprising
->  since the -stable branches cherry-pick important/benign
->  fixes from later revisions.
+And as for line wrapping I apologize, emacs on my laptop was
+apparently not turning on auto-fill but has been rectified.
 
-Why are you going from .26.8 to .27? Based on the -stable policy, there 
-should be no reason not to skip .26.x between .26 and .27. In fact, it's 
-not unlikely that merging both .26.8 and .27 will introduce bugs when the 
-same issue was fixed in different places in the two branches: a narrow 
-patch to paper over the identified problem in -stable and an intrusive 
-patch to change some API to make simpler code correct in the mainline.
+Regards,
+Nathaniel P Dawson
 
-That is, the correct way of merging changes from -stable with the latest 
-mainline series is always to take the mainline version, even if the 
--stable changes don't conflict at all.
+On Mon, Mar 30, 2009 at 12:50:07PM +0200, Johannes Sixt wrote:
+> Please wrap your lines at ca. 75 columns.
+>=20
+> Nathaniel P Dawson schrieb:
+> > This is just the beginning for this project. I'm slowly cleaning up
+> > the header includes one chunk at a time. I hope my patches aren't too
+> > messy, I've learned how to better utilize git to make patches and
+> > organize my commits logically so I'll submit neater chunks henceforth.
+> > You can expect patches from me nightly until I've finished this project.
+>=20
+> You have removed includes that are implied by other includes, i.e. if
+> foo.h includes bar.h, then you removed #include "bar.h" from *.c if there
+> is #include "foo.h".
+>=20
+> IMO, this is not a good guiding principle to reduce includes. A better
+> principle is to keep #include "bar.h" in a source or header file iff a
+> feature that is declared or defined in bar.h is *used* *directly* in that
+> source or header file, regardless of whether bar.h is included in foo.h
+> that is itself included in that source or header file.
+>=20
+> If this latter principle is obeyed, then the build won't break by removing
+> the include of foo.h (for the reason that nothing of foo.h is *use*
+> *directly* anymore).
+>=20
+> -- Hannes
+>=20
 
-It should actually be ideal to just merge your local changes directly with 
-the mainline kernel you want to end up using. But you might want to merge 
-first with earlier mainline kernels in order to get fewer or easier 
-conflicts per step.
+--XWOWbaMNXpFDWE00
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-	-Daniel
-*This .sig left intentionally blank*
---1547844168-955355923-1238434278=:19665--
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEAREKAAYFAknRAl8ACgkQJPz5XkJJCtC9CwCfRmlnG9KNmIaIDNg0KXeigwux
+bGAAn3NMAx0cPWwjaTiM/17XlAUTlrCo
+=PuKP
+-----END PGP SIGNATURE-----
+
+--XWOWbaMNXpFDWE00--
