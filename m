@@ -1,83 +1,76 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-svn: fix ls-tree usage with dash-prefixed paths
-Date: Mon, 30 Mar 2009 11:05:53 -0700
-Message-ID: <7vy6umdgxq.fsf@gitster.siamese.dyndns.org>
-References: <22719363.post@talk.nabble.com>
- <20090326130213.GC3114@atjola.homenet>
- <83dfc36c0903260735q3231ce96h5949d1123858995f@mail.gmail.com>
- <83dfc36c0903270418q59a81290xcb8043b8c037be18@mail.gmail.com>
- <20090329060858.GB15773@dcvr.yhbt.net> <20090329061045.GA29721@dcvr.yhbt.net>
- <7v8wmoqdc1.fsf@gitster.siamese.dyndns.org>
- <20090329215651.GA4355@dcvr.yhbt.net>
- <7v3acvldc7.fsf@gitster.siamese.dyndns.org>
- <20090330174151.GA32728@dcvr.yhbt.net>
+Subject: Re: [PATCH 2/2] Add feature release instructions to gitworkflows man
+ page
+Date: Mon, 30 Mar 2009 11:14:43 -0700
+Message-ID: <7vljqmdgj0.fsf@gitster.siamese.dyndns.org>
+References: <1238391319-4953-1-git-send-email-rocketraman@fastmail.fm>
+ <1238391319-4953-2-git-send-email-rocketraman@fastmail.fm>
+ <7vk567ijlf.fsf@gitster.siamese.dyndns.org> <49D10875.2060008@fastmail.fm>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Anton Gyllenberg <anton@iki.fi>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Mar 30 20:08:58 2009
+Cc: git@vger.kernel.org
+To: Raman Gupta <rocketraman@fastmail.fm>
+X-From: git-owner@vger.kernel.org Mon Mar 30 20:16:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoLtb-0004In-PC
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 20:07:40 +0200
+	id 1LoM29-0008Kd-Q6
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 20:16:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752594AbZC3SGF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 14:06:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752457AbZC3SGE
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 14:06:04 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58392 "EHLO
+	id S1752689AbZC3SOu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2009 14:14:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751192AbZC3SOu
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 14:14:50 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59533 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751686AbZC3SGD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2009 14:06:03 -0400
+	with ESMTP id S1750962AbZC3SOt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2009 14:14:49 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id CFB57AFBC;
-	Mon, 30 Mar 2009 14:05:58 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 4A559A0C9;
+	Mon, 30 Mar 2009 14:14:47 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 24C80AFBB; Mon,
- 30 Mar 2009 14:05:55 -0400 (EDT)
-In-Reply-To: <20090330174151.GA32728@dcvr.yhbt.net> (Eric Wong's message of
- "Mon, 30 Mar 2009 10:41:51 -0700")
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9A37BA0C8; Mon,
+ 30 Mar 2009 14:14:44 -0400 (EDT)
+In-Reply-To: <49D10875.2060008@fastmail.fm> (Raman Gupta's message of "Mon,
+ 30 Mar 2009 13:59:17 -0400")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 6BF6136A-1D55-11DE-8A0A-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A6F14416-1D56-11DE-AEBA-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115183>
 
-Eric Wong <normalperson@yhbt.net> writes:
+Raman Gupta <rocketraman@fastmail.fm> writes:
 
-> Junio C Hamano <gitster@pobox.com> wrote:
->
->> I think that is an independent bug.  Not just "--" but it appears "--d"
->> seems to hit it (and this is an ancient bug---even v1.0.0 seems to have
->> it).
->
->> I suspect that ls-tree needs a fix, not about "--" but about the pathspec
->> filtering.  It appears that the part that decides if a subtree is worth
->> traversing into uses the correct "is a pathspec pattern match leading path
->> components?" semantics (i.e. "--dashed" matches but "--" doesn't), but
->> after traversing into subtrees, the part that emits the output uses a
->> broken semantics "does the path have any pathspec patter as its prefix?"
->> It shouldn't check for "prefix", but for "leading path components", in
->> other words, the match must happen at directory boundaries.
->> 
->> And I do not think *this* bug is too late to fix.  We should fix it.
->
-> From the ls-tree documentation, I was under the impression that "--"
-> matching "--dashed" was intended:
->
->   When paths are given, show them (note that this isn't really raw
->   pathnames, but rather a list of patterns to match).
->
-> It doesn't make sense to me match like this, either; but I do think it
-> was intended and it will break things if people depend on the
-> existing behavior.
+> Junio C Hamano wrote:
+> ...
+> If you wish to remove discussion of 'next' from this document, that is
+> probably better done in a separate followup change. Though personally
+> I think its a useful concept for readers to learn about as they are
+> setting up their own workflows.
 
-Ok, but then the decision to descend into --dashed should be consistent
-with that policy, no?  Right now, it appears that giving "--" alone says
-"Anything under --dashed can never match that pattern, so I wouldn't
-bother recursing into it".
+I do not have a particularly strong feeling about 'next' either way.
+
+As the document states at the top, it lists ingredients from git.git
+management and it is left up to the readers to adopt parts that suit their
+needs, while not using others.  In that spirit, the description of 'next'
+as "ahead of master that is supposed to be rock solid" may be a good thing
+to keep.  It is orthogonal if the project wants to rewind and rebuild
+'next' after every feature release---they do not need to (and we didn't do
+so for quite some time).  One valid choice by readers is to adopt the
+concept of 'next' in their project but never rewind and rebuild it, and
+you made that clear that it is optional.  So I think this part of your
+patch is good as-is.
+
+>> Other parts (except for the "branch -f" bit I've already told you
+>> about in the other message) looked good.
+>
+> I'll add some discussion about the branch -f bit -- I hope you agree
+> that in this document that is distributed with git, some
+> beginner-level explanation of the difference between the branch -f and
+> the merge approach is warranted?
+
+Surely and thanks.
