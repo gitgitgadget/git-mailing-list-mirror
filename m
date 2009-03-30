@@ -1,89 +1,62 @@
-From: Raman Gupta <rocketraman@fastmail.fm>
-Subject: Re: [PATCH 2/2] Add feature release instructions to gitworkflows
- man page
-Date: Mon, 30 Mar 2009 13:59:17 -0400
-Message-ID: <49D10875.2060008@fastmail.fm>
-References: <1238391319-4953-1-git-send-email-rocketraman@fastmail.fm> <1238391319-4953-2-git-send-email-rocketraman@fastmail.fm> <7vk567ijlf.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCHv2 4/4] Rename push.default to push.mode
+Date: Mon, 30 Mar 2009 14:02:53 -0400
+Message-ID: <20090330180253.GA7220@coredump.intra.peff.net>
+References: <1238407903-28020-1-git-send-email-santi@agolina.net> <1238407903-28020-5-git-send-email-santi@agolina.net> <49D0A1FE.60300@drmicha.warpmail.net> <adf1fd3d0903300537i41d4aef3g49ab6bde9343cbc5@mail.gmail.com> <49D0C3B8.2050801@drmicha.warpmail.net> <20090330134544.GA31827@coredump.intra.peff.net> <49D0DB78.2010204@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 30 20:01:16 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Santi =?utf-8?B?QsOpamFy?= <santi@agolina.net>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Mar 30 20:06:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoLn9-0001QH-L7
-	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 20:01:00 +0200
+	id 1LoLqj-0002x4-Un
+	for gcvg-git-2@gmane.org; Mon, 30 Mar 2009 20:04:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752231AbZC3R72 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 13:59:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752103AbZC3R71
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 13:59:27 -0400
-Received: from smtp107.rog.mail.re2.yahoo.com ([68.142.225.205]:39269 "HELO
-	smtp107.rog.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751561AbZC3R71 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Mar 2009 13:59:27 -0400
-Received: (qmail 34158 invoked from network); 30 Mar 2009 17:59:24 -0000
-Received: from unknown (HELO apollo.rocketraman.com) (rocketraman@99.224.155.40 with login)
-  by smtp107.rog.mail.re2.yahoo.com with SMTP; 30 Mar 2009 17:59:24 -0000
-X-YMail-OSG: pLT7d8MVM1mlO9lSXxuMhk_sI3HfBLe1C55NbSRhTkeGojbqvvxiTU7YbpNCQpr5Rg--
-X-Yahoo-Newman-Property: ymail-3
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by apollo.rocketraman.com (Postfix) with ESMTP id 07B3321C051A;
-	Mon, 30 Mar 2009 13:59:24 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at rocketraman.com
-Received: from apollo.rocketraman.com ([127.0.0.1])
-	by localhost (apollo.rocketraman.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id vPge7-eTr6Iy; Mon, 30 Mar 2009 13:59:18 -0400 (EDT)
-Received: from [192.168.1.5] (zeus.rocketraman.com [192.168.1.5])
-	by apollo.rocketraman.com (Postfix) with ESMTP id 092C121C0519;
-	Mon, 30 Mar 2009 13:59:18 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <7vk567ijlf.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.2
+	id S1753095AbZC3SDH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Mar 2009 14:03:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753246AbZC3SDF
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 14:03:05 -0400
+Received: from peff.net ([208.65.91.99]:49432 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753183AbZC3SDE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2009 14:03:04 -0400
+Received: (qmail 6062 invoked by uid 107); 30 Mar 2009 18:03:18 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 30 Mar 2009 14:03:17 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 30 Mar 2009 14:02:53 -0400
+Content-Disposition: inline
+In-Reply-To: <49D0DB78.2010204@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115181>
 
-Junio C Hamano wrote:
-> rocketraman@fastmail.fm writes:
-> 
->> From: Raman Gupta <raman@rocketraman.com>
->>
->> Based on a mailing list discussion, add a description of the workflow,
->> and associated commands, for creating a feature release.
-> 
-> The same comment applies to the other one, but this commit log message is
-> really lacking.  If you do not bother to summarize the discussion, place a
-> pointer to the list archive, and more importantly, please describe *why*
-> this change is desiable.
+On Mon, Mar 30, 2009 at 04:47:20PM +0200, Michael J Gruber wrote:
 
-Ok will do.
+> Thanks for the explanation! I rechecked, and for sure it also happene=
+d
+> with patches from Tor Arne Vestb=C3=B8 and Nguy=E1=BB=85n Th=C3=A1i N=
+g=E1=BB=8Dc Duy.
+> Again I feel blessed by my umlautlessness... and challenged by gmane.
+> About time to ditch it for reading patches also, or at least to be aw=
+are
+> of it when saving patches.
 
-> I am not sure rewinding and rebuilding of 'next', or even having 'next',
-> is applicable for other projects as a BCP.  
+The message gmane passes out has the content-transfer-encoding set
+properly. Your newsreader should properly un-QP it, or if it has an
+option to save it directly (encoding and all), then "git am" will un-QP
+it. If you were to "git apply" it directly, that would break, though
+(and it is user error). If your newsreader saves the QP text without th=
+e
+matching header, then that would also break (and your newsreader is
+broken).
 
-Hmmm... The existing gitworkflows man page discusses the 'next' branch
-several times. I am simply expanding the document to cover the branch
-management associated with the git.git release process as well, which
-necessarily includes a discussion of 'next'.
+Just curious how you are seeing the breakage (because I want to make
+sure there is no git bug).
 
-If you wish to remove discussion of 'next' from this document, that is
-probably better done in a separate followup change. Though personally
-I think its a useful concept for readers to learn about as they are
-setting up their own workflows.
-
-> Other parts (except for the "branch -f" bit I've already told you
-> about in the other message) looked good.
-
-I'll add some discussion about the branch -f bit -- I hope you agree
-that in this document that is distributed with git, some
-beginner-level explanation of the difference between the branch -f and
-the merge approach is warranted?
-
-Cheers,
-Raman
+-Peff
