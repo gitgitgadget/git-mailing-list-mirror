@@ -1,57 +1,70 @@
-From: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
-Subject: Re: [PATCH] Add warning about known issues to documentation of	cvsimport
-Date: Tue, 31 Mar 2009 07:36:16 +0200
-Message-ID: <49D1ABD0.8070707@pelagic.nl>
-References: <20090323195304.GC26678@macbook.lan> <49C7F233.9050205@pelagic.nl> <20090330221729.GB68118@macbook.lan>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 3/4] bisect: fix reading more than one path in "$GIT_DIR/BISECT_NAMES"
+Date: Tue, 31 Mar 2009 07:36:42 +0200
+Message-ID: <200903310736.42366.chriscool@tuxfamily.org>
+References: <20090329114457.c6fca0fe.chriscool@tuxfamily.org> <7vocvjh25n.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Tue Mar 31 07:37:53 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, John Tapsell <johnflux@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 31 07:39:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoWfX-0006gn-AT
-	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 07:37:51 +0200
+	id 1LoWgv-0006ut-Pn
+	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 07:39:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753324AbZCaFgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2009 01:36:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751921AbZCaFgT
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 01:36:19 -0400
-Received: from hupie.xs4all.nl ([82.95.241.251]:38118 "EHLO
-	Lighthouse.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751713AbZCaFgS (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Mar 2009 01:36:18 -0400
-Received: from [192.168.0.51] (unknown [192.168.0.51])
-	by Lighthouse.internal.Hupie.com (Postfix) with ESMTP id 50B5F58BD88;
-	Tue, 31 Mar 2009 07:36:16 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <20090330221729.GB68118@macbook.lan>
+	id S1753483AbZCaFhr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Mar 2009 01:37:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753248AbZCaFhr
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 01:37:47 -0400
+Received: from smtp4-g21.free.fr ([212.27.42.4]:49457 "EHLO smtp4-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750897AbZCaFhr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Mar 2009 01:37:47 -0400
+Received: from smtp4-g21.free.fr (localhost [127.0.0.1])
+	by smtp4-g21.free.fr (Postfix) with ESMTP id 4FA194C8104;
+	Tue, 31 Mar 2009 07:37:37 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp4-g21.free.fr (Postfix) with ESMTP id 5FE6F4C80AF;
+	Tue, 31 Mar 2009 07:37:35 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vocvjh25n.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115216>
 
-Heiko Voigt wrote:
-> On Mon, Mar 23, 2009 at 09:33:55PM +0100, Ferry Huberts (Pelagic) wrote:
->> maybe you can also add remarks about autocrlf and safecrlf?
->> both need to be off
-> 
-> From my experience thats not necessarily true. You can use
-> autocrlf=input to repair broken revisions were crlf's have been
-> mistakenly committed into the repository. And if I remember correctly
-> safecrlf helps if you want to make sure that no information gets lost.
-> 
-> So when importing from a nice correct cvs repository you would expect
-> safecrlf to not stop your import. And I suspect there are actually cvs
-> users that were very careful with their lineendings who would use it.
-> 
-> cheers Heiko
-If you look at this thread:
-http://thread.gmane.org/gmane.comp.version-control.git/110152/focus=110358
-you'll see why I said it. I did some testing to prove my statement.
+Le lundi 30 mars 2009, Junio C Hamano a =E9crit :
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> > The implementation of "read_bisect_paths" worked with only one
+> > path in each line of "$GIT_DIR/BISECT_NAMES", but the paths are all
+> > stored on one line by "git-bisect.sh".
+> >
+> > So we have to process all the paths that may be on each line.
+>
+> This is "oops, the previous one is broken", for a series that was not=
+ yet
+> 'next' worthy, so I squashed the fix and rebuilt the topic, together =
+with
+> your other patches.
 
-Ferry
+No problem.
+
+> The series now looks like this:
+
+[...]
+
+> I've tweaked a few patches before applying, but they all looked basic=
+ally
+> sane.  Unless I hear from other people in a few days , I'd say we mer=
+ge
+> it to 'next' and start cooking it.
+
+Thanks,
+Christian.
