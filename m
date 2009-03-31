@@ -1,140 +1,117 @@
-From: Florian Mickler <florian@mickler.org>
-Subject: nomad workflow -- dont pull ... more like...   snatch ...or.. tear!
-Date: Tue, 31 Mar 2009 02:59:44 +0200
-Message-ID: <20090331025944.51be8509@schatten>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: "git reflog expire --all" very slow
+Date: Mon, 30 Mar 2009 18:43:59 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.0903301803190.4093@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/AhQjhXnpEhP6haRluUlC6NY";
- protocol="application/pgp-signature"; micalg=PGP-SHA1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 31 03:01:50 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <casey@nrlssc.navy.mil>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 31 03:48:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoSMB-0001qO-Gm
-	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 03:01:36 +0200
+	id 1LoT5L-0003D5-6G
+	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 03:48:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757897AbZCaBAD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 21:00:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757714AbZCaBAB
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 21:00:01 -0400
-Received: from ist.d-labs.de ([213.239.218.44]:36558 "EHLO mx01.d-labs.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757639AbZCaBAA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2009 21:00:00 -0400
-Received: from schatten (f053213010.adsl.alicedsl.de [78.53.213.10])
-	by mx01.d-labs.de (Postfix) with ESMTP id 28CDB83E2B
-	for <git@vger.kernel.org>; Tue, 31 Mar 2009 02:59:55 +0200 (CEST)
-X-Mailer: Claws Mail 3.7.0 (GTK+ 2.12.11; x86_64-pc-linux-gnu)
+	id S1754511AbZCaBqn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2009 21:46:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754089AbZCaBqm
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 21:46:42 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:35311 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753923AbZCaBqm (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Mar 2009 21:46:42 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n2V1i0C0024265
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 30 Mar 2009 18:44:36 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n2V1hxWs025660;
+	Mon, 30 Mar 2009 18:43:59 -0700
+X-X-Sender: torvalds@localhost.localdomain
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.441 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115204>
-
---Sig_/AhQjhXnpEhP6haRluUlC6NY
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
-
-Hi!
-
-I'm working on many different work stations during the week and have
-one central repo, where i interface with an svn upstream.=20
-
-because of (but not only because of) git svn's metadata-changes i have
-the following workflow, which is currently not well supported with git.
-
-<summary>  (for the busy reader)
-    i want to be able to drop my local tracking branches in favor of
-    the remote ones, but keep backup-refs and have the opportunity to
-    abort if something looks funny.
-  =20
-i have a script which does this, which i could submit for starters...
-
-</summary>
-
-my workflow:
-
-i have a remote git repository following an svn upstream. (via git svn)=20
-
-there are 2 svn branches i do work on and some topic-branches in
-which i prepare features to integrate into the svn branches.=20
-
-When i come to work (to any random workstation), i do basically the
-following:
-
-firsy i run git-svn-rebase on my central git repo.
-
-then i run my script, which does:
-
-a) run git-fetch origin in my workstations git-repo.
-
-b) for all the branches i currently work on: (eg
-origin/svnStableBranch)=20
-
-	1. git cherry origin/svnStableBranch svnStableBranch
-
-	2. if everything is contained it skips the next 2 steps
-
-	3. else it shows the not contained commits and waits for
-	userinput (strg-c, f for full commit descriptions, or anykey to
-	continue)=20
-
-	4. it creates backup branch (named tmp_[unixtimestamp]) =20
-
-	5. it drops local branch and creates a new tracking branch with
-	the same name
-
-at the end of my workday, i run svn rebase on origin and run my script
-again.
-
-if smth got committed before i could push my changes to the svn, i
-decide if i create a new branch on origin for my work, so i can
-integrate it next time, or just merge / rebase my commits now.
-(recovering them from the backup-branch)
-
-whatever i do i somehow sync my repo onto origin and dcommit
-there ...maybe...
-
-the next day i go to any workstation (probably with a working state
-from a week ago), run my script to drop the local refs, and continue
-working.=20
-
-if i have rebased one of my working branches during the week,
-i see the refactored log vs the old log and can happily drop the backup
-branches. if i see some piece of work which i forgot to push to origin,
-and which is worth saving i can do it now.
-
-if not ... good.
-
-Do you see my point? Is smth like this deemed useful? is this
-an acceptable workflow? (dropping local refs in favor of remote ones)=20
-
-it saves me the hazle of doublecheking the state of my
-current workstation every time i change it and if i forgot to push
-something a week ago or yesterday, nothing is lost.
-
-is there any possibility that if i submitted a cleaned up version for
-this called ''git snatch'' or something like this, it would be
-integrated into mainline?
-
-(because of its disruptive nature, maybe git tear would be a better
-name?)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115205>
 
 
-Sincerely,
-Florian
+I haven't checked in detail what is up, but I just did a "git gc --prune", 
+and it was quiet for about half a minute before anything seemed to happen.
 
---Sig_/AhQjhXnpEhP6haRluUlC6NY
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Disposition: attachment; filename=signature.asc
+Very irritating, as normally the expensive stuff at least gives you some 
+kind of indication of what it's doing.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+It turns out that it's the reflog expiration. On my crazy beefy 
+Nehalem machine:
 
-iEYEARECAAYFAknRawYACgkQPjqCkyL3Kv1bpACcCZuQ03GjinN7yfS7XeZ8JV4i
-kh0Anjp8sDcp8uyAVfOC8NkSGPmsFT1m
-=U215
------END PGP SIGNATURE-----
+	[torvalds@nehalem linux]$ time git reflog expire --all
 
---Sig_/AhQjhXnpEhP6haRluUlC6NY--
+	real	0m37.596s
+	user	0m37.554s
+	sys	0m0.040s
+
+and that really isn't good. 37 cpu-seconds on this machine is like half a 
+decade on some laptops I could name.
+
+The flat pgprof for this thing (user-land oprofile isn't doing Nehalem 
+yet) looks like this:
+
+      %   cumulative   self              self     total           
+     time   seconds   seconds    calls   s/call   s/call  name    
+     60.94     30.24    30.24 301120211     0.00     0.00  interesting
+     12.37     36.38     6.14 301338513     0.00     0.00  insert_by_date
+     11.35     42.01     5.63     8776     0.00     0.00  clear_commit_marks
+      9.96     46.95     4.94     4388     0.00     0.01  merge_bases_many
+      2.16     48.02     1.07 301486366     0.00     0.00  commit_list_insert
+      1.21     48.62     0.60 301329737     0.00     0.00  parse_commit
+      0.87     49.05     0.43 301637945     0.00     0.00  xmalloc
+      0.34     49.22     0.17       24     0.01     0.01  xstrdup
+      ...
+
+Ok, so my reflog on this thing has 1583 entries on HEAD (yes, in the last 
+90 days, the problem is _not_ that I have a long reflog and am pruning it, 
+it _is_ already pruned). Add to that the reflogs for the branches (mainly 
+master: 1294), and you end up with apparently a nice total of 4388 reflog 
+entries.
+
+And then it looks like for _each_ reflog entry we have:
+
+  expire_reflog_ent()
+    in_merge_bases()
+
+which then calls 
+
+  get_merge_bases()
+    get_merge_bases_many()
+      ..
+
+each of which probably often traverses an appreciable part of the kernel 
+tree, since my reflog entries are often merges, and the merge bases need 
+easily thousands of commits to look up.
+
+Which explains how you end up with 301 _million_ commits inserted into the 
+lists and checked if they are interesting. Since the whole kernel tree has 
+only something like 140k commits, and my revlog doesn't even go back more 
+than three months, I guess that means that we'll be traversing the same 
+commits tens of thousands of times each.
+
+Even on this machine, that whole cluster-f*ck takes a little while. Oops.
+
+I have not checked if there is anything really obvious going on that could 
+change that whole logic that causes us to do merge-bases into something 
+saner, since the reflog code is not a part of git I'm familiar with. 
+
+Instead, I'm just sending this to Junio, Brandon, and Dscho, who are 
+getting the main blame for 'builtin-reflog.c'. Although I'm pretty sure 
+this is all Junio, but just in case..
+
+			Linus
