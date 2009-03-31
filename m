@@ -1,73 +1,119 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 07/10] rev-list: call new "filter_skip" function
-Date: Tue, 31 Mar 2009 08:45:23 +0200
-Message-ID: <200903310845.23674.chriscool@tuxfamily.org>
-References: <20090326055549.e1f244d9.chriscool@tuxfamily.org> <200903300526.12978.chriscool@tuxfamily.org> <alpine.DEB.1.00.0903300951460.7534@intel-tinevez-2-302>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: add a double quiet option to hide git commits
+Date: Mon, 30 Mar 2009 23:52:31 -0700
+Message-ID: <20090331065231.GA32142@dcvr.yhbt.net>
+References: <49CFCD5A.1080801@simon.arlott.org.uk> <20090329224324.GB20675@dcvr.yhbt.net> <7vvdprjyrc.fsf@gitster.siamese.dyndns.org> <49D1100D.8010206@simon.arlott.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	John Tapsell <johnflux@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 31 08:48:12 2009
+	mdpoole@troilus.org
+To: Simon Arlott <simon@fire.lp0.eu>
+X-From: git-owner@vger.kernel.org Tue Mar 31 08:54:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoXlc-0004WZ-FU
-	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 08:48:12 +0200
+	id 1LoXrI-0005sf-K2
+	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 08:54:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758725AbZCaGq3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Mar 2009 02:46:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755137AbZCaGq3
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 02:46:29 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2]:59022 "EHLO smtp2-g21.free.fr"
+	id S1753625AbZCaGwd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Mar 2009 02:52:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753215AbZCaGwd
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 02:52:33 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:38559 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755202AbZCaGq2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Mar 2009 02:46:28 -0400
-Received: from smtp2-g21.free.fr (localhost [127.0.0.1])
-	by smtp2-g21.free.fr (Postfix) with ESMTP id D01AA4B006B;
-	Tue, 31 Mar 2009 08:46:19 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp2-g21.free.fr (Postfix) with ESMTP id E8FB44B0015;
-	Tue, 31 Mar 2009 08:46:16 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.DEB.1.00.0903300951460.7534@intel-tinevez-2-302>
+	id S1751938AbZCaGwd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Mar 2009 02:52:33 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 849D91F5FC;
+	Tue, 31 Mar 2009 06:52:31 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <49D1100D.8010206@simon.arlott.org.uk>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115227>
 
-Hi,
+Simon Arlott <simon@fire.lp0.eu> wrote:
+> People may expect/prefer -q to still show git commits,
+> so this change allows a second -q to hide them.
+> 
+> Signed-off-by: Michael Poole <mdpoole@troilus.org>
+> Signed-off-by: Simon Arlott <simon@fire.lp0.eu>
 
-Le lundi 30 mars 2009, Johannes Schindelin a =E9crit :
-> Hi,
->
-> On Mon, 30 Mar 2009, Christian Couder wrote:
-> > Le jeudi 26 mars 2009, Junio C Hamano a =E9crit :
-> > >
-> > > I've learned to suspect without reading a qsort() callback that d=
-oes
-> > > not derefence its arguments.  Is this doing the right thing?
-> >
-> > I think so.
->
-> I suspect something much worse: you are trying to build a list of sha=
-1s
-> of commits that need to be skipped, later to look up every commit via
-> binary search.
->
-> But it has been proven a lot of times that using a hash set is superi=
-or
-> to that approach, and even better: we already have the framework in p=
-lace
-> in the form of struct decorate.
+Thanks,
+  Acked-by: Eric Wong <normalperson@yhbt.net>
+and pushed out to git://git.bogomips.org/git-svn
 
-I had a look, and "struct decorate" can be used to store objects, but I=
- want=20
-to store only sha1s.
-
-Regards,
-Christian.
+> ---
+> On 30/03/09 07:44, Junio C Hamano wrote:
+> > Eric Wong <normalperson@yhbt.net> writes:
+> >> Simon Arlott <simon@fire.lp0.eu> wrote:
+> >>> Ideally only errors should be output in this mode so fetch
+> >>> can be run from cron and normally produce no output. Without
+> >>> this change it would output a single line on each git commit,
+> >>> e.g.
+> >>> r1909 = 32ef87860662526d4a62f903949ed21e0341079e (u2_10_12_branch)
+> 
+>  Documentation/git-svn.txt |    3 ++-
+>  git-svn.perl              |    9 +++++----
+>  2 files changed, 7 insertions(+), 5 deletions(-)
+> 
+> diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+> index cda3389..8163a19 100644
+> --- a/Documentation/git-svn.txt
+> +++ b/Documentation/git-svn.txt
+> @@ -385,7 +385,8 @@ config key: svn.authorsfile
+>  
+>  -q::
+>  --quiet::
+> -	Make 'git-svn' less verbose.
+> +	Make 'git-svn' less verbose. Specify a second time to make it
+> +	even less verbose.
+>  
+>  --repack[=<n>]::
+>  --repack-flags=<flags>::
+> diff --git a/git-svn.perl b/git-svn.perl
+> index e5c3dfe..d919798 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -68,6 +68,7 @@ my ($_stdin, $_help, $_edit,
+>  	$_prefix, $_no_checkout, $_url, $_verbose,
+>  	$_git_format, $_commit_url, $_tag);
+>  $Git::SVN::_follow_parent = 1;
+> +$_q ||= 0;
+>  my %remote_opts = ( 'username=s' => \$Git::SVN::Prompt::_username,
+>                      'config-dir=s' => \$Git::SVN::Ra::config_dir,
+>                      'no-auth-cache' => \$Git::SVN::Prompt::_no_auth_cache,
+> @@ -80,7 +81,7 @@ my %fc_opts = ( 'follow-parent|follow!' => \$Git::SVN::_follow_parent,
+>  		'useSvnsyncProps' => \$Git::SVN::_use_svnsync_props,
+>  		'log-window-size=i' => \$Git::SVN::Ra::_log_window_size,
+>  		'no-checkout' => \$_no_checkout,
+> -		'quiet|q' => \$_q,
+> +		'quiet|q+' => \$_q,
+>  		'repack-flags|repack-args|repack-opts=s' =>
+>  		   \$Git::SVN::_repack_flags,
+>  		'use-log-author' => \$Git::SVN::_use_log_author,
+> @@ -2331,13 +2332,13 @@ sub do_git_commit {
+>  
+>  	$self->{last_rev} = $log_entry->{revision};
+>  	$self->{last_commit} = $commit;
+> -	print "r$log_entry->{revision}" unless $::_q;
+> +	print "r$log_entry->{revision}" unless $::_q > 1;
+>  	if (defined $log_entry->{svm_revision}) {
+> -		 print " (\@$log_entry->{svm_revision})" unless $::_q;
+> +		 print " (\@$log_entry->{svm_revision})" unless $::_q > 1;
+>  		 $self->rev_map_set($log_entry->{svm_revision}, $commit,
+>  		                   0, $self->svm_uuid);
+>  	}
+> -	print " = $commit ($self->{ref_id})\n" unless $::_q;
+> +	print " = $commit ($self->{ref_id})\n" unless $::_q > 1;
+>  	if (--$_gc_nr == 0) {
+>  		$_gc_nr = $_gc_period;
+>  		gc();
+> -- 
+> 1.6.2
+> -- 
+> Simon Arlott
