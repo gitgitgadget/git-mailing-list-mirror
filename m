@@ -1,84 +1,84 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: [PATCH] Add warning about known issues to documentation of
-	cvsimport
-Date: Tue, 31 Mar 2009 18:22:18 +0200
-Message-ID: <20090331162103.GA72569@macbook.lan>
-References: <20090323195304.GC26678@macbook.lan> <49C7F233.9050205@pelagic.nl> <20090330221729.GB68118@macbook.lan> <49D1ABD0.8070707@pelagic.nl>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
-X-From: git-owner@vger.kernel.org Tue Mar 31 18:24:24 2009
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: [PATCH 1/4] send-email: don't attempt to prompt if tty is closed
+Date: Tue, 31 Mar 2009 12:22:11 -0400
+Message-ID: <e439cc23328dc25d153baed21f6ad7d90106eb03.1238516122.git.jaysoffian@gmail.com>
+References: <cover.1238516122.git.jaysoffian@gmail.com>
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?q?Bj=C3=B6rn=20Steinbrink?= <B.Steinbrink@gmx.de>,
+	=?utf-8?q?Uwe=20Kleine-K=C3=B6nig?= <Uwe.Kleine-Koenig@digi.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 31 18:24:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Logko-0007Uo-51
-	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 18:23:58 +0200
+	id 1LoglC-0007f0-Hv
+	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 18:24:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760354AbZCaQWW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2009 12:22:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759775AbZCaQWW
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 12:22:22 -0400
-Received: from darksea.de ([83.133.111.250]:40179 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757977AbZCaQWV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2009 12:22:21 -0400
-Received: (qmail 14236 invoked from network); 31 Mar 2009 18:22:08 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 31 Mar 2009 18:22:08 +0200
-Content-Disposition: inline
-In-Reply-To: <49D1ABD0.8070707@pelagic.nl>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1760655AbZCaQW4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Mar 2009 12:22:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760394AbZCaQW4
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 12:22:56 -0400
+Received: from mail-qy0-f118.google.com ([209.85.221.118]:35585 "EHLO
+	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760071AbZCaQWz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Mar 2009 12:22:55 -0400
+Received: by qyk16 with SMTP id 16so4637386qyk.33
+        for <git@vger.kernel.org>; Tue, 31 Mar 2009 09:22:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:in-reply-to:references;
+        bh=//RsqNK4WGqmQkL9Zc2hY8i0I31NYtpv25+GPsYRVFM=;
+        b=plwXF2veT45gnDs/QzAu4F3Y1rX0nqCEcX2b1y1vmkKJxy5/NXvZjU3Moxz/vc2CJM
+         82pQb73ib+nmjBtF2uT2AilShZ7+y2fdjWTK/1b4/MlX4GjPs9BtLx0aRy30fhDCWRdW
+         rJscGTR2wG4XhnkWtwaKhD40qZrHpgA7KpB4U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=Ph9a6Bp/y7ROeUDAZR74PZPuPX08RMeK2xpr7CGQ0qkmYKIk4w+M6bkOPwyQrc/gJ+
+         Zohjr3GggJETIdhJAAKs8CfLADQnqhHhW5pidnjzAem8UwmNRP63tqhKKUVHqghwULaS
+         lOYAylmpmI864hy2nJVDHUT1il9RwTFBB9Ho4=
+Received: by 10.224.60.138 with SMTP id p10mr8397285qah.232.1238516573015;
+        Tue, 31 Mar 2009 09:22:53 -0700 (PDT)
+Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
+        by mx.google.com with ESMTPS id 6sm22138qwk.17.2009.03.31.09.22.51
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 31 Mar 2009 09:22:52 -0700 (PDT)
+X-Mailer: git-send-email 1.6.2.1.427.g15408
+In-Reply-To: <cover.1238516122.git.jaysoffian@gmail.com>
+In-Reply-To: <cover.1238516122.git.jaysoffian@gmail.com>
+References: <cover.1238516122.git.jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115277>
 
-On Tue, Mar 31, 2009 at 07:36:16AM +0200, Ferry Huberts (Pelagic) wrote:
-> Heiko Voigt wrote:
-> > On Mon, Mar 23, 2009 at 09:33:55PM +0100, Ferry Huberts (Pelagic) wrote:
-> >> maybe you can also add remarks about autocrlf and safecrlf?
-> >> both need to be off
-> > 
-> > From my experience thats not necessarily true. You can use
-> > autocrlf=input to repair broken revisions were crlf's have been
-> > mistakenly committed into the repository. And if I remember correctly
-> > safecrlf helps if you want to make sure that no information gets lost.
-> > 
-> > So when importing from a nice correct cvs repository you would expect
-> > safecrlf to not stop your import. And I suspect there are actually cvs
-> > users that were very careful with their lineendings who would use it.
-> > 
-> > cheers Heiko
-> If you look at this thread:
-> http://thread.gmane.org/gmane.comp.version-control.git/110152/focus=110358
-> you'll see why I said it. I did some testing to prove my statement.
+Attempting to prompt when the tty is closed (typically when running from
+cron) is pointless and emits a warning. This patch causes ask() to
+return early, squelching the warning.
 
-Well, from that thread I see my statement supported. It is not true that
-they *need* to be off. Maybe a statement that certain crlf settings are
-exclusive would be good, but I agree that should go into the config
-documentation.
+Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+---
+ git-send-email.perl |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-The main point I see here is that the User may not be aware that such a
-conversion is applied so something like this could help.
-
-cheers Heiko
-
-diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
-index e1fd047..d4e7fd4 100644
---- a/Documentation/git-cvsimport.txt
-+++ b/Documentation/git-cvsimport.txt
-@@ -40,6 +40,11 @@ probably want to make a bare clone of the imported repository
- and use the clone as the shared repository.
- See linkgit:gitcvs-migration[7].
- 
-+Note: All revisions are imported using the index so settings of
-+core.autocrlf and core.safecrlf are applied. This way you can change or
-+safety check the import. If you do not want this make sure these options
-+are both set to false.
-+
- 
- OPTIONS
- -------
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 5916c86..d790660 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -612,6 +612,9 @@ sub ask {
+ 	my $default = $arg{default};
+ 	my $resp;
+ 	my $i = 0;
++	return defined $default ? $default : undef
++		unless defined $term->IN and defined fileno($term->IN) and
++		       defined $term->OUT and defined fileno($term->OUT);
+ 	while ($i++ < 10) {
+ 		$resp = $term->readline($prompt);
+ 		if (!defined $resp) { # EOF
+-- 
+1.6.2.1.427.g15408
