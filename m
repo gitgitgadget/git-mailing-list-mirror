@@ -1,107 +1,111 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [PATCH] git-svn: fix ls-tree usage with dash-prefixed paths
-Date: Tue, 31 Mar 2009 09:11:00 +0200
-Message-ID: <20090331071100.GA3307@atjola.homenet>
-References: <83dfc36c0903260735q3231ce96h5949d1123858995f@mail.gmail.com> <83dfc36c0903270418q59a81290xcb8043b8c037be18@mail.gmail.com> <20090329060858.GB15773@dcvr.yhbt.net> <20090329061045.GA29721@dcvr.yhbt.net> <7v8wmoqdc1.fsf@gitster.siamese.dyndns.org> <20090329215651.GA4355@dcvr.yhbt.net> <7v3acvldc7.fsf@gitster.siamese.dyndns.org> <20090330174151.GA32728@dcvr.yhbt.net> <7vy6umdgxq.fsf@gitster.siamese.dyndns.org> <20090330225834.GA24254@dcvr.yhbt.net>
+From: "Michael Johnson" <redbeard@mdjohnson.us>
+Subject: Re: Segfault on merge with 1.6.2.1
+Date: Tue, 31 Mar 2009 02:14:21 -0500
+Message-ID: <op.urnad7jbso3nzr@sulidor.mdjohnson.us>
+References: <op.urifmtkkso3nzr@sulidor.mdjohnson.us>
+ <20090329121700.GN22446@genesis.frugalware.org>
+ <op.urk20nanso3nzr@sulidor.mdjohnson.us>
+ <20090330110335.GF22446@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Anton Gyllenberg <anton@iki.fi>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Mar 31 09:12:49 2009
+Content-Type: text/plain; format=flowed; delsp=yes; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Miklos Vajna" <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Tue Mar 31 09:16:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoY9J-000247-Kn
-	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 09:12:42 +0200
+	id 1LoYD9-0002wv-KL
+	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 09:16:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751388AbZCaHLL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Mar 2009 03:11:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751868AbZCaHLI
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 03:11:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52087 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751345AbZCaHLG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2009 03:11:06 -0400
-Received: (qmail invoked by alias); 31 Mar 2009 07:11:03 -0000
-Received: from i59F54235.versanet.de (EHLO atjola.local) [89.245.66.53]
-  by mail.gmx.net (mp019) with SMTP; 31 Mar 2009 09:11:03 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX186KHB90no6IAOxyD0zGV7lpWMopu1/RuNHqYyuhl
-	YP1qfXywH/lHbX
-Content-Disposition: inline
-In-Reply-To: <20090330225834.GA24254@dcvr.yhbt.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1753359AbZCaHOe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Mar 2009 03:14:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753317AbZCaHOd
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 03:14:33 -0400
+Received: from caibbdcaaaaf.dreamhost.com ([208.113.200.5]:42623 "EHLO
+	looneymail-a5.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752599AbZCaHOc (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Mar 2009 03:14:32 -0400
+Received: from sulidor.mdjohnson.us (216.49.248-IP-55.ckt.net [216.49.248.55])
+	by looneymail-a5.g.dreamhost.com (Postfix) with ESMTP id 633A7122544;
+	Tue, 31 Mar 2009 00:14:29 -0700 (PDT)
+In-Reply-To: <20090330110335.GF22446@genesis.frugalware.org>
+User-Agent: Opera Mail/9.64 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115230>
 
-On 2009.03.30 15:58:34 -0700, Eric Wong wrote:
-> Junio C Hamano <gitster@pobox.com> wrote:
-> > Eric Wong <normalperson@yhbt.net> writes:
-> > > From the ls-tree documentation, I was under the impression that "=
---"
-> > > matching "--dashed" was intended:
-> > >
-> > >   When paths are given, show them (note that this isn't really ra=
-w
-> > >   pathnames, but rather a list of patterns to match).
-> > >
-> > > It doesn't make sense to me match like this, either; but I do thi=
-nk it
-> > > was intended and it will break things if people depend on the
-> > > existing behavior.
+On Mon, 30 Mar 2009 06:03:35 -0500, Miklos Vajna <vmiklos@frugalware.org>  
+wrote:
 
-I guess that paragraph was meant to explain why "git ls-tree HEAD
-Documentation" and "git ls-tree HEAD Documentation/" give different
-results.  The first one shows the entry for the tree object, while the
-second one shows the contents of the tree object. In contrast to "ls"
-which would descend into the directory in both cases.
+> On Sun, Mar 29, 2009 at 09:39:49PM -0500, Michael Johnson  
+> <redbeard@mdjohnson.us> wrote:
+>> Well, I've got a backtrace, but I don't have debugging symbols,
+>> apparently. There is not a Debian package I can find that has them. I
+>> checked debug.debian.net, as well as the standard sid repository. So I
+>> will have to rebuild the package with debugging turned on. I will not be
+>> able to do that tonight, unfortunately. I will probably have a chance
+>> tomorrow evening.
+>
+> Okay, no rush. In case Dscho's patch does not fix your problem, please
+> rebuild git with debug symbols enabled and send a normal trace.
+>
 
-> > Ok, but then the decision to descend into --dashed should be consis=
-tent
-> > with that policy, no?  Right now, it appears that giving "--" alone=
- says
-> > "Anything under --dashed can never match that pattern, so I wouldn'=
-t
-> > bother recursing into it".
->=20
-> Right.  Except in the case when there are multiple files inside --das=
-hed/
-> as Bj=F6rn's email illustrated.  So there seems to be a bug in the wa=
-y
-> the number of files inside --dashed/ affects what "--" does when used
-> with "--dashed/1" (if --dashed/2 also exists).  Very confusing :x
+It would appear that the patch has already been applied to 1.6.2.1.
 
-It's not the number of files that matters. With just one file, you just
-don't notice the buggy behaviour, because showing all files is the same
-as showing the specified file.
+That said, here's my backtrace. I've tried tracing through to figure out  
+where the problem is occurring, but my gdb-foo is non-existent, I'm wating  
+for some GUIs to install, and I'm ready for some sleep :| So if I haven't  
+heard back by tomorrow evening, I'll be running one of the frontends for  
+gdb until I have something traced down :)
 
-And interestingly, the problem doesn't seem to be in
-show_tree/show_recursive, but in match_tree_entry.
+If you need any more information, please let me know.
 
-With "git ls-tree HEAD gitweb/git-favicon.png g" we descend into gitweb=
-/
-and at some point we get:
+Thanks,
+Michael
 
-match =3D "g"
-base =3D "gitweb/"
+(gdb) run merge origin/dojo-1.3
+Starting program: /usr/bin/git merge origin/dojo-1.3
+[Thread debugging using libthread_db enabled]
+[New Thread 0xb7b1bb30 (LWP 2651)]
 
-And we have:
-if (baselen >=3D matchlen) {
-	if (strncmp(base, match, matchlen))
-		continue;
-	/* The base is a subdirectory of a path which was specified */
-	return 1;
-}
+Program received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 0xb7b1bb30 (LWP 2651)]
+0x080fa828 in parse_tree (item=0x0) at tree.c:250
+250		if (item->object.parsed)
+(gdb) backtrace
+#0  0x080fa828 in parse_tree (item=0x0) at tree.c:250
+#1  0x080cc40b in init_tree_desc_from_tree (desc=0xbfdf53ac, tree=0x0) at  
+merge-recursive.c:161
+#2  0x080cc4d4 in git_merge_trees (index_only=1, common=0x8fa5df8,  
+head=0x0, merge=0x8fa5718) at merge-recursive.c:186
+#3  0x080cf28e in merge_trees (o=0xbfdf54d0, head=0x0, merge=0x8fa5718,  
+common=0x8fa5df8, result=0xbfdf5448)
+     at merge-recursive.c:1170
+#4  0x080cf75f in merge_recursive (o=0xbfdf54d0, h1=0x8ffc200,  
+h2=0x8f992f0, ca=0x0, result=0xbfdf548c)
+     at merge-recursive.c:1294
+#5  0x080cf6c7 in merge_recursive (o=0xbfdf54d0, h1=0x8f99050,  
+h2=0x8f98ff0, ca=0x8f97b98, result=0xbfdf551c)
+     at merge-recursive.c:1280
+#6  0x08080d75 in try_merge_strategy (strategy=0x811b9b0 "recursive",  
+common=0x8fd40f0, head_arg=0x811be14 "HEAD")
+     at builtin-merge.c:566
+#7  0x08082446 in cmd_merge (argc=1, argv=0xbfdf5808, prefix=0x0) at  
+builtin-merge.c:1111
+#8  0x0804bb5f in run_builtin (p=0x8130400, argc=2, argv=0xbfdf5808) at  
+git.c:244
+#9  0x0804bcf3 in handle_internal_command (argc=2, argv=0xbfdf5808) at  
+git.c:388
+#10 0x0804bdf0 in run_argv (argcp=0xbfdf5780, argv=0xbfdf5784) at git.c:434
+#11 0x0804bf82 in main (argc=2, argv=0xbfdf5808) at git.c:505
 
-So we return 1 there. The code doesn't do what the comment says, so I
-guess we can be pretty sure that the behaviour is not intended.
+-- 
+Michael D Johnson   <redbeard@mdjohnson.us>    
+redbeardcreator.deviantart.com
 
-Bj=F6rn
+"Marketing research...[has] shown that energy weapons that make sounds sell
+  better..." - Kevin Siembieda (Rifts Game Master Guide, pg 111)
