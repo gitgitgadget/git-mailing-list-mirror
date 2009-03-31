@@ -1,86 +1,83 @@
-From: Joshua Juran <jjuran@gmail.com>
-Subject: Git, C89, and older compilers
-Date: Tue, 31 Mar 2009 12:26:57 -0700
-Message-ID: <9D199AAA-5EC6-4E7C-AC26-0CDA68341D00@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v753.1)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 31 21:28:46 2009
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Add warning about known issues to documentation of
+	cvsimport
+Date: Tue, 31 Mar 2009 15:40:56 -0400
+Message-ID: <20090331194056.GA23102@coredump.intra.peff.net>
+References: <20090323195304.GC26678@macbook.lan> <20090324031448.GA12829@coredump.intra.peff.net> <20090330223646.GC68118@macbook.lan> <20090331112812.GA2090@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Chris Johnsen <chris_johnsen@pobox.com>, git@vger.kernel.org
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Tue Mar 31 21:42:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LojdV-0002li-TR
-	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 21:28:38 +0200
+	id 1LojrC-00086f-AY
+	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 21:42:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753512AbZCaT1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2009 15:27:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753285AbZCaT1G
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 15:27:06 -0400
-Received: from wf-out-1314.google.com ([209.85.200.168]:14350 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750919AbZCaT1D (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2009 15:27:03 -0400
-Received: by wf-out-1314.google.com with SMTP id 29so3338775wff.4
-        for <git@vger.kernel.org>; Tue, 31 Mar 2009 12:27:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:mime-version:content-type
-         :message-id:content-transfer-encoding:from:subject:date:to:x-mailer;
-        bh=IrVPwnvh/M4bJ3ROn3d4BeiFhFy81K+4pCalYC2IdLU=;
-        b=Wglnn7LGdxX8eTJ/cVQ8akiacSOMcSJQj7BMlntWD95UwMU7+6BKmyZ4Tr9FftIdoa
-         GJCZQBhPAEwUfksDRWqsSwVUtlLLiLGRm92x7BvFJPAmhF0obPzwkHOa3KLve6mrYWcP
-         XYVErYTrchuLcBCkfmOnT4Gc1T67m4GHalVZ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:content-type:message-id:content-transfer-encoding:from
-         :subject:date:to:x-mailer;
-        b=Vf3afcqOW3y+nakNWun8kROqeG5r6Cj+q3rTBUwDQ+E77229OHkrayu6OJe7JXev6l
-         MATFW5x0c0eFojSaZUOEZMHGBmYbUhE34XCqW4HBvKLssSCOW502pU04Hag8XI9bGwOQ
-         1G795fm/W+7HZYR7zdSS0VJGP5n3SEC4A55eI=
-Received: by 10.143.31.4 with SMTP id i4mr2758143wfj.102.1238527621787;
-        Tue, 31 Mar 2009 12:27:01 -0700 (PDT)
-Received: from ?192.168.1.24? (c-71-227-175-60.hsd1.wa.comcast.net [71.227.175.60])
-        by mx.google.com with ESMTPS id 32sm11614667wfc.9.2009.03.31.12.27.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 31 Mar 2009 12:27:00 -0700 (PDT)
-X-Mailer: Apple Mail (2.753.1)
+	id S1754743AbZCaTlN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Mar 2009 15:41:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752374AbZCaTlM
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 15:41:12 -0400
+Received: from peff.net ([208.65.91.99]:33555 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753573AbZCaTlK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Mar 2009 15:41:10 -0400
+Received: (qmail 12498 invoked by uid 107); 31 Mar 2009 19:41:24 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 31 Mar 2009 15:41:24 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 31 Mar 2009 15:40:56 -0400
+Content-Disposition: inline
+In-Reply-To: <20090331112812.GA2090@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115302>
 
-Hello,
+On Tue, Mar 31, 2009 at 07:28:12AM -0400, Jeff King wrote:
 
-I'm porting Git to Lamp (Lamp ain't Mac POSIX), a Unix-like  
-environment which runs in classic Mac OS, much like Cygwin.
+> On Tue, Mar 31, 2009 at 12:36:46AM +0200, Heiko Voigt wrote:
+> 
+> > > Note the extra blank line between each heading and its list, and the
+> > > lack of a blank line between the end of the first list and the heading
+> > > of the second. Your source is very readable, so it really is just
+> > > asciidoc being silly, but I wonder if there is a way to work around
+> > > that.
+> > 
+> > My xmlto is not working at the moment. I will check that.
+> 
+> I looked into it a little more; it happens all over the place, so it is
+> a problem somewhere in the documentation toolchain. So don't worry about
+> it for this particular patch.
 
-One of the complications I've run into is that Metrowerks C 2.4.1  
-(released in 2001) doesn't support some of the constructs git uses,  
-such as initializing an aggregate's member with the address of a  
-local variable, illustrated by the patch below:
+I looked into it more and posted to the docbook-apps list.  Here's what
+I found out: the problem is fixed in docbook-xsl 1.74.3. However, our
+template to prevent extra .sp in manpage-base.xml prevents it.
 
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 46e649c..8b98547 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -605,7 +605,8 @@ static int prepare_to_commit(const char  
-*index_file, const c
+That fix is in 7ef0435 (spurious .sp in manpages, 2006-12-13), and I get
+good output by reverting it and using docbook 1.74.3.
 
-         if (use_editor) {
-                 char index[PATH_MAX];
--               const char *env[2] = { index, NULL };
-+               const char *env[2] = { NULL, NULL };
-+               env[0] = index;
-                 snprintf(index, sizeof(index), "GIT_INDEX_FILE=%s",  
-index_file);
-                 if (launch_editor(git_path(commit_editmsg), NULL,  
-env)) {
-                         fprintf(stderr,
+Going back to the original discussion, it looks like it is a workaround
+for docbook-xsl 1.69.0:
 
-Is git intended to compile on a C89 compiler?  In any case, if I  
-produce a complete set of patches, will they be applied?
+  http://article.gmane.org/gmane.comp.version-control.git/32957
 
-Josh
+Assuming that is correct, I think the sane choices are:
+
+  1. drop the workaround, as that version of docbook-xsl is now several
+     years old
+
+     or
+
+  2. turn the workaround off by default, but add a knob to turn it on
+     (DOCBOOK_XSL_1690?)
+
+Having it on by default and turning it off with a knob seems silly,
+since most versions don't need it. Debian stable is shipping 1.73 these
+days, which looks fine without 7ef0435. Are there other platforms still
+shipping 1.69.0? Is it too old for us to care?
+
+-Peff
