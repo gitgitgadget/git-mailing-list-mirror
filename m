@@ -1,72 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] Header includes cleanup
-Date: Tue, 31 Mar 2009 09:04:38 -0700
-Message-ID: <7vk56565m1.fsf@gitster.siamese.dyndns.org>
-References: <1238406925-15907-1-git-send-email-nathaniel.dawson@gmail.com>
- <49D0A3DF.4000203@viscovery.net> <20090330173319.GC25950@eiku.org>
- <200903310859.36035.chriscool@tuxfamily.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: bsd group semantics
+Date: Tue, 31 Mar 2009 12:08:42 -0400
+Message-ID: <20090331160842.GA9019@coredump.intra.peff.net>
+References: <20090331112637.GA1910@coredump.intra.peff.net> <7vvdpp6623.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nathaniel P Dawson <nathaniel.dawson@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Tue Mar 31 18:07:14 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 31 18:10:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LogTk-00006Q-Sl
-	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 18:06:21 +0200
+	id 1LogXt-0002AM-1n
+	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 18:10:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759180AbZCaQEv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2009 12:04:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757702AbZCaQEu
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 12:04:50 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:35336 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755856AbZCaQEt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2009 12:04:49 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8EA07A601A;
-	Tue, 31 Mar 2009 12:04:46 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0B1B5A600F; Tue,
- 31 Mar 2009 12:04:40 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A7C1E5AA-1E0D-11DE-999B-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1760934AbZCaQI5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Mar 2009 12:08:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760739AbZCaQI4
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 12:08:56 -0400
+Received: from peff.net ([208.65.91.99]:39383 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759775AbZCaQI4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Mar 2009 12:08:56 -0400
+Received: (qmail 11171 invoked by uid 107); 31 Mar 2009 16:09:09 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 31 Mar 2009 12:09:09 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 31 Mar 2009 12:08:42 -0400
+Content-Disposition: inline
+In-Reply-To: <7vvdpp6623.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115274>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+On Tue, Mar 31, 2009 at 08:55:00AM -0700, Junio C Hamano wrote:
 
-> I think it's a good thing that you started working on it even if in the end 
-> we decide that we want these cleanup to be done otherwise. At least we will 
-> hopefully have clarified our include header policy.
+> IIRC, DIR_HAS_BSD_GROUP_SEMANTICS means you do not have to ask explicitly
+> with g+s to the filesystem to use the "subdirectory is owned by the same
+> group as its parent" semantics.  On SysV you have to ask; on BSD you do
+> not have to (and do not need FORCE_DIR_SET_GID).
 
-Before seeing a lot of patches to change #include all over the place, I'd
-like to see a simple guiding principle described, not just a subjective "I
-think this makes things better" but with "... because of X and Y and Z".
+OK, I see. Thanks for the explanation. So the test is wrong, since it
+explicitly checks for g+s, and we only need it sometimes.
 
-The document Documentation/CodingGuidelines describes the only policy that
-exists currently: git-compat-util.h must be the first thing the compiler
-sees.  The language should probably be stronger than what appears there:
+> That one was not about "you do not have to ask", but "you are not allowed
+> to ask because the request will fail".  Perhaps between FBSD4 and FBSD6
+> things changed, and you can now make g+s request (which I presume is still
+> a no-op other than setting the bit on)?
 
- - The first #include in C files, except in platform specific
-   compat/ implementations, should be git-compat-util.h or another
-   well-known header file that includes it at the beginning, namely
-   cache.h or builtin.h.
+Yes, you can ask just fine now:
 
-Even though http.h may include "cache.h" at the very beginning, I'd rather
-not to see http-walker.c lose inclusion of "cache.h".  It will force us to
-remember that http.h is Ok to include as the first file, and that won't
-scale.
+  $ uname -sr
+  FreeBSD 6.1-RELEASE-p17-jc1
+  $ mkdir foo
+  $ ls -ld foo
+  drwxr-xr-x  2 peff  peff  512 Mar 31 09:04 foo/
+  $ chmod g+s foo
+  $ ls -ld foo
+  drwxr-sr-x  2 peff  peff  512 Mar 31 09:04 foo/
 
-The reason git-compat-util.h must be the first is because inclusion of all
-the system header files is supposed to happen there, and there are some
-platforms that have broken system header dependencies we do not want
-application writers to care about, and the compat-util header knows about
-them.
+But it isn't necessary.
+
+> Ideally the test should be checking if the subdirectory is owned by the
+> same group as the toplevel, but that is rather hard to correctly arrange,
+> as it depends on the set of groups the user who runs the test belongs to,
+> how the git work tree is set up (if it is owned by his primary group or a
+> secondary), etc.
+
+Shouldn't that just be:
+
+  perl -e 'sub group { return (stat(shift))[5] }' \
+       -e 'exit group($ARGV[0]) == group($ARGV[1]) ? 0 : 1' \
+       a b
+
+?
+
+-Peff
