@@ -1,72 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add warning about known issues to documentation of
- cvsimport
-Date: Tue, 31 Mar 2009 16:55:53 -0700
-Message-ID: <7vljql4586.fsf@gitster.siamese.dyndns.org>
-References: <20090323195304.GC26678@macbook.lan>
- <20090324031448.GA12829@coredump.intra.peff.net>
- <20090330223646.GC68118@macbook.lan>
- <20090331112812.GA2090@coredump.intra.peff.net>
- <20090331194056.GA23102@coredump.intra.peff.net>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: [PATCH] git-gui: make "Git GUI Here" Explorer extension
+ more robust
+Date: Wed, 1 Apr 2009 01:59:24 +0200
+Message-ID: <200904010159.24764.markus.heidelberg@web.de>
+References: <200903300030.03733.markus.heidelberg@web.de> <20090330141510.GW23521@spearce.org> <499F039601E4A981@joe.mail.tiscali.sys> (added by postmaster@tiscali.it)
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Heiko Voigt <hvoigt@hvoigt.net>,
-	Chris Johnsen <chris_johnsen@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 01 01:57:38 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, msysgit@googlegroups.com, git@vger.kernel.org
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Wed Apr 01 02:00:58 2009
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from yw-out-2122.google.com ([74.125.46.26])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lonpm-00089N-UK
-	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 01:57:35 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762774AbZCaX4I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2009 19:56:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759816AbZCaX4H
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 19:56:07 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55824 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753522AbZCaX4G (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2009 19:56:06 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 939FDA6DD7;
-	Tue, 31 Mar 2009 19:56:00 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 1633EA6DD5; Tue,
- 31 Mar 2009 19:55:54 -0400 (EDT)
-In-Reply-To: <20090331194056.GA23102@coredump.intra.peff.net> (Jeff King's
- message of "Tue, 31 Mar 2009 15:40:56 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7C6313C4-1E4F-11DE-A335-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
-Sender: git-owner@vger.kernel.org
+	id 1Lont2-0000Wp-Td
+	for gcvm-msysgit@m.gmane.org; Wed, 01 Apr 2009 02:00:57 +0200
+Received: by yw-out-2122.google.com with SMTP id 1so998840ywp.63
+        for <gcvm-msysgit@m.gmane.org>; Tue, 31 Mar 2009 16:59:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received-spf:authentication-results:received
+         :received:from:reply-to:to:subject:date:user-agent:cc:references
+         :in-reply-to:jabber-id:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id:x-sender
+         :x-provags-id:sender:precedence:x-google-loop:mailing-list:list-id
+         :list-post:list-help:list-unsubscribe:x-beenthere-env:x-beenthere;
+        bh=CrB2M6q84jNLb2kul9tjZanCNZMn027aAmXR/JUP2n0=;
+        b=3UQvFAx+hJEAgrPIvtmU/OOnudYOU0DeczaYk//8VIpRKLcdjm0W82t0DzdWLOupTx
+         f9RiQv0MF1oQlP6GNG5j0Dw2EubmwTY/FYO6N0xqfVwZhhx6Gp5nq0vXOdr6hW66gl8a
+         hKzJ1I/TRA+mKBz2qTmT/ee/n0YkATCI2rkCQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:from
+         :reply-to:to:subject:date:user-agent:cc:references:in-reply-to
+         :jabber-id:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id:x-provags-id:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        b=GvyubojgoBzUugyBSxSxeqpk/FkT/IIeyOik4zVcpQNvbsmyiQisZ34bgg1Pu6LVfw
+         HLvPWm6+BhoJoKfjyvaREnhEUavXbw2sVu7ywdkReKi9glxH+HIAGOk1hTmDyWk5FjXB
+         G5g76XTFkZV3qdL3PAWEvTVuOqsCM+pV7Se9o=
+Received: by 10.90.63.6 with SMTP id l6mr1029297aga.12.1238543961180;
+        Tue, 31 Mar 2009 16:59:21 -0700 (PDT)
+Received: by 10.177.113.42 with SMTP id q42gr4584yqm.0;
+	Tue, 31 Mar 2009 16:59:21 -0700 (PDT)
+X-Sender: markus.heidelberg@web.de
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.90.118.19 with SMTP id q19mr252041agc.5.1238543960185; Tue, 31 Mar 2009 16:59:20 -0700 (PDT)
+Received: from fmmailgate03.web.de (fmmailgate03.web.de [217.72.192.234]) by gmr-mx.google.com with ESMTP id 14si703240gxk.7.2009.03.31.16.59.19; Tue, 31 Mar 2009 16:59:20 -0700 (PDT)
+Received-SPF: pass (google.com: domain of markus.heidelberg@web.de designates 217.72.192.234 as permitted sender) client-ip=217.72.192.234;
+Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of markus.heidelberg@web.de designates 217.72.192.234 as permitted sender) smtp.mail=markus.heidelberg@web.de
+Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172]) by fmmailgate03.web.de (Postfix) with ESMTP id 8C467F9CEE0F; Wed,  1 Apr 2009 01:59:19 +0200 (CEST)
+Received: from [89.59.106.150] (helo=.) by smtp06.web.de with asmtp (TLSv1:AES256-SHA:256) (WEB.DE 4.110 #277) id 1LonrT-0004go-00; Wed, 01 Apr 2009 01:59:19 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <499F039601E4A981@joe.mail.tiscali.sys>
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX18xUUKgz7YM4FPitj6TmLv/EFo2/n+xtets+1Yv Q7QH4tr0fq3Wn8EpQLSYp6wkbns6Cy3PKA6M2n8mjNdPlA6F4A krxH532ads2eIaH7mhVQ==
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115333>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115334>
 
-Jeff King <peff@peff.net> writes:
 
-> Going back to the original discussion, it looks like it is a workaround
-> for docbook-xsl 1.69.0:
->
->   http://article.gmane.org/gmane.comp.version-control.git/32957
->
-> Assuming that is correct, I think the sane choices are:
->
->   1. drop the workaround, as that version of docbook-xsl is now several
->      years old
->
->      or
->
->   2. turn the workaround off by default, but add a knob to turn it on
->      (DOCBOOK_XSL_1690?)
->
-> Having it on by default and turning it off with a knob seems silly,
-> since most versions don't need it. Debian stable is shipping 1.73 these
-> days, which looks fine without 7ef0435. Are there other platforms still
-> shipping 1.69.0? Is it too old for us to care?
+Giuseppe Bilotta, 31.03.2009:
+> On Monday 30 March 2009 16:15, Shawn O. Pearce wrote:
+> 
+> > Markus Heidelberg <markus.heidelberg@web.de> wrote:
+> >> 
+> >> But I just noticed, that it will obviously "cd .." forever, if no .git/
+> >> was found. Somehow the root directory has to be catched.
+> > 
+> > Yup.  I'm dropping this patch for now because of this issue, but
+> > I'll look at it again if its addressed in another version.  :-)
+> 
+> I have a couple of pending patches to fix git gui handling of repositories,
+> including support for nonstandard repository locations and bare repositories.
+> You can find them at
+> 
+> http://git.oblomov.eu/git
+> 
+> and specifically
+> 
+> http://git.oblomov.eu/git/patches/b2e4c32e13df1b7f18e7b4a9f746650471a3122e..a63526bf3238cf25d9a5521f7ee35ed1bd11cb16
 
-I am very tempted to say 1. but we seem to have a track record of trying
-to be nice to people.  How involved would 2 be compared to 1?
+I just tried these two patches on Windows (Uhh, Qemu is too slow for
+this, I have to setup something else).
+
+> I got distracted by real-life issue and forgot to resend them. I'll try
+> to find the time again later on this week. I'm not entirely sure these
+> solve Markus' problem though.
+
+Starting git-gui via Explorer "Git GUI Here" is now possible from the
+.git/ directory with your patches, but it doesn't show the working tree
+status. Also "Explore Working Copy" wants to open the .git directory
+then instead of the project directory (I say "want" because of the issue
+I just sent a patch out). It seems to be as non-functional as if you run
+"git status" inside of .git/
+
+Markus
