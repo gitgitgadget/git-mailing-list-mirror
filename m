@@ -1,143 +1,142 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Clean up reflog unreachability pruning decision
-Date: Tue, 31 Mar 2009 10:44:58 -0700
-Message-ID: <7vab7160yt.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH 2/2] Speed up reflog pruning of unreachable commits
+Date: Tue, 31 Mar 2009 10:46:57 -0700
+Message-ID: <7v63hp60vi.fsf@gitster.siamese.dyndns.org>
 References: <alpine.LFD.2.00.0903310958000.4093@localhost.localdomain>
  <alpine.LFD.2.00.0903311003490.4093@localhost.localdomain>
+ <alpine.LFD.2.00.0903311010050.4093@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
 To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Mar 31 19:47:05 2009
+X-From: git-owner@vger.kernel.org Tue Mar 31 19:48:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Loi34-0003AO-2K
-	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 19:46:54 +0200
+	id 1Loi4k-0003qF-PL
+	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 19:48:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758602AbZCaRpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2009 13:45:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754666AbZCaRpJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 13:45:09 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45387 "EHLO
+	id S1759992AbZCaRrI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Mar 2009 13:47:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757895AbZCaRrH
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 13:47:07 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38672 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754785AbZCaRpI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2009 13:45:08 -0400
+	with ESMTP id S1758700AbZCaRrG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Mar 2009 13:47:06 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id ED4D2A6A19;
-	Tue, 31 Mar 2009 13:45:02 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 26A55A457;
+	Tue, 31 Mar 2009 13:47:02 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C532AA6A18; Tue,
- 31 Mar 2009 13:44:59 -0400 (EDT)
-In-Reply-To: <alpine.LFD.2.00.0903311003490.4093@localhost.localdomain>
- (Linus Torvalds's message of "Tue, 31 Mar 2009 10:09:55 -0700 (PDT)")
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5E47BA456; Tue,
+ 31 Mar 2009 13:46:59 -0400 (EDT)
+In-Reply-To: <alpine.LFD.2.00.0903311010050.4093@localhost.localdomain>
+ (Linus Torvalds's message of "Tue, 31 Mar 2009 10:11:56 -0700 (PDT)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A9CDBB0E-1E1B-11DE-9928-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: F0DA6006-1E1B-11DE-863F-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115292>
 
 Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> From: Linus Torvalds <torvalds@linux-foundation.org>
-> Date: Tue, 31 Mar 2009 09:45:22 -0700
+> From: Junio Hamano <gitster@pobox.com>
+> Date: Mon, 30 Mar 2009 21:34:14 -0700
 >
-> This clarifies the pruning rules for unreachable commits by having a 
-> separate helpder function for the unreachability decision.
+> Instead of doing the (potentially very expensive) "in_merge_base()"
+> check for each commit that might be pruned if it is unreachable, do a
+> preparatory reachability graph of the commit space, so that the common
+> case of being reachable can be tested directly.
 >
-> It's preparation for actual bigger changes to come to speed up the
-> decision when the reachability calculations become a bottleneck.
->
-> In the process it also _does_ change behavior, although in a way that I 
-> think is much saner than the old behavior (which was in my opinion not 
-> designed, just a result of how the tests were written). It now will prune 
-> reflog entries that are older than that 'prune_unreacable' time _and_ that 
-> have commit references that can't be even looked up.
-
-> Of course, "--stale-fix" also does that, and does it regardless of the age 
-> of the reflog entry is, but I really think this is the right thing to do. 
-> If we can't even look it up, we should consider it to be unreachable.
->
+> [ Cleaned up a bit and tweaked to actually work.  - Linus ]
 > Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 > ---
->  builtin-reflog.c |   32 ++++++++++++++++++++++++++------
->  1 files changed, 26 insertions(+), 6 deletions(-)
+>  builtin-reflog.c |   43 +++++++++++++++++++++++++++++++++++++++++++
+>  1 files changed, 43 insertions(+), 0 deletions(-)
 >
-> Note the behavioural change. I think it's sane and "ObviouslyCorrect(tm)", 
-> but maybe somebody disagrees.
-
-I did not recall initially when I was discussing this with you last night
-but I think this "no commit? not prune" is intentional.  The codepath is
-not about logs/heads but logs/*anything*, and we allow pointers to non
-commit objects (like v2.6.11-tree).
-
-Also even if we limit ourselves to commits, @{-N} notation can be used to
-see the history of branch switching, and that does not need any underlying
-objects.  I do not think it is interesting to be able to see which branch
-you were on 30 days abo, though ;-)
-
-
 > diff --git a/builtin-reflog.c b/builtin-reflog.c
-> index d95f515..0355ce6 100644
+> index 0355ce6..f29ab2f 100644
 > --- a/builtin-reflog.c
 > +++ b/builtin-reflog.c
-> @@ -209,6 +209,31 @@ static int keep_entry(struct commit **it, unsigned char *sha1)
+> @@ -52,6 +52,7 @@ struct collect_reflog_cb {
+>  
+>  #define INCOMPLETE	(1u<<10)
+>  #define STUDYING	(1u<<11)
+> +#define REACHABLE	(1u<<12)
+>  
+>  static int tree_is_complete(const unsigned char *sha1)
+>  {
+> @@ -209,6 +210,43 @@ static int keep_entry(struct commit **it, unsigned char *sha1)
 >  	return 1;
 >  }
 >  
-> +static int unreachable(struct expire_reflog_cb *cb, struct commit *commit, unsigned char *sha1)
+> +static void mark_reachable(struct commit *commit, unsigned long expire_limit)
 > +{
 > +	/*
-> +	 * We may or may not have the commit yet - if not, look it
-> +	 * up using the supplied sha1.
+> +	 * We need to compute if commit on either side of an reflog
+> +	 * entry is reachable from the tip of the ref for all entries.
+> +	 * Mark commits that are reachable from the tip down to the
+> +	 * time threashold first; we know a commit marked thusly is
+> +	 * reachable from the tip without running in_merge_bases()
+> +	 * at all.
 > +	 */
-> +	if (!commit) {
-> +		if (is_null_sha1(sha1))
-> +			return 0;
+> +	struct commit_list *pending = NULL;
 > +
-> +		commit = lookup_commit_reference_gently(sha1, 1);
-> +
-> +		/* We can't even look it up - consider it unreachable */
-> +		if (!commit)
-> +			return 1;
-
-	/* If it is not a commit, keep it. */
-        if (!commit)
-        	return 0;
-
+> +	commit_list_insert(commit, &pending);
+> +	while (pending) {
+> +		struct commit_list *entry = pending;
+> +		struct commit_list *parent;
+> +		pending = entry->next;
+> +		commit = entry->item;
+> +		free(entry);
+> +		if (commit->object.flags & REACHABLE)
+> +			continue;
+> +		if (parse_commit(commit))
+> +			continue;
+> +		commit->object.flags |= REACHABLE;
+> +		if (commit->date < expire_limit)
+> +			continue;
+> +		parent = commit->parents;
+> +		while (parent) {
+> +			commit = parent->item;
+> +			parent = parent->next;
+> +			if (commit->object.flags & REACHABLE)
+> +				continue;
+> +			commit_list_insert(commit, &pending);
+> +		}
 > +	}
-> +
-> +	/* Reachable from the current reflog top? Don't prune */
-
-That's "tip of the ref", not necessarily "reflog top".
-
-> +	if (in_merge_bases(commit, &cb->ref_commit, 1))
-> +		return 0;
-> +
-> +	/* We can't reach it - prune it. */
-> +	return 1;
 > +}
 > +
->  static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
->  		const char *email, unsigned long timestamp, int tz,
->  		const char *message, void *cb_data)
-> @@ -230,12 +255,7 @@ static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
->  	if (timestamp < cb->cmd->expire_unreachable) {
->  		if (!cb->ref_commit)
->  			goto prune;
-> -		if (!old && !is_null_sha1(osha1))
-> -			old = lookup_commit_reference_gently(osha1, 1);
-> -		if (!new && !is_null_sha1(nsha1))
-> -			new = lookup_commit_reference_gently(nsha1, 1);
-> -		if ((old && !in_merge_bases(old, &cb->ref_commit, 1)) ||
-> -		    (new && !in_merge_bases(new, &cb->ref_commit, 1)))
-> +		if (unreachable(cb, old, osha1) || unreachable(cb, new, nsha1))
->  			goto prune;
+>  static int unreachable(struct expire_reflog_cb *cb, struct commit *commit, unsigned char *sha1)
+>  {
+>  	/*
+> @@ -227,6 +265,8 @@ static int unreachable(struct expire_reflog_cb *cb, struct commit *commit, unsig
 >  	}
 >  
+>  	/* Reachable from the current reflog top? Don't prune */
+> +	if (commit->object.flags & REACHABLE)
+> +		return 0;
+>  	if (in_merge_bases(commit, &cb->ref_commit, 1))
+>  		return 0;
+>  
+> @@ -308,7 +348,10 @@ static int expire_reflog(const char *ref, const unsigned char *sha1, int unused,
+>  	cb.ref_commit = lookup_commit_reference_gently(sha1, 1);
+>  	cb.ref = ref;
+>  	cb.cmd = cmd;
+> +
+
+You seem to have lost "if (cb.ref_commit)" from the last round to protect
+mark_rechable().  It can be NULL.
+
+> +	mark_reachable(cb.ref_commit, cmd->expire_total);
+>  	for_each_reflog_ent(ref, expire_reflog_ent, &cb);
+> +	clear_commit_marks(cb.ref_commit, REACHABLE);
+>   finish:
+>  	if (cb.newlog) {
+>  		if (fclose(cb.newlog)) {
 > -- 
 > 1.6.2.1.404.gb0085.dirty
