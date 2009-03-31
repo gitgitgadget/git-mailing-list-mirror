@@ -1,60 +1,81 @@
-From: byrnejb <byrnejb@harte-lyne.ca>
-Subject: Re: git doc build failure on OS X 10.5.6 (Leopard) during xmlto
- phase
-Date: Tue, 31 Mar 2009 13:17:00 -0700 (PDT)
-Message-ID: <1238530620384-2565224.post@n2.nabble.com>
-References: <5e68abd90903110721o414283a4te188b58e0e4df8ad@mail.gmail.com> <76718490903110812t5e1723ebi28a84da680422d8a@mail.gmail.com> <76718490903110839m17041c7bxd7912eb09496c81a@mail.gmail.com> <76718490903110849x2ef48a89j3f17706390991eda@mail.gmail.com> <49B7E670.7060606@drmicha.warpmail.net> <gp95vf$gp1$1@ger.gmane.org> <49B8EF3E.2070208@drmicha.warpmail.net> <20090312170931.GB19175@inocybe.teonanacatl.org> <49BA356D.8050007@drmicha.warpmail.net> <76718490903130918r733e3ef4meae49311883969b5@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Joshua Juran <jjuran@gmail.com>
+Subject: strbuf name conflict on Mac OS
+Date: Tue, 31 Mar 2009 13:17:11 -0700
+Message-ID: <E5D92A5D-B2CC-44CE-B117-0BB88C0E663E@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v753.1)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 31 22:18:43 2009
+X-From: git-owner@vger.kernel.org Tue Mar 31 22:18:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LokPv-0005JR-97
-	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 22:18:39 +0200
+	id 1LokQB-0005Ou-Oz
+	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 22:18:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752475AbZCaURH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2009 16:17:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752374AbZCaURG
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 16:17:06 -0400
-Received: from kuber.nabble.com ([216.139.236.158]:56825 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751022AbZCaURF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2009 16:17:05 -0400
-Received: from tervel.nabble.com ([192.168.236.150])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
-	id 1LokOK-0004yu-Ca
-	for git@vger.kernel.org; Tue, 31 Mar 2009 13:17:00 -0700
-In-Reply-To: <76718490903130918r733e3ef4meae49311883969b5@mail.gmail.com>
-X-Nabble-From: byrnejb@harte-lyne.ca
+	id S1753599AbZCaURS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Mar 2009 16:17:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753204AbZCaURR
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 16:17:17 -0400
+Received: from wf-out-1314.google.com ([209.85.200.172]:19509 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752374AbZCaURQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Mar 2009 16:17:16 -0400
+Received: by wf-out-1314.google.com with SMTP id 29so3360608wff.4
+        for <git@vger.kernel.org>; Tue, 31 Mar 2009 13:17:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:mime-version:content-type
+         :message-id:content-transfer-encoding:from:subject:date:to:x-mailer;
+        bh=+glFFU1lpKfvVmYEW4K81CCknepW84J2NRfGW2WzR/4=;
+        b=a5rdxksHYum01CGKdYNkuRE/BMAFrCs1dck+NT2/O0lcxy8cJK4F+PUtZsBL/ZHRK1
+         zsthlUxWDz0QbwoYc22hwiui/Wzr3IJy0MyPulM00nbay7YP/4rnCm9WNufBVr4H3OSp
+         U9qLvl0Ca9yMufAqhf2ch4FKS35bXQlMkCPxM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:content-type:message-id:content-transfer-encoding:from
+         :subject:date:to:x-mailer;
+        b=k3gOTllbxzhtMeaWFx5BqgdVfh7BQqh3rSCM6iBIvd4KmnPXlJYWBasfCKBxe6xtxU
+         3LcQHZxdJNmJ3utxl/HeKd0mdREBuUIzjS8a6JvVtyDRekqEQHXUnLOukIGSWWR8uo+Q
+         JTLBDDlxPa1TZ2fsadAV4BRnNu0Nln6ZqA0Qw=
+Received: by 10.142.192.1 with SMTP id p1mr2758350wff.295.1238530635304;
+        Tue, 31 Mar 2009 13:17:15 -0700 (PDT)
+Received: from ?192.168.1.24? (c-71-227-175-60.hsd1.wa.comcast.net [71.227.175.60])
+        by mx.google.com with ESMTPS id 30sm11491489wff.27.2009.03.31.13.17.13
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 31 Mar 2009 13:17:14 -0700 (PDT)
+X-Mailer: Apple Mail (2.753.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115308>
+
+Apple's OpenTransport.h from Universal Interfaces 3.4.2 defines its  
+own struct strbuf, with which git's collides.
+
+Since OpenTransport.h also defines some POSIX constants (such as  
+O_NONBLOCK) as enums, it's necessary to include OpenTransport.h from  
+fcntl.h (and other affected headers) so as to control the order in  
+which the definitions appear in the translation unit.
+
+This is the minimal patch:
 
 
-Hi,
+diff --git a/strbuf.h b/strbuf.h
+index 89bd36e..b8f380e 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -40,6 +40,8 @@
 
-I am attempting to build git-1.6.2-1 on CentOS5.3 and running into this problem:
+  #include <assert.h>
 
-  parser error : PCDATA invalid Char value 7
-
-I am using asciidoc-8.4.1 and yesterday, when I first built git from the src rpm, the process completed without error.  The only thing that has happened to the build system since then is an update of perl packages from epel.  I do not see how that would affect anything, but I include the information for completeness nonetheless.  
-
-In any case, I can live without the documentation if that will get the application built.  I have tried the suggestions with respect to setting ENV variables without success:
-$ set
-ASCIIDOC8=YesPlease
-...
-DOCBOOK_XSL_172=YesPlease
-
-So, have I misunderstood the instructions given here?  Is there something else I should do?  Is there a way to simply skip the documentation part of the build?
++#define strbuf git_strbuf
++
+  extern char strbuf_slopbuf[];
+  struct strbuf {
+         size_t alloc;
 
 
--- 
-View this message in context: http://n2.nabble.com/git-doc-build-failure-on-OS-X-10.5.6-%28Leopard%29-during-xmlto-phase-tp2461534p2565224.html
-Sent from the git mailing list archive at Nabble.com.
+Josh
