@@ -1,106 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: bsd group semantics
-Date: Tue, 31 Mar 2009 14:33:26 -0700
-Message-ID: <7vr60d4btl.fsf@gitster.siamese.dyndns.org>
-References: <20090331112637.GA1910@coredump.intra.peff.net>
- <7vvdpp6623.fsf@gitster.siamese.dyndns.org>
- <20090331160842.GA9019@coredump.intra.peff.net>
- <7veiwd61k1.fsf@gitster.siamese.dyndns.org>
- <20090331184604.GA10701@coredump.intra.peff.net>
- <7vy6ul4exy.fsf@gitster.siamese.dyndns.org>
- <20090331203600.GA24340@coredump.intra.peff.net>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: strbuf name conflict on Mac OS
+Date: Tue, 31 Mar 2009 17:36:40 -0400
+Message-ID: <76718490903311436p5fe81ce3k31f18170d9388e8e@mail.gmail.com>
+References: <E5D92A5D-B2CC-44CE-B117-0BB88C0E663E@gmail.com>
+	 <alpine.DEB.1.00.0903312222440.6616@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 31 23:35:14 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Joshua Juran <jjuran@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 31 23:38:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lolby-0008LJ-Vp
-	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 23:35:11 +0200
+	id 1Lolew-0000rW-24
+	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 23:38:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757109AbZCaVdh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2009 17:33:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756437AbZCaVdg
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 17:33:36 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61003 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755318AbZCaVdg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2009 17:33:36 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B5B44B843;
-	Tue, 31 Mar 2009 17:33:31 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id CE1F2B83F; Tue,
- 31 Mar 2009 17:33:27 -0400 (EDT)
-In-Reply-To: <20090331203600.GA24340@coredump.intra.peff.net> (Jeff King's
- message of "Tue, 31 Mar 2009 16:36:00 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 94E08DA0-1E3B-11DE-B73D-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+	id S1755408AbZCaVgn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Mar 2009 17:36:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755285AbZCaVgn
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 17:36:43 -0400
+Received: from yx-out-2324.google.com ([74.125.44.28]:3204 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754503AbZCaVgm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Mar 2009 17:36:42 -0400
+Received: by yx-out-2324.google.com with SMTP id 31so2631346yxl.1
+        for <git@vger.kernel.org>; Tue, 31 Mar 2009 14:36:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Nt/7VByTRx6jveff7FLlQI1d/2D31x2G/qdUlHm6Fi0=;
+        b=uYXJNyE4EQy3yw0WpoieGxirZaN396TPvHYr8ZqxGRSnfUt3aod0CWqGq87tIu8QjC
+         4EetA9i8qD2pj2GUQYBh8B+bu9XbcPHtG2CuicEjCPHMMKYIP93GocFnu1NTgc6SvTa+
+         BYh7PhNXRofD4HBNfH5U6Rt0M4179RqSeLw+Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=nWjxUvRoAijoTyMrsIlVIZzlwqi6yshAwpedVfDoGDhqQErsGwoGz6+ZtUMYh1B7V4
+         89yQowY/Tg8zh9rlbAJPXLAN5NdTApduN4VrjXOwXnHY8q7rCA/UA+9XxrFGlH+mUlMn
+         5hWsn0+aE6rMtuzgdmc13dthVH1CwU+hvtAzc=
+Received: by 10.151.103.11 with SMTP id f11mr3295313ybm.235.1238535400120; 
+	Tue, 31 Mar 2009 14:36:40 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0903312222440.6616@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115320>
 
-Jeff King <peff@peff.net> writes:
+On Tue, Mar 31, 2009 at 4:24 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> How about this instead?
+> =C2=A0ifeq ($(uname_S),Darwin)
+> + =C2=A0 =C2=A0 =C2=A0 BASIC_CFLAGS +=3D -Dstrbuf=3Dgit_strbuf
 
-> On Tue, Mar 31, 2009 at 01:26:01PM -0700, Junio C Hamano wrote:
->
->> For now, I'd suggest teaching the test not to care about g+s bit.
->> After all, they are about giving correct mode bits to files and
->> directories.  Correct mode bits for group do not mean anything if you make
->> them owned by a wrong group, but that is not something we have tested so
->> far, and can be a separate test anyway.
->
-> Makes sense. How about this?
->
-> -- >8 --
-> Subject: [PATCH] t1301: loosen test for forced modes
->
-> One of the aspects of the test checked explicitly for the
-> g+s bit to be set on created directories. However, this is
-> only the means to an end (the "end" being having the correct
-> group set). And in fact, on systems where
-> DIR_HAS_BSD_GROUP_SEMANTICS is set, we do not even need to
-> use this "means" at all, causing the test to fail.
->
-> This patch removes that part of the test. In an ideal world
-> it would be replaced by a test to check that the group was
-> properly assigned, but that is difficult to automate because
-> it requires the user running the test suite be a member of
-> multiple groups.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  t/t1301-shared-repo.sh |    3 ---
->  1 files changed, 0 insertions(+), 3 deletions(-)
->
-> diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
-> index 11ef302..9b18507 100755
-> --- a/t/t1301-shared-repo.sh
-> +++ b/t/t1301-shared-repo.sh
-> @@ -147,9 +147,6 @@ test_expect_success 'forced modes' '
->  	# Everything must be unaccessible to others
->  	test -z "$(sed -n -e "/^.......---/d" actual)" &&
->  
-> -	# All directories must have 2770
-> -	test -z "$(sed -n -e "/^drwxrws---/d" -e "/^d/p" actual)" &&
+Heh, wrong platform. See Joshua's other message about porting git to
+Mac OS (not Mac OS X). :-)
 
-Did you mean 
-
--	# All directories must have 2770
--	test -z "$(sed -n -e "/^drwxrws---/d" -e "/^d/p" actual)" &&
-+	# All directories must have either 2770 or 770
-+	test -z "$(sed -n -e "/^drwxrw[sx]---/d" -e "/^d/p" actual)" &&
-
-
-> -
->  	# post-update hook must be 0770
->  	test -z "$(sed -n -e "/post-update/{
->  		/^-rwxrwx---/d
-> -- 
-> 1.6.2.1.591.geb450
+j.
