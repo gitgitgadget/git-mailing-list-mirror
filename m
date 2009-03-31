@@ -1,75 +1,108 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [PATCH 2/2] send-email: add tests for refactored prompting
-Date: Tue, 31 Mar 2009 12:33:03 +0200
-Message-ID: <20090331103303.GD3307@atjola.homenet>
-References: <1238290751-57461-1-git-send-email-jaysoffian@gmail.com> <1238290751-57461-2-git-send-email-jaysoffian@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] AIX 5.2 - bug with 1.6.2.1
+Date: Tue, 31 Mar 2009 06:37:04 -0400
+Message-ID: <20090331103703.GA1589@coredump.intra.peff.net>
+References: <3930158b0903301647o790f7381l37ba61089713ce80@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 31 12:34:47 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Pierre Poissinger <pierre.poissinger@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 31 12:38:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LobIq-0006Sp-27
-	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 12:34:44 +0200
+	id 1LobMl-0007jx-Od
+	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 12:38:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752674AbZCaKdM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Mar 2009 06:33:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752306AbZCaKdK
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 06:33:10 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41451 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751637AbZCaKdI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2009 06:33:08 -0400
-Received: (qmail invoked by alias); 31 Mar 2009 10:33:05 -0000
-Received: from i59F54235.versanet.de (EHLO atjola.local) [89.245.66.53]
-  by mail.gmx.net (mp045) with SMTP; 31 Mar 2009 12:33:05 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX18UOl5/dA0UYt2FXFzKk3Iiq8AEaIfNlSEaleO/Jc
-	K9lkxBLdaZLGBz
+	id S1752548AbZCaKhR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Mar 2009 06:37:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752137AbZCaKhQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 06:37:16 -0400
+Received: from peff.net ([208.65.91.99]:44703 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751637AbZCaKhP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Mar 2009 06:37:15 -0400
+Received: (qmail 9494 invoked by uid 107); 31 Mar 2009 10:37:29 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 31 Mar 2009 06:37:29 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 31 Mar 2009 06:37:04 -0400
 Content-Disposition: inline
-In-Reply-To: <1238290751-57461-2-git-send-email-jaysoffian@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+In-Reply-To: <3930158b0903301647o790f7381l37ba61089713ce80@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115249>
 
-On 2009.03.28 21:39:11 -0400, Jay Soffian wrote:
-> +test_expect_success 'confirm detects EOF (auto causes failure)' '
-> +	CONFIRM=3D$(git config --get sendemail.confirm) &&
-> +	git config sendemail.confirm auto &&
-> +	GIT_SEND_EMAIL_NOTTY=3D1 \
-> +		test_must_fail git send-email \
-> +			--from=3D"Example <nobody@example.com>" \
-> +			--to=3Dnobody@example.com \
-> +			--smtp-server=3D"$(pwd)/fake.sendmail" \
-> +			$patches < /dev/null
-> +	ret=3D"$?"
-> +	git config sendemail.confirm ${CONFIRM:-never}
-> +	test $ret =3D "0"
-> +'
-> +
-> +test_expect_success 'confirm doesnt loop forever' '
-> +	CONFIRM=3D$(git config --get sendemail.confirm) &&
-> +	git config sendemail.confirm auto &&
-> +	yes "bogus" | GIT_SEND_EMAIL_NOTTY=3D1 \
-> +		test_must_fail git send-email \
-> +			--from=3D"Example <nobody@example.com>" \
-> +			--to=3Dnobody@example.com \
-> +			--smtp-server=3D"$(pwd)/fake.sendmail" \
-> +			$patches
-> +	ret=3D"$?"
-> +	git config sendemail.confirm ${CONFIRM:-never}
-> +	test $ret =3D "0"
+[I'm cc'ing the git-list; please send bug reports there]
 
-These two cause interactive prompts for me.
+On Tue, Mar 31, 2009 at 01:47:47AM +0200, Pierre Poissinger wrote:
 
-Bj=F6rn
+> Looks like the patch posted here
+> http://osdir.com/ml/git/2009-01/msg01128.html
+> (around d8e96fd86d415554a9c2e09ffb929a9e22fdad25 I think - too late to
+> look for it - love google that gave me this guy as first hit...)
+> 
+> breaks git on AIX 5.2 with gcc 2.9 :-(
+
+Wow, I didn't know people were still using the 2.9 branch of gcc.
+
+> Nothing new to pack.
+> trace: built-in: git 'prune-packed'
+> The end...
+> fatal: unable to run 'git-repack'
+> error: waitpid 155256: code 128 (Error 0)
+> error: failed to run repack
+
+Hmm. Can you confirm the status being passed back by run_command? The
+following patch should do it:
+
+diff --git a/git.c b/git.c
+index c2b181e..a99c31b 100644
+--- a/git.c
++++ b/git.c
+@@ -413,6 +413,7 @@ static void execv_dashed_external(const char **argv)
+ 	 * OK to return. Otherwise, we just pass along the status code.
+ 	 */
+ 	status = run_command_v_opt(argv, 0);
++	fprintf(stderr, "run_command produced status %d\n", status);
+ 	if (status != -ERR_RUN_COMMAND_EXEC) {
+ 		if (IS_RUN_COMMAND_ERR(status))
+ 			die("unable to run '%s'", argv[0]);
+
+> The bottom line: Looks like my box really don't like the run-command
+> error define as:
+> #define IS_RUN_COMMAND_ERR(x) ((x) <= -ERR_RUN_COMMAND_FORK)
+> 
+> it will trigger even with x==0 :-)
+
+That seems very wrong. I wonder if it is a problem with the signedness
+of enums in that version of gcc. Can you run the following program and
+report on its output?
+
+-- >8 --
+#include <stdio.h>
+enum { FOO = 10000 };
+int main()
+{
+  printf("-FOO: %d\n", -FOO);
+  printf("0 <= -FOO: %d\n", 0 <= -FOO);
+  printf("-10000 <= -FOO: %d\n", -10000 <= -FOO);
+  return 0;
+}
+-- 8< --
+
+> So, following patch simply change this define to
+> #define IS_RUN_COMMAND_ERR(x) ((x) > ERR_RUN_COMMAND_FORK)
+
+That's not right; x is going to be a large negative value. You could
+try:
+
+  #define IS_RUN_COMMAND_ERR(x) ((-x) > ERR_RUN_COMMAND_FORK)
+
+The other option is to rework run_command to just return positive values
+(which should be fine as long as they remain out of the range of normal
+exit codes).
+
+-Peff
