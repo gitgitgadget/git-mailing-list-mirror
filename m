@@ -1,84 +1,84 @@
-From: Magnus =?iso-8859-1?Q?B=E4ck?= <baeck@swipnet.se>
-Subject: Re: Implementing stat() with FindFirstFile()
-Date: Tue, 31 Mar 2009 22:32:48 +0200
-Message-ID: <20090331203248.GE27249@jeeves.jpl.local>
-References: <200903212055.15026.j6t@kdbg.org> <20090324215416.GB27249@jeeves.jpl.local> <49CB2BA5.1070100@viscovery.net> <20090326213907.GC27249@jeeves.jpl.local> <alpine.DEB.1.00.0903270320020.10279@pacific.mpi-cbg.de> <20090329224803.GD27249@jeeves.jpl.local> <alpine.DEB.1.00.0903300245080.6454@intel-tinevez-2-302> <20090330051118.GA2681@atjola.homenet> <20090330220709.GA68118@macbook.lan> <alpine.DEB.1.00.0903310128410.10279@pacific.mpi-cbg.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: bsd group semantics
+Date: Tue, 31 Mar 2009 16:36:00 -0400
+Message-ID: <20090331203600.GA24340@coredump.intra.peff.net>
+References: <20090331112637.GA1910@coredump.intra.peff.net> <7vvdpp6623.fsf@gitster.siamese.dyndns.org> <20090331160842.GA9019@coredump.intra.peff.net> <7veiwd61k1.fsf@gitster.siamese.dyndns.org> <20090331184604.GA10701@coredump.intra.peff.net> <7vy6ul4exy.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Heiko Voigt <hvoigt@hvoigt.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>,
-	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 31 22:34:30 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 31 22:38:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LokfC-0002r5-It
-	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 22:34:27 +0200
+	id 1Lokit-0004Rq-0c
+	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 22:38:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753985AbZCaUcz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Mar 2009 16:32:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752841AbZCaUcz
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 16:32:55 -0400
-Received: from proxy3.bredband.net ([195.54.101.73]:49084 "EHLO
-	proxy3.bredband.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751957AbZCaUcy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2009 16:32:54 -0400
-Received: from ironport2.bredband.com (195.54.101.122) by proxy3.bredband.net (7.3.139)
-        id 49CB852D003015DA for git@vger.kernel.org; Tue, 31 Mar 2009 22:32:51 +0200
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AjYFANsa0klT4/BMPGdsb2JhbACBU5QtAQEBAR4iuECDegY
-X-IronPort-AV: E=Sophos;i="4.39,304,1235948400"; 
-   d="scan'208";a="469485159"
-Received: from ua-83-227-240-76.cust.bredbandsbolaget.se (HELO elwood.jpl.local) ([83.227.240.76])
-  by ironport2.bredband.com with ESMTP; 31 Mar 2009 22:32:51 +0200
-Received: from jeeves.jpl.local (jeeves.jpl.local [192.168.7.3])
-	by elwood.jpl.local (Postfix) with ESMTP id C2258422AF;
-	Tue, 31 Mar 2009 22:32:49 +0200 (CEST)
-Received: by jeeves.jpl.local (Postfix, from userid 100)
-	id 1266F3C2D; Tue, 31 Mar 2009 22:32:48 +0200 (CEST)
+	id S1755226AbZCaUgO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Mar 2009 16:36:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754446AbZCaUgO
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 16:36:14 -0400
+Received: from peff.net ([208.65.91.99]:41562 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751397AbZCaUgN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Mar 2009 16:36:13 -0400
+Received: (qmail 13044 invoked by uid 107); 31 Mar 2009 20:36:28 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 31 Mar 2009 16:36:28 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 31 Mar 2009 16:36:00 -0400
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0903310128410.10279@pacific.mpi-cbg.de>
-User-Agent: Mutt/1.4.1i
+In-Reply-To: <7vy6ul4exy.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115313>
 
-On Tuesday, March 31, 2009 at 01:29 CEST,
-     Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+On Tue, Mar 31, 2009 at 01:26:01PM -0700, Junio C Hamano wrote:
 
-> On Tue, 31 Mar 2009, Heiko Voigt wrote:
->=20
-> > On Mon, Mar 30, 2009 at 07:11:18AM +0200, Bj=F6rn Steinbrink wrote:
-> >
-> > > Not official documentation, but at least from some MS guy it seem=
-s:=20
-> > > http://www.osronline.com/showThread.cfm?link=3D73086 (last messag=
-e).
-> > >=20
-> > > Apparently, it was in NT3.x, but they document only what's actual=
-ly=20
-> > > defined in the header.
-> >=20
-> > How about runtime checking? You could do GetProcAddress(...) and if
-> > you don't get it use the old behaviour. I mean if it really is
-> > faster why not let Users of recent systems benefit from it.
->=20
-> While my first reaction was negative, I have to admit that thinking
-> about it longer, it does seem to make a whole lot of sense.
+> For now, I'd suggest teaching the test not to care about g+s bit.
+> After all, they are about giving correct mode bits to files and
+> directories.  Correct mode bits for group do not mean anything if you make
+> them owned by a wrong group, but that is not something we have tested so
+> far, and can be a separate test anyway.
 
-If anything worries me it's forward compatibility should Microsoft
-change the function signature. Backwards compatibility can always
-be guaranteed by using GetProcAddress(). Again, I would be very
-surprised but IF it could be quite fatal.
+Makes sense. How about this?
 
-Anyway, we don't know for sure if it's faster or if it fixes the DST
-problem of FindFirstFile(). I'll write some code to try it out.
+-- >8 --
+Subject: [PATCH] t1301: loosen test for forced modes
 
---=20
-Magnus B=E4ck
-baeck@swipnet.se
+One of the aspects of the test checked explicitly for the
+g+s bit to be set on created directories. However, this is
+only the means to an end (the "end" being having the correct
+group set). And in fact, on systems where
+DIR_HAS_BSD_GROUP_SEMANTICS is set, we do not even need to
+use this "means" at all, causing the test to fail.
+
+This patch removes that part of the test. In an ideal world
+it would be replaced by a test to check that the group was
+properly assigned, but that is difficult to automate because
+it requires the user running the test suite be a member of
+multiple groups.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t1301-shared-repo.sh |    3 ---
+ 1 files changed, 0 insertions(+), 3 deletions(-)
+
+diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
+index 11ef302..9b18507 100755
+--- a/t/t1301-shared-repo.sh
++++ b/t/t1301-shared-repo.sh
+@@ -147,9 +147,6 @@ test_expect_success 'forced modes' '
+ 	# Everything must be unaccessible to others
+ 	test -z "$(sed -n -e "/^.......---/d" actual)" &&
+ 
+-	# All directories must have 2770
+-	test -z "$(sed -n -e "/^drwxrws---/d" -e "/^d/p" actual)" &&
+-
+ 	# post-update hook must be 0770
+ 	test -z "$(sed -n -e "/post-update/{
+ 		/^-rwxrwx---/d
+-- 
+1.6.2.1.591.geb450
