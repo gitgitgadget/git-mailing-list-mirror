@@ -1,65 +1,84 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: strbuf name conflict on Mac OS
-Date: Tue, 31 Mar 2009 16:26:45 -0400
-Message-ID: <5ECAAD78-F8D4-4F86-A16B-C8DF483771D6@silverinsanity.com>
-References: <E5D92A5D-B2CC-44CE-B117-0BB88C0E663E@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Joshua Juran <jjuran@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 31 22:28:24 2009
+From: Magnus =?iso-8859-1?Q?B=E4ck?= <baeck@swipnet.se>
+Subject: Re: Implementing stat() with FindFirstFile()
+Date: Tue, 31 Mar 2009 22:32:48 +0200
+Message-ID: <20090331203248.GE27249@jeeves.jpl.local>
+References: <200903212055.15026.j6t@kdbg.org> <20090324215416.GB27249@jeeves.jpl.local> <49CB2BA5.1070100@viscovery.net> <20090326213907.GC27249@jeeves.jpl.local> <alpine.DEB.1.00.0903270320020.10279@pacific.mpi-cbg.de> <20090329224803.GD27249@jeeves.jpl.local> <alpine.DEB.1.00.0903300245080.6454@intel-tinevez-2-302> <20090330051118.GA2681@atjola.homenet> <20090330220709.GA68118@macbook.lan> <alpine.DEB.1.00.0903310128410.10279@pacific.mpi-cbg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Heiko Voigt <hvoigt@hvoigt.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 31 22:34:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LokZK-0000Mo-Kx
-	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 22:28:23 +0200
+	id 1LokfC-0002r5-It
+	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 22:34:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754941AbZCaU0u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2009 16:26:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754617AbZCaU0u
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 16:26:50 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:58050 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754497AbZCaU0t (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2009 16:26:49 -0400
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id B302F1FFC032; Tue, 31 Mar 2009 20:26:41 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.4 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [192.168.5.44] (nmd.sbx07360.rocheny.wayport.net [98.98.50.102])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTPSA id E2BFC1FFC030;
-	Tue, 31 Mar 2009 20:26:39 +0000 (UTC)
-In-Reply-To: <E5D92A5D-B2CC-44CE-B117-0BB88C0E663E@gmail.com>
-X-Mailer: Apple Mail (2.930.3)
+	id S1753985AbZCaUcz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Mar 2009 16:32:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752841AbZCaUcz
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 16:32:55 -0400
+Received: from proxy3.bredband.net ([195.54.101.73]:49084 "EHLO
+	proxy3.bredband.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751957AbZCaUcy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Mar 2009 16:32:54 -0400
+Received: from ironport2.bredband.com (195.54.101.122) by proxy3.bredband.net (7.3.139)
+        id 49CB852D003015DA for git@vger.kernel.org; Tue, 31 Mar 2009 22:32:51 +0200
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AjYFANsa0klT4/BMPGdsb2JhbACBU5QtAQEBAR4iuECDegY
+X-IronPort-AV: E=Sophos;i="4.39,304,1235948400"; 
+   d="scan'208";a="469485159"
+Received: from ua-83-227-240-76.cust.bredbandsbolaget.se (HELO elwood.jpl.local) ([83.227.240.76])
+  by ironport2.bredband.com with ESMTP; 31 Mar 2009 22:32:51 +0200
+Received: from jeeves.jpl.local (jeeves.jpl.local [192.168.7.3])
+	by elwood.jpl.local (Postfix) with ESMTP id C2258422AF;
+	Tue, 31 Mar 2009 22:32:49 +0200 (CEST)
+Received: by jeeves.jpl.local (Postfix, from userid 100)
+	id 1266F3C2D; Tue, 31 Mar 2009 22:32:48 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0903310128410.10279@pacific.mpi-cbg.de>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115312>
 
+On Tuesday, March 31, 2009 at 01:29 CEST,
+     Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 
-On Mar 31, 2009, at 4:17 PM, Joshua Juran wrote:
+> On Tue, 31 Mar 2009, Heiko Voigt wrote:
+>=20
+> > On Mon, Mar 30, 2009 at 07:11:18AM +0200, Bj=F6rn Steinbrink wrote:
+> >
+> > > Not official documentation, but at least from some MS guy it seem=
+s:=20
+> > > http://www.osronline.com/showThread.cfm?link=3D73086 (last messag=
+e).
+> > >=20
+> > > Apparently, it was in NT3.x, but they document only what's actual=
+ly=20
+> > > defined in the header.
+> >=20
+> > How about runtime checking? You could do GetProcAddress(...) and if
+> > you don't get it use the old behaviour. I mean if it really is
+> > faster why not let Users of recent systems benefit from it.
+>=20
+> While my first reaction was negative, I have to admit that thinking
+> about it longer, it does seem to make a whole lot of sense.
 
-> Apple's OpenTransport.h from Universal Interfaces 3.4.2 defines its  
-> own struct strbuf, with which git's collides.
->
-> Since OpenTransport.h also defines some POSIX constants (such as  
-> O_NONBLOCK) as enums, it's necessary to include OpenTransport.h from  
-> fcntl.h (and other affected headers) so as to control the order in  
-> which the definitions appear in the translation unit.
+If anything worries me it's forward compatibility should Microsoft
+change the function signature. Backwards compatibility can always
+be guaranteed by using GetProcAddress(). Again, I would be very
+surprised but IF it could be quite fatal.
 
-Just to be clear, this is related to your work on LAMP under Classic  
-and not OS X, correct?  If so, perhaps you need to create a compat/ 
-classic_mac.h file that's included (when the correct #defines are  
-seen) from git-compat-util.h in the manner of compat/ 
-{cygwin,mingw}.h.  I'm assuming that this naming conflict is not the  
-only such you'll find and it's better to keep platform specific tweaks  
-to a single place when possible.
+Anyway, we don't know for sure if it's faster or if it fixes the DST
+problem of FindFirstFile(). I'll write some code to try it out.
 
-~~ Brian
+--=20
+Magnus B=E4ck
+baeck@swipnet.se
