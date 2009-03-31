@@ -1,74 +1,58 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [PATCH] git-svn: fix ls-tree usage with dash-prefixed paths
-Date: Tue, 31 Mar 2009 09:31:47 +0200
-Message-ID: <20090331073147.GB3307@atjola.homenet>
-References: <83dfc36c0903270418q59a81290xcb8043b8c037be18@mail.gmail.com> <20090329060858.GB15773@dcvr.yhbt.net> <20090329061045.GA29721@dcvr.yhbt.net> <7v8wmoqdc1.fsf@gitster.siamese.dyndns.org> <20090329215651.GA4355@dcvr.yhbt.net> <7v3acvldc7.fsf@gitster.siamese.dyndns.org> <20090330174151.GA32728@dcvr.yhbt.net> <7vy6umdgxq.fsf@gitster.siamese.dyndns.org> <20090330225834.GA24254@dcvr.yhbt.net> <20090331071100.GA3307@atjola.homenet>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: [PATCH] init-db: support --import to add all files and commit right after init
+Date: Tue, 31 Mar 2009 18:09:43 +0900
+Message-ID: <buomyb2cb3c.fsf@dhlpc061.dev.necel.com>
+References: <1237946996-5287-1-git-send-email-pclouds@gmail.com>
+	<20090325041934.GA15524@coredump.intra.peff.net>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Anton Gyllenberg <anton@iki.fi>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Mar 31 09:34:00 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 31 11:11:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoYTm-0007dg-NZ
-	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 09:33:51 +0200
+	id 1Loa0O-0003Nx-6O
+	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 11:11:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754921AbZCaHbz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Mar 2009 03:31:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754634AbZCaHbz
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 03:31:55 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43069 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754446AbZCaHby (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2009 03:31:54 -0400
-Received: (qmail invoked by alias); 31 Mar 2009 07:31:51 -0000
-Received: from i59F54235.versanet.de (EHLO atjola.local) [89.245.66.53]
-  by mail.gmx.net (mp026) with SMTP; 31 Mar 2009 09:31:51 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX18y7WJpMm0yhc94iq5OUgGAn7YBub6lxiEv3W2h1o
-	vTUjgDvGo/3azq
-Content-Disposition: inline
-In-Reply-To: <20090331071100.GA3307@atjola.homenet>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.58
+	id S1755399AbZCaJKB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Mar 2009 05:10:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755766AbZCaJKA
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 05:10:00 -0400
+Received: from TYO202.gate.nec.co.jp ([202.32.8.206]:51792 "EHLO
+	tyo202.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756718AbZCaJJ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Mar 2009 05:09:59 -0400
+Received: from relay21.aps.necel.com ([10.29.19.50])
+	by tyo202.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id n2V99iCx006871;
+	Tue, 31 Mar 2009 18:09:44 +0900 (JST)
+Received: from relay21.aps.necel.com ([10.29.19.20] [10.29.19.20]) by relay21.aps.necel.com with ESMTP; Tue, 31 Mar 2009 18:09:44 +0900
+Received: from dhlpc061 ([10.114.112.72] [10.114.112.72]) by relay21.aps.necel.com with ESMTP; Tue, 31 Mar 2009 18:09:44 +0900
+Received: by dhlpc061 (Postfix, from userid 31295)
+	id 034FE52E26D; Tue, 31 Mar 2009 18:09:43 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
+In-Reply-To: <20090325041934.GA15524@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 25 Mar 2009 00:19:35 -0400")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115234>
 
-On 2009.03.31 09:11:00 +0200, Bj=F6rn Steinbrink wrote:
-> And interestingly, the problem doesn't seem to be in
-> show_tree/show_recursive, but in match_tree_entry.
->=20
-> With "git ls-tree HEAD gitweb/git-favicon.png g" we descend into gitw=
-eb/
-> and at some point we get:
->=20
-> match =3D "g"
-> base =3D "gitweb/"
->=20
-> And we have:
-> if (baselen >=3D matchlen) {
-> 	if (strncmp(base, match, matchlen))
-> 		continue;
-> 	/* The base is a subdirectory of a path which was specified */
-> 	return 1;
-> }
->=20
-> So we return 1 there. The code doesn't do what the comment says, so I
-> guess we can be pretty sure that the behaviour is not intended.
+Jeff King <peff@peff.net> writes:
+> I seem to recall that we were phasing out "--long-option <arg>" at some
+> point, and that all long-options should use "--long-option=". But maybe
+> I am mis-remembering.
 
-Yup, it's in match_tree_entry, you get the same thing with git show.
-With git.git, you can try with:
+Surely it should support both where possible, since both are standard
+syntaxes for passing args to "--"-style long options (so users expect
+both to work).
 
-git show 4fa535a -- Documentation/git-merge.txt D
+-Miles
 
-I'll try to get a patch done, if noone beats me to it.
-
-Bj=F6rn
+-- 
+Occam's razor split hairs so well, I bought the whole argument!
