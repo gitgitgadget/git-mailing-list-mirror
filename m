@@ -1,52 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/4] send-email: correct two tests which were going
-	interactive
-Date: Tue, 31 Mar 2009 15:46:06 -0400
-Message-ID: <20090331194606.GA23184@coredump.intra.peff.net>
-References: <cover.1238516122.git.jaysoffian@gmail.com> <232681e20e15a61defb73a1645fd2c6b6aadd751.1238516122.git.jaysoffian@gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] Add configuration variable for sign-off to format-patch
+Date: Tue, 31 Mar 2009 21:47:37 +0200
+Message-ID: <49D27359.1040703@op5.se>
+References: <20090331185018.GD72569@macbook.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>,
-	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <Uwe.Kleine-Koenig@digi.com>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 31 21:48:00 2009
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Tue Mar 31 21:49:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lojw9-0001Yd-W3
-	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 21:47:54 +0200
+	id 1LojxY-00022o-AM
+	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 21:49:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754973AbZCaTqT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Mar 2009 15:46:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754428AbZCaTqT
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 15:46:19 -0400
-Received: from peff.net ([208.65.91.99]:48550 "EHLO peff.net"
+	id S1761732AbZCaTrp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Mar 2009 15:47:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760330AbZCaTro
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 15:47:44 -0400
+Received: from mail.op5.se ([193.201.96.20]:41255 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752417AbZCaTqS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2009 15:46:18 -0400
-Received: (qmail 12527 invoked by uid 107); 31 Mar 2009 19:46:33 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 31 Mar 2009 15:46:33 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 31 Mar 2009 15:46:06 -0400
-Content-Disposition: inline
-In-Reply-To: <232681e20e15a61defb73a1645fd2c6b6aadd751.1238516122.git.jaysoffian@gmail.com>
+	id S1759625AbZCaTrn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Mar 2009 15:47:43 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 215221B80379;
+	Tue, 31 Mar 2009 21:25:12 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 4L2Yp3ulJuku; Tue, 31 Mar 2009 21:25:10 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [172.27.78.6])
+	by mail.op5.se (Postfix) with ESMTP id 87CE11B80076;
+	Tue, 31 Mar 2009 21:25:10 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <20090331185018.GD72569@macbook.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115304>
 
-On Tue, Mar 31, 2009 at 12:22:13PM -0400, Jay Soffian wrote:
+Heiko Voigt wrote:
+> If you regularly create patches which require a Signed-off: line you may
+> want to make it your default to add that line. It also helps you not to forget
+> to add the -s/--signoff switch.
+> 
+> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+> ---
+> 
+> Because it happened to me twice already that I forgot to add the switch.
+> 
+>  Documentation/config.txt           |    4 ++++
+>  Documentation/git-format-patch.txt |    1 +
+>  builtin-log.c                      |   23 ++++++++++++++++-------
+>  3 files changed, 21 insertions(+), 7 deletions(-)
+> 
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index ad22cb8..ed85536 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -715,6 +715,10 @@ format.thread::
+>  	A true boolean value is the same as `shallow`, and a false
+>  	value disables threading.
+>  
+> +format.signoff::
+> +	This lets you enable the -s/--signoff option of format-patch by
+> +	default. It takes a boolean value.
+> +
 
-> Commit 67f1fe5 added two tests which went interactive under the
-> dash shell. This commit corrects the issue. Reported by
-> Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de>
+Can we please make it "formatpatch.signoff" or some such instead? Just
+plain "format" is a bit too generic for my taste.
 
-Thanks. I was seeing the same issue as Bj=C3=B6rn, and this fixes it fo=
-r me.
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
--Peff
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
