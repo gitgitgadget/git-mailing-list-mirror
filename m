@@ -1,97 +1,67 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 2/4] quote: add "sq_dequote_to_argv" to put unwrapped args in an argv array
-Date: Tue, 31 Mar 2009 07:09:38 +0200
-Message-ID: <200903310709.39034.chriscool@tuxfamily.org>
-References: <20090329114452.b19a2f60.chriscool@tuxfamily.org> <7vhc1bjyl7.fsf@gitster.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: "git reflog expire --all" very slow
+Date: Mon, 30 Mar 2009 22:09:25 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.0903302154000.4093@localhost.localdomain>
+References: <alpine.LFD.2.00.0903301803190.4093@localhost.localdomain> <7vk5668g55.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, John Tapsell <johnflux@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Brandon Casey <casey@nrlssc.navy.mil>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 31 07:12:17 2009
+X-From: git-owner@vger.kernel.org Tue Mar 31 07:14:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoWGm-000226-Hw
-	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 07:12:17 +0200
+	id 1LoWIr-0002TC-47
+	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 07:14:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753324AbZCaFKp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Mar 2009 01:10:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752326AbZCaFKo
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 01:10:44 -0400
-Received: from smtp6-g21.free.fr ([212.27.42.6]:49736 "EHLO smtp6-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751943AbZCaFKo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Mar 2009 01:10:44 -0400
-Received: from smtp6-g21.free.fr (localhost [127.0.0.1])
-	by smtp6-g21.free.fr (Postfix) with ESMTP id DAC70E08080;
-	Tue, 31 Mar 2009 07:10:34 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp6-g21.free.fr (Postfix) with ESMTP id F1621E08016;
-	Tue, 31 Mar 2009 07:10:31 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vhc1bjyl7.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1761639AbZCaFMB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Mar 2009 01:12:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759903AbZCaFMA
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 01:12:00 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:36369 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752326AbZCaFMA (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Mar 2009 01:12:00 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n2V59QWo002019
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 30 Mar 2009 22:10:03 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n2V59Pdo013290;
+	Mon, 30 Mar 2009 22:09:26 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <7vk5668g55.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.441 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115212>
 
-Le lundi 30 mars 2009, Junio C Hamano a =E9crit :
-> Christian Couder <chriscool@tuxfamily.org> writes:
-> > This new function unwraps the space separated shell quoted elements=
- in
-> > its first argument and put a copy of them in the argv array passed =
-as
-> > its second argument.
-> >
-> > Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> > ---
-> >  quote.c |   17 +++++++++++++++++
-> >  quote.h |    2 ++
-> >  2 files changed, 19 insertions(+), 0 deletions(-)
-> >
-> > diff --git a/quote.c b/quote.c
-> > index 8cf0ef4..5b12a4a 100644
-> > --- a/quote.c
-> > +++ b/quote.c
-> > @@ -120,6 +120,23 @@ char *sq_dequote(char *arg)
-> >  	return sq_dequote_many(arg, NULL);
-> >  }
-> >
-> > +int sq_dequote_to_argv(char *arg, const char ***argv, int *nr, int
-> > *alloc) +{
-> > +	char *next =3D arg;
-> > +
-> > +	if (!*arg)
-> > +		return 0;
-> > +	do {
-> > +		char *dequoted =3D sq_dequote_many(next, &next);
-> > +		if (!dequoted)
-> > +			return 1;
->
-> Usually we signal an error with a negative value, e.g. -1.
->
-> > +		ALLOC_GROW(*argv, *nr + 1, *alloc);
-> > +		(*argv)[(*nr)++] =3D xstrdup(dequoted);
->
-> The original sq_dequote() interface takes advantage of the fact that =
-the
-> result of single-quote unquoting is always shorter than the original =
-and
-> it can rewrite the argument in-place to return the result.  I would
-> expect dequote_step() to retain that trait and allow the caller to us=
-e
-> its return value without xstrdup().
 
-I thought that it could be dangerous not to use xstrdup, as users of th=
-is=20
-function might want to free the strings in argv one by one. But I don't=
-=20
-care much.
 
-Thanks,
-Christian.
+On Mon, 30 Mar 2009, Junio C Hamano wrote:
+> 
+> Most of your reflog entries are expected to be reachable from the tip, so
+> one optimization would be to mark all commits reachable from the tip
+> upfront, and omit the in_merge_bases() computation for the ones that are
+> already marked.  Perhaps something like this...
+
+This if anything makes things just go slower.
+
+Not much, but some. It went from 36.566s to 38.070s. That may be in the 
+noise, I've not done any sensitivity analysis.
+
+I thought you perhaps had a missing "parse_commit()" making the 
+reachability thing not work (look_up_gently parses the object, but if it's 
+a tag deref_tag() will dereference it until it hits a commit, but never 
+parse the commit). But that wasn't it.
+
+			Linus
