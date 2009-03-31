@@ -1,66 +1,75 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [RFC/PATCH] graph API: Added logic for colored edges.
-Date: Tue, 31 Mar 2009 12:26:58 +0200
-Message-ID: <49D1EFF2.303@viscovery.net>
-References: <20090318100512.GA7932@linux.vnet> <alpine.DEB.1.00.0903181228420.10279@pacific.mpi-cbg.de> <b2e43f8f0903190959if539048r19e972899bd2132d@mail.gmail.com> <alpine.DEB.1.00.0903191831590.6357@intel-tinevez-2-302> <20090320064813.6117@nanako3.lavabit.com> <b2e43f8f0903201213o396de6c0sb52149ed1d889d1@mail.gmail.com> <20090320195806.GC26934@coredump.intra.peff.net> <20090321175726.GA6677@linux.vnet> <20090330141322.GA6221@linux.vnet> <alpine.DEB.1.00.0903311210000.10279@pacific.mpi-cbg.de>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [PATCH 2/2] send-email: add tests for refactored prompting
+Date: Tue, 31 Mar 2009 12:33:03 +0200
+Message-ID: <20090331103303.GD3307@atjola.homenet>
+References: <1238290751-57461-1-git-send-email-jaysoffian@gmail.com> <1238290751-57461-2-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Allan Caffee <allan.caffee@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	Nanako Shiraishi <nanako3@lavabit.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 31 12:28:43 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 31 12:34:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LobD0-0004kU-Ka
-	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 12:28:43 +0200
+	id 1LobIq-0006Sp-27
+	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 12:34:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751246AbZCaK1L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2009 06:27:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750951AbZCaK1L
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 06:27:11 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:63186 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750897AbZCaK1K (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2009 06:27:10 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1LobBQ-0008T5-1J; Tue, 31 Mar 2009 12:27:04 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 5B41F6C4; Tue, 31 Mar 2009 12:26:58 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <alpine.DEB.1.00.0903311210000.10279@pacific.mpi-cbg.de>
-X-Spam-Score: -1.4 (-)
+	id S1752674AbZCaKdM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Mar 2009 06:33:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752306AbZCaKdK
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 06:33:10 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41451 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751637AbZCaKdI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Mar 2009 06:33:08 -0400
+Received: (qmail invoked by alias); 31 Mar 2009 10:33:05 -0000
+Received: from i59F54235.versanet.de (EHLO atjola.local) [89.245.66.53]
+  by mail.gmx.net (mp045) with SMTP; 31 Mar 2009 12:33:05 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX18UOl5/dA0UYt2FXFzKk3Iiq8AEaIfNlSEaleO/Jc
+	K9lkxBLdaZLGBz
+Content-Disposition: inline
+In-Reply-To: <1238290751-57461-2-git-send-email-jaysoffian@gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115248>
 
-Johannes Schindelin schrieb:
-> How about this function instead?
-> 
-> static void strbuf_add_column(struct strbuf *sb,
-> 	const struct column *column, const char *fmt, ...)
-> {
->         va_list ap;
-> 
->         va_start(ap, fmt);
-> 	if (column->color)
-> 		strbuf_addstr(sb, column->color);
->         strbuf_vaddf(sb, fmt, ap);
-> 	if (column->color)
-> 		strbuf_addstr(sb, GIT_COLOR_RESET);
->         va_end(ap);
-> }
-> 
-> Hmm?
+On 2009.03.28 21:39:11 -0400, Jay Soffian wrote:
+> +test_expect_success 'confirm detects EOF (auto causes failure)' '
+> +	CONFIRM=3D$(git config --get sendemail.confirm) &&
+> +	git config sendemail.confirm auto &&
+> +	GIT_SEND_EMAIL_NOTTY=3D1 \
+> +		test_must_fail git send-email \
+> +			--from=3D"Example <nobody@example.com>" \
+> +			--to=3Dnobody@example.com \
+> +			--smtp-server=3D"$(pwd)/fake.sendmail" \
+> +			$patches < /dev/null
+> +	ret=3D"$?"
+> +	git config sendemail.confirm ${CONFIRM:-never}
+> +	test $ret =3D "0"
+> +'
+> +
+> +test_expect_success 'confirm doesnt loop forever' '
+> +	CONFIRM=3D$(git config --get sendemail.confirm) &&
+> +	git config sendemail.confirm auto &&
+> +	yes "bogus" | GIT_SEND_EMAIL_NOTTY=3D1 \
+> +		test_must_fail git send-email \
+> +			--from=3D"Example <nobody@example.com>" \
+> +			--to=3Dnobody@example.com \
+> +			--smtp-server=3D"$(pwd)/fake.sendmail" \
+> +			$patches
+> +	ret=3D"$?"
+> +	git config sendemail.confirm ${CONFIRM:-never}
+> +	test $ret =3D "0"
 
-Except the strbuf_vaddf() is only in your private repository ;)
+These two cause interactive prompts for me.
 
--- Hannes
+Bj=F6rn
