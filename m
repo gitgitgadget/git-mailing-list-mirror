@@ -1,88 +1,84 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH 0/4] send-email: correct various issues
-Date: Tue, 31 Mar 2009 12:22:10 -0400
-Message-ID: <cover.1238516122.git.jaysoffian@gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH] Add warning about known issues to documentation of
+	cvsimport
+Date: Tue, 31 Mar 2009 18:22:18 +0200
+Message-ID: <20090331162103.GA72569@macbook.lan>
+References: <20090323195304.GC26678@macbook.lan> <49C7F233.9050205@pelagic.nl> <20090330221729.GB68118@macbook.lan> <49D1ABD0.8070707@pelagic.nl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?q?Bj=C3=B6rn=20Steinbrink?= <B.Steinbrink@gmx.de>,
-	=?utf-8?q?Uwe=20Kleine-K=C3=B6nig?= <Uwe.Kleine-Koenig@digi.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 31 18:24:23 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
+X-From: git-owner@vger.kernel.org Tue Mar 31 18:24:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoglB-0007f0-QC
-	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 18:24:22 +0200
+	id 1Logko-0007Uo-51
+	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 18:23:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756409AbZCaQWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2009 12:22:47 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755902AbZCaQWq
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 12:22:46 -0400
-Received: from qw-out-2122.google.com ([74.125.92.26]:46070 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755403AbZCaQWp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2009 12:22:45 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so3180189qwh.37
-        for <git@vger.kernel.org>; Tue, 31 Mar 2009 09:22:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=vQLqyeDQzahJ/iu3zuOPLlanIGrwy+rVmKJvq19RR/Q=;
-        b=YF2YfbvmPoZylRFvNjZw/yOpYmTOvJTDqmdb8U5rj4Kes8OT2rMjd5w4lUWF1fcY+m
-         CJTk60GnRCI4quLyx5VGpuo9Qc5asUvKUX0an9IStmH9zNecPhmXUn0/moOmMff0GM8G
-         8Vc4/LxRdBHqx78ZrSYZ9eH+quuJjfXTgex8c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=s3hmquccWsKWGaGPytJF3apbj3EUMCMVCN7BbMzMnrA78KzdVt010K2H/ay+y4b9ux
-         BWT1+U3d5OZBY6tcXGV9BKhMKr4a+9zhCn//l5OK0HLM8KUfEPom8p+RPwVbgLVlWD6F
-         6Vw+RUCzW3TkLNCnilivFTM0mM2SS+aq4Slzw=
-Received: by 10.224.37.77 with SMTP id w13mr8412804qad.142.1238516563718;
-        Tue, 31 Mar 2009 09:22:43 -0700 (PDT)
-Received: from localhost (cpe-075-182-093-216.nc.res.rr.com [75.182.93.216])
-        by mx.google.com with ESMTPS id 4sm138784qwe.15.2009.03.31.09.22.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 31 Mar 2009 09:22:43 -0700 (PDT)
-X-Mailer: git-send-email 1.6.2.1.427.g15408
+	id S1760354AbZCaQWW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Mar 2009 12:22:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759775AbZCaQWW
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 12:22:22 -0400
+Received: from darksea.de ([83.133.111.250]:40179 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757977AbZCaQWV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Mar 2009 12:22:21 -0400
+Received: (qmail 14236 invoked from network); 31 Mar 2009 18:22:08 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 31 Mar 2009 18:22:08 +0200
+Content-Disposition: inline
+In-Reply-To: <49D1ABD0.8070707@pelagic.nl>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115276>
 
-Junio, these are technically all independent bug fixes, but they were
-minor, so I've lumped them together. I figured you'd just add them to
-the js/send-email topic anyway. Also, I apologize for causing trouble i=
-n
-master. :-(
+On Tue, Mar 31, 2009 at 07:36:16AM +0200, Ferry Huberts (Pelagic) wrote:
+> Heiko Voigt wrote:
+> > On Mon, Mar 23, 2009 at 09:33:55PM +0100, Ferry Huberts (Pelagic) wrote:
+> >> maybe you can also add remarks about autocrlf and safecrlf?
+> >> both need to be off
+> > 
+> > From my experience thats not necessarily true. You can use
+> > autocrlf=input to repair broken revisions were crlf's have been
+> > mistakenly committed into the repository. And if I remember correctly
+> > safecrlf helps if you want to make sure that no information gets lost.
+> > 
+> > So when importing from a nice correct cvs repository you would expect
+> > safecrlf to not stop your import. And I suspect there are actually cvs
+> > users that were very careful with their lineendings who would use it.
+> > 
+> > cheers Heiko
+> If you look at this thread:
+> http://thread.gmane.org/gmane.comp.version-control.git/110152/focus=110358
+> you'll see why I said it. I did some testing to prove my statement.
 
-Bj=C3=B6rn, I've cc'd you for 3/4, which caused me to notice the proble=
-m that
-led to 4/4. Uwe, I've cc'd you for 4/4.
+Well, from that thread I see my statement supported. It is not true that
+they *need* to be off. Maybe a statement that certain crlf settings are
+exclusive would be good, but I agree that should go into the config
+documentation.
 
-Jay Soffian (4):
-  send-email: don't attempt to prompt if tty is closed
-  send-email: ask_default should apply to all emails, not just the
-    first
-  send-email: correct two tests which were going interactive
-  send-email: ensure quoted addresses are rfc2047 encoded
+The main point I see here is that the User may not be aware that such a
+conversion is applied so something like this could help.
 
- git-send-email.perl   |    9 ++++++---
- t/t9001-send-email.sh |   25 +++++++++++++++++++++----
- 2 files changed, 27 insertions(+), 7 deletions(-)
+cheers Heiko
+
+diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
+index e1fd047..d4e7fd4 100644
+--- a/Documentation/git-cvsimport.txt
++++ b/Documentation/git-cvsimport.txt
+@@ -40,6 +40,11 @@ probably want to make a bare clone of the imported repository
+ and use the clone as the shared repository.
+ See linkgit:gitcvs-migration[7].
+ 
++Note: All revisions are imported using the index so settings of
++core.autocrlf and core.safecrlf are applied. This way you can change or
++safety check the import. If you do not want this make sure these options
++are both set to false.
++
+ 
+ OPTIONS
+ -------
