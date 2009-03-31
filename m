@@ -1,62 +1,98 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: "git reflog expire --all" very slow
-Date: Mon, 30 Mar 2009 22:51:34 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.0903302250500.4093@localhost.localdomain>
-References: <alpine.LFD.2.00.0903301803190.4093@localhost.localdomain> <7vk5668g55.fsf@gitster.siamese.dyndns.org> <alpine.LFD.2.00.0903302154000.4093@localhost.localdomain> <alpine.LFD.2.00.0903302231370.4093@localhost.localdomain>
- <alpine.LFD.2.00.0903302244580.4093@localhost.localdomain>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 0/5] Header includes cleanup
+Date: Tue, 31 Mar 2009 07:53:11 +0200
+Message-ID: <200903310753.11595.chriscool@tuxfamily.org>
+References: <1238406925-15907-1-git-send-email-nathaniel.dawson@gmail.com> <49D0A3DF.4000203@viscovery.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Brandon Casey <casey@nrlssc.navy.mil>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 31 07:55:27 2009
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nathaniel P Dawson <nathaniel.dawson@gmail.com>,
+	git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Mar 31 07:55:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoWwY-0001fU-I1
-	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 07:55:27 +0200
+	id 1LoWwv-0001lJ-AJ
+	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 07:55:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755864AbZCaFx5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2009 01:53:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755788AbZCaFx4
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 01:53:56 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:60200 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755235AbZCaFx4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Mar 2009 01:53:56 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n2V5pZf8005346
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 30 Mar 2009 22:52:06 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n2V5pYh8024019;
-	Mon, 30 Mar 2009 22:51:35 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <alpine.LFD.2.00.0903302244580.4093@localhost.localdomain>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.44 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1756207AbZCaFyQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Mar 2009 01:54:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756182AbZCaFyQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 01:54:16 -0400
+Received: from smtp4-g21.free.fr ([212.27.42.4]:59070 "EHLO smtp4-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755788AbZCaFyP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Mar 2009 01:54:15 -0400
+Received: from smtp4-g21.free.fr (localhost [127.0.0.1])
+	by smtp4-g21.free.fr (Postfix) with ESMTP id AD0674C80F6;
+	Tue, 31 Mar 2009 07:54:07 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp4-g21.free.fr (Postfix) with ESMTP id C086C4C8018;
+	Tue, 31 Mar 2009 07:54:04 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <49D0A3DF.4000203@viscovery.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115222>
 
+Le lundi 30 mars 2009, Johannes Sixt a =E9crit :
+> Please wrap your lines at ca. 75 columns.
+>
+> Nathaniel P Dawson schrieb:
+> > This is just the beginning for this project. I'm slowly cleaning up
+> > the header includes one chunk at a time. I hope my patches aren't t=
+oo
+> > messy, I've learned how to better utilize git to make patches and
+> > organize my commits logically so I'll submit neater chunks hencefor=
+th.
+> > You can expect patches from me nightly until I've finished this
+> > project.
+>
+> You have removed includes that are implied by other includes, i.e. if
+> foo.h includes bar.h, then you removed #include "bar.h" from *.c if t=
+here
+> is #include "foo.h".
+>
+> IMO, this is not a good guiding principle to reduce includes. A bette=
+r
+> principle is to keep #include "bar.h" in a source or header file iff =
+a
+> feature that is declared or defined in bar.h is *used* *directly* in =
+that
+> source or header file, regardless of whether bar.h is included in foo=
+=2Eh
+> that is itself included in that source or header file.
 
-That made no sense. It should have been:
+In theory, it's perhaps the best way to do it. But we don't do that for=
+=20
+system header includes. And I think it makes it very difficult to clean=
+up=20
+header includes, because you have to check what is needed for each feat=
+ure=20
+in a file. So I think we have to choose between basically no header inc=
+lude=20
+cleanup or a cleanup like the one Nathaniel started.
 
-On Mon, 30 Mar 2009, Linus Torvalds wrote:
-> 
-> but we care about the commits that are younger than 'expire_total' (older 
-> than that, and they are pruned unconditionally), but older than 
-> 'expire_unreachable' (younger than that and the date doesn't matter).
-                                                  ^^^^
-                                                 reachability
+> If this latter principle is obeyed, then the build won't break by
+> removing the include of foo.h (for the reason that nothing of foo.h i=
+s
+> *use* *directly* anymore).
 
-but other than that the commentary stands.
+I think it's more likely that we will add features rather than remove s=
+ome.
+And it's not very difficult if we remove some, to remove "foo.h" and=20
+add "bar.h" at the same time.
 
-		Linus
+=46or example, many files include "cache.h", does it really make sense =
+to try=20
+to remove these #include because we could replace them by only includes=
+=20
+of "git-compat-util.h" and "hash.h"? I don't think so.
+
+Best regards,
+Christian.
