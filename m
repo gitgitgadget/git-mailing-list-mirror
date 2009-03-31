@@ -1,51 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCHv2 4/4] Rename push.default to push.mode
-Date: Tue, 31 Mar 2009 09:08:13 -0400
-Message-ID: <20090331130813.GA8148@coredump.intra.peff.net>
-References: <1238407903-28020-1-git-send-email-santi@agolina.net> <1238407903-28020-5-git-send-email-santi@agolina.net> <49D0A1FE.60300@drmicha.warpmail.net> <adf1fd3d0903300537i41d4aef3g49ab6bde9343cbc5@mail.gmail.com> <49D0C3B8.2050801@drmicha.warpmail.net> <20090330134544.GA31827@coredump.intra.peff.net> <49D0DB78.2010204@drmicha.warpmail.net> <20090330180253.GA7220@coredump.intra.peff.net> <49D212B0.8070005@drmicha.warpmail.net>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH 2/2] send-email: add tests for refactored prompting
+Date: Tue, 31 Mar 2009 09:58:12 -0400
+Message-ID: <76718490903310658w2dffdfa4y4f40e0757cac8034@mail.gmail.com>
+References: <1238290751-57461-1-git-send-email-jaysoffian@gmail.com>
+	 <1238290751-57461-2-git-send-email-jaysoffian@gmail.com>
+	 <20090331103303.GD3307@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Santi =?utf-8?B?QsOpamFy?= <santi@agolina.net>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Mar 31 15:10:44 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?Q?Bj=C3=B6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 31 15:59:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lodjm-0001HC-5z
-	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 15:10:42 +0200
+	id 1LoeVI-0003QD-8e
+	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 15:59:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757979AbZCaNI1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2009 09:08:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758061AbZCaNI0
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 09:08:26 -0400
-Received: from peff.net ([208.65.91.99]:47871 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758200AbZCaNIZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2009 09:08:25 -0400
-Received: (qmail 10183 invoked by uid 107); 31 Mar 2009 13:08:40 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 31 Mar 2009 09:08:40 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 31 Mar 2009 09:08:13 -0400
-Content-Disposition: inline
-In-Reply-To: <49D212B0.8070005@drmicha.warpmail.net>
+	id S1754907AbZCaN6P convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Mar 2009 09:58:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754883AbZCaN6P
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 09:58:15 -0400
+Received: from yw-out-2324.google.com ([74.125.46.29]:37486 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751548AbZCaN6O convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Mar 2009 09:58:14 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so2441074ywb.1
+        for <git@vger.kernel.org>; Tue, 31 Mar 2009 06:58:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=1kTZbt7rux9rJWegqH0yO2cjLyADJZgkD9R2YOTqe7E=;
+        b=eXdwkt+sB6eIAqjOTdNvv+VFcpK95jLoM+8qUajsBqLFn76ituy9ghmcxi3wU8XeZn
+         t1KTeAJzgJ1ZiT/8SkNsncAWS82wOqLqx/xAB+aXu65QzAd2o12Wwm05ewsQ0I295svo
+         9nuUxPsnkWS7CwUUSbILLmDP/ZlqJ6yxAXn9Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=VcekCUZM31uNfFLX6SfBnzW8/6lbUZ86CZ7eOXRWDTHf+mGKAqpoiW4+pRUMpJJVmB
+         a26ghyO/1FyAkmbDmy7qgRo79no9mAvBt3a1SXqHGqClB2oIstj7zqCjbfCZLd6j9mx6
+         q4qD2Vibk/Hb0HwAvIyK7aukJX5/Dtwtsz9Jc=
+Received: by 10.150.225.17 with SMTP id x17mr12623632ybg.193.1238507892412; 
+	Tue, 31 Mar 2009 06:58:12 -0700 (PDT)
+In-Reply-To: <20090331103303.GD3307@atjola.homenet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115260>
 
-On Tue, Mar 31, 2009 at 02:55:12PM +0200, Michael J Gruber wrote:
+2009/3/31 Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de>:
+>> + =C2=A0 =C2=A0 GIT_SEND_EMAIL_NOTTY=3D1 \
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 test_must_fail git send-=
+email \
+>> [...]
+>> + =C2=A0 =C2=A0 yes "bogus" | GIT_SEND_EMAIL_NOTTY=3D1 \
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 test_must_fail git send-=
+email \
+>
+> These two cause interactive prompts for me.
 
-> I haven't seen any breakage. I just noticed a different font being used
-> for Santi's posts (due to different character encoding, with a different
-> font preset in TB) and looked at the message source, where I saw =20 and
-> such all over the place (message display is fine). When saving from TB
-> the QP is undone. It just made me feel uneasy because of our recent
-> discussion regarding format-flowed and patch submission. I know ff \ne
-> qp, but still I thought git-{send-email,apply} would prefer straight ascii.
+Hmpfh. I think the only way that's possible is if GIT_SEND_EMAIL_NOTTY
+isn't being set by the shell. But I'm not sure why that's unique to
+these tests.
 
-Ah, OK. I think everything is working as expected, then. Thanks for the
-clarification.
+Thanks for the report.
 
--Peff
+j.
