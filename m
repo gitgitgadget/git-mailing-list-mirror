@@ -1,182 +1,213 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: "git reflog expire --all" very slow
-Date: Mon, 30 Mar 2009 23:08:02 -0700
-Message-ID: <7vd4by6x8d.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LFD.2.00.0903301803190.4093@localhost.localdomain>
- <7vk5668g55.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.2.00.0903302154000.4093@localhost.localdomain>
- <alpine.LFD.2.00.0903302231370.4093@localhost.localdomain>
- <alpine.LFD.2.00.0903302244580.4093@localhost.localdomain>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH 1/8] mergetool: use tabs consistently
+Date: Mon, 30 Mar 2009 23:36:14 -0700
+Message-ID: <20090331063613.GA20690@gmail.com>
+References: <1238389428-69328-1-git-send-email-davvid@gmail.com> <1238389428-69328-2-git-send-email-davvid@gmail.com> <7vzlf3flim.fsf@gitster.siamese.dyndns.org> <20090330213530.GA7091@hashpling.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Brandon Casey <casey@nrlssc.navy.mil>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Mar 31 08:09:57 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Tue Mar 31 08:37:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoXAa-0004q1-4k
-	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 08:09:56 +0200
+	id 1LoXbe-00029w-EW
+	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 08:37:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758555AbZCaGIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2009 02:08:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762073AbZCaGIQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 02:08:16 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:40819 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760983AbZCaGIP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2009 02:08:15 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id D6E5CA63F5;
-	Tue, 31 Mar 2009 02:08:12 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 96325A63F3; Tue,
- 31 Mar 2009 02:08:06 -0400 (EDT)
-In-Reply-To: <alpine.LFD.2.00.0903302244580.4093@localhost.localdomain>
- (Linus Torvalds's message of "Mon, 30 Mar 2009 22:50:17 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 510BFCDA-1DBA-11DE-9DC5-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1754852AbZCaGgX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Mar 2009 02:36:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754750AbZCaGgW
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 02:36:22 -0400
+Received: from wa-out-1112.google.com ([209.85.146.176]:38493 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753600AbZCaGgW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Mar 2009 02:36:22 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so1557640wah.21
+        for <git@vger.kernel.org>; Mon, 30 Mar 2009 23:36:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=NlhArbP186LZZQ7KjH3yJkXNWHhrHqBfaNKjsSf8mYE=;
+        b=tboFhHm1uUND9XeyA7AG1QOsRMyJyr4xeKxy21PXX8CzOoywBnrf149q8VQ40JApxp
+         HXU92t6Rms52ZDf0w5jbamFfG7lSkpjZ2AriCkVVDXdf8utz1A9hso7WrQOExze5GrZo
+         Z0MtFicI2PETknh2zC3Ax+hfWvqF1eo5ndyEk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=el/ZD1DfB6z1F4Wrz6o3fxp0pua6675MI5jqGboPT06HgPI5CP+p0aTBAmrAlQWFbW
+         KM+wj74ZnaM+qKqQcUX726ba3opKjQT6cfUsh90YlfKJiJsKaaPW2SRavhUnaGjvOqEV
+         kJYBDzBa/NtWUT5Ridp7uoKSNYQO4ij2lmAcs=
+Received: by 10.115.107.5 with SMTP id j5mr4139562wam.158.1238481380038;
+        Mon, 30 Mar 2009 23:36:20 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id n30sm5285846wag.56.2009.03.30.23.36.18
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 30 Mar 2009 23:36:19 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20090330213530.GA7091@hashpling.org>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115225>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On  0, Charles Bailey <charles@hashpling.org> wrote:
+> On Mon, Mar 30, 2009 at 01:44:01AM -0700, Junio C Hamano wrote:
+> 
+> I don't much like [1/8] though. I'm all in favour of consistency, but
+> this patch touches most of the lines in git-mergetool and tries to go
+> the opposite way to the consistency drive that we were trying to
+> introduce gradually (i.e. only through lines materially affected by
+> subsequent patches) in:
 
-> On Mon, 30 Mar 2009, Linus Torvalds wrote:
->> 
->> If I do
->> 
->> 	mark_reachable(cb.ref_commit, 0);
->
-> Ok, I think I got it.
->
-> You had
->
-> 	mark_reachable(cb.ref_commit, cmd->expire_unreachable);
->
-> but we care about the commits that are younger than 'expire_total' (older 
-> than that, and they are pruned unconditionally), but older than 
-> 'expire_unreachable' (younger than that and the date doesn't matter).
->
-> So making it do
->
-> 	mark_reachable(cb.ref_commit, cmd->expire_total);
->
-> marks the right parts reachable. Not the whole tree, but also not just the 
-> commits we're not going to expire regardless.
->
-> With that change, it's all basically instantaneous. We don't need to 
-> traverse the whole kernel history, and with that change to your patch, I 
-> get
->
-> 	[torvalds@nehalem linux]$ time ~/git/git reflog expire --all
->
-> 	real	0m1.715s
-> 	user	0m1.676s
-> 	sys	0m0.040s
->
-> which is still slower than I'd wish for, but is a whole lot faster than 
-> over half a minute.
+Sounds good.  I'll re-roll and give the refactoring another go.
 
-Actually, the initial pruning I showed (around 23 seconds) is not helped
-with the expire_total change at all, but if I mark everything and get rid
-of in_merge_bases(), it goes down to 1.15 seconds.
+I think we can definitely do better, and more importantly, I
+think we can decouple things by using less globals.
 
-But subsequent pruning, which is what we should be optimizing for, gets
-much faster with your approach of not traversing down the history all the
-way.
+Junio, did you have any comments about patch v2
+"difftool: add support for difftool.prompt config variable"?
 
-By the way, I suspect I might be making the same mistake of traversing
-both sides of the merge twice while marking, but I am tired already, so
-I'll throw out the final patch for tonight and go to bed.
+This series was based on top of that patch so I'm wondering if I
+should do that again.
 
- builtin-reflog.c |   48 ++++++++++++++++++++++++++++++++++++++++++++++--
- 1 files changed, 46 insertions(+), 2 deletions(-)
 
-diff --git a/builtin-reflog.c b/builtin-reflog.c
-index d95f515..b67272a 100644
---- a/builtin-reflog.c
-+++ b/builtin-reflog.c
-@@ -52,6 +52,7 @@ struct collect_reflog_cb {
- 
- #define INCOMPLETE	(1u<<10)
- #define STUDYING	(1u<<11)
-+#define REACHABLE	(1u<<12)
- 
- static int tree_is_complete(const unsigned char *sha1)
- {
-@@ -209,6 +210,43 @@ static int keep_entry(struct commit **it, unsigned char *sha1)
- 	return 1;
- }
- 
-+static void mark_reachable(struct commit *commit, unsigned long expire_limit)
-+{
-+	/*
-+	 * We need to compute if commit on either side of an reflog
-+	 * entry is reachable from the tip of the ref for all entries.
-+	 * Mark commits that are reachable from the tip down to the
-+	 * time threashold first; we know a commit marked thusly is
-+	 * reachable from the tip without running in_merge_bases()
-+	 * at all.
-+	 */
-+	struct commit_list *pending = NULL;
-+
-+	commit_list_insert(commit, &pending);
-+	while (pending) {
-+		struct commit_list *entry = pending;
-+		struct commit_list *parent;
-+		pending = entry->next;
-+		commit = entry->item;
-+		free(entry);
-+		if (commit->object.flags & REACHABLE)
-+			continue;
-+		commit->object.flags |= REACHABLE;
-+		parent = commit->parents;
-+		while (parent) {
-+			commit = parent->item;
-+			parent = parent->next;
-+			if (commit->object.flags & REACHABLE)
-+				continue;
-+			if (parse_commit(commit))
-+				continue;
-+			if (expire_limit && commit->date < expire_limit)
-+				continue;
-+			commit_list_insert(commit, &pending);
-+		}
-+	}
-+}
-+
- static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
- 		const char *email, unsigned long timestamp, int tz,
- 		const char *message, void *cb_data)
-@@ -234,8 +272,10 @@ static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
- 			old = lookup_commit_reference_gently(osha1, 1);
- 		if (!new && !is_null_sha1(nsha1))
- 			new = lookup_commit_reference_gently(nsha1, 1);
--		if ((old && !in_merge_bases(old, &cb->ref_commit, 1)) ||
--		    (new && !in_merge_bases(new, &cb->ref_commit, 1)))
-+		if ((old && !(old->object.flags & REACHABLE) &&
-+		     !in_merge_bases(old, &cb->ref_commit, 1)) ||
-+		    (new && !(new->object.flags & REACHABLE) &&
-+		     !in_merge_bases(new, &cb->ref_commit, 1)))
- 			goto prune;
- 	}
- 
-@@ -288,7 +328,11 @@ static int expire_reflog(const char *ref, const unsigned char *sha1, int unused,
- 	cb.ref_commit = lookup_commit_reference_gently(sha1, 1);
- 	cb.ref = ref;
- 	cb.cmd = cmd;
-+	if (cb.ref_commit)
-+		mark_reachable(cb.ref_commit, cmd->expire_total);
- 	for_each_reflog_ent(ref, expire_reflog_ent, &cb);
-+	if (cb.ref_commit)
-+		clear_commit_marks(cb.ref_commit, REACHABLE);
-  finish:
- 	if (cb.newlog) {
- 		if (fclose(cb.newlog)) {
+> 
+> commit 0eea345111a9b9fea4dd2841b80bc7d62964e812
+> Author: Charles Bailey <charles@hashpling.org>
+> Date:   Thu Nov 13 12:41:13 2008 +0000
+> 
+>     Fix some tab/space inconsistencies in git-mergetool.sh
+> 
+> If you'd gone the other way the patch to consistency would only affect
+> 23 lines rather than 347 lines and all bar 3 of these lines you
+> subsequently remove from git-mergetool.sh in later patches anyway.
+> 
+> [2/8] - looks good.
+> 
+> [3/8] - no mergetool impact.
+> 
+> [4/8] - Hmmm, OK. Even so at this point, I'm getting slightly iffy
+> feelings about the whole init_merge_tool_path sets a variable needed
+> by the calling script. I know it's only scripting and not programming,
+> but it seemed less bad to set (global) variables in sh functions when
+> they were all in the same sh script.
+> 
+> [5/8] - no mergtool impact.
+> 
+> [6/8] - ditto
+> 
+> [7/8] - OK, here's where my uneasiness about global script variables
+> vs. parameters really gets going. Why is merge_tool a parameter when
+> it's setup once and doesn't change in the invocation of a script, yet
+> base_present is a script global but can vary between sets of paths to
+> be merged?
+> 
+> I fully appreciate that this is just inheriting the way things are
+> and that they weren't beautiful before, but it somehow seems even
+> worse when the variables are set in one script and used from a
+> function in a separate sourced script. We're definitely setting up a
+> very strong coupling between the two scripts which will make it harder
+> to change either in the future.
+> 
+> [8/8] - no mergetool impact here.
+> 
+> On the plus side, I really like the introduction and function of the
+> run_mergetool function. It's exactly the split that will make
+> extending mergetool resolves of file vs. symlink vs. directory easier
+> in the future. I have a similar split in some slow brewing patches
+> myself.
+> 
+> I think that [1/8] is the only patch that I'd relucatant to ack, as it
+> seems like unnecessary churn and change of direction. Here's a sample
+> patch for consistency 'the other way'. As I mentioned before, the
+> first to hunks are made redundant by your subsequent changes anyway,
+> so I only counted 3 lines that are currently inconsistent in
+> git-mergetool as it stands at the moment.
+> 
+> Sample patch fixing consistent whitespace 'the other way'.
+> ---
+>  git-mergetool.sh |   46 +++++++++++++++++++++++-----------------------
+>  1 files changed, 23 insertions(+), 23 deletions(-)
+> 
+> diff --git a/git-mergetool.sh b/git-mergetool.sh
+> index 87fa88a..1588b5f 100755
+> --- a/git-mergetool.sh
+> +++ b/git-mergetool.sh
+> @@ -344,29 +344,29 @@ valid_custom_tool()
+>  }
+>  
+>  valid_tool() {
+> -	case "$1" in
+> -		kdiff3 | tkdiff | xxdiff | meld | opendiff | emerge | vimdiff | gvimdiff | ecmerge)
+> -			;; # happy
+> -		*)
+> -			if ! valid_custom_tool "$1"; then
+> -				return 1
+> -			fi
+> -			;;
+> -	esac
+> +    case "$1" in
+> +	kdiff3 | tkdiff | xxdiff | meld | opendiff | emerge | vimdiff | gvimdiff | ecmerge)
+> +	    ;; # happy
+> +	*)
+> +	    if ! valid_custom_tool "$1"; then
+> +		return 1
+> +	    fi
+> +	    ;;
+> +    esac
+>  }
+>  
+>  init_merge_tool_path() {
+> -	merge_tool_path=`git config mergetool.$1.path`
+> -	if test -z "$merge_tool_path" ; then
+> -		case "$1" in
+> -			emerge)
+> -				merge_tool_path=emacs
+> -				;;
+> -			*)
+> -				merge_tool_path=$1
+> -				;;
+> -		esac
+> -	fi
+> +    merge_tool_path=`git config mergetool.$1.path`
+> +    if test -z "$merge_tool_path" ; then
+> +	case "$1" in
+> +	    emerge)
+> +		merge_tool_path=emacs
+> +		;;
+> +	    *)
+> +		merge_tool_path=$1
+> +		;;
+> +	esac
+> +    fi
+>  }
+>  
+>  prompt_after_failed_merge() {
+> @@ -389,9 +389,9 @@ prompt_after_failed_merge() {
+>  if test -z "$merge_tool"; then
+>      merge_tool=`git config merge.tool`
+>      if test -n "$merge_tool" && ! valid_tool "$merge_tool"; then
+> -	    echo >&2 "git config option merge.tool set to unknown tool: $merge_tool"
+> -	    echo >&2 "Resetting to default..."
+> -	    unset merge_tool
+> +	echo >&2 "git config option merge.tool set to unknown tool: $merge_tool"
+> +	echo >&2 "Resetting to default..."
+> +	unset merge_tool
+>      fi
+>  fi
+>  
+> -- 
+> 1.6.2.323.geaf6e
+> 
+> -- 
+> Charles Bailey
+> http://ccgi.hashpling.plus.com/blog/
+
+-- 
+		David
