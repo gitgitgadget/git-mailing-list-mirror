@@ -1,75 +1,79 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH] mailmap: resurrect lower-casing of email addresses
-Date: Tue, 31 Mar 2009 02:18:36 +0200 (CEST)
-Message-ID: <f182fb1700e8dea15459fd02ced2a6e5797bec99.1238458535u.git.johannes.schindelin@gmx.de>
-References: <cover.1238458535u.git.johannes.schindelin@gmx.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add warning about known issues to documentation of
+ cvsimport
+Date: Mon, 30 Mar 2009 17:51:53 -0700
+Message-ID: <7v4oxaa506.fsf@gitster.siamese.dyndns.org>
+References: <20090323195304.GC26678@macbook.lan>
+ <20090324031448.GA12829@coredump.intra.peff.net>
+ <20090330223646.GC68118@macbook.lan>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Marius Storm-Olsen <marius@trolltech.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Mar 31 02:18:22 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Tue Mar 31 02:54:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoRg8-0008BO-GY
-	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 02:18:09 +0200
+	id 1LoSEu-0000As-A9
+	for gcvg-git-2@gmane.org; Tue, 31 Mar 2009 02:54:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754559AbZCaAQW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Mar 2009 20:16:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754411AbZCaAQW
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 20:16:22 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53762 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753827AbZCaAQV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Mar 2009 20:16:21 -0400
-Received: (qmail invoked by alias); 31 Mar 2009 00:16:18 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp057) with SMTP; 31 Mar 2009 02:16:18 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+xfS9hWdSx4fliK3SiGGxHzUGJIRWEDpvPwqYujO
-	I8euNPWtQu+I6c
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <cover.1238458535u.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.62
+	id S1756706AbZCaAwI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Mar 2009 20:52:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753641AbZCaAwG
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 Mar 2009 20:52:06 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:57200 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756842AbZCaAwF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Mar 2009 20:52:05 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3C467A6052;
+	Mon, 30 Mar 2009 20:52:01 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 23AC0A6051; Mon,
+ 30 Mar 2009 20:51:55 -0400 (EDT)
+In-Reply-To: <20090330223646.GC68118@macbook.lan> (Heiko Voigt's message of
+ "Tue, 31 Mar 2009 00:36:46 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 25126690-1D8E-11DE-8D3B-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115203>
 
-Commit 0925ce4(Add map_user() and clear_mailmap() to mailmap) broke the
-lower-casing of email addresses.  This mostly did not matter if your
-.mailmap has only lower-case email addresses;  However, we did not
-require .mailmap to contain lowercase-only email addresses.
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- lezzee how that goes
- mailmap.c |    9 +++++++++
- 1 files changed, 9 insertions(+), 0 deletions(-)
+> On Mon, Mar 23, 2009 at 11:14:48PM -0400, Jeff King was talking about:
+>> On Mon, Mar 23, 2009 at 08:53:05PM +0100, Heiko Voigt wrote:
+>> 
+>> > The described issues are compiled from the tests by Michael Haggerty and me.
+>> > Because it is not apparent that these can be fixed anytime soon at least warn
+>> > unwary users not to rely on the inbuilt cvsimport to much.
+>> 
+>> I think this change is good in concept.
+>> 
+>> > +[[issues]]
+>> > +ISSUES
+>> > +------
+>> > +Problems related to timestamps:
+>> > +
+>> > + * If timestamps of commits in the cvs repository are not stable enough
+>> > +   to be used for ordering commits
+>> > + * If any files were ever "cvs import"ed more than once (e.g., import of
+>> > +   more than one vendor release)
+>> > + * If the timestamp order of different files cross the revision order
+>> > +   within the commit matching time window
+>> 
+>> Reading this, I kept waiting for the "then" to your "if". I think the
+>> implication is "your import will be incorrect". But it would be nice to
+>> say _how_, even if it's something as simple as "changes may show up in
+>> the wrong commit, the wrong branch, be omitted" or whatever. Just give a
+>> general idea of what can happen.
+>
+> You are right, I actually wanted to update my patch but as I've seen
+> today my patch already made it into master. So I guess I will prepare an
+> update patch to address these issues.
 
-diff --git a/mailmap.c b/mailmap.c
-index f12bb45..6be91b6 100644
---- a/mailmap.c
-+++ b/mailmap.c
-@@ -50,6 +50,15 @@ static void add_mapping(struct string_list *map,
- {
- 	struct mailmap_entry *me;
- 	int index;
-+	char *p;
-+
-+	if (old_email)
-+		for (p = old_email; *p; p++)
-+			*p = tolower(*p);
-+	if (new_email)
-+		for (p = new_email; *p; p++)
-+			*p = tolower(*p);
-+
- 	if (old_email == NULL) {
- 		old_email = new_email;
- 		new_email = NULL;
--- 
-1.6.2.1.613.g25746
+Thanks.
