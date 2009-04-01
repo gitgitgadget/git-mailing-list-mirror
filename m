@@ -1,89 +1,105 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: Segfault on merge with 1.6.2.1
-Date: Wed, 1 Apr 2009 11:50:14 +0200
-Message-ID: <20090401095014.GT22446@genesis.frugalware.org>
-References: <op.urifmtkkso3nzr@sulidor.mdjohnson.us> <20090329121700.GN22446@genesis.frugalware.org> <op.urk20nanso3nzr@sulidor.mdjohnson.us> <20090330110335.GF22446@genesis.frugalware.org> <op.urnad7jbso3nzr@sulidor.mdjohnson.us> <op.uro0u0xuso3nzr@sulidor.mdjohnson.us>
+From: "Ulrich Windl" <ulrich.windl@rz.uni-regensburg.de>
+Subject: Re: On git 1.6 (novice's opinion)
+Date: Wed, 01 Apr 2009 11:55:01 +0200
+Organization: Universitaetsklinikum Regensburg
+Message-ID: <49D35616.1812.DA02BA@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+References: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>, <49D33EC0.29775.7EDC13@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>, <49D328C2.4000006@op5.se>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="cxfMsoqvp1jUizWj"
-Cc: git@vger.kernel.org
-To: Michael Johnson <redbeard@mdjohnson.us>
-X-From: git-owner@vger.kernel.org Wed Apr 01 11:51:52 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Wed Apr 01 11:56:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lox6t-0007HS-Gi
-	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 11:51:51 +0200
+	id 1LoxBk-0000JV-DB
+	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 11:56:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752677AbZDAJuT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2009 05:50:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751497AbZDAJuT
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 05:50:19 -0400
-Received: from virgo.iok.hu ([212.40.97.103]:40147 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752180AbZDAJuR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Apr 2009 05:50:17 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 0A5D2580BD;
-	Wed,  1 Apr 2009 11:50:15 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id B964A44783;
-	Wed,  1 Apr 2009 11:50:14 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 4932E11F0824; Wed,  1 Apr 2009 11:50:14 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <op.uro0u0xuso3nzr@sulidor.mdjohnson.us>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752534AbZDAJzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2009 05:55:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751952AbZDAJzU
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 05:55:20 -0400
+Received: from rrzmta2.rz.uni-regensburg.de ([194.94.155.53]:13880 "EHLO
+	rrzmta2.rz.uni-regensburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751619AbZDAJzT (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Apr 2009 05:55:19 -0400
+Received: from rrzmta2.rz.uni-regensburg.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id 76548B615A;
+	Wed,  1 Apr 2009 11:55:19 +0200 (CEST)
+Received: from kgate1.dvm.klinik.uni-regensburg.de (kgate1.klinik.uni-regensburg.de [132.199.176.18])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by rrzmta2.rz.uni-regensburg.de (Postfix) with ESMTP id 48751C4615;
+	Wed,  1 Apr 2009 11:55:19 +0200 (CEST)
+Received: from rkdvmks1.ngate.uni-regensburg.de (rkdvmks1.dvm.klinik.uni-regensburg.de [132.199.176.1])
+	by kgate1.dvm.klinik.uni-regensburg.de (8.13.6/8.13.6/20070831MT-1) with ESMTP id n319tAPA009558;
+	Wed, 1 Apr 2009 11:55:10 +0200
+Received: from RKDVMKS1/SpoolDir by rkdvmks1.ngate.uni-regensburg.de (Mercury 1.48);
+    1 Apr 09 11:55:09 +0100
+Received: from SpoolDir by RKDVMKS1 (Mercury 1.48); 1 Apr 09 11:55:07 +0100
+In-reply-to: <49D328C2.4000006@op5.se>
+X-mailer: Pegasus Mail for Windows (4.41)
+Content-description: Mail message body
+X-Content-Conformance: HerringScan-0.29/Sophos-P=4.37.0+V=4.37+U=2.07.219+R=05 January 2009+T=589357@20090401.094025Z
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115363>
 
+On 1 Apr 2009 at 10:41, Andreas Ericsson wrote:
 
---cxfMsoqvp1jUizWj
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Ulrich Windl wrote:
+> > On 30 Mar 2009 at 11:06, Andreas Ericsson wrote:
+> > 
+> > [...]
+> >> 3 It's far better to set the version number in the release-process. Usually
+> >>   this can be done automatically by one invocation of "git describe", just
+> >>   as git.git does it.
+> > 
+> > However if you put a version number into every file and THEN commit, it's somewhat 
+> > ridiculous (I'll have to learn about "git describe"). But for configuration 
+> > management you want to have exactly that (find exactly the file that was shipped 
+> > (or used to build)).
+> > 
+> >> We've adopted "3" full out at $dayjob. Our build-machinery gets the version
+> >> number from the git tag (releases can only be built from signed tags), and
+> >> it updates macros and whatnot used for informing the user which version he
+> >> or she is running. This makes a lot more sense both from a bug-reporting
+> >> and from a release process view than having generated version-numbers in
+> > 
+> > So your "release commits" are outside GIT? (see above)
+> > 
+> 
+> They aren't release commits. Just a script that creates a tarball and an RPM
+> (in our case).
 
-On Wed, Apr 01, 2009 at 12:43:38AM -0500, Michael Johnson <redbeard@mdjohns=
-on.us> wrote:
-> Anyway, I decided to try an experiment, as I had mentioned to someone tha=
-t =20
-> if I couldn't get this bug tracked down, I'd have to do the merge =20
-> manually. So... I figured out the common ancestor (I used git show-branch=
-, =20
-> but I'm betting there's an easier way), and merged the ancestor + 1 of th=
-e =20
-> other branch into my HEAD. It segfaulted. So, I tried the resolve strateg=
-y =20
-> at the same point. Amazingly, it worked. And a default recursive merge =
-=20
-> handled the rest.
+OK, that's what I did with CVS also, but with "CVS diff" I see the revision 
+numbers (old and new) for every single file in a patch, while Git just uses "a" 
+and "b". There I'd still prefer what CVS does.
 
-I initially replied to this thread as I wasn't sure if it's a bug in
-merge-recursive or builtin-merge itself. I'm not that familiar with
-merge-recursive, that's why I didn't reply so far. ;-)
+> 
+> >> files. On a side-note; When I told my co-workers I'd like us to switch to
+> >> git, two of them asked about autoversioning features. I said there weren't
+> >> any and asked them to name a single time when we've actually used them for
+> >> anything *at all*. In a team of eight, having been programming for three
+> >> years with 12 releases and about 800 bugreports + feature-requests, noone
+> >> could mention a single time when the autogenerated version numbers had
+> >> actually been used for anything.
+> > 
+> > Hmm: Were they visible to customers?
+> > 
+> 
+> Ofcourse they were, but they were rather useless even there, as a customer
+> could upgrade and the $Id$ tag still wouldn't get updated. It caused a lot
+> of confusion for our not-so-techsavvy users and customers.
 
-> In short, I don't personally need a fix right now, but I can help figure =
-=20
-> out what is broken with it.
+What I don't understand here is: Why wouldn't the $Id$ be updated upon upgrade? 
+Because it's a manual process?
 
-If you don't need rename detection, you can merge with '-s resolve', I
-think that would do what you need and it avoids the problematic
-codepath.
+[...]
 
---cxfMsoqvp1jUizWj
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAknTONYACgkQe81tAgORUJYPNACgkJ4e7E+21LHcD6a4Pn457aqt
-Ok8An2F3HXMC5KTGJWQiWuYaEgrs5UO9
-=GkI4
------END PGP SIGNATURE-----
-
---cxfMsoqvp1jUizWj--
+Regards,
+Ulrich
