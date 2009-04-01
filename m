@@ -1,103 +1,55 @@
-From: Andreas Ericsson <exon@op5.com>
-Subject: Re: On git 1.6 (novice's opinion)
-Date: Wed, 01 Apr 2009 12:21:09 +0200
-Message-ID: <49D34015.9080709@op5.com>
-References: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>, <49D33EC0.29775.7EDC13@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>, <49D328C2.4000006@op5.se> <49D35616.1812.DA02BA@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Add configuration variable for sign-off to format-patch
+Date: Wed, 1 Apr 2009 06:26:10 -0400
+Message-ID: <20090401102610.GC26181@coredump.intra.peff.net>
+References: <20090331185018.GD72569@macbook.lan> <20090331200457.GA23879@coredump.intra.peff.net> <20090331204338.GA88381@macbook.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
-To: Ulrich Windl <ulrich.windl@rz.uni-regensburg.de>
-X-From: git-owner@vger.kernel.org Wed Apr 01 12:24:12 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Wed Apr 01 12:28:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Loxc8-0000QC-9s
-	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 12:24:08 +0200
+	id 1Loxfn-0001Hi-Sh
+	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 12:27:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762276AbZDAKVT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2009 06:21:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762536AbZDAKVR
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 06:21:17 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:21324 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762070AbZDAKVP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Apr 2009 06:21:15 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so651646fgg.17
-        for <git@vger.kernel.org>; Wed, 01 Apr 2009 03:21:12 -0700 (PDT)
-Received: by 10.86.4.14 with SMTP id 14mr5979328fgd.8.1238581272299;
-        Wed, 01 Apr 2009 03:21:12 -0700 (PDT)
-Received: from clix.int.op5.se ([212.112.163.94])
-        by mx.google.com with ESMTPS id 4sm6586104fgg.25.2009.04.01.03.21.10
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 01 Apr 2009 03:21:11 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <49D35616.1812.DA02BA@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+	id S1752660AbZDAK0X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2009 06:26:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752170AbZDAK0X
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 06:26:23 -0400
+Received: from peff.net ([208.65.91.99]:43729 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752176AbZDAK0W (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Apr 2009 06:26:22 -0400
+Received: (qmail 16354 invoked by uid 107); 1 Apr 2009 10:26:38 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 01 Apr 2009 06:26:38 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 01 Apr 2009 06:26:10 -0400
+Content-Disposition: inline
+In-Reply-To: <20090331204338.GA88381@macbook.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115368>
 
-Ulrich Windl wrote:
-> On 1 Apr 2009 at 10:41, Andreas Ericsson wrote:
-> 
->> Ulrich Windl wrote:
->>> On 30 Mar 2009 at 11:06, Andreas Ericsson wrote:
->>>
->>> [...]
->>>> 3 It's far better to set the version number in the release-process. Usually
->>>>   this can be done automatically by one invocation of "git describe", just
->>>>   as git.git does it.
->>> However if you put a version number into every file and THEN commit, it's somewhat 
->>> ridiculous (I'll have to learn about "git describe"). But for configuration 
->>> management you want to have exactly that (find exactly the file that was shipped 
->>> (or used to build)).
->>>
->>>> We've adopted "3" full out at $dayjob. Our build-machinery gets the version
->>>> number from the git tag (releases can only be built from signed tags), and
->>>> it updates macros and whatnot used for informing the user which version he
->>>> or she is running. This makes a lot more sense both from a bug-reporting
->>>> and from a release process view than having generated version-numbers in
->>> So your "release commits" are outside GIT? (see above)
->>>
->> They aren't release commits. Just a script that creates a tarball and an RPM
->> (in our case).
-> 
-> OK, that's what I did with CVS also, but with "CVS diff" I see the revision 
-> numbers (old and new) for every single file in a patch, while Git just uses "a" 
-> and "b". There I'd still prefer what CVS does.
-> 
->>>> files. On a side-note; When I told my co-workers I'd like us to switch to
->>>> git, two of them asked about autoversioning features. I said there weren't
->>>> any and asked them to name a single time when we've actually used them for
->>>> anything *at all*. In a team of eight, having been programming for three
->>>> years with 12 releases and about 800 bugreports + feature-requests, noone
->>>> could mention a single time when the autogenerated version numbers had
->>>> actually been used for anything.
->>> Hmm: Were they visible to customers?
->>>
->> Ofcourse they were, but they were rather useless even there, as a customer
->> could upgrade and the $Id$ tag still wouldn't get updated. It caused a lot
->> of confusion for our not-so-techsavvy users and customers.
-> 
-> What I don't understand here is: Why wouldn't the $Id$ be updated upon upgrade? 
-> Because it's a manual process?
-> 
+On Tue, Mar 31, 2009 at 10:43:48PM +0200, Heiko Voigt wrote:
 
-It MAY not get updated, since $Id$ tags are per-file instead of per-project.
-Any sane project will have more than one file, and the file listing the
-$Id$ that the end-user sees may not have changed since the last release.
+> I see, it is of course true that you should not just sign off
+> everything without thinking about it.
+> 
+> However I always read through my messages before sending them and it is
+> way easier to delete that line than typing/copying it.
 
-Per-file revision tags are stupid and useless for anything but a one-file
-project.
+I agree. Personally, the concept of writing something that I _couldn't_
+sign off on is so foreign to me that I would be very conscious of the
+fact, and it would be simple to remove it during the final proof-read of
+the patch that I do.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+I think to satisfy everyone, though, you need some extra text in the
+documentation indicating that signing off is supposed to be conscious,
+and you should understand the implications of setting the variable.
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+-Peff
