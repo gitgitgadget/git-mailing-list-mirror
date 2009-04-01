@@ -1,99 +1,82 @@
-From: Tomas Carnecky <tom@dbservice.com>
-Subject: Re: More help with "pull" please
-Date: Wed, 1 Apr 2009 22:15:37 +0200
-Message-ID: <4659A860-4AF5-4E34-B38E-60C926E2BAE1@dbservice.com>
-References: <450196A1AAAE4B42A00A8B27A59278E70A7D4D9A@EXCHANGE.trad.tradestation.com>
-Mime-Version: 1.0 (Apple Message framework v930.4)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: John Dlugosz <JDlugosz@tradestation.com>
-X-From: git-owner@vger.kernel.org Wed Apr 01 22:18:25 2009
+From: Ali Gholami Rudi <ali@rudi.ir>
+Subject: Re: [PATCH] builtin-clone.c: fix memory leak in cmd_clone()
+Date: Thu, 2 Apr 2009 00:47:04 +0430
+Message-ID: <20090401201704.GA2237@lilem.mirepesht>
+References: <20090401144056.GC2237@lilem.mirepesht> <alpine.DEB.1.00.0904011754250.13502@intel-tinevez-2-302> <20090401161254.GD2237@lilem.mirepesht> <7v3acs1gyf.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 01 22:19:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lp6t2-0001iT-IS
-	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 22:18:13 +0200
+	id 1Lp6tr-00020G-9A
+	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 22:19:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934133AbZDAUQL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2009 16:16:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933830AbZDAUQK
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 16:16:10 -0400
-Received: from office.neopsis.com ([78.46.209.98]:58301 "EHLO
-	office.neopsis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759330AbZDAUQI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Apr 2009 16:16:08 -0400
-Received: from [192.168.0.130] ([62.65.141.13])
-	(authenticated user tom@dbservice.com)
-	by office.neopsis.com
-	(using TLSv1/SSLv3 with cipher AES128-SHA (128 bits));
-	Wed, 1 Apr 2009 22:16:03 +0200
-In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E70A7D4D9A@EXCHANGE.trad.tradestation.com>
-X-Mailer: Apple Mail (2.930.4)
+	id S1763014AbZDAURU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2009 16:17:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759719AbZDAURS
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 16:17:18 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:45100 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757714AbZDAURR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Apr 2009 16:17:17 -0400
+Received: by fxm2 with SMTP id 2so212472fxm.37
+        for <git@vger.kernel.org>; Wed, 01 Apr 2009 13:17:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=CaREFwFHatFA+a3009+GufzE+OmrCD0T30gMHFmh1jQ=;
+        b=EcxZ8vbFAi0ERgobYMqGgtue3gzt0zRE4xIqdrrMAsP8XSLtbDyL75E/aLlNVDaOvW
+         SG4fzgM4oAUDDcVzBW/Xu27mWkai44+fQUvHIQTalYM6FUe6PT6wAaqHMiOiOU7yE4Fo
+         PTO6UTokFUtI1pB80RN5sYJRxkzhg+m1XzAkw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=AtW2Yrpoh/QIKD8HQNu0mOf5/ikekTZrNMcP63fnBoUzIggDPPvMdFRUeeywvvK/vf
+         D/CU9gaPrBZRIpLBGYxz+ePIcFUvscZuyTxYytuXCr8//GTW/GyuC0Rqc89GAJbhddLN
+         X+1zzjLlIdsXvZKMILQdqDv0QiGonRGHIS3J0=
+Received: by 10.86.36.17 with SMTP id j17mr1005699fgj.27.1238617034556;
+        Wed, 01 Apr 2009 13:17:14 -0700 (PDT)
+Received: from localhost ([85.185.70.156])
+        by mx.google.com with ESMTPS id 12sm7172287fgg.17.2009.04.01.13.17.11
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 01 Apr 2009 13:17:13 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7v3acs1gyf.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.19 (2009-01-27)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115412>
 
+Hi,
 
-On Apr 1, 2009, at 9:28 PM, John Dlugosz wrote:
+Junio C Hamano <gitster@pobox.com> wrote:
+> Yup, I'll queue (I won't have time today to work on git it seems) the
 
-> I've actually given up on using "git pull" at all, preferring to fetch
-> first, examine in gitk, and then decide whether to merge or whatever.
->
-> The problem I have is that it seems to always want to merge  
-> "something"
-> with the current checked-out branch.  It always throws the remote HEAD
-> into the mix, or if fetch lines are set up in the configuration file,
-> takes the first thing on there regardless of which branch I'm  
-> currently
-> checked out.  Maybe I'm wrong, but I just re-read the man page,  
-> forward
-> and backwards, and am more bewildered than ever.
+Thanks.
 
-When you create a branch, you can tell git which remote branch it  
-tracks, like this:
+> other two patches from you, but I was going to drop this one---unless your
+> plan was to make cmd_clone() callable more than once in order to use it in
+> say a C rewrite of git submodule or something like that.
 
-$ git branch --track mynext origin/next
+The only problem in builtin-clone.c seems to be remove_junk() which is
+called from a signal handler or atexit().  cmd_clone() can be changed to
+register this function only once.
 
-So whenever you are on brach 'mynext' and do a git-pull, it will fetch  
-and merge origin/next.
+remove_junk() uses junk_* global variables which are overwritten in each
+cmd_clone() call.  Since no concurrent cmd_clone() is allowed (?) and we
+only care about the last one, this does not seem to be an issue.
 
-You can do the same with the git-checkout command:
+I'll probably send a new patch tomorrow.
 
-$ git checkout --track origin/next
-
-This will create a local branch 'next' which tracks 'origin/next'
-
-> Anyway, I want to help out a co-worker who has a more specialized
-> situation that may be right for a pull.  Also, I'll talk him through
-> cloning the remote from the beginning, so the config files won't be  
-> all
-> strange or not setup from the previous users.
->
-> The only remaining issue is the remote in question:  it is not a bare
-> repository, and may be in use locally as well, at least for  
-> maintenance.
-> So I can't trust its HEAD to be anything reasonable at any given time.
->
-> This person wants to track a remote branch tip.  When that advances or
-> otherwise changes on the remote, update the working tree to match.  It
-> will always use the same branch, let's call it ReleaseCandidate for  
-> this
-> discussion.
->
-> My question is:  What is the easiest way to create this local  
-> repository
-> and operate it so that he can just keep it following that branch on  
-> the
-> remote?
-
-$ git clone $url XXX
-$ cd XXX
-$ git checkout --trach origin/ReleaseCandidate
-...
-$ git pull # will automatically fetch and merge origin/ReleaseCandidate
-
-tom
+Regards,
+Ali
