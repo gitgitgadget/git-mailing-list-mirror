@@ -1,192 +1,155 @@
-From: =?iso-8859-1?Q?Martin_Storsj=F6?= <martin@martin.st>
-Subject: [PATCH] Allow curl to rewind the read buffers
-Date: Wed, 1 Apr 2009 19:48:24 +0300 (EEST)
-Message-ID: <Pine.LNX.4.64.0904011946510.5901@localhost.localdomain>
-References: <Pine.LNX.4.64.0904011809080.5901@localhost.localdomain>
- <7vbprg1h3m.fsf@gitster.siamese.dyndns.org>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [PATCH v2] Add configuration variable for sign-off to format-patch
+Date: Wed, 1 Apr 2009 19:51:54 +0200
+Message-ID: <20090401175153.GA90421@macbook.lan>
+References: <20090331185018.GD72569@macbook.lan> <20090331200457.GA23879@coredump.intra.peff.net> <20090331204338.GA88381@macbook.lan> <20090401102610.GC26181@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 01 18:50:29 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 01 19:53:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lp3da-0006hL-EH
-	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 18:50:03 +0200
+	id 1Lp4dK-00015d-OJ
+	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 19:53:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762485AbZDAQs2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2009 12:48:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759235AbZDAQs2
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 12:48:28 -0400
-Received: from smtp2.abo.fi ([130.232.213.77]:60231 "EHLO smtp2.abo.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757991AbZDAQs1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Apr 2009 12:48:27 -0400
-Received: from albin.abo.fi (albin.abo.fi [130.232.81.192])
-	by smtp2.abo.fi (8.14.3/8.12.9) with ESMTP id n31GmOFw002550
-	for <git@vger.kernel.org>; Wed, 1 Apr 2009 19:48:24 +0300
-X-X-Sender: mstorsjo@localhost.localdomain
-In-Reply-To: <7vbprg1h3m.fsf@gitster.siamese.dyndns.org>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (smtp2.abo.fi [130.232.213.77]); Wed, 01 Apr 2009 19:48:24 +0300 (EEST)
-X-Virus-Scanned: by foxy.abo.fi (foxy.abo.fi: Wed Apr  1 19:48:24 2009)
-X-Scanned-By: MIMEDefang 2.64 on 130.232.213.77
+	id S1764875AbZDARwE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2009 13:52:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932896AbZDARwB
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 13:52:01 -0400
+Received: from darksea.de ([83.133.111.250]:43094 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932872AbZDARwA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Apr 2009 13:52:00 -0400
+Received: (qmail 16618 invoked from network); 1 Apr 2009 19:51:43 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 1 Apr 2009 19:51:43 +0200
+Content-Disposition: inline
+In-Reply-To: <20090401102610.GC26181@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115404>
 
-When using multi-pass authentication methods, the curl library may
-need to rewind the read buffers (depending on how much already has
-been fed to the server) used for providing data to HTTP PUT, POST or
-PROPFIND, and in order to allow the library to do so, we need to tell
-it how by providing either an ioctl callback or a seek callback.
+If you regularly create patches which require a Signed-off: line you may
+want to make it your default to add that line. It also helps you not to forget
+to add the -s/--signoff switch.
 
-This patch adds an ioctl callback, which should be usable on older
-curl versions (since 7.12.3) than the seek callback (introduced in
-curl 7.18.0).
-
-Some HTTP servers (such as Apache) give an 401 error reply immediately
-after receiving the headers (so no data has been read from the read
-buffers, and thus no rewinding is needed), but other servers (such
-as Lighttpd) only replies after the whole request has been sent and
-all data has been read from the read buffers, making rewinding necessary.
-
-Signed-off-by: Martin Storsjo <martin@martin.st>
+Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
 ---
+This adds a note about the purpose of the Signed-off-by: line to the
+Documentation this is the interdiff:
 
-Updated comment to better describe the potential need for this.
+ diff --git a/Documentation/config.txt b/Documentation/config.txt
+ index 9ccc28c..27cb7f1 100644
+ --- a/Documentation/config.txt
+ +++ b/Documentation/config.txt
+ @@ -717,7 +717,10 @@ format.thread::
+  
+  format.signoff::
+      A boolean value which lets you enable the `-s/--signoff` option of
+ -    format-patch by default.
+ +    format-patch by default. *Note:* Adding the Signed-off-by: line to a
+ +    patch should be a conscious act and means that you certify you have
+ +    the rights to submit this work under the same open source license.
+ +    Please see the 'SubmittingPatches' document for further discussion.
+  
+  gc.aggressiveWindow::
+  	The window size parameter used in the delta compression
 
- http-push.c |   24 ++++++++++++++++++++++++
- http.c      |   19 +++++++++++++++++++
- http.h      |    7 +++++++
- 3 files changed, 50 insertions(+), 0 deletions(-)
+ Documentation/config.txt           |    7 +++++++
+ Documentation/git-format-patch.txt |    1 +
+ builtin-log.c                      |   23 ++++++++++++++++-------
+ 3 files changed, 24 insertions(+), 7 deletions(-)
 
-diff --git a/http-push.c b/http-push.c
-index 6ce5a1d..7dc0dd4 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -567,6 +567,10 @@ static void start_put(struct transfer_request *request)
- 	curl_easy_setopt(slot->curl, CURLOPT_INFILE, &request->buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_INFILESIZE, request->buffer.buf.len);
- 	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, fread_buffer);
-+#ifndef NO_CURL_IOCTL
-+	curl_easy_setopt(slot->curl, CURLOPT_IOCTLFUNCTION, ioctl_buffer);
-+	curl_easy_setopt(slot->curl, CURLOPT_IOCTLDATA, &request->buffer);
-+#endif
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_null);
- 	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_PUT);
- 	curl_easy_setopt(slot->curl, CURLOPT_UPLOAD, 1);
-@@ -1267,6 +1271,10 @@ static struct remote_lock *lock_remote(const char *path, long timeout)
- 	curl_easy_setopt(slot->curl, CURLOPT_INFILE, &out_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_INFILESIZE, out_buffer.buf.len);
- 	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, fread_buffer);
-+#ifndef NO_CURL_IOCTL
-+	curl_easy_setopt(slot->curl, CURLOPT_IOCTLFUNCTION, ioctl_buffer);
-+	curl_easy_setopt(slot->curl, CURLOPT_IOCTLDATA, &out_buffer);
-+#endif
- 	curl_easy_setopt(slot->curl, CURLOPT_FILE, &in_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
-@@ -1508,6 +1516,10 @@ static void remote_ls(const char *path, int flags,
- 	curl_easy_setopt(slot->curl, CURLOPT_INFILE, &out_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_INFILESIZE, out_buffer.buf.len);
- 	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, fread_buffer);
-+#ifndef NO_CURL_IOCTL
-+	curl_easy_setopt(slot->curl, CURLOPT_IOCTLFUNCTION, ioctl_buffer);
-+	curl_easy_setopt(slot->curl, CURLOPT_IOCTLDATA, &out_buffer);
-+#endif
- 	curl_easy_setopt(slot->curl, CURLOPT_FILE, &in_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
-@@ -1584,6 +1596,10 @@ static int locking_available(void)
- 	curl_easy_setopt(slot->curl, CURLOPT_INFILE, &out_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_INFILESIZE, out_buffer.buf.len);
- 	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, fread_buffer);
-+#ifndef NO_CURL_IOCTL
-+	curl_easy_setopt(slot->curl, CURLOPT_IOCTLFUNCTION, ioctl_buffer);
-+	curl_easy_setopt(slot->curl, CURLOPT_IOCTLDATA, &out_buffer);
-+#endif
- 	curl_easy_setopt(slot->curl, CURLOPT_FILE, &in_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_URL, repo->url);
-@@ -1766,6 +1782,10 @@ static int update_remote(unsigned char *sha1, struct remote_lock *lock)
- 	curl_easy_setopt(slot->curl, CURLOPT_INFILE, &out_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_INFILESIZE, out_buffer.buf.len);
- 	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, fread_buffer);
-+#ifndef NO_CURL_IOCTL
-+	curl_easy_setopt(slot->curl, CURLOPT_IOCTLFUNCTION, ioctl_buffer);
-+	curl_easy_setopt(slot->curl, CURLOPT_IOCTLDATA, &out_buffer);
-+#endif
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_null);
- 	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_PUT);
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, dav_headers);
-@@ -1910,6 +1930,10 @@ static void update_remote_info_refs(struct remote_lock *lock)
- 		curl_easy_setopt(slot->curl, CURLOPT_INFILE, &buffer);
- 		curl_easy_setopt(slot->curl, CURLOPT_INFILESIZE, buffer.buf.len);
- 		curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, fread_buffer);
-+#ifndef NO_CURL_IOCTL
-+		curl_easy_setopt(slot->curl, CURLOPT_IOCTLFUNCTION, ioctl_buffer);
-+		curl_easy_setopt(slot->curl, CURLOPT_IOCTLDATA, &buffer);
-+#endif
- 		curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_null);
- 		curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_PUT);
- 		curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, dav_headers);
-diff --git a/http.c b/http.c
-index eae74aa..3e8d548 100644
---- a/http.c
-+++ b/http.c
-@@ -44,6 +44,25 @@ size_t fread_buffer(void *ptr, size_t eltsize, size_t nmemb, void *buffer_)
- 	return size;
- }
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index ad22cb8..27cb7f1 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -715,6 +715,13 @@ format.thread::
+ 	A true boolean value is the same as `shallow`, and a false
+ 	value disables threading.
  
-+#ifndef NO_CURL_IOCTL
-+curlioerr ioctl_buffer(CURL *handle, int cmd, void *clientp)
-+{
-+	struct buffer *buffer = clientp;
++format.signoff::
++    A boolean value which lets you enable the `-s/--signoff` option of
++    format-patch by default. *Note:* Adding the Signed-off-by: line to a
++    patch should be a conscious act and means that you certify you have
++    the rights to submit this work under the same open source license.
++    Please see the 'SubmittingPatches' document for further discussion.
 +
-+	switch (cmd) {
-+	case CURLIOCMD_NOP:
-+		return CURLIOE_OK;
-+
-+	case CURLIOCMD_RESTARTREAD:
-+		buffer->posn = 0;
-+		return CURLIOE_OK;
-+
-+	default:
-+		return CURLIOE_UNKNOWNCMD;
+ gc.aggressiveWindow::
+ 	The window size parameter used in the delta compression
+ 	algorithm used by 'git-gc --aggressive'.  This defaults
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index c2eb5fa..c25ea10 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -197,6 +197,7 @@ more than one.
+ 	numbered = auto
+ 	cc = <email>
+ 	attach [ = mime-boundary-string ]
++	signoff = true
+ ------------
+ 
+ 
+diff --git a/builtin-log.c b/builtin-log.c
+index c7a5772..d77b7fb 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -465,6 +465,7 @@ static void add_header(const char *value)
+ #define THREAD_SHALLOW 1
+ #define THREAD_DEEP 2
+ static int thread = 0;
++static int do_signoff = 0;
+ 
+ static int git_format_config(const char *var, const char *value, void *cb)
+ {
+@@ -514,6 +515,10 @@ static int git_format_config(const char *var, const char *value, void *cb)
+ 		thread = git_config_bool(var, value) && THREAD_SHALLOW;
+ 		return 0;
+ 	}
++	if (!strcmp(var, "format.signoff")) {
++		do_signoff = git_config_bool(var, value);
++		return 0;
 +	}
-+}
-+#endif
-+
- size_t fwrite_buffer(const void *ptr, size_t eltsize, size_t nmemb, void *buffer_)
- {
- 	size_t size = eltsize * nmemb;
-diff --git a/http.h b/http.h
-index 905b462..26abebe 100644
---- a/http.h
-+++ b/http.h
-@@ -37,6 +37,10 @@
- #define CURLE_HTTP_RETURNED_ERROR CURLE_HTTP_NOT_FOUND
- #endif
  
-+#if LIBCURL_VERSION_NUM < 0x070c03
-+#define NO_CURL_IOCTL
-+#endif
-+
- struct slot_results
- {
- 	CURLcode curl_result;
-@@ -67,6 +71,9 @@ struct buffer
- extern size_t fread_buffer(void *ptr, size_t eltsize, size_t nmemb, void *strbuf);
- extern size_t fwrite_buffer(const void *ptr, size_t eltsize, size_t nmemb, void *strbuf);
- extern size_t fwrite_null(const void *ptr, size_t eltsize, size_t nmemb, void *strbuf);
-+#ifndef NO_CURL_IOCTL
-+extern curlioerr ioctl_buffer(CURL *handle, int cmd, void *clientp);
-+#endif
+ 	return git_log_config(var, value, cb);
+ }
+@@ -865,13 +870,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		}
+ 		else if (!strcmp(argv[i], "--signoff") ||
+ 			 !strcmp(argv[i], "-s")) {
+-			const char *committer;
+-			const char *endpos;
+-			committer = git_committer_info(IDENT_ERROR_ON_NO_NAME);
+-			endpos = strchr(committer, '>');
+-			if (!endpos)
+-				die("bogus committer info %s", committer);
+-			add_signoff = xmemdupz(committer, endpos - committer + 1);
++			do_signoff = 1;
+ 		}
+ 		else if (!strcmp(argv[i], "--attach")) {
+ 			rev.mime_boundary = git_version_string;
+@@ -923,6 +922,16 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	}
+ 	argc = j;
  
- /* Slot lifecycle functions */
- extern struct active_request_slot *get_active_slot(void);
++	if(do_signoff) {
++		const char *committer;
++		const char *endpos;
++		committer = git_committer_info(IDENT_ERROR_ON_NO_NAME);
++		endpos = strchr(committer, '>');
++		if (!endpos)
++			die("bogus committer info %s", committer);
++		add_signoff = xmemdupz(committer, endpos - committer + 1);
++	}
++
+ 	for (i = 0; i < extra_hdr_nr; i++) {
+ 		strbuf_addstr(&buf, extra_hdr[i]);
+ 		strbuf_addch(&buf, '\n');
 -- 
-1.6.0.2
+1.6.2.1.424.g0b27.dirty
