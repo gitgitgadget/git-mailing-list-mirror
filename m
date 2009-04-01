@@ -1,84 +1,103 @@
-From: "Wesley J. Landaker" <wjl@icecavern.net>
-Subject: [PATCH] Documentation: git-svn: fix trunk/fetch svn-remote key typo
-Date: Wed, 1 Apr 2009 15:02:30 -0600
-Organization: icecavern.net
-Message-ID: <200904011502.31465.wjl@icecavern.net>
-Mime-Version: 1.0
-Content-Type: Multipart/Mixed;
-  boundary="Boundary-00=_nZ90Je1jzU8b2vR"
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCHv2 2/2] Make local branches behave like remote branches when --tracked
+Date: Wed,  1 Apr 2009 23:42:49 +0200
+Message-ID: <1238622169-5238-3-git-send-email-git@drmicha.warpmail.net>
+References: <49CD0440.6010304@drmicha.warpmail.net>
+ <1238622169-5238-1-git-send-email-git@drmicha.warpmail.net>
+ <1238622169-5238-2-git-send-email-git@drmicha.warpmail.net>
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 01 23:15:11 2009
+X-From: git-owner@vger.kernel.org Wed Apr 01 23:44:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lp7m7-0008PE-9s
-	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 23:15:07 +0200
+	id 1Lp8Em-0000Pm-Nu
+	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 23:44:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759575AbZDAVNe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2009 17:13:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758463AbZDAVNe
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 17:13:34 -0400
-Received: from rinoa.icecavern.net ([92.243.7.152]:55600 "EHLO icecavern.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756808AbZDAVNd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Apr 2009 17:13:33 -0400
-X-Greylist: delayed 648 seconds by postgrey-1.27 at vger.kernel.org; Wed, 01 Apr 2009 17:13:33 EDT
-Received: from tonberry.icecavern.net (c-76-113-110-228.hsd1.nm.comcast.net [76.113.110.228])
-	by icecavern.net (Postfix) with ESMTPSA id DC14436548;
-	Wed,  1 Apr 2009 15:02:40 -0600 (MDT)
-X-Face: #;qMWg=Msk*d]z]X1P2-t9]~6+RoGF$nJo89f%|Y`^whfl3Wj$X2Q_1u)ZAW@Hx|g)J]!)=?utf-8?q?=0A=09Br0=3FK3Imj?=)np=]r*QN,Q8].V99^Og'xl-d9FM~$yaSGB"mfXb>x[QNi[()=?utf-8?q?oob=60/4M42=26We=0A=09cC1jq=3DQ=5CS?=@ck\>H@=?utf-8?q?t=26Y7Y=3Apub=3DHOWqY=7D-d=5CwrCxvsTo7k1Ek=7DqQO=5D5=7EngK=5E=25?=
- =?utf-8?q?cT5IzmmG=5BQ=0A=09Nha=7D=5DAmI=60R-6m84VcWT4=236c?=)1`>t{$~l6:gZMtv18ge'!d[Yk-/?T3>C5O-|6On4(
- =?utf-8?q?N=7BAV=23=0A=094Eyw52=5B=3A=25Z?=>#"c
+	id S934728AbZDAVnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2009 17:43:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934761AbZDAVnI
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 17:43:08 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:44076 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S934727AbZDAVnG (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Apr 2009 17:43:06 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 0D24130DFD8;
+	Wed,  1 Apr 2009 17:43:04 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Wed, 01 Apr 2009 17:43:04 -0400
+X-Sasl-enc: /e8eJv4XRhtr92PQpLuzM4ZQOc+1kJG1yL7bOXMIehY0 1238622183
+Received: from localhost (p4FC63601.dip0.t-ipconnect.de [79.198.54.1])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id F405045E18;
+	Wed,  1 Apr 2009 17:43:02 -0400 (EDT)
+X-Mailer: git-send-email 1.6.2.1.507.g0e68d
+In-Reply-To: <1238622169-5238-2-git-send-email-git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115417>
 
---Boundary-00=_nZ90Je1jzU8b2vR
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+This makes sure that local branches, when followed using --track, behave
+the same as remote ones (e.g. differences being reported by git status
+and git checkout). This fixes 1 known failure.
 
+The fix is done within branch_get(): The first natural candidate,
+namely remote_find_tracking(), does not have all the necessary info
+because in general there is no remote struct for '.', and we don't want
+one because it would show up in other places as well.
 
-Fix the git-svn documentation svn-remote example section talking about
-tags and branches by using the proper key "fetch" instead of "trunk".
-Using "trunk" actually might be nice, but it doesn't currently work.
+branch_get(), on the other hand, has access to merge_names[] (in
+addition to merge[]) and therefore can set up the followed branch
+easily.
 
-The fetch line for the trunk was also reordered to be at the top of the
-list, since most people think about the trunk/tags/branches trio in that
-logical order.
-
-Signed-off-by: Wesley J. Landaker <wjl@icecavern.net>
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
- Documentation/git-svn.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ remote.c                 |    7 +++++--
+ t/t6040-tracking-info.sh |    2 +-
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-
---Boundary-00=_nZ90Je1jzU8b2vR
-Content-Type: text/x-patch;
-  charset="utf-8";
-  name="fa96799d745c94a691cb71a3768afc328718416c.diff"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline;
-	filename="fa96799d745c94a691cb71a3768afc328718416c.diff"
-
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index cda3389..64f1c55 100644
-=2D-- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -672,9 +672,9 @@ listed below are allowed:
- ------------------------------------------------------------------------
- [svn-remote "project-a"]
- 	url =3D http://server.org/svn
-+	fetch =3D trunk/project-a:refs/remotes/project-a/trunk
- 	branches =3D branches/*/project-a:refs/remotes/project-a/branches/*
- 	tags =3D tags/*/project-a:refs/remotes/project-a/tags/*
-=2D	trunk =3D trunk/project-a:refs/remotes/project-a/trunk
- ------------------------------------------------------------------------
-=20
- Keep in mind that the '*' (asterisk) wildcard of the local ref
-
---Boundary-00=_nZ90Je1jzU8b2vR--
+diff --git a/remote.c b/remote.c
+index 2b037f1..d12140e 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1170,8 +1170,9 @@ struct branch *branch_get(const char *name)
+ 			for (i = 0; i < ret->merge_nr; i++) {
+ 				ret->merge[i] = xcalloc(1, sizeof(**ret->merge));
+ 				ret->merge[i]->src = xstrdup(ret->merge_name[i]);
+-				remote_find_tracking(ret->remote,
+-						     ret->merge[i]);
++				if (remote_find_tracking(ret->remote, ret->merge[i])
++				    && !strcmp(ret->remote_name, "."))
++					ret->merge[i]->dst = xstrdup(ret->merge_name[i]);
+ 			}
+ 		}
+ 	}
+@@ -1451,6 +1452,8 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
+ 	base = branch->merge[0]->dst;
+ 	if (!prefixcmp(base, "refs/remotes/")) {
+ 		base += strlen("refs/remotes/");
++	} else if (!prefixcmp(base, "refs/heads/")) {
++		base += strlen("refs/heads/");
+ 	}
+ 	if (!num_theirs)
+ 		strbuf_addf(sb, "Your branch is ahead of '%s' "
+diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
+index 2a2b6b6..3d6db4d 100755
+--- a/t/t6040-tracking-info.sh
++++ b/t/t6040-tracking-info.sh
+@@ -58,7 +58,7 @@ test_expect_success 'checkout' '
+ 	grep "have 1 and 1 different" actual
+ '
+ 
+-test_expect_failure 'checkout with local tracked branch' '
++test_expect_success 'checkout with local tracked branch' '
+ 	git checkout master &&
+ 	git checkout follower >actual
+ 	grep "is ahead of" actual
+-- 
+1.6.2.1.507.g0e68d
