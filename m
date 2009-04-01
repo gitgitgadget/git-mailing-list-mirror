@@ -1,80 +1,68 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH v2] Add configuration variable for sign-off to 
-	format-patch
-Date: Wed, 1 Apr 2009 19:55:43 +0200
-Message-ID: <fabb9a1e0904011055u67b3ebfbuae15c8e23d7e5ed0@mail.gmail.com>
-References: <20090331185018.GD72569@macbook.lan> <20090331200457.GA23879@coredump.intra.peff.net> 
-	<20090331204338.GA88381@macbook.lan> <20090401102610.GC26181@coredump.intra.peff.net> 
-	<20090401175153.GA90421@macbook.lan>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/8] mergetool: use tabs consistently
+Date: Wed, 01 Apr 2009 10:56:32 -0700
+Message-ID: <7vab70z29b.fsf@gitster.siamese.dyndns.org>
+References: <1238389428-69328-1-git-send-email-davvid@gmail.com>
+ <1238389428-69328-2-git-send-email-davvid@gmail.com>
+ <7vzlf3flim.fsf@gitster.siamese.dyndns.org>
+ <20090330213530.GA7091@hashpling.org> <20090331063613.GA20690@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Wed Apr 01 19:57:40 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Charles Bailey <charles@hashpling.org>, git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 01 19:58:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lp4gz-0001zy-Tw
-	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 19:57:38 +0200
+	id 1Lp4hw-0002GM-Lv
+	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 19:58:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754949AbZDAR4F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Apr 2009 13:56:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754028AbZDAR4D
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 13:56:03 -0400
-Received: from mail-bw0-f169.google.com ([209.85.218.169]:39674 "EHLO
-	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753421AbZDAR4B convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Apr 2009 13:56:01 -0400
-Received: by bwz17 with SMTP id 17so146859bwz.37
-        for <git@vger.kernel.org>; Wed, 01 Apr 2009 10:55:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=RJ7teZ5YWvPjA6c6Jtmedh46/r8f41Hv9v4FIIK5xFo=;
-        b=ReATsVz0LHmgxI8OaefgBB+lyJ7+DtNVoXtoxVjEfTPCbuHHT9dO/u5oRaW5Ww3Tgc
-         d0ZxqM/DEZYvjvdbB6UISXxqx6sIYIWboqqSi0krAZ+UT38vPQj+W4Kdk05Fvfr6j5ic
-         O+cUj/w/UjzGPHcBWyhAQV38S21ksrFVhDHGo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=dXN8xV8VCBUwfM1foOk0ZkJNTID61LZBgkein5/7i8beVNL3tBdMiz2H7Ai1U/fLNq
-         EIAZW4si3c3OXkySxiJ8LUSz/rivGKBcNhFXkOzbtlHebiJy8bozseModiCrnpS6Fxtt
-         cEvHLera4/IqaiQIHFvIoFV2HgxxvCrleDhqQ=
-In-Reply-To: <20090401175153.GA90421@macbook.lan>
-Received: by 10.103.248.17 with SMTP id a17mr2957701mus.83.1238608558349; Wed, 
-	01 Apr 2009 10:55:58 -0700 (PDT)
+	id S1757731AbZDAR4m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2009 13:56:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764529AbZDAR4m
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 13:56:42 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63635 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764462AbZDAR4l (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Apr 2009 13:56:41 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1F6FFA6E38;
+	Wed,  1 Apr 2009 13:56:38 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D329EA6E32; Wed,
+  1 Apr 2009 13:56:33 -0400 (EDT)
+In-Reply-To: <20090331063613.GA20690@gmail.com> (David Aguilar's message of
+ "Mon, 30 Mar 2009 23:36:14 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 72901260-1EE6-11DE-BF67-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115407>
 
-Heya,
+David Aguilar <davvid@gmail.com> writes:
 
-On Wed, Apr 1, 2009 at 19:51, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> =A0format.signoff::
-> =A0 =A0 =A0A boolean value which lets you enable the `-s/--signoff` o=
-ption of
-> =A0- =A0 =A0format-patch by default.
-> =A0+ =A0 =A0format-patch by default. *Note:* Adding the Signed-off-by=
-: line to a
-> =A0+ =A0 =A0patch should be a conscious act and means that you certif=
-y you have
-> =A0+ =A0 =A0the rights to submit this work under the same open source=
- license.
-> =A0+ =A0 =A0Please see the 'SubmittingPatches' document for further d=
-iscussion.
+> On  0, Charles Bailey <charles@hashpling.org> wrote:
+>> On Mon, Mar 30, 2009 at 01:44:01AM -0700, Junio C Hamano wrote:
+>> 
+>> I don't much like [1/8] though. I'm all in favour of consistency, but
+>> this patch touches most of the lines in git-mergetool and tries to go
+>> the opposite way to the consistency drive that we were trying to
+>> introduce gradually (i.e. only through lines materially affected by
+>> subsequent patches) in:
+>
+> Sounds good.  I'll re-roll and give the refactoring another go.
+>
+> I think we can definitely do better, and more importantly, I
+> think we can decouple things by using less globals.
+>
+> Junio, did you have any comments about patch v2
+> "difftool: add support for difftool.prompt config variable"?
 
-Which brings us to the question... what about projects that do not
-have such a file?
+I only took a cursory look but it; you did seem to have based it on the
+one I queued in 'pu' with a typo-fixup and it looked fine.
 
---=20
-Cheers,
-
-Sverre Rabbelier
+Thanks.
