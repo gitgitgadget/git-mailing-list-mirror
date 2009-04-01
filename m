@@ -1,114 +1,104 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [PATCH] git-gui: make "Git GUI Here" Explorer extension
- more robust
-Date: Wed, 1 Apr 2009 01:59:24 +0200
-Message-ID: <200904010159.24764.markus.heidelberg@web.de>
-References: <200903300030.03733.markus.heidelberg@web.de> <20090330141510.GW23521@spearce.org> <499F039601E4A981@joe.mail.tiscali.sys> (added by postmaster@tiscali.it)
-Reply-To: markus.heidelberg@web.de
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC GSoC 2009: git-submodule for multiple, active developers
+ on  active trees]
+Date: Wed, 1 Apr 2009 02:58:31 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904010247170.10279@pacific.mpi-cbg.de>
+References: <526944450903251314o622711b5u3665bac90398d6be@mail.gmail.com>  <20090330153245.GD23521@spearce.org>  <526944450903310830q5f56fe82xb64ae8dc3c954ffb@mail.gmail.com>  <alpine.DEB.1.00.0903311749160.7052@intel-tinevez-2-302> 
+ <526944450903311532u24eb74fby1f558c1bef5c653a@mail.gmail.com>  <alpine.DEB.1.00.0904010058490.6616@intel-tinevez-2-302> <526944450903311649q358d43edkf07e2e5058a9e527@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, msysgit@googlegroups.com, git@vger.kernel.org
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Wed Apr 01 02:00:58 2009
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from yw-out-2122.google.com ([74.125.46.26])
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: P Baker <me@retrodict.com>
+X-From: git-owner@vger.kernel.org Wed Apr 01 02:58:57 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lont2-0000Wp-Td
-	for gcvm-msysgit@m.gmane.org; Wed, 01 Apr 2009 02:00:57 +0200
-Received: by yw-out-2122.google.com with SMTP id 1so998840ywp.63
-        for <gcvm-msysgit@m.gmane.org>; Tue, 31 Mar 2009 16:59:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received-spf:authentication-results:received
-         :received:from:reply-to:to:subject:date:user-agent:cc:references
-         :in-reply-to:jabber-id:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id:x-sender
-         :x-provags-id:sender:precedence:x-google-loop:mailing-list:list-id
-         :list-post:list-help:list-unsubscribe:x-beenthere-env:x-beenthere;
-        bh=CrB2M6q84jNLb2kul9tjZanCNZMn027aAmXR/JUP2n0=;
-        b=3UQvFAx+hJEAgrPIvtmU/OOnudYOU0DeczaYk//8VIpRKLcdjm0W82t0DzdWLOupTx
-         f9RiQv0MF1oQlP6GNG5j0Dw2EubmwTY/FYO6N0xqfVwZhhx6Gp5nq0vXOdr6hW66gl8a
-         hKzJ1I/TRA+mKBz2qTmT/ee/n0YkATCI2rkCQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:from
-         :reply-to:to:subject:date:user-agent:cc:references:in-reply-to
-         :jabber-id:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id:x-provags-id:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        b=GvyubojgoBzUugyBSxSxeqpk/FkT/IIeyOik4zVcpQNvbsmyiQisZ34bgg1Pu6LVfw
-         HLvPWm6+BhoJoKfjyvaREnhEUavXbw2sVu7ywdkReKi9glxH+HIAGOk1hTmDyWk5FjXB
-         G5g76XTFkZV3qdL3PAWEvTVuOqsCM+pV7Se9o=
-Received: by 10.90.63.6 with SMTP id l6mr1029297aga.12.1238543961180;
-        Tue, 31 Mar 2009 16:59:21 -0700 (PDT)
-Received: by 10.177.113.42 with SMTP id q42gr4584yqm.0;
-	Tue, 31 Mar 2009 16:59:21 -0700 (PDT)
-X-Sender: markus.heidelberg@web.de
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.90.118.19 with SMTP id q19mr252041agc.5.1238543960185; Tue, 31 Mar 2009 16:59:20 -0700 (PDT)
-Received: from fmmailgate03.web.de (fmmailgate03.web.de [217.72.192.234]) by gmr-mx.google.com with ESMTP id 14si703240gxk.7.2009.03.31.16.59.19; Tue, 31 Mar 2009 16:59:20 -0700 (PDT)
-Received-SPF: pass (google.com: domain of markus.heidelberg@web.de designates 217.72.192.234 as permitted sender) client-ip=217.72.192.234;
-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of markus.heidelberg@web.de designates 217.72.192.234 as permitted sender) smtp.mail=markus.heidelberg@web.de
-Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172]) by fmmailgate03.web.de (Postfix) with ESMTP id 8C467F9CEE0F; Wed,  1 Apr 2009 01:59:19 +0200 (CEST)
-Received: from [89.59.106.150] (helo=.) by smtp06.web.de with asmtp (TLSv1:AES256-SHA:256) (WEB.DE 4.110 #277) id 1LonrT-0004go-00; Wed, 01 Apr 2009 01:59:19 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <499F039601E4A981@joe.mail.tiscali.sys>
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX18xUUKgz7YM4FPitj6TmLv/EFo2/n+xtets+1Yv Q7QH4tr0fq3Wn8EpQLSYp6wkbns6Cy3PKA6M2n8mjNdPlA6F4A krxH532ads2eIaH7mhVQ==
-Sender: msysgit@googlegroups.com
+	id 1LoomE-0006hg-PA
+	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 02:57:59 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753882AbZDAA42 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Mar 2009 20:56:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753325AbZDAA41
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 20:56:27 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47141 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752734AbZDAA40 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Mar 2009 20:56:26 -0400
+Received: (qmail invoked by alias); 01 Apr 2009 00:56:17 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp029) with SMTP; 01 Apr 2009 02:56:17 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19F1AB9BNhFwFoRdG6dybDnzAF5Izv4uew3ZgdkJu
+	IS94rhxz0II4g/
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <526944450903311649q358d43edkf07e2e5058a9e527@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit+owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit+help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-X-BeenThere-Env: msysgit@googlegroups.com
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115334>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115335>
 
+Hi,
 
-Giuseppe Bilotta, 31.03.2009:
-> On Monday 30 March 2009 16:15, Shawn O. Pearce wrote:
+On Tue, 31 Mar 2009, P Baker wrote:
+
+> I'll paraphrase to see if I understand your points:
 > 
-> > Markus Heidelberg <markus.heidelberg@web.de> wrote:
-> >> 
-> >> But I just noticed, that it will obviously "cd .." forever, if no .git/
-> >> was found. Somehow the root directory has to be catched.
-> > 
-> > Yup.  I'm dropping this patch for now because of this issue, but
-> > I'll look at it again if its addressed in another version.  :-)
-> 
-> I have a couple of pending patches to fix git gui handling of repositories,
-> including support for nonstandard repository locations and bare repositories.
-> You can find them at
-> 
-> http://git.oblomov.eu/git
-> 
-> and specifically
-> 
-> http://git.oblomov.eu/git/patches/b2e4c32e13df1b7f18e7b4a9f746650471a3122e..a63526bf3238cf25d9a5521f7ee35ed1bd11cb16
+> *Moving objects from submodule .git directories into the base .git/
+> directory would protect the submodules and is a good idea.
 
-I just tried these two patches on Windows (Uhh, Qemu is too slow for
-this, I have to setup something else).
+No, I did not say that.
 
-> I got distracted by real-life issue and forgot to resend them. I'll try
-> to find the time again later on this week. I'm not entirely sure these
-> solve Markus' problem though.
+I said that moving submodules' working directory need to protected when 
+renaming/deleting submodules.
 
-Starting git-gui via Explorer "Git GUI Here" is now possible from the
-.git/ directory with your patches, but it doesn't show the working tree
-status. Also "Explore Working Copy" wants to open the .git directory
-then instead of the project directory (I say "want" because of the issue
-I just sent a patch out). It seems to be as non-functional as if you run
-"git status" inside of .git/
+Even worse, I think that moving the .git/ directory into the 
+superproject's .git/ would be at least quite a bit awkward in the nested 
+case.
 
-Markus
+> *Moving to a .git/ file from .gitmodules should be taken off of the
+> goal list (I went back and read this thread:
+> http://thread.gmane.org/gmane.comp.version-control.git/78605; seemed
+> to clear things up).
+
+Can't follow links here, as I am reading this offline, so cannot comment.
+
+> *git submodule recurse would be a good option (not as a default), if
+> the remaining issues are resolved.
+
+Definitely.
+
+> *It would be a good idea for git submodule to work with foreign VCS,
+> through Daniel's patches.
+
+But that would not only apply to submodules, but rather all repositories, 
+to the point that "git submodule" does not need any change.
+
+> I appreciate the guidance, it's helping me to see that some of this work 
+> has already been done, it needs to be finished and pushed into a public 
+> release. As an intense user of submodules, what does it do poorly/not do 
+> for your needs?
+
+One gripe I have, but which should be rather easy to fix: "git checkout -- 
+submodule/" does not update the index, last time I checked.  (It correctly 
+does not touch the submodule's working directory.)
+
+Another one: The most common mistake with submodules is to commit and push 
+the superproject, after having committed (but not pushed) in the 
+submodule.  Not sure how that could be helped.
+
+Further, often it would come in rather handy to be able to say something 
+like "git diff $REVISION_AS_COMMITTED_IN_THE_SUPERPROJECT" from within 
+the submodule...
+
+git submodule summary should output to the pager by default.
+
+Oh, and it would not hurt performance on Windows at all if git-submodule 
+would be finally made a builtin.
+
+Ciao,
+Dscho
