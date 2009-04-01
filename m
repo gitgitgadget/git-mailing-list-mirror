@@ -1,82 +1,74 @@
-From: Constantine Plotnikov <constantine.plotnikov@gmail.com>
-Subject: [JGIT PATCH/RFC] Added -crlf attribute for test patch files
-Date: Wed, 1 Apr 2009 13:59:50 +0300
-Message-ID: <85647ef50904010359r639f5278t23c85d7c91a59d6b@mail.gmail.com>
+From: Ali Gholami Rudi <ali@rudi.ir>
+Subject: [PATCH] builtin-clone.c: no need to strdup for setenv
+Date: Wed, 1 Apr 2009 15:52:25 +0430
+Message-ID: <20090401112225.GB2237@lilem.mirepesht>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 01 13:01:38 2009
+X-From: git-owner@vger.kernel.org Wed Apr 01 13:27:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoyCH-0008O4-CV
-	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 13:01:29 +0200
+	id 1LoyYn-0005f7-IU
+	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 13:24:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752780AbZDAK7z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2009 06:59:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752677AbZDAK7z
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 06:59:55 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:51838 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752660AbZDAK7y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Apr 2009 06:59:54 -0400
-Received: by fxm2 with SMTP id 2so2877485fxm.37
-        for <git@vger.kernel.org>; Wed, 01 Apr 2009 03:59:50 -0700 (PDT)
+	id S1753610AbZDALXO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2009 07:23:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752677AbZDALXO
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 07:23:14 -0400
+Received: from mail-ew0-f165.google.com ([209.85.219.165]:33017 "EHLO
+	mail-ew0-f165.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752658AbZDALXN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Apr 2009 07:23:13 -0400
+Received: by ewy9 with SMTP id 9so3018987ewy.37
+        for <git@vger.kernel.org>; Wed, 01 Apr 2009 04:23:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=/BgME5/UvjPfDDwspmAh7c26fmLLCwUFcYBCV0IAQo0=;
-        b=qHlwVUaqzot1a9L5yJqMWjqeCyhVB4d4G/Kby40v1HsTVXznPfNCKOWoV637c+cv84
-         zXeVmA/1JlHDKqqeGMjfcOuduhtPSLvoSD+Ozo8JaxNHC2RIZYu/4hUZSv2fkz6L0+Ro
-         sdc6iukRpYCxLIhqIlkSYNGwbvMrd3A3brSu8=
+        h=domainkey-signature:received:received:sender:date:from:to:subject
+         :message-id:mime-version:content-type:content-disposition:user-agent;
+        bh=9qKI/rW8FYnLr35JwSmJla0RK1JFFinkQIqgEQ/c5jo=;
+        b=KoaPt8yJutmiScgiriV+yVVd1xz6nLCLfpwWaqdiTepXtWmraVy8u5nUORAsjqHhKZ
+         idLEPLG4AQUzEGRQTdCxIYX60sjKk3PeToQ3OrBT7OI6glZKxWp6EzA7RDZ/B2L6YrG3
+         XBQP8XBH+3TXl2TWYQ7KU61XeMF+Bo4OIM6d0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=IKtMPUn/fH1G22HG0CS0Y0NP96NhXY0bNr83X4Oy/yLY4IvnhZxiXGsvlKGpP087Z8
-         DUptt9PbrkyHa1JjSDip3e0c/Nj95KjTsgSNT1h+7iTGJ0QOw4idpoua5rdP0KKnYJQD
-         2AhWIEFo895qRmLomGGomAUWxU0hSZzo7/XXg=
-Received: by 10.204.31.75 with SMTP id x11mr2763545bkc.0.1238583590080; Wed, 
-	01 Apr 2009 03:59:50 -0700 (PDT)
+        h=sender:date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        b=Vn6Ck5Lbld9Ldc//EURSMYqCHmYBhtQyG4Wc3ZVQCA/pHdZtbNDyygLAFNnQc6DWBr
+         jSP/A7TxL7GOwGkjSX7InPEMQuK9Gxbzwfu5dM+8YSup5AG1V6qMBWYwRjFvjUJBj3Oj
+         wJ/FXSNRytECcXCU1pW/lp8z8Nz+FqGjSSMkg=
+Received: by 10.216.73.79 with SMTP id u57mr2518891wed.40.1238584990020;
+        Wed, 01 Apr 2009 04:23:10 -0700 (PDT)
+Received: from localhost ([85.185.70.254])
+        by mx.google.com with ESMTPS id 28sm4163436eye.14.2009.04.01.04.23.03
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 01 Apr 2009 04:23:07 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.19 (2009-01-27)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115371>
 
-The method RawParseUtils.nextLF(byte[],int,char) used for parsing
-patches expects \n as a line separator. However on MinGW git
-uses \r\n as line separator for text files by default, and patch
-files in egit/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/patch
-are treated as text files. This caused test suit failure. To prevent
-test suit failure, "-crlf" attribute is added for patch files.
+The setenv function makes a copy, itself.
 
-Signed-off-by: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+Signed-off-by: Ali Gholami Rudi <ali@rudi.ir>
 ---
-I'm not completely sure whether I have fixed a correct place.
-MinGW itself uses \n as line separator in patches. Thus I think
-it is an error to have \r\n in the patch file, so I have fixed
-patch files rather than parsing code. Other possible solution
-is to fix nextLF() to handle \r\n as well.
+ builtin-clone.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Without this fix the egit could not be built on the maven when
-it is checked out using MinGW git.
-
- .../tst-rsrc/org/spearce/jgit/patch/.gitattributes |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644
-org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/patch/.gitattributes
-
-diff --git a/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/patch/.gitattributes
-b/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/patch/.gitattributes
-new file mode 100644
-index 0000000..b38f87f
---- /dev/null
-+++ b/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/patch/.gitattributes
-@@ -0,0 +1 @@
-+*.patch -crlf
--- 
-1.6.0.2.1172.ga5ed0
+diff --git a/builtin-clone.c b/builtin-clone.c
+index 0031b5f..28d15bb 100644
+--- a/builtin-clone.c
++++ b/builtin-clone.c
+@@ -406,7 +406,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	atexit(remove_junk);
+ 	sigchain_push_common(remove_junk_on_signal);
+ 
+-	setenv(CONFIG_ENVIRONMENT, xstrdup(mkpath("%s/config", git_dir)), 1);
++	setenv(CONFIG_ENVIRONMENT, mkpath("%s/config", git_dir), 1);
+ 
+ 	if (safe_create_leading_directories_const(git_dir) < 0)
+ 		die("could not create leading directories of '%s'", git_dir);
