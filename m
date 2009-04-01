@@ -1,33 +1,32 @@
 From: Andreas Ericsson <ae@op5.se>
 Subject: Re: On git 1.6 (novice's opinion)
-Date: Wed, 01 Apr 2009 10:37:24 +0200
-Message-ID: <49D327C4.7000101@op5.se>
-References: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>, <49CCAF5D.21814.24B4DE63@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>, <f9d2a5e10903292318w6108bc50u2ddc830a6d9d85df@mail.gmail.com> <49D339B2.4388.6B1DEF@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+Date: Wed, 01 Apr 2009 10:41:38 +0200
+Message-ID: <49D328C2.4000006@op5.se>
+References: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>, <49D08B8B.1000309@op5.se> <49D33EC0.29775.7EDC13@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Russ Dill <russ.dill@gmail.com>,
-	"H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
 To: Ulrich Windl <ulrich.windl@rz.uni-regensburg.de>
-X-From: git-owner@vger.kernel.org Wed Apr 01 10:39:35 2009
+X-From: git-owner@vger.kernel.org Wed Apr 01 10:43:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lovyw-0006Zs-Rm
-	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 10:39:35 +0200
+	id 1Low2U-0007nr-Q7
+	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 10:43:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761993AbZDAIhj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2009 04:37:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754757AbZDAIhi
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 04:37:38 -0400
-Received: from mail.op5.se ([193.201.96.20]:44912 "EHLO mail.op5.se"
+	id S1760566AbZDAIlp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2009 04:41:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757845AbZDAIlo
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 04:41:44 -0400
+Received: from mail.op5.se ([193.201.96.20]:54711 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762182AbZDAIhe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Apr 2009 04:37:34 -0400
+	id S1755385AbZDAIln (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Apr 2009 04:41:43 -0400
 Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 88C471B80F34;
-	Wed,  1 Apr 2009 10:15:01 +0200 (CEST)
+	by mail.op5.se (Postfix) with ESMTP id DA73124B0009;
+	Wed,  1 Apr 2009 10:19:14 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at 
 X-Spam-Flag: NO
 X-Spam-Score: -2.499
@@ -36,80 +35,71 @@ X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
 	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
 Received: from mail.op5.se ([127.0.0.1])
 	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id EW8F1j+IkcJA; Wed,  1 Apr 2009 10:15:00 +0200 (CEST)
+	with ESMTP id pkB0R6m81LoC; Wed,  1 Apr 2009 10:19:13 +0200 (CEST)
 Received: from clix.int.op5.se (unknown [172.27.78.14])
-	by mail.op5.se (Postfix) with ESMTP id C4B631B80F1A;
-	Wed,  1 Apr 2009 10:14:59 +0200 (CEST)
+	by mail.op5.se (Postfix) with ESMTP id 884291B80F1A;
+	Wed,  1 Apr 2009 10:19:13 +0200 (CEST)
 User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <49D339B2.4388.6B1DEF@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+In-Reply-To: <49D33EC0.29775.7EDC13@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115357>
 
 Ulrich Windl wrote:
-> On 29 Mar 2009 at 23:18, Russ Dill wrote:
+> On 30 Mar 2009 at 11:06, Andreas Ericsson wrote:
 > 
->> On Fri, Mar 27, 2009 at 2:50 AM, Ulrich Windl
->> <ulrich.windl@rz.uni-regensburg.de> wrote:
->>> On 27 Mar 2009 at 9:05, H.Merijn Brand wrote:
->>>
->>>> On Fri, 27 Mar 2009 08:21:36 +0100, "Ulrich Windl"
->>>> <ulrich.windl@rz.uni-regensburg.de> wrote:
->>>>
->>>>> What I'd like to see in git (My apologies if some were already discussed to
->>>>> death):
->>>>>
->>>>> 1) The ability to use the file's time at the time of add/commit instead of
->>>>>    the current time, and the ability tho check outfiles with the times stored
->>>>>    in the repository.
->>>>>
->>>>> 2) Keyword substitution. I know it's controverse (dealing with binary files),
->>>>>    but I'd like to have some automatic version numbering keyword at least:
->>>>>    Initial idea is that every commit with a change increments the number by
->>>>>    one, and when merging numbers a and b, the resulting number is max(a, b) + 1.
->>>> impossible. Even with checkin- and checkout hooks, you won't get that
->>>> SCCS behaviour. They have to be better in something too :)
->>>> /me still misses that but got used to it
->>> Hi,
->>>
->>> what made me wonder is this (about item 1): I thought I've read that blobs store
->>> content and attributes, so very obviously I wondered why not store thr "right
->>> attributes" (i.e. the time of the file). My reasoning: You make some changes, then
->>> test them (which might last several hours or days). The if I'm happy I'll
->>> "commit". Naturally I want to see the time of change for each file when the change
->>> had been actually made, not when the change was committed. Likewise when checking
->>> out, I want to be able to see the time of modification, not the time of commit.
->>> I'm aware that many people don't care about such differences...
->>>
->> Ok, so if Nancy did some work on the part number form 6 months ago,
->> but it got merged into master yesterday. What date should the file
->> have? This kind of incremental version number, and trusting of file
+> [...]
+>> 3 It's far better to set the version number in the release-process. Usually
+>>   this can be done automatically by one invocation of "git describe", just
+>>   as git.git does it.
 > 
-> If Nancy committed it with my semantics, the file's date would be 6 months old 
-> before the merge. If the merge would not require any change, the file's date would 
-> still be six months old. If a change was required, the file's date would be the 
-> time of change. That sounds quite logical to me.
+> However if you put a version number into every file and THEN commit, it's somewhat 
+> ridiculous (I'll have to learn about "git describe"). But for configuration 
+> management you want to have exactly that (find exactly the file that was shipped 
+> (or used to build)).
+> 
+>> We've adopted "3" full out at $dayjob. Our build-machinery gets the version
+>> number from the git tag (releases can only be built from signed tags), and
+>> it updates macros and whatnot used for informing the user which version he
+>> or she is running. This makes a lot more sense both from a bug-reporting
+>> and from a release process view than having generated version-numbers in
+> 
+> So your "release commits" are outside GIT? (see above)
 > 
 
-But if you built the old source before you merged but after Nancy made her
-changes, make wouldn't grok that the file is actually changed. Trust me,
-the current semantics are far better.
+They aren't release commits. Just a script that creates a tarball and an RPM
+(in our case).
 
->> dates really only matters on a centralized system with a single
->> branch.
->>
->> Not only that, but modification times are much more useful with make.
->> Merging or pulling small changes into a tree shouldn't require a full
->> rebuild of the entire tree which in some cases could take hours.
+>> files. On a side-note; When I told my co-workers I'd like us to switch to
+>> git, two of them asked about autoversioning features. I said there weren't
+>> any and asked them to name a single time when we've actually used them for
+>> anything *at all*. In a team of eight, having been programming for three
+>> years with 12 releases and about 800 bugreports + feature-requests, noone
+>> could mention a single time when the autogenerated version numbers had
+>> actually been used for anything.
 > 
-> Git is not a build system, and I really dislike "full rebuilds", but for 
-> stability, before releasing anything, one should test it with a full rebuild.
+> Hmm: Were they visible to customers?
+> 
 
-I build all the time. Before and after every commit (merges are one type of
-commit). I rely on file timestamps to be an accurate indicator of when the
-file last changed *on my disk*.
+Ofcourse they were, but they were rather useless even there, as a customer
+could upgrade and the $Id$ tag still wouldn't get updated. It caused a lot
+of confusion for our not-so-techsavvy users and customers.
+
+>> Otoh, having the entire repository locally makes it painless to view the
+>> commit-log for an entire project (or parts of it) and see who changed what
+>> when and why, which is information that's actually *useful*.
+> 
+> [Big meals need time to digest: Just give me more time to do so (getting into 
+> git). As with vi and Emacs (usualy I prefer Emacs), there will be situations when 
+> I won't use Git however]
+> 
+
+Take all the time you need. It's a paradigm-shift, because the information you
+thought you needed is made obsolete by the information you *actually* need.
+Wrapping ones head around the fact that one's been wrong for several years takes
+a little time ;-)
 
 -- 
 Andreas Ericsson                   andreas.ericsson@op5.se
