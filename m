@@ -1,102 +1,75 @@
-From: Andreas Ericsson <exon@op5.com>
-Subject: Re: On git 1.6 (novice's opinion)
-Date: Wed, 01 Apr 2009 14:40:30 +0200
-Message-ID: <49D360BE.6030100@op5.com>
-References: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>, <49D35616.1812.DA02BA@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>, <49D34015.9080709@op5.com> <49D37190.23422.145597D@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <exon@op5.com>, Andreas Ericsson <ae@op5.se>,
-	git@vger.kernel.org
-To: Ulrich Windl <ulrich.windl@rz.uni-regensburg.de>
-X-From: git-owner@vger.kernel.org Wed Apr 01 14:42:18 2009
+From: David Aguilar <davvid@gmail.com>
+Subject: git-{diff,merge} refactor round 2
+Date: Wed,  1 Apr 2009 05:55:04 -0700
+Message-ID: <1238590514-41893-1-git-send-email-davvid@gmail.com>
+Cc: git@vger.kernel.org
+To: gitster@pobox.com, charles@hashpling.org
+X-From: git-owner@vger.kernel.org Wed Apr 01 14:57:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lozlg-0000Kf-7Q
-	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 14:42:08 +0200
+	id 1Lp006-0003nW-Hf
+	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 14:57:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758282AbZDAMkh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2009 08:40:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756549AbZDAMkg
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 08:40:36 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:1100 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752922AbZDAMkg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Apr 2009 08:40:36 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so673822fgg.17
-        for <git@vger.kernel.org>; Wed, 01 Apr 2009 05:40:33 -0700 (PDT)
-Received: by 10.86.33.10 with SMTP id g10mr6045399fgg.44.1238589633333;
-        Wed, 01 Apr 2009 05:40:33 -0700 (PDT)
-Received: from clix.int.op5.se ([212.112.163.94])
-        by mx.google.com with ESMTPS id d6sm1583058fga.17.2009.04.01.05.40.31
+	id S1764614AbZDAMzf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2009 08:55:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758107AbZDAMze
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 08:55:34 -0400
+Received: from wa-out-1112.google.com ([209.85.146.183]:5853 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758739AbZDAMzd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Apr 2009 08:55:33 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so13652wah.21
+        for <git@vger.kernel.org>; Wed, 01 Apr 2009 05:55:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=skZxMgLx0YvrBdIqgBgY8cCLdISa95xkewMhDmrzeIU=;
+        b=ghOVuy7Yl/cn2EZN2ConGflK4NjA341emiR+d19oeaFunAbFpZGpXFIaRk0HBorR2p
+         RAZt8tphhl9RV14ttyV4zYFifuAmG2urDxzwvL3iBgA82apI5PAKpflH19gNJnc1cQcI
+         RP0kMRIVSCAAb0DADr+yBuF5DKJVyCpWK/9Qw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=Mwl04vSPEk+UaiRlo6j87+ZIAQNdopNGpISNJGmsHklo1qqNy0dQ8tToF6ue+GHxFa
+         CU8Xs1I+l3m/jNjfoI+8dyKMzocQV7NyyxA43nil0lyTk2BbTiecQGOG5Ap8AZnsWCHf
+         ILc7503dYzUoXrFQw5Po2Ap+Vr1+LG7W4W2+o=
+Received: by 10.115.92.2 with SMTP id u2mr5191335wal.228.1238590530348;
+        Wed, 01 Apr 2009 05:55:30 -0700 (PDT)
+Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id v39sm7176892wah.40.2009.04.01.05.55.29
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 01 Apr 2009 05:40:32 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <49D37190.23422.145597D@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+        Wed, 01 Apr 2009 05:55:29 -0700 (PDT)
+X-Mailer: git-send-email 1.6.2.1.423.g442d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115379>
 
-Ulrich Windl wrote:
-> On 1 Apr 2009 at 12:21, Andreas Ericsson wrote:
-> 
-> [...]
->>> What I don't understand here is: Why wouldn't the $Id$ be updated upon upgrade? 
->>> Because it's a manual process?
->>>
->> It MAY not get updated, since $Id$ tags are per-file instead of per-project.
->> Any sane project will have more than one file, and the file listing the
->> $Id$ that the end-user sees may not have changed since the last release.
->>
->> Per-file revision tags are stupid and useless for anything but a one-file
->> project.
-> 
-> Hmm...:
-> # what vmunix
-> vmunix:
->          ivt.s $Date: 2008/11/21 09:10:19 $Revision: r11.31/5 PATCH_11.31 (B11.3
-> 1.0903LR)
->          side_dumpdev - HP IDE Dump Driver B.11.31 /ux/core/kern/em/svc/dump/scs
-> i_ide_dumpdev.c: Jan  8 2009, 23:48:25
->          eschgr - Changer Driver B.11.31.01 /ux/core/kern/common/io/escsi/eschgr
-> /eschgr.c:Jan 10 2007,17:04:47
->          eschgr - Changer Driver B.11.31.01 /ux/core/kern/common/io/escsi/eschgr
-> /eschgr_diag.c:Dec 27 2006,16:59:17
-> [...]
->         vxfs:$RCSfile: vx_portal.c,v $  $Revision: 4.14.26.3 $
->         vxfs:$RCSfile: vx_portal_osrel.c,v $    $Revision: 1.1.2.1 $
->         vxfs:$RCSfile: vx_portal_dlkm.c,v $     $Revision: 1.1.2.1 $
->         vxfs:$RCSfile: vxportal50.modmeta,v $   $Revision: 1.1.2.5 $
->          wsio_cdio.c $Date: 2008/06/03 05:52:50 $Revision: r11.31/13 PATCH_11.31
->  (B11.31.0809LR)
->          $Revision: wsio:    B11.31.0809LR
->          $Revision: wxb_hp:    B.11.31_LR
->          tracer.s $Date: 2008/04/28 17:14:06 $Revision: r11.31/3 PATCH_11.31 (B1
-> 1.31.0809LR)
-> 
-> For a kernel, where development is decentralized, it would make sense: Imageine a 
-> user (or distributor) will nut upgrade anything to the latest version, but only 
-> parts (subsystems). Then the single kernel version number is meaningless.
-> 
+Here's the 2nd round of refactoring.
 
-Not really. They can (and should) create their own version numbers. I can't make
-sense of the above output. If you ask a developer to piece together the puzzle
-that makes up this subsystem and then fit it into the bigger picture, he won't
-love you for it. Not only because this particular subsystem might well be the
-same version across several different releases with all their different API's
-(the input system has changed its API's incompatibly quite frequently over the
-last six months, fe, so a driver-version *alone* in that system makes absolutely
-no sense if you're trying to debug it).
+This is based on Junio's pu branch.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+I'm including the difftool.prompt patch in this series
+because it is a dependency and including it here makes
+that obvious.
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+I tried to keep the dependencies untangled while still being
+able to manage the various command-line flags all in one
+place.  Alas, this is shell so it can only be so elegant.
+
+I went ahead and rolled in the "remove -o $MERGED" from
+tkdiff for the diff mode case.
+
+
+Still TODO:
+incorporate the "add diffuse as a merge tool" patch.
+
+Is there more that can be refactored?
+Probably the part that sets up candidate mergetools,
+replacing that with a function might be useful.
+
+Here's what I've got so far.
