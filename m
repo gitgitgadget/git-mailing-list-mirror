@@ -1,167 +1,97 @@
-From: Andreas Ericsson <ae@op5.se>
+From: "Ulrich Windl" <ulrich.windl@rz.uni-regensburg.de>
 Subject: Re: On git 1.6 (novice's opinion)
-Date: Wed, 01 Apr 2009 09:29:22 +0200
-Message-ID: <49D317D2.8030403@op5.se>
-References: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>, <49CCE72E.20081.258EE61F@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>, <m3fxgz2h2n.fsf@localhost.localdomain> <49D32CE5.21780.391D18@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+Date: Wed, 01 Apr 2009 09:35:17 +0200
+Organization: Universitaetsklinikum Regensburg
+Message-ID: <49D33556.24356.5A16ED@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+References: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>, <7veiwi5t8j.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: Ulrich Windl <ulrich.windl@rz.uni-regensburg.de>
-X-From: git-owner@vger.kernel.org Wed Apr 01 09:31:24 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 01 09:37:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Louux-0003N4-5M
-	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 09:31:23 +0200
+	id 1Lov0c-00052n-Ts
+	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 09:37:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758380AbZDAH33 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2009 03:29:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755087AbZDAH33
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 03:29:29 -0400
-Received: from mail.op5.se ([193.201.96.20]:60045 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753624AbZDAH32 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Apr 2009 03:29:28 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 9A2551B80F21;
-	Wed,  1 Apr 2009 09:06:59 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id selQw3K4Ysh9; Wed,  1 Apr 2009 09:06:58 +0200 (CEST)
-Received: from clix.int.op5.se (unknown [172.27.78.14])
-	by mail.op5.se (Postfix) with ESMTP id EB4211B80F1A;
-	Wed,  1 Apr 2009 09:06:57 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <49D32CE5.21780.391D18@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+	id S1760425AbZDAHfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2009 03:35:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759775AbZDAHfj
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 03:35:39 -0400
+Received: from rrzmta2.rz.uni-regensburg.de ([194.94.155.53]:28356 "EHLO
+	rrzmta2.rz.uni-regensburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1760128AbZDAHfi (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Apr 2009 03:35:38 -0400
+Received: from rrzmta2.rz.uni-regensburg.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id D1A99C4607;
+	Wed,  1 Apr 2009 09:35:38 +0200 (CEST)
+Received: from kgate1.dvm.klinik.uni-regensburg.de (kgate1.klinik.uni-regensburg.de [132.199.176.18])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by rrzmta2.rz.uni-regensburg.de (Postfix) with ESMTP id A5E5BC4554;
+	Wed,  1 Apr 2009 09:35:37 +0200 (CEST)
+Received: from rkdvmks1.ngate.uni-regensburg.de (rkdvmks1.dvm.klinik.uni-regensburg.de [132.199.176.1])
+	by kgate1.dvm.klinik.uni-regensburg.de (8.13.6/8.13.6/20070831MT-1) with ESMTP id n317ZUPn000519;
+	Wed, 1 Apr 2009 09:35:30 +0200
+Received: from RKDVMKS1/SpoolDir by rkdvmks1.ngate.uni-regensburg.de (Mercury 1.48);
+    1 Apr 09 09:35:29 +0100
+Received: from SpoolDir by RKDVMKS1 (Mercury 1.48); 1 Apr 09 09:35:23 +0100
+In-reply-to: <7veiwi5t8j.fsf@gitster.siamese.dyndns.org>
+X-mailer: Pegasus Mail for Windows (4.41)
+Content-description: Mail message body
+X-Content-Conformance: HerringScan-0.29/Sophos-P=4.37.0+V=4.37+U=2.07.219+R=05 January 2009+T=589357@20090401.072036Z
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115345>
 
-Ulrich Windl wrote:
-> On 27 Mar 2009 at 7:09, Jakub Narebski wrote:
+On 27 Mar 2009 at 18:30, Junio C Hamano wrote:
+
+> "Ulrich Windl" <ulrich.windl@rz.uni-regensburg.de> writes:
 > 
->> "Ulrich Windl" <ulrich.windl@rz.uni-regensburg.de> writes:
->>> On 27 Mar 2009 at 13:49, Michael J Gruber wrote: 
->>>> Ulrich Windl venit, vidit, dixit 27.03.2009 08:21:
->>> [...]
->>>
->>>> Keyword substitution and cvs/svn style version numbers are independent
->>>> issues. The sha1 describes a commit uniquely, one could use that as a
->>>> keyword.
->>> However version numbers and time stamps have the property of being at least 
->>> partially ordered in respect of "newer/older". That property does not hold for 
->>> SHA-1 checksums. Just imagine suggesting users to upgrade from Microsoft 
->>> Word/004765c2a1e9771e886f0dbe87d4f89643cd6f70 to Microsoft 
->>> Word/00b7e6f51130f234a969c84ee9231a5ff7fc8a82 ;-)
->> That is why people use output of git-describe and _tag_ their releases,
->> and make embedding version number in released version (tarball / binary)
->> the job of make: see GIT-VERSION-GEN script in git sources, and how it
->> is used in Makefile.
+> > ... Also some seemingly dangerous commands that cannot easily be undone
+> > should ask safety questions ("cvs merge (-j)" would also fall into that
+> > category.
 > 
-> OK, but imaginge someone sends you some file that originated from some git 
-> version, maybe with minor modifications. Is there a way to find out from what git 
-> version that file was derived? IMHO that's where "automatically replaced 
-> placeholders" (like $id$) make sense.
+> This is slightly an interesting point.
 > 
-
-Actually, that's where communication makes sense. With the CVS style keywords,
-that file could have come from 1.3.7, or 2.9.1 (if it hasn't changed), and
-the bug the changes are fixing might be in some other file entirely (such as
-a header file on some particular system, but the offending call could well
-be made in some other file).
-
-If they build from the version control system, they're most likely quite
-competent enough in finding the version number of the project they're using.
-If they're building from sources, you can easily put the version number of
-the project in every source-file you have with just a simple sed script.
-Git makes that quite easy for you. Consider something like this:
-
---8<--8<-- release.sh --8<--8<--
-#!/bin/sh
-project=foo
-latest_tag=$(git describe --abbrev=0)
-version=$(echo tag | sed 's/^v//')
-git archive --format=tar $latest_tag --prefix=$project-$version/ | \
-	sed s/@@VERSION@@/$version/ | \
-	gzip -9 > $project-$version.tar.gz
---8<--8<--8<--8<--
-
-Now, if you put @@VERSION@@ as the keyword in all the source-files, all
-the files released as anything but a clone of your version control system
-will have a version tag that marks the version of your *project* rather
-than some arbitrary number indicating how many times that particular file
-has been changed over the course of your project.
-
-I know which I prefer.
-
->>>> Increasing version numbers are meaningless in a true DVCS world. What is
->>>> your 100th commit may not be someone else's, even if both your master's
->>>> heads are the same! This is why hg version numbers are a local thing.
->>>> They are merely a local shortcut for specifying a revision and serve the
->>>> same purpose as git's "backward" counts like HEAD~3 etc. Neither of them
->>>> work permanently, not even in a local repo, if you allow rebasing.
->>> Maybe I didn't fully understand, but having a version number that is larger than 
->>> any parent's version numbers when doing a merge/commit doesn't look wrong to me.
->> I'm sorry to dissapoint you, but without central server assigning
->> numbers to commits it wouldn't simply work in distributed version
->> control world.  Take for example the following situation: somebody
->> clones your repository, and creates new commit on 'master' (trunk) and
->> it gets version number N.  Meanwhile you also independently create new
->> commit on 'master'... and without central authority it would also get
->> version number N.  Then you would merge (pull) his/her changes, and
->> you would have two commits with the same number; not something you want.
+> In CVS and Subversion, "merge" (rather "update") can be a dangerous
+> operation.  You start working, you keep building, and you eventually
+> accumulate quite a lot of changes but you still cannot see the end of the
+> tunnel.  Your changes are incomplete and you will upset others if you
+> commit.  Your changes are extensive enough that it can conflict heavily
+> with what others have done already, and there is a high chance that you
+> can screw up the merging but there is no easy way (unless you tar-up the
+> whole work tree before attempting to update) to get back to the state
+> before your merge.  Damned if you commit, damned if you don't.  You lose
+> either way.
 > 
-> Anyway the result would have number "N+1". Maybe you misunderstood: I'm not 
-> proposing to replace git's internal version numbering (SHA-1), but so introduce 
-> some more comprehensible, primitive user-level numbering.
+> This is because you cannot have a local commit.  The problem is inherent
+> to the centralized nature of these systems.
 > 
-
-It's been discussed to death and noone has been able to solve all the corner
-cases. If you do, feel free to send the patches. In my experience though, the
-git notation (HEAD~3) is totally superior to any made-up version numbers.
-This is because in 99% of the cases where you're referring to anything but
-"latest", you're either interested in some stable release (which should be
-tagged, so you get to pick whatever version number you want) for diffing
-purposes, or you want a *range* of commits (to send as patches, or to give
-as an indication of "I think something happened somewhere here"), and the
-backward count notation of git fits that mindset a whole lot better than
-having numbers that increment from the start, and therefore quickly become
-as unwieldy as the SHA1's for the human brain.
-
->> Not to mention that you can have multiple roots (multiple commits with
->> no parent) in git repository; besides independent branches (like
->> 'man', 'html' or 'todo') it is usually result of absorbing or
->> subtree-merging other projects.  In 'master' branch there are 5 roots
->> or more: joined 'git-tools' (mailinfo / mailsplit), absorbed gitweb,
->> and subtree-merged gitk and git-gui.  And here you would again have
->> multiple commits with the same number...
+> Distributed systems are different.  Unlike CVS/Subversion's
 > 
-> Which would not harm, because it would be version N from committer X. Any if 
-> committer X merges from anything else, the next number would be > N. I did not 
-> claim that my method makes a total ordering of commits and merges possible.
+> 	work work work; then
 > 
-> I truly believe in unique IDs, but they are just not handy in every situation.
+>         update to merge, risk screwing up the work in progress (or almost
+> 	finished work); then
 > 
+>         commit
+> 
+> workflow, in a distributed system, you first commit and then merge,
+> preferably from a clean slate.  You will not have to worry about screwing
+> up the conflict resolution, because both states (what the other guy did,
+> and what you did) are committed safely away and you can reset back to the
+> state before you start your merge.
 
-What do they solve that the HEAD~3 syntax does not?
+Hi!
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+OK, that example is not that dangerous in git, but git also has commands a 
+beginner could make some undesired damage ("git rebase", maybe).
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Regards,
+Ulrich
