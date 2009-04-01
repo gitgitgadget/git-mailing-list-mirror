@@ -1,104 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC GSoC 2009: git-submodule for multiple, active developers
- on  active trees]
-Date: Wed, 1 Apr 2009 02:58:31 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0904010247170.10279@pacific.mpi-cbg.de>
-References: <526944450903251314o622711b5u3665bac90398d6be@mail.gmail.com>  <20090330153245.GD23521@spearce.org>  <526944450903310830q5f56fe82xb64ae8dc3c954ffb@mail.gmail.com>  <alpine.DEB.1.00.0903311749160.7052@intel-tinevez-2-302> 
- <526944450903311532u24eb74fby1f558c1bef5c653a@mail.gmail.com>  <alpine.DEB.1.00.0904010058490.6616@intel-tinevez-2-302> <526944450903311649q358d43edkf07e2e5058a9e527@mail.gmail.com>
+From: Kris Shannon <kris@shannon.id.au>
+Subject: Re: On git 1.6 (novice's opinion)
+Date: Wed, 1 Apr 2009 13:32:21 +1100
+Message-ID: <e51f4f550903311932x118e1378yc1b25e5d9c97d50d@mail.gmail.com>
+References: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: P Baker <me@retrodict.com>
-X-From: git-owner@vger.kernel.org Wed Apr 01 02:58:57 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Ulrich Windl <ulrich.windl@rz.uni-regensburg.de>
+X-From: git-owner@vger.kernel.org Wed Apr 01 04:34:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LoomE-0006hg-PA
-	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 02:57:59 +0200
+	id 1LoqHX-0002Cd-2I
+	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 04:34:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753882AbZDAA42 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Mar 2009 20:56:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753325AbZDAA41
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 20:56:27 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47141 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752734AbZDAA40 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Mar 2009 20:56:26 -0400
-Received: (qmail invoked by alias); 01 Apr 2009 00:56:17 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp029) with SMTP; 01 Apr 2009 02:56:17 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19F1AB9BNhFwFoRdG6dybDnzAF5Izv4uew3ZgdkJu
-	IS94rhxz0II4g/
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <526944450903311649q358d43edkf07e2e5058a9e527@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1753498AbZDACcZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Mar 2009 22:32:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752417AbZDACcZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 Mar 2009 22:32:25 -0400
+Received: from yw-out-2324.google.com ([74.125.46.30]:36894 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751466AbZDACcY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Mar 2009 22:32:24 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so2744818ywb.1
+        for <git@vger.kernel.org>; Tue, 31 Mar 2009 19:32:21 -0700 (PDT)
+Received: by 10.231.16.199 with SMTP id p7mr1546205iba.40.1238553141659; Tue, 
+	31 Mar 2009 19:32:21 -0700 (PDT)
+In-Reply-To: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115336>
 
-Hi,
+2009/3/27 Ulrich Windl <ulrich.windl@rz.uni-regensburg.de>:
+> 2) Keyword substitution. I know it's controverse (dealing with binary=
+ files),
+> but I'd like to have some automatic version numbering keyword at leas=
+t:
+> Initial idea is that every commit with a change increments the number=
+ by one,
+> and when merging numbers a and b, the resulting number is max(a, b) +=
+ 1.
 
-On Tue, 31 Mar 2009, P Baker wrote:
+Check out gitattributes(5) - the ident attribute:
 
-> I'll paraphrase to see if I understand your points:
-> 
-> *Moving objects from submodule .git directories into the base .git/
-> directory would protect the submodules and is a good idea.
+When the attribute ident is set for a path, git replaces $Id$ in the bl=
+ob
+object=C2=A0with $Id:, followed by the 40-character hexadecimal blob ob=
+ject name,
+followed by a dollar sign $ upon checkout. Any byte sequence that begin=
+s
+with $Id: and ends with $ in the worktree file is replaced with $Id$ up=
+on
+check-in.
 
-No, I did not say that.
-
-I said that moving submodules' working directory need to protected when 
-renaming/deleting submodules.
-
-Even worse, I think that moving the .git/ directory into the 
-superproject's .git/ would be at least quite a bit awkward in the nested 
-case.
-
-> *Moving to a .git/ file from .gitmodules should be taken off of the
-> goal list (I went back and read this thread:
-> http://thread.gmane.org/gmane.comp.version-control.git/78605; seemed
-> to clear things up).
-
-Can't follow links here, as I am reading this offline, so cannot comment.
-
-> *git submodule recurse would be a good option (not as a default), if
-> the remaining issues are resolved.
-
-Definitely.
-
-> *It would be a good idea for git submodule to work with foreign VCS,
-> through Daniel's patches.
-
-But that would not only apply to submodules, but rather all repositories, 
-to the point that "git submodule" does not need any change.
-
-> I appreciate the guidance, it's helping me to see that some of this work 
-> has already been done, it needs to be finished and pushed into a public 
-> release. As an intense user of submodules, what does it do poorly/not do 
-> for your needs?
-
-One gripe I have, but which should be rather easy to fix: "git checkout -- 
-submodule/" does not update the index, last time I checked.  (It correctly 
-does not touch the submodule's working directory.)
-
-Another one: The most common mistake with submodules is to commit and push 
-the superproject, after having committed (but not pushed) in the 
-submodule.  Not sure how that could be helped.
-
-Further, often it would come in rather handy to be able to say something 
-like "git diff $REVISION_AS_COMMITTED_IN_THE_SUPERPROJECT" from within 
-the submodule...
-
-git submodule summary should output to the pager by default.
-
-Oh, and it would not hurt performance on Windows at all if git-submodule 
-would be finally made a builtin.
-
-Ciao,
-Dscho
+That means the Id is file specific, not commit specific - just like the=
+ $Id$
+expansion for CVS and SCCS is about the file (as there is no real conce=
+pt
+of a commit in CVS and SCCS)
