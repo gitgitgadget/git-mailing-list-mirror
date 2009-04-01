@@ -1,77 +1,108 @@
-From: "Ulrich Windl" <ulrich.windl@rz.uni-regensburg.de>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
 Subject: Re: On git 1.6 (novice's opinion)
-Date: Wed, 01 Apr 2009 09:42:51 +0200
-Organization: Universitaetsklinikum Regensburg
-Message-ID: <49D3371C.20188.610353@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
-References: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>, <3e8340490903282241u355ce5b3u1a6ff23b27f4ec12@mail.gmail.com>, <alpine.DEB.1.00.0903291149460.10279@pacific.mpi-cbg.de>
+Date: Wed, 01 Apr 2009 09:41:09 +0200
+Message-ID: <vpqhc18rfca.fsf@bauges.imag.fr>
+References: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+	<49CCE520.17260.2586E134@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+	<49CCD90F.6090707@gmail.com>
+	<49D32ABF.11569.30BC41@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Apr 01 09:44:50 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Etienne Vallette d'Osia" <dohzya@gmail.com>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	"H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
+To: "Ulrich Windl" <ulrich.windl@rz.uni-regensburg.de>
+X-From: git-owner@vger.kernel.org Wed Apr 01 09:48:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lov7x-00072q-Jz
-	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 09:44:50 +0200
+	id 1LovBS-00081t-DG
+	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 09:48:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758942AbZDAHnP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2009 03:43:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758602AbZDAHnO
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 03:43:14 -0400
-Received: from rrzmta2.rz.uni-regensburg.de ([194.94.155.53]:25167 "EHLO
-	rrzmta2.rz.uni-regensburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753675AbZDAHnN (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Apr 2009 03:43:13 -0400
-Received: from rrzmta2.rz.uni-regensburg.de (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id 87E2F9F4BC;
-	Wed,  1 Apr 2009 09:43:12 +0200 (CEST)
-Received: from kgate1.dvm.klinik.uni-regensburg.de (kgate1.klinik.uni-regensburg.de [132.199.176.18])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by rrzmta2.rz.uni-regensburg.de (Postfix) with ESMTP id 77DF29F327;
-	Wed,  1 Apr 2009 09:43:12 +0200 (CEST)
-Received: from rkdvmks1.ngate.uni-regensburg.de (rkdvmks1.dvm.klinik.uni-regensburg.de [132.199.176.1])
-	by kgate1.dvm.klinik.uni-regensburg.de (8.13.6/8.13.6/20070831MT-1) with ESMTP id n317h4pA000894;
-	Wed, 1 Apr 2009 09:43:04 +0200
-Received: from RKDVMKS1/SpoolDir by rkdvmks1.ngate.uni-regensburg.de (Mercury 1.48);
-    1 Apr 09 09:43:03 +0100
-Received: from SpoolDir by RKDVMKS1 (Mercury 1.48); 1 Apr 09 09:42:58 +0100
-In-reply-to: <alpine.DEB.1.00.0903291149460.10279@pacific.mpi-cbg.de>
-X-mailer: Pegasus Mail for Windows (4.41)
-Content-description: Mail message body
-X-Content-Conformance: HerringScan-0.29/Sophos-P=4.37.0+V=4.37+U=2.07.219+R=05 January 2009+T=589357@20090401.073615Z
+	id S1759678AbZDAHq4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Apr 2009 03:46:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756505AbZDAHqz
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 03:46:55 -0400
+Received: from harmonie.imag.fr ([147.171.130.40]:33206 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753918AbZDAHqy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Apr 2009 03:46:54 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id n317fCZN006262;
+	Wed, 1 Apr 2009 09:41:12 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Lov4P-0006KO-47; Wed, 01 Apr 2009 09:41:09 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Lov4P-00076L-1i; Wed, 01 Apr 2009 09:41:09 +0200
+In-Reply-To: <49D32ABF.11569.30BC41@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de> (Ulrich Windl's message of "Wed\, 01 Apr 2009 08\:50\:07 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Wed, 01 Apr 2009 09:41:13 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115348>
 
-On 29 Mar 2009 at 11:50, Johannes Schindelin wrote:
+"Ulrich Windl" <ulrich.windl@rz.uni-regensburg.de> writes:
 
-> Hi,
-> 
-> On Sun, 29 Mar 2009, Bryan Donlan wrote:
-> 
-> > On Fri, Mar 27, 2009 at 3:21 AM, Ulrich Windl
-> > <ulrich.windl@rz.uni-regensburg.de> wrote:
-> > 
-> > > 3) "git undo": If possible undo the effects of the last command.
-> > 
-> > You can roll back the state of most local references by using the git 
-> > reflog (see git reflog --help for more information). This covers most 
-> > situations - but note that it only works to roll back to a committed 
-> > state, and won't save any uncommitted data at all.
-> 
-> Which is why you should commit early and often, and certainly before doing 
-> something bigger.
+> On 27 Mar 2009 at 14:47, Etienne Vallette d'Osia wrote:
+>
+>> Ulrich Windl a =E9crit :
+>> > AFAIK, "committing" in git is "kind of publishing your work" (othe=
+rs may pull it).=20
+>> > I don't like publishing my mistakes ;-) Even if no-one pulls the c=
+ommit, your=20
+>> > "undo" refers to "committing a fix for the last committed mistake"=
+, right? Again,=20
+>> > I don't really want to document/archive (i.e. commit) my mistake. =
+Or did I miss=20
+>> > something here?
+>> > I know: Other's opinions are quite different on these issues.
+>>=20
+>> commit is local.
+>
+> I had made the experience that you can "pull" from a local directory =
+(unless=20
+> permissions forbid it). As I can't control what others are doing, a "=
+commit" is=20
+> still more or less making the results public (unless you can convince=
+ me that=20
+> 	I'm wrong). OK, I grew up with servers that host hundreds of users, =
+not with=20
+> having my own laptop...
 
-A user will only "commit" if he knows how to "undo" it. Proposing to use "commit" 
-to help with "undo" is a partial solution at best...
+Multi-users server, or NFS-shared $HOME, yes, expose every working
+tree and therefore directories to other users. But still, the good
+practice would be to distinguish your working area, and a "clean"
+area if you want to get all the power of distributed version control.
 
-> 
-> Ciao,
-> Dscho
-> 
+One of the main points in having version control distributed is
+precisely to allow you to distinguish private things and published
+ones (i.e. commit !=3D push). Linus explains this better than I do in
+his talk:
+
+  http://www.youtube.com/watch?v=3D4XpnKHJAok8
+
+You _can_ expose your working tree directly to others, but if you do
+so, you'll have to forget about "git commit --amend",=20
+"git reset <anything-else-than-HEAD>", "git rebase",=20
+"git filter-branch", ... (any history-editing feature of Git indeed).
+
+OTOH, the common setup for people is to have a workstation (laptop or
+desktop) without a public access (for example, my home computer is
+switched of when I'm not using it, and my office station is only
+reachable from outside with ssh), and to publish things on another
+server. So, in the common case, the distinction private/public is
+natural.
+
+--=20
+Matthieu
