@@ -1,61 +1,76 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv2 0/2] Make local branches behave like remote branches when --tracked
-Date: Wed,  1 Apr 2009 23:42:47 +0200
-Message-ID: <1238622169-5238-1-git-send-email-git@drmicha.warpmail.net>
-References: <49CD0440.6010304@drmicha.warpmail.net>
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
+From: Josef Wolf <jw@raven.inka.de>
+Subject: How to sync two svn repositories via git?
+Date: Thu, 2 Apr 2009 00:30:52 +0200
+Message-ID: <20090401223052.GA28619@raven.wolf.lan>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 01 23:44:48 2009
+X-From: git-owner@vger.kernel.org Thu Apr 02 00:37:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lp8El-0000Pm-8b
-	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 23:44:43 +0200
+	id 1Lp93M-0003n7-NZ
+	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 00:37:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934681AbZDAVnF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2009 17:43:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934766AbZDAVnD
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 17:43:03 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:33936 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756967AbZDAVnB (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Apr 2009 17:43:01 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 6F0EC30DDA4;
-	Wed,  1 Apr 2009 17:42:58 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Wed, 01 Apr 2009 17:42:58 -0400
-X-Sasl-enc: 7idxzu+iRd10nd90NR/pA1VkmngdArKkkD7fSrXbidBZ 1238622177
-Received: from localhost (p4FC63601.dip0.t-ipconnect.de [79.198.54.1])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id ACD1D45E18;
-	Wed,  1 Apr 2009 17:42:57 -0400 (EDT)
-X-Mailer: git-send-email 1.6.2.1.507.g0e68d
-In-Reply-To: <49CD0440.6010304@drmicha.warpmail.net>
+	id S1762151AbZDAWf1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2009 18:35:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760950AbZDAWf0
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 18:35:26 -0400
+Received: from quechua.inka.de ([193.197.184.2]:49894 "EHLO mail.inka.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760019AbZDAWfZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Apr 2009 18:35:25 -0400
+Received: from raven.inka.de (uucp@[127.0.0.1])
+	by mail.inka.de with uucp (rmailwrap 0.5) 
+	id 1Lp91m-0002dN-IZ; Thu, 02 Apr 2009 00:35:22 +0200
+Received: by raven.inka.de (Postfix, from userid 1000)
+	id 702162CBE0; Thu,  2 Apr 2009 00:30:52 +0200 (CEST)
+Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115420>
 
+Hello,
 
-This mini series makes local branches behave the same as remote ones
-when they are used as --tracked branches. This means differences are
-reported by git status and git checkout, and also that the soon to be
-released tracking branch short cut (aka BEL) will work.
+I have two subversion repositories which I would like to synchronize via
+git-svn.  For this, I have set up a git repository and configured two
+branches to track the subversion repositories via git-svn:
 
-v2 adds a more detailed commit message to 2/2 and fixes up formatting.
-Also, the simplification of remote refs is now unchanged, and local refs
-are simplified in the same way. This may lead to ambiguous refs just
-like before this series. Unique simplification (which several places may
-benefit from) is left for a future series.
+    mkdir test-sync
+    cd    test-sync
+    git svn init --stdlayout file://$REPOSDIR/svn-first
 
-Michael J Gruber (2):
-  Test for local branches being followed with --track
-  Make local branches behave like remote branches when --tracked
+    for repos in svn-first svn-second; do
+        git config svn-remote.$repos.url      file://$REPOSDIR/$repos
+        git config svn-remote.$repos.fetch    trunk:refs/remotes/$repos/trunk
+        git config svn-remote.$repos.branches branches/*:refs/remotes/$repos/*
+        git config svn-remote.$repos.tags     tags/*:refs/remotes/$repos/tags/*
+        git svn fetch -R $repos
+        git checkout -b $repos $repos/trunk
+    done
+    git gc
 
- remote.c                 |    7 +++++--
- t/t6040-tracking-info.sh |   10 +++++++++-
- 2 files changed, 14 insertions(+), 3 deletions(-)
+This gives me two remote and two local branches:
+
+    master                                                                                    
+    svn-first                                                                                 
+  * svn-second                                                                                
+    svn-first/trunk                                                                           
+    svn-second/trunk                                                                          
+
+The first step I'd like to do is to "mirror" the manual merges that were
+done between the subversion repositories in the past:
+
+    git checkout svn-first
+    git merge -s ours --log commit-of-the-first-merge-in-svn-second
+
+    git checkout svn-second
+    git merge -s ours --log commit-of-the-first-merge-in-svn-first
+
+This seems to work, but git-gui shows conflicts.  How can I get conflicts
+when I use the "-s ours" merge strategy?
