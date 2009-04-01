@@ -1,102 +1,93 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
+From: "Ulrich Windl" <ulrich.windl@rz.uni-regensburg.de>
 Subject: Re: On git 1.6 (novice's opinion)
-Date: Wed, 01 Apr 2009 09:54:46 +0200
-Message-ID: <vpq63horepl.fsf@bauges.imag.fr>
-References: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
-	<49CCE72E.20081.258EE61F@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
-	<m3fxgz2h2n.fsf@localhost.localdomain>
-	<49D32CE5.21780.391D18@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+Date: Wed, 01 Apr 2009 10:15:27 +0200
+Organization: Universitaetsklinikum Regensburg
+Message-ID: <49D33EC0.29775.7EDC13@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+References: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>, <49D08B8B.1000309@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: "Ulrich Windl" <ulrich.windl@rz.uni-regensburg.de>
-X-From: git-owner@vger.kernel.org Wed Apr 01 10:16:17 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Wed Apr 01 10:17:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LovcK-00081D-68
-	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 10:16:12 +0200
+	id 1Lovdn-0008Qa-29
+	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 10:17:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761883AbZDAIOX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2009 04:14:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761845AbZDAIOV
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 04:14:21 -0400
-Received: from imag.imag.fr ([129.88.30.1]:64387 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761757AbZDAIOO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Apr 2009 04:14:14 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n3187FXJ026194
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 1 Apr 2009 10:07:15 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1LovHb-000744-0Y; Wed, 01 Apr 2009 09:54:47 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1LovHa-00079f-UZ; Wed, 01 Apr 2009 09:54:46 +0200
-In-Reply-To: <49D32CE5.21780.391D18@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de> (Ulrich Windl's message of "Wed\, 01 Apr 2009 08\:59\:16 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1760904AbZDAIQK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2009 04:16:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760572AbZDAIQJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 04:16:09 -0400
+Received: from rrzmta1.rz.uni-regensburg.de ([194.94.155.51]:3607 "EHLO
+	rrzmta1.rz.uni-regensburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1760858AbZDAIQH (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Apr 2009 04:16:07 -0400
+Received: from rrzmta1.rz.uni-regensburg.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id 1F451ABAAB;
+	Wed,  1 Apr 2009 10:16:05 +0200 (CEST)
+Received: from kgate1.dvm.klinik.uni-regensburg.de (kgate1.klinik.uni-regensburg.de [132.199.176.18])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by rrzmta1.rz.uni-regensburg.de (Postfix) with ESMTP id 99A4CABBE3;
+	Wed,  1 Apr 2009 10:16:04 +0200 (CEST)
+Received: from rkdvmks1.ngate.uni-regensburg.de (rkdvmks1.dvm.klinik.uni-regensburg.de [132.199.176.1])
+	by kgate1.dvm.klinik.uni-regensburg.de (8.13.6/8.13.6/20070831MT-1) with ESMTP id n318FuGm003035;
+	Wed, 1 Apr 2009 10:15:56 +0200
+Received: from RKDVMKS1/SpoolDir by rkdvmks1.ngate.uni-regensburg.de (Mercury 1.48);
+    1 Apr 09 10:15:55 +0100
+Received: from SpoolDir by RKDVMKS1 (Mercury 1.48); 1 Apr 09 10:15:36 +0100
+In-reply-to: <49D08B8B.1000309@op5.se>
+X-mailer: Pegasus Mail for Windows (4.41)
+Content-description: Mail message body
+X-Content-Conformance: HerringScan-0.29/Sophos-P=4.37.0+V=4.37+U=2.07.219+R=05 January 2009+T=589357@20090401.080643Z
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115353>
 
-"Ulrich Windl" <ulrich.windl@rz.uni-regensburg.de> writes:
+On 30 Mar 2009 at 11:06, Andreas Ericsson wrote:
 
->> Not to mention that you can have multiple roots (multiple commits with
->> no parent) in git repository; besides independent branches (like
->> 'man', 'html' or 'todo') it is usually result of absorbing or
->> subtree-merging other projects.  In 'master' branch there are 5 roots
->> or more: joined 'git-tools' (mailinfo / mailsplit), absorbed gitweb,
->> and subtree-merged gitk and git-gui.  And here you would again have
->> multiple commits with the same number...
->
-> Which would not harm, because it would be version N from committer X. Any if 
-> committer X merges from anything else, the next number would be > N. I did not 
-> claim that my method makes a total ordering of commits and merges possible.
+[...]
+> 3 It's far better to set the version number in the release-process. Usually
+>   this can be done automatically by one invocation of "git describe", just
+>   as git.git does it.
 
-Neither does it make the numbers unique for committer X.
+However if you put a version number into every file and THEN commit, it's somewhat 
+ridiculous (I'll have to learn about "git describe"). But for configuration 
+management you want to have exactly that (find exactly the file that was shipped 
+(or used to build)).
 
-If commiter X commits a successor to commit N, it's labeled N+1. If
-later, he creates another branch from commit N, and commit, the new,
-other commit will be labeled N+1.
+> 
+> We've adopted "3" full out at $dayjob. Our build-machinery gets the version
+> number from the git tag (releases can only be built from signed tags), and
+> it updates macros and whatnot used for informing the user which version he
+> or she is running. This makes a lot more sense both from a bug-reporting
+> and from a release process view than having generated version-numbers in
 
-This means even within a repository, you cannot say things like
-"commit number N", so, OK, you have numerical IDs, but you can't use
-them.
+So your "release commits" are outside GIT? (see above)
 
-What can be interesting is that a commit takes 
-max{all commits in repository}+1, not just max{parents} + 1. Then, you
-have local revision numbers, but they're not stable. Indeed, that's
-precisely what Mercurial does.
+> files. On a side-note; When I told my co-workers I'd like us to switch to
+> git, two of them asked about autoversioning features. I said there weren't
+> any and asked them to name a single time when we've actually used them for
+> anything *at all*. In a team of eight, having been programming for three
+> years with 12 releases and about 800 bugreports + feature-requests, noone
+> could mention a single time when the autogenerated version numbers had
+> actually been used for anything.
 
-But I'm not sure how much simplicity it adds compared to the confusion
-it adds. Newbies will see Mercurial identifiers as
+Hmm: Were they visible to customers?
 
-changeset:   2:699b81a5851b
-changeset:   1:fd4b6597548f
-changeset:   0:58cff172192e
+> 
+> Otoh, having the entire repository locally makes it painless to view the
+> commit-log for an entire project (or parts of it) and see who changed what
+> when and why, which is information that's actually *useful*.
 
-And think "OK, the revision numbers are 0, 1, 2, and the hexadecimal
-stuff beside is useless". And one day, he'll send a mail, post a
-bugreport, or whatever, saying "I have a problem with revision number
-42", and no one else but him will know which revision is called "42".
+[Big meals need time to digest: Just give me more time to do so (getting into 
+git). As with vi and Emacs (usualy I prefer Emacs), there will be situations when 
+I won't use Git however]
 
-> I truly believe in unique IDs, but they are just not handy in every situation.
-
-Usually, people find Git IDs to be non-handy until the find out they
-can cut-and-paste only the first few digits in most cases, like
-442dd42 instead of 442dd42d6d4903640b0dc5561481a77c88dcea90 ;-).
-
--- 
-Matthieu
+Regards,
+Ulrich
