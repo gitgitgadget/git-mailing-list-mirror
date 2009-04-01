@@ -1,178 +1,57 @@
-From: =?iso-8859-1?Q?Martin_Storsj=F6?= <martin@martin.st>
-Subject: [PATCH] Allow curl to rewind the read buffers
-Date: Wed, 1 Apr 2009 18:10:09 +0300 (EEST)
-Message-ID: <Pine.LNX.4.64.0904011809080.5901@localhost.localdomain>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] builtin-clone.c: fix memory leak in cmd_clone()
+Date: Wed, 1 Apr 2009 17:56:34 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904011754250.13502@intel-tinevez-2-302>
+References: <20090401144056.GC2237@lilem.mirepesht>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 01 17:12:35 2009
+Cc: git@vger.kernel.org
+To: Ali Gholami Rudi <ali@rudi.ir>
+X-From: git-owner@vger.kernel.org Wed Apr 01 17:58:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lp26W-0001tG-25
-	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 17:11:48 +0200
+	id 1Lp2pQ-0007lh-Dj
+	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 17:58:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762254AbZDAPKP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2009 11:10:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760507AbZDAPKO
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 11:10:14 -0400
-Received: from smtp2.abo.fi ([130.232.213.77]:44374 "EHLO smtp2.abo.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760543AbZDAPKM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Apr 2009 11:10:12 -0400
-Received: from albin.abo.fi (albin.abo.fi [130.232.81.192])
-	by smtp2.abo.fi (8.14.3/8.12.9) with ESMTP id n31FA912021432
-	for <git@vger.kernel.org>; Wed, 1 Apr 2009 18:10:09 +0300
-X-X-Sender: mstorsjo@localhost.localdomain
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (smtp2.abo.fi [130.232.213.77]); Wed, 01 Apr 2009 18:10:09 +0300 (EEST)
-X-Virus-Scanned: by foxy.abo.fi (foxy.abo.fi: Wed Apr  1 18:10:09 2009)
-X-Scanned-By: MIMEDefang 2.64 on 130.232.213.77
+	id S1755776AbZDAP4j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2009 11:56:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754945AbZDAP4j
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 11:56:39 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36052 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751878AbZDAP4j (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Apr 2009 11:56:39 -0400
+Received: (qmail invoked by alias); 01 Apr 2009 15:56:35 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp011) with SMTP; 01 Apr 2009 17:56:35 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/K/wpgboDKY1AswXPaCtvtmtSjNET4TAE0tSkaWq
+	GbRFeU81+BllKQ
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <20090401144056.GC2237@lilem.mirepesht>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.73
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115395>
 
-Rewinding of the read buffers may be needed when doing HTTP PUT or POST
-(or PROPFIND) with multi-pass authentication methods.
+Hi,
 
-Depending on the HTTP server, the read buffers may or may not need
-rewinding. (Apache returns a 401 error immediately before any data has
-been read from the buffers, while Lighttpd doesn't reply until all data
-has been sent.)
+On Wed, 1 Apr 2009, Ali Gholami Rudi wrote:
 
-Signed-off-by: Martin Storsjo <martin@martin.st>
----
- http-push.c |   24 ++++++++++++++++++++++++
- http.c      |   19 +++++++++++++++++++
- http.h      |    7 +++++++
- 3 files changed, 50 insertions(+), 0 deletions(-)
+> With this patch, cmd_clone() safely frees its xstrdup()-allocated
+> memory.  Also junk_work_tree and junk_git_dir (used in remove_junk()
+> which is called asynchronously) were changed to use static arrays rather
+> than sharing the memory allocated in cmd_clone().
 
-diff --git a/http-push.c b/http-push.c
-index 6ce5a1d..7dc0dd4 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -567,6 +567,10 @@ static void start_put(struct transfer_request *request)
- 	curl_easy_setopt(slot->curl, CURLOPT_INFILE, &request->buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_INFILESIZE, request->buffer.buf.len);
- 	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, fread_buffer);
-+#ifndef NO_CURL_IOCTL
-+	curl_easy_setopt(slot->curl, CURLOPT_IOCTLFUNCTION, ioctl_buffer);
-+	curl_easy_setopt(slot->curl, CURLOPT_IOCTLDATA, &request->buffer);
-+#endif
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_null);
- 	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_PUT);
- 	curl_easy_setopt(slot->curl, CURLOPT_UPLOAD, 1);
-@@ -1267,6 +1271,10 @@ static struct remote_lock *lock_remote(const char *path, long timeout)
- 	curl_easy_setopt(slot->curl, CURLOPT_INFILE, &out_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_INFILESIZE, out_buffer.buf.len);
- 	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, fread_buffer);
-+#ifndef NO_CURL_IOCTL
-+	curl_easy_setopt(slot->curl, CURLOPT_IOCTLFUNCTION, ioctl_buffer);
-+	curl_easy_setopt(slot->curl, CURLOPT_IOCTLDATA, &out_buffer);
-+#endif
- 	curl_easy_setopt(slot->curl, CURLOPT_FILE, &in_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
-@@ -1508,6 +1516,10 @@ static void remote_ls(const char *path, int flags,
- 	curl_easy_setopt(slot->curl, CURLOPT_INFILE, &out_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_INFILESIZE, out_buffer.buf.len);
- 	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, fread_buffer);
-+#ifndef NO_CURL_IOCTL
-+	curl_easy_setopt(slot->curl, CURLOPT_IOCTLFUNCTION, ioctl_buffer);
-+	curl_easy_setopt(slot->curl, CURLOPT_IOCTLDATA, &out_buffer);
-+#endif
- 	curl_easy_setopt(slot->curl, CURLOPT_FILE, &in_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
-@@ -1584,6 +1596,10 @@ static int locking_available(void)
- 	curl_easy_setopt(slot->curl, CURLOPT_INFILE, &out_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_INFILESIZE, out_buffer.buf.len);
- 	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, fread_buffer);
-+#ifndef NO_CURL_IOCTL
-+	curl_easy_setopt(slot->curl, CURLOPT_IOCTLFUNCTION, ioctl_buffer);
-+	curl_easy_setopt(slot->curl, CURLOPT_IOCTLDATA, &out_buffer);
-+#endif
- 	curl_easy_setopt(slot->curl, CURLOPT_FILE, &in_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_URL, repo->url);
-@@ -1766,6 +1782,10 @@ static int update_remote(unsigned char *sha1, struct remote_lock *lock)
- 	curl_easy_setopt(slot->curl, CURLOPT_INFILE, &out_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_INFILESIZE, out_buffer.buf.len);
- 	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, fread_buffer);
-+#ifndef NO_CURL_IOCTL
-+	curl_easy_setopt(slot->curl, CURLOPT_IOCTLFUNCTION, ioctl_buffer);
-+	curl_easy_setopt(slot->curl, CURLOPT_IOCTLDATA, &out_buffer);
-+#endif
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_null);
- 	curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_PUT);
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, dav_headers);
-@@ -1910,6 +1930,10 @@ static void update_remote_info_refs(struct remote_lock *lock)
- 		curl_easy_setopt(slot->curl, CURLOPT_INFILE, &buffer);
- 		curl_easy_setopt(slot->curl, CURLOPT_INFILESIZE, buffer.buf.len);
- 		curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, fread_buffer);
-+#ifndef NO_CURL_IOCTL
-+		curl_easy_setopt(slot->curl, CURLOPT_IOCTLFUNCTION, ioctl_buffer);
-+		curl_easy_setopt(slot->curl, CURLOPT_IOCTLDATA, &buffer);
-+#endif
- 		curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_null);
- 		curl_easy_setopt(slot->curl, CURLOPT_CUSTOMREQUEST, DAV_PUT);
- 		curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, dav_headers);
-diff --git a/http.c b/http.c
-index eae74aa..3e8d548 100644
---- a/http.c
-+++ b/http.c
-@@ -44,6 +44,25 @@ size_t fread_buffer(void *ptr, size_t eltsize, size_t nmemb, void *buffer_)
- 	return size;
- }
- 
-+#ifndef NO_CURL_IOCTL
-+curlioerr ioctl_buffer(CURL *handle, int cmd, void *clientp)
-+{
-+	struct buffer *buffer = clientp;
-+
-+	switch (cmd) {
-+	case CURLIOCMD_NOP:
-+		return CURLIOE_OK;
-+
-+	case CURLIOCMD_RESTARTREAD:
-+		buffer->posn = 0;
-+		return CURLIOE_OK;
-+
-+	default:
-+		return CURLIOE_UNKNOWNCMD;
-+	}
-+}
-+#endif
-+
- size_t fwrite_buffer(const void *ptr, size_t eltsize, size_t nmemb, void *buffer_)
- {
- 	size_t size = eltsize * nmemb;
-diff --git a/http.h b/http.h
-index 905b462..26abebe 100644
---- a/http.h
-+++ b/http.h
-@@ -37,6 +37,10 @@
- #define CURLE_HTTP_RETURNED_ERROR CURLE_HTTP_NOT_FOUND
- #endif
- 
-+#if LIBCURL_VERSION_NUM < 0x070c03
-+#define NO_CURL_IOCTL
-+#endif
-+
- struct slot_results
- {
- 	CURLcode curl_result;
-@@ -67,6 +71,9 @@ struct buffer
- extern size_t fread_buffer(void *ptr, size_t eltsize, size_t nmemb, void *strbuf);
- extern size_t fwrite_buffer(const void *ptr, size_t eltsize, size_t nmemb, void *strbuf);
- extern size_t fwrite_null(const void *ptr, size_t eltsize, size_t nmemb, void *strbuf);
-+#ifndef NO_CURL_IOCTL
-+extern curlioerr ioctl_buffer(CURL *handle, int cmd, void *clientp);
-+#endif
- 
- /* Slot lifecycle functions */
- extern struct active_request_slot *get_active_slot(void);
--- 
-1.6.0.2
+If you want to go down that route, you will have a long way to go: the 
+assumption is pretty much in every cmd_() and main() function that 
+singletons will be free()d automatically when the process ends.
+
+Ciao,
+Dscho
