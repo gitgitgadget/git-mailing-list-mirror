@@ -1,93 +1,77 @@
-From: "Ulrich Windl" <ulrich.windl@rz.uni-regensburg.de>
-Subject: Re: On git 1.6 (novice's opinion)
-Date: Wed, 01 Apr 2009 10:15:27 +0200
-Organization: Universitaetsklinikum Regensburg
-Message-ID: <49D33EC0.29775.7EDC13@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
-References: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>, <49D08B8B.1000309@op5.se>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH 0/4] send-email: correct various issues
+Date: Wed, 01 Apr 2009 10:33:04 +0200
+Message-ID: <vpqiqlolqnz.fsf@bauges.imag.fr>
+References: <cover.1238516122.git.jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Wed Apr 01 10:17:43 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <Uwe.Kleine-Koenig@digi.com>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 01 10:37:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lovdn-0008Qa-29
-	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 10:17:43 +0200
+	id 1Lovwk-0005wt-J9
+	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 10:37:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760904AbZDAIQK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2009 04:16:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760572AbZDAIQJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 04:16:09 -0400
-Received: from rrzmta1.rz.uni-regensburg.de ([194.94.155.51]:3607 "EHLO
-	rrzmta1.rz.uni-regensburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760858AbZDAIQH (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Apr 2009 04:16:07 -0400
-Received: from rrzmta1.rz.uni-regensburg.de (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id 1F451ABAAB;
-	Wed,  1 Apr 2009 10:16:05 +0200 (CEST)
-Received: from kgate1.dvm.klinik.uni-regensburg.de (kgate1.klinik.uni-regensburg.de [132.199.176.18])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by rrzmta1.rz.uni-regensburg.de (Postfix) with ESMTP id 99A4CABBE3;
-	Wed,  1 Apr 2009 10:16:04 +0200 (CEST)
-Received: from rkdvmks1.ngate.uni-regensburg.de (rkdvmks1.dvm.klinik.uni-regensburg.de [132.199.176.1])
-	by kgate1.dvm.klinik.uni-regensburg.de (8.13.6/8.13.6/20070831MT-1) with ESMTP id n318FuGm003035;
-	Wed, 1 Apr 2009 10:15:56 +0200
-Received: from RKDVMKS1/SpoolDir by rkdvmks1.ngate.uni-regensburg.de (Mercury 1.48);
-    1 Apr 09 10:15:55 +0100
-Received: from SpoolDir by RKDVMKS1 (Mercury 1.48); 1 Apr 09 10:15:36 +0100
-In-reply-to: <49D08B8B.1000309@op5.se>
-X-mailer: Pegasus Mail for Windows (4.41)
-Content-description: Mail message body
-X-Content-Conformance: HerringScan-0.29/Sophos-P=4.37.0+V=4.37+U=2.07.219+R=05 January 2009+T=589357@20090401.080643Z
+	id S1756156AbZDAIfr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2009 04:35:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754757AbZDAIfq
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 04:35:46 -0400
+Received: from harmonie.imag.fr ([147.171.130.40]:59459 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753469AbZDAIfo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Apr 2009 04:35:44 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id n318X4Kx012874;
+	Wed, 1 Apr 2009 10:33:04 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Lovse-0007e4-Ai; Wed, 01 Apr 2009 10:33:04 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Lovse-0007wT-8R; Wed, 01 Apr 2009 10:33:04 +0200
+In-Reply-To: <cover.1238516122.git.jaysoffian@gmail.com> (Jay Soffian's message of "Tue\, 31 Mar 2009 12\:22\:10 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Wed, 01 Apr 2009 10:33:08 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115354>
 
-On 30 Mar 2009 at 11:06, Andreas Ericsson wrote:
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-[...]
-> 3 It's far better to set the version number in the release-process. Usually
->   this can be done automatically by one invocation of "git describe", just
->   as git.git does it.
+> Junio, these are technically all independent bug fixes, but they were
+> minor, so I've lumped them together. I figured you'd just add them to
+> the js/send-email topic anyway. Also, I apologize for causing trouble in
+> master. :-(
 
-However if you put a version number into every file and THEN commit, it's somewhat 
-ridiculous (I'll have to learn about "git describe"). But for configuration 
-management you want to have exactly that (find exactly the file that was shipped 
-(or used to build)).
+But I shall thank you for fixing them ;-).
 
-> 
-> We've adopted "3" full out at $dayjob. Our build-machinery gets the version
-> number from the git tag (releases can only be built from signed tags), and
-> it updates macros and whatnot used for informing the user which version he
-> or she is running. This makes a lot more sense both from a bug-reporting
-> and from a release process view than having generated version-numbers in
+> Jay Soffian (4):
+>   send-email: don't attempt to prompt if tty is closed
 
-So your "release commits" are outside GIT? (see above)
+Works, I don't have garbage anymore in my logs.
 
-> files. On a side-note; When I told my co-workers I'd like us to switch to
-> git, two of them asked about autoversioning features. I said there weren't
-> any and asked them to name a single time when we've actually used them for
-> anything *at all*. In a team of eight, having been programming for three
-> years with 12 releases and about 800 bugreports + feature-requests, noone
-> could mention a single time when the autogenerated version numbers had
-> actually been used for anything.
+>   send-email: ask_default should apply to all emails, not just the
+>     first
 
-Hmm: Were they visible to customers?
+Works, I get the informational message in my logs once, and all the
+mails are sent successfully.
 
-> 
-> Otoh, having the entire repository locally makes it painless to view the
-> commit-log for an entire project (or parts of it) and see who changed what
-> when and why, which is information that's actually *useful*.
+>   send-email: correct two tests which were going interactive
+>   send-email: ensure quoted addresses are rfc2047 encoded
 
-[Big meals need time to digest: Just give me more time to do so (getting into 
-git). As with vi and Emacs (usualy I prefer Emacs), there will be situations when 
-I won't use Git however]
+Didn't test these.
 
-Regards,
-Ulrich
+-- 
+Matthieu
