@@ -1,84 +1,102 @@
-From: "Michael Johnson" <redbeard@mdjohnson.us>
-Subject: Re: Segfault on merge with 1.6.2.1
-Date: Wed, 01 Apr 2009 00:43:38 -0500
-Message-ID: <op.uro0u0xuso3nzr@sulidor.mdjohnson.us>
-References: <op.urifmtkkso3nzr@sulidor.mdjohnson.us>
- <20090329121700.GN22446@genesis.frugalware.org>
- <op.urk20nanso3nzr@sulidor.mdjohnson.us>
- <20090330110335.GF22446@genesis.frugalware.org>
- <op.urnad7jbso3nzr@sulidor.mdjohnson.us>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 07/10] rev-list: call new "filter_skip" function
+Date: Wed, 1 Apr 2009 08:09:40 +0200
+Message-ID: <200904010809.41110.chriscool@tuxfamily.org>
+References: <20090326055549.e1f244d9.chriscool@tuxfamily.org> <200903310845.23674.chriscool@tuxfamily.org> <alpine.DEB.1.00.0903311117400.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; delsp=yes; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Miklos Vajna" <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Wed Apr 01 07:45:38 2009
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	John Tapsell <johnflux@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Apr 01 08:12:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LotGa-0001Gq-5H
-	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 07:45:36 +0200
+	id 1LotgW-0007Iz-NY
+	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 08:12:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752418AbZDAFnv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2009 01:43:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752057AbZDAFnv
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 01:43:51 -0400
-Received: from caibbdcaaaaf.dreamhost.com ([208.113.200.5]:45936 "EHLO
-	looneymail-a2.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751597AbZDAFnu (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Apr 2009 01:43:50 -0400
-Received: from sulidor.mdjohnson.us (216.49.248-IP-55.ckt.net [216.49.248.55])
-	by looneymail-a2.g.dreamhost.com (Postfix) with ESMTP id 9E3FB16D206;
-	Tue, 31 Mar 2009 22:43:46 -0700 (PDT)
-In-Reply-To: <op.urnad7jbso3nzr@sulidor.mdjohnson.us>
-User-Agent: Opera Mail/9.64 (Linux)
+	id S1754869AbZDAGKs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Apr 2009 02:10:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751948AbZDAGKs
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 02:10:48 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:60312 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755824AbZDAGKr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Apr 2009 02:10:47 -0400
+Received: from smtp5-g21.free.fr (localhost [127.0.0.1])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 29308D4804B;
+	Wed,  1 Apr 2009 08:10:36 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 45D6CD480C3;
+	Wed,  1 Apr 2009 08:10:34 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <alpine.DEB.1.00.0903311117400.10279@pacific.mpi-cbg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115339>
 
-On Tue, 31 Mar 2009 02:14:21 -0500, Michael Johnson  
-<redbeard@mdjohnson.us> wrote:
+Le mardi 31 mars 2009, Johannes Schindelin a =E9crit :
+> Hi,
+>
+> On Tue, 31 Mar 2009, Christian Couder wrote:
+> > Le lundi 30 mars 2009, Johannes Schindelin a =E9crit :
+> > > On Mon, 30 Mar 2009, Christian Couder wrote:
+> > > > Le jeudi 26 mars 2009, Junio C Hamano a =E9crit :
+> > > > > I've learned to suspect without reading a qsort() callback th=
+at
+> > > > > does not derefence its arguments.  Is this doing the right th=
+ing?
+> > > >
+> > > > I think so.
+> > >
+> > > I suspect something much worse: you are trying to build a list of
+> > > sha1s of commits that need to be skipped, later to look up every
+> > > commit via binary search.
+> > >
+> > > But it has been proven a lot of times that using a hash set is
+> > > superior to that approach, and even better: we already have the
+> > > framework in place in the form of struct decorate.
+> >
+> > I had a look, and "struct decorate" can be used to store objects, b=
+ut I
+> > want to store only sha1s.
+>
+> No, you want to _look up_ sha1s.  And struct decorate is not about
+> storing objects, but to attach things to objects.=20
 
-> That said, here's my backtrace. I've tried tracing through to figure out  
-> where the problem is occurring, but my gdb-foo is non-existent, I'm  
-> wating for some GUIs to install, and I'm ready for some sleep :| So if I  
-> haven't heard back by tomorrow evening, I'll be running one of the  
-> frontends for gdb until I have something traced down :)
+The problem is that I don't have any object to attach things to when I =
+read=20
+the bisect skip refs. I just need to store the sha1 from the skip refs =
+in=20
+some sha1 container.
 
-I tried tracing it manually with KDbg tonight. But either I'm too tired  
-(and my patience is low), or I'm just not capable of understanding it. I  
-hope it's the former, since I was able to follow the basic flow well  
-enough. But I still wasn't terribly happy with the front end. It's obvious  
-that gdb is awesome, I'm just not ready for it yet :)
+Here is the related code:
 
-Anyway, I decided to try an experiment, as I had mentioned to someone that  
-if I couldn't get this bug tracked down, I'd have to do the merge  
-manually. So... I figured out the common ancestor (I used git show-branch,  
-but I'm betting there's an easier way), and merged the ancestor + 1 of the  
-other branch into my HEAD. It segfaulted. So, I tried the resolve strategy  
-at the same point. Amazingly, it worked. And a default recursive merge  
-handled the rest.
+static int register_ref(const char *refname, const unsigned char *sha1,
+			int flags, void *cb_data)
+{
+	if (!strcmp(refname, "bad")) {
+		...
+	} else if (!prefixcmp(refname, "good-")) {
+		...
+	} else if (!prefixcmp(refname, "skip-")) {
+		ALLOC_GROW(skipped_sha1, skipped_sha1_nr + 1,
+			   skipped_sha1_alloc);
+		hashcpy(skipped_sha1[skipped_sha1_nr++], sha1);
+	}
 
-That means my current problem is resolved, but I'm guessing a segfault on  
-a default merge is still a bad thing, so I'll try to keep up on this. I do  
-have a copy of the repository before the merge (several, right now,  
-actually), so I can try fixes. If I'm lucky I'll have some time to work on  
-it myself. But it will be at least two weeks before I actually have the  
-time to personally track down the problem without help. However, I should  
-be able to assist someone else fairly easily.
+	return 0;
+}
 
-In short, I don't personally need a fix right now, but I can help figure  
-out what is broken with it.
+static int read_bisect_refs(void)
+{
+	return for_each_bisect_ref(register_ref, NULL);
+}
 
-Thanks,
-Michael
-
--- 
-Michael D Johnson   <redbeard@mdjohnson.us>    
-redbeardcreator.deviantart.com
-
-"Marketing research...[has] shown that energy weapons that make sounds sell
-  better..." - Kevin Siembieda (Rifts Game Master Guide, pg 111)
+Best regards,
+Christian.
