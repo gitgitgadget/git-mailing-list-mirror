@@ -1,74 +1,102 @@
-From: Ali Gholami Rudi <ali@rudi.ir>
-Subject: [PATCH] builtin-clone.c: make junk_pid static
-Date: Wed, 1 Apr 2009 12:34:44 +0430
-Message-ID: <20090401080444.GA2237@lilem.mirepesht>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: On git 1.6 (novice's opinion)
+Date: Wed, 01 Apr 2009 09:54:46 +0200
+Message-ID: <vpq63horepl.fsf@bauges.imag.fr>
+References: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+	<49CCE72E.20081.258EE61F@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+	<m3fxgz2h2n.fsf@localhost.localdomain>
+	<49D32CE5.21780.391D18@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 01 10:08:42 2009
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: "Ulrich Windl" <ulrich.windl@rz.uni-regensburg.de>
+X-From: git-owner@vger.kernel.org Wed Apr 01 10:16:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LovUw-0005k7-86
-	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 10:08:34 +0200
+	id 1LovcK-00081D-68
+	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 10:16:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753233AbZDAIHD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2009 04:07:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751025AbZDAIHB
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 04:07:01 -0400
-Received: from mail-ew0-f165.google.com ([209.85.219.165]:38584 "EHLO
-	mail-ew0-f165.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750728AbZDAIHA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Apr 2009 04:07:00 -0400
-Received: by ewy9 with SMTP id 9so2941381ewy.37
-        for <git@vger.kernel.org>; Wed, 01 Apr 2009 01:06:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=e+Bm6h8ymT3vUAvwf7jMfULY9bbbO6VA/kuC583X6VY=;
-        b=iPOvWgk25KCvnUA/J6fOuAikBwraE4KB56REiVObz9HWqYPpXUNRoxmt90GDlFfC67
-         ZIXc3Pey9tSsvzlmB4BZsPaWJrws9DVBaewQB4a3mA6OjnNhh7TEIvVuWnrDK8DxbO2+
-         BwAROEtFyBS/nNe339q5ih0R0dZb1i7pOOvOk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=c+rzjg8dMWMBE2coKh2bdQHq83nazzPzdw8yjnDdC4wNArjXgyS6OJAJhI/qUmovXs
-         2qvpF1V3D7eGzFapYgTO+/lc1cNwJ2q0LO4+cwx7NwlS5xkcASzfSy68rWN7uhML5PaO
-         F0685Cks4CCaUM7vw6okezk1FwV7Z9GUQpaPE=
-Received: by 10.216.20.210 with SMTP id p60mr2427166wep.172.1238573217549;
-        Wed, 01 Apr 2009 01:06:57 -0700 (PDT)
-Received: from localhost ([85.185.70.226])
-        by mx.google.com with ESMTPS id g9sm11469762gvc.28.2009.04.01.01.06.54
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 01 Apr 2009 01:06:56 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.19 (2009-01-27)
+	id S1761883AbZDAIOX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2009 04:14:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761845AbZDAIOV
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 04:14:21 -0400
+Received: from imag.imag.fr ([129.88.30.1]:64387 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761757AbZDAIOO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Apr 2009 04:14:14 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n3187FXJ026194
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 1 Apr 2009 10:07:15 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1LovHb-000744-0Y; Wed, 01 Apr 2009 09:54:47 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1LovHa-00079f-UZ; Wed, 01 Apr 2009 09:54:46 +0200
+In-Reply-To: <49D32CE5.21780.391D18@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de> (Ulrich Windl's message of "Wed\, 01 Apr 2009 08\:59\:16 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115352>
 
-junk_pid is used only in builtin-clone.c.
+"Ulrich Windl" <ulrich.windl@rz.uni-regensburg.de> writes:
 
-Signed-off-by: Ali Gholami Rudi <ali@rudi.ir>
----
- builtin-clone.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+>> Not to mention that you can have multiple roots (multiple commits with
+>> no parent) in git repository; besides independent branches (like
+>> 'man', 'html' or 'todo') it is usually result of absorbing or
+>> subtree-merging other projects.  In 'master' branch there are 5 roots
+>> or more: joined 'git-tools' (mailinfo / mailsplit), absorbed gitweb,
+>> and subtree-merged gitk and git-gui.  And here you would again have
+>> multiple commits with the same number...
+>
+> Which would not harm, because it would be version N from committer X. Any if 
+> committer X merges from anything else, the next number would be > N. I did not 
+> claim that my method makes a total ordering of commits and merges possible.
 
-diff --git a/builtin-clone.c b/builtin-clone.c
-index 0031b5f..736c72c 100644
---- a/builtin-clone.c
-+++ b/builtin-clone.c
-@@ -270,7 +270,7 @@ static const struct ref *clone_local(const char *src_repo,
- 
- static const char *junk_work_tree;
- static const char *junk_git_dir;
--pid_t junk_pid;
-+static pid_t junk_pid;
- 
- static void remove_junk(void)
- {
+Neither does it make the numbers unique for committer X.
+
+If commiter X commits a successor to commit N, it's labeled N+1. If
+later, he creates another branch from commit N, and commit, the new,
+other commit will be labeled N+1.
+
+This means even within a repository, you cannot say things like
+"commit number N", so, OK, you have numerical IDs, but you can't use
+them.
+
+What can be interesting is that a commit takes 
+max{all commits in repository}+1, not just max{parents} + 1. Then, you
+have local revision numbers, but they're not stable. Indeed, that's
+precisely what Mercurial does.
+
+But I'm not sure how much simplicity it adds compared to the confusion
+it adds. Newbies will see Mercurial identifiers as
+
+changeset:   2:699b81a5851b
+changeset:   1:fd4b6597548f
+changeset:   0:58cff172192e
+
+And think "OK, the revision numbers are 0, 1, 2, and the hexadecimal
+stuff beside is useless". And one day, he'll send a mail, post a
+bugreport, or whatever, saying "I have a problem with revision number
+42", and no one else but him will know which revision is called "42".
+
+> I truly believe in unique IDs, but they are just not handy in every situation.
+
+Usually, people find Git IDs to be non-handy until the find out they
+can cut-and-paste only the first few digits in most cases, like
+442dd42 instead of 442dd42d6d4903640b0dc5561481a77c88dcea90 ;-).
+
+-- 
+Matthieu
