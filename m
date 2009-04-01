@@ -1,82 +1,114 @@
-From: Ali Gholami Rudi <ali@rudi.ir>
-Subject: Re: [PATCH] builtin-clone.c: fix memory leak in cmd_clone()
-Date: Thu, 2 Apr 2009 00:47:04 +0430
-Message-ID: <20090401201704.GA2237@lilem.mirepesht>
-References: <20090401144056.GC2237@lilem.mirepesht> <alpine.DEB.1.00.0904011754250.13502@intel-tinevez-2-302> <20090401161254.GD2237@lilem.mirepesht> <7v3acs1gyf.fsf@gitster.siamese.dyndns.org>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [PATCH v2] Cleanup warning about known issues in cvsimport
+	documentation
+Date: Wed, 1 Apr 2009 22:24:28 +0200
+Message-ID: <20090401202415.GA90837@macbook.lan>
+References: <20090323195304.GC26678@macbook.lan> <20090324031448.GA12829@coredump.intra.peff.net> <20090330223646.GC68118@macbook.lan> <7v4oxaa506.fsf@gitster.siamese.dyndns.org> <20090331164503.GB72569@macbook.lan> <20090331194940.GB23184@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 01 22:19:12 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 01 22:26:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lp6tr-00020G-9A
-	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 22:19:03 +0200
+	id 1Lp71P-00046H-P3
+	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 22:26:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763014AbZDAURU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2009 16:17:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759719AbZDAURS
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 16:17:18 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:45100 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757714AbZDAURR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Apr 2009 16:17:17 -0400
-Received: by fxm2 with SMTP id 2so212472fxm.37
-        for <git@vger.kernel.org>; Wed, 01 Apr 2009 13:17:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=CaREFwFHatFA+a3009+GufzE+OmrCD0T30gMHFmh1jQ=;
-        b=EcxZ8vbFAi0ERgobYMqGgtue3gzt0zRE4xIqdrrMAsP8XSLtbDyL75E/aLlNVDaOvW
-         SG4fzgM4oAUDDcVzBW/Xu27mWkai44+fQUvHIQTalYM6FUe6PT6wAaqHMiOiOU7yE4Fo
-         PTO6UTokFUtI1pB80RN5sYJRxkzhg+m1XzAkw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=AtW2Yrpoh/QIKD8HQNu0mOf5/ikekTZrNMcP63fnBoUzIggDPPvMdFRUeeywvvK/vf
-         D/CU9gaPrBZRIpLBGYxz+ePIcFUvscZuyTxYytuXCr8//GTW/GyuC0Rqc89GAJbhddLN
-         X+1zzjLlIdsXvZKMILQdqDv0QiGonRGHIS3J0=
-Received: by 10.86.36.17 with SMTP id j17mr1005699fgj.27.1238617034556;
-        Wed, 01 Apr 2009 13:17:14 -0700 (PDT)
-Received: from localhost ([85.185.70.156])
-        by mx.google.com with ESMTPS id 12sm7172287fgg.17.2009.04.01.13.17.11
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 01 Apr 2009 13:17:13 -0700 (PDT)
+	id S934235AbZDAUYd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2009 16:24:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933759AbZDAUYc
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 16:24:32 -0400
+Received: from darksea.de ([83.133.111.250]:33107 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S934015AbZDAUYc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Apr 2009 16:24:32 -0400
+Received: (qmail 16855 invoked from network); 1 Apr 2009 22:24:15 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 1 Apr 2009 22:24:15 +0200
 Content-Disposition: inline
-In-Reply-To: <7v3acs1gyf.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.19 (2009-01-27)
+In-Reply-To: <20090331194940.GB23184@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115413>
 
-Hi,
+Not all statements were complete sentences.
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Yup, I'll queue (I won't have time today to work on git it seems) the
+Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+---
 
-Thanks.
+I corrected the typos. This is the interdiff:
 
-> other two patches from you, but I was going to drop this one---unless your
-> plan was to make cmd_clone() callable more than once in order to use it in
-> say a C rewrite of git submodule or something like that.
+ diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
+ index ba6a50b..d7bab13 100644
+ --- a/Documentation/git-cvsimport.txt
+ +++ b/Documentation/git-cvsimport.txt
+ @@ -176,7 +176,7 @@ Problems related to timestamps:
+     to be used for ordering commits changes may show up in the wrong
+     order.
+   * If any files were ever "cvs import"ed more than once (e.g., import of
+ -   more than one vendor release) the HEAD will be incorrect.
+ +   more than one vendor release) the HEAD contains the wrong content.
+   * If the timestamp order of different files cross the revision order
+     within the commit matching time window the order of commits may be
+     wrong.
+ @@ -187,7 +187,7 @@ Problems related to branches:
+   * All files from the branching point are added to a branch even if
+     never added in cvs.
+   * This applies to files added to the source branch *after* a daughter
+ -   branch was created: If previously no commit was made on the daugther
+ +   branch was created: if previously no commit was made on the daughter
+     branch they will erroneously be added to the daughter branch in git.
+  
+  Problems related to tags:
 
-The only problem in builtin-clone.c seems to be remove_junk() which is
-called from a signal handler or atexit().  cmd_clone() can be changed to
-register this function only once.
 
-remove_junk() uses junk_* global variables which are overwritten in each
-cmd_clone() call.  Since no concurrent cmd_clone() is allowed (?) and we
-only care about the last one, this does not seem to be an issue.
+ Documentation/git-cvsimport.txt |   20 +++++++++++---------
+ 1 files changed, 11 insertions(+), 9 deletions(-)
 
-I'll probably send a new patch tomorrow.
-
-Regards,
-Ali
+diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
+index e1fd047..d7bab13 100644
+--- a/Documentation/git-cvsimport.txt
++++ b/Documentation/git-cvsimport.txt
+@@ -173,24 +173,26 @@ ISSUES
+ Problems related to timestamps:
+ 
+  * If timestamps of commits in the cvs repository are not stable enough
+-   to be used for ordering commits
++   to be used for ordering commits changes may show up in the wrong
++   order.
+  * If any files were ever "cvs import"ed more than once (e.g., import of
+-   more than one vendor release)
++   more than one vendor release) the HEAD contains the wrong content.
+  * If the timestamp order of different files cross the revision order
+-   within the commit matching time window
++   within the commit matching time window the order of commits may be
++   wrong.
+ 
+ Problems related to branches:
+ 
+- * Branches on which no commits have been made are not imported
++ * Branches on which no commits have been made are not imported.
+  * All files from the branching point are added to a branch even if
+-   never added in cvs
+- * files added to the source branch *after* a daughter branch was
+-   created: If previously no commit was made on the daugther branch they
+-   will erroneously be added to the daughter branch in git
++   never added in cvs.
++ * This applies to files added to the source branch *after* a daughter
++   branch was created: if previously no commit was made on the daughter
++   branch they will erroneously be added to the daughter branch in git.
+ 
+ Problems related to tags:
+ 
+-* Multiple tags on the same revision are not imported
++* Multiple tags on the same revision are not imported.
+ 
+ If you suspect that any of these issues may apply to the repository you
+ want to import consider using these alternative tools which proved to be
+-- 
+1.6.2.1.424.g0b27.dirty
