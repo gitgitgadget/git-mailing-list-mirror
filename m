@@ -1,187 +1,122 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [PATCH 08/10] mergetool-lib: introduce run_mergetool
-Date: Thu, 2 Apr 2009 00:47:40 +0200
-Message-ID: <200904020047.41561.markus.heidelberg@web.de>
-References: <1238590514-41893-1-git-send-email-davvid@gmail.com> <1238590514-41893-8-git-send-email-davvid@gmail.com> <1238590514-41893-9-git-send-email-davvid@gmail.com>
-Reply-To: markus.heidelberg@web.de
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: RE: More help with "pull" please
+Date: Wed, 1 Apr 2009 18:53:10 -0400
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E70A7D4E71@EXCHANGE.trad.tradestation.com>
+References: <450196A1AAAE4B42A00A8B27A59278E70A7D4D9A@EXCHANGE.trad.tradestation.com> <4659A860-4AF5-4E34-B38E-60C926E2BAE1@dbservice.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, charles@hashpling.org, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 02 00:49:10 2009
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "Tomas Carnecky" <tom@dbservice.com>
+X-From: git-owner@vger.kernel.org Thu Apr 02 00:55:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lp9F8-000681-2g
-	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 00:49:10 +0200
+	id 1Lp9Kp-0007Ln-3l
+	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 00:55:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754137AbZDAWrf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2009 18:47:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755540AbZDAWrf
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 18:47:35 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:42985 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753208AbZDAWre (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Apr 2009 18:47:34 -0400
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate01.web.de (Postfix) with ESMTP id B314AFF4B5C0;
-	Thu,  2 Apr 2009 00:47:31 +0200 (CEST)
-Received: from [89.59.70.14] (helo=.)
-	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1Lp9DX-0004yU-00; Thu, 02 Apr 2009 00:47:31 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <1238590514-41893-9-git-send-email-davvid@gmail.com>
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX1+Rshlnz6FiI/cvM9mLTnEP6ucZ/naAPPQRcC+O
-	RWbCXvqK6w9jwsR1UQVpaSMXIZqvmwMQsFtZtGZh5A82acc2/B
-	U8kiLD7TJeLBSBzxL2wA==
+	id S1755540AbZDAWxc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2009 18:53:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755316AbZDAWxb
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 18:53:31 -0400
+Received: from mail2.tradestation.com ([63.99.207.80]:59847 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753208AbZDAWxa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Apr 2009 18:53:30 -0400
+X-ASG-Debug-ID: 1238626407-148700940004-QuoKaX
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
+Received: from mail5.tradestation.com (localhost [127.0.0.1])
+	by mail2.tradestation.com (Spam Firewall) with ESMTP
+	id 7A54427E886; Wed,  1 Apr 2009 18:53:28 -0400 (EDT)
+Received: from mail5.tradestation.com (tx02exchange02.trad.tradestation.com [192.168.51.76]) by mail2.tradestation.com with ESMTP id PPJ6cHrfDTvlMiFg; Wed, 01 Apr 2009 18:53:28 -0400 (EDT)
+X-ASG-Whitelist: Client
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.122]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 1 Apr 2009 18:53:27 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-ASG-Orig-Subj: RE: More help with "pull" please
+In-Reply-To: <4659A860-4AF5-4E34-B38E-60C926E2BAE1@dbservice.com>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: More help with "pull" please
+Thread-Index: AcmzBrOi3o6hpeVdSW+JfEeJNckFGwABNDNA
+X-OriginalArrivalTime: 01 Apr 2009 22:53:27.0437 (UTC) FILETIME=[AB7DBBD0:01C9B31C]
+X-Barracuda-Connect: tx02exchange02.trad.tradestation.com[192.168.51.76]
+X-Barracuda-Start-Time: 1238626408
+X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115423>
 
-David Aguilar, 01.04.2009:
-> diff --git a/git-mergetool-lib.sh b/git-mergetool-lib.sh
-> +run_mergetool () {
-> +	base_present="$2"
-> +	if diff_mode; then
-> +		base_present="false"
-> +	fi
-> +	if test -z "$base_present"; then
-> +		base_present="true"
-> +	fi
-> +
-> +	case "$1" in
-> +	kdiff3)
-> +		if $base_present; then
-> +			("$merge_tool_path" --auto \
-> +			 --L1 "$MERGED (Base)" --L2 "$MERGED (Local)" --L3 "$MERGED (Remote)" \
-> +			 -o "$MERGED" "$BASE" "$LOCAL" "$REMOTE" > /dev/null 2>&1)
-> +		else
-> +			("$merge_tool_path" --auto \
-> +			 --L1 "$MERGED (Local)" --L2 "$MERGED (Remote)" \
-> +			 -o "$MERGED" "$LOCAL" "$REMOTE" > /dev/null 2>&1)
-> +		fi
-> +		status=$?
-> +		;;
-> +	kompare)
-> +		"$merge_tool_path" "$LOCAL" "$REMOTE"
-> +		status=$?
-> +		;;
-> +	tkdiff)
-> +		if $base_present; then
-> +			"$merge_tool_path" -a "$BASE" -o "$MERGED" "$LOCAL" "$REMOTE"
-> +		else
-> +			if diff_mode; then
+> When you create a branch, you can tell git which remote branch it
+> tracks, like this:
+> 
+> $ git branch --track mynext origin/next
+> 
+> So whenever you are on brach 'mynext' and do a git-pull, it will fetch
+> and merge origin/next.
+> 
+> You can do the same with the git-checkout command:
+> 
+> $ git checkout --track origin/next
+> 
+> This will create a local branch 'next' which tracks 'origin/next'
+> 
 
-Query merge_mode instead of diff_mode as in all the other places.
+OK, that works by adding something to the config file, right?  The docs
+don't say, but does mention "having Pull: <refspec> lines for a
+<repository>".  Does tracking add Pull: lines, or is that another
+feature?
 
-> +				"$merge_tool_path" "$LOCAL" "$REMOTE"
-> +			else
-> +				"$merge_tool_path" -o "$MERGED" "$LOCAL" "$REMOTE"
-> +			fi
-> +		fi
-> +		status=$?
-> +		;;
-> +	meld)
-> +		merge_mode && touch "$BACKUP"
-> +		if merge_mode; then
-> +			"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"
+> 
+> $ git clone $url XXX
+> $ cd XXX
+> $ git checkout --track origin/ReleaseCandidate
+> ...
+> $ git pull # will automatically fetch and merge
+origin/ReleaseCandidate
 
-Put the touch command into the if then block as in the other places.
+According to the manpage on pull, "While git-pull run without any
+explicit <refspec> parameter takes default <refspec>s from Pull: lines,
+it merges only the first <refspec> found into the current branch, after
+fetching all the remote refs."
 
-> +		else
-> +			"$merge_tool_path" "$LOCAL" "$REMOTE"
-> +		fi
-> +		check_unchanged
-> +		;;
-> +	vimdiff)
-> +		if merge_mode; then
-> +			touch "$BACKUP"
-> +			"$merge_tool_path" -c "wincmd l" "$LOCAL" "$MERGED" "$REMOTE"
-> +			check_unchanged
-> +		else
-> +			"$merge_tool_path" -c "wincmd l" "$LOCAL" "$REMOTE"
-> +		fi
-> +		;;
-> +	gvimdiff)
-> +		if merge_mode; then
-> +			touch "$BACKUP"
-> +			"$merge_tool_path" -c "wincmd l" -f "$LOCAL" "$MERGED" "$REMOTE"
-> +			check_unchanged
-> +		else
-> +			"$merge_tool_path" -c "wincmd l" -f "$LOCAL" "$REMOTE"
-> +		fi
-> +		;;
-> +	xxdiff)
-> +		merge_mode && touch "$BACKUP"
-> +		if $base_present; then
-> +			"$merge_tool_path" -X --show-merged-pane \
-> +			    -R 'Accel.SaveAsMerged: "Ctrl-S"' \
-> +			    -R 'Accel.Search: "Ctrl+F"' \
-> +			    -R 'Accel.SearchForward: "Ctrl-G"' \
-> +			    --merged-file "$MERGED" "$LOCAL" "$BASE" "$REMOTE"
-> +		else
-> +			merge_mode && extra=--show-merged-pane
-> +			"$merge_tool_path" -X $extra \
-> +				-R 'Accel.SaveAsMerged: "Ctrl-S"' \
-> +				-R 'Accel.Search: "Ctrl+F"' \
-> +				-R 'Accel.SearchForward: "Ctrl-G"' \
-> +				--merged-file "$MERGED" "$LOCAL" "$REMOTE"
-> +		fi
-> +		check_unchanged
-> +		;;
-> +	opendiff)
-> +		merge_mode && touch "$BACKUP"
-> +		if $base_present; then
-> +			"$merge_tool_path" "$LOCAL" "$REMOTE" \
-> +				-ancestor "$BASE" -merge "$MERGED" | cat
-> +		else
-> +			"$merge_tool_path" "$LOCAL" "$REMOTE" \
-> +				-merge "$MERGED" | cat
-> +		fi
-> +		check_unchanged
-> +		;;
-> +	ecmerge)
-> +		merge_mode && touch "$BACKUP"
-> +		if $base_present; then
-> +			"$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" \
-> +				--default --mode=merge3 --to="$MERGED"
-> +		else
-> +			"$merge_tool_path" "$LOCAL" "$REMOTE" \
-> +				--default --mode=merge2 --to="$MERGED"
-> +		fi
-> +		check_unchanged
-> +		;;
-> +	emerge)
-> +		if $base_present; then
-> +			"$merge_tool_path" -f emerge-files-with-ancestor-command \
-> +				"$LOCAL" "$REMOTE" "$BASE" "$(basename "$MERGED")"
-> +		else
-> +			"$merge_tool_path" -f emerge-files-command \
-> +				"$LOCAL" "$REMOTE" "$(basename "$MERGED")"
-> +		fi
-> +		status=$?
-> +		;;
-> +	*)
-> +		if test -n "$merge_tool_cmd"; then
-> +			if merge_mode &&
-> +			test "$merge_tool_trust_exit_code" = "false"; then
-> +				touch "$BACKUP"
-> +				( eval $merge_tool_cmd )
-> +				check_unchanged
-> +			else
-> +				( eval $merge_tool_cmd )
-> +				status=$?
-> +			fi
-> +		fi
-> +		;;
-> +	esac
-> +}
+Also, "When no refspec was given on the command line ... If
+branch.<name>.merge configuration for the current branch <name> exists,
+that is the name of the branch at the remote site that is merged."  So
+is that yet again different from having Pull: lines?  If so, I'm fine if
+no "Pull:" lines exist, or it would merge the first refspec found there.
+
+Also, "Normally the branch merged in is the HEAD of the remote
+repository, but the choice is determined by the branch.<name>.remote and
+branch.<name>.merge options; see git-config(1) for details."  That
+agrees with the previous.  If branch.<name>.merge configuration exists,
+I don't need to worry about the remote HEAD.
+
+
+> $ git checkout --track origin/ReleaseCandidate
+
+That command does not work.  It compains that --track can only be used
+with -b, etc.
+
+I think 
+	git checkout -b origin/ReleaseCandidate
+
+is the correct shortcut?  
+
+	git checkout -b ReleaseCandidate origin/ReleaseCandidate
+
+did work.  I know that --track is automatic if the second argument is
+remote.
+
+--John
+
+
+
+
+TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
+  If you received this in error, please contact the sender and delete the material from any computer.
