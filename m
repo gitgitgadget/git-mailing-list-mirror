@@ -1,98 +1,121 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH 6/8 v2] sh-tools: add a run_merge_tool function
-Date: Wed, 1 Apr 2009 01:36:49 -0700
-Message-ID: <20090401083649.GA30594@gmail.com>
-References: <1238400684-14881-1-git-send-email-davvid@gmail.com> <885649360903311115o6131988emdcba6ef215ec0ab0@mail.gmail.com> <200904010011.10296.markus.heidelberg@web.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: On git 1.6 (novice's opinion)
+Date: Wed, 01 Apr 2009 10:37:24 +0200
+Message-ID: <49D327C4.7000101@op5.se>
+References: <49CC8C90.12268.242CEFCE@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>, <49CCAF5D.21814.24B4DE63@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>, <f9d2a5e10903292318w6108bc50u2ddc830a6d9d85df@mail.gmail.com> <49D339B2.4388.6B1DEF@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: James Pickens <jepicken@gmail.com>, gitster@pobox.com,
-	git@vger.kernel.org
-To: Markus Heidelberg <markus.heidelberg@web.de>
-X-From: git-owner@vger.kernel.org Wed Apr 01 10:38:57 2009
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Russ Dill <russ.dill@gmail.com>,
+	"H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
+To: Ulrich Windl <ulrich.windl@rz.uni-regensburg.de>
+X-From: git-owner@vger.kernel.org Wed Apr 01 10:39:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LovyL-0006Rs-4c
-	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 10:38:57 +0200
+	id 1Lovyw-0006Zs-Rm
+	for gcvg-git-2@gmane.org; Wed, 01 Apr 2009 10:39:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758011AbZDAIhD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2009 04:37:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756766AbZDAIhB
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 04:37:01 -0400
-Received: from rv-out-0506.google.com ([209.85.198.229]:55979 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753836AbZDAIg7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Apr 2009 04:36:59 -0400
-Received: by rv-out-0506.google.com with SMTP id f9so3506970rvb.1
-        for <git@vger.kernel.org>; Wed, 01 Apr 2009 01:36:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=pl4nlW7fUhv10CB8v+1O2gagYzRskP2IEbHfT40Lyes=;
-        b=BsZgOjWV7nr0N9M5L76fZ1YhYcM9QDwvh18oOAz9GKX4cr5kSrfTR34eujjs5e9xt9
-         FJ2dyyF/0DzTpFNd71DgDcfv2OTzj+6f/SCxncbX6D2rD+5maTC8xHY4S01Xlk4IdufJ
-         1vP39nSzet7kDIT0O1dROlVi1yFQhEI7wenxY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=q0WV3QzB4CNzXVPKeYW+mdZ/QGHh1u4wE/c38MrfyVwBszzYpD9C7fqKQXOKhouup8
-         m63BdinlT1ynM8vnF5IjVJB9xDKqgWE6arbOmyPRvrgeTtAvXfCdy47qq9O/lCm6x6LI
-         4PLbaV4CJAVqWr6BmB/i06fZFYFY6oClhz6cA=
-Received: by 10.114.178.13 with SMTP id a13mr5060696waf.88.1238575017525;
-        Wed, 01 Apr 2009 01:36:57 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id c26sm7091493waa.15.2009.04.01.01.36.56
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 01 Apr 2009 01:36:57 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <200904010011.10296.markus.heidelberg@web.de>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1761993AbZDAIhj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2009 04:37:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754757AbZDAIhi
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 04:37:38 -0400
+Received: from mail.op5.se ([193.201.96.20]:44912 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762182AbZDAIhe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Apr 2009 04:37:34 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 88C471B80F34;
+	Wed,  1 Apr 2009 10:15:01 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id EW8F1j+IkcJA; Wed,  1 Apr 2009 10:15:00 +0200 (CEST)
+Received: from clix.int.op5.se (unknown [172.27.78.14])
+	by mail.op5.se (Postfix) with ESMTP id C4B631B80F1A;
+	Wed,  1 Apr 2009 10:14:59 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <49D339B2.4388.6B1DEF@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115356>
 
+Ulrich Windl wrote:
+> On 29 Mar 2009 at 23:18, Russ Dill wrote:
+> 
+>> On Fri, Mar 27, 2009 at 2:50 AM, Ulrich Windl
+>> <ulrich.windl@rz.uni-regensburg.de> wrote:
+>>> On 27 Mar 2009 at 9:05, H.Merijn Brand wrote:
+>>>
+>>>> On Fri, 27 Mar 2009 08:21:36 +0100, "Ulrich Windl"
+>>>> <ulrich.windl@rz.uni-regensburg.de> wrote:
+>>>>
+>>>>> What I'd like to see in git (My apologies if some were already discussed to
+>>>>> death):
+>>>>>
+>>>>> 1) The ability to use the file's time at the time of add/commit instead of
+>>>>>    the current time, and the ability tho check outfiles with the times stored
+>>>>>    in the repository.
+>>>>>
+>>>>> 2) Keyword substitution. I know it's controverse (dealing with binary files),
+>>>>>    but I'd like to have some automatic version numbering keyword at least:
+>>>>>    Initial idea is that every commit with a change increments the number by
+>>>>>    one, and when merging numbers a and b, the resulting number is max(a, b) + 1.
+>>>> impossible. Even with checkin- and checkout hooks, you won't get that
+>>>> SCCS behaviour. They have to be better in something too :)
+>>>> /me still misses that but got used to it
+>>> Hi,
+>>>
+>>> what made me wonder is this (about item 1): I thought I've read that blobs store
+>>> content and attributes, so very obviously I wondered why not store thr "right
+>>> attributes" (i.e. the time of the file). My reasoning: You make some changes, then
+>>> test them (which might last several hours or days). The if I'm happy I'll
+>>> "commit". Naturally I want to see the time of change for each file when the change
+>>> had been actually made, not when the change was committed. Likewise when checking
+>>> out, I want to be able to see the time of modification, not the time of commit.
+>>> I'm aware that many people don't care about such differences...
+>>>
+>> Ok, so if Nancy did some work on the part number form 6 months ago,
+>> but it got merged into master yesterday. What date should the file
+>> have? This kind of incremental version number, and trusting of file
+> 
+> If Nancy committed it with my semantics, the file's date would be 6 months old 
+> before the merge. If the merge would not require any change, the file's date would 
+> still be six months old. If a change was required, the file's date would be the 
+> time of change. That sounds quite logical to me.
+> 
 
-On  0, Markus Heidelberg <markus.heidelberg@web.de> wrote:
-> James Pickens, 31.03.2009:
-> > On Mon, Mar 30, 2009 at 1:11 AM, David Aguilar <davvid@gmail.com> wrote:
-> > > This function launches merge tools and will be used to refactor
-> > > git-(diff|merge)tool.
+But if you built the old source before you merged but after Nancy made her
+changes, make wouldn't grok that the file is actually changed. Trust me,
+the current semantics are far better.
 
-sorry this whole series is being rewriten...
+>> dates really only matters on a centralized system with a single
+>> branch.
+>>
+>> Not only that, but modification times are much more useful with make.
+>> Merging or pulling small changes into a tree shouldn't require a full
+>> rebuild of the entire tree which in some cases could take hours.
+> 
+> Git is not a build system, and I really dislike "full rebuilds", but for 
+> stability, before releasing anything, one should test it with a full rebuild.
 
-
-> > 
-> > Thanks for writing difftool; I find it quite useful.  I tried it with
-> > tkdiff, and noticed that it shows the 'merge preview' window even though it
-> > isn't doing a merge.  If a user with unstaged changes were to carelessly
-> > click the 'save and exit' button, his changes could be lost.  So I think
-> > it's a good idea to stop the merge preview window from showing up under
-> > difftool.  To do that I think you just have to remove the '-o "$MERGED"'
-> > option to tkdiff.
-> 
-> This mail made me see an issue with your patch series. Sorry, I haven't
-> seen this earlier, my review was just scratching the surface, I merely
-> applied it and looked through it, but didn't actually test it. Lack of
-> time.
-> 
-> The invocations seem to be appropriate only for mergetool, it is just
-> the invocations from the old git-mergetool.sh, not from the old
-> git-difftool-helper.sh. This means, git-difftool opens 3 files instead
-> of 2.
-> 
-> I think there are preset diff tools, which opened 3 files instead of 2
-> before this series (I just tested kdiff3, it opened 3 files). Seems to
-> be originated from the fact, that they were initially copied from
-> git-mergetool.sh.
-> 
-> Markus
-> 
+I build all the time. Before and after every commit (merges are one type of
+commit). I rely on file timestamps to be an accurate indicator of when the
+file last changed *on my disk*.
 
 -- 
-		David
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
