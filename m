@@ -1,70 +1,63 @@
-From: "Michael Johnson" <redbeard@mdjohnson.us>
-Subject: Re: Segfault on merge with 1.6.2.1
-Date: Wed, 01 Apr 2009 19:33:37 -0500
-Message-ID: <op.urqg6bhmso3nzr@sulidor.mdjohnson.us>
-References: <op.urifmtkkso3nzr@sulidor.mdjohnson.us>
- <20090329121700.GN22446@genesis.frugalware.org>
- <op.urk20nanso3nzr@sulidor.mdjohnson.us>
- <20090330110335.GF22446@genesis.frugalware.org>
- <op.urnad7jbso3nzr@sulidor.mdjohnson.us> <20090401180627.GA14716@localhost>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: "git clone --depth <depth>" producing history with <depth + 1>
+ commits?
+Date: Thu, 2 Apr 2009 03:04:58 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904020303320.10279@pacific.mpi-cbg.de>
+References: <49CBB490.8040908@hartwork.org> <49D3C300.1040303@hartwork.org>
 Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; delsp=yes; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: "Miklos Vajna" <vmiklos@frugalware.org>, git@vger.kernel.org
-To: "Clemens Buchacher" <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Thu Apr 02 02:35:29 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Sebastian Pipping <webmaster@hartwork.org>
+X-From: git-owner@vger.kernel.org Thu Apr 02 03:04:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LpAtv-0002g4-1G
-	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 02:35:23 +0200
+	id 1LpBLr-0007Xi-Cu
+	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 03:04:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761309AbZDBAdv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Apr 2009 20:33:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760410AbZDBAdv
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 20:33:51 -0400
-Received: from caibbdcaaaaf.dreamhost.com ([208.113.200.5]:49962 "EHLO
-	looneymail-a3.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1759119AbZDBAdu (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Apr 2009 20:33:50 -0400
-Received: from sulidor.mdjohnson.us (216.49.248-IP-55.ckt.net [216.49.248.55])
-	by looneymail-a3.g.dreamhost.com (Postfix) with ESMTP id 4DD4227B7E;
-	Wed,  1 Apr 2009 17:33:47 -0700 (PDT)
-In-Reply-To: <20090401180627.GA14716@localhost>
-User-Agent: Opera Mail/9.64 (Linux)
+	id S1756222AbZDBBCj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Apr 2009 21:02:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755858AbZDBBCj
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Apr 2009 21:02:39 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46331 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750886AbZDBBCi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Apr 2009 21:02:38 -0400
+Received: (qmail invoked by alias); 02 Apr 2009 01:02:35 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp011) with SMTP; 02 Apr 2009 03:02:35 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX183ektwxho3Pt066EwglNTswicuxndrfqiJrBcNdn
+	5TA3FK1qIFmCz2
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <49D3C300.1040303@hartwork.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115428>
 
-On Wed, 01 Apr 2009 13:06:27 -0500, Clemens Buchacher <drizzd@aon.at>  
-wrote:
+Hi,
 
-> On Tue, Mar 31, 2009 at 02:14:21AM -0500, Michael Johnson wrote:
->> It would appear that the patch has already been applied to 1.6.2.1.
->
-> I don't think it has. But judging from the stack trace this bug is  
-> unrelated to the patch anyways.
+On Wed, 1 Apr 2009, Sebastian Pipping wrote:
 
-When I tried to appy the patch I got a conflict (I applied it directly to  
-Debian's source package for git-core). When I compared the code to the  
-patch it appeared it had been applied. Of course, I'm far from an expert  
-at applying patches, so I might have misread the direction of the patch.
+> Sebastian Pipping wrote:
+> > Is "git clone --depth 1 <ropository>" expected to give a history
+> > with 2 commits?  "--depth 2" gives 3 commits, "--depth 0" all.
+> > 
+> > Is that by design or a bug?
+> 
+> Anyone?  Is "git clone --depth 1 <ropository>" really supposed to 
+> produce a history holding _two_ commits?  Why so?
 
-> If nobody else is dealing with this I'd like to have a look at it. Could  
-> you please send me a copy of the repo.
+Because storing _no_ commit (according to you, that should happen with 
+--depth=0) would make no sense?
 
-It doesn't sound like anyone else is. So I'll send you a copy shortly, off  
-list.
+After all, if you want to clone, you want to clone at least _something_.
 
-Thanks for all the help,
-Michael
-
--- 
-Michael D Johnson   <redbeard@mdjohnson.us>    
-redbeardcreator.deviantart.com
-
-"Marketing research...[has] shown that energy weapons that make sounds sell
-  better..." - Kevin Siembieda (Rifts Game Master Guide, pg 111)
+Ciao,
+Dscho
