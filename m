@@ -1,90 +1,56 @@
-From: demerphq <demerphq@gmail.com>
-Subject: Re: [PATCH] git remote update: New option --prune (-p)
-Date: Thu, 2 Apr 2009 15:34:15 +0200
-Message-ID: <9b18b3110904020634i17633645ue4ba91701ea243a1@mail.gmail.com>
-References: <20090402123823.GA1756@pvv.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Broken t9001 tests
+Date: Thu, 2 Apr 2009 09:40:19 -0400
+Message-ID: <20090402134019.GA26699@coredump.intra.peff.net>
+References: <alpine.DEB.1.00.0904021520200.7464@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Finn Arne Gangstad <finnag@pvv.org>
-X-From: git-owner@vger.kernel.org Thu Apr 02 15:36:01 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Apr 02 15:42:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LpN5D-0001WU-HC
-	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 15:35:52 +0200
+	id 1LpNBF-0003Y4-Pg
+	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 15:42:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754232AbZDBNeT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Apr 2009 09:34:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753979AbZDBNeS
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 09:34:18 -0400
-Received: from mail-gx0-f160.google.com ([209.85.217.160]:62945 "EHLO
-	mail-gx0-f160.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751917AbZDBNeS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Apr 2009 09:34:18 -0400
-Received: by gxk4 with SMTP id 4so1202972gxk.13
-        for <git@vger.kernel.org>; Thu, 02 Apr 2009 06:34:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=CughoFzVgNvOZl6vTRO2874rnrmu4P39X1N/ZQ8kOcY=;
-        b=W1iwryQ3dOG/k21Q+BBl0R1wv1zQhu+O+tKkhCZZPv04oRwCQlP3UjrkjVrz7leyaV
-         Lo+D8GuPbj+lLADTB/0uoMt98GQDnmxPic/e/7UlUDVxLZd6A69d59uVpT+ywWojyvg+
-         bVLRpuTVFpxBBgZRCupm6KvcvLs7UogxUgDqs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=QyUaJOF8ridvMpIvBPoellEaMmlnsk3PZ/Q77IdsXxqSGb9KRCIKiIvendHNzPKy/z
-         /c8HJGeKRdd4LTaRCa831KUve/izloiM3e/zDr4nBPAoayW3RFTdG5sVImZLaySni3mn
-         rg3g52G8MkZx8ep9R88E2j6F3hgZyC2wrwSBQ=
-Received: by 10.231.30.198 with SMTP id v6mr8031ibc.22.1238679255482; Thu, 02 
-	Apr 2009 06:34:15 -0700 (PDT)
-In-Reply-To: <20090402123823.GA1756@pvv.org>
+	id S1754185AbZDBNke (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Apr 2009 09:40:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752060AbZDBNke
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 09:40:34 -0400
+Received: from peff.net ([208.65.91.99]:48600 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751792AbZDBNkd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Apr 2009 09:40:33 -0400
+Received: (qmail 26241 invoked by uid 107); 2 Apr 2009 13:40:49 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 02 Apr 2009 09:40:49 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Apr 2009 09:40:19 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0904021520200.7464@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115465>
 
-2009/4/2 Finn Arne Gangstad <finnag@pvv.org>:
-> With the --prune (or -p) option, git remote update will also prune
-> all the remotes that it fetches. =A0Previously, you had to do a manua=
-l git
-> remote prune <remote> for each of the remotes you wanted to prune, an=
-d this
-> could be tedious with many remotes.
+On Thu, Apr 02, 2009 at 03:22:33PM +0200, Johannes Schindelin wrote:
 
-Yay!
+> only when I revert both dc1460a(send-email: ask_default should apply to 
+> all emails, not just the first) and c18f75a(send-email: add tests for 
+> refactored prompting) does my test suite pass without asking me 
+> _interactively_ (twice, even) if I want to
+> 
+> 	Send this email? ([y]es|[n]o|[q]uit|[a]ll):
+> 
+> Please fix.
 
-But one question. It seem to me odd to put this as an option to git
-remote update, and not git remote prune.
+Try
 
-I mean, it seems weird that one must say:
+  http://article.gmane.org/gmane.comp.version-control.git/115280
 
-   git remote update --prune
+Junio seems to have picked up the first part of the series, but not this
+fix. I'm not sure why.
 
-and one cannot say:
-
-   git remote prune --all
-
-especially when there is a `git remote prune` already. It seems a bit
-counterintuitive to find pruning actions under "update", but not all
-that strange to find an all "--all" option for the "prune" action.
-
-Although to me having both be allowed and mean the same thing also make=
-s sense.
-
-Anyway, thanks for this regardless, I am looking forward to this
-functionality. :-)
-
-Cheers,
-yves
-
-
---=20
-perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
+-Peff
