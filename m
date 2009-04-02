@@ -1,74 +1,71 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: [PATCH 10/10] mergetool: use run_mergetool from
-	git-mergetool-lib
-Date: Thu, 2 Apr 2009 21:02:35 +0100
-Message-ID: <20090402200235.GB13817@hashpling.org>
-References: <1238590514-41893-1-git-send-email-davvid@gmail.com> <1238590514-41893-10-git-send-email-davvid@gmail.com> <1238590514-41893-11-git-send-email-davvid@gmail.com> <200904020054.23147.markus.heidelberg@web.de>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: [PATCH] {diff,merge}tool: rename helpers to remove them from tab-completion
+Date: Thu, 2 Apr 2009 22:04:33 +0200
+Message-ID: <200904022204.34019.markus.heidelberg@web.de>
+References: <1238672296-10265-1-git-send-email-davvid@gmail.com>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Aguilar <davvid@gmail.com>, gitster@pobox.com,
-	git@vger.kernel.org
-To: Markus Heidelberg <markus.heidelberg@web.de>
-X-From: git-owner@vger.kernel.org Thu Apr 02 22:04:31 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 02 22:06:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LpT92-0006Ha-RR
-	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 22:04:13 +0200
+	id 1LpTB3-0006mt-9h
+	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 22:06:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761276AbZDBUCk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Apr 2009 16:02:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760975AbZDBUCk
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 16:02:40 -0400
-Received: from relay.pcl-ipout02.plus.net ([212.159.7.100]:60599 "EHLO
-	relay.pcl-ipout02.plus.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755772AbZDBUCj (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Apr 2009 16:02:39 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApoEAFu21EnUnw6R/2dsb2JhbADPdYN8Bg
-Received: from ptb-relay01.plus.net ([212.159.14.145])
-  by relay.pcl-ipout02.plus.net with ESMTP; 02 Apr 2009 21:02:36 +0100
-Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by ptb-relay01.plus.net with esmtp (Exim) id 1LpT7U-00058W-1G; Thu, 02 Apr 2009 21:02:36 +0100
-Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
-	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id n32K2Z5i014516
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 2 Apr 2009 21:02:35 +0100
-Received: (from charles@localhost)
-	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id n32K2Zgc014515;
-	Thu, 2 Apr 2009 21:02:35 +0100
+	id S1762253AbZDBUEi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Apr 2009 16:04:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757285AbZDBUEi
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 16:04:38 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:57934 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756467AbZDBUEh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Apr 2009 16:04:37 -0400
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 598E0FC6A7EC;
+	Thu,  2 Apr 2009 22:04:35 +0200 (CEST)
+Received: from [89.59.93.159] (helo=.)
+	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1LpT9P-00026o-00; Thu, 02 Apr 2009 22:04:35 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <1238672296-10265-1-git-send-email-davvid@gmail.com>
+Jabber-ID: markus.heidelberg@web.de
 Content-Disposition: inline
-In-Reply-To: <200904020054.23147.markus.heidelberg@web.de>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Plusnet-Relay: 27c6b773151c5855a410e31435ae7a51
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX1+J1OhCUwPL1tfxIdNvck3fKcE2AaDj/+KMncf0
+	wxVUME24Po9V7rVSZDKdmPICGRMLGG/JfLk26LALZzcSk2lsG8
+	tFVl7YBq5GOF/h0LzRJA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115492>
 
-On Thu, Apr 02, 2009 at 12:54:22AM +0200, Markus Heidelberg wrote:
-> David Aguilar, 01.04.2009:
-> > +    present=false
-> > +    base_present &&
-> > +    present=true
-> > +
-> > +    run_mergetool "$merge_tool" "$present"
-> > +    status=$?
-> 
-> This last line has to be deleted, because the variable 'status' set in
-> run_mergetool would be overwritten then. In this case the merge will
-> succeed even if it didn't and the file will be staged.
+David Aguilar, 02.04.2009:
+> diff --git a/Makefile b/Makefile
+[..]
+>  SCRIPT_SH += git-merge-resolve.sh
+>  SCRIPT_SH += git-mergetool.sh
+> -SCRIPT_SH += git-mergetool-lib.sh
+> +SCRIPT_SH += git-mergetool--lib.sh
+>  SCRIPT_SH += git-parse-remote.sh
+>  SCRIPT_SH += git-pull.sh
+>  SCRIPT_SH += git-quiltimport.sh
 
-I think that it would be better if $status stayed as local as
-possible. If run_mergetool returned the value of $status as its exit
-code then the function will properly return whether the merge
-succeeded or not.
+This conflicts with commit 496c021 (Add a script to edit/inspect notes)
+in 'pu', which seems to be just merged today. If you build your patches
+on top of 'da/difftool' (99511d8) instead of 'pu', then these conflicts
+won't arise and avoid hassle.
 
-This way run_mergetool's clients can just use its exit code, without
-having to know about a magic $status global variable.
+In fact I already applied all your patches on top 'da/difftool' and not
+'pu' all the time, until now.
 
--- 
-Charles Bailey
-http://ccgi.hashpling.plus.com/blog/
+Thanks for your work on this
+
+Markus
