@@ -1,100 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git remote update: New option --prune (-p)
-Date: Thu, 2 Apr 2009 10:31:12 -0400
-Message-ID: <20090402143112.GA26974@coredump.intra.peff.net>
-References: <20090402123823.GA1756@pvv.org> <9b18b3110904020634i17633645ue4ba91701ea243a1@mail.gmail.com> <20090402134414.GB26699@coredump.intra.peff.net> <9b18b3110904020717h3a0d4b34h7f4b2b83527e6743@mail.gmail.com>
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: RE: More help with "pull" please
+Date: Thu, 2 Apr 2009 10:45:12 -0400
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E70A7D4FF7@EXCHANGE.trad.tradestation.com>
+References: <450196A1AAAE4B42A00A8B27A59278E70A7D4D9A@EXCHANGE.trad.tradestation.com> <4659A860-4AF5-4E34-B38E-60C926E2BAE1@dbservice.com> <450196A1AAAE4B42A00A8B27A59278E70A7D4E71@EXCHANGE.trad.tradestation.com> <F364AB31-EC5B-4719-834E-58613BDBC433@dbservice.com> <7viqlnokrv.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Finn Arne Gangstad <finnag@pvv.org>, git@vger.kernel.org,
-	gitster@pobox.com
-To: demerphq <demerphq@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 02 16:33:18 2009
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>,
+	"Tomas Carnecky" <tom@dbservice.com>
+X-From: git-owner@vger.kernel.org Thu Apr 02 16:47:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LpNyY-0004aF-JH
-	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 16:33:03 +0200
+	id 1LpOCt-00014C-N8
+	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 16:47:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759555AbZDBOb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Apr 2009 10:31:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759375AbZDBOb2
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 10:31:28 -0400
-Received: from peff.net ([208.65.91.99]:39491 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759250AbZDBOb1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Apr 2009 10:31:27 -0400
-Received: (qmail 26509 invoked by uid 107); 2 Apr 2009 14:31:43 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 02 Apr 2009 10:31:43 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Apr 2009 10:31:12 -0400
-Content-Disposition: inline
-In-Reply-To: <9b18b3110904020717h3a0d4b34h7f4b2b83527e6743@mail.gmail.com>
+	id S1757613AbZDBOqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Apr 2009 10:46:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757064AbZDBOqR
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 10:46:17 -0400
+Received: from mail2.tradestation.com ([63.99.207.80]:36178 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755555AbZDBOqQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Apr 2009 10:46:16 -0400
+X-ASG-Debug-ID: 1238683573-0972002b0000-QuoKaX
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
+Received: from mail5.tradestation.com (localhost [127.0.0.1])
+	by mail2.tradestation.com (Spam Firewall) with ESMTP
+	id 12CB4286275; Thu,  2 Apr 2009 10:46:13 -0400 (EDT)
+Received: from mail5.tradestation.com (tx02exchange02.trad.tradestation.com [192.168.51.76]) by mail2.tradestation.com with ESMTP id Qhqlzzy3pTiI7OhK; Thu, 02 Apr 2009 10:46:13 -0400 (EDT)
+X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
+X-ASG-Whitelist: Client
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.122]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 2 Apr 2009 10:46:13 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-ASG-Orig-Subj: RE: More help with "pull" please
+In-Reply-To: <7viqlnokrv.fsf@gitster.siamese.dyndns.org>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: More help with "pull" please
+Thread-Index: AcmzOiWxIs9gKEFlSWaEYBIijwBzfwAZuEIw
+X-OriginalArrivalTime: 02 Apr 2009 14:46:13.0451 (UTC) FILETIME=[C51739B0:01C9B3A1]
+X-Barracuda-Connect: tx02exchange02.trad.tradestation.com[192.168.51.76]
+X-Barracuda-Start-Time: 1238683574
+X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115471>
 
-On Thu, Apr 02, 2009 at 04:17:35PM +0200, demerphq wrote:
+> If your repository is using .git/remotes/origin to name the "origin"
 
-> > But "git remote update" actually respects "remote groups", so it is not
-> > just "--all". I think what you want is "git remote prune <group>".
-> 
-> Are there any implicit groups defined, like "all-remotes" or
-> something? It seems less than desirable to have to define such a group
-> for an operation that IMO is pretty reasonable to expect to happen
-> regularly.
+I don't have a directory under .git called remotes.  A new repository
+made using clone describes origin in the config file.  Is that an old
+way of doing things?
 
-Yes. From "git help remote":
+> remote, they are still honored.  But you are correct to point out that
+> branch.<name>.remote and with the remote.<name>.* variables in
+> .git/config
+> are used to control these more recent features.  So in that sense the
+> documentation is still correct.
 
-       update
-           Fetch updates for a named set of remotes in the repository as
-           defined by remotes.<group>. If a named group is not specified on
-           the command line, the configuration parameter remotes.default will
-           get used; if remotes.default is not defined, all remotes which do
-           not have the configuration parameter
-           remote.<name>.skipDefaultUpdate set to true will be updated. (See
-           git-config(1)).
+A related question:  is the name "origin" hard-coded as the default, or
+does each repository remember specifically which is the upstream
+repository regardless of what you named it?  From what I see in the
+config file, it would have to be per-branch.  I suppose in other cases
+it's implicit in where the label was found under remotes.
 
-So without defining any other config, "git remote update" will by
-default update everything
+--John
 
-> I personally haven't found any use for defining  remote groups yet to
-> be honest. Its a granularity of operation that hasnt served much
-> purpose for me yet. Although i could see it being useful in the
-> future.
-
-I haven't either. I suspect it would be useful if you had a complex set
-of repo relationships, like an integration manager pulling from an
-upstream but also from other developers.
-
-> Generally tho I either want to update and prune one remote only, with
-> 
->    git fetch $remote; git prune $remote,
-
-It might be useful if "remote update" treated an unconfigured group as a
-simple remote. So that "git remote update --prune $remote" would do what
-you wanted here.
-
-I could even see "remote.*.autoprune" config being useful so you could
-avoid --prune. It is living dangerously, I suppose, for some workflows;
-but I generally consider whatever is in my remote tracking branches to
-be throwaway, and automatically pruning is not really dangerous.
-
-> or i want to update and prune all with something like:
-> 
->   git remote update; for r in $(git remote); do git remote prune $r; done;
-> 
-> This patch makes the latter better huffman encoded, but I'd kind of
-> expect both to be doable as single commands in terms of how often I
-> want to do them.
-> 
-> Maybe git fetch --prune would be a nice complement to this patch.
-
-I think we have tried to keep pruning out of fetch, as fetch does not
-necessarily use or know about tracking branches. But the "git remote
-update $remote" proposal I gave above would do basically the same thing
-(except you would call it "remote update" instead of "fetch").
-
--Peff
+TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
+  If you received this in error, please contact the sender and delete the material from any computer.
