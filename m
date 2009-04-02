@@ -1,255 +1,89 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v2 08/10] mergetool-lib: introduce run_mergetool
-Date: Wed,  1 Apr 2009 21:20:39 -0700
-Message-ID: <1238646040-46008-2-git-send-email-davvid@gmail.com>
-References: <1238646040-46008-1-git-send-email-davvid@gmail.com>
-Cc: git@vger.kernel.org, markus.heidelberg@web.de,
-	charles@hashpling.org, David Aguilar <davvid@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Apr 02 06:22:49 2009
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 07/10] rev-list: call new "filter_skip" function
+Date: Thu, 2 Apr 2009 06:23:40 +0200
+Message-ID: <200904020623.40908.chriscool@tuxfamily.org>
+References: <20090326055549.e1f244d9.chriscool@tuxfamily.org> <200904010809.41110.chriscool@tuxfamily.org> <alpine.DEB.1.00.0904011631300.13502@intel-tinevez-2-302>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	John Tapsell <johnflux@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Apr 02 06:26:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LpERw-0002z2-Os
-	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 06:22:45 +0200
+	id 1LpEVM-0003US-4M
+	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 06:26:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751375AbZDBEU4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Apr 2009 00:20:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751369AbZDBEUy
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 00:20:54 -0400
-Received: from rv-out-0506.google.com ([209.85.198.231]:24850 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750921AbZDBEUx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Apr 2009 00:20:53 -0400
-Received: by rv-out-0506.google.com with SMTP id g37so2560646rvb.5
-        for <git@vger.kernel.org>; Wed, 01 Apr 2009 21:20:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=F2fSqJkSy6uywdQv2pyKaUeFpzc2oQ0LIv9/6ZIzCAI=;
-        b=KqKHU6CZ0motpzif2DvLcGIYVW1Pjwlt6Jjwby+jERyF1PgKgQ1Rz3NSrwR2y2wrnf
-         nTLYaR1DMsWQQrNk63WxLTHJgpQ0eHl0Zl/nOoh8M8ndZkIYnad8ED8jtIi2KEqeANj8
-         9aVH2h8sbNOqmUT7KN3A6WWlvLR5JNXhgTDuY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=GKyrnhqGLAbRIrViBicvAwPZCZ+1caJTy+AfvB8H7nZTQ6w9HNHvH1gh25e7OvQwpY
-         3ks9PM5hhIOYThD6uhDX3sFd3Lii9sc/qu+tz0mRIILahpRfyb+WcrCbBIz8X6xPOcUo
-         S/FmWNimdXQ7ro9vz5hlPrYtG9+x7HOMd/33U=
-Received: by 10.142.185.21 with SMTP id i21mr3354840wff.220.1238646051818;
-        Wed, 01 Apr 2009 21:20:51 -0700 (PDT)
-Received: from localhost (isrfasc7a1-gw.disneyanimation.com [12.188.26.241])
-        by mx.google.com with ESMTPS id l31sm5110050rvb.5.2009.04.01.21.20.51
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 01 Apr 2009 21:20:51 -0700 (PDT)
-X-Mailer: git-send-email 1.6.2.1.423.g442d
-In-Reply-To: <1238646040-46008-1-git-send-email-davvid@gmail.com>
+	id S1753370AbZDBEYq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Apr 2009 00:24:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751684AbZDBEYq
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 00:24:46 -0400
+Received: from smtp4-g21.free.fr ([212.27.42.4]:44578 "EHLO smtp4-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750843AbZDBEYp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Apr 2009 00:24:45 -0400
+Received: from smtp4-g21.free.fr (localhost [127.0.0.1])
+	by smtp4-g21.free.fr (Postfix) with ESMTP id DB0F44C806E;
+	Thu,  2 Apr 2009 06:24:36 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp4-g21.free.fr (Postfix) with ESMTP id BB3EB4C8051;
+	Thu,  2 Apr 2009 06:24:33 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <alpine.DEB.1.00.0904011631300.13502@intel-tinevez-2-302>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115438>
 
-run_mergetool contains the common functionality for launching
-mergetools.  There's some context-specific behavior but overall
-it's better to have all of this stuff in one place versus multiple
-places.
+Hi,
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
+Le mercredi 1 avril 2009, Johannes Schindelin a =E9crit :
+> Hi,
+>
+> On Wed, 1 Apr 2009, Christian Couder wrote:
+> > Le mardi 31 mars 2009, Johannes Schindelin a =E9crit :
+> > > Hi,
+> > >
+> > > On Tue, 31 Mar 2009, Christian Couder wrote:
+> > > > Le lundi 30 mars 2009, Johannes Schindelin a =E9crit :
+> > > No, you want to _look up_ sha1s.  And struct decorate is not abou=
+t
+> > > storing objects, but to attach things to objects.
+> >
+> > The problem is that I don't have any object to attach things to whe=
+n I
+> > read the bisect skip refs. I just need to store the sha1 from the s=
+kip
+> > refs in some sha1 container.
+>
+> I see, so you do not want to parse the commits just to register them =
+as
+> skipped.
+>
+> Fair enough.
+>
+> But I still think that a hashmap/set would be better suited.
+>
+> In any case, it should be refactored into something usable in all of
+> libgit.a.  You are basically duplicating the grafts code in commit.c,
+> sharing that shortcoming that your code would be static again, not
+> encouraging reusage.
 
-Include fixups from Markus
+I agree that binary search functions and related code should be refacto=
+red.=20
+That's why I added the "Refactor binary search functions" task to the=20
+Janitor wiki page (http://git.or.cz/gitwiki/Janitor) a few weeks ago.
 
- Documentation/git-mergetool-lib.txt |   10 +++
- git-mergetool-lib.sh                |  141 +++++++++++++++++++++++++++++++++++
- 2 files changed, 151 insertions(+), 0 deletions(-)
+I will have a look at that, and perhaps, after that, I will try to make=
+=20
+things less static, but I think these are some old problems in the code=
+=20
+base, so new developments should not be hostage of them.
 
-diff --git a/Documentation/git-mergetool-lib.txt b/Documentation/git-mergetool-lib.txt
-index a8d62f5..7377774 100644
---- a/Documentation/git-mergetool-lib.txt
-+++ b/Documentation/git-mergetool-lib.txt
-@@ -29,6 +29,16 @@ FUNCTIONS
- get_merge_tool_path::
- 	returns the `merge_tool_path` for a `merge_tool`.
- 
-+run_mergetool::
-+	launches a merge tool given the tool name and a true/false
-+	flag to indicate whether a merge base is present
-+
-+valid_tool::
-+	tests whether a merge tool is setup correctly.
-+
-+get_custom_cmd::
-+	given a merge tool, returns the custom command for that tool.
-+
- Author
- ------
- Written by David Aguilar <davvid@gmail.com>
-diff --git a/git-mergetool-lib.sh b/git-mergetool-lib.sh
-index 5f9ba97..d28be68 100644
---- a/git-mergetool-lib.sh
-+++ b/git-mergetool-lib.sh
-@@ -3,7 +3,12 @@ diff_mode() {
- 	test $TOOL_MODE = "diff"
- }
- 
-+merge_mode() {
-+	test $TOOL_MODE = "merge"
-+}
-+
- get_merge_tool_path () {
-+	path="$1"
- 	if test -z "$2"; then
- 		case "$1" in
- 		emerge)
-@@ -17,6 +22,11 @@ get_merge_tool_path () {
- 	echo "$path"
- }
- 
-+# Overridden in git-mergetool
-+check_unchanged () {
-+	true
-+}
-+
- valid_tool () {
- 	case "$1" in
- 	kdiff3 | kompare | tkdiff | xxdiff | meld | opendiff | emerge | vimdiff | gvimdiff | ecmerge)
-@@ -40,3 +50,134 @@ get_custom_cmd () {
- 	test -n "$custom_cmd" &&
- 	echo "$custom_cmd"
- }
-+
-+run_mergetool () {
-+	base_present="$2"
-+	if diff_mode; then
-+		base_present="false"
-+	fi
-+	if test -z "$base_present"; then
-+		base_present="true"
-+	fi
-+
-+	case "$1" in
-+	kdiff3)
-+		if $base_present; then
-+			("$merge_tool_path" --auto \
-+			 --L1 "$MERGED (Base)" --L2 "$MERGED (Local)" --L3 "$MERGED (Remote)" \
-+			 -o "$MERGED" "$BASE" "$LOCAL" "$REMOTE" > /dev/null 2>&1)
-+		else
-+			("$merge_tool_path" --auto \
-+			 --L1 "$MERGED (Local)" --L2 "$MERGED (Remote)" \
-+			 -o "$MERGED" "$LOCAL" "$REMOTE" > /dev/null 2>&1)
-+		fi
-+		status=$?
-+		;;
-+	kompare)
-+		"$merge_tool_path" "$LOCAL" "$REMOTE"
-+		status=$?
-+		;;
-+	tkdiff)
-+		if $base_present; then
-+			"$merge_tool_path" -a "$BASE" -o "$MERGED" "$LOCAL" "$REMOTE"
-+		else
-+			if merge_mode; then
-+				"$merge_tool_path" -o "$MERGED" "$LOCAL" "$REMOTE"
-+			else
-+				"$merge_tool_path" "$LOCAL" "$REMOTE"
-+			fi
-+		fi
-+		status=$?
-+		;;
-+	meld)
-+		if merge_mode; then
-+			touch "$BACKUP"
-+			"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"
-+		else
-+			"$merge_tool_path" "$LOCAL" "$REMOTE"
-+		fi
-+		check_unchanged
-+		;;
-+	vimdiff)
-+		if merge_mode; then
-+			touch "$BACKUP"
-+			"$merge_tool_path" -c "wincmd l" "$LOCAL" "$MERGED" "$REMOTE"
-+			check_unchanged
-+		else
-+			"$merge_tool_path" -c "wincmd l" "$LOCAL" "$REMOTE"
-+		fi
-+		;;
-+	gvimdiff)
-+		if merge_mode; then
-+			touch "$BACKUP"
-+			"$merge_tool_path" -c "wincmd l" -f "$LOCAL" "$MERGED" "$REMOTE"
-+			check_unchanged
-+		else
-+			"$merge_tool_path" -c "wincmd l" -f "$LOCAL" "$REMOTE"
-+		fi
-+		;;
-+	xxdiff)
-+		merge_mode && touch "$BACKUP"
-+		if $base_present; then
-+			"$merge_tool_path" -X --show-merged-pane \
-+			    -R 'Accel.SaveAsMerged: "Ctrl-S"' \
-+			    -R 'Accel.Search: "Ctrl+F"' \
-+			    -R 'Accel.SearchForward: "Ctrl-G"' \
-+			    --merged-file "$MERGED" "$LOCAL" "$BASE" "$REMOTE"
-+		else
-+			merge_mode && extra=--show-merged-pane
-+			"$merge_tool_path" -X $extra \
-+				-R 'Accel.SaveAsMerged: "Ctrl-S"' \
-+				-R 'Accel.Search: "Ctrl+F"' \
-+				-R 'Accel.SearchForward: "Ctrl-G"' \
-+				--merged-file "$MERGED" "$LOCAL" "$REMOTE"
-+		fi
-+		check_unchanged
-+		;;
-+	opendiff)
-+		merge_mode && touch "$BACKUP"
-+		if $base_present; then
-+			"$merge_tool_path" "$LOCAL" "$REMOTE" \
-+				-ancestor "$BASE" -merge "$MERGED" | cat
-+		else
-+			"$merge_tool_path" "$LOCAL" "$REMOTE" \
-+				-merge "$MERGED" | cat
-+		fi
-+		check_unchanged
-+		;;
-+	ecmerge)
-+		merge_mode && touch "$BACKUP"
-+		if $base_present; then
-+			"$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" \
-+				--default --mode=merge3 --to="$MERGED"
-+		else
-+			"$merge_tool_path" "$LOCAL" "$REMOTE" \
-+				--default --mode=merge2 --to="$MERGED"
-+		fi
-+		check_unchanged
-+		;;
-+	emerge)
-+		if $base_present; then
-+			"$merge_tool_path" -f emerge-files-with-ancestor-command \
-+				"$LOCAL" "$REMOTE" "$BASE" "$(basename "$MERGED")"
-+		else
-+			"$merge_tool_path" -f emerge-files-command \
-+				"$LOCAL" "$REMOTE" "$(basename "$MERGED")"
-+		fi
-+		status=$?
-+		;;
-+	*)
-+		if test -n "$merge_tool_cmd"; then
-+			if merge_mode &&
-+			test "$merge_tool_trust_exit_code" = "false"; then
-+				touch "$BACKUP"
-+				( eval $merge_tool_cmd )
-+				check_unchanged
-+			else
-+				( eval $merge_tool_cmd )
-+				status=$?
-+			fi
-+		fi
-+		;;
-+	esac
-+}
--- 
-1.6.1.3
+Best reagrds,
+Christian.
