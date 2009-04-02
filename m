@@ -1,89 +1,118 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 07/10] rev-list: call new "filter_skip" function
-Date: Thu, 2 Apr 2009 06:23:40 +0200
-Message-ID: <200904020623.40908.chriscool@tuxfamily.org>
-References: <20090326055549.e1f244d9.chriscool@tuxfamily.org> <200904010809.41110.chriscool@tuxfamily.org> <alpine.DEB.1.00.0904011631300.13502@intel-tinevez-2-302>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] tree_entry_interesting: Only recurse when the pathspec
+ is a leading path component
+Date: Wed, 01 Apr 2009 21:32:05 -0700
+Message-ID: <7vbprfn0ai.fsf@gitster.siamese.dyndns.org>
+References: <20090331094107.GC3307@atjola.homenet>
+ <20090331150501.GA11446@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	John Tapsell <johnflux@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Apr 02 06:26:16 2009
+Cc: Eric Wong <normalperson@yhbt.net>, Anton Gyllenberg <anton@iki.fi>,
+	git@vger.kernel.org
+To: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Apr 02 06:33:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LpEVM-0003US-4M
-	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 06:26:16 +0200
+	id 1LpEcj-0004fJ-Ua
+	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 06:33:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753370AbZDBEYq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Apr 2009 00:24:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751684AbZDBEYq
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 00:24:46 -0400
-Received: from smtp4-g21.free.fr ([212.27.42.4]:44578 "EHLO smtp4-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750843AbZDBEYp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Apr 2009 00:24:45 -0400
-Received: from smtp4-g21.free.fr (localhost [127.0.0.1])
-	by smtp4-g21.free.fr (Postfix) with ESMTP id DB0F44C806E;
-	Thu,  2 Apr 2009 06:24:36 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp4-g21.free.fr (Postfix) with ESMTP id BB3EB4C8051;
-	Thu,  2 Apr 2009 06:24:33 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.DEB.1.00.0904011631300.13502@intel-tinevez-2-302>
-Content-Disposition: inline
+	id S1751411AbZDBEcQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Apr 2009 00:32:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751281AbZDBEcQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 00:32:16 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58640 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750921AbZDBEcP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Apr 2009 00:32:15 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5BB50A63A0;
+	Thu,  2 Apr 2009 00:32:13 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id AB7BEA639E; Thu,
+  2 Apr 2009 00:32:07 -0400 (EDT)
+In-Reply-To: <20090331150501.GA11446@atjola.homenet> (=?utf-8?Q?Bj=C3=B6rn?=
+ Steinbrink's message of "Tue, 31 Mar 2009 17:05:01 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 3CF0E4FA-1F3F-11DE-9751-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115439>
 
-Hi,
+Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de> writes:
 
-Le mercredi 1 avril 2009, Johannes Schindelin a =E9crit :
-> Hi,
+> Previously the code did a simple prefix match, which means that it
+> treated for example "foo/" as a subdirectory of "f".
 >
-> On Wed, 1 Apr 2009, Christian Couder wrote:
-> > Le mardi 31 mars 2009, Johannes Schindelin a =E9crit :
-> > > Hi,
-> > >
-> > > On Tue, 31 Mar 2009, Christian Couder wrote:
-> > > > Le lundi 30 mars 2009, Johannes Schindelin a =E9crit :
-> > > No, you want to _look up_ sha1s.  And struct decorate is not abou=
-t
-> > > storing objects, but to attach things to objects.
-> >
-> > The problem is that I don't have any object to attach things to whe=
-n I
-> > read the bisect skip refs. I just need to store the sha1 from the s=
-kip
-> > refs in some sha1 container.
->
-> I see, so you do not want to parse the commits just to register them =
-as
-> skipped.
->
-> Fair enough.
->
-> But I still think that a hashmap/set would be better suited.
->
-> In any case, it should be refactored into something usable in all of
-> libgit.a.  You are basically duplicating the grafts code in commit.c,
-> sharing that shortcoming that your code would be static again, not
-> encouraging reusage.
+> Signed-off-by: Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de>
+> ---
+> I'm not exactly happy with the commit message, but that's the best I
+> could come up with. Probably shows how little I know about that code =
+:-/
+> The test suite still passes and I'll try to provide a new testcase
+> tonight or tommorow.
 
-I agree that binary search functions and related code should be refacto=
-red.=20
-That's why I added the "Refactor binary search functions" task to the=20
-Janitor wiki page (http://git.or.cz/gitwiki/Janitor) a few weeks ago.
+I'm planning to queue this.
 
-I will have a look at that, and perhaps, after that, I will try to make=
+=46rom: Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de>
+Date: Tue, 31 Mar 2009 17:05:01 +0200
+Subject: [PATCH] tree_entry_interesting: a pathspec only matches at dir=
+ectory boundary
+
+Previously the code did a simple prefix match, which means that a
+path in a directory "frotz/" would have matched with pathspec "f".
+
+Signed-off-by: Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t4010-diff-pathspec.sh |    8 ++++++++
+ tree-diff.c              |   12 +++++++++---
+ 2 files changed, 17 insertions(+), 3 deletions(-)
+
+diff --git a/t/t4010-diff-pathspec.sh b/t/t4010-diff-pathspec.sh
+index ad3d9e4..4c4c8b1 100755
+--- a/t/t4010-diff-pathspec.sh
++++ b/t/t4010-diff-pathspec.sh
+@@ -62,4 +62,12 @@ test_expect_success \
+     'git diff-index --cached $tree -- file0/ >current &&
+      compare_diff_raw current expected'
 =20
-things less static, but I think these are some old problems in the code=
++test_expect_success 'diff-tree pathspec' '
++	tree2=3D$(git write-tree) &&
++	echo "$tree2" &&
++	git diff-tree -r --name-only $tree $tree2 -- pa path1/a >current &&
++	>expected &&
++	test_cmp expected current
++'
++
+ test_done
+diff --git a/tree-diff.c b/tree-diff.c
+index 9f67af6..b05d0f4 100644
+--- a/tree-diff.c
++++ b/tree-diff.c
+@@ -118,10 +118,16 @@ static int tree_entry_interesting(struct tree_des=
+c *desc, const char *base, int
+ 				continue;
 =20
-base, so new developments should not be hostage of them.
-
-Best reagrds,
-Christian.
+ 			/*
+-			 * The base is a subdirectory of a path which
+-			 * was specified, so all of them are interesting.
++			 * If the base is a subdirectory of a path which
++			 * was specified, all of them are interesting.
+ 			 */
+-			return 2;
++			if (!matchlen ||
++			    base[matchlen] =3D=3D '/' ||
++			    match[matchlen - 1] =3D=3D '/')
++				return 2;
++
++			/* Just a random prefix match */
++			continue;
+ 		}
+=20
+ 		/* Does the base match? */
