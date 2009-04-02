@@ -1,64 +1,114 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/5] Header includes cleanup
-Date: Thu, 2 Apr 2009 07:27:05 -0400
-Message-ID: <20090402112705.GD14599@sigill.intra.peff.net>
-References: <1238406925-15907-1-git-send-email-nathaniel.dawson@gmail.com> <200903310859.36035.chriscool@tuxfamily.org> <7vk56565m1.fsf@gitster.siamese.dyndns.org> <200904020557.25058.chriscool@tuxfamily.org> <7v8wmjk4p6.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Nathaniel P Dawson <nathaniel.dawson@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 02 13:28:48 2009
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH] bash completion: add git-difftool
+Date: Thu,  2 Apr 2009 04:30:57 -0700
+Message-ID: <1238671857-8811-1-git-send-email-davvid@gmail.com>
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
+To: gitster@pobox.com, spearce@spearce.org
+X-From: git-owner@vger.kernel.org Thu Apr 02 13:37:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LpL6F-00054Z-N8
-	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 13:28:48 +0200
+	id 1LpLA5-0006SV-QH
+	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 13:32:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753052AbZDBL1N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Apr 2009 07:27:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753448AbZDBL1K
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 07:27:10 -0400
-Received: from peff.net ([208.65.91.99]:45986 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753052AbZDBL1J (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Apr 2009 07:27:09 -0400
-Received: (qmail 24748 invoked by uid 107); 2 Apr 2009 11:27:24 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 02 Apr 2009 07:27:24 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Apr 2009 07:27:05 -0400
-Content-Disposition: inline
-In-Reply-To: <7v8wmjk4p6.fsf@gitster.siamese.dyndns.org>
+	id S1751710AbZDBLbL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Apr 2009 07:31:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752403AbZDBLbI
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 07:31:08 -0400
+Received: from wa-out-1112.google.com ([209.85.146.176]:5481 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751218AbZDBLbF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Apr 2009 07:31:05 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so393898wah.21
+        for <git@vger.kernel.org>; Thu, 02 Apr 2009 04:31:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=VeICE46pnxz3XOENVPkV7jBpxES17DHraVRVVsct2/I=;
+        b=CEpsZBnTK9wk2ymRgtEPXcP5A70gpjDGt9eIsfh81O3AHa4M1tnX6rrGLUYwAkC/gl
+         vtkNmIC4MKaJaEPYnEiOaGT5E5GqwsQZHnpNht8mlgnCzbJcvhaARAZxHFvyXmJugMVJ
+         HhV7dncvv0GJ89p+W20zj6T+RB0gOk3mN35Vs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=KJF3/7wV/TFO1iD327/iPkAam40n+oWiMc+1ZKdNM/cgnGyS9abY4K1opQiuxnnGOU
+         aiq+m8NKpZAPk+Orm746/cWsjlWM9AZ6Z/r7KVWkobkfmrzaoIJxh3aYiGvMoOPjiHAi
+         Aobjour3hWlrEb77wikD6L88Cen6VIBmtEDhw=
+Received: by 10.115.110.1 with SMTP id n1mr5855649wam.99.1238671863933;
+        Thu, 02 Apr 2009 04:31:03 -0700 (PDT)
+Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id n9sm1055657wag.11.2009.04.02.04.31.03
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 02 Apr 2009 04:31:03 -0700 (PDT)
+X-Mailer: git-send-email 1.6.2.1.469.gdffc1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115458>
 
-On Wed, Apr 01, 2009 at 10:25:09PM -0700, Junio C Hamano wrote:
+This adds completion for difftool's --tool flag.
+The known diff tool names were also consolidated into
+a single variable.
 
-> > - a header file should be included in a C file only if it is needed to 
-> > compile the C file (it is not ok to include it only because it includes 
-> > many other headers that are needed)
-> 
-> If that is the rule, perhaps the problem lies not in a .c program that
-> includes such a .h header, but in the .h itself that includes many other
-> header files.
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+ contrib/completion/git-completion.bash |   27 ++++++++++++++++++++++-----
+ 1 files changed, 22 insertions(+), 5 deletions(-)
 
-If this were combined with splitting gigantic .h files (like cache.h)
-into smaller logical units, then we could in theory speed up
-recompilation times with make (we would also need to correctly track
-header dependencies, but gcc -M can do this fairly easily).
-
-But it does come at the price of actually having to consider which
-include files are necessary. I can't think of more than half a dozen
-times in the last year I have actually had to add a #include while
-working on a git .c file, mostly because everything and the kitchen sink
-is included by cache.h.
-
-So I don't know if it is worth it.
-
--Peff
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 4fcd77a..33a8ec7 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -909,6 +909,26 @@ _git_diff ()
+ 	__git_complete_file
+ }
+ 
++__git_mergetools_common="diffuse ecmerge emerge kdiff3 meld opendiff
++			tkdiff vimdiff gvimdiff xxdiff
++"
++
++_git_difftool ()
++{
++	local cur="${COMP_WORDS[COMP_CWORD]}"
++	case "$cur" in
++	--tool=*)
++		__gitcomp "$__git_mergetools_common kompare" "" "${cur##--tool=}"
++		return
++		;;
++	--*)
++		__gitcomp "--tool="
++		return
++		;;
++	esac
++	COMPREPLY=()
++}
++
+ __git_fetch_options="
+ 	--quiet --verbose --append --upload-pack --force --keep --depth=
+ 	--tags --no-tags
+@@ -1171,11 +1191,7 @@ _git_mergetool ()
+ 	local cur="${COMP_WORDS[COMP_CWORD]}"
+ 	case "$cur" in
+ 	--tool=*)
+-		__gitcomp "
+-			kdiff3 tkdiff meld xxdiff emerge
+-			vimdiff gvimdiff ecmerge diffuse
+-			opendiff
+-			" "" "${cur##--tool=}"
++		__gitcomp "$__git_mergetools_common" "" "${cur##--tool=}"
+ 		return
+ 		;;
+ 	--*)
+@@ -1900,6 +1916,7 @@ _git ()
+ 	config)      _git_config ;;
+ 	describe)    _git_describe ;;
+ 	diff)        _git_diff ;;
++	difftool)    _git_difftool;;
+ 	fetch)       _git_fetch ;;
+ 	format-patch) _git_format_patch ;;
+ 	fsck)        _git_fsck ;;
+-- 
+1.6.2.1.469.gdffc1
