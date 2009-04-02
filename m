@@ -1,93 +1,97 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: "git reflog expire --all" very slow
-Date: Wed, 01 Apr 2009 23:46:07 -0700
-Message-ID: <7vmyazimds.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LFD.2.00.0903301803190.4093@localhost.localdomain>
- <7vk5668g55.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.2.00.0903302154000.4093@localhost.localdomain>
- <alpine.LFD.2.00.0903302231370.4093@localhost.localdomain>
- <alpine.LFD.2.00.0903302244580.4093@localhost.localdomain>
- <alpine.LFD.2.00.0903302250500.4093@localhost.localdomain>
+Subject: Re: [PATCH] Build RPMs locally unless overruled in ~/.rpmmacros
+Date: Wed, 01 Apr 2009 23:47:55 -0700
+Message-ID: <7vfxgrimas.fsf@gitster.siamese.dyndns.org>
+References: <1238425839-6337-1-git-send-email-Niels@Basjes.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Brandon Casey <casey@nrlssc.navy.mil>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Apr 02 08:47:50 2009
+Cc: git@vger.kernel.org
+To: Niels Basjes <Niels@basjes.nl>
+X-From: git-owner@vger.kernel.org Thu Apr 02 08:50:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LpGiL-0000Um-B2
-	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 08:47:49 +0200
+	id 1LpGkh-0000xk-Ea
+	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 08:50:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752545AbZDBGqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Apr 2009 02:46:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751553AbZDBGqR
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 02:46:17 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61439 "EHLO
+	id S1761200AbZDBGsN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Apr 2009 02:48:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755381AbZDBGsK
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 02:48:10 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:62520 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751885AbZDBGqQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Apr 2009 02:46:16 -0400
+	with ESMTP id S1755595AbZDBGsJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Apr 2009 02:48:09 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 3EAF4B9F2;
-	Thu,  2 Apr 2009 02:46:14 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 2B445A6C56;
+	Thu,  2 Apr 2009 02:48:00 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 4C2DBB9ED; Thu, 
- 2 Apr 2009 02:46:09 -0400 (EDT)
-In-Reply-To: <alpine.LFD.2.00.0903302250500.4093@localhost.localdomain>
- (Linus Torvalds's message of "Mon, 30 Mar 2009 22:51:34 -0700 (PDT)")
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id ECC5BA6C55; Thu,
+  2 Apr 2009 02:47:56 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F5B02796-1F51-11DE-B87E-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 34D00AAE-1F52-11DE-8848-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115447>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Niels Basjes <Niels@basjes.nl> writes:
 
-> That made no sense. It should have been:
+> From: Niels Basjes <niels@basjes.nl>
 >
-> On Mon, 30 Mar 2009, Linus Torvalds wrote:
->> 
->> but we care about the commits that are younger than 'expire_total' (older 
->> than that, and they are pruned unconditionally), but older than 
->> 'expire_unreachable' (younger than that and the date doesn't matter).
->                                                   ^^^^
->                                                  reachability
->
-> but other than that the commentary stands.
+> Signed-off-by: Niels Basjes <niels@basjes.nl>
 
-Correct.  But after thinking about this a bit more, I am starting to suspect
-the "of course" in your earlier
+I am not opposed to have an option to build RPM binary packages in-tree,
+and RPM_BUILDING might be an already accepted name for the directory (even
+though it looks too loud to my eyes, you may have chosen it because it is
+a common practice in the RPM land---I am not an RPM person so I wouldn't
+know).
 
-    If I do
+But I thought somebody already pointed out a possible regression scenario.
+If one has been running 'make rpm' with RPMBUILD that invokes rpmbuild
+command with a custom yet not $HOME/.rpmmacos file via --macros option, or
+has been running it as a user that can write into system-wide rpm
+workplaces, this patch would break such an established workflow.
 
-            mark_reachable(cb.ref_commit, 0);
+Perhaps something along this line might work just as well, without
+breaking things for people?
 
-    instead (to traverse the _whole_ tree, with no regards to date), the time 
-    shrinks to 1.7s. But of course, that's also wrong.
+	ifdef RPM_BUILD_HERE
+        RPMBUILDOPTS = --define="_topdir $(pwd)/RPM_BUILDING"
+	rpmprep:
+        	mkdir RPM_BUILDING
+                mkdir RPM_BUILDING/BUILD
+        	mkdir RPM_BUILDING/RPMS
+        	mkdir RPM_BUILDING/SOURCES
+        	mkdir RPM_BUILDING/SPECS
+        	mkdir RPM_BUILDING/SRPMS
+	else
+        RPMBUILDOPTS =
+        rpmprep:
+		: nothing
+        endif
 
-may not be such a clearly obvious thing.
+	rpm: dist rpmprep
+        	$(RPMBUILD) $(RPMBUILDOPTS) -ta $(GIT_TARNAME).tar.gz
 
-Suppose you do not do "mark_reachable(cb.ref_commit, 0)" but use the
-expire_total as the cut-off value (which is what I've queued).  If you
-have one unreachable entry that you end up running in_merge_bases() for,
-you will traverse all the history down _anyway_, and at that point, you
-would be better off if you actually marked everything upfront, and
-discarded anything unmarked as unreachable without falling back to
-in_merge_bases() at all.
+By the way, as far as I can tell, you do not need to have SOURCES
+directory in order to run "make rpm" in git.git.
 
-The above reasoning of course assumes that "keep reflog entries if they
-are reachable from the tip, otherwise drop them if they are more than 30
-days old" is a good medium level semantics to cull what the other rule
-"drop any reflog entry older than 90 days" may not.
+> +RPMBUILDOPTS = $(shell if [ "`grep '^%_topdir' $(HOME)/.rpmmacros`" == "" ];        \
+> +                       then                                                         \
+> +                           mkdir -p RPM_BUILDING/{BUILD,RPMS,SOURCES,SPECS,SRPMS};  \
 
-A hacky alternative would be to use total_expire as the cut-off and do not
-fall back on in_merge_bases().  We might incorrectly prune away an entry
-that records that you pulled a commit that is still reachable from the tip
-last week, if that commit happens to be 4 months old if we did so, so I am
-not convinced myself it is a reasonable hack, though.
+Not everybody runs bash.
+
+> +                           echo '--define="_topdir `pwd`/RPM_BUILDING"' ;           \
+> +                       fi                                                           \
+> +                )
+> +RPMBUILD = rpmbuild $(RPMBUILDOPTS)
+>  TCL_PATH = tclsh
+>  TCLTK_PATH = wish
+>  PTHREAD_LIBS = -lpthread
+
+You need to have "make clean" remove RPM_BUILDING.
