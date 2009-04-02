@@ -1,68 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix 'git checkout <submodule>' to update the index
-Date: Thu, 02 Apr 2009 12:54:17 -0700
-Message-ID: <7vprfuesra.fsf@gitster.siamese.dyndns.org>
-References: <cover.1238678601u.git.johannes.schindelin@gmx.de>
- <c267451c12c4ead4c222eebe6df460b46edd59c1.1238678601u.git.johannes.schindelin@gmx.de>
+From: Charles Bailey <charles@hashpling.org>
+Subject: Re: git-{diff,merge} refactor round 2
+Date: Thu, 2 Apr 2009 20:59:18 +0100
+Message-ID: <20090402195918.GA13817@hashpling.org>
+References: <1238590514-41893-1-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Apr 02 21:56:02 2009
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 02 22:01:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LpT17-0003uD-Vk
-	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 21:56:02 +0200
+	id 1LpT6E-0005We-1u
+	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 22:01:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932467AbZDBTy1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Apr 2009 15:54:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765317AbZDBTy0
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 15:54:26 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55152 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763501AbZDBTy0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Apr 2009 15:54:26 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 7A1B2BFD1;
-	Thu,  2 Apr 2009 15:54:22 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C10B1BFD0; Thu, 
- 2 Apr 2009 15:54:18 -0400 (EDT)
-In-Reply-To: <c267451c12c4ead4c222eebe6df460b46edd59c1.1238678601u.git.johannes.schindelin@gmx.de> (Johannes Schindelin's message of "Thu, 2 Apr 2009 15:30:25 +0200 (CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 0FAD847C-1FC0-11DE-BC3E-781813508E2D-77302942!a-sasl-quonix.pobox.com
+	id S1756492AbZDBT7Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Apr 2009 15:59:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757285AbZDBT7W
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 15:59:22 -0400
+Received: from relay.ptn-ipout02.plus.net ([212.159.7.36]:8688 "EHLO
+	relay.ptn-ipout02.plus.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753718AbZDBT7W (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Apr 2009 15:59:22 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ApoEAKi11EnUnw6S/2dsb2JhbADPb4N8Bg
+Received: from ptb-relay02.plus.net ([212.159.14.146])
+  by relay.ptn-ipout02.plus.net with ESMTP; 02 Apr 2009 20:59:19 +0100
+Received: from [212.159.69.125] (helo=hashpling.plus.com)
+	 by ptb-relay02.plus.net with esmtp (Exim) id 1LpT4J-0003Ze-H5; Thu, 02 Apr 2009 20:59:19 +0100
+Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
+	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id n32JxJE6014451
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 2 Apr 2009 20:59:19 +0100
+Received: (from charles@localhost)
+	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id n32JxIiR014450;
+	Thu, 2 Apr 2009 20:59:18 +0100
+Content-Disposition: inline
+In-Reply-To: <1238590514-41893-1-git-send-email-davvid@gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Plusnet-Relay: 885f0ec2c04bd47c84352676160ff7b4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115490>
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On Wed, Apr 01, 2009 at 05:55:04AM -0700, David Aguilar wrote:
+> Here's the 2nd round of refactoring.
+ 
+Again, I reply in summary form...
 
-> While 'git checkout <submodule>' should not update the submodule's
-> working directory, it should update the index.  This is in line with
-> how submodules are handled in the rest of Git.
->
-> While at it, test 'git reset [<commit>] <submodule>', too.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->
-> 	I have no idea who thought that it would be a good idea to leave 
-> 	the submodules alone, but I think it is highly counterintuitive 
-> 	that
->
-> 		git checkout <submodule>
->
-> 	does not touch the index.
+[02/10] - I ack this.
 
-I do not see anything that treats submodule specially in the scripted
-version and this check for S_ISGITLINK() has been there since the very
-beginning of C rewrite 782c2d6 (Build in checkout, 2008-02-07), so it is a
-regression fix that can go to maint (all the way down to 1.5.5 if you
-want).
+[03-07 / 10] - fine. I'm not sure, but should they be one commit?
+They're really about consolidating blocks from one place to another
+and the change might be more 'obvious' as a single commit.
 
-Thanks.
+[08/10] Now that we've isolated the run_mergetool, can we get it to
+return the value of '$status' (either the result of the tool or of
+check_unchanged) as its exit code so that we know whether the merge
+succeeded?
+
+[10/10] Then this chunk:
+
++    run_mergetool "$merge_tool" "$present"
++    status=$?
+     if test "$status" -ne 0; then
+
+can validly become:
+
+     if ! run_mergtool "$merge_tool" "$present"; then
+
+which seems clearer to me.
+
+-- 
+Charles Bailey
+http://ccgi.hashpling.plus.com/blog/
