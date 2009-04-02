@@ -1,114 +1,95 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] bash completion: add git-difftool
-Date: Thu,  2 Apr 2009 04:30:57 -0700
-Message-ID: <1238671857-8811-1-git-send-email-davvid@gmail.com>
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
-To: gitster@pobox.com, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Thu Apr 02 13:37:25 2009
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [PATCH] tree_entry_interesting: Only recurse when the pathspec
+	is a leading path component
+Date: Thu, 2 Apr 2009 13:38:51 +0200
+Message-ID: <20090402113851.GA12675@atjola.homenet>
+References: <20090331094107.GC3307@atjola.homenet> <20090331150501.GA11446@atjola.homenet> <7vbprfn0ai.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eric Wong <normalperson@yhbt.net>, Anton Gyllenberg <anton@iki.fi>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 02 13:41:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LpLA5-0006SV-QH
-	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 13:32:46 +0200
+	id 1LpLHo-00011e-05
+	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 13:40:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751710AbZDBLbL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Apr 2009 07:31:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752403AbZDBLbI
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 07:31:08 -0400
-Received: from wa-out-1112.google.com ([209.85.146.176]:5481 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751218AbZDBLbF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Apr 2009 07:31:05 -0400
-Received: by wa-out-1112.google.com with SMTP id j5so393898wah.21
-        for <git@vger.kernel.org>; Thu, 02 Apr 2009 04:31:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=VeICE46pnxz3XOENVPkV7jBpxES17DHraVRVVsct2/I=;
-        b=CEpsZBnTK9wk2ymRgtEPXcP5A70gpjDGt9eIsfh81O3AHa4M1tnX6rrGLUYwAkC/gl
-         vtkNmIC4MKaJaEPYnEiOaGT5E5GqwsQZHnpNht8mlgnCzbJcvhaARAZxHFvyXmJugMVJ
-         HhV7dncvv0GJ89p+W20zj6T+RB0gOk3mN35Vs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=KJF3/7wV/TFO1iD327/iPkAam40n+oWiMc+1ZKdNM/cgnGyS9abY4K1opQiuxnnGOU
-         aiq+m8NKpZAPk+Orm746/cWsjlWM9AZ6Z/r7KVWkobkfmrzaoIJxh3aYiGvMoOPjiHAi
-         Aobjour3hWlrEb77wikD6L88Cen6VIBmtEDhw=
-Received: by 10.115.110.1 with SMTP id n1mr5855649wam.99.1238671863933;
-        Thu, 02 Apr 2009 04:31:03 -0700 (PDT)
-Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id n9sm1055657wag.11.2009.04.02.04.31.03
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 02 Apr 2009 04:31:03 -0700 (PDT)
-X-Mailer: git-send-email 1.6.2.1.469.gdffc1
+	id S1757327AbZDBLjE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Apr 2009 07:39:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755652AbZDBLjB
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 07:39:01 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47071 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751218AbZDBLjA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Apr 2009 07:39:00 -0400
+Received: (qmail invoked by alias); 02 Apr 2009 11:38:57 -0000
+Received: from i59F556A8.versanet.de (EHLO atjola.local) [89.245.86.168]
+  by mail.gmx.net (mp057) with SMTP; 02 Apr 2009 13:38:57 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+2h5thpHa2fyQHecyl1H2Dkuj/OjFClK6cmyfkuW
+	Pf5Z5+xXnxKlYi
+Content-Disposition: inline
+In-Reply-To: <7vbprfn0ai.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115459>
 
-This adds completion for difftool's --tool flag.
-The known diff tool names were also consolidated into
-a single variable.
+On 2009.04.01 21:32:05 -0700, Junio C Hamano wrote:
+> I'm planning to queue this.
+> [Improved version of my patch]
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
- contrib/completion/git-completion.bash |   27 ++++++++++++++++++++++-----
- 1 files changed, 22 insertions(+), 5 deletions(-)
+Ah, thanks. Got busy with other stuff, and tried to fix another related
+bug in ls-tree which made me forget to send the match_tree_entry fix :-=
+/
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 4fcd77a..33a8ec7 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -909,6 +909,26 @@ _git_diff ()
- 	__git_complete_file
- }
- 
-+__git_mergetools_common="diffuse ecmerge emerge kdiff3 meld opendiff
-+			tkdiff vimdiff gvimdiff xxdiff
-+"
-+
-+_git_difftool ()
-+{
-+	local cur="${COMP_WORDS[COMP_CWORD]}"
-+	case "$cur" in
-+	--tool=*)
-+		__gitcomp "$__git_mergetools_common kompare" "" "${cur##--tool=}"
-+		return
-+		;;
-+	--*)
-+		__gitcomp "--tool="
-+		return
-+		;;
-+	esac
-+	COMPREPLY=()
-+}
-+
- __git_fetch_options="
- 	--quiet --verbose --append --upload-pack --force --keep --depth=
- 	--tags --no-tags
-@@ -1171,11 +1191,7 @@ _git_mergetool ()
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
- 	case "$cur" in
- 	--tool=*)
--		__gitcomp "
--			kdiff3 tkdiff meld xxdiff emerge
--			vimdiff gvimdiff ecmerge diffuse
--			opendiff
--			" "" "${cur##--tool=}"
-+		__gitcomp "$__git_mergetools_common" "" "${cur##--tool=}"
- 		return
- 		;;
- 	--*)
-@@ -1900,6 +1916,7 @@ _git ()
- 	config)      _git_config ;;
- 	describe)    _git_describe ;;
- 	diff)        _git_diff ;;
-+	difftool)    _git_difftool;;
- 	fetch)       _git_fetch ;;
- 	format-patch) _git_format_patch ;;
- 	fsck)        _git_fsck ;;
--- 
-1.6.2.1.469.gdffc1
+That other ls-tree bug is with recursing into subdirectories, because
+match_tree_entry matches even when the base is a subdirectory, but
+ls-tree doesn't actually want that behaviour, I think. For example:
+
+$ git ls-tree --abbrev HEAD git-gui/macosx/AppMain.tcl
+100644 blob ddbe633	git-gui/macosx/AppMain.tcl
+
+$ git ls-tree --abbrev HEAD  git-gui/
+100644 blob f96112d	git-gui/.gitattributes
+100644 blob 6483b21	git-gui/.gitignore
+100755 blob b3f937e	git-gui/GIT-VERSION-GEN
+100644 blob 3ad8a21	git-gui/Makefile
+100755 blob 12e117e	git-gui/git-gui--askpass
+100755 blob e018e07	git-gui/git-gui.sh
+040000 tree f723285	git-gui/lib
+040000 tree 73f3c34	git-gui/macosx
+040000 tree 11cd1a0	git-gui/po
+040000 tree 144728d	git-gui/windows
+
+$ git ls-tree --abbrev HEAD git-gui/macosx/AppMain.tcl git-gui/
+100644 blob f96112d	git-gui/.gitattributes
+100644 blob 6483b21	git-gui/.gitignore
+100755 blob b3f937e	git-gui/GIT-VERSION-GEN
+100644 blob 3ad8a21	git-gui/Makefile
+100755 blob 12e117e	git-gui/git-gui--askpass
+100755 blob e018e07	git-gui/git-gui.sh
+040000 tree f723285	git-gui/lib
+100644 blob ddbe633	git-gui/macosx/AppMain.tcl
+100644 blob b3bf15f	git-gui/macosx/Info.plist
+100644 blob 77d88a7	git-gui/macosx/git-gui.icns
+040000 tree 11cd1a0	git-gui/po
+040000 tree 144728d	git-gui/windows
+
+The last ls-tree shows all entries from git-gui/macosx/, beacuse the
+first pattern makes it descend into that tree and all entries are
+matched by the git-gui/ prefix. So the combined ls-tree shows more than
+what the individual calls show. Seems wrong to me, but I'm unsure how t=
+o
+tackle that, assuming that match_tree_entry is right in allowing any
+base that's a subdirectory of a specified pathspec.
+
+Bj=F6rn
