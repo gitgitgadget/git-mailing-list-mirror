@@ -1,123 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] Header includes cleanup
-Date: Wed, 01 Apr 2009 22:25:09 -0700
-Message-ID: <7v8wmjk4p6.fsf@gitster.siamese.dyndns.org>
-References: <1238406925-15907-1-git-send-email-nathaniel.dawson@gmail.com>
- <200903310859.36035.chriscool@tuxfamily.org>
- <7vk56565m1.fsf@gitster.siamese.dyndns.org>
- <200904020557.25058.chriscool@tuxfamily.org>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH 6/8 v2] sh-tools: add a run_merge_tool function
+Date: Wed, 1 Apr 2009 22:33:46 -0700
+Message-ID: <20090402053345.GA4185@gmail.com>
+References: <1238400684-14881-1-git-send-email-davvid@gmail.com> <885649360903311115o6131988emdcba6ef215ec0ab0@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nathaniel P Dawson <nathaniel.dawson@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Thu Apr 02 07:27:11 2009
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: James Pickens <jepicken@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 02 07:35:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LpFSH-00044C-L9
-	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 07:27:10 +0200
+	id 1LpFaR-0005Qj-0n
+	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 07:35:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752545AbZDBFZX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Apr 2009 01:25:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752508AbZDBFZW
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 01:25:22 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47568 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752373AbZDBFZU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Apr 2009 01:25:20 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 78369A67C6;
-	Thu,  2 Apr 2009 01:25:18 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C0B5DA67C1; Thu,
-  2 Apr 2009 01:25:12 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A76B4BA2-1F46-11DE-AC67-32B0EBB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1755153AbZDBFeA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Apr 2009 01:34:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753813AbZDBFd7
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 01:33:59 -0400
+Received: from wa-out-1112.google.com ([209.85.146.181]:48975 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753716AbZDBFd6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Apr 2009 01:33:58 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so289824wah.21
+        for <git@vger.kernel.org>; Wed, 01 Apr 2009 22:33:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=OxWnNMWQSnbYXQ0Nurmbm3SdCE0UUR7LQfxgIUSumKY=;
+        b=e1ANO0S9A1LcntxtgYT25YV2orrNEi7ZC+DEbqqrrUqxO3hpuyqG067b9qWyjTkPbN
+         IL0dPCXUzACTrV9L9+Rd4am87EeAMgsf33xU6SP7SKfuOI6kno6BOtvKzJI5/gSd+Wb8
+         obm1XvMH6xn4MuaqY+klpn08/btBp8TJPH2F4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=DAaMNLekNoxXmPEKASVtTNt/jm03HdLcg2F3fhPpFmDHZ6dO4MXzopeuEYcMjUdQmG
+         obDoJX4xHryYwfyLVNf3DKEDjECsV7nEconoSjisbKYJ7QFGMY5FqKJ5EXV8ZNG0CUDt
+         EiTl6RtpQFiNev7m5/Jd7ULJvuQXbf9yrkDhI=
+Received: by 10.114.95.1 with SMTP id s1mr5702550wab.50.1238650436351;
+        Wed, 01 Apr 2009 22:33:56 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id n33sm747239wag.53.2009.04.01.22.33.55
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 01 Apr 2009 22:33:55 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <885649360903311115o6131988emdcba6ef215ec0ab0@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115444>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+On  0, James Pickens <jepicken@gmail.com> wrote:
+> On Mon, Mar 30, 2009 at 1:11 AM, David Aguilar <davvid@gmail.com> wrote:
+> > This function launches merge tools and will be used to refactor
+> > git-(diff|merge)tool.
+> 
+> Thanks for writing difftool; I find it quite useful.  I tried it with
+> tkdiff, and noticed that it shows the 'merge preview' window even though it
+> isn't doing a merge.  If a user with unstaged changes were to carelessly
+> click the 'save and exit' button, his changes could be lost.  So I think
+> it's a good idea to stop the merge preview window from showing up under
+> difftool.  To do that I think you just have to remove the '-o "$MERGED"'
+> option to tkdiff.
+> 
+> James
 
-> Ok, so I suggest the following simple guiding principles:
->
-> - git-compat-util.h or cache.h or builtin.h should always be the first 
-> #include in C files,
->
-> - header files should include other incude files if and only if the other 
-> includes are needed to compile them,
+Hi James
 
-This is unclear.
+I included your suggestion in my latest patch series.
+Once things settle down with the current series I'll
+add diffuse to {diff,merge}tool and friends.
 
-Long before I started touching git, I used to be religious about making
-header files self contained.  For a header file frotz.h in the project, I
-used to insist that
+So, yup, this shouldn't be an issue in future versions of
+difftool.
 
-	$ cat >1.c <<\EOF
-	#include "frotz.h"
-        EOF
-        $ cc -Wall -c 1.c
+Thanks
 
-did not fail.  
+-- 
 
-Are you talking about that by "to compile them"?
-
-I stopped doing that long time ago, partly because the rule was cumbersome
-to enforce, but primarily because it was not helping much in the larger
-picture.
-
-Such a rule, together with strict rules such as the order of including
-other header files in the header files themselves, may make life easier
-for programmers who touch .c files but never .h files, because they can
-include only the necessary .h files and in any order.  But in practice,
-people need to touch both .h and .c files and when they need to include
-new system header files, they need to follow the inclusion order rule
-somewhere anyway---at that point, it does not matter much if the rule
-applies to only .h files or both .h and .c files.
-
-So for example, you cannot compile
-
-	$ cat >1.c <<\EOF
-        #include "revision.h"
-        EOF
-        $ cc -Wll -c 1.c
-
-in git.git project, but I do not think it is a problem.
-
-> - a header file should be included in a C file only if it is needed to 
-> compile the C file (it is not ok to include it only because it includes 
-> many other headers that are needed)
-
-If that is the rule, perhaps the problem lies not in a .c program that
-includes such a .h header, but in the .h itself that includes many other
-header files.
-
-> - other than the above rules, it is ok to reduce the number of includes as 
-> much as possible
->
-> What do you think?
-
-What you did not write and I forgot to mention, which is a logical
-conclusion of the first rule, is that C files should not directly include
-common system header files such as unistd, sys/stat, etc.
-
-There are exceptions to any rule.  For example, inclusion of syslog.h in
-daemon.c is OK because most of the rest of the system does not even use
-syslog.  If we later find a platform whose syslog.h has some funny
-inter-header dependencies, however, we will need to include it in the
-git-compat-util.h and resolve the dependencies there, like we do for other
-system header files.
-
-> Or perhaps Junio would prefer that you work on a C file by C file basis? 
-> Like for example:
->
-> "delete useless includes in 'builtin-diff-files.c'"
-> "delete useless includes in 'builtin-diff-index.c'"
-
-If the series does not involve .h file clean-up, then a series that
-consists of one patch per .c file would be easier to handle, I think.
+	David
