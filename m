@@ -1,142 +1,181 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: "git reflog expire --all" very slow
-Date: Thu, 2 Apr 2009 08:30:52 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.0904020759180.4130@localhost.localdomain>
-References: <alpine.LFD.2.00.0903301803190.4093@localhost.localdomain> <7vk5668g55.fsf@gitster.siamese.dyndns.org> <alpine.LFD.2.00.0903302154000.4093@localhost.localdomain> <alpine.LFD.2.00.0903302231370.4093@localhost.localdomain>
- <alpine.LFD.2.00.0903302244580.4093@localhost.localdomain> <alpine.LFD.2.00.0903302250500.4093@localhost.localdomain> <7vmyazimds.fsf@gitster.siamese.dyndns.org>
+From: demerphq <demerphq@gmail.com>
+Subject: Re: [PATCH] git remote update: New option --prune (-p)
+Date: Thu, 2 Apr 2009 18:07:33 +0200
+Message-ID: <9b18b3110904020907i23f246aelccc2a0770acc2574@mail.gmail.com>
+References: <20090402123823.GA1756@pvv.org>
+	 <9b18b3110904020634i17633645ue4ba91701ea243a1@mail.gmail.com>
+	 <20090402134414.GB26699@coredump.intra.peff.net>
+	 <9b18b3110904020717h3a0d4b34h7f4b2b83527e6743@mail.gmail.com>
+	 <20090402143112.GA26974@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Brandon Casey <casey@nrlssc.navy.mil>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 02 17:37:06 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Finn Arne Gangstad <finnag@pvv.org>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 02 18:09:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LpOyB-0001F7-PJ
-	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 17:36:44 +0200
+	id 1LpPTy-0003W6-AS
+	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 18:09:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763439AbZDBPdl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Apr 2009 11:33:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763241AbZDBPdl
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 11:33:41 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:53909 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1762486AbZDBPdk (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Apr 2009 11:33:40 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n32FUs7O004881
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 2 Apr 2009 08:31:25 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n32FUqol005769;
-	Thu, 2 Apr 2009 08:30:53 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <7vmyazimds.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.439 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1758793AbZDBQHi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Apr 2009 12:07:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758667AbZDBQHh
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 12:07:37 -0400
+Received: from mail-qy0-f118.google.com ([209.85.221.118]:48992 "EHLO
+	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753001AbZDBQHg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Apr 2009 12:07:36 -0400
+Received: by qyk16 with SMTP id 16so1178500qyk.33
+        for <git@vger.kernel.org>; Thu, 02 Apr 2009 09:07:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=McA/QcA9oyrXUhWITyK3ZIX9kJJkYZrGBCsp70DT3gA=;
+        b=vRL8TGGTp6CtAC+SyQ0KpuCRZqWlgHZql8DRnVgEWxamDVCfWY6POoxG7HfQH1F4I9
+         DNNF9Zzstd0LXhUOXtSulmES5Lz7/6+KOFuPa5HpByXxspY+f1qVm5q/gfNvHCD4/ZsI
+         0ObMETrMQu0InD2HtacLCQL50QinkFGdimUqc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=e4Iym/NIwb9YfaVMcGMnkRQi9TKJr//XxvDARHFIWuEWGgEooy+3Hw1KHQdj3gonYl
+         UC5CZQhSyoyXXCuQowAcvYPlBYIxCFpVQLRK/u09vX2p+khKorlQr4NUw9NzojIIiVxl
+         74x9hVCCShdJNgSKiC6luCc0Z4fuw9R1Bxazc=
+Received: by 10.231.15.74 with SMTP id j10mr69844iba.10.1238688453333; Thu, 02 
+	Apr 2009 09:07:33 -0700 (PDT)
+In-Reply-To: <20090402143112.GA26974@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115474>
+
+2009/4/2 Jeff King <peff@peff.net>:
+> On Thu, Apr 02, 2009 at 04:17:35PM +0200, demerphq wrote:
+>
+>> > But "git remote update" actually respects "remote groups", so it i=
+s not
+>> > just "--all". I think what you want is "git remote prune <group>".
+>>
+>> Are there any implicit groups defined, like "all-remotes" or
+>> something? It seems less than desirable to have to define such a gro=
+up
+>> for an operation that IMO is pretty reasonable to expect to happen
+>> regularly.
+>
+> Yes. From "git help remote":
+>
+> =A0 =A0 =A0 update
+> =A0 =A0 =A0 =A0 =A0 Fetch updates for a named set of remotes in the r=
+epository as
+> =A0 =A0 =A0 =A0 =A0 defined by remotes.<group>. If a named group is n=
+ot specified on
+> =A0 =A0 =A0 =A0 =A0 the command line, the configuration parameter rem=
+otes.default will
+> =A0 =A0 =A0 =A0 =A0 get used; if remotes.default is not defined, all =
+remotes which do
+> =A0 =A0 =A0 =A0 =A0 not have the configuration parameter
+> =A0 =A0 =A0 =A0 =A0 remote.<name>.skipDefaultUpdate set to true will =
+be updated. (See
+> =A0 =A0 =A0 =A0 =A0 git-config(1)).
+>
+> So without defining any other config, "git remote update" will by
+> default update everything
+
+Er, personally i find that documentation pretty cryptic. And when i
+check git config for group, i see this:
+
+       remotes.<group>
+           The list of remotes which are fetched by "git remote update
+           <group>". See git-remote(1).
+
+and
+
+       remote.<name>.skipDefaultUpdate
+           If true, this remote will be skipped by default when updatin=
+g using
+           the update subcommand of git-remote(1).
+
+Neither of which really explain groups, how to define them properly,
+(the list is separated by what? and includes the remote name?) or
+whether there are implicit groups. I mean, it seems logical that if
+you can have user defined groups that there are some built in ones
+too, like "all" and "none" or perhaps groups defined by transport
+"http" or "git" for instance.
+
+>> I personally haven't found any use for defining =A0remote groups yet=
+ to
+>> be honest. Its a granularity of operation that hasnt served much
+>> purpose for me yet. Although i could see it being useful in the
+>> future.
+>
+> I haven't either. I suspect it would be useful if you had a complex s=
+et
+> of repo relationships, like an integration manager pulling from an
+> upstream but also from other developers.
+
+Now that you have called my attention to them in more detail i suspect
+ill end up using them for a few things. Maybe ill try to write up a
+doc patch once i have.
+
+>> Generally tho I either want to update and prune one remote only, wit=
+h
+>>
+>> =A0 =A0git fetch $remote; git prune $remote,
+>
+> It might be useful if "remote update" treated an unconfigured group a=
+s a
+> simple remote. So that "git remote update --prune $remote" would do w=
+hat
+> you wanted here.
+
+It seems reasonable to me that names for groups and remotes should
+stay distinct and that remotes are treated as being groups which
+contain only the remote of the same name. These would be yet more
+implicit groups.
+
+>
+> I could even see "remote.*.autoprune" config being useful so you coul=
+d
+> avoid --prune. It is living dangerously, I suppose, for some workflow=
+s;
+> but I generally consider whatever is in my remote tracking branches t=
+o
+> be throwaway, and automatically pruning is not really dangerous.
+
+Me too.
+
+>> or i want to update and prune all with something like:
+>>
+>> =A0 git remote update; for r in $(git remote); do git remote prune $=
+r; done;
+>>
+>> This patch makes the latter better huffman encoded, but I'd kind of
+>> expect both to be doable as single commands in terms of how often I
+>> want to do them.
+>>
+>> Maybe git fetch --prune would be a nice complement to this patch.
+>
+> I think we have tried to keep pruning out of fetch, as fetch does not
+> necessarily use or know about tracking branches. But the "git remote
+> update $remote" proposal I gave above would do basically the same thi=
+ng
+> (except you would call it "remote update" instead of "fetch").
+
+Ok, that makes sense.  I see why fetch would be left out. Thanks for ex=
+plaining.
+
+cheers,
+Yves
 
 
 
-On Wed, 1 Apr 2009, Junio C Hamano wrote:
-> 
-> Correct.  But after thinking about this a bit more, I am starting to suspect
-> the "of course" in your earlier
-> 
->     If I do
-> 
->             mark_reachable(cb.ref_commit, 0);
-> 
->     instead (to traverse the _whole_ tree, with no regards to date), the time 
->     shrinks to 1.7s. But of course, that's also wrong.
-> 
-> may not be such a clearly obvious thing.
 
-I think we should never do it up-front, because for nicely behaved people 
-who just pull other peoples work (which are also the people most likely to 
-not have beefy machines), the normal reflog is going to be entirely 
-reachable, and we don't have to traverse the whole thing.
-
-So what I'd suggest is something like:
-
- - start off with the time limit, possibly with some extra fudging
-
- - but never bother calling "in_merge_bases()"
-
- - if we ever get to a commit that doesn't look reachable in that 
-   situation, we now have two choices:
-
-    (a) just use the dang 'object->flags & REACHABLE' flag as-is.
-        Why even bother to be clever? We did the reachability by time 
-        already, it's done, it's there, just use it. In other words, the 
-        reachability simply works like "--since=<date>'.
-
-    (b) Try to do the "exact" thing, and waste lots of time on it, and 
-        maybe find an odd commit or two where the date had been wrong. Do 
-        we really care? 
-
-I'd actually go for 'a', with a slight modification: try to convert the 
-"reflog date" (the date of a local action) into a "commit date" (the date 
-of a commit in the repository). Because those two are different "time 
-spaces", and comparing a "commit date" to a "in my repo" date is fairly 
-wrong.
-
-But in general, I don't think this is something that needs any extra 
-precision. We're not talking about "theoretically reachable" here. We're 
-talking about reflog entries that are already older than the 
-unreachability limit, and that point to commits that are older than the 
-reachability limit. Yes, yes, clocks aren't synchronized, but do we really 
-care?
-
-IOW, I'd suggest just removing the in_merge_base() tests entirely. Make 
-the semantics even simpler:
-
-	have_done_reachability = 0;
-	reachability_date = 0;
-
-	for_each_reflog_oldest_first() {
-		/* Older than unconditional expire? */
-		if (really_old(entry)) {
-			reachability_date = entry->commit->date;
-			goto prune;
-		}
-
-		/* Younger than the reflog reachability? */
-		if (really_young(entry) && !fix_stale)
-			goto save;
-
-		/*
-		 * Ok, not an unconditional expire entry.
-		 * Do the reachability - once
-		 */
-		if (!have_done_reachability) {
-			have_done_reachability = 1;
-			if (fix_stale)
-				reachability_date = 0;
-			mark_reachabile(top, reachability_date);
-		}
-
-		if (!(entry->commit->flags & REACHABLE))
-			goto prune;
-
-	save:
-		save(entry);
-		continue;
-	prune:
-		prune(entry);
-		continue;
-	}
-
-Does that change semantics? Yes, absolutely. But it sounds very practical.
-
-		Linus
+--=20
+perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
