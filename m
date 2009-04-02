@@ -1,60 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git remote update: New option --prune (-p)
-Date: Thu, 02 Apr 2009 11:06:56 -0700
-Message-ID: <7vab6zexq7.fsf@gitster.siamese.dyndns.org>
-References: <20090402123823.GA1756@pvv.org>
- <9b18b3110904020634i17633645ue4ba91701ea243a1@mail.gmail.com>
- <20090402134414.GB26699@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: demerphq <demerphq@gmail.com>, Finn Arne Gangstad <finnag@pvv.org>,
-	git@vger.kernel.org, gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 02 20:09:49 2009
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [EGIT PATCH 1/5] Make the equals method work for AnyObjectId, not just ObjectId
+Date: Thu,  2 Apr 2009 20:46:27 +0200
+Message-ID: <1238697991-12990-2-git-send-email-robin.rosenberg@dewire.com>
+References: <1238697991-12990-1-git-send-email-robin.rosenberg@dewire.com>
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Thu Apr 02 20:51:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LpRLN-0001DT-Kf
-	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 20:08:50 +0200
+	id 1LpRxi-00078a-7I
+	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 20:48:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760867AbZDBSHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Apr 2009 14:07:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760029AbZDBSHR
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 14:07:17 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53089 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754939AbZDBSHQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Apr 2009 14:07:16 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1D06FA7EC9;
-	Thu,  2 Apr 2009 14:07:12 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 17D97A7EC8; Thu,
-  2 Apr 2009 14:07:04 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 16DCD5EA-1FB1-11DE-A18F-BB14ECB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1757831AbZDBSqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Apr 2009 14:46:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756492AbZDBSqs
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 14:46:48 -0400
+Received: from mail.dewire.com ([83.140.172.130]:5490 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753149AbZDBSqs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Apr 2009 14:46:48 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id B01DA148898C;
+	Thu,  2 Apr 2009 20:46:45 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id vzRCjBgSy8MW; Thu,  2 Apr 2009 20:46:45 +0200 (CEST)
+Received: from localhost.localdomain (unknown [10.9.0.4])
+	by dewire.com (Postfix) with ESMTP id E82561484141;
+	Thu,  2 Apr 2009 20:46:44 +0200 (CEST)
+X-Mailer: git-send-email 1.6.2.1.345.g89fb
+In-Reply-To: <1238697991-12990-1-git-send-email-robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115481>
 
-Jeff King <peff@peff.net> writes:
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
 
-> I think it makes sense under update as pruning is really just a
-> different (and perhaps slightly more dangerous) form of update.
-> Generally I would only want to run prune after having run update, so
-> combining them makes sense from a workflow perspective.
+This has nothing to do with the series, just trying to squeeze it in... The
+quickdiff fixes works fine with our without this patch, but it seems reasonable.
 
-I agree with you that "oh by the way please prune as well" makes perfect
-sense, but I actually would even go stronger than that---if we _were_
-adding this command today, I would probably make "update" prune by
-default, perhaps with an option to skip the pruning step.
+ .../src/org/spearce/jgit/lib/AnyObjectId.java      |    4 ++--
+ .../src/org/spearce/jgit/revwalk/RevObject.java    |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-I gave the patch an only cursory look, so I wouldn't comment on the
-implementation; two things I would look at in the code would be if it
-makes two connections to the remote to learn the same information (which
-would be bad) and if it skips the pruning stage if the update stage failed
-(which would probably be a sane precaution).
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/AnyObjectId.java b/org.spearce.jgit/src/org/spearce/jgit/lib/AnyObjectId.java
+index e2f70ca..2e3a43e 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/AnyObjectId.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/AnyObjectId.java
+@@ -248,12 +248,12 @@ public int hashCode() {
+ 	 *            the other id to compare to. May be null.
+ 	 * @return true only if both ObjectIds have identical bits.
+ 	 */
+-	public boolean equals(final ObjectId other) {
++	public boolean equals(final AnyObjectId other) {
+ 		return other != null ? equals(this, other) : false;
+ 	}
+ 
+ 	public boolean equals(final Object o) {
+-		return equals((ObjectId) o);
++		return equals((AnyObjectId) o);
+ 	}
+ 
+ 	/**
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/revwalk/RevObject.java b/org.spearce.jgit/src/org/spearce/jgit/revwalk/RevObject.java
+index e8fb29f..1a13d0a 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/revwalk/RevObject.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/revwalk/RevObject.java
+@@ -75,7 +75,7 @@ public final ObjectId getId() {
+ 	}
+ 
+ 	@Override
+-	public final boolean equals(final ObjectId o) {
++	public final boolean equals(final AnyObjectId o) {
+ 		return this == o;
+ 	}
+ 
+-- 
+1.6.2.1.345.g89fb
