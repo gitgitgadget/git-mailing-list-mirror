@@ -1,65 +1,65 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] match_tree_entry(): a pathspec only matches at directory
- boundaries
-Date: Thu, 2 Apr 2009 09:36:46 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.0904020923180.4130@localhost.localdomain>
-References: <20090331094107.GC3307@atjola.homenet> <20090331150501.GA11446@atjola.homenet> <7vbprfn0ai.fsf@gitster.siamese.dyndns.org> <7vwsa3llac.fsf_-_@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] mergetool-lib: add diffuse as merge and diff tool
+Date: Thu, 02 Apr 2009 11:06:07 -0700
+Message-ID: <7vhc17exrk.fsf@gitster.siamese.dyndns.org>
+References: <1238668246-762-1-git-send-email-davvid@gmail.com>
+ <1238668246-762-2-git-send-email-davvid@gmail.com>
+ <1238668246-762-3-git-send-email-davvid@gmail.com>
+ <20090402104252.GA29223@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
-	Eric Wong <normalperson@yhbt.net>,
-	Anton Gyllenberg <anton@iki.fi>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 02 18:41:43 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Sebastian Pipping <sebastian@pipping.org>, git@vger.kernel.org,
+	spearce@spearce.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 02 20:08:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LpPyv-0005BE-Rg
-	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 18:41:34 +0200
+	id 1LpRKQ-0000jk-OE
+	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 20:07:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759498AbZDBQj6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Apr 2009 12:39:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755012AbZDBQj6
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 12:39:58 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:44563 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752337AbZDBQj6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Apr 2009 12:39:58 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n32Gal3B010762
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 2 Apr 2009 09:37:18 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n32Gaka7024717;
-	Thu, 2 Apr 2009 09:36:47 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <7vwsa3llac.fsf_-_@gitster.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-5.439 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1753820AbZDBSGS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Apr 2009 14:06:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751327AbZDBSGR
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 14:06:17 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45654 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751262AbZDBSGR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Apr 2009 14:06:17 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B2577B62F;
+	Thu,  2 Apr 2009 14:06:13 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E6D8AB62E; Thu, 
+ 2 Apr 2009 14:06:08 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: F411D1F0-1FB0-11DE-A666-781813508E2D-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115478>
 
+David Aguilar <davvid@gmail.com> writes:
 
+> git-send-email (probably gmail, too) won't let me send
+> one patch in a series with a different "From:" header,
+> so maybe you should resend this patch so that you can get the
+> proper authorship recognition?  I've attached the original
+> patch file I sent in case you want to just grab it and
+> send-email it back out for the purposes of getting the right
+> authorship in there (actually, Junio, please advise...,
+> I'm not exactly sure what you'd prefer)
 
-On Wed, 1 Apr 2009, Junio C Hamano wrote:
->
-> Previously the code did a simple prefix match, which means that a path in
-> a directory "frotz/" would have matched with pathspec "f".
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+The way you marked your 3/3 with a From: line in the body of the message
+is the preferred way to say "David forwards a patch from Sebastian", and
+our patch application tool knows about it.
 
-I have this suspicion that we should be able to write it more readably, 
-but yes:
+If you wanted to preserve the original author date, you could have also
+added a Date: line in-body ("David forwards a patch from Sebastian, who
+created it at this date in this timezone").  You can find an earlier
+example in:
 
-	Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
-
-because the current code is clearly buggy.
-
-		Linus
+    http://article.gmane.org/gmane.comp.version-control.git/115289
