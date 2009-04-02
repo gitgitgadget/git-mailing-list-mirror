@@ -1,87 +1,71 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH 6/8 v2] sh-tools: add a run_merge_tool function
-Date: Wed, 1 Apr 2009 22:33:46 -0700
-Message-ID: <20090402053345.GA4185@gmail.com>
-References: <1238400684-14881-1-git-send-email-davvid@gmail.com> <885649360903311115o6131988emdcba6ef215ec0ab0@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 3/4] Documentation: branch.*.merge can also afect 
+ 'git-push'
+Date: Wed, 01 Apr 2009 23:08:27 -0700
+Message-ID: <7v3acrk2p0.fsf@gitster.siamese.dyndns.org>
+References: <1238407903-28020-1-git-send-email-santi@agolina.net>
+ <1238407903-28020-4-git-send-email-santi@agolina.net>
+ <7vd4bzdkkq.fsf@gitster.siamese.dyndns.org>
+ <adf1fd3d0903301506r65bd9b9bv6bf76c652a051400@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: James Pickens <jepicken@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 02 07:35:35 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Santi =?utf-8?Q?B=C3=A9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Thu Apr 02 08:10:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LpFaR-0005Qj-0n
-	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 07:35:35 +0200
+	id 1LpG7q-00027k-GK
+	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 08:10:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755153AbZDBFeA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Apr 2009 01:34:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753813AbZDBFd7
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 01:33:59 -0400
-Received: from wa-out-1112.google.com ([209.85.146.181]:48975 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753716AbZDBFd6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Apr 2009 01:33:58 -0400
-Received: by wa-out-1112.google.com with SMTP id j5so289824wah.21
-        for <git@vger.kernel.org>; Wed, 01 Apr 2009 22:33:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=OxWnNMWQSnbYXQ0Nurmbm3SdCE0UUR7LQfxgIUSumKY=;
-        b=e1ANO0S9A1LcntxtgYT25YV2orrNEi7ZC+DEbqqrrUqxO3hpuyqG067b9qWyjTkPbN
-         IL0dPCXUzACTrV9L9+Rd4am87EeAMgsf33xU6SP7SKfuOI6kno6BOtvKzJI5/gSd+Wb8
-         obm1XvMH6xn4MuaqY+klpn08/btBp8TJPH2F4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=DAaMNLekNoxXmPEKASVtTNt/jm03HdLcg2F3fhPpFmDHZ6dO4MXzopeuEYcMjUdQmG
-         obDoJX4xHryYwfyLVNf3DKEDjECsV7nEconoSjisbKYJ7QFGMY5FqKJ5EXV8ZNG0CUDt
-         EiTl6RtpQFiNev7m5/Jd7ULJvuQXbf9yrkDhI=
-Received: by 10.114.95.1 with SMTP id s1mr5702550wab.50.1238650436351;
-        Wed, 01 Apr 2009 22:33:56 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id n33sm747239wag.53.2009.04.01.22.33.55
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 01 Apr 2009 22:33:55 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <885649360903311115o6131988emdcba6ef215ec0ab0@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752012AbZDBGIg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Apr 2009 02:08:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751612AbZDBGIf
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 02:08:35 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60090 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751467AbZDBGIf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Apr 2009 02:08:35 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id DFBA8B899;
+	Thu,  2 Apr 2009 02:08:32 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 324DCB896; Thu, 
+ 2 Apr 2009 02:08:30 -0400 (EDT)
+In-Reply-To: <adf1fd3d0903301506r65bd9b9bv6bf76c652a051400@mail.gmail.com>
+ (Santi =?utf-8?Q?B=C3=A9jar's?= message of "Tue, 31 Mar 2009 00:06:30 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: B1CEEF1C-1F4C-11DE-B87E-C5D912508E2D-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115445>
 
-On  0, James Pickens <jepicken@gmail.com> wrote:
-> On Mon, Mar 30, 2009 at 1:11 AM, David Aguilar <davvid@gmail.com> wrote:
-> > This function launches merge tools and will be used to refactor
-> > git-(diff|merge)tool.
-> 
-> Thanks for writing difftool; I find it quite useful.  I tried it with
-> tkdiff, and noticed that it shows the 'merge preview' window even though it
-> isn't doing a merge.  If a user with unstaged changes were to carelessly
-> click the 'save and exit' button, his changes could be lost.  So I think
-> it's a good idea to stop the merge preview window from showing up under
-> difftool.  To do that I think you just have to remove the '-o "$MERGED"'
-> option to tkdiff.
-> 
-> James
+Santi B=C3=A9jar <santi@agolina.net> writes:
 
-Hi James
+> 2009/3/30 Junio C Hamano <gitster@pobox.com>:
+> ...
+> Maybe the push.default description needs some enhancements, but this
+> [3/4] is true.
+>
+>> I think the author meant to say if your local branch frotz by defaul=
+t
+>> merges changes made to the branch nitfol of the remote repository, "=
+frotz
+>> tracks nitfol", but the use of the word "track" for that meaning app=
+ears
+>> nowhere in Documentation/glossary-content.txt
+>
+> So we can define:
+>
+> push.default =3D "tracking" =3D "push the current branch to its upstr=
+eam branch"
+>
+> The "upstream branch" is defined in branch.name.merge and could also
+> be added to glossary-content.
 
-I included your suggestion in my latest patch series.
-Once things settle down with the current series I'll
-add diffuse to {diff,merge}tool and friends.
-
-So, yup, this shouldn't be an issue in future versions of
-difftool.
-
-Thanks
-
--- 
-
-	David
+Sounds like a good plan.  Please make it so.
