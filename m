@@ -1,82 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: "git clone --depth <depth>" producing history with <depth + 1>
- commits?
-Date: Thu, 2 Apr 2009 13:00:57 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0904021248080.7464@intel-tinevez-2-302>
-References: <49CBB490.8040908@hartwork.org> <49D3C300.1040303@hartwork.org> <alpine.DEB.1.00.0904020303320.10279@pacific.mpi-cbg.de> <7veiwbokd7.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/5] Header includes cleanup
+Date: Thu, 2 Apr 2009 07:27:05 -0400
+Message-ID: <20090402112705.GD14599@sigill.intra.peff.net>
+References: <1238406925-15907-1-git-send-email-nathaniel.dawson@gmail.com> <200903310859.36035.chriscool@tuxfamily.org> <7vk56565m1.fsf@gitster.siamese.dyndns.org> <200904020557.25058.chriscool@tuxfamily.org> <7v8wmjk4p6.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sebastian Pipping <webmaster@hartwork.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Nathaniel P Dawson <nathaniel.dawson@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 02 13:02:40 2009
+X-From: git-owner@vger.kernel.org Thu Apr 02 13:28:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LpKgs-00075q-Oa
-	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 13:02:35 +0200
+	id 1LpL6F-00054Z-N8
+	for gcvg-git-2@gmane.org; Thu, 02 Apr 2009 13:28:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757680AbZDBLBF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Apr 2009 07:01:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754853AbZDBLBC
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 07:01:02 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38975 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751002AbZDBLBA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Apr 2009 07:01:00 -0400
-Received: (qmail invoked by alias); 02 Apr 2009 11:00:57 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp051) with SMTP; 02 Apr 2009 13:00:57 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/dx/p+nMrdH5XxCocv6bv1bihix2pjxhZa2Grjdw
-	23xMFFO3j5w51l
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <7veiwbokd7.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+	id S1753052AbZDBL1N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Apr 2009 07:27:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753448AbZDBL1K
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 07:27:10 -0400
+Received: from peff.net ([208.65.91.99]:45986 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753052AbZDBL1J (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Apr 2009 07:27:09 -0400
+Received: (qmail 24748 invoked by uid 107); 2 Apr 2009 11:27:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 02 Apr 2009 07:27:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Apr 2009 07:27:05 -0400
+Content-Disposition: inline
+In-Reply-To: <7v8wmjk4p6.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115457>
 
-Hi,
+On Wed, Apr 01, 2009 at 10:25:09PM -0700, Junio C Hamano wrote:
 
-On Wed, 1 Apr 2009, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > - a header file should be included in a C file only if it is needed to 
+> > compile the C file (it is not ok to include it only because it includes 
+> > many other headers that are needed)
 > 
-> > On Wed, 1 Apr 2009, Sebastian Pipping wrote:
-> >
-> >> Sebastian Pipping wrote:
-> >> > Is "git clone --depth 1 <ropository>" expected to give a history 
-> >> > with 2 commits?  "--depth 2" gives 3 commits, "--depth 0" all.
-> >> > 
-> >> > Is that by design or a bug?
-> >> 
-> >> Anyone?  Is "git clone --depth 1 <ropository>" really supposed to 
-> >> produce a history holding _two_ commits?  Why so?
-> >
-> > Because storing _no_ commit (according to you, that should happen with 
-> > --depth=0) would make no sense?
-> 
-> But then you can error out upon such a request.
+> If that is the rule, perhaps the problem lies not in a .c program that
+> includes such a .h header, but in the .h itself that includes many other
+> header files.
 
-Right.  Or disable the shallow cloning, as is the case now.
+If this were combined with splitting gigantic .h files (like cache.h)
+into smaller logical units, then we could in theory speed up
+recompilation times with make (we would also need to correctly track
+header dependencies, but gcc -M can do this fairly easily).
 
-> > After all, if you want to clone, you want to clone at least 
-> > _something_.
-> 
-> I am a bit puzzled by your logic.  If one is requested, shouldn't you 
-> give only one and not two?
+But it does come at the price of actually having to consider which
+include files are necessary. I can't think of more than half a dozen
+times in the last year I have actually had to add a #include while
+working on a git .c file, mostly because everything and the kitchen sink
+is included by cache.h.
 
-Reading the OP again, I have to apologize: I missed the fact that there is 
-no way to have _just_ one commit.
+So I don't know if it is worth it.
 
-And that is very obviously a bug.
-
-If nobody beats me to it, I will take care of it this weekend.
-
-Ciao,
-Dscho
+-Peff
