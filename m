@@ -1,67 +1,62 @@
-From: Josef Wolf <jw@raven.inka.de>
-Subject: Re: How to merge in different order?
-Date: Fri, 3 Apr 2009 19:59:24 +0200
-Message-ID: <20090403175924.GD28619@raven.wolf.lan>
-References: <20090403161208.GC28619@raven.wolf.lan> <20090403163150.GD8155@coredump.intra.peff.net>
+From: Changsheng Jiang <jiangzuoyan@gmail.com>
+Subject: How to init a empty repo for pushing?
+Date: Sat, 4 Apr 2009 02:17:33 +0800
+Message-ID: <eafc0afe0904031117rbfd55cft5f40f1b45df1e454@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 03 20:03:05 2009
+X-From: git-owner@vger.kernel.org Fri Apr 03 20:25:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LpniK-0002lw-Os
-	for gcvg-git-2@gmane.org; Fri, 03 Apr 2009 20:02:01 +0200
+	id 1Lpnzz-0003E3-V6
+	for gcvg-git-2@gmane.org; Fri, 03 Apr 2009 20:20:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934720AbZDCSAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Apr 2009 14:00:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760224AbZDCSAN
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Apr 2009 14:00:13 -0400
-Received: from quechua.inka.de ([193.197.184.2]:56517 "EHLO mail.inka.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934073AbZDCSAM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Apr 2009 14:00:12 -0400
-Received: from raven.inka.de (uucp@[127.0.0.1])
-	by mail.inka.de with uucp (rmailwrap 0.5) 
-	id 1LpngX-0003sj-AP; Fri, 03 Apr 2009 20:00:09 +0200
-Received: by raven.inka.de (Postfix, from userid 1000)
-	id B41F42CBDB; Fri,  3 Apr 2009 19:59:24 +0200 (CEST)
-Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20090403163150.GD8155@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S934704AbZDCSRx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Apr 2009 14:17:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757925AbZDCSRx
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Apr 2009 14:17:53 -0400
+Received: from ti-out-0910.google.com ([209.85.142.188]:54981 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753381AbZDCSRw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Apr 2009 14:17:52 -0400
+Received: by ti-out-0910.google.com with SMTP id i7so1141454tid.23
+        for <git@vger.kernel.org>; Fri, 03 Apr 2009 11:17:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:received:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=KuyVd6jaTT1OBLRoAjcxd68n+Y0GDXal/GwWwbMhi2A=;
+        b=btuzVuiKZYU+CXfItSN7AWXH+D49BJ23EiDFKTAwNqLh1zh35QNu2zQHIuT4DLd+lo
+         Hc8uSb6nfp02WXx+kR72m0MGVAmPHGuia6LHuzwPQA0LdvIZCCW55njIfxImTi25YGWE
+         89mgRlJZagFT89H/6ScKAmHrq5W6yzuQ6tdg8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=GTIrMoJzllNSR6j1W7osJ/RUtwt11dhjX2yJdQ+t4lK21rCfpdbuyNqWTJKp+I5gge
+         fpm7lE6m6pshTimiGUekPQHR9Wshh5V41smkG63xVcaJvbZvHyPn28KoOA/eVV/cmr7G
+         HhtUVsRi0AWAuLBRii+09tODQpAB0cCAE1Wew=
+Received: by 10.110.57.5 with SMTP id f5mr2078382tia.34.1238782669416; Fri, 03 
+	Apr 2009 11:17:49 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115550>
 
-On Fri, Apr 03, 2009 at 12:31:50PM -0400, Jeff King wrote:
+Hi list,
 
-[ ... ]
-> But what you probably want to do is rewrite the history of your branch
-> to re-order the commits.
+I have a repository in my laptop, and need to push the repo to a
+remote server using ssh protocol.
 
-Yeah, That's exactly what I need. But I guess there's a lot of work ahead:
-about 2500 commits are waiting for the sort.
+I know how to init a original repo. But the repo in the server is not
+original, the laptop repo is.
 
-> You can do this with "git rebase -i".
+Just 'git init' in server, then 'git push server' after 'git remote
+add server ...'  in laptop gives error.
 
-Sounds good
-
-> Like any
-> history rewriting, this can cause difficulties for people who you have
-> already shared the branch with (because it will replace the commits that
-> they already have with 5 _new_ commits that just happen to do more or
-> less the same thing).
-
-This is a copy of a svn repository, created with git-svn. So the branch
-is shared with other people.
-
-> If you have already shared the branch, you may just want to cherry-pick
-> the changes you want (using "git cherry-pick") onto your other branch.
-
-Argh, I was looking for git-cherry, but that does something different ;-)
-
-Thanks for the answer, Jeff!
+Thanks,
+Changsheng Jiang
