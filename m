@@ -1,49 +1,504 @@
-From: "Nancy" <ayse-nur@cheme.kyoto-u.ac.jp>
-Subject: Damned terrorists!!!
-Date: Thu, 2 Apr 2009 22:36:25 -0800
-Message-ID: <20090402223625.8000501@cheme.kyoto-u.ac.jp>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: [PATCH] NO_PERL support
+Date: Fri, 3 Apr 2009 00:03:50 -0700
+Message-ID: <20090403T065545Z@curie.orbis-terrarum.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 03 08:06:20 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="E39vaYmALEf/7YXx"
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 03 09:12:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LpcXQ-0006d4-DX
-	for gcvg-git-2@gmane.org; Fri, 03 Apr 2009 08:06:00 +0200
+	id 1LpdZs-0005iO-0x
+	for gcvg-git-2@gmane.org; Fri, 03 Apr 2009 09:12:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753360AbZDCGE2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Apr 2009 02:04:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752352AbZDCGE2
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Apr 2009 02:04:28 -0400
-Received: from h-67-103-70-74.lsanca54.static.covad.net ([67.103.70.74]:34053
-	"HELO h-67-103-70-74.lsanca54.static.covad.net"
-	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with SMTP
-	id S1751590AbZDCGE1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Apr 2009 02:04:27 -0400
-Received: from qiq ([89.119.62.234]) by h-67-103-70-74.lsanca54.static.covad.net with Microsoft SMTPSVC(6.0.3790.0); Thu, 2 Apr 2009 22:36:25 -0800
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+	id S1755502AbZDCHKm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Apr 2009 03:10:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751832AbZDCHKl
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Apr 2009 03:10:41 -0400
+Received: from b01.ext.isohunt.com ([208.71.112.51]:39876 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751334AbZDCHKk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Apr 2009 03:10:40 -0400
+X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Fri, 03 Apr 2009 03:10:39 EDT
+Received: (qmail 30488 invoked from network); 3 Apr 2009 07:03:56 -0000
+Received: from tsi-static.orbis-terrarum.net (HELO curie.orbis-terrarum.net) (76.10.188.108)
+  (smtp-auth username robbat2@isohunt.com, mechanism login)
+  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Fri, 03 Apr 2009 07:03:56 +0000
+Received: (qmail 29965 invoked by uid 10000); 3 Apr 2009 00:03:50 -0700
+Content-Disposition: inline
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 14.8 points;
- *  3.0 RAZOR2_CF_RANGE_51_100 BODY: Razor2 gives confidence level above 50%
- *      [cf: 100]
- *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?67.103.70.74>]
- *  0.8 URIBL_PH_SURBL Contains an URL listed in the PH SURBL blocklist
- *      [URIs: goodnewsdigital.com]
- *  0.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: goodnewsdigital.com]
- *  2.0 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: goodnewsdigital.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: goodnewsdigital.com]
- *  0.4 PLING_PLING Subject has lots of exclamation marks
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115519>
 
-Are you in the city now? http://kj.goodnewsdigital.com/main.php
+
+--E39vaYmALEf/7YXx
+Content-Type: multipart/mixed; boundary="OXfL5xGRrasGEqWY"
+Content-Disposition: inline
+
+
+--OXfL5xGRrasGEqWY
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+The attached patch adds NO_PERL to the build system, in the same fashion
+as NO_TCLTK.
+
+Effects:
+- No perl-based scripts or code are installed:
+	$SCRIPT_PERL
+	git-instaweb
+	gitweb
+	git-cvsserver
+	git-svn
+- git-add does NOT have interactive support.
+- None of the tests for the disabled stuff gets run.
+
+This patch has been a optional part of the Gentoo build of Git for a
+full year now, originally introduced with v1.5.4.4.
+
+--=20
+Robin Hugh Johnson
+Gentoo Linux Developer & Infra Guy
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+
+--OXfL5xGRrasGEqWY
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="20090402-git-1.6.2.2-noperl.patch"
+Content-Transfer-Encoding: quoted-printable
+
+Implement 95% of the NO_PERL functionality, to build Git without any Perl
+support, because some Gentoo users want a Git without any Perl whatesoever
+(Gentoo bug #214168).
+
+Remaining bits are doing configure.ac as well as git-remote usage in:
+t5502-quickfetch.sh
+t5512-ls-remote.sh
+t5520-pull.sh
+
+Signed-off-by: Robin H. Johnson <robbat2@gentoo.org>
+Updated-by: Bernd Lommerzheim <bernd@lommerzheim.com>
+Bugzilla-URL: http://bugs.gentoo.org/show_bug.cgi?id=3D214168
+Notes: Ported from 20080423-git-1.5.5.1-noperl.patch
+Notes: Ported from 20080322-git-1.5.4.5-noperl.patch
+Notes: Ported from 20080528-git-1.5.6.1-noperl.patch
+Notes: Ported from 20080626-git-1.5.6.1-noperl.patch and 20081123-git-1.6.0=
+=2E4-noperl-cvsserver.patch
+Notes: Ported from 20090126-git-1.6.1.1-noperl.patch
+Notes: t3701-add-interactive.sh block added 2009/04/02 as it was missed, br=
+oke
+       testsuite with USE=3D-perl.
+
+diff --git a/Makefile b/Makefile
+index 0675c43..0adb2b5 100644
+--- a/Makefile
++++ b/Makefile
+@@ -139,6 +139,8 @@ all::
+ # Define NO_PERL_MAKEMAKER if you cannot use Makefiles generated by perl's
+ # MakeMaker (e.g. using ActiveState under Cygwin).
+ #
++# Define NO_PERL if you do not want Perl scripts at all.
++#
+ # Define NO_TCLTK if you do not want Tcl/Tk GUI.
+ #
+ # The TCL_PATH variable governs the location of the Tcl interpreter
+@@ -277,6 +279,8 @@ SCRIPT_SH +=3D git-stash.sh
+ SCRIPT_SH +=3D git-submodule.sh
+ SCRIPT_SH +=3D git-web--browse.sh
+=20
++SCRIPTS =3D $(patsubst %.sh,%,$(SCRIPT_SH))
++ifndef NO_PERL
+ SCRIPT_PERL +=3D git-add--interactive.perl
+ SCRIPT_PERL +=3D git-archimport.perl
+ SCRIPT_PERL +=3D git-cvsexportcommit.perl
+@@ -285,10 +289,11 @@ SCRIPT_PERL +=3D git-cvsserver.perl
+ SCRIPT_PERL +=3D git-relink.perl
+ SCRIPT_PERL +=3D git-send-email.perl
+ SCRIPT_PERL +=3D git-svn.perl
+-
+-SCRIPTS =3D $(patsubst %.sh,%,$(SCRIPT_SH)) \
+-	  $(patsubst %.perl,%,$(SCRIPT_PERL)) \
+-	  git-instaweb
++SCRIPTS +=3D $(patsubst %.perl,%,$(SCRIPT_PERL)) \
++			git-instaweb
++else
++SCRIPT_PERL =3D
++endif
+=20
+ # Empty...
+ EXTRA_PROGRAMS =3D
+@@ -335,7 +340,10 @@ BUILT_INS +=3D git-whatchanged$X
+ ALL_PROGRAMS =3D $(PROGRAMS) $(SCRIPTS)
+=20
+ # what 'all' will build but not install in gitexecdir
+-OTHER_PROGRAMS =3D git$X gitweb/gitweb.cgi
++OTHER_PROGRAMS =3D git$X
++ifndef NO_PERL
++OTHER_PROGRAMS +=3D gitweb/gitweb.cgi
++endif
+=20
+ # Set paths to tools early so that they can be used for version tests.
+ ifndef SHELL_PATH
+@@ -868,6 +876,10 @@ else
+ 	endif
+ endif
+=20
++ifdef NO_PERL
++	BASIC_CFLAGS +=3D -DNO_PERL
++endif
++
+ ifdef ZLIB_PATH
+ 	BASIC_CFLAGS +=3D -I$(ZLIB_PATH)/include
+ 	EXTLIBS +=3D -L$(ZLIB_PATH)/$(lib) $(CC_LD_DYNPATH)$(ZLIB_PATH)/$(lib)
+@@ -1067,6 +1079,11 @@ endif
+ ifeq ($(TCLTK_PATH),)
+ NO_TCLTK=3DNoThanks
+ endif
++ifeq ($(PERL_PATH),)
++NO_PERL=3DNoThanks
++export NO_PERL
++export NO_PERL_MAKEMAKER
++endif
+=20
+ QUIET_SUBDIR0  =3D +$(MAKE) -C # space to separate -C and subdir
+ QUIET_SUBDIR1  =3D
+@@ -1142,7 +1159,9 @@ ifndef NO_TCLTK
+ 	$(QUIET_SUBDIR0)git-gui $(QUIET_SUBDIR1) gitexecdir=3D'$(gitexec_instdir_=
+SQ)' all
+ 	$(QUIET_SUBDIR0)gitk-git $(QUIET_SUBDIR1) all
+ endif
++ifndef NO_PERL
+ 	$(QUIET_SUBDIR0)perl $(QUIET_SUBDIR1) PERL_PATH=3D'$(PERL_PATH_SQ)' prefi=
+x=3D'$(prefix_SQ)' all
++endif
+ 	$(QUIET_SUBDIR0)templates $(QUIET_SUBDIR1)
+=20
+ please_set_SHELL_PATH_to_a_more_modern_shell:
+@@ -1189,6 +1208,7 @@ $(patsubst %.sh,%,$(SCRIPT_SH)) : % : %.sh
+ 	chmod +x $@+ && \
+ 	mv $@+ $@
+=20
++ifndef NO_PERL
+ $(patsubst %.perl,%,$(SCRIPT_PERL)): perl/perl.mak
+=20
+ perl/perl.mak: GIT-CFLAGS perl/Makefile perl/Makefile.PL
+@@ -1248,6 +1268,7 @@ git-instaweb: git-instaweb.sh gitweb/gitweb.cgi gitwe=
+b/gitweb.css
+ 	    $@.sh > $@+ && \
+ 	chmod +x $@+ && \
+ 	mv $@+ $@
++endif # NO_PERL
+=20
+ configure: configure.ac
+ 	$(QUIET_GEN)$(RM) $@ $<+ && \
+@@ -1455,9 +1476,12 @@ install: all
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+ 	$(INSTALL) $(ALL_PROGRAMS) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+-	$(INSTALL) git$X git-upload-pack$X git-receive-pack$X git-upload-archive$=
+X git-shell$X git-cvsserver '$(DESTDIR_SQ)$(bindir_SQ)'
++	$(INSTALL) git$X git-upload-pack$X git-receive-pack$X git-upload-archive$=
+X git-shell$X '$(DESTDIR_SQ)$(bindir_SQ)'
+ 	$(MAKE) -C templates DESTDIR=3D'$(DESTDIR_SQ)' install
++ifndef NO_PERL
+ 	$(MAKE) -C perl prefix=3D'$(prefix_SQ)' DESTDIR=3D'$(DESTDIR_SQ)' install
++	$(INSTALL) git-cvsserver '$(DESTDIR_SQ)$(bindir_SQ)'
++endif
+ ifndef NO_TCLTK
+ 	$(MAKE) -C gitk-git install
+ 	$(MAKE) -C git-gui gitexecdir=3D'$(gitexec_instdir_SQ)' install
+@@ -1565,9 +1589,11 @@ clean:
+ 	$(RM) -r $(GIT_TARNAME) .doc-tmp-dir
+ 	$(RM) $(GIT_TARNAME).tar.gz git-core_$(GIT_VERSION)-*.tar.gz
+ 	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
+-	$(RM) gitweb/gitweb.cgi
+ 	$(MAKE) -C Documentation/ clean
++ifndef NO_PERL
++	$(RM) gitweb/gitweb.cgi
+ 	$(MAKE) -C perl clean
++endif
+ 	$(MAKE) -C templates/ clean
+ 	$(MAKE) -C t/ clean
+ ifndef NO_TCLTK
+diff --git a/builtin-add.c b/builtin-add.c
+index 08443f2..01e18a1 100644
+--- a/builtin-add.c
++++ b/builtin-add.c
+@@ -15,7 +15,9 @@ static const char * const builtin_add_usage[] =3D {
+ 	"git add [options] [--] <filepattern>...",
+ 	NULL
+ };
++#ifndef NO_PERL
+ static int patch_interactive, add_interactive;
++#endif
+ static int take_worktree_changes;
+=20
+ static void fill_pathspec_matches(const char **pathspec, char *seen, int s=
+pecs)
+@@ -158,6 +160,7 @@ static const char **validate_pathspec(int argc, const c=
+har **argv, const char *p
+ 	return pathspec;
+ }
+=20
++#ifndef NO_PERL
+ int interactive_add(int argc, const char **argv, const char *prefix)
+ {
+ 	int status, ac;
+@@ -186,6 +189,7 @@ int interactive_add(int argc, const char **argv, const =
+char *prefix)
+ 	free(args);
+ 	return status;
+ }
++#endif
+=20
+ static struct lock_file lock_file;
+=20
+@@ -199,8 +203,10 @@ static struct option builtin_add_options[] =3D {
+ 	OPT__DRY_RUN(&show_only),
+ 	OPT__VERBOSE(&verbose),
+ 	OPT_GROUP(""),
++#ifndef NO_PERL
+ 	OPT_BOOLEAN('i', "interactive", &add_interactive, "interactive picking"),
+ 	OPT_BOOLEAN('p', "patch", &patch_interactive, "interactive patching"),
++#endif
+ 	OPT_BOOLEAN('f', "force", &ignored_too, "allow adding otherwise ignored f=
+iles"),
+ 	OPT_BOOLEAN('u', "update", &take_worktree_changes, "update tracked files"=
+),
+ 	OPT_BOOLEAN('N', "intent-to-add", &intent_to_add, "record only the fact t=
+hat the path will be added later"),
+@@ -252,10 +258,12 @@ int cmd_add(int argc, const char **argv, const char *=
+prefix)
+=20
+ 	argc =3D parse_options(argc, argv, builtin_add_options,
+ 			  builtin_add_usage, 0);
++#ifndef NO_PERL
+ 	if (patch_interactive)
+ 		add_interactive =3D 1;
+ 	if (add_interactive)
+ 		exit(interactive_add(argc, argv, prefix));
++#endif
+=20
+ 	git_config(add_config, NULL);
+=20
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 46e649c..944f3ac 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -100,7 +100,9 @@ static struct option builtin_commit_options[] =3D {
+ 	OPT_GROUP("Commit contents options"),
+ 	OPT_BOOLEAN('a', "all", &all, "commit all changed files"),
+ 	OPT_BOOLEAN('i', "include", &also, "add specified files to index for comm=
+it"),
++#ifndef NO_PERL
+ 	OPT_BOOLEAN(0, "interactive", &interactive, "interactively add files"),
++#endif
+ 	OPT_BOOLEAN('o', "only", &only, "commit only specified files"),
+ 	OPT_BOOLEAN('n', "no-verify", &no_verify, "bypass pre-commit hook"),
+ 	OPT_BOOLEAN(0, "amend", &amend, "amend previous commit"),
+@@ -223,6 +225,7 @@ static char *prepare_index(int argc, const char **argv,=
+ const char *prefix)
+ 	struct string_list partial;
+ 	const char **pathspec =3D NULL;
+=20
++#ifndef NO_PERL
+ 	if (interactive) {
+ 		interactive_add(argc, argv, prefix);
+ 		if (read_cache_preload(NULL) < 0)
+@@ -230,6 +233,7 @@ static char *prepare_index(int argc, const char **argv,=
+ const char *prefix)
+ 		commit_style =3D COMMIT_AS_IS;
+ 		return get_index_file();
+ 	}
++#endif
+=20
+ 	if (*argv)
+ 		pathspec =3D get_pathspec(prefix, argv);
+diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
+index 67c431d..83a5535 100644
+--- a/t/lib-git-svn.sh
++++ b/t/lib-git-svn.sh
+@@ -9,6 +9,12 @@ then
+ 	test_done
+ 	exit
+ fi
++if test -n "$NO_PERL"
++then
++	test_expect_success 'skipping git-svn tests, NO_PERL defined' :
++	test_done
++	exit
++fi
+=20
+ GIT_DIR=3D$PWD/.git
+ GIT_SVN_DIR=3D$GIT_DIR/svn/git-svn
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index eb63718..e3bcf20 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -3,6 +3,12 @@
+ test_description=3D'git remote porcelain-ish'
+=20
+ . ./test-lib.sh
++if test -n "$NO_PERL"
++then
++	test_expect_success 'skipping git-cvsimport tests, NO_PERL defined' :
++	test_done
++	exit
++fi
+=20
+ setup_repository () {
+ 	mkdir "$1" && (
+diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
+index b4e2b4d..2e74ce5 100755
+--- a/t/t7501-commit.sh
++++ b/t/t7501-commit.sh
+@@ -38,7 +38,7 @@ test_expect_success \
+ 	"echo King of the bongo >file &&
+ 	test_must_fail git commit -m foo -a file"
+=20
+-test_expect_success \
++[ -z "$NO_PERL" ] && test_expect_success \
+ 	"using paths with --interactive" \
+ 	"echo bong-o-bong >file &&
+ 	! (echo 7 | git commit -m foo --interactive file)"
+@@ -119,7 +119,7 @@ test_expect_success \
+ 	"echo 'gak' >file && \
+ 	 git commit -m 'author' --author 'Rubber Duck <rduck@convoy.org>' -a"
+=20
+-test_expect_success \
++[ -z "$NO_PERL" ] && test_expect_success \
+ 	"interactive add" \
+ 	"echo 7 | git commit --interactive | grep 'What now'"
+=20
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index cb3d183..1d5355d 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -2,6 +2,12 @@
+=20
+ test_description=3D'git send-email'
+ . ./test-lib.sh
++if test -n "$NO_PERL"
++then
++	test_expect_success 'skipping git-send-email tests, NO_PERL defined' :
++	test_done
++	exit
++fi
+=20
+ PROG=3D'git send-email'
+ test_expect_success \
+diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
+index 245a7c3..6cd779a 100755
+--- a/t/t9200-git-cvsexportcommit.sh
++++ b/t/t9200-git-cvsexportcommit.sh
+@@ -13,6 +13,12 @@ then
+     test_done
+     exit
+ fi
++if test -n "$NO_PERL"
++then
++	test_expect_success 'skipping git-cvsexportcommit tests, NO_PERL defined'=
+ :
++	test_done
++	exit
++fi
+=20
+ CVSROOT=3D$(pwd)/cvsroot
+ CVSWORK=3D$(pwd)/cvswork
+diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server=
+=2Esh
+index 6a37f71..84a0d31 100755
+--- a/t/t9400-git-cvsserver-server.sh
++++ b/t/t9400-git-cvsserver-server.sh
+@@ -17,6 +17,12 @@ then
+     test_done
+     exit
+ fi
++if test -n "$NO_PERL"
++then
++	test_expect_success 'skipping git-cvsserver tests, NO_PERL defined' :
++	test_done
++	exit
++fi
+ perl -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
+     test_expect_success 'skipping git-cvsserver tests, Perl SQLite interfa=
+ce unavailable' :
+     test_done
+diff --git a/t/t9500-gitweb-standalone-no-errors.sh b/t/t9500-gitweb-standa=
+lone-no-errors.sh
+index 6ed10d0..d4580a4 100755
+--- a/t/t9500-gitweb-standalone-no-errors.sh
++++ b/t/t9500-gitweb-standalone-no-errors.sh
+@@ -72,6 +72,13 @@ safe_chmod () {
+ }
+=20
+ . ./test-lib.sh
++if test -n "$NO_PERL"
++then
++	test_expect_success 'skipping gitweb-standalone-no-errors tests, NO_PERL =
+defined' :
++	test_done
++	exit
++fi
++
+=20
+ perl -MEncode -e 'decode_utf8("", Encode::FB_CROAK)' >/dev/null 2>&1 || {
+     test_expect_success 'skipping gitweb tests, perl version is too old' :
+diff --git a/t/t9600-cvsimport.sh b/t/t9600-cvsimport.sh
+index d2379e7..75bf178 100755
+--- a/t/t9600-cvsimport.sh
++++ b/t/t9600-cvsimport.sh
+@@ -16,6 +16,12 @@ then
+ 	test_done
+ 	exit
+ fi
++if test -n "$NO_PERL"
++then
++	test_expect_success 'skipping git-cvsimport tests, NO_PERL defined' :
++	test_done
++	exit
++fi
+=20
+ cvsps_version=3D`cvsps -h 2>&1 | sed -ne 's/cvsps version //p'`
+ case "$cvsps_version" in
+diff a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+--- a/t/t3701-add-interactive.sh	2009-04-02 14:26:45.000000000 -0700
++++ b/t/t3701-add-interactive.sh	2009-04-02 23:06:20.543358154 -0700
+@@ -3,6 +3,13 @@
+ test_description=3D'add -i basic tests'
+ . ./test-lib.sh
+=20
++if test -n "$NO_PERL"
++then
++	test_expect_success 'skipping add-interactive tests, NO_PERL defined' :
++	test_done
++	exit
++fi
++
+ test_expect_success 'setup (initial)' '
+ 	echo content >file &&
+ 	git add file &&
+
+--OXfL5xGRrasGEqWY--
+
+--E39vaYmALEf/7YXx
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.10 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+
+iEYEARECAAYFAknVtNYACgkQPpIsIjIzwiwIDACg13Ig7ZAXFboMsm8WV/EPiCEu
+ZtgAnA43NSmHzP6sdR12AvBB4LSqn1Ar
+=tv/9
+-----END PGP SIGNATURE-----
+
+--E39vaYmALEf/7YXx--
