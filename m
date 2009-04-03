@@ -1,80 +1,256 @@
-From: Pat Thoyts <patthoyts@googlemail.com>
-Subject: Re: [msysGit] Re: [PATCH] Add custom memory allocator to MinGW and 
-	MacOS builds
-Date: Fri, 3 Apr 2009 21:12:11 +0000
-Message-ID: <a5b261830904031412o60b7eb4fv7e25a2ca4f89fe60@mail.gmail.com>
-References: <1238766761-3576-1-git-send-email-marius@trolltech.com>
-	 <49D61B35.8060508@trolltech.com>
+From: Chow Loong Jin <hyperair@gmail.com>
+Subject: GPG signing for git commit?
+Date: Sat, 04 Apr 2009 05:25:54 +0800
+Message-ID: <1238793954.19982.14.camel@hyperair-laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: marius@trolltech.com
-X-From: git-owner@vger.kernel.org Fri Apr 03 23:13:48 2009
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-0/b3WY/Psb8w7XDDQY5p"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 03 23:28:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lpqhv-0002Dz-Oq
-	for gcvg-git-2@gmane.org; Fri, 03 Apr 2009 23:13:48 +0200
+	id 1LpqvZ-0006MH-LJ
+	for gcvg-git-2@gmane.org; Fri, 03 Apr 2009 23:27:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756582AbZDCVMP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Apr 2009 17:12:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755760AbZDCVMP
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Apr 2009 17:12:15 -0400
-Received: from mail-ew0-f165.google.com ([209.85.219.165]:53808 "EHLO
-	mail-ew0-f165.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756233AbZDCVMO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Apr 2009 17:12:14 -0400
-Received: by ewy9 with SMTP id 9so1147452ewy.37
-        for <git@vger.kernel.org>; Fri, 03 Apr 2009 14:12:11 -0700 (PDT)
+	id S1755099AbZDCV0H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Apr 2009 17:26:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757855AbZDCV0F
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Apr 2009 17:26:05 -0400
+Received: from ti-out-0910.google.com ([209.85.142.191]:7980 "EHLO
+	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758491AbZDCV0B (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Apr 2009 17:26:01 -0400
+Received: by ti-out-0910.google.com with SMTP id i7so1183606tid.23
+        for <git@vger.kernel.org>; Fri, 03 Apr 2009 14:25:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=hZDOUheaIIbmteojva7dwZs9gdUxtjNUEv/B69fnNGg=;
-        b=d3Mnq+7iakrgpunuPq2u8EFGmmDQ6Ik2M/mxSALEq2T7/jDU1H1l/upcKCU6GRF3dM
-         R4kn70eb2beu+EAHR0hdOy0dDsm1o1KkAJlnNWA5mmvZ1gnzNduBbyFruWyV0wd63jTq
-         dNne3QZZ96nId50RuEeA/IdugmSvEB88OpNgQ=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:subject:from:to:content-type
+         :date:message-id:mime-version:x-mailer;
+        bh=VZzjV927dVXw0mDKv5XOBAhmguqUYlkRK21sZvbYTZI=;
+        b=rW5Syr/ai1x++gIsbn3CNTJfuqGuG4anC4snUvd9poyENAnRXbloPuk4Xg7dvDEqV3
+         /SbVsYjL2Efrp09BfaUBpa5ottp4p3CqumAUI0BpJTra8EGlpsdxYXcPYpcd+Hkur8tf
+         feOnqSYSM+GAJN6b27zrx0Eh21TXGRMV+wiKg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=q8WQIoVGC4oNBnnwUBV8K8yUedViYAfa3qFOAvyGswKyhsnJvEcce/7SxbLYLE2ojT
-         KLzIDS4XqXWZp/2d5p2yflEyjSuAdgvuqS47F1abErto1BSdaeQL8fmWGyhufuxoW4JQ
-         rjCqbGzElLSlTLyTYpK1MZWoz+8uPDBfPCtg4=
-Received: by 10.216.44.211 with SMTP id n61mr570308web.133.1238793131227; Fri, 
-	03 Apr 2009 14:12:11 -0700 (PDT)
-In-Reply-To: <49D61B35.8060508@trolltech.com>
+        d=gmail.com; s=gamma;
+        h=subject:from:to:content-type:date:message-id:mime-version:x-mailer;
+        b=j8xzoaANf0H5g/FBhazL++CrIGqQjg7moNH7PyWHpNL0at8oXzDlhnePicnHINJbVM
+         g9T12CeGW9k1GDxsl7hftyNhh9nb2a1Mtj+exlnJ8fmaC49yUSSGJl22J0WT66NcM6ad
+         Y4N2aLZjO2oD94FQvwwILAqyWc9DJtVd3yQuI=
+Received: by 10.110.57.5 with SMTP id f5mr2338267tia.19.1238793958745;
+        Fri, 03 Apr 2009 14:25:58 -0700 (PDT)
+Received: from ?172.20.92.185? ([155.69.188.61])
+        by mx.google.com with ESMTPS id y3sm2132525tia.23.2009.04.03.14.25.56
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 03 Apr 2009 14:25:57 -0700 (PDT)
+X-Mailer: Evolution 2.24.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115562>
 
-2009/4/3 Marius Storm-Olsen <marius@trolltech.com>:
->
-> Marius Storm-Olsen said the following on 03.04.2009 15:52:
->> The standard allocator on Windows is pretty bad prior
->> to Windows Vista, and nedmalloc is better than the
->> modified dlmalloc provided with newer versions of the
->> MinGW libc.
->
-> Actually, it just struck me that it's probably the synchronization
-> primitives which are better on Vista than XP, and not the memory
-> manager? (Since mingw 4.3.3-tdm on XP and Vista most likely use the
-> same dlmalloc fork?) ^shrug^
->
-> Anyways, not that I haven't tried to 'tune' nedmalloc in any way, just
-> ensured that it compiles with the different MinGWs which I
-> benchmarked. So, if anyone feels like it, maybe we can squeeze more
-> performance out of it by tweaking it.
 
-The difference on Windows Vista is that the low fragmentation heap is
-the default memory allocator. On Windows XP you need to enable it
-specifically for an application. So a possible alternative to this is
-just to enable the low fragmentation heap. (done via GetProcessHeaps
-and HeapSetInformation Win32 API calls).
+--=-0/b3WY/Psb8w7XDDQY5p
+Content-Type: multipart/mixed; boundary="=-ft9AsyUY40fQHh8omYyI"
 
-Pat Thoyts
+
+--=-ft9AsyUY40fQHh8omYyI
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+
+Hi,
+
+It crossed my mind that currently git commits cannot actually be
+verified to be authentic, due to the fact that I can just set my
+identity to be someone else, and then commit under their name. During
+discussion on #git, Ilari, context and I figured that it would be a good
+idea to get GPG signing on git commits, considering that git-tag already
+has GPG signing support.
+
+Attached is the transcript of the log, with some irrelevant bits chopped
+out. Log is dated Sat, April 4, and timezone GMT +0800.
+
+--=20
+Chow Loong Jin
+
+--=-ft9AsyUY40fQHh8omYyI
+Content-Disposition: attachment; filename="git-commit-sign.log"
+Content-Type: text/x-log; name="git-commit-sign.log"; charset="UTF-8"
+Content-Transfer-Encoding: base64
+
+MDQ6MzUgPGh5cGVyYWlyPiBobW0gaSd2ZSBhbHdheXMgd29uZGVyZWQuLi4gaXMgaXQgcG9zc2li
+bGUgdG8gY3JlYXRlIGNvbW1pdHMgdW5kZXIgc29tZW9uZSBlbHNlJ3MgbmFtZSBhbmQgdGhlbiBw
+dXNoIGl0IHRvIGEgZ2l0IHNlcnZlcj8gaWYgaXQgaXMsIGhvdyBkb2VzIG9uZSBwcmV2ZW50IHRo
+YXQgZnJvbSBoYXBwZW5pbmc/DQowNDozNSA8aHlwZXJhaXI+IHMvZ2l0IHNlcnZlci9naXQgcmVw
+by8NCjA0OjM2IDxJbGFyaT4gaHlwZXJhaXI6IFN1cmUgaXQgaXMuDQowNDozNiA8d2VyZUhhbXN0
+ZXI+IGh5cGVyYWlyOiBHSVRfQ09NTUlUVEVSX05BTUU9IlNvbWVvbmUgRWxzZSIgZ2l0IGNvbW1p
+dA0KMDQ6MzYgPElsYXJpPiBVVW5jaWE6IEl0IGhhcyBjYXBhYmlsaXR5IHRvIHRyYW5zZmVyIGNv
+bW1pdHMgYmV0d2VlbiByZXBvc2l0b3JpZXMuIFB1c2hpbmcgKHRyYW5zZmVyIHRvIGFub3RoZXIg
+cmVwb3NpdG9yeSksIEZldGNoaW5nICh0cmFuc2ZlciBmcm9tIGFub3RoZXIgcmVwb3NpdG9yeSwg
+Y2xvbmUvcHVsbCBhcmUgYnVpbHQgb24gdG9wKSBhbmQgc25lYWtlcm5ldCBjb21taXQgdHJhbnNw
+b3J0IGFyZSBhbGwgc3VwcG9ydGVkLg0KMDQ6MzYgPGh5cGVyYWlyPiBJbGFyaSwgd2VyZUhhbXN0
+ZXI6IHllYWggaSB0aG91Z2h0IHNvLCBidXQgaG93IGRvIHlvdSBwcmV2ZW50IHNvbWVvbmUgZnJv
+bSBwdXNoaW5nIHRvIGEgZ2l0IHJlcG8gdW5kZXIgeW91ciBuYW1lPw0KMDQ6MzYgPHdlcmVIYW1z
+dGVyPiBoeXBlcmFpcjogeW91J2QgaGF2ZSB0byBoYXZlIGhvb2tzIG9uIHRoZSBzZXJ2ZXIgc2lk
+ZSB0aGF0IGNoZWNrIHRoZSBjb21taXRlciBuYW1lDQowNDozNiA8aHlwZXJhaXI+IGFoIGkgc2Vl
+DQowNDozNyA8SWxhcmk+IGh5cGVyYWlyOiBUaGVuIHRoZXJlIGFyZSBzaXR1YXRpb25zIHdoZXJl
+IG9uZSBsZWdpbWF0ZWx5IG5lZWRzIHRvIHB1c2ggY29tbWl0IHdpdGggc29tZSBvZGRiYWxsIGNv
+bW1pdHRlciBuYW1lLg0KMDQ6MzcgPHdlcmVIYW1zdGVyPiBoeXBlcmFpcjogYWxzbyBub3RlIHRo
+YXQgZ2l0IGRpc3Rpbmd1aXNoZXMgYmV0d2VlbiBjb21taXR0ZXIgYW5kIGF1dGhvcg0KMDQ6Mzcg
+PGh5cGVyYWlyPiB3ZXJlSGFtc3RlcjogY29tbWl0dGVyIGFuZCBhdXRob3I/DQowNDozOCA8aHlw
+ZXJhaXI+IHdlcmVIYW1zdGVyOiB3aGF0J3MgdGhlIGRpZmZlcmVuY2U/DQowNDozOCA8d2VyZUhh
+bXN0ZXI+IGh5cGVyYWlyOiBhdXRob3IgaXMgdGhlIHBlcnNvbiB3aG8gd3JvdGUgdGhlIHBhdGNo
+LCBjb21taXR0ZXIgaXMgdGhlIHBlcnNvbiB3aG8gY3JlYXRlZCB0aGUgY29tbWl0DQowNDozOCA8
+d2VyZUhhbXN0ZXI+IHNvIGlmIHNvbWVvbmUgc2VuZHMgeW91IGEgcGF0Y2gsIGhlL3NoZSBpcyB0
+aGUgYXV0aG9yIGJ1dCB5b3UgYXJlIHRoZSBjb21taXR0ZXINCjA0OjM4IDxoeXBlcmFpcj4gd2Vy
+ZUhhbXN0ZXI6IGhvdyBkb2VzIGdpdCB0ZWxsIHRoZSBkaWZmZXJlbmNlPw0KMDQ6MzkgPGh5cGVy
+YWlyPiB3ZXJlSGFtc3RlcjogYWxzbywgc3VwcG9zaW5nIHlvdSB3ZXJlbid0IHdvcmtpbmcgYnkg
+cGFzc2luZyBwYXRjaGVzIGFyb3VuZCwgYnV0IHJhdGhlciBieSBwdXNoaW5nIHRvIGEgbWFpbiBw
+cm9qZWN0IHJlcG9zaXRvcnksIHdoYXQncyB0byBzdG9wIG9uZSBjb21taXR0ZXIgZnJvbSBjb21t
+aXR0aW5nIHVuZGVyIGFub3RoZXIgcGVyc29uJ3MgbmFtZSBhbmQgc2hvdmluZyBhbGwgdGhlIGJs
+YW1lIG9udG8gaGltPw0KMDQ6MzkgPGNvbnRleHQ+IHRoZSBhdXRob3JzIGFyZSBsaWtlIHBoeXNp
+Y3Mgc3R1ZGVudHMNCjA0OjM5IDxoeXBlcmFpcj4gb3IgaGVyPw0KMDQ6MzkgPGNvbnRleHQ+IGFu
+ZCB0aGUgY29tbWl0ZXJzIGFyZSByb2NrZXQgc2NpZW50ZXN0cw0KMDQ6NDAgPHdlcmVIYW1zdGVy
+PiBJIHRoaW5rIGJ5IGxvb2tpbmcgYXQgdGhlIHBhdGNoIGhlYWRlcnMgKGFzc3VtaW5nIGl0J3Mg
+c2VudCBpbiBtYm94IGZvcm1hdCkNCjA0OjQwIDxjb250ZXh0PiBoeXBlcmFpcjogbm90aGluZy4N
+CjA0OjQwIDxoeXBlcmFpcj4gY29udGV4dDogYml0IGluc2VjdXJlIGRvbid0IHlvdSB0aGluaz8N
+CjA0OjQwIDxjb250ZXh0PiBoeXBlcmFpcjogdGhlcmUgaXMgbm8gd2F5IHRvIHN0b3AgaXQuIHlv
+dSBnYXZlIHRoZW0gY29tbWl0IGFjY2VzcywgeW91IHRydXN0IHRoZW0gZW5vdWdoDQowNDo0MSA8
+d2VyZUhhbXN0ZXI+IHRoZXJlIGlzIGEgd2F5IHRvIHN0b3AgaXQ6IGRvbid0IGdpdmUgdGhlbSBj
+b21taXR0IGFjY2VzcyA7KQ0KMDQ6NDEgPGNvbnRleHQ+IHdlcmVoYW1zdGVyOiA7KQ0KMDQ6NDEg
+PGh5cGVyYWlyPiB3ZXJlSGFtc3RlcjogeW91IG1lYW4gcHVzaCBhY2Nlc3MgPXANCjA0OjQxIDxJ
+bGFyaT4gaHlwZXJhaXI6IFRoZXJlIGFyZSBjYXNlcyBsaWtlOiBJIHdvcmsgb24gc29tZSBmZWF0
+dXJlLiBJIGNvbXBsZXRlIGl0IGFuZCBzZW5kIHB1bGwgcmVxdWVzdCB0byBzb21lYm9keSB3aG8g
+aGFzIHB1c2ggcHJpdnMgdG8gbWFpbiByZXBvLiBUaGV5IHB1bGwgaXQgYW5kIHNpbmNlIGl0cyB1
+cCB0byBkYXRlLCBpdCByZXN1bHRzIGZhc3QgZm9yd2FyZC4gVGhlbiB0aGV5IHB1c2ggaXQuIEFn
+YWluLCBpdHMgdXAgdG8gZGF0ZSBzbyBwdXNoIHN1Y2NlZWRzLiBOb3cgeW91IGhhdmUgd291bmQg
+dXAgd2l0aCBzaXR1YXRpb24gd2hlcmUgdG9wbW9zdCBjb21taXQgY2xhaW1zIChjb3JyZWN0bHkp
+IHRoYXQgSSBjb21taXR0ZWQgaXQuDQowNDo0MSA8Y29udGV4dD4gaHlwZXJhaXI6IHVubGVzcyB5
+b3UgaGF2ZSBhIHByb3BzZWwgb24gaG93IHRvIHN0b3AgaXQNCjA0OjQyIDxDaXJjdWl0c29mdD4g
+VGhlcmUgaXNuJ3QgcmVhbGx5IGEgd2F5IHRvIHN0b3AgaXQuDQowNDo0MiA8SWxhcmk+IGh5cGVy
+YWlyOiBZb3UgY291bGQgdXNlIGhvb2tzIHRvIGtlZXAgbG9ncyBhYm91dCB3aG8gcHVzaGVkIHdo
+YXQuDQowNDo0MiA8aHlwZXJhaXI+IGkgc2VlDQowNDo0MiA8Q2lyY3VpdHNvZnQ+IEV2ZW4gaWYg
+dGhlcmUgd2VyZSwgdGhlcmUncyBub3RoaW5nIHByZXZlbnRpbmcgc29tZW9uZSBlbHNlIGZyb20g
+c2V0dGluZyB0aGVpciBpZGVudGl0eSB0byB5b3UuDQowNDo0MiA8Y29udGV4dD4gaWxhcmk6IHRo
+YXQgc3RpbGwgZG9lc250IHdvcmsuDQowNDo0MiA8Y29udGV4dD4gaWxhcmk6IHNheSBpIHB1bGwg
+ZnJvbSB5b3UsIG1lcmdlIG15IGNoYW5nZXMgd2l0aCB5b3VycywgdGhlbiBtZXJnZSBpbnRvIG1h
+c3RlciBhbmQgcHVzaCB0byByZXBvDQowNDo0MyA8Y29udGV4dD4gaG93IGRvIHlvdSB0cmFjayB0
+aGUgYnJhbmNoIGkgcHVsbGVkIGZvcm0geW91IGlzIHJlYWxseSBmcm9tIHlvdS4NCjA0OjQzIDxo
+eXBlcmFpcj4gaG93IGFib3V0IGdwZyBzaWduaW5nIGV2ZXJ5IGNvbW1pdCA9cA0KMDQ6NDMgPEls
+YXJpPiBjb250ZXh0OiBCb3RoICJtZXJnZXMiIGFyZSBmYXN0IGZvcndhcmRzIGJ5IGFzc3VtcHRp
+b24gdGhlcmUuDQowNDo0MyA8aHlwZXJhaXI+IGp1c3QgbGlrZSBob3cgdGFncyBjYW4gYmUgc2ln
+bmVkLCBob3cgYWJvdXQgc2lnbmluZyB0aGVtIGNvbW1pdHMNCjA0OjQzIDxjb250ZXh0PiBoeXBl
+cmFpcjogdGhhdCB3b3VsZCB3b3JrLg0KMDQ6NDMgPGNvbnRleHQ+IGlsYXJpOiBubyBpIG1lYW4g
+bWVyZ2UgYXMgaW4gbWVyZ2UuDQowNDo0MyA8SWxhcmk+IGh5cGVyYWlyOiBJdHMganVzdCBpbXBy
+YWN0aWNhbCB3aXRoIGN1cnJlbnQgdG9vbHMuDQowNDo0NCA8aHlwZXJhaXI+IElsYXJpOiB5ZWFo
+IGl0J3MgaW1wcmFjdGljYWwsIGJ1dCBpZiB5b3UgZ2l0IGdpdC1jb21taXQgc2lnbmluZyBjYXBh
+YmlsaXRpZXMgc2ltaWxhciB0byB0YWh0IG9mIGdpdC10YWcncyBpJ20gc3VyZSBpdCB3b3VsZCB3
+b3JrDQowNDo0NCA8aHlwZXJhaXI+IElsYXJpOiBhbmQgYmVjb21lIHByYWN0aWNhbC4NCjA0OjQ0
+IDxJbGFyaT4gY29udGV4dDogVW5sZXNzIHlvdSBleHBsaWNpdGx5IGFzaywgbWVyZ2Ugd2hlbiBw
+cmVzZW50ZWQgd2l0aCBzaXR1YXRpb24gd2hlcmUgb25lIG9mIGJyYW5jaGVzIGlzIGluIGZ1dHVy
+ZSBvZiBhbm90aGVyIHdpbGwgbWFrZSBmYXN0IGZvcndhcmQgd2l0aG91dCBhbnkgbmV3IGNvbW1p
+dHMuDQowNDo0NSA8SWxhcmk+IGh5cGVyYWlyOiBUaGVyZSBhcmUgZXZlbiBoYWNrcyB0aGF0IGF1
+dGhlbnRpY2F0ZSBwdXNoaW5nIHRvIGdpdDovLyBieSB1c2luZyBzaWduZWQgdGFncy4NCjA0OjQ2
+IDxoeXBlcmFpcj4gSWxhcmk6IHdoYXQgaGFja3MgYXJlIHRob3NlPw0KMDQ6NDYgPElsYXJpPiBo
+eXBlcmFpcjogVGhleSBlc3NlbnRpYWxseSBpbXBsZW1lbnQgcHVzaCBhdXRoZW50aWNhdGlvbiBv
+biB0b3Agb2YgZ2l0Oi8vDQowNDo0NiA8SWxhcmk+IGh5cGVyYWlyOiBOb3QgdmVyeSBoZWxwZnVs
+LCBiZWNhdXNlIHNzaCB1c3VhbGx5IGRvZXMgaXQgYmV0dGVyLg0KMDQ6NDYgPGh5cGVyYWlyPiB5
+ZWFoIGkgdGhvdWdodCBzbw0KMDQ6NDcgPElsYXJpPiBoeXBlcmFpcjogQW5kIGFzIHRpcDogSWYg
+eW91IHdhbnQgdG8ga2VlcCBsb2dzLCBjdXJyZW50IHZlcnNpb24gb2YgZ2l0b3NpcyAobGFzdCBJ
+IGNoZWNrZWQpIGNhbiBub3QgYmUgdXNlZCBpbiBzdWNoIGFwcGxpY2F0aW9ucyB3aXRob3V0IG1v
+ZGlmaWNhdGlvbi4NCjA0OjQ4IDxoeXBlcmFpcj4gSWxhcmk6IHdoYXQncyBnaXRvc2lzPw0KMDQ6
+NDggPElsYXJpPiBoeXBlcmFpcjogU29mdHdhcmUgdGhhdCBtYWtlcyBhZG1pbmluZyByZXBvIHBl
+cm1pc3Npb25zIGluIGdyb3VwIHNldHRpbmdzIGVhc2llci4NCjA0OjQ4IDxoeXBlcmFpcj4gaG1t
+IGludGVyZXN0aW5nDQowNDo0OSA8RGFzaGthbD4gU29tZXRpbWVzIEkgd2lzaCBJIGNvdWxkIGFu
+bm90YXRlIGEgYnJhbmNoLiAgTGVhdmUgYSBjb21tZW50IG9uIHRoZSBicmFuY2ggaXRzZWxmIHRo
+YXQgZXhwbGFpbnMgd2h5IEkgbWFkZSBpdC4uLg0KMDQ6NDkgPElsYXJpPiBoeXBlcmFpcjogVXN1
+YWxseSB2ZXJ5IGdvb2QuIEJ1dCBpdHMgbGFjayBvZiBleHBvcnRlZCB1c2VyIGlkZW50aXR5ICh1
+bmxlc3MgeW91IGNhbiBoYWNrIGl0IGluKSBpcyBhYnNvbHV0ZSBzaG93c3RvcHBlciBpZiB5b3Ug
+bmVlZCB0byBrZWVwIHB1c2ggbG9ncy4NCjA0OjQ5IDxoeXBlcmFpcj4gaG1tDQowNDo1MCA8SWxh
+cmk+IGh5cGVyYWlyOiBCdXQgaXRzIG9uZSBsaW5lIGNoYW5nZSBBRkFJQ1MuLi4NCjA0OjUwIDxo
+eXBlcmFpcj4gaW50ZXJlc3RpbmcNCjA0OjUwIDxoeXBlcmFpcj4gRGFzaGthbDogc2VsZi1leHBs
+YW5hdG9yeSBuYW1lcyBmdHcuDQowNDo1MSA8Y29udGV4dD4gaWxhcmk6IHllcyBpIGtub3cNCjA0
+OjUxIDxjb250ZXh0PiA8LS0gbm90IG5ldyB0byBnaXQNCjA0OjU5IDxjb250ZXh0PiBoeXBlcmFp
+cjogb25seSB3YXkgdG8gdHJ1c3QgYSBjb21taXQgd291bGQgYmUgZ3BnIHNpZ25hdHVyZXMNCjA0
+OjU5IDxEYXNoa2FsPiBJbGFyaTogb2g/ICBNaWdodCBoYXZlIHRvIGh1bnQgdGhyb3VnaCBnaXQu
+Z2l0IGZvciBpdA0KMDQ6NTkgPElsYXJpPiBEYXNoa2FsOiBwdSBoYXMgaXQuDQowNDo1OSA8RGFz
+aGthbD4gbmlmdHksIGRhbmtlDQowNDo1OSA8Y29udGV4dD4gYnV0IGkgZG9udCB0aGluayB5b3Ug
+Y2FuIGdwZyBzaWduIGFsbCBjb21taXRzIGNhbiB5b3UNCjA0OjU5IDxjb250ZXh0PiBub3QgdG8g
+bWVudGlvbiB0eXBpbmcgaW4gdGhhdCBwYXNzd2QgZXZlcnkgY29tbWl0IHdvdWxkIFNVQ0sgIQ0K
+MDQ6NTkgPGh5cGVyYWlyPiBjb250ZXh0OiB5ZXMgb2YgY291cnNlLCBidXQgZ2l0IGNvbW1pdCBk
+b2Vzbid0IGhhdmUgZ3BnIHN1cHBvcnQuDQowNDo1OSA8SWxhcmk+IERhc2hrYWw6IE5leHQgZG9l
+c24ndC4gQnV0IGJld2FyZSB0aGF0IHB1IGJlZ2lucyB0byBiZSBhY3R1YWxseSB1bnN0YWJsZS4N
+CjA0OjU5IDxoeXBlcmFpcj4gY29udGV4dDogZXZlciBoZWFyZCBvZiBhIGdwZyBhZ2VudD8NCjA1
+OjAwIDxjb250ZXh0PiBoeXBlcmFpcjogeWVzLiBmaXJlZ3BnIHVzZXMgaXQgc28gaSBkb250IGhh
+dmUgdG8gdHlwZSBpdCBpbiBmb3IgZXZlcnkgZW1haWwgaSBzZW5kIGZyb20gZ21haWwNCjA1OjAw
+IDxEYXNoa2FsPiBJbGFyaTogWWVhaCwgSSdtIGtpbmQgb2YgYWZyYWlkIG9mIHB1IGFzIGEgd2hv
+bGUsIGJ1dCBpZiBJIGNhbiBmaW5kIHRoZSByZWxpdmFudCBjb21taXRzIEkgY2FuIGJyaW5nIGp1
+c3QgdGhhdCBpbg0KMDU6MDAgPGNvbnRleHQ+IGdtYWlsICsgZ3BnID0gd2luDQowNTowMCA8aHlw
+ZXJhaXI+IGkgdXNlIGV2b2x1dGlvbi4NCjA1OjAwIDxjb250ZXh0PiBoeXBlcmFpcjogYW5vdGhl
+ciBld2UuDQowNTowMCA8Y29udGV4dD4gOykNCjA1OjAwICAqIGh5cGVyYWlyIHdvbmRlcnMgd2hh
+dCBld2UgaXMNCjA1OjAxIDxjb250ZXh0PiAnaWNreScgZ3Jvd3NlDQowNTowMSA8SWxhcmk+IGh5
+cGVyYWlyOiBHcGcgc2lnbmluZyBkb2Vzbid0IHJlYWxseSB3b3JrIGlmIHlvdSBoYXZlIGV4dGVy
+bmFsIGNvbnRyaWJ1dG9ycyB0aGF0IGNhbiByZXF1ZXN0IHB1bGwgdW5sZXNzIHlvdSBmb3JjZSBu
+b24tZmYgbWVyZ2Ugc29tZXdoZXJlLg0KMDU6MDEgPGh5cGVyYWlyPiBpIGRvbid0IHRoaW5rIGl0
+IGNvbWVzIHdpdGggYSB0cmFpbGluZyBlDQowNTowMSA8Y29udGV4dD4gaWxhcmk6IGVoPw0KMDU6
+MDEgPGNvbnRleHQ+IGh5cGVyYWlyOiBpbGwgaGF2ZSB0byB1cGRhdGUgbXkgZGljdGlvbmFyeQ0K
+MDU6MDEgPGh5cGVyYWlyPiBJbGFyaTogdGhlIG1haW4gcG9pbnQgaXMgdGhhdCB5b3UgbWFrZSB5
+b3VyIGNvbW1pdHMgYmUgdmVyaWZpYWJsZSwgc28gdGhhdCBub2JvZHkgY2FuIHByZXRlbmQgdG8g
+Y29tbWl0IGFzIHlvdS4NCjA1OjAyIDxjb250ZXh0PiBoeXBlcmFpcjogdXNlIHN2biwgOykNCjA1
+OjAyICAqIGh5cGVyYWlyIGJhcmZzIG9uIGNvbnRleHQgDQowNTowMiA8Q2lyY3VpdHNvZnQ+IGNv
+bnRleHQ6IEJsYXNwaGVtZXIhDQowNTowMiA8SWxhcmk+IGh5cGVyYWlyOiBXZWxsLCBpZiB5b3Ug
+bmVlZCBpZGVudGlmeWluZyBvZiBtYWluIGNvbnRyaWJ1dG9ycyBvbmx5Lg0KMDU6MDIgICogY29u
+dGV4dCBoaWRlcw0KMDU6MDIgPElsYXJpPiBoeXBlcmFpcjogU28gbm8gb25lIHNwb29mcyB0aGVt
+LiBCdXQgaXQgZG9lc24ndCBwcm90ZWN0IG90aGVycy4NCjA1OjAyIDxjb250ZXh0PiBpbGFyaTog
+YWN0dWFsbHkgaXQgd291bGRudCBiZSB0b28gaGFyZC4gaWYgY29tbWl0J3MgY291bGQgYmUgc2ln
+bg0KMDU6MDIgPGh5cGVyYWlyPiBJbGFyaTogeWVhaCB0cnVlLg0KMDU6MDMgPGNvbnRleHQ+IHRy
+dXN0ZWQgdXNlcnMgY291bGQgYWRkIHRoZWlyIGZpbmdlciBwcmludCB0byBsaWtlIGEgfi8uZ2l0
+ZmluZ2VyIGZpbGUNCjA1OjAzIDxjb250ZXh0PiBwZW9wbGUgV09VTEQgbm90aWNlIGlmIHRoYXQg
+Z2V0cyBjaGFuZ2VkDQowNTowMyA8Y29udGV4dD4gYW5kIHlvdSBjb3VsZCBoYXZlIGxpa2UgYSBn
+aXQgZmV0Y2gtZ3BnLWtleXMNCjA1OjAzIDxoeXBlcmFpcj4gaGFoYWgNCjA1OjAzIDxoeXBlcmFp
+cj4gaSB0aGluayB3ZSBzaG91bGQgZmlsZSB0aGF0IGFzIGEgZmVhdHVyZSByZXF1ZXN0ID1wDQow
+NTowMyA8aHlwZXJhaXI+IGlmIHRhZ3MgY2FuIGJlIHNpZ25lZCwgd2h5IG5vdCBjb21taXRzPyA9
+cA0KMDU6MDQgPElsYXJpPiBoeXBlcmFpcjogQm90aCBldmVuIGhhdmUgc2ltaWxhciBzdHJ1Y3R1
+cmUuIEhlYWRlciBmaWVsZHMgcGx1cyBmcmVlZm9ybSB0ZXh0IHNlY3Rpb24uDQowNTowNCA8SWxh
+cmk+IGh5cGVyYWlyOiBUaGUgdGV4dCBzZWN0aW9uIGlzIGV2ZW4gZnVsbHkgOC1iaXQgY2xlYW4u
+DQowNTowNCA8aHlwZXJhaXI+IGF3ZXNvbWUuIHNvIGxldCdzIGhhdmUgaXQgc2lnbmVkID1wDQow
+NTowNSA8SWxhcmk+IGh5cGVyYWlyOiBTaW5jZSBpdCBzdGFydHMgaW1tZWRpYXRlbHkgYWZ0ZXIg
+Zmlyc3QgMEEwQWggc2VxdWVuY2UgaW4gb2JqZWN0IGFuZCBjb250aW51ZXMgdG8gZW5kIG9mIG9i
+amVjdC4gQW5kIG9iamVjdHMgbmVlZCB0byBiZSA4LWJpdCBjbGVhbiB0byBzdG9yZSBiaW5hcnkg
+ZmlsZXMgaW4gYmxvYnMuDQowNTowNSA8Y29udGV4dD4gaHlwZXJhaXI6IHRoZW4geW91IG5lZWQg
+dG8gd29ycnkgYWJvdXQgYW4gYXV0aG9yIHNpZ25hdHVyZSwgQU5EIGNvbW1pdGVycyBzaWduYXR1
+cmUNCjA1OjA1IDxjb250ZXh0PiBhbmQgZGlmZidzIG1pZ2h0IGJlIGV2ZW4gbW9yZSBmdW5reQ0K
+MDU6MDYgPGNvbnRleHQ+IGJ1dCBpdCB3b3VsZCBiZSBhbiBhd2Vzb21lIGZlYXR1cmUNCjA1OjA2
+IDxoeXBlcmFpcj4gY29udGV4dDogZGlmZnMgY2FuIGhhdmUgaGVhZGVycyBhbmQgZm9vdGVycy4g
+c28gYSBjbGVhcnNpZ24gd291bGQgYmUgZmluZQ0KMDU6MDYgPElsYXJpPiBJZiB5b3UgY2FyZSBv
+bmx5IGFib3V0IHByb3RlY3RpbmcgbWFpbiBhdXRob3JzLCBjb21taXR0ZXIgc2lnbmF0dXJlIGlz
+IGVub3VnaC4NCjA1OjA2IDxDaXJjdWl0c29mdD4gV2hhdCBpZiBncGcgb24gY29tbWl0IHdhcyBv
+bmx5IHVzZWQgd2hlbiB0aGUgLS1zaWdub2ZmIG9wdGlvbiB3YXMgc2VsZWN0ZWQ/DQowNTowNyA8
+SWxhcmk+IEl0IGFsc28gaGFzIHNpbXBsaWZ5aW5nIGZhY3RvciB0aGF0IHNpZ25pbmcgaGVhZGVy
+cyBwbHVzIHJlc3Qgb2YgY29tbWl0IG1lc3NhZ2UgaXMgZW5vdWdoLg0KMDU6MDcgPGh5cGVyYWly
+PiBDaXJjdWl0c29mdDogdGhhdCB3b3VsZCBiZSBhd2Vzb21lLCBidXQgYXMgZmFyIGFzIGkgY2Fu
+IHRlbGwsIGl0IGlzbid0IHVzZWQgYXRtDQowNTowNyA8aHlwZXJhaXI+IG5vdyB0aGVuIGFyZSB0
+aGVyZSBhbnkgZ2l0IGRldnMgd2UgY2FuIHByb3Bvc2UgdGhpcyB0bz8gPXANCjA1OjA3IDxjb250
+ZXh0PiA8LS0gZ2V0cyBhbGwgY3JlZGl0DQowNTowNyA8Y29udGV4dD4gYW5kIGhpcyBtaWxsaW9u
+IGRvbGxhciBwcml6ZQ0KMDU6MDggPGh5cGVyYWlyPiBsb2wNCjA1OjA4IDxJbGFyaT4gaHlwZXJh
+aXI6IFNlbmQgaWRlYSB0byBtYWlsaW5nbGlzdC4gVGhlIG9mZmljaWFsIHBvbGljeSBpcyBlc3Nl
+bnRpYWxseSB0aGF0IGFsdG91Z2ggdGhpcyBjaGFubmVsIGhhcyBhcmNoaXZlcywgZm9yIGRldmVs
+b3BtZW50IHB1cnBvc2VzIGRpc2N1c3Npb25zIGhlcmUgbmV2ZXIgaGFwcG5lZC4NCn==
+
+
+--=-ft9AsyUY40fQHh8omYyI--
+
+--=-0/b3WY/Psb8w7XDDQY5p
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAknWfuIACgkQ4LFcUo8CpBGP4wCfYaL6geWDsFBzr5b8CcWjgr86
+MyEAoLJ1eDrAnCkUJNysTVfjuuiAl8sT
+=apPx
+-----END PGP SIGNATURE-----
+
+--=-0/b3WY/Psb8w7XDDQY5p--
