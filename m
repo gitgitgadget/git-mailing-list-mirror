@@ -1,73 +1,79 @@
-From: Marius Storm-Olsen <marius@trolltech.com>
-Subject: Re: [PATCH] Add custom memory allocator to MinGW and MacOS builds
-Date: Fri, 03 Apr 2009 16:20:37 +0200
-Message-ID: <49D61B35.8060508@trolltech.com>
-References: <1238766761-3576-1-git-send-email-marius@trolltech.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] NO_PERL support
+Date: Fri, 3 Apr 2009 16:51:09 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904031649400.10279@pacific.mpi-cbg.de>
+References: <20090403T065545Z@curie.orbis-terrarum.net> <20090403132029.GC21153@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: msysgit@googlegroups.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 03 16:22:21 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Robin H. Johnson" <robbat2@gentoo.org>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 03 16:51:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LpkHc-0004rZ-Sy
-	for gcvg-git-2@gmane.org; Fri, 03 Apr 2009 16:22:13 +0200
+	id 1LpkjK-0007yJ-FU
+	for gcvg-git-2@gmane.org; Fri, 03 Apr 2009 16:50:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757086AbZDCOUm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Apr 2009 10:20:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761620AbZDCOUk
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Apr 2009 10:20:40 -0400
-Received: from hoat.troll.no ([62.70.27.150]:39664 "EHLO hoat.troll.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754840AbZDCOUj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Apr 2009 10:20:39 -0400
-Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id 1A810211C9;
-	Fri,  3 Apr 2009 16:20:37 +0200 (CEST)
-Received: from [172.20.1.78] (unknown [172.20.1.78])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hoat.troll.no (Postfix) with ESMTP id EEBBB211C6;
-	Fri,  3 Apr 2009 16:20:36 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.8.1.21) Gecko/20090302 Thunderbird/2.0.0.21 ThunderGit/0.1a Mnenhy/0.7.6.666
-In-Reply-To: <1238766761-3576-1-git-send-email-marius@trolltech.com>
-X-Enigmail-Version: 0.95.7
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEXU1NTAwMABAQGsrKyE
- hIQwMDAEBAS8hGUfAAACQUlEQVQ4jV2TS47cMAxEKSDZW1CfwMB4PYLkrKchsveJRR2gEen+R0hR
- 9vziBmahhyqSRQ4NfF1FmIv3dH4usNAGoFprBVguQJmZ1nX0XiHgEukTCK3TairiZeXcVGzmZIoU
- 3738pehdVbiU9KFgMQWeZ1fpHZDfRS4rPb3eQVaZChGx4ikt5GDkAZQ2KKohzjklno4+iJpVhxka
- ZjSpasJ4gdGaEQMWTMjRa5uTqza0XDJjzhIdzGTMrqoopimoIPCKZtVOq265MAXpMLXycmVl2Y8C
- oE1FkT/faKauOjYoHJyOxHfvixjowvI0xZJsKykubgLYzuJMdBO+L86TjxfQ9hz9jpSudbnXXzRm
- tor5i3MUONpOfARAhlWbzWF7OhP2eSeEW9HUBNiHOxUM8HLWHhUAj3NZNsdqRZpNA+DJ+XlX+Qc9
- Z4ZjHX8LRUzgTBBef84NQoCMOcS0+BMsj3klbTzRri03ugXr9em1GfgzDAyEn4J3fvFI5YwdTrYu
- 1ntAY1h5ysM2OMGm+cBOocCXHisAHu2PagnLghoG2krz8bzsA4fj7KxCGk+63jt+DDCtYjbFNkHD
- nRwpRqsQYx5WYzsbm/eBfn0I4TbOGvMWqhQAiEDzNs4apumCI0x2OyHtY7uAlZff/sanbH9+AGT1
- KOEmUlJISdYPgEgehw+cTZEf6xeFyoEjCPgv+A62KhW3EOy9PL7WmCBMRWmfYN0OqW9krzl/Ay91
- 75HMqfDtP8UFckFUX2rwrm/kTVB2gH+hdu4avZVCuAAAAABJRU5ErkJggg==
+	id S933535AbZDCOst (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Apr 2009 10:48:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933539AbZDCOss
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Apr 2009 10:48:48 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43878 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933535AbZDCOsr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Apr 2009 10:48:47 -0400
+Received: (qmail invoked by alias); 03 Apr 2009 14:48:44 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp034) with SMTP; 03 Apr 2009 16:48:44 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/XcABkG93XnEBdIU4hA9mt9ThbPbdvYkBk0Ak/77
+	Do/P6Tu7tGCduk
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20090403132029.GC21153@coredump.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115532>
 
-Marius Storm-Olsen said the following on 03.04.2009 15:52:
-> The standard allocator on Windows is pretty bad prior
-> to Windows Vista, and nedmalloc is better than the
-> modified dlmalloc provided with newer versions of the
-> MinGW libc.
+Hi,
 
-Actually, it just struck me that it's probably the synchronization 
-primitives which are better on Vista than XP, and not the memory 
-manager? (Since mingw 4.3.3-tdm on XP and Vista most likely use the 
-same dlmalloc fork?) ^shrug^
+On Fri, 3 Apr 2009, Jeff King wrote:
 
-Anyways, not that I haven't tried to 'tune' nedmalloc in any way, just 
-ensured that it compiles with the different MinGWs which I 
-benchmarked. So, if anyone feels like it, maybe we can squeeze more 
-performance out of it by tweaking it.
+> On Fri, Apr 03, 2009 at 12:03:50AM -0700, Robin H. Johnson wrote:
+> 
+> > Effects:
+> > - No perl-based scripts or code are installed:
+> > 	$SCRIPT_PERL
+> > 	git-instaweb
+> > 	gitweb
+> > 	git-cvsserver
+> > 	git-svn
+> > - git-add does NOT have interactive support.
+> > - None of the tests for the disabled stuff gets run.
+> 
+> Hmm. With this patch, a user with a NO_PERL build will just get:
+> 
+>   $ git svn
+>   git: 'svn' is not a git-command. See 'git --help'.
+>   $ git add -i
+>   error: unknown switch `i'
+>   usage: ...
+> 
+> I wonder if we should be a little nicer and say "we know about this
+> command or option, but we did not build support for it". OTOH, what you
+> have mirrors what NO_TCLTK does, so perhaps it is not a big deal.
 
---
-.marius
+Actually, "add -i" is a part of another program that does work without 
+Perl, so it is quite a different kind of kettle.
+
+It is not like "git gui" works with NO_TCLTK but "git gui -i" does not.
+
+Ciao,
+Dscho
