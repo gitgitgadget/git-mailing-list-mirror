@@ -1,86 +1,67 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] NO_PERL support
-Date: Fri, 3 Apr 2009 19:54:57 +0200
-Message-ID: <200904031954.57584.j6t@kdbg.org>
-References: <20090403T065545Z@curie.orbis-terrarum.net> <20090403132029.GC21153@coredump.intra.peff.net>
+From: Josef Wolf <jw@raven.inka.de>
+Subject: Re: How to merge in different order?
+Date: Fri, 3 Apr 2009 19:59:24 +0200
+Message-ID: <20090403175924.GD28619@raven.wolf.lan>
+References: <20090403161208.GC28619@raven.wolf.lan> <20090403163150.GD8155@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-To: "Robin H. Johnson" <robbat2@gentoo.org>
-X-From: git-owner@vger.kernel.org Fri Apr 03 19:57:26 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 03 20:03:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lpndb-0000zv-Fq
-	for gcvg-git-2@gmane.org; Fri, 03 Apr 2009 19:57:07 +0200
+	id 1LpniK-0002lw-Os
+	for gcvg-git-2@gmane.org; Fri, 03 Apr 2009 20:02:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935048AbZDCRzG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Apr 2009 13:55:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934493AbZDCRzF
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Apr 2009 13:55:05 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:19395 "EHLO bsmtp.bon.at"
+	id S934720AbZDCSAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Apr 2009 14:00:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760224AbZDCSAN
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Apr 2009 14:00:13 -0400
+Received: from quechua.inka.de ([193.197.184.2]:56517 "EHLO mail.inka.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935048AbZDCRzE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Apr 2009 13:55:04 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 6BF3DCDF96;
-	Fri,  3 Apr 2009 19:54:58 +0200 (CEST)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 455941D235;
-	Fri,  3 Apr 2009 19:54:58 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <20090403132029.GC21153@coredump.intra.peff.net>
+	id S934073AbZDCSAM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Apr 2009 14:00:12 -0400
+Received: from raven.inka.de (uucp@[127.0.0.1])
+	by mail.inka.de with uucp (rmailwrap 0.5) 
+	id 1LpngX-0003sj-AP; Fri, 03 Apr 2009 20:00:09 +0200
+Received: by raven.inka.de (Postfix, from userid 1000)
+	id B41F42CBDB; Fri,  3 Apr 2009 19:59:24 +0200 (CEST)
+Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <20090403163150.GD8155@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115549>
 
-On Freitag, 3. April 2009, Jeff King wrote:
-> On Fri, Apr 03, 2009 at 12:03:50AM -0700, Robin H. Johnson wrote:
-> > +if test -n "$NO_PERL"
-> > +then
-> > +	test_expect_success 'skipping git-svn tests, NO_PERL defined' :
-> > +	test_done
-> > +	exit
-> > +fi
->
-> This probably got copied from an older example, but I think the
-> recommended way to skip tests these days is to use 'say' instead of
-> test_expect_success (since we have statistics on passing/failing tests
-> now).
->
-> Also, it may make sense to integrate this with Johannes Sixt's
-> test_have_prereq work (which is still in next), but I haven't looked too
-> closely at that.
+On Fri, Apr 03, 2009 at 12:31:50PM -0400, Jeff King wrote:
 
-If you base the patch on 'master', you can add this line to test-lib.sh
+[ ... ]
+> But what you probably want to do is rewrite the history of your branch
+> to re-order the commits.
 
-test -z "$NO_PERL" && test_set_prereq PERL
+Yeah, That's exactly what I need. But I guess there's a lot of work ahead:
+about 2500 commits are waiting for the sort.
 
-[But actually, if I read you patch correctly, NO_PERL will be set in 
-t/Makefile only if one runs 'make test' from the main directory. You should 
-invent some method to detect missing perl (or that NO_PERL was set) if 'make' 
-is run directly from t/.]
+> You can do this with "git rebase -i".
 
-Now you write the above as
+Sounds good
 
-if ! test_have_prereq PERL
-then
-	say 'perl not available - skipping git-svn tests'
-	test_done
-	exit
-fi
+> Like any
+> history rewriting, this can cause difficulties for people who you have
+> already shared the branch with (because it will replace the commits that
+> they already have with 5 _new_ commits that just happen to do more or
+> less the same thing).
 
-Furthermore, you can skip single tests like this:
+This is a copy of a svn repository, created with git-svn. So the branch
+is shared with other people.
 
-> > -test_expect_success \
-> > +[ -z "$NO_PERL" ] && test_expect_success \
+> If you have already shared the branch, you may just want to cherry-pick
+> the changes you want (using "git cherry-pick") onto your other branch.
 
-test_expect_success PERL \
+Argh, I was looking for git-cherry, but that does something different ;-)
 
--- Hannes
+Thanks for the answer, Jeff!
