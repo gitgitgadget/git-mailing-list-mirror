@@ -1,67 +1,203 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: How to merge in different order?
-Date: Fri, 3 Apr 2009 12:31:50 -0400
-Message-ID: <20090403163150.GD8155@coredump.intra.peff.net>
-References: <20090403161208.GC28619@raven.wolf.lan>
+Subject: Re: [PATCH] NO_PERL support
+Date: Fri, 3 Apr 2009 13:15:14 -0400
+Message-ID: <20090403171514.GA11112@coredump.intra.peff.net>
+References: <20090403T065545Z@curie.orbis-terrarum.net> <7vljqhaemm.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 03 18:35:22 2009
+Cc: "Robin H. Johnson" <robbat2@gentoo.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 03 19:17:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LpmKq-0005R0-Ez
-	for gcvg-git-2@gmane.org; Fri, 03 Apr 2009 18:33:40 +0200
+	id 1Lpn0s-00043P-43
+	for gcvg-git-2@gmane.org; Fri, 03 Apr 2009 19:17:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765466AbZDCQcJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Apr 2009 12:32:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764152AbZDCQcH
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Apr 2009 12:32:07 -0400
-Received: from peff.net ([208.65.91.99]:51953 "EHLO peff.net"
+	id S1758898AbZDCRPd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Apr 2009 13:15:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758041AbZDCRPc
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Apr 2009 13:15:32 -0400
+Received: from peff.net ([208.65.91.99]:45734 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754216AbZDCQcG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Apr 2009 12:32:06 -0400
-Received: (qmail 425 invoked by uid 107); 3 Apr 2009 16:32:23 -0000
+	id S1751507AbZDCRPc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Apr 2009 13:15:32 -0400
+Received: (qmail 551 invoked by uid 107); 3 Apr 2009 17:15:48 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 03 Apr 2009 12:32:23 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Apr 2009 12:31:50 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 03 Apr 2009 13:15:48 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Apr 2009 13:15:14 -0400
 Content-Disposition: inline
-In-Reply-To: <20090403161208.GC28619@raven.wolf.lan>
+In-Reply-To: <7vljqhaemm.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115547>
 
-On Fri, Apr 03, 2009 at 06:12:08PM +0200, Josef Wolf wrote:
+On Fri, Apr 03, 2009 at 09:25:21AM -0700, Junio C Hamano wrote:
 
-> Given a branch that looks like
+> While I do not mind omitting whole programs in fringes like you did for
+> archimport and relink, I *really* do not like this particular change (and
+> any change to the C code).
 > 
->   A1  A2  A3  A4  A5
+> I'd rather see something along the lines of:
 > 
-> I would like to merge into another branch in the order
+> 	if NO_PERL
+>         git-add--interactive: unimplemented.sh
+>         	rm -f $@+ $@
+>                 cat $? >$@+
+>                 chmod +x $@+
+>                 mv $@+ $@
+> 	else
+>         git-add--interactive: git-add--interactive.perl
+>         	... usual .perl to script rule applies
+> 	endif
 > 
->   A1  A3  A4  A2  A5
+> and ship:
 > 
-> When I merge A3, then A2 is merged also.  git-merge don't seem
-> to have an option to omit slurping older commits?
+> 	#!/bin/sh
+>         echo >&2 "Sorry $0 not available here"
+>         exit 1
+> 
+> in unimplemented.sh, *without* touching code that calls out to
+> scripts that happen to be implemented in Perl.
 
-Right. Remember that git represents history as a directed graph, so a
-merge is really just another commit saying "I include all history
-leading up to these two commits". There is no way to say "I include the
-history leading up to these commits, minus some other commits".
+OK, that is more or less what I proposed elsewhere in the thread. Below
+is a cleaned up version of the Makefile bits.
 
-If you just want to throw away A2, you can "git revert" it, then merge.
+The test script changes should come in a different patch, but they are a
+bit more complex. Tests that rely on missing scripts should obviously
+just be skipped outright.  But there are some test scripts that use perl
+for testing tasks (e.g., t4103), and those are not covered by Robin's
+patch. Do we want to also skip those? Do we want to place the burden on
+authors of the test suite to always check for NO_PERL whenever they use
+perl?
 
-But what you probably want to do is rewrite the history of your branch
-to re-order the commits. You can do this with "git rebase -i". Like any
-history rewriting, this can cause difficulties for people who you have
-already shared the branch with (because it will replace the commits that
-they already have with 5 _new_ commits that just happen to do more or
-less the same thing).
+The other option would be saying "we support building with NO_PERL, but
+not running the test suite".
 
-If you have already shared the branch, you may just want to cherry-pick
-the changes you want (using "git cherry-pick") onto your other branch.
+Thoughts?
 
--Peff
+-- >8 --
+Subject: [PATCH] Makefile: allow building without perl
+
+For systems with a missing or broken perl, it is nicer to
+explicitly say "we don't want perl" because:
+
+  1. The Makefile knows not to bother with Perl-ish things
+     like Git.pm.
+
+  2. We can print a more user-friendly error message
+     than "foo is not a git command" or whatever the broken
+     perl might barf
+
+  3. Test scripts that require perl can mark themselves and
+     such and be skipped
+
+This patch implements parts (1) and (2). The perl/
+subdirectory is skipped entirely, gitweb is not built, and
+any git commands which rely on perl will print a
+human-readable message and exit with an error code.
+
+This patch is based on one from Robin H. Johnson.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Makefile         |   23 +++++++++++++++++++++--
+ unimplemented.sh |    4 ++++
+ 2 files changed, 25 insertions(+), 2 deletions(-)
+ create mode 100644 unimplemented.sh
+
+diff --git a/Makefile b/Makefile
+index 0675c43..44c856d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -139,6 +139,8 @@ all::
+ # Define NO_PERL_MAKEMAKER if you cannot use Makefiles generated by perl's
+ # MakeMaker (e.g. using ActiveState under Cygwin).
+ #
++# Define NO_PERL if you do not want Perl scripts or libraries at all.
++#
+ # Define NO_TCLTK if you do not want Tcl/Tk GUI.
+ #
+ # The TCL_PATH variable governs the location of the Tcl interpreter
+@@ -335,7 +337,10 @@ BUILT_INS += git-whatchanged$X
+ ALL_PROGRAMS = $(PROGRAMS) $(SCRIPTS)
+ 
+ # what 'all' will build but not install in gitexecdir
+-OTHER_PROGRAMS = git$X gitweb/gitweb.cgi
++OTHER_PROGRAMS = git$X
++ifndef NO_PERL
++OTHER_PROGRAMS += gitweb/gitweb.cgi
++endif
+ 
+ # Set paths to tools early so that they can be used for version tests.
+ ifndef SHELL_PATH
+@@ -1142,7 +1147,9 @@ ifndef NO_TCLTK
+ 	$(QUIET_SUBDIR0)git-gui $(QUIET_SUBDIR1) gitexecdir='$(gitexec_instdir_SQ)' all
+ 	$(QUIET_SUBDIR0)gitk-git $(QUIET_SUBDIR1) all
+ endif
++ifndef NO_PERL
+ 	$(QUIET_SUBDIR0)perl $(QUIET_SUBDIR1) PERL_PATH='$(PERL_PATH_SQ)' prefix='$(prefix_SQ)' all
++endif
+ 	$(QUIET_SUBDIR0)templates $(QUIET_SUBDIR1)
+ 
+ please_set_SHELL_PATH_to_a_more_modern_shell:
+@@ -1189,6 +1196,7 @@ $(patsubst %.sh,%,$(SCRIPT_SH)) : % : %.sh
+ 	chmod +x $@+ && \
+ 	mv $@+ $@
+ 
++ifndef NO_PERL
+ $(patsubst %.perl,%,$(SCRIPT_PERL)): perl/perl.mak
+ 
+ perl/perl.mak: GIT-CFLAGS perl/Makefile perl/Makefile.PL
+@@ -1248,6 +1256,15 @@ git-instaweb: git-instaweb.sh gitweb/gitweb.cgi gitweb/gitweb.css
+ 	    $@.sh > $@+ && \
+ 	chmod +x $@+ && \
+ 	mv $@+ $@
++else # NO_PERL
++$(patsubst %.perl,%,$(SCRIPT_PERL)) git-instaweb: % : unimplemented.sh
++	$(QUIET_GEN)$(RM) $@ $@+ && \
++	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
++	    -e 's|@@REASON@@|NO_PERL=$(NO_PERL)|g' \
++	    unimplemented.sh >$@+ && \
++	chmod +x $@+ && \
++	mv $@+ $@
++endif # NO_PERL
+ 
+ configure: configure.ac
+ 	$(QUIET_GEN)$(RM) $@ $<+ && \
+@@ -1565,9 +1582,11 @@ clean:
+ 	$(RM) -r $(GIT_TARNAME) .doc-tmp-dir
+ 	$(RM) $(GIT_TARNAME).tar.gz git-core_$(GIT_VERSION)-*.tar.gz
+ 	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
+-	$(RM) gitweb/gitweb.cgi
+ 	$(MAKE) -C Documentation/ clean
++ifndef NO_PERL
++	$(RM) gitweb/gitweb.cgi
+ 	$(MAKE) -C perl clean
++endif
+ 	$(MAKE) -C templates/ clean
+ 	$(MAKE) -C t/ clean
+ ifndef NO_TCLTK
+diff --git a/unimplemented.sh b/unimplemented.sh
+new file mode 100644
+index 0000000..5252de4
+--- /dev/null
++++ b/unimplemented.sh
+@@ -0,0 +1,4 @@
++#!/bin/sh
++
++echo >&2 "fatal: git was built without support for `basename $0` (@@REASON@@)."
++exit 128
+-- 
+1.6.2.2.569.g2d4b2
+
+
+
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
