@@ -1,256 +1,125 @@
-From: Chow Loong Jin <hyperair@gmail.com>
-Subject: GPG signing for git commit?
-Date: Sat, 04 Apr 2009 05:25:54 +0800
-Message-ID: <1238793954.19982.14.camel@hyperair-laptop>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: GPG signing for git commit?
+Date: Fri, 3 Apr 2009 15:54:10 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.0904031535140.3915@localhost.localdomain>
+References: <1238793954.19982.14.camel@hyperair-laptop>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-0/b3WY/Psb8w7XDDQY5p"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 03 23:28:11 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Chow Loong Jin <hyperair@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 04 00:57:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LpqvZ-0006MH-LJ
-	for gcvg-git-2@gmane.org; Fri, 03 Apr 2009 23:27:54 +0200
+	id 1LpsJt-0003fv-3U
+	for gcvg-git-2@gmane.org; Sat, 04 Apr 2009 00:57:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755099AbZDCV0H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Apr 2009 17:26:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757855AbZDCV0F
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Apr 2009 17:26:05 -0400
-Received: from ti-out-0910.google.com ([209.85.142.191]:7980 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758491AbZDCV0B (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Apr 2009 17:26:01 -0400
-Received: by ti-out-0910.google.com with SMTP id i7so1183606tid.23
-        for <git@vger.kernel.org>; Fri, 03 Apr 2009 14:25:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:content-type
-         :date:message-id:mime-version:x-mailer;
-        bh=VZzjV927dVXw0mDKv5XOBAhmguqUYlkRK21sZvbYTZI=;
-        b=rW5Syr/ai1x++gIsbn3CNTJfuqGuG4anC4snUvd9poyENAnRXbloPuk4Xg7dvDEqV3
-         /SbVsYjL2Efrp09BfaUBpa5ottp4p3CqumAUI0BpJTra8EGlpsdxYXcPYpcd+Hkur8tf
-         feOnqSYSM+GAJN6b27zrx0Eh21TXGRMV+wiKg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:content-type:date:message-id:mime-version:x-mailer;
-        b=j8xzoaANf0H5g/FBhazL++CrIGqQjg7moNH7PyWHpNL0at8oXzDlhnePicnHINJbVM
-         g9T12CeGW9k1GDxsl7hftyNhh9nb2a1Mtj+exlnJ8fmaC49yUSSGJl22J0WT66NcM6ad
-         Y4N2aLZjO2oD94FQvwwILAqyWc9DJtVd3yQuI=
-Received: by 10.110.57.5 with SMTP id f5mr2338267tia.19.1238793958745;
-        Fri, 03 Apr 2009 14:25:58 -0700 (PDT)
-Received: from ?172.20.92.185? ([155.69.188.61])
-        by mx.google.com with ESMTPS id y3sm2132525tia.23.2009.04.03.14.25.56
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 03 Apr 2009 14:25:57 -0700 (PDT)
-X-Mailer: Evolution 2.24.3 
+	id S1756107AbZDCWzZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Apr 2009 18:55:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755390AbZDCWzZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Apr 2009 18:55:25 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:59575 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753017AbZDCWzY (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Apr 2009 18:55:24 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n33MsAbp000848
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 3 Apr 2009 15:54:46 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n33MsATq029774;
+	Fri, 3 Apr 2009 15:54:10 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <1238793954.19982.14.camel@hyperair-laptop>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.437 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115563>
 
 
---=-0/b3WY/Psb8w7XDDQY5p
-Content-Type: multipart/mixed; boundary="=-ft9AsyUY40fQHh8omYyI"
 
+On Sat, 4 Apr 2009, Chow Loong Jin wrote:
+> 
+> It crossed my mind that currently git commits cannot actually be
+> verified to be authentic, due to the fact that I can just set my
+> identity to be someone else, and then commit under their name.
 
---=-ft9AsyUY40fQHh8omYyI
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+You can't do that.
 
-Hi,
+Well, you can, but it's always going to be inferior to just adding a tag. 
 
-It crossed my mind that currently git commits cannot actually be
-verified to be authentic, due to the fact that I can just set my
-identity to be someone else, and then commit under their name. During
-discussion on #git, Ilari, context and I figured that it would be a good
-idea to get GPG signing on git commits, considering that git-tag already
-has GPG signing support.
+The thing is, what is it you want to protect? The tree, the authorship, 
+the committer info, the commit log, what?
 
-Attached is the transcript of the log, with some irrelevant bits chopped
-out. Log is dated Sat, April 4, and timezone GMT +0800.
+And it really does matter. Because the signature must be over some part of 
+the commit, and since the SHA1 of the commit by definition contains 
+everything, then the _safest_ thing is always to sign the SHA1 itself: 
+thus a tag.
 
---=20
-Chow Loong Jin
+Anything else is always bound to only sign a _part_ of the commit. What 
+part do you feel like protecting? Or put another way, what part do you 
+feel like _not_ protecting?
 
---=-ft9AsyUY40fQHh8omYyI
-Content-Disposition: attachment; filename="git-commit-sign.log"
-Content-Type: text/x-log; name="git-commit-sign.log"; charset="UTF-8"
-Content-Transfer-Encoding: base64
+So the way git does signatures protects everything. When you do a tag with 
+"git tag -s" on a commit, you can absolutely _know_ that nobody will ever 
+modify that commit in any way without the tag signature becoming invalid. 
 
-MDQ6MzUgPGh5cGVyYWlyPiBobW0gaSd2ZSBhbHdheXMgd29uZGVyZWQuLi4gaXMgaXQgcG9zc2li
-bGUgdG8gY3JlYXRlIGNvbW1pdHMgdW5kZXIgc29tZW9uZSBlbHNlJ3MgbmFtZSBhbmQgdGhlbiBw
-dXNoIGl0IHRvIGEgZ2l0IHNlcnZlcj8gaWYgaXQgaXMsIGhvdyBkb2VzIG9uZSBwcmV2ZW50IHRo
-YXQgZnJvbSBoYXBwZW5pbmc/DQowNDozNSA8aHlwZXJhaXI+IHMvZ2l0IHNlcnZlci9naXQgcmVw
-by8NCjA0OjM2IDxJbGFyaT4gaHlwZXJhaXI6IFN1cmUgaXQgaXMuDQowNDozNiA8d2VyZUhhbXN0
-ZXI+IGh5cGVyYWlyOiBHSVRfQ09NTUlUVEVSX05BTUU9IlNvbWVvbmUgRWxzZSIgZ2l0IGNvbW1p
-dA0KMDQ6MzYgPElsYXJpPiBVVW5jaWE6IEl0IGhhcyBjYXBhYmlsaXR5IHRvIHRyYW5zZmVyIGNv
-bW1pdHMgYmV0d2VlbiByZXBvc2l0b3JpZXMuIFB1c2hpbmcgKHRyYW5zZmVyIHRvIGFub3RoZXIg
-cmVwb3NpdG9yeSksIEZldGNoaW5nICh0cmFuc2ZlciBmcm9tIGFub3RoZXIgcmVwb3NpdG9yeSwg
-Y2xvbmUvcHVsbCBhcmUgYnVpbHQgb24gdG9wKSBhbmQgc25lYWtlcm5ldCBjb21taXQgdHJhbnNw
-b3J0IGFyZSBhbGwgc3VwcG9ydGVkLg0KMDQ6MzYgPGh5cGVyYWlyPiBJbGFyaSwgd2VyZUhhbXN0
-ZXI6IHllYWggaSB0aG91Z2h0IHNvLCBidXQgaG93IGRvIHlvdSBwcmV2ZW50IHNvbWVvbmUgZnJv
-bSBwdXNoaW5nIHRvIGEgZ2l0IHJlcG8gdW5kZXIgeW91ciBuYW1lPw0KMDQ6MzYgPHdlcmVIYW1z
-dGVyPiBoeXBlcmFpcjogeW91J2QgaGF2ZSB0byBoYXZlIGhvb2tzIG9uIHRoZSBzZXJ2ZXIgc2lk
-ZSB0aGF0IGNoZWNrIHRoZSBjb21taXRlciBuYW1lDQowNDozNiA8aHlwZXJhaXI+IGFoIGkgc2Vl
-DQowNDozNyA8SWxhcmk+IGh5cGVyYWlyOiBUaGVuIHRoZXJlIGFyZSBzaXR1YXRpb25zIHdoZXJl
-IG9uZSBsZWdpbWF0ZWx5IG5lZWRzIHRvIHB1c2ggY29tbWl0IHdpdGggc29tZSBvZGRiYWxsIGNv
-bW1pdHRlciBuYW1lLg0KMDQ6MzcgPHdlcmVIYW1zdGVyPiBoeXBlcmFpcjogYWxzbyBub3RlIHRo
-YXQgZ2l0IGRpc3Rpbmd1aXNoZXMgYmV0d2VlbiBjb21taXR0ZXIgYW5kIGF1dGhvcg0KMDQ6Mzcg
-PGh5cGVyYWlyPiB3ZXJlSGFtc3RlcjogY29tbWl0dGVyIGFuZCBhdXRob3I/DQowNDozOCA8aHlw
-ZXJhaXI+IHdlcmVIYW1zdGVyOiB3aGF0J3MgdGhlIGRpZmZlcmVuY2U/DQowNDozOCA8d2VyZUhh
-bXN0ZXI+IGh5cGVyYWlyOiBhdXRob3IgaXMgdGhlIHBlcnNvbiB3aG8gd3JvdGUgdGhlIHBhdGNo
-LCBjb21taXR0ZXIgaXMgdGhlIHBlcnNvbiB3aG8gY3JlYXRlZCB0aGUgY29tbWl0DQowNDozOCA8
-d2VyZUhhbXN0ZXI+IHNvIGlmIHNvbWVvbmUgc2VuZHMgeW91IGEgcGF0Y2gsIGhlL3NoZSBpcyB0
-aGUgYXV0aG9yIGJ1dCB5b3UgYXJlIHRoZSBjb21taXR0ZXINCjA0OjM4IDxoeXBlcmFpcj4gd2Vy
-ZUhhbXN0ZXI6IGhvdyBkb2VzIGdpdCB0ZWxsIHRoZSBkaWZmZXJlbmNlPw0KMDQ6MzkgPGh5cGVy
-YWlyPiB3ZXJlSGFtc3RlcjogYWxzbywgc3VwcG9zaW5nIHlvdSB3ZXJlbid0IHdvcmtpbmcgYnkg
-cGFzc2luZyBwYXRjaGVzIGFyb3VuZCwgYnV0IHJhdGhlciBieSBwdXNoaW5nIHRvIGEgbWFpbiBw
-cm9qZWN0IHJlcG9zaXRvcnksIHdoYXQncyB0byBzdG9wIG9uZSBjb21taXR0ZXIgZnJvbSBjb21t
-aXR0aW5nIHVuZGVyIGFub3RoZXIgcGVyc29uJ3MgbmFtZSBhbmQgc2hvdmluZyBhbGwgdGhlIGJs
-YW1lIG9udG8gaGltPw0KMDQ6MzkgPGNvbnRleHQ+IHRoZSBhdXRob3JzIGFyZSBsaWtlIHBoeXNp
-Y3Mgc3R1ZGVudHMNCjA0OjM5IDxoeXBlcmFpcj4gb3IgaGVyPw0KMDQ6MzkgPGNvbnRleHQ+IGFu
-ZCB0aGUgY29tbWl0ZXJzIGFyZSByb2NrZXQgc2NpZW50ZXN0cw0KMDQ6NDAgPHdlcmVIYW1zdGVy
-PiBJIHRoaW5rIGJ5IGxvb2tpbmcgYXQgdGhlIHBhdGNoIGhlYWRlcnMgKGFzc3VtaW5nIGl0J3Mg
-c2VudCBpbiBtYm94IGZvcm1hdCkNCjA0OjQwIDxjb250ZXh0PiBoeXBlcmFpcjogbm90aGluZy4N
-CjA0OjQwIDxoeXBlcmFpcj4gY29udGV4dDogYml0IGluc2VjdXJlIGRvbid0IHlvdSB0aGluaz8N
-CjA0OjQwIDxjb250ZXh0PiBoeXBlcmFpcjogdGhlcmUgaXMgbm8gd2F5IHRvIHN0b3AgaXQuIHlv
-dSBnYXZlIHRoZW0gY29tbWl0IGFjY2VzcywgeW91IHRydXN0IHRoZW0gZW5vdWdoDQowNDo0MSA8
-d2VyZUhhbXN0ZXI+IHRoZXJlIGlzIGEgd2F5IHRvIHN0b3AgaXQ6IGRvbid0IGdpdmUgdGhlbSBj
-b21taXR0IGFjY2VzcyA7KQ0KMDQ6NDEgPGNvbnRleHQ+IHdlcmVoYW1zdGVyOiA7KQ0KMDQ6NDEg
-PGh5cGVyYWlyPiB3ZXJlSGFtc3RlcjogeW91IG1lYW4gcHVzaCBhY2Nlc3MgPXANCjA0OjQxIDxJ
-bGFyaT4gaHlwZXJhaXI6IFRoZXJlIGFyZSBjYXNlcyBsaWtlOiBJIHdvcmsgb24gc29tZSBmZWF0
-dXJlLiBJIGNvbXBsZXRlIGl0IGFuZCBzZW5kIHB1bGwgcmVxdWVzdCB0byBzb21lYm9keSB3aG8g
-aGFzIHB1c2ggcHJpdnMgdG8gbWFpbiByZXBvLiBUaGV5IHB1bGwgaXQgYW5kIHNpbmNlIGl0cyB1
-cCB0byBkYXRlLCBpdCByZXN1bHRzIGZhc3QgZm9yd2FyZC4gVGhlbiB0aGV5IHB1c2ggaXQuIEFn
-YWluLCBpdHMgdXAgdG8gZGF0ZSBzbyBwdXNoIHN1Y2NlZWRzLiBOb3cgeW91IGhhdmUgd291bmQg
-dXAgd2l0aCBzaXR1YXRpb24gd2hlcmUgdG9wbW9zdCBjb21taXQgY2xhaW1zIChjb3JyZWN0bHkp
-IHRoYXQgSSBjb21taXR0ZWQgaXQuDQowNDo0MSA8Y29udGV4dD4gaHlwZXJhaXI6IHVubGVzcyB5
-b3UgaGF2ZSBhIHByb3BzZWwgb24gaG93IHRvIHN0b3AgaXQNCjA0OjQyIDxDaXJjdWl0c29mdD4g
-VGhlcmUgaXNuJ3QgcmVhbGx5IGEgd2F5IHRvIHN0b3AgaXQuDQowNDo0MiA8SWxhcmk+IGh5cGVy
-YWlyOiBZb3UgY291bGQgdXNlIGhvb2tzIHRvIGtlZXAgbG9ncyBhYm91dCB3aG8gcHVzaGVkIHdo
-YXQuDQowNDo0MiA8aHlwZXJhaXI+IGkgc2VlDQowNDo0MiA8Q2lyY3VpdHNvZnQ+IEV2ZW4gaWYg
-dGhlcmUgd2VyZSwgdGhlcmUncyBub3RoaW5nIHByZXZlbnRpbmcgc29tZW9uZSBlbHNlIGZyb20g
-c2V0dGluZyB0aGVpciBpZGVudGl0eSB0byB5b3UuDQowNDo0MiA8Y29udGV4dD4gaWxhcmk6IHRo
-YXQgc3RpbGwgZG9lc250IHdvcmsuDQowNDo0MiA8Y29udGV4dD4gaWxhcmk6IHNheSBpIHB1bGwg
-ZnJvbSB5b3UsIG1lcmdlIG15IGNoYW5nZXMgd2l0aCB5b3VycywgdGhlbiBtZXJnZSBpbnRvIG1h
-c3RlciBhbmQgcHVzaCB0byByZXBvDQowNDo0MyA8Y29udGV4dD4gaG93IGRvIHlvdSB0cmFjayB0
-aGUgYnJhbmNoIGkgcHVsbGVkIGZvcm0geW91IGlzIHJlYWxseSBmcm9tIHlvdS4NCjA0OjQzIDxo
-eXBlcmFpcj4gaG93IGFib3V0IGdwZyBzaWduaW5nIGV2ZXJ5IGNvbW1pdCA9cA0KMDQ6NDMgPEls
-YXJpPiBjb250ZXh0OiBCb3RoICJtZXJnZXMiIGFyZSBmYXN0IGZvcndhcmRzIGJ5IGFzc3VtcHRp
-b24gdGhlcmUuDQowNDo0MyA8aHlwZXJhaXI+IGp1c3QgbGlrZSBob3cgdGFncyBjYW4gYmUgc2ln
-bmVkLCBob3cgYWJvdXQgc2lnbmluZyB0aGVtIGNvbW1pdHMNCjA0OjQzIDxjb250ZXh0PiBoeXBl
-cmFpcjogdGhhdCB3b3VsZCB3b3JrLg0KMDQ6NDMgPGNvbnRleHQ+IGlsYXJpOiBubyBpIG1lYW4g
-bWVyZ2UgYXMgaW4gbWVyZ2UuDQowNDo0MyA8SWxhcmk+IGh5cGVyYWlyOiBJdHMganVzdCBpbXBy
-YWN0aWNhbCB3aXRoIGN1cnJlbnQgdG9vbHMuDQowNDo0NCA8aHlwZXJhaXI+IElsYXJpOiB5ZWFo
-IGl0J3MgaW1wcmFjdGljYWwsIGJ1dCBpZiB5b3UgZ2l0IGdpdC1jb21taXQgc2lnbmluZyBjYXBh
-YmlsaXRpZXMgc2ltaWxhciB0byB0YWh0IG9mIGdpdC10YWcncyBpJ20gc3VyZSBpdCB3b3VsZCB3
-b3JrDQowNDo0NCA8aHlwZXJhaXI+IElsYXJpOiBhbmQgYmVjb21lIHByYWN0aWNhbC4NCjA0OjQ0
-IDxJbGFyaT4gY29udGV4dDogVW5sZXNzIHlvdSBleHBsaWNpdGx5IGFzaywgbWVyZ2Ugd2hlbiBw
-cmVzZW50ZWQgd2l0aCBzaXR1YXRpb24gd2hlcmUgb25lIG9mIGJyYW5jaGVzIGlzIGluIGZ1dHVy
-ZSBvZiBhbm90aGVyIHdpbGwgbWFrZSBmYXN0IGZvcndhcmQgd2l0aG91dCBhbnkgbmV3IGNvbW1p
-dHMuDQowNDo0NSA8SWxhcmk+IGh5cGVyYWlyOiBUaGVyZSBhcmUgZXZlbiBoYWNrcyB0aGF0IGF1
-dGhlbnRpY2F0ZSBwdXNoaW5nIHRvIGdpdDovLyBieSB1c2luZyBzaWduZWQgdGFncy4NCjA0OjQ2
-IDxoeXBlcmFpcj4gSWxhcmk6IHdoYXQgaGFja3MgYXJlIHRob3NlPw0KMDQ6NDYgPElsYXJpPiBo
-eXBlcmFpcjogVGhleSBlc3NlbnRpYWxseSBpbXBsZW1lbnQgcHVzaCBhdXRoZW50aWNhdGlvbiBv
-biB0b3Agb2YgZ2l0Oi8vDQowNDo0NiA8SWxhcmk+IGh5cGVyYWlyOiBOb3QgdmVyeSBoZWxwZnVs
-LCBiZWNhdXNlIHNzaCB1c3VhbGx5IGRvZXMgaXQgYmV0dGVyLg0KMDQ6NDYgPGh5cGVyYWlyPiB5
-ZWFoIGkgdGhvdWdodCBzbw0KMDQ6NDcgPElsYXJpPiBoeXBlcmFpcjogQW5kIGFzIHRpcDogSWYg
-eW91IHdhbnQgdG8ga2VlcCBsb2dzLCBjdXJyZW50IHZlcnNpb24gb2YgZ2l0b3NpcyAobGFzdCBJ
-IGNoZWNrZWQpIGNhbiBub3QgYmUgdXNlZCBpbiBzdWNoIGFwcGxpY2F0aW9ucyB3aXRob3V0IG1v
-ZGlmaWNhdGlvbi4NCjA0OjQ4IDxoeXBlcmFpcj4gSWxhcmk6IHdoYXQncyBnaXRvc2lzPw0KMDQ6
-NDggPElsYXJpPiBoeXBlcmFpcjogU29mdHdhcmUgdGhhdCBtYWtlcyBhZG1pbmluZyByZXBvIHBl
-cm1pc3Npb25zIGluIGdyb3VwIHNldHRpbmdzIGVhc2llci4NCjA0OjQ4IDxoeXBlcmFpcj4gaG1t
-IGludGVyZXN0aW5nDQowNDo0OSA8RGFzaGthbD4gU29tZXRpbWVzIEkgd2lzaCBJIGNvdWxkIGFu
-bm90YXRlIGEgYnJhbmNoLiAgTGVhdmUgYSBjb21tZW50IG9uIHRoZSBicmFuY2ggaXRzZWxmIHRo
-YXQgZXhwbGFpbnMgd2h5IEkgbWFkZSBpdC4uLg0KMDQ6NDkgPElsYXJpPiBoeXBlcmFpcjogVXN1
-YWxseSB2ZXJ5IGdvb2QuIEJ1dCBpdHMgbGFjayBvZiBleHBvcnRlZCB1c2VyIGlkZW50aXR5ICh1
-bmxlc3MgeW91IGNhbiBoYWNrIGl0IGluKSBpcyBhYnNvbHV0ZSBzaG93c3RvcHBlciBpZiB5b3Ug
-bmVlZCB0byBrZWVwIHB1c2ggbG9ncy4NCjA0OjQ5IDxoeXBlcmFpcj4gaG1tDQowNDo1MCA8SWxh
-cmk+IGh5cGVyYWlyOiBCdXQgaXRzIG9uZSBsaW5lIGNoYW5nZSBBRkFJQ1MuLi4NCjA0OjUwIDxo
-eXBlcmFpcj4gaW50ZXJlc3RpbmcNCjA0OjUwIDxoeXBlcmFpcj4gRGFzaGthbDogc2VsZi1leHBs
-YW5hdG9yeSBuYW1lcyBmdHcuDQowNDo1MSA8Y29udGV4dD4gaWxhcmk6IHllcyBpIGtub3cNCjA0
-OjUxIDxjb250ZXh0PiA8LS0gbm90IG5ldyB0byBnaXQNCjA0OjU5IDxjb250ZXh0PiBoeXBlcmFp
-cjogb25seSB3YXkgdG8gdHJ1c3QgYSBjb21taXQgd291bGQgYmUgZ3BnIHNpZ25hdHVyZXMNCjA0
-OjU5IDxEYXNoa2FsPiBJbGFyaTogb2g/ICBNaWdodCBoYXZlIHRvIGh1bnQgdGhyb3VnaCBnaXQu
-Z2l0IGZvciBpdA0KMDQ6NTkgPElsYXJpPiBEYXNoa2FsOiBwdSBoYXMgaXQuDQowNDo1OSA8RGFz
-aGthbD4gbmlmdHksIGRhbmtlDQowNDo1OSA8Y29udGV4dD4gYnV0IGkgZG9udCB0aGluayB5b3Ug
-Y2FuIGdwZyBzaWduIGFsbCBjb21taXRzIGNhbiB5b3UNCjA0OjU5IDxjb250ZXh0PiBub3QgdG8g
-bWVudGlvbiB0eXBpbmcgaW4gdGhhdCBwYXNzd2QgZXZlcnkgY29tbWl0IHdvdWxkIFNVQ0sgIQ0K
-MDQ6NTkgPGh5cGVyYWlyPiBjb250ZXh0OiB5ZXMgb2YgY291cnNlLCBidXQgZ2l0IGNvbW1pdCBk
-b2Vzbid0IGhhdmUgZ3BnIHN1cHBvcnQuDQowNDo1OSA8SWxhcmk+IERhc2hrYWw6IE5leHQgZG9l
-c24ndC4gQnV0IGJld2FyZSB0aGF0IHB1IGJlZ2lucyB0byBiZSBhY3R1YWxseSB1bnN0YWJsZS4N
-CjA0OjU5IDxoeXBlcmFpcj4gY29udGV4dDogZXZlciBoZWFyZCBvZiBhIGdwZyBhZ2VudD8NCjA1
-OjAwIDxjb250ZXh0PiBoeXBlcmFpcjogeWVzLiBmaXJlZ3BnIHVzZXMgaXQgc28gaSBkb250IGhh
-dmUgdG8gdHlwZSBpdCBpbiBmb3IgZXZlcnkgZW1haWwgaSBzZW5kIGZyb20gZ21haWwNCjA1OjAw
-IDxEYXNoa2FsPiBJbGFyaTogWWVhaCwgSSdtIGtpbmQgb2YgYWZyYWlkIG9mIHB1IGFzIGEgd2hv
-bGUsIGJ1dCBpZiBJIGNhbiBmaW5kIHRoZSByZWxpdmFudCBjb21taXRzIEkgY2FuIGJyaW5nIGp1
-c3QgdGhhdCBpbg0KMDU6MDAgPGNvbnRleHQ+IGdtYWlsICsgZ3BnID0gd2luDQowNTowMCA8aHlw
-ZXJhaXI+IGkgdXNlIGV2b2x1dGlvbi4NCjA1OjAwIDxjb250ZXh0PiBoeXBlcmFpcjogYW5vdGhl
-ciBld2UuDQowNTowMCA8Y29udGV4dD4gOykNCjA1OjAwICAqIGh5cGVyYWlyIHdvbmRlcnMgd2hh
-dCBld2UgaXMNCjA1OjAxIDxjb250ZXh0PiAnaWNreScgZ3Jvd3NlDQowNTowMSA8SWxhcmk+IGh5
-cGVyYWlyOiBHcGcgc2lnbmluZyBkb2Vzbid0IHJlYWxseSB3b3JrIGlmIHlvdSBoYXZlIGV4dGVy
-bmFsIGNvbnRyaWJ1dG9ycyB0aGF0IGNhbiByZXF1ZXN0IHB1bGwgdW5sZXNzIHlvdSBmb3JjZSBu
-b24tZmYgbWVyZ2Ugc29tZXdoZXJlLg0KMDU6MDEgPGh5cGVyYWlyPiBpIGRvbid0IHRoaW5rIGl0
-IGNvbWVzIHdpdGggYSB0cmFpbGluZyBlDQowNTowMSA8Y29udGV4dD4gaWxhcmk6IGVoPw0KMDU6
-MDEgPGNvbnRleHQ+IGh5cGVyYWlyOiBpbGwgaGF2ZSB0byB1cGRhdGUgbXkgZGljdGlvbmFyeQ0K
-MDU6MDEgPGh5cGVyYWlyPiBJbGFyaTogdGhlIG1haW4gcG9pbnQgaXMgdGhhdCB5b3UgbWFrZSB5
-b3VyIGNvbW1pdHMgYmUgdmVyaWZpYWJsZSwgc28gdGhhdCBub2JvZHkgY2FuIHByZXRlbmQgdG8g
-Y29tbWl0IGFzIHlvdS4NCjA1OjAyIDxjb250ZXh0PiBoeXBlcmFpcjogdXNlIHN2biwgOykNCjA1
-OjAyICAqIGh5cGVyYWlyIGJhcmZzIG9uIGNvbnRleHQgDQowNTowMiA8Q2lyY3VpdHNvZnQ+IGNv
-bnRleHQ6IEJsYXNwaGVtZXIhDQowNTowMiA8SWxhcmk+IGh5cGVyYWlyOiBXZWxsLCBpZiB5b3Ug
-bmVlZCBpZGVudGlmeWluZyBvZiBtYWluIGNvbnRyaWJ1dG9ycyBvbmx5Lg0KMDU6MDIgICogY29u
-dGV4dCBoaWRlcw0KMDU6MDIgPElsYXJpPiBoeXBlcmFpcjogU28gbm8gb25lIHNwb29mcyB0aGVt
-LiBCdXQgaXQgZG9lc24ndCBwcm90ZWN0IG90aGVycy4NCjA1OjAyIDxjb250ZXh0PiBpbGFyaTog
-YWN0dWFsbHkgaXQgd291bGRudCBiZSB0b28gaGFyZC4gaWYgY29tbWl0J3MgY291bGQgYmUgc2ln
-bg0KMDU6MDIgPGh5cGVyYWlyPiBJbGFyaTogeWVhaCB0cnVlLg0KMDU6MDMgPGNvbnRleHQ+IHRy
-dXN0ZWQgdXNlcnMgY291bGQgYWRkIHRoZWlyIGZpbmdlciBwcmludCB0byBsaWtlIGEgfi8uZ2l0
-ZmluZ2VyIGZpbGUNCjA1OjAzIDxjb250ZXh0PiBwZW9wbGUgV09VTEQgbm90aWNlIGlmIHRoYXQg
-Z2V0cyBjaGFuZ2VkDQowNTowMyA8Y29udGV4dD4gYW5kIHlvdSBjb3VsZCBoYXZlIGxpa2UgYSBn
-aXQgZmV0Y2gtZ3BnLWtleXMNCjA1OjAzIDxoeXBlcmFpcj4gaGFoYWgNCjA1OjAzIDxoeXBlcmFp
-cj4gaSB0aGluayB3ZSBzaG91bGQgZmlsZSB0aGF0IGFzIGEgZmVhdHVyZSByZXF1ZXN0ID1wDQow
-NTowMyA8aHlwZXJhaXI+IGlmIHRhZ3MgY2FuIGJlIHNpZ25lZCwgd2h5IG5vdCBjb21taXRzPyA9
-cA0KMDU6MDQgPElsYXJpPiBoeXBlcmFpcjogQm90aCBldmVuIGhhdmUgc2ltaWxhciBzdHJ1Y3R1
-cmUuIEhlYWRlciBmaWVsZHMgcGx1cyBmcmVlZm9ybSB0ZXh0IHNlY3Rpb24uDQowNTowNCA8SWxh
-cmk+IGh5cGVyYWlyOiBUaGUgdGV4dCBzZWN0aW9uIGlzIGV2ZW4gZnVsbHkgOC1iaXQgY2xlYW4u
-DQowNTowNCA8aHlwZXJhaXI+IGF3ZXNvbWUuIHNvIGxldCdzIGhhdmUgaXQgc2lnbmVkID1wDQow
-NTowNSA8SWxhcmk+IGh5cGVyYWlyOiBTaW5jZSBpdCBzdGFydHMgaW1tZWRpYXRlbHkgYWZ0ZXIg
-Zmlyc3QgMEEwQWggc2VxdWVuY2UgaW4gb2JqZWN0IGFuZCBjb250aW51ZXMgdG8gZW5kIG9mIG9i
-amVjdC4gQW5kIG9iamVjdHMgbmVlZCB0byBiZSA4LWJpdCBjbGVhbiB0byBzdG9yZSBiaW5hcnkg
-ZmlsZXMgaW4gYmxvYnMuDQowNTowNSA8Y29udGV4dD4gaHlwZXJhaXI6IHRoZW4geW91IG5lZWQg
-dG8gd29ycnkgYWJvdXQgYW4gYXV0aG9yIHNpZ25hdHVyZSwgQU5EIGNvbW1pdGVycyBzaWduYXR1
-cmUNCjA1OjA1IDxjb250ZXh0PiBhbmQgZGlmZidzIG1pZ2h0IGJlIGV2ZW4gbW9yZSBmdW5reQ0K
-MDU6MDYgPGNvbnRleHQ+IGJ1dCBpdCB3b3VsZCBiZSBhbiBhd2Vzb21lIGZlYXR1cmUNCjA1OjA2
-IDxoeXBlcmFpcj4gY29udGV4dDogZGlmZnMgY2FuIGhhdmUgaGVhZGVycyBhbmQgZm9vdGVycy4g
-c28gYSBjbGVhcnNpZ24gd291bGQgYmUgZmluZQ0KMDU6MDYgPElsYXJpPiBJZiB5b3UgY2FyZSBv
-bmx5IGFib3V0IHByb3RlY3RpbmcgbWFpbiBhdXRob3JzLCBjb21taXR0ZXIgc2lnbmF0dXJlIGlz
-IGVub3VnaC4NCjA1OjA2IDxDaXJjdWl0c29mdD4gV2hhdCBpZiBncGcgb24gY29tbWl0IHdhcyBv
-bmx5IHVzZWQgd2hlbiB0aGUgLS1zaWdub2ZmIG9wdGlvbiB3YXMgc2VsZWN0ZWQ/DQowNTowNyA8
-SWxhcmk+IEl0IGFsc28gaGFzIHNpbXBsaWZ5aW5nIGZhY3RvciB0aGF0IHNpZ25pbmcgaGVhZGVy
-cyBwbHVzIHJlc3Qgb2YgY29tbWl0IG1lc3NhZ2UgaXMgZW5vdWdoLg0KMDU6MDcgPGh5cGVyYWly
-PiBDaXJjdWl0c29mdDogdGhhdCB3b3VsZCBiZSBhd2Vzb21lLCBidXQgYXMgZmFyIGFzIGkgY2Fu
-IHRlbGwsIGl0IGlzbid0IHVzZWQgYXRtDQowNTowNyA8aHlwZXJhaXI+IG5vdyB0aGVuIGFyZSB0
-aGVyZSBhbnkgZ2l0IGRldnMgd2UgY2FuIHByb3Bvc2UgdGhpcyB0bz8gPXANCjA1OjA3IDxjb250
-ZXh0PiA8LS0gZ2V0cyBhbGwgY3JlZGl0DQowNTowNyA8Y29udGV4dD4gYW5kIGhpcyBtaWxsaW9u
-IGRvbGxhciBwcml6ZQ0KMDU6MDggPGh5cGVyYWlyPiBsb2wNCjA1OjA4IDxJbGFyaT4gaHlwZXJh
-aXI6IFNlbmQgaWRlYSB0byBtYWlsaW5nbGlzdC4gVGhlIG9mZmljaWFsIHBvbGljeSBpcyBlc3Nl
-bnRpYWxseSB0aGF0IGFsdG91Z2ggdGhpcyBjaGFubmVsIGhhcyBhcmNoaXZlcywgZm9yIGRldmVs
-b3BtZW50IHB1cnBvc2VzIGRpc2N1c3Npb25zIGhlcmUgbmV2ZXIgaGFwcG5lZC4NCn==
+And perhaps equally interestingly, that signature is now also easily 
+separable from the history - which is interesting if you want to 
+distribute your cryptographic parts separately (for example, you only use 
+it _internally_ within a company or group, to mark some group-specific 
+issues).
 
+Also, related to that "separable" - the person signing on something is not 
+necessarily the person marked as author, or even committing it anyway. One 
+of the guiding goals for git was always that it should work well with 
+"outside" flows, ie others passing patches around or using other SCM's to 
+manage their own flow. 
 
---=-ft9AsyUY40fQHh8omYyI--
+Finally, on that same "separable" notion - imagine a big rewrite operation 
+for whatever reason - like a big import into git, or a project re-writing 
+their history because they ended up importing more history from old 
+sources (or because they wanted to split a big project into subprojects). 
+All of those invalidate any cryptographic signatures.
 
---=-0/b3WY/Psb8w7XDDQY5p
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
+And all of those are events that you may still want to _update_ the 
+signatures, but do you want to trust the one doing the conversion with the 
+private keys? Obviously not. You could "wrap" the signing in a new 
+"conversion signature", and have a signature to try to imply that the 
+person doing the conversion "signs" the conversion. But the fact is, that 
+doesn't mean the same thing.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+With separate signatures (ie the "git tag -s" model), you can ask the 
+people who signed the original repository to consider re-signing the 
+rewritten one. See? Safe, flexible, and much superior.
 
-iEYEABECAAYFAknWfuIACgkQ4LFcUo8CpBGP4wCfYaL6geWDsFBzr5b8CcWjgr86
-MyEAoLJ1eDrAnCkUJNysTVfjuuiAl8sT
-=apPx
------END PGP SIGNATURE-----
+The exact same thing goes for keys that get invalidated because they ended 
+up being shown to be too weak or just flawed some other way, btw. That is 
+a reason to re-sign, _without_ the repository necessarily changing.
 
---=-0/b3WY/Psb8w7XDDQY5p--
+You can do _none_ of these things sanely if you put the signatures into 
+the commits themselves. 
+
+So don't do it.
+
+Btw, there's a final reason, and probably the really real one. Signing 
+each commit is totally stupid. It just means that you automate it, and you 
+make the signature worth less. It also doesn't add any real value, since 
+the way the git DAG-chain of SHA1's work, you only ever need _one_ 
+signature to make all the commits reachable from that one be effectively 
+covered by that one. So signing each commit is simply missing the point. 
+
+IOW, you don't _ever_ have a reason to sign anythign but the "tip". The 
+only exception is the "go back and re-sign", but that's the one that 
+requires external signatures anyway.
+
+So be happy with 'git tag -s'. It really is the right way.
+
+		Linus
