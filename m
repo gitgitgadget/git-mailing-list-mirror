@@ -1,125 +1,109 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: GPG signing for git commit?
-Date: Fri, 3 Apr 2009 15:54:10 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.0904031535140.3915@localhost.localdomain>
-References: <1238793954.19982.14.camel@hyperair-laptop>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add custom memory allocator to MinGW and MacOS
+ builds
+Date: Sat, 4 Apr 2009 01:16:47 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904040116300.10279@pacific.mpi-cbg.de>
+References: <1238766761-3576-1-git-send-email-marius@trolltech.com> <49D61B35.8060508@trolltech.com> <a5b261830904031412o60b7eb4fv7e25a2ca4f89fe60@mail.gmail.com>
+Reply-To: Johannes.Schindelin@gmx.de
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Chow Loong Jin <hyperair@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 04 00:57:06 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: marius@trolltech.com, git@vger.kernel.org, msysgit@googlegroups.com
+To: Pat Thoyts <patthoyts@googlemail.com>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Sat Apr 04 01:16:00 2009
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qy0-f163.google.com ([209.85.221.163])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LpsJt-0003fv-3U
-	for gcvg-git-2@gmane.org; Sat, 04 Apr 2009 00:57:05 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756107AbZDCWzZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Apr 2009 18:55:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755390AbZDCWzZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Apr 2009 18:55:25 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:59575 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753017AbZDCWzY (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Apr 2009 18:55:24 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n33MsAbp000848
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 3 Apr 2009 15:54:46 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n33MsATq029774;
-	Fri, 3 Apr 2009 15:54:10 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <1238793954.19982.14.camel@hyperair-laptop>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.437 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
-Sender: git-owner@vger.kernel.org
+	id 1Lpsc9-0007zS-FS
+	for gcvm-msysgit@m.gmane.org; Sat, 04 Apr 2009 01:15:57 +0200
+Received: by mail-qy0-f163.google.com with SMTP id 35so2174252qyk.3
+        for <gcvm-msysgit@m.gmane.org>; Fri, 03 Apr 2009 16:14:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received-spf:authentication-results:received
+         :received:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc
+         :subject:in-reply-to:message-id:references:user-agent:mime-version
+         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        bh=KN1SUuZY0iSZ5XY3eDYY+eAzuIdRVEmSk2MM7pk394k=;
+        b=oBMKENmHcTv1sYRk+Q6zNJrExEMS5Qw7SkJIcNRFjhtQ2l5/U+pU1LHxx7/Htru0KM
+         XmxS9tmDlKxqhDjV7BKDv4QdOl+a4Vm+PZ6wnlZnAMhZkBvmOERms+9/f1CC9wWvceRQ
+         /+0zs+yymQgY+ryfU3KuXKXLuIBOIxWxgcNhE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject
+         :in-reply-to:message-id:references:user-agent:mime-version
+         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        b=PGZHodQpvvWC5SDjAqN9QK9DYexvAMbVdAP2sDgb53eBZFfDNux10PP8jLOQLQTt3V
+         WJ765OkMJ4eYp0QFf+E3r5s4hEQxRqPe989CyTDH1VRPCO0vIfvj4ADdlpa/4NjmrkFB
+         J+da2TkFoeCGV7GhvidNPm8/M1cdxmrYjcmXQ=
+Received: by 10.229.82.77 with SMTP id a13mr139032qcl.18.1238800462183;
+        Fri, 03 Apr 2009 16:14:22 -0700 (PDT)
+Received: by 10.177.145.19 with SMTP id x19gr4638yqn.0;
+	Fri, 03 Apr 2009 16:14:22 -0700 (PDT)
+X-Sender: Johannes.Schindelin@gmx.de
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.86.51.10 with SMTP id y10mr16375fgy.12.1238800461348; Fri, 03 Apr 2009 16:14:21 -0700 (PDT)
+Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by gmr-mx.google.com with SMTP id 5si96916fge.4.2009.04.03.16.14.21; Fri, 03 Apr 2009 16:14:21 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
+Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Received: (qmail invoked by alias); 03 Apr 2009 23:14:20 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38] by mail.gmx.net (mp060) with SMTP; 04 Apr 2009 01:14:20 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+xWOIYm6Wx0Mz0xiahH369VguuFfinM32NWf3ZnK TTzdhJHLG/VF0t
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <a5b261830904031412o60b7eb4fv7e25a2ca4f89fe60@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.61
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115563>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115564>
 
 
+Hi,
 
-On Sat, 4 Apr 2009, Chow Loong Jin wrote:
+On Fri, 3 Apr 2009, Pat Thoyts wrote:
+
+> 2009/4/3 Marius Storm-Olsen <marius@trolltech.com>:
+> >
+> > Marius Storm-Olsen said the following on 03.04.2009 15:52:
+> >> The standard allocator on Windows is pretty bad prior to Windows 
+> >> Vista, and nedmalloc is better than the modified dlmalloc provided 
+> >> with newer versions of the MinGW libc.
+> >
+> > Actually, it just struck me that it's probably the synchronization 
+> > primitives which are better on Vista than XP, and not the memory 
+> > manager? (Since mingw 4.3.3-tdm on XP and Vista most likely use the 
+> > same dlmalloc fork?) ^shrug^
+> >
+> > Anyways, not that I haven't tried to 'tune' nedmalloc in any way, just 
+> > ensured that it compiles with the different MinGWs which I 
+> > benchmarked. So, if anyone feels like it, maybe we can squeeze more 
+> > performance out of it by tweaking it.
 > 
-> It crossed my mind that currently git commits cannot actually be
-> verified to be authentic, due to the fact that I can just set my
-> identity to be someone else, and then commit under their name.
+> The difference on Windows Vista is that the low fragmentation heap is 
+> the default memory allocator. On Windows XP you need to enable it 
+> specifically for an application. So a possible alternative to this is 
+> just to enable the low fragmentation heap. (done via GetProcessHeaps and 
+> HeapSetInformation Win32 API calls).
 
-You can't do that.
+Does this also work on NT?
 
-Well, you can, but it's always going to be inferior to just adding a tag. 
-
-The thing is, what is it you want to protect? The tree, the authorship, 
-the committer info, the commit log, what?
-
-And it really does matter. Because the signature must be over some part of 
-the commit, and since the SHA1 of the commit by definition contains 
-everything, then the _safest_ thing is always to sign the SHA1 itself: 
-thus a tag.
-
-Anything else is always bound to only sign a _part_ of the commit. What 
-part do you feel like protecting? Or put another way, what part do you 
-feel like _not_ protecting?
-
-So the way git does signatures protects everything. When you do a tag with 
-"git tag -s" on a commit, you can absolutely _know_ that nobody will ever 
-modify that commit in any way without the tag signature becoming invalid. 
-
-And perhaps equally interestingly, that signature is now also easily 
-separable from the history - which is interesting if you want to 
-distribute your cryptographic parts separately (for example, you only use 
-it _internally_ within a company or group, to mark some group-specific 
-issues).
-
-Also, related to that "separable" - the person signing on something is not 
-necessarily the person marked as author, or even committing it anyway. One 
-of the guiding goals for git was always that it should work well with 
-"outside" flows, ie others passing patches around or using other SCM's to 
-manage their own flow. 
-
-Finally, on that same "separable" notion - imagine a big rewrite operation 
-for whatever reason - like a big import into git, or a project re-writing 
-their history because they ended up importing more history from old 
-sources (or because they wanted to split a big project into subprojects). 
-All of those invalidate any cryptographic signatures.
-
-And all of those are events that you may still want to _update_ the 
-signatures, but do you want to trust the one doing the conversion with the 
-private keys? Obviously not. You could "wrap" the signing in a new 
-"conversion signature", and have a signature to try to imply that the 
-person doing the conversion "signs" the conversion. But the fact is, that 
-doesn't mean the same thing.
-
-With separate signatures (ie the "git tag -s" model), you can ask the 
-people who signed the original repository to consider re-signing the 
-rewritten one. See? Safe, flexible, and much superior.
-
-The exact same thing goes for keys that get invalidated because they ended 
-up being shown to be too weak or just flawed some other way, btw. That is 
-a reason to re-sign, _without_ the repository necessarily changing.
-
-You can do _none_ of these things sanely if you put the signatures into 
-the commits themselves. 
-
-So don't do it.
-
-Btw, there's a final reason, and probably the really real one. Signing 
-each commit is totally stupid. It just means that you automate it, and you 
-make the signature worth less. It also doesn't add any real value, since 
-the way the git DAG-chain of SHA1's work, you only ever need _one_ 
-signature to make all the commits reachable from that one be effectively 
-covered by that one. So signing each commit is simply missing the point. 
-
-IOW, you don't _ever_ have a reason to sign anythign but the "tip". The 
-only exception is the "go back and re-sign", but that's the one that 
-requires external signatures anyway.
-
-So be happy with 'git tag -s'. It really is the right way.
-
-		Linus
+Ciao,
+Dscho
