@@ -1,85 +1,71 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 0/5] Header includes cleanup
-Date: Fri, 3 Apr 2009 06:14:26 +0200
-Message-ID: <200904030614.26310.chriscool@tuxfamily.org>
-References: <1238406925-15907-1-git-send-email-nathaniel.dawson@gmail.com> <7v8wmjk4p6.fsf@gitster.siamese.dyndns.org> <20090402112705.GD14599@sigill.intra.peff.net>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [RFC] GSoC Proposal v2:
+Date: Fri, 3 Apr 2009 06:22:29 +0200
+Message-ID: <fabb9a1e0904022122w4b11dbccr69a48f08c6f345a4@mail.gmail.com>
+References: <526944450904022015n67be674dwfab5d3dc597c806b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nathaniel P Dawson <nathaniel.dawson@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Apr 03 06:17:05 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Andreas Ericsson <ae@op5.se>
+To: P Baker <me@retrodict.com>
+X-From: git-owner@vger.kernel.org Fri Apr 03 06:25:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lpapz-00044k-NJ
-	for gcvg-git-2@gmane.org; Fri, 03 Apr 2009 06:17:04 +0200
+	id 1LpayY-0005Po-AY
+	for gcvg-git-2@gmane.org; Fri, 03 Apr 2009 06:25:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751370AbZDCEPd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Apr 2009 00:15:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751144AbZDCEPc
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Apr 2009 00:15:32 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2]:38381 "EHLO smtp2-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751189AbZDCEPc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Apr 2009 00:15:32 -0400
-Received: from smtp2-g21.free.fr (localhost [127.0.0.1])
-	by smtp2-g21.free.fr (Postfix) with ESMTP id 727AB4B004B;
-	Fri,  3 Apr 2009 06:15:21 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp2-g21.free.fr (Postfix) with ESMTP id 6F5E64B0069;
-	Fri,  3 Apr 2009 06:15:19 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <20090402112705.GD14599@sigill.intra.peff.net>
-Content-Disposition: inline
+	id S1751794AbZDCEYX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Apr 2009 00:24:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751419AbZDCEYX
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Apr 2009 00:24:23 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:33499 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750956AbZDCEYW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Apr 2009 00:24:22 -0400
+Received: by fxm2 with SMTP id 2so804970fxm.37
+        for <git@vger.kernel.org>; Thu, 02 Apr 2009 21:24:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=16qKnQgw1nI7AYHIy7kdOJwCawXKxXoexb0FFbZ/vMU=;
+        b=ZFLwHPkY/hHOQaPDemzWZJ4wouggfJQZozTb76L/EjcFwmzKl85dZ8k/qyn/ZjGLgA
+         nAUX1X4oHwCsKaKJDukYQw945/cHoMuDtf24vPBYj/Sj4vb2sN2I3UU/ygkKX5QY3OYF
+         knwgN+W76mSe85kUGdluHU403opZ8YkRUgkfY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=cRGIYG5B26cFvdidxlgWdCA5BFJFkQQqY4AdDVtBifzltuLqZ4idhJoInzo2tek3Ef
+         U6yGMXckuWqpphtH4RrKPsZ111L7cGy9tCBMc4cBhUz2pZGzpA/Et/rzW/Sk3we67Sph
+         3wY3droJpBM05nSD0GQ60t+rm/ACaX0r1tg6I=
+In-Reply-To: <526944450904022015n67be674dwfab5d3dc597c806b@mail.gmail.com>
+Received: by 10.103.49.12 with SMTP id b12mr358209muk.98.1238732659342; Thu, 
+	02 Apr 2009 21:24:19 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115517>
 
-Hi,
+Heya,
 
-Le jeudi 2 avril 2009, Jeff King a =C3=A9crit :
-> On Wed, Apr 01, 2009 at 10:25:09PM -0700, Junio C Hamano wrote:
-> > > - a header file should be included in a C file only if it is need=
-ed
-> > > to compile the C file (it is not ok to include it only because it
-> > > includes many other headers that are needed)
-> >
-> > If that is the rule, perhaps the problem lies not in a .c program t=
-hat
-> > includes such a .h header, but in the .h itself that includes many
-> > other header files.
->
-> If this were combined with splitting gigantic .h files (like cache.h)
-> into smaller logical units, then we could in theory speed up
-> recompilation times with make (we would also need to correctly track
-> header dependencies, but gcc -M can do this fairly easily).
->
-> But it does come at the price of actually having to consider which
-> include files are necessary. I can't think of more than half a dozen
-> times in the last year I have actually had to add a #include while
-> working on a git .c file, mostly because everything and the kitchen s=
-ink
-> is included by cache.h.
+On Fri, Apr 3, 2009 at 05:15, P Baker <me@retrodict.com> wrote:
+> See below for a revised project application. More comments would be
+> appreciated. Thanks to Shawn, Dscho and Andreas for already offering
+> some help!
 
-Yeah, I think the best feature of the actual design is the simplicity, =
-and=20
-that's why we don't have to add new #include very often. So let's keep =
-this=20
-simplicity by having and applying rules to keep things simple for the=20
-developer.
+In case you haven't noticed the announcement, please submit your
+proposal for GSoC to http://socghop.appspot.com as soon as possible!
+Thanks :).
 
-> So I don't know if it is worth it.
+-- 
+Cheers,
 
-I am not sure what you are talking about here, but if you mean that you=
-=20
-don't think it's worth splitting gigantic .h files (like cache.h) into=20
-smaller logical units, then I agree.
-
-Best regards,
-Christian.
+Sverre Rabbelier
