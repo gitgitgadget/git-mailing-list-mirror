@@ -1,80 +1,56 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] mergetool-lib: specialize opendiff options when in diff mode
-Date: Thu,  2 Apr 2009 19:16:11 -0700
-Message-ID: <1238724971-60979-1-git-send-email-davvid@gmail.com>
-Cc: charles@hashpling.org, markus.heidelberg@web.de,
-	git@vger.kernel.org, David Aguilar <davvid@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Apr 03 04:17:55 2009
+From: Miles Bader <miles@gnu.org>
+Subject: Re: Whitespace options
+Date: Fri, 03 Apr 2009 11:39:33 +0900
+Message-ID: <buoab6yjw9m.fsf@dhlpc061.dev.necel.com>
+References: <3C72F4A7-9B7A-44D0-B13D-FD534EB02C27@bitart.com>
+Reply-To: Miles Bader <miles@gnu.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Gerd Knops <gerti-git@bitart.com>
+X-From: git-owner@vger.kernel.org Fri Apr 03 04:41:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LpYyg-0000ba-JZ
-	for gcvg-git-2@gmane.org; Fri, 03 Apr 2009 04:17:55 +0200
+	id 1LpZLt-0004lA-D4
+	for gcvg-git-2@gmane.org; Fri, 03 Apr 2009 04:41:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752234AbZDCCQV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Apr 2009 22:16:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751436AbZDCCQV
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 22:16:21 -0400
-Received: from rv-out-0506.google.com ([209.85.198.227]:31594 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752111AbZDCCQV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Apr 2009 22:16:21 -0400
-Received: by rv-out-0506.google.com with SMTP id g37so42331rvb.5
-        for <git@vger.kernel.org>; Thu, 02 Apr 2009 19:16:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=2Nl473K4o0d3zyVlzhUFTeZO3z8jASyPqpwG5g7ra6E=;
-        b=bSsoWHzsmJpc9CsPq+Mf62nzy+fF3f/IU5oT0D5T6VuK92Cc8bkzCRICr3jGWKB1CB
-         gghxP/REvtQn1iYsMS27GQ93X06ZqqtBaTnY0ylgkOSHD/Zpv0rJPh2ytdJFSYsj0Zfy
-         9YRLCELxiyeDQIxb7uxP81jftGx9avh6GZ1LE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=Vz8NRyYzuH/XM40mYjPvgbXWaexCT/x417IwybTC0TjwAsLPulFve2ffeeVOiY4y7K
-         roD7XyWw7EnYdc70+IbV9RYAU15TwOWW84BHWmFo0yCEBUxuk5fZXtbMTjKWD0Q1usNt
-         pdDWkUgAlAN8/ktgvNNaqRHxRrXUPT3DJ+bHM=
-Received: by 10.141.122.1 with SMTP id z1mr275669rvm.49.1238724979233;
-        Thu, 02 Apr 2009 19:16:19 -0700 (PDT)
-Received: from localhost (wdas-1.disneyanimation.com [12.188.26.1])
-        by mx.google.com with ESMTPS id b8sm5229682rvf.42.2009.04.02.19.16.18
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 02 Apr 2009 19:16:18 -0700 (PDT)
-X-Mailer: git-send-email 1.6.2.2.404.ge96f3
+	id S1753107AbZDCCjo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Apr 2009 22:39:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753252AbZDCCjo
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Apr 2009 22:39:44 -0400
+Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:34367 "EHLO
+	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752069AbZDCCjo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Apr 2009 22:39:44 -0400
+Received: from relay31.aps.necel.com ([10.29.19.54])
+	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id n332dPuB001065;
+	Fri, 3 Apr 2009 11:39:34 +0900 (JST)
+Received: from relay21.aps.necel.com ([10.29.19.20] [10.29.19.20]) by relay31.aps.necel.com with ESMTP; Fri, 3 Apr 2009 11:39:34 +0900
+Received: from dhlpc061 ([10.114.112.72] [10.114.112.72]) by relay21.aps.necel.com with ESMTP; Fri, 3 Apr 2009 11:39:33 +0900
+Received: by dhlpc061 (Postfix, from userid 31295)
+	id 84FC452E20F; Fri,  3 Apr 2009 11:39:33 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
+In-Reply-To: <3C72F4A7-9B7A-44D0-B13D-FD534EB02C27@bitart.com> (Gerd Knops's
+	message of "Thu, 2 Apr 2009 14:18:19 -0500")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115512>
 
-We don't need the '-merged "$MERGED"' option when in diff mode.
+Gerd Knops <gerti-git@bitart.com> writes:
+> The reason is that many editors (especially those supporting indent-
+> based code folding) keep 'empty' lines at the current indentation
+> level. git (with default settings) flags all those lines.
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
- git-mergetool--lib.sh |    8 ++++++--
- 1 files changed, 6 insertions(+), 2 deletions(-)
+That sounds like very fragile behavior on the part of the editor -- it
+sounds like they assume that all source code was created by their
+editor, and will never be touched by any other tool...
 
-diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index 06d261a..b8566b2 100644
---- a/git-mergetool--lib.sh
-+++ b/git-mergetool--lib.sh
-@@ -189,8 +189,12 @@ run_mergetool () {
- 			"$merge_tool_path" "$LOCAL" "$REMOTE" \
- 				-ancestor "$BASE" -merge "$MERGED" | cat
- 		else
--			"$merge_tool_path" "$LOCAL" "$REMOTE" \
--				-merge "$MERGED" | cat
-+			if merge_mode; then
-+				"$merge_tool_path" "$LOCAL" "$REMOTE" \
-+					-merge "$MERGED" | cat
-+			else
-+				"$merge_tool_path" "$LOCAL" "$REMOTE" | cat
-+			fi
- 		fi
- 		check_unchanged
- 		;;
+-Miles
+
 -- 
-1.6.1.3
+Suburbia: where they tear out the trees and then name streets after them.
