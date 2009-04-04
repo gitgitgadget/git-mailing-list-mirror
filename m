@@ -1,7 +1,7 @@
 From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: [PATCH] mergetool-lib: make (g)vimdiff workable under Windows
-Date: Sat, 4 Apr 2009 15:17:54 +0200
-Message-ID: <200904041517.55890.markus.heidelberg@web.de>
+Subject: [PATCH] mergetool-lib: add new merge tool TortoiseMerge
+Date: Sat, 4 Apr 2009 15:18:02 +0200
+Message-ID: <200904041518.03325.markus.heidelberg@web.de>
 Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
 Content-Type: text/plain;
@@ -11,53 +11,50 @@ Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
 	Charles Bailey <charles@hashpling.org>,
 	msysgit@googlegroups.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 04 15:19:42 2009
+X-From: git-owner@vger.kernel.org Sat Apr 04 15:19:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lq5me-0004bI-4a
-	for gcvg-git-2@gmane.org; Sat, 04 Apr 2009 15:19:40 +0200
+	id 1Lq5me-0004bI-Se
+	for gcvg-git-2@gmane.org; Sat, 04 Apr 2009 15:19:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753448AbZDDNSA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Apr 2009 09:18:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753302AbZDDNSA
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Apr 2009 09:18:00 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:60293 "EHLO
+	id S1754391AbZDDNSH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Apr 2009 09:18:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753690AbZDDNSG
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Apr 2009 09:18:06 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:60400 "EHLO
 	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750906AbZDDNR7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Apr 2009 09:17:59 -0400
-Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate02.web.de (Postfix) with ESMTP id DC85BFC79E54;
-	Sat,  4 Apr 2009 15:17:56 +0200 (CEST)
+	with ESMTP id S1753563AbZDDNSF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Apr 2009 09:18:05 -0400
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate02.web.de (Postfix) with ESMTP id ABC8EFC79EFB;
+	Sat,  4 Apr 2009 15:18:03 +0200 (CEST)
 Received: from [89.59.94.8] (helo=.)
-	by smtp06.web.de with asmtp (TLSv1:AES256-SHA:256)
+	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
 	(WEB.DE 4.110 #277)
-	id 1Lq5ky-0007WU-00; Sat, 04 Apr 2009 15:17:56 +0200
+	id 1Lq5l5-00011C-00; Sat, 04 Apr 2009 15:18:03 +0200
 User-Agent: KMail/1.9.9
 Jabber-ID: markus.heidelberg@web.de
 Content-Disposition: inline
 X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX1+vL2QpplOgfiJdlai6QJ923oUWw2Y8mX7Ybmmi
-	KqEahZCWlcf/RHjcY+07qV3kaPW0T8C4qc28PePMtlY/8a029b
-	qGVZGsPx1wD6LjPA69sA==
+X-Provags-ID: V01U2FsdGVkX18vzm6cJ/2kL1nSCnvm1R/Dg7Ux1mwHNeGMuDlf
+	0McMipOn8p0oYe4uSMXc9a+dguZMhKK/UEbt/VhCz5CffzVExV
+	v/zhQnLF6IqkhSTU+KrQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115585>
 
-Under Windows vimdiff and gvimdiff are not available as symbolic links,
-but as batch files vimdiff.bat and gvimdiff.bat. These files weren't
-found by 'type vimdiff' which led to the following error:
+TortoiseMerge comes with TortoiseSVN or TortoiseGit for Windows. It can
+only be used as a merge tool with an existing base file. It cannot be
+used without a base nor as a diff tool.
 
-    The merge tool vimdiff is not available as 'vimdiff'
+The documentation only mentions the slash '/' as command line option
+prefix, which refused to work, but the parser also accepts the dash '-'
 
-Even if they were found, it wouldn't work to invoke these batch files
-from git-mergetool.
-
-To solve this, use vim and gvim (vim.exe and gvim.exe) and pass the -d
-command line switch over to them.
+See http://code.google.com/p/msysgit/issues/detail?id=226
 
 Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
 ---
@@ -67,49 +64,47 @@ This is 'da/difftool' in the current 'pu' and in addition:
 [PATCH] mergetool-lib: refactor run_mergetool and check_unchanged
 [PATCH] mergetool-lib: specialize opendiff options when in diff mode
 
- git-mergetool--lib.sh |   14 ++++++++++----
- 1 files changed, 10 insertions(+), 4 deletions(-)
+I couldn't recognize a special order so I put tortoisemerge at the end
+of the list.
+
+ git-mergetool--lib.sh |   15 ++++++++++++++-
+ 1 files changed, 14 insertions(+), 1 deletions(-)
 
 diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index b8566b2..6f0e8f7 100644
+index 6f0e8f7..4ad2cb5 100644
 --- a/git-mergetool--lib.sh
 +++ b/git-mergetool--lib.sh
-@@ -11,6 +11,12 @@ get_merge_tool_path () {
- 	path="$1"
- 	if test -z "$2"; then
- 		case "$1" in
-+		vimdiff)
-+			path=vim
-+			;;
-+		gvimdiff)
-+			path=gvim
-+			;;
- 		emerge)
- 			path=emacs
- 			;;
-@@ -142,19 +148,19 @@ run_mergetool () {
- 	vimdiff)
- 		if merge_mode; then
- 			touch "$BACKUP"
--			"$merge_tool_path" -c "wincmd l" "$LOCAL" "$MERGED" "$REMOTE"
-+			"$merge_tool_path" -d -c "wincmd l" "$LOCAL" "$MERGED" "$REMOTE"
- 			check_unchanged
- 		else
--			"$merge_tool_path" -c "wincmd l" "$LOCAL" "$REMOTE"
-+			"$merge_tool_path" -d -c "wincmd l" "$LOCAL" "$REMOTE"
+@@ -51,10 +51,13 @@ check_unchanged () {
+ 
+ valid_tool () {
+ 	case "$1" in
+-	kdiff3 | kompare | tkdiff | xxdiff | meld | opendiff | emerge | vimdiff | gvimdiff | ecmerge | diffuse)
++	kdiff3 | kompare | tkdiff | xxdiff | meld | opendiff | emerge | vimdiff | gvimdiff | ecmerge | diffuse | tortoisemerge)
+ 		if test "$1" = "kompare" && ! diff_mode; then
+ 			return 1
  		fi
- 		;;
- 	gvimdiff)
- 		if merge_mode; then
- 			touch "$BACKUP"
--			"$merge_tool_path" -c "wincmd l" -f "$LOCAL" "$MERGED" "$REMOTE"
-+			"$merge_tool_path" -d -c "wincmd l" -f "$LOCAL" "$MERGED" "$REMOTE"
- 			check_unchanged
- 		else
--			"$merge_tool_path" -c "wincmd l" -f "$LOCAL" "$REMOTE"
-+			"$merge_tool_path" -d -c "wincmd l" -f "$LOCAL" "$REMOTE"
++		if test "$1" = "tortoisemerge" && ! merge_mode; then
++			return 1
++		fi
+ 		;; # happy
+ 	*)
+ 		if test -z "$(get_custom_cmd "$1")"; then
+@@ -225,6 +228,16 @@ run_mergetool () {
  		fi
+ 		status=$?
  		;;
- 	xxdiff)
++	tortoisemerge)
++		if $base_present; then
++			touch "$BACKUP"
++			"$merge_tool_path" -base:"$BASE" -mine:"$LOCAL" -theirs:"$REMOTE" -merged:"$MERGED"
++			check_unchanged
++		else
++			echo "TortoiseMerge cannot be used without a base" 1>&2
++			status=1
++		fi
++		;;
+ 	*)
+ 		if test -n "$merge_tool_cmd"; then
+ 			if merge_mode &&
 -- 
 1.6.2.2.428.gea44ab
