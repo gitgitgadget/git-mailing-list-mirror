@@ -1,77 +1,72 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: [PATCH] doc/git-pack-refs: fix two grammar issues
-Date: Sat, 4 Apr 2009 12:35:22 +0200
-Message-ID: <200904041235.23310.markus.heidelberg@web.de>
-Reply-To: markus.heidelberg@web.de
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 04 12:38:57 2009
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [EGIT PATCH] Select and show a newly created branch in the checkout dialog
+Date: Sat,  4 Apr 2009 13:55:25 +0200
+Message-ID: <1238846125-30149-1-git-send-email-robin.rosenberg@dewire.com>
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Sat Apr 04 14:00:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lq3Gz-0005TD-1y
-	for gcvg-git-2@gmane.org; Sat, 04 Apr 2009 12:38:49 +0200
+	id 1Lq4Us-0007dC-PR
+	for gcvg-git-2@gmane.org; Sat, 04 Apr 2009 13:57:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752324AbZDDKfa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Apr 2009 06:35:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751483AbZDDKfa
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Apr 2009 06:35:30 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:35844 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751042AbZDDKfa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Apr 2009 06:35:30 -0400
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 5D0D1F9F67DC;
-	Sat,  4 Apr 2009 12:35:25 +0200 (CEST)
-Received: from [89.59.94.8] (helo=.)
-	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1Lq3Dh-0002NH-00; Sat, 04 Apr 2009 12:35:25 +0200
-User-Agent: KMail/1.9.9
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX19nFuZ4d1fb4WPlMVrFEHrLQWsphI3/2AjD6vwg
-	3EnHmGX+xo2nu7R3+dw2xluJ03w7JBkbumrMND1/tEnyWmFHWr
-	mfcZDghnQtDPBh4td0eQ==
+	id S1752899AbZDDLzj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Apr 2009 07:55:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751587AbZDDLzi
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Apr 2009 07:55:38 -0400
+Received: from mail.dewire.com ([83.140.172.130]:19323 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751407AbZDDLzi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Apr 2009 07:55:38 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 005EB148898A;
+	Sat,  4 Apr 2009 13:55:30 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id OFVIRmWrNd5W; Sat,  4 Apr 2009 13:55:30 +0200 (CEST)
+Received: from localhost.localdomain (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 2216B1488989;
+	Sat,  4 Apr 2009 13:55:29 +0200 (CEST)
+X-Mailer: git-send-email 1.6.2.1.345.g89fb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115582>
 
-
-Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
 ---
- Documentation/git-pack-refs.txt |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ .../ui/internal/dialogs/BranchSelectionDialog.java |    8 +++++++-
+ 1 files changed, 7 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/git-pack-refs.txt b/Documentation/git-pack-refs.txt
-index a5244d3..1ee99c2 100644
---- a/Documentation/git-pack-refs.txt
-+++ b/Documentation/git-pack-refs.txt
-@@ -26,7 +26,7 @@ problem by stashing the refs in a single file,
- traditional `$GIT_DIR/refs` hierarchy, it is looked up in this
- file and used if found.
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/dialogs/BranchSelectionDialog.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/dialogs/BranchSelectionDialog.java
+index cbbc384..1866086 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/dialogs/BranchSelectionDialog.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/dialogs/BranchSelectionDialog.java
+@@ -150,6 +150,7 @@ private void fillTreeWithBranches(String select) throws IOException {
+ 		TreeItem curSubItem = null;
+ 		String curPrefix = null;
+ 		String curSubPrefix = null;
++		TreeItem itemToSelect = null;
  
--Subsequent updates to branches always creates new file under
-+Subsequent updates to branches always create new files under
- `$GIT_DIR/refs` hierarchy.
- 
- A recommended practice to deal with a repository with too many
-@@ -35,7 +35,7 @@ occasionally run `git pack-refs \--prune`.  Tags are by
- definition stationary and are not expected to change.  Branch
- heads will be packed with the initial `pack-refs --all`, but
- only the currently active branch heads will become unpacked,
--and next `pack-refs` (without `--all`) will leave them
-+and the next `pack-refs` (without `--all`) will leave them
- unpacked.
- 
+ 		for (String ref : branches) {
+ 			String shortName = ref;
+@@ -217,7 +218,12 @@ public void widgetDisposed(DisposeEvent e) {
+ 			}
+ 			else item.setText(shortName);
+ 			if (ref.equals(select))
+-				branchTree.select(item);
++				itemToSelect = item;
++			branchTree.setLinesVisible(true);
++		}
++		if (itemToSelect != null) {
++			branchTree.select(itemToSelect);
++			branchTree.showItem(itemToSelect);
+ 		}
+ 	}
  
 -- 
-1.6.2.1.428.g41b20c
+1.6.2.1.345.g89fb
