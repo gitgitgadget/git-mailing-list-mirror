@@ -1,110 +1,69 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: [PATCH] mergetool-lib: add new merge tool TortoiseMerge
-Date: Sat, 4 Apr 2009 15:18:02 +0200
-Message-ID: <200904041518.03325.markus.heidelberg@web.de>
-Reply-To: markus.heidelberg@web.de
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
-	Charles Bailey <charles@hashpling.org>,
-	msysgit@googlegroups.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 04 15:19:43 2009
+From: Dan McGee <dpmcgee@gmail.com>
+Subject: [PATCH 1/2] git-repack: use non-dashed update-server-info
+Date: Sat,  4 Apr 2009 11:59:55 -0500
+Message-ID: <1238864396-8964-1-git-send-email-dpmcgee@gmail.com>
+Cc: Dan McGee <dpmcgee@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 04 19:02:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lq5me-0004bI-Se
-	for gcvg-git-2@gmane.org; Sat, 04 Apr 2009 15:19:41 +0200
+	id 1Lq9Fj-0006uk-WA
+	for gcvg-git-2@gmane.org; Sat, 04 Apr 2009 19:01:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754391AbZDDNSH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Apr 2009 09:18:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753690AbZDDNSG
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Apr 2009 09:18:06 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:60400 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753563AbZDDNSF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Apr 2009 09:18:05 -0400
-Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
-	by fmmailgate02.web.de (Postfix) with ESMTP id ABC8EFC79EFB;
-	Sat,  4 Apr 2009 15:18:03 +0200 (CEST)
-Received: from [89.59.94.8] (helo=.)
-	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1Lq5l5-00011C-00; Sat, 04 Apr 2009 15:18:03 +0200
-User-Agent: KMail/1.9.9
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX18vzm6cJ/2kL1nSCnvm1R/Dg7Ux1mwHNeGMuDlf
-	0McMipOn8p0oYe4uSMXc9a+dguZMhKK/UEbt/VhCz5CffzVExV
-	v/zhQnLF6IqkhSTU+KrQ==
+	id S1752625AbZDDRAI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Apr 2009 13:00:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752428AbZDDRAH
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Apr 2009 13:00:07 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:12735 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751453AbZDDRAG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Apr 2009 13:00:06 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so1467811ywb.1
+        for <git@vger.kernel.org>; Sat, 04 Apr 2009 10:00:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=1O/qAmd+QgfWsHO16dDs4NxuZqlX33W+5LGrDVHGga8=;
+        b=N4HZpUS5BHLLKiKcNedCLNDfKDVTmAIe938AZN2I9wkjN7eIlXVAN329iDKeR9LoNX
+         Ds3TMDnc/ar6a312jG5DkxYzo8yDU3nynLmZ0jze9n2rrRJ8CdI9sVpCEojevdmQwDuP
+         F8pn5N5f6BU+bEHhvIIcvY2H1D+7zyEUwpN4s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=huwav8iAYQsA2pFauzi5rBLJNnhugk82y/ZVv3aFokXBT+d19McUUXs6AoVoAjkCaW
+         9cEAutwPEYQAFBzehkeH/+JVVhYXj7KX7wRLLmRb6eHLfWByLclKvjH7hlE3M0ulfD6h
+         VXwVCPNhIgB83AqY7uXxfD8Q57BKQOOM+0Abs=
+Received: by 10.100.121.12 with SMTP id t12mr647357anc.113.1238864403847;
+        Sat, 04 Apr 2009 10:00:03 -0700 (PDT)
+Received: from localhost (adsl-76-193-181-72.dsl.chcgil.sbcglobal.net [76.193.181.72])
+        by mx.google.com with ESMTPS id d38sm9949720and.49.2009.04.04.10.00.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 04 Apr 2009 10:00:02 -0700 (PDT)
+X-Mailer: git-send-email 1.6.2.2.404.ge96f3.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115586>
 
-TortoiseMerge comes with TortoiseSVN or TortoiseGit for Windows. It can
-only be used as a merge tool with an existing base file. It cannot be
-used without a base nor as a diff tool.
-
-The documentation only mentions the slash '/' as command line option
-prefix, which refused to work, but the parser also accepts the dash '-'
-
-See http://code.google.com/p/msysgit/issues/detail?id=226
-
-Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+Signed-off-by: Dan McGee <dpmcgee@gmail.com>
 ---
+ git-repack.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-This patch goes on top of the current difftool/mergetool patches from David.
-This is 'da/difftool' in the current 'pu' and in addition:
-[PATCH] mergetool-lib: refactor run_mergetool and check_unchanged
-[PATCH] mergetool-lib: specialize opendiff options when in diff mode
-
-I couldn't recognize a special order so I put tortoisemerge at the end
-of the list.
-
- git-mergetool--lib.sh |   15 ++++++++++++++-
- 1 files changed, 14 insertions(+), 1 deletions(-)
-
-diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index 6f0e8f7..4ad2cb5 100644
---- a/git-mergetool--lib.sh
-+++ b/git-mergetool--lib.sh
-@@ -51,10 +51,13 @@ check_unchanged () {
+diff --git a/git-repack.sh b/git-repack.sh
+index 1782a23..0868734 100755
+--- a/git-repack.sh
++++ b/git-repack.sh
+@@ -181,5 +181,5 @@ fi
  
- valid_tool () {
- 	case "$1" in
--	kdiff3 | kompare | tkdiff | xxdiff | meld | opendiff | emerge | vimdiff | gvimdiff | ecmerge | diffuse)
-+	kdiff3 | kompare | tkdiff | xxdiff | meld | opendiff | emerge | vimdiff | gvimdiff | ecmerge | diffuse | tortoisemerge)
- 		if test "$1" = "kompare" && ! diff_mode; then
- 			return 1
- 		fi
-+		if test "$1" = "tortoisemerge" && ! merge_mode; then
-+			return 1
-+		fi
- 		;; # happy
- 	*)
- 		if test -z "$(get_custom_cmd "$1")"; then
-@@ -225,6 +228,16 @@ run_mergetool () {
- 		fi
- 		status=$?
- 		;;
-+	tortoisemerge)
-+		if $base_present; then
-+			touch "$BACKUP"
-+			"$merge_tool_path" -base:"$BASE" -mine:"$LOCAL" -theirs:"$REMOTE" -merged:"$MERGED"
-+			check_unchanged
-+		else
-+			echo "TortoiseMerge cannot be used without a base" 1>&2
-+			status=1
-+		fi
-+		;;
- 	*)
- 		if test -n "$merge_tool_cmd"; then
- 			if merge_mode &&
+ case "$no_update_info" in
+ t) : ;;
+-*) git-update-server-info ;;
++*) git update-server-info ;;
+ esac
 -- 
-1.6.2.2.428.gea44ab
+1.6.2.2.404.ge96f3.dirty
