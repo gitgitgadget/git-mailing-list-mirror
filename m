@@ -1,98 +1,96 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: git bisect issue
-Date: Sat, 4 Apr 2009 21:48:31 +0200
-Message-ID: <200904042148.32723.chriscool@tuxfamily.org>
-References: <Pine.LNX.4.64.0904041307360.10230@linmac.oyster.ru>
+Subject: [PATCH] bisect: improve error message when branch checkout fails
+Date: Sat, 4 Apr 2009 22:02:26 +0200
+Message-ID: <20090404220226.58a3ac99.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: malc@pulsesoft.com
-X-From: git-owner@vger.kernel.org Sat Apr 04 21:57:55 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, malc@pulsesoft.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 04 22:05:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqBzw-00045f-J3
-	for gcvg-git-2@gmane.org; Sat, 04 Apr 2009 21:57:49 +0200
+	id 1LqC72-0005n9-Lt
+	for gcvg-git-2@gmane.org; Sat, 04 Apr 2009 22:05:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755531AbZDDTtn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 4 Apr 2009 15:49:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755368AbZDDTtm
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Apr 2009 15:49:42 -0400
-Received: from smtp1-g21.free.fr ([212.27.42.1]:41882 "EHLO smtp1-g21.free.fr"
+	id S1754403AbZDDUDf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Apr 2009 16:03:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754164AbZDDUDf
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Apr 2009 16:03:35 -0400
+Received: from smtp1-g21.free.fr ([212.27.42.1]:57378 "EHLO smtp1-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755296AbZDDTtm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Apr 2009 15:49:42 -0400
+	id S1753201AbZDDUDe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Apr 2009 16:03:34 -0400
 Received: from smtp1-g21.free.fr (localhost [127.0.0.1])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id 5DF5A940099;
-	Sat,  4 Apr 2009 21:49:33 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id 769FF94004B;
-	Sat,  4 Apr 2009 21:49:31 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <Pine.LNX.4.64.0904041307360.10230@linmac.oyster.ru>
-Content-Disposition: inline
+	by smtp1-g21.free.fr (Postfix) with ESMTP id B800E940089;
+	Sat,  4 Apr 2009 22:03:26 +0200 (CEST)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g21.free.fr (Postfix) with SMTP id A8C5894001B;
+	Sat,  4 Apr 2009 22:03:23 +0200 (CEST)
+X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.12; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115594>
 
-Hi,
+In "git-bisect.sh" the "git checkout" command is only used to
+change the current branch, but it is used like this:
 
-Le samedi 4 avril 2009, malc@pulsesoft.com a =E9crit :
-> Hello,
->
-> I was trying to run git bisect today and stumbled upon this:
->
-> $ git bisect start
-> error: pathspec 'bisect' did not match any file(s) known to git.
->
-> .git had some (stale?) BISECT_XXX files in it, and removing them
-> helped. One of those (BISECT_START) consisted of a single line:
-> "bisect". If i remember correctly i used to have a bisect branch
-> in this particular repo.
+git checkout "$branch"
 
-When you start bisecting, the current branch is saved in .git/BISECT_ST=
-ART=20
-so if you started a bisection in a branch named "bisect", then "bisect"=
- was=20
-saved in ".git/BISECT_START". Then you probably didn't use "git bisect=20
-reset" to stop bisecting, so the .git/BISECT_START file was not removed=
-=2E
+which will output the following misleading error message when
+it fails:
 
-You probably deleted the "bisect" branch and later when you started a n=
-ew=20
-bisection, "git bisect" found the .git/BISECT_START file, so it thought=
-=20
-that you were currently bisecting.
+error: pathspec 'foo' did not match any file(s) known to git.
 
-It then tryed to abort the previous bisection by going back to branch s=
-aved=20
-in the .git/BISECT_START file, and that failed with the error message y=
-ou=20
-saw.
+This patch change the way we use "git checkout" like this:
 
-The error message could perhaps be improved with this patch:
+git checkout "$branch" --
+
+so that we will get the following error message:
+
+fatal: invalid reference: foo
+
+which is better.
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ git-bisect.sh |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/git-bisect.sh b/git-bisect.sh
-index e313bde..093736c 100755
+index e313bde..df0ae63 100755
 --- a/git-bisect.sh
 +++ b/git-bisect.sh
 @@ -77,7 +77,7 @@ bisect_start() {
-        then
-                # Reset to the rev from where we started.
-                start_head=3D$(cat "$GIT_DIR/BISECT_START")
--               git checkout "$start_head" || exit
-+               git checkout "$start_head" -- || exit
-        else
-                # Get rev from where we start.
-                case "$head" in
-
-it will give the following error message instead of the one you saw:
-
-fatal: invalid reference: bisect
-
-Regards,
-Christian.
+ 	then
+ 		# Reset to the rev from where we started.
+ 		start_head=$(cat "$GIT_DIR/BISECT_START")
+-		git checkout "$start_head" || exit
++		git checkout "$start_head" -- || exit
+ 	else
+ 		# Get rev from where we start.
+ 		case "$head" in
+@@ -370,7 +370,7 @@ bisect_checkout() {
+ 	_msg="$2"
+ 	echo "Bisecting: $_msg"
+ 	mark_expected_rev "$_rev"
+-	git checkout -q "$_rev" || exit
++	git checkout -q "$_rev" -- || exit
+ 	git show-branch "$_rev"
+ }
+ 
+@@ -549,7 +549,7 @@ bisect_reset() {
+ 	*)
+ 	    usage ;;
+ 	esac
+-	git checkout "$branch" && bisect_clean_state
++	git checkout "$branch" -- && bisect_clean_state
+ }
+ 
+ bisect_clean_state() {
+-- 
+1.6.2.2.404.ge96f3.dirty
