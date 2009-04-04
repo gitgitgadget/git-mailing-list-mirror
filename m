@@ -1,91 +1,101 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 4/4] replace_object: use the new generic "sha1_pos" function
- to lookup sha1
-Date: Sat, 4 Apr 2009 22:59:41 +0200
-Message-ID: <20090404225941.7fef76a7.chriscool@tuxfamily.org>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Performance issue: initial git clone causes massive repack
+Date: Sat, 4 Apr 2009 15:07:43 -0700
+Message-ID: <20090404220743.GA869@curie-int>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 04 23:02:40 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="jousvV0MzM2p6OtC"
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Apr 05 00:09:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqD0f-0001uP-Du
-	for gcvg-git-2@gmane.org; Sat, 04 Apr 2009 23:02:37 +0200
+	id 1LqE3G-0001eJ-Q3
+	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 00:09:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755228AbZDDVAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Apr 2009 17:00:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755181AbZDDVAv
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Apr 2009 17:00:51 -0400
-Received: from smtp1-g21.free.fr ([212.27.42.1]:42691 "EHLO smtp1-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755172AbZDDVAu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Apr 2009 17:00:50 -0400
-Received: from smtp1-g21.free.fr (localhost [127.0.0.1])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id 6095B940130;
-	Sat,  4 Apr 2009 23:00:41 +0200 (CEST)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g21.free.fr (Postfix) with SMTP id 1D8109400AF;
-	Sat,  4 Apr 2009 23:00:39 +0200 (CEST)
-X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.12; i486-pc-linux-gnu)
+	id S1751980AbZDDWHv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Apr 2009 18:07:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751947AbZDDWHu
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Apr 2009 18:07:50 -0400
+Received: from b01.ext.isohunt.com ([208.71.112.51]:47036 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750877AbZDDWHu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Apr 2009 18:07:50 -0400
+Received: (qmail 17592 invoked from network); 4 Apr 2009 22:07:46 -0000
+Received: from tsi-static.orbis-terrarum.net (HELO curie.orbis-terrarum.net) (76.10.188.108)
+  (smtp-auth username robbat2@isohunt.com, mechanism login)
+  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Sat, 04 Apr 2009 22:07:46 +0000
+Received: (qmail 16664 invoked by uid 10000); 4 Apr 2009 15:07:43 -0700
+Content-Disposition: inline
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115600>
 
-instead of the specific one that was simpler but less efficient.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- replace_object.c |   24 +++++++++---------------
- 1 files changed, 9 insertions(+), 15 deletions(-)
+--jousvV0MzM2p6OtC
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/replace_object.c b/replace_object.c
-index 1227214..eb59604 100644
---- a/replace_object.c
-+++ b/replace_object.c
-@@ -1,4 +1,5 @@
- #include "cache.h"
-+#include "sha1-lookup.h"
- #include "refs.h"
- 
- static struct replace_object {
-@@ -7,23 +8,16 @@ static struct replace_object {
- 
- static int replace_object_alloc, replace_object_nr;
- 
-+static const unsigned char *replace_sha1_access(size_t index, void *table)
-+{
-+	struct replace_object **replace = table;
-+	return replace[index]->sha1[0];
-+}
-+
- static int replace_object_pos(const unsigned char *sha1)
- {
--	int lo, hi;
--	lo = 0;
--	hi = replace_object_nr;
--	while (lo < hi) {
--		int mi = (lo + hi) / 2;
--		struct replace_object *rep = replace_object[mi];
--		int cmp = hashcmp(sha1, rep->sha1[0]);
--		if (!cmp)
--			return mi;
--		if (cmp < 0)
--			hi = mi;
--		else
--			lo = mi + 1;
--	}
--	return -lo - 1;
-+	return sha1_pos(sha1, replace_object, replace_object_nr,
-+			replace_sha1_access);
- }
- 
- static int register_replace_object(struct replace_object *replace,
--- 
-1.6.2.2.404.ge96f3.dirty
+Hi,
+
+This is a first in my series of mails over the next few days, on issues
+that we've run into planning a potential migration for Gentoo's
+repository into Git.
+
+Our full repository conversion is large, even after tuning the
+repacking, the packed repository is between 1.4 and 1.6GiB. As of Feburary
+4th, 2009, it contained 4886949 objects. It is not suitable for
+splitting into submodules either unfortunately - we have a lot of
+directory moves that would cause submodule bloat.
+
+During an initial clone, I see that git-upload-pack invokes
+pack-objects, despite the ENTIRE repository already being packed - no
+loose objects whatsoever. git-upload-pack then seems to buffer in
+memory.
+
+In a small repository, this wouldn't be a problem, as the entire
+repository can fit in memory very easily. However, with our large
+repository, git-upload-pack and git-pack-objects grows in memory to well
+more than the size of the packed repository, and are usually killed by
+the OOM.
+
+During 'remote: Counting objects: 4886949, done.', git-upload-pack peaks at
+2474216KB VSZ and 1143048KB RSS.=20
+Shortly thereafter, we get 'remote: Compressing objects:   0%
+(1328/1994284)', git-pack-objects with ~2.8GB VSZ and ~1.8GB RSS. Here,
+the CPU burn also starts. On our test server machine (w/ git 1.6.0.6),
+it takes about 200 minutes walltime to finish the pack, IFF the OOM
+doesn't kick in.
+
+Given that the repo is entirely packed already, I see no point in doing
+this.
+
+For the initial clone, can the git-upload-pack algorithm please send
+existing packs, and only generate a pack containing the non-packed
+items?
+
+--=20
+Robin Hugh Johnson
+Gentoo Linux Developer & Infra Guy
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+
+--jousvV0MzM2p6OtC
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.10 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+
+iEYEARECAAYFAknX2i8ACgkQPpIsIjIzwizVDACfZMUSxD0wyHdl75NREqFavCHL
+ZcQAnRB8XFuywB7FlFFY64pxyV1t0HTo
+=wux1
+-----END PGP SIGNATURE-----
+
+--jousvV0MzM2p6OtC--
