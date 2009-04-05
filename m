@@ -1,85 +1,76 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Performance issue: initial git clone causes massive repack
-Date: Sun, 5 Apr 2009 12:17:03 -0700
-Message-ID: <20090405191703.GJ23521@spearce.org>
-References: <20090404220743.GA869@curie-int> <20090405000536.GA12927@vidovic> <20090405T001239Z@curie.orbis-terrarum.net> <20090405035453.GB12927@vidovic> <20090405070412.GB869@curie-int> <20090405190213.GA12929@vidovic>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 1/4] sha1-lookup: add new "sha1_pos" function to 
+	efficiently lookup sha1
+Date: Sun, 5 Apr 2009 22:19:27 +0300
+Message-ID: <94a0d4530904051219q7d9ed028jd6e05f541d7c12b5@mail.gmail.com>
+References: <20090404225926.a9ad50e0.chriscool@tuxfamily.org>
+	 <fabb9a1e0904050317o1399118erb15ddf86d0fe6c3c@mail.gmail.com>
+	 <7vvdpjrkp0.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Robin H. Johnson" <robbat2@gentoo.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Sebrecht <nicolas.s-dev@laposte.net>
-X-From: git-owner@vger.kernel.org Sun Apr 05 21:19:28 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 05 21:21:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqXra-00066L-A6
-	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 21:18:38 +0200
+	id 1LqXuR-000111-FP
+	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 21:21:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753644AbZDETRI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Apr 2009 15:17:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755379AbZDETRH
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 15:17:07 -0400
-Received: from george.spearce.org ([209.20.77.23]:33957 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755378AbZDETRF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Apr 2009 15:17:05 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id EA85738211; Sun,  5 Apr 2009 19:17:03 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20090405190213.GA12929@vidovic>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1755760AbZDETTf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Apr 2009 15:19:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755880AbZDETTc
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 15:19:32 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:47536 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755872AbZDETTb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Apr 2009 15:19:31 -0400
+Received: by fg-out-1718.google.com with SMTP id e12so705833fga.17
+        for <git@vger.kernel.org>; Sun, 05 Apr 2009 12:19:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=5pg7IRD4mKdhNb4DS/fBhbEQ/CRE/87+MQ7iOCJk/40=;
+        b=yHXhHkUUVGy2azpe2FbFF7QSdUBeGeGNyvpeSl1PYN9aQ74vZcsCGpLEV6fmr0ERiI
+         6kbPPXxGr18w5E1sYNT6RY/WZ7j7g9FJIuYoYQxbFjrnW+DfEbaZt0o/kGonNsaMDDBx
+         +99e15SbGfYKWaFX7Az2PEz/ulvZJe/8rVQlg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=BnZMcEr2plDW04KaD1mqlqs7DW7Uh85ykZElofBvBbiZaqsfWZl5BLYeNfc2D2oLMV
+         ybfSD2axdXEmaZOX8qe6zOVrJ/IolOxgLg8b5rsHybHJDVowikD1u7gvyFMdzRFM9Xe2
+         iAxwt3jxnUdD6ILkOsFCjLLwPWows3kxADFvE=
+Received: by 10.86.1.1 with SMTP id 1mr2535694fga.0.1238959167803; Sun, 05 Apr 
+	2009 12:19:27 -0700 (PDT)
+In-Reply-To: <7vvdpjrkp0.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115683>
 
-Nicolas Sebrecht <nicolas.s-dev@laposte.net> wrote:
-> On Sun, Apr 05, 2009 at 12:04:12AM -0700, Robin H. Johnson wrote:
-> >          The GSoC 2009 ideas contain a potential project for caching the
-> > generated packs, which, while having value in itself, could be partially
-> > avoided by sending suitable pre-built packs (if they exist) without any
-> > repacking.
-> 
-> Right. It could be an option to wait and see if the GSoC gives
-> something.
+On Sun, Apr 5, 2009 at 9:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> U3ZlcnJlIFJhYmJlbGllciA8c3JhYmJlbGllckBnbWFpbC5jb20+IHdyaXRlczoNCg0KPiBPbiBT
+> YXQsIEFwciA0LCAyMDA5IGF0IDIyOjU5LCBDaHJpc3RpYW4gQ291ZGVyIDxjaHJpc2Nvb2xAdHV4
+> ZmFtaWx5Lm9yZz4gd3JvdGU6DQo+PiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+> IMKgIMKgIMKgIMKgIGlmIChsbyA8PSBtaSAmJiBtaSA8IGhpKQ0KPj4gKyDCoCDCoCDCoCDCoCDC
+> oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBicmVhazsNCj4+ICsg
+> wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgZGllKCJvb3BzIik7
+> DQo+DQo+IFRoYXQncyBnb2luZyB0byBiZSBhbiBvZmZpY2lhbCBnaXQgZXJyb3IgbWVzc2FnZT8g
+> V2h5IG5vdCBtYWtlIGl0ICJUaGUNCg0KSXQncyBub3QgImdvaW5nIHRvIGJlIiwgYnV0ICJoYXMg
+> YmVlbiBzbyBmb3IgdGhlIGxhc3QgdHdvIHllYXJzIHNpbmNlDQo1ZDIzZTEzIi4NCg0KSXQgaXMg
+> YW4gYXNzZXJ0LCBhbmQgSSB0aGluayBQZWZmJ3MgZGllKCJCVUc6IC4uLiIpIHdvdWxkIGJlIGEg
+> Z29vZCBpZGVhLg0K
 
-Another option is to use rsync:// for initial clones.
- 
-Tell new developers that their initial command sequence to
-(efficiently) get the base tree is:
-
-  git clone rsync://git.gentoo.org/tree.git
-  cd tree
-  git config remote.origin.url git://git.gentoo.org/tree.git
-
-rsync should be more efficient at dragging 1.6GiB over the network,
-as its only streaming the files.  But it may fall over if the server
-has a lot of loose objects; many more small files to create.
-
-One way around that would be to use two repositories on the server;
-a historical repository that is fully packed and contains the full
-history, and a bleeding edge repository that users would normally
-work against:
-
-  git clone rsync://git.gentoo.org/fully-packed-tree.git tree
-  cd tree
-  git config remote.origin.url git://git.gentoo.org/tree.git
-  git pull
-
-Then every so often (e.g. once a Gentoo release cycle, so once
-a year) pull the bleeding edge repository into the fully packed
-repository.  That will introduce a single new pack file, so the
-fully packed repository grows at a rate of 2 inodes/year, and is
-still very efficient to rsync on initial clones.
-
-
-That caching GSoC project may help, but didn't I see earlier in
-this thread that you have >4.8 million objects in your repository?
-Any proposals on that project would still have Git malloc()'ing
-data per object; its ~80 bytes per object needed so that's a data
-segment of 384+ MiB, per concurrent clone client.
+Huh?
 
 -- 
-Shawn.
+Felipe Contreras
