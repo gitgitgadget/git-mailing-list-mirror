@@ -1,94 +1,86 @@
-From: david@lang.hm
-Subject: Re: Performance issue: initial git clone causes massive repack
-Date: Sun, 5 Apr 2009 16:20:07 -0700 (PDT)
-Message-ID: <alpine.DEB.1.10.0904051613420.6245@asgard.lang.hm>
-References: <20090404220743.GA869@curie-int> <20090405000536.GA12927@vidovic> <20090405T001239Z@curie.orbis-terrarum.net> <20090405035453.GB12927@vidovic> <20090405070412.GB869@curie-int> <20090405190213.GA12929@vidovic> <alpine.DEB.1.10.0904051419490.6245@asgard.lang.hm>
- <20090405225954.GA18730@vidovic>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [RFC/PATCH 0/2] New 'stage' command
+Date: Mon, 6 Apr 2009 01:22:41 +0200
+Message-ID: <fabb9a1e0904051622k66352ea4v542ecd99bd5d9c6@mail.gmail.com>
+References: <1238939331-10152-1-git-send-email-felipe.contreras@gmail.com> 
+	<200904052358.53028.markus.heidelberg@web.de> <94a0d4530904051535v8bd901fsedecdf61bc4acb33@mail.gmail.com> 
+	<200904060117.24810.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: "Robin H. Johnson" <robbat2@gentoo.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Sebrecht <nicolas.s-dev@laposte.net>
-X-From: git-owner@vger.kernel.org Mon Apr 06 01:21:53 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: markus.heidelberg@web.de
+X-From: git-owner@vger.kernel.org Mon Apr 06 01:24:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lqbew-0003l4-Pc
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 01:21:51 +0200
+	id 1LqbhX-0004AT-VW
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 01:24:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753573AbZDEXUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Apr 2009 19:20:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753517AbZDEXUT
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 19:20:19 -0400
-Received: from mail.lang.hm ([64.81.33.126]:50404 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752212AbZDEXUS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Apr 2009 19:20:18 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n35NK7YO027787;
-	Sun, 5 Apr 2009 16:20:07 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <20090405225954.GA18730@vidovic>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1753738AbZDEXXA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Apr 2009 19:23:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752212AbZDEXW7
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 19:22:59 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:61820 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751972AbZDEXW7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Apr 2009 19:22:59 -0400
+Received: by fxm2 with SMTP id 2so1662700fxm.37
+        for <git@vger.kernel.org>; Sun, 05 Apr 2009 16:22:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :received:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=glPWfirWrkqvIVkX9k2safEoSPWuH96ojcuEIr32y4Q=;
+        b=F3zVV9+F8GRAqE3vGkEQWllHNYtN9CEU8rqF0H9PddArGtDGteiRT2T2h83dQNBJpm
+         Mo4WKwyf/q6FMcORM1YkDl3YRoB8FldhcHrhBBTsjeE1gLDRy8THBTKECm0o4BTOwmyM
+         qn/Un4ubTynRBgWUSAdLb+mfcPROKz4HpxH9E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=LaqPt+Ay2nudekz0U4wXpFqXVwisKMazrrRn3AcaVEJy+bqKged9Ud23n7MbkP5FK3
+         M9mXSOns89ShmXAnDqN/Omy6D45cWBAuVRps6vCCHbE57wSVQAXWx7AS9ra5uYY+ifQc
+         V5LwCmKBVhoRRWHwG7bbwBpoBaa51F/RLKZKg=
+In-Reply-To: <200904060117.24810.markus.heidelberg@web.de>
+Received: by 10.103.244.10 with SMTP id w10mr1671557mur.71.1238973776279; Sun, 
+	05 Apr 2009 16:22:56 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115736>
 
-On Mon, 6 Apr 2009, Nicolas Sebrecht wrote:
+Heya,
 
-> On Sun, Apr 05, 2009 at 02:28:35PM -0700, david@lang.hm wrote:
+On Mon, Apr 6, 2009 at 01:17, Markus Heidelberg
+<markus.heidelberg@web.de> wrote:
+> Felipe Contreras, 06.04.2009:
+>> But actually, "git diff --cached" is a
+>> different action; you can't do "git diff --cached HEAD^.." for
+>> example.
 >
->> guys, back off a little on telling the gentoo people to change.
->
-> Don't blame Git people, please. I currently am the only one here to
-> discuss that way and see a painful work coming at Gentoo.
-> Git people didn't discuss around thoses issues.
->
->>                                                                 the
->> kernel developers don't split th kernel into 'core' 'drivers' etc pieces
->> just because some people only work on one area.
->
-> And you might notice that they don't provide a CVS access and actually
-> don't work around an unique shared repo. Also, you might notice that
-> keeping the history clean to assure the work on the kernel easier is not
-> an elementary issue.
+> And I neither could I do "git stage diff HEAD^.."
 
-these issues are completely seperate from the issue that the initial 
-poster asked about, which is that when someone tries to do a clone of the 
-repository the system wastes a lot of time creating a new pack.
+I rest my case ;). That's the whole point Felipe is trying to make here.
+$ git diff --cached
+$ git diff HEAD^..
 
-the kernel has a central public repo, they could run the cvs server on 
-that and still keep the rest of the kernel development exactly the way it 
-is.
+That's two different modes of operation with the only difference being
+a switch ('--cached'), which changes what is, and what is not valid
+after that.
 
-if they are currently planning for one central repo with everyone pushing 
-to it, I expect that they will change their workflow as they get used to 
-git, but that isn't going to address the problem in the tool.
+Whereas with
+$ git stage diff
 
->> just because some people only work on one area. I see the gentoo desire
->> to keep things in one repo as being something very similar.
->
-> That's why I think the gentoo desire is not very clean (don't be
-> affected). What I see is that in one hand you want a DSCM and on the
-> other hand you want to keep a central shared repo.
+There is no confusion that 'HEAD^..' is not a valid argument, as there
+is no command in 'git stage diff' to which it _is_ a valid argument.
 
-don't worry about this part of things, worry about why the server wastes 
-so many resources.
 
-if this is really what's happening, other projects will suffer as well 
-(including the kernel, which has a very distributed workflow)
+-- 
+Cheers,
 
->> the problem here is a real one, if you have a large repo, git send-pack
->> will always generate a new pack, even if it doesn't need to (with the
->> extreme case being the the repo is fully packed)
->
-> What about the rsync solution given in this thread?
-
-that may be a work-around for a situation where git just doesn't work, but 
-how do they prevent users from killing their server by trying to do a 
-normal git clone?
-
-Daivd Lang
+Sverre Rabbelier
