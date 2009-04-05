@@ -1,152 +1,156 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: git-{diff,merge} refactor round 2
-Date: Mon, 6 Apr 2009 00:15:16 +0200
-Message-ID: <200904060015.17145.markus.heidelberg@web.de>
-References: <1238590514-41893-1-git-send-email-davvid@gmail.com> <7vzlevv3fy.fsf@gitster.siamese.dyndns.org> <20090405211533.GA1393@gmail.com>
-Reply-To: markus.heidelberg@web.de
+From: Reece Dunn <msclrhd@googlemail.com>
+Subject: Re: Running 'git pull' from an unnamed branch
+Date: Sun, 5 Apr 2009 23:15:40 +0100
+Message-ID: <3f4fd2640904051515x797e10b5ia20543f207084a60@mail.gmail.com>
+References: <3f4fd2640904051433u199587c3wc9bf080d138944e7@mail.gmail.com>
+	 <200904052342.44856.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes.Schindelin@gmx.de, charles@hashpling.org, git@vger.kernel.org, msysgit@googlegroups.com
-To: David Aguilar <davvid@gmail.com>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Mon Apr 06 00:16:54 2009
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qy0-f163.google.com ([209.85.221.163])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: markus.heidelberg@web.de
+X-From: git-owner@vger.kernel.org Mon Apr 06 00:17:19 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lqadz-0007dg-3d
-	for gcvm-msysgit@m.gmane.org; Mon, 06 Apr 2009 00:16:47 +0200
-Received: by qyk35 with SMTP id 35so3427407qyk.3
-        for <gcvm-msysgit@m.gmane.org>; Sun, 05 Apr 2009 15:15:20 -0700 (PDT)
+	id 1LqaeV-0007ks-1r
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 00:17:19 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753718AbZDEWPp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Apr 2009 18:15:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753642AbZDEWPo
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 18:15:44 -0400
+Received: from mail-bw0-f169.google.com ([209.85.218.169]:60707 "EHLO
+	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753492AbZDEWPn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Apr 2009 18:15:43 -0400
+Received: by bwz17 with SMTP id 17so1641932bwz.37
+        for <git@vger.kernel.org>; Sun, 05 Apr 2009 15:15:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received-spf:authentication-results:received
-         :received:from:reply-to:to:subject:date:user-agent:cc:references
-         :in-reply-to:jabber-id:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id:x-sender
-         :x-provags-id:sender:precedence:x-google-loop:mailing-list:list-id
-         :list-post:list-help:list-unsubscribe:x-beenthere-env:x-beenthere;
-        bh=nzlS6fi1uoWhzJWael6LWOyJycxRCDO3hwwLP0QFVns=;
-        b=NHwkS+2d7/qq0gisqfVpXy5u8ZZew1UHaOeNAPyJVQzWyBmcN/m6aRLF0kT6b+hd3h
-         c2sMYU0pwrwhS9n50AQ99ezrOTL25wZUmPeTJpjilvdXpqED3fDWvLQn8EolLffVUG4n
-         JyFe9J5mkMjJ0F4G4kmSKwVZvPGGlRW7GNf70=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=r0865XDHtltQZAD4Bxp1RUEf/HNrRgJh81yrejlexOA=;
+        b=KLtAQ8emc1GMtE2vs9ex+g8jn2czsBdcLrn7j7bEj4JPtm7/rXp0EvxUfbSzcZfb7W
+         cJ1M5dlD+R9VSzEFbiQDXNdhhRY6uVOsw/rN7aMAmyd9n7EsQyXLJAmpqXXgl8VK8pna
+         AxazE7CnTkfz3H9r3Gi765DCyspzouWNHIMzk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:from
-         :reply-to:to:subject:date:user-agent:cc:references:in-reply-to
-         :jabber-id:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id:x-provags-id:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        b=YfbYFTrpAoY0fIlbI6C9Te3CMoNDTUNczVDqMkXRM7zt/eS2Jf3NXeIp48JPg6tkNF
-         ztCEp+ih7IX+6cIx5O9q4o1SCgTX7M2WCQLhqXwcrvDjEEM8o3lU65/z+YHKnPTayeyA
-         1MEcEqL2f2orGs1AleFL+CzRnX1dzar+AKU4M=
-Received: by 10.224.67.199 with SMTP id s7mr529903qai.12.1238969711070;
-        Sun, 05 Apr 2009 15:15:11 -0700 (PDT)
-Received: by 10.177.145.19 with SMTP id x19gr4662yqn.0;
-	Sun, 05 Apr 2009 15:15:11 -0700 (PDT)
-X-Sender: markus.heidelberg@web.de
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.210.27.20 with SMTP id a20mr1136305eba.14.1238969710166; Sun, 05 Apr 2009 15:15:10 -0700 (PDT)
-Received: from fmmailgate03.web.de (fmmailgate03.web.de [217.72.192.234]) by gmr-mx.google.com with ESMTP id 14si608144ewy.1.2009.04.05.15.15.10; Sun, 05 Apr 2009 15:15:10 -0700 (PDT)
-Received-SPF: pass (google.com: best guess record for domain of markus.heidelberg@web.de designates 217.72.192.234 as permitted sender) client-ip=217.72.192.234;
-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: best guess record for domain of markus.heidelberg@web.de designates 217.72.192.234 as permitted sender) smtp.mail=markus.heidelberg@web.de
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215]) by fmmailgate03.web.de (Postfix) with ESMTP id F0885FA020B6; Mon,  6 Apr 2009 00:15:09 +0200 (CEST)
-Received: from [89.59.118.104] (helo=.) by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256) (WEB.DE 4.110 #277) id 1LqacP-0001r1-00; Mon, 06 Apr 2009 00:15:09 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <20090405211533.GA1393@gmail.com>
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX19EXDx5giNHCNpo97X5mlv+Y6r370boCoLwF+w1 bRwEFfdCdWupuGr1xJGz3lw+c1B9jghuOg4Dvt56Dfk5L11FAa rwuFrxas+OmpovVUa58Q==
-Sender: msysgit@googlegroups.com
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=jHNCsHOvW7cRHBjtzRRKCwQsJZ/t6UA76bluSdXb0bgvH2xGaB/bgKnbXaVn+mu8mD
+         rAs6tNej4pV/IvcVbgVE0hdPQ/2jpl0pyy9QAC7JETL+T6e0oKMMbLrmt/zKRluDkGAZ
+         9Wz3vD7kKzfSsFgUFNyJfsHjPS3Zofp7UuFPI=
+Received: by 10.239.135.77 with SMTP id c13mr82551hbc.104.1238969740739; Sun, 
+	05 Apr 2009 15:15:40 -0700 (PDT)
+In-Reply-To: <200904052342.44856.markus.heidelberg@web.de>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit+owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit+help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-X-BeenThere-Env: msysgit@googlegroups.com
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115726>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115727>
 
+2009/4/5 Markus Heidelberg <markus.heidelberg@web.de>:
+> Reece Dunn, 05.04.2009:
+>> Hi,
+>>
+>> Here is something I have just recently tripped up on.
+>>
+>> $ git pull
+>>
+>> [..]
+>>
+>> $ git branch
+>> * (no branch)
+>> =A0 master
+>>
+>> Running `git checkout master && git pull` fixed the above issue. The
+>> patch below improves the error message for users that are in this
+>> state.
+>>
+>> Also, is "branch..remote" valid? Should this be "branch.remote"?
+>
+> The current branch has no name, so there is nothing between the two
+> dots. For clarification: branch.(no branch).remote
 
-David Aguilar, 05.04.2009:
-> On  0, Junio C Hamano <gitster@pobox.com> wrote:
-> > David Aguilar <davvid@gmail.com> writes:
-> > 
-> > I'll try to queue all the outstanding da/difftool patches tonight, but I
-> > think the patches in the series are getting to the point of needing a
-> > fresh redoing.  Patches like "oops, these non-user scripts should have
-> > been named with double-dash" can and should disappear.
-> > 
-> > Currently they are:
-> > 
-> > $ git log --oneline next..da/difftool
-> > [..]
-> 
-> It goes back even farther...
-> 
-> d3b8cec difftool: move 'git-difftool' out of contrib
-> 
-> d3db8cec is currently sitting in 'next' and is where the
-> "oops, I should have used double-dash" lack of foresight
-> began.
+Ok. I see now.
 
-> 1. Base it on the current master, completely throwing away
-> the existing da/difftool branch.  That would include throwing
-> away the commit that's in next if we really want to be clean
-> about the history.  In the process, move Markus' mergetool
-> fixes for windows to the top so that they can be applied
-> independently if necessary.  This series would then depend
-> on them.
+>> + =A0 =A0 echo "You may not be on a branch. In this case, you need t=
+o move"
+>> + =A0 =A0 echo "onto the branch you want to pull to (usually master)=
+:"
+>> + =A0 =A0 echo " =A0 =A0git checkout <branch>"
+>> + =A0 =A0 echo
+>
+> Not being on a branch is not the general case when you receive this
+> message. Maybe determining if you are not on a branch and adjusting t=
+he
+> message acordingly is an option.
 
-This is my favourite, too.
+So, something like:
 
-Additionally, what about basing these on master as well? They also are
-unrelated to the refactoring:
+=46rom 59e8b71be1585a3a6c8c1233811c19ef0022b3e5 Mon Sep 17 00:00:00 200=
+1
+=46rom: Reece Dunn <msclrhd@gmail.com>
+Date: Sun, 5 Apr 2009 23:15:03 +0100
+Subject: [PATCH] Improve the message when pulling to a headless branch.
 
-def88c8 mergetool-lib: specialize opendiff options when in diff mode
-2a83022 mergetool-lib: add diffuse as merge and diff tool
-73c59d9 mergetool-lib: specialize xxdiff options when in diff mode
-273e7a2 mergetool-lib: specialize kdiff3 options when in diff mode
+---
+ git-pull.sh |   40 +++++++++++++++++++++++-----------------
+ 1 files changed, 23 insertions(+), 17 deletions(-)
 
-And start refactoring on top of these?
-Then these could go into master or next, since they are mostly bugfixes
-and the refactoring can start in pu.
+diff --git a/git-pull.sh b/git-pull.sh
+index 8a26763..f263c04 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -90,23 +90,29 @@ error_on_no_merge_candidates () {
 
-> This would probably mean a merge conflict with next at some
-> point.
+ 	curr_branch=3D${curr_branch#refs/heads/}
 
-Revert "d3b8cec difftool: move 'git-difftool' out of contrib" from next?
+-	echo "You asked me to pull without telling me which branch you"
+-	echo "want to merge with, and 'branch.${curr_branch}.merge' in"
+-	echo "your configuration file does not tell me either.  Please"
+-	echo "name which branch you want to merge on the command line and"
+-	echo "try again (e.g. 'git pull <repository> <refspec>')."
+-	echo "See git-pull(1) for details on the refspec."
+-	echo
+-	echo "If you often merge with the same branch, you may want to"
+-	echo "configure the following variables in your configuration"
+-	echo "file:"
+-	echo
+-	echo "    branch.${curr_branch}.remote =3D <nickname>"
+-	echo "    branch.${curr_branch}.merge =3D <remote-ref>"
+-	echo "    remote.<nickname>.url =3D <url>"
+-	echo "    remote.<nickname>.fetch =3D <refspec>"
+-	echo
+-	echo "See git-config(1) for details."
++	if [ -n "$curr_branch" ]; then
++		echo "You asked me to pull without telling me which branch you"
++		echo "want to merge with, and 'branch.${curr_branch}.merge' in"
++		echo "your configuration file does not tell me either.  Please"
++		echo "name which branch you want to merge on the command line"
++		echo "and try again (e.g. 'git pull <repository> <refspec>')."
++		echo "See git-pull(1) for details on the refspec."
++		echo
++		echo "If you often merge with the same branch, you may want to"
++		echo "configure the following variables in your configuration"
++		echo "file:"
++		echo
++		echo "    branch.${curr_branch}.remote =3D <nickname>"
++		echo "    branch.${curr_branch}.merge =3D <remote-ref>"
++		echo "    remote.<nickname>.url =3D <url>"
++		echo "    remote.<nickname>.fetch =3D <refspec>"
++		echo
++		echo "See git-config(1) for details."
++	else
++		echo "You may not be on a branch. In this case, you need to"
++		echo "move to the branch you want to pull to (usually master):"
++		echo "    git checkout <branch>"
++	fi
+ 	exit 1
+ }
 
-> Regardless of which it's based on, it's obvious that there'll
-> be some squashing going on.  Tentatively,
-> 
-> Will be squashed:
-> 588954e difftool: use valid_tool from git-mergetool-lib
-> 8af4556 mergetool: use valid_tool from git-mergetool-lib
-> 
-> Will be squashed:
-> 72286b5 difftool: use get_mergetool_path from git-mergetool-lib
-> d03b97f mergetool: use get_mergetool_path from git-mergetool-lib
-> c6afc72 Add a mergetool-lib scriptlet for holding common merge tool functions
-> 
-> Will be squashed:
-> 99511d8 mergetool: use run_mergetool from git-mergetool-lib
-> 37c48c7 difftool: use run_mergetool from git-mergetool-lib
-> 4e314b5 mergetool-lib: introduce run_mergetool
-> 
-> Will be squashed:
-> def88c8 mergetool-lib: specialize opendiff options when in diff mode
-> 73c59d9 mergetool-lib: specialize xxdiff options when in diff mode
-> 273e7a2 mergetool-lib: specialize kdiff3 options when in diff mode
-
-Yes, some squashing would be nice. Similar commit messages are confusing
-when reading the history.
-
-Markus
+--=20
+1.6.2.2.414.g81aa.dirty
