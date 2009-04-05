@@ -1,78 +1,101 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [RFC/PATCH 0/2] New 'stage' command
-Date: Mon, 6 Apr 2009 01:06:06 +0300
-Message-ID: <94a0d4530904051506x5cf7fa09o6b0168a4c440e1f8@mail.gmail.com>
-References: <1238939331-10152-1-git-send-email-felipe.contreras@gmail.com>
-	 <7vmyausz3h.fsf@gitster.siamese.dyndns.org>
-	 <94a0d4530904051228m4e57ec90y810dded41f47e443@mail.gmail.com>
-	 <7v7i1yrj3t.fsf@gitster.siamese.dyndns.org>
-	 <7vzleuq3ci.fsf@gitster.siamese.dyndns.org>
-	 <94a0d4530904051341s7e8718c2uced945a16c26670e@mail.gmail.com>
-	 <76718490904051355p2f92d445j860c56638118a604@mail.gmail.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: Running 'git pull' from an unnamed branch
+Date: Mon, 6 Apr 2009 00:08:55 +0200
+Message-ID: <20090405220855.GA20356@atjola.homenet>
+References: <3f4fd2640904051433u199587c3wc9bf080d138944e7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 06 00:07:47 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: Reece Dunn <msclrhd@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 06 00:10:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqaVE-0005Qk-Hd
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 00:07:45 +0200
+	id 1LqaXv-000695-2r
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 00:10:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753679AbZDEWGM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Apr 2009 18:06:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752211AbZDEWGK
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 18:06:10 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:47078 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752363AbZDEWGJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Apr 2009 18:06:09 -0400
-Received: by fxm2 with SMTP id 2so1650442fxm.37
-        for <git@vger.kernel.org>; Sun, 05 Apr 2009 15:06:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=M2w/Fl9UIhNSpwN+0rM82qjz9rjpCPaOxTVsBgOVI2c=;
-        b=BfY3my2pAays3wZWvN0jIfZzIfWPXKP4PbIiR4cuhnByMl+G0dMfkUeIgwALUskws9
-         sIiQ46oPtIvIA2u2JkbXpO4Tr2YtB4WeX/vQhDFF7u9unKhmzZqgpeoBbOmXKg4btWQE
-         J1SRDms46JR+Qlpnt5rB5s7FacSA3dO65AfFU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=CKCt67hvz+qJq2b+zCksQgtX3ijQinbQ84FOZEwKnnoxwZSUGfaW5HOvUVNDOUzsln
-         IFYe+cQM2XC5fg0cADm1q+ik+xmkJnBnNDBX7czKMXTUfF/Zwf1accLP/Th3buN3EhEr
-         +7h3a/r/voYhu4JQhk6R7GPmjv4JBIONxFyO0=
-Received: by 10.86.1.1 with SMTP id 1mr2617316fga.0.1238969166722; Sun, 05 Apr 
-	2009 15:06:06 -0700 (PDT)
-In-Reply-To: <76718490904051355p2f92d445j860c56638118a604@mail.gmail.com>
+	id S1753741AbZDEWJA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Apr 2009 18:09:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752966AbZDEWI7
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 18:08:59 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48771 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752318AbZDEWI7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Apr 2009 18:08:59 -0400
+Received: (qmail invoked by alias); 05 Apr 2009 22:08:56 -0000
+Received: from i59F56377.versanet.de (EHLO atjola.local) [89.245.99.119]
+  by mail.gmx.net (mp067) with SMTP; 06 Apr 2009 00:08:56 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1/ySdVqN17y0a61MPec1dKD5ijlByiffqIpZ7E+5y
+	ZI6uB07tXBH4Mk
+Content-Disposition: inline
+In-Reply-To: <3f4fd2640904051433u199587c3wc9bf080d138944e7@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115725>
 
-On Sun, Apr 5, 2009 at 11:55 PM, Jay Soffian <jaysoffian@gmail.com> wrote:
-> On Sun, Apr 5, 2009 at 4:41 PM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->> == stage ==
->>
->> The word "stage" is used widely in the English language, and it
->> immediately evokes a theatrical stage. Generally, it means a different
->> (upper) level.
->>
->> In git it is barely used, mostly on the "documentation industry"
->> probably because it's easier to understand for most people (even
->> non-native-English speakers).
->
-> Would an index by any other name smell as sweet?
+On 2009.04.05 22:33:57 +0100, Reece Dunn wrote:
+> $ git pull
+> You asked me to pull without telling me which branch you
+> want to merge with, and 'branch..merge' in
+> your configuration file does not tell me either.  Please
+> name which branch you want to merge on the command line and
+> try again (e.g. 'git pull <repository> <refspec>').
+> See git-pull(1) for details on the refspec.
+>=20
+> If you often merge with the same branch, you may want to
+> configure the following variables in your configuration
+> file:
+>=20
+>     branch..remote =3D <nickname>
+>     branch..merge =3D <remote-ref>
+>     remote.<nickname>.url =3D <url>
+>     remote.<nickname>.fetch =3D <refspec>
+>=20
+> See git-config(1) for details.
+>=20
+> $ git branch
+> * (no branch)
+>   master
+>=20
+> Running `git checkout master && git pull` fixed the above issue. The
+> patch below improves the error message for users that are in this
+> state.
 
-Yeap, almost. Do you have in mind any other word that would fit?
+It doesn't "fix" anything, you're simply doing something different.
 
--- 
-Felipe Contreras
+"git pull" while on a detached HEAD can't work, there are no defaults
+that could be used. But e.g. "git pull origin master" would do, fetchin=
+g
+"master" from "origin" and merging it to the commit you have checked
+out.
+
+Your "git checkout master && git pull" does something else. It uses the
+configured pull defaults for "master" to fetch something and merge it t=
+o
+"master".
+
+> Also, is "branch..remote" valid? Should this be "branch.remote"?
+
+That's a bug, but it should not be branch.remote. The config setting is
+branch.<name>.remote. As you were on a detached HEAD, there is no
+"<name>", and the code that generates the error message doesn't handle
+that correctly. I'd even say that in this case, the whole "If you often
+merge ..." part makes no sense at all, you simply can't setup pull
+defaults for a detached HEAD.
+
+> +	echo "You may not be on a branch. In this case, you need to move"
+> +	echo "onto the branch you want to pull to (usually master):"
+
+Hm? Neither do you really need to move to a branch, nor is "master"
+really _that_ special that it is warranted to recommend checking it
+out... IMHO.
+
+Bj=F6rn
