@@ -1,78 +1,85 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] send-email: fix nasty bug in ask() function
-Date: Sat, 4 Apr 2009 23:31:42 -0400
-Message-ID: <76718490904042031o5009a684xcf10aaff163e657@mail.gmail.com>
-References: <449c10960904041002s22124b74k8440af216b1de9ee@mail.gmail.com>
-	 <1238901801-47109-1-git-send-email-jaysoffian@gmail.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: git-{diff,merge} refactor round 2
+Date: Sat, 4 Apr 2009 20:34:44 -0700
+Message-ID: <20090405033443.GA16219@gmail.com>
+References: <1238590514-41893-1-git-send-email-davvid@gmail.com> <200904050458.17708.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Bruce Stephens <bruce.stephens@isode.com>,
-	Dan McGee <dpmcgee@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 05 05:33:21 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, charles@hashpling.org, git@vger.kernel.org
+To: Markus Heidelberg <markus.heidelberg@web.de>
+X-From: git-owner@vger.kernel.org Sun Apr 05 05:36:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqJ6k-00036I-Cp
-	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 05:33:18 +0200
+	id 1LqJ9s-0003Xv-74
+	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 05:36:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756876AbZDEDbr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Apr 2009 23:31:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756871AbZDEDbq
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Apr 2009 23:31:46 -0400
-Received: from yx-out-2324.google.com ([74.125.44.28]:43495 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756850AbZDEDbp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Apr 2009 23:31:45 -0400
-Received: by yx-out-2324.google.com with SMTP id 31so1625262yxl.1
-        for <git@vger.kernel.org>; Sat, 04 Apr 2009 20:31:42 -0700 (PDT)
+	id S1756850AbZDEDe7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Apr 2009 23:34:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756845AbZDEDe7
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Apr 2009 23:34:59 -0400
+Received: from rv-out-0506.google.com ([209.85.198.225]:51089 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756802AbZDEDe6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Apr 2009 23:34:58 -0400
+Received: by rv-out-0506.google.com with SMTP id f9so1728086rvb.1
+        for <git@vger.kernel.org>; Sat, 04 Apr 2009 20:34:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=oasdIE4M4YhbiI+1l73Tlo1t8ImscbDg8ClyWmsNJAs=;
-        b=IH+grxQM1pX5noAR4eQEeTL/vXOT44aeZhjr1DGRUAVqYFYiNK8vv3BCl9XbfZKkai
-         705fLjb9DnWOqG+bQuwNb1FaqG66FwlRxVZ1GppGVHAMiKBSFgES7kigS92LqBHpzuVA
-         c1jYYOKhx2pzKLCczMQHa3IqqQ5ggidGav32A=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=0M8O/7Lml9Pgtxhe59DNyzylfv3LchqoTjlyc2X0Upg=;
+        b=AWK1eSLCdjYP0p4/qVITLUYrc/rrvzxyeOcC2+/6RrMhF/H9fu885s1ZMi3sLCWpI3
+         y63mUrA5UmYqMS08FN9gkojstqIE5+aEzJXe2BVSvKvAVoYXkp0iAclMLNRM7PX1CEN0
+         RltzbZD7FbU6U8HJv0vfYdSMFXW2RO6iZI/4M=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=GvmxG1dGLuJOkiSvFnQWB8RyCOXZqFQMkS0zPacDCoQFUSBPMosCTiNo7Q4r28Bruj
-         Uubhjv3HxJqj8wtqP7scY8FljQQ+x22iUdaBBO+xLSmL7vz+uxhrHj1FWk3Nt3+2UMd0
-         T9m4kqsH7iXDDynwxsPaLDA41Ab3+MFnT67s8=
-Received: by 10.151.156.6 with SMTP id i6mr1714690ybo.200.1238902302862; Sat, 
-	04 Apr 2009 20:31:42 -0700 (PDT)
-In-Reply-To: <1238901801-47109-1-git-send-email-jaysoffian@gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=u3/rcBD0eMuF1OwzxnTKkmAj0p9Gkm6xWl9UBIjt1HSHKcQY0GoNpPgsoBdD0X5oiS
+         ftBJy83r7wS9ErlfQaSQpIcvkAib7PnoEPRjPY834VeIUIiSuLOF4B64dfrd5AbKUiwi
+         fdvKKq4Tx2QM2JJAmhAG6SPFpr+QpbMgU5P9I=
+Received: by 10.114.255.1 with SMTP id c1mr1506536wai.4.1238902495555;
+        Sat, 04 Apr 2009 20:34:55 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id l37sm3875780waf.38.2009.04.04.20.34.53
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 04 Apr 2009 20:34:54 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <200904050458.17708.markus.heidelberg@web.de>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115627>
 
-> I'm also super confused why the issue is occuring. You can see from the
-> patch below that by default the ask() function attempted to match the
-> user's input against the empty regex //, which should match anything:
->
-> $ perl -e 'use strict; my $resp="something"; my $re=""; print "true\n" if $resp =~ /$re/'
-> true
-> $ perl -e 'use strict; my $resp=""; my $re=""; print "true\n" if $resp =~ /$re/'
-> true
->
-> Any yet while my demonstration above works as I expect, for some reason
-> what is basically the same code (AFAICT) in send-email does not match. I
-> thought I knew my perl fairly well, but maybe some perl guru can see
-> what's going wrong.
+On  0, Markus Heidelberg <markus.heidelberg@web.de> wrote:
+> David Aguilar, 01.04.2009:
+> > Here's the 2nd round of refactoring.
+> 
+> I just noticed that mergetool.<mergetool>.path doesn't work anymore.
+> git grep mergetool.*path only hits one line in git-difftool--helper.sh
+> Neither does it seem to work with difftool, but I'm gonna go to bed now.
+> 
+> Markus
+> 
 
-Ah, found it in perlreref:
+Oops.  Well, I have one final patch that removes the last bit of
+redundant code.  It also fixed this problem so I'll go ahead
+and send it (it's based on top of da/difftool mentioned in
+pu).
 
-   If 'pattern' is an empty string, the last successfully matched
-   regex is used.
+Since the test cases didn't catch that breakage I added a test
+for it. 
 
-Grumble.
+Look for a patch called:
 
-j.
+mergetool--lib: consolidate the last redundant bits in {diff,merge}tool
+
+
+-- 
+
+	David
