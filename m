@@ -1,108 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] revision.h: add includes of "diff.h" and "commit.h"
-Date: Sun, 05 Apr 2009 01:02:09 -0700
-Message-ID: <7v3acnzfy6.fsf@gitster.siamese.dyndns.org>
-References: <20090404214554.75ada117.chriscool@tuxfamily.org>
- <20090405162841.6117@nanako3.lavabit.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 7/7] user-manual: simplify the user configuration
+Date: Sun, 5 Apr 2009 12:14:02 +0300
+Message-ID: <94a0d4530904050214y256cc0d3icc1843cfd148d69d@mail.gmail.com>
+References: <1238837909-3060-1-git-send-email-felipe.contreras@gmail.com>
+	 <1238837909-3060-2-git-send-email-felipe.contreras@gmail.com>
+	 <1238837909-3060-3-git-send-email-felipe.contreras@gmail.com>
+	 <1238837909-3060-4-git-send-email-felipe.contreras@gmail.com>
+	 <1238837909-3060-5-git-send-email-felipe.contreras@gmail.com>
+	 <1238837909-3060-6-git-send-email-felipe.contreras@gmail.com>
+	 <1238837909-3060-7-git-send-email-felipe.contreras@gmail.com>
+	 <1238837909-3060-8-git-send-email-felipe.contreras@gmail.com>
+	 <76718490904042036q26bebc13p91c8cffaf432c02c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	Nathaniel P Dawson <nathaniel.dawson@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Sun Apr 05 10:04:06 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 05 11:15:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqNKn-0004FB-B5
-	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 10:04:05 +0200
+	id 1LqOS6-0000aK-B0
+	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 11:15:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758076AbZDEICa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Apr 2009 04:02:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758074AbZDEIC3
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 04:02:29 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58386 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757839AbZDEIC2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Apr 2009 04:02:28 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 6DA87A8A23;
-	Sun,  5 Apr 2009 04:02:24 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DF129A8A1F; Sun,
-  5 Apr 2009 04:02:13 -0400 (EDT)
-In-Reply-To: <20090405162841.6117@nanako3.lavabit.com> (Nanako Shiraishi's
- message of "Sun, 05 Apr 2009 16:28:41 +0900")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 18F17BE8-21B8-11DE-87C4-BB14ECB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1755584AbZDEJOK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Apr 2009 05:14:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754559AbZDEJOH
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 05:14:07 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:49616 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754128AbZDEJOF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Apr 2009 05:14:05 -0400
+Received: by fxm2 with SMTP id 2so1486440fxm.37
+        for <git@vger.kernel.org>; Sun, 05 Apr 2009 02:14:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=cjfpCFgGJysG6mK12i+yTl09atkqtVaJEnbWdj85v4s=;
+        b=eCp26FSS0K6HfIt+D+7onqRVXd5R2wwy0nFRpXtRVCpdtc1fQs9TDr2lmHSBryjAs5
+         MayBjZD6nXT+CgIaQYh3zOcmWezeZjODGlMwkIKyDYfQN7ODhZmxwIFqXGe9WDJqDtgw
+         weqsFSmH6nFxfhsjVPB+BzToJmlIaVqbj6Xk8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=MJ8wSq3yMfKA7Hve2rVk/DHMvPdJyBRqViUSpoylqIk7M3xLlI/AjXaitb1kKqKeJv
+         wGEIQNIpbESL/DeBu4w9MjfERRLYt1hbPIDaLJq+zn0Y4/bDNgYvCk0/jrd13BVzsyEG
+         jSQy3/PSsklSoXCNT6B1xwF38zKf91g8hz5uM=
+Received: by 10.86.31.18 with SMTP id e18mr2163793fge.72.1238922842430; Sun, 
+	05 Apr 2009 02:14:02 -0700 (PDT)
+In-Reply-To: <76718490904042036q26bebc13p91c8cffaf432c02c@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115640>
 
-Nanako Shiraishi <nanako3@lavabit.com> writes:
-
-> Quoting Christian Couder <chriscool@tuxfamily.org>:
+On Sun, Apr 5, 2009 at 6:36 AM, Jay Soffian <jaysoffian@gmail.com> wrot=
+e:
+> On Sat, Apr 4, 2009 at 5:38 AM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> This is shorter, avoids the burder to think about the format of the
+>> configuration file, and git config is already used in other places i=
+n
+>> the manual.
+>> [...]
+>> =C2=A0------------------------------------------------
+>> -[user]
+>> - =C2=A0 =C2=A0 =C2=A0 name =3D Your Name Comes Here
+>> - =C2=A0 =C2=A0 =C2=A0 email =3D you@yourdomain.example.com
+>> +$ git config --global user.name "Your Name Comes Here"
+>> +$ git config --global user.email you@yourdomain.example.com
+>> =C2=A0------------------------------------------------
 >
->> Because they are needed by some features included in
->> "revision.h".
->>
->> This makes the following just work:
->>
->>         $ cat >1.c <<\EOF
->>         #include "cache.h"
->>         #include "revision.h"
->>         EOF
->>         $ cc -Wall -DSHA1_HEADER='<openssl/sha.h>' -c 1.c
->
-> I'm sorry if this is obvious to experienced people, but I don't understand what benefit there is to make such an empty program compilable.
+> This has come up before, and the idea was to hint to the reader that
+> .gitconfig is something they can edit themselves.
 
-I believe this was prompted by my earlier comment on the header clean-up
-($gmane/115443), but I'd say it does not make much sense.  I have already
-explained why it doesn't, and in addition, as the above example shows, you
-still have to include "cache.h" in your 1.c file anyway, so it is not
-making the header "usable standalone" either.
+Ok, I forgot to explain this again the commit message of this
+particular patch, but it's described in the patch series description.
 
-If you have a follow-up patch that removes the inclusion of diff.h and
-commit.h to millions of .c files that already include revision.h, it might
-start to make sense, but it goes against one of the rules Christian wanted
-to add, namely:
+The previous patch adds a 'Getting Started' section that explains
+exactly that; you can edit ~/.gitconfig.
 
-    a header file should be included in a C file only if it is needed to 
-    compile the C file (it is not ok to include it only because it includes 
-    many other headers that are needed)
+So that concern is already addressed.
 
-in the sense that if somebody wants to run diff in his C code, he should
-explicitly include diff.h (or diffcore.h if necessary), instead of relying
-on the fact that revision.h happens to include it, and he happens to
-include revision.h because he uses setup_revisions() to parse the command
-line arguments (and I happen to think that guideline makes sense).
-
-Even though including the same .h file twice is protected with the
-standard:
-
-	#ifndef FROTZ_H
-        #define FROTZ_H
-        ...
-        #endif
-
-it does make C preprocessor do extra work to open the header twice (and
-skip the whole file in its second inclusion), so there is a slight
-performance issue.
-
-You can argue revision.h is somewhat special---it are so central that
-almost all core-ish history inspection commands in git revolve around
-them, and it is not particularly a bad idea to say "you can rely on
-revision.h to include diff.h" in practice.  That would give you an escape
-hatch to omit inclusion of diff.h from programs that include revision.h
-and avoid the performance issue.
-
-But then that introduces new rules on which ones are special and which
-ones are not, and overall it does not help simplifying the life of the
-programmers.
-
-So I do not feel strongly supportive about this patch.
+--=20
+=46elipe Contreras
