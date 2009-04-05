@@ -1,59 +1,83 @@
-From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-Subject: [question] how can i verify whether a local branch is tracking a 
-	remote branch?
-Date: Sun, 5 Apr 2009 12:32:29 +0200
-Message-ID: <4d8e3fd30904050332w394cccbaq5b82d2a53ed357a3@mail.gmail.com>
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: non-ascii filenames issue
+Date: Sun, 5 Apr 2009 11:51:10 +0100
+Message-ID: <43d8ce650904050351p72590d52l8861b3901f95201a@mail.gmail.com>
+References: <20090405093640.GA9803@home> <87ab6v2zor.fsf@iki.fi>
+	 <20090405100127.GA12126@home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 05 12:34:25 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 05 12:53:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqPgF-0007pa-7i
-	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 12:34:23 +0200
+	id 1LqPyE-0002tK-QV
+	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 12:52:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758491AbZDEKce (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Apr 2009 06:32:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758338AbZDEKcd
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 06:32:33 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:27196 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758079AbZDEKcc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Apr 2009 06:32:32 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so116655fgg.17
-        for <git@vger.kernel.org>; Sun, 05 Apr 2009 03:32:29 -0700 (PDT)
+	id S1759114AbZDEKv2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Apr 2009 06:51:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757513AbZDEKv1
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 06:51:27 -0400
+Received: from rv-out-0506.google.com ([209.85.198.230]:12737 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758668AbZDEKvN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Apr 2009 06:51:13 -0400
+Received: by rv-out-0506.google.com with SMTP id f9so1805381rvb.1
+        for <git@vger.kernel.org>; Sun, 05 Apr 2009 03:51:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=/azJji5VqEOz9cGwRy7MwSOZzJXtw96EKNvfqDBSOjQ=;
-        b=mo97KHnGCbmRm6YYfr46vaguZx9UFADy+3PayO/OQyQ6dswgKL+Kz5z+j+/CClBBSl
-         1XI75ttdBTIMlSAUWi0eqfnlush3MR6FnFJOY130pgdoJ+Zvd6jWhOPzVhH8D5sCpRKt
-         359ugOKVrOc4iADKQaDFU1txHmFG9sj/WOwNs=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=r9Sv5Z78fFCF7oy9vXcp692jg5U1AOosnVqlDx7C938=;
+        b=jtB1UNeKm+BYLY0LPTutXnPVntFO564Ts75aJtEswqbxPECVWE/p2BSWee1ax9jWKQ
+         PdGAoRcQtlmkKflUg+jK9ZFpi+TlAHTEtapaDjlO7dPDrQtGZMmr5z/zOSly3/ifUF08
+         SGccL2ePoP66/z+rXbOqTDFQfeM1ntVJ032cg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=hBHOcu1phP/XvBpGTCW0o1SEW1Bubt0NlTWD382MFUTsZb6ZGE3vBWPXAv21gV53E7
-         eNHxe/J/zkPzBEUHkIfKtKNJdyxhXDvQIRdY9E0R9Zo/6kC1j4SXYbb9AdhSyCvkKEUe
-         jLwpmUMGCMoutPVYSONcJVYRG4B0R9XaJo7/w=
-Received: by 10.86.65.9 with SMTP id n9mr2221372fga.55.1238927549803; Sun, 05 
-	Apr 2009 03:32:29 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=Dptb9B9Nnhb58UnLhHXD4RHL5ygZT1H9Y49dZ1KODrfBE3uqW3M5n1KnktKCILSuxT
+         3eS7a/Iw190odHYRGogMQChRVajz6jtkSJq+r0AQND4pL61oYA1jM1ueYpFEdCfu3/1o
+         EYiVTCsyPCrHqHbi3nEgByLDQ4aVURN2j/Lac=
+Received: by 10.142.191.5 with SMTP id o5mr930826wff.53.1238928670885; Sun, 05 
+	Apr 2009 03:51:10 -0700 (PDT)
+In-Reply-To: <20090405100127.GA12126@home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115656>
 
-Hi all,
-is there a way to verify, using the UI, whether a local branch is
-tracking a remote branch?
+2009/4/5 Gregory Petrosyan <gregory.petrosyan@gmail.com>:
+> On Sun, Apr 05, 2009 at 12:54:28PM +0300, Teemu Likonen wrote:
+>> On 2009-04-05 13:36 (+0400), Gregory Petrosyan wrote:
+>>
+>> > # Changes to be committed:
+>> > # =C2=A0 (use "git rm --cached <file>..." to unstage)
+>> > #
+>> > # =C2=A0new file: =C2=A0 "\321\204\320\260\320\271\320\273"
+>> > #
+>> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^^^^^^^^^^^=
+^^^^^^^^^^^^^^^^^^^^^^
+>> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0"=D1=
+=84=D0=B0=D0=B9=D0=BB" should be here instead
+>>
+>> It can be fixed with command:
+>>
+>> =C2=A0 =C2=A0 git config --global core.quotepath false
+>
+> Thanks! That works. Does it make sence to set it to "false" by defaul=
+t?
 
-Ciao,
--- 
-Paolo
-http://paolo.ciarrocchi.googlepages.com/
-http://mypage.vodafone.it/
+Unfortunately not, because for some absolutely crazy reason, there is
+no way at all to tell what encoding the string is in.  It never
+occured to anyone that it might actually be useful to be able to read
+the filename in an unambiguous way.  The result is this sort of mess.
+Just wait until you try to checkout that file on a new filesystem with
+a different encoding.  Or try to checkout that file in Windows.  It's
+like git decided to step backwards 30 years.
+
+John
