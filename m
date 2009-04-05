@@ -1,81 +1,82 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: [PATCH 3/4] Makefile: allow building without perl
-Date: Sat, 4 Apr 2009 17:06:09 -0700
-Message-ID: <20090405T000318Z@curie.orbis-terrarum.net>
-References: <20090403192700.GA14965@coredump.intra.peff.net> <20090403193220.GC5547@coredump.intra.peff.net> <20090404T224109Z@curie.orbis-terrarum.net> <20090404233936.GB26906@coredump.intra.peff.net> <20090404T234556Z@curie.orbis-terrarum.net> <20090404235636.GA27354@coredump.intra.peff.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 2/2] pack-objects: report actual number of threads to be
+ used
+Date: Sat, 04 Apr 2009 20:11:38 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0904042001540.6741@xanadu.home>
+References: <1238864396-8964-1-git-send-email-dpmcgee@gmail.com>
+ <1238864396-8964-2-git-send-email-dpmcgee@gmail.com>
+ <20090404180601.GA14888@coredump.intra.peff.net>
+ <449c10960904041120j38086192s25070912b0371c09@mail.gmail.com>
+ <20090404232505.GA26906@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="1XWsVB21DFCvn2e8"
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 05 02:09:29 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Dan McGee <dpmcgee@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Apr 05 02:13:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqFvU-0006vb-0r
-	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 02:09:28 +0200
+	id 1LqFzC-0007na-6U
+	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 02:13:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756024AbZDEAGS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Apr 2009 20:06:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755892AbZDEAGS
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Apr 2009 20:06:18 -0400
-Received: from b01.ext.isohunt.com ([208.71.112.51]:45731 "EHLO
-	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755057AbZDEAGR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Apr 2009 20:06:17 -0400
-Received: (qmail 31249 invoked from network); 5 Apr 2009 00:06:12 -0000
-Received: from tsi-static.orbis-terrarum.net (HELO curie.orbis-terrarum.net) (76.10.188.108)
-  (smtp-auth username robbat2@isohunt.com, mechanism login)
-  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Sun, 05 Apr 2009 00:06:12 +0000
-Received: (qmail 32715 invoked by uid 10000); 4 Apr 2009 17:06:09 -0700
-Content-Disposition: inline
-In-Reply-To: <20090404235636.GA27354@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1755057AbZDEALr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Apr 2009 20:11:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754454AbZDEALq
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Apr 2009 20:11:46 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:31490 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754105AbZDEALq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Apr 2009 20:11:46 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KHL00JHDPVE8330@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Sat, 04 Apr 2009 20:11:39 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20090404232505.GA26906@coredump.intra.peff.net>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115610>
+
+On Sat, 4 Apr 2009, Jeff King wrote:
+
+> On Sat, Apr 04, 2009 at 01:20:18PM -0500, Dan McGee wrote:
+> 
+> > > That makes sense to me, though I wonder if it may confuse and frustrate
+> > > users who are expecting their awesome quad-core machine to be using 4
+> > > threads when it only uses 2. Is it worth printing both values, or some
+> > > indicator that we could have been using more?
+> > 
+> > I thought of this, but decided it wasn't really worth it. The default
+> > window size of 10 makes it a very rare case that you will use fewer
+> > than 4 threads. With the default, each thread needs a minimum of 20
+> > objects, so even a 100-object repository would spawn the 4 threads.
+> 
+> Good point. Though by that logic, isn't your patch also not worth it
+> (i.e., it is unlikely not to fill the threads, so the output will be the
+> same with or without it)?
+> 
+> I still think yours is an improvement, though, however slight.
+
+I don't think this is worth it at all.
+
+This display is there mainly to confirm expected number of available 
+threads.  The number of actually active threads is an implementation 
+detail.  Sure if the number of objects is too low, or if the window size 
+is too large, then the number of active threads will be lower.  But in 
+practice it is also possible that with some patological object set you 
+end up with 2 threads out of 4 completing very quickly and the other 2 
+threads still busy with big objects and total remaining work set too 
+small to split it further amongst idle threads, meaning that you'll end 
+up with only 2 busy CPUs even though the display said 4 threads 
+initially even with this patch.
+
+In other words I don't think this patch is a good idea as we don't 
+update the display with remaining active threads along the way.
 
 
---1XWsVB21DFCvn2e8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Sat, Apr 04, 2009 at 07:56:36PM -0400, Jeff King wrote:
-> Ah, I see. You are not asking "was PERL_PATH blank" but rather "does
-> PERL_PATH exist". And I think that is not the right thing for the
-> Makefile, as it is unlike any other part of the git Makefile, which
-> generally does what it is told with the minimum of magic. That sort of
-> magic generally goes into configure.ac.
-At a glance, PERL_PATH in configure.ac isn't actually used at the
-moment, the definition in the Makefile overrides it.
-
-> So NO_PERL_MAKEMAKER is _already_ exported, and I don't think there is
-> any reason to export NO_PERL in the environment (see patch 4/4, which
-> exports it via GIT-BUILD-OPTIONS).
-Ok, drop the export then, but do keep at least the if(is empty
-PERL_PATH) then { set NO_PERL }, even if you won't keep the existence
-check.
-
---=20
-Robin Hugh Johnson
-Gentoo Linux Developer & Infra Guy
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
-
---1XWsVB21DFCvn2e8
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.10 (GNU/Linux)
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
-
-iEYEARECAAYFAknX9fEACgkQPpIsIjIzwiw89QCfa+oc9vaC6pHn6M5WEcTp3083
-jOkAn1avF4A1cXRV7LNBJJx7kUX7+Nd0
-=gxg+
------END PGP SIGNATURE-----
-
---1XWsVB21DFCvn2e8--
+Nicolas
