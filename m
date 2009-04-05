@@ -1,84 +1,56 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [RFC/PATCH 0/2] New 'stage' command
-Date: Sun,  5 Apr 2009 16:48:49 +0300
-Message-ID: <1238939331-10152-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 05 15:50:49 2009
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/3] git-mergetool/difftool: TortoiseMerge and (g)vimdiff
+ for Windows
+Date: Sun, 5 Apr 2009 15:52:03 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904051551400.10279@pacific.mpi-cbg.de>
+References: <200904051440.33154.markus.heidelberg@web.de>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	msysgit@googlegroups.com, David Aguilar <davvid@gmail.com>,
+	Charles Bailey <charles@hashpling.org>
+To: Markus Heidelberg <markus.heidelberg@web.de>
+X-From: git-owner@vger.kernel.org Sun Apr 05 15:51:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqSkG-0004wg-3x
-	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 15:50:44 +0200
+	id 1LqSkm-00056A-Qe
+	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 15:51:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755003AbZDENtK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Apr 2009 09:49:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754678AbZDENtI
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 09:49:08 -0400
-Received: from mail-bw0-f169.google.com ([209.85.218.169]:42988 "EHLO
-	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752234AbZDENtH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Apr 2009 09:49:07 -0400
-Received: by bwz17 with SMTP id 17so1527786bwz.37
-        for <git@vger.kernel.org>; Sun, 05 Apr 2009 06:49:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=giwmdbT394CkbRm7+c4nR6Z6vUq3ZMhVw51H7t1Bsd8=;
-        b=EtO44+7SlE9lvQeO1lWA/IAF7pX9WPFqjue8q2MoTcx0UnxTsX051Ey2HVKqEsQoYF
-         P0+oMCYhURfL0oYx/ceVOOE+kdS4cJnAfuzc9NRc3XTDMe69ihMaEs+OXooTVxCZRrGT
-         gmrFGTaTtk1vAXE95spu95Jw1VMgkTyI1jBmU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=p/VVyIP8Q2g90d4Zn7xt+dJzTURyCBgifWcsmw+/ze42P42XXG+wcP0mcW1eF8NuvT
-         ouB8r0x83Qyyp+THLbRoWKoQoMslQoPYwziAS4usVOETFoJIgIBCyVxT420h7bMSkUoO
-         VR0NhPZXG9yhGQcyERAiXCUrZBwLS5mtJ2qkI=
-Received: by 10.223.123.210 with SMTP id q18mr535976far.63.1238939342344;
-        Sun, 05 Apr 2009 06:49:02 -0700 (PDT)
-Received: from localhost (a91-153-251-222.elisa-laajakaista.fi [91.153.251.222])
-        by mx.google.com with ESMTPS id g28sm1827034fkg.18.2009.04.05.06.49.01
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 05 Apr 2009 06:49:01 -0700 (PDT)
-X-Mailer: git-send-email 1.6.2.2.406.g45db3f
+	id S1754159AbZDENtj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Apr 2009 09:49:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753287AbZDENti
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 09:49:38 -0400
+Received: from mail.gmx.net ([213.165.64.20]:53725 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754365AbZDENth (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Apr 2009 09:49:37 -0400
+Received: (qmail invoked by alias); 05 Apr 2009 13:49:34 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp011) with SMTP; 05 Apr 2009 15:49:34 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/KmWkxJUbKVfckm/Tswhfs5k34fcddH56vOpXnnn
+	WIXnP6Ht8uVgp3
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <200904051440.33154.markus.heidelberg@web.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.74
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115667>
 
 Hi,
 
-The 'stage' is probably the most novel-yet-missunderstood feature of git, and
-somehow the user interface is not exploiting it properly, even to the point
-where it doesn't even have a consistent name (stage, index, cache, etc)
+On Sun, 5 Apr 2009, Markus Heidelberg wrote:
 
-This patch series is one approach that has been working reasonably well for me,
-which is to replace the 'git stage' command to map different actions that can
-be executed with it.
+> Patches 2/3 and 3/3 are already in 'da/difftool' in 'pu'. This series is
+> based on 'master', now they can be applied to 4msysgit.git.
 
-For example 'git stage diff' is more natural (at least to me) than 'git diff
---cached', same goes for 'git stage rm foo.c' vs 'git rm --cached foo.c'.
+Thanks, they are in, as branch 'tortoisemerge'.
 
-This is the list of actions I've mapped:
-
- * add: git stage = git stage add (git add)
- * rm: (git rm --cached)
- * diff: (git rm --cached)
- * import: stage all files; modified, deleted, new
- * ls: (git ls-files --stage)
-
-Felipe Contreras (2):
-  git: remote stage
-  Add new 'git stage' script
-
- Documentation/git-stage.txt |   19 -------------------
- Makefile                    |    2 +-
- git-stage.sh                |   28 ++++++++++++++++++++++++++++
- git.c                       |    1 -
- 4 files changed, 29 insertions(+), 21 deletions(-)
- delete mode 100644 Documentation/git-stage.txt
- create mode 100644 git-stage.sh
+Ciao,
+Dscho
