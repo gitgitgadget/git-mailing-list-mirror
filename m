@@ -1,65 +1,60 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: non-ascii filenames issue
-Date: Sun, 5 Apr 2009 16:22:23 -0400
-Message-ID: <76718490904051322u48f22143s6744d62a37fa55ec@mail.gmail.com>
-References: <20090405093640.GA9803@home> <87ab6v2zor.fsf@iki.fi>
-	 <20090405100127.GA12126@home>
-	 <43d8ce650904050351p72590d52l8861b3901f95201a@mail.gmail.com>
-	 <76718490904050923j105e383dsf650afa0a0687858@mail.gmail.com>
-	 <7vfxgmrjb7.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/4] sha1-lookup: add new "sha1_pos" function to
+	efficiently lookup sha1
+Date: Sun, 5 Apr 2009 16:25:51 -0400
+Message-ID: <20090405202551.GD4716@coredump.intra.peff.net>
+References: <20090404225926.a9ad50e0.chriscool@tuxfamily.org> <fabb9a1e0904050317o1399118erb15ddf86d0fe6c3c@mail.gmail.com> <7vvdpjrkp0.fsf@gitster.siamese.dyndns.org> <94a0d4530904051219q7d9ed028jd6e05f541d7c12b5@mail.gmail.com> <3f4fd2640904051231x17117a4g3efe38067c8d3359@mail.gmail.com> <7vocvaq36x.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: John Tapsell <johnflux@gmail.com>, Teemu Likonen <tlikonen@iki.fi>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Reece Dunn <msclrhd@googlemail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 05 22:28:50 2009
+X-From: git-owner@vger.kernel.org Sun Apr 05 22:30:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqYsn-0000pS-Kp
-	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 22:23:58 +0200
+	id 1LqYwR-0001iD-3T
+	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 22:27:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754610AbZDEUW1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Apr 2009 16:22:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753789AbZDEUW0
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 16:22:26 -0400
-Received: from yw-out-2324.google.com ([74.125.46.30]:32816 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753551AbZDEUWZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Apr 2009 16:22:25 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so1843143ywb.1
-        for <git@vger.kernel.org>; Sun, 05 Apr 2009 13:22:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=EKRZIrHGFWicpvDldL2VJf0clGppxguJt/3nL6bZfns=;
-        b=gz4+x1XwxIpOxo5ZNUkJFuEyMu1sOUP54p9W29ENFf+RAuzdwxaujU9Z9WQ3+vJxzV
-         HhMj+QcmXmI4H3X23EA3uGhewumhGciB38vpcxjitfimTQ4QwZfjW5QFvRr5cFn9mEaU
-         jGcP76L13V0hj5wZNAh00I97d/kf51BmcELrw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=FmZM6KGrBpb1swS38vQqUxC/UjiVEAkj6J5G21RSG5MMk7+raSUrXCHBmt8g0rkO1t
-         16JXD04k3zh9BsDLP4oZNjML3dNMMHwUa7C0Ks7G9yOSlu/Ro3LF4yad2Y+eU9xLeq8G
-         Yq1PnTuMyD9IGreeXpSLIo02pgeVTxgx+p70g=
-Received: by 10.150.54.6 with SMTP id c6mr222672yba.10.1238962943086; Sun, 05 
-	Apr 2009 13:22:23 -0700 (PDT)
-In-Reply-To: <7vfxgmrjb7.fsf@gitster.siamese.dyndns.org>
+	id S1758027AbZDEU0M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Apr 2009 16:26:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755707AbZDEU0K
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 16:26:10 -0400
+Received: from peff.net ([208.65.91.99]:36207 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753824AbZDEU0K (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Apr 2009 16:26:10 -0400
+Received: (qmail 17681 invoked by uid 107); 5 Apr 2009 20:26:28 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 05 Apr 2009 16:26:28 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 05 Apr 2009 16:25:51 -0400
+Content-Disposition: inline
+In-Reply-To: <7vocvaq36x.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115698>
 
-> I do not think the message gives enough information on the issue
+On Sun, Apr 05, 2009 at 01:02:30PM -0700, Junio C Hamano wrote:
 
-Of course you are correct. I was perturbed by John's message, but your
-thoughtful reply is much more beneficial than my silly link. Thank you
-for providing the level-headed response as always.
+> > I think Junio is trying to learn base64 :)!
+> 
+> I think that is what my Gnus/message-mode did.  I do not know which letter
+> triggered it to decide it is UTF-8 to begin with, though.  As far as I am
+> aware, I didn't type anything non-ascii in my message.
 
-j.
+Actually, it is Sverre's fault. :)
+
+You quoted his message, quoting Christian's message. Christian's message
+was 7bit. But for some reason, Sverre's quoting of Christian's message
+contains weird iso8859 space characters (0xa0).
+
+But it is probably worth configuring Gnus to use QP instead of base64.
+It's more efficient (for mostly ascii text), more readable to humans
+looking at the encoded form, and is less likely to make you look like a
+spammer. :)
+
+-Peff
