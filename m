@@ -1,83 +1,92 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [RFC/PATCH 0/2] New 'stage' command
-Date: Mon, 6 Apr 2009 01:35:24 +0300
-Message-ID: <94a0d4530904051535v8bd901fsedecdf61bc4acb33@mail.gmail.com>
-References: <1238939331-10152-1-git-send-email-felipe.contreras@gmail.com>
-	 <200904052358.53028.markus.heidelberg@web.de>
+From: Nicolas Sebrecht <nicolas.s-dev@laposte.net>
+Subject: Re: Performance issue: initial git clone causes massive repack
+Date: Mon, 6 Apr 2009 00:59:54 +0200
+Message-ID: <20090405225954.GA18730@vidovic>
+References: <20090404220743.GA869@curie-int> <20090405000536.GA12927@vidovic> <20090405T001239Z@curie.orbis-terrarum.net> <20090405035453.GB12927@vidovic> <20090405070412.GB869@curie-int> <20090405190213.GA12929@vidovic> <alpine.DEB.1.10.0904051419490.6245@asgard.lang.hm>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: markus.heidelberg@web.de
-X-From: git-owner@vger.kernel.org Mon Apr 06 00:37:02 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: david@lang.hm
+X-From: git-owner@vger.kernel.org Mon Apr 06 01:01:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqaxY-0003lD-MH
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 00:37:01 +0200
+	id 1LqbLN-0000EA-Tc
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 01:01:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753872AbZDEWf2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Apr 2009 18:35:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753798AbZDEWf2
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 18:35:28 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:49719 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753655AbZDEWf1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Apr 2009 18:35:27 -0400
-Received: by fxm2 with SMTP id 2so1655537fxm.37
-        for <git@vger.kernel.org>; Sun, 05 Apr 2009 15:35:24 -0700 (PDT)
+	id S1753576AbZDEXAF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Apr 2009 19:00:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753566AbZDEXAE
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 19:00:04 -0400
+Received: from mail-ew0-f165.google.com ([209.85.219.165]:40014 "EHLO
+	mail-ew0-f165.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752212AbZDEXAA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Apr 2009 19:00:00 -0400
+Received: by ewy9 with SMTP id 9so1692321ewy.37
+        for <git@vger.kernel.org>; Sun, 05 Apr 2009 15:59:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Itx/5BCtI8c3pB7cDMzo2Ej/bqAfuOHtDTesDJlaAhU=;
-        b=xUHPjBg17EyXlZdtS8jDdh20O9PR9DOOkQeIwDHUNF/kCmxwienMDgsi2Thi9nYHvf
-         FJHLhqSKdL5QTit/akLIzu1gODQFLuE4XQoZDL4LVLsjTf477gI1Z6qGdVXB4hVwCx+8
-         LNC9sY3l9ebGADavL9b1LIinEskjAlsuk1PlA=
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=iaOhvRa/vdNX0pbUPWkIXR1YRDms+X6H0lisiEztX8o=;
+        b=GMSGumVCG/QVOH1sw7v45zJnAgvV6mbT0NwIxCh1j8uS4qq3LDt20yUKa8Gu5rJPwc
+         F1Msfmd8Y/LaROPYRTSiMaWEJv91Apicj1AMh5564Nizp33Zsbbxc7UcfSpY0XyNYkT1
+         CwpTUCy+3KVbIxFujOoRew3ADvAH2nglAjfCQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=xdHBZ27+0iM0yrfp965BBCmoagxg/i4X+/kHsthHN0VtHoPpq54NgZVSWBMnSPokFi
-         aFj4WS+2Jdzf4rr3ahqH1gi8GTwEqQ65yurp9l2V5ilwMDuyeeArAfK6J3GRlVc6cbI9
-         nXkgnpKS5d/WAh+eO4WW7s2OD1yHfvzTIVMOg=
-Received: by 10.86.61.13 with SMTP id j13mr2564773fga.68.1238970924723; Sun, 
-	05 Apr 2009 15:35:24 -0700 (PDT)
-In-Reply-To: <200904052358.53028.markus.heidelberg@web.de>
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=AYKxNeqRX6VeirDqCZqISbDRe5cCYgsURKepVIhcGDnJIIuubHhAsVCxFD3eo7YQqL
+         n0CzrvES1rX4SsseELX2aN1f8bejaUvndEBXsWEuNsUkw14Nyf3xDQjTVmqXd93Npcgs
+         +wTqJQ36/d/tQITOr+4+0aOAPUoQKZ7gawrRk=
+Received: by 10.210.115.17 with SMTP id n17mr2829969ebc.43.1238972397732;
+        Sun, 05 Apr 2009 15:59:57 -0700 (PDT)
+Received: from @ (83-154-175-191.rev.libertysurf.net [83.154.175.191])
+        by mx.google.com with ESMTPS id 28sm6011853eye.44.2009.04.05.15.59.56
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 05 Apr 2009 15:59:57 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.10.0904051419490.6245@asgard.lang.hm>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115731>
 
-On Mon, Apr 6, 2009 at 12:58 AM, Markus Heidelberg
-<markus.heidelberg@web.de> wrote:
-> Felipe Contreras, 05.04.2009:
->> For example 'git stage diff' is more natural (at least to me) than 'git diff
->> --cached', same goes for 'git stage rm foo.c' vs 'git rm --cached foo.c'.
->
-> Not for me. If I want to GET a diff, I want to use a command "diff", so
-> "git diff" is more obvious.
-> The next step is to say WHAT exactly to diff. Therefor options to the
-> "diff" command are more logically to me from a hierarchic POV. And here
-> I don't think options like "--cached" or "sha1..sha2", despite having
-> different style, make any difference.
+On Sun, Apr 05, 2009 at 02:28:35PM -0700, david@lang.hm wrote:
 
-Well, it's a matter of preference, and you would not loose the option
-to do it the way you like. But actually, "git diff --cached" is a
-different action; you can't do "git diff --cached HEAD^.." for
-example.
+> guys, back off a little on telling the gentoo people to change.
 
-Consider "git rm foo.c" vs "git rm --cached foo.c"... both commands
-are removing a file, the only difference is that one is removing from
-the staging area while the other is removing it from the working
-directory. Now think about "git branch -d bar", following the "first I
-specify the action, and then the object" thinking, would it make sense
-to have "git rm --branch bar"? Probably not; if you want to do stuff
-with branches, you use "git branch", similarly, if you want to do
-stuff with the staging area, why not use "git stage"?
+Don't blame Git people, please. I currently am the only one here to
+discuss that way and see a painful work coming at Gentoo.
+Git people didn't discuss around thoses issues.
+
+>                                                                 the 
+> kernel developers don't split th kernel into 'core' 'drivers' etc pieces 
+> just because some people only work on one area.
+
+And you might notice that they don't provide a CVS access and actually
+don't work around an unique shared repo. Also, you might notice that
+keeping the history clean to assure the work on the kernel easier is not
+an elementary issue.
+
+> just because some people only work on one area. I see the gentoo desire 
+> to keep things in one repo as being something very similar.
+
+That's why I think the gentoo desire is not very clean (don't be
+affected). What I see is that in one hand you want a DSCM and on the
+other hand you want to keep a central shared repo.
+
+> the problem here is a real one, if you have a large repo, git send-pack  
+> will always generate a new pack, even if it doesn't need to (with the  
+> extreme case being the the repo is fully packed)
+
+What about the rsync solution given in this thread?
 
 -- 
-Felipe Contreras
+Nicolas Sebrecht
