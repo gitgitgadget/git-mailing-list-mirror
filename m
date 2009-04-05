@@ -1,65 +1,97 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [EGIT PATCH 5/5] Cache resolved ids in quickdiff document for
-	faster update
-Date: Sun, 5 Apr 2009 13:36:04 -0700
-Message-ID: <20090405203604.GP23521@spearce.org>
-References: <1238697991-12990-1-git-send-email-robin.rosenberg@dewire.com> <1238697991-12990-2-git-send-email-robin.rosenberg@dewire.com> <1238697991-12990-3-git-send-email-robin.rosenberg@dewire.com> <1238697991-12990-4-git-send-email-robin.rosenberg@dewire.com> <1238697991-12990-5-git-send-email-robin.rosenberg@dewire.com> <1238697991-12990-6-git-send-email-robin.rosenberg@dewire.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH 1/4] sha1-lookup: add new "sha1_pos" function to 
+	efficiently lookup sha1
+Date: Sun, 5 Apr 2009 16:34:58 -0400
+Message-ID: <76718490904051334p67e34ee5t89e73430a311bff3@mail.gmail.com>
+References: <20090404225926.a9ad50e0.chriscool@tuxfamily.org>
+	 <fabb9a1e0904050317o1399118erb15ddf86d0fe6c3c@mail.gmail.com>
+	 <7vvdpjrkp0.fsf@gitster.siamese.dyndns.org>
+	 <94a0d4530904051219q7d9ed028jd6e05f541d7c12b5@mail.gmail.com>
+	 <3f4fd2640904051231x17117a4g3efe38067c8d3359@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Sun Apr 05 22:40:17 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Reece Dunn <msclrhd@googlemail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 05 22:41:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqZ69-0004GH-6R
-	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 22:37:45 +0200
+	id 1LqZ56-00041j-EY
+	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 22:36:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758026AbZDEUgL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Apr 2009 16:36:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753881AbZDEUgI
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 16:36:08 -0400
-Received: from george.spearce.org ([209.20.77.23]:52054 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751972AbZDEUgH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Apr 2009 16:36:07 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id A472E38211; Sun,  5 Apr 2009 20:36:04 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1238697991-12990-6-git-send-email-robin.rosenberg@dewire.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1755652AbZDEUfE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Apr 2009 16:35:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755553AbZDEUfC
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 16:35:02 -0400
+Received: from mail-gx0-f160.google.com ([209.85.217.160]:37048 "EHLO
+	mail-gx0-f160.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753551AbZDEUfA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Apr 2009 16:35:00 -0400
+Received: by gxk4 with SMTP id 4so4071978gxk.13
+        for <git@vger.kernel.org>; Sun, 05 Apr 2009 13:34:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=pNkBH3gALI5MFoAh8LCLxVUcr12u+KDBtzmidc0doQ0=;
+        b=ggZPmZDHcWxcbdrgZAOHB709gBGTPFvAaFKJxOcs9dVJa//cvAAeshtJh3w1JWjNOL
+         +a2wVx/UaooqjtJte3ruYZjugxHx5iP1ELZpbXyNNYYvqQWOYgMpNZuUivR2CXW+gJQS
+         P0UgtOp2KofVtR+0zgDQAW8TAaWB9CQfhahvc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ehfX33fXTfgt3l01FlFRji0h/ALgDaNe9YzzKbdiATeCHphSxxf9vuW79Sqb2/emGs
+         nYGMiH9zioJttYP+/KV/uwceBSFqp4c5676Xh1N0qF0MQuWyuq6aKbZMsghzo9J6FfUX
+         SzfpXU0Ya6lGh3oLvdP7o7R/u18BM9QPVryMw=
+Received: by 10.150.122.21 with SMTP id u21mr5559129ybc.20.1238963698543; Sun, 
+	05 Apr 2009 13:34:58 -0700 (PDT)
+In-Reply-To: <3f4fd2640904051231x17117a4g3efe38067c8d3359@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115702>
 
-Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
-> We do this by caching the commit, tree and blob ids and can then
-> very quickly decide whether a change in baseline actually results in a
-> changed version of the reference blob used for quickdiff.
-...
-> @@ -31,6 +34,11 @@
->  
->  class GitDocument extends Document implements RepositoryListener {
->  	private final IResource resource;
-> +
-> +	private AnyObjectId lastCommit;
-> +	private AnyObjectId lastTree;
-> +	private AnyObjectId lastBlob;
+On Sun, Apr 5, 2009 at 3:31 PM, Reece Dunn <msclrhd@googlemail.com> wrote:
+> 2009/4/5 Felipe Contreras <felipe.contreras@gmail.com>:
+>> On Sun, Apr 5, 2009 at 9:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> U3ZlcnJlIFJhYmJlbGllciA8c3JhYmJlbGllckBnbWFpbC5jb20+IHdyaXRlczoNCg0KPiBPbiBT
+>>> YXQsIEFwciA0LCAyMDA5IGF0IDIyOjU5LCBDaHJpc3RpYW4gQ291ZGVyIDxjaHJpc2Nvb2xAdHV4
+>>> ZmFtaWx5Lm9yZz4gd3JvdGU6DQo+PiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+>>> IMKgIMKgIMKgIMKgIGlmIChsbyA8PSBtaSAmJiBtaSA8IGhpKQ0KPj4gKyDCoCDCoCDCoCDCoCDC
+>>> oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBicmVhazsNCj4+ICsg
+>>> wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgZGllKCJvb3BzIik7
+>>> DQo+DQo+IFRoYXQncyBnb2luZyB0byBiZSBhbiBvZmZpY2lhbCBnaXQgZXJyb3IgbWVzc2FnZT8g
+>>> V2h5IG5vdCBtYWtlIGl0ICJUaGUNCg0KSXQncyBub3QgImdvaW5nIHRvIGJlIiwgYnV0ICJoYXMg
+>>> YmVlbiBzbyBmb3IgdGhlIGxhc3QgdHdvIHllYXJzIHNpbmNlDQo1ZDIzZTEzIi4NCg0KSXQgaXMg
+>>> YW4gYXNzZXJ0LCBhbmQgSSB0aGluayBQZWZmJ3MgZGllKCJCVUc6IC4uLiIpIHdvdWxkIGJlIGEg
+>>> Z29vZCBpZGVhLg0K
+>>
+>> Huh?
+>
+> I think Junio is trying to learn base64 :)!
 
-Should have been "ObjectId"; I amended the patch.
+Junio's _original_ message was fine. The problem is that vger
+(majordomo) appends the mailing list footer which technically corrupts
+the message. Respectable MUA's can deal with the corruption, but
+gmail's web-interface just shows the raw base64 (previously it used to
+just show an empty message). I've filed a bug against gmail, but who
+knows.
 
-> +		Commit baselineCommit = repository.mapCommit(commitId);
-> +		Tree baselineTree = baselineCommit.getTree();
-> +		TreeEntry blobEntry = baselineTree.findBlobMember(gitPath);
+The other options are:
 
-Arrrgh.  We're still using Commit/Tree/TreeEntry to read file paths?
+- fix majordomo on vger
+- replace majordomo on vger with a decent MLM
+- disable the mailing list footer
+- deal with it if you're a gmail user
 
-I'm applying this as-is, but we really need to start to transition
-away from them.  I wanted to start deleting the mapCommit and its
-friends from the Repository class.
-
--- 
-Shawn.
+j.
