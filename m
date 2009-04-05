@@ -1,96 +1,94 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [RFC/PATCH 0/2] New 'stage' command
-Date: Mon, 6 Apr 2009 01:17:24 +0200
-Message-ID: <200904060117.24810.markus.heidelberg@web.de>
-References: <1238939331-10152-1-git-send-email-felipe.contreras@gmail.com> <200904052358.53028.markus.heidelberg@web.de> <94a0d4530904051535v8bd901fsedecdf61bc4acb33@mail.gmail.com>
-Reply-To: markus.heidelberg@web.de
+From: david@lang.hm
+Subject: Re: Performance issue: initial git clone causes massive repack
+Date: Sun, 5 Apr 2009 16:20:07 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0904051613420.6245@asgard.lang.hm>
+References: <20090404220743.GA869@curie-int> <20090405000536.GA12927@vidovic> <20090405T001239Z@curie.orbis-terrarum.net> <20090405035453.GB12927@vidovic> <20090405070412.GB869@curie-int> <20090405190213.GA12929@vidovic> <alpine.DEB.1.10.0904051419490.6245@asgard.lang.hm>
+ <20090405225954.GA18730@vidovic>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 06 01:19:10 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: "Robin H. Johnson" <robbat2@gentoo.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nicolas Sebrecht <nicolas.s-dev@laposte.net>
+X-From: git-owner@vger.kernel.org Mon Apr 06 01:21:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqbcL-0003Cx-Gv
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 01:19:10 +0200
+	id 1Lqbew-0003l4-Pc
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 01:21:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758883AbZDEXRW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Apr 2009 19:17:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758880AbZDEXRV
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 19:17:21 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:42431 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758865AbZDEXRU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Apr 2009 19:17:20 -0400
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate01.web.de (Postfix) with ESMTP id A371CFF723BE;
-	Mon,  6 Apr 2009 01:17:17 +0200 (CEST)
-Received: from [89.59.118.104] (helo=.)
-	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1LqbaX-0002QM-00; Mon, 06 Apr 2009 01:17:17 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <94a0d4530904051535v8bd901fsedecdf61bc4acb33@mail.gmail.com>
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX1+NvhlyPOQzfOXApbdGEcxeoGrQz5u4vfItIPAH
-	oPPQz3mV70KKZ8NJTHhRhshMGKf0BjPwWAAKf8Qyre5sm5aLYb
-	P4JUPm0dCEiFU+BWpd6g==
+	id S1753573AbZDEXUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Apr 2009 19:20:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753517AbZDEXUT
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 19:20:19 -0400
+Received: from mail.lang.hm ([64.81.33.126]:50404 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752212AbZDEXUS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Apr 2009 19:20:18 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n35NK7YO027787;
+	Sun, 5 Apr 2009 16:20:07 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <20090405225954.GA18730@vidovic>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115735>
 
-Felipe Contreras, 06.04.2009:
-> On Mon, Apr 6, 2009 at 12:58 AM, Markus Heidelberg
-> <markus.heidelberg@web.de> wrote:
-> > Felipe Contreras, 05.04.2009:
-> >> For example 'git stage diff' is more natural (at least to me) than 'git diff
-> >> --cached', same goes for 'git stage rm foo.c' vs 'git rm --cached foo.c'.
-> >
-> > Not for me. If I want to GET a diff, I want to use a command "diff", so
-> > "git diff" is more obvious.
-> > The next step is to say WHAT exactly to diff. Therefor options to the
-> > "diff" command are more logically to me from a hierarchic POV. And here
-> > I don't think options like "--cached" or "sha1..sha2", despite having
-> > different style, make any difference.
-> 
-> Well, it's a matter of preference, and you would not loose the option
-> to do it the way you like.
+On Mon, 6 Apr 2009, Nicolas Sebrecht wrote:
 
-I know, but that's not the topic.
+> On Sun, Apr 05, 2009 at 02:28:35PM -0700, david@lang.hm wrote:
+>
+>> guys, back off a little on telling the gentoo people to change.
+>
+> Don't blame Git people, please. I currently am the only one here to
+> discuss that way and see a painful work coming at Gentoo.
+> Git people didn't discuss around thoses issues.
+>
+>>                                                                 the
+>> kernel developers don't split th kernel into 'core' 'drivers' etc pieces
+>> just because some people only work on one area.
+>
+> And you might notice that they don't provide a CVS access and actually
+> don't work around an unique shared repo. Also, you might notice that
+> keeping the history clean to assure the work on the kernel easier is not
+> an elementary issue.
 
-> But actually, "git diff --cached" is a
-> different action; you can't do "git diff --cached HEAD^.." for
-> example.
+these issues are completely seperate from the issue that the initial 
+poster asked about, which is that when someone tries to do a clone of the 
+repository the system wastes a lot of time creating a new pack.
 
-And I neither could I do "git stage diff HEAD^.."
+the kernel has a central public repo, they could run the cvs server on 
+that and still keep the rest of the kernel development exactly the way it 
+is.
 
-> Consider "git rm foo.c" vs "git rm --cached foo.c"... both commands
-> are removing a file, the only difference is that one is removing from
-> the staging area while the other is removing it from the working
-> directory. Now think about "git branch -d bar", following the "first I
-> specify the action, and then the object" thinking, would it make sense
-> to have "git rm --branch bar"? Probably not;
+if they are currently planning for one central repo with everyone pushing 
+to it, I expect that they will change their workflow as they get used to 
+git, but that isn't going to address the problem in the tool.
 
-Right, the argumentation with first the action doesn't fly any more.
-I guess it has to be considered what makes sense to have as command.
-"rm" (not git-rm) is such a well-known tool for deleting files so it
-probably doesn't make sense to have a command git-rm-files instead.
+>> just because some people only work on one area. I see the gentoo desire
+>> to keep things in one repo as being something very similar.
+>
+> That's why I think the gentoo desire is not very clean (don't be
+> affected). What I see is that in one hand you want a DSCM and on the
+> other hand you want to keep a central shared repo.
 
-> if you want to do stuff
-> with branches, you use "git branch", similarly, if you want to do
-> stuff with the staging area, why not use "git stage"?
+don't worry about this part of things, worry about why the server wastes 
+so many resources.
 
-So git-diff for working with diffs, git-branch for working with
-branches and git-rm/git-add for working on file level makes sense for
-me. Whether the a command can work with both the working tree and the
-index doesn't seem to make a difference for me.
+if this is really what's happening, other projects will suffer as well 
+(including the kernel, which has a very distributed workflow)
 
-Markus
+>> the problem here is a real one, if you have a large repo, git send-pack
+>> will always generate a new pack, even if it doesn't need to (with the
+>> extreme case being the the repo is fully packed)
+>
+> What about the rsync solution given in this thread?
+
+that may be a work-around for a situation where git just doesn't work, but 
+how do they prevent users from killing their server by trying to do a 
+normal git clone?
+
+Daivd Lang
