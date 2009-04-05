@@ -1,77 +1,113 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [RFC/PATCH 0/2] New 'stage' command
-Date: Sun, 5 Apr 2009 16:55:58 -0400
-Message-ID: <76718490904051355p2f92d445j860c56638118a604@mail.gmail.com>
-References: <1238939331-10152-1-git-send-email-felipe.contreras@gmail.com>
-	 <7vmyausz3h.fsf@gitster.siamese.dyndns.org>
-	 <94a0d4530904051228m4e57ec90y810dded41f47e443@mail.gmail.com>
-	 <7v7i1yrj3t.fsf@gitster.siamese.dyndns.org>
-	 <7vzleuq3ci.fsf@gitster.siamese.dyndns.org>
-	 <94a0d4530904051341s7e8718c2uced945a16c26670e@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [EGIT] [PATCH RFC v1 0/5] Add (static) ignore functionality to
+	EGit
+Date: Sun, 5 Apr 2009 14:02:48 -0700
+Message-ID: <20090405210248.GA23604@spearce.org>
+References: <cover.1238102327.git.ferry.huberts@pelagic.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 05 22:59:39 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: Ferry Huberts <ferry.huberts@pelagic.nl>
+X-From: git-owner@vger.kernel.org Sun Apr 05 23:04:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqZRI-00017e-5Q
-	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 22:59:36 +0200
+	id 1LqZVu-0002Ov-6L
+	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 23:04:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753670AbZDEU4F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Apr 2009 16:56:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753618AbZDEU4D
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 16:56:03 -0400
-Received: from yw-out-2324.google.com ([74.125.46.31]:53682 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751972AbZDEU4B (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Apr 2009 16:56:01 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so1852229ywb.1
-        for <git@vger.kernel.org>; Sun, 05 Apr 2009 13:55:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=u1NGQphXn742qt3bN0hG+32PGfqDCUvy55xdkXPDB3I=;
-        b=b4C/neZxti6fJTLCdfeRGFSJz3Kv3KysTnonJEWmmt64dak0DZhOIID1pD48inji4I
-         BjFwJn+Ubvw1Ddb16QslZARxKEV/19IKMDaYO0LKmMobUqlbHhSBFuWOHHK/7LqH/sO8
-         +jdLcKf9u/h6mTA+cyRgWqGDKxuhCQIeAlaNU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=LQKflBBkNAt6QBswDy0BXNo3SedUPrJrsczE4IMVo1oK1kG2qNZvLcIakGKUlooztv
-         lGcPX0Fq7SQDU7Q2C4ULh4x73rSnU7BcJKQjXeKUjLJL7j8j9zYmSNIEYU2hnIb/9JbR
-         S3khIZk0SNQB4xmzJvvm5yboOUBHMf5PKKbKk=
-Received: by 10.151.42.12 with SMTP id u12mr6946491ybj.236.1238964958957; Sun, 
-	05 Apr 2009 13:55:58 -0700 (PDT)
-In-Reply-To: <94a0d4530904051341s7e8718c2uced945a16c26670e@mail.gmail.com>
+	id S1758225AbZDEVCv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Apr 2009 17:02:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757154AbZDEVCu
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 17:02:50 -0400
+Received: from george.spearce.org ([209.20.77.23]:42462 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753941AbZDEVCu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Apr 2009 17:02:50 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 2619738211; Sun,  5 Apr 2009 21:02:48 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <cover.1238102327.git.ferry.huberts@pelagic.nl>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115708>
 
-On Sun, Apr 5, 2009 at 4:41 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> == stage ==
->
-> The word "stage" is used widely in the English language, and it
-> immediately evokes a theatrical stage. Generally, it means a different
-> (upper) level.
->
-> In git it is barely used, mostly on the "documentation industry"
-> probably because it's easier to understand for most people (even
-> non-native-English speakers).
+Ferry Huberts <ferry.huberts@pelagic.nl> wrote:
+> This is the first - early - code that adds ignore functionality to EGit.
+> Currently it reads in all ignore patterns upon workspace startup into an
+> ignore cache. From this cache the ignore state of a resource is evaluated
+> in the same fashion as git does.
+> 
+> The code does not yet react to changes in ignore files but I'm planning to add
+> that soon and I can share a lot of code for that.
+> 
+> I send this code to receive feedback and to give you insight into what I'm
+> doing with it. I'm new both to EGit programming and Eclipse programming so
+> there might be things that could be done more elegantly :-)
 
-Would an index by any other name smell as sweet?
+Ok, I finally got a chance to review this series.
 
-http://www.merriam-webster.com/dictionary/staging%20area
 
-:-)
+We really want as much of the Git specific logic as we can in JGit
+under the BSD license.  This has already been raised elsewhere in
+this thread.
 
-j.
+JGit and EGit are holding the line on Java 5 support; that means
+that String.isEmpty() must be spelled as String.length() == 0
+(isEmpty was added in Java 6).
+
+Style nit: Don't put /* Constructors */, /* Methods */ or
+  / * Public Methods */ comments in code, e.g.
+  IgnoreProjectCache l.52-54 or GitIgnoreData l.58-61.
+
+Style nit: Don't assign fields to their default values.
+
+  E.g. Exclude.java l.25,33,42,.. these are being set to the
+  same value that the JRE sets the field to if the field is not
+  explicitly initialized.  We find it much easier to read code when
+  the defaults are assumed.
+
+Style nit: Don't use "this." to refer to members.
+
+  Your IDE should highlight field references differently than
+  parameters, and a parameter should never shadow a field name,
+  thus "this." is unnecessary and makes the code much more verbose
+  to read.  E.g. see Exclude.java 's constructor on l.87-108; I can't
+  see the forest (the code) due to all the trees (this.) appearing.
+
+IgnoreFileOutside: Ugh, our own implementation of IFile ?
+
+  I'm worried about the long-term stability of the IFile API.
+  Is it really frozen enough that we can implement it ourselves?
+  Of course, this may be moot if much of the code was moved back
+  to JGit.
+
+IgnoreRepositoryCache: Why not put this into RepositoryMapping?
+
+  Instead of caching it inside a static HashMap of GitIgnoreData,
+  wouldn't it be better to put it into RepositoryMapping?
+  The TrackOperation for example already has the RepositoryMapping
+  handle in scope, saving a few lookup operations, and avoiding
+  needing to manage this new additional static HashMap against leaks.
+
+
+I kind of wanted to tie exclude processing (and attribute processing)
+into a TreeWalk, so that we can do an n-way merge against trees and
+working directories by tossing all of their AbstractTreeIterators
+into a single walk, possibly apply a path filter, and let the walk
+handle the per-directory ignore rules as it goes.
+
+Most of your code seems to be built around the Eclipse IResource
+model, and the idea that it gets called for a single file path
+at a time, which may make it less efficient when we put it into a
+TreeWalk and apply the notion of entering and exiting a subdirectory.
+
+
+OK, that's about all I have for now.  Its reasonable, but still an
+early series.
+ 
+-- 
+Shawn.
