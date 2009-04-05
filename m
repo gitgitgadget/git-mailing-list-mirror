@@ -1,71 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/4] Makefile: allow building without perl
-Date: Sat, 4 Apr 2009 19:56:36 -0400
-Message-ID: <20090404235636.GA27354@coredump.intra.peff.net>
-References: <20090403192700.GA14965@coredump.intra.peff.net> <20090403193220.GC5547@coredump.intra.peff.net> <20090404T224109Z@curie.orbis-terrarum.net> <20090404233936.GB26906@coredump.intra.peff.net> <20090404T234556Z@curie.orbis-terrarum.net>
+From: Nicolas Sebrecht <nicolas.s-dev@laposte.net>
+Subject: Re: Performance issue: initial git clone causes massive repack
+Date: Sun, 5 Apr 2009 02:05:36 +0200
+Message-ID: <20090405000536.GA12927@vidovic>
+References: <20090404220743.GA869@curie-int>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
 To: "Robin H. Johnson" <robbat2@gentoo.org>
-X-From: git-owner@vger.kernel.org Sun Apr 05 01:58:27 2009
+X-From: git-owner@vger.kernel.org Sun Apr 05 02:07:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqFkn-00052S-NU
-	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 01:58:26 +0200
+	id 1LqFtk-0006db-LA
+	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 02:07:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755683AbZDDX4z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Apr 2009 19:56:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755385AbZDDX4y
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Apr 2009 19:56:54 -0400
-Received: from peff.net ([208.65.91.99]:50211 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755344AbZDDX4y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Apr 2009 19:56:54 -0400
-Received: (qmail 13092 invoked by uid 107); 4 Apr 2009 23:57:11 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 04 Apr 2009 19:57:11 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 04 Apr 2009 19:56:36 -0400
+	id S1754911AbZDEAFp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Apr 2009 20:05:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754454AbZDEAFp
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Apr 2009 20:05:45 -0400
+Received: from mail-ew0-f165.google.com ([209.85.219.165]:34477 "EHLO
+	mail-ew0-f165.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754002AbZDEAFo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Apr 2009 20:05:44 -0400
+Received: by ewy9 with SMTP id 9so1443375ewy.37
+        for <git@vger.kernel.org>; Sat, 04 Apr 2009 17:05:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=YLgPYqk0nfakVeezvX4HRFPU9rDlxGuFeQweRiaTMwQ=;
+        b=OGUyopedcUABrL316CJCN3Dzaw2tHBXPFLgIU+kkF0kKIMVErnDtIjwbIXL8WPJIsd
+         lc9g8+R55MtU/cG0PZVM9ptxaZWs3BWYGFID69b2WJhLyWRDyD0VBmNq/mIhsWRCqe0N
+         oB5MmxaTE8quHNkZj7DhOOTFaey+4C9O+N7VM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=tO3k2VYf43F8RJxK2gpBqENsgaKwEWS9t5FTFlSGdGIoSnu+lBNmxC6JIs0ve223Su
+         Nd3GcK/7Jt7OZZYNkULWl455OT+TShQw62oTfHEHDWnWytpd3uKfAEjI3M5R+0l77gu8
+         bTJqJh4vTDvWjemKU/ULQN+FtaY4vNETZ1NK4=
+Received: by 10.210.40.10 with SMTP id n10mr2105093ebn.71.1238889941790;
+        Sat, 04 Apr 2009 17:05:41 -0700 (PDT)
+Received: from @ (ABordeaux-258-1-82-86.w86-201.abo.wanadoo.fr [86.201.73.86])
+        by mx.google.com with ESMTPS id 23sm4827218eya.36.2009.04.04.17.05.39
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 04 Apr 2009 17:05:41 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20090404T234556Z@curie.orbis-terrarum.net>
+In-Reply-To: <20090404220743.GA869@curie-int>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115608>
 
-On Sat, Apr 04, 2009 at 04:51:48PM -0700, Robin H. Johnson wrote:
+On Sat, Apr 04, 2009 at 03:07:43PM -0700, Robin H. Johnson wrote:
 
-> On Sat, Apr 04, 2009 at 07:39:36PM -0400, Jeff King wrote:
-> > > +ifeq ($(wildcard $(PERL_PATH)),)
-> > I'm not sure what you're trying to accomplish with the wildcard, unless
-> > it is "PERL_PATH = /usr/*/perl" or similar, but that seems a bit crazy
-> > to me. It should probably behave the same as TCLTK_PATH, though (so if
-> > there is a good use case, TCLTK_PATH should be enhanced).
-> No. The ifeq ($(wildcard $(PERL_PATH)),) is entirely correct.
-> It's one of the few ways to detect the existence of a file from within
-> Make, without any exec calls. If you give it a non-expandable path,
-> /usr/bin/perl in this case, it checks only that path, and either returns
-> it or an empty string. This enables us to check that /usr/bin/perl
-> exists, and take suitable action if it does not.
+> Our full repository conversion is large, even after tuning the
+> repacking, the packed repository is between 1.4 and 1.6GiB. As of Feburary
+> 4th, 2009, it contained 4886949 objects. It is not suitable for
+> splitting into submodules either unfortunately - we have a lot of
+> directory moves that would cause submodule bloat.
 
-Ah, I see. You are not asking "was PERL_PATH blank" but rather "does
-PERL_PATH exist". And I think that is not the right thing for the
-Makefile, as it is unlike any other part of the git Makefile, which
-generally does what it is told with the minimum of magic. That sort of
-magic generally goes into configure.ac.
+Actually, I'm not sure that a full portage tree repository would be the
+best thing to do. It would not be suitable in the long term and working
+on the repository/history would be a big mess. Why provide a such repo ?
+Or at least, why provide a such readable repo ?
 
-> > I don't think there is a point in setting NO_PERL_MAKEMAKER if NO_PERL
-> > is set, and I believe the export is pointless, as I described in an
-> > earlier email.
-> From further down the Makefile:
-> ifdef NO_PERL_MAKEMAKER
->     export NO_PERL_MAKEMAKER
-> endif
+IMHO, you should provide a repository per upstream package on the main
+server.
 
-So NO_PERL_MAKEMAKER is _already_ exported, and I don't think there is
-any reason to export NO_PERL in the environment (see patch 4/4, which
-exports it via GIT-BUILD-OPTIONS).
 
--Peff
+PS: what about cc'ing gentoo-scm list ?
+
+-- 
+Nicolas Sebrecht
