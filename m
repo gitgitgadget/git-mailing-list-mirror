@@ -1,56 +1,82 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/3] git-mergetool/difftool: TortoiseMerge and (g)vimdiff
- for Windows
-Date: Sun, 5 Apr 2009 15:52:03 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0904051551400.10279@pacific.mpi-cbg.de>
-References: <200904051440.33154.markus.heidelberg@web.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/4] sha1-lookup: add new "sha1_pos" function to
+	efficiently lookup sha1
+Date: Sun, 5 Apr 2009 10:41:11 -0400
+Message-ID: <20090405144111.GB2076@sigill.intra.peff.net>
+References: <20090404225926.a9ad50e0.chriscool@tuxfamily.org> <fabb9a1e0904050317o1399118erb15ddf86d0fe6c3c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	msysgit@googlegroups.com, David Aguilar <davvid@gmail.com>,
-	Charles Bailey <charles@hashpling.org>
-To: Markus Heidelberg <markus.heidelberg@web.de>
-X-From: git-owner@vger.kernel.org Sun Apr 05 15:51:20 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 05 16:42:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqSkm-00056A-Qe
-	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 15:51:17 +0200
+	id 1LqTYd-0000bM-IU
+	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 16:42:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754159AbZDENtj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Apr 2009 09:49:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753287AbZDENti
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 09:49:38 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53725 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754365AbZDENth (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Apr 2009 09:49:37 -0400
-Received: (qmail invoked by alias); 05 Apr 2009 13:49:34 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp011) with SMTP; 05 Apr 2009 15:49:34 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/KmWkxJUbKVfckm/Tswhfs5k34fcddH56vOpXnnn
-	WIXnP6Ht8uVgp3
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <200904051440.33154.markus.heidelberg@web.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.74
+	id S1752966AbZDEOlP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Apr 2009 10:41:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752703AbZDEOlP
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 10:41:15 -0400
+Received: from peff.net ([208.65.91.99]:53027 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752680AbZDEOlP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Apr 2009 10:41:15 -0400
+Received: (qmail 16111 invoked by uid 107); 5 Apr 2009 14:41:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 05 Apr 2009 10:41:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 05 Apr 2009 10:41:11 -0400
+Content-Disposition: inline
+In-Reply-To: <fabb9a1e0904050317o1399118erb15ddf86d0fe6c3c@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115668>
 
-Hi,
+On Sun, Apr 05, 2009 at 12:17:32PM +0200, Sverre Rabbelier wrote:
 
-On Sun, 5 Apr 2009, Markus Heidelberg wrote:
+> On Sat, Apr 4, 2009 at 22:59, Christian Couder <chriscool@tuxfamily.o=
+rg> wrote:
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (lo <=3D mi && mi < hi)
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 brea=
+k;
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die("oops");
+>=20
+> That's going to be an official git error message? Why not make it "Th=
+e
+> fatal error oops has occured, press ctrl-c to lose all your work, or
+> press any other key to do the same"?
 
-> Patches 2/3 and 3/3 are already in 'da/difftool' in 'pu'. This series is
-> based on 'master', now they can be applied to 4msysgit.git.
+=46rom my cursory reading of the code, this is a "cannot happen"
+assertion (and there is one a few lines below, too):
 
-Thanks, they are in, as branch 'tortoisemerge'.
++                               die("oops");
++                       }
++               }
++               if (18 <=3D ofs)
++                       die("cannot happen -- lo and hi are identical")=
+;
++       }
 
-Ciao,
-Dscho
+I don't think we have an established style for such assertions. In
+theory, users never see it, but the whole point of it being there is
+that they _might_. :) One could use the "assert" macro, though I think
+its output is just as cryptic to end users. I usually do
+
+  die("BUG: <something that makes a little bit of sense to the user>");
+
+some examples of which you can see via "git grep BUG:".
+
+Of course, "binary search on fire?" would probably work, too.
+
+-Peff
