@@ -1,102 +1,111 @@
-From: Nicolas Sebrecht <nicolas.s-dev@laposte.net>
-Subject: Re: Performance issue: initial git clone causes massive repack
-Date: Sun, 5 Apr 2009 05:54:53 +0200
-Message-ID: <20090405035453.GB12927@vidovic>
-References: <20090404220743.GA869@curie-int> <20090405000536.GA12927@vidovic> <20090405T001239Z@curie.orbis-terrarum.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Robin H. Johnson" <robbat2@gentoo.org>
-X-From: git-owner@vger.kernel.org Sun Apr 05 05:56:45 2009
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH v2] mergetool--lib: add new merge tool TortoiseMerge
+Date: Sat,  4 Apr 2009 21:00:24 -0700
+Message-ID: <1238904024-11238-1-git-send-email-davvid@gmail.com>
+Cc: markus.heidelberg@web.de, charles@hashpling.org,
+	git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Apr 05 06:02:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqJTQ-0006j3-Oi
-	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 05:56:45 +0200
+	id 1LqJYj-0007VY-Fm
+	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 06:02:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756940AbZDEDzE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Apr 2009 23:55:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753655AbZDEDzD
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Apr 2009 23:55:03 -0400
-Received: from mail-ew0-f165.google.com ([209.85.219.165]:43545 "EHLO
-	mail-ew0-f165.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750757AbZDEDzB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Apr 2009 23:55:01 -0400
-Received: by ewy9 with SMTP id 9so1468962ewy.37
-        for <git@vger.kernel.org>; Sat, 04 Apr 2009 20:54:58 -0700 (PDT)
+	id S1750735AbZDEEAn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Apr 2009 00:00:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750712AbZDEEAm
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 00:00:42 -0400
+Received: from wa-out-1112.google.com ([209.85.146.178]:28639 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1749667AbZDEEAm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Apr 2009 00:00:42 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so1311861wah.21
+        for <git@vger.kernel.org>; Sat, 04 Apr 2009 21:00:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=y74niqgW1ghw+kYsTGwCYItd0TDiCYyNuF3gzJnxQ4Q=;
-        b=hsfxSXjnvE9YCrnz38FgX4g+gQirw1xPGM7ofvg/jLuonjOz7BYGYM2lXj21ENnSze
-         pR83CKEIB0KR8bAgYkm2M/poYmh7n7rc8+sklsYynQT6LcNE6zjzi6yXKrSD9RnuvsYc
-         UCq9iLB5eCSZ5ynkzj2wPPeeLZX+Auzn6Q3TE=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=Bkv82goRXi3+bqum0/+aWLPvoipOsfUKN9FGazmlBC8=;
+        b=Qxl6rktJbYQ5hB9bugO084dypDhdGi9yjZaNdo3EEnc5gn16DeBqv0Qf/2Sa/o5aFy
+         lAdnIbec2bDnB2O96BBd28BGeXyS8deDBC0h4cbTpQSMGb3nTIZTSD0yIFpXj8BrBPrJ
+         GEmm7059BoGmWjeNmBn0BxJvOsWD978e04KJM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=F69dQOPwXMa7HZgJ8VEMcnxxXkVgLjM1RS207WcC9ZvpC5s+TboF7yD7PUBLFNAl5W
-         dHVJH30Wor0VZ9VYuHx3jd3Vb5syKLx2U410ecPZxGhzp6B4VKH2x2/7BRCQLP8eSojA
-         9mpeehkX+BLCuBoQ3NutRe9Vv9NWoZI0Jh6bA=
-Received: by 10.210.71.12 with SMTP id t12mr155801eba.41.1238903698791;
-        Sat, 04 Apr 2009 20:54:58 -0700 (PDT)
-Received: from @ (ABordeaux-258-1-82-86.w86-201.abo.wanadoo.fr [86.201.73.86])
-        by mx.google.com with ESMTPS id 28sm5005026eye.14.2009.04.04.20.54.56
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 04 Apr 2009 20:54:57 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20090405T001239Z@curie.orbis-terrarum.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=st2pF2rfUnFSm4NjWfhRj1JvDQbaRFMIXzeudsrbHmS6FOngB6JpoIkUlD14N7YoAa
+         TzProwTLTfHMryFzrvu03tmHtwsjZhc5VXKBvxzDFUy7NcdsrDXvAz9WiXmpKHTdiCRH
+         ew0BJbDgRLw4mwD7oo9M2YXfd6gqzhOozDJZs=
+Received: by 10.115.75.14 with SMTP id c14mr1505890wal.86.1238904039924;
+        Sat, 04 Apr 2009 21:00:39 -0700 (PDT)
+Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id j28sm3905128waf.39.2009.04.04.21.00.38
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 04 Apr 2009 21:00:39 -0700 (PDT)
+X-Mailer: git-send-email 1.6.2.1.469.gdffc1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115631>
 
-On Sat, Apr 04, 2009 at 05:37:53PM -0700, Robin H. Johnson wrote:
+From: Markus Heidelberg <markus.heidelberg@web.de>
 
-> That causes incredibly bloat unfortunately.
-> 
-> I'll summarize why here for the git mailing list. Most our developers
-> have the entire tree checked out, and in informal surveys, would like to
-> continue to do so. There are ~13500 packages right now 
+TortoiseMerge comes with TortoiseSVN or TortoiseGit for Windows. It can
+only be used as a merge tool with an existing base file. It cannot be
+used without a base nor as a diff tool.
 
-Each developer doesn't work on so many packages, right ? From my point
-of view, checkin'out the entire tree is the wrong way on how to do
-things.
+The documentation only mentions the slash '/' as command line option
+prefix, which refused to work, but the parser also accepts the dash '-'
 
-Also, you could keep an entire tree repo assuming it's _not_
-"fetch-able".
+See http://code.google.com/p/msysgit/issues/detail?id=226
 
-> For each package, the .git directory, assuming in a single pack,
-> consumes at least 36 inodes.  Tail-packing is limited to Reiserfs3 and
-> JFS, and isn't widely used other than that, so assuming 4KiB inodes,
-> that's an overhead of at least 144KiB per package. Multiple by the
-> number of packages, and we get an overhead of 2GiB, before we've added
-> ANY content.
+Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+---
 
-> Without tail packing, the Gentoo tree is presently around 520MiB (you
-> can fit it into ~190MiB with tail packing). This means that
-> repo-per-package would have an overhead in the range of 400%.
+This is Markus' patch rebased on top of my latest refactoring
+patch.  It didn't apply cleanly so I figured I'd resolve the
+merge myself.
 
-Don't know about the business for Gentoo, but HDD is cheap. Also, I'd
-like to know how much space you will gain with the CVS to Git migration.
-How bigger is a CVS repo against a Git one ?
+ git-mergetool--lib.sh |   15 ++++++++++++++-
+ 1 files changed, 14 insertions(+), 1 deletions(-)
 
-One repo per category could be a good compromise assuming one seperate
-branch per ebuild, then.
-
-> Additionally, there's a lot of commonality between ebuilds and packages,
-> and having repo-per-package means that the compression algorithms can't
-> make use of it - dictionary algorithms are effective at compression for
-> a reason.
-
-Please, no. We are in the long term issues. Compression will be
-efficient. It's all about the content of the files and dictionary
-algorithms certainly will do a good job over the ebuilds revisions.
-
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index dcd4516..268485a 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -46,10 +46,13 @@ check_unchanged () {
+ 
+ valid_tool () {
+ 	case "$1" in
+-	kdiff3 | kompare | tkdiff | xxdiff | meld | opendiff | emerge | vimdiff | gvimdiff | ecmerge | diffuse)
++	kdiff3 | kompare | tkdiff | xxdiff | meld | opendiff | emerge | vimdiff | gvimdiff | ecmerge | diffuse | tortoisemerge)
+ 		if test "$1" = "kompare" && ! diff_mode; then
+ 			return 1
+ 		fi
++		if test "$1" = "tortoisemerge" && ! merge_mode; then
++			return 1
++		fi
+ 		;; # happy
+ 	*)
+ 		if test -z "$(get_merge_tool_cmd "$1")"; then
+@@ -220,6 +223,16 @@ run_merge_tool () {
+ 		fi
+ 		status=$?
+ 		;;
++	tortoisemerge)
++		if $base_present; then
++			touch "$BACKUP"
++			"$merge_tool_path" -base:"$BASE" -mine:"$LOCAL" -theirs:"$REMOTE" -merged:"$MERGED"
++			check_unchanged
++		else
++			echo "TortoiseMerge cannot be used without a base" 1>&2
++			status=1
++		fi
++		;;
+ 	*)
+ 		if test -n "$merge_tool_cmd"; then
+ 			if merge_mode &&
 -- 
-Nicolas Sebrecht
+1.6.2.1.469.gdffc1
