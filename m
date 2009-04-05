@@ -1,75 +1,63 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH 7/7] user-manual: simplify the user configuration
-Date: Sun, 5 Apr 2009 11:11:42 -0400
-Message-ID: <76718490904050811n3a5d2bby466c7955e7435ee3@mail.gmail.com>
-References: <1238837909-3060-1-git-send-email-felipe.contreras@gmail.com>
-	 <1238837909-3060-2-git-send-email-felipe.contreras@gmail.com>
-	 <1238837909-3060-3-git-send-email-felipe.contreras@gmail.com>
-	 <1238837909-3060-4-git-send-email-felipe.contreras@gmail.com>
-	 <1238837909-3060-5-git-send-email-felipe.contreras@gmail.com>
-	 <1238837909-3060-6-git-send-email-felipe.contreras@gmail.com>
-	 <1238837909-3060-7-git-send-email-felipe.contreras@gmail.com>
-	 <1238837909-3060-8-git-send-email-felipe.contreras@gmail.com>
-	 <76718490904042036q26bebc13p91c8cffaf432c02c@mail.gmail.com>
-	 <94a0d4530904050214y256cc0d3icc1843cfd148d69d@mail.gmail.com>
+From: Adam Mercer <ramercer@gmail.com>
+Subject: Re: error in rewriting author history with filter-branch --env-filter
+Date: Sun, 5 Apr 2009 10:52:02 -0500
+Message-ID: <799406d60904050852pf9ffffep84b5d24cb1c5f84a@mail.gmail.com>
+References: <799406d60904042121o27b4ac39m633354dcf0bcc84d@mail.gmail.com> 
+	<20090405072158.GA3881@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 05 17:13:46 2009
+Cc: =?UTF-8?B?R0lU77u/77u/77u/77u/?= <git@vger.kernel.org>
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Sun Apr 05 17:55:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqU28-0000QL-La
-	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 17:13:17 +0200
+	id 1LqUhC-00057r-Op
+	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 17:55:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754907AbZDEPLp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Apr 2009 11:11:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754717AbZDEPLp
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 11:11:45 -0400
-Received: from yw-out-2324.google.com ([74.125.46.30]:28471 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754572AbZDEPLo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Apr 2009 11:11:44 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so1763361ywb.1
-        for <git@vger.kernel.org>; Sun, 05 Apr 2009 08:11:42 -0700 (PDT)
+	id S1751152AbZDEPwV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Apr 2009 11:52:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751151AbZDEPwV
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 11:52:21 -0400
+Received: from mail-gx0-f160.google.com ([209.85.217.160]:57002 "EHLO
+	mail-gx0-f160.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750986AbZDEPwU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Apr 2009 11:52:20 -0400
+Received: by gxk4 with SMTP id 4so3926531gxk.13
+        for <git@vger.kernel.org>; Sun, 05 Apr 2009 08:52:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :received:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=Q7gbd+Kbf7NwpywVnA3zpccQKRHobKOLLgdX8zpELHE=;
-        b=EmuyerzZ/aRF8WoKRMsvoxsaDjY1vCwigU6Qn7UBGFo9YSOFr4br+O268wGFHhU5WA
-         CmYtof1TY/KDek/7P+pjbwli9TCNj01KlcKez9qAbpNo5uF1X8EoacQFUflq1nSiZpqp
-         3F3CDQiPwn3nrz2bi9XctzkwaWmIOCBs6jSMs=
+        bh=NuAMmUFOBhFVpkw3KcqI7+kBX+GU8XDgn5ESTlnB47k=;
+        b=l+SYxuVSe0XCVfKuUJ1s96psUFAhb0ST1yN+mCRhKplIh4wTN2zr19jqCCHInm4Top
+         6StHrsdzv6Fep0CmIDOcfyjnl7fBI9nOqXCPHUn/3Nfm+xl4pfuEWeMAHFlsclm3xKVX
+         dQQkFTWj1AWVaeOCOB5L+vADVthBoWHWk5n08=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=SC8Q/kkACIvMkzMkOj6S/4QtylO+Pg2+fhJKrt5nTqP/eJ2RW37hOCjxTrZDBz9baF
-         ncseUpJcxC8A46YqPnE3LwhM8gEEzuBJdBq89m4LaBmid8xeat1Cen9P0OGVdy+RPfWj
-         7l/MfUcSxrljfUtGQPyYm4+lx221pzl8VxXWA=
-Received: by 10.151.108.3 with SMTP id k3mr6474565ybm.103.1238944302096; Sun, 
-	05 Apr 2009 08:11:42 -0700 (PDT)
-In-Reply-To: <94a0d4530904050214y256cc0d3icc1843cfd148d69d@mail.gmail.com>
+        b=QBTci+ePYYC5M+rIIFXx1lNF9IAfJgUybOMJRjOpjB1WBe2nSQuBanfymCu6Y32K+x
+         vdzeUSILrl87F2Z5DxwRmJSfE8dEEAnC8CQKgW7YclfQH9JR1C0N2XEQELdZrxJKXv6A
+         LRUcdJq1ssW/0xLZpNj0CkmSKx5hmwj8inVGY=
+In-Reply-To: <20090405072158.GA3881@glandium.org>
+Received: by 10.90.33.15 with SMTP id g15mr2253171agg.55.1238946738466; Sun, 
+	05 Apr 2009 08:52:18 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115672>
 
-On Sun, Apr 5, 2009 at 5:14 AM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-=> Ok, I forgot to explain this again the commit message of this
-> particular patch, but it's described in the patch series description.
->
-> The previous patch adds a 'Getting Started' section that explains
-> exactly that; you can edit ~/.gitconfig.
->
-> So that concern is already addressed.
+On Sun, Apr 5, 2009 at 02:21, Mike Hommey <mh@glandium.org> wrote:
 
-Doh, sorry. Thanks for the explanation.
+> You need a white space between "ram" and ].
 
-j.
+Thanks! I knew it would be something stupid!
+
+Cheers
+
+Adam
