@@ -1,123 +1,86 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] mergetool--lib: make (g)vimdiff workable under Windows
-Date: Sat,  4 Apr 2009 21:15:23 -0700
-Message-ID: <1238904923-13368-1-git-send-email-davvid@gmail.com>
-Cc: markus.heidelberg@web.de, charles@hashpling.org,
-	git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Apr 05 06:18:15 2009
+From: Adam Mercer <ramercer@gmail.com>
+Subject: error in rewriting author history with filter-branch --env-filter
+Date: Sat, 4 Apr 2009 23:21:36 -0500
+Message-ID: <799406d60904042121o27b4ac39m633354dcf0bcc84d@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: =?UTF-8?B?R0lU77u/77u/77u/77u/?= <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Apr 05 06:23:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqJoE-0001gu-T9
-	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 06:18:15 +0200
+	id 1LqJtI-0002Pj-CS
+	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 06:23:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752252AbZDEEPc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Apr 2009 00:15:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752128AbZDEEPc
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 00:15:32 -0400
-Received: from wa-out-1112.google.com ([209.85.146.181]:23180 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751776AbZDEEPb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Apr 2009 00:15:31 -0400
-Received: by wa-out-1112.google.com with SMTP id j5so1314852wah.21
-        for <git@vger.kernel.org>; Sat, 04 Apr 2009 21:15:29 -0700 (PDT)
+	id S1754010AbZDEEVy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Apr 2009 00:21:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751629AbZDEEVy
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 00:21:54 -0400
+Received: from mail-gx0-f160.google.com ([209.85.217.160]:64415 "EHLO
+	mail-gx0-f160.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752518AbZDEEVx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Apr 2009 00:21:53 -0400
+Received: by gxk4 with SMTP id 4so3702139gxk.13
+        for <git@vger.kernel.org>; Sat, 04 Apr 2009 21:21:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=s3afrE3QRUnhrx8qvhsmDsfAx+4WHSwhpuCNBgp6Hik=;
-        b=PlFMzOmHHJVD8x3L350xcs3lnf9KPVosVdMI8X91xr9DyZpmSFbQXJUHmTsCvvErpt
-         6Tb7ysZ7OMAnnrtzNjTu/rMwgNnUMACmrsP+2xvxCtZ4kjNMi3c6CdtpbG/ZSBLMcIcJ
-         EMm8VwId6RjhjWgV0bVjQJlFY2A23VKgo6Lxo=
+        h=domainkey-signature:mime-version:date:received:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=u69WL4dBoOvtKIHcRVZbekz1g8rXCRcDuQOg8j9iah8=;
+        b=JtvKAMoMu31I7LpLQGWiyW4lS49uGBgMSeSbPrxfZHf7KSfBhqRD5zAGN3Ai8jQV2g
+         YSut5SZexuacojN4a16rykL+x9kEH63EqY/NyKcHHMOt/1YO/p/fPgQ1ORBtgmLmJhBq
+         Axg/pU6iRQPRMn6iXZor2+2+6KKs0C1yybMDQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=diXmVP42JBc/pAXMOW+VYUrAW+q+jcES4zuni+NJmt5Mm+tyHlpFa4e6r8ZjH7Cwxo
-         lxmGCdfjn3B/zzEN7HP4+mZ2inLG5Ryit4YDj94FO+OZIFQQJKO4p9PiLaptOMUSyIHr
-         PzaaZBzbzrhS8Z4dK5TBKZhty/A/l+OxJaL78=
-Received: by 10.114.103.1 with SMTP id a1mr1494599wac.218.1238904929757;
-        Sat, 04 Apr 2009 21:15:29 -0700 (PDT)
-Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id f20sm3929499waf.35.2009.04.04.21.15.28
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 04 Apr 2009 21:15:29 -0700 (PDT)
-X-Mailer: git-send-email 1.6.2.1.469.gdffc1
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=jKq/DcDPBvJktZRq3O6UUj+49ls4GxWGtBtUEbYw7D41oYoix+YTw5YIBkJR0tHSxT
+         qTrGcviHinNVO7QG1toEC8P/txLN+Yk8dIJ1UBLISBM59yyYTE+ar5lQRSw06FuJOyQZ
+         9vieE0FpDhv0s+uBu91Mq3se3Sqw66kol58rQ=
+Received: by 10.90.113.11 with SMTP id l11mr1907689agc.87.1238905311508; Sat, 
+	04 Apr 2009 21:21:51 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115634>
 
-From: Markus Heidelberg <markus.heidelberg@web.de>
+Hi
 
-Under Windows vimdiff and gvimdiff are not available as symbolic links,
-but as batch files vimdiff.bat and gvimdiff.bat. These files weren't
-found by 'type vimdiff' which led to the following error:
+I'm trying to use git filter-branch to rewrite the author information
+on an repo that was imported from CVS a while ago, the commits I'm
+trying to rewrite are as follows:
 
-The merge tool vimdiff is not available as 'vimdiff'
+commit 2cdeb25148f02b35391bd80a2c4c1876d7b8b840
+Author: <ram>
+Date:   Wed Dec 22 13:36:01 2004 +0000
 
-Even if they were found, it wouldn't work to invoke these batch files
-from git-mergetool.
+    modify style
 
-To solve this, use vim and gvim (vim.exe and gvim.exe) and pass the -d
-command line switch over to them.
+I'm trying to modify <ram> to be replaced with my name and email
+address. To do this I've been trying to use the following command
 
-Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
----
+$ git filter-branch --env-filter '
+an="$GIT_AUTHOR_NAME"
+am="$GIT_AUTHOR_EMAIL"
+if [ "$GIT_AUTHOR_EMAIL" = "ram"]; then
+an="Adam Mercer"
+am="ramercer@gmail.com"
+fi
+export GIT_AUTHOR_NAME=$an
+export GIT_AUTHOR_EMAIL=$am
+'
 
-Markus' last patch rebased.
+however when I run this I get loads of errors of the form:
 
-This patch goes on top of the current difftool/mergetool patches from David.
-This is 'da/difftool' in the current 'pu' and in addition:
-[PATCH] mergetool-lib: refactor run_mergetool and check_unchanged
-[PATCH] mergetool-lib: specialize opendiff options when in diff mode
+Rewrite 18242fa722ff393e7fce78e05f37fa7c3b3825e1
+(1/216)/opt/local/libexec/git-core/git-filter-branch: line 307: [:
+missing `]'
 
+Any ideas what I'm doing wrong? I'm running git-1.6.2.2.
 
- git-mergetool--lib.sh |   14 ++++++++++----
- 1 files changed, 10 insertions(+), 4 deletions(-)
+Cheers
 
-diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index 268485a..3d3edda 100644
---- a/git-mergetool--lib.sh
-+++ b/git-mergetool--lib.sh
-@@ -12,6 +12,12 @@ translate_merge_tool_path () {
- 		echo "$2"
- 	else
- 		case "$1" in
-+		vimdiff)
-+			path=vim
-+			;;
-+		gvimdiff)
-+			path=gvim
-+			;;
- 		emerge)
- 			path=emacs
- 			;;
-@@ -146,19 +152,19 @@ run_merge_tool () {
- 	vimdiff)
- 		if merge_mode; then
- 			touch "$BACKUP"
--			"$merge_tool_path" -c "wincmd l" "$LOCAL" "$MERGED" "$REMOTE"
-+			"$merge_tool_path" -d -c "wincmd l" "$LOCAL" "$MERGED" "$REMOTE"
- 			check_unchanged
- 		else
--			"$merge_tool_path" -c "wincmd l" "$LOCAL" "$REMOTE"
-+			"$merge_tool_path" -d -c "wincmd l" "$LOCAL" "$REMOTE"
- 		fi
- 		;;
- 	gvimdiff)
- 		if merge_mode; then
- 			touch "$BACKUP"
--			"$merge_tool_path" -c "wincmd l" -f "$LOCAL" "$MERGED" "$REMOTE"
-+			"$merge_tool_path" -d -c "wincmd l" -f "$LOCAL" "$MERGED" "$REMOTE"
- 			check_unchanged
- 		else
--			"$merge_tool_path" -c "wincmd l" -f "$LOCAL" "$REMOTE"
-+			"$merge_tool_path" -d -c "wincmd l" -f "$LOCAL" "$REMOTE"
- 		fi
- 		;;
- 	xxdiff)
--- 
-1.6.2.1.469.gdffc1
+Adam
