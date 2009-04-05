@@ -1,85 +1,78 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: git-{diff,merge} refactor round 2
-Date: Sat, 4 Apr 2009 20:34:44 -0700
-Message-ID: <20090405033443.GA16219@gmail.com>
-References: <1238590514-41893-1-git-send-email-davvid@gmail.com> <200904050458.17708.markus.heidelberg@web.de>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH 7/7] user-manual: simplify the user configuration
+Date: Sat, 4 Apr 2009 23:36:41 -0400
+Message-ID: <76718490904042036q26bebc13p91c8cffaf432c02c@mail.gmail.com>
+References: <1238837909-3060-1-git-send-email-felipe.contreras@gmail.com>
+	 <1238837909-3060-2-git-send-email-felipe.contreras@gmail.com>
+	 <1238837909-3060-3-git-send-email-felipe.contreras@gmail.com>
+	 <1238837909-3060-4-git-send-email-felipe.contreras@gmail.com>
+	 <1238837909-3060-5-git-send-email-felipe.contreras@gmail.com>
+	 <1238837909-3060-6-git-send-email-felipe.contreras@gmail.com>
+	 <1238837909-3060-7-git-send-email-felipe.contreras@gmail.com>
+	 <1238837909-3060-8-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, charles@hashpling.org, git@vger.kernel.org
-To: Markus Heidelberg <markus.heidelberg@web.de>
-X-From: git-owner@vger.kernel.org Sun Apr 05 05:36:36 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 05 05:38:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqJ9s-0003Xv-74
-	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 05:36:32 +0200
+	id 1LqJBX-0003ku-8T
+	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 05:38:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756850AbZDEDe7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Apr 2009 23:34:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756845AbZDEDe7
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Apr 2009 23:34:59 -0400
-Received: from rv-out-0506.google.com ([209.85.198.225]:51089 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756802AbZDEDe6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Apr 2009 23:34:58 -0400
-Received: by rv-out-0506.google.com with SMTP id f9so1728086rvb.1
-        for <git@vger.kernel.org>; Sat, 04 Apr 2009 20:34:55 -0700 (PDT)
+	id S1756876AbZDEDgp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Apr 2009 23:36:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756845AbZDEDgo
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Apr 2009 23:36:44 -0400
+Received: from yw-out-2324.google.com ([74.125.46.30]:19871 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756802AbZDEDgo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Apr 2009 23:36:44 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so1628914ywb.1
+        for <git@vger.kernel.org>; Sat, 04 Apr 2009 20:36:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=0M8O/7Lml9Pgtxhe59DNyzylfv3LchqoTjlyc2X0Upg=;
-        b=AWK1eSLCdjYP0p4/qVITLUYrc/rrvzxyeOcC2+/6RrMhF/H9fu885s1ZMi3sLCWpI3
-         y63mUrA5UmYqMS08FN9gkojstqIE5+aEzJXe2BVSvKvAVoYXkp0iAclMLNRM7PX1CEN0
-         RltzbZD7FbU6U8HJv0vfYdSMFXW2RO6iZI/4M=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=w0lGzPtNy+WhHdo08gNlYwepx3Gh7okEuTMnaOKBZaI=;
+        b=YjpyOP9bUzBoe7pXTkPH0IErvE7YRzc4fT6/mRz4Q7WLn/2OJ62x5qu/3CsGQTu2pg
+         7yZ0A9NcN80MFukO42pcnpBS2iVI/u1Dsoum4P/QcN8X25Q2+vdd/9SMFedXI0vBbLBj
+         s92akFHgRqtm+AswBlTSYbGlNBaBOFu0bunoY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=u3/rcBD0eMuF1OwzxnTKkmAj0p9Gkm6xWl9UBIjt1HSHKcQY0GoNpPgsoBdD0X5oiS
-         ftBJy83r7wS9ErlfQaSQpIcvkAib7PnoEPRjPY834VeIUIiSuLOF4B64dfrd5AbKUiwi
-         fdvKKq4Tx2QM2JJAmhAG6SPFpr+QpbMgU5P9I=
-Received: by 10.114.255.1 with SMTP id c1mr1506536wai.4.1238902495555;
-        Sat, 04 Apr 2009 20:34:55 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id l37sm3875780waf.38.2009.04.04.20.34.53
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 04 Apr 2009 20:34:54 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <200904050458.17708.markus.heidelberg@web.de>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=wOxSJt+sn/UgDIgQmNZHZU0oGrc5Xf2bfjuRFhDV2FFik53hFgE8KGkFWjidjosFbe
+         3ANDtDMv+PJjy06V0C2RGb+3I8Jz6+TRdTAlzmJe92TMglvFZLqsCEQTqcBwWqGTYmX4
+         Lmmq3CagX1xArdKBJcSUqG8TmiK5QSLhDMRfI=
+Received: by 10.151.11.19 with SMTP id o19mr5531927ybi.146.1238902601999; Sat, 
+	04 Apr 2009 20:36:41 -0700 (PDT)
+In-Reply-To: <1238837909-3060-8-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115628>
 
-On  0, Markus Heidelberg <markus.heidelberg@web.de> wrote:
-> David Aguilar, 01.04.2009:
-> > Here's the 2nd round of refactoring.
-> 
-> I just noticed that mergetool.<mergetool>.path doesn't work anymore.
-> git grep mergetool.*path only hits one line in git-difftool--helper.sh
-> Neither does it seem to work with difftool, but I'm gonna go to bed now.
-> 
-> Markus
-> 
+On Sat, Apr 4, 2009 at 5:38 AM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> This is shorter, avoids the burder to think about the format of the
+> configuration file, and git config is already used in other places in
+> the manual.
+> [...]
+>  ------------------------------------------------
+> -[user]
+> -       name = Your Name Comes Here
+> -       email = you@yourdomain.example.com
+> +$ git config --global user.name "Your Name Comes Here"
+> +$ git config --global user.email you@yourdomain.example.com
+>  ------------------------------------------------
 
-Oops.  Well, I have one final patch that removes the last bit of
-redundant code.  It also fixed this problem so I'll go ahead
-and send it (it's based on top of da/difftool mentioned in
-pu).
+This has come up before, and the idea was to hint to the reader that
+.gitconfig is something they can edit themselves.
 
-Since the test cases didn't catch that breakage I added a test
-for it. 
-
-Look for a patch called:
-
-mergetool--lib: consolidate the last redundant bits in {diff,merge}tool
-
-
--- 
-
-	David
+j.
