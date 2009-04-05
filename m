@@ -1,88 +1,113 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 4/4] replace_object: use the new generic "sha1_pos"
- function to lookup sha1
-Date: Sun, 5 Apr 2009 15:19:25 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0904051516170.10279@pacific.mpi-cbg.de>
-References: <20090404225941.7fef76a7.chriscool@tuxfamily.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sun Apr 05 15:20:02 2009
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [RFC/PATCH 1/2] git: remote stage
+Date: Sun,  5 Apr 2009 16:48:50 +0300
+Message-ID: <1238939331-10152-2-git-send-email-felipe.contreras@gmail.com>
+References: <1238939331-10152-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 05 15:50:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqSGX-0004LK-Hn
-	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 15:20:02 +0200
+	id 1LqSkG-0004wg-Ro
+	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 15:50:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754336AbZDENRA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Apr 2009 09:17:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752286AbZDENQ7
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 09:16:59 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44697 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751369AbZDENQ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Apr 2009 09:16:59 -0400
-Received: (qmail invoked by alias); 05 Apr 2009 13:16:56 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp047) with SMTP; 05 Apr 2009 15:16:56 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18Y9KoFx/UYlEV4erYMT/NTvECpEcmoks+u+tOuAx
-	WtfMXltYTV5Dd2
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20090404225941.7fef76a7.chriscool@tuxfamily.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59
+	id S1755253AbZDENtM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Apr 2009 09:49:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754919AbZDENtK
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 09:49:10 -0400
+Received: from mail-bw0-f169.google.com ([209.85.218.169]:63104 "EHLO
+	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753284AbZDENtI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Apr 2009 09:49:08 -0400
+Received: by bwz17 with SMTP id 17so1527794bwz.37
+        for <git@vger.kernel.org>; Sun, 05 Apr 2009 06:49:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=Wndemii9rBdgsv1cRnS9Asuv2CH/pj3D6BJL+ECCN+E=;
+        b=SGAPdOyckuFvBYbhP9WugcrS+QrFH1rcSYDuA6ELy5Kc6cfDEsYpVJboj5Fb6xceTH
+         8SuhmFHrLtqvgs4ZzUR/p0g1X0DQTR5/sOfyv/HqM/uJx1wr2K08+Ctd9CAbnslhzer/
+         0DALAJ+RuthxSWSGCQ6aeL9sbvAFKkQDoAJn0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=HVY/3mASboSSs0KLST/CWDzrpzU/+THK38Bs77yd62F2IQTWr7uAXFHSUIugb9KNdU
+         WGXZvEnfBhOCRn0moPL8+f4W2cmXnKadUpXZG464hORC0IfrGpih9E1Hy7pgJXedS9L8
+         WTd1zj8EJp4sYTnalD/Bhxtc1O1hBQK1s10MM=
+Received: by 10.223.112.202 with SMTP id x10mr2735068fap.68.1238939344054;
+        Sun, 05 Apr 2009 06:49:04 -0700 (PDT)
+Received: from localhost (a91-153-251-222.elisa-laajakaista.fi [91.153.251.222])
+        by mx.google.com with ESMTPS id 12sm1757196fks.5.2009.04.05.06.49.03
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 05 Apr 2009 06:49:03 -0700 (PDT)
+X-Mailer: git-send-email 1.6.2.2.406.g45db3f
+In-Reply-To: <1238939331-10152-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115664>
 
-Hi,
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ Documentation/git-stage.txt |   19 -------------------
+ Makefile                    |    1 -
+ git.c                       |    1 -
+ 3 files changed, 0 insertions(+), 21 deletions(-)
+ delete mode 100644 Documentation/git-stage.txt
 
-On Sat, 4 Apr 2009, Christian Couder wrote:
-
-> instead of the specific one that was simpler but less efficient.
-> 
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  replace_object.c |   24 +++++++++---------------
->  1 files changed, 9 insertions(+), 15 deletions(-)
-> 
-> diff --git a/replace_object.c b/replace_object.c
-> index 1227214..eb59604 100644
-> --- a/replace_object.c
-> +++ b/replace_object.c
-> @@ -1,4 +1,5 @@
->  #include "cache.h"
-> +#include "sha1-lookup.h"
->  #include "refs.h"
->  
->  static struct replace_object {
-> @@ -7,23 +8,16 @@ static struct replace_object {
->  
->  static int replace_object_alloc, replace_object_nr;
->  
-> +static const unsigned char *replace_sha1_access(size_t index, void *table)
-> +{
-> +	struct replace_object **replace = table;
-> +	return replace[index]->sha1[0];
-> +}
-
-I have to agree with Junio that this is potentially slowing down things, 
-as there is an additional redirection layer here.
-
-If the tables are not too large, I'd prefer using a
-
-	struct sha1_list_entry {
-		unsigned char *sha1;
-		void *object;
-	};
-
-Hmm.
-
-Ciao,
-Dscho
+diff --git a/Documentation/git-stage.txt b/Documentation/git-stage.txt
+deleted file mode 100644
+index 7f251a5..0000000
+--- a/Documentation/git-stage.txt
++++ /dev/null
+@@ -1,19 +0,0 @@
+-git-stage(1)
+-==============
+-
+-NAME
+-----
+-git-stage - Add file contents to the staging area
+-
+-
+-SYNOPSIS
+---------
+-[verse]
+-'git stage' args...
+-
+-
+-DESCRIPTION
+------------
+-
+-This is a synonym for linkgit:git-add[1].  Please refer to the
+-documentation of that command.
+diff --git a/Makefile b/Makefile
+index 7867eac..0c3de6b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -345,7 +345,6 @@ BUILT_INS += git-merge-subtree$X
+ BUILT_INS += git-peek-remote$X
+ BUILT_INS += git-repo-config$X
+ BUILT_INS += git-show$X
+-BUILT_INS += git-stage$X
+ BUILT_INS += git-status$X
+ BUILT_INS += git-whatchanged$X
+ 
+diff --git a/git.c b/git.c
+index c2b181e..ebc3ccb 100644
+--- a/git.c
++++ b/git.c
+@@ -267,7 +267,6 @@ static void handle_internal_command(int argc, const char **argv)
+ 	const char *cmd = argv[0];
+ 	static struct cmd_struct commands[] = {
+ 		{ "add", cmd_add, RUN_SETUP | NEED_WORK_TREE },
+-		{ "stage", cmd_add, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "annotate", cmd_annotate, RUN_SETUP },
+ 		{ "apply", cmd_apply },
+ 		{ "archive", cmd_archive },
+-- 
+1.6.2.2.406.g45db3f
