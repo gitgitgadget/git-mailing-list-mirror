@@ -1,90 +1,94 @@
-From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-Subject: Re: [question] how can i verify whether a local branch is tracking a 
-	remote branch?
-Date: Sun, 5 Apr 2009 23:25:29 +0200
-Message-ID: <4d8e3fd30904051425w6739a12fp5666e71e8b2d7958@mail.gmail.com>
-References: <4d8e3fd30904050332w394cccbaq5b82d2a53ed357a3@mail.gmail.com>
-	 <20090405144413.GC2076@sigill.intra.peff.net>
+From: david@lang.hm
+Subject: Re: Performance issue: initial git clone causes massive repack
+Date: Sun, 5 Apr 2009 14:28:35 -0700 (PDT)
+Message-ID: <alpine.DEB.1.10.0904051419490.6245@asgard.lang.hm>
+References: <20090404220743.GA869@curie-int> <20090405000536.GA12927@vidovic> <20090405T001239Z@curie.orbis-terrarum.net> <20090405035453.GB12927@vidovic> <20090405070412.GB869@curie-int> <20090405190213.GA12929@vidovic>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Apr 05 23:27:05 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: "Robin H. Johnson" <robbat2@gentoo.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nicolas Sebrecht <nicolas.s-dev@laposte.net>
+X-From: git-owner@vger.kernel.org Sun Apr 05 23:31:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqZrs-0002Ja-Fd
-	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 23:27:04 +0200
+	id 1LqZvo-0003R0-Cd
+	for gcvg-git-2@gmane.org; Sun, 05 Apr 2009 23:31:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752550AbZDEVZd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Apr 2009 17:25:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751768AbZDEVZc
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 17:25:32 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:32858 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751416AbZDEVZc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Apr 2009 17:25:32 -0400
-Received: by fxm2 with SMTP id 2so1642349fxm.37
-        for <git@vger.kernel.org>; Sun, 05 Apr 2009 14:25:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ksJK0vcK2fwXHIfiZow9jmhmvTXU42QmwcxWriC2ZX8=;
-        b=n9jLf99wVtl57c0EkTxatyZliTmCjLuNsJbqJRiASyw44YryRM764C5m/RfCY/BCw1
-         ZMr3mt/Js2Ye8EeBQm0Gjc0A+51fmLXDO3XWJBl22sGtXR7n5RMe94WoiYmw83DzRl8W
-         g6ez8mch9jECLqQwB8N7Ntcqama5UPz3NPgZE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=fCejFqR31ujJbVlIEjEKfd0FksQVbK1JRuUuHlRS6VIarOuAh4vKpiJ2EDDCcF4/UP
-         7dUg4svrvzEcI2owj192kxZOy8ADOJMVDkBF1UL+kSGVIu/eFONCTTKh/q+Xifmjb58a
-         1ey+8SbFnIneMDpjAbmceDfO4+wnZL70KTH5M=
-Received: by 10.86.82.16 with SMTP id f16mr2556380fgb.32.1238966729228; Sun, 
-	05 Apr 2009 14:25:29 -0700 (PDT)
-In-Reply-To: <20090405144413.GC2076@sigill.intra.peff.net>
+	id S1755672AbZDEV2t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Apr 2009 17:28:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753681AbZDEV2t
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 17:28:49 -0400
+Received: from mail.lang.hm ([64.81.33.126]:53921 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752212AbZDEV2s (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Apr 2009 17:28:48 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n35LSZYq027304;
+	Sun, 5 Apr 2009 14:28:35 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <20090405190213.GA12929@vidovic>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115714>
 
-On 4/5/09, Jeff King <peff@peff.net> wrote:
-> On Sun, Apr 05, 2009 at 12:32:29PM +0200, Paolo Ciarrocchi wrote:
+On Sun, 5 Apr 2009, Nicolas Sebrecht wrote:
+
+> On Sun, Apr 05, 2009 at 12:04:12AM -0700, Robin H. Johnson wrote:
 >
->> is there a way to verify, using the UI, whether a local branch is
->> tracking a remote branch?
+>> Before I answer the rest of your post, I'd like to note that the matter
+>> of which choice between single-repo, repo-per-package, repo-per-category
+>> has been flogged to death within Gentoo.
+>>
+>> I did not come to the Git mailing list to rehash those choices. I came
+>> here to find a solution to the performance problem.
 >
-> Do you mean "whether it is tracking any branch", or "whether the branch
-> is is tracking is remote"?
+> I understand. I know two ways to resolve this:
+> - by resolving the performance problem itself,
+> - by changing the workflow to something more accurate and more suitable
+>  against the facts.
+>
+> My point is that going from a centralized to a decentralized SCM
+> involves breacking strongly how developers and maintainers work. What
+> you're currently suggesting is a way to work with Git in a centralized
+> way. This sucks. To get the things right with Git I would avoid shared
+> and global repositories. Gnome is doing it this way:
+> http://gitorious.org/projects/gnome-svn-hooks/repos/mainline/trees/master
 
-I mean whether it is tracking a branch and if it is I want to know
-which branch is being tracked.
+guys, back off a little on telling the gentoo people to change. the kernel 
+developers don't split th kernel into 'core' 'drivers' etc pieces just 
+because some people only work on one area. I see the gentoo desire to keep 
+things in one repo as being something very similar.
 
-> If the former, then I think if one of branch.$branch.{merge,rebase}
-> is set, it is tracking something. The tracked thing is remote unless
-> branch.$branch.remote is ".".
+the problem here is a real one, if you have a large repo, git send-pack 
+will always generate a new pack, even if it doesn't need to (with the 
+extreme case being the the repo is fully packed)
 
-An example:
-$ git clone -n URL temp
-$ cd temp
-$ git branch -r
-  origin/master
-  origin/foo
-  Origin/bar
-$ git checkout --track -b foo origin/foo
+>>          The GSoC 2009 ideas contain a potential project for caching the
+>> generated packs, which, while having value in itself, could be partially
+>> avoided by sending suitable pre-built packs (if they exist) without any
+>> repacking.
+>
+> Right. It could be an option to wait and see if the GSoC gives
+> something.
 
-Now, how can I know that foo is tracking origin/foo ?
+the GSOC project is not the same thing. in this case the packs are already 
+'cached' (they are stored on disk), what is needed is some option to let 
+git send existing pack(s) if they exist rather then taking the time to 
+try and generate an 'optimal' pack.
 
-Thanks.
+I'm actually aurprised that this is happening, I thought that the 
+recommendation was that the public repository should do a very agressive 
+pack (that takes a lot of resources) for the old content so that people 
+cloning from it get the advantage of the tight packing without having to 
+do it themselves.
 
+if the server _always_ re-generates the pack from scratch then this is a 
+waste of time (except for people who clone via the dumb, unsafe 
+mechanisms)
 
-Ciao,
--- 
-Paolo
-http://paolo.ciarrocchi.googlepages.com/
-http://mypage.vodafone.it/
+David Lang
