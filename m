@@ -1,62 +1,69 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [RFC/PATCH 0/2] New 'stage' command
-Date: Mon, 6 Apr 2009 01:23:58 +0200
-Message-ID: <200904060123.58602.markus.heidelberg@web.de>
-References: <1238939331-10152-1-git-send-email-felipe.contreras@gmail.com> <94a0d4530904051535v8bd901fsedecdf61bc4acb33@mail.gmail.com> <20090405230655.GB20356@atjola.homenet>
-Reply-To: markus.heidelberg@web.de
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: Performance issue: initial git clone causes massive repack
+Date: Mon, 6 Apr 2009 01:28:41 +0200
+Message-ID: <200904060128.42095.robin.rosenberg.lists@dewire.com>
+References: <20090404220743.GA869@curie-int> <20090405225954.GA18730@vidovic> <alpine.DEB.1.10.0904051613420.6245@asgard.lang.hm>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: Text/Plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: =?iso-8859-1?q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Apr 06 01:25:27 2009
+Cc: Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: david@lang.hm
+X-From: git-owner@vger.kernel.org Mon Apr 06 01:30:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqbiP-0004L3-3x
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 01:25:25 +0200
+	id 1LqbnL-0005Jb-5n
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 01:30:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753888AbZDEXXy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Apr 2009 19:23:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753836AbZDEXXy
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 19:23:54 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:45276 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753771AbZDEXXx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Apr 2009 19:23:53 -0400
-Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 85C00FF72589;
-	Mon,  6 Apr 2009 01:23:51 +0200 (CEST)
-Received: from [89.59.118.104] (helo=.)
-	by smtp06.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1Lqbgt-0000vC-00; Mon, 06 Apr 2009 01:23:51 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <20090405230655.GB20356@atjola.homenet>
-Jabber-ID: markus.heidelberg@web.de
+	id S1752937AbZDEX2z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Apr 2009 19:28:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752586AbZDEX2z
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 19:28:55 -0400
+Received: from mail.dewire.com ([83.140.172.130]:25879 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751416AbZDEX2z convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Apr 2009 19:28:55 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 576621483A0B;
+	Mon,  6 Apr 2009 01:28:52 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id FGT1EXuFf49Y; Mon,  6 Apr 2009 01:28:44 +0200 (CEST)
+Received: from sleipner.localnet (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id CFC3413913F4;
+	Mon,  6 Apr 2009 01:28:42 +0200 (CEST)
+User-Agent: KMail/1.11.2 (Linux/2.6.27-14-generic; KDE/4.2.2; i686; ; )
+In-Reply-To: <alpine.DEB.1.10.0904051613420.6245@asgard.lang.hm>
 Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX1+L/UN8da+Z1xleHAUnYrybtOrecaQZFPU7KOpw
-	C+d8pTwjNMg0JEDpBBl+xuLxG5+x1I3p3eGADpcuL+NmS2PuA0
-	L8zpA/TpDubql1ZoKp5Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115738>
 
-Bj=F6rn Steinbrink, 06.04.2009:
-> On 2009.04.06 01:35:24 +0300, Felipe Contreras wrote:
-> > Well, it's a matter of preference, and you would not loose the opti=
-on
-> > to do it the way you like. But actually, "git diff --cached" is a
-> > different action; you can't do "git diff --cached HEAD^.." for
-> > example.
+m=E5ndag 06 april 2009 01:20:07 skrev david@lang.hm:
+> >> the problem here is a real one, if you have a large repo, git send=
+-pack
+> >> will always generate a new pack, even if it doesn't need to (with =
+the
+> >> extreme case being the the repo is fully packed)
+> >
+> > What about the rsync solution given in this thread?
 >=20
-> Sure you can. It diffs the index against HEAD^
+> that may be a work-around for a situation where git just doesn't work=
+, but=20
+> how do they prevent users from killing their server by trying to do a=
+=20
+> normal git clone?
 
-No, note the ".."
+Is there no way of telling git not work so hard on packing?=20
 
-Markus
+If not, you could try JGit and compare. It's still too stupid to pack m=
+uch, so it shouldn't spend much CPU time (for that reason at least). I =
+haven't tried JGit's deamon for large amounts of data yet.
+
+-- robin
