@@ -1,347 +1,103 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [PATCH v2 14/14] difftool/mergetool: refactor commands to use git-mergetool--lib
-Date: Tue, 7 Apr 2009 01:37:17 +0200
-Message-ID: <200904070137.17716.markus.heidelberg@web.de>
-References: <1239010228-21315-1-git-send-email-davvid@gmail.com>
-Reply-To: markus.heidelberg@web.de
+From: Klas Lindberg <klas.lindberg@gmail.com>
+Subject: Re: Fetching SHA id's instead of named references?
+Date: Tue, 7 Apr 2009 01:40:04 +0200
+Message-ID: <33f4f4d70904061640j1b03c499x1765da1a72a411f3@mail.gmail.com>
+References: <33f4f4d70904060513k320fb6a0ya928c714dcd11e89@mail.gmail.com>
+	 <alpine.DEB.1.00.0904061431020.6619@intel-tinevez-2-302>
+	 <20090406144047.GE23604@spearce.org>
+	 <33f4f4d70904060922t5c868ec0x89ed5891cf4b19c2@mail.gmail.com>
+	 <alpine.LFD.2.00.0904061245111.6741@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org, benji@silverinsanity.com,
-	charles@hashpling.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 07 01:39:03 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Git Users List <git@vger.kernel.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Apr 07 01:41:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqyP7-0005tj-N4
-	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 01:39:02 +0200
+	id 1LqyRh-0006TX-Dh
+	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 01:41:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753303AbZDFXhK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Apr 2009 19:37:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751216AbZDFXhK
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 19:37:10 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:57371 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752162AbZDFXhI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2009 19:37:08 -0400
-Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 3F175FF7E8D9;
-	Tue,  7 Apr 2009 01:37:05 +0200 (CEST)
-Received: from [89.59.82.208] (helo=.)
-	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1LqyNF-0000I7-00; Tue, 07 Apr 2009 01:37:05 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <1239010228-21315-1-git-send-email-davvid@gmail.com>
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX1//Y/Qpq3r3VCLX4CvXSq2biTHg2EZUjb+LQLt0
-	7Ok+RhnbAjO7YluMRz/iRGJskLUSXgaX0LsgAs7aMr5L+54xhm
-	c+rAjj0Ux1nMJ13fXm7g==
+	id S1751804AbZDFXkL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Apr 2009 19:40:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751314AbZDFXkK
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 19:40:10 -0400
+Received: from mail-bw0-f169.google.com ([209.85.218.169]:42564 "EHLO
+	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751268AbZDFXkI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Apr 2009 19:40:08 -0400
+Received: by bwz17 with SMTP id 17so2089693bwz.37
+        for <git@vger.kernel.org>; Mon, 06 Apr 2009 16:40:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=HZb5owKCImEXLuWSeSrR/9lBKpcwyvBTko1pbD0VKl4=;
+        b=R3ft4HsR0aVFbi5OHnHyLErXA+SvCHQjQ6aLkZCmOUecL9bqAgnblARRsXAngCm6Tg
+         +C8iEPp7arQpUrnvC0J8L2v1iAfZRwXRRdNkBOq5Ohs1np/6A77kszhUq0tKqPciAhlm
+         aNlzunLB2yG/aEcSsZUgeBtd+3bYllI7Cw8O8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=de2cueHiZhTMtl2R2yXMcUq/DM0evX/9tZxas3iwRuGocbiYMJVzC4Sk0izBb8Yo+O
+         bmVxxznKUhXfua9vGyHoGKBv2/QfL1XNLegeW75LSN4lpTScQHKytHm0do2c7AwGsMqq
+         DKpzQ7L1Jlomr8OI41GA1BnUahWXVBXKFWjyc=
+Received: by 10.223.113.199 with SMTP id b7mr4007515faq.82.1239061204790; Mon, 
+	06 Apr 2009 16:40:04 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.00.0904061245111.6741@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115893>
 
-David Aguilar, 06.04.2009:
-> diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+On Mon, Apr 6, 2009 at 6:55 PM, Nicolas Pitre <nico@cam.org> wrote:
 
-> +check_unchanged () {
-> +	if merge_mode; then
-> +		if test "$MERGED" -nt "$BACKUP"; then
-> +			status=0
-> +		else
-> +			while true; do
-> +				echo "$MERGED seems unchanged."
-> +				printf "Was the merge successful? [y/n] "
-> +				read answer < /dev/tty
-> +				case "$answer" in
-> +				y*|Y*) status=0; break ;;
-> +				n*|N*) status=1; break ;;
-> +				esac
-> +			done
-> +		fi
-> +	else
-> +		status=0
-> +	fi
-> +	return $status
-> +}
+> Why can't you simply fetch the remote from its branch tip and then
+> figure out / checkout the particular unnamed reference you wish local=
+ly?
 
-The return value is currently never used.
+It is a pretty sane thing to do, but it makes me a bit nervous that
+branches are not immutable. Let's say I decide on a manifest format
+where each tree is listed as a branch name plus the current SHA key on
+that branch. The branch name is needed to enable fetch, but if the
+branch is later renamed because of a change in naming policy, or its
+name simply reused to refer to something completely different (*),
+then there is no guarantee that the SHA key is reachable through that
+branch name.
 
-> +run_merge_tool () {
-> +	base_present="$2"
-> +	if diff_mode; then
-> +		base_present="false"
-> +	fi
-> +	if test -z "$base_present"; then
-> +		base_present="true"
-> +	fi
+(*) These situations cannot be discounted in an organization with,
+say, a few thousand employees and several tens of really big projects
+with considerable overlap. I have to take into account that the right
+hand may not know what the left hand is doing all the time.
 
-The second if is never true, so isn't necessary. run_merge_tool() is
-called with $2 = true or false in mergetool and $2 = "" in difftool.
+> Unlike with CVS/SVN, you don't need anything from the remote if you w=
+ant
+> to checkout an old version. In particular, there is no need for you t=
+o
+> only fetch that old version from the remote. =C2=A0You just fetch eve=
+rything
+> from the remote and then checkout the particular old version you wish=
+=2E
 
-But I wonder, if it would be better to change the proceeding in the
-case-esac in the next hunk below:
+Please consider when you have to recreate some particular forest that
+you never worked on before, but now you have to fetch and recreate a 3
+year old version so that you can work on that critical error report.
+And I may really not want to fetch everything. Some projects are just
+very very big.
 
-Currently it is:
-    if $base_present
-        mergetool with base
-    else
-        if $merge_mode
-            mergetool without base
-        else
-            difftool
-        fi
-    fi
+I think that what I would need is either
 
-Maybe better:
-    if $merge_mode
-        if $base_present
-            mergetool with base
-        else
-            mergetool without base
-        fi
-    else
-        difftool
-    fi
+ * Immutable tags, or
+ * A way to maintain sets of indestructible commits based on SHA id's
+and a way to fetch them without going through a named reference.
 
-Then the first if can vanish as well and $base_present doesn't have to
-be set to false in diff_mode.
+The second option seems better because it would allow for recursion on
+submodules and it doesn't pollute the tag name space.
 
-And check_unchanged() doesn't have to be called in diff_mode any more,
-$status could be set to 0 by default and doesn't have to be touched when
-in diff_mode. Only in merge_mode git-mergetool has to know, whether the
-merge went fine.
-
-Then it will be:
-    if $merge_mode
-        touch $BACKUP
-        if $base_present
-            mergetool with base
-        else
-            mergetool without base
-        fi
-	check_unchanged
-    else
-        difftool
-    fi
-
-or:
-    if $merge_mode
-        if $base_present
-            mergetool with base
-        else
-            mergetool without base
-        fi
-	status=$?
-    else
-        difftool
-    fi
-
-Sorry for coming so late with this.
-
-> +	case "$1" in
-> +	kdiff3)
-> +		if $base_present; then
-> +			("$merge_tool_path" --auto \
-> +			 --L1 "$MERGED (Base)" --L2 "$MERGED (Local)" --L3 "$MERGED (Remote)" \
-> +			 -o "$MERGED" "$BASE" "$LOCAL" "$REMOTE" > /dev/null 2>&1)
-> +		else
-> +			if merge_mode; then
-> +				("$merge_tool_path" --auto \
-> +				 --L1 "$MERGED (Local)" \
-> +				 --L2 "$MERGED (Remote)" \
-> +				 -o "$MERGED" "$LOCAL" "$REMOTE" \
-> +				> /dev/null 2>&1)
-> +			else
-> +				("$merge_tool_path" --auto \
-> +				 --L1 "$MERGED (A)" \
-> +				 --L2 "$MERGED (B)" \
-> +				 "$LOCAL" "$REMOTE" \
-> +				> /dev/null 2>&1)
-> +			fi
-> +		fi
-> +		status=$?
-> +		;;
-> +	kompare)
-> +		"$merge_tool_path" "$LOCAL" "$REMOTE"
-> +		status=$?
-> +		;;
-> +	tkdiff)
-> +		if $base_present; then
-> +			"$merge_tool_path" -a "$BASE" -o "$MERGED" "$LOCAL" "$REMOTE"
-> +		else
-> +			if merge_mode; then
-> +				"$merge_tool_path" -o "$MERGED" "$LOCAL" "$REMOTE"
-> +			else
-> +				"$merge_tool_path" "$LOCAL" "$REMOTE"
-> +			fi
-> +		fi
-> +		status=$?
-> +		;;
-> +	meld)
-> +		if merge_mode; then
-> +			touch "$BACKUP"
-> +			"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"
-> +		else
-> +			"$merge_tool_path" "$LOCAL" "$REMOTE"
-> +		fi
-> +		check_unchanged
-> +		;;
-> +	diffuse)
-> +		if merge_mode; then
-> +			touch "$BACKUP"
-> +		fi
-> +		if $base_present; then
-> +			"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE" "$BASE" | cat
-> +		else
-> +			if merge_mode; then
-> +				"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE" | cat
-> +			else
-> +				"$merge_tool_path" "$LOCAL" "$REMOTE" | cat
-> +			fi
-> +		fi
-> +		check_unchanged
-> +		;;
-> +	vimdiff)
-> +		if merge_mode; then
-> +			touch "$BACKUP"
-> +			"$merge_tool_path" -d -c "wincmd l" "$LOCAL" "$MERGED" "$REMOTE"
-> +			check_unchanged
-> +		else
-> +			"$merge_tool_path" -d -c "wincmd l" "$LOCAL" "$REMOTE"
-> +		fi
-> +		;;
-> +	gvimdiff)
-> +		if merge_mode; then
-> +			touch "$BACKUP"
-> +			"$merge_tool_path" -d -c "wincmd l" -f "$LOCAL" "$MERGED" "$REMOTE"
-> +			check_unchanged
-> +		else
-> +			"$merge_tool_path" -d -c "wincmd l" -f "$LOCAL" "$REMOTE"
-> +		fi
-> +		;;
-> +	xxdiff)
-> +		if merge_mode; then
-> +			touch "$BACKUP"
-> +		fi
-> +		if $base_present; then
-> +			"$merge_tool_path" -X --show-merged-pane \
-> +			    -R 'Accel.SaveAsMerged: "Ctrl-S"' \
-> +			    -R 'Accel.Search: "Ctrl+F"' \
-> +			    -R 'Accel.SearchForward: "Ctrl-G"' \
-> +			    --merged-file "$MERGED" "$LOCAL" "$BASE" "$REMOTE"
-> +		else
-> +			if merge_mode; then
-> +				"$merge_tool_path" -X $extra \
-> +					-R 'Accel.SaveAsMerged: "Ctrl-S"' \
-> +					-R 'Accel.Search: "Ctrl+F"' \
-> +					-R 'Accel.SearchForward: "Ctrl-G"' \
-> +					--merged-file "$MERGED" "$LOCAL" "$REMOTE"
-> +			else
-> +				"$merge_tool_path" \
-> +					-R 'Accel.Search: "Ctrl+F"' \
-> +					-R 'Accel.SearchForward: "Ctrl-G"' \
-> +					"$LOCAL" "$REMOTE"
-> +			fi
-> +		fi
-> +		check_unchanged
-> +		;;
-> +	opendiff)
-> +		merge_mode && touch "$BACKUP"
-> +		if $base_present; then
-> +			"$merge_tool_path" "$LOCAL" "$REMOTE" \
-> +				-ancestor "$BASE" -merge "$MERGED" | cat
-> +		else
-> +			if merge_mode; then
-> +				"$merge_tool_path" "$LOCAL" "$REMOTE" \
-> +					-merge "$MERGED" | cat
-> +			else
-> +				"$merge_tool_path" "$LOCAL" "$REMOTE" | cat
-> +			fi
-> +		fi
-> +		check_unchanged
-> +		;;
-> +	ecmerge)
-> +		merge_mode && touch "$BACKUP"
-> +		if $base_present; then
-> +			"$merge_tool_path" "$BASE" "$LOCAL" "$REMOTE" \
-> +				--default --mode=merge3 --to="$MERGED"
-> +		else
-> +			"$merge_tool_path" "$LOCAL" "$REMOTE" \
-> +				--default --mode=merge2 --to="$MERGED"
-> +		fi
-> +		check_unchanged
-> +		;;
-> +	emerge)
-> +		if $base_present; then
-> +			"$merge_tool_path" -f emerge-files-with-ancestor-command \
-> +				"$LOCAL" "$REMOTE" "$BASE" "$(basename "$MERGED")"
-> +		else
-> +			"$merge_tool_path" -f emerge-files-command \
-> +				"$LOCAL" "$REMOTE" "$(basename "$MERGED")"
-> +		fi
-> +		status=$?
-> +		;;
-> +	tortoisemerge)
-> +		if $base_present; then
-> +			touch "$BACKUP"
-> +			"$merge_tool_path" -base:"$BASE" -mine:"$LOCAL" -theirs:"$REMOTE" -merged:"$MERGED"
-> +			check_unchanged
-> +		else
-> +			echo "TortoiseMerge cannot be used without a base" 1>&2
-> +			status=1
-> +		fi
-> +		;;
-> +	*)
-> +		if test -n "$merge_tool_cmd"; then
-> +			if merge_mode &&
-> +			test "$merge_tool_trust_exit_code" = "false"; then
-> +				touch "$BACKUP"
-> +				( eval $merge_tool_cmd )
-> +				check_unchanged
-> +			else
-> +				( eval $merge_tool_cmd )
-> +				status=$?
-> +			fi
-> +		fi
-> +		;;
-> +	esac
-> +	return $status
-> +}
-> +
-> +guess_merge_tool () {
-> +	if diff_mode; then
-> +		kompare="kompare"
-> +	fi
-> +	if test -n "$DISPLAY"; then
-> +		if test -n "$GNOME_DESKTOP_SESSION_ID" ; then
-> +			tools="meld kdiff3 $kompare tkdiff"
-> +			tools="$tools xxdiff gvimdiff diffuse"
-> +		else
-> +			tools="kdiff3 $kompare tkdiff xxdiff"
-> +			tools="$tools meld gvimdiff diffuse"
-> +		fi
-> +	fi
-
-We lost tortoisemerge. And we could add ecmerge. Then every possible
-built-in can be detected if installed.
-
-> +	if echo "${VISUAL:-$EDITOR}" | grep emacs > /dev/null 2>&1; then
-> +		# $EDITOR is emacs so add emerge as a candidate
-> +		tools="$tools emerge opendiff vimdiff"
-> +	elif echo "${VISUAL:-$EDITOR}" | grep vim > /dev/null 2>&1; then
-> +		# $EDITOR is vim so add vimdiff as a candidate
-> +		tools="$tools vimdiff opendiff emerge"
-> +	else
-> +		tools="$tools opendiff emerge vimdiff"
-> +	fi
-
-Why is opendiff here? I thought the graphical tools should go above.
-Doesn't have Mac OS $DISPLAY set?
+BR / Klas
