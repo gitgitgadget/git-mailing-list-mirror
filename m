@@ -1,148 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [question] how can i verify whether a local branch is tracking
-	a remote branch?
-Date: Mon, 6 Apr 2009 00:34:26 -0400
-Message-ID: <20090406043426.GC12341@coredump.intra.peff.net>
-References: <4d8e3fd30904050332w394cccbaq5b82d2a53ed357a3@mail.gmail.com> <20090405144413.GC2076@sigill.intra.peff.net> <4d8e3fd30904051425w6739a12fp5666e71e8b2d7958@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Performance issue: initial git clone causes massive repack
+Date: Sun, 05 Apr 2009 22:15:19 -0700
+Message-ID: <7vab6ue520.fsf@gitster.siamese.dyndns.org>
+References: <20090404220743.GA869@curie-int> <20090405000536.GA12927@vidovic>
+ <20090405T001239Z@curie.orbis-terrarum.net> <20090405035453.GB12927@vidovic>
+ <20090405070412.GB869@curie-int> <20090405190213.GA12929@vidovic>
+ <alpine.DEB.1.10.0904051419490.6245@asgard.lang.hm>
+ <20090405225954.GA18730@vidovic>
+ <alpine.DEB.1.10.0904051613420.6245@asgard.lang.hm>
+ <alpine.LFD.2.00.0904052326090.6741@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 06 06:36:20 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: david@lang.hm, Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Mon Apr 06 07:17:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqgZG-0004hB-2w
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 06:36:18 +0200
+	id 1LqhCr-0002RB-2V
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 07:17:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751035AbZDFEer (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Apr 2009 00:34:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750869AbZDFEeq
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 00:34:46 -0400
-Received: from peff.net ([208.65.91.99]:42748 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750779AbZDFEeq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2009 00:34:46 -0400
-Received: (qmail 20919 invoked by uid 107); 6 Apr 2009 04:35:04 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 06 Apr 2009 00:35:04 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Apr 2009 00:34:26 -0400
-Content-Disposition: inline
-In-Reply-To: <4d8e3fd30904051425w6739a12fp5666e71e8b2d7958@mail.gmail.com>
+	id S1751709AbZDFFPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Apr 2009 01:15:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751641AbZDFFPh
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 01:15:37 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44418 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751571AbZDFFPg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2009 01:15:36 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7E79DA83F0;
+	Mon,  6 Apr 2009 01:15:33 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id CE2FEA83EB; Mon,
+  6 Apr 2009 01:15:21 -0400 (EDT)
+In-Reply-To: <alpine.LFD.2.00.0904052326090.6741@xanadu.home> (Nicolas
+ Pitre's message of "Sun, 05 Apr 2009 23:34:32 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: F4662C30-2269-11DE-BC64-BB14ECB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115763>
 
-On Sun, Apr 05, 2009 at 11:25:29PM +0200, Paolo Ciarrocchi wrote:
+Nicolas Pitre <nico@cam.org> writes:
 
-> An example:
-> $ git clone -n URL temp
-> $ cd temp
-> $ git branch -r
->   origin/master
->   origin/foo
->   Origin/bar
-> $ git checkout --track -b foo origin/foo
-> 
-> Now, how can I know that foo is tracking origin/foo ?
+> What git-pack-objects does in this case is not a full repack.  It 
+> instead _reuse_ as much of the existing packs as possible, and only does 
+> the heavy packing processing for loose objects and/or inter pack 
+> boundaryes when gluing everything together for streaming over the net.  
+> If for example you have a single pack because your repo is already fully 
+> packed, then the "packing operation" involved during a clone should 
+> merely copy the existing pack over with no further attempt at delta 
+> compression.
 
-Doing it right is hard. You have to:
-
-  1. check branch.foo.merge and branch.foo.rebase; if no value, it is not
-     tracking anything; if it is, remember that value as $m
-
-  2. check branch.foo.remote for the remote name, $r
-
-  3. check the fetch refspecs for remote $r; these can come from
-     the config, or from .git/remotes/* files. Maybe even .git/branches
-     files; I don't even remember how those work.
-
-  4. find the refspec that fetches from $m; then find the matching
-     destination for that refspec. That is the tracking branch.
-
-E.g., in your example (and using a modern git):
-
-  1. $m is refs/heads/foo
-  2. $r is origin
-  3. The fetch refspec is in remote.origin.fetch, and is generally
-     "refs/heads/*:refs/remotes/origin/*"
-  4. So refs/heads/foo becomes refs/remotes/origin/foo.
-     refs/remotes/origin/foo is your tracking branch.
-
-Steps 1 and 2 are easy, but 3 and 4 are a bit nasty. You can fake it by
-assuming that "refs/heads/$m" on "$r" is always "refs/remotes/$r/$m",
-which is true for very vanilla setups.
-
-There is C code that does this, but there is not a good way of accessing
-it from the command-line. The best you can do is "git remote show
-origin", which on recent git versions should show something like:
-
-  ...
-  Local branches configured for 'git pull':
-    foo    merges with remote foo
-  ...
-
-But of course that implies that you already guessed the remote "origin".
-And it's not using plumbing, so it's not very suitable for scripts.
-
-I don't think it would be unreasonable to expose this functionality via
-"for-each-ref". Something like this (which would need cleanup,
-documentation, and perhaps a :short variant):
-
----
-diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
-index 5cbb4b0..3f418e4 100644
---- a/builtin-for-each-ref.c
-+++ b/builtin-for-each-ref.c
-@@ -8,6 +8,7 @@
- #include "blob.h"
- #include "quote.h"
- #include "parse-options.h"
-+#include "remote.h"
- 
- /* Quoting styles */
- #define QUOTE_NONE 0
-@@ -66,6 +67,7 @@ static struct {
- 	{ "subject" },
- 	{ "body" },
- 	{ "contents" },
-+	{ "tracking" },
- };
- 
- /*
-@@ -699,6 +701,18 @@ static void populate_value(struct refinfo *ref)
- 				v->s = s;
- 			}
- 		}
-+		if (!strcmp(name, "tracking")) {
-+			struct branch *branch;
-+			if (prefixcmp(ref->refname, "refs/heads/"))
-+				continue;
-+			branch = branch_get(ref->refname + 11);
-+			if (branch && branch->merge && branch->merge[0] &&
-+			    branch->merge[0]->dst)
-+				v->s = branch->merge[0]->dst;
-+			else
-+				v->s = NULL;
-+			free(branch); /* XXX should also free other parts? */
-+		}
- 	}
- 
- 	grab_values(ref->value, 0, obj, buf, size);
-
-
-
-
-
-> 
-> Thanks.
-> 
-> 
-> Ciao,
-> -- 
-> Paolo
-> http://paolo.ciarrocchi.googlepages.com/
-> http://mypage.vodafone.it/
+One possibile scenario that you still need to spend memory and cycle is if
+the cloned repository was packed to an excessive depth to cause many of
+its objects to be in deltified form on insanely deep chains, while cloning
+send-pack uses a depth that is more reasonable.  Then pack-objects invoked
+by send-pack is not allowed to reuse most of the objects and would end up
+redoing the delta on them.
