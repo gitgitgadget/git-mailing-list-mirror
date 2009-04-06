@@ -1,7 +1,7 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH 09/14] difftool: move 'git-difftool' out of contrib
-Date: Mon,  6 Apr 2009 01:31:24 -0700
-Message-ID: <1239006689-14695-10-git-send-email-davvid@gmail.com>
+Subject: [PATCH 07/14] difftool: add a -y shortcut for --no-prompt
+Date: Mon,  6 Apr 2009 01:31:22 -0700
+Message-ID: <1239006689-14695-8-git-send-email-davvid@gmail.com>
 References: <1239006689-14695-1-git-send-email-davvid@gmail.com>
  <1239006689-14695-2-git-send-email-davvid@gmail.com>
  <1239006689-14695-3-git-send-email-davvid@gmail.com>
@@ -9,198 +9,183 @@ References: <1239006689-14695-1-git-send-email-davvid@gmail.com>
  <1239006689-14695-5-git-send-email-davvid@gmail.com>
  <1239006689-14695-6-git-send-email-davvid@gmail.com>
  <1239006689-14695-7-git-send-email-davvid@gmail.com>
- <1239006689-14695-8-git-send-email-davvid@gmail.com>
- <1239006689-14695-9-git-send-email-davvid@gmail.com>
 Cc: git@vger.kernel.org, charles@hashpling.org,
 	markus.heidelberg@web.de, David Aguilar <davvid@gmail.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Apr 06 10:35:11 2009
+X-From: git-owner@vger.kernel.org Mon Apr 06 10:35:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqkII-0002l9-Fy
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 10:35:02 +0200
+	id 1LqkIJ-0002l9-7Y
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 10:35:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754804AbZDFIcJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1754777AbZDFIcJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Mon, 6 Apr 2009 04:32:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754748AbZDFIcH
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 04:32:07 -0400
-Received: from rv-out-0506.google.com ([209.85.198.231]:11551 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754696AbZDFIcD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2009 04:32:03 -0400
-Received: by rv-out-0506.google.com with SMTP id f9so2100137rvb.1
-        for <git@vger.kernel.org>; Mon, 06 Apr 2009 01:32:01 -0700 (PDT)
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754350AbZDFIcD
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 04:32:03 -0400
+Received: from wa-out-1112.google.com ([209.85.146.177]:18484 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754194AbZDFIb7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2009 04:31:59 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so1642088wah.21
+        for <git@vger.kernel.org>; Mon, 06 Apr 2009 01:31:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=XZNlxAKpnNqkw07ua/aqB/f6aMkDM/koKkDHLIhHu6Q=;
-        b=H7MwAbBxInwx0JqLWCNWNx/dDxs87FCmR2tj3oA6YQF9b0GibWBsBp3TXIFwokHYYu
-         pmS2zuz2G93tbFnqgU4ZfMu5IWan1vKdKPfh5KvpSzh2Og1i1J9tmtp51loiaJNdldaD
-         joKgmwZOSe/CVSXilGp6LMqKna/kZuvoabs0M=
+        bh=WDoZcAer1oij+5du1SJIDFpwdZGSu8QGV20aczao3yo=;
+        b=QIPl0xquzwGfeg/2zTARRyMu2XLyX87tlDXEibkM2qhNutphLlKx5sZp1Dlreox9r+
+         nz6oXXfrGVhMbsClyHSG5KiYTd+rF+srxoKP0WhPI5NVOzuzRiuoOitFP4MqnW2HataF
+         aGMvwoxaNwGb2WlXewJj8EP7AgUglBxkyBVqY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=TIVeoQrv1mRfFbvKrWOn8PmZOkN2cD+hGW5fzyiUWCxSzG9oC+S7Cz3tYNflFpcAqw
-         oV3U/cQ2aB+6AkAOcCs3mIRP6ynokCVG7vdSGecUYoL+l/QgY0zeOnSdXDbe5/Gy6yYf
-         3ETLa1flc50AKYMGmOgm6JS4CNwKhy1quM1f0=
-Received: by 10.115.58.18 with SMTP id l18mr2160137wak.31.1239006721131;
-        Mon, 06 Apr 2009 01:32:01 -0700 (PDT)
+        b=mhdRdeIfjWsqwsv2VdoWShKJc503TdxpJo6q05SCCRu3uDHSk/pv90/0tIO0AVZ/ft
+         frhIsNagN/w6TP9KcXOxWFK64TIfIN75gsknEmDe48zXoFWjlzP9ycn50CMFHd+7yrml
+         wYkiesoQ4fKwyp35/RlXh+fIcAd72DsduiY5Y=
+Received: by 10.115.106.18 with SMTP id i18mr2142387wam.213.1239006717584;
+        Mon, 06 Apr 2009 01:31:57 -0700 (PDT)
 Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id v32sm5211503wah.17.2009.04.06.01.32.00
+        by mx.google.com with ESMTPS id k14sm5184056waf.58.2009.04.06.01.31.56
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 06 Apr 2009 01:32:00 -0700 (PDT)
+        Mon, 06 Apr 2009 01:31:56 -0700 (PDT)
 X-Mailer: git-send-email 1.6.2.2.414.g81aa9
-In-Reply-To: <1239006689-14695-9-git-send-email-davvid@gmail.com>
+In-Reply-To: <1239006689-14695-7-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115791>
 
-This prepares 'git-difftool' and its documentation for
-mainstream use.
-
-'git-difftool-helper' became 'git-difftool--helper'
-since users should not use it directly.
-
-'git-difftool' was added to the list of commands as
-an ancillaryinterrogator.
+This is another consistency cleanup to make git-difftool's options
+match git-mergetool.
 
 Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
- .gitignore                                         |    2 ++
- Documentation/config.txt                           |   17 +++++++++++++++++
- .../difftool => Documentation}/git-difftool.txt    |    0
- Makefile                                           |    2 ++
- command-list.txt                                   |    1 +
- .../git-difftool-helper => git-difftool--helper.sh |    2 +-
- contrib/difftool/git-difftool => git-difftool.perl |    6 +++---
- 7 files changed, 26 insertions(+), 4 deletions(-)
- rename {contrib/difftool => Documentation}/git-difftool.txt (100%)
- rename contrib/difftool/git-difftool-helper => git-difftool--helper.sh (98%)
- rename contrib/difftool/git-difftool => git-difftool.perl (92%)
+ contrib/difftool/git-difftool     |    6 +++---
+ contrib/difftool/git-difftool.txt |   36 ++++++++++++++----------------------
+ 2 files changed, 17 insertions(+), 25 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 1c57d4c..a36da9d 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -35,6 +35,8 @@ git-diff
- git-diff-files
- git-diff-index
- git-diff-tree
-+git-difftool
-+git-difftool--helper
- git-describe
- git-fast-export
- git-fast-import
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ad22cb8..185a9ef 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -667,6 +667,23 @@ diff.suppressBlankEmpty::
- 	A boolean to inhibit the standard behavior of printing a space
- 	before each empty output line. Defaults to false.
- 
-+diff.tool::
-+	Controls which diff tool is used.  `diff.tool` overrides
-+	`merge.tool` when used by linkgit:git-difftool[1] and has
-+	the same valid values as `merge.tool`.
-+
-+difftool.<tool>.path::
-+	Override the path for the given tool.  This is useful in case
-+	your tool is not in the PATH.
-+
-+difftool.<tool>.cmd::
-+	Specify the command to invoke the specified diff tool.
-+	The specified command is evaluated in shell with the following
-+	variables available:  'LOCAL' is set to the name of the temporary
-+	file containing the contents of the diff pre-image and 'REMOTE'
-+	is set to the name of the temporary file containing the contents
-+	of the diff post-image.
-+
- diff.wordRegex::
- 	A POSIX Extended Regular Expression used to determine what is a "word"
- 	when performing word-by-word difference calculations.  Character
-diff --git a/contrib/difftool/git-difftool.txt b/Documentation/git-difftool.txt
-similarity index 100%
-rename from contrib/difftool/git-difftool.txt
-rename to Documentation/git-difftool.txt
-diff --git a/Makefile b/Makefile
-index 7867eac..a80055f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -277,6 +277,7 @@ TEST_PROGRAMS =
- 
- SCRIPT_SH += git-am.sh
- SCRIPT_SH += git-bisect.sh
-+SCRIPT_SH += git-difftool--helper.sh
- SCRIPT_SH += git-filter-branch.sh
- SCRIPT_SH += git-lost-found.sh
- SCRIPT_SH += git-merge-octopus.sh
-@@ -296,6 +297,7 @@ SCRIPT_SH += git-submodule.sh
- SCRIPT_SH += git-web--browse.sh
- 
- SCRIPT_PERL += git-add--interactive.perl
-+SCRIPT_PERL += git-difftool.perl
- SCRIPT_PERL += git-archimport.perl
- SCRIPT_PERL += git-cvsexportcommit.perl
- SCRIPT_PERL += git-cvsimport.perl
-diff --git a/command-list.txt b/command-list.txt
-index 3583a33..fb03a2e 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -33,6 +33,7 @@ git-diff                                mainporcelain common
- git-diff-files                          plumbinginterrogators
- git-diff-index                          plumbinginterrogators
- git-diff-tree                           plumbinginterrogators
-+git-difftool                            ancillaryinterrogators
- git-fast-export				ancillarymanipulators
- git-fast-import				ancillarymanipulators
- git-fetch                               mainporcelain common
-diff --git a/contrib/difftool/git-difftool-helper b/git-difftool--helper.sh
-similarity index 98%
-rename from contrib/difftool/git-difftool-helper
-rename to git-difftool--helper.sh
-index 4b0daec..fc61416 100755
---- a/contrib/difftool/git-difftool-helper
-+++ b/git-difftool--helper.sh
-@@ -1,5 +1,5 @@
- #!/bin/sh
--# git-difftool-helper is a GIT_EXTERNAL_DIFF-compatible diff tool launcher.
-+# git-difftool--helper is a GIT_EXTERNAL_DIFF-compatible diff tool launcher.
- # This script is typically launched by using the 'git difftool'
- # convenience command.
- #
-diff --git a/contrib/difftool/git-difftool b/git-difftool.perl
-similarity index 92%
-rename from contrib/difftool/git-difftool
-rename to git-difftool.perl
-index 8c160e5..8857ac8 100755
+diff --git a/contrib/difftool/git-difftool b/contrib/difftool/git-difftool
+index 207dd50..8c160e5 100755
 --- a/contrib/difftool/git-difftool
-+++ b/git-difftool.perl
-@@ -2,9 +2,9 @@
- # Copyright (c) 2009 David Aguilar
- #
- # This is a wrapper around the GIT_EXTERNAL_DIFF-compatible
--# git-difftool-helper script.  This script exports
-+# git-difftool--helper script.  This script exports
- # GIT_EXTERNAL_DIFF and GIT_PAGER for use by git, and
--# GIT_DIFFTOOL_NO_PROMPT and GIT_DIFF_TOOL for use by git-difftool-helper.
-+# GIT_DIFFTOOL_NO_PROMPT and GIT_DIFF_TOOL for use by git-difftool--helper.
- # Any arguments that are unknown to this script are forwarded to 'git diff'.
- 
- use strict;
-@@ -27,7 +27,7 @@ sub setup_environment
++++ b/contrib/difftool/git-difftool
+@@ -18,7 +18,7 @@ my $DIR = abs_path(dirname($0));
+ sub usage
  {
- 	$ENV{PATH} = "$DIR:$ENV{PATH}";
- 	$ENV{GIT_PAGER} = '';
--	$ENV{GIT_EXTERNAL_DIFF} = 'git-difftool-helper';
-+	$ENV{GIT_EXTERNAL_DIFF} = 'git-difftool--helper';
+ 	print << 'USAGE';
+-usage: git difftool [--tool=<tool>] [--no-prompt] ["git diff" options]
++usage: git difftool [--tool=<tool>] [-y|--no-prompt] ["git diff" options]
+ USAGE
+ 	exit 1;
  }
+@@ -60,11 +60,11 @@ sub generate_command
+ 			$ENV{GIT_DIFF_TOOL} = substr($arg, 7);
+ 			next;
+ 		}
+-		if ($arg eq '--no-prompt') {
++		if ($arg eq '-y' || $arg eq '--no-prompt') {
+ 			$ENV{GIT_DIFFTOOL_NO_PROMPT} = 'true';
+ 			next;
+ 		}
+-		if ($arg eq '-h' or $arg eq '--help') {
++		if ($arg eq '-h' || $arg eq '--help') {
+ 			usage();
+ 		}
+ 		push @command, $arg;
+diff --git a/contrib/difftool/git-difftool.txt b/contrib/difftool/git-difftool.txt
+index 2b7bc03..4dff529 100644
+--- a/contrib/difftool/git-difftool.txt
++++ b/contrib/difftool/git-difftool.txt
+@@ -3,35 +3,32 @@ git-difftool(1)
  
- sub exe
+ NAME
+ ----
+-git-difftool - compare changes using common merge tools
++git-difftool - Show changes using common diff tools
+ 
+ SYNOPSIS
+ --------
+-'git difftool' [--tool=<tool>] [--no-prompt] ['git diff' options]
++'git difftool' [-t|--tool=<tool>] [-y|--no-prompt] [<'git diff' options>]
+ 
+ DESCRIPTION
+ -----------
+ 'git-difftool' is a git command that allows you to compare and edit files
+-between revisions using common merge tools.  At its most basic level,
+-'git-difftool' does what 'git-mergetool' does but its use is for non-merge
+-situations such as when preparing commits or comparing changes against
+-the index.
+-
+-'git difftool' is a frontend to 'git diff' and accepts the same
+-arguments and options.
+-
+-See linkgit:git-diff[1] for the full list of supported options.
++between revisions using common diff tools.  'git difftool' is a frontend
++to 'git-diff' and accepts the same options and arguments.
+ 
+ OPTIONS
+ -------
++-y::
++--no-prompt::
++	Do not prompt before launching a diff tool.
++
+ -t <tool>::
+ --tool=<tool>::
+-	Use the merge resolution program specified by <tool>.
++	Use the diff tool specified by <tool>.
+ 	Valid merge tools are:
+ 	kdiff3, kompare, tkdiff, meld, xxdiff, emerge,
+ 	vimdiff, gvimdiff, ecmerge, and opendiff
+ +
+-If a merge resolution program is not specified, 'git-difftool'
++If a diff tool is not specified, 'git-difftool'
+ will use the configuration variable `diff.tool`.  If the
+ configuration variable `diff.tool` is not set, 'git-difftool'
+ will pick a suitable default.
+@@ -42,7 +39,7 @@ can configure the absolute path to kdiff3 by setting
+ `difftool.kdiff3.path`. Otherwise, 'git-difftool' assumes the
+ tool is available in PATH.
+ +
+-Instead of running one of the known merge tool programs,
++Instead of running one of the known diff tools,
+ 'git-difftool' can be customized to run an alternative program
+ by specifying the command line to invoke in a configuration
+ variable `difftool.<tool>.cmd`.
+@@ -56,8 +53,7 @@ is set to the name of the temporary file containing the contents
+ of the diff post-image.  `$BASE` is provided for compatibility
+ with custom merge tool commands and has the same value as `$LOCAL`.
+ 
+---no-prompt::
+-	Do not prompt before launching a diff tool.
++See linkgit:git-diff[1] for the full list of supported options.
+ 
+ CONFIG VARIABLES
+ ----------------
+@@ -65,21 +61,17 @@ CONFIG VARIABLES
+ difftool equivalents have not been defined.
+ 
+ diff.tool::
+-	The default merge tool to use.
++	The default diff tool to use.
+ 
+ difftool.<tool>.path::
+ 	Override the path for the given tool.  This is useful in case
+ 	your tool is not in the PATH.
+ 
+ difftool.<tool>.cmd::
+-	Specify the command to invoke the specified merge tool.
++	Specify the command to invoke the specified diff tool.
+ +
+ See the `--tool=<tool>` option above for more details.
+ 
+-merge.keepBackup::
+-	The original, unedited file content can be saved to a file with
+-	a `.orig` extension.  Defaults to `true` (i.e. keep the backup files).
+-
+ SEE ALSO
+ --------
+ linkgit:git-diff[1]::
 -- 
 1.6.2.2.414.g81aa9
