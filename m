@@ -1,86 +1,126 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Performance issue: initial git clone causes massive repack
-Date: Mon, 06 Apr 2009 12:14:11 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0904061207110.6741@xanadu.home>
-References: <20090404220743.GA869@curie-int>
- <alpine.DEB.1.10.0904051419490.6245@asgard.lang.hm>
- <20090405225954.GA18730@vidovic>
- <alpine.DEB.1.10.0904051613420.6245@asgard.lang.hm>
- <alpine.LFD.2.00.0904052326090.6741@xanadu.home>
- <7vab6ue520.fsf@gitster.siamese.dyndns.org>
- <9e4733910904060652t6c0f37d9t246b7394e3aad350@mail.gmail.com>
- <alpine.LFD.2.00.0904060959250.6741@xanadu.home>
- <9e4733910904060737k3d1c082fk785cd98cdeb6d73d@mail.gmail.com>
- <alpine.LFD.2.00.0904061042300.6741@xanadu.home>
- <9e4733910904060828m414dfe7v66b19f7b4c5b670e@mail.gmail.com>
+From: Andreas Gruenbacher <agruen@suse.de>
+Subject: GNU patch: upcoming stable release
+Date: Mon, 6 Apr 2009 17:13:37 +0100
+Organization: SUSE Labs / Novell
+Message-ID: <200904061813.37994.agruen@suse.de>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_+O1ICX4blPBy+V141Dth2A)"
-Cc: Junio C Hamano <gitster@pobox.com>, david@lang.hm,
-	Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
-	"Robin H. Johnson" <robbat2@gentoo.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 06 18:17:22 2009
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 06 18:21:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqrVM-00009b-4B
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 18:17:00 +0200
+	id 1LqrZY-0001md-0z
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 18:21:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757102AbZDFQOm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Apr 2009 12:14:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752075AbZDFQOl
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 12:14:41 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:30297 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758921AbZDFQOk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2009 12:14:40 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KHO0065JT3OWEH0@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 06 Apr 2009 12:14:12 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <9e4733910904060828m414dfe7v66b19f7b4c5b670e@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1752428AbZDFQTu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Apr 2009 12:19:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751608AbZDFQTt
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 12:19:49 -0400
+Received: from cantor2.suse.de ([195.135.220.15]:43014 "EHLO mx2.suse.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751270AbZDFQTs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2009 12:19:48 -0400
+Received: from Relay2.suse.de (mail2.suse.de [195.135.221.8])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx2.suse.de (Postfix) with ESMTP id A2BAE86445
+	for <git@vger.kernel.org>; Mon,  6 Apr 2009 18:19:45 +0200 (CEST)
+User-Agent: KMail/1.9.9
+Content-Disposition: inline
+X-Length: 3598
+X-UID: 12595
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115849>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hello,
 
---Boundary_(ID_+O1ICX4blPBy+V141Dth2A)
-Content-type: TEXT/PLAIN; charset=ISO-8859-1
-Content-transfer-encoding: 8BIT
+I am pleased to announce the next alpha release of GNU patch, available by 
+anonymous FTP from:
 
-On Mon, 6 Apr 2009, Jon Smirl wrote:
+  ftp://alpha.gnu.org/gnu/patch/
 
-> On Mon, Apr 6, 2009 at 11:14 AM, Nicolas Pitre <nico@cam.org> wrote:
-> > This means that, when those objects are about to be stored in the new
-> > pack, their raw data is simply copied straight from the original pack
-> > using the offset and size noted above.  In other words, those objects
-> > are simply never redeltified nor redeflated at all, and all the work
-> > that was previously done to find the best delta match is preserved with
-> > no extra cost.
-> 
-> Does this process cause random reads all over a 2GB pack file? Busy
-> servers can't keep a 2GB pack in memory.
+The code should be feature complete for the next stable release with only a 
+few minor bugfixes left in the queue.  This is your chance to report more 
+bugs that still need to be addressed.  Please expect the next stable release 
+to happen in about a month's time.
 
-The creation of a new pack follows the same object recency rule as the 
-ones it copies from, so the various reads should be perfectly 
-sequential.
+The last stable release dates back to June 2004 with version 2.5.9.  I would 
+like to thank Paul Eggert for his work on GNU patch, and for making his code 
+repository available for import.  A new project has been created on Savannah 
+with the new code repository and the bug-patch@gnu.org mailing list archive:
 
-> sendfile() the 2GB pack to client is way more efficient. (assuming the
-> pack is marked as being ok to send).
+  http://savannah.gnu.org/projects/patch
 
-Git is not a FTP server.  Otherwise we would have stayed with the rsync 
-protocol.
+A lot of things have accumulated since version 2.5.9.  The following user 
+visible changes have been made:
 
+* A regression test suite has been added ("make check").
 
-Nicolas
+* A -m or --merge option has been added which will merge a patch file into
+  the original files similar to merge(1).  See the patch(1) manual page for
+  documentation.
 
---Boundary_(ID_+O1ICX4blPBy+V141Dth2A)--
+* Unless a filename has been specified on the command line, look only
+  for filenames in the patch until one has been found.  This prevents
+  patch from tripping over garbage that isn't a patch.  When conforming
+  to POSIX, this behavior is turned off and patch will ask for a
+  filename if none is found.
+
+* All reject files have file name headers, which allows to use them
+  as regular patches.
+
+* When a patch file modifies the same file more than once, patch makes
+  sure it backs up the original version of the file, rather than any
+  intermediary versions.
+
+* In the above situation, if there are rejects in more than one of those
+  patches, the rejects are appended to the same reject file (rather then
+  overwriting themselves).
+
+* The -r option works correctly even there are rejects in more than one
+  file.  Use the - argument to discard rejects.
+
+* Rejected hunks come out in unified diff format if the input patch was of
+  that format, otherwise in ordinary context diff form.  Use the
+  --reject-format option to enforce either "context" or "unified" format.
+  The "diff -p" (--show-c-function) output is preserved.
+  Changed lines in context format reject files are correctly indicated
+  with '!' markers as the format defines.  Added and removed lines are
+  still marked with '+' and '-', respectively.
+
+* The file permissions of reject files are no longer set to match the files
+  they modify.  Instead, they retain the default permissions.  This is
+  consistent with reject files to which rejects of multiple files may be
+  written (-r option).
+
+* The --binary option disables the heuristic for stripping CRs from
+  line endings in patches.  This allows to preserve CRs even in mangled
+  patches, or in patches generated without the --binary option on non-POSIX
+  systems.
+
+* Backup files for nonexisting files are now created with default
+  permissions rather than with mode 0: backup files with mode 0 were
+  causing problems with applications which do not expect unreadable
+  files.
+
+* The -B, -Y, and -z options (--prefix, --basename-prefix, --suffix) now
+  imply the simple version control mode, and can be combined.
+
+* Patch rejects more malformed normal format commands and checks for trailing
+  garbage.  It now recognizes ed commands without addresses.
+
+Please see the project's bug tracker for a list of known issues before 
+reporting those things again on the mailing list.  (Postponed bugs are not 
+going to be addressed in the next stable release.)
+
+Please email bugs or suggestions to <bug-patch@gnu.org>.
+
+Thanks,
+Andreas
