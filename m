@@ -1,67 +1,107 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Performance issue: initial git clone causes massive repack
-Date: Sun, 05 Apr 2009 22:15:19 -0700
-Message-ID: <7vab6ue520.fsf@gitster.siamese.dyndns.org>
-References: <20090404220743.GA869@curie-int> <20090405000536.GA12927@vidovic>
- <20090405T001239Z@curie.orbis-terrarum.net> <20090405035453.GB12927@vidovic>
- <20090405070412.GB869@curie-int> <20090405190213.GA12929@vidovic>
- <alpine.DEB.1.10.0904051419490.6245@asgard.lang.hm>
- <20090405225954.GA18730@vidovic>
- <alpine.DEB.1.10.0904051613420.6245@asgard.lang.hm>
- <alpine.LFD.2.00.0904052326090.6741@xanadu.home>
+Subject: Re: [RFC/PATCH 0/2] New 'stage' command
+Date: Sun, 05 Apr 2009 22:17:26 -0700
+Message-ID: <7v63hie4yh.fsf@gitster.siamese.dyndns.org>
+References: <1238939331-10152-1-git-send-email-felipe.contreras@gmail.com>
+ <200904052358.53028.markus.heidelberg@web.de>
+ <94a0d4530904051535v8bd901fsedecdf61bc4acb33@mail.gmail.com>
+ <200904060117.24810.markus.heidelberg@web.de>
+ <fabb9a1e0904051622k66352ea4v542ecd99bd5d9c6@mail.gmail.com>
+ <20090406032457.GA14758@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: david@lang.hm, Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
-	"Robin H. Johnson" <robbat2@gentoo.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Apr 06 07:17:15 2009
+Cc: Sverre Rabbelier <srabbelier@gmail.com>, markus.heidelberg@web.de,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 06 07:19:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqhCr-0002RB-2V
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 07:17:13 +0200
+	id 1LqhEl-0002gJ-Ek
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 07:19:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751709AbZDFFPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Apr 2009 01:15:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751641AbZDFFPh
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 01:15:37 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44418 "EHLO
+	id S1752044AbZDFFRk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Apr 2009 01:17:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751851AbZDFFRj
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 01:17:39 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46005 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751571AbZDFFPg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2009 01:15:36 -0400
+	with ESMTP id S1753267AbZDFFRg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2009 01:17:36 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 7E79DA83F0;
-	Mon,  6 Apr 2009 01:15:33 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 38D66CAD7;
+	Mon,  6 Apr 2009 01:17:34 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id CE2FEA83EB; Mon,
-  6 Apr 2009 01:15:21 -0400 (EDT)
-In-Reply-To: <alpine.LFD.2.00.0904052326090.6741@xanadu.home> (Nicolas
- Pitre's message of "Sun, 05 Apr 2009 23:34:32 -0400 (EDT)")
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3EEB4CACE; Mon, 
+ 6 Apr 2009 01:17:28 -0400 (EDT)
+In-Reply-To: <20090406032457.GA14758@gmail.com> (David Aguilar's message of
+ "Sun, 5 Apr 2009 20:24:58 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F4662C30-2269-11DE-BC64-BB14ECB1AA3C-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 3C5BFB8C-226A-11DE-926D-DC76898A30C1-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115764>
 
-Nicolas Pitre <nico@cam.org> writes:
+David Aguilar <davvid@gmail.com> writes:
 
-> What git-pack-objects does in this case is not a full repack.  It 
-> instead _reuse_ as much of the existing packs as possible, and only does 
-> the heavy packing processing for loose objects and/or inter pack 
-> boundaryes when gluing everything together for streaming over the net.  
-> If for example you have a single pack because your repo is already fully 
-> packed, then the "packing operation" involved during a clone should 
-> merely copy the existing pack over with no further attempt at delta 
-> compression.
+> On  0, Sverre Rabbelier <srabbelier@gmail.com> wrote:
+>> Heya,
+>> 
+>> On Mon, Apr 6, 2009 at 01:17, Markus Heidelberg
+>> <markus.heidelberg@web.de> wrote:
+>> > Felipe Contreras, 06.04.2009:
+>> >> But actually, "git diff --cached" is a
+>> >> different action; you can't do "git diff --cached HEAD^.." for
+>> >> example.
+>> >
+>> > And I neither could I do "git stage diff HEAD^.."
+>> 
+>> I rest my case ;). That's the whole point Felipe is trying to make here.
+>> $ git diff --cached
+>> $ git diff HEAD^..
+>> 
+>> That's two different modes of operation with the only difference being
+>> a switch ('--cached'), which changes what is, and what is not valid
+>> after that.
+>> 
+>> Whereas with
+>> $ git stage diff
+>> 
+>> There is no confusion that 'HEAD^..' is not a valid argument, as there
+>> is no command in 'git stage diff' to which it _is_ a valid argument.
+>
+> Hello
+>
+> Here's an interesting email from a while back:
+>
+> http://kerneltrap.org/mailarchive/git/2008/10/29/3857134
+>
+> The above mentions the following suggestion:
+>
+>     git diff STAGE WORKTREE   (like "git diff" today)
+>     git diff HEAD WORKTREE    (like "git diff HEAD" today)
+>     git diff WORKTREE HEAD    (like "git diff -R HEAD" today)
+>     git diff HEAD STAGE       (like "git diff --cached" today)
+>     git diff commit STAGE     (like "git diff --cached commit" today)
+>
+>
+> From a consistency and usability perspective, the above
+> example seems very appealing because:
+>
+> a) it does not introduce any new commands, and
+>
+> b) it is consistent with the way git-diff's command-line
+>    interface works today.
+>
+> All we'd have to do is teach git-diff to special-case
+> 'STAGE' and 'WORKTREE'.  Now, whether we'd want to do
+> that is a completely different discussion, but I figured I'd
+> throw the old thread out there.
 
-One possibile scenario that you still need to spend memory and cycle is if
-the cloned repository was packed to an excessive depth to cause many of
-its objects to be in deltified form on insanely deep chains, while cloning
-send-pack uses a depth that is more reasonable.  Then pack-objects invoked
-by send-pack is not allowed to reuse most of the objects and would end up
-redoing the delta on them.
+How would you express operations the current --index option does in such a
+scheme?  Yet another WORKTREEANDTHEINDEX token?
