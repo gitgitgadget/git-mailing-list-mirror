@@ -1,86 +1,83 @@
-From: Finn Arne Gangstad <finnag@pvv.org>
-Subject: Re: Submodules can't work recursively because Git implements
-	policy?
-Date: Mon, 6 Apr 2009 15:56:18 +0200
-Message-ID: <20090406135618.GA17793@pvv.org>
-References: <33f4f4d70904060642m25b2cff8nafed433eeabfb6c4@mail.gmail.com>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Re: Performance issue: initial git clone causes massive repack
+Date: Mon, 6 Apr 2009 07:03:20 -0700
+Message-ID: <20090406T140124Z@curie.orbis-terrarum.net>
+References: <20090405T001239Z@curie.orbis-terrarum.net> <20090405035453.GB12927@vidovic> <20090405070412.GB869@curie-int> <20090405190213.GA12929@vidovic> <alpine.DEB.1.10.0904051419490.6245@asgard.lang.hm> <20090405225954.GA18730@vidovic> <alpine.DEB.1.10.0904051613420.6245@asgard.lang.hm> <alpine.LFD.2.00.0904052326090.6741@xanadu.home> <vpq3acm6n7p.fsf@bauges.imag.fr> <alpine.LFD.2.00.0904060912530.6741@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Users List <git@vger.kernel.org>
-To: Klas Lindberg <klas.lindberg@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 06 15:59:29 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="SgT04PEqo/+yUDw3"
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 06 16:08:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqpKj-00084C-E9
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 15:57:53 +0200
+	id 1LqpRa-0002XD-O8
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 16:04:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754415AbZDFN4X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Apr 2009 09:56:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754355AbZDFN4W
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 09:56:22 -0400
-Received: from decibel.pvv.ntnu.no ([129.241.210.179]:45928 "EHLO
-	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754157AbZDFN4W (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2009 09:56:22 -0400
-Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
-	(envelope-from <finnag@pvv.ntnu.no>)
-	id 1LqpJC-0000E8-Jq; Mon, 06 Apr 2009 15:56:18 +0200
+	id S1755384AbZDFOD2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Apr 2009 10:03:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754995AbZDFOD2
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 10:03:28 -0400
+Received: from b01.ext.isohunt.com ([208.71.112.51]:59340 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755059AbZDFOD1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2009 10:03:27 -0400
+Received: (qmail 11364 invoked from network); 6 Apr 2009 14:03:24 -0000
+Received: from tsi-static.orbis-terrarum.net (HELO curie.orbis-terrarum.net) (76.10.188.108)
+  (smtp-auth username robbat2@isohunt.com, mechanism login)
+  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Mon, 06 Apr 2009 14:03:24 +0000
+Received: (qmail 6257 invoked by uid 10000); 6 Apr 2009 07:03:20 -0700
 Content-Disposition: inline
-In-Reply-To: <33f4f4d70904060642m25b2cff8nafed433eeabfb6c4@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <alpine.LFD.2.00.0904060912530.6741@xanadu.home>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115833>
 
-On Mon, Apr 06, 2009 at 03:42:31PM +0200, Klas Lindberg wrote:
-> On Mon, Apr 6, 2009 at 3:16 PM, Finn Arne Gangstad <finnag@pvv.org> wrote:
-> 
-> > git submodule update just does "git fetch" and hopes that the required
-> > commit appears. In practice this means that you (may) need to invent a
-> > tag or a branch for all the submodules, otherwise they are not
-> > fetchable.
-> >
-> > This bit us pretty hard when we tried to use submodules earlier, so we
-> > gave up. Maybe some day...
-> 
-> It "hopes" to find them?
 
-Perhaps "hopes" is a loaded word, "expects" at least. The code just
-does the equivalent of "git fetch; git checkout <sha-1> || die .. "
+--SgT04PEqo/+yUDw3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->  This is actually my other reason for bringing
-> the whole SHA key fetching thing up. From what I can see, it is not
-> possible to implement submodules sensibly without support for fetching
-> SHA keys. I.e. I want fetch, checkout and every other command to
-> recurse as needed in the presence of submodules. This limitation
-> forces me to implement a whole CM tool where none should be necessary.
+I haven't read all this morning submissions to the thread yet, but I
+wanted to make two posts before I leave on a trip (in ~20 minutes), and
+I'll be back late on Thursday.
 
-Yes, I could not agree more.  You may also end up writing some really
-complicated wrappers around git push to get things going (where do you
-push, for example). We made some interesting "concept art" around this
-last year at $dayjob, but decided to drop it.
+On Mon, Apr 06, 2009 at 09:29:04AM -0400, Nicolas Pitre wrote:
+> > To me, this is a non-issue (if the content of these objects are
+> > secret, then why are they here at all on a public server?), but I
+> > think there were discussions here about it (can't find the right
+> > keywords to dig the archives though), and other people may think
+> > differently.
+> Guess who was involved in that discussion...
+> I may allow you to pull certain branches directly from my own PC through=
+=20
+> the git native protocol.  That doesn't mean you have direct access to=20
+> the whole of any of the packs I have on my disk.
+If the native rsync protocol is allowed to the repo, then that argument
+is moot.
 
-> It appears to me that the security concern (being able to hide commits
-> by making them unreachable from a named reference) is actually a
-> policy decision and not a technical one. On what grounds does Git
-> decide for me how to handle security concerns? It just seems more
-> important to be able to have recursive submodule behaviour than to
-> provide band aid for careless users.
+--=20
+Robin Hugh Johnson
+Gentoo Linux Developer & Infra Guy
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
 
-Maybe the security concerns could be handled by adding some
-functionality to (quickly) get rid of unwanted commits?
+--SgT04PEqo/+yUDw3
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-> Out of curiosity: Is it really possible to change the value of an
-> already pushed tag? Can you only do the hiding trick with branches?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.10 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
 
-Yes, but if you modify a tag, you get additional complications. In
-particular, no one will ever try to refetch the tag, so everyone who
-has already fetched it will have a permanently broken tag.
+iEYEARECAAYFAknaC6gACgkQPpIsIjIzwixcCwCg8+EYv3iqXrulL8tgWtixaRS0
+0hUAnRvqjo8/7vaJ2hn7MCGcpRgoA1AQ
+=sVGX
+-----END PGP SIGNATURE-----
 
-- Finn Arne
+--SgT04PEqo/+yUDw3--
