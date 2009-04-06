@@ -1,104 +1,109 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: Re: Performance issue: initial git clone causes massive repack
-Date: Sun, 5 Apr 2009 17:29:09 -0700
-Message-ID: <20090406T002445Z@curie.orbis-terrarum.net>
-References: <20090405T230552Z@curie.orbis-terrarum.net> <0015174c150e49b5740466d7d2c2@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Gnus content transfer encoding
+Date: Sun, 05 Apr 2009 17:30:13 -0700
+Message-ID: <7vskkmoc8a.fsf@gitster.siamese.dyndns.org>
+References: <20090404225926.a9ad50e0.chriscool@tuxfamily.org>
+ <fabb9a1e0904050317o1399118erb15ddf86d0fe6c3c@mail.gmail.com>
+ <7vvdpjrkp0.fsf@gitster.siamese.dyndns.org>
+ <94a0d4530904051219q7d9ed028jd6e05f541d7c12b5@mail.gmail.com>
+ <3f4fd2640904051231x17117a4g3efe38067c8d3359@mail.gmail.com>
+ <7vocvaq36x.fsf@gitster.siamese.dyndns.org> <87r60626c9.fsf_-_@iki.fi>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="VkVuOCYP9O7H3CXI"
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 06 02:30:49 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Reece Dunn <msclrhd@googlemail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Mon Apr 06 02:31:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lqcjg-0006Qa-JQ
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 02:30:49 +0200
+	id 1Lqckm-0006Zm-RK
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 02:31:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753069AbZDFA3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Apr 2009 20:29:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752796AbZDFA3R
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 20:29:17 -0400
-Received: from b01.ext.isohunt.com ([208.71.112.51]:50013 "EHLO
-	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751549AbZDFA3Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Apr 2009 20:29:16 -0400
-Received: (qmail 27688 invoked from network); 6 Apr 2009 00:29:12 -0000
-Received: from tsi-static.orbis-terrarum.net (HELO curie.orbis-terrarum.net) (76.10.188.108)
-  (smtp-auth username robbat2@isohunt.com, mechanism login)
-  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Mon, 06 Apr 2009 00:29:11 +0000
-Received: (qmail 11069 invoked by uid 10000); 5 Apr 2009 17:29:09 -0700
-Content-Disposition: inline
-In-Reply-To: <0015174c150e49b5740466d7d2c2@google.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1753413AbZDFAa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Apr 2009 20:30:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753551AbZDFAa2
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Apr 2009 20:30:28 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:57750 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753413AbZDFAa1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Apr 2009 20:30:27 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id EA2D2A83F1;
+	Sun,  5 Apr 2009 20:30:24 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 512E2A83ED; Sun,
+  5 Apr 2009 20:30:15 -0400 (EDT)
+In-Reply-To: <87r60626c9.fsf_-_@iki.fi> (Teemu Likonen's message of "Sun, 05
+ Apr 2009 23:28:22 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 1EE62ADC-2242-11DE-BB57-BB14ECB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115746>
 
+Teemu Likonen <tlikonen@iki.fi> writes:
 
---VkVuOCYP9O7H3CXI
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Apr 06, 2009 at 12:17:18AM +0000, SRabbelier@gmail.com wrote:
-> Heya,
+> On 2009-04-05 13:02 (-0700), Junio C Hamano wrote:
 >
-> On Mon, Apr 6, 2009 at 01:38, Robin H. Johnson robbat2@gentoo.org> wrote:
->> Relatedly, throwing more RAM (6GiB total, vs. the previous 2GiB) at the=
-=20
->> server
->> in this case cut the 200 wallclock minutes before any sending too place=
-=20
->> down to
->> 5 minutes.
-> I'm curious what kind of hardware changes you made to achieve such an=20
-> enormous effect? Was it just added RAM on the same machine?
-No, see the paragraph previous to that, showing it was a different machine =
-that
-just happened to have 6GiB of RAM.
+>> Reece Dunn <msclrhd@googlemail.com> writes:
+>>> I think Junio is trying to learn base64 :)!
+>>
+>> I think that is what my Gnus/message-mode did. I do not know which
+>> letter triggered it to decide it is UTF-8 to begin with, though. As
+>> far as I am aware, I didn't type anything non-ascii in my message.
+>
+> You can customize the encoding decision mechanism, for example:
+>
+>     (setq mm-body-charset-encoding-alist
+>           '((iso-8859-1 . 8bit)
+>             (utf-8 . 8bit)))
+>
+> For more info, see:
+>
+>     C-h v mm-body-charset-encoding-alist RET
 
-The key difference is that having 6GiB of RAM was enough to stop the
-swap/OOM-killing of git-pack-objects/git-upload-pack that happened on the s=
-low
-server, which I considered to be entirely unwarranted since the pack was
-already generated and perfect for use.
+Interesting.
 
-"Slow" server:
-- deadline scheduler
-- AMD Opteron 1210, single socket, 2 cores @ 1.8GHZ
-- 2GB Reg ECC RAM
-- 2x ST3250620AS, RAID1
-- 100Mbit internet feed, co-located in Texas.
+I have had these for a long time:
 
-"Fast" server:
-- deadline scheduler
-- Intel Core2 Q6600, single socket, 4 cores @ 2.4GHz
-- ~5.7GiB of cheap RAM (6GiB in the box, 256 not usable due to BIOS MTRR br=
-okeness)
-- 7x ST3320620AS, RAID-5.
-- Sitting on my home LAN, with a very crappy upload bandwidth to the Intern=
-et.
+	(setq mm-coding-system-priorities '(us-ascii iso-2022-jp utf-8 iso-8859-1))
+        (setq mm-content-transfer-encoding-defaults
+              '(("text/.*" 8bit)
+                ("message/rfc822" 8bit)
+                ("application/emacs-lisp" qp-or-base64)
+                ("application/x-emacs-lisp" qp-or-base64)
+                ("application/x-patch" qp-or-base64)
+                (".*" base64)))
 
---=20
-Robin Hugh Johnson
-Gentoo Linux Developer & Infra Guy
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+I did not have any customization on my own to body-charset-encoding-alist 
+and C-h v gave me:
 
---VkVuOCYP9O7H3CXI
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+    mm-body-charset-encoding-alist's value is 
+    ((iso-2022-jp . 7bit)
+     (iso-2022-jp-2 . 7bit)
+     (utf-16 . base64)
+     (utf-16be . base64)
+     (utf-16le . base64))
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.10 (GNU/Linux)
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+I'll have the following in my .emacs in addition to the coding-system-prio
+and c-t-e-defaults I already have:
 
-iEYEARECAAYFAknZTNUACgkQPpIsIjIzwizcrwCcCNwkCn70p5VLnORDAsikWYtS
-DlMAoNjfgtuv5uYrcBXpkVmkRHpgX60a
-=mPqu
------END PGP SIGNATURE-----
+        (setq mm-body-charset-encoding-alist
+              '((iso-2022-jp . 7bit)
+                (iso-2022-jp-2 . 7bit)
+                (iso-8859-1 . 8bit)
+                (utf-8 . 8bit)))
 
---VkVuOCYP9O7H3CXI--
+and will see what happens, but I wonder how this new one interacts with
+the c-t-e-defaults.
+
+Thanks.
