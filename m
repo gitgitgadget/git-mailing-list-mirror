@@ -1,60 +1,77 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [RFC/PATCH 0/2] New 'stage' command
-Date: Mon, 6 Apr 2009 11:48:15 +0200
-Message-ID: <20090406094815.GC20356@atjola.homenet>
-References: <1238939331-10152-1-git-send-email-felipe.contreras@gmail.com> <94a0d4530904051535v8bd901fsedecdf61bc4acb33@mail.gmail.com> <20090405230655.GB20356@atjola.homenet> <200904060123.58602.markus.heidelberg@web.de>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: Re: [PATCH] perl: add new module Git::Config for cached 'git
+	config' access
+Date: Mon, 6 Apr 2009 11:29:42 +0200
+Message-ID: <20090406092942.GW17706@mail-vs.djpig.de>
+References: <1238975176-14354-1-git-send-email-sam.vilain@catalyst.net.nz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Markus Heidelberg <markus.heidelberg@web.de>
-X-From: git-owner@vger.kernel.org Mon Apr 06 11:51:40 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
+To: Sam Vilain <sam.vilain@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Mon Apr 06 12:04:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqlUR-0007lD-5F
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 11:51:39 +0200
+	id 1Lqlgw-0002hr-SC
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 12:04:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758358AbZDFJsV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Apr 2009 05:48:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758540AbZDFJsV
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 05:48:21 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55256 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758324AbZDFJsU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2009 05:48:20 -0400
-Received: (qmail invoked by alias); 06 Apr 2009 09:48:16 -0000
-Received: from i59F56377.versanet.de (EHLO atjola.local) [89.245.99.119]
-  by mail.gmx.net (mp060) with SMTP; 06 Apr 2009 11:48:16 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX18M/zNlP6EMUyvqlssWL3NtLSOunWbn90zLqHrFQ0
-	C4iAHlWGJHL7nI
+	id S1754713AbZDFKDA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Apr 2009 06:03:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754421AbZDFKC7
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 06:02:59 -0400
+Received: from pauli.djpig.de ([78.46.38.139]:37878 "EHLO pauli.djpig.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753699AbZDFKC7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2009 06:02:59 -0400
+X-Greylist: delayed 1982 seconds by postgrey-1.27 at vger.kernel.org; Mon, 06 Apr 2009 06:02:58 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by pauli.djpig.de (Postfix) with ESMTP id 81F039007F;
+	Mon,  6 Apr 2009 11:29:53 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at pauli.djpig.de
+Received: from pauli.djpig.de ([127.0.0.1])
+	by localhost (pauli.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 4c5fhqMWQ71X; Mon,  6 Apr 2009 11:29:43 +0200 (CEST)
+Received: from mail-vs.djpig.de (mail-vs.djpig.de [78.47.136.189])
+	by pauli.djpig.de (Postfix) with ESMTP id 066E69007D;
+	Mon,  6 Apr 2009 11:29:43 +0200 (CEST)
+Received: from djpig by mail-vs.djpig.de with local (Exim 4.69)
+	(envelope-from <djpig@mail-vs.djpig.de>)
+	id 1Lql9C-0005Rn-Hd; Mon, 06 Apr 2009 11:29:42 +0200
 Content-Disposition: inline
-In-Reply-To: <200904060123.58602.markus.heidelberg@web.de>
+In-Reply-To: <1238975176-14354-1-git-send-email-sam.vilain@catalyst.net.nz>
 User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115803>
 
-On 2009.04.06 01:23:58 +0200, Markus Heidelberg wrote:
-> Bj=F6rn Steinbrink, 06.04.2009:
-> > On 2009.04.06 01:35:24 +0300, Felipe Contreras wrote:
-> > > Well, it's a matter of preference, and you would not loose the op=
-tion
-> > > to do it the way you like. But actually, "git diff --cached" is a
-> > > different action; you can't do "git diff --cached HEAD^.." for
-> > > example.
-> >=20
-> > Sure you can. It diffs the index against HEAD^
->=20
-> No, note the ".."
+On Mon, Apr 06, 2009 at 11:46:15AM +1200, Sam Vilain wrote:
+> +	my ($fh, $c) = $git->command_output_pipe(
+> +		'config', ( $which ? ("--$which") : () ),
+> +		'--list',
+> +	       );
+> +	my $read_state = {};
+> +
+> +	while (<$fh>) {
+> +		my ($item, $value) = m{(.*?)=(.*)};
+> +		my $sl = \( $read_state->{$item} );
+> +		if (!defined $$sl) {
+> +			$$sl = $value;
+> +		}
+> +		elsif (!ref $$sl) {
+> +			$$sl = [ $$sl, $value ];
+> +		}
+> +		else {
+> +			push @{ $$sl }, $value;
+> +		}
+> +	}
 
-Oh, d'oh... Sorry, and thanks!
+Any reason why you don't use --null here? The output of --list without --null
+is not reliably parsable, since people can put newlines in values.
 
-Bj=F6rn
+Gruesse,
+-- 
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
