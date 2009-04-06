@@ -1,69 +1,68 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] Initial Japanese gitk translation
-Date: Mon, 6 Apr 2009 16:01:17 +0300
-Message-ID: <94a0d4530904060601o16fe8200m83423eec94d0ced9@mail.gmail.com>
-References: <FD6CAD0757FA434C91E904C1F202CBA1@DELL300>
-	 <7vws9ymudz.fsf@gitster.siamese.dyndns.org>
+From: Klas Lindberg <klas.lindberg@gmail.com>
+Subject: Re: Fetching SHA id's instead of named references?
+Date: Mon, 6 Apr 2009 15:06:46 +0200
+Message-ID: <33f4f4d70904060606h4d014fbdibe195a83233d8899@mail.gmail.com>
+References: <33f4f4d70904060513k320fb6a0ya928c714dcd11e89@mail.gmail.com>
+	 <alpine.DEB.1.00.0904061431020.6619@intel-tinevez-2-302>
+	 <33f4f4d70904060541s6dfb7e8ctf50f5e8a872ae1c@mail.gmail.com>
+	 <vpqprfq3ptb.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: FORS Luis <l-fors@cerca-jp.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 06 15:03:20 2009
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Users List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Mon Apr 06 15:08:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqoTX-0006WQ-2a
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 15:02:55 +0200
+	id 1LqoYp-0008MK-Pg
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 15:08:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754886AbZDFNBW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Apr 2009 09:01:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754763AbZDFNBV
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 09:01:21 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:37660 "EHLO
+	id S1755015AbZDFNGv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Apr 2009 09:06:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754763AbZDFNGv
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 09:06:51 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:55795 "EHLO
 	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754308AbZDFNBU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2009 09:01:20 -0400
-Received: by fxm2 with SMTP id 2so1872746fxm.37
-        for <git@vger.kernel.org>; Mon, 06 Apr 2009 06:01:17 -0700 (PDT)
+	with ESMTP id S1754715AbZDFNGu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2009 09:06:50 -0400
+Received: by fxm2 with SMTP id 2so1875139fxm.37
+        for <git@vger.kernel.org>; Mon, 06 Apr 2009 06:06:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=jX4Rv1EJtT/cYf3r67ycUuwV2x25cakmIIes/aiaxXg=;
-        b=maFj3JpIwygz/12jPawnJA6bj2lwbI1TzPuywPKvqsoO060naiBnyZIdmvX4PC1eq3
-         lu0tbP+n6MzVK1znOz6xof8kyu510K8TlGL7nZnJngX461tLR2lw6gUJRlBoLw/fQfOc
-         KkJuTYzbFKZcJuILahkTNO4kL9/E1ApYuO1dA=
+        bh=1EWoe/WC/MoyCp0Ik1JR/9Pi0nRr/BgvlrID32hWips=;
+        b=KYrbsVYITGGrAbVOzVW84F2C+lthaTPrsiUZloOXFigE5zwuewVbce+tnVwhJbBPHF
+         4Lq5Kcm+KoQK4kaS+AX1myaMNz9R5b0TfLsBk3QmMw7g51iCSp3Ra3MtHPoAeYxtHHao
+         rjyZoRMUxplPLK2C2gqXwj++yHfqP+Vxd/S7Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=g1WerUSfr7BNDxvJscJaPTNPHJTyJfZxnSlPXZKCSngNj2lzHKZlUjEiNQ9N06ljic
-         w0nyqxNA8SE8oedm0AnyGDzyGpunMx0RHLtmuum67qq+gtntaecesnjE6L4pxJbktarc
-         CoPnEalh7Q1DeqJnGjdTancyLfIT471OK7XTM=
-Received: by 10.86.61.13 with SMTP id j13mr3165900fga.68.1239022877139; Mon, 
-	06 Apr 2009 06:01:17 -0700 (PDT)
-In-Reply-To: <7vws9ymudz.fsf@gitster.siamese.dyndns.org>
+        b=k8ZKGqjgIh/1k7cwMIDHQrlCo7v2ueAbsEm6/D9A861NRGdolS+wsFMmGsuYNbQa/0
+         L5qM2cu7GInxdxOaKKOi5IvneFag38CSMDu7sl+3Z02/GbqDEsylD9GMysxzRsjSC1VD
+         gDQNxdIXL6enh2wtCyU3Oz2NzEdcLNjuuCnVA=
+Received: by 10.223.124.147 with SMTP id u19mr3740750far.28.1239023206730; 
+	Mon, 06 Apr 2009 06:06:46 -0700 (PDT)
+In-Reply-To: <vpqprfq3ptb.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115818>
 
-T24gTW9uLCBBcHIgNiwgMjAwOSBhdCA0OjQwIEFNLCBKdW5pbyBDIEhhbWFubyA8Z2l0c3RlckBw
-b2JveC5jb20+IHdyb3RlOgo+ICJGT1JTIEx1aXMiIDxsLWZvcnNAY2VyY2EtanAuY29tPiB3cml0
-ZXM6Cj4+ICsjOiBnaXRrOjM0MAo+PiArbXNnaWQgIk5vIGZpbGVzIHNlbGVjdGVkOiAtLW1lcmdl
-IHNwZWNpZmllZCBidXQgbm8gZmlsZXMgYXJlIHVubWVyZ2VkLiIKPj4gK21zZ3N0ciAi44OV44Kh
-44Kk44Or44GM6YG45oqe44GV44KM44Gm44GE44G+44Gb44KT77yaLS1tZXJnZeOCquODl+OCt+OD
-p+ODs+OBjOaMh+WumuOBleOCjOOBn+OBruOBq+acquODnuODvOOCuOODleOCoeOCpOODq+OBr+OB
-guOCiuOBvuOBm+OCk+OAgiIKPj4gKwo+PiArIzogZ2l0azozNDMKPj4gK21zZ2lkICJObyBmaWxl
-cyBzZWxlY3RlZDogLS1tZXJnZSBzcGVjaWZpZWQgYnV0IG5vIHVubWVyZ2VkIGZpbGVzIGFyZSB3
-aXRoaW4gZmlsZSBsaW1pdC4iCj4+ICttc2dzdHIgIuODleOCoeOCpOODq+OBjOmBuOaKnuOBleOC
-jOOBpuOBhOOBvuOBm+OCk++8mi0tbWVyZ2Xjgqrjg5fjgrfjg6fjg7PjgYzmjIflrprjgZXjgozj
-gZ/jga7jgavpgbjmip7jgZXjgozjgZ/jg5XjgqHjgqTjg6vmnKrjg57jg7zjgrjjg5XjgqHjgqTj
-g6vjgpLlkKvjgb/jgb7jgZvjgpPjgIJObyBoYXkgYXJjaGl2b3Mgc2VsZWNjaW9uYWRvczogc2Ug
-c2VsZWNjaW9uw7MgbGEgb3BjacOzbiAtLW1lcmdlIHBlcm8gbG9zIGFyY2hpdm9zIGVzcGVjaWZp
-Y2Fkb3Mgbm8gbmVjZXNpdGFuIGZ1c2nDs24uIgo+Cj4gTm8gaGFibGEgRXNwYcOxb2wsIHBlcmTD
-s25hbWUuCgpzL2hhYmxhL2hhYmxvLyA6KQoKLS0gCkZlbGlwZSBDb250cmVyYXMK
+On Mon, Apr 6, 2009 at 2:54 PM, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+
+> What Johannes pointed out is that someone could fetch from your repo
+> _after_ you correct the mistake (if you don't control garbage
+> collection).
+
+Aha, ok. But how then does submodule update work? Git will only see
+SHA keys for each submodule in the cotntainer tree commit, so how does
+it perform fetching of those (unnamed) references?
+
+BR / Klas
