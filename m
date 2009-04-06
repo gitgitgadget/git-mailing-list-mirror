@@ -1,103 +1,82 @@
-From: Sam Vilain <sam.vilain@catalyst.net.nz>
-Subject: Re: [PATCH] perl: add new module Git::Config for cached 'git
- config' access
-Date: Tue, 07 Apr 2009 10:50:59 +1200
-Message-ID: <1239058276.31863.19.camel@maia.lan>
-References: <1238975176-14354-1-git-send-email-sam.vilain@catalyst.net.nz>
-	  <20090406092942.GW17706@mail-vs.djpig.de>
+From: =?utf-8?q?Santi=20B=C3=A9jar?= <santi@agolina.net>
+Subject: [PATCH] Documentation: Introduce "upstream branch"
+Date: Tue,  7 Apr 2009 01:24:30 +0200
+Message-ID: <1239060270-15307-1-git-send-email-santi@agolina.net>
 Mime-Version: 1.0
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
-To: Frank Lichtenheld <frank@lichtenheld.de>
-X-From: git-owner@vger.kernel.org Tue Apr 07 01:01:25 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 07 01:26:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lqxoj-0006Eo-6i
-	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 01:01:25 +0200
+	id 1LqyCl-0003I4-He
+	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 01:26:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758177AbZDFW7v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Apr 2009 18:59:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755163AbZDFW7v
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 18:59:51 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:45514 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754886AbZDFW7u (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2009 18:59:50 -0400
-X-Greylist: delayed 363 seconds by postgrey-1.27 at vger.kernel.org; Mon, 06 Apr 2009 18:59:50 EDT
-Received: by mail.utsl.gen.nz (Postfix, from userid 1003)
-	id 8768A21C50A; Tue,  7 Apr 2009 10:53:37 +1200 (NZST)
-In-Reply-To: <20090406092942.GW17706@mail-vs.djpig.de>
+	id S1754837AbZDFXYm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Apr 2009 19:24:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753067AbZDFXYm
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 19:24:42 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:47959 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751787AbZDFXYl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2009 19:24:41 -0400
+Received: by fg-out-1718.google.com with SMTP id 16so308717fgg.17
+        for <git@vger.kernel.org>; Mon, 06 Apr 2009 16:24:39 -0700 (PDT)
+Received: by 10.86.92.9 with SMTP id p9mr3592295fgb.15.1239060278767;
+        Mon, 06 Apr 2009 16:24:38 -0700 (PDT)
+Received: from localhost (p5B0D786D.dip.t-dialin.net [91.13.120.109])
+        by mx.google.com with ESMTPS id l19sm136066fgb.21.2009.04.06.16.24.38
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 06 Apr 2009 16:24:38 -0700 (PDT)
+X-Mailer: git-send-email 1.6.1.258.g7ff14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115891>
 
-On Mon, 2009-04-06 at 11:29 +0200, Frank Lichtenheld wrote:
-> On Mon, Apr 06, 2009 at 11:46:15AM +1200, Sam Vilain wrote:
-> > +	my ($fh, $c) = $git->command_output_pipe(
-> > +		'config', ( $which ? ("--$which") : () ),
-> > +		'--list',
-> > +	       );
-> Any reason why you don't use --null here? The output of --list without --null
-> is not reliably parsable, since people can put newlines in values.
 
-No particularly good reason :-)
-
-Subject: [PATCH] perl: make Git::Config use --null
-
-Use the form of 'git-config' designed for parsing by modules like
-this for safety with values containing embedded line feeds.
-
-Signed-off-by: Sam Vilain <sam.vilain@catalyst.net.nz>
+Signed-off-by: Santi B=C3=A9jar <santi@agolina.net>
 ---
- perl/Git/Config.pm |    6 ++++--
- t/t9700/config.t   |    4 ++++
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ Documentation/config.txt           |    2 +-
+ Documentation/glossary-content.txt |    6 ++++++
+ 2 files changed, 7 insertions(+), 1 deletions(-)
 
-diff --git a/perl/Git/Config.pm b/perl/Git/Config.pm
-index a0a6a41..a35d9f3 100644
---- a/perl/Git/Config.pm
-+++ b/perl/Git/Config.pm
-@@ -179,12 +179,14 @@ sub read {
- 
- 	my ($fh, $c) = $git->command_output_pipe(
- 		'config', ( $which ? ("--$which") : () ),
--		'--list',
-+		 '--null', '--list',
- 	       );
- 	my $read_state = {};
- 
-+	local($/)="\0";
- 	while (<$fh>) {
--		my ($item, $value) = m{(.*?)=(.*)};
-+		my ($item, $value) = m{(.*?)\n((?s:.*))\0}
-+			or die "failed to parse it; \$_='$_'";
- 		my $sl = \( $read_state->{$item} );
- 		if (!defined $$sl) {
- 			$$sl = $value;
-diff --git a/t/t9700/config.t b/t/t9700/config.t
-index 395a5c9..f0f7d2d 100644
---- a/t/t9700/config.t
-+++ b/t/t9700/config.t
-@@ -16,6 +16,7 @@ in_empty_repo sub {
- 	$git->command_oneline("config", "foo.intval", "12g");
- 	$git->command_oneline("config", "foo.false.val", "false");
- 	$git->command_oneline("config", "foo.true.val", "yes");
-+	$git->command_oneline("config", "multiline.val", "hello\nmultiline.val=world");
- 
- 	my $conf = Git::Config->new();
- 	ok($conf, "constructed a new Git::Config");
-@@ -92,6 +93,9 @@ in_empty_repo sub {
- 	is($unset, undef,
- 	   "boolean thaw - not present");
- 
-+	like($conf->config("multiline.val"), qr{\n},
-+	     "parsing multi-line values");
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 3afd124..f3ebd2f 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1215,7 +1215,7 @@ push.default::
+ * `matching` push all matching branches.
+   All branches having the same name in both ends are considered to be
+   matching. This is the default.
+-* `tracking` push the current branch to the branch it is tracking.
++* `tracking` push the current branch to its upstream branch.
+ * `current` push the current branch to a branch of the same name.
+=20
+ rebase.stat::
+diff --git a/Documentation/glossary-content.txt b/Documentation/glossar=
+y-content.txt
+index 4fc1cf1..86be3ae 100644
+--- a/Documentation/glossary-content.txt
++++ b/Documentation/glossary-content.txt
+@@ -449,6 +449,12 @@ This commit is referred to as a "merge commit", or=
+ sometimes just a
+ 	An <<def_object,object>> which is not <<def_reachable,reachable>> fro=
+m a
+ 	<<def_branch,branch>>, <<def_tag,tag>>, or any other reference.
+=20
++[[def_upstream_branch]]upstream branch::
++	The default <<def_branch,branch>> that is merged/rebased into another
++	branch. It is configured via branch.<name>.remote and
++	branch.<name>.merge. If the upstream branch of 'A' is 'origin/B' it i=
+s
++	sometimes refered as "'A' is tracking 'origin/B'".
 +
- 	$git->command_oneline("config", "foo.intval", "12g");
- 	$git->command_oneline("config", "foo.falseval", "false");
- 	$git->command_oneline("config", "foo.trueval", "on");
--- 
-debian.1.5.6.1
+ [[def_working_tree]]working tree::
+ 	The tree of actual checked out files.  The working tree is
+ 	normally equal to the <<def_HEAD,HEAD>> plus any local changes
+--=20
+1.6.1.258.g7ff14
