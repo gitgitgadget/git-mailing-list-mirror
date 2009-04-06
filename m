@@ -1,72 +1,68 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [EGIT] [PATCH RFC v1 0/5] Add (static) ignore functionality to 
-	EGit
-Date: Mon, 6 Apr 2009 19:38:12 +0200
-Message-ID: <fabb9a1e0904061038x657177beyf6686eb6683a971@mail.gmail.com>
-References: <cover.1238102327.git.ferry.huberts@pelagic.nl> 
-	<20090405210248.GA23604@spearce.org> <49DA3305.7090601@pelagic.nl>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: git diff bug?
+Date: Mon, 06 Apr 2009 19:37:29 +0200
+Message-ID: <vpqeiw53cpy.fsf@bauges.imag.fr>
+References: <m2ocvdkyul.fsf@boostpro.com>
+	<20090404014527.GA13350@coredump.intra.peff.net>
+	<1BF9172A-BE91-4D1C-932A-EB9FD79BA402@boostpro.com>
+	<20090406155303.GA3275@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Robin Rosenberg <robin.rosenberg@dewire.com>
-To: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
-X-From: git-owner@vger.kernel.org Mon Apr 06 19:40:06 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: David Abrahams <dave@boostpro.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Apr 06 19:41:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lqsnk-00056x-Df
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 19:40:04 +0200
+	id 1Lqsox-0005cT-2K
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 19:41:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751717AbZDFRib (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Apr 2009 13:38:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751327AbZDFRib
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 13:38:31 -0400
-Received: from mail-bw0-f169.google.com ([209.85.218.169]:40338 "EHLO
-	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751009AbZDFRia (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2009 13:38:30 -0400
-Received: by bwz17 with SMTP id 17so1978960bwz.37
-        for <git@vger.kernel.org>; Mon, 06 Apr 2009 10:38:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :received:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=8zlz1wFgR2j1VxaorOaTMeHQsM2+WPnUkVTqdMprX10=;
-        b=og6eWgpQMP1CEf+lPO/H2xMiYv54ULOgLof4QpFukZVj5t5d4Mn5U/aYdp0mnLKONx
-         HTDz4SeRucUg01D2Kjf2X5qDsKrhbCfy2xFt7aZR/U/48E3/O0+uDiqHzCxNZMCs3Lo+
-         muWnM5tDue/TGbFJjEP5eKAi4ewczVPsFpwcU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=oy37lt7GM2V9+CFDUXsNbDq4/AbnkPHryaFc/fbpjWBOggL9wT37r276fF9NseT1x0
-         92Gz8hZ0xSue+AO7ikN+sz76PUQrwLENh0GOzUUFVzIq7PuVUDOuClrGSXjR3E7pUKzP
-         /6Llmzw02V5By4OHzXnVxFNVYUNDopWJL2b8E=
-In-Reply-To: <49DA3305.7090601@pelagic.nl>
-Received: by 10.204.115.143 with SMTP id i15mr1861424bkq.103.1239039507321; 
-	Mon, 06 Apr 2009 10:38:27 -0700 (PDT)
+	id S1752775AbZDFRjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Apr 2009 13:39:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752086AbZDFRju
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 13:39:50 -0400
+Received: from harmonie.imag.fr ([147.171.130.40]:37806 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752467AbZDFRjt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2009 13:39:49 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id n36HbUvG011164;
+	Mon, 6 Apr 2009 19:37:30 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1LqslF-0007g2-Va; Mon, 06 Apr 2009 19:37:29 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1LqslF-0007vJ-TM; Mon, 06 Apr 2009 19:37:29 +0200
+In-Reply-To: <20090406155303.GA3275@sigill.intra.peff.net> (Jeff King's message of "Mon\, 6 Apr 2009 11\:53\:04 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Mon, 06 Apr 2009 19:37:30 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115858>
 
-Heya,
+Jeff King <peff@peff.net> writes:
 
-On Mon, Apr 6, 2009 at 18:51, Ferry Huberts (Pelagic)
-<ferry.huberts@pelagic.nl> wrote:
-> just looked in the project settings for org.spearce.egit.core and it has
-> java 1.5 style specified _and_ eclipse does not give me a warning on the
-> *.isEmpty() calls. Am i missing something here?
+> But the latter two lines are about preference: "here is how _I_ would
+> like to generate diffs for el files".
 
-FYI, notice the #since annotation in the JavaDoc [0].
+... and they are commands to be executed. If they were in the
+repository, and propagated with clone, then doing
 
-[0] http://java.sun.com/javase/6/docs/api/java/lang/String.html#isEmpty()
+git clone git://some.git/repo
+cd repo
+git diff
+
+would execute arbitrary commands, which wouldn't be acceptable for
+security reasons.
 
 -- 
-Cheers,
-
-Sverre Rabbelier
+Matthieu
