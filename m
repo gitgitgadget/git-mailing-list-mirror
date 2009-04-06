@@ -1,82 +1,120 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: Broken umlaut in my name, again
-Date: Mon, 6 Apr 2009 15:17:47 +0200
-Message-ID: <20090406131747.GH20356@atjola.homenet>
-References: <20090331153039.GA1520@atjola.homenet> <20090406114618.GF20356@atjola.homenet> <adf1fd3d0904060546j6c2fbba9r75829f2bd383458b@mail.gmail.com>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: [RFC/PATCH 0/2] New 'stage' command
+Date: Mon, 06 Apr 2009 15:20:19 +0200
+Message-ID: <871vs5kjfw.fsf@krank.kagedal.org>
+References: <1238939331-10152-1-git-send-email-felipe.contreras@gmail.com>
+	<200904052358.53028.markus.heidelberg@web.de>
+	<94a0d4530904051535v8bd901fsedecdf61bc4acb33@mail.gmail.com>
+	<200904060117.24810.markus.heidelberg@web.de>
+	<fabb9a1e0904051622k66352ea4v542ecd99bd5d9c6@mail.gmail.com>
+	<20090406032457.GA14758@gmail.com>
+	<7v63hie4yh.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Marius Storm-Olsen <marius@trolltech.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Santi =?iso-8859-1?Q?B=E9jar?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Mon Apr 06 15:19:35 2009
+Cc: David Aguilar <davvid@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	markus.heidelberg@web.de,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	git@vger.kernel.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 06 15:22:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqojW-0003Ye-8W
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 15:19:26 +0200
+	id 1LqomE-0004Zv-AU
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 15:22:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756527AbZDFNRz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Apr 2009 09:17:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756263AbZDFNRy
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 09:17:54 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56534 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755878AbZDFNRx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2009 09:17:53 -0400
-Received: (qmail invoked by alias); 06 Apr 2009 13:17:49 -0000
-Received: from i59F56377.versanet.de (EHLO atjola.local) [89.245.99.119]
-  by mail.gmx.net (mp035) with SMTP; 06 Apr 2009 15:17:49 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19p4tNswKZp8pmZV1AhhW+KH6PtYxn2ik42QeG1i/
-	2r7Qejr4YzR4or
-Content-Disposition: inline
-In-Reply-To: <adf1fd3d0904060546j6c2fbba9r75829f2bd383458b@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1755015AbZDFNUf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Apr 2009 09:20:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754837AbZDFNUe
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 09:20:34 -0400
+Received: from main.gmane.org ([80.91.229.2]:44110 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753894AbZDFNUe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2009 09:20:34 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LqokY-0005tP-4h
+	for git@vger.kernel.org; Mon, 06 Apr 2009 13:20:30 +0000
+Received: from 87.96.142.66 ([87.96.142.66])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 06 Apr 2009 13:20:30 +0000
+Received: from davidk by 87.96.142.66 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 06 Apr 2009 13:20:30 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 87.96.142.66
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+Cancel-Lock: sha1:NpLvmgm8DhTiEchk3eYgGqHgYrI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115822>
 
-On 2009.04.06 14:46:43 +0200, Santi B=E9jar wrote:
-> 2009/4/6 Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>:
-> > On 2009.03.31 17:30:39 +0200, Bj=F6rn Steinbrink wrote:
-> >> While it makes no sense to map some email address to an empty one,=
- doing
-> >> things the other way around can be useful. For example when using
-> >> filter-branch with an env-filter that employs a mailmap to fix up =
-an
-> >> import that created such broken commits with empty email addresses=
-=2E
-> >>
-> >> Signed-off-by: Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>
-> >
-> > The umlaut (=F6) in my name is broken in the commit that made it in=
-to
-> > git.git --> 5288dd58356e53d61e2b3804fc7d8d23c3a46ab3
-> >
-> > Last time this happened when I used format-patch -s instead of comm=
-it -s
-> > IIRC. But since then, I pay attention to do the sign-off via commit=
- -s,
-> > yet my name is broken again. What did I do wrong this time?
->=20
-> I don't see nothing wrong in your mails. It appears to be a double
-> conversion to UTF-8 between the mail and the commit.
->=20
-> But I always use format-patch -s without problems, what was your
-> problem with format-patch?
+Junio C Hamano <gitster@pobox.com> writes:
 
-I don't recall the exact problem, and I can't find the mails anymore,
-the IIRC it was something about Content-type being generated from the
-original commit message, and only afterwards the sign-off line got
-added, or something like that. That causes the Content-type to say
-ascii, although the sign-off had UTF-8 in it. Or something like that.
-Might very well have been fixed since then (it was almost 2 years ago
-that I hit that bug IIRC), but it made me stick to commit -s ;-)
+> David Aguilar <davvid@gmail.com> writes:
+>
+>> Hello
+>>
+>> Here's an interesting email from a while back:
 
-Bj=F6rn
+Thanks, I would have brought it back up myself if you hadn't.
+
+>> http://kerneltrap.org/mailarchive/git/2008/10/29/3857134
+>>
+>> The above mentions the following suggestion:
+>>
+>>     git diff STAGE WORKTREE   (like "git diff" today)
+>>     git diff HEAD WORKTREE    (like "git diff HEAD" today)
+>>     git diff WORKTREE HEAD    (like "git diff -R HEAD" today)
+>>     git diff HEAD STAGE       (like "git diff --cached" today)
+>>     git diff commit STAGE     (like "git diff --cached commit" today=
+)
+>>
+>>
+>> From a consistency and usability perspective, the above
+>> example seems very appealing because:
+>>
+>> a) it does not introduce any new commands, and
+>>
+>> b) it is consistent with the way git-diff's command-line
+>>    interface works today.
+>>
+>> All we'd have to do is teach git-diff to special-case
+>> 'STAGE' and 'WORKTREE'.  Now, whether we'd want to do
+>> that is a completely different discussion, but I figured I'd
+>> throw the old thread out there.
+>
+> How would you express operations the current --index option does in s=
+uch a
+> scheme?  Yet another WORKTREEANDTHEINDEX token?
+
+What do you mean? This was a suggestion for how git diff should
+work. I fail to see how you would need a WORKTREEANDTHEINDEX there.
+
+I think this is a basic usability issue for a high-level porcelain
+command such as diff. Having the command syntax "git diff <something>
+<somethingelse>" makes sure you never wonder what you are
+diffing. "git diff --cached" makes me wonder what the index is diffed
+against every time I see it.
+
+We wouldn't have to use the "STAGE" or "WORKTREE" names, of course. It
+doesn't have to look like refspecs even. The last example already has
+a syntax that matches the suggestion:
+
+     git diff --cached <commit>
+
+So, extrapolating this to "git diff --worktree --cached" would mean
+what "git diff -R" means today etc.
+
+The obvious objection is that "git diff --cached <foo>" would mean the
+inverse of "git diff <foo> --cached", but maybe that isn't so
+unexpected by the user after all?
+
+--=20
+David K=C3=A5gedal
