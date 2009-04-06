@@ -1,138 +1,125 @@
-From: Jason Merrill <jason@redhat.com>
-Subject: [PATCH v2] Documentation: clarify .gitattributes search
-Date: Mon, 06 Apr 2009 11:03:36 -0400
-Message-ID: <49DA19C8.5010308@redhat.com>
-References: <49D96C63.9070200@redhat.com> <7viqlicp1y.fsf@gitster.siamese.dyndns.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Performance issue: initial git clone causes massive repack
+Date: Mon, 06 Apr 2009 11:14:58 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0904061042300.6741@xanadu.home>
+References: <20090404220743.GA869@curie-int> <20090405070412.GB869@curie-int>
+ <20090405190213.GA12929@vidovic>
+ <alpine.DEB.1.10.0904051419490.6245@asgard.lang.hm>
+ <20090405225954.GA18730@vidovic>
+ <alpine.DEB.1.10.0904051613420.6245@asgard.lang.hm>
+ <alpine.LFD.2.00.0904052326090.6741@xanadu.home>
+ <7vab6ue520.fsf@gitster.siamese.dyndns.org>
+ <9e4733910904060652t6c0f37d9t246b7394e3aad350@mail.gmail.com>
+ <alpine.LFD.2.00.0904060959250.6741@xanadu.home>
+ <9e4733910904060737k3d1c082fk785cd98cdeb6d73d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------030604000803010706010809"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 06 17:06:55 2009
+Content-Type: multipart/mixed; boundary="Boundary_(ID_Mpzm7CBkR1Ek2cKgDLTbaw)"
+Cc: Junio C Hamano <gitster@pobox.com>, david@lang.hm,
+	Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 06 17:16:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqqOz-0008HO-OC
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 17:06:22 +0200
+	id 1LqqZ2-0003c1-4c
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 17:16:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752048AbZDFPEp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Apr 2009 11:04:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752045AbZDFPEo
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 11:04:44 -0400
-Received: from mx2.redhat.com ([66.187.237.31]:59507 "EHLO mx2.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751803AbZDFPEn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2009 11:04:43 -0400
-Received: from int-mx2.corp.redhat.com (int-mx2.corp.redhat.com [172.16.27.26])
-	by mx2.redhat.com (8.13.8/8.13.8) with ESMTP id n36F3dFb022335;
-	Mon, 6 Apr 2009 11:03:39 -0400
-Received: from ns3.rdu.redhat.com (ns3.rdu.redhat.com [10.11.255.199])
-	by int-mx2.corp.redhat.com (8.13.1/8.13.1) with ESMTP id n36F3d0g007799;
-	Mon, 6 Apr 2009 11:03:40 -0400
-Received: from [127.0.0.1] (sebastian-int.corp.redhat.com [172.16.52.221])
-	by ns3.rdu.redhat.com (8.13.8/8.13.8) with ESMTP id n36F3b8L021509;
-	Mon, 6 Apr 2009 11:03:38 -0400
-User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
-In-Reply-To: <7viqlicp1y.fsf@gitster.siamese.dyndns.org>
-X-Scanned-By: MIMEDefang 2.58 on 172.16.27.26
+	id S1751195AbZDFPPN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Apr 2009 11:15:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751158AbZDFPPM
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 11:15:12 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:18782 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750894AbZDFPPL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2009 11:15:11 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KHO00419QCYUHH0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 06 Apr 2009 11:14:59 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <9e4733910904060737k3d1c082fk785cd98cdeb6d73d@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115845>
 
-This is a multi-part message in MIME format.
---------------030604000803010706010809
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Junio C Hamano wrote:
->  (2) also wondered why you were confused to think if your home directory
->      (for that matter, any higher directory, like /.gitattributes at the
->      filesystem root level) that is clearly outside of the project could
->      possibly affect what happens inside a project; and
+--Boundary_(ID_Mpzm7CBkR1Ek2cKgDLTbaw)
+Content-type: TEXT/PLAIN; charset=ISO-8859-1
+Content-transfer-encoding: 8BIT
 
-Because it would be useful if it did; specifically, it would be 
-convenient to be able to say that ChangeLog files use 
-git-merge-changelog wherever they appear, and not have to repeat that in 
-all my projects.  I didn't really expect it, but thought that maybe it 
-was designed to work that way.
+On Mon, 6 Apr 2009, Jon Smirl wrote:
 
->  (3) was puzzled why you do not have any patch to description of ignore
->      files (perhaps you do not even a similar confusion on them).
+> On Mon, Apr 6, 2009 at 10:19 AM, Nicolas Pitre <nico@cam.org> wrote:
+> > On Mon, 6 Apr 2009, Jon Smirl wrote:
+> >
+> >> First thing an initial clone does is copy all of the pack files from
+> >> the server to the client without even looking at them.
+> >
+> > This is a no go for reasons already stated many times.  There are
+> > security implications (those packs might contain stuff that you didn't
+> > intend to be publically accessible) and there might be efficiency
+> > reasons as well (you might have a shared object store with lots of stuff
+> > unrelated to the particular clone).
+> 
+> How do you deal with dense history packs? These packs take many hours
+> to make (on a server class machine) and can be half the size of a
+> regular pack. Shouldn't there be a way to copy these packs intact on
+> an initial clone? It's ok if these packs are specially marked as being
+> ok to copy.
 
-I hadn't really thought about them, but looking at the documentation now 
-I see that ignore files have the core.excludesfile config variable to 
-provide global ignores; there doesn't seem to be anything analogous for 
-attributes.
+[sigh]
 
->  (1) To a long-time git person, "up to the root" is obviously talking
->      about the toplevel of the work tree, not "root of the filesystem",
->      but is it clear to _you_ (or do you think it would be clear to
->      somebody else without much previous exposure to git)?
+Let me explain it all again.
 
-It seems clear enough, as it would be pointless to say it if it meant 
-the root of the filesystem.
+There is basically two ways to create a new pack: the intelligent way, 
+and the bruteforce way.
 
->  (2) If not, I think we should come up with a good wording and use that in
->      both.  How does the "toplevel of the work tree" sound for that
->      purpose?
+When creating a new pack the intelligent way, what we do is to enumerate 
+all the needed object and look them up in the object store.  When a 
+particular object is found, we create a record for that object and note 
+in which pack it is located, at what offset in that pack, how much space 
+it occupies in its compressed form within that pack, , and if whether it 
+is a delta or not.  When that object is indeed a delta (the majority of 
+objects usually are) then we also keep a pointer on the record for the 
+base object for that delta.
 
-Sure, I'll use that.
+Next, for all objects in delta form which base object is also part of 
+the object enumeration and obviously part of the same pack, we simply 
+flag those objects as directly reusable without any further processing.  
+This means that, when those objects are about to be stored in the new 
+pack, their raw data is simply copied straight from the original pack 
+using the offset and size noted above.  In other words, those objects 
+are simply never redeltified nor redeflated at all, and all the work 
+that was previously done to find the best delta match is preserved with 
+no extra cost.
 
+Of course, when your repository is tightly packed into a single pack, 
+then all enumerated objects fall into the reusable category and 
+therefore a copy of the original pack is indeed sent over the wire.  
+One exception is with older git clients which don't support the delta 
+base offset encoding, in which case the delta reference encoding is 
+substituted on the fly with almost no cost (this is btw another reason 
+why a dumb copy of existing pack may not work universally either).  But 
+in the common case, you might see the above as just the same as if git 
+did copy the pack file because it really only reads some data from a 
+pack and immediately writes that data out.
 
-
---------------030604000803010706010809
-Content-Type: text/x-patch;
- name="0001-Documentation-clarify-.gitattributes-search.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename*0="0001-Documentation-clarify-.gitattributes-search.patch"
-
-Use the term "toplevel of the work tree" in gitattributes.txt and
-gitignore.txt to define the limits of the search for those files.
-
-Signed-off-by: Jason Merrill <jason@redhat.com>
----
- Documentation/gitattributes.txt |    6 +++---
- Documentation/gitignore.txt     |    4 ++--
- 2 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 55668e3..b762bba 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -60,9 +60,9 @@ same as in `.gitignore` files; see linkgit:gitignore[5].
- When deciding what attributes are assigned to a path, git
- consults `$GIT_DIR/info/attributes` file (which has the highest
- precedence), `.gitattributes` file in the same directory as the
--path in question, and its parent directories (the further the
--directory that contains `.gitattributes` is from the path in
--question, the lower its precedence).
-+path in question, and its parent directories up to the toplevel of the
-+work tree (the further the directory that contains `.gitattributes`
-+is from the path in question, the lower its precedence).
- 
- If you wish to affect only a single repository (i.e., to assign
- attributes to files that are particular to one user's workflow), then
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index 59321a2..7df3cef 100644
---- a/Documentation/gitignore.txt
-+++ b/Documentation/gitignore.txt
-@@ -31,8 +31,8 @@ precedence, the last matching pattern decides the outcome):
- 
-  * Patterns read from a `.gitignore` file in the same directory
-    as the path, or in any parent directory, with patterns in the
--   higher level files (up to the root) being overridden by those in
--   lower level files down to the directory containing the file.
-+   higher level files (up to the toplevel of the work tree) being overridden
-+   by those in lower level files down to the directory containing the file.
-    These patterns match relative to the location of the
-    `.gitignore` file.  A project normally includes such
-    `.gitignore` files in its repository, containing patterns for
--- 
-1.6.2.2
+The bruteforce repacking is different because it simply doesn't concern 
+itself with existing deltas at all.  It instead start everything from 
+scratch and perform the whole delta search all over for all objects.  
+This is what takes lots of resources and CPU cycles, and as you may 
+guess, is never used for fetch/clone requests.
 
 
---------------030604000803010706010809--
+Nicolas
+
+--Boundary_(ID_Mpzm7CBkR1Ek2cKgDLTbaw)--
