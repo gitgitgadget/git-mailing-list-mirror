@@ -1,83 +1,67 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: git diff bug?
-Date: Mon, 06 Apr 2009 21:32:43 +0200
-Message-ID: <vpqzlet1stg.fsf@bauges.imag.fr>
-References: <m2ocvdkyul.fsf@boostpro.com>
-	<20090404014527.GA13350@coredump.intra.peff.net>
-	<1BF9172A-BE91-4D1C-932A-EB9FD79BA402@boostpro.com>
-	<20090406155303.GA3275@sigill.intra.peff.net>
-	<vpqeiw53cpy.fsf@bauges.imag.fr>
-	<7vskkl64yu.fsf@gitster.siamese.dyndns.org>
+From: Joerg Bornemann <joerg.bornemann@web.de>
+Subject: [PATCH] git-gui: fix use of undeclared variable diff_empty_count
+Date: Mon, 06 Apr 2009 21:59:28 +0200
+Message-ID: <49DA5F20.4030800@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, David Abrahams <dave@boostpro.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 06 21:37:26 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 06 22:07:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lqud4-00066L-Vc
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 21:37:11 +0200
+	id 1Lqv0G-0006Af-JM
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 22:01:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754915AbZDFTfh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Apr 2009 15:35:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751907AbZDFTfg
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 15:35:36 -0400
-Received: from imag.imag.fr ([129.88.30.1]:60701 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754915AbZDFTfg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2009 15:35:36 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n36JWjFC003071
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 6 Apr 2009 21:32:45 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1LquYl-0000sw-Lq; Mon, 06 Apr 2009 21:32:43 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1LquYl-00089W-JL; Mon, 06 Apr 2009 21:32:43 +0200
-In-Reply-To: <7vskkl64yu.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Mon\, 06 Apr 2009 10\:56\:41 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 06 Apr 2009 21:32:46 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1754885AbZDFT7Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Apr 2009 15:59:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753928AbZDFT7Y
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 15:59:24 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:37088 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752206AbZDFT7X (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2009 15:59:23 -0400
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate02.web.de (Postfix) with ESMTP id D62F6FC91549
+	for <git@vger.kernel.org>; Mon,  6 Apr 2009 21:59:21 +0200 (CEST)
+Received: from [92.225.83.154] (helo=[192.168.1.3])
+	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1LquyW-0003nX-00
+	for git@vger.kernel.org; Mon, 06 Apr 2009 21:59:20 +0200
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+X-Sender: joerg.bornemann@web.de
+X-Provags-ID: V01U2FsdGVkX1/mzuP0ToLh144AJDNriVZnnvieC9csrIPXWCK/
+	ENV/fKcafAYWDMA8avFEIYLs4mkZfetnJAQGzDwGDhbF4LNR4Q
+	VpeuKV6hGpRrpd3J5RwQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115875>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Commit 584fa9cc introduced the global variable diff_empty_count, which
+is used in diff.tcl. This variable wasn't declared anywhere which
+resulted in an ugly error message box instead of the intended
+informative message.
 
-> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
->
->> Jeff King <peff@peff.net> writes:
->>
->>> But the latter two lines are about preference: "here is how _I_ would
->>> like to generate diffs for el files".
->>
->> ... and they are commands to be executed. If they were in the
->> repository, and propagated with clone, then doing
->>
->> git clone git://some.git/repo
->> cd repo
->> git diff
->>
->> would execute arbitrary commands, which wouldn't be acceptable for
->> security reasons.
->
-> Other configuration variables have such security implications, but diff
-> hunk header bit doesn't.  You are a bit overly cautious in this particular
-> case.
+Signed-off-by: Joerg Bornemann <joerg.bornemann@web.de>
+---
+  git-gui.sh |    1 +
+  1 files changed, 1 insertions(+), 0 deletions(-)
 
-Oops, right, I was thinking of other parameters in the same section of
-the config file. Thanks for correcting.
+diff --git a/git-gui.sh b/git-gui.sh
+index e4a9230..46b056f 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -1131,6 +1131,7 @@ set current_diff_path {}
+  set is_3way_diff 0
+  set is_conflict_diff 0
+  set selected_commit_type new
++set diff_empty_count 0
 
--- 
-Matthieu
+  set nullid "0000000000000000000000000000000000000000"
+  set nullid2 "0000000000000000000000000000000000000001"
+--
+1.6.0.2.1172.ga5ed0
