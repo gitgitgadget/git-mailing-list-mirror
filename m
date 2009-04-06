@@ -1,166 +1,151 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [question] how can i verify whether a local branch is tracking
-   a remote branch?
-Date: Mon, 06 Apr 2009 14:00:34 +0200
-Message-ID: <49D9EEE2.3000607@drmicha.warpmail.net>
-References: <4d8e3fd30904050332w394cccbaq5b82d2a53ed357a3@mail.gmail.com> <20090405144413.GC2076@sigill.intra.peff.net> <4d8e3fd30904051425w6739a12fp5666e71e8b2d7958@mail.gmail.com> <20090406043426.GC12341@coredump.intra.peff.net>
+From: Reece Dunn <msclrhd@googlemail.com>
+Subject: Re: Running 'git pull' from an unnamed branch
+Date: Mon, 6 Apr 2009 13:04:39 +0100
+Message-ID: <3f4fd2640904060504y452cd8a1pbb9170cd7a357e47@mail.gmail.com>
+References: <3f4fd2640904051433u199587c3wc9bf080d138944e7@mail.gmail.com>
+	 <7v3acmoalw.fsf@gitster.siamese.dyndns.org>
+	 <3f4fd2640904060042m438a3a8en2d2746a6216b2b95@mail.gmail.com>
+	 <20090406100305.GD20356@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Apr 06 14:02:15 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Apr 06 14:07:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqnWp-00022x-3x
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 14:02:15 +0200
+	id 1Lqnah-0002yE-5X
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 14:06:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755465AbZDFMAn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Apr 2009 08:00:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755329AbZDFMAm
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 08:00:42 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:60689 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755203AbZDFMAm (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Apr 2009 08:00:42 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id D2ECE311CA5;
-	Mon,  6 Apr 2009 08:00:39 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Mon, 06 Apr 2009 08:00:39 -0400
-X-Sasl-enc: 7ynND2ldtbOHYNb0eRyfd+63/gyVTCmtY6fHHFUUdhYY 1239019239
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id BCBF849FE;
-	Mon,  6 Apr 2009 08:00:38 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090406 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <20090406043426.GC12341@coredump.intra.peff.net>
+	id S1755901AbZDFMEo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Apr 2009 08:04:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755329AbZDFMEn
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 08:04:43 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:58249 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755200AbZDFMEm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Apr 2009 08:04:42 -0400
+Received: by fg-out-1718.google.com with SMTP id e12so779011fga.17
+        for <git@vger.kernel.org>; Mon, 06 Apr 2009 05:04:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=UZdI/I+d3uz1TZNZrx/R43asHczrPtwKzlc7Ckdvjh8=;
+        b=kqAbr1APINosmAhUTEWxPx4KYeGX9gfqBHTlT/8AVc5n/6M9Db/t/GGQv+gmerW9CJ
+         AW0V2AOuYToQQAMJkrqq+nmHG1q0OiQgAAmNONh5pne1kvJsC6LWM9guoUmq/JjYtfJr
+         l301XRvPYMl4xnTi6w8V7Fh6j5UCVzg8xhOVM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=DHH0OdVu7BAOq8T/T6JMFrTSSNuk2m5GfnVcPL/XDfWR+fkF6A3/v+u9XawG1+/iN0
+         cU7PunrmqWzukjqcEq484lqlKiWaa5uARUXTYzeh+aCza6K5vA4WaIEyvJn9RtuHyDoB
+         5y71Z1HNDCnj/b2WzmsGDWvlLDWdFKZTRJijs=
+Received: by 10.239.156.193 with SMTP id n1mr99336hbc.43.1239019479070; Mon, 
+	06 Apr 2009 05:04:39 -0700 (PDT)
+In-Reply-To: <20090406100305.GD20356@atjola.homenet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115810>
 
-Jeff King venit, vidit, dixit 06.04.2009 06:34:
-> On Sun, Apr 05, 2009 at 11:25:29PM +0200, Paolo Ciarrocchi wrote:
-> 
->> An example:
->> $ git clone -n URL temp
->> $ cd temp
->> $ git branch -r
->>   origin/master
->>   origin/foo
->>   Origin/bar
->> $ git checkout --track -b foo origin/foo
+2009/4/6 Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>:
+> On 2009.04.06 08:42:16 +0100, Reece Dunn wrote:
+>> 2009/4/6 Junio C Hamano <gitster@pobox.com>:
+>> > Reece Dunn <msclrhd@googlemail.com> writes:
+>> >
+>> >> diff --git a/git-pull.sh b/git-pull.sh
+>> >> index 8a26763..00a72dd 100755
+>> >> --- a/git-pull.sh
+>> >> +++ b/git-pull.sh
+>> >> @@ -97,6 +97,10 @@ error_on_no_merge_candidates () {
+>> >> =A0 =A0 =A0 echo "try again (e.g. 'git pull <repository> <refspec=
+>')."
+>> >> =A0 =A0 =A0 echo "See git-pull(1) for details on the refspec."
+>> >> =A0 =A0 =A0 echo
+>> >> + =A0 =A0 echo "You may not be on a branch. In this case, you nee=
+d to move"
+>> >> + =A0 =A0 echo "onto the branch you want to pull to (usually mast=
+er):"
+>> >> + =A0 =A0 echo " =A0 =A0git checkout <branch>"
+>> >> + =A0 =A0 echo
+>> >
+>> > I do not think that is necessarily what the user wanted to hear. =A0=
+Often I
+>> > create trial merges on a detached HEAD when I hear a pull-request =
+from
+>> > others (I have a few work trees that share the repository with my =
+primary
+>> > working area, made with contrib/workdir/git-new-workdir script, an=
+d their
+>> > HEAD are typically detached at the tip of the master), and in such=
+ a use
+>> > case, the first line of the instruction in the context in your pat=
+ch is
+>> > the right thing to give. =A0I do not want to have the resulting tr=
+ial merge
+>> > anywhere on my real branches, and do not want to be told to switch=
+ to any
+>> > of them.
+>> >
+>> > We really should teach people, especially the new ones early on, t=
+hat "git
+>> > push" and "git pull" are meant to be told where-to/from and what, =
+and how
+>> > to drive these commands with explicit arguments, before letting th=
+em rely
+>> > on the default configuration blindly without understanding the und=
+erlying
+>> > concepts.
 >>
->> Now, how can I know that foo is tracking origin/foo ?
-> 
-> Doing it right is hard. You have to:
-> 
->   1. check branch.foo.merge and branch.foo.rebase; if no value, it is not
->      tracking anything; if it is, remember that value as $m
-> 
->   2. check branch.foo.remote for the remote name, $r
-> 
->   3. check the fetch refspecs for remote $r; these can come from
->      the config, or from .git/remotes/* files. Maybe even .git/branches
->      files; I don't even remember how those work.
-> 
->   4. find the refspec that fetches from $m; then find the matching
->      destination for that refspec. That is the tracking branch.
-> 
-> E.g., in your example (and using a modern git):
-> 
->   1. $m is refs/heads/foo
->   2. $r is origin
->   3. The fetch refspec is in remote.origin.fetch, and is generally
->      "refs/heads/*:refs/remotes/origin/*"
->   4. So refs/heads/foo becomes refs/remotes/origin/foo.
->      refs/remotes/origin/foo is your tracking branch.
-> 
-> Steps 1 and 2 are easy, but 3 and 4 are a bit nasty. You can fake it by
-> assuming that "refs/heads/$m" on "$r" is always "refs/remotes/$r/$m",
-> which is true for very vanilla setups.
-> 
-> There is C code that does this, but there is not a good way of accessing
-> it from the command-line. The best you can do is "git remote show
-> origin", which on recent git versions should show something like:
-> 
->   ...
->   Local branches configured for 'git pull':
->     foo    merges with remote foo
->   ...
-> 
-> But of course that implies that you already guessed the remote "origin".
-> And it's not using plumbing, so it's not very suitable for scripts.
-> 
-> I don't think it would be unreasonable to expose this functionality via
-> "for-each-ref". Something like this (which would need cleanup,
-> documentation, and perhaps a :short variant):
-> 
-> ---
-> diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
-> index 5cbb4b0..3f418e4 100644
-> --- a/builtin-for-each-ref.c
-> +++ b/builtin-for-each-ref.c
-> @@ -8,6 +8,7 @@
->  #include "blob.h"
->  #include "quote.h"
->  #include "parse-options.h"
-> +#include "remote.h"
->  
->  /* Quoting styles */
->  #define QUOTE_NONE 0
-> @@ -66,6 +67,7 @@ static struct {
->  	{ "subject" },
->  	{ "body" },
->  	{ "contents" },
-> +	{ "tracking" },
->  };
->  
->  /*
-> @@ -699,6 +701,18 @@ static void populate_value(struct refinfo *ref)
->  				v->s = s;
->  			}
->  		}
-> +		if (!strcmp(name, "tracking")) {
-> +			struct branch *branch;
-> +			if (prefixcmp(ref->refname, "refs/heads/"))
-> +				continue;
-> +			branch = branch_get(ref->refname + 11);
-> +			if (branch && branch->merge && branch->merge[0] &&
-> +			    branch->merge[0]->dst)
-> +				v->s = branch->merge[0]->dst;
+>> Ok, so how about something like:
+>>
+>> "You may not be on a branch. Because of this, you need to specify
+>
+> This should not say "may", either you are or you are not on a detache=
+d
+> HEAD, and git can tell that, so it should not let the user have to
+> guess.
+>
+>> where you are pulling from and to. See git-pull(1) for how to do thi=
+s.
+>> Alternatively, you can move to a named branch using:
+>> =A0 =A0 git checkout <branch>"
+>
+> Checking out a named branch won't solve the "problem" on its own.
+> Consider this:
+>
+> git checkout origin/foo
+> =A0 *do stuff*
+>
+> git pull
+> =A0 *Oh! I need a named branch*
+>
+> git checkout -b foo
+> git pull
+> =A0 *Still fails*
+>
+> Maybe:
+> You asked me to pull without telling me which branch you want to merg=
+e
+> with and as you have no branch checked out, I cannot look for any
+> defaults to use. Please name which branch you want to merge on the
+> command line and try again (e.g. 'git pull <repository> <refspec>'). =
+See
+> git-pull(1) for details on the refspec.
 
-Isn't that missing out on those cases where you --track (i.e. follow) a
-local (upstream) branch? See
-5e6e2b4 (Make local branches behave like remote branches when --tracked,
-2009-04-01)
+Sounds reasonable. I'll update the patch and resubmit later on today.
 
-> +			else
-> +				v->s = NULL;
-> +			free(branch); /* XXX should also free other parts? */
-> +		}
->  	}
->  
->  	grab_values(ref->value, 0, obj, buf, size);
-> 
-> 
-> 
-> 
-> 
+> That just adjusts the "you can set some defaults" part, replacing it
+> with a message telling that a detached HEAD cannot have any defaults.
+> Without implying anything about how the user might want to work, but
+> giving a hint that a branch can have defaults for "git pull".
+>
+> Bj=F6rn
 
-If we hook it up into git-branch there would be to useful directions:
-
-- "git branch --follows foo" could list all branches which follow foo,
-analogous to --contains. It gives you all your feature work on top of
-foo, all branches affected by rebasing foo etc.
-
-- "git branch --whatever foo" could list the branch whoch foo follows.
-
-I just notices that "git branch -v foo" does not give me the "-v" output
-for foo... Improving that would open up the possibility to go for -vv foo.
-
-Michael
+- Reece
