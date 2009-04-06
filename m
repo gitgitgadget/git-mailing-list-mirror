@@ -1,85 +1,86 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Performance issue: initial git clone causes massive repack
-Date: Mon, 06 Apr 2009 09:29:04 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0904060912530.6741@xanadu.home>
-References: <20090404220743.GA869@curie-int> <20090405000536.GA12927@vidovic>
- <20090405T001239Z@curie.orbis-terrarum.net> <20090405035453.GB12927@vidovic>
- <20090405070412.GB869@curie-int> <20090405190213.GA12929@vidovic>
- <alpine.DEB.1.10.0904051419490.6245@asgard.lang.hm>
- <20090405225954.GA18730@vidovic>
- <alpine.DEB.1.10.0904051613420.6245@asgard.lang.hm>
- <alpine.LFD.2.00.0904052326090.6741@xanadu.home>
- <vpq3acm6n7p.fsf@bauges.imag.fr>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: Broken umlaut in my name, again
+Date: Mon, 6 Apr 2009 15:40:35 +0200
+Message-ID: <adf1fd3d0904060640k3fcac0d5oc09dde7ebd430231@mail.gmail.com>
+References: <20090331153039.GA1520@atjola.homenet>
+	 <20090406114618.GF20356@atjola.homenet>
+	 <adf1fd3d0904060546j6c2fbba9r75829f2bd383458b@mail.gmail.com>
+	 <20090406131747.GH20356@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: david@lang.hm, Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
-	"Robin H. Johnson" <robbat2@gentoo.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Apr 06 15:32:14 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Marius Storm-Olsen <marius@trolltech.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Apr 06 15:42:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqovZ-0007Yk-8C
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 15:31:53 +0200
+	id 1Lqp5b-0002Im-Ln
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 15:42:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755170AbZDFN3N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Apr 2009 09:29:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754906AbZDFN3N
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 09:29:13 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:11843 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751437AbZDFN3M (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2009 09:29:12 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KHO00MIKLGG15B0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 06 Apr 2009 09:29:04 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <vpq3acm6n7p.fsf@bauges.imag.fr>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1756435AbZDFNkj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Apr 2009 09:40:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755522AbZDFNkj
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 09:40:39 -0400
+Received: from mail-bw0-f169.google.com ([209.85.218.169]:34097 "EHLO
+	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755366AbZDFNki convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Apr 2009 09:40:38 -0400
+Received: by bwz17 with SMTP id 17so1878499bwz.37
+        for <git@vger.kernel.org>; Mon, 06 Apr 2009 06:40:35 -0700 (PDT)
+Received: by 10.223.119.5 with SMTP id x5mr3760315faq.40.1239025235381; Mon, 
+	06 Apr 2009 06:40:35 -0700 (PDT)
+In-Reply-To: <20090406131747.GH20356@atjola.homenet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115824>
 
-On Mon, 6 Apr 2009, Matthieu Moy wrote:
+2009/4/6 Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>:
+> On 2009.04.06 14:46:43 +0200, Santi B=E9jar wrote:
+>> 2009/4/6 Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>:
+>> > On 2009.03.31 17:30:39 +0200, Bj=F6rn Steinbrink wrote:
+>> >> While it makes no sense to map some email address to an empty one=
+, doing
+>> >> things the other way around can be useful. For example when using
+>> >> filter-branch with an env-filter that employs a mailmap to fix up=
+ an
+>> >> import that created such broken commits with empty email addresse=
+s.
+>> >>
+>> >> Signed-off-by: Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>
+>> >
+>> > The umlaut (=F6) in my name is broken in the commit that made it i=
+nto
+>> > git.git --> 5288dd58356e53d61e2b3804fc7d8d23c3a46ab3
+>> >
+>> > Last time this happened when I used format-patch -s instead of com=
+mit -s
+>> > IIRC. But since then, I pay attention to do the sign-off via commi=
+t -s,
+>> > yet my name is broken again. What did I do wrong this time?
+>>
+>> I don't see nothing wrong in your mails. It appears to be a double
+>> conversion to UTF-8 between the mail and the commit.
+>>
+>> But I always use format-patch -s without problems, what was your
+>> problem with format-patch?
+>
+> I don't recall the exact problem, and I can't find the mails anymore,
+> the IIRC it was something about Content-type being generated from the
+> original commit message, and only afterwards the sign-off line got
+> added, or something like that. That causes the Content-type to say
+> ascii, although the sign-off had UTF-8 in it. Or something like that.
+> Might very well have been fixed since then
 
-> Nicolas Pitre <nico@cam.org> writes:
-> 
-> > If for example you have a single pack because your repo is already fully 
-> > packed, then the "packing operation" involved during a clone should 
-> > merely copy the existing pack over with no further attempt at delta 
-> > compression.
-> 
-> There's still the question if your repository has too many objects
-> (for example, a branch that you deleted without garbage-collecting
-> it). Then, sending the whole pack sends data that one may have
-> considered as "secret".
+Yes, it is fixed (at least what you described).
 
-I said "merely copy", which is not a straight copy.  In this case, only 
-the relevant objects from the existing pack will be copied into the 
-streamed pack, and objects from the unused branch will be left behind.  
-In that case, deltas which base object is left behind will automatically 
-be considered for alternative delta matching of course, but that is 
-normally a relatively small set of objects.  And if that set gets really 
-big, that means that an even bigger set of objects was left behind, 
-making the actual repacking smaller in scope.
+> (it was almost 2 years ago
+> that I hit that bug IIRC),
 
-> To me, this is a non-issue (if the content of these objects are
-> secret, then why are they here at all on a public server?), but I
-> think there were discussions here about it (can't find the right
-> keywords to dig the archives though), and other people may think
-> differently.
+Uf! half an eternity in git scale ;-)
 
-Guess who was involved in that discussion...
-
-I may allow you to pull certain branches directly from my own PC through 
-the git native protocol.  That doesn't mean you have direct access to 
-the whole of any of the packs I have on my disk.
-
-
-Nicolas
+Santi
