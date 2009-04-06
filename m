@@ -1,77 +1,59 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Performance issue: initial git clone causes massive repack
-Date: Mon, 06 Apr 2009 09:12:22 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0904060901250.6741@xanadu.home>
-References: <20090404220743.GA869@curie-int> <20090405000536.GA12927@vidovic>
- <20090405T001239Z@curie.orbis-terrarum.net> <20090405035453.GB12927@vidovic>
- <20090405070412.GB869@curie-int> <20090405190213.GA12929@vidovic>
- <alpine.DEB.1.10.0904051419490.6245@asgard.lang.hm>
- <20090405225954.GA18730@vidovic>
- <alpine.DEB.1.10.0904051613420.6245@asgard.lang.hm>
- <alpine.LFD.2.00.0904052326090.6741@xanadu.home>
- <7vab6ue520.fsf@gitster.siamese.dyndns.org>
+From: Finn Arne Gangstad <finnag@pvv.org>
+Subject: Re: Fetching SHA id's instead of named references?
+Date: Mon, 6 Apr 2009 15:16:43 +0200
+Message-ID: <20090406131643.GA16229@pvv.org>
+References: <33f4f4d70904060513k320fb6a0ya928c714dcd11e89@mail.gmail.com> <alpine.DEB.1.00.0904061431020.6619@intel-tinevez-2-302> <33f4f4d70904060541s6dfb7e8ctf50f5e8a872ae1c@mail.gmail.com> <vpqprfq3ptb.fsf@bauges.imag.fr> <33f4f4d70904060606h4d014fbdibe195a83233d8899@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: david@lang.hm, Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
-	"Robin H. Johnson" <robbat2@gentoo.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 06 15:14:04 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Users List <git@vger.kernel.org>
+To: Klas Lindberg <klas.lindberg@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 06 15:18:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqoeJ-0001z4-I6
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 15:14:04 +0200
+	id 1Lqoik-0003Ic-Ub
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 15:18:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754906AbZDFNMb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Apr 2009 09:12:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754553AbZDFNMa
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 09:12:30 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:37715 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753894AbZDFNM3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2009 09:12:29 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KHO003PJKOMCY30@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 06 Apr 2009 09:12:22 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7vab6ue520.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1756331AbZDFNQt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Apr 2009 09:16:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755723AbZDFNQs
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 09:16:48 -0400
+Received: from decibel.pvv.ntnu.no ([129.241.210.179]:39285 "EHLO
+	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755219AbZDFNQr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2009 09:16:47 -0400
+Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
+	(envelope-from <finnag@pvv.ntnu.no>)
+	id 1Lqogt-0006Pt-5G; Mon, 06 Apr 2009 15:16:43 +0200
+Content-Disposition: inline
+In-Reply-To: <33f4f4d70904060606h4d014fbdibe195a83233d8899@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115820>
 
-On Sun, 5 Apr 2009, Junio C Hamano wrote:
-
-> Nicolas Pitre <nico@cam.org> writes:
+On Mon, Apr 06, 2009 at 03:06:46PM +0200, Klas Lindberg wrote:
+> On Mon, Apr 6, 2009 at 2:54 PM, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
 > 
-> > What git-pack-objects does in this case is not a full repack.  It 
-> > instead _reuse_ as much of the existing packs as possible, and only does 
-> > the heavy packing processing for loose objects and/or inter pack 
-> > boundaryes when gluing everything together for streaming over the net.  
-> > If for example you have a single pack because your repo is already fully 
-> > packed, then the "packing operation" involved during a clone should 
-> > merely copy the existing pack over with no further attempt at delta 
-> > compression.
+> > What Johannes pointed out is that someone could fetch from your repo
+> > _after_ you correct the mistake (if you don't control garbage
+> > collection).
 > 
-> One possibile scenario that you still need to spend memory and cycle is if
-> the cloned repository was packed to an excessive depth to cause many of
-> its objects to be in deltified form on insanely deep chains, while cloning
-> send-pack uses a depth that is more reasonable.  Then pack-objects invoked
-> by send-pack is not allowed to reuse most of the objects and would end up
-> redoing the delta on them.
+> Aha, ok. But how then does submodule update work? Git will only see
+> SHA keys for each submodule in the cotntainer tree commit, so how does
+> it perform fetching of those (unnamed) references?
 
-Nope.  When pack data is reused, there is simply no consideration what 
-so ever for the actual delta depth limit.  Only when an object already 
-being used as a delta base for reused deltas is itself subject to delta 
-compression does the real depth of the concerned delta chain is 
-evaluated in order to not purposely bust the specified delta depth limit 
-(otherwise a delta chain could grow unbounded).
+git submodule update just does "git fetch" and hopes that the required
+commit appears. In practice this means that you (may) need to invent a
+tag or a branch for all the submodules, otherwise they are not
+fetchable.
 
+This bit us pretty hard when we tried to use submodules earlier, so we
+gave up. Maybe some day...
 
-Nicolas
+- Finn Arne
