@@ -1,59 +1,67 @@
-From: David Abrahams <dave@boostpro.com>
-Subject: Re: git diff bug?
-Date: Mon, 6 Apr 2009 13:58:08 -0400
-Message-ID: <D4B0EDF7-E1BD-44E3-858F-002CFF2C496A@boostpro.com>
-References: <m2ocvdkyul.fsf@boostpro.com> <20090404014527.GA13350@coredump.intra.peff.net> <1BF9172A-BE91-4D1C-932A-EB9FD79BA402@boostpro.com> <49DA156A.1000105@drmicha.warpmail.net>
-Mime-Version: 1.0 (Apple Message framework v930.4)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Apr 06 20:00:00 2009
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH v2] Add configuration variable for sign-off to
+	format-patch
+Date: Mon, 6 Apr 2009 20:09:25 +0200
+Message-ID: <20090406180925.GA466@macbook.lan>
+References: <20090331185018.GD72569@macbook.lan> <20090331200457.GA23879@coredump.intra.peff.net> <20090331204338.GA88381@macbook.lan> <20090401102610.GC26181@coredump.intra.peff.net> <20090401175153.GA90421@macbook.lan> <7veiw69p26.fsf@gitster.siamese.dyndns.org> <49D9E040.40007@op5.se> <vpqvdpi5807.fsf@bauges.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <exon@op5.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Mon Apr 06 20:13:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lqt6q-0003w6-6C
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 19:59:48 +0200
+	id 1LqtJU-0000Kq-P0
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 20:12:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752985AbZDFR6P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Apr 2009 13:58:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754630AbZDFR6N
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 13:58:13 -0400
-Received: from boost-consulting.com ([206.71.190.141]:61380 "EHLO
-	boost-consulting.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754077AbZDFR6M (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2009 13:58:12 -0400
-Received: from [192.168.188.134] (207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com [207.172.223.249])
-	(Authenticated sender: dave)
-	by boost-consulting.com (Postfix) with ESMTPSA id ED3A41CC1F;
-	Mon,  6 Apr 2009 10:56:13 -0700 (PDT)
-In-Reply-To: <49DA156A.1000105@drmicha.warpmail.net>
-X-Mailer: Apple Mail (2.930.4)
+	id S1752049AbZDFSJa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Apr 2009 14:09:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751917AbZDFSJa
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 14:09:30 -0400
+Received: from darksea.de ([83.133.111.250]:37643 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750903AbZDFSJ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2009 14:09:29 -0400
+Received: (qmail 6288 invoked from network); 6 Apr 2009 20:09:13 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 6 Apr 2009 20:09:13 +0200
+Content-Disposition: inline
+In-Reply-To: <vpqvdpi5807.fsf@bauges.imag.fr>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115862>
 
+On Mon, Apr 06, 2009 at 01:36:24PM +0200, Matthieu Moy wrote:
+> Andreas Ericsson <exon@op5.com> writes:
+> 
+> > How about:
+> > "Some projects (notably the Linux kernel and git itself) put special
+> > meaning in a 'Signed-off-by' line while other's dont. Please refer
+> > to your project's documentation for appropriate behaviour."
+> >
+> > Optionally with the following amendment:
+> >
+> > "In general, you should refrain from signing off on a patch containing
+> > material that you're not sure can be legally spread under the project's
+> > license."
+> 
+> To me, this is at least an improvement over refering to
+> SubmittingPatches (which is targeted to Git contributors) in the
+> documentation (targeted to Git users), yes.
 
-On Apr 6, 2009, at 10:44 AM, Michael J Gruber wrote:
+To me too. When writing I was probably too focused on Git.
 
->
-> Well, I don't think anayone else has tried putting config lines into
-> .gitattributes ;)
->
-> The "*.el" line goes into .gitattributes (or .git/info/a...), the  
-> other
-> lines are config lines and thus goe into .git/config or .gitconfig.
+> Not sure whether these two sentences should come in the documentation
+> for the config option or the command-line switch.
 
+I think you should be able to get to this note from all locations where
+this option is provided (+ the commit option) so maybe a link ?
 
-Aha, thanks.  The hunk header section in the gitattributes manpage  
-turns out to be the only one that shows config stuff without  
-mentioning a config file, thus my confusion.  I suggest a tiny patch  
-('cept I don't know how to write manpage format)
-
---
-David Abrahams
-BoostPro Computing
-http://boostpro.com
+cheers Heiko
