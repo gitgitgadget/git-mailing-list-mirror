@@ -1,132 +1,101 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: Running 'git pull' from an unnamed branch
-Date: Mon, 6 Apr 2009 12:03:05 +0200
-Message-ID: <20090406100305.GD20356@atjola.homenet>
-References: <3f4fd2640904051433u199587c3wc9bf080d138944e7@mail.gmail.com> <7v3acmoalw.fsf@gitster.siamese.dyndns.org> <3f4fd2640904060042m438a3a8en2d2746a6216b2b95@mail.gmail.com>
+From: Andreas Ericsson <exon@op5.com>
+Subject: Re: [PATCH v2] Add configuration variable for sign-off to format-patch
+Date: Mon, 06 Apr 2009 12:58:08 +0200
+Message-ID: <49D9E040.40007@op5.se>
+References: <20090331185018.GD72569@macbook.lan> <20090331200457.GA23879@coredump.intra.peff.net> <20090331204338.GA88381@macbook.lan> <20090401102610.GC26181@coredump.intra.peff.net> <20090401175153.GA90421@macbook.lan> <7veiw69p26.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Reece Dunn <msclrhd@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 06 12:04:59 2009
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Heiko Voigt <hvoigt@hvoigt.net>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 06 13:00:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqlhF-0002m4-6m
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 12:04:53 +0200
+	id 1LqmYO-00026h-U6
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 12:59:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754751AbZDFKDN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Apr 2009 06:03:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754421AbZDFKDL
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 06:03:11 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45870 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754630AbZDFKDK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2009 06:03:10 -0400
-Received: (qmail invoked by alias); 06 Apr 2009 10:03:07 -0000
-Received: from i59F56377.versanet.de (EHLO atjola.local) [89.245.99.119]
-  by mail.gmx.net (mp006) with SMTP; 06 Apr 2009 12:03:07 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1+suGM4NmusiPHN4/4uMAkAPUH3bDxQ9ENCxsN9iQ
-	yrFXJqndj15vn2
-Content-Disposition: inline
-In-Reply-To: <3f4fd2640904060042m438a3a8en2d2746a6216b2b95@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.55
+	id S1755372AbZDFK6R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Apr 2009 06:58:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755269AbZDFK6R
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 06:58:17 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:35813 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755278AbZDFK6Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2009 06:58:16 -0400
+Received: by fxm2 with SMTP id 2so1819534fxm.37
+        for <git@vger.kernel.org>; Mon, 06 Apr 2009 03:58:11 -0700 (PDT)
+Received: by 10.86.49.13 with SMTP id w13mr2984845fgw.76.1239015491776;
+        Mon, 06 Apr 2009 03:58:11 -0700 (PDT)
+Received: from clix.int.op5.se ([212.112.174.166])
+        by mx.google.com with ESMTPS id 3sm6899997fge.29.2009.04.06.03.58.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 06 Apr 2009 03:58:10 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <7veiw69p26.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115805>
 
-On 2009.04.06 08:42:16 +0100, Reece Dunn wrote:
-> 2009/4/6 Junio C Hamano <gitster@pobox.com>:
-> > Reece Dunn <msclrhd@googlemail.com> writes:
-> >
-> >> diff --git a/git-pull.sh b/git-pull.sh
-> >> index 8a26763..00a72dd 100755
-> >> --- a/git-pull.sh
-> >> +++ b/git-pull.sh
-> >> @@ -97,6 +97,10 @@ error_on_no_merge_candidates () {
-> >> =A0 =A0 =A0 echo "try again (e.g. 'git pull <repository> <refspec>=
-')."
-> >> =A0 =A0 =A0 echo "See git-pull(1) for details on the refspec."
-> >> =A0 =A0 =A0 echo
-> >> + =A0 =A0 echo "You may not be on a branch. In this case, you need=
- to move"
-> >> + =A0 =A0 echo "onto the branch you want to pull to (usually maste=
-r):"
-> >> + =A0 =A0 echo " =A0 =A0git checkout <branch>"
-> >> + =A0 =A0 echo
-> >
-> > I do not think that is necessarily what the user wanted to hear. =A0=
-Often I
-> > create trial merges on a detached HEAD when I hear a pull-request f=
-rom
-> > others (I have a few work trees that share the repository with my p=
-rimary
-> > working area, made with contrib/workdir/git-new-workdir script, and=
- their
-> > HEAD are typically detached at the tip of the master), and in such =
-a use
-> > case, the first line of the instruction in the context in your patc=
-h is
-> > the right thing to give. =A0I do not want to have the resulting tri=
-al merge
-> > anywhere on my real branches, and do not want to be told to switch =
-to any
-> > of them.
-> >
-> > We really should teach people, especially the new ones early on, th=
-at "git
-> > push" and "git pull" are meant to be told where-to/from and what, a=
-nd how
-> > to drive these commands with explicit arguments, before letting the=
-m rely
-> > on the default configuration blindly without understanding the unde=
-rlying
-> > concepts.
->=20
-> Ok, so how about something like:
->=20
-> "You may not be on a branch. Because of this, you need to specify
+Junio C Hamano wrote:
+> Heiko Voigt <hvoigt@hvoigt.net> writes:
+> 
+>> diff --git a/Documentation/config.txt b/Documentation/config.txt
+>> index ad22cb8..27cb7f1 100644
+>> --- a/Documentation/config.txt
+>> +++ b/Documentation/config.txt
+>> @@ -715,6 +715,13 @@ format.thread::
+>>  	A true boolean value is the same as `shallow`, and a false
+>>  	value disables threading.
+>>  
+>> +format.signoff::
+>> +    A boolean value which lets you enable the `-s/--signoff` option of
+>> +    format-patch by default. *Note:* Adding the Signed-off-by: line to a
+>> +    patch should be a conscious act and means that you certify you have
+>> +    the rights to submit this work under the same open source license.
+>> +    Please see the 'SubmittingPatches' document for further discussion.
+> 
+> I have a mixed feeling about this description.  The existing description
+> on the --signoff option merely talks about what it does, leaving what it
+> means, and it is quite deliberate.  If your project uses S-o-b, it may be
+> useful.  If yours doesn't, you simply just don't use it.  It does not
+> matter to _us_ as the document writer what that line means to your
+> project.
+> 
+> We do want to make the reader think twice iff S-o-b is used in the
+> reader's project with the same meaning as it means in git and the Linux
+> kernel project, which is what the description you added is about.  But
+> should we just assume if anybody uses S-o-b convention in their project
+> they must give it the same meaning as we give it?
+> 
+> The patch looks straightforward enough, and the wording we can update if
+> somebody can come up with a better one, so I'll apply the patch to
+> 'master' and we will go from there.
+> 
 
-This should not say "may", either you are or you are not on a detached
-HEAD, and git can tell that, so it should not let the user have to
-guess.
+How about:
+"Some projects (notably the Linux kernel and git itself) put special
+meaning in a 'Signed-off-by' line while other's dont. Please refer
+to your project's documentation for appropriate behaviour."
 
-> where you are pulling from and to. See git-pull(1) for how to do this=
-=2E
-> Alternatively, you can move to a named branch using:
->     git checkout <branch>"
+Optionally with the following amendment:
 
-Checking out a named branch won't solve the "problem" on its own.
-Consider this:
+"In general, you should refrain from signing off on a patch containing
+material that you're not sure can be legally spread under the project's
+license."
 
-git checkout origin/foo
-   *do stuff*
+I'll whip up a patch if someone cares enough about it to say "+1" to
+either proposal, or make a better one.
 
-git pull
-   *Oh! I need a named branch*
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-git checkout -b foo
-git pull
-   *Still fails*
-
-Maybe:
-You asked me to pull without telling me which branch you want to merge
-with and as you have no branch checked out, I cannot look for any
-defaults to use. Please name which branch you want to merge on the
-command line and try again (e.g. 'git pull <repository> <refspec>'). Se=
-e
-git-pull(1) for details on the refspec.
-
-
-That just adjusts the "you can set some defaults" part, replacing it
-with a message telling that a detached HEAD cannot have any defaults.
-Without implying anything about how the user might want to work, but
-giving a hint that a branch can have defaults for "git pull".
-
-Bj=F6rn
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
