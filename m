@@ -1,83 +1,138 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: The EGIT Chronicles Issue Volume 3, Issue 1
-Date: Mon, 6 Apr 2009 08:03:48 -0700
-Message-ID: <20090406150348.GH23604@spearce.org>
-References: <200904060833.27711.robin.rosenberg.lists@dewire.com>
+From: Jason Merrill <jason@redhat.com>
+Subject: [PATCH v2] Documentation: clarify .gitattributes search
+Date: Mon, 06 Apr 2009 11:03:36 -0400
+Message-ID: <49DA19C8.5010308@redhat.com>
+References: <49D96C63.9070200@redhat.com> <7viqlicp1y.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/mixed;
+ boundary="------------030604000803010706010809"
 Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Mon Apr 06 17:06:12 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 06 17:06:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqqOa-00080n-8Q
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 17:05:56 +0200
+	id 1LqqOz-0008HO-OC
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 17:06:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751727AbZDFPDu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Apr 2009 11:03:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751597AbZDFPDu
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 11:03:50 -0400
-Received: from george.spearce.org ([209.20.77.23]:49758 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751195AbZDFPDu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2009 11:03:50 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 44E6A38215; Mon,  6 Apr 2009 15:03:48 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <200904060833.27711.robin.rosenberg.lists@dewire.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752048AbZDFPEp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Apr 2009 11:04:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752045AbZDFPEo
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 11:04:44 -0400
+Received: from mx2.redhat.com ([66.187.237.31]:59507 "EHLO mx2.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751803AbZDFPEn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2009 11:04:43 -0400
+Received: from int-mx2.corp.redhat.com (int-mx2.corp.redhat.com [172.16.27.26])
+	by mx2.redhat.com (8.13.8/8.13.8) with ESMTP id n36F3dFb022335;
+	Mon, 6 Apr 2009 11:03:39 -0400
+Received: from ns3.rdu.redhat.com (ns3.rdu.redhat.com [10.11.255.199])
+	by int-mx2.corp.redhat.com (8.13.1/8.13.1) with ESMTP id n36F3d0g007799;
+	Mon, 6 Apr 2009 11:03:40 -0400
+Received: from [127.0.0.1] (sebastian-int.corp.redhat.com [172.16.52.221])
+	by ns3.rdu.redhat.com (8.13.8/8.13.8) with ESMTP id n36F3b8L021509;
+	Mon, 6 Apr 2009 11:03:38 -0400
+User-Agent: Thunderbird 2.0.0.19 (X11/20090105)
+In-Reply-To: <7viqlicp1y.fsf@gitster.siamese.dyndns.org>
+X-Scanned-By: MIMEDefang 2.58 on 172.16.27.26
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115844>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
->
-> Most interestingly, some Eclipse developers, i.e. the ones
-> that build and contribute to the Eclipse platform, have raised
-> interest in Git for source control. We have had an Eclipse
-> proposal under development for a while and finally submitted
-> EGit for consideration as and Eclipse Technology project.  Link:
-> http://www.eclipse.org/proposals/egit/
-> 
-> Egit is EPL and BSD licensed which license-wise qualifies it for
-> inclusion into the Eclipse project, unlike the nearest competitor
-> Mercurial that cannot be bundled with Eclipse due to the GPL.
+This is a multi-part message in MIME format.
+--------------030604000803010706010809
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-For pretty much this reason alone, Eclipse is starting to consider
-switching from CVS and SVN to Git.  Some committers were interested
-in a switch to Mecurial, but the GPL license makes it unfriendly
-to the project's distribution rules.
+Junio C Hamano wrote:
+>  (2) also wondered why you were confused to think if your home directory
+>      (for that matter, any higher directory, like /.gitattributes at the
+>      filesystem root level) that is clearly outside of the project could
+>      possibly affect what happens inside a project; and
 
-> - Shawn's been working on Gerrit2, a code review system built on
-> top of JGit, the core of the Eclipse plugin.
+Because it would be useful if it did; specifically, it would be 
+convenient to be able to say that ChangeLog files use 
+git-merge-changelog wherever they appear, and not have to repeat that in 
+all my projects.  I didn't really expect it, but thought that maybe it 
+was designed to work that way.
 
-Its also sucking up all of my time.
+>  (3) was puzzled why you do not have any patch to description of ignore
+>      files (perhaps you do not even a similar confusion on them).
 
-But... its open source, and is gaining (some) momentum in Git
-communities that want mandatory code review, but who also want to
-avoid the bottleneck of a maintainer / "merge monkey".
+I hadn't really thought about them, but looking at the documentation now 
+I see that ignore files have the core.excludesfile config variable to 
+provide global ignores; there doesn't seem to be anything analogous for 
+attributes.
 
-Junio made some remark back when I joined Google that Google just
-swallows up open source developers whole, and you never hear from
-them again.  At least half true.  Fortunately I am at least able to
-open source (EPL if in EGit, BSD if in JGit, else APLv2) everything
-that I do while in that big black hole known as Google.
+>  (1) To a long-time git person, "up to the root" is obviously talking
+>      about the toplevel of the work tree, not "root of the filesystem",
+>      but is it clear to _you_ (or do you think it would be clear to
+>      somebody else without much previous exposure to git)?
 
-> - Lots of stuff is coming. For example, a few diff engines are
-> being considered, a blame implementation has been demonstrated,
-> though not fully ready yet. Some simple merge/cherry picking
-> capability is included already, but without the diff/patch engine
-> it's not as fully automated as one might want yet. Gerrit2 uses
-> it though.
+It seems clear enough, as it would be pointless to say it if it meant 
+the root of the filesystem.
 
-The lack of a diff engine is starting to become an issue for me
-in Gerrit2.  Maybe next month I'll be able to get to it, if someone
-doesn't beat me to it first.  Gerrit2 users are asking for proper
-cherry pick support, not just the path-level-only cr*p we do now.
+>  (2) If not, I think we should come up with a good wording and use that in
+>      both.  How does the "toplevel of the work tree" sound for that
+>      purpose?
 
+Sure, I'll use that.
+
+
+
+--------------030604000803010706010809
+Content-Type: text/x-patch;
+ name="0001-Documentation-clarify-.gitattributes-search.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename*0="0001-Documentation-clarify-.gitattributes-search.patch"
+
+Use the term "toplevel of the work tree" in gitattributes.txt and
+gitignore.txt to define the limits of the search for those files.
+
+Signed-off-by: Jason Merrill <jason@redhat.com>
+---
+ Documentation/gitattributes.txt |    6 +++---
+ Documentation/gitignore.txt     |    4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 55668e3..b762bba 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -60,9 +60,9 @@ same as in `.gitignore` files; see linkgit:gitignore[5].
+ When deciding what attributes are assigned to a path, git
+ consults `$GIT_DIR/info/attributes` file (which has the highest
+ precedence), `.gitattributes` file in the same directory as the
+-path in question, and its parent directories (the further the
+-directory that contains `.gitattributes` is from the path in
+-question, the lower its precedence).
++path in question, and its parent directories up to the toplevel of the
++work tree (the further the directory that contains `.gitattributes`
++is from the path in question, the lower its precedence).
+ 
+ If you wish to affect only a single repository (i.e., to assign
+ attributes to files that are particular to one user's workflow), then
+diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+index 59321a2..7df3cef 100644
+--- a/Documentation/gitignore.txt
++++ b/Documentation/gitignore.txt
+@@ -31,8 +31,8 @@ precedence, the last matching pattern decides the outcome):
+ 
+  * Patterns read from a `.gitignore` file in the same directory
+    as the path, or in any parent directory, with patterns in the
+-   higher level files (up to the root) being overridden by those in
+-   lower level files down to the directory containing the file.
++   higher level files (up to the toplevel of the work tree) being overridden
++   by those in lower level files down to the directory containing the file.
+    These patterns match relative to the location of the
+    `.gitignore` file.  A project normally includes such
+    `.gitignore` files in its repository, containing patterns for
 -- 
-Shawn.
+1.6.2.2
+
+
+--------------030604000803010706010809--
