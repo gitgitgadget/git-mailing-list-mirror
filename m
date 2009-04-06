@@ -1,71 +1,52 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Fetching SHA id's instead of named references?
-Date: Mon, 06 Apr 2009 12:55:46 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0904061245111.6741@xanadu.home>
-References: <33f4f4d70904060513k320fb6a0ya928c714dcd11e89@mail.gmail.com>
- <alpine.DEB.1.00.0904061431020.6619@intel-tinevez-2-302>
- <20090406144047.GE23604@spearce.org>
- <33f4f4d70904060922t5c868ec0x89ed5891cf4b19c2@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [EGIT] [PATCH RFC v1 0/5] Add (static) ignore functionality to
+	EGit
+Date: Mon, 6 Apr 2009 10:03:26 -0700
+Message-ID: <20090406170326.GI23604@spearce.org>
+References: <cover.1238102327.git.ferry.huberts@pelagic.nl> <20090405210248.GA23604@spearce.org> <49DA3305.7090601@pelagic.nl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Git Users List <git@vger.kernel.org>
-To: Klas Lindberg <klas.lindberg@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 06 18:57:36 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
+X-From: git-owner@vger.kernel.org Mon Apr 06 19:07:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lqs8Z-0006E1-PA
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 18:57:32 +0200
+	id 1LqsFo-0000p9-KS
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 19:05:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753590AbZDFQzy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Apr 2009 12:55:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753150AbZDFQzy
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 12:55:54 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:37897 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751730AbZDFQzx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2009 12:55:53 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KHO00ESOV0Y7GP0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 06 Apr 2009 12:55:46 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <33f4f4d70904060922t5c868ec0x89ed5891cf4b19c2@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1751993AbZDFRD3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Apr 2009 13:03:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751590AbZDFRD2
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 13:03:28 -0400
+Received: from george.spearce.org ([209.20.77.23]:59175 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751009AbZDFRD2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2009 13:03:28 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id A4D1938211; Mon,  6 Apr 2009 17:03:26 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <49DA3305.7090601@pelagic.nl>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115856>
 
-On Mon, 6 Apr 2009, Klas Lindberg wrote:
+"Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl> wrote:
+> Shawn O. Pearce wrote:
+> > JGit and EGit are holding the line on Java 5 support; that means
+> > that String.isEmpty() must be spelled as String.length() == 0
+> > (isEmpty was added in Java 6).
+> 
+> just looked in the project settings for org.spearce.egit.core and it has
+> java 1.5 style specified _and_ eclipse does not give me a warning on the
+> *.isEmpty() calls. Am i missing something here?
 
-> In the remote tree, the unnamed reference is either available or it
-> isn't. If someone made an unnamed reference unreachable and then
-> garbage-collected it, well so be it. Just tell the user that the
-> reference can't be found and may in fact not exist at all and you're
-> done. No exhaustive search necessary.
+Your workspace default JRE must be set to a Java 6.  Switch it to
+Java 5 in the workspace settings.
 
-Why can't you simply fetch the remote from its branch tip and then 
-figure out / checkout the particular unnamed reference you wish locally?
-
-> I may later want to use that revision of the manifest to perform a 
-> checkout on every component listed by the manifest. At that point I 
-> expect all the work trees to have exactly the contents they "should" 
-> have for that old version of the manifest. It's all about affordable 
-> reproducibility.
-
-Unlike with CVS/SVN, you don't need anything from the remote if you want 
-to checkout an old version.  In particular, there is no need for you to 
-only fetch that old version from the remote.  You just fetch everything 
-from the remote and then checkout the particular old version you wish.  
-There is just no real advantage to limit yourself to some old version 
-from the remote repository because that's what you want locally.  Sure 
-you might be getting more data than needed, but usually not that much 
-due to git's good delta compression making extra versions almost free.
-
-
-Nicolas
+-- 
+Shawn.
