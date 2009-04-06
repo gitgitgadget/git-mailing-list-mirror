@@ -1,151 +1,68 @@
-From: Reece Dunn <msclrhd@googlemail.com>
-Subject: Re: Running 'git pull' from an unnamed branch
-Date: Mon, 6 Apr 2009 13:04:39 +0100
-Message-ID: <3f4fd2640904060504y452cd8a1pbb9170cd7a357e47@mail.gmail.com>
-References: <3f4fd2640904051433u199587c3wc9bf080d138944e7@mail.gmail.com>
-	 <7v3acmoalw.fsf@gitster.siamese.dyndns.org>
-	 <3f4fd2640904060042m438a3a8en2d2746a6216b2b95@mail.gmail.com>
-	 <20090406100305.GD20356@atjola.homenet>
+From: Klas Lindberg <klas.lindberg@gmail.com>
+Subject: Fetching SHA id's instead of named references?
+Date: Mon, 6 Apr 2009 14:13:04 +0200
+Message-ID: <33f4f4d70904060513k320fb6a0ya928c714dcd11e89@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Apr 06 14:07:31 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: Git Users List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 06 14:14:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lqnah-0002yE-5X
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 14:06:15 +0200
+	id 1Lqniv-0006iT-FW
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 14:14:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755901AbZDFMEo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Apr 2009 08:04:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755329AbZDFMEn
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 08:04:43 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:58249 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755200AbZDFMEm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Apr 2009 08:04:42 -0400
-Received: by fg-out-1718.google.com with SMTP id e12so779011fga.17
-        for <git@vger.kernel.org>; Mon, 06 Apr 2009 05:04:39 -0700 (PDT)
+	id S1756336AbZDFMNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Apr 2009 08:13:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756165AbZDFMNJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 08:13:09 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:52604 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755505AbZDFMNI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2009 08:13:08 -0400
+Received: by fxm2 with SMTP id 2so1851184fxm.37
+        for <git@vger.kernel.org>; Mon, 06 Apr 2009 05:13:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=UZdI/I+d3uz1TZNZrx/R43asHczrPtwKzlc7Ckdvjh8=;
-        b=kqAbr1APINosmAhUTEWxPx4KYeGX9gfqBHTlT/8AVc5n/6M9Db/t/GGQv+gmerW9CJ
-         AW0V2AOuYToQQAMJkrqq+nmHG1q0OiQgAAmNONh5pne1kvJsC6LWM9guoUmq/JjYtfJr
-         l301XRvPYMl4xnTi6w8V7Fh6j5UCVzg8xhOVM=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=RDhfNCHPW2vN2i/PbvfBqBe0biiWcOprT1ZJpmuoLAc=;
+        b=kqQphysTLoHHehRsKmEnJBPFdj5DRV9tblQWn0pe+y9ADPPJmtxwwrIHFaetoqh5Zh
+         osJCbjzqOxX7pS6cfhPoFPngKVaQouwb86NYJbvD53/Sf+G+CWrgwWFFpWamHtO3jivk
+         St5p8eON56f6pVrKbS+zvq6P9gQilFNrBGf30=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=DHH0OdVu7BAOq8T/T6JMFrTSSNuk2m5GfnVcPL/XDfWR+fkF6A3/v+u9XawG1+/iN0
-         cU7PunrmqWzukjqcEq484lqlKiWaa5uARUXTYzeh+aCza6K5vA4WaIEyvJn9RtuHyDoB
-         5y71Z1HNDCnj/b2WzmsGDWvlLDWdFKZTRJijs=
-Received: by 10.239.156.193 with SMTP id n1mr99336hbc.43.1239019479070; Mon, 
-	06 Apr 2009 05:04:39 -0700 (PDT)
-In-Reply-To: <20090406100305.GD20356@atjola.homenet>
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=IsofshiDqKfQxkBLOpyJbO2++KPhExr03jpjGywf2Y0QuaTil66tOh4NtIQdo9w+5P
+         XL4vSQTKSIwPAtVBy/lqx90gD9z2QYE9E4+tT3xEoHgbTHGrAdYzopUd3m3egQdAey6z
+         QYITg9kxcMhw40/CvVu3x13QF7jXjdx0HzalY=
+Received: by 10.223.104.19 with SMTP id m19mr3683251fao.58.1239019984838; Mon, 
+	06 Apr 2009 05:13:04 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115811>
 
-2009/4/6 Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>:
-> On 2009.04.06 08:42:16 +0100, Reece Dunn wrote:
->> 2009/4/6 Junio C Hamano <gitster@pobox.com>:
->> > Reece Dunn <msclrhd@googlemail.com> writes:
->> >
->> >> diff --git a/git-pull.sh b/git-pull.sh
->> >> index 8a26763..00a72dd 100755
->> >> --- a/git-pull.sh
->> >> +++ b/git-pull.sh
->> >> @@ -97,6 +97,10 @@ error_on_no_merge_candidates () {
->> >> =A0 =A0 =A0 echo "try again (e.g. 'git pull <repository> <refspec=
->')."
->> >> =A0 =A0 =A0 echo "See git-pull(1) for details on the refspec."
->> >> =A0 =A0 =A0 echo
->> >> + =A0 =A0 echo "You may not be on a branch. In this case, you nee=
-d to move"
->> >> + =A0 =A0 echo "onto the branch you want to pull to (usually mast=
-er):"
->> >> + =A0 =A0 echo " =A0 =A0git checkout <branch>"
->> >> + =A0 =A0 echo
->> >
->> > I do not think that is necessarily what the user wanted to hear. =A0=
-Often I
->> > create trial merges on a detached HEAD when I hear a pull-request =
-from
->> > others (I have a few work trees that share the repository with my =
-primary
->> > working area, made with contrib/workdir/git-new-workdir script, an=
-d their
->> > HEAD are typically detached at the tip of the master), and in such=
- a use
->> > case, the first line of the instruction in the context in your pat=
-ch is
->> > the right thing to give. =A0I do not want to have the resulting tr=
-ial merge
->> > anywhere on my real branches, and do not want to be told to switch=
- to any
->> > of them.
->> >
->> > We really should teach people, especially the new ones early on, t=
-hat "git
->> > push" and "git pull" are meant to be told where-to/from and what, =
-and how
->> > to drive these commands with explicit arguments, before letting th=
-em rely
->> > on the default configuration blindly without understanding the und=
-erlying
->> > concepts.
->>
->> Ok, so how about something like:
->>
->> "You may not be on a branch. Because of this, you need to specify
->
-> This should not say "may", either you are or you are not on a detache=
-d
-> HEAD, and git can tell that, so it should not let the user have to
-> guess.
->
->> where you are pulling from and to. See git-pull(1) for how to do thi=
-s.
->> Alternatively, you can move to a named branch using:
->> =A0 =A0 git checkout <branch>"
->
-> Checking out a named branch won't solve the "problem" on its own.
-> Consider this:
->
-> git checkout origin/foo
-> =A0 *do stuff*
->
-> git pull
-> =A0 *Oh! I need a named branch*
->
-> git checkout -b foo
-> git pull
-> =A0 *Still fails*
->
-> Maybe:
-> You asked me to pull without telling me which branch you want to merg=
-e
-> with and as you have no branch checked out, I cannot look for any
-> defaults to use. Please name which branch you want to merge on the
-> command line and try again (e.g. 'git pull <repository> <refspec>'). =
-See
-> git-pull(1) for details on the refspec.
+Hello
 
-Sounds reasonable. I'll update the patch and resubmit later on today.
+Is there a way to fetch based on SHA id's instead of named references?
 
-> That just adjusts the "you can set some defaults" part, replacing it
-> with a message telling that a detached HEAD cannot have any defaults.
-> Without implying anything about how the user might want to work, but
-> giving a hint that a branch can have defaults for "git pull".
->
-> Bj=F6rn
+My usage scenario is this: A change management tool based on version
+controlled manifest files (somewhat similar to Google's Repo) must be
+able to check out exact versions of all 200 trees in the project view.
+To support this, tags are used since they specify an exact revision.
+But there are two problems with tagging:
 
-- Reece
+ * Tags are not immutable.
+ * External components that already have a tagging style get polluted
+by our excessive use of tags.
+
+I would really prefer to just list SHA keys in the manifests, but
+fetch apparently doesn't support that? Could I use a combination of
+lower level commands instead?
+
+BR / Klas
