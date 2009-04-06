@@ -1,76 +1,83 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: Broken umlaut in my name, again
-Date: Mon, 6 Apr 2009 21:28:48 +0200
-Message-ID: <20090406192848.GJ20356@atjola.homenet>
-References: <20090331153039.GA1520@atjola.homenet> <20090406114618.GF20356@atjola.homenet> <20090406164732.GA11724@sigill.intra.peff.net>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: git diff bug?
+Date: Mon, 06 Apr 2009 21:32:43 +0200
+Message-ID: <vpqzlet1stg.fsf@bauges.imag.fr>
+References: <m2ocvdkyul.fsf@boostpro.com>
+	<20090404014527.GA13350@coredump.intra.peff.net>
+	<1BF9172A-BE91-4D1C-932A-EB9FD79BA402@boostpro.com>
+	<20090406155303.GA3275@sigill.intra.peff.net>
+	<vpqeiw53cpy.fsf@bauges.imag.fr>
+	<7vskkl64yu.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Marius Storm-Olsen <marius@trolltech.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Apr 06 21:30:27 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, David Abrahams <dave@boostpro.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 06 21:37:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LquWY-000432-F3
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 21:30:26 +0200
+	id 1Lqud4-00066L-Vc
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 21:37:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752997AbZDFT2y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Apr 2009 15:28:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752615AbZDFT2y
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 15:28:54 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52333 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751907AbZDFT2x (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2009 15:28:53 -0400
-Received: (qmail invoked by alias); 06 Apr 2009 19:28:49 -0000
-Received: from i59F5A3DA.versanet.de (EHLO atjola.local) [89.245.163.218]
-  by mail.gmx.net (mp006) with SMTP; 06 Apr 2009 21:28:49 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1+mT59iRFGmp7HvmOSfZIJhEI2Ao6hX2QmzUcGyTz
-	CABBpgnYEpABlu
-Content-Disposition: inline
-In-Reply-To: <20090406164732.GA11724@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.58
+	id S1754915AbZDFTfh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Apr 2009 15:35:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751907AbZDFTfg
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 15:35:36 -0400
+Received: from imag.imag.fr ([129.88.30.1]:60701 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754915AbZDFTfg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2009 15:35:36 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n36JWjFC003071
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 6 Apr 2009 21:32:45 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1LquYl-0000sw-Lq; Mon, 06 Apr 2009 21:32:43 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1LquYl-00089W-JL; Mon, 06 Apr 2009 21:32:43 +0200
+In-Reply-To: <7vskkl64yu.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Mon\, 06 Apr 2009 10\:56\:41 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 06 Apr 2009 21:32:46 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115874>
 
-On 2009.04.06 12:47:33 -0400, Jeff King wrote:
-> On Mon, Apr 06, 2009 at 01:46:18PM +0200, Bj=F6rn Steinbrink wrote:
->=20
-> > On 2009.03.31 17:30:39 +0200, Bj=F6rn Steinbrink wrote:
-> > > While it makes no sense to map some email address to an empty one=
-, doing
-> > > things the other way around can be useful. For example when using
-> > > filter-branch with an env-filter that employs a mailmap to fix up=
- an
-> > > import that created such broken commits with empty email addresse=
-s.
-> > >=20
-> > > Signed-off-by: Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>
-> >=20
-> > The umlaut (=F6) in my name is broken in the commit that made it in=
-to
-> > git.git --> 5288dd58356e53d61e2b3804fc7d8d23c3a46ab3
->=20
-> The mail you sent that presumably became 5288dd58 looks fine (both th=
-e
-> >From and body are properly marked as iso8859-1), and "git am" applie=
-s it
-> correctly here. I wonder if Junio did something unusual while applyin=
-g.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Hm, ok, so I take it that it wasn't me who broke things. Then I'm
-already happy. I don't care much about my name being messed up, but jus=
-t
-wanted to make sure that it wasn't my fault.
+> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+>
+>> Jeff King <peff@peff.net> writes:
+>>
+>>> But the latter two lines are about preference: "here is how _I_ would
+>>> like to generate diffs for el files".
+>>
+>> ... and they are commands to be executed. If they were in the
+>> repository, and propagated with clone, then doing
+>>
+>> git clone git://some.git/repo
+>> cd repo
+>> git diff
+>>
+>> would execute arbitrary commands, which wouldn't be acceptable for
+>> security reasons.
+>
+> Other configuration variables have such security implications, but diff
+> hunk header bit doesn't.  You are a bit overly cautious in this particular
+> case.
 
-Thanks,
-Bj=F6rn
+Oops, right, I was thinking of other parameters in the same section of
+the config file. Thanks for correcting.
+
+-- 
+Matthieu
