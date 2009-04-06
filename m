@@ -1,108 +1,88 @@
-From: David Abrahams <dave@boostpro.com>
-Subject: Re: git diff bug?
-Date: Mon, 6 Apr 2009 05:09:32 -0400
-Message-ID: <1BF9172A-BE91-4D1C-932A-EB9FD79BA402@boostpro.com>
-References: <m2ocvdkyul.fsf@boostpro.com> <20090404014527.GA13350@coredump.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v930.4)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Apr 06 11:21:40 2009
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v2] mergetool--lib: add new merge tool TortoiseMerge
+Date: Mon, 6 Apr 2009 02:27:36 -0700
+Message-ID: <20090406092736.GA16408@gmail.com>
+References: <1238904024-11238-1-git-send-email-davvid@gmail.com> <DB42161D-8B55-4739-B418-D286B280EFF8@silverinsanity.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, markus.heidelberg@web.de, charles@hashpling.org,
+	git@vger.kernel.org
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Mon Apr 06 11:29:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lql1J-0007fY-N5
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 11:21:34 +0200
+	id 1Lql8q-0001YR-GT
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 11:29:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754713AbZDFJUB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Apr 2009 05:20:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754690AbZDFJUB
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 05:20:01 -0400
-Received: from boost-consulting.com ([206.71.190.141]:55487 "EHLO
-	boost-consulting.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754577AbZDFJUA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2009 05:20:00 -0400
-X-Greylist: delayed 619 seconds by postgrey-1.27 at vger.kernel.org; Mon, 06 Apr 2009 05:20:00 EDT
-Received: from [192.168.188.150] (207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com [207.172.223.249])
-	(Authenticated sender: dave)
-	by boost-consulting.com (Postfix) with ESMTPSA id 9AC091CC26;
-	Mon,  6 Apr 2009 02:07:41 -0700 (PDT)
-In-Reply-To: <20090404014527.GA13350@coredump.intra.peff.net>
-X-Mailer: Apple Mail (2.930.4)
+	id S1754728AbZDFJ1s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Apr 2009 05:27:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754304AbZDFJ1s
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 05:27:48 -0400
+Received: from rv-out-0506.google.com ([209.85.198.225]:26358 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752702AbZDFJ1r (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2009 05:27:47 -0400
+Received: by rv-out-0506.google.com with SMTP id f9so2118132rvb.1
+        for <git@vger.kernel.org>; Mon, 06 Apr 2009 02:27:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=3yBO65Il0EwMM0RSCNYQr3M7tejjqj4uiobLUSyfwGw=;
+        b=WWYaPj8dXfq7XceNy2bXtSiQPRlIlX8+d2L4k5073mvFAS4PbNfqeiubqmKsBJlagY
+         b1NznwwsW5LvNaKDsttUwjaPe0MdvBpmBt0IK35JtrqXWEubBI+SpgEAHxPsaYxoyLfA
+         oWEWeqCskqWumEGWYEBPcA30ROuLn8w+U20l4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=pIRGZcfrI47c1e4aHJ7kryriyXiNrCU7xzLPXr7gfWK2eknNKl84Po0H2WZYGWxjvm
+         8ICsROGFDBwofeiXL4+7glGrJCY21ZPh989xDtW+BJQIuP8L+J/q5216ghSDQMOBkErW
+         FT4G77YTpOetIfHyo7FM9gpjV/brxUyyG7x7I=
+Received: by 10.114.52.13 with SMTP id z13mr2176548waz.150.1239010065424;
+        Mon, 06 Apr 2009 02:27:45 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id n9sm3823498wag.46.2009.04.06.02.27.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 06 Apr 2009 02:27:45 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <DB42161D-8B55-4739-B418-D286B280EFF8@silverinsanity.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115799>
 
-
-On Apr 3, 2009, at 9:45 PM, Jeff King wrote:
-
-> On Fri, Apr 03, 2009 at 09:10:42PM -0400, David Abrahams wrote:
+On  0, Brian Gernhardt <benji@silverinsanity.com> wrote:
 >
->> Please see
->> http://github.com/techarcana/elisp/commit/63d672c296316c85690085930b05c642b88a9978#diff-2
->>
->> Note how the @@ ... @@ clauses are followed by text from the previous
->> line's comment.  Not sure, but this strikes me as a line-ending  
->> issue.
->> custom.el was originally built on a linux machine; now I'm using a  
->> Mac.
+> On Apr 5, 2009, at 12:00 AM, David Aguilar wrote:
 >
-> This is as designed. The original file ("git show e7dd7db") contains  
-> (my
-> numbering seems different than what git produces; it is produced by  
-> "nl"
-> which is maybe treating some line endings differently earlier in the
-> file):
+>> valid_tool () {
+>> 	case "$1" in
+>> 	<lots-of-stuff>)
+>> 		if test "$1" = "kompare" && ! diff_mode; then
+>> 			return 1
+>> 		fi
+>> +		if test "$1" = "tortoisemerge" && ! merge_mode; then
+>> +			return 1
+>> +		fi
+>> 		;; # happy
+>> 	*)
+>> 		if test -z "$(get_merge_tool_cmd "$1")"; then
 >
->   102   '(mm-attachment-override-types (quote ("text/x-vcard"  
-> "application/pkcs7-mime" "application/x-pkcs7-mime" "application/ 
-> pkcs7-signature" "application/x-pkcs7-signature" "image/*")) nil nil "
->   103  Added image/* to display attached images inline")
->   104   '(mm-discouraged-alternatives (quote ("text/html" "text/ 
-> richtext" "image/.*")) nil nil "
->   105  The documentation for this variable says it all")
->   106   '(mm-inline-text-html-with-images t)
->   107   '(muse-project-alist (quote (("WikiPlanner" ("~/ 
-> plans" :default "index" :major-mode planner-mode :visit-link planner- 
-> visit-link)))))
->   108   '(org-agenda-files (quote ("~/organizer.org")))
+> Why is `case "$1"` being followed by two `if test "$1" =`s?
+> Wouldn't it be simpler to have separate case arms for them?
+> Especially with how long that list is getting...
 >
-> The changed text in your diff starts on 108. So we show 105-107 as
-> context lines. The text after the @@ clause is the "function header";
-> this is equivalent to "-p" in GNU diff. It's basically a guess about  
-> the
-> most interesting context to show, and looks alphabetic characters that
-> are left-aligned. In the case of lisp, it really isn't all that
-> interesting (and what looks so weird is that your file contains
-> a lot of
->
->  "\nSome text"
->
-> so the text strings are all left-aligned. You can customize the regex
-> used to guess at the function header. See "defining a custom
-> hunk-header" in "git help attributes".
+> ~~ Brian
 
-Hmm, so I tried sticking this .gitattributes in my repo
+It would.  It wasn't until after the rewrite that I remembered
+this email... oh well [PATCH v2 14/14] it is
 
-   *.el   diff=el
-   [diff "el"]
-         xfuncname = "^(\\(def[a-z]+ .+)$"
+-- 
 
-and git diff barfed with
-
-   "el"] is not a valid attribute name: .gitattributes:2
-   "^(\\(def[a-z]+ is not a valid attribute name: .gitattributes:3
-
-What am I missing?  I tried googling, but from what turns up for me,  
-it doesn't look like anyone else has ever tried to use this feature!
-
-TIA,
-
---
-David Abrahams
-BoostPro Computing
-http://boostpro.com
+	David
