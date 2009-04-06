@@ -1,120 +1,85 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [RFC/PATCH 0/2] New 'stage' command
-Date: Mon, 06 Apr 2009 15:20:19 +0200
-Message-ID: <871vs5kjfw.fsf@krank.kagedal.org>
-References: <1238939331-10152-1-git-send-email-felipe.contreras@gmail.com>
-	<200904052358.53028.markus.heidelberg@web.de>
-	<94a0d4530904051535v8bd901fsedecdf61bc4acb33@mail.gmail.com>
-	<200904060117.24810.markus.heidelberg@web.de>
-	<fabb9a1e0904051622k66352ea4v542ecd99bd5d9c6@mail.gmail.com>
-	<20090406032457.GA14758@gmail.com>
-	<7v63hie4yh.fsf@gitster.siamese.dyndns.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Performance issue: initial git clone causes massive repack
+Date: Mon, 06 Apr 2009 09:29:04 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0904060912530.6741@xanadu.home>
+References: <20090404220743.GA869@curie-int> <20090405000536.GA12927@vidovic>
+ <20090405T001239Z@curie.orbis-terrarum.net> <20090405035453.GB12927@vidovic>
+ <20090405070412.GB869@curie-int> <20090405190213.GA12929@vidovic>
+ <alpine.DEB.1.10.0904051419490.6245@asgard.lang.hm>
+ <20090405225954.GA18730@vidovic>
+ <alpine.DEB.1.10.0904051613420.6245@asgard.lang.hm>
+ <alpine.LFD.2.00.0904052326090.6741@xanadu.home>
+ <vpq3acm6n7p.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Aguilar <davvid@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	markus.heidelberg@web.de,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git@vger.kernel.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 06 15:22:27 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: david@lang.hm, Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Mon Apr 06 15:32:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LqomE-0004Zv-AU
-	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 15:22:14 +0200
+	id 1LqovZ-0007Yk-8C
+	for gcvg-git-2@gmane.org; Mon, 06 Apr 2009 15:31:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755015AbZDFNUf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Apr 2009 09:20:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754837AbZDFNUe
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 09:20:34 -0400
-Received: from main.gmane.org ([80.91.229.2]:44110 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753894AbZDFNUe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Apr 2009 09:20:34 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LqokY-0005tP-4h
-	for git@vger.kernel.org; Mon, 06 Apr 2009 13:20:30 +0000
-Received: from 87.96.142.66 ([87.96.142.66])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 06 Apr 2009 13:20:30 +0000
-Received: from davidk by 87.96.142.66 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 06 Apr 2009 13:20:30 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 87.96.142.66
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-Cancel-Lock: sha1:NpLvmgm8DhTiEchk3eYgGqHgYrI=
+	id S1755170AbZDFN3N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Apr 2009 09:29:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754906AbZDFN3N
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Apr 2009 09:29:13 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:11843 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751437AbZDFN3M (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Apr 2009 09:29:12 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KHO00MIKLGG15B0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 06 Apr 2009 09:29:04 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <vpq3acm6n7p.fsf@bauges.imag.fr>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115823>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, 6 Apr 2009, Matthieu Moy wrote:
 
-> David Aguilar <davvid@gmail.com> writes:
->
->> Hello
->>
->> Here's an interesting email from a while back:
+> Nicolas Pitre <nico@cam.org> writes:
+> 
+> > If for example you have a single pack because your repo is already fully 
+> > packed, then the "packing operation" involved during a clone should 
+> > merely copy the existing pack over with no further attempt at delta 
+> > compression.
+> 
+> There's still the question if your repository has too many objects
+> (for example, a branch that you deleted without garbage-collecting
+> it). Then, sending the whole pack sends data that one may have
+> considered as "secret".
 
-Thanks, I would have brought it back up myself if you hadn't.
+I said "merely copy", which is not a straight copy.  In this case, only 
+the relevant objects from the existing pack will be copied into the 
+streamed pack, and objects from the unused branch will be left behind.  
+In that case, deltas which base object is left behind will automatically 
+be considered for alternative delta matching of course, but that is 
+normally a relatively small set of objects.  And if that set gets really 
+big, that means that an even bigger set of objects was left behind, 
+making the actual repacking smaller in scope.
 
->> http://kerneltrap.org/mailarchive/git/2008/10/29/3857134
->>
->> The above mentions the following suggestion:
->>
->>     git diff STAGE WORKTREE   (like "git diff" today)
->>     git diff HEAD WORKTREE    (like "git diff HEAD" today)
->>     git diff WORKTREE HEAD    (like "git diff -R HEAD" today)
->>     git diff HEAD STAGE       (like "git diff --cached" today)
->>     git diff commit STAGE     (like "git diff --cached commit" today=
-)
->>
->>
->> From a consistency and usability perspective, the above
->> example seems very appealing because:
->>
->> a) it does not introduce any new commands, and
->>
->> b) it is consistent with the way git-diff's command-line
->>    interface works today.
->>
->> All we'd have to do is teach git-diff to special-case
->> 'STAGE' and 'WORKTREE'.  Now, whether we'd want to do
->> that is a completely different discussion, but I figured I'd
->> throw the old thread out there.
->
-> How would you express operations the current --index option does in s=
-uch a
-> scheme?  Yet another WORKTREEANDTHEINDEX token?
+> To me, this is a non-issue (if the content of these objects are
+> secret, then why are they here at all on a public server?), but I
+> think there were discussions here about it (can't find the right
+> keywords to dig the archives though), and other people may think
+> differently.
 
-What do you mean? This was a suggestion for how git diff should
-work. I fail to see how you would need a WORKTREEANDTHEINDEX there.
+Guess who was involved in that discussion...
 
-I think this is a basic usability issue for a high-level porcelain
-command such as diff. Having the command syntax "git diff <something>
-<somethingelse>" makes sure you never wonder what you are
-diffing. "git diff --cached" makes me wonder what the index is diffed
-against every time I see it.
+I may allow you to pull certain branches directly from my own PC through 
+the git native protocol.  That doesn't mean you have direct access to 
+the whole of any of the packs I have on my disk.
 
-We wouldn't have to use the "STAGE" or "WORKTREE" names, of course. It
-doesn't have to look like refspecs even. The last example already has
-a syntax that matches the suggestion:
 
-     git diff --cached <commit>
-
-So, extrapolating this to "git diff --worktree --cached" would mean
-what "git diff -R" means today etc.
-
-The obvious objection is that "git diff --cached <foo>" would mean the
-inverse of "git diff <foo> --cached", but maybe that isn't so
-unexpected by the user after all?
-
---=20
-David K=C3=A5gedal
+Nicolas
