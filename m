@@ -1,106 +1,80 @@
-From: Andreas Ericsson <exon@op5.com>
-Subject: Re: [PATCH RFC 1/6] Re: send-email: Add --delay for separating emails
-Date: Wed, 08 Apr 2009 00:17:54 +0200
-Message-ID: <49DBD112.5000705@op5.se>
-References: <1239139522-24118-1-git-send-email-mfwitten@gmail.com> <20090407215143.GA18144@coredump.intra.peff.net> <20090407220854.GA12908@vidovic>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v2 10/14] difftool: add various git-difftool tests
+Date: Tue, 7 Apr 2009 15:38:35 -0700
+Message-ID: <20090407223834.GA71200@gmail.com>
+References: <1239092483-14973-1-git-send-email-davvid@gmail.com> <1239092483-14973-3-git-send-email-davvid@gmail.com> <1239092483-14973-4-git-send-email-davvid@gmail.com> <200904071952.21109.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Michael Witten <mfwitten@gmail.com>,
-	git@vger.kernel.org
-To: Nicolas Sebrecht <nicolas.s-dev@laposte.net>
-X-From: git-owner@vger.kernel.org Wed Apr 08 00:19:36 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, git@vger.kernel.org, charles@hashpling.org
+To: Markus Heidelberg <markus.heidelberg@web.de>
+X-From: git-owner@vger.kernel.org Wed Apr 08 00:40:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrJdk-0003IC-Ig
-	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 00:19:33 +0200
+	id 1LrJxo-0000SJ-4l
+	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 00:40:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932107AbZDGWSA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2009 18:18:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760042AbZDGWR7
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 18:17:59 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:51482 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759954AbZDGWR6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2009 18:17:58 -0400
-Received: by fxm2 with SMTP id 2so2542557fxm.37
-        for <git@vger.kernel.org>; Tue, 07 Apr 2009 15:17:56 -0700 (PDT)
-Received: by 10.86.95.8 with SMTP id s8mr532058fgb.36.1239142675899;
-        Tue, 07 Apr 2009 15:17:55 -0700 (PDT)
-Received: from clix.int.op5.se ([212.112.163.94])
-        by mx.google.com with ESMTPS id l19sm1442183fgb.16.2009.04.07.15.17.54
+	id S1760251AbZDGWin (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2009 18:38:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759361AbZDGWim
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 18:38:42 -0400
+Received: from rv-out-0506.google.com ([209.85.198.225]:9244 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751618AbZDGWim (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2009 18:38:42 -0400
+Received: by rv-out-0506.google.com with SMTP id f9so2957438rvb.1
+        for <git@vger.kernel.org>; Tue, 07 Apr 2009 15:38:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=NcVmZeFMAeWdxTa+EJ0v/x4mB7XdZhoYJEXEv+a8Wpo=;
+        b=rxmQl7J/mhYGIwdYMo+T8P0NRtJjN/QXjfGjhtCDsh2x0VJ8TPG2EBF/NKroTdIUR6
+         7HZR1gvVmrvd69g6aWNXGQB2M9T+8r/pUso0NzgCphi8uDL1T39y5GQFptR1hWFhf07j
+         UWzT7eTAe0xfZDV5tgWMSfk7+4XX6ygLkoE8k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=gc296SwuGWrNCAve4K4dIMD9qDoJFt1xLwfx3dVwC1Kxqto1uRr62myYp/D7VDmJSP
+         lt/fi3tzngKEmuh2SVL17RSybDZ3ySpEB4aeqo8CzVNmwbh4dM20/lGSjaYeDj5TOgKT
+         TnFWeIO3RRGeEXTfR0VPoM9b3/rcxOOZSTLVk=
+Received: by 10.140.207.18 with SMTP id e18mr196422rvg.4.1239143921550;
+        Tue, 07 Apr 2009 15:38:41 -0700 (PDT)
+Received: from gmail.com (wdas-1.disneyanimation.com [12.188.26.1])
+        by mx.google.com with ESMTPS id k2sm23261353rvb.14.2009.04.07.15.38.40
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 07 Apr 2009 15:17:55 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <20090407220854.GA12908@vidovic>
+        Tue, 07 Apr 2009 15:38:40 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <200904071952.21109.markus.heidelberg@web.de>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116005>
 
-Nicolas Sebrecht wrote:
-> On Tue, Apr 07, 2009 at 05:51:43PM -0400, Jeff King wrote:
+On  0, Markus Heidelberg <markus.heidelberg@web.de> wrote:
+> David Aguilar, 07.04.2009:
+> > t7800-difftool.sh tests the various command-line flags,
+> > git-config variables, and environment settings supported by
+> > git-difftool.
+> > 
+> > Signed-off-by: David Aguilar <davvid@gmail.com>
+> > ---
+> > 
+> > The original broke the test suite on Mac OS.
+> > Testing difftool.<path>.path is hard without internal support
+> > for a fake tool.
 > 
->>> When sending a patch series, the emails often arrive at the final
->>> destination out of order; though these emails should be chained
->>> via the In-Reply-To headers, some mail-viewing systems display
->>> by order of arrival instead.
->>>
->>> The --delay option provides a means for specifying that there
->>> should be a certain number of seconds of delay between sending
->>> emails, so that the arrival order can be controlled better.
->>>
->>> Signed-off-by: Michael Witten <mfwitten@gmail.com>
-> 
->> I think it may still be reasonable to implement a solution that only
->> covers some of the cases, but I what I am asking is if we know what
->> percentage of the cases that is. If we are preventing only 1% of
->> out-of-order deliveries with this, I question whether it is worth the
->> bother.
-> 
-> IMHO, this improvement is broken by design. We try to fix a
-> receiver-only issue by a sender side fix.
-> 
-> If the receiver wants the patch series be in a good ordered _for sure_, he
-> has to switch to a client mail supporting the In-Reply-To chains.
+> Mac OS doesn't have the "echo" command?
 > 
 
-The biggest problem with in-reply-to chains is that they're absolutely
-horrible for patch-series of more than five or so messages. The "worst"
-one this week was a series of 14 patches, I believe. If any of the
-deeper nested patches gets any sort of commentary, it usually eats so
-much horizontal screen estate that it becomes hopeless to actually
-find anything.
-
-Besides that, most mua's I've worked with list emails in a thread
-like this:
-
- First
-  +------ second
-  |         +------ third
-  |         |
-  |         +---- reply to second
-  |                 +
-  |                 |
-  |                 + reply to reply to second
-  |
-  +-- reply to first
-
-etc. etc, but when asked for "next unread message in thread", they
-jump to the *deepest* message in the thread first, so you end up
-reading the replies to the patches in the wrong order anyway.
-
-For those two reasons, I absolutely loathe deeply nested
-in-reply-to chains.
+Hmmm maybe the thing that validates the merge tool isn't
+using the $merge_tool_path when validating.  All I know is that
+it was failing so figured I could add it again later.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+		David
