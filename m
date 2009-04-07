@@ -1,65 +1,52 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] Add configuration variable for sign-off to
-	format-patch
-Date: Tue, 7 Apr 2009 03:23:27 -0400
-Message-ID: <20090407072327.GA5239@coredump.intra.peff.net>
-References: <20090331185018.GD72569@macbook.lan> <20090331200457.GA23879@coredump.intra.peff.net> <20090331204338.GA88381@macbook.lan> <20090401102610.GC26181@coredump.intra.peff.net> <20090401175153.GA90421@macbook.lan> <7veiw69p26.fsf@gitster.siamese.dyndns.org> <49D9E040.40007@op5.se>
+Subject: Re: [PATCH 3/4] Makefile: allow building without perl
+Date: Tue, 7 Apr 2009 03:27:53 -0400
+Message-ID: <20090407072738.GB5239@coredump.intra.peff.net>
+References: <20090403192700.GA14965@coredump.intra.peff.net> <20090403193220.GC5547@coredump.intra.peff.net> <20090404T224109Z@curie.orbis-terrarum.net> <20090404233936.GB26906@coredump.intra.peff.net> <20090404T234556Z@curie.orbis-terrarum.net> <20090404235636.GA27354@coredump.intra.peff.net> <20090405T000318Z@curie.orbis-terrarum.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org
-To: Andreas Ericsson <exon@op5.com>
-X-From: git-owner@vger.kernel.org Tue Apr 07 09:25:12 2009
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "Robin H. Johnson" <robbat2@gentoo.org>
+X-From: git-owner@vger.kernel.org Tue Apr 07 09:29:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lr5gF-00071j-EX
-	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 09:25:11 +0200
+	id 1Lr5kR-000849-1I
+	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 09:29:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751800AbZDGHXk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2009 03:23:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751323AbZDGHXk
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 03:23:40 -0400
-Received: from peff.net ([208.65.91.99]:45698 "EHLO peff.net"
+	id S1753384AbZDGH16 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2009 03:27:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752048AbZDGH16
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 03:27:58 -0400
+Received: from peff.net ([208.65.91.99]:43093 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750994AbZDGHXj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2009 03:23:39 -0400
-Received: (qmail 541 invoked by uid 107); 7 Apr 2009 07:23:29 -0000
+	id S1751800AbZDGH15 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2009 03:27:57 -0400
+Received: (qmail 603 invoked by uid 107); 7 Apr 2009 07:27:55 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 07 Apr 2009 03:23:29 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Apr 2009 03:23:27 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 07 Apr 2009 03:27:55 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Apr 2009 03:27:53 -0400
 Content-Disposition: inline
-In-Reply-To: <49D9E040.40007@op5.se>
+In-Reply-To: <20090405T000318Z@curie.orbis-terrarum.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115916>
 
-On Mon, Apr 06, 2009 at 12:58:08PM +0200, Andreas Ericsson wrote:
+On Sat, Apr 04, 2009 at 05:06:09PM -0700, Robin H. Johnson wrote:
 
-> How about:
-> "Some projects (notably the Linux kernel and git itself) put special
-> meaning in a 'Signed-off-by' line while other's dont. Please refer
-> to your project's documentation for appropriate behaviour."
+> At a glance, PERL_PATH in configure.ac isn't actually used at the
+> moment, the definition in the Makefile overrides it.
 
-I think that is fine, with some typo fixups:
+It is. The configure variables go into config.mak.autogen which is
+included after PERL_PATH is set to a default value.
 
-  s/other's/others/
-  s/dont/don't/
+> Ok, drop the export then, but do keep at least the if(is empty
+> PERL_PATH) then { set NO_PERL }, even if you won't keep the existence
+> check.
 
-And of course being American, I would spell it behavior. :)
-
-> Optionally with the following amendment:
->
-> "In general, you should refrain from signing off on a patch containing
-> material that you're not sure can be legally spread under the project's
-> license."
-
-I don't think that makes sense. That is what signing-off is about for
-the kernel and for git, but I don't think there is any reason another
-project might not want to use the convenient signoff options to mean
-something totally unrelated (like we use Acked-by).
+Will do.
 
 -Peff
