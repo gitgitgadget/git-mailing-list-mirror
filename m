@@ -1,78 +1,104 @@
-From: Hannu Koivisto <azure@iki.fi>
-Subject: Re: git rebase -i (and gitk) problem in Windows/Cygwin
-Date: Tue, 07 Apr 2009 17:53:26 +0300
-Message-ID: <83ws9wh5w9.fsf@kalahari.s2.org>
-References: <831vs4im37.fsf@kalahari.s2.org>
-	<alpine.DEB.1.00.0904071624250.6897@intel-tinevez-2-302>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Apr 07 17:29:56 2009
+From: Ferry Huberts <ferry.huberts@pelagic.nl>
+Subject: [[PATCH  1/1] Ensure consistent usage of mergetool.keepBackup
+Date: Tue,  7 Apr 2009 17:33:35 +0200
+Message-ID: <cfb81044a29899f9dd0b46f10447243632c50c94.1239108064.git.ferry.huberts@pelagic.nl>
+Cc: Ferry Huberts <ferry.huberts@pelagic.nl>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 07 17:47:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrDF9-00053K-M0
-	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 17:29:44 +0200
+	id 1LrDWJ-0002uy-PL
+	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 17:47:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761471AbZDGP0n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2009 11:26:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761574AbZDGP0m
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 11:26:42 -0400
-Received: from s2.org ([195.197.64.39]:50372 "EHLO kalahari.s2.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761551AbZDGP0l (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2009 11:26:41 -0400
-X-Greylist: delayed 1993 seconds by postgrey-1.27 at vger.kernel.org; Tue, 07 Apr 2009 11:26:40 EDT
-Received: from azure by kalahari.s2.org with local (Exim 4.69)
-	(envelope-from <azure@iki.fi>)
-	id 1LrCg2-0000Z8-7N; Tue, 07 Apr 2009 17:53:26 +0300
-In-Reply-To: <alpine.DEB.1.00.0904071624250.6897@intel-tinevez-2-302>
-	(Johannes Schindelin's message of "Tue, 7 Apr 2009 16:25:16 +0200
-	(CEST)")
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/22.2 (gnu/linux)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: azure@iki.fi
-X-SA-Exim-Scanned: No (on kalahari.s2.org); SAEximRunCond expanded to false
+	id S1757614AbZDGPpG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2009 11:45:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755396AbZDGPpF
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 11:45:05 -0400
+Received: from smtp-vbr16.xs4all.nl ([194.109.24.36]:3643 "EHLO
+	smtp-vbr16.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757041AbZDGPpD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2009 11:45:03 -0400
+X-Greylist: delayed 644 seconds by postgrey-1.27 at vger.kernel.org; Tue, 07 Apr 2009 11:45:03 EDT
+Received: from localhost.localdomain ([62.140.137.125])
+	(authenticated bits=0)
+	by smtp-vbr16.xs4all.nl (8.13.8/8.13.8) with ESMTP id n37FXaAR071954;
+	Tue, 7 Apr 2009 17:33:42 +0200 (CEST)
+	(envelope-from ferry.huberts@pelagic.nl)
+X-Mailer: git-send-email 1.6.0.6
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115964>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+In several places merge.keepBackup is used i.s.o.
+mergetool.keepBackup. This patch makes it all
+consistent.
 
-> Hi,
->
-> On Tue, 7 Apr 2009, Hannu Koivisto wrote:
->
->> * I change a file in workspace.
->> * I "Update" in gitk - I see the change.
->> * I undo the change.
->> * I "Update" in gitk - I see an empty change.
->> * "Reload" doesn't help - I still se an empty change.
->> * I run "git status" on the command line and then select "Update"
->>   in gitk -> now the change disappears.
->
-> What does "git diff" say?  It may be an autocrlf issue or a file mode 
-> issue.
+Signed-off-by: Ferry Huberts <ferry.huberts@pelagic.nl>
+---
+This patch is rebased on v1.6.2.2
 
-It outputs only one line "diff --git a/path/to/file" (where the
-file is the one I modified and then undid the modification).  After
-I run "git status", it outputs absolutely nothing.
+ contrib/difftool/git-difftool.txt |    2 +-
+ git-gui/git-gui.sh                |    2 +-
+ git-gui/lib/mergetool.tcl         |    2 +-
+ git-mergetool.sh                  |    2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-In my gitk problem case I have autocrlf and safecrlf toggled on for
-the repository and crlf attribute forced for the file in question.
-It was in this repository I also first saw the rebase problem but
-when I ran the shown test case, autocrlf and safecrlf were off
-(they are globally off and I just toggle them on for some
-repositories).
-
-I remember seeing and reporting a similar "spurious changes in
-gitk" problem a long time ago and I recall back then Junio came up
-with some file mode related modification.  I haven't seen the
-problem since until now.
-
+diff --git a/contrib/difftool/git-difftool.txt b/contrib/difftool/git-difftool.txt
+index 6e2610c..ca7482a 100644
+--- a/contrib/difftool/git-difftool.txt
++++ b/contrib/difftool/git-difftool.txt
+@@ -66,7 +66,7 @@ merge.tool::
+ +
+ See the `--tool=<tool>` option above for more details.
+ 
+-merge.keepBackup::
++mergetool.keepBackup::
+ 	The original, unedited file content can be saved to a file with
+ 	a `.orig` extension.  Defaults to `true` (i.e. keep the backup files).
+ 
+diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+index e018e07..e4e643a 100755
+--- a/git-gui/git-gui.sh
++++ b/git-gui/git-gui.sh
+@@ -699,7 +699,7 @@ proc apply_config {} {
+ 
+ set default_config(branch.autosetupmerge) true
+ set default_config(merge.tool) {}
+-set default_config(merge.keepbackup) true
++set default_config(mergetool.keepbackup) true
+ set default_config(merge.diffstat) true
+ set default_config(merge.summary) false
+ set default_config(merge.verbosity) 2
+diff --git a/git-gui/lib/mergetool.tcl b/git-gui/lib/mergetool.tcl
+index eb2b4b5..b7263b3 100644
+--- a/git-gui/lib/mergetool.tcl
++++ b/git-gui/lib/mergetool.tcl
+@@ -382,7 +382,7 @@ proc merge_tool_finish {fd} {
+ 		delete_temp_files $mtool_tmpfiles
+ 		ui_status [mc "Merge tool failed."]
+ 	} else {
+-		if {[is_config_true merge.keepbackup]} {
++		if {[is_config_true mergetool.keepbackup]} {
+ 			file rename -force -- $backup "$mtool_target.orig"
+ 		}
+ 
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index 87fa88a..1455bd9 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -430,7 +430,7 @@ else
+ 
+     init_merge_tool_path "$merge_tool"
+ 
+-    merge_keep_backup="$(git config --bool merge.keepBackup || echo true)"
++    merge_keep_backup="$(git config --bool mergetool.keepBackup || echo true)"
+     merge_keep_temporaries="$(git config --bool mergetool.keepTemporaries || echo false)"
+ 
+     if test -z "$merge_tool_cmd" && ! type "$merge_tool_path" > /dev/null 2>&1; then
 -- 
-Hannu
+1.6.0.6
