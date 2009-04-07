@@ -1,53 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [question] how can i verify whether a local branch is tracking
-	a remote branch?
-Date: Tue, 7 Apr 2009 00:41:14 -0400
-Message-ID: <20090407044113.GA26556@coredump.intra.peff.net>
-References: <4d8e3fd30904050332w394cccbaq5b82d2a53ed357a3@mail.gmail.com> <20090405144413.GC2076@sigill.intra.peff.net> <4d8e3fd30904051425w6739a12fp5666e71e8b2d7958@mail.gmail.com> <20090406043426.GC12341@coredump.intra.peff.net> <4d8e3fd30904060130l985b0a5x331d215ca6106fd4@mail.gmail.com> <20090406212516.GA882@coredump.intra.peff.net> <4d8e3fd30904061500m7857f0f1i2b76a2113f30c562@mail.gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 0/3] remove static vars from "builtin-rev-list.c"
+Date: Tue, 7 Apr 2009 06:50:12 +0200
+Message-ID: <20090407065012.c6528241.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 07 06:42:53 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 07 06:52:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lr398-0007PM-NU
-	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 06:42:51 +0200
+	id 1Lr3Is-0000UK-DB
+	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 06:52:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751649AbZDGElT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2009 00:41:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751435AbZDGElT
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 00:41:19 -0400
-Received: from peff.net ([208.65.91.99]:58400 "EHLO peff.net"
+	id S1751528AbZDGEvW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2009 00:51:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751032AbZDGEvV
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 00:51:21 -0400
+Received: from smtp2-g21.free.fr ([212.27.42.2]:40327 "EHLO smtp2-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751415AbZDGElS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2009 00:41:18 -0400
-Received: (qmail 31266 invoked by uid 107); 7 Apr 2009 04:41:15 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 07 Apr 2009 00:41:15 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Apr 2009 00:41:14 -0400
-Content-Disposition: inline
-In-Reply-To: <4d8e3fd30904061500m7857f0f1i2b76a2113f30c562@mail.gmail.com>
+	id S1750722AbZDGEvV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2009 00:51:21 -0400
+Received: from smtp2-g21.free.fr (localhost [127.0.0.1])
+	by smtp2-g21.free.fr (Postfix) with ESMTP id 814E24B0076;
+	Tue,  7 Apr 2009 06:51:12 +0200 (CEST)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp2-g21.free.fr (Postfix) with SMTP id 800A34B002F;
+	Tue,  7 Apr 2009 06:51:10 +0200 (CEST)
+X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.12; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115906>
 
-On Tue, Apr 07, 2009 at 12:00:20AM +0200, Paolo Ciarrocchi wrote:
+This patch series removes all static variables from
+"builtin-rev-list.c" except the usage string.
 
-> > So the questions are:
-> >
-> >   - is this worth it? The verbose information is already available via
-> >     git status, but only for the current branch.
-> 
-> I think it's a very usefull information.
-> I feel like it would be nice to have this information being part of
-> the basic git branch output and not associated to the -vv option.
+This cleans up the code and should please Dscho.
 
-I'm not sure we should disrupt the simplicity of the current "git
-branch" output. I would be curious to hear what others think.
+It also makes it possible to remove restrictions on using the
+"sho_bisect_vars" function.
 
--Peff
+
+  list-objects: add "void *data" parameter to show functions
+  rev-list: remove last static vars used in "show_commit"
+  rev-list: add "int bisect_show_flags" in "struct rev_list_info"
+
+ bisect.c               |    8 +++-
+ bisect.h               |   18 ++++----
+ builtin-pack-objects.c |    6 +-
+ builtin-rev-list.c     |  109 ++++++++++++++++++++++++------------------------
+ list-objects.c         |    9 ++--
+ list-objects.h         |    6 +-
+ upload-pack.c          |    6 +-
+ 7 files changed, 84 insertions(+), 78 deletions(-)
+
+PS: Sorry but it looks like the script I used to send this series has some bugs.
+First the date in the email are wrong, and then I have to resend this cover letter
+because it did not appear on the mailing list.
