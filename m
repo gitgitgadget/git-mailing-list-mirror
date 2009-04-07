@@ -1,96 +1,80 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: GPG signing for git commit?
-Date: Tue, 07 Apr 2009 10:55:01 -0700 (PDT)
-Message-ID: <m3ljqc1h55.fsf@localhost.localdomain>
-References: <1238793954.19982.14.camel@hyperair-laptop>
-	<alpine.LFD.2.00.0904031535140.3915@localhost.localdomain>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Performance issue: initial git clone causes massive repack
+Date: Tue, 07 Apr 2009 13:59:50 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0904071348420.6741@xanadu.home>
+References: <20090404220743.GA869@curie-int>
+ <m3tz5023rq.fsf@localhost.localdomain>
+ <alpine.LFD.2.00.0904070903020.6741@xanadu.home>
+ <200904071537.04225.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Chow Loong Jin <hyperair@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Apr 07 19:56:52 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
+	Sverre Rabbelier <srabbelier@gmail.com>, david@lang.hm,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 07 20:01:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrFXM-0001r7-VC
-	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 19:56:41 +0200
+	id 1LrFc3-0003pw-Qy
+	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 20:01:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757820AbZDGRzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2009 13:55:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756871AbZDGRzG
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 13:55:06 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:37066 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756729AbZDGRzE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2009 13:55:04 -0400
-Received: by fxm2 with SMTP id 2so2444490fxm.37
-        for <git@vger.kernel.org>; Tue, 07 Apr 2009 10:55:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=8TzBoonKAXURf3DnHjqF8PSgBoroMOszeG3oAFeOvs8=;
-        b=XunNCQ9kTM44YisgVRSYyzSbAyv4kTrkBjof4btjUMnCQjTrF6wu1jlYsGzySicC0U
-         d5xr99/nFiqQWY5/NlxJNhRdy4o5PY7x20SV1vVaU4SLQcZGf1Yo4sQMGlR/QFm3OuOz
-         nQ/Ff/0Azk4Y2Pk4kixaXvEkVG/RDePF1uDso=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=HbIWE3niXxHWzosMyU0MyqhLlUTbXqc7tPf8Upz0KGi9SsmZFxWEmjKT0nY+br2lo3
-         N4luf2g1ZJbGUkTillLtPFtqIKRWbJe2ypXtvP5AjM3FTrDn04U01S5xWH3DICHuB9Zc
-         UBT3QZdrsASUF0jM5jdqIAvf2nFhSYcQQs0Ls=
-Received: by 10.103.245.18 with SMTP id x18mr78452mur.62.1239126901945;
-        Tue, 07 Apr 2009 10:55:01 -0700 (PDT)
-Received: from localhost.localdomain (abuz219.neoplus.adsl.tpnet.pl [83.8.197.219])
-        by mx.google.com with ESMTPS id y6sm9626806mug.57.2009.04.07.10.55.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 07 Apr 2009 10:55:01 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n37HvMX0024708;
-	Tue, 7 Apr 2009 19:57:28 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n37HvBvj024701;
-	Tue, 7 Apr 2009 19:57:11 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <alpine.LFD.2.00.0904031535140.3915@localhost.localdomain>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1758913AbZDGR76 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2009 13:59:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758632AbZDGR75
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 13:59:57 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:51266 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758195AbZDGR75 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2009 13:59:57 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KHQ004V9SM1CDS0@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 07 Apr 2009 13:58:49 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <200904071537.04225.jnareb@gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115972>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Tue, 7 Apr 2009, Jakub Narebski wrote:
 
-> On Sat, 4 Apr 2009, Chow Loong Jin wrote:
-> > 
-> > It crossed my mind that currently git commits cannot actually be
-> > verified to be authentic, due to the fact that I can just set my
-> > identity to be someone else, and then commit under their name.
-
-[...]
-> Btw, there's a final reason, and probably the really real one. Signing 
-> each commit is totally stupid. It just means that you automate it, and you 
-> make the signature worth less. It also doesn't add any real value, since 
-> the way the git DAG-chain of SHA1's work, you only ever need _one_ 
-> signature to make all the commits reachable from that one be effectively 
-> covered by that one. So signing each commit is simply missing the point. 
+> On Tue, 7 Apr 2009, Nicolas Pitre wrote:
+> > Having git-rev-list consume about 2G RSS for the enumeration of 4M 
+> > objects is simply inacceptable, period.  This is the equivalent of 500 
+> > bytes per object pinned in memory on average, just for listing object, 
+> > which is completely silly. We ought to do better than that.
 > 
-> IOW, you don't _ever_ have a reason to sign anythign but the "tip". The 
-> only exception is the "go back and re-sign", but that's the one that 
-> requires external signatures anyway.
-> 
-> So be happy with 'git tag -s'. It really is the right way.
+> I have thought that the large amount of memory consumed by git-rev-list
+> was caused by not-so-sequential access to very large packfile (1.5GB+ if
+> I remember correctly), which I thought causes the whole packfile to be
+> mmapped and not only window, plus large amount of objects in 300MB+ mem
+> range or something; those both would account for around 2GB.
 
-And if you really, really need for some reason (for example
-requirement checkpoint, or being paranoid enough) ned to have each and
-every commit signed, you can use Monotone instead of Git.  That is
-what we recommended IPsec (or something) on #git.
+The pack has not to be mapped all at once.  At least on 32-bit machines 
+the total pack mappings cannot exceed 256MB total by default.  On 64-bit 
+machines the default is 8GB which might not work very well if total 
+amount of RAM is lower than that.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Another consideration is the object layout in a pack.  Currently we have 
+tree and blob objects mixed together so to have sequential pack access 
+when performing a checkout.  Maybe having trees packed together would 
+help a lot with object enumeration as the blobs have not to be mapped at 
+all.  Remains to see how that might impact other operations though.
+
+> Besides even if git-rev-list wouldn't take so much memory, object
+> enumeration caching would still help with CPU load... admittedly less.
+
+Yes, but let's not lose sight of all the inconvenients associated with 
+extra caching.  If we can get away without it then all the better.
+
+
+Nicolas
