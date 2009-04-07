@@ -1,87 +1,61 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH 4/5] make get_short_ref a public function
-Date: Tue, 7 Apr 2009 09:39:58 +0200
-Message-ID: <36ca99e90904070039m15869c34jc9e12d5ccc48d82@mail.gmail.com>
-References: <20090407070254.GA2870@coredump.intra.peff.net>
-	 <20090407071420.GD2924@coredump.intra.peff.net>
+From: =?iso-8859-1?Q?Martin_Storsj=F6?= <martin@martin.st>
+Subject: Re: git over http not re-authenticating after 301 redirect?
+Date: Tue, 7 Apr 2009 10:42:43 +0300 (EEST)
+Message-ID: <Pine.LNX.4.64.0904071041200.5901@localhost.localdomain>
+References: <5591393c0904061914y5ea26812kcfc0d14b52ed4300@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 07 09:41:39 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Paul Vincent Craven <paul@cravenfamily.com>
+X-From: git-owner@vger.kernel.org Tue Apr 07 09:44:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lr5w8-0002kG-UD
-	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 09:41:37 +0200
+	id 1Lr5yo-0003MU-NC
+	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 09:44:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751663AbZDGHkF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2009 03:40:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751458AbZDGHkE
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 03:40:04 -0400
-Received: from mail-bw0-f169.google.com ([209.85.218.169]:60963 "EHLO
-	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751452AbZDGHkC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2009 03:40:02 -0400
-Received: by bwz17 with SMTP id 17so2176153bwz.37
-        for <git@vger.kernel.org>; Tue, 07 Apr 2009 00:39:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=137L5fzTF22pHkrDJ+ST6PVMSz8BYJ8ScWQMdUIo1FU=;
-        b=I6JO0VOtbkv2O0DQMcAvKjhIqwu6caWC4t2xqkgP7UcCaF+JOwFiJGLToe1zFlh1d+
-         HLOQ5cqXurUW4HRHX9Nup4xTHJyxjLe9VggLVXz3j8+3QLv1STLiDRqhkZF7H9hLxPX7
-         j78iJbABt+U0qzmEKBzAqUUYVTUVTALx4TSGk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=AQGkkBRkU4VBbCMqXE2p6+h4rjypRpDIAaya6Z7kvz+ZnYEJFc+4e8Pr4tC8/NY+Pl
-         OTsP+7KrmWacHanXr6jC+AizrOO7uVTJlWkaF9xnUjIdOktTTulcaaT7BW0MpXEpI1Xq
-         YL+1vvgsvuNQfDUgbd8cYB54fxitd/rDVtxJk=
-Received: by 10.204.59.14 with SMTP id j14mr2462521bkh.39.1239089998996; Tue, 
-	07 Apr 2009 00:39:58 -0700 (PDT)
-In-Reply-To: <20090407071420.GD2924@coredump.intra.peff.net>
+	id S1752177AbZDGHmt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2009 03:42:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751256AbZDGHmt
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 03:42:49 -0400
+Received: from smtp2.abo.fi ([130.232.213.77]:34977 "EHLO smtp2.abo.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751116AbZDGHms (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2009 03:42:48 -0400
+Received: from albin.abo.fi (albin.abo.fi [130.232.81.192])
+	by smtp2.abo.fi (8.14.3/8.12.9) with ESMTP id n377ghcZ012665;
+	Tue, 7 Apr 2009 10:42:44 +0300
+X-X-Sender: mstorsjo@localhost.localdomain
+In-Reply-To: <5591393c0904061914y5ea26812kcfc0d14b52ed4300@mail.gmail.com>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (smtp2.abo.fi [130.232.213.77]); Tue, 07 Apr 2009 10:42:44 +0300 (EEST)
+X-Virus-Scanned: by roxy.abo.fi (roxy.abo.fi: Tue Apr  7 10:42:44 2009)
+X-Scanned-By: MIMEDefang 2.67 on 130.232.213.77
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115920>
 
-On Tue, Apr 7, 2009 at 09:14, Jeff King <peff@peff.net> wrote:
-> Often we want to shorten a full ref name to something "prettier"
-> to show a user. For example, "refs/heads/master" is often shown
-> simply as "master", or "refs/remotes/origin/master" is shown as
-> "origin/master".
->
-> Many places in the code use a very simple formula: skip common
-> prefixes like refs/heads, refs/remotes, etc. This is codified in
-> the prettify_ref function.
->
-> for-each-ref has a more correct (but more expensive) approach:
-> consider the ref lookup rules, and try shortening as much as
-> possible while remaining unambiguous.
->
-> This patch makes the latter strategy globally available as
-> shorten_unambiguous_ref.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> Actually, I am not quite sure that this function is "more correct". It
-> looks at the rev-parsing rules as a hierarchy, so if you have
-> "refs/remotes/foo" and "refs/heads/foo", then it will abbreviate the
-> first to "remotes/foo" (as expected) and the latter to just "foo".
->
-> This is technically correct, as "refs/heads/foo" will be selected by
-> "foo", but it will warn about ambiguity. Should we actually try to avoid
-> reporting refs which would be ambiguous?
-Back than, there was the idea that the core.warnAmbiguousRefs config
-could be used for this.
+Hi Paul,
 
-Anyway
+On Mon, 6 Apr 2009, Paul Vincent Craven wrote:
 
-Acked-by: Bert Wesarg <bert.wesarg@googlemail.com>
+> Note that after the 301 redirect, I don't seem to have a username sent
+> anymore. I'm not sure this is the issue, but is seems like a
+> possibility.
+> 
+> I have the same issue on other computers that have cloned the repository.
+> 
+> The /my_repo.git/info/ directory does exist.
+> 
+> I thought I had this working the first day I set it up, but now it no
+> longer does. If someone could point me in the correct direction, I'd
+> appreciate it.
+
+It's a long shot, but try see if you can upgrade to a newer version of 
+libcurl; I think I saw some issue like this when I was experimenting with 
+different http auth setups last week, that was solved by using newer 
+versions...
+
+// Martin
