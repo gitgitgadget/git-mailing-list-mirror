@@ -1,329 +1,98 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 4/5] make get_short_ref a public function
-Date: Tue, 07 Apr 2009 09:57:46 +0200
-Message-ID: <49DB077A.1060506@drmicha.warpmail.net>
-References: <20090407070254.GA2870@coredump.intra.peff.net> <20090407071420.GD2924@coredump.intra.peff.net>
+Subject: Re: [question] how can i verify whether a local branch is tracking
+   a remote branch?
+Date: Tue, 07 Apr 2009 09:59:47 +0200
+Message-ID: <49DB07F3.4000704@drmicha.warpmail.net>
+References: <4d8e3fd30904050332w394cccbaq5b82d2a53ed357a3@mail.gmail.com> <20090405144413.GC2076@sigill.intra.peff.net> <4d8e3fd30904051425w6739a12fp5666e71e8b2d7958@mail.gmail.com> <20090406043426.GC12341@coredump.intra.peff.net> <49D9EEE2.3000607@drmicha.warpmail.net> <20090406212935.GB882@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+Cc: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 07 10:00:30 2009
+X-From: git-owner@vger.kernel.org Tue Apr 07 10:01:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lr6EB-0007T4-KY
-	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 10:00:16 +0200
+	id 1Lr6FN-0007ww-Mo
+	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 10:01:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755211AbZDGH5y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2009 03:57:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755158AbZDGH5y
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 03:57:54 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:60097 "EHLO
+	id S1751908AbZDGH7y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2009 03:59:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751720AbZDGH7y
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 03:59:54 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:41551 "EHLO
 	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754925AbZDGH5x (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Apr 2009 03:57:53 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id E8FA8313E2C;
-	Tue,  7 Apr 2009 03:57:50 -0400 (EDT)
+	by vger.kernel.org with ESMTP id S1751621AbZDGH7x (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Apr 2009 03:59:53 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id B30343115E7;
+	Tue,  7 Apr 2009 03:59:51 -0400 (EDT)
 Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Tue, 07 Apr 2009 03:57:50 -0400
-X-Sasl-enc: QXlOIMBr4d34Sq8tLd7enLM3PC8hIBsRQrdIp74+eSn9 1239091070
+  by compute1.internal (MEProxy); Tue, 07 Apr 2009 03:59:51 -0400
+X-Sasl-enc: LpqHm+hQpLcy6eQIIKFqklY8LJYrqKM2oCJqfsYT/YC1 1239091191
 Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 0F8D071AB;
-	Tue,  7 Apr 2009 03:57:49 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id E4A18BEA2;
+	Tue,  7 Apr 2009 03:59:50 -0400 (EDT)
 User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090407 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <20090407071420.GD2924@coredump.intra.peff.net>
+In-Reply-To: <20090406212935.GB882@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115926>
 
-Jeff King venit, vidit, dixit 07.04.2009 09:14:
-> Often we want to shorten a full ref name to something "prettier"
-> to show a user. For example, "refs/heads/master" is often shown
-> simply as "master", or "refs/remotes/origin/master" is shown as
-> "origin/master".
+Jeff King venit, vidit, dixit 06.04.2009 23:29:
+> On Mon, Apr 06, 2009 at 02:00:34PM +0200, Michael J Gruber wrote:
 > 
-> Many places in the code use a very simple formula: skip common
-> prefixes like refs/heads, refs/remotes, etc. This is codified in
-> the prettify_ref function.
+>>> +		if (!strcmp(name, "tracking")) {
+>>> +			struct branch *branch;
+>>> +			if (prefixcmp(ref->refname, "refs/heads/"))
+>>> +				continue;
+>>> +			branch = branch_get(ref->refname + 11);
+>>> +			if (branch && branch->merge && branch->merge[0] &&
+>>> +			    branch->merge[0]->dst)
+>>> +				v->s = branch->merge[0]->dst;
+>>
+>> Isn't that missing out on those cases where you --track (i.e. follow) a
+>> local (upstream) branch? See
+>> 5e6e2b4 (Make local branches behave like remote branches when --tracked,
+>> 2009-04-01)
 > 
-> for-each-ref has a more correct (but more expensive) approach:
-> consider the ref lookup rules, and try shortening as much as
-> possible while remaining unambiguous.
+> I thought the logic was in branch_get to handle it. And indeed:
 > 
-> This patch makes the latter strategy globally available as
-> shorten_unambiguous_ref.
+>   $ git checkout --track -b new master
+>   Branch new set up to track local branch master.
+>   Switched to a new branch "new"
+>   $ git for-each-ref --format='%(refname) %(tracking)'
+>   refs/heads/master
+>   refs/heads/new refs/heads/master
 > 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> Actually, I am not quite sure that this function is "more correct". It
-> looks at the rev-parsing rules as a hierarchy, so if you have
-> "refs/remotes/foo" and "refs/heads/foo", then it will abbreviate the
-> first to "remotes/foo" (as expected) and the latter to just "foo".
-> 
-> This is technically correct, as "refs/heads/foo" will be selected by
-> "foo", but it will warn about ambiguity. Should we actually try to avoid
-> reporting refs which would be ambiguous?
-> 
-> Should this simply replace prettify_ref (and other places which should
-> be using prettify_ref but aren't)? It is definitely more expensive, as
-> it has to resolve refs to look for ambiguities, but I don't know if we
-> care in most code paths.
+> So it will point either to something in refs/remotes or in refs/heads,
+> as applicable.
 
-I would think that as long as the default is to warn about ambiguous
-refs we should not generate ambiguous refs...
-
-Other than that it's very nice, it can be used in many places.
+Uhm, yes, sorry for the noise. It was actually me who fixed branch_get()...
 
 > 
->  builtin-for-each-ref.c |  105 +-----------------------------------------------
->  refs.c                 |   99 +++++++++++++++++++++++++++++++++++++++++++++
->  refs.h                 |    1 +
->  3 files changed, 101 insertions(+), 104 deletions(-)
+>> If we hook it up into git-branch there would be to useful directions:
 > 
-> diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
-> index 277d1fb..8c82484 100644
-> --- a/builtin-for-each-ref.c
-> +++ b/builtin-for-each-ref.c
-> @@ -546,109 +546,6 @@ static void grab_values(struct atom_value *val, int deref, struct object *obj, v
->  }
->  
->  /*
-> - * generate a format suitable for scanf from a ref_rev_parse_rules
-> - * rule, that is replace the "%.*s" spec with a "%s" spec
-> - */
-> -static void gen_scanf_fmt(char *scanf_fmt, const char *rule)
-> -{
-> -	char *spec;
-> -
-> -	spec = strstr(rule, "%.*s");
-> -	if (!spec || strstr(spec + 4, "%.*s"))
-> -		die("invalid rule in ref_rev_parse_rules: %s", rule);
-> -
-> -	/* copy all until spec */
-> -	strncpy(scanf_fmt, rule, spec - rule);
-> -	scanf_fmt[spec - rule] = '\0';
-> -	/* copy new spec */
-> -	strcat(scanf_fmt, "%s");
-> -	/* copy remaining rule */
-> -	strcat(scanf_fmt, spec + 4);
-> -
-> -	return;
-> -}
-> -
-> -/*
-> - * Shorten the refname to an non-ambiguous form
-> - */
-> -static char *get_short_ref(const char *ref)
-> -{
-> -	int i;
-> -	static char **scanf_fmts;
-> -	static int nr_rules;
-> -	char *short_name;
-> -
-> -	/* pre generate scanf formats from ref_rev_parse_rules[] */
-> -	if (!nr_rules) {
-> -		size_t total_len = 0;
-> -
-> -		/* the rule list is NULL terminated, count them first */
-> -		for (; ref_rev_parse_rules[nr_rules]; nr_rules++)
-> -			/* no +1 because strlen("%s") < strlen("%.*s") */
-> -			total_len += strlen(ref_rev_parse_rules[nr_rules]);
-> -
-> -		scanf_fmts = xmalloc(nr_rules * sizeof(char *) + total_len);
-> -
-> -		total_len = 0;
-> -		for (i = 0; i < nr_rules; i++) {
-> -			scanf_fmts[i] = (char *)&scanf_fmts[nr_rules]
-> -					+ total_len;
-> -			gen_scanf_fmt(scanf_fmts[i], ref_rev_parse_rules[i]);
-> -			total_len += strlen(ref_rev_parse_rules[i]);
-> -		}
-> -	}
-> -
-> -	/* bail out if there are no rules */
-> -	if (!nr_rules)
-> -		return xstrdup(ref);
-> -
-> -	/* buffer for scanf result, at most ref must fit */
-> -	short_name = xstrdup(ref);
-> -
-> -	/* skip first rule, it will always match */
-> -	for (i = nr_rules - 1; i > 0 ; --i) {
-> -		int j;
-> -		int short_name_len;
-> -
-> -		if (1 != sscanf(ref, scanf_fmts[i], short_name))
-> -			continue;
-> -
-> -		short_name_len = strlen(short_name);
-> -
-> -		/*
-> -		 * check if the short name resolves to a valid ref,
-> -		 * but use only rules prior to the matched one
-> -		 */
-> -		for (j = 0; j < i; j++) {
-> -			const char *rule = ref_rev_parse_rules[j];
-> -			unsigned char short_objectname[20];
-> -			char refname[PATH_MAX];
-> -
-> -			/*
-> -			 * the short name is ambiguous, if it resolves
-> -			 * (with this previous rule) to a valid ref
-> -			 * read_ref() returns 0 on success
-> -			 */
-> -			mksnpath(refname, sizeof(refname),
-> -				 rule, short_name_len, short_name);
-> -			if (!read_ref(refname, short_objectname))
-> -				break;
-> -		}
-> -
-> -		/*
-> -		 * short name is non-ambiguous if all previous rules
-> -		 * haven't resolved to a valid ref
-> -		 */
-> -		if (j == i)
-> -			return short_name;
-> -	}
-> -
-> -	free(short_name);
-> -	return xstrdup(ref);
-> -}
-> -
-> -
-> -/*
->   * Parse the object referred by ref, and grab needed value.
->   */
->  static void populate_value(struct refinfo *ref)
-> @@ -704,7 +601,7 @@ static void populate_value(struct refinfo *ref)
->  		if (formatp) {
->  			formatp++;
->  			if (!strcmp(formatp, "short"))
-> -				refname = get_short_ref(refname);
-> +				refname = shorten_unambiguous_ref(refname);
->  			else
->  				die("unknown %.*s format %s",
->  					formatp - name, name, formatp);
-> diff --git a/refs.c b/refs.c
-> index 59c373f..1e5e7b4 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1652,3 +1652,102 @@ struct ref *find_ref_by_name(const struct ref *list, const char *name)
->  			return (struct ref *)list;
->  	return NULL;
->  }
-> +
-> +/*
-> + * generate a format suitable for scanf from a ref_rev_parse_rules
-> + * rule, that is replace the "%.*s" spec with a "%s" spec
-> + */
-> +static void gen_scanf_fmt(char *scanf_fmt, const char *rule)
-> +{
-> +	char *spec;
-> +
-> +	spec = strstr(rule, "%.*s");
-> +	if (!spec || strstr(spec + 4, "%.*s"))
-> +		die("invalid rule in ref_rev_parse_rules: %s", rule);
-> +
-> +	/* copy all until spec */
-> +	strncpy(scanf_fmt, rule, spec - rule);
-> +	scanf_fmt[spec - rule] = '\0';
-> +	/* copy new spec */
-> +	strcat(scanf_fmt, "%s");
-> +	/* copy remaining rule */
-> +	strcat(scanf_fmt, spec + 4);
-> +
-> +	return;
-> +}
-> +
-> +char *shorten_unambiguous_ref(const char *ref)
-> +{
-> +	int i;
-> +	static char **scanf_fmts;
-> +	static int nr_rules;
-> +	char *short_name;
-> +
-> +	/* pre generate scanf formats from ref_rev_parse_rules[] */
-> +	if (!nr_rules) {
-> +		size_t total_len = 0;
-> +
-> +		/* the rule list is NULL terminated, count them first */
-> +		for (; ref_rev_parse_rules[nr_rules]; nr_rules++)
-> +			/* no +1 because strlen("%s") < strlen("%.*s") */
-> +			total_len += strlen(ref_rev_parse_rules[nr_rules]);
-> +
-> +		scanf_fmts = xmalloc(nr_rules * sizeof(char *) + total_len);
-> +
-> +		total_len = 0;
-> +		for (i = 0; i < nr_rules; i++) {
-> +			scanf_fmts[i] = (char *)&scanf_fmts[nr_rules]
-> +					+ total_len;
-> +			gen_scanf_fmt(scanf_fmts[i], ref_rev_parse_rules[i]);
-> +			total_len += strlen(ref_rev_parse_rules[i]);
-> +		}
-> +	}
-> +
-> +	/* bail out if there are no rules */
-> +	if (!nr_rules)
-> +		return xstrdup(ref);
-> +
-> +	/* buffer for scanf result, at most ref must fit */
-> +	short_name = xstrdup(ref);
-> +
-> +	/* skip first rule, it will always match */
-> +	for (i = nr_rules - 1; i > 0 ; --i) {
-> +		int j;
-> +		int short_name_len;
-> +
-> +		if (1 != sscanf(ref, scanf_fmts[i], short_name))
-> +			continue;
-> +
-> +		short_name_len = strlen(short_name);
-> +
-> +		/*
-> +		 * check if the short name resolves to a valid ref,
-> +		 * but use only rules prior to the matched one
-> +		 */
-> +		for (j = 0; j < i; j++) {
-> +			const char *rule = ref_rev_parse_rules[j];
-> +			unsigned char short_objectname[20];
-> +			char refname[PATH_MAX];
-> +
-> +			/*
-> +			 * the short name is ambiguous, if it resolves
-> +			 * (with this previous rule) to a valid ref
-> +			 * read_ref() returns 0 on success
-> +			 */
-> +			mksnpath(refname, sizeof(refname),
-> +				 rule, short_name_len, short_name);
-> +			if (!read_ref(refname, short_objectname))
-> +				break;
-> +		}
-> +
-> +		/*
-> +		 * short name is non-ambiguous if all previous rules
-> +		 * haven't resolved to a valid ref
-> +		 */
-> +		if (j == i)
-> +			return short_name;
-> +	}
-> +
-> +	free(short_name);
-> +	return xstrdup(ref);
-> +}
-> diff --git a/refs.h b/refs.h
-> index 68c2d16..2d0f961 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -80,6 +80,7 @@ extern int for_each_reflog(each_ref_fn, void *);
->  extern int check_ref_format(const char *target);
->  
->  extern const char *prettify_ref(const struct ref *ref);
-> +extern char *shorten_unambiguous_ref(const char *ref);
->  
->  /** rename ref, return 0 on success **/
->  extern int rename_ref(const char *oldref, const char *newref, const char *logmsg);
+> The difference being that git-branch is porcelain and git-for-each-ref
+> is plumbing. So they really serve different purposes.
+> 
+>> - "git branch --follows foo" could list all branches which follow foo,
+>> analogous to --contains. It gives you all your feature work on top of
+>> foo, all branches affected by rebasing foo etc.
+> 
+> Sure, that would probably be useful.
+> 
+>> - "git branch --whatever foo" could list the branch whoch foo follows.
+>>
+>> I just notices that "git branch -v foo" does not give me the "-v" output
+>> for foo... Improving that would open up the possibility to go for -vv foo.
+> 
+> See the "-vv" patch I just posted elsewhere in the thread.
+
+I'll comment there ;)
+
+Michael
