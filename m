@@ -1,80 +1,103 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v2] git-checkout.txt: clarify that <branch> applies when no path is given.
-Date: Tue,  7 Apr 2009 14:43:53 +0200
-Message-ID: <1239108233-20924-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <1239099643-11959-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 07 14:48:24 2009
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Performance issue: initial git clone causes massive repack
+Date: Tue, 07 Apr 2009 09:13:45 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0904070903020.6741@xanadu.home>
+References: <20090404220743.GA869@curie-int> <20090405000536.GA12927@vidovic>
+ <20090405T001239Z@curie.orbis-terrarum.net> <20090405035453.GB12927@vidovic>
+ <20090405070412.GB869@curie-int> <20090405190213.GA12929@vidovic>
+ <alpine.DEB.1.10.0904051419490.6245@asgard.lang.hm>
+ <fabb9a1e0904051436i1dc9c1bdhe86a23e470c756f9@mail.gmail.com>
+ <alpine.LFD.2.00.0904052315210.6741@xanadu.home>
+ <20090407081019.GK20356@atjola.homenet> <m3tz5023rq.fsf@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="Boundary_(ID_3G/wgUZfLbGu34B8f/bq4A)"
+Cc: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
+	Sverre Rabbelier <srabbelier@gmail.com>, david@lang.hm,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 07 15:17:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrAin-0000qB-Od
-	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 14:48:10 +0200
+	id 1LrBAh-00046j-My
+	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 15:17:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753709AbZDGMqb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2009 08:46:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752694AbZDGMqa
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 08:46:30 -0400
-Received: from harmonie.imag.fr ([147.171.130.40]:54305 "EHLO harmonie.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752538AbZDGMqa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2009 08:46:30 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id n37Ci67V022029;
-	Tue, 7 Apr 2009 14:44:06 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1LrAeq-0008ST-Oy; Tue, 07 Apr 2009 14:44:04 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1LrAeq-0005SH-Lw; Tue, 07 Apr 2009 14:44:04 +0200
-X-Mailer: git-send-email 1.6.2.2.449.g92961.dirty
-In-Reply-To: <1239099643-11959-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Tue, 07 Apr 2009 14:44:10 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1756989AbZDGNOF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2009 09:14:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756953AbZDGNOD
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 09:14:03 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:9454 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756912AbZDGNOA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2009 09:14:00 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KHQ00LNUFEXVPC0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 07 Apr 2009 09:13:48 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <m3tz5023rq.fsf@localhost.localdomain>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115954>
 
-Otherwise, the sentence "Defaults to HEAD." can be mis-read to mean
-that "git checkout -- hello.c" checks-out from HEAD.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-Sorry, patch v1 was introducing a spurious newline, which broke
-asciidoc syntax. This fixes it, but Junio, if you already applied v1,
-just remove the empty line after <branch>:: and before +.
+--Boundary_(ID_3G/wgUZfLbGu34B8f/bq4A)
+Content-type: TEXT/PLAIN; charset=iso-8859-15
+Content-transfer-encoding: 8BIT
 
- Documentation/git-checkout.txt |    8 ++++++--
- 1 files changed, 6 insertions(+), 2 deletions(-)
+On Tue, 7 Apr 2009, Jakub Narebski wrote:
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 0b5485b..223ea9c 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -126,9 +126,13 @@ the conflicted merge in the specified paths.
- <new_branch>::
- 	Name for the new branch.
- 
-+<tree-ish>::
-+	Tree to checkout from (when paths are given). If not specified,
-+	the index will be used.
-+
- <branch>::
--	Branch to checkout; may be any object ID that resolves to a
--	commit.  Defaults to HEAD.
-+	Branch to checkout (when no paths are given); may be any object
-+	ID that resolves to a commit.  Defaults to HEAD.
- +
- When this parameter names a non-branch (but still a valid commit object),
- your HEAD becomes 'detached'.
--- 
-1.6.2.2.449.g92961.dirty
+> Björn Steinbrink <B.Steinbrink@gmx.de> writes:
+> > On 2009.04.05 23:24:27 -0400, Nicolas Pitre wrote:
+> > > On Sun, 5 Apr 2009, Sverre Rabbelier wrote:
+> > > > 
+> > > > I agree here, we should either say "look, we don't really support big
+> > > > repositories because [explanation here], unless you [workarounds
+> > > > here]" OR we should work to improve the support we do have. Of course,
+> > > > the latter option does not magically create developer time to work on
+> > > > that, but if we do go that way we should at least tell people that we
+> > > > are aware of the problems and that it's on the global TODO list (not
+> > > > necessarily on anyone's personal TODO list though).
+> > > 
+> > > For the record... I at least am aware of the problem and it is indeed on 
+> > > my personal git todo list.  Not that I have a clear solution yet (I've 
+> > > been pondering on some git packing issues for almost 4 years now).
+> > > 
+> > > Still, in this particular case, the problem appears to be unclear to me, 
+> > > like "this shouldn't be so bad".
+> > 
+> > It's not primarily pack-objects, I think. It's the rev-list that's run
+> > by upload-pack.  Running "git rev-list --objects --all" on that repo
+> > eats about 2G RSS, easily killing the system's cache on a small box,
+> > leading to swapping and a painful time reading the packfile contents
+> > afterwards to send them to the client.
+> 
+> Than I think that "packfile caching" GSoC project (which is IIRC
+> "object enumeration caching", or at least includes it) should help
+> here.
+
+NO!
+
+Please people stop being so creative with all sort of ways to simply 
+avoid the real issue and focussing on a real fix.  Git has not become 
+what it is today by the accumulation of workarounds and ignorance of 
+fundamental issues.
+
+Having git-rev-list consume about 2G RSS for the enumeration of 4M 
+objects is simply inacceptable, period.  This is the equivalent of 500 
+bytes per object pinned in memory on average, just for listing object, 
+which is completely silly. We ought to do better than that.
+
+
+Nicolas
+
+--Boundary_(ID_3G/wgUZfLbGu34B8f/bq4A)--
