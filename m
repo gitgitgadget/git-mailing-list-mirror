@@ -1,79 +1,60 @@
-From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-Subject: Re: [PATCH 5/5] branch: show upstream branch when double verbose
-Date: Tue, 7 Apr 2009 10:12:29 +0200
-Message-ID: <4d8e3fd30904070112w72ada661p99525aaa9437f8ff@mail.gmail.com>
-References: <20090407070254.GA2870@coredump.intra.peff.net>
-	 <20090407071656.GE2924@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 07 10:14:22 2009
+From: David Aguilar <davvid@gmail.com>
+Subject: Updates to the latest {diff,merge}tool series
+Date: Tue,  7 Apr 2009 01:21:18 -0700
+Message-ID: <1239092483-14973-1-git-send-email-davvid@gmail.com>
+Cc: git@vger.kernel.org, charles@hashpling.org,
+	markus.heidelberg@web.de
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Apr 07 10:23:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lr6Ri-00039F-D6
-	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 10:14:14 +0200
+	id 1Lr6aW-0005e5-OI
+	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 10:23:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752585AbZDGIMf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Apr 2009 04:12:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754342AbZDGIMd
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 04:12:33 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:38901 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753460AbZDGIMb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Apr 2009 04:12:31 -0400
-Received: by fxm2 with SMTP id 2so2207687fxm.37
-        for <git@vger.kernel.org>; Tue, 07 Apr 2009 01:12:29 -0700 (PDT)
+	id S1754764AbZDGIVr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2009 04:21:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754680AbZDGIVp
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 04:21:45 -0400
+Received: from rv-out-0506.google.com ([209.85.198.233]:3518 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754175AbZDGIVn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2009 04:21:43 -0400
+Received: by rv-out-0506.google.com with SMTP id f9so2620149rvb.1
+        for <git@vger.kernel.org>; Tue, 07 Apr 2009 01:21:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=BN0bywzvF/UefR2O5IUlZnSLwPlfYFSBBRJtTXJXyXY=;
-        b=QV/WwNQVNAjzYDcIPxtZS2s7fjkimaPoj0tvWDu8SZyzt9YxGmSl4n9ohATEJtEDi3
-         7uZfwlcb/yKbc9FMkjPZmzhpLMt9jJWKrUtqmzduW6IXjBsSRfIUkrH/vBHqhDshkM6I
-         a8KkCatVa6udoFlPQa+689Ch5/462TfWezbJA=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=nGmG2axytOqiHh5L4HnZKcfhiBRmfFNRv8uWKAv0c+s=;
+        b=dgNzv9zXlQtcy/t4tfFgKbwllbs5OJbIrJeeUJtE7NHT9+BHOcLmbHjjjnRS52eWzd
+         TzXCUbiSZWZJvB7qJyrsuhpCRHDoYQMjwrVGN1qp/XEUtIDWRRxQiqAakElLCyZZEGC7
+         jFY1t6bRugEvc5P7wbCEQWUutjCaw4ArOuvZk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=DXsyKY7k8Xme7xTozwaUywJ4QluuVw7y8OsNtjUj+564cyeJqU91zriXyJiCuvUBv9
-         3SkGYnmC1UZvqXIkIFbTcYaRxnP50o4jk6xmbNQvOEDMEkdGYgwTF5mIdusKoA7SLPPG
-         1jKvCDQcyLhYU9RIq9v4qx087R5XxJTLPXw78=
-Received: by 10.86.59.2 with SMTP id h2mr3826194fga.73.1239091949179; Tue, 07 
-	Apr 2009 01:12:29 -0700 (PDT)
-In-Reply-To: <20090407071656.GE2924@coredump.intra.peff.net>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=ULGj6Q4NSlpLrsAR11A5iSNZe1eVi8zLsViRNy7aOH5QqDyS/IxwdHeC+o5q5v+Wi7
+         6EdoM2sAur/6AgoZ6gesOPkuHYrSCjXi4GUf/q7TlinJ7QUQiPSNmQD1oO1HSHlyEFro
+         Th2InZjwL3/yo+OPBlj+5QnEzTXNYJaJNy8g8=
+Received: by 10.114.26.18 with SMTP id 18mr2786396waz.159.1239092501349;
+        Tue, 07 Apr 2009 01:21:41 -0700 (PDT)
+Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id m31sm6591570wag.64.2009.04.07.01.21.40
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 07 Apr 2009 01:21:40 -0700 (PDT)
+X-Mailer: git-send-email 1.6.2.2.414.g81aa9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115931>
 
-On Tue, Apr 7, 2009 at 9:16 AM, Jeff King <peff@peff.net> wrote:
-> This information is easily accessible when we are
-> calculating the relationship. The only reason not to print
-> it all the time is that it consumes a fair bit of screen
-> space, and may not be of interest to the user.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> This one is very RFC. Should this information be part of the regular
-> "-v"? Should it be part of "git branch" with regular verbosity?
->
-> Should the format be different? I wonder if
->
-> =A0master 1234abcd [origin/master: ahead 5, behind 6] whatever
->
-> will be interpreted as "origin/master is ahead 5, behind 6" when it i=
-s
-> really the reverse. Maybe "[ahead 5, behind 6 from origin/master]" wo=
-uld
-> be better?
+Here they are.
 
-Yes I think so.
-Thanks a lot for your work!
-
--Paolo
+07/14: Updated usage synopsis
+09/14: Updated diff.tool config.txt documentation
+10/14: The original broke the test suite on Mac OS...
+       Testing {diff,merge}tool.<tool>.path is tricky.
+11/14: This depends on 07/14, so the rebase requires a resend
+14/14: Reworked logic as discussed.
