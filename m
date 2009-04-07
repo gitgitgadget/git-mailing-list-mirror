@@ -1,75 +1,101 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] mailmap: resurrect lower-casing of email addresses
-Date: Tue, 7 Apr 2009 13:16:45 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0904071315460.6897@intel-tinevez-2-302>
-References: <cover.1238458535u.git.johannes.schindelin@gmx.de> <f182fb1700e8dea15459fd02ced2a6e5797bec99.1238458535u.git.johannes.schindelin@gmx.de> <49D53ABF.80706@gmail.com> <alpine.DEB.1.00.0904030039290.10279@pacific.mpi-cbg.de> <7v63hmekyv.fsf@gitster.siamese.dyndns.org>
- <49D542FA.3070304@gmail.com> <alpine.DEB.1.00.0904030107320.10279@pacific.mpi-cbg.de> <49D54799.9010607@gmail.com> <alpine.DEB.1.00.0904030447480.10279@pacific.mpi-cbg.de> <49D6B8C8.8090304@gmail.com> <alpine.DEB.1.00.0904061114420.10279@pacific.mpi-cbg.de>
- <49DAB5BB.1040100@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH v2] git-pull.sh: better warning message for "git pull" on detached head.
+Date: Tue, 07 Apr 2009 13:36:41 +0200
+Message-ID: <vpqvdpgn19y.fsf@bauges.imag.fr>
+References: <e2b179460904070224o3057c6efk6930bd1249adb0fe@mail.gmail.com>
+	<1239098181-10360-1-git-send-email-Matthieu.Moy@imag.fr>
+	<20090407104145.GA22658@pvv.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: A Large Angry SCM <gitzilla@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 07 13:18:29 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Finn Arne Gangstad <finnag@pvv.org>
+X-From: git-owner@vger.kernel.org Tue Apr 07 13:42:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lr9Jv-00065y-Fx
-	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 13:18:23 +0200
+	id 1Lr9gz-0004eZ-7U
+	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 13:42:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751396AbZDGLQt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2009 07:16:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751116AbZDGLQt
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 07:16:49 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60039 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750920AbZDGLQs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2009 07:16:48 -0400
-Received: (qmail invoked by alias); 07 Apr 2009 11:16:45 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp057) with SMTP; 07 Apr 2009 13:16:45 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/nshZEYLbnxrpeVdB0Fk744EXoruz8GigmNhtQVH
-	qDsaoCzfBnbUiD
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <49DAB5BB.1040100@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+	id S1752141AbZDGLjq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2009 07:39:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752017AbZDGLjp
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 07:39:45 -0400
+Received: from harmonie.imag.fr ([147.171.130.40]:41834 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751266AbZDGLjp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2009 07:39:45 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id n37BafGq009394;
+	Tue, 7 Apr 2009 13:36:42 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Lr9bd-0006rm-JR; Tue, 07 Apr 2009 13:36:41 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Lr9bd-0003Kv-HB; Tue, 07 Apr 2009 13:36:41 +0200
+In-Reply-To: <20090407104145.GA22658@pvv.org> (Finn Arne Gangstad's message of "Tue\, 7 Apr 2009 12\:41\:46 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Tue, 07 Apr 2009 13:36:46 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115948>
 
-Hi,
+Finn Arne Gangstad <finnag@pvv.org> writes:
 
-On Mon, 6 Apr 2009, A Large Angry SCM wrote:
+> On Tue, Apr 07, 2009 at 11:56:21AM +0200, Matthieu Moy wrote:
+>> Otherwise, git complains about not finding a branch to pull from in
+>> 'branch..merge', which is hardly understandable. While we're there,
+>> reword the sentences slightly.
+>> [...]
+>> +	if [ -z "$curr_branch" ]; then
+>> +		echo "You asked me to pull without telling me which branch you want"
+>> +		echo "to merge with, and you are on a detached HEAD, so I cannot"
+>> [...]
+>
+> In this case why can't we just do
+>
+> echo "You are currently not on any branch."
 
-> Johannes Schindelin wrote:
-> 
-> > On Fri, 3 Apr 2009, A Large Angry SCM wrote:
-> > 
-> > > Sorry, this is not a flame war (and as Peff already sent a response 
-> > > that superior to my own) so I'll let Junio decide.
-> > 
-> > Thanks for keeping a cool head where I failed.  My sincere apologies.
-> > 
-> > > However, to keep the peace (and as a thank you for all the hard work 
-> > > to date, I'll say that I'm scheduled to be be Germany and Munich the 
-> > > first 10 days in October and I'll buy the first $100 dollars in 
-> > > drinks at any meet that participate in (as a thank you to all the 
-> > > hard work for git that has been performed) that may happen that I 
-> > > participate in).
-> > 
-> > I'll take you up on that!
-> 
-> s/Germany and Munich/Berlin and Munich/
+Well, I would understand this as "you can't pull when you're not on a
+branch", which would be incorrect.
 
-Cool!  Berlin is only 2 hours from my home, so let's meet there!
+> echo "git pull cannot be run without arguments unless you are on a branch."
 
-We could even use the opportunity for a little informal German 
-GitTogether... "Alles wird Git!"?
+This is better (less missleading).
 
-Ciao,
-Dscho
+> And possibly also something like this:
+>
+> echo "Usage: git pull <repository> <refspec>."
+> echo " See git-pull(1) for details."
+
+This usage string would be incorrect, repository and refspec are not
+always mandatory. To be correct, it should be
+Usage: git pull [<repository> <refspec>]
+and then you're back to the problem of having to explain why they are
+optionnal.
+
+> If you need all the verbosity this error otherwise gives, "detached
+> HEAD" is probably going to be confusing?
+
+Grepping the source, "not on a branch" seems more widely used than
+"detached head" in the UI (including in another place of git-pull.sh),
+so, yes, something like this would be better:
+
+	if [ -z "$curr_branch" ]; then
+		echo "You are not currently on a branch, so I cannot use any"
+		echo "'branch.<branchname>.merge' in your configuration file."
+		echo "Please specify which branch you want to merge on the command"
+		echo "line and try again (e.g. 'git pull <repository> <refspec>')."
+		echo "See git-pull(1) for details."
+	else
+
+-- 
+Matthieu
