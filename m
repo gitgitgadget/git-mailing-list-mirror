@@ -1,73 +1,71 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH] for-each-ref: remove multiple xstrdup() in 
-	get_short_ref()
-Date: Tue, 7 Apr 2009 09:44:47 +0200
-Message-ID: <36ca99e90904070044p48a4fe7bwb7278bde2d64837c@mail.gmail.com>
-References: <20090407070254.GA2870@coredump.intra.peff.net>
-	 <1239089599-24760-1-git-send-email-bert.wesarg@googlemail.com>
+From: "Octavio Alvarez" <alvarezp@alvarezp.ods.org>
+Subject: Re: [RFC/PATCH 0/2] New 'stage' command
+Date: Tue, 07 Apr 2009 00:38:18 -0700
+Message-ID: <op.urz95k0q4oyyg1@localhost.localdomain>
+References: <1238939331-10152-1-git-send-email-felipe.contreras@gmail.com>
+ <200904052358.53028.markus.heidelberg@web.de>
+ <94a0d4530904051535v8bd901fsedecdf61bc4acb33@mail.gmail.com>
+ <200904060117.24810.markus.heidelberg@web.de>
+ <fabb9a1e0904051622k66352ea4v542ecd99bd5d9c6@mail.gmail.com>
+ <20090406032457.GA14758@gmail.com> <7v63hie4yh.fsf@gitster.siamese.dyndns.org>
+ <871vs5kjfw.fsf@krank.kagedal.org> <7vy6ud4otd.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; format=flowed; delsp=yes; charset=iso-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	Bert Wesarg <bert.wesarg@googlemail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 07 09:46:49 2009
+Cc: git@vger.kernel.org, "David Aguilar" <davvid@gmail.com>,
+	"Sverre Rabbelier" <srabbelier@gmail.com>,
+	markus.heidelberg@web.de,
+	"Felipe Contreras" <felipe.contreras@gmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>,
+	=?iso-8859-1?Q?David_K=E5gedal?= <davidk@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Tue Apr 07 09:54:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lr619-00040E-PJ
-	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 09:46:48 +0200
+	id 1Lr68S-00061f-Df
+	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 09:54:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754143AbZDGHow (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2009 03:44:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754136AbZDGHov
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 03:44:51 -0400
-Received: from mail-bw0-f169.google.com ([209.85.218.169]:61185 "EHLO
-	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754200AbZDGHou (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2009 03:44:50 -0400
-Received: by bwz17 with SMTP id 17so2177736bwz.37
-        for <git@vger.kernel.org>; Tue, 07 Apr 2009 00:44:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=MlRl54smIottzt3nzUMRv4b60ufEA+RRLPz4y5pJdBE=;
-        b=HYgZifvf6TUDtzstkyD2n+++DEqaiVzazBtTOL25SloicN1aavAIdR6ypovAah6lxg
-         SzBB6Fm8b8qAZ/RobXegT/Abcu/S3Wv/kiSpM5YrqxX6+krRULLp1RekbZ1hIUZ0rWHH
-         7enbkz7kf5s7yS2znT1A2RHL2Kj7F/i50aCZ8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=nL/3Ly0worGAVLa9Df3TJg0c27TTVF/i5Il4PEIi4tS9BWDzC0JVpuRyNnPvdwXJ1H
-         d6PXF3UoiZwYXwYG319uxQZviPzKTTDN2UkVSnM7FV+uN3Q2/JCEKnOW5xvSZzO1WxKQ
-         BjlNwq7MmCamw8kcFFYBEy3M0eWOP8SCjtRgA=
-Received: by 10.204.117.141 with SMTP id r13mr2456920bkq.207.1239090287594; 
-	Tue, 07 Apr 2009 00:44:47 -0700 (PDT)
-In-Reply-To: <1239089599-24760-1-git-send-email-bert.wesarg@googlemail.com>
+	id S1752152AbZDGHwq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2009 03:52:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751930AbZDGHwq
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 03:52:46 -0400
+Received: from spider.alvarezp.com ([66.150.225.106]:41109 "EHLO
+	spider.alvarezp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751793AbZDGHwp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2009 03:52:45 -0400
+X-Greylist: delayed 845 seconds by postgrey-1.27 at vger.kernel.org; Tue, 07 Apr 2009 03:52:45 EDT
+Received: from localhost.localdomain (201.160.155.130.cable.dyn.cableonline.com.mx [201.160.155.130])
+	(authenticated bits=0)
+	by spider.alvarezp.com (8.13.8/8.13.8/Debian-3) with ESMTP id n377cN3T021598
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NOT);
+	Tue, 7 Apr 2009 00:38:29 -0700
+In-Reply-To: <7vy6ud4otd.fsf@gitster.siamese.dyndns.org>
+User-Agent: Opera Mail/10.00 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115923>
 
-On Tue, Apr 7, 2009 at 09:33, Bert Wesarg <bert.wesarg@googlemail.com> wrote:
-> Now that get_short_ref() always return an malloced string, consolidate to
-> one xstrcpy() call.
+On Mon, 06 Apr 2009 11:30:54 -0700, Junio C Hamano <gitster@pobox.com> wrote:
+>    - when you want to work with the index, you say --cached;
 >
-> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
->
-> ---
-> Also an
->
-> Acked-by: Bert Wesarg <bert.wesarg@googlemail.com>
-Sorry, wrong Message-ID for In-Reply-To, this Ack is for:
+>    - when you want to work with both the index and the work tree at the
+>      same time, you say --index.
 
-[PATCH 1/5] for-each-ref: refactor get_short_ref function
+This is where I also think the options are messed up.
 
-with Message-ID <20090407070501.GA2924@coredump.intra.peff.net>
+If I want to work with the "index", shouldn't I use... uhh... "--index"?
 
-Bert
+If I want to work with both, shouldn't I use something like "--both"?
+
+"And if --index works with the workcopy and index, will --cache use both,
+the workcopy and the cache?"
+
+To a new user like me, these options don't look like they refer to different
+actions, but to different existing things. Those options say that there is
+an index, and there is a cache.
+
+(Now I learned all of this through reading the docs which is not hard, but
+reading this from the man pages is not intuitive at all.)
