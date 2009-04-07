@@ -1,210 +1,131 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [RFC PATCH] git-send-email.txt: clarify which options take an argument.
-Date: Tue,  7 Apr 2009 15:39:47 +0200
-Message-ID: <1239111587-23452-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 07 15:43:51 2009
+From: Jon Smirl <jonsmirl@gmail.com>
+Subject: Re: Performance issue: initial git clone causes massive repack
+Date: Tue, 7 Apr 2009 10:03:48 -0400
+Message-ID: <9e4733910904070703w22887bd6l7358ac8ec8b95c97@mail.gmail.com>
+References: <20090404220743.GA869@curie-int>
+	 <m3tz5023rq.fsf@localhost.localdomain>
+	 <alpine.LFD.2.00.0904070903020.6741@xanadu.home>
+	 <200904071537.04225.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nicolas Pitre <nico@cam.org>,
+	=?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
+	Sverre Rabbelier <srabbelier@gmail.com>, david@lang.hm,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 07 16:06:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrBag-00067R-Eq
-	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 15:43:51 +0200
+	id 1LrBvc-0005dw-SA
+	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 16:05:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752418AbZDGNmO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2009 09:42:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752077AbZDGNmO
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 09:42:14 -0400
-Received: from harmonie.imag.fr ([147.171.130.40]:65086 "EHLO harmonie.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751714AbZDGNmN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2009 09:42:13 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id n37DdohC004013;
-	Tue, 7 Apr 2009 15:39:50 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1LrBWn-0001Eb-Lq; Tue, 07 Apr 2009 15:39:49 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1LrBWn-000677-Je; Tue, 07 Apr 2009 15:39:49 +0200
-X-Mailer: git-send-email 1.6.2.2.449.g92961.dirty
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Tue, 07 Apr 2009 15:39:51 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1756966AbZDGODw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Apr 2009 10:03:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756927AbZDGODw
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 10:03:52 -0400
+Received: from wf-out-1314.google.com ([209.85.200.171]:31569 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756612AbZDGODu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Apr 2009 10:03:50 -0400
+Received: by wf-out-1314.google.com with SMTP id 29so2777422wff.4
+        for <git@vger.kernel.org>; Tue, 07 Apr 2009 07:03:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=8Wu1KQFIA+wYjp3pSorIT5VRFXHBpQZNAwZL7kMN80w=;
+        b=Y8JGNP1a5nZNVQ8lml8+WQ/yUrVG5CO0VbsY0nahQPrwm1KAxK6umgXNuqyd/D7wCw
+         ueN8H3PJmIdLQp56BlkH/8vl6HCpOxtAp/IgV7A5mkL0OvBfMdlXjyvkYBRsWt0z/5IK
+         aWPRMEBVgqW+rJooj2oZnIizo97py2ISfTqQY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Xout7vYJUUpg9tl3NgPTH5M0D+679+uMEAyGand9Vyk0HCqRmWhZLf6GVB/bfISG5u
+         HhWChDNqHa8sg5FSPOSDc97rLIJGNJLOqCgOpU3y9oq1mkfPWIPktCmQJ2hmGtvbamP5
+         HqawgTNztkqPJfK06PPkmeW0gAPyXIzArZHfk=
+Received: by 10.220.74.71 with SMTP id t7mr278398vcj.97.1239113029150; Tue, 07 
+	Apr 2009 07:03:49 -0700 (PDT)
+In-Reply-To: <200904071537.04225.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115957>
 
----
+2009/4/7 Jakub Narebski <jnareb@gmail.com>:
+> On Tue, 7 Apr 2009, Nicolas Pitre wrote:
+>> On Tue, 7 Apr 2009, Jakub Narebski wrote:
+>>> Bj=F6rn Steinbrink <B.Steinbrink@gmx.de> writes:
+>
+> [...]
+>>>> It's not primarily pack-objects, I think. It's the rev-list that's=
+ run
+>>>> by upload-pack. =A0Running "git rev-list --objects --all" on that =
+repo
+>>>> eats about 2G RSS, easily killing the system's cache on a small bo=
+x,
+>>>> leading to swapping and a painful time reading the packfile conten=
+ts
+>>>> afterwards to send them to the client.
+>>>
+>>> Than I think that "packfile caching" GSoC project (which is IIRC
+>>> "object enumeration caching", or at least includes it) should help
+>>> here.
+>>
+>> NO!
+>>
+>> Please people stop being so creative with all sort of ways to simply
+>> avoid the real issue and focussing on a real fix. =A0Git has not bec=
+ome
+>> what it is today by the accumulation of workarounds and ignorance of
+>> fundamental issues.
+>>
+>> Having git-rev-list consume about 2G RSS for the enumeration of 4M
+>> objects is simply inacceptable, period. =A0This is the equivalent of=
+ 500
+>> bytes per object pinned in memory on average, just for listing objec=
+t,
+>> which is completely silly. We ought to do better than that.
+>
+> I have thought that the large amount of memory consumed by git-rev-li=
+st
+> was caused by not-so-sequential access to very large packfile (1.5GB+=
+ if
+> I remember correctly), which I thought causes the whole packfile to b=
+e
+> mmapped and not only window, plus large amount of objects in 300MB+ m=
+em
+> range or something; those both would account for around 2GB.
 
-Can someone more knowledgeable than me proof-read this? I tried to use
-intuitive names for the arguments (like 'address' where an email
-address is expected), but since there are options I never used, I may
-have mis-understood some of them.
+I don't know all of the finer details of chasing revision lists, but
+would it help if pack files recorded the root IDs of their object
+trees at creation time and stored it in the front of the pack?
 
-Thanks,
 
- Documentation/git-send-email.txt |   36 ++++++++++++++++++------------------
- 1 files changed, 18 insertions(+), 18 deletions(-)
+>
+> Besides even if git-rev-list wouldn't take so much memory, object
+> enumeration caching would still help with CPU load... admittedly less=
+=2E
+>
+> --
+> Jakub Narebski
+> Poland
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+>
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 10dfd66..e25da71 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -39,13 +39,13 @@ OPTIONS
- Composing
- ~~~~~~~~~
- 
----bcc::
-+--bcc='address'::
- 	Specify a "Bcc:" value for each email. Default is the value of
- 	'sendemail.bcc'.
- +
- The --bcc option must be repeated for each user you want on the bcc list.
- 
----cc::
-+--cc='address'::
- 	Specify a starting "Cc:" value for each email.
- 	Default is the value of 'sendemail.cc'.
- +
-@@ -68,24 +68,24 @@ and In-Reply-To headers will be used unless they are removed.
- +
- Missing From or In-Reply-To headers will be prompted for.
- 
----from::
-+--from='address'::
- 	Specify the sender of the emails.  This will default to
- 	the value GIT_COMMITTER_IDENT, as returned by "git var -l".
- 	The user will still be prompted to confirm this entry.
- 
----in-reply-to::
-+--in-reply-to='identifier'::
- 	Specify the contents of the first In-Reply-To header.
- 	Subsequent emails will refer to the previous email
- 	instead of this if --chain-reply-to is set (the default)
- 	Only necessary if --compose is also set.  If --compose
- 	is not set, this will be prompted for.
- 
----subject::
-+--subject='string'::
- 	Specify the initial subject of the email thread.
- 	Only necessary if --compose is also set.  If --compose
- 	is not set, this will be prompted for.
- 
----to::
-+--to='address'::
- 	Specify the primary recipient of the emails generated. Generally, this
- 	will be the upstream maintainer of the project involved. Default is the
- 	value of the 'sendemail.to' configuration value; if that is unspecified,
-@@ -97,7 +97,7 @@ The --to option must be repeated for each user you want on the to list.
- Sending
- ~~~~~~~
- 
----envelope-sender::
-+--envelope-sender='address'::
- 	Specify the envelope sender used to send the emails.
- 	This is useful if your default address is not the address that is
- 	subscribed to a list. If you use the sendmail binary, you must have
-@@ -105,12 +105,12 @@ Sending
- 	the 'sendemail.envelopesender' configuration variable; if that is
- 	unspecified, choosing the envelope sender is left to your MTA.
- 
----smtp-encryption::
-+--smtp-encryption='mode'::
- 	Specify the encryption to use, either 'ssl' or 'tls'.  Any other
- 	value reverts to plain SMTP.  Default is the value of
- 	'sendemail.smtpencryption'.
- 
----smtp-pass::
-+--smtp-pass[='password']::
- 	Password for SMTP-AUTH. The argument is optional: If no
- 	argument is specified, then the empty string is used as
- 	the password. Default is the value of 'sendemail.smtppass',
-@@ -122,7 +122,7 @@ or on the command line. If a username has been specified (with
- specified (with '--smtp-pass' or 'sendemail.smtppass'), then the
- user is prompted for a password while the input is masked for privacy.
- 
----smtp-server::
-+--smtp-server='host'::
- 	If set, specifies the outgoing SMTP server to use (e.g.
- 	`smtp.example.com` or a raw IP address).  Alternatively it can
- 	specify a full pathname of a sendmail-like program instead;
-@@ -132,7 +132,7 @@ user is prompted for a password while the input is masked for privacy.
- 	`/usr/lib/sendmail` if such program is available, or
- 	`localhost` otherwise.
- 
----smtp-server-port::
-+--smtp-server-port='port'::
- 	Specifies a port different from the default port (SMTP
- 	servers typically listen to smtp port 25 and ssmtp port
- 	465). This can be set with 'sendemail.smtpserverport'.
-@@ -140,7 +140,7 @@ user is prompted for a password while the input is masked for privacy.
- --smtp-ssl::
- 	Legacy alias for '--smtp-encryption ssl'.
- 
----smtp-user::
-+--smtp-user='user'::
- 	Username for SMTP-AUTH. Default is the value of 'sendemail.smtpuser';
- 	if a username is not specified (with '--smtp-user' or 'sendemail.smtpuser'),
- 	then authentication is not attempted.
-@@ -149,13 +149,13 @@ user is prompted for a password while the input is masked for privacy.
- Automating
- ~~~~~~~~~~
- 
----cc-cmd::
-+--cc-cmd='cmd'::
- 	Specify a command to execute once per patch file which
- 	should generate patch file specific "Cc:" entries.
- 	Output of this command must be single email address per line.
- 	Default is the value of 'sendemail.cccmd' configuration value.
- 
----[no-]chain-reply-to::
-+--[no-]chain-reply-to='identifier'::
- 	If this is set, each email will be sent as a reply to the previous
- 	email sent.  If disabled with "--no-chain-reply-to", all emails after
- 	the first will be sent as replies to the first email sent.  When using
-@@ -163,7 +163,7 @@ Automating
- 	entire patch series. Default is the value of the 'sendemail.chainreplyto'
- 	configuration value; if that is unspecified, default to --chain-reply-to.
- 
----identity::
-+--identity='identity'::
- 	A configuration identity. When given, causes values in the
- 	'sendemail.<identity>' subsection to take precedence over
- 	values in the 'sendemail' section. The default identity is
-@@ -174,7 +174,7 @@ Automating
- 	cc list. Default is the value of 'sendemail.signedoffbycc' configuration
- 	value; if that is unspecified, default to --signed-off-by-cc.
- 
----suppress-cc::
-+--suppress-cc='category'::
- 	Specify an additional category of recipients to suppress the
- 	auto-cc of:
- +
-@@ -211,7 +211,7 @@ specified, as well as 'body' if --no-signed-off-cc is specified.
- Administering
- ~~~~~~~~~~~~~
- 
----confirm::
-+--confirm='mode'::
- 	Confirm just before sending:
- +
- --
-@@ -234,7 +234,7 @@ have been specified, in which case default to 'compose'.
- 	Make git-send-email less verbose.  One line per email should be
- 	all that is output.
- 
----[no-]validate::
-+--[no-]validate='mode'::
- 	Perform sanity checks on patches.
- 	Currently, validation means the following:
- +
--- 
-1.6.2.2.449.g92961.dirty
+
+
+--=20
+Jon Smirl
+jonsmirl@gmail.com
