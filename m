@@ -1,101 +1,150 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH v2] git-pull.sh: better warning message for "git pull" on detached head.
-Date: Tue, 07 Apr 2009 13:36:41 +0200
-Message-ID: <vpqvdpgn19y.fsf@bauges.imag.fr>
-References: <e2b179460904070224o3057c6efk6930bd1249adb0fe@mail.gmail.com>
-	<1239098181-10360-1-git-send-email-Matthieu.Moy@imag.fr>
-	<20090407104145.GA22658@pvv.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] perl: add new module Git::Config for cached 'git config' access
+Date: Tue, 07 Apr 2009 05:01:37 -0700 (PDT)
+Message-ID: <m3prfo1xh6.fsf@localhost.localdomain>
+References: <1238975176-14354-1-git-send-email-sam.vilain@catalyst.net.nz>
+	<20090406092942.GW17706@mail-vs.djpig.de>
+	<1239058276.31863.19.camel@maia.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Finn Arne Gangstad <finnag@pvv.org>
-X-From: git-owner@vger.kernel.org Tue Apr 07 13:42:19 2009
+Cc: Frank Lichtenheld <frank@lichtenheld.de>, git@vger.kernel.org,
+	Petr Baudis <pasky@suse.cz>
+To: Sam Vilain <sam.vilain@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Tue Apr 07 14:04:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lr9gz-0004eZ-7U
-	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 13:42:13 +0200
+	id 1LrA2G-0002aW-KA
+	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 14:04:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752141AbZDGLjq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2009 07:39:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752017AbZDGLjp
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 07:39:45 -0400
-Received: from harmonie.imag.fr ([147.171.130.40]:41834 "EHLO harmonie.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751266AbZDGLjp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2009 07:39:45 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id n37BafGq009394;
-	Tue, 7 Apr 2009 13:36:42 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Lr9bd-0006rm-JR; Tue, 07 Apr 2009 13:36:41 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1Lr9bd-0003Kv-HB; Tue, 07 Apr 2009 13:36:41 +0200
-In-Reply-To: <20090407104145.GA22658@pvv.org> (Finn Arne Gangstad's message of "Tue\, 7 Apr 2009 12\:41\:46 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Tue, 07 Apr 2009 13:36:46 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1755886AbZDGMBo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2009 08:01:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755857AbZDGMBn
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 08:01:43 -0400
+Received: from wf-out-1314.google.com ([209.85.200.173]:26224 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755755AbZDGMBk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2009 08:01:40 -0400
+Received: by wf-out-1314.google.com with SMTP id 29so2732378wff.4
+        for <git@vger.kernel.org>; Tue, 07 Apr 2009 05:01:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=nanA9CCOvdjsqj15+IcN70b4JhbhCPNDiGgPbsUU/1o=;
+        b=SZt5F6ftqNelWhMAi1DxxkHTgG4T1I42lQfBWF4PKa4BIroI1Lv3IXr5IXpoyIswp4
+         rY/Xb8ZYklaKleYdFO3Qw9Yy6iHIZ5LRwqgywjBQeX5BL2vUTDVmZbZ/ENiXtabntuVd
+         MoHaLhbOh9VaPU+sjvqVhq4k1iHigbQSJhGnU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=LEvPn3HohZ7pdaeG8PFtFWP6P657vybOYw7OSabhy9Z5uvzLxZKItng/P6pyuDN3lW
+         VWcxpYIev3Ddq+TlkZWdSotLrv+OdoOeZQVz3V92DQOAXwi/tDtU9MujS8U2hFEygD4J
+         Xqi8V6YmOaG8TWmyKO9p1udV1TxkuBwUBJNVI=
+Received: by 10.142.177.5 with SMTP id z5mr15607wfe.89.1239105698847;
+        Tue, 07 Apr 2009 05:01:38 -0700 (PDT)
+Received: from localhost.localdomain (abvx71.neoplus.adsl.tpnet.pl [83.8.221.71])
+        by mx.google.com with ESMTPS id 22sm6822657wfd.26.2009.04.07.05.01.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 07 Apr 2009 05:01:37 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n37C4RGS020775;
+	Tue, 7 Apr 2009 14:04:27 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n37C4MdB020766;
+	Tue, 7 Apr 2009 14:04:22 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1239058276.31863.19.camel@maia.lan>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115949>
 
-Finn Arne Gangstad <finnag@pvv.org> writes:
+Sam Vilain <sam.vilain@catalyst.net.nz> writes:
 
-> On Tue, Apr 07, 2009 at 11:56:21AM +0200, Matthieu Moy wrote:
->> Otherwise, git complains about not finding a branch to pull from in
->> 'branch..merge', which is hardly understandable. While we're there,
->> reword the sentences slightly.
->> [...]
->> +	if [ -z "$curr_branch" ]; then
->> +		echo "You asked me to pull without telling me which branch you want"
->> +		echo "to merge with, and you are on a detached HEAD, so I cannot"
->> [...]
->
-> In this case why can't we just do
->
-> echo "You are currently not on any branch."
+> On Mon, 2009-04-06 at 11:29 +0200, Frank Lichtenheld wrote:
+> > On Mon, Apr 06, 2009 at 11:46:15AM +1200, Sam Vilain wrote:
 
-Well, I would understand this as "you can't pull when you're not on a
-branch", which would be incorrect.
+> > > +	my ($fh, $c) = $git->command_output_pipe(
+> > > +		'config', ( $which ? ("--$which") : () ),
+> > > +		'--list',
+> > > +	       );
+> >
+> > Any reason why you don't use --null here? The output of --list
+> > without --null is not reliably parsable, since people can put
+> > newlines in values.
+> 
+> No particularly good reason :-)
+> 
+> Subject: [PATCH] perl: make Git::Config use --null
+> 
+> Use the form of 'git-config' designed for parsing by modules like
+> this for safety with values containing embedded line feeds.
+> 
+> Signed-off-by: Sam Vilain <sam.vilain@catalyst.net.nz>
 
-> echo "git pull cannot be run without arguments unless you are on a branch."
+> diff --git a/perl/Git/Config.pm b/perl/Git/Config.pm
+> index a0a6a41..a35d9f3 100644
+> --- a/perl/Git/Config.pm
+> +++ b/perl/Git/Config.pm
+> @@ -179,12 +179,14 @@ sub read {
+>  
+>  	my ($fh, $c) = $git->command_output_pipe(
+>  		'config', ( $which ? ("--$which") : () ),
+> -		'--list',
+> +		 '--null', '--list',
+>  	       );
+>  	my $read_state = {};
+>  
+> +	local($/)="\0";
+>  	while (<$fh>) {
+> -		my ($item, $value) = m{(.*?)=(.*)};
+> +		my ($item, $value) = m{(.*?)\n((?s:.*))\0}
+> +			or die "failed to parse it; \$_='$_'";
+>  		my $sl = \( $read_state->{$item} );
+>  		if (!defined $$sl) {
+>  			$$sl = $value;
 
-This is better (less missleading).
+Errr... wouldn't it be better to simply use 
 
-> And possibly also something like this:
->
-> echo "Usage: git pull <repository> <refspec>."
-> echo " See git-pull(1) for details."
++		my ($item, $value) = split("\n", $_, 2)
 
-This usage string would be incorrect, repository and refspec are not
-always mandatory. To be correct, it should be
-Usage: git pull [<repository> <refspec>]
-and then you're back to the problem of having to explain why they are
-optionnal.
+here? Have you tested Git::Config with a "null" value, i.e. something
+like
 
-> If you need all the verbosity this error otherwise gives, "detached
-> HEAD" is probably going to be confusing?
+    [section]
+        noval
 
-Grepping the source, "not on a branch" seems more widely used than
-"detached head" in the UI (including in another place of git-pull.sh),
-so, yes, something like this would be better:
+in the config file (which evaluates to 'true' with '--bool' option)?
+Because from what I remember from the discussion on the 
+"git config --null --list" format the lack of "\n" is used to
+distinguish between noval (which is equivalent to 'true'), and empty
+value (which is equivalent to 'false')
 
-	if [ -z "$curr_branch" ]; then
-		echo "You are not currently on a branch, so I cannot use any"
-		echo "'branch.<branchname>.merge' in your configuration file."
-		echo "Please specify which branch you want to merge on the command"
-		echo "line and try again (e.g. 'git pull <repository> <refspec>')."
-		echo "See git-pull(1) for details."
-	else
+    [boolean
+        noval        # equivalent to 'true'
+        empty1 =     # equivalent to 'false'
+        empty2 = ""  # equivalent to 'false'
+
+> diff --git a/t/t9700/config.t b/t/t9700/config.t
+> index 395a5c9..f0f7d2d 100644
+> --- a/t/t9700/config.t
+> +++ b/t/t9700/config.t
+> @@ -16,6 +16,7 @@ in_empty_repo sub {
+>  	$git->command_oneline("config", "foo.intval", "12g");
+>  	$git->command_oneline("config", "foo.false.val", "false");
+>  	$git->command_oneline("config", "foo.true.val", "yes");
+> +	$git->command_oneline("config", "multiline.val", "hello\nmultiline.val=world");
+>  
+>  	my $conf = Git::Config->new();
+>  	ok($conf, "constructed a new Git::Config");
 
 -- 
-Matthieu
+Jakub Narebski
+Poland
+ShadeHawk on #git
