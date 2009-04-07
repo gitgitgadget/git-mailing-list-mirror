@@ -1,82 +1,93 @@
-From: Tim Visher <tim.visher@gmail.com>
-Subject: Re: Showing the version of a file that's in the Index.
-Date: Tue, 7 Apr 2009 16:15:27 -0400
-Message-ID: <c115fd3c0904071315s6cb8812ajcdc98357f9750716@mail.gmail.com>
-References: <c115fd3c0904071259y53b4b264u9c9957b68e36cc44@mail.gmail.com>
-	 <200904072210.05591.markus.heidelberg@web.de> <874ox0w7ak.fsf@iki.fi>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: Performance issue: initial git clone causes massive repack
+Date: Tue, 7 Apr 2009 22:27:25 +0200
+Message-ID: <20090407202725.GC4413@atjola.homenet>
+References: <alpine.DEB.1.10.0904051419490.6245@asgard.lang.hm> <fabb9a1e0904051436i1dc9c1bdhe86a23e470c756f9@mail.gmail.com> <alpine.LFD.2.00.0904052315210.6741@xanadu.home> <20090407081019.GK20356@atjola.homenet> <m3tz5023rq.fsf@localhost.localdomain> <alpine.LFD.2.00.0904070903020.6741@xanadu.home> <20090407142147.GA4413@atjola.homenet> <alpine.LFD.2.00.0904071321520.6741@xanadu.home> <20090407181259.GB4413@atjola.homenet> <alpine.LFD.2.00.0904071454250.6741@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: markus.heidelberg@web.de, Git Mailing List <git@vger.kernel.org>
-To: Teemu Likonen <tlikonen@iki.fi>
-X-From: git-owner@vger.kernel.org Tue Apr 07 22:17:43 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>, david@lang.hm,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Apr 07 22:31:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrHjp-0004Md-V8
-	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 22:17:42 +0200
+	id 1LrHuv-0008DA-Vi
+	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 22:29:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757841AbZDGUPa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2009 16:15:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755482AbZDGUP3
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 16:15:29 -0400
-Received: from yx-out-2324.google.com ([74.125.44.28]:3625 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756245AbZDGUP3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2009 16:15:29 -0400
-Received: by yx-out-2324.google.com with SMTP id 31so2784768yxl.1
-        for <git@vger.kernel.org>; Tue, 07 Apr 2009 13:15:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=wH4tJqQmihTwb3PA3a5EPzFSdAlx04iNcmN6mTgFO2A=;
-        b=MMy63VAHIczu/Qa1GQyinzNQRI6XTqOGnIEIl0/R8wYUCZwgfhw6mINuxkeDTfboqV
-         YlEHaD+2WYhkxciTPFB09jjsWy72T7azDqNMcWCAPI7rGPHlP4b3vNhIhTn67nvePUmN
-         p5HhsEw4mlPDGQbwS0izrlVwPttBCCIiRnVP8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=m9YKx1vuRyZmZ/yS+tegGpyXhR1YQClBzOwL49h64tgS1d/ovPaia9RccCuSHtclRl
-         oS1tTJtHI1bLVwvp7FImBDnZrpVsBdEu+qKO9TiPz/SesdG6v49e/DQtRQYLJkY7ralO
-         JXICmUa/TWcRMk/PIQJ3JvdB8zXvXAfaeD89o=
-Received: by 10.100.138.10 with SMTP id l10mr487569and.136.1239135327703; Tue, 
-	07 Apr 2009 13:15:27 -0700 (PDT)
-In-Reply-To: <874ox0w7ak.fsf@iki.fi>
+	id S1757321AbZDGU1a convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Apr 2009 16:27:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753796AbZDGU1a
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 16:27:30 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38511 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755348AbZDGU1a (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2009 16:27:30 -0400
+Received: (qmail invoked by alias); 07 Apr 2009 20:27:27 -0000
+Received: from i59F5B7E9.versanet.de (EHLO atjola.local) [89.245.183.233]
+  by mail.gmx.net (mp025) with SMTP; 07 Apr 2009 22:27:27 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1/Wq3MbGjDWK8kWsp7Ho2wzngzQJSKjf1UdeDZA+3
+	7u9ySiSwSUzi25
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.00.0904071454250.6741@xanadu.home>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115985>
 
-On Tue, Apr 7, 2009 at 4:14 PM, Teemu Likonen <tlikonen@iki.fi> wrote:
-> On 2009-04-07 22:10 (+0200), Markus Heidelberg wrote:
->
->> Tim Visher, 07.04.2009:
->>> How do you go about showing the version of the file that's in an
->>> index.
->>
->> With version do you mean content? Then
->>
->>     git cat-file -p :0:file
->> or
->>     git cat-file -p :file
->
-> Or
->
->    git show :file
->
+On 2009.04.07 14:56:41 -0400, Nicolas Pitre wrote:
+> On Tue, 7 Apr 2009, Bj=F6rn Steinbrink wrote:
+>=20
+> > On 2009.04.07 13:48:02 -0400, Nicolas Pitre wrote:
+> > > The first low hanging fruit to help this case is to make upload-p=
+ack use=20
+> > > the --revs argument with pack-object to let it do the object enum=
+eration=20
+> > > itself directly, instead of relying on the rev-list output throug=
+h a=20
+> > > pipe.  This is what 'git repack' does already.  pack-objects has =
+to=20
+> > > access the pack anyway, so this would eliminate an extra access f=
+rom a=20
+> > > different process.
+> >=20
+> > Hm, for an initial clone that would end up as:
+> > git pack-objects --stdout --all
+> > right?
+> >=20
+> > If so, that doesn't look it it's going to work out as easily as one
+> > would hope. Robin said that both processes, git-upload-pack (which =
+does
+> > the rev-list) and pack-objects peaked at ~2GB of RSS (which probabl=
+y
+> > includes the mmapped packs). But the above pack-objects with --all =
+peaks
+> > at 3.1G here, so it basically seems to keep all the stuff in memory=
+ that
+> > the individual processes had. But this way, it's all at once, not 2=
+G
+> > first and then 2G in a second process, after the first one exitted.
+>=20
+> Right, and it is probably faster too.
+>=20
+> Can I get a copy of that repository somewhere?
 
-Nice.  Thank you!
+http://git.overlays.gentoo.org/gitweb/?p=3Dexp/gentoo-x86.git;a=3Dsumma=
+ry
 
--- 
+At least that's what I cloned ;-) I hope it's the right one, but it fit=
+s
+the description...
 
-In Christ,
-
-Timmy V.
-
-http://burningones.com/
-http://five.sentenc.es/ - Spend less time on e-mail
+Bj=F6rn
