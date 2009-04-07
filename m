@@ -1,85 +1,79 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: Performance issue: initial git clone causes massive repack
-Date: Tue, 7 Apr 2009 10:10:19 +0200
-Message-ID: <20090407081019.GK20356@atjola.homenet>
-References: <20090404220743.GA869@curie-int> <20090405000536.GA12927@vidovic> <20090405T001239Z@curie.orbis-terrarum.net> <20090405035453.GB12927@vidovic> <20090405070412.GB869@curie-int> <20090405190213.GA12929@vidovic> <alpine.DEB.1.10.0904051419490.6245@asgard.lang.hm> <fabb9a1e0904051436i1dc9c1bdhe86a23e470c756f9@mail.gmail.com> <alpine.LFD.2.00.0904052315210.6741@xanadu.home>
+From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+Subject: Re: [PATCH 5/5] branch: show upstream branch when double verbose
+Date: Tue, 7 Apr 2009 10:12:29 +0200
+Message-ID: <4d8e3fd30904070112w72ada661p99525aaa9437f8ff@mail.gmail.com>
+References: <20090407070254.GA2870@coredump.intra.peff.net>
+	 <20090407071656.GE2924@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, david@lang.hm,
-	Junio C Hamano <gitster@pobox.com>,
-	Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
-	"Robin H. Johnson" <robbat2@gentoo.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Apr 07 10:12:13 2009
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Apr 07 10:14:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lr6Pj-0002bA-Pf
-	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 10:12:12 +0200
+	id 1Lr6Ri-00039F-D6
+	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 10:14:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751966AbZDGIKa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Apr 2009 04:10:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752152AbZDGIK2
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 04:10:28 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33679 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751901AbZDGIK1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2009 04:10:27 -0400
-Received: (qmail invoked by alias); 07 Apr 2009 08:10:23 -0000
-Received: from i59F5A3DA.versanet.de (EHLO atjola.local) [89.245.163.218]
-  by mail.gmx.net (mp001) with SMTP; 07 Apr 2009 10:10:23 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1+/4rwEWgy/UsRjaQdy3FWOfEEjLmZqySowEzuJ2e
-	bIswazqjb4LnmZ
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.0904052315210.6741@xanadu.home>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59
+	id S1752585AbZDGIMf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Apr 2009 04:12:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754342AbZDGIMd
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 04:12:33 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:38901 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753460AbZDGIMb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Apr 2009 04:12:31 -0400
+Received: by fxm2 with SMTP id 2so2207687fxm.37
+        for <git@vger.kernel.org>; Tue, 07 Apr 2009 01:12:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=BN0bywzvF/UefR2O5IUlZnSLwPlfYFSBBRJtTXJXyXY=;
+        b=QV/WwNQVNAjzYDcIPxtZS2s7fjkimaPoj0tvWDu8SZyzt9YxGmSl4n9ohATEJtEDi3
+         7uZfwlcb/yKbc9FMkjPZmzhpLMt9jJWKrUtqmzduW6IXjBsSRfIUkrH/vBHqhDshkM6I
+         a8KkCatVa6udoFlPQa+689Ch5/462TfWezbJA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=DXsyKY7k8Xme7xTozwaUywJ4QluuVw7y8OsNtjUj+564cyeJqU91zriXyJiCuvUBv9
+         3SkGYnmC1UZvqXIkIFbTcYaRxnP50o4jk6xmbNQvOEDMEkdGYgwTF5mIdusKoA7SLPPG
+         1jKvCDQcyLhYU9RIq9v4qx087R5XxJTLPXw78=
+Received: by 10.86.59.2 with SMTP id h2mr3826194fga.73.1239091949179; Tue, 07 
+	Apr 2009 01:12:29 -0700 (PDT)
+In-Reply-To: <20090407071656.GE2924@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115930>
 
-On 2009.04.05 23:24:27 -0400, Nicolas Pitre wrote:
-> On Sun, 5 Apr 2009, Sverre Rabbelier wrote:
->=20
-> > Heya,
-> >=20
-> > On Sun, Apr 5, 2009 at 23:28,  <david@lang.hm> wrote:
-> > > Guys, back off a little on telling the gentoo people to change.
-> >=20
-> > I agree here, we should either say "look, we don't really support b=
-ig
-> > repositories because [explanation here], unless you [workarounds
-> > here]" OR we should work to improve the support we do have. Of cour=
-se,
-> > the latter option does not magically create developer time to work =
-on
-> > that, but if we do go that way we should at least tell people that =
-we
-> > are aware of the problems and that it's on the global TODO list (no=
-t
-> > necessarily on anyone's personal TODO list though).
->=20
-> For the record... I at least am aware of the problem and it is indeed=
- on=20
-> my personal git todo list.  Not that I have a clear solution yet (I'v=
-e=20
-> been pondering on some git packing issues for almost 4 years now).
->=20
-> Still, in this particular case, the problem appears to be unclear to =
-me,=20
-> like "this shouldn't be so bad".
+On Tue, Apr 7, 2009 at 9:16 AM, Jeff King <peff@peff.net> wrote:
+> This information is easily accessible when we are
+> calculating the relationship. The only reason not to print
+> it all the time is that it consumes a fair bit of screen
+> space, and may not be of interest to the user.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> This one is very RFC. Should this information be part of the regular
+> "-v"? Should it be part of "git branch" with regular verbosity?
+>
+> Should the format be different? I wonder if
+>
+> =A0master 1234abcd [origin/master: ahead 5, behind 6] whatever
+>
+> will be interpreted as "origin/master is ahead 5, behind 6" when it i=
+s
+> really the reverse. Maybe "[ahead 5, behind 6 from origin/master]" wo=
+uld
+> be better?
 
-It's not primarily pack-objects, I think. It's the rev-list that's run
-by upload-pack.  Running "git rev-list --objects --all" on that repo
-eats about 2G RSS, easily killing the system's cache on a small box,
-leading to swapping and a painful time reading the packfile contents
-afterwards to send them to the client.
+Yes I think so.
+Thanks a lot for your work!
 
-Bj=F6rn
+-Paolo
