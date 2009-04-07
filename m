@@ -1,74 +1,58 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH RFC 1/6] send-email: Add --delay for separating emails
-Date: Tue, 7 Apr 2009 17:51:43 -0400
-Message-ID: <20090407215143.GA18144@coredump.intra.peff.net>
-References: <1239139522-24118-1-git-send-email-mfwitten@gmail.com>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: Showing the version of a file that's in the Index.
+Date: Tue, 7 Apr 2009 23:57:47 +0200
+Message-ID: <200904072357.47881.markus.heidelberg@web.de>
+References: <c115fd3c0904071259y53b4b264u9c9957b68e36cc44@mail.gmail.com> <200904072210.05591.markus.heidelberg@web.de> <874ox0w7ak.fsf@iki.fi>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 07 23:53:36 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Tim Visher <tim.visher@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Tue Apr 07 23:59:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrJEN-0002Cf-AI
-	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 23:53:19 +0200
+	id 1LrJJv-0004UU-Hx
+	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 23:59:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753121AbZDGVvr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2009 17:51:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752356AbZDGVvr
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 17:51:47 -0400
-Received: from peff.net ([208.65.91.99]:49442 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752138AbZDGVvq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2009 17:51:46 -0400
-Received: (qmail 9717 invoked by uid 107); 7 Apr 2009 21:51:45 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 07 Apr 2009 17:51:45 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Apr 2009 17:51:43 -0400
+	id S932118AbZDGV5d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2009 17:57:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932106AbZDGV5c
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 17:57:32 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:33760 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932074AbZDGV5b (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2009 17:57:31 -0400
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate02.web.de (Postfix) with ESMTP id EB5CAFC7CCCC;
+	Tue,  7 Apr 2009 23:57:29 +0200 (CEST)
+Received: from [89.59.110.219] (helo=.)
+	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1LrJIP-0008UY-00; Tue, 07 Apr 2009 23:57:29 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <874ox0w7ak.fsf@iki.fi>
+Jabber-ID: markus.heidelberg@web.de
 Content-Disposition: inline
-In-Reply-To: <1239139522-24118-1-git-send-email-mfwitten@gmail.com>
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX18qNZFeislvLjsQdq6n7+OBhIl8hRarZVUYWN4U
+	6CCSF8jdvdKMQszPwna6NRxicazhADriTRlCcXGFPjf3VOOMqJ
+	Dtm7BAg08cLWgGGjnpKw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115999>
 
-On Tue, Apr 07, 2009 at 04:25:17PM -0500, Michael Witten wrote:
-
-> When sending a patch series, the emails often arrive at the final
-> destination out of order; though these emails should be chained
-> via the In-Reply-To headers, some mail-viewing systems display
-> by order of arrival instead.
+Teemu Likonen, 07.04.2009:
+> Or
 > 
-> The --delay option provides a means for specifying that there
-> should be a certain number of seconds of delay between sending
-> emails, so that the arrival order can be controlled better.
-> 
-> Signed-off-by: Michael Witten <mfwitten@gmail.com>
+>     git show :file
 
-I'm a little dubious how well this works in practice. Have you done any
-experiments?
-
-The reason I am dubious is that you are presumably delaying only a few
-seconds (since anything more would be quite annoying to the user). This
-may deal with a short race condition in your local mail server. But what
-is the real cause of out-of-order delivery? Is it the local mail server
-seeing two messages essentially "simultaneously" and then reordering
-them randomly? Or is it other random delays that happen _after_ that,
-like network congestion, DNS lookups, down or congested servers, time it
-takes to deliver the actual message body (e.g., if your mail server
-sends two simultaneously, but the first one is much larger and takes
-longer to complete), etc.
-
-Those delays can be much larger than a few seconds, and this won't help
-at all there.
-
-I think it may still be reasonable to implement a solution that only
-covers some of the cases, but I what I am asking is if we know what
-percentage of the cases that is. If we are preventing only 1% of
-out-of-order deliveries with this, I question whether it is worth the
-bother.
-
--Peff
+Huh, I use git-show daily for commits, but I completely forgot about it
+for files when replying. I already felt strange about having to pass an
+option.
