@@ -1,204 +1,318 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/5] for-each-ref: add "upstream" format field
-Date: Tue, 7 Apr 2009 03:09:39 -0400
-Message-ID: <20090407070939.GC2924@coredump.intra.peff.net>
+Subject: [PATCH 4/5] make get_short_ref a public function
+Date: Tue, 7 Apr 2009 03:14:20 -0400
+Message-ID: <20090407071420.GD2924@coredump.intra.peff.net>
 References: <20090407070254.GA2870@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	Santi =?utf-8?B?QsOpamFy?= <santi@agolina.net>
+Cc: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 07 09:11:30 2009
+X-From: git-owner@vger.kernel.org Tue Apr 07 09:16:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lr5Sz-0003XE-D7
-	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 09:11:29 +0200
+	id 1Lr5XX-0004q1-EA
+	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 09:16:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757168AbZDGHJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2009 03:09:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757909AbZDGHJq
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 03:09:46 -0400
-Received: from peff.net ([208.65.91.99]:52411 "EHLO peff.net"
+	id S1751740AbZDGHOi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2009 03:14:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751452AbZDGHOh
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 03:14:37 -0400
+Received: from peff.net ([208.65.91.99]:42611 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752919AbZDGHJp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2009 03:09:45 -0400
-Received: (qmail 369 invoked by uid 107); 7 Apr 2009 07:09:41 -0000
+	id S1751323AbZDGHOg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2009 03:14:36 -0400
+Received: (qmail 429 invoked by uid 107); 7 Apr 2009 07:14:22 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 07 Apr 2009 03:09:41 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Apr 2009 03:09:39 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 07 Apr 2009 03:14:22 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Apr 2009 03:14:20 -0400
 Content-Disposition: inline
 In-Reply-To: <20090407070254.GA2870@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115913>
 
-The logic for determining the upstream ref of a branch is
-somewhat complex to perform in a shell script. This patch
-provides a plumbing mechanism for scripts to access the C
-logic used internally by git-status, git-branch, etc.
+Often we want to shorten a full ref name to something "prettier"
+to show a user. For example, "refs/heads/master" is often shown
+simply as "master", or "refs/remotes/origin/master" is shown as
+"origin/master".
 
-For example:
+Many places in the code use a very simple formula: skip common
+prefixes like refs/heads, refs/remotes, etc. This is codified in
+the prettify_ref function.
 
-  $ git for-each-ref \
-       --format='%(refname:short) %(upstream:short)' \
-       refs/heads/
-  master origin/master
+for-each-ref has a more correct (but more expensive) approach:
+consider the ref lookup rules, and try shortening as much as
+possible while remaining unambiguous.
+
+This patch makes the latter strategy globally available as
+shorten_unambiguous_ref.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-This is a cleaned-up version of what I sent previously. Mainly just code
-cleanups, and it no longer frees the branch struct, which seems to be
-allocated from semi-permanent storage during branch_get.
+Actually, I am not quite sure that this function is "more correct". It
+looks at the rev-parsing rules as a hierarchy, so if you have
+"refs/remotes/foo" and "refs/heads/foo", then it will abbreviate the
+first to "remotes/foo" (as expected) and the latter to just "foo".
 
-Should the documentation explain the concept of "upstream" more fully? I
-noticed Santi sent a glossary patch earlier today, so maybe that is
-enough.
+This is technically correct, as "refs/heads/foo" will be selected by
+"foo", but it will warn about ambiguity. Should we actually try to avoid
+reporting refs which would be ambiguous?
 
- Documentation/git-for-each-ref.txt |    5 +++++
- builtin-for-each-ref.c             |   14 ++++++++++++++
- t/t6300-for-each-ref.sh            |   22 ++++++++++++++++++++++
- 3 files changed, 41 insertions(+), 0 deletions(-)
+Should this simply replace prettify_ref (and other places which should
+be using prettify_ref but aren't)? It is definitely more expensive, as
+it has to resolve refs to look for ambiguities, but I don't know if we
+care in most code paths.
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 5061d3e..b362e9e 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -85,6 +85,11 @@ objectsize::
- objectname::
- 	The object name (aka SHA-1).
- 
-+upstream::
-+	The name of a local ref which can be considered ``upstream''
-+	from the displayed ref. Respects `:short` in the same way as
-+	`refname` above.
-+
- In addition to the above, for commit and tag objects, the header
- field names (`tree`, `parent`, `object`, `type`, and `tag`) can
- be used to specify the value in the header field.
+ builtin-for-each-ref.c |  105 +-----------------------------------------------
+ refs.c                 |   99 +++++++++++++++++++++++++++++++++++++++++++++
+ refs.h                 |    1 +
+ 3 files changed, 101 insertions(+), 104 deletions(-)
+
 diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
-index b50c93b..277d1fb 100644
+index 277d1fb..8c82484 100644
 --- a/builtin-for-each-ref.c
 +++ b/builtin-for-each-ref.c
-@@ -8,6 +8,7 @@
- #include "blob.h"
- #include "quote.h"
- #include "parse-options.h"
-+#include "remote.h"
- 
- /* Quoting styles */
- #define QUOTE_NONE 0
-@@ -66,6 +67,7 @@ static struct {
- 	{ "subject" },
- 	{ "body" },
- 	{ "contents" },
-+	{ "upstream" },
- };
- 
- /*
-@@ -682,6 +684,18 @@ static void populate_value(struct refinfo *ref)
- 
- 		if (!prefixcmp(name, "refname"))
- 			refname = ref->refname;
-+		else if(!prefixcmp(name, "upstream")) {
-+			struct branch *branch;
-+			/* only local branches may have an upstream */
-+			if (prefixcmp(ref->refname, "refs/heads/"))
-+				continue;
-+			branch = branch_get(ref->refname + 11);
-+
-+			if (!branch || !branch->merge || !branch->merge[0] ||
-+			    !branch->merge[0]->dst)
-+				continue;
-+			refname = branch->merge[0]->dst;
-+		}
- 		else
- 			continue;
- 
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 8bfae44..daf02d5 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -26,6 +26,13 @@ test_expect_success 'Create sample commit with known timestamp' '
- 	git tag -a -m "Tagging at $datestamp" testtag
- '
- 
-+test_expect_success 'Create upstream config' '
-+	git update-ref refs/remotes/origin/master master &&
-+	git remote add origin nowhere &&
-+	git config branch.master.remote origin &&
-+	git config branch.master.merge refs/heads/master
-+'
-+
- test_atom() {
- 	case "$1" in
- 		head) ref=refs/heads/master ;;
-@@ -39,6 +46,7 @@ test_atom() {
+@@ -546,109 +546,6 @@ static void grab_values(struct atom_value *val, int deref, struct object *obj, v
  }
  
- test_atom head refname refs/heads/master
-+test_atom head upstream refs/remotes/origin/master
- test_atom head objecttype commit
- test_atom head objectsize 171
- test_atom head objectname 67a36f10722846e891fbada1ba48ed035de75581
-@@ -68,6 +76,7 @@ test_atom head contents 'Initial
- '
- 
- test_atom tag refname refs/tags/testtag
-+test_atom tag upstream ''
- test_atom tag objecttype tag
- test_atom tag objectsize 154
- test_atom tag objectname 98b46b1d36e5b07909de1b3886224e3e81e87322
-@@ -203,6 +212,7 @@ test_expect_success 'Check format "rfc2822" date fields output' '
- 
- cat >expected <<\EOF
- refs/heads/master
-+refs/remotes/origin/master
- refs/tags/testtag
- EOF
- 
-@@ -214,6 +224,7 @@ test_expect_success 'Verify ascending sort' '
- 
- cat >expected <<\EOF
- refs/tags/testtag
-+refs/remotes/origin/master
- refs/heads/master
- EOF
- 
-@@ -224,6 +235,7 @@ test_expect_success 'Verify descending sort' '
- 
- cat >expected <<\EOF
- 'refs/heads/master'
-+'refs/remotes/origin/master'
- 'refs/tags/testtag'
- EOF
- 
-@@ -244,6 +256,7 @@ test_expect_success 'Quoting style: python' '
- 
- cat >expected <<\EOF
- "refs/heads/master"
-+"refs/remotes/origin/master"
- "refs/tags/testtag"
- EOF
- 
-@@ -273,6 +286,15 @@ test_expect_success 'Check short refname format' '
- 	test_cmp expected actual
- '
- 
-+cat >expected <<EOF
-+origin/master
-+EOF
+ /*
+- * generate a format suitable for scanf from a ref_rev_parse_rules
+- * rule, that is replace the "%.*s" spec with a "%s" spec
+- */
+-static void gen_scanf_fmt(char *scanf_fmt, const char *rule)
+-{
+-	char *spec;
+-
+-	spec = strstr(rule, "%.*s");
+-	if (!spec || strstr(spec + 4, "%.*s"))
+-		die("invalid rule in ref_rev_parse_rules: %s", rule);
+-
+-	/* copy all until spec */
+-	strncpy(scanf_fmt, rule, spec - rule);
+-	scanf_fmt[spec - rule] = '\0';
+-	/* copy new spec */
+-	strcat(scanf_fmt, "%s");
+-	/* copy remaining rule */
+-	strcat(scanf_fmt, spec + 4);
+-
+-	return;
+-}
+-
+-/*
+- * Shorten the refname to an non-ambiguous form
+- */
+-static char *get_short_ref(const char *ref)
+-{
+-	int i;
+-	static char **scanf_fmts;
+-	static int nr_rules;
+-	char *short_name;
+-
+-	/* pre generate scanf formats from ref_rev_parse_rules[] */
+-	if (!nr_rules) {
+-		size_t total_len = 0;
+-
+-		/* the rule list is NULL terminated, count them first */
+-		for (; ref_rev_parse_rules[nr_rules]; nr_rules++)
+-			/* no +1 because strlen("%s") < strlen("%.*s") */
+-			total_len += strlen(ref_rev_parse_rules[nr_rules]);
+-
+-		scanf_fmts = xmalloc(nr_rules * sizeof(char *) + total_len);
+-
+-		total_len = 0;
+-		for (i = 0; i < nr_rules; i++) {
+-			scanf_fmts[i] = (char *)&scanf_fmts[nr_rules]
+-					+ total_len;
+-			gen_scanf_fmt(scanf_fmts[i], ref_rev_parse_rules[i]);
+-			total_len += strlen(ref_rev_parse_rules[i]);
+-		}
+-	}
+-
+-	/* bail out if there are no rules */
+-	if (!nr_rules)
+-		return xstrdup(ref);
+-
+-	/* buffer for scanf result, at most ref must fit */
+-	short_name = xstrdup(ref);
+-
+-	/* skip first rule, it will always match */
+-	for (i = nr_rules - 1; i > 0 ; --i) {
+-		int j;
+-		int short_name_len;
+-
+-		if (1 != sscanf(ref, scanf_fmts[i], short_name))
+-			continue;
+-
+-		short_name_len = strlen(short_name);
+-
+-		/*
+-		 * check if the short name resolves to a valid ref,
+-		 * but use only rules prior to the matched one
+-		 */
+-		for (j = 0; j < i; j++) {
+-			const char *rule = ref_rev_parse_rules[j];
+-			unsigned char short_objectname[20];
+-			char refname[PATH_MAX];
+-
+-			/*
+-			 * the short name is ambiguous, if it resolves
+-			 * (with this previous rule) to a valid ref
+-			 * read_ref() returns 0 on success
+-			 */
+-			mksnpath(refname, sizeof(refname),
+-				 rule, short_name_len, short_name);
+-			if (!read_ref(refname, short_objectname))
+-				break;
+-		}
+-
+-		/*
+-		 * short name is non-ambiguous if all previous rules
+-		 * haven't resolved to a valid ref
+-		 */
+-		if (j == i)
+-			return short_name;
+-	}
+-
+-	free(short_name);
+-	return xstrdup(ref);
+-}
+-
+-
+-/*
+  * Parse the object referred by ref, and grab needed value.
+  */
+ static void populate_value(struct refinfo *ref)
+@@ -704,7 +601,7 @@ static void populate_value(struct refinfo *ref)
+ 		if (formatp) {
+ 			formatp++;
+ 			if (!strcmp(formatp, "short"))
+-				refname = get_short_ref(refname);
++				refname = shorten_unambiguous_ref(refname);
+ 			else
+ 				die("unknown %.*s format %s",
+ 					formatp - name, name, formatp);
+diff --git a/refs.c b/refs.c
+index 59c373f..1e5e7b4 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1652,3 +1652,102 @@ struct ref *find_ref_by_name(const struct ref *list, const char *name)
+ 			return (struct ref *)list;
+ 	return NULL;
+ }
 +
-+test_expect_success 'Check short upstream format' '
-+	git for-each-ref --format="%(upstream:short)" refs/heads >actual &&
-+	test_cmp expected actual
-+'
++/*
++ * generate a format suitable for scanf from a ref_rev_parse_rules
++ * rule, that is replace the "%.*s" spec with a "%s" spec
++ */
++static void gen_scanf_fmt(char *scanf_fmt, const char *rule)
++{
++	char *spec;
 +
- test_expect_success 'Check for invalid refname format' '
- 	test_must_fail git for-each-ref --format="%(refname:INVALID)"
- '
++	spec = strstr(rule, "%.*s");
++	if (!spec || strstr(spec + 4, "%.*s"))
++		die("invalid rule in ref_rev_parse_rules: %s", rule);
++
++	/* copy all until spec */
++	strncpy(scanf_fmt, rule, spec - rule);
++	scanf_fmt[spec - rule] = '\0';
++	/* copy new spec */
++	strcat(scanf_fmt, "%s");
++	/* copy remaining rule */
++	strcat(scanf_fmt, spec + 4);
++
++	return;
++}
++
++char *shorten_unambiguous_ref(const char *ref)
++{
++	int i;
++	static char **scanf_fmts;
++	static int nr_rules;
++	char *short_name;
++
++	/* pre generate scanf formats from ref_rev_parse_rules[] */
++	if (!nr_rules) {
++		size_t total_len = 0;
++
++		/* the rule list is NULL terminated, count them first */
++		for (; ref_rev_parse_rules[nr_rules]; nr_rules++)
++			/* no +1 because strlen("%s") < strlen("%.*s") */
++			total_len += strlen(ref_rev_parse_rules[nr_rules]);
++
++		scanf_fmts = xmalloc(nr_rules * sizeof(char *) + total_len);
++
++		total_len = 0;
++		for (i = 0; i < nr_rules; i++) {
++			scanf_fmts[i] = (char *)&scanf_fmts[nr_rules]
++					+ total_len;
++			gen_scanf_fmt(scanf_fmts[i], ref_rev_parse_rules[i]);
++			total_len += strlen(ref_rev_parse_rules[i]);
++		}
++	}
++
++	/* bail out if there are no rules */
++	if (!nr_rules)
++		return xstrdup(ref);
++
++	/* buffer for scanf result, at most ref must fit */
++	short_name = xstrdup(ref);
++
++	/* skip first rule, it will always match */
++	for (i = nr_rules - 1; i > 0 ; --i) {
++		int j;
++		int short_name_len;
++
++		if (1 != sscanf(ref, scanf_fmts[i], short_name))
++			continue;
++
++		short_name_len = strlen(short_name);
++
++		/*
++		 * check if the short name resolves to a valid ref,
++		 * but use only rules prior to the matched one
++		 */
++		for (j = 0; j < i; j++) {
++			const char *rule = ref_rev_parse_rules[j];
++			unsigned char short_objectname[20];
++			char refname[PATH_MAX];
++
++			/*
++			 * the short name is ambiguous, if it resolves
++			 * (with this previous rule) to a valid ref
++			 * read_ref() returns 0 on success
++			 */
++			mksnpath(refname, sizeof(refname),
++				 rule, short_name_len, short_name);
++			if (!read_ref(refname, short_objectname))
++				break;
++		}
++
++		/*
++		 * short name is non-ambiguous if all previous rules
++		 * haven't resolved to a valid ref
++		 */
++		if (j == i)
++			return short_name;
++	}
++
++	free(short_name);
++	return xstrdup(ref);
++}
+diff --git a/refs.h b/refs.h
+index 68c2d16..2d0f961 100644
+--- a/refs.h
++++ b/refs.h
+@@ -80,6 +80,7 @@ extern int for_each_reflog(each_ref_fn, void *);
+ extern int check_ref_format(const char *target);
+ 
+ extern const char *prettify_ref(const struct ref *ref);
++extern char *shorten_unambiguous_ref(const char *ref);
+ 
+ /** rename ref, return 0 on success **/
+ extern int rename_ref(const char *oldref, const char *newref, const char *logmsg);
 -- 
 1.6.2.2.450.gd6aa9.dirty
