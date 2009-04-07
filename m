@@ -1,88 +1,54 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Performance issue: initial git clone causes massive repack
-Date: Tue, 07 Apr 2009 14:56:41 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0904071454250.6741@xanadu.home>
-References: <20090405070412.GB869@curie-int> <20090405190213.GA12929@vidovic>
- <alpine.DEB.1.10.0904051419490.6245@asgard.lang.hm>
- <fabb9a1e0904051436i1dc9c1bdhe86a23e470c756f9@mail.gmail.com>
- <alpine.LFD.2.00.0904052315210.6741@xanadu.home>
- <20090407081019.GK20356@atjola.homenet> <m3tz5023rq.fsf@localhost.localdomain>
- <alpine.LFD.2.00.0904070903020.6741@xanadu.home>
- <20090407142147.GA4413@atjola.homenet>
- <alpine.LFD.2.00.0904071321520.6741@xanadu.home>
- <20090407181259.GB4413@atjola.homenet>
+From: Paul Vincent Craven <paul@cravenfamily.com>
+Subject: Re: git over http not re-authenticating after 301 redirect?
+Date: Tue, 7 Apr 2009 14:25:53 -0500
+Message-ID: <5591393c0904071225w7d5a426ap50cb5f973e34f802@mail.gmail.com>
+References: <5591393c0904061914y5ea26812kcfc0d14b52ed4300@mail.gmail.com>
+	 <Pine.LNX.4.64.0904071041200.5901@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_ExWHMs053BD5L7jEVUY/8A)"
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>, david@lang.hm,
-	Junio C Hamano <gitster@pobox.com>,
-	Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
-	"Robin H. Johnson" <robbat2@gentoo.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Apr 07 21:04:13 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?Q?Martin_Storsj=F6?= <martin@martin.st>
+X-From: git-owner@vger.kernel.org Tue Apr 07 21:27:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrGVh-0000x1-MN
-	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 20:59:02 +0200
+	id 1LrGxP-0004Nu-2L
+	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 21:27:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760826AbZDGS4v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2009 14:56:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760776AbZDGS4u
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 14:56:50 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:42502 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756984AbZDGS4t (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2009 14:56:49 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KHQ00K3AVAHG710@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 07 Apr 2009 14:56:43 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20090407181259.GB4413@atjola.homenet>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1754218AbZDGTZ4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Apr 2009 15:25:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753271AbZDGTZ4
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 15:25:56 -0400
+Received: from yw-out-2324.google.com ([74.125.46.30]:57891 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751911AbZDGTZz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Apr 2009 15:25:55 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so2767140ywb.1
+        for <git@vger.kernel.org>; Tue, 07 Apr 2009 12:25:54 -0700 (PDT)
+Received: by 10.231.20.3 with SMTP id d3mr171531ibb.18.1239132353257; Tue, 07 
+	Apr 2009 12:25:53 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0904071041200.5901@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115979>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Tue, Apr 7, 2009 at 2:42 AM, Martin Storsj=F6 <martin@martin.st> wro=
+te:
 
---Boundary_(ID_ExWHMs053BD5L7jEVUY/8A)
-Content-type: TEXT/PLAIN; charset=iso-8859-1
-Content-transfer-encoding: 8BIT
+> It's a long shot, but try see if you can upgrade to a newer version o=
+f
+> libcurl; I think I saw some issue like this when I was experimenting =
+with
+> different http auth setups last week, that was solved by using newer
+> versions...
 
-On Tue, 7 Apr 2009, Björn Steinbrink wrote:
+No luck, but thanks for the suggestion. Updating to the March 3 build
+of curl 7.19.4 yielded the same results.
 
-> On 2009.04.07 13:48:02 -0400, Nicolas Pitre wrote:
-> > The first low hanging fruit to help this case is to make upload-pack use 
-> > the --revs argument with pack-object to let it do the object enumeration 
-> > itself directly, instead of relying on the rev-list output through a 
-> > pipe.  This is what 'git repack' does already.  pack-objects has to 
-> > access the pack anyway, so this would eliminate an extra access from a 
-> > different process.
-> 
-> Hm, for an initial clone that would end up as:
-> git pack-objects --stdout --all
-> right?
-> 
-> If so, that doesn't look it it's going to work out as easily as one
-> would hope. Robin said that both processes, git-upload-pack (which does
-> the rev-list) and pack-objects peaked at ~2GB of RSS (which probably
-> includes the mmapped packs). But the above pack-objects with --all peaks
-> at 3.1G here, so it basically seems to keep all the stuff in memory that
-> the individual processes had. But this way, it's all at once, not 2G
-> first and then 2G in a second process, after the first one exitted.
-
-Right, and it is probably faster too.
-
-Can I get a copy of that repository somewhere?
-
-
-Nicolas
-
---Boundary_(ID_ExWHMs053BD5L7jEVUY/8A)--
+--=20
+Paul Vincent Craven
+http://www.cravenfamily.com
