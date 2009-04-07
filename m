@@ -1,106 +1,74 @@
-From: demerphq <demerphq@gmail.com>
-Subject: Re: [PATCH RFC 6/6] send-email: Remove horrible mix of tabs and 
-	spaces
-Date: Tue, 7 Apr 2009 23:44:31 +0200
-Message-ID: <9b18b3110904071444g2a8c4b66l9c22bd5ffabe3d6a@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH RFC 1/6] send-email: Add --delay for separating emails
+Date: Tue, 7 Apr 2009 17:51:43 -0400
+Message-ID: <20090407215143.GA18144@coredump.intra.peff.net>
 References: <1239139522-24118-1-git-send-email-mfwitten@gmail.com>
-	 <1239139522-24118-2-git-send-email-mfwitten@gmail.com>
-	 <1239139522-24118-3-git-send-email-mfwitten@gmail.com>
-	 <1239139522-24118-4-git-send-email-mfwitten@gmail.com>
-	 <1239139522-24118-5-git-send-email-mfwitten@gmail.com>
-	 <1239139522-24118-6-git-send-email-mfwitten@gmail.com>
-	 <9b18b3110904071435p320e5d1dh16061d04a3a8ab57@mail.gmail.com>
-	 <b4087cc50904071442ka298564x52112c1eac9ac284@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 07 23:46:13 2009
+X-From: git-owner@vger.kernel.org Tue Apr 07 23:53:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrJ7T-00008S-Kj
-	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 23:46:12 +0200
+	id 1LrJEN-0002Cf-AI
+	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 23:53:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756622AbZDGVof convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Apr 2009 17:44:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753471AbZDGVod
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 17:44:33 -0400
-Received: from qw-out-2122.google.com ([74.125.92.27]:42071 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751716AbZDGVod convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Apr 2009 17:44:33 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so3225079qwh.37
-        for <git@vger.kernel.org>; Tue, 07 Apr 2009 14:44:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=kSFToWvsfg1R/Mj8NIGqqWAonXRlUZO54eNDSsdEiwg=;
-        b=j6UPRidTX3bTSPcyjYDdpv6yJcExWtpIWNNYOnGXQUMWo9EZP6uvRFZg9hFunNE4XI
-         yuSlM9jLuCMVWKdDLhPWpJATodgBc8Zn7AtPqgF71ATHLDt3IfcbG5ReGPOcERGTcVsx
-         prv6JpTzL0kFGipzEyFF89oPbokC46wPDt5ng=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=XLyjeE77KXb1JvwzT/3bVRDo/qnK21/XS2J8YkJAzyTQL4aXsmDJ8HlbMSC7M+kpuB
-         lg5X1FwJG2zb2q2+GBgHAb6BvlmCYIiq+/JRCvQjUfenq2aDR+uNGmjP0ndtEKu2iL69
-         7M2X4BEGhsenIw1f7xQDtR6AO8EwQXz4irQgg=
-Received: by 10.231.15.74 with SMTP id j10mr207176iba.10.1239140671377; Tue, 
-	07 Apr 2009 14:44:31 -0700 (PDT)
-In-Reply-To: <b4087cc50904071442ka298564x52112c1eac9ac284@mail.gmail.com>
+	id S1753121AbZDGVvr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2009 17:51:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752356AbZDGVvr
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 17:51:47 -0400
+Received: from peff.net ([208.65.91.99]:49442 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752138AbZDGVvq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2009 17:51:46 -0400
+Received: (qmail 9717 invoked by uid 107); 7 Apr 2009 21:51:45 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 07 Apr 2009 17:51:45 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Apr 2009 17:51:43 -0400
+Content-Disposition: inline
+In-Reply-To: <1239139522-24118-1-git-send-email-mfwitten@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115998>
 
-2009/4/7 Michael Witten <mfwitten@gmail.com>:
-> On Tue, Apr 7, 2009 at 16:35, demerphq <demerphq@gmail.com> wrote:
->> 2009/4/7 Michael Witten <mfwitten@gmail.com>:
->>> +## WARNING! ACHTUNG! ATTENTION! ADVERTENCIA!
->>> +## =A0 Currently, this file uses tabs (like the rest of git source=
-) to
->>> +## =A0 delineate code structure. Do NOT under any circumstances mi=
-x tabs
->>> +## =A0 and spaces across lines that share a relationship in terms =
-of layout.
->>> +## =A0 In fact, it would currently be best to use only tabs, so pl=
-ease set
->>> +## =A0 your editor(s) accordingly. This code is already trashy eno=
-ugh. Please
->>> +## =A0 don't make it worse.
->>
->> Perltidy the file?
->>
->> Yves
->
-> Oooh, that's sexy!
->
-> I'll have to give that a try. However, I've been entertaining the ide=
-a
-> of rewriting the whole thing anyway; it's in need of much more than
-> reformatting.
+On Tue, Apr 07, 2009 at 04:25:17PM -0500, Michael Witten wrote:
 
-Yes. I notice evilness in there. Not necessarily dire burn your house
-down evilness, but evilness none the less.
+> When sending a patch series, the emails often arrive at the final
+> destination out of order; though these emails should be chained
+> via the In-Reply-To headers, some mail-viewing systems display
+> by order of arrival instead.
+> 
+> The --delay option provides a means for specifying that there
+> should be a certain number of seconds of delay between sending
+> emails, so that the arrival order can be controlled better.
+> 
+> Signed-off-by: Michael Witten <mfwitten@gmail.com>
 
-> As a side note, Yves, I sent the patches to perl5-porters again about
-> 1.6666666 hours ago, but nothing seems to have come through; I'll try
-> again later.
+I'm a little dubious how well this works in practice. Have you done any
+experiments?
 
-You mean the 14 patches I just applied and pushed to blead?
+The reason I am dubious is that you are presumably delaying only a few
+seconds (since anything more would be quite annoying to the user). This
+may deal with a short race condition in your local mail server. But what
+is the real cause of out-of-order delivery? Is it the local mail server
+seeing two messages essentially "simultaneously" and then reordering
+them randomly? Or is it other random delays that happen _after_ that,
+like network congestion, DNS lookups, down or congested servers, time it
+takes to deliver the actual message body (e.g., if your mail server
+sends two simultaneously, but the first one is much larger and takes
+longer to complete), etc.
 
-:-)
+Those delays can be much larger than a few seconds, and this won't help
+at all there.
 
-cheers,
-Yves
+I think it may still be reasonable to implement a solution that only
+covers some of the cases, but I what I am asking is if we know what
+percentage of the cases that is. If we are preventing only 1% of
+out-of-order deliveries with this, I question whether it is worth the
+bother.
 
-
-
---=20
-perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
+-Peff
