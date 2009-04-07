@@ -1,71 +1,85 @@
-From: "Octavio Alvarez" <alvarezp@alvarezp.ods.org>
-Subject: Re: [RFC/PATCH 0/2] New 'stage' command
-Date: Tue, 07 Apr 2009 00:38:18 -0700
-Message-ID: <op.urz95k0q4oyyg1@localhost.localdomain>
-References: <1238939331-10152-1-git-send-email-felipe.contreras@gmail.com>
- <200904052358.53028.markus.heidelberg@web.de>
- <94a0d4530904051535v8bd901fsedecdf61bc4acb33@mail.gmail.com>
- <200904060117.24810.markus.heidelberg@web.de>
- <fabb9a1e0904051622k66352ea4v542ecd99bd5d9c6@mail.gmail.com>
- <20090406032457.GA14758@gmail.com> <7v63hie4yh.fsf@gitster.siamese.dyndns.org>
- <871vs5kjfw.fsf@krank.kagedal.org> <7vy6ud4otd.fsf@gitster.siamese.dyndns.org>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH] for-each-ref: remove multiple xstrdup() in 
+	get_short_ref()
+Date: Tue, 7 Apr 2009 09:54:23 +0200
+Message-ID: <36ca99e90904070054y3bbd21e0g44548162e71f3a13@mail.gmail.com>
+References: <20090407070254.GA2870@coredump.intra.peff.net>
+	 <1239089599-24760-1-git-send-email-bert.wesarg@googlemail.com>
+	 <20090407074435.GB7327@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; delsp=yes; charset=iso-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "David Aguilar" <davvid@gmail.com>,
-	"Sverre Rabbelier" <srabbelier@gmail.com>,
-	markus.heidelberg@web.de,
-	"Felipe Contreras" <felipe.contreras@gmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>,
-	=?iso-8859-1?Q?David_K=E5gedal?= <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Tue Apr 07 09:54:26 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Apr 07 09:55:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lr68S-00061f-Df
-	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 09:54:20 +0200
+	id 1Lr6A0-0006P6-Dm
+	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 09:55:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752152AbZDGHwq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2009 03:52:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751930AbZDGHwq
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 03:52:46 -0400
-Received: from spider.alvarezp.com ([66.150.225.106]:41109 "EHLO
-	spider.alvarezp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751793AbZDGHwp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2009 03:52:45 -0400
-X-Greylist: delayed 845 seconds by postgrey-1.27 at vger.kernel.org; Tue, 07 Apr 2009 03:52:45 EDT
-Received: from localhost.localdomain (201.160.155.130.cable.dyn.cableonline.com.mx [201.160.155.130])
-	(authenticated bits=0)
-	by spider.alvarezp.com (8.13.8/8.13.8/Debian-3) with ESMTP id n377cN3T021598
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NOT);
-	Tue, 7 Apr 2009 00:38:29 -0700
-In-Reply-To: <7vy6ud4otd.fsf@gitster.siamese.dyndns.org>
-User-Agent: Opera Mail/10.00 (Linux)
+	id S1753580AbZDGHy2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Apr 2009 03:54:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753517AbZDGHy1
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 03:54:27 -0400
+Received: from mail-bw0-f169.google.com ([209.85.218.169]:57241 "EHLO
+	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752249AbZDGHy0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Apr 2009 03:54:26 -0400
+Received: by bwz17 with SMTP id 17so2181005bwz.37
+        for <git@vger.kernel.org>; Tue, 07 Apr 2009 00:54:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=zeygc2jHG0GCOg3i4dAyBhA7ZdVh/kMrNsQvZ5ow76U=;
+        b=FGT4TdN0XpdxL0OX7g1/v5NZCIqMJVikZk2lXodMA20jNPwkzniKntC4rxSdiAT1+U
+         dc/XgGEe4D/eMUgQaksVGmTGDcUR7+hAS1gT4Kvf+TblHRrQ7W/RpnBOxV8A6BLkLng5
+         OvT7nXELCOt7+F/p+fvh/m/Vb9LPelVd/k83c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=L4DvPyTU+EE7yYd764jKANJSel5Kah2fLyyIIUCWflXSfd06ezh1Nt84IBvTEu0R0q
+         oLd6ncrtpi4Tr5of9rHPOAXgd7ChoLnLCvR5WiAJIJAC2aO3lQMDaiAXR29TR61b8U/H
+         IB2M4d4NQ8emzNV65+pzbsa+bkCOFb6vxIsN0=
+Received: by 10.204.76.129 with SMTP id c1mr2479929bkk.9.1239090863769; Tue, 
+	07 Apr 2009 00:54:23 -0700 (PDT)
+In-Reply-To: <20090407074435.GB7327@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115924>
 
-On Mon, 06 Apr 2009 11:30:54 -0700, Junio C Hamano <gitster@pobox.com> wrote:
->    - when you want to work with the index, you say --cached;
+On Tue, Apr 7, 2009 at 09:44, Jeff King <peff@peff.net> wrote:
+> On Tue, Apr 07, 2009 at 09:33:19AM +0200, Bert Wesarg wrote:
 >
->    - when you want to work with both the index and the work tree at the
->      same time, you say --index.
+>> Now that get_short_ref() always return an malloced string, consolida=
+te to
+>> one xstrcpy() call.
+>
+> Makes sense to squash in on top of what I have. But I think it actual=
+ly
+> is pretty easy to always return a pointer into the existing string
+> (patch based on current master):
+Yes, thats probably a good idea. The caller can always do a
+xstrdup(get_short_ref(ref)).
 
-This is where I also think the options are messed up.
+> @@ -637,12 +637,14 @@ static char *get_short_ref(struct refinfo *ref)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * short name =
+is non-ambiguous if all previous rules
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * haven't res=
+olved to a valid ref
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 */
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (j =3D=3D i)
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 return short_name;
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (j =3D=3D i) {
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 ref +=3D strlen(ref) - strlen(short_name);
+we have strlen(short_name) in short_name_len already.
 
-If I want to work with the "index", shouldn't I use... uhh... "--index"?
-
-If I want to work with both, shouldn't I use something like "--both"?
-
-"And if --index works with the workcopy and index, will --cache use both,
-the workcopy and the cache?"
-
-To a new user like me, these options don't look like they refer to different
-actions, but to different existing things. Those options say that there is
-an index, and there is a cache.
-
-(Now I learned all of this through reading the docs which is not hard, but
-reading this from the man pages is not intuitive at all.)
+Bert
