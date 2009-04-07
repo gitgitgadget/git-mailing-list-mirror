@@ -1,80 +1,72 @@
-From: demerphq <demerphq@gmail.com>
-Subject: Re: [PATCH RFC 6/6] send-email: Remove horrible mix of tabs and 
-	spaces
-Date: Tue, 7 Apr 2009 23:35:07 +0200
-Message-ID: <9b18b3110904071435p320e5d1dh16061d04a3a8ab57@mail.gmail.com>
-References: <1239139522-24118-1-git-send-email-mfwitten@gmail.com>
-	 <1239139522-24118-2-git-send-email-mfwitten@gmail.com>
-	 <1239139522-24118-3-git-send-email-mfwitten@gmail.com>
-	 <1239139522-24118-4-git-send-email-mfwitten@gmail.com>
-	 <1239139522-24118-5-git-send-email-mfwitten@gmail.com>
-	 <1239139522-24118-6-git-send-email-mfwitten@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] for-each-ref: remove multiple xstrdup() in
+	get_short_ref()
+Date: Tue, 7 Apr 2009 17:41:44 -0400
+Message-ID: <20090407214144.GA17962@coredump.intra.peff.net>
+References: <20090407070254.GA2870@coredump.intra.peff.net> <1239089599-24760-1-git-send-email-bert.wesarg@googlemail.com> <20090407074435.GB7327@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 07 23:37:08 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 07 23:44:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrIyU-0005oQ-0O
-	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 23:36:54 +0200
+	id 1LrJ5Y-00080q-LS
+	for gcvg-git-2@gmane.org; Tue, 07 Apr 2009 23:44:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932112AbZDGVfN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Apr 2009 17:35:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760881AbZDGVfL
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 17:35:11 -0400
-Received: from mail-qy0-f118.google.com ([209.85.221.118]:56451 "EHLO
-	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760773AbZDGVfJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Apr 2009 17:35:09 -0400
-Received: by qyk16 with SMTP id 16so5305716qyk.33
-        for <git@vger.kernel.org>; Tue, 07 Apr 2009 14:35:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=l17pIOcTuwcpF93bAH1UwN8MKQ58T09FULKvypSqOrQ=;
-        b=rLoxIcNdp2lnV+/A2LVs/Xj5qmNims+gVvA7TpwauNIgkq3o/Z1gKzxVScfpt6e3F1
-         ZSO4vWgwyJwrgmJ6KQpub8ig9/OyPEZ/zBc9qgVgWliv5TRfGCuKZLXRkuwcVNkD9fKA
-         Ljl3icA6GoX6QQkooZYDAXgTnVQNfxMix0sBY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Wez/+IwLabVn3MkRIqwvxGblqzkyWFasv18DbPL4tFPz2v28ZxBBElJf6K1wQVO+a+
-         Hdw8VIOd0dN7GwbI4MV3t9KwEbUL3eoajqWJ7if6UpAfc/jTrNyr8F10AkmSHmVXXxDs
-         GiWMUi8e5AA6dfISfvLEVuJdvUQdqofDWO7io=
-Received: by 10.231.15.202 with SMTP id l10mr199916iba.35.1239140107441; Tue, 
-	07 Apr 2009 14:35:07 -0700 (PDT)
-In-Reply-To: <1239139522-24118-6-git-send-email-mfwitten@gmail.com>
+	id S1761799AbZDGVlt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2009 17:41:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761728AbZDGVls
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 17:41:48 -0400
+Received: from peff.net ([208.65.91.99]:51708 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761770AbZDGVlr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2009 17:41:47 -0400
+Received: (qmail 9591 invoked by uid 107); 7 Apr 2009 21:41:46 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 07 Apr 2009 17:41:46 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Apr 2009 17:41:44 -0400
+Content-Disposition: inline
+In-Reply-To: <20090407074435.GB7327@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/115995>
 
-2009/4/7 Michael Witten <mfwitten@gmail.com>:
-> +## WARNING! ACHTUNG! ATTENTION! ADVERTENCIA!
-> +## =A0 Currently, this file uses tabs (like the rest of git source) =
-to
-> +## =A0 delineate code structure. Do NOT under any circumstances mix =
-tabs
-> +## =A0 and spaces across lines that share a relationship in terms of=
- layout.
-> +## =A0 In fact, it would currently be best to use only tabs, so plea=
-se set
-> +## =A0 your editor(s) accordingly. This code is already trashy enoug=
-h. Please
-> +## =A0 don't make it worse.
+On Tue, Apr 07, 2009 at 03:44:35AM -0400, Jeff King wrote:
 
-Perltidy the file?
+> +		if (1 != sscanf(ref, scanf_fmts[i], short_name))
+> [...]
+> +		if (j == i) {
+> +			ref += strlen(ref) - strlen(short_name);
+> +			break;
+> +		}
 
-Yves
+Actually, I am not sure this is correct, either. It is making the
+assumption that the short_name is always a suffix of the ref. But one of
+the rev_parse_rules is:
 
+     "refs/remotes/%.*s/HEAD"
 
---=20
-perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
+for which this is not true. _But_ as it happens, this rule doesn't
+actually work in reverse because of the way scanf works with %s. The
+code:
+
+    sscanf("refs/remotes/origin/HEAD", "refs/remotes/%s/HEAD", buf);
+
+will put "origin/HEAD" in buf, not "origin"; %s eats until it sees
+whitespace (which should not be occuring in a ref, fortunately).
+
+So it actually _is_ correct to assume with the current code that the
+short_name is always a suffix, but I am not sure if that is what we
+actually want. We will always see "$remote/HEAD" instead of "$remote".
+
+Part of me actually thinks the "incorrect" behavior we are doing now is
+actually more explicit and readable. But if that is the case, we should
+perhaps simply be excluding that final rule explicitly, and then our
+"suffix" assumption will hold.
+
+-Peff
