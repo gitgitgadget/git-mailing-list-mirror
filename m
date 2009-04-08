@@ -1,81 +1,49 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [EGIT PATCH 1/4] Add actual test for success to ConnectOperationTest
-Date: Wed,  8 Apr 2009 17:51:28 +0200
-Message-ID: <1239205891-28236-1-git-send-email-robin.rosenberg@dewire.com>
-Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
-To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Wed Apr 08 17:54:11 2009
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: Bug report - git show <tagname> together with --pretty=format
+Date: Wed, 8 Apr 2009 18:37:21 +0200
+Message-ID: <adf1fd3d0904080937v634c5b69rffa7a737f22a3768@mail.gmail.com>
+References: <49DC9F07.4090105@gmx.de> <49DCC295.7010908@drmicha.warpmail.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Cornelius <c.r1@gmx.de>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Apr 08 18:39:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lra66-0003ue-El
-	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 17:53:54 +0200
+	id 1Lranl-0005Un-Mg
+	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 18:39:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752716AbZDHPvk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Apr 2009 11:51:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755220AbZDHPvi
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 11:51:38 -0400
-Received: from mail.dewire.com ([83.140.172.130]:6919 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751027AbZDHPvi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Apr 2009 11:51:38 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id A0E0C14915DB;
-	Wed,  8 Apr 2009 17:51:36 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0Rgm4REGFh0P; Wed,  8 Apr 2009 17:51:36 +0200 (CEST)
-Received: from localhost.localdomain (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id 0D42214915D6;
-	Wed,  8 Apr 2009 17:51:36 +0200 (CEST)
-X-Mailer: git-send-email 1.6.2.2.446.gfbdc0
+	id S1754702AbZDHQhZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Apr 2009 12:37:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754002AbZDHQhY
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 12:37:24 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:45193 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752113AbZDHQhY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Apr 2009 12:37:24 -0400
+Received: by fxm2 with SMTP id 2so217535fxm.37
+        for <git@vger.kernel.org>; Wed, 08 Apr 2009 09:37:21 -0700 (PDT)
+Received: by 10.103.227.13 with SMTP id e13mr672106mur.20.1239208641650; Wed, 
+	08 Apr 2009 09:37:21 -0700 (PDT)
+In-Reply-To: <49DCC295.7010908@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116095>
 
-Also remove a few obsolete lines (irrelevant asserts)
+2009/4/8 Michael J Gruber <git@drmicha.warpmail.net>:
+> Cornelius venit, vidit, dixit 08.04.2009 14:56:
+>> Hi,
+>> I've a problem with git 1.6.2.2 (self compiled) and git show. I use it's
+>> output for parsing the git data,
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
- .../op/T0001_ConnectProviderOperationTest.java     |   16 +++-------------
- 1 files changed, 3 insertions(+), 13 deletions(-)
+In addition to what Michael said, you should use the plumbing commands
+instead of the porcelain (see man git). They are specifically for use
+with scripts and parse their output. The output from the porcelain
+commands can change.
 
-diff --git a/org.spearce.egit.core.test/src/org/spearce/egit/core/op/T0001_ConnectProviderOperationTest.java b/org.spearce.egit.core.test/src/org/spearce/egit/core/op/T0001_ConnectProviderOperationTest.java
-index 092c048..1d332a3 100644
---- a/org.spearce.egit.core.test/src/org/spearce/egit/core/op/T0001_ConnectProviderOperationTest.java
-+++ b/org.spearce.egit.core.test/src/org/spearce/egit/core/op/T0001_ConnectProviderOperationTest.java
-@@ -89,19 +89,6 @@ public void testNewUnsharedFile() throws CoreException, IOException,
- 		lck.setNewObjectId(id);
- 		assertEquals(RefUpdate.Result.NEW, lck.forceUpdate());
- 
--		// helper asserts, this is not what we are really testing
--		assertTrue("blob missing", new File(gitDir,
--				"objects/2e/2439c32d01f0ef39644d561945e8f4b2239489").exists());
--
--		assertTrue("tree missing", new File(gitDir,
--				"objects/87/a105cc4bc0a79885d07ec560c3eee49438acf0").exists());
--		assertTrue("tree missing", new File(gitDir,
--				"objects/08/ccc3d91a14d337a45f355d3d63bd97fd5e4db9").exists());
--		assertTrue("tree missing", new File(gitDir,
--				"objects/9d/aeec817090098f05eeca858e3a552d78b0a346").exists());
--		assertTrue("commit missing", new File(gitDir,
--				"objects/09/6f1a84091b90b6d9fb12f95848da69496305c1").exists());
--
- 		ConnectProviderOperation operation = new ConnectProviderOperation(
- 				project.getProject(), null);
- 		operation.run(null);
-@@ -125,5 +112,8 @@ protected IStatus run(IProgressMonitor monitor) {
- 			Thread.sleep(1000);
- 		}
- 		System.out.println("DONE");
-+
-+		assertNotNull(RepositoryProvider.getProvider(project.getProject()));
-+
- 	}
- }
--- 
-1.6.2.2.446.gfbdc0
+Santi
