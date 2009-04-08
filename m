@@ -1,87 +1,113 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: Alles wird Git
-Date: Wed, 08 Apr 2009 07:20:59 -0400
-Message-ID: <49DC889B.1070501@gmail.com>
-References: <cover.1238458535u.git.johannes.schindelin@gmx.de> <f182fb1700e8dea15459fd02ced2a6e5797bec99.1238458535u.git.johannes.schindelin@gmx.de> <49D53ABF.80706@gmail.com> <alpine.DEB.1.00.0904030039290.10279@pacific.mpi-cbg.de> <7v63hmekyv.fsf@gitster.siamese.dyndns.org> <49D542FA.3070304@gmail.com> <alpine.DEB.1.00.0904030107320.10279@pacific.mpi-cbg.de> <49D54799.9010607@gmail.com> <alpine.DEB.1.00.0904030447480.10279@pacific.mpi-cbg.de> <49D6B8C8.8090304@gmail.com> <alpine.DEB.1.00.0904061114420.10279@pacific.mpi-cbg.de> <49DAB5BB.1040100@gmail.com> <alpine.DEB.1.00.0904071315460.6897@intel-tinevez-2-302> <49DBF4C3.8080103@gmail.com> <alpine.DEB.1.00.0904080420160.10279@pacific.mpi-cbg.de>
-Reply-To: gitzilla@gmail.com
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: [PATCH] process_{tree,blob}: Remove useless xstrdup calls
+Date: Wed, 8 Apr 2009 13:28:54 +0200
+Message-ID: <20090408112854.GA8624@atjola.homenet>
+References: <alpine.LFD.2.00.0904070903020.6741@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Apr 08 13:22:44 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>, david@lang.hm,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed Apr 08 13:30:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrVre-0004bk-Dp
-	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 13:22:42 +0200
+	id 1LrVzI-0007KN-Qf
+	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 13:30:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756751AbZDHLVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Apr 2009 07:21:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753749AbZDHLVH
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 07:21:07 -0400
-Received: from mail-gx0-f160.google.com ([209.85.217.160]:57435 "EHLO
-	mail-gx0-f160.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753103AbZDHLVG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Apr 2009 07:21:06 -0400
-Received: by gxk4 with SMTP id 4so103910gxk.13
-        for <git@vger.kernel.org>; Wed, 08 Apr 2009 04:21:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id
-         :disposition-notification-to:date:from:reply-to:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=KtRjr56DSmnUoYbXr2YFNIz3efSKsYkWdLXNZHtzk4I=;
-        b=JSnRDZei9GfZxUiKlURlPsIPpfSpJ0QRjPTEC06qgnCyMTbl+VBlwD/VRJzq8o7Kop
-         iY87TmuDpCfj2XIq1erph9l6JDVuSiZOXxcNvnn9GFanthVCe46gsQNhyd1CHKR1VK/i
-         F/N8PwWsKO0XKq1Xk+Bm0eKMxitTUXlKcp1Sg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:disposition-notification-to:date:from:reply-to
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        b=qTGad76hQVLfBTtDH7+FJ06qPUFUgLpUg4XmqZA/a/0zR3dUsr/QPTlq+l0vQChaiw
-         WkJBrlRkE83c+Jq89vBapYgp3Wg7wFIvZ986ryQK9ojykbvX6Xe3ddWRop+HYY07eoXY
-         e3dvOdFQbrOI4I1+lIu6lhwF3mW7bjE3ywpJQ=
-Received: by 10.90.49.8 with SMTP id w8mr1431136agw.118.1239189660525;
-        Wed, 08 Apr 2009 04:21:00 -0700 (PDT)
-Received: from ?10.0.0.6? (c-66-177-19-100.hsd1.fl.comcast.net [66.177.19.100])
-        by mx.google.com with ESMTPS id 7sm9738770aga.33.2009.04.08.04.20.59
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 08 Apr 2009 04:21:00 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
-In-Reply-To: <alpine.DEB.1.00.0904080420160.10279@pacific.mpi-cbg.de>
+	id S932282AbZDHL3F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Apr 2009 07:29:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932315AbZDHL3D
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 07:29:03 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36999 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932317AbZDHL3A (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Apr 2009 07:29:00 -0400
+Received: (qmail invoked by alias); 08 Apr 2009 11:28:57 -0000
+Received: from i59F5B7E9.versanet.de (EHLO atjola.local) [89.245.183.233]
+  by mail.gmx.net (mp010) with SMTP; 08 Apr 2009 13:28:57 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+3vuR6bOu38gGgLK74PiyqWuPab7W89/dEyGT5Xp
+	yPcYGIzGXH1ktO
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.00.0904070903020.6741@xanadu.home>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116080>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Tue, 7 Apr 2009, A Large Angry SCM wrote:
-> 
->> [CC list trimmed since I don't Junio is that interested in what this thread
->> has morphed into.]
->>
->> Johannes Schindelin wrote:
->>
->>> We could even use the opportunity for a little informal German 
->>> GitTogether... "Alles wird Git!"?
->> Could you translate that for the Deutsch-challenged among us?
-> 
-> No problem:
-> 
-> 	Everything is going to be alright.
-> 
-> (with the "alright" part misspelt so it reads "git" ;-)
-> 
->> According to the /current/ itinerary, the evenings I have free in Berlin 
->> are Saturday Oct 3 and Monday Oct 5.
-> 
-> Sir, we have a date.
+The name of the processed object was duplicated for passing it to
+add_object(), but that already calls path_name, which allocates a new
+string anyway. So the memory allocated by the xstrdup calls just went
+nowhere, leaking memory.
 
-Which date?
+Signed-off-by: Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>
+---
+This reduces the RSS usage for a "rev-list --all --objects" by about 10=
+% on
+the gentoo repo (fully packed) as well as linux-2.6.git:
+
+gentoo:
+		| old		| new	=09
+----------------|-------------------------------
+RSS		|	1537284 |	1388408
+VSZ		|	1816852 |	1667952
+time elapsed	|	1:49.62 |	1:48.99
+min. page faults|	 417178 |	 379919
+
+linux-2.6.git:
+		| old		| new	=09
+----------------|-------------------------------
+RSS		|	 324452 |	 292996
+VSZ		|	 491792 |	 460376
+time elapsed	|	0:14.53 |	0:14.28
+min. page faults|	  89360 |	  81613
+
+ list-objects.c |    2 --
+ reachable.c    |    1 -
+ 2 files changed, 0 insertions(+), 3 deletions(-)
+
+diff --git a/list-objects.c b/list-objects.c
+index c8b8375..dd243c7 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -23,7 +23,6 @@ static void process_blob(struct rev_info *revs,
+ 	if (obj->flags & (UNINTERESTING | SEEN))
+ 		return;
+ 	obj->flags |=3D SEEN;
+-	name =3D xstrdup(name);
+ 	add_object(obj, p, path, name);
+ }
+=20
+@@ -78,7 +77,6 @@ static void process_tree(struct rev_info *revs,
+ 	if (parse_tree(tree) < 0)
+ 		die("bad tree object %s", sha1_to_hex(obj->sha1));
+ 	obj->flags |=3D SEEN;
+-	name =3D xstrdup(name);
+ 	add_object(obj, p, path, name);
+ 	me.up =3D path;
+ 	me.elem =3D name;
+diff --git a/reachable.c b/reachable.c
+index 3b1c18f..b515fa2 100644
+--- a/reachable.c
++++ b/reachable.c
+@@ -48,7 +48,6 @@ static void process_tree(struct tree *tree,
+ 	obj->flags |=3D SEEN;
+ 	if (parse_tree(tree) < 0)
+ 		die("bad tree object %s", sha1_to_hex(obj->sha1));
+-	name =3D xstrdup(name);
+ 	add_object(obj, p, path, name);
+ 	me.up =3D path;
+ 	me.elem =3D name;
+--=20
+1.6.2.2.446.gfbdc0.dirty
