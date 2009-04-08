@@ -1,121 +1,67 @@
-From: Sam Vilain <samv@catalyst.net.nz>
-Subject: Re: [PATCH] perl: add new module Git::Config for cached 'git config'
- access
-Date: Wed, 08 Apr 2009 22:44:18 +1200
-Message-ID: <49DC8002.6050503@catalyst.net.nz>
-References: <1238975176-14354-1-git-send-email-sam.vilain@catalyst.net.nz> <m3prfo1xh6.fsf@localhost.localdomain> <49DC3ADD.5000902@catalyst.net.nz> <200904081218.39984.jnareb@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Showing the version of a file that's in the Index.
+Date: Wed, 8 Apr 2009 13:04:05 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904081303400.9157@intel-tinevez-2-302>
+References: <c115fd3c0904071259y53b4b264u9c9957b68e36cc44@mail.gmail.com> <200904072210.05591.markus.heidelberg@web.de> <874ox0w7ak.fsf@iki.fi> <200904072357.47881.markus.heidelberg@web.de> <87y6ubvix7.fsf@iki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Sam Vilain <sam.vilain@catalyst.net.nz>,
-	Frank Lichtenheld <frank@lichtenheld.de>, git@vger.kernel.org,
-	Petr Baudis <pasky@suse.cz>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 08 12:46:34 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: markus.heidelberg@web.de, Tim Visher <tim.visher@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Wed Apr 08 13:06:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrVIe-0001MN-4L
-	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 12:46:32 +0200
+	id 1LrVbL-0007RJ-KV
+	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 13:05:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932093AbZDHKod (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Apr 2009 06:44:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762944AbZDHKoc
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 06:44:32 -0400
-Received: from godel.catalyst.net.nz ([202.78.240.40]:49734 "EHLO
-	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763884AbZDHKob (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Apr 2009 06:44:31 -0400
-Received: from 203-97-235-49.cable.telstraclear.net ([203.97.235.49] helo=[192.168.69.179])
-	by mail1.catalyst.net.nz with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <samv@catalyst.net.nz>)
-	id 1LrVGW-0004KS-9e; Wed, 08 Apr 2009 22:44:20 +1200
-User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
-In-Reply-To: <200904081218.39984.jnareb@gmail.com>
+	id S1755659AbZDHLEL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Apr 2009 07:04:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755343AbZDHLEJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 07:04:09 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55844 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751138AbZDHLEI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Apr 2009 07:04:08 -0400
+Received: (qmail invoked by alias); 08 Apr 2009 11:04:06 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp041) with SMTP; 08 Apr 2009 13:04:06 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19lmjAbPdllljZi4leLr0LnJWlyQOTvV2FkvdrXDz
+	g/opRS2/wCai9E
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <87y6ubvix7.fsf@iki.fi>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116078>
 
-Jakub Narebski wrote:
-> By the way, did you take a look how cached 'git config' access and
-> typecasting is done in gitweb?  See commit b201927 (gitweb: Read
-> repo config using 'git config -z -l') and following similar commits.
->   
+Hi,
 
-Right ... sure, looks fairly straightforward.  I guess gitweb could 
-potentially use this tested module instead of including that code 
-itself.  Also various parts of git-svn... anything really.
+On Wed, 8 Apr 2009, Teemu Likonen wrote:
 
-I actually wrote this code because I wanted something a bit nicer for 
-writing the mirror-sync initial implementations.  And I wanted to have a 
-bit of control over when values get committed, and save work for 
-reading, so I wrote this.
+> On 2009-04-07 23:57 (+0200), Markus Heidelberg wrote:
+> 
+> > Teemu Likonen, 07.04.2009:
+> >> Or
+> >> 
+> >>     git show :file
+> >
+> > Huh, I use git-show daily for commits, but I completely forgot about it
+> > for files when replying.
+> 
+> It's nice for trees too:
+> 
+>     git show HEAD~3:
+>     git show master~1:directory/
 
->> Any more gremlins? 
->>     
-> I have nor examined your patch in detail; I'll try to do it soon,
-> but with git config file parsing there lies following traps.
->
-> 1. In fully qualified variable name section name and variable name
->    have to be compared case insensitive (or normalized, i.e.
->    lowercased), while subsection part (if it exists) is case sensitive.
->   
+But that's not in the index, and my patch to show cache-trees was 
+rejected.
 
-I noticed that 'git config' hides this by normalising the case of what 
-it outputs with 'git config --list'; do you think anything special is 
-required in light of this?
-
-> 2. When coercing type to bool, you need to remember (and test) that
->    there are values which are truish (no value, 'true', 'yes', non-zero
->    integer usually 1), values which are falsish (empry, 'false', 'no',
->    0); other values IIRC are truish too.
->   
-
-Yep, see the Git::Config::boolean mini-package which has a list of 
-those.  I think I used the documented legal values, which are 'true', 
-'yes' and '1' for affirmative and 'false', 'no' and '0' for negative.  I 
-guess I could make that include non-zero integers as well.
-
-> 3. When coercing type to int, you need to remember about optional
->    value suffixes: 'k', 'm' or 'g'.
->   
-
-Yep, covered on input and output :-).  See Git::Config::integer for the 
-conversion functions.
-
-> 4. I don't know if you remembered about 'colorbool' and 'color'; the
->    latter would probably require some extra CPAN module for ANSI color
->    escapes... or copying color codes from the C version.
->   
-
-Yeah, I thought those could probably be done with a follow-up patch.  
-It's just a matter of writing functions Git::Config::color::thaw and 
-::freeze.
-
-> Why not represent it simply as an 'undef'? You can always distinguish 
-> between not defined and not existing by using 'exists'...
->   
-
-I don't like 'undef' being a data value.  In this case I was already 
-using setting a value to undef to tell the module to remove the key from 
-the config file.  But in any case you should not need to care what form 
-the values exist in the internal ->{read_state} hash, as you should 
-always be retrieving them using the ->config method, which will marshall 
-them into the type you want.  Note it's always the same object, just 
-like Perl's &PL_undef via the C API.
-
->> Sneak a couple of vim footer changes in too.
->>     
->
-> Hmmm...
->   
-
-Guess someone noticed them.  Oh well, rebase time ...
-
-Thanks for your input Jakub, I'll incorporate your suggestions.
-
-Sam
+Ciao,
+Dscho
