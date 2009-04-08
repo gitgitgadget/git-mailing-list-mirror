@@ -1,60 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 7/8] archive: disregard .gitattributes on working
- directory
-Date: Wed, 08 Apr 2009 12:20:29 -0700
-Message-ID: <7v3acjkl4y.fsf@gitster.siamese.dyndns.org>
-References: <1239185133-4181-1-git-send-email-pclouds@gmail.com>
- <1239185133-4181-2-git-send-email-pclouds@gmail.com>
- <1239185133-4181-3-git-send-email-pclouds@gmail.com>
- <1239185133-4181-4-git-send-email-pclouds@gmail.com>
- <1239185133-4181-5-git-send-email-pclouds@gmail.com>
- <1239185133-4181-6-git-send-email-pclouds@gmail.com>
- <1239185133-4181-7-git-send-email-pclouds@gmail.com>
- <1239185133-4181-8-git-send-email-pclouds@gmail.com>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Plumbing commands (was: Bug report - git show <tagname> together with --pretty=format)
+Date: Wed, 08 Apr 2009 22:47:22 +0300
+Message-ID: <87myarszat.fsf_-_@iki.fi>
+References: <49DC9F07.4090105@gmx.de> <49DCC295.7010908@drmicha.warpmail.net>
+	<adf1fd3d0904080937v634c5b69rffa7a737f22a3768@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 08 21:22:42 2009
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Cornelius <c.r1@gmx.de>, git@vger.kernel.org
+To: Santi =?iso-8859-1?Q?B=E9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Wed Apr 08 21:49:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrdM0-0001Or-Ra
-	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 21:22:33 +0200
+	id 1Lrdli-00038l-AI
+	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 21:49:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764471AbZDHTUg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Apr 2009 15:20:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764028AbZDHTUg
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 15:20:36 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:54900 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755896AbZDHTUf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Apr 2009 15:20:35 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DFB15A84B4;
-	Wed,  8 Apr 2009 15:20:34 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D5695A84B3; Wed,
-  8 Apr 2009 15:20:30 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 559D2936-2472-11DE-BAFF-BB14ECB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1759400AbZDHTrb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Apr 2009 15:47:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758552AbZDHTra
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 15:47:30 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:34036 "EHLO jenni2.inet.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752923AbZDHTr3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Apr 2009 15:47:29 -0400
+Received: from mithlond.arda.local (80.220.180.181) by jenni2.inet.fi (8.5.014)
+        id 49CA1E6700A0C9B5; Wed, 8 Apr 2009 22:47:23 +0300
+Received: from dtw by mithlond.arda.local with local (Exim 4.69)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1Lrdk2-0005c8-7x; Wed, 08 Apr 2009 22:47:22 +0300
+In-Reply-To: <adf1fd3d0904080937v634c5b69rffa7a737f22a3768@mail.gmail.com>
+ ("Santi =?iso-8859-1?Q?B=E9jar=22's?= message of "Wed\, 8 Apr 2009
+ 18\:37\:21 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116115>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On 2009-04-08 18:37 (+0200), Santi B=E9jar wrote:
 
-> Some tests in t500-tar-tree.sh depends on in-worktree
-> .gitattributes. Fix them too.
+> In addition to what Michael said, you should use the plumbing command=
+s
+> instead of the porcelain (see man git). They are specifically for use
+> with scripts and parse their output. The output from the porcelain
+> commands can change.
 
-s/500/5000/;
+Hmm, I've been using a command like this in a script:
 
-You can also consider these as examples of possibly useful use cases of
-the current "fix-attributes" feature you are breaking with this patch (=
-see
-my comments to 3/8).
+    date=3D$(git log -1 --pretty=3Dformat:%ai $REV)
+
+Would it be better to change it to
+
+    date=3D$(git rev-list -1 --pretty=3Dformat:%ai $REV | sed -e 1d)
+
+or something else?
