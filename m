@@ -1,96 +1,68 @@
-From: Ping Yin <pkufranky@gmail.com>
-Subject: Re: Any way to edit the file in index directly?
-Date: Wed, 8 Apr 2009 10:27:57 +0800
-Message-ID: <46dff0320904071927l16d54c8bv9c219e681cc96bb2@mail.gmail.com>
-References: <46dff0320904071803k68fddff4j226760392e0c5bcc@mail.gmail.com>
-	 <20090408021041.GB18244@coredump.intra.peff.net>
-	 <20090408021620.GC18244@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] list-objects: add "void *data" parameter to show
+ functions
+Date: Tue, 07 Apr 2009 19:29:20 -0700
+Message-ID: <7vk55vubcv.fsf@gitster.siamese.dyndns.org>
+References: <20090407040819.4338.4291.chriscool@tuxfamily.org>
+ <20090407040854.4338.94304.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git mailing list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 08 04:30:26 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Wed Apr 08 04:31:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrNYS-0007Wp-Dw
-	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 04:30:20 +0200
+	id 1LrNZd-0007nH-R1
+	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 04:31:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760749AbZDHC17 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Apr 2009 22:27:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759014AbZDHC17
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 22:27:59 -0400
-Received: from rv-out-0506.google.com ([209.85.198.224]:19144 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756852AbZDHC16 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Apr 2009 22:27:58 -0400
-Received: by rv-out-0506.google.com with SMTP id f9so3035485rvb.1
-        for <git@vger.kernel.org>; Tue, 07 Apr 2009 19:27:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=trg0/F/VBf4LLpr1uyRb/wNvxiRC3FtmattPkHIJ9gg=;
-        b=WNxeyuYe5ROt2zlkJULABiz7NmIN0VwPp4qUfPUxyJGmmseTH47mMwbdETUXMiiF2E
-         c3bg4lrBTHlVlZLgakYTBQUTsD8J+pPckPcYOCgPQOe446z/4Zs6Z14NXawBR8Fi1hyx
-         o7S3NP4vijUAKwB8uPTPmhvOiFVyNOn7KBkLU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Fwn8Fb0n33HGMDp3CD1wZYZyvR53S2ev6KTOTEsQktiAo6y0O1ycVHbaGwGz5s32WD
-         KFyGsTAWOpz6tzHZQLivX98J3DClAOsmQ8ShTvJXOcMwmtlR29BHCGHoLK/r1/sD6WvX
-         tLT8fvdvArFjq4PVm6h5UGUOHuyDKhjXy0rJw=
-Received: by 10.115.58.1 with SMTP id l1mr426122wak.191.1239157677199; Tue, 07 
-	Apr 2009 19:27:57 -0700 (PDT)
-In-Reply-To: <20090408021620.GC18244@coredump.intra.peff.net>
+	id S1760301AbZDHC31 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2009 22:29:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757106AbZDHC31
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 22:29:27 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51020 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757005AbZDHC30 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2009 22:29:26 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 57C3FB0AB;
+	Tue,  7 Apr 2009 22:29:25 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9A3C4B0A8; Tue, 
+ 7 Apr 2009 22:29:21 -0400 (EDT)
+In-Reply-To: <20090407040854.4338.94304.chriscool@tuxfamily.org> (Christian
+ Couder's message of "Mon, 6 Apr 2009 21:28:36 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 13BF9126-23E5-11DE-B992-DC76898A30C1-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116023>
 
-Ping Yin
+Christian Couder <chriscool@tuxfamily.org> writes:
 
+> The goal of this patch is to get rid of the "static struct rev_info
+> revs" static variable in "builtin-rev-list.c".
 
+Hmm.  If it were a more library-ish file, a removal of such a static
+variable might help you to make more than one calls to a library function,
+but does it matter in files like builtin-rev-list.c?  Its cmd_rev_list()
+is like main() --- it is meant to run once and exit.
 
-On Wed, Apr 8, 2009 at 10:16 AM, Jeff King <peff@peff.net> wrote:
-> On Tue, Apr 07, 2009 at 10:10:41PM -0400, Jeff King wrote:
->
->> On Wed, Apr 08, 2009 at 09:03:03AM +0800, Ping Yin wrote:
->>
->> > There seems to be a patch for this ( add -e?), but i forget where =
-to
->> > find it.
->>
->> "add -p" has an "e"dit option for editing the patch. I don't recall =
-any
->> way of directly editing the content.
->
+So if it is the only goal of this series, I am inclined to say that I do
+not have a reason to look at the rest of the series, but as a side effect
+does this removal make some other API better?  Perhaps a more library-ish
+function is in builtin-rev-list.c and this structure should really needs
+to be passed around as a parameter, but I cannot tell solely by reading
+the goal above, without reading the patches themselves.
 
-> "add -p" has an "e"dit option for editing the patch. I don't recall a=
-ny
-> way of directly editing the content.
+> Anyway this makes the code more clean and more generic, so it
+> should be a good thing in the long run.
 
-Sometimes by 'add -p', i can't get what i want (the patch will fail to
-apply when exiting editor). And with 'add -p', i can't get a global
-view of all changes together
-
-> I'm not sure what you mean by "alongside".
-
-By "aloneside" i mean i can open the index and worktree file in diff
-mode side by side for easily editing.
-
-> Hmm, actually maybe you are thinking of:
->
-> =C2=A0http://article.gmane.org/gmane.comp.version-control.git/103389
->
-> which I even reviewed, but it doesn't seem to have gone anywhere afte=
-r
-> that.
->
-
-Thanks, That's what i want.
+I wouldn't disagree with that "long run" thing, but the answer to the
+above question affects the placement of this series in my prioritized
+queue.
