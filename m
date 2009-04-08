@@ -1,110 +1,71 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] git-pull.sh: better warning message for "git pull" on detached head.
-Date: Wed,  8 Apr 2009 09:24:03 +0200
-Message-ID: <1239175443-7693-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <7vk55wvutb.fsf@gitster.siamese.dyndns.org>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 08 09:29:47 2009
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH 2/3] rev-list: remove last static vars used in "show_commit"
+Date: Wed, 08 Apr 2009 09:40:12 +0200
+Message-ID: <49DC54DC.3060408@gnu.org>
+References: <20090407040819.4338.4291.chriscool@tuxfamily.org>	<20090407040854.4338.94304.chriscool@tuxfamily.org> <20090407040854.4338.40055.chriscool@tuxfamily.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Wed Apr 08 09:42:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrSE0-0003Dy-Mg
-	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 09:29:33 +0200
+	id 1LrSQ9-0007Ew-K8
+	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 09:42:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762304AbZDHH0i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Apr 2009 03:26:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762249AbZDHH0h
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 03:26:37 -0400
-Received: from harmonie.imag.fr ([147.171.130.40]:46589 "EHLO harmonie.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758083AbZDHH0d (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Apr 2009 03:26:33 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id n387OGLF018408;
-	Wed, 8 Apr 2009 09:24:16 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1LrS8t-0001fa-U3; Wed, 08 Apr 2009 09:24:15 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1LrS8t-00020g-RL; Wed, 08 Apr 2009 09:24:15 +0200
-X-Mailer: git-send-email 1.6.2.2.449.g92961.dirty
-In-Reply-To: <7vk55wvutb.fsf@gitster.siamese.dyndns.org>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Wed, 08 Apr 2009 09:24:16 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1759445AbZDHHkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Apr 2009 03:40:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757775AbZDHHkH
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 03:40:07 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:41370 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752482AbZDHHkF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Apr 2009 03:40:05 -0400
+Received: by fxm2 with SMTP id 2so2657772fxm.37
+        for <git@vger.kernel.org>; Wed, 08 Apr 2009 00:40:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=2M5RlvXT9Jr2aAkh4cvS80WhBhoFYOSxwPmpgU1nA/k=;
+        b=tcPs7oLncgwSfIBXfZB0iVbvGWxiIV9GVgtJt2+txkmvh7W+MMDMO9JObhT8ocATqb
+         NgrSzxltg39Y68405EwQ01Sfx0AYt/1lat/SxM07q/bC5Wt5e8UsnuOkQ0A3WwZI74PI
+         mLfLiBwSaZ6jApKyhV6/iZsjRQV2DhB4X+stQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=g2Ryqi3+/xS05TBS1pKrUhDNVN3+Xo3zyrip+CWAW+4OuGIk3DZ17rmmIKUncD+IhY
+         j4i1ffvRBRvpqN8QnKbzP/wEic1/WKCL9xDawcCbtFlDcA9Z8CtFQPgrqYxgEOvYEr+5
+         YkOIXw6XRm+o0QHtq8waiW0BPA7ORF8Kn4EpM=
+Received: by 10.86.79.19 with SMTP id c19mr848038fgb.20.1239176402718;
+        Wed, 08 Apr 2009 00:40:02 -0700 (PDT)
+Received: from scientist-2.mobile.usilu.net ([195.176.179.202])
+        by mx.google.com with ESMTPS id e11sm9773582fga.25.2009.04.08.00.40.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 08 Apr 2009 00:40:01 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (Macintosh/20090302)
+In-Reply-To: <20090407040854.4338.40055.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116057>
 
-Otherwise, git complains about not finding a branch to pull from in
-'branch..merge', which is hardly understandable. While we're there,
-reword the sentences slightly.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- git-pull.sh |   42 +++++++++++++++++++++++++-----------------
- 1 files changed, 25 insertions(+), 17 deletions(-)
+>  	struct rev_info revs;
+> +	struct rev_list_info info;
+>  	int reaches = 0, all = 0;
+>  
+> +	memset(&info, 0, sizeof(info));
+> +	info.revs = &revs;
 
-diff --git a/git-pull.sh b/git-pull.sh
-index 8a26763..8c75027 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -90,23 +90,31 @@ error_on_no_merge_candidates () {
- 
- 	curr_branch=${curr_branch#refs/heads/}
- 
--	echo "You asked me to pull without telling me which branch you"
--	echo "want to merge with, and 'branch.${curr_branch}.merge' in"
--	echo "your configuration file does not tell me either.  Please"
--	echo "name which branch you want to merge on the command line and"
--	echo "try again (e.g. 'git pull <repository> <refspec>')."
--	echo "See git-pull(1) for details on the refspec."
--	echo
--	echo "If you often merge with the same branch, you may want to"
--	echo "configure the following variables in your configuration"
--	echo "file:"
--	echo
--	echo "    branch.${curr_branch}.remote = <nickname>"
--	echo "    branch.${curr_branch}.merge = <remote-ref>"
--	echo "    remote.<nickname>.url = <url>"
--	echo "    remote.<nickname>.fetch = <refspec>"
--	echo
--	echo "See git-config(1) for details."
-+	if [ -z "$curr_branch" ]; then
-+		echo "You are not currently on a branch, so I cannot use any"
-+		echo "'branch.<branchname>.merge' in your configuration file."
-+		echo "Please specify which branch you want to merge on the command"
-+		echo "line and try again (e.g. 'git pull <repository> <refspec>')."
-+		echo "See git-pull(1) for details."
-+	else
-+		echo "You asked me to pull without telling me which branch you"
-+		echo "want to merge with, and 'branch.${curr_branch}.merge' in"
-+		echo "your configuration file does not tell me either.	Please"
-+		echo "specify which branch you want to merge on the command line and"
-+		echo "try again (e.g. 'git pull <repository> <refspec>')."
-+		echo "See git-pull(1) for details."
-+		echo
-+		echo "If you often merge with the same branch, you may want to"
-+		echo "configure the following variables in your configuration"
-+		echo "file:"
-+		echo
-+		echo "    branch.${curr_branch}.remote = <nickname>"
-+		echo "    branch.${curr_branch}.merge = <remote-ref>"
-+		echo "    remote.<nickname>.url = <url>"
-+		echo "    remote.<nickname>.fetch = <refspec>"
-+		echo
-+		echo "See git-config(1) for details."
-+	fi
- 	exit 1
- }
- 
--- 
-1.6.2.2.449.g92961.dirty
+Would it make sense to embed the struct rev_info entirely in the new
+struct, without going through a pointer?
+
+Paolo
