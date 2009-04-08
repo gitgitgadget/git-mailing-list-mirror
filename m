@@ -1,58 +1,108 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [ANNOUNCE] git_fast_filter
-Date: Wed, 8 Apr 2009 11:45:41 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0904081144580.9157@intel-tinevez-2-302>
-References: <51419b2c0904072035u1182b507o836a67ac308d32b9@mail.gmail.com>
+From: Sam Vilain <samv@catalyst.net.nz>
+Subject: Re: [PATCH] perl: add new module Git::Config for cached 'git config'
+ access
+Date: Wed, 08 Apr 2009 21:50:39 +1200
+Message-ID: <49DC736F.1030007@catalyst.net.nz>
+References: <1238975176-14354-1-git-send-email-sam.vilain@catalyst.net.nz> <20090406092942.GW17706@mail-vs.djpig.de> <1239058276.31863.19.camel@maia.lan> <m3prfo1xh6.fsf@localhost.localdomain> <7vbpr7r72w.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 08 11:47:26 2009
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Frank Lichtenheld <frank@lichtenheld.de>, git@vger.kernel.org,
+	Petr Baudis <pasky@suse.cz>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 08 11:53:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrUNK-0007Gh-1V
-	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 11:47:18 +0200
+	id 1LrUTH-0000dm-TG
+	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 11:53:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755629AbZDHJpp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Apr 2009 05:45:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755093AbZDHJpp
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 05:45:45 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52705 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754142AbZDHJpo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Apr 2009 05:45:44 -0400
-Received: (qmail invoked by alias); 08 Apr 2009 09:45:41 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp054) with SMTP; 08 Apr 2009 11:45:41 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX198u7ZAqJ58D9NoCBRpcvSpP96bZwEB1A/u/5UdZd
-	CG6CHZb2GKhW1w
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <51419b2c0904072035u1182b507o836a67ac308d32b9@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6899999999999999
+	id S1759268AbZDHJuz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Apr 2009 05:50:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758824AbZDHJuy
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 05:50:54 -0400
+Received: from godel.catalyst.net.nz ([202.78.240.40]:48809 "EHLO
+	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756748AbZDHJux (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Apr 2009 05:50:53 -0400
+Received: from 203-97-235-49.cable.telstraclear.net ([203.97.235.49] helo=[192.168.69.179])
+	by mail1.catalyst.net.nz with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <samv@catalyst.net.nz>)
+	id 1LrUQb-0001vZ-DZ; Wed, 08 Apr 2009 21:50:41 +1200
+User-Agent: Thunderbird 2.0.0.14 (X11/20080505)
+In-Reply-To: <7vbpr7r72w.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116064>
 
-Hi,
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+>
+>   
+>> Errr... wouldn't it be better to simply use 
+>>
+>> +		my ($item, $value) = split("\n", $_, 2)
+>>
+>> here? Have you tested Git::Config with a "null" value, i.e. something
+>> like
+>>
+>>     [section]
+>>         noval
+>>
+>> in the config file (which evaluates to 'true' with '--bool' option)?
+>> Because from what I remember from the discussion on the 
+>> "git config --null --list" format the lack of "\n" is used to
+>> distinguish between noval (which is equivalent to 'true'), and empty
+>> value (which is equivalent to 'false')
+>>
+>>     [boolean
+>>         noval        # equivalent to 'true'
+>>         empty1 =     # equivalent to 'false'
+>>         empty2 = ""  # equivalent to 'false'
+>>     
+>
+> I do not mind if the _write method always wrote out
+>
+> 	[core]
+>         	autocrlf = true
+>
+> for a variable that is true, but it should be able to read existing
+>
+> 	[core]
+>         	autocrlf
+>
+> correctly.
+>   
 
-On Tue, 7 Apr 2009, Elijah Newren wrote:
+Yep - that's what I thought was reasonable behaviour as well and what my 
+submission does.
 
-> Just thought I'd make this available, in case there's others with niche 
-> needs that find it useful...
+> Sam, I think you meant to make me squash the "Oops, for no good reason,
+> here is a fix-up" into the previous one, but for this case, I'd appreciate
+> a re-roll of the series, that includes a test to read from an existing
+> configuration file that contains such "presense of the name alone means
+> boolean true" variables.
+>   
 
-Have you seen
+Sure, I rebased the series to have the fix-ups at the right places, but 
+didn't think it was an interesting enough change to rate a full 
+re-submission. The series at git://github.com/samv/git branch 
+perl-Config has the minor change put into the place it was introduced. I 
+put a little note to this effect after the --- line.
 
-	http://thread.gmane.org/gmane.comp.version-control.git/52323
+I'm not quite sure what you want squashed where, maybe just edit the 
+below list to be how you'd like it,
 
-I was rather disappointed that skimo left the patch series in a rather 
-half-useful state.
+pick d43238e perl: add new module Git::Config for cached 'git config' access
+pick 5ea135d perl: make Git.pm use new Git::Config module
+pick b2865bc perl: make Git::Config use --null
+pick 28eecdc perl: fix no value items in Git::Config
 
-Ciao,
-Dscho
+:-)
+
+Sam
