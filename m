@@ -1,78 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] git remote update: Report error for non-existing
- groups
-Date: Wed, 08 Apr 2009 01:20:36 -0700
-Message-ID: <7vy6ubo8tn.fsf@gitster.siamese.dyndns.org>
-References: <1239025262-16960-1-git-send-email-finnag@pvv.org>
- <1239025262-16960-2-git-send-email-finnag@pvv.org>
- <7vprfnubyi.fsf@gitster.siamese.dyndns.org> <20090408080738.GA24386@pvv.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Alles wird Git, was Re: [PATCH] mailmap: resurrect lower-casing of
+ email addresses
+Date: Wed, 8 Apr 2009 11:36:43 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904081135470.9157@intel-tinevez-2-302>
+References: <cover.1238458535u.git.johannes.schindelin@gmx.de> <49DAB5BB.1040100@gmail.com> <alpine.DEB.1.00.0904071315460.6897@intel-tinevez-2-302> <200904072158.41927.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Finn Arne Gangstad <finnag@pvv.org>
-X-From: git-owner@vger.kernel.org Wed Apr 08 10:23:16 2009
+To: Markus Heidelberg <markus.heidelberg@web.de>
+X-From: git-owner@vger.kernel.org Wed Apr 08 11:39:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrT3z-0004bW-RB
-	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 10:23:16 +0200
+	id 1LrUFF-0004vx-43
+	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 11:38:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763632AbZDHIUv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Apr 2009 04:20:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763863AbZDHIUt
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 04:20:49 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58733 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763548AbZDHIUr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Apr 2009 04:20:47 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 369B0A8929;
-	Wed,  8 Apr 2009 04:20:44 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 18DC3A8928; Wed,
-  8 Apr 2009 04:20:37 -0400 (EDT)
-In-Reply-To: <20090408080738.GA24386@pvv.org> (Finn Arne Gangstad's message
- of "Wed, 8 Apr 2009 10:07:38 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 27B8E098-2416-11DE-8EFA-BB14ECB1AA3C-77302942!a-sasl-fastnet.pobox.com
+	id S1758042AbZDHJgt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Apr 2009 05:36:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756749AbZDHJgt
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 05:36:49 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45691 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755064AbZDHJgs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Apr 2009 05:36:48 -0400
+Received: (qmail invoked by alias); 08 Apr 2009 09:36:47 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp070) with SMTP; 08 Apr 2009 11:36:47 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX180AUoGGv00CaWzDvTmTAf9UVNCRnh0CdqtVivC/h
+	NDCikIK3SNwnMr
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <200904072158.41927.markus.heidelberg@web.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116062>
 
-Finn Arne Gangstad <finnag@pvv.org> writes:
+Hi,
 
-> On Tue, Apr 07, 2009 at 07:16:21PM -0700, Junio C Hamano wrote:
->> Finn Arne Gangstad <finnag@pvv.org> writes:
->> 
->> > @@ -1227,8 +1229,11 @@ static int update(int argc, const char **argv)
->> >  
->> >  	remote_group.list = &list;
->> >  	for (i = 1; i < argc; i++) {
->> > +		int groups_found = 0;
->> >  		remote_group.name = argv[i];
->> > -		result = git_config(get_remote_group, NULL);
->> > +		result = git_config(get_remote_group, &groups_found);
->> > +		if (!groups_found && (i != 1 || strcmp(argv[1], "default")))
->> > +			die("No such remote group: '%s'", argv[i]);
->> 
->> I think you are trying to be silent about the case where the caller feeds
->> you the default_argv[] array with this, but do we want to be more explicit
->> about this so that we do die when the end user explicitly says "default"
->> from the command line?
->
-> Are you thinking that "git remote update default" should only be allowed
-> if you have configured a group named default?
+[following ALASCM's example, I am culling the Cc: list]
 
-I have no preference either way, and that is why I asked.
+On Tue, 7 Apr 2009, Markus Heidelberg wrote:
 
-"git remote update" without explicit "default" is obviously what your code
-try not to say "No such remote group" to, and that probably is a sane
-thing to do.
+> Johannes Schindelin, 07.04.2009:
+> 
+> > On Mon, 6 Apr 2009, A Large Angry SCM wrote:
+> > 
+> > > s/Germany and Munich/Berlin and Munich/
+> > 
+> > Cool!  Berlin is only 2 hours from my home, so let's meet there!
+> > 
+> > We could even use the opportunity for a little informal German 
+> > GitTogether... "Alles wird Git!"?
+> 
+> Damn, why only is Berlin on the other end of Germany compared to where I 
+> live?
 
-I don't know what users want to see when they say "default" explicitly
-without having an explicit configuration.  Should it do the same thing as
-"git remote update"?
+There are planes ;-)
+
+> Nice slogan, BTW.
+
+Thanks!
+
+Ciao,
+Dscho
