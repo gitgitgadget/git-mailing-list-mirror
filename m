@@ -1,69 +1,72 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: git checkout and pwd?
-Date: Wed, 8 Apr 2009 20:38:15 +0200
-Message-ID: <200904082038.16133.markus.heidelberg@web.de>
-References: <450196A1AAAE4B42A00A8B27A59278E70A99A3D6@EXCHANGE.trad.tradestation.com>
-Reply-To: markus.heidelberg@web.de
+From: Elijah Newren <newren@gmail.com>
+Subject: Re: need help with git show :1:...
+Date: Wed, 8 Apr 2009 12:38:06 -0600
+Message-ID: <51419b2c0904081138o3f05a6fm6a4213e7b0f1db6f@mail.gmail.com>
+References: <6838.1239212486@relay.known.net>
+	 <51419b2c0904081058p7d5a56c3j6aa5cebb0188ad43@mail.gmail.com>
+	 <7199.1239213762@relay.known.net>
+	 <51419b2c0904081107s7ba08367w671d5b494095402@mail.gmail.com>
+	 <7357.1239214209@relay.known.net>
+	 <51419b2c0904081125u3bdf37deyd5dd85f6c2a6d7cc@mail.gmail.com>
+	 <7685.1239215733@relay.known.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "John Dlugosz" <JDlugosz@tradestation.com>
-X-From: git-owner@vger.kernel.org Wed Apr 08 20:39:36 2009
+To: layer <layer@known.net>
+X-From: git-owner@vger.kernel.org Wed Apr 08 20:40:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrcgR-0001WW-5P
-	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 20:39:35 +0200
+	id 1Lrcgn-0001eO-Qs
+	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 20:39:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757535AbZDHSh5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Apr 2009 14:37:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755940AbZDHSh4
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 14:37:56 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:54890 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755609AbZDHShz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Apr 2009 14:37:55 -0400
-Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
-	by fmmailgate03.web.de (Postfix) with ESMTP id CA87EFA27BDF;
-	Wed,  8 Apr 2009 20:37:53 +0200 (CEST)
-Received: from [89.59.73.185] (helo=.)
-	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1Lrcen-0004pQ-00; Wed, 08 Apr 2009 20:37:53 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E70A99A3D6@EXCHANGE.trad.tradestation.com>
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX18IePSNJlYpOD6sVVoTNgKxPUIBHkCegkHin8H2
-	KgABs5lCcE5MYXCF0wYUrio33B94bV7kXF7Tt5RAr1zq932BJd
-	SqD36ZKPea1f+T0dF3eQ==
+	id S1760460AbZDHSiK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Apr 2009 14:38:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759352AbZDHSiK
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 14:38:10 -0400
+Received: from yx-out-2324.google.com ([74.125.44.30]:34119 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758931AbZDHSiI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Apr 2009 14:38:08 -0400
+Received: by yx-out-2324.google.com with SMTP id 31so259179yxl.1
+        for <git@vger.kernel.org>; Wed, 08 Apr 2009 11:38:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=6auNwItgxpv10S0z+s29DkAierGsxIb9p1phwQ86AkQ=;
+        b=N2WdfsBkpF0p8Fumfwr5xuR84KEkAfKkbQplAcjSeVL06XJMxlWZw256MKBxphtCRH
+         wJ11Mfic2RVn/Zso72HYEbSxAve0ikbgsGPuFkIQOiacUrLI7SQci4SpuvHC0zsxt892
+         KnXsYtnu+yqhopZDDAPSNvaCfL/wRvHQnkN5o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=lvrjYaRXJGASCpHab3u7b/nIQPsOENySwQwxUUIbCQNW0E1C/wfeoQLChwHgzMP0Lj
+         UbjJR4vg4UQMJRuG/EaU20BkMpqiZLvFsB7c2JdLwcvEcIUy82rYBGpW97Achrf8t/kR
+         Oth1snOi+S5/8EI2YddjCWJQdisNAEA+41nbs=
+Received: by 10.231.15.74 with SMTP id j10mr440477iba.10.1239215886518; Wed, 
+	08 Apr 2009 11:38:06 -0700 (PDT)
+In-Reply-To: <7685.1239215733@relay.known.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116108>
 
-John Dlugosz, 08.04.2009:
-> On a Windows system running msysgit, I entered the command:
-> 
-> 	git checkout -b -l jmd/mt_queue
-> 
-> and got a reply of: 
-> fatal: git checkout: updating paths is incompatible with switching
-> branches.
-> Did you intend to checkout 'compile.vc8/Win32/release/jmd/mt_queue'
-> which can not be resolved as commit?
+Hi,
 
->From the documentation: [-b <new_branch> [-l]]
-The new branch has to follow the -b option immediately.
+On Wed, Apr 8, 2009 at 12:35 PM, layer <layer@known.net> wrote:
+<snip>
+>>> git merge-file current-sock other-sock base-sock
+>
+> Did you mean this?
+>
+>  git merge-file current-sock base-sock other-sock
+>
+> The man page seems to indicate that.
 
-> Is there something about this form of checkout that requires that it be
-> issued while in the "top level" directory of the project (i.e. the one
-> containing the .git subdirectory)?
-
-No, that doesn't matter.
-
-Markus
+Oops, yeah, current then base then other, like the manpage says.
