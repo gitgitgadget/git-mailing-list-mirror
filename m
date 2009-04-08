@@ -1,77 +1,59 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH] Add a simple getpass() for MinGW
-Date: Wed, 8 Apr 2009 03:30:22 +0200 (CEST)
-Message-ID: <7ba615a300fe2742e8d32f0313c6ee9a1a1aaed3.1239154140u.git.johannes.schindelin@gmx.de>
-References: <cover.1239154140u.git.johannes.schindelin@gmx.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH RFC 6/6] send-email: Remove horrible mix of tabs and
+	spaces
+Date: Tue, 7 Apr 2009 22:02:52 -0400
+Message-ID: <20090408020252.GA18244@coredump.intra.peff.net>
+References: <1239139522-24118-1-git-send-email-mfwitten@gmail.com> <1239139522-24118-2-git-send-email-mfwitten@gmail.com> <1239139522-24118-3-git-send-email-mfwitten@gmail.com> <1239139522-24118-4-git-send-email-mfwitten@gmail.com> <1239139522-24118-5-git-send-email-mfwitten@gmail.com> <1239139522-24118-6-git-send-email-mfwitten@gmail.com> <9b18b3110904071435p320e5d1dh16061d04a3a8ab57@mail.gmail.com> <b4087cc50904071442ka298564x52112c1eac9ac284@mail.gmail.com> <20090407220048.GB18144@coredump.intra.peff.net> <49DBCF5D.6070404@op5.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <j6t@kdbg.org>, gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 08 03:29:25 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Witten <mfwitten@gmail.com>, demerphq <demerphq@gmail.com>,
+	git@vger.kernel.org
+To: Andreas Ericsson <exon@op5.com>
+X-From: git-owner@vger.kernel.org Wed Apr 08 04:04:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrMbU-0004r6-PX
-	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 03:29:25 +0200
+	id 1LrN9R-0002ul-S7
+	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 04:04:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757669AbZDHB1v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2009 21:27:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754915AbZDHB1v
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 21:27:51 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56863 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753223AbZDHB1v (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2009 21:27:51 -0400
-Received: (qmail invoked by alias); 08 Apr 2009 01:27:48 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp039) with SMTP; 08 Apr 2009 03:27:48 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18LK2VmgyELP57FrCn6+UBkfD3HClq6KGvy0I0yZE
-	AxAnZ/7JaTzA7g
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <cover.1239154140u.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1754723AbZDHCC5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Apr 2009 22:02:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753486AbZDHCC4
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 22:02:56 -0400
+Received: from peff.net ([208.65.91.99]:58491 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752078AbZDHCC4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Apr 2009 22:02:56 -0400
+Received: (qmail 11594 invoked by uid 107); 8 Apr 2009 02:02:55 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 07 Apr 2009 22:02:55 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Apr 2009 22:02:52 -0400
+Content-Disposition: inline
+In-Reply-To: <49DBCF5D.6070404@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116016>
 
-This should be replaced with a graphical getpass() at some stage.
+On Wed, Apr 08, 2009 at 12:10:37AM +0200, Andreas Ericsson wrote:
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+>>   2. Make a new command to compete with send-email instead of using the
+>>      same name. This means that people who are really put off by
+>>      CPAN dependencies from (1) above won't be negatively impacted. And
+>>      you can drop any historical interface warts if you want to.
+>>
+>
+> 3. Make it capable of sending email directly from commits rather than
+>   than having to generate them as files first. For bonus-points, use
+>   git sequencer or some other "git rebase -i"-esque mangling thing
+>   first, with capabilities of adding a cover-letter for patch-series.
 
-	I saw it coming that I had to do this.
+As Tomas noted, this is already possible (this was due to some patches
+from Pierre a few months ago, I think). But IIRC, there are some corner
+cases where send-email has to guess whether you mean rev-list options or
+a file (or maybe there is some way to signal, I don't remember). And
+that is exactly the sort of thing that you could clean up via (2) above.
 
- compat/mingw.c |   15 +++++++++++++++
- 1 files changed, 15 insertions(+), 0 deletions(-)
-
-diff --git a/compat/mingw.c b/compat/mingw.c
-index d50186e..2ab5bbe 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -1157,3 +1157,18 @@ int link(const char *oldpath, const char *newpath)
- 	}
- 	return 0;
- }
-+
-+char *getpass(const char *prompt)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	fputs(prompt, stderr);
-+	for (;;) {
-+		char c = _getch();
-+		if (c == '\r' || c == '\n')
-+			break;
-+		strbuf_addch(&buf, c);
-+	}
-+	fputs("\n", stderr);
-+	return strbuf_detach(&buf, NULL);
-+}
--- 
-1.6.2.1.613.g25746
+-Peff
