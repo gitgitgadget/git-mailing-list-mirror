@@ -1,72 +1,96 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Alles wird Git, was Re: [PATCH] mailmap: resurrect lower-casing of
- email addresses
-Date: Wed, 8 Apr 2009 04:21:26 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0904080420160.10279@pacific.mpi-cbg.de>
-References: <cover.1238458535u.git.johannes.schindelin@gmx.de> <f182fb1700e8dea15459fd02ced2a6e5797bec99.1238458535u.git.johannes.schindelin@gmx.de> <49D53ABF.80706@gmail.com> <alpine.DEB.1.00.0904030039290.10279@pacific.mpi-cbg.de> <7v63hmekyv.fsf@gitster.siamese.dyndns.org>
- <49D542FA.3070304@gmail.com> <alpine.DEB.1.00.0904030107320.10279@pacific.mpi-cbg.de> <49D54799.9010607@gmail.com> <alpine.DEB.1.00.0904030447480.10279@pacific.mpi-cbg.de> <49D6B8C8.8090304@gmail.com> <alpine.DEB.1.00.0904061114420.10279@pacific.mpi-cbg.de>
- <49DAB5BB.1040100@gmail.com> <alpine.DEB.1.00.0904071315460.6897@intel-tinevez-2-302> <49DBF4C3.8080103@gmail.com>
+From: Ping Yin <pkufranky@gmail.com>
+Subject: Re: Any way to edit the file in index directly?
+Date: Wed, 8 Apr 2009 10:27:57 +0800
+Message-ID: <46dff0320904071927l16d54c8bv9c219e681cc96bb2@mail.gmail.com>
+References: <46dff0320904071803k68fddff4j226760392e0c5bcc@mail.gmail.com>
+	 <20090408021041.GB18244@coredump.intra.peff.net>
+	 <20090408021620.GC18244@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: A Large Angry SCM <gitzilla@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 08 04:20:53 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git mailing list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 08 04:30:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrNPH-0005rd-AN
-	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 04:20:51 +0200
+	id 1LrNYS-0007Wp-Dw
+	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 04:30:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761358AbZDHCSz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2009 22:18:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760101AbZDHCSz
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 22:18:55 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60196 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757854AbZDHCSy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2009 22:18:54 -0400
-Received: (qmail invoked by alias); 08 Apr 2009 02:18:52 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp004) with SMTP; 08 Apr 2009 04:18:52 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/1yw0+27f1H/BZun4aDa6cn0WY0BwLMcpNgNgiGX
-	DJklPW5Uo6d8w8
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <49DBF4C3.8080103@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.66
+	id S1760749AbZDHC17 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Apr 2009 22:27:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759014AbZDHC17
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 22:27:59 -0400
+Received: from rv-out-0506.google.com ([209.85.198.224]:19144 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756852AbZDHC16 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Apr 2009 22:27:58 -0400
+Received: by rv-out-0506.google.com with SMTP id f9so3035485rvb.1
+        for <git@vger.kernel.org>; Tue, 07 Apr 2009 19:27:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=trg0/F/VBf4LLpr1uyRb/wNvxiRC3FtmattPkHIJ9gg=;
+        b=WNxeyuYe5ROt2zlkJULABiz7NmIN0VwPp4qUfPUxyJGmmseTH47mMwbdETUXMiiF2E
+         c3bg4lrBTHlVlZLgakYTBQUTsD8J+pPckPcYOCgPQOe446z/4Zs6Z14NXawBR8Fi1hyx
+         o7S3NP4vijUAKwB8uPTPmhvOiFVyNOn7KBkLU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Fwn8Fb0n33HGMDp3CD1wZYZyvR53S2ev6KTOTEsQktiAo6y0O1ycVHbaGwGz5s32WD
+         KFyGsTAWOpz6tzHZQLivX98J3DClAOsmQ8ShTvJXOcMwmtlR29BHCGHoLK/r1/sD6WvX
+         tLT8fvdvArFjq4PVm6h5UGUOHuyDKhjXy0rJw=
+Received: by 10.115.58.1 with SMTP id l1mr426122wak.191.1239157677199; Tue, 07 
+	Apr 2009 19:27:57 -0700 (PDT)
+In-Reply-To: <20090408021620.GC18244@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116022>
 
-Hi,
+Ping Yin
 
-On Tue, 7 Apr 2009, A Large Angry SCM wrote:
 
-> [CC list trimmed since I don't Junio is that interested in what this thread
-> has morphed into.]
-> 
-> Johannes Schindelin wrote:
+
+On Wed, Apr 8, 2009 at 10:16 AM, Jeff King <peff@peff.net> wrote:
+> On Tue, Apr 07, 2009 at 10:10:41PM -0400, Jeff King wrote:
 >
-> > We could even use the opportunity for a little informal German 
-> > GitTogether... "Alles wird Git!"?
-> 
-> Could you translate that for the Deutsch-challenged among us?
+>> On Wed, Apr 08, 2009 at 09:03:03AM +0800, Ping Yin wrote:
+>>
+>> > There seems to be a patch for this ( add -e?), but i forget where =
+to
+>> > find it.
+>>
+>> "add -p" has an "e"dit option for editing the patch. I don't recall =
+any
+>> way of directly editing the content.
+>
 
-No problem:
+> "add -p" has an "e"dit option for editing the patch. I don't recall a=
+ny
+> way of directly editing the content.
 
-	Everything is going to be alright.
+Sometimes by 'add -p', i can't get what i want (the patch will fail to
+apply when exiting editor). And with 'add -p', i can't get a global
+view of all changes together
 
-(with the "alright" part misspelt so it reads "git" ;-)
+> I'm not sure what you mean by "alongside".
 
-> According to the /current/ itinerary, the evenings I have free in Berlin 
-> are Saturday Oct 3 and Monday Oct 5.
+By "aloneside" i mean i can open the index and worktree file in diff
+mode side by side for easily editing.
 
-Sir, we have a date.
+> Hmm, actually maybe you are thinking of:
+>
+> =C2=A0http://article.gmane.org/gmane.comp.version-control.git/103389
+>
+> which I even reviewed, but it doesn't seem to have gone anywhere afte=
+r
+> that.
+>
 
-Ciao,
-Dscho
+Thanks, That's what i want.
