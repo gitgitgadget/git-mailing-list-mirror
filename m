@@ -1,126 +1,97 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: [ANNOUNCE] git_fast_filter
-Date: Tue, 7 Apr 2009 21:35:10 -0600
-Message-ID: <51419b2c0904072035u1182b507o836a67ac308d32b9@mail.gmail.com>
+From: Ping Yin <pkufranky@gmail.com>
+Subject: Re: Any way to edit the file in index directly?
+Date: Wed, 8 Apr 2009 12:17:59 +0800
+Message-ID: <46dff0320904072117x712f29dj6854ee7219aede9d@mail.gmail.com>
+References: <46dff0320904071803k68fddff4j226760392e0c5bcc@mail.gmail.com>
+	 <20090408021041.GB18244@coredump.intra.peff.net>
+	 <alpine.DEB.1.00.0904080434240.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 08 05:36:47 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git mailing list <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Apr 08 06:19:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrOak-00033C-NC
-	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 05:36:47 +0200
+	id 1LrPGA-0002Lk-Jl
+	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 06:19:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753384AbZDHDfO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Apr 2009 23:35:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753321AbZDHDfN
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Apr 2009 23:35:13 -0400
-Received: from mail-gx0-f160.google.com ([209.85.217.160]:37813 "EHLO
-	mail-gx0-f160.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753271AbZDHDfM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Apr 2009 23:35:12 -0400
-Received: by gxk4 with SMTP id 4so6640838gxk.13
-        for <git@vger.kernel.org>; Tue, 07 Apr 2009 20:35:11 -0700 (PDT)
+	id S1751426AbZDHESC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Apr 2009 00:18:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751265AbZDHESA
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 00:18:00 -0400
+Received: from wa-out-1112.google.com ([209.85.146.177]:12858 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750803AbZDHESA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Apr 2009 00:18:00 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so2261214wah.21
+        for <git@vger.kernel.org>; Tue, 07 Apr 2009 21:17:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=wPGIEBRPfkcYPpIz8Dm3g5P7eeNvTWw936s0GHJgumM=;
-        b=Aa01rE9npNxtdFwdQrRPeQICjsLnGH5+nQZ1M/SAJlN8veSEpeetLjynqtRZ54Ax1v
-         goET2fQuzrLZu+268tkF4LjcLCFZimdg4tDdTqbz97QRQ9lZbSSHLVFSRAlLleid63b9
-         /h3p6jLsfthuro15c9MI5J+9If/twPEkWqoXQ=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=lHgQ0T0SX+rCJZ1jES0qwfZuoSHt3/VyiF8VCXBPsq0=;
+        b=p8DoGXE+bFAt/vkrhNZpFCOD+xJqOFMFZPUhHi1XwA0tL5GXgNvPWuJmyjOdDdnm5G
+         cpRy9I2CdVf8BOvXZVeAGZ1wB1VmDZEuDTphcfBrq71GbtEpNc2qdPGaANlBB0X739Cq
+         CokVtNgneDEL1tQ70IWzqE1Nb+D9yLgCNwA9g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=Bq29KxeI6K0sd1MXKFcNxatDBfH9NWGY7tkPz5tBLDwExl4zPTLZIN5FWZCUt0FMeI
-         SI4hHgv/0lWVphxW8cuFZCzrPzXUAv5OLoD6T24BT4BReNwG4QkvJXmQzPwhZLqP/+sD
-         ThAtjB9IKQTelm1sJsEUK+TT2tCn4RVVtaQ9Y=
-Received: by 10.231.14.196 with SMTP id h4mr268815iba.36.1239161710911; Tue, 
-	07 Apr 2009 20:35:10 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=C5EGxu1ZdJj3fyuV4bFogcetczwPPbNbCEgVDHKQt3PVBRfhk6jJV6g+I8I0yliRoK
+         jRbDjRfZGa0KkbIXGbkEh+tB9fKGpPx1qzOA/uElE8w4PQTx2h6HlYtanhpnA25HLBXg
+         TA1y3iUUQYplaXa7WgRAhd74WA5VfO9+nMtUQ=
+Received: by 10.114.159.17 with SMTP id h17mr477762wae.197.1239164279307; Tue, 
+	07 Apr 2009 21:17:59 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0904080434240.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116029>
 
-Just thought I'd make this available, in case there's others with
-niche needs that find it useful...
+On Wed, Apr 8, 2009 at 10:39 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Tue, 7 Apr 2009, Jeff King wrote:
+>
+>> On Wed, Apr 08, 2009 at 09:03:03AM +0800, Ping Yin wrote:
+>>
+>> > There seems to be a patch for this ( add -e?), but i forget where =
+to
+>> > find it.
+>>
+>> "add -p" has an "e"dit option for editing the patch. I don't recall =
+any
+>> way of directly editing the content.
+>
+> I posted a patch for "git add --edit", which allows you to edit the _=
+diff_
+> between the working directory and the index, and which applies the re=
+sult
+> using apply --recount.
+>
+> But that has nothing to do with "editing the index directly".
+>
+> But you might want to use a combination of "hash-object -w --stdin" a=
+nd
+> "update-index --cacheinfo". =C2=A0IOW something like
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0sha1=3D$(echo Hello | git hash-object -w -=
+-stdin) &&
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git update-index --cacheinfo 0644 $sha1 my=
+-file
+>
+> However, Ping, I _strongly_ suspect an X-Y problem here. =C2=A0IOW I =
+think you
+> are asking about specifics of a certain _solution_, while we probably=
+ have
+> a better solution for your particular _problem_.
+>
 
-
-git_fast_filter assists with quickly rewriting the history of a repository
-by making it easy to write scripts whose purpose is to serve as safe
-filters between fast-export and fast-import.  git_fast_filter comes with
-example programs, a basic test-suite, and a double your money back
-satisfaction guarantee.  (I love free software.)  You can get it from
-
-  git://gitorious.org/git_fast_filter/mainline.git
-
-In more detail...
-
-=== Purpose ===
-
-git_fast_filter is designed to make it easy to filter or rewrite the
-history of a repository.  As such, it fills the same role as
-git-filter-branch, and was written primarily to overcome the sometimes
-severe speed shortcomings of git-filter-branch.  In particular, using
-git_fast_filter can avoid thousands or millions of new process forks, and
-can allow you to rewrite the same file only one time instead of 50,000
-times.  However, while using git_fast_filter is fairly simple and quick, it
-is hard to beat writing a simple git-filter-branch one-liner for efficiency
-of human time.  Also, the two tools use very different methods of rewriting
-history and do not have exactly overlapping feature sets, so the best tool
-for a particular job is going to be very problem dependent.
-
-As human time is often more important than computer time, especially for
-one-shot rewrites, git-filter-branch will probably continue to be the more
-common tool.  However, git_fast_filter is useful in cases where computer
-time of a rewrite matters (particularly larger repositories and more
-involved rewrites that need to be run and tested many times on large data
-sets).  Also git_fast_filter has a couple features that may come in handy
-in special cases (assisting with generating fast-export output from
-scratch, interleaving commits from seperate repositories, and bidirectional
-collaboration between filtered and unfiltered repositories).
-
-=== Idea ===
-
-The way git_fast_filter works is by providing a simple python library,
-git_fast_filter.py.  This library can be used in simple python scripts to
-create a filter for the output of git-fast-export.  Thus, the typical
-calling convention is of the form:
-
-    git fast-export | filter_script.py | git fast-import
-
-=== Example ===
-
-An example script that renames the 'master' branch to 'other is shown
-below (this is similar to the example in the git-fast-export manpage, but
-is safe against the string 'refs/heads/master' appearing in some file or
-commit message in the repository):
-
-  #!/usr/bin/python
-
-  from git_fast_filter import Commit, FastExportFilter
-
-  def my_commit_callback(commit):
-    if commit.branch == "refs/heads/master":
-      commit.branch = "refs/heads/other"
-
-  filter = FastExportFilter(commit_callback = my_commit_callback)
-  filter.run()
-
-The user can then run this script by:
-  $ mkdir target && cd target && git init
-  $ (cd /PATH/LEADING/TO/source && git fast-export --all) \
-       | /PATH/TO/filter_script.py | git fast-import
-
-(Note: The user can have the script take care of the git init, the cd's,
-and the invocations of git fast-export and git fast-import by just passing
-directory names to FastExportFilter.run; however, writing out the details
-explicitly as in the above example makes it clearer what is going on.)
-
-
-Elijah
+Thanks. I think 'add --edit' is just what i meant by saying 'add -e'.
+I'll have it a try.
