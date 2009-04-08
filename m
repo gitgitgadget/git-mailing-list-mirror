@@ -1,74 +1,74 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: [PATCH RFC 1/6] send-email: Add --delay for separating emails
-Date: Wed, 8 Apr 2009 09:35:02 -0500
-Message-ID: <b4087cc50904080735i6d56212fke3072a22da488fb@mail.gmail.com>
-References: <49dcb464.06d7720a.66ca.ffffbd30@mx.google.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Bug report - git show <tagname> together with --pretty=format
+Date: Wed, 08 Apr 2009 17:28:21 +0200
+Message-ID: <49DCC295.7010908@drmicha.warpmail.net>
+References: <49DC9F07.4090105@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>,
-	Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 08 16:37:25 2009
+To: Cornelius <c.r1@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Apr 08 17:31:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrYtO-0000cW-2u
-	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 16:36:42 +0200
+	id 1LrZjw-000340-Nd
+	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 17:31:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754912AbZDHOfH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Apr 2009 10:35:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751840AbZDHOfF
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 10:35:05 -0400
-Received: from qw-out-2122.google.com ([74.125.92.27]:8369 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751268AbZDHOfE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Apr 2009 10:35:04 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so131999qwh.37
-        for <git@vger.kernel.org>; Wed, 08 Apr 2009 07:35:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=s5JtPrhBZ8oeuP7WyNVh71eqih8h4wItwWKGpEQ2bsg=;
-        b=PY/W1Fzm1keGIwohVqMMeA3CTurjY2RyxDvSqUJLeBwRQZMIts9veHF85RNmZ5aYHC
-         LutmzFngJewaHSd62xHdoldRUVaOjbc24I+pQ0Ii1KfykVUqliBWTkE/gL/QcOrW1GdQ
-         hTh/OVBMf7dQQPBGvgDnHaZ7QDCZcQBRX+vN0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=NbDQxecQ2JqCV3/PGv/O6KM0OZpTV2uXY2epmb+RB5kOLSYxLYgNFjPXvXKLzXlRAQ
-         nfXlYvfxSY15U/rEuke3m3JXT+N6a/uIilCr2HVPlhJls0a3kvmAaUu7kechFO0a8xQ7
-         WCWdD40MBe0IPhJVe2B++CA75W7Dpzz67Rl3M=
-Received: by 10.224.67.130 with SMTP id r2mr1565119qai.284.1239201302612; Wed, 
-	08 Apr 2009 07:35:02 -0700 (PDT)
-In-Reply-To: <49dcb464.06d7720a.66ca.ffffbd30@mx.google.com>
+	id S934083AbZDHP23 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Apr 2009 11:28:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934080AbZDHP22
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 11:28:28 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:53487 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933993AbZDHP21 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Apr 2009 11:28:27 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 4FE36313FDC;
+	Wed,  8 Apr 2009 11:28:26 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Wed, 08 Apr 2009 11:28:26 -0400
+X-Sasl-enc: RPGdcMTRrsn0pj+OtZCYG2nfaBysiXdP6V33K9uXhH9X 1239204506
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id BC8A225574;
+	Wed,  8 Apr 2009 11:28:25 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090408 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <49DC9F07.4090105@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116085>
 
-On Wed, Apr 8, 2009 at 09:25, Michael Witten <mfwitten@gmail.com> wrote:
-> For instance, with
-> a 14-patch series, one could set `--delay 60' and then let send-email
-> run happily for the next 14 minutes with nary a thought.
+Cornelius venit, vidit, dixit 08.04.2009 14:56:
+> Hi,
+> I've a problem with git 1.6.2.2 (self compiled) and git show. I use it's 
+> output for parsing the git data, so this is more than a minor issue for 
+> me. When you normally do a git show on a tag name it's output resembles 
+> the following:
+> tag <tagname>
+> Tagger: Cornelius <c.r1@gmx.de>
+> Date:   Wed Apr 8 14:39:17 2009 +0200
+> 
+> 
+> tagmessage
+> commit 77e312e0527f87604e4c70ebf6040e79bb55d2ed
+> <snip>
+> 
+> Now when you do a git show <tagname> 
+> --pretty=format:"ENDOFGITTAGOUTPUTMESAGEHERE%n%H" --
+> the Date: line is missing. Git 1.6.0.5 (which is avaible in my distro's 
+> repos) doesn't have this issue. Please CC me, I'm not subcribed here.
+> Cornelius
 
-As implemented, it would only take 13 minutes.
+It's not a bug, it's a feature ;)
 
-For a 5-patch series:
+In fact, git show used to ignore format specifiers for the tag part and
+apply them to the commit part only. Since
+ea718e6 (show <tag>: reuse pp_user_info() instead of duplicating code,
+2009-01-02)
+(which is in v1.6.2) it applies the format to both, which is why there
+is no tag date unless you ask for it (or use the default format).
 
-* Patch 1/5 sent
-* delay 60 seconds
-* Patch 2/5 sent
-* delay 60 seconds
-* Patch 3/5 sent
-* delay 60 seconds
-* Patch 4/5 sent
-* delay 60 seconds
-* Patch 5/5 sent
-* send email exits immediately
+Michael
