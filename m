@@ -1,120 +1,100 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 1/3] list-objects: add "void *data" parameter to show functions
-Date: Wed, 8 Apr 2009 06:39:35 +0200
-Message-ID: <200904080639.35499.chriscool@tuxfamily.org>
-References: <20090407040819.4338.4291.chriscool@tuxfamily.org> <20090407040854.4338.94304.chriscool@tuxfamily.org> <7vk55vubcv.fsf@gitster.siamese.dyndns.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Performance issue: initial git clone causes massive repack
+Date: Wed, 08 Apr 2009 00:52:54 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0904080041240.6741@xanadu.home>
+References: <alpine.DEB.1.10.0904051419490.6245@asgard.lang.hm>
+ <fabb9a1e0904051436i1dc9c1bdhe86a23e470c756f9@mail.gmail.com>
+ <alpine.LFD.2.00.0904052315210.6741@xanadu.home>
+ <20090407081019.GK20356@atjola.homenet> <m3tz5023rq.fsf@localhost.localdomain>
+ <alpine.LFD.2.00.0904070903020.6741@xanadu.home>
+ <20090407142147.GA4413@atjola.homenet>
+ <alpine.LFD.2.00.0904071321520.6741@xanadu.home>
+ <20090407181259.GB4413@atjola.homenet>
+ <alpine.LFD.2.00.0904071454250.6741@xanadu.home>
+ <20090407202725.GC4413@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 08 06:42:18 2009
+Content-Type: multipart/mixed; boundary="Boundary_(ID_GdY0ZCnB9Gfp83PrJniGBg)"
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>, david@lang.hm,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Apr 08 06:54:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrPc9-0006uY-Gd
-	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 06:42:17 +0200
+	id 1LrPoH-0000bQ-WE
+	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 06:54:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752038AbZDHEkq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Apr 2009 00:40:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750871AbZDHEkp
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 00:40:45 -0400
-Received: from smtp1-g21.free.fr ([212.27.42.1]:33494 "EHLO smtp1-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750800AbZDHEko convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Apr 2009 00:40:44 -0400
-Received: from smtp1-g21.free.fr (localhost [127.0.0.1])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id 840E89400C4;
-	Wed,  8 Apr 2009 06:40:35 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id 5CF6B940019;
-	Wed,  8 Apr 2009 06:40:33 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vk55vubcv.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752190AbZDHExE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Apr 2009 00:53:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752087AbZDHExB
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 00:53:01 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:49705 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751746AbZDHExA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Apr 2009 00:53:00 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KHR004XMMW6E0N0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 08 Apr 2009 00:52:54 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20090407202725.GC4413@atjola.homenet>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116032>
 
-Le mercredi 8 avril 2009, Junio C Hamano a =E9crit :
-> Christian Couder <chriscool@tuxfamily.org> writes:
-> > The goal of this patch is to get rid of the "static struct rev_info
-> > revs" static variable in "builtin-rev-list.c".
->
-> Hmm.  If it were a more library-ish file, a removal of such a static
-> variable might help you to make more than one calls to a library
-> function, but does it matter in files like builtin-rev-list.c?  Its
-> cmd_rev_list() is like main() --- it is meant to run once and exit.
->
-> So if it is the only goal of this series, I am inclined to say that I=
- do
-> not have a reason to look at the rest of the series, but as a side ef=
-fect
-> does this removal make some other API better?  Perhaps a more library=
--ish
-> function is in builtin-rev-list.c and this structure should really ne=
-eds
-> to be passed around as a parameter, but I cannot tell solely by readi=
-ng
-> the goal above, without reading the patches themselves.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-In the cover letter, I wrote that the patch series removes restrictions=
- on=20
-using the "show_bisect_vars" function.
+--Boundary_(ID_GdY0ZCnB9Gfp83PrJniGBg)
+Content-type: TEXT/PLAIN; charset=iso-8859-1
+Content-transfer-encoding: 8BIT
 
-In fact there was a restriction on the use of the BISECT_SHOW_ALL flag=20
-because that would use the "show_commit" function that was using static=
-=20
-variables.
+On Tue, 7 Apr 2009, Björn Steinbrink wrote:
 
-The restriction was described in a comment in "bisect.h" and this comme=
-nt is=20
-removed by the series.=20
+> On 2009.04.07 14:56:41 -0400, Nicolas Pitre wrote:
+> > On Tue, 7 Apr 2009, Björn Steinbrink wrote:
+> > 
+> > > On 2009.04.07 13:48:02 -0400, Nicolas Pitre wrote:
+> > > > The first low hanging fruit to help this case is to make upload-pack use 
+> > > > the --revs argument with pack-object to let it do the object enumeration 
+> > > > itself directly, instead of relying on the rev-list output through a 
+> > > > pipe.  This is what 'git repack' does already.  pack-objects has to 
+> > > > access the pack anyway, so this would eliminate an extra access from a 
+> > > > different process.
+> > > 
+> > > Hm, for an initial clone that would end up as:
+> > > git pack-objects --stdout --all
+> > > right?
+> > > 
+> > > If so, that doesn't look it it's going to work out as easily as one
+> > > would hope. Robin said that both processes, git-upload-pack (which does
+> > > the rev-list) and pack-objects peaked at ~2GB of RSS (which probably
+> > > includes the mmapped packs). But the above pack-objects with --all peaks
+> > > at 3.1G here, so it basically seems to keep all the stuff in memory that
+> > > the individual processes had. But this way, it's all at once, not 2G
+> > > first and then 2G in a second process, after the first one exitted.
+> > 
+> > Right, and it is probably faster too.
+> > 
+> > Can I get a copy of that repository somewhere?
+> 
+> http://git.overlays.gentoo.org/gitweb/?p=exp/gentoo-x86.git;a=summary
+> 
+> At least that's what I cloned ;-) I hope it's the right one, but it fits
+> the description...
 
-This is the relevant hunk in patch 2/3:
-
-diff --git a/bisect.h b/bisect.h
-index f5d1067..b1c334d 100644
---- a/bisect.h
-+++ b/bisect.h
-@@ -14,12 +14,14 @@ extern struct commit_list *filter_skipped(struct=20
-commit_list *list,
- #define BISECT_SHOW_TRIED      (1<<1)
- #define BISECT_SHOW_STRINGED   (1<<2)
-=20
--/*
-- * The flag BISECT_SHOW_ALL should not be set if this function is call=
-ed
-- * from outside "builtin-rev-list.c" as otherwise it would use
-- * static "revs" from this file.
-- */
--extern int show_bisect_vars(struct rev_info *revs, int reaches, int al=
-l,
-+struct rev_list_info {
-+       struct rev_info *revs;
-+       int show_timestamp;
-+       int hdr_termination;
-+       const char *header_prefix;
-+};
-+
-+extern int show_bisect_vars(struct rev_list_info *info, int reaches, i=
-nt=20
-all,
-                            int flags);
-=20
- extern int bisect_next_vars(const char *prefix);
+OK.  FWIW, I repacked it with --window=250 --depth=250 and obtained a 
+725MB pack file.  So that's about half the originally reported size.
 
 
-Best regards,
-Christian.
+Nicolas
 
-> > Anyway this makes the code more clean and more generic, so it
-> > should be a good thing in the long run.
->
-> I wouldn't disagree with that "long run" thing, but the answer to the
-> above question affects the placement of this series in my prioritized
-> queue.
+--Boundary_(ID_GdY0ZCnB9Gfp83PrJniGBg)--
