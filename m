@@ -1,113 +1,134 @@
 From: P Baker <me@retrodict.com>
-Subject: [PATCH 1/2] Clarify the gitmodules and submodules docs
-Date: Wed, 8 Apr 2009 03:04:46 -0400
-Message-ID: <526944450904080004r1249d1b8j4a44472d72502b9c@mail.gmail.com>
-References: <1239172816-38966-1-git-send-email-pbaker@retrodict.com>
+Subject: [PATCH 2/2] Make git submodule --quiet summary obey flag
+Date: Wed, 8 Apr 2009 03:05:19 -0400
+Message-ID: <526944450904080005q115d17b4qcfc82239fc2e4b2d@mail.gmail.com>
+References: <1239172707-38915-1-git-send-email-pbaker@retrodict.com>
+	 <1239172707-38915-2-git-send-email-pbaker@retrodict.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 08 09:06:59 2009
+X-From: git-owner@vger.kernel.org Wed Apr 08 09:08:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrRrv-0004yY-F5
-	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 09:06:43 +0200
+	id 1LrRtS-0005RA-DQ
+	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 09:08:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761442AbZDHHEt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Apr 2009 03:04:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761286AbZDHHEt
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 03:04:49 -0400
-Received: from qw-out-2122.google.com ([74.125.92.25]:32599 "EHLO
+	id S1750894AbZDHHFY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Apr 2009 03:05:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761996AbZDHHFW
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 03:05:22 -0400
+Received: from qw-out-2122.google.com ([74.125.92.26]:8098 "EHLO
 	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761175AbZDHHEs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Apr 2009 03:04:48 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so3434736qwh.37
-        for <git@vger.kernel.org>; Wed, 08 Apr 2009 00:04:46 -0700 (PDT)
+	with ESMTP id S1761901AbZDHHFU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Apr 2009 03:05:20 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so3434923qwh.37
+        for <git@vger.kernel.org>; Wed, 08 Apr 2009 00:05:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:sender:received:in-reply-to
          :references:date:x-google-sender-auth:message-id:subject:from:to
          :content-type:content-transfer-encoding;
-        bh=KT39anfekl8oTPnINSn69IKfsk6e7A+HKduuly+K5qg=;
-        b=VRzNA2pu+ZZQ+6tCyBUIwDrYYYbz4pIDhzaMoSC8OsHlrksYw82RItH3OLcmkj5zP3
-         tXbMeSSQfozYYUKdevr4GrDhObIKIoAdGS1qp1/VQgQ1wPnbEFqEIhv44WJNBJjWmvF9
-         iny5Pl38pcbxXsQxBOGpZRWIbhS4M4pSwy380=
+        bh=frd63T7Fk7KULhrEbSceuud25rMrxN8T8sMmxJgPa2I=;
+        b=Fd7K2Y3gmepdI2FS4vmbzcRw4yzy3V5Y+biV3fVwFF7iZX7CA/1lnEJbc5uwGWgZAS
+         fXHZ0Nt2M/TzE0R8sq/uiCbzXvAUqx2HuUZ/bfG118YeHIxBQ2XHXx69l3I8U0W7omyv
+         29xHlrbygvYzHSEst2+J2V0jrB7afXbarYfzw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:sender:in-reply-to:references:date
          :x-google-sender-auth:message-id:subject:from:to:content-type
          :content-transfer-encoding;
-        b=B8zDgy97NGgelUlFNcYP4TmLRlk6RzIm48x8r8Z8OOlUBPj4aBGgUGI128EZfKmo0Z
-         zrH5RacLjOHJCWe0OrnwR4IvSDHywi0J5UvFlti+reO+Y98xzH0+p3u2q5HF/kCEO4D7
-         J2lRywIThSC3qA/DDzyRa4ji2n8wC93zbdW3c=
-Received: by 10.220.72.200 with SMTP id n8mr1528472vcj.16.1239174286563; Wed, 
-	08 Apr 2009 00:04:46 -0700 (PDT)
-In-Reply-To: <1239172816-38966-1-git-send-email-pbaker@retrodict.com>
-X-Google-Sender-Auth: 0a621aa52afdaa8a
+        b=skTmGLHiobMfu5NYnVW+j3ukVOK5D77jCwcGUmF0841/88xKlPcLB6Z6nDUDb4cH9V
+         rHFbXPdYD4y9H/aW6GbXRTwzPPXKBoH2s54ifjBb37sjbv/1HqUnre+kDORfLN8rRWZV
+         H6JbMUGQgJmJG9XLG0/lZjBJSFsyLzTQRLjug=
+Received: by 10.220.76.144 with SMTP id c16mr1540923vck.17.1239174319256; Wed, 
+	08 Apr 2009 00:05:19 -0700 (PDT)
+In-Reply-To: <1239172707-38915-2-git-send-email-pbaker@retrodict.com>
+X-Google-Sender-Auth: 3d5d7a9ec0185c5d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116052>
 
-Added some explanation to the docs to clear up some confusing parts of
-git-submodules that appeared frequently on the mailing list.
+Even with flag, summary would echo output. This patch conforms
+git-submodule to match user expectations.
 
  Signed-off-by: pbaker <pbaker@retrodict.com>
  ---
+  git-submodule.sh |   16 ++++++++--------
+  1 files changed, 8 insertions(+), 8 deletions(-)
 
- As I dug into the reasoning and structure of git-submodule as part of
-GSoC preparation, I also ran across frequently asked questions on the
-mailing list. From this background, I added some explanation to the
-docs to  clear up some confusing parts of git-submodules.
+ diff --git a/git-submodule.sh b/git-submodule.sh
+ index 7c2e060..784c6fa 100755
+ --- a/git-submodule.sh
+ +++ b/git-submodule.sh
+ @@ -187,7 +187,7 @@ cmd_add()
+        then
+                if test -d "$path"/.git -o -f "$path"/.git
+                then
+ -                       echo "Adding existing repo at '$path' to the index"
+ +                       say "Adding existing repo at '$path' to the index"
+                else
+                        die "'$path' already exists and is not a valid git repo"
+                fi
+ @@ -450,10 +450,10 @@ cmd_summary() {
+                while read mod_src mod_dst sha1_src sha1_dst status name
+                do
+                        # Always show modules deleted or type-changed
+(blob<->module)
+ -                       test $status = D -o $status = T && echo
+"$name" && continue
+ +                       test $status = D -o $status = T && say
+"$name" && continue
+                        # Also show added or modified modules which
+are checked out
+                        GIT_DIR="$name/.git" git-rev-parse --git-dir
+>/dev/null 2>&1 &&
+ -                       echo "$name"
+ +                       say "$name"
+                done
+        )
 
- - pbaker
-
- Documentation/git-submodule.txt |    9 ++++++---
-  Documentation/gitmodules.txt    |    8 +++++++-
-  2 files changed, 13 insertions(+), 4 deletions(-)
-
- diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
- index 3b8df44..1ca8184 100644
- --- a/Documentation/git-submodule.txt
- +++ b/Documentation/git-submodule.txt
- @@ -50,9 +50,12 @@ This command will manage the tree entries and
-contents of the
-  gitmodules file for you, as well as inspect the status of your
-  submodules and update them.
-  When adding a new submodule to the tree, the 'add' subcommand
- -is to be used.  However, when pulling a tree containing submodules,
- -these will not be checked out by default;
- -the 'init' and 'update' subcommands will maintain submodules
- +is to be used. This creates a record in the gitmodules file for each
- +submodule. When the file is committed and pulled by others it serves as an
- +in-tree reference for where to obtain the submodule.
+ @@ -522,25 +522,25 @@ cmd_summary() {
+                        total_commits=" ($(($total_commits + 0)))"
+                        ;;
+                esac
+ -
  +
- +When pulling a tree containing submodules, these will not be checked out by
- +default; the 'init' and 'update' subcommands will maintain submodules
-  checked out and at appropriate revision in your working tree.
-  You can briefly inspect the up-to-date status of your submodules
-  using the 'status' subcommand and get a detailed overview of the
- diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
- index d1a17e2..8f03310 100644
- --- a/Documentation/gitmodules.txt
- +++ b/Documentation/gitmodules.txt
- @@ -15,7 +15,13 @@ DESCRIPTION
-
-  The `.gitmodules` file, located in the top-level directory of a git
-  working tree, is a text file with a syntax matching the requirements
- -of linkgit:git-config[1].
- +of linkgit:git-config[1]. As this file is managed by Git, it tracks the
- +records of a project's submodules. Information stored in this file is used
- +as a hint to prime the authoritative version of the record stored in the
- +project configuration file. User specific record changes (e.g. to account
- +for differences in submodule URLs due to networking situations) should be
- +made to the configuration file, while record changes to be propagated (e.g.
- +due to a relocation of the submodule source) should be made to this file.
-
-  The file contains one subsection per submodule, and the subsection value
-  is the name of the submodule. Each submodule section also contains the
+                sha1_abbr_src=$(echo $sha1_src | cut -c1-7)
+                sha1_abbr_dst=$(echo $sha1_dst | cut -c1-7)
+                if test $status = T
+                then
+                        if test $mod_dst = 160000
+                        then
+ -                               echo "* $name
+$sha1_abbr_src(blob)->$sha1_abbr_dst(submodule)$total_commits:"
+ +                               say "* $name
+$sha1_abbr_src(blob)->$sha1_abbr_dst(submodule)$total_commits:"
+                        else
+ -                               echo "* $name
+$sha1_abbr_src(submodule)->$sha1_abbr_dst(blob)$total_commits:"
+ +                               say "* $name
+$sha1_abbr_src(submodule)->$sha1_abbr_dst(blob)$total_commits:"
+                        fi
+                else
+ -                       echo "* $name
+$sha1_abbr_src...$sha1_abbr_dst$total_commits:"
+ +                       say "* $name
+$sha1_abbr_src...$sha1_abbr_dst$total_commits:"
+                fi
+                if test -n "$errmsg"
+                then
+                        # Don't give error msg for modification whose
+dst is not submodule
+                        # i.e. deleted or changed to blob
+ -                       test $mod_dst = 160000 && echo "$errmsg"
+ +                       test $mod_dst = 160000 && echo >&2 "$errmsg"
+                else
+                        if test $mod_src = 160000 -a $mod_dst = 160000
+                        then
  --
  1.6.2.1.316.gedbc2
