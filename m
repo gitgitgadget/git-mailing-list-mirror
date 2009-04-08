@@ -1,112 +1,141 @@
-From: Marius Storm-Olsen <mstormo@gmail.com>
-Subject: Re: Git for Windows 1.6.2.2
-Date: Wed, 08 Apr 2009 07:20:14 +0200
-Message-ID: <49DC340E.9010101@gmail.com>
-References: <alpine.DEB.1.00.0904080440170.10279@pacific.mpi-cbg.de>
-Reply-To: mstormo@gmail.com
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: [PATCH v4 14/14] difftool/mergetool: refactor commands to use git-mergetool--lib
+Date: Wed, 8 Apr 2009 07:33:00 +0200
+Message-ID: <200904080733.01030.markus.heidelberg@web.de>
+References: <1239145213-76701-1-git-send-email-davvid@gmail.com>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: msysgit@googlegroups.com, git@vger.kernel.org
-To: Johannes.Schindelin@gmx.de
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Wed Apr 08 07:21:56 2009
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-gx0-f199.google.com ([209.85.217.199])
+Cc: gitster@pobox.com, git@vger.kernel.org, charles@hashpling.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 08 07:34:33 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrQEU-0005ob-8O
-	for gcvm-msysgit@m.gmane.org; Wed, 08 Apr 2009 07:21:54 +0200
-Received: by gxk23 with SMTP id 23so178312gxk.21
-        for <gcvm-msysgit@m.gmane.org>; Tue, 07 Apr 2009 22:20:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received-spf:authentication-results:received
-         :dkim-signature:domainkey-signature:received:received:message-id
-         :date:from:user-agent:mime-version:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding:reply-to:sender
-         :precedence:x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        bh=hSRMn1a7m9Ln9QQkqCnjobs+xZ+bwUTVGuQek8V57CM=;
-        b=58Ue9e3o6ksm/n2K1UOynuLJrb+LPYR+imWaPhwTlLHOa07ITuIAd/uexIXspSCn6Q
-         ikChHaRvYhkgPQ7qdyoijJiJ8xYd08/Fu1esDymQMHGu20vYcg3LNOYz8wYnNAXDXv31
-         WujavBjQUgJPBmj9HA0k+lxiV4WQFKjZ/PSjI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :dkim-signature:domainkey-signature:message-id:date:from:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding:reply-to:sender:precedence:x-google-loop
-         :mailing-list:list-id:list-post:list-help:list-unsubscribe
-         :x-beenthere-env:x-beenthere;
-        b=dgLhj/VRNncDCpiGDWCs8cBkHcRKUle5IBDXEl6Wq+gaA5YUl8LytZOkWDFep8ifH1
-         JFUt7WZ89lfF5Lrt1D7SiQu7GGwco55iwrBcpKkHfg16WTW2gza3kPcx8VER/5mHMMpt
-         8YM3mEv26OqcGtoqmLgIK22PUrXxUR5UEJl5A=
-Received: by 10.90.83.2 with SMTP id g2mr135481agb.16.1239168018456;
-        Tue, 07 Apr 2009 22:20:18 -0700 (PDT)
-Received: by 10.176.233.6 with SMTP id f6gr4696yqh.0;
-	Tue, 07 Apr 2009 22:20:18 -0700 (PDT)
-X-Sender: mstormo@gmail.com
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.86.70.3 with SMTP id s3mr11928fga.20.1239168017512; Tue, 07 Apr 2009 22:20:17 -0700 (PDT)
-Received: from mail-fx0-f172.google.com (mail-fx0-f172.google.com [209.85.220.172]) by gmr-mx.google.com with ESMTP id 3si284822fgg.14.2009.04.07.22.20.16; Tue, 07 Apr 2009 22:20:16 -0700 (PDT)
-Received-SPF: pass (google.com: domain of mstormo@gmail.com designates 209.85.220.172 as permitted sender) client-ip=209.85.220.172;
-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of mstormo@gmail.com designates 209.85.220.172 as permitted sender) smtp.mail=mstormo@gmail.com; dkim=pass (test mode) header.i=@gmail.com
-Received: by fxm20 with SMTP id 20so2532066fxm.12 for <msysgit@googlegroups.com>; Tue, 07 Apr 2009 22:20:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:received:received:message-id:date:from :user-agent:mime-version:to:cc:subject:references:in-reply-to :content-type:content-transfer-encoding; bh=AMExYSTMa98+OoYAw57k+QLIlrHX4IaMdqJhCkdXsW8=; b=IhIEkAyeRBUSV1buekWPEJg3E8ONhM6KzGFmujtnm3QLgS9wGeI4ZJ1jgEZ0emdo7i z1p0TKcni0yrwJn92Q/VDygcPTjV3HEtHLU8ipYzLnq1Nc2O2FET1LH8gJ6ohCXA+RWo jYyg4Dq/ST1CYouXoBq3987RRfLZEv6rkTsi8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=message-id:date:from:user-agent:mime-version:to:cc:subject :references:in-reply-to:content-type:content-transfer-encoding; b=T+Vrb0Uwh4JmfxHZgRFncSVIKiEgCJ8evNrU2dZyoj/3M3Out36U6HCxaXvh63awzB Bm2d4aRhPpEcklazgIoW7ugY4JxmX25BRg84Hqkj5ddtxn+2FqDwX/F0DR6oXGFER37N qwRW/3wml/fO8aktdO8S71Qwimnu/1QRmj/10=
-Received: by 10.204.124.7 with SMTP id s7mr769452bkr.52.1239168016395; Tue, 07 Apr 2009 22:20:16 -0700 (PDT)
-Received: from ?172.24.90.95? ([62.70.27.104]) by mx.google.com with ESMTPS id 12sm2980728fks.5.2009.04.07.22.20.15 (version=TLSv1/SSLv3 cipher=RC4-MD5); Tue, 07 Apr 2009 22:20:15 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.21) Gecko/20090302 Lightning/0.9 Thunderbird/2.0.0.21 ThunderGit/0.1a Mnenhy/0.7.6.666
-In-Reply-To: <alpine.DEB.1.00.0904080440170.10279@pacific.mpi-cbg.de>
-Sender: msysgit@googlegroups.com
+	id 1LrQQi-00089Z-Hq
+	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 07:34:33 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1758399AbZDHFco (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Apr 2009 01:32:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754293AbZDHFcn
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 01:32:43 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:35400 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753968AbZDHFcn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Apr 2009 01:32:43 -0400
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 4F045FCA4A1F;
+	Wed,  8 Apr 2009 07:32:41 +0200 (CEST)
+Received: from [89.59.73.185] (helo=.)
+	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1LrQOv-0006eQ-00; Wed, 08 Apr 2009 07:32:41 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <1239145213-76701-1-git-send-email-davvid@gmail.com>
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX18THnnvLeMOJm5zjm/TjWRjp1Yc28clHR1Kel7J
+	faKMVe0XagJ1uxhM7rDbzw2pbxiynOdvTpYDUDxLIeFTw2PHg0
+	YsYQRIyctNwH02z9vmPw==
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit+owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit+help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-X-BeenThere-Env: msysgit@googlegroups.com
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116036>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116037>
 
+David Aguilar, 08.04.2009:
+> diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
 
-Johannes Schindelin said the following on 08.04.2009 04:46:
-> Hi,
-> 
-> this email tries to inform you that the Windows installer was updated to 
-> the newest version of Git.
-> 
-> Changes since Git-1.6.2.1-preview20090322
-> 
-> New Features
-> 
-> - Comes with official git 1.6.2.2.
-> - Upgraded Tcl/Tk to 8.5.5.
-> - TortoiseMerge is supported by mergetool now (Thanks Markus Heidelberg).
-> - Uses pthreads (faster garbage collection on multi-core machines).
-> - The test suite passes!
-> 
-> Bugfixes
-> 
-> - Renaming was made more robust (due to Explorer or some virus scanners, 
->   files could not be renamed at the first try, so we have to try multiple 
->   times).
-> - Johannes Sixt made lots of changes to the test-suite to identify 
->   properly which tests should pass, and which ones cannot pass due to 
->   limitations of the platform.
-> - Support PAGERs with spaces in their filename.
-> - Quite a few changes were undone which we needed in the olden days of 
->   msysGit.
-> - Fall back to / when HOME cannot be set to the real home directory due to 
->   locale issues (works around Issue 108 for the moment).
+> +guess_merge_tool () {
+> +	tools="ecmerge"
+> +	if merge_mode; then
+> +		tools="$tools tortoisemerge"
 
-Excellent work guys! Thanks plenty!
+ecmerge can now go to the block after "test -n $DISPLAY", so that in
+this if-then-else really only merge-only and diff-only tools are
+handled.
+Then here it is
++		tools="tortoisemerge"
 
-Oh, and go to sleep! :-p
+> +	else
+> +		kompare="kompare"
 
---
-.marius
+and here
++		tools="kompare"
+
+> +	fi
+> +	if test -n "$DISPLAY"; then
+> +		if test -n "$GNOME_DESKTOP_SESSION_ID" ; then
+> +			tools="meld opendiff kdiff3 $kompare tkdiff $tools"
+> +			tools="$tools xxdiff gvimdiff diffuse"
+> +		else
+> +			tools="opendiff kdiff3 $kompare tkdiff xxdiff $tools"
+> +			tools="$tools meld gvimdiff diffuse"
+> +		fi
+
+And above ecmerge
+And now that we remove the duplicated spaces afterwards anyway, we can
+get rid of the double tools= and continue the line with \
+if we adjust the sed command below...
+
+> +	fi
+> +	if echo "${VISUAL:-$EDITOR}" | grep emacs > /dev/null 2>&1; then
+> +		# $EDITOR is emacs so add emerge as a candidate
+> +		tools="$tools emerge vimdiff"
+> +	elif echo "${VISUAL:-$EDITOR}" | grep vim > /dev/null 2>&1; then
+> +		# $EDITOR is vim so add vimdiff as a candidate
+> +		tools="$tools vimdiff emerge"
+> +	else
+> +		tools="$tools emerge vimdiff"
+> +	fi
+> +	tools="$(echo "$tools" | sed -e 's/ +/ /g')"
+
+Doesn't work for me. For me 's/ \+/ /g' works.
+
+...like this: 's/[ 	]\+/ /g' (space and tab)
+
+OK, for clarification now:
+	if merge_mode; then
+		tools="tortoisemerge"
+	else
+		tools="kompare"
+	fi
+	if test -n "$DISPLAY"; then
+		if test -n "$GNOME_DESKTOP_SESSION_ID" ; then
+			tools="meld opendiff kdiff3 tkdiff xxdiff $tools \
+				gvimdiff diffuse ecmerge"
+		else
+			tools="opendiff kdiff3 tkdiff xxdiff meld $tools \
+				gvimdiff diffuse ecmerge"
+		fi
+	fi
+	[...]
+	tools="$(echo "$tools" | sed -e 's/[ 	]\+/ /g')"
+
+> +	echo >&2 "merge tool candidates: $tools"
+> +
+> +	# Loop over each candidate and stop when a valid merge tool is found.
+> +	for i in $tools
+> +	do
+> +		merge_tool_path="$(translate_merge_tool_path "$i")"
+> +		if type "$merge_tool_path" > /dev/null 2>&1; then
+> +			merge_tool="$i"
+> +			break
+> +		fi
+> +	done
+> +
+> +	if test -z "$merge_tool" ; then
+> +		echo >&2 "No known merge resolution program available."
+> +		return 1
+> +	fi
+> +	echo "$merge_tool"
+> +}
+
+Looks good to me, after these last 2 issues are adjusted.
+Maybe resend the whole series then, so that Junio can apply them easily?
+
+Markus
