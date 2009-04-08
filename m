@@ -1,71 +1,94 @@
-From: "John Dlugosz" <JDlugosz@TradeStation.com>
-Subject: git checkout and pwd?
-Date: Wed, 8 Apr 2009 14:12:37 -0400
-Message-ID: <450196A1AAAE4B42A00A8B27A59278E70A99A3D6@EXCHANGE.trad.tradestation.com>
+From: Elijah Newren <newren@gmail.com>
+Subject: Re: need help with git show :1:...
+Date: Wed, 8 Apr 2009 12:25:35 -0600
+Message-ID: <51419b2c0904081125u3bdf37deyd5dd85f6c2a6d7cc@mail.gmail.com>
+References: <6838.1239212486@relay.known.net>
+	 <51419b2c0904081058p7d5a56c3j6aa5cebb0188ad43@mail.gmail.com>
+	 <7199.1239213762@relay.known.net>
+	 <51419b2c0904081107s7ba08367w671d5b494095402@mail.gmail.com>
+	 <7357.1239214209@relay.known.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 08 20:16:42 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: layer <layer@known.net>
+X-From: git-owner@vger.kernel.org Wed Apr 08 20:28:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrcJb-0006uy-HQ
-	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 20:16:00 +0200
+	id 1LrcUN-0004Yd-54
+	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 20:27:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765853AbZDHSO3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Apr 2009 14:14:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764896AbZDHSO3
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 14:14:29 -0400
-Received: from mail2.tradestation.com ([63.99.207.80]:44285 "EHLO
-	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762193AbZDHSO2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Apr 2009 14:14:28 -0400
-X-ASG-Debug-ID: 1239214454-7aac0323000e-QuoKaX
-X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
-Received: from mail5.tradestation.com (localhost [127.0.0.1])
-	by mail2.tradestation.com (Spam Firewall) with ESMTP id 4779F2D6C18
-	for <git@vger.kernel.org>; Wed,  8 Apr 2009 14:14:16 -0400 (EDT)
-Received: from mail5.tradestation.com (tx02exchange02.trad.tradestation.com [192.168.51.76]) by mail2.tradestation.com with ESMTP id qRpgqBKbZl7Zvfw1 for <git@vger.kernel.org>; Wed, 08 Apr 2009 14:14:16 -0400 (EDT)
-X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
-X-ASG-Whitelist: Client
-Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 8 Apr 2009 14:13:17 -0400
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-ASG-Orig-Subj: git checkout and pwd?
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: git checkout and pwd?
-Thread-Index: Acm4dZjbowYDpnMTTAmmWwb9iyIunw==
-X-OriginalArrivalTime: 08 Apr 2009 18:13:17.0129 (UTC) FILETIME=[B0A88B90:01C9B875]
-X-Barracuda-Connect: tx02exchange02.trad.tradestation.com[192.168.51.76]
-X-Barracuda-Start-Time: 1239214456
-X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
+	id S1762331AbZDHSZj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Apr 2009 14:25:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762987AbZDHSZi
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 14:25:38 -0400
+Received: from qw-out-2122.google.com ([74.125.92.24]:65090 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755583AbZDHSZh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Apr 2009 14:25:37 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so267689qwh.37
+        for <git@vger.kernel.org>; Wed, 08 Apr 2009 11:25:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=h3mSgbCtUtcFQpbwP3Zi0CAeBdsIAYMYDPsQ7jtlOOE=;
+        b=NuyT15HQn4Oebq51u6I9CUPhgVmheD54ZLwemymyL5leIk6Ypi8jXBMFSYJnassKYf
+         DavMq1CCtUWXtntEZvYB1NDr//YPHvzAmTTIYsQgNnDqmsiF4MvSabytrOz7vgaYiWeo
+         Pgdz/f0hBgwsBtWHyaqpRCQJ0zhiLgJdNUAPE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=V9e4BoBP53mtu5w7cCYH/xxaDhqf4OKE64adEmUJFeFNG5+mo89RNUUwgR7er8qEed
+         j+J0JrbjhjswCwXZuz4Z3IF2i6Fho6Le7dLg/VqOHFduKbl8pDzbFmU6YEiq0QnFnSOu
+         0H7AJuABsip+5fQiv/RkqlkhaoBolkQc/m2KU=
+Received: by 10.231.18.130 with SMTP id w2mr435760iba.11.1239215135539; Wed, 
+	08 Apr 2009 11:25:35 -0700 (PDT)
+In-Reply-To: <7357.1239214209@relay.known.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116105>
 
-On a Windows system running msysgit, I entered the command:
+Hi,
 
-	git checkout -b -l jmd/mt_queue
+On Wed, Apr 8, 2009 at 12:10 PM, layer <layer@known.net> wrote:
+> Elijah Newren <newren@gmail.com> wrote:
+>>> On Wed, Apr 8, 2009 at 12:02 PM, layer <layer@known.net> wrote:
+>>> > quadra% git ls-files -s src/c/sock.c
+>>> > 100644 ef6c9b94c678dc79760edfd15a0796b3726b76f6 0       src/c/sock.c
+>>>
+>>> That suggests that the file is not unmerged, i.e. that there aren't
+>>> any remaining conflicts.  This explains why your commands wouldn't
+>>> work unless you used stage 0 instead of 1 or 2.  Now, why there
+>>> weren't conflicts when you thought there were?  I have no idea, unless
+>>> perhaps you did a stray git add src/c/sock.c.
+>
+> It was several of weeks ago that I started this merge, and I remember
+> playing with git show then and it worki.  I might have overwriten
+> the file with one of the show's and done manual editing that way.  I
+> don't know if this makes a difference.
+>
+> How can I redo the merge for just this file?  Is that possible?  I
+> think I'd definitely like to start over on *just this one file*.
 
-and got a reply of: 
-fatal: git checkout: updating paths is incompatible with switching
-branches.
-Did you intend to checkout 'compile.vc8/Win32/release/jmd/mt_queue'
-which can not be resolved as commit?
+Well, someone else probably knows a clever way to do this.  I don't,
+but the following may help:
 
-Is there something about this form of checkout that requires that it be
-issued while in the "top level" directory of the project (i.e. the one
-containing the .git subdirectory)?
+MERGE_REF=$(cat .git/MERGE_HEAD)
+git show HEAD:src/c/sock.c > current-sock
+git show $MERGE_REF:src/c/sock.c > other-sock
+git show $(git merge-base $MERGE_REF HEAD):src/c/sock.c > base-sock
+git merge-file current-sock other-sock base-sock
 
---John
-(sorry about the footer; it's not my idea)
+That'll redo the three way merge on src/c/sock.c (assuming no renames
+or other special cases happened) and store the result in current-sock.
+ You can then edit that file and when ready, move the result over
+src/c/sock.c.
 
-TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
-  If you received this in error, please contact the sender and delete the material from any computer.
+Elijah
