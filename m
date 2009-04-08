@@ -1,49 +1,56 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/3] git remote update: Report error for non-existing
-	groups
-Date: Wed, 8 Apr 2009 13:08:45 -0400
-Message-ID: <20090408170844.GB28069@coredump.intra.peff.net>
-References: <1239025262-16960-1-git-send-email-finnag@pvv.org> <1239025262-16960-2-git-send-email-finnag@pvv.org> <7vprfnubyi.fsf@gitster.siamese.dyndns.org> <20090408080738.GA24386@pvv.org> <7vy6ubo8tn.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Finn Arne Gangstad <finnag@pvv.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 08 19:11:13 2009
+From: layer <layer@known.net>
+Subject: need help with git show :1:...
+Date: Wed, 08 Apr 2009 10:41:26 -0700
+Message-ID: <6838.1239212486@relay.known.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 08 19:51:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrbIj-0003WD-KQ
-	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 19:11:02 +0200
+	id 1Lrbvp-0004UH-O3
+	for gcvg-git-2@gmane.org; Wed, 08 Apr 2009 19:51:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934929AbZDHRIx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Apr 2009 13:08:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934926AbZDHRIv
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 13:08:51 -0400
-Received: from peff.net ([208.65.91.99]:38472 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934916AbZDHRIt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Apr 2009 13:08:49 -0400
-Received: (qmail 31412 invoked by uid 107); 8 Apr 2009 17:08:48 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 08 Apr 2009 13:08:48 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Apr 2009 13:08:45 -0400
-Content-Disposition: inline
-In-Reply-To: <7vy6ubo8tn.fsf@gitster.siamese.dyndns.org>
+	id S934609AbZDHRt3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Apr 2009 13:49:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754904AbZDHRt2
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 13:49:28 -0400
+Received: from relay.known.net ([67.121.255.169]:37571 "HELO relay.known.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754825AbZDHRt2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Apr 2009 13:49:28 -0400
+X-Greylist: delayed 480 seconds by postgrey-1.27 at vger.kernel.org; Wed, 08 Apr 2009 13:49:27 EDT
+Received: from localhost (127.0.0.1) by relay.known.net
+    (Allegro Maild v1.2.17) id 000000034329; Wed, 8 Apr 2009 10:41:26 -0700
+X-Mailer: MH-E 8.1; nmh 1.3; GNU Emacs 22.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116098>
 
-On Wed, Apr 08, 2009 at 01:20:36AM -0700, Junio C Hamano wrote:
+I remember this working for me in the not too distant past.  
+I'm using git version 1.6.1.3.  Perhaps it was an older version of git
+when it worked for me.
 
-> I don't know what users want to see when they say "default" explicitly
-> without having an explicit configuration.  Should it do the same thing as
-> "git remote update"?
+quadra% ls -l src/c/sock.c
+-rw-r--r-- 1 layer fi 57909 Mar  9 13:32 src/c/sock.c
+quadra% git show :2:src/c/sock.c
+fatal: ambiguous argument ':2:src/c/sock.c': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions
+quadra% git show :1:c/sock.c
+fatal: ambiguous argument ':1:c/sock.c': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions
+quadra% git show :1:sock.c
+fatal: ambiguous argument ':1:sock.c': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions
+quadra% git show :1:/src/c/sock.c
+fatal: ambiguous argument ':1:/src/c/sock.c': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions
 
-I'm not sure we have a choice anymore; is it worth breaking
-compatibility to "fix" something that doesn't actually seem to be
-harming anyone?
 
--Peff
+
+
+If I cd to "src/c" and do "git show :1:sock.c" the same thing happens.
+
+Thanks.
