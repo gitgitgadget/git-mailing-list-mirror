@@ -1,97 +1,68 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH RFC 1/6] send-email: Add --delay for separating emails
-Date: Thu, 9 Apr 2009 04:14:44 -0400
-Message-ID: <20090409081443.GB17221@coredump.intra.peff.net>
-References: <49dcb464.06d7720a.66ca.ffffbd30@mx.google.com>
+Subject: Re: [PATCH 5/5] branch: show upstream branch when double verbose
+Date: Thu, 9 Apr 2009 04:23:50 -0400
+Message-ID: <20090409082350.GD17221@coredump.intra.peff.net>
+References: <20090407070254.GA2870@coredump.intra.peff.net> <20090407071656.GE2924@coredump.intra.peff.net> <49DB089A.7080207@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 09 10:23:10 2009
+Cc: git@vger.kernel.org, Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Apr 09 10:25:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrpXM-0003xa-Kc
-	for gcvg-git-2@gmane.org; Thu, 09 Apr 2009 10:23:05 +0200
+	id 1LrpZx-0004kM-DG
+	for gcvg-git-2@gmane.org; Thu, 09 Apr 2009 10:25:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757821AbZDIIVb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Apr 2009 04:21:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756491AbZDIIV3
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 04:21:29 -0400
-Received: from peff.net ([208.65.91.99]:42789 "EHLO peff.net"
+	id S1759804AbZDIIX4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Apr 2009 04:23:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758922AbZDIIXy
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 04:23:54 -0400
+Received: from peff.net ([208.65.91.99]:42793 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757458AbZDIIV2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Apr 2009 04:21:28 -0400
-Received: (qmail 14389 invoked by uid 107); 9 Apr 2009 08:14:47 -0000
+	id S1758445AbZDIIXx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Apr 2009 04:23:53 -0400
+Received: (qmail 14505 invoked by uid 107); 9 Apr 2009 08:23:53 -0000
 Received: from Unknown (HELO coredump.intra.peff.net) (10.0.0.130)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 09 Apr 2009 04:14:47 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Apr 2009 04:14:44 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 09 Apr 2009 04:23:53 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Apr 2009 04:23:50 -0400
 Content-Disposition: inline
-In-Reply-To: <49dcb464.06d7720a.66ca.ffffbd30@mx.google.com>
+In-Reply-To: <49DB089A.7080207@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116149>
 
-On Wed, Apr 08, 2009 at 09:25:25AM -0500, Michael Witten wrote:
+On Tue, Apr 07, 2009 at 10:02:34AM +0200, Michael J Gruber wrote:
 
-> Firstly, I presume that someone is electing to use this option, so it is
-> almost by definition not annoying for that person.
-
-Sure, obviously only people who enable it will be affected. I was
-thinking of it more in terms of group economics: how many people _will_
-enable it, because they think the payoff outweighs the annoyance.
-
-And perhaps you can argue that it has negligible group cost. The
-code is small and not likely to introduce new bugs. So the only costs
-are whatever any sender is willing to pay themselves. And in that sense,
-if even one person uses it, it is a net win.
-
-> Secondly, it seems reasonable to drop into another VC, screen window, or
-> terminal instance, and then set send-email a-running. For instance, with
-> a 14-patch series, one could set `--delay 60' and then let send-email
-> run happily for the next 14 minutes with nary a thought.
-
-Except for your 10-minute "no activity, so let's suspend to ram"
-timeout. ;) But I think we can assume since the user is opting in to the
-feature that they don't have a problem with it.
-
-> Frankly, I don't care how other people's patch series appear to me. I care
-> about how mine appear to others. Is this irrational? Probably, but I'm kind
-> of OC; I want my patch series to look like it's in order for everyone.
-
-No, it's not irrational. We spend time proofreading, cleaning up
-patches, etc, because we know other people will read them. And a little
-effort by the sender can often save a lot of effort by many readers. And
-people do it out of politeness, perhaps, or altruism, or simply because
-it encourages others to spend the effort for them.
-
-But I would personally find such a delay annoying (especially 60
-seconds, which I consider to be huge), and I feel that by threading and
-using sane date fields, I have done enough for the reader.
-
-> I have worked with 2 major mail clients that both display by date received:
+> > will be interpreted as "origin/master is ahead 5, behind 6" when it is
+> > really the reverse. Maybe "[ahead 5, behind 6 from origin/master]" would
+> > be better?
 > 
->   * Mac OS X's Mail
->   * Gmail
+> Maybe [origin/master +5 -6]? That should be short enough for sticking it
+> into -v. We could even use [origin/master +0 -0] for an up-to-date
+> branch then.
 
-Somebody reported in the thread I referenced earlier that gmane's web
-interface has the same problem; I didn't check it myself, though.
+I am not opposed to that format, but I don't feel strongly. And not many
+people are voicing an opinion in this thread (strange, given that it is
+an opportunity for bikeshedding :) ). My patches are in next, so I think
+I am done on the topic for now. But feel free to submit a followup
+patch.
 
-> There's nothing simpler than slowing the rate of outgoing email. It doesn't
-> even have to be used; it is completely unintrusive and fully automated. It
-> even works with the confirmation. Best of all, it didn't take much code to
-> implement.
+> In any case, I think often one is interested in one branch only. I would
+> expect "git branch -v foo" to give me the -v info just for branch foo.
+> Currently it does not. But that would be an independent patch on top.
 
-I disagree that it's unintrusive (and I understand that you don't think
-it is, and that there may be others like you, but I am pointing out
-there are others who think the opposite). But given that it's optional,
-and it's not very much code, I don't have a strong objection. My
-original comment was that I was dubious whether it would work: however,
-I was thinking you would set it to a few seconds. Setting it to 60
-seconds, I can imagine it would have an impact.
+Hmm. I think that is a little counterintuitive because we think of "-v"
+as simply "increase verbosity" (because that is what it means in just
+about every program). But here you are fundamentally changing the action
+that is occurring (from "create branch" to "show branch").  I think it
+would make more sense to have a "show branch" mode like:
+
+  git branch -s foo
+
+which would probably have the more detailed output by default.
 
 -Peff
