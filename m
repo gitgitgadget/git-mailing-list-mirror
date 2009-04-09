@@ -1,121 +1,96 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: [PATCH v2] Replace ",<,>,& with their respective XML entities in DAV requests
-Date: Fri, 10 Apr 2009 00:25:37 +0200
-Message-ID: <1239315937-22920-1-git-send-email-mh@glandium.org>
-References: <20090409111944.GA22297@kos.to>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Apr 10 00:26:04 2009
+From: Ben Jackson <ben@ben.com>
+Subject: [PATCH 2/2] Save init/clone --ignore-paths option as svn-remotes.svn.ignore-paths
+Date: Thu,  9 Apr 2009 14:58:09 -0700
+Message-ID: <1239314289-36149-2-git-send-email-ben@ben.com>
+References: <1239314289-36149-1-git-send-email-ben@ben.com>
+Cc: gitster@pobox.com, ben@ben.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 10 00:30:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ls2hA-0001d6-8J
-	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 00:26:04 +0200
+	id 1Ls2l0-0002ow-7b
+	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 00:30:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763006AbZDIWYa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Apr 2009 18:24:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762465AbZDIWYa
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 18:24:30 -0400
-Received: from vuizook.err.no ([85.19.221.46]:50157 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756732AbZDIWY3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Apr 2009 18:24:29 -0400
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <mh@glandium.org>)
-	id 1Ls2fY-00078H-IT; Fri, 10 Apr 2009 00:24:27 +0200
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1Ls2gj-0005yD-La; Fri, 10 Apr 2009 00:25:37 +0200
-X-Mailer: git-send-email 1.6.2.1
-In-Reply-To: <20090409111944.GA22297@kos.to>
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
+	id S1763171AbZDIW2Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Apr 2009 18:28:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756636AbZDIW2Z
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 18:28:25 -0400
+Received: from kronos.home.ben.com ([71.117.242.19]:63707 "EHLO
+	kronos.home.ben.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754789AbZDIW2Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Apr 2009 18:28:24 -0400
+X-Greylist: delayed 1810 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Apr 2009 18:28:24 EDT
+Received: from kronos.home.ben.com (localhost [127.0.0.1])
+	by kronos.home.ben.com (8.14.3/8.14.3) with ESMTP id n39LwAPw036179;
+	Thu, 9 Apr 2009 14:58:10 -0700 (PDT)
+Received: (from bjj@localhost)
+	by kronos.home.ben.com (8.14.3/8.14.3/Submit) id n39LwAqG036175;
+	Thu, 9 Apr 2009 14:58:10 -0700 (PDT)
+	(envelope-from bjj)
+X-Mailer: git-send-email 1.6.0.1
+In-Reply-To: <1239314289-36149-1-git-send-email-ben@ben.com>
+X-Virus-Scanned: ClamAV 0.93.3/9219/Thu Apr  9 08:11:17 2009 on kronos.home.ben.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116217>
 
-If the repo url or the user email contain XML special characters, the
-remote DAV server is likely to reject the LOCK requests because the XML
-is then malformed.
-
-Signed-off-by: Mike Hommey <mh@glandium.org>
+Signed-off-by: Ben Jackson <ben@ben.com>
 ---
- http-push.c |   36 ++++++++++++++++++++++++++++++++++--
- 1 files changed, 34 insertions(+), 2 deletions(-)
+ Documentation/git-svn.txt       |    4 ++++
+ git-svn.perl                    |    3 +++
+ t/t9134-git-svn-ignore-paths.sh |    4 ++--
+ 3 files changed, 9 insertions(+), 2 deletions(-)
 
-Gah, the previous one didn't have a fix squashed in...
-
-diff --git a/http-push.c b/http-push.c
-index feeb340..5138224 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -186,6 +186,32 @@ enum dav_header_flag {
- 	DAV_HEADER_TIMEOUT = (1u << 2)
- };
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index af2d6c2..cd47bff 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -85,6 +85,10 @@ COMMANDS
+ 	specified, the prefix must include a trailing slash.
+ 	Setting a prefix is useful if you wish to track multiple
+ 	projects that share a common repository.
++--ignore-paths=<regex>;;
++	When passed to 'init' or 'clone' this regular expression will
++	be preserved as a config key.  See 'fetch' for a description
++	of '--ignore-paths'.
  
-+static char *xml_entities(char *s)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	while (*s) {
-+		size_t len = strcspn(s, "\"<>&");
-+		strbuf_add(&buf, s, len);
-+		s += len;
-+		switch (*s) {
-+		case '"':
-+			strbuf_addstr(&buf, "&quot;");
-+			break;
-+		case '<':
-+			strbuf_addstr(&buf, "&lt;");
-+			break;
-+		case '>':
-+			strbuf_addstr(&buf, "&gt;");
-+			break;
-+		case '&':
-+			strbuf_addstr(&buf, "&amp;");
-+			break;
-+		}
-+		s++;
-+	}
-+	return strbuf_detach(&buf, NULL);
-+}
-+
- static struct curl_slist *get_dav_token_headers(struct remote_lock *lock, enum dav_header_flag options)
- {
- 	struct strbuf buf = STRBUF_INIT;
-@@ -1225,6 +1251,7 @@ static struct remote_lock *lock_remote(const char *path, long timeout)
- 	struct remote_lock *lock = NULL;
- 	struct curl_slist *dav_headers = NULL;
- 	struct xml_ctx ctx;
-+	char *escaped;
- 
- 	url = xmalloc(strlen(repo->url) + strlen(path) + 1);
- 	sprintf(url, "%s%s", repo->url, path);
-@@ -1259,7 +1286,9 @@ static struct remote_lock *lock_remote(const char *path, long timeout)
- 		ep = strchr(ep + 1, '/');
+ 'fetch'::
+ 	Fetch unfetched revisions from the Subversion remote we are
+diff --git a/git-svn.perl b/git-svn.perl
+index 2599e4c..1516916 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -334,6 +334,9 @@ sub do_git_init_db {
+ 		command_noisy('config', "$pfx.$i", $icv{$i});
+ 		$set = $i;
  	}
++	my $ignore_regex = \$SVN::Git::Fetcher::_ignore_regex;
++	command_noisy('config', "$pfx.ignore-paths", $$ignore_regex)
++		if defined $$ignore_regex;
+ }
  
--	strbuf_addf(&out_buffer.buf, LOCK_REQUEST, git_default_email);
-+	escaped = xml_entities(git_default_email);
-+	strbuf_addf(&out_buffer.buf, LOCK_REQUEST, escaped);
-+	free(escaped);
+ sub init_subdir {
+diff --git a/t/t9134-git-svn-ignore-paths.sh b/t/t9134-git-svn-ignore-paths.sh
+index c393f4e..67ab953 100755
+--- a/t/t9134-git-svn-ignore-paths.sh
++++ b/t/t9134-git-svn-ignore-paths.sh
+@@ -31,10 +31,10 @@ test_expect_success 'clone an SVN repository with ignored www directory' '
+ 	test_cmp expect expect2
+ '
  
- 	sprintf(timeout_header, "Timeout: Second-%ld", timeout);
- 	dav_headers = curl_slist_append(dav_headers, timeout_header);
-@@ -1584,8 +1613,11 @@ static int locking_available(void)
- 	struct curl_slist *dav_headers = NULL;
- 	struct xml_ctx ctx;
- 	int lock_flags = 0;
-+	char *escaped;
+-test_expect_success 'set persistent ignore-paths config' '
++test_expect_success 'verify ignore-paths config saved by clone' '
+ 	(
+ 	    cd g &&
+-	    git config svn-remote.svn.ignore-paths "^www"
++	    git config --get svn-remote.svn.ignore-paths | fgrep "www"
+ 	)
+ '
  
--	strbuf_addf(&out_buffer.buf, PROPFIND_SUPPORTEDLOCK_REQUEST, repo->url);
-+	escaped = xml_entities(repo->url);
-+	strbuf_addf(&out_buffer.buf, PROPFIND_SUPPORTEDLOCK_REQUEST, escaped);
-+	free(escaped);
- 
- 	dav_headers = curl_slist_append(dav_headers, "Depth: 0");
- 	dav_headers = curl_slist_append(dav_headers, "Content-Type: text/xml");
 -- 
-1.6.2.1
+1.6.2.2
