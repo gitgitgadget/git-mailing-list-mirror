@@ -1,78 +1,80 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH RFC 1/6] send-email: Add --delay for separating emails
-Date: Thu, 09 Apr 2009 15:36:00 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0904091535150.6741@xanadu.home>
-References: <49dcb464.06d7720a.66ca.ffffbd30@mx.google.com>
- <20090409081443.GB17221@coredump.intra.peff.net>
- <alpine.LFD.2.00.0904091342170.6741@xanadu.home>
- <7vskkh1va5.fsf@gitster.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Allow users to un-configure rename detection
+Date: Thu, 9 Apr 2009 12:40:39 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.0904091232420.4583@localhost.localdomain>
+References: <alpine.LFD.2.00.0904091141420.4583@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jeff King <peff@peff.net>, Michael Witten <mfwitten@gmail.com>,
-	Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 09 21:37:45 2009
+To: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 09 21:44:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ls04G-0001s4-Km
-	for gcvg-git-2@gmane.org; Thu, 09 Apr 2009 21:37:45 +0200
+	id 1Ls0AL-000406-04
+	for gcvg-git-2@gmane.org; Thu, 09 Apr 2009 21:44:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933648AbZDITgJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Apr 2009 15:36:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762094AbZDITgI
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 15:36:08 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:63116 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761914AbZDITgH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Apr 2009 15:36:07 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KHU00EK3MG0W7G0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 09 Apr 2009 15:36:01 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7vskkh1va5.fsf@gitster.siamese.dyndns.org>
+	id S1762094AbZDITm1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Apr 2009 15:42:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759146AbZDITm0
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 15:42:26 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:52638 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755690AbZDITmZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Apr 2009 15:42:25 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n39JedSC027202
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 9 Apr 2009 12:41:15 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n39Jedka021696;
+	Thu, 9 Apr 2009 12:40:39 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <alpine.LFD.2.00.0904091141420.4583@localhost.localdomain>
 User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.443 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116202>
 
-On Thu, 9 Apr 2009, Junio C Hamano wrote:
 
-> Nicolas Pitre <nico@cam.org> writes:
+
+On Thu, 9 Apr 2009, Linus Torvalds wrote:
 > 
-> > On Thu, 9 Apr 2009, Jeff King wrote:
-> >
-> >> On Wed, Apr 08, 2009 at 09:25:25AM -0500, Michael Witten wrote:
-> >> 
-> >> > Firstly, I presume that someone is electing to use this option, so it is
-> >> > almost by definition not annoying for that person.
-> >> 
-> >> Sure, obviously only people who enable it will be affected. I was
-> >> thinking of it more in terms of group economics: how many people _will_
-> >> enable it, because they think the payoff outweighs the annoyance.
-> >
-> > My ISP doesn't allow me to send more than 20 emails at once.
-> 
-> Hmm, I first thought you meant 20 emails in a single smtp session, but it
-> appears that we create a new instance of Net::SMTP for each piece of email
-> so it really sounds like it is time based (N pieces of e-mail within M
-> minutes).
-> 
-> Perhaps --pause=N,M to say "Pause N seconds for every M messages", where
-> Michael's --delay=N is just a shorthand for --pause=N,1 is what you want?
-> That is, reset the counter to 0 at the beginning, increment it after
-> sending each message, and when the counter is M and if you have more to
-> send, you wait for N seconds and reset the counter to 0.  Then when you
-> have a series smaller than 20 you won't have to suffer from any artificial
-> delay.
+> 	[diff]
+> 		renames = no
 
-I suppose that would work fine too.
+Btw, while doing this, I also though that "renames = on/off" made more 
+sense, but while we allow yes/no and true/false for booleans, we don't 
+allow on/off.
 
+Should we? Maybe. Here's a stupid patch. 
 
-Nicolas
+		Linus
+
+---
+ config.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/config.c b/config.c
+index b76fe4c..e7d91f5 100644
+--- a/config.c
++++ b/config.c
+@@ -331,9 +331,9 @@ int git_config_bool_or_int(const char *name, const char *value, int *is_bool)
+ 		return 1;
+ 	if (!*value)
+ 		return 0;
+-	if (!strcasecmp(value, "true") || !strcasecmp(value, "yes"))
++	if (!strcasecmp(value, "true") || !strcasecmp(value, "yes") || !strcasecmp(value, "on"))
+ 		return 1;
+-	if (!strcasecmp(value, "false") || !strcasecmp(value, "no"))
++	if (!strcasecmp(value, "false") || !strcasecmp(value, "no") || !strcasecmp(value, "off"))
+ 		return 0;
+ 	*is_bool = 0;
+ 	return git_config_int(name, value);
