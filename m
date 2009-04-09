@@ -1,65 +1,72 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH RFC 1/6] send-email: Add --delay for separating emails
-Date: Thu, 09 Apr 2009 13:51:02 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0904091349150.6741@xanadu.home>
-References: <49dcb464.06d7720a.66ca.ffffbd30@mx.google.com>
- <20090409081443.GB17221@coredump.intra.peff.net>
- <7v3aci43g2.fsf@gitster.siamese.dyndns.org>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: [PATCH] graph API: Added logic for colored edges
+Date: Thu, 09 Apr 2009 20:58:51 +0300
+Message-ID: <87hc0x7lpg.fsf@iki.fi>
+References: <20090331235922.GA7411@linux.vnet>
+	<20090407185724.GA9996@linux.vnet>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jeff King <peff@peff.net>, Michael Witten <mfwitten@gmail.com>,
-	Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 09 19:53:00 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>,
+	Nanako Shiraishi <nanako3@lavabit.com>
+To: Allan Caffee <allan.caffee@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 09 20:00:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LryQt-0002Vn-Bx
-	for gcvg-git-2@gmane.org; Thu, 09 Apr 2009 19:52:59 +0200
+	id 1LryYE-0005RP-30
+	for gcvg-git-2@gmane.org; Thu, 09 Apr 2009 20:00:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935928AbZDIRvR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Apr 2009 13:51:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935923AbZDIRvP
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 13:51:15 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:28077 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935917AbZDIRvN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Apr 2009 13:51:13 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KHU00B9FHL2FRU0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 09 Apr 2009 13:51:03 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7v3aci43g2.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1759020AbZDIR64 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Apr 2009 13:58:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758677AbZDIR64
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 13:58:56 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:37985 "EHLO jenni2.inet.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757499AbZDIR6z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Apr 2009 13:58:55 -0400
+Received: from mithlond.arda.local (80.220.180.181) by jenni2.inet.fi (8.5.014)
+        id 49CA1E6700AB985C; Thu, 9 Apr 2009 20:58:52 +0300
+Received: from dtw by mithlond.arda.local with local (Exim 4.69)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1LryWZ-0002fn-GZ; Thu, 09 Apr 2009 20:58:51 +0300
+In-Reply-To: <20090407185724.GA9996@linux.vnet> (Allan Caffee's message of "Tue\, 7 Apr 2009 14\:57\:24 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116192>
 
-On Thu, 9 Apr 2009, Junio C Hamano wrote:
+On 2009-04-07 14:57 (-0400), Allan Caffee wrote:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I disagree that it's unintrusive (and I understand that you don't think
-> > it is, and that there may be others like you, but I am pointing out
-> > there are others who think the opposite). But given that it's optional,
-> > and it's not very much code, I don't have a strong objection. My
-> > original comment was that I was dubious whether it would work: however,
-> > I was thinking you would set it to a few seconds. Setting it to 60
-> > seconds, I can imagine it would have an impact.
-> 
-> Heh, then why not make the option specify the number of _minutes_ not
-> seconds to delay?  That would help clarifying what this option is meant to
-> do.
+> Modified the graph drawing logic to colorize edges based on
+> parent-child relationships similiarly to gitk.
 
-Maybe only a few seconds is all that is needed in some circumstances.
-For the issue I just posted, I wouldn't use it at all if the minimum 
-delay was one minute.
+I like the colored graph very much, thanks. Unfortunately there are some
+problems with aligning of log messages and headers. For example, try
+this in git.git repository:
 
 
-Nicolas
+$ git log -1 --graph 796b137
+
+*   commit 796b13781aecce551b8f92049a66646e60f31dce
+|\ Merge: 6da14ee db12d97
+| | Author: Junio C Hamano <gitster@pobox.com>
+| | Date:   2009-04-08 23:41:27 -0700
+
+
+Without colors or without your patch the alignment is correct:
+
+$ git log -1 --graph --no-color 796b137
+
+*   commit 796b13781aecce551b8f92049a66646e60f31dce
+|\  Merge: 6da14ee db12d97
+| | Author: Junio C Hamano <gitster@pobox.com>
+| | Date:   2009-04-08 23:41:27 -0700
+
+
+(Perhaps the "Merge:" header could have two spaces befor the data, but
+this is  unrelated to --graph.)
