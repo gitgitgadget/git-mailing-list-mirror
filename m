@@ -1,65 +1,115 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH] git-svn: always initialize with core.autocrlf=false
-Date: Thu, 9 Apr 2009 13:29:57 +0200 (CEST)
-Message-ID: <560e98ae1d5350c6ff8db56d41089900dbaab08a.1239276588u.git.johannes.schindelin@gmx.de>
-References: <cover.1239276588u.git.johannes.schindelin@gmx.de>
+From: Riku Voipio <riku.voipio@iki.fi>
+Subject: bug: git-http-push fails to validate email address in LOCK request
+Date: Thu, 9 Apr 2009 14:19:44 +0300
+Message-ID: <20090409111944.GA22297@kos.to>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Eric Wong <normalperson@yhbt.net>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Apr 09 13:29:01 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="SUOF0GtieIMvvwua"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 09 13:46:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrsRI-00059b-Cb
-	for gcvg-git-2@gmane.org; Thu, 09 Apr 2009 13:29:00 +0200
+	id 1Lrsie-0002SK-Av
+	for gcvg-git-2@gmane.org; Thu, 09 Apr 2009 13:46:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757517AbZDIL1X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Apr 2009 07:27:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756679AbZDIL1X
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 07:27:23 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54196 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756352AbZDIL1W (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Apr 2009 07:27:22 -0400
-Received: (qmail invoked by alias); 09 Apr 2009 11:27:20 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp065) with SMTP; 09 Apr 2009 13:27:20 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19ck+A+VwpcB/MVIjIy9ogt0na0ha3UXTFXEN5+zl
-	3vVGsMk5U4GDg9
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <cover.1239276588u.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1758732AbZDILpU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Apr 2009 07:45:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755300AbZDILpU
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 07:45:20 -0400
+Received: from naru.obs2.net ([84.20.150.76]:51872 "EHLO naru.obs2.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751908AbZDILpS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Apr 2009 07:45:18 -0400
+X-Greylist: delayed 1530 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Apr 2009 07:45:18 EDT
+Received: from kos.to (localhost.localdomain [127.0.0.1])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by narury.org (Postfix) with ESMTP id 5E4AD3274001
+	for <git@vger.kernel.org>; Thu,  9 Apr 2009 14:19:44 +0300 (EEST)
+Received: by kos.to (Postfix, from userid 573)
+	id 25494EE839A; Thu,  9 Apr 2009 14:19:44 +0300 (EEST)
+Content-Disposition: inline
+X-message-flag: Warning: message not sent with a DRM-Certified client
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116164>
 
-It has been reported time and time again in relation to msysGit that
-git-svn does not work well when core.autocrlf has any value other than
-'false'.  So let's make it so by default.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- git-svn.perl |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+--SUOF0GtieIMvvwua
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 8be6be0..d4e8fc8 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -325,6 +325,7 @@ sub do_git_init_db {
- 		command_noisy(@init_db);
- 		$_repository = Git->repository(Repository => ".git");
- 	}
-+	command_noisy('config', 'core.autocrlf', 'false');
- 	my $set;
- 	my $pfx = "svn-remote.$Git::SVN::default_repo_id";
- 	foreach my $i (keys %icv) {
--- 
-1.6.2.1.613.g25746
+Hi,
+
+If for whatever case EMAIL env variable or gitconfig email=3D setting
+contains any special xml character <>%&, the lock request in push
+will fail, with a completly useless error message:
+
+git push foo upstream-push:master
+Error: cannot lock existing info/refs
+error: failed to push some refs to 'https://git.foo.org/projects/foo'
+
+using the undocumented GIT_CURL_VERBOSE=3D1 env variable:
+
+-snip-
+> LOCK /projects/foo/info/refs HTTP/1.1
+Authorization: Basic nothisstringisnottheonefromthereallog
+User-Agent: git/1.6.2.1
+Host: git.foo.org
+Accept: */*
+Timeout: Second-600
+Content-Type: text/xml
+Content-Length: 225
+Expect: 100-continue
+
+< HTTP/1.1 100 Continue
+* The requested URL returned error: 400
+* Closing connection #0
+Error: cannot lock existing info/refs
+error: failed to push some refs to 'https://git.foo.org/projects/foo'
+-snip-
+
+Helpfully, the actual lock request is omitted.
+
+After finding someone from git hoster to grep the logs:
+
+[Tue Apr 07 14:13:24 2009] [error] [client 1.1.1.1] XML Parser
+Error: XML parser error code: not well-formed (invalid token) (4)
+
+=66rom http-push.c, we see that the lock request is:
+
+#define LOCK_REQUEST "<?xml version=3D\"1.0\" encoding=3D\"utf-8\" ?>\n<D:l=
+ockinfo xmlns:D=3D\"DAV:\">\n<D:lockscope><D:exclusive/></D:lockscope>\n<D:=
+locktype><D:write/></D:locktype>\n<D:owner>\n<D:href>mailto:%s</D:href>\n</=
+D:owner>\n</D:lockinfo>"
+
+So there is exactly one variable being set. Turns out the email
+address in .gitconfig was set to '<riku.voipio@iki.fi>'. Yes,
+a user error. This was copied from $EMAIL env variable, where
+using strings such as 'foo bar <foo.bar@corp.com>' have been
+a norm forever.
+
+
+--=20
+"rm -rf" only sounds scary if you don't have backups
+
+--SUOF0GtieIMvvwua
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iD8DBQFJ3dnQibPvMsrqrwMRAtL7AJ0eAKFi1ofUdRLSVKkQg4Ai4qERwACgqEeP
+8/lCfHhKhIrthEtVAcd2lw0=
+=selc
+-----END PGP SIGNATURE-----
+
+--SUOF0GtieIMvvwua--
