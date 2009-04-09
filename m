@@ -1,69 +1,69 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: Egit: how to merge after fetch (or pull)
-Date: Thu, 9 Apr 2009 05:39:47 +0200
-Message-ID: <200904090539.47489.robin.rosenberg.lists@dewire.com>
-References: <3ae83b000904081456i37ad65ate133469fa9a8f23c@mail.gmail.com>
+From: James Pickens <jepicken@gmail.com>
+Subject: Re: legend on top-right pane in 'git gui'
+Date: Wed, 8 Apr 2009 21:11:42 -0700
+Message-ID: <885649360904082111q31f1d90br8ee62eb4afba2611@mail.gmail.com>
+References: <slrngt4h04.q0l.sitaramc@sitaramc.homelinux.net>
+	 <slrngtqr13.566.sitaramc@sitaramc.homelinux.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: John Bito <jwbito@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 09 05:41:36 2009
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 09 06:14:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lrl8x-0000kc-H6
-	for gcvg-git-2@gmane.org; Thu, 09 Apr 2009 05:41:36 +0200
+	id 1Lrlf7-00077A-F4
+	for gcvg-git-2@gmane.org; Thu, 09 Apr 2009 06:14:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759217AbZDIDj6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Apr 2009 23:39:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759260AbZDIDj5
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 23:39:57 -0400
-Received: from mail.dewire.com ([83.140.172.130]:9645 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759250AbZDIDj4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Apr 2009 23:39:56 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 0263B147D0E5;
-	Thu,  9 Apr 2009 05:39:50 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id LdHvZ4BvZTN4; Thu,  9 Apr 2009 05:39:50 +0200 (CEST)
-Received: from sleipner.localnet (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id 04F8E80265A;
-	Thu,  9 Apr 2009 05:39:49 +0200 (CEST)
-User-Agent: KMail/1.11.2 (Linux/2.6.27-14-generic; KDE/4.2.2; i686; ; )
-In-Reply-To: <3ae83b000904081456i37ad65ate133469fa9a8f23c@mail.gmail.com>
-Content-Disposition: inline
+	id S1751816AbZDIELo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Apr 2009 00:11:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751300AbZDIELo
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 00:11:44 -0400
+Received: from rv-out-0506.google.com ([209.85.198.231]:46178 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751000AbZDIELn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Apr 2009 00:11:43 -0400
+Received: by rv-out-0506.google.com with SMTP id f9so431254rvb.1
+        for <git@vger.kernel.org>; Wed, 08 Apr 2009 21:11:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=nvD8iEf6zuawo01HDRgTV330rvyVJGg/dtvV32ooWPU=;
+        b=Lhpo8bcWMfqD5nboxBcpnxqKrsXrjnXAtuFnEGFVizBPjk0IHRVAHprxLai5tHEKrr
+         scV+pBp7eizdbwYyu/HBsHWqTI9uIAU7kjmhC78KE7yYnna3c5sLtx0sInvITboxKTrs
+         z5VmumQoMGX8orFbvJt3vXQiXy+eypup/227I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Mo6JyQbdWk0qCQd+fwWE3WQvlybbnuKD8oyuHrYutlSu8yg2qGIgyOE/p1MkaGFj66
+         Rn07jjnIKHhGODls7zQpmGNthJ5iHlmlM/8ndInqNboM+aeVprB8+SOJ23YVfmgCI+tJ
+         XHdI4n4rsR758CCPOGnLu/82+GuEr099oMSQw=
+Received: by 10.114.146.4 with SMTP id t4mr1166832wad.143.1239250302914; Wed, 
+	08 Apr 2009 21:11:42 -0700 (PDT)
+In-Reply-To: <slrngtqr13.566.sitaramc@sitaramc.homelinux.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116140>
 
-onsdag 08 april 2009 23:56:23 skrev John Bito <jwbito@gmail.com>:
-> I'd like to pull a branch before I do more work on it.  After fetch,
-> git status says the branch is behind origin by N commits.
-> 
-> Can you tell me if there is an operation I can do via egit to get the
-> origin changes onto my branch? (Most of the documentation I found for
-> Egit appears to be before the fetch command was implemented.)
-> 
-> In the mean time, I've been using 'git pull'. Unfortunately, I found
-> that it's important to shut down Eclipse while doing a git operation
-> using Cygwin - a GC run when Egit had a file open caused a problem in
-> the repository that subsequent pushes propagated to my GitHub
-> repository.  It would be nice to work entirely within Eclipse.
+On Wed, Apr 8, 2009, Sitaram Chamarty <sitaramc@gmail.com> wrote:
+> Can someone at least tell me "Sita, you're wrong/this is a
+> stupid question/this is perfectly correct behaviour/whatever"?  :-)
+>
+> I won't even ask why, I promise :-)
 
-A very recent update to msysgit (not git core and hence not cygwin) might help there. 
-Windows locks files when reading and the Eclipse plugin reads things from the
-repo when changes are detected to see if anything interesting is there. The fix
-in msysgit retries certain operations a number of times if they fail with access denied,
-which is what you get if the file is open for reading.
+Well, I for one think your proposed new message - "untracked, not
+staged (partial)" - is nonsense.  A file can't be both untracked
+and partially staged.
 
-Built-in pull is not there just yet.
+Also I don't agree that the message needs to be different
+depending on where you click; actually I think such behavior
+would be more confusing to users than the current behavior.
 
--- robin
+James
