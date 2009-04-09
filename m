@@ -1,56 +1,79 @@
-From: Jeff King <peff@peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] Allow setting default diff options via
-	diff.defaultOptions
-Date: Thu, 9 Apr 2009 04:31:15 -0400
-Message-ID: <20090409083115.GA17622@coredump.intra.peff.net>
-References: <20090320194930.GB26934@coredump.intra.peff.net> <1237600853-22815-1-git-send-email-keith@cs.ucla.edu> <alpine.DEB.1.00.0903210415110.10279@pacific.mpi-cbg.de> <alpine.GSO.2.00.0904081741410.15657@kiwi.cs.ucla.edu>
+ diff.defaultOptions
+Date: Thu, 9 Apr 2009 10:45:40 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904091030030.10279@pacific.mpi-cbg.de>
+References: <20090320194930.GB26934@coredump.intra.peff.net> <1237600853-22815-1-git-send-email-keith@cs.ucla.edu> <alpine.DEB.1.00.0903210415110.10279@pacific.mpi-cbg.de> <alpine.GSO.2.00.0904021647120.16242@kiwi.cs.ucla.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	git@vger.kernel.org
 To: Keith Cascio <keith@CS.UCLA.EDU>
-X-From: git-owner@vger.kernel.org Thu Apr 09 10:32:55 2009
+X-From: git-owner@vger.kernel.org Thu Apr 09 10:44:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lrpgs-0006zg-AU
-	for gcvg-git-2@gmane.org; Thu, 09 Apr 2009 10:32:54 +0200
+	id 1LrpsN-0001y9-6C
+	for gcvg-git-2@gmane.org; Thu, 09 Apr 2009 10:44:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757021AbZDIIbV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Apr 2009 04:31:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756491AbZDIIbV
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 04:31:21 -0400
-Received: from peff.net ([208.65.91.99]:49081 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753989AbZDIIbT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Apr 2009 04:31:19 -0400
-Received: (qmail 14920 invoked by uid 107); 9 Apr 2009 08:31:19 -0000
-Received: from Unknown (HELO coredump.intra.peff.net) (10.0.0.130)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 09 Apr 2009 04:31:19 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Apr 2009 04:31:15 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.GSO.2.00.0904081741410.15657@kiwi.cs.ucla.edu>
+	id S1758292AbZDIInK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Apr 2009 04:43:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758021AbZDIInJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 04:43:09 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49212 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757821AbZDIInG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Apr 2009 04:43:06 -0400
+Received: (qmail invoked by alias); 09 Apr 2009 08:43:04 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp048) with SMTP; 09 Apr 2009 10:43:04 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX196rj8S19F6HnjzdlUj+QGNKf7baB3A2jolKQVTRw
+	YArrE+aUAxOemP
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <alpine.GSO.2.00.0904021647120.16242@kiwi.cs.ucla.edu>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.66
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116152>
 
-On Wed, Apr 08, 2009 at 05:44:29PM -0700, Keith Cascio wrote:
+Hi,
 
-> Hi.  Was my last message understandable or should I add more explanation?
->   http://comments.gmane.org/gmane.comp.version-control.git/115506
+On Thu, 2 Apr 2009, Keith Cascio wrote:
 
-Your point made sense to me, and is the expected difference between the
-two approaches (as we discussed before).
+> On Sat, 21 Mar 2009, Johannes Schindelin wrote:
+> 
+> > The idea is from Keith Cascio.
+> > 
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> > 	I do not particularly like what this patch does, but I like
+> > 	the non-intrusiveness and conciseness of it.
+> 
+> Your patch does not provide a command line opt_out flag.  Let me describe a 
+> workflow situation and ask you how to handle it if the user were running your 
+> patch.  Let diff.defaultOptions = "-b".  The user is getting closer to 
+> submitting his patch and he wants to see patch output identical to what `git format-patch`
+> will produce.  What command should he use?
+> 
+>       `git format-patch --stdout master` ?
 
-I'm sorry I haven't had a chance to review your patch in detail. It is
-pleasantly much shorter than previous iterations, but I wanted to very
-carefully check a few of the diff callsites to make sure they work
-properly (e.g., some of the cases I laid out earlier in the thread).
+The proper way would be to have options to _undo_ every diff option, I 
+guess, as this would also help aliases in addition to defaultOptions.
 
-I have a lot of regular life responsibilities right now, but I'll try
-take a close look this weekend.
+In the case of format-patch, though, I am pretty certain that I do not 
+want any diff.defaultOptions: the output is almost always intended for 
+machine consumption, so it is a different kind of cattle.
 
--Peff
+Now, it is easy to put a patch on top of my patch to support something 
+like --no-defaults.
+
+Of course, to keep things simple, this has to be a separate patch.
+
+Ciao,
+Dscho
