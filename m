@@ -1,61 +1,73 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: RESEND [PATCH 1/1] Ensure consistent usage of
-	mergetool.keepBackup
-Date: Thu, 9 Apr 2009 08:30:33 -0700
-Message-ID: <20090409153033.GN23604@spearce.org>
-References: <cfb81044a29899f9dd0b46f10447243632c50c94.1239108064.git.ferry.huberts@pelagic.nl>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Ferry Huberts <ferry.huberts@pelagic.nl>
-X-From: git-owner@vger.kernel.org Thu Apr 09 17:32:18 2009
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] remote.c: use shorten_unambiguous_ref
+Date: Thu,  9 Apr 2009 17:33:02 +0200
+Message-ID: <1239291182-12860-1-git-send-email-git@drmicha.warpmail.net>
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 09 17:35:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrwEd-0004EZ-06
-	for gcvg-git-2@gmane.org; Thu, 09 Apr 2009 17:32:11 +0200
+	id 1LrwHb-0005UX-UF
+	for gcvg-git-2@gmane.org; Thu, 09 Apr 2009 17:35:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935326AbZDIPah (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Apr 2009 11:30:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935324AbZDIPag
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 11:30:36 -0400
-Received: from george.spearce.org ([209.20.77.23]:51733 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755701AbZDIPae (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Apr 2009 11:30:34 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id DB01338211; Thu,  9 Apr 2009 15:30:33 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <cfb81044a29899f9dd0b46f10447243632c50c94.1239108064.git.ferry.huberts@pelagic.nl>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1757642AbZDIPdN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Apr 2009 11:33:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756594AbZDIPdM
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 11:33:12 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:41961 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755942AbZDIPdL (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Apr 2009 11:33:11 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 8D60A31549C;
+	Thu,  9 Apr 2009 11:33:08 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Thu, 09 Apr 2009 11:33:08 -0400
+X-Sasl-enc: wXda6gllV10ZyQcp2WB83uqMWyEB3QNva7Vl5xrWUZtC 1239291188
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id D585F23EA3;
+	Thu,  9 Apr 2009 11:33:07 -0400 (EDT)
+X-Mailer: git-send-email 1.6.2.2.646.gb214
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116174>
 
-Ferry Huberts <ferry.huberts@pelagic.nl> wrote:
-> In several places merge.keepBackup is used i.s.o.
-> mergetool.keepBackup. This patch makes it all
-> consistent.
-> 
-> Signed-off-by: Ferry Huberts <ferry.huberts@pelagic.nl>
-> ---
-> This patch is rebased on v1.6.2.2
-> 
->  contrib/difftool/git-difftool.txt |    2 +-
->  git-gui/git-gui.sh                |    2 +-
->  git-gui/lib/mergetool.tcl         |    2 +-
->  git-mergetool.sh                  |    2 +-
->  4 files changed, 4 insertions(+), 4 deletions(-)
+Use the new shorten_unambiguous_ref() for simplifying the output of
+upstream branch names. This affects status and checkout.
 
-git-gui patches should be sent by themselves as they apply to
-git-gui.git which is then merged into git.git every so often.
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+I intentionally didn't combine the line with the previous one (see
+context) to make things a bit clearer.
 
-Yesterday I broke the git-gui part out by hand and applied it to
-git-gui.git.  You should break this patch down and send Junio the
-non-git-gui half so he can more easily apply it to git.git.
+I haven't seen more obvious place for using shorten_unambiguous_ref().
+prettify_ref() is a natural candidate but is mostly used for
+prettyfying refs on the remote side. git branch is covered by Jeff's
+patch already.
+
+ remote.c |    6 +-----
+ 1 files changed, 1 insertions(+), 5 deletions(-)
+
+diff --git a/remote.c b/remote.c
+index a06761a..10af722 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1461,11 +1461,7 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
+ 		return 0;
  
+ 	base = branch->merge[0]->dst;
+-	if (!prefixcmp(base, "refs/remotes/")) {
+-		base += strlen("refs/remotes/");
+-	} else if (!prefixcmp(base, "refs/heads/")) {
+-		base += strlen("refs/heads/");
+-	}
++	base = shorten_unambiguous_ref(base);
+ 	if (!num_theirs)
+ 		strbuf_addf(sb, "Your branch is ahead of '%s' "
+ 			    "by %d commit%s.\n",
 -- 
-Shawn.
+1.6.2.2.646.gb214
