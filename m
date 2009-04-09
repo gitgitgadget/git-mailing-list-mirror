@@ -1,70 +1,73 @@
-From: Tim Visher <tim.visher@gmail.com>
-Subject: Error Building 1.6.2.2 on Cygwin
-Date: Thu, 9 Apr 2009 15:10:30 -0400
-Message-ID: <c115fd3c0904091210u398ea4bag62eac3a6deaffa5f@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH RFC 1/6] send-email: Add --delay for separating emails
+Date: Thu, 09 Apr 2009 12:28:34 -0700
+Message-ID: <7vskkh1va5.fsf@gitster.siamese.dyndns.org>
+References: <49dcb464.06d7720a.66ca.ffffbd30@mx.google.com>
+ <20090409081443.GB17221@coredump.intra.peff.net>
+ <alpine.LFD.2.00.0904091342170.6741@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 09 21:12:12 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Michael Witten <mfwitten@gmail.com>,
+	Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
+	git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu Apr 09 21:30:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrzfW-0001R3-Fo
-	for gcvg-git-2@gmane.org; Thu, 09 Apr 2009 21:12:10 +0200
+	id 1LrzxC-0007kn-8v
+	for gcvg-git-2@gmane.org; Thu, 09 Apr 2009 21:30:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765955AbZDITKd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Apr 2009 15:10:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762092AbZDITKc
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 15:10:32 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:34012 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755521AbZDITKc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Apr 2009 15:10:32 -0400
-Received: by yx-out-2324.google.com with SMTP id 31so789881yxl.1
-        for <git@vger.kernel.org>; Thu, 09 Apr 2009 12:10:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=w4wSaVRqERDtQ9auJ/aoRAwbxs4lnt8kH6CL3vRuF7w=;
-        b=qWfbT0qaUYPdi+YKr2cR9KYnOwrAsgeny4CXkie4KsdPgAhwaf51OmeHdjgbqgk9At
-         cuDsqzRfpubv7iwAMrhrR71PDzupNFpj9p1W0BdmRnXTArElzuzhVsiyLioJVfUD846H
-         io/KA20GLpFtVbkk3Ljik0JZG7ip8GmrcUVMU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=JXFmFyiLJfU6S5HiKEzPzzDmiCXLVPpKhkb6fMKLCKev0FGiC0tskuIkrFGwnaRJJH
-         dbejHbsKMzWZDJk2YAHZY4Dd3lp7AUjHiTsI0NQT7G3SRv7tdkIKFTm2qioMPUI41dps
-         EIOc5pzRx1Olz9NFu0OUIR0xV8aqgJQN4UKx0=
-Received: by 10.100.152.19 with SMTP id z19mr867152and.16.1239304230178; Thu, 
-	09 Apr 2009 12:10:30 -0700 (PDT)
+	id S935148AbZDIT2q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Apr 2009 15:28:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934873AbZDIT2q
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 15:28:46 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:44422 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934073AbZDIT2q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Apr 2009 15:28:46 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 76359A9AB8;
+	Thu,  9 Apr 2009 15:28:43 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 72B3CA9AB3; Thu,
+  9 Apr 2009 15:28:36 -0400 (EDT)
+In-Reply-To: <alpine.LFD.2.00.0904091342170.6741@xanadu.home> (Nicolas
+ Pitre's message of "Thu, 09 Apr 2009 13:48:23 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: A33BD6A4-253C-11DE-9AC4-BB14ECB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116200>
 
-Hello Everyone,
+Nicolas Pitre <nico@cam.org> writes:
 
-Trying to build 1.6.2.2 and I'm getting the following error.
+> On Thu, 9 Apr 2009, Jeff King wrote:
+>
+>> On Wed, Apr 08, 2009 at 09:25:25AM -0500, Michael Witten wrote:
+>> 
+>> > Firstly, I presume that someone is electing to use this option, so it is
+>> > almost by definition not annoying for that person.
+>> 
+>> Sure, obviously only people who enable it will be affected. I was
+>> thinking of it more in terms of group economics: how many people _will_
+>> enable it, because they think the payoff outweighs the annoyance.
+>
+> My ISP doesn't allow me to send more than 20 emails at once.
 
-    LINK git-fast-import.exe
-    cc: unrecognized option `-pthread'
-    /usr/lib/gcc/i686-pc-cygwin/3.4.4/../../../../i686-pc-cygwin/bin/ld:
-cannot find -liconv
-    collect2: ld returned 1 exit status
-    make: *** [git-fast-import.exe] Error 1
+Hmm, I first thought you meant 20 emails in a single smtp session, but it
+appears that we create a new instance of Net::SMTP for each piece of email
+so it really sounds like it is time based (N pieces of e-mail within M
+minutes).
 
-Thoughts?
-
--- 
-
-In Christ,
-
-Timmy V.
-
-http://burningones.com/
-http://five.sentenc.es/ - Spend less time on e-mail
+Perhaps --pause=N,M to say "Pause N seconds for every M messages", where
+Michael's --delay=N is just a shorthand for --pause=N,1 is what you want?
+That is, reset the counter to 0 at the beginning, increment it after
+sending each message, and when the counter is M and if you have more to
+send, you wait for N seconds and reset the counter to 0.  Then when you
+have a series smaller than 20 you won't have to suffer from any artificial
+delay.
