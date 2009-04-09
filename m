@@ -1,84 +1,76 @@
-From: Thomas Jarosch <thomas.jarosch@intra2net.com>
-Subject: Re: [PATCH] Fix buffer overflow in config parser
-Date: Thu, 9 Apr 2009 09:59:28 +0200
-Organization: Intra2net AG
-Message-ID: <200904090959.28646.thomas.jarosch@intra2net.com>
-References: <49DD21A0.3040505@intra2net.com> <200904090058.42751.markus.heidelberg@web.de> <200904090115.17609.markus.heidelberg@web.de>
+From: "streamlake@tiscali.it" <streamlake@tiscali.it>
+Subject: gitk error on cygwin
+Date: Thu, 9 Apr 2009 09:29:14 +0200 (CEST)
+Message-ID: <4019929.147451239262154071.JavaMail.defaultUser@defaultHost>
+Reply-To: "streamlake@tiscali.it" <streamlake@tiscali.it>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: markus.heidelberg@web.de
-X-From: git-owner@vger.kernel.org Thu Apr 09 10:02:20 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 09 10:14:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LrpC6-00053d-VU
-	for gcvg-git-2@gmane.org; Thu, 09 Apr 2009 10:01:07 +0200
+	id 1LrpP4-0001Vo-48
+	for gcvg-git-2@gmane.org; Thu, 09 Apr 2009 10:14:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759871AbZDIH7f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Apr 2009 03:59:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758934AbZDIH7e
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 03:59:34 -0400
-Received: from rs02.intra2net.com ([81.169.173.116]:51794 "EHLO
-	rs02.intra2net.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752693AbZDIH7d (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Apr 2009 03:59:33 -0400
-Received: from intranator.m.i2n (unknown [172.16.1.99])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by rs02.intra2net.com (Postfix) with ESMTP id 392114D88;
-	Thu,  9 Apr 2009 09:59:30 +0200 (CEST)
-Received: from localhost (intranator.m.i2n [127.0.0.1])
-	by localhost (Postfix) with ESMTP id D3D762AC4B;
-	Thu,  9 Apr 2009 09:59:29 +0200 (CEST)
-Received: from storm.localnet (storm.m.i2n [172.16.1.2])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by intranator.m.i2n (Postfix) with ESMTP id 16D002AC4A;
-	Thu,  9 Apr 2009 09:59:29 +0200 (CEST)
-User-Agent: KMail/1.11.0 (Linux/2.6.27.19-78.2.30.fc9.i686; KDE/4.2.1; i686; ; )
-In-Reply-To: <200904090115.17609.markus.heidelberg@web.de>
-Content-Disposition: inline
-X-Virus-Scanned: by Intranator (www.intra2net.com) with AMaViS and F-Secure AntiVirus (fsavdb 2009-04-09_07)
-X-Spam-Status: hits=-4.1 tests=[ALL_TRUSTED=-1.8,BAYES_00=-2.312]
-X-Spam-Level: 959
+	id S1753345AbZDIIM4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Apr 2009 04:12:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752701AbZDIIMz
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 04:12:55 -0400
+Received: from mrqout3.tiscali.it ([195.130.225.13]:59144 "EHLO
+	mrqout3.tiscali.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751853AbZDIIMy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Apr 2009 04:12:54 -0400
+X-Greylist: delayed 2618 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Apr 2009 04:12:53 EDT
+Received: from [10.39.115.27] 
+	by mrq-3 with esmtp (Exim)
+	id 1LrohG-0001xT-7K; Thu, 09 Apr 2009 09:29:14 +0200
+Received: from ps22 (10.39.75.92) by mail-7-it.mail.tiscali.sys (8.0.022)
+        id 49BE276A0007B47D for git@vger.kernel.org; Thu, 9 Apr 2009 09:29:14 +0200
+xOriginalSenderIP: 79.38.58.205
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116146>
 
-On Thursday, 9. April 2009 01:15:17 Markus Heidelberg wrote:
-> > > diff --git a/config.c b/config.c
-> > > index b76fe4c..a9c67e8 100644
-> > > --- a/config.c
-> > > +++ b/config.c
-> > > @@ -72,7 +72,7 @@ static char *parse_value(void)
-> > >                         }
-> > >                 }
-> > >                 if (space) {
-> > > -                       if (len)
-> > > +                       if (len && len < sizeof(value)-1)
-> > >                                 value[len++] = ' ';
-> > >                         space = 0;
->
-> Eh, or maybe better add a "continue;" here, so that only one char per
-> loop is read.
+Hi,
+While browsing revisions in gitk on a windows xp machine and cygwin=20
+version (I tried both the packaged and a compiled one) I always find=20
+tis error:
 
-Thanks for the review.
+fatal: write failure on stdout: No such file or directory
 
-If I understand the intention of the complete code correctly, the idea was
-to read in 1+ spaces and put -one- space in the buffer as soon as the first
-non-space character is encountered (if not inside quotes).
+fatal: write failure on stdout: No such file or directory
+    while=20
+executing
+"close $bdf"
+    (procedure "getblobdiffline" line 12)
+   =20
+invoked from within
+"getblobdiffline file102f41f0=20
+5978405b2bdf0c43c3b49427b0167eb31d433fe4"
+    ("eval" body line 1)
+   =20
+invoked from within
+"eval $script"
+    (procedure "dorunq" line 11)
+   =20
+invoked from within
+"dorunq"
+    ("after" script)
 
-Adding a "continue" statement would eat up the first non-space character.
+After this gitk=20
+becomes unstable and doesn't show diffs,
+Thanks,
+=46rank
 
-I guess it's ok to modify the first size check or keep to problem local and 
-check the size before putting the space in the buffer. Guess that's up to
-the maintainer which method he prefers.
 
-Cheers,
-Thomas
+Con Tutto Incluso chiami e navighi senza limiti e hai 4 mesi GRATIS.
+
+L'attivazione del servizio =C3=A8 gratis e non paghi pi=C3=B9 Telecom!=20
+
+L'offerta =C3=A8 valida solo se attivi entro il 09/04/09 http://abbonat=
+i.tiscali.it/promo/tuttoincluso/
