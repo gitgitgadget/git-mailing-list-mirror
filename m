@@ -1,98 +1,86 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH] Add "list" and "rm" sub commands to tg-depend
-Date: Thu, 9 Apr 2009 20:01:04 +0200
-Message-ID: <36ca99e90904091101l6dd1685y5be70dd77bf52b57@mail.gmail.com>
-References: <20090407133329.57b06727.weiny2@llnl.gov>
-	 <20090408080824.GF8940@machine.or.cz>
-	 <20090408083955.GA28482@pengutronix.de>
-	 <20090408091949.8a648d83.weiny2@llnl.gov>
-	 <20090409124337.GA6034@pengutronix.de>
-	 <20090409091021.5a7ded79.weiny2@llnl.gov>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-svn: always initialize with core.autocrlf=false
+Date: Thu, 9 Apr 2009 20:30:19 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904092029490.10279@pacific.mpi-cbg.de>
+References: <cover.1239276588u.git.johannes.schindelin@gmx.de> <560e98ae1d5350c6ff8db56d41089900dbaab08a.1239276588u.git.johannes.schindelin@gmx.de> <20090409165920.GA6311@dcvr.yhbt.net> <49DE2E99.9060804@pelagic.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>,
-	Brian Behlendorf <behlendorf1@llnl.gov>,
-	Git Mailing List <git@vger.kernel.org>
-To: Ira Weiny <weiny2@llnl.gov>
-X-From: git-owner@vger.kernel.org Thu Apr 09 20:02:46 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org,
+	gitster@pobox.com
+To: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
+X-From: git-owner@vger.kernel.org Thu Apr 09 20:30:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LryaM-0006CK-5M
-	for gcvg-git-2@gmane.org; Thu, 09 Apr 2009 20:02:46 +0200
+	id 1Lrz03-0007h2-Qm
+	for gcvg-git-2@gmane.org; Thu, 09 Apr 2009 20:29:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764485AbZDISBK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Apr 2009 14:01:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762129AbZDISBI
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 14:01:08 -0400
-Received: from mail-bw0-f169.google.com ([209.85.218.169]:37679 "EHLO
-	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760466AbZDISBG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Apr 2009 14:01:06 -0400
-Received: by bwz17 with SMTP id 17so709896bwz.37
-        for <git@vger.kernel.org>; Thu, 09 Apr 2009 11:01:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=WE5rljYmQBeswW6zTszFjBov9l3aWf2bOE926BmXPzE=;
-        b=e1+hf2Fy6XfBqy2fvSrhaNFcog+EUyEFAqqp+5LIr87wNGM0VUrmDDORRtKcsX/QXT
-         vIBHEJ4OCWr/A8hPMudmErpQwHkaE6zGIvw+1iDOCFURxgluG53Oe2wj0YY/o7O0CqQR
-         toJFoCSUMubXz6MU4wg0OFmZ6uFhsRjJF/KP0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=glosDNHmjep++tuhe/YjlmLnPeBNWr44jpjVjSOKk9rzTFD9onx4K/Ibw/UVOASw5F
-         xLOa/MUiJMVhWOBYJdhRvlpBdIM1TQfGLEalWWzd3aMLA8KyEJrBLZSfM0hhEVvA/zA5
-         YWZ6NnXf37ts+OxvWpBJlYeKIIdi9pe+mWlmQ=
-Received: by 10.223.116.205 with SMTP id n13mr851690faq.103.1239300064098; 
-	Thu, 09 Apr 2009 11:01:04 -0700 (PDT)
-In-Reply-To: <20090409091021.5a7ded79.weiny2@llnl.gov>
+	id S1755197AbZDIS1p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Apr 2009 14:27:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754272AbZDIS1p
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 14:27:45 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45287 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751824AbZDIS1o (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Apr 2009 14:27:44 -0400
+Received: (qmail invoked by alias); 09 Apr 2009 18:27:42 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp064) with SMTP; 09 Apr 2009 20:27:42 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19qdxE8FRtqa0MrBjPTl2HXQ+KHxzCnW6xZKXdcAl
+	cKw0FqxQ3ZsP0S
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <49DE2E99.9060804@pelagic.nl>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116194>
 
-2009/4/9 Ira Weiny <weiny2@llnl.gov>:
-> On Thu, 9 Apr 2009 14:43:37 +0200
-> Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de> wrote:
->> You might want to check
->>
->> =C2=A0 =C2=A0 =C2=A0 http:// thread.gmane.org/gmane.comp.version-con=
-trol.git/114581
->
-> Ah this brings up more issues I had not thought about... =C2=A0:-( =C2=
-=A0But perhaps
-> Bert's work could be used to help implement "rm". =C2=A0Thoughts?
-No, it wont help. Because the base and tip of the topic should not
-changed in respect to the old state (expect for .topdeps of course).
+Hi,
 
-If you really want to remove a dependency, you need to revert a merge
-of this dep from the topic base. which is not possible today, or maybe
-I have just an idea for this:
+On Thu, 9 Apr 2009, Ferry Huberts (Pelagic) wrote:
 
-  'topic': the topic
-  'base':  the base of the topic, i.e. a merge from all dependent
-topics dep0, ..., depN
+> Eric Wong wrote:
+> > Johannes Schindelin <johannes.schindelin@gmx.de> wrote:
+> >> It has been reported time and time again in relation to msysGit that
+> >> git-svn does not work well when core.autocrlf has any value other than
+> >> 'false'.  So let's make it so by default.
+> >>
+> >> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > 
+> > Acked-by: Eric Wong <normalperson@yhbt.net>
+> > 
+> >> ---
+> >>  git-svn.perl |    1 +
+> >>  1 files changed, 1 insertions(+), 0 deletions(-)
+> >>
+> >> diff --git a/git-svn.perl b/git-svn.perl
+> >> index 8be6be0..d4e8fc8 100755
+> >> --- a/git-svn.perl
+> >> +++ b/git-svn.perl
+> >> @@ -325,6 +325,7 @@ sub do_git_init_db {
+> >>  		command_noisy(@init_db);
+> >>  		$_repository = Git->repository(Repository => ".git");
+> >>  	}
+> >> +	command_noisy('config', 'core.autocrlf', 'false');
+> >>  	my $set;
+> >>  	my $pfx = "svn-remote.$Git::SVN::default_repo_id";
+> >>  	foreach my $i (keys %icv) {
+> >> -- 
+> >> 1.6.2.1.613.g25746
+> > 
+> funny that this kind of seems to get through while my suggestion (and
+> proff by tests) to do the same for the cvs-import stuff resulted in
+> hefty discussions and no consensus on what to do, the result of which is
+> to do nothing. i guess i couldn't make myself clear enough?
 
-say you want to remove dep0
+Actually, I was very much in favor of it.  Care to resend, for our 
+pleasure, pretty please?
 
-  1) merge all deps dep1, ..,depN into 'new-base'
-
-  2) merge 'new-base' into base with the merge driver 'theirs', that
-would overwrite all changes from dep0 in the 'base'
-
-  3) update 'topic' to the updated 'base'
-
-Any thoughts from someone who knows more than me?
-
-Bert
-
-> Thanks,
-> Ira
+Thanks,
+Dscho
