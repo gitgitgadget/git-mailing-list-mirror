@@ -1,62 +1,86 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 2/3] rev-list: remove last static vars used in "show_commit"
-Date: Thu, 9 Apr 2009 05:11:08 +0200
-Message-ID: <200904090511.08242.chriscool@tuxfamily.org>
-References: <20090407040819.4338.4291.chriscool@tuxfamily.org> <20090407040854.4338.40055.chriscool@tuxfamily.org> <49DC54DC.3060408@gnu.org>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: legend on top-right pane in 'git gui'
+Date: Thu, 9 Apr 2009 03:31:47 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngtqr13.566.sitaramc@sitaramc.homelinux.net>
+References: <slrngt4h04.q0l.sitaramc@sitaramc.homelinux.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Apr 09 05:14:22 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 09 05:34:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lrkib-00043L-Fl
-	for gcvg-git-2@gmane.org; Thu, 09 Apr 2009 05:14:21 +0200
+	id 1Lrl1j-0007rR-4X
+	for gcvg-git-2@gmane.org; Thu, 09 Apr 2009 05:34:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755456AbZDIDMV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Apr 2009 23:12:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754804AbZDIDMU
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 23:12:20 -0400
-Received: from smtp4-g21.free.fr ([212.27.42.4]:50948 "EHLO smtp4-g21.free.fr"
+	id S1757731AbZDIDcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Apr 2009 23:32:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756891AbZDIDcA
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Apr 2009 23:32:00 -0400
+Received: from main.gmane.org ([80.91.229.2]:48086 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755465AbZDIDMS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Apr 2009 23:12:18 -0400
-Received: from smtp4-g21.free.fr (localhost [127.0.0.1])
-	by smtp4-g21.free.fr (Postfix) with ESMTP id 6CD054C8044;
-	Thu,  9 Apr 2009 05:12:08 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp4-g21.free.fr (Postfix) with ESMTP id 32E0D4C802F;
-	Thu,  9 Apr 2009 05:12:06 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <49DC54DC.3060408@gnu.org>
-Content-Disposition: inline
+	id S1756867AbZDIDb7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Apr 2009 23:31:59 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Lrkzd-000269-O5
+	for git@vger.kernel.org; Thu, 09 Apr 2009 03:31:57 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 09 Apr 2009 03:31:57 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 09 Apr 2009 03:31:57 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116138>
 
-Le mercredi 8 avril 2009, Paolo Bonzini a =E9crit :
-> >  	struct rev_info revs;
-> > +	struct rev_list_info info;
-> >  	int reaches =3D 0, all =3D 0;
-> >
-> > +	memset(&info, 0, sizeof(info));
-> > +	info.revs =3D &revs;
+Hi guys,
+
+Can someone at least tell me "Sita, you're wrong/this is a
+stupid question/this is perfectly correct behaviour/whatever"?  :-)
+
+I won't even ask why, I promise :-)
+
+Regards,
+
+Sitaram
+
+On 2009-03-31, Sitaram Chamarty <sitaramc@gmail.com> wrote:
+> Hello,
 >
-> Would it make sense to embed the struct rev_info entirely in the new
-> struct, without going through a pointer?
-
-Perhaps, I will have a look.
-
-The downside is that the struct rev_info may be initialized twice if we=
-=20
-still use "memset(&info, 0, sizeof(info))" as it is also initialized=20
-in "init_revisions".
-
-Thanks,
-Christian.
+> 'git gui' has a minor issue with the legend on the main code
+> panel (yellow bar, top right pane).
+>
+> When you click on a file in the top left pane, the yellow
+> bar becomes "untracked, not staged".  When you click on a
+> file in the bottom left pane, it becomes "staged for
+> commit".  So far so good.
+>
+> But when you take a file and (un)stage a part of it, then
+> the text on the yellow bar changes to "Portions staged for
+> commit", regardless of whether you clicked on the filename
+> in the top left (unstaged) or bottom left (staged) pane.
+>
+> One of the two texts should be different, but what?  I was
+> thinking, just add "(partial)" to the normal text, like:
+>
+>     "untracked, not staged (partial)"
+>     "staged for commit (partial)"
+>
+> I also tried to see if I could patch it, but it's not just a
+> matter of changing the text somewhere, and I don't know tcl.
+> However, if someone can give me a pointer I could still
+> try...
+>
+> Any thoughts?
+>
