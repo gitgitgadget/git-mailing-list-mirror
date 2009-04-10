@@ -1,104 +1,125 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [PATCH v2 1/2] Ensure consistent usage of mergetool.keepBackup in git
-Date: Fri, 10 Apr 2009 16:48:43 +0200
-Message-ID: <200904101648.44593.markus.heidelberg@web.de>
-References: <20090409153033.GN23604@spearce.org> <20090410074327.GA9369@gmail.com> <20090410081843.GB9369@gmail.com>
-Reply-To: markus.heidelberg@web.de
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>,
-	Charles Bailey <charles@hashpling.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 10 16:50:47 2009
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [RFC PATCH] git add -p: new "quit" command at the prompt.
+Date: Fri, 10 Apr 2009 16:57:01 +0200
+Message-ID: <1239375421-2556-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 10 17:32:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LsI3z-0007Lc-N7
-	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 16:50:40 +0200
+	id 1LsIil-0005f6-PQ
+	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 17:32:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763390AbZDJOsQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Apr 2009 10:48:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759884AbZDJOsQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 10:48:16 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:45936 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763205AbZDJOsP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Apr 2009 10:48:15 -0400
-Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 4ED2CFA40FB8;
-	Fri, 10 Apr 2009 16:48:13 +0200 (CEST)
-Received: from [89.59.65.40] (helo=.)
-	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1LsI1c-0003xy-00; Fri, 10 Apr 2009 16:48:12 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <20090410081843.GB9369@gmail.com>
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX1/z5DtqbS6wQODwUXlAOKFdJ13J+3xOPE5vSx9t
-	vAD5SXe1Vu9cWDwvVEyTtPQTeOhgmBY4F55X1CS7CNtDJ6KvNM
-	8JDoevjWsAs2zOIB3AjA==
+	id S1753355AbZDJPbK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Apr 2009 11:31:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752183AbZDJPbI
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 11:31:08 -0400
+Received: from imag.imag.fr ([129.88.30.1]:40874 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751463AbZDJPbH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Apr 2009 11:31:07 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n3AFQ72V029280
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 10 Apr 2009 17:26:07 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1LsIAA-0003v7-Rc; Fri, 10 Apr 2009 16:57:02 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1LsIAA-0000fo-P4; Fri, 10 Apr 2009 16:57:02 +0200
+X-Mailer: git-send-email 1.6.2.2.449.g92961.dirty
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 10 Apr 2009 17:26:07 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116261>
 
-David Aguilar, 10.04.2009:
-> On  0, David Aguilar <davvid@gmail.com> wrote:
-> > 
-> > It /seems/ like the docs and completion should be updated.
-> 
-> Though my guess is as good as any....
-> I'd rather hear someone else's opinion.
+There's already 'd' to stop staging hunks in a file, but no command to
+stop the interactive staging (for the current files and the remaining
+ones). This patch implements this functionality, and binds it to 'q'.
+---
 
-And I've waited for a response from the difftool/mergetool maintainers
-at first, so I waited with my reply till now.
+I'm not familiar at all with the code in git-add--interactive.perl, so
+my code is mostly cut-and-pasted+adapted from the 'd' command.
+Probably suboptimal.
 
-> $ git log -p 44c36d1c
-> commit 44c36d1ccc9a40bfb31910dfd7e18d59fa8be502
-> Author: Charles Bailey <charles@hashpling.org>
-> Date:   Thu Feb 21 23:30:02 2008 +0000
-> 
->     Tidy up git mergetool's backup file behaviour
->     
->     Currently a backup pre-merge file with conflict markers is sometimes
->     kept with a .orig extenstion and sometimes removed depending on the
->     particular merge tool used.
->     
->     This patch makes the handling consistent across all merge tools and
->     configurable via a new mergetool.keepBackup config variable
->     
->     Signed-off-by: Charles Bailey <charles@hashpling.org>
->     Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> 
-> 
-> The commit comment says mergetool.keepBackup, even though the code always
-> had it as merge.keepBackup.
+ git-add--interactive.perl |   20 +++++++++++++++++++-
+ 1 files changed, 19 insertions(+), 1 deletions(-)
 
-Yes, merge.keepbackup was never documented, we shouldn't have to keep
-backwards compatibility for such undocumented behaviour.
-
-> Right now more people have merge.keepbackup already set since git-gui
-> has had it that way for the last 7 months or so.
-
-People which noticed that the documented mergetool.keepBackup didn't
-work, had to look into the source to find out that merge.keepBackup did
-it, so I see no problem with changing it. They rather should have
-reported it anyway.
-
-Ferry did it right with fixing this inconsistency.
-
-> Nevertheless,
-> Shawn's already applied the git-gui patch which hints that maybe
-> we should just make the code match the docs.
-
-Yes.
-
-Markus
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index def062a..210d230 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -894,6 +894,7 @@ sub help_patch_cmd {
+ 	print colored $help_color, <<\EOF ;
+ y - stage this hunk
+ n - do not stage this hunk
++q - quit, do not stage this hunk nor any of the remaining ones
+ a - stage this and all the remaining hunks in the file
+ d - do not stage this hunk nor any of the remaining hunks in the file
+ g - select a hunk to go to
+@@ -930,7 +931,7 @@ sub patch_update_cmd {
+ 					@mods);
+ 	}
+ 	for (@them) {
+-		patch_update_file($_->{VALUE});
++		return 0 if patch_update_file($_->{VALUE});
+ 	}
+ }
+ 
+@@ -976,6 +977,7 @@ sub display_hunks {
+ }
+ 
+ sub patch_update_file {
++	my $quit = 0;
+ 	my ($ix, $num);
+ 	my $path = shift;
+ 	my ($head, @hunk) = parse_diff($path);
+@@ -1006,6 +1008,11 @@ sub patch_update_file {
+ 				$_->{USE} = 0 foreach ($mode, @hunk);
+ 				last;
+ 			}
++			elsif ($line =~ /^q/i) {
++				$_->{USE} = 0 foreach ($mode, @hunk);
++				$quit = 1;
++				last;
++			}
+ 			else {
+ 				help_patch_cmd('');
+ 				next;
+@@ -1113,6 +1120,16 @@ sub patch_update_file {
+ 				}
+ 				next;
+ 			}
++			elsif ($line =~ /^q/i) {
++				while ($ix < $num) {
++					if (!defined $hunk[$ix]{USE}) {
++						$hunk[$ix]{USE} = 0;
++					}
++					$ix++;
++				}
++				$quit = 1;
++				next;
++			}
+ 			elsif ($line =~ m|^/(.*)|) {
+ 				my $regex = $1;
+ 				if ($1 eq "") {
+@@ -1239,6 +1256,7 @@ sub patch_update_file {
+ 	}
+ 
+ 	print "\n";
++	return $quit;
+ }
+ 
+ sub diff_cmd {
+-- 
+1.6.2.2.449.g92961.dirty
