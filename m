@@ -1,136 +1,80 @@
-From: Constantine Plotnikov <constantine.plotnikov@gmail.com>
-Subject: [JGIT PATCH] Added support for StrictHostKeyChecking property in SSH 
-	config
-Date: Fri, 10 Apr 2009 20:27:31 +0400
-Message-ID: <85647ef50904100927k11d36945h1c5b2c63b4f35e26@mail.gmail.com>
+From: Jacob Kaplan-Moss <jacob@jacobian.org>
+Subject: git-stash fails on OSX 10.5
+Date: Fri, 10 Apr 2009 11:44:36 -0500
+Message-ID: <be4ebbe10904100944p6ec2c0dao8607fcff75d2754e@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 10 18:29:20 2009
+X-From: git-owner@vger.kernel.org Fri Apr 10 18:46:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LsJbM-00012z-Iq
-	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 18:29:13 +0200
+	id 1LsJs3-0007F4-Nk
+	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 18:46:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935636AbZDJQ1h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Apr 2009 12:27:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935474AbZDJQ1g
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 12:27:36 -0400
-Received: from fk-out-0910.google.com ([209.85.128.186]:55814 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934147AbZDJQ1e (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Apr 2009 12:27:34 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so516671fkq.5
-        for <git@vger.kernel.org>; Fri, 10 Apr 2009 09:27:31 -0700 (PDT)
+	id S1765839AbZDJQoy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Apr 2009 12:44:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765264AbZDJQoy
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 12:44:54 -0400
+Received: from mail-qy0-f118.google.com ([209.85.221.118]:62711 "EHLO
+	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759684AbZDJQoy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Apr 2009 12:44:54 -0400
+Received: by qyk16 with SMTP id 16so2369625qyk.33
+        for <git@vger.kernel.org>; Fri, 10 Apr 2009 09:44:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=l4MyATlrsrFg6O3WxqPB9EGRBsRGGJkUIswZzDWWhxQ=;
-        b=Hrhe9RK89SsbWNO6zjeXPuUW+Cq+FsfBMEOX+BtUFWI2PUrK4j/0U7LK5hLQ3NnxZP
-         Gn/SXT+CoIcuqjbozU8k8D3cVOdw6OQF2x+YY1Chh0qU0XERzs7Ij/EPcJnVDxseiILY
-         2pUBNSltX41/5v++0XFXwnHx/0kgN/NqOBibw=
+        h=domainkey-signature:mime-version:sender:received:from:date
+         :x-google-sender-auth:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        bh=lUjM7ZoMQdFsR+HZy1tL1d+xcJU+TwAiaJAkjOfAMqg=;
+        b=MZDVbeb2gyha2esTM0z4eBkszjaMtOdLx2ZTszUI0QkEFnRpEBpYmmPX2waT9hgRRz
+         5mqPauxbgFWTjfECc7vJ7WPs062C06VzCYXmzc0qVJNmQqm0hI0NEdW82UfMfstmgNsK
+         wFpPrgW5krhhzVtI1PZWICFIKjPheAuxVR51Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=DId3e+PTzthzOGsqh0Yaf9NBhAPlPtvFS1hU0+JaObicv5yPilSY68W8Oz33dkJL8D
-         6ND2gIyLJTynBncVMo3UIyaYWxWrD3D06wmoMujgxfXlpc6U+4r+I7BPz+hAWTxq4S49
-         E7lf6Jl/cVRYVFzPb8B29pj0Txtl7EEhavw54=
-Received: by 10.204.56.4 with SMTP id w4mr3459999bkg.25.1239380851262; Fri, 10 
-	Apr 2009 09:27:31 -0700 (PDT)
+        h=mime-version:sender:from:date:x-google-sender-auth:message-id
+         :subject:to:content-type:content-transfer-encoding;
+        b=FC2D5PLjEnX9WEhJrSUkKjC5vzL4UPasvpthcanoufVs4zRQ/iZdRZJdXgPCiQseaL
+         ScXI6ErOlxvV9VRPzOWrHBF35Fjw90mH/Gifps3QQs+Z+/aYPFxY3PzomCJvAKvvpvaH
+         nqlhubDn8e8pj1jm1AkHNMFgwA+DxK+TqAwOM=
+Received: by 10.220.98.209 with SMTP id r17mr4941447vcn.20.1239381892264; Fri, 
+	10 Apr 2009 09:44:52 -0700 (PDT)
+X-Google-Sender-Auth: ac9cded7aae394af
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116265>
 
-StrictHostKeyChecking property allows to specify ssh behavior
-when ssh client encounters a new host or a change of the host key.
-Thus in addition to the default policy "ask", it is now possible to specify
-"yes" and "no" policies that automatically reject and accept new host
-keys.
+Hi folks --
 
-Signed-off-by: Constantine Plotnikov <constantine.plotnikov@gmail.com>
----
-This patch is needed for running JGit in the application server context.
-The property allows suppressing appearance of known hosts message box
-that does not makes sense in this context.
+I'm stumped; git-stash simply won't work on my machine. On any
+repository I've tried, with various permutations, I keep getting::
 
-I'm working on more extensive patch that allows more flexible
-configuration of SSH, but this is a minimal change required.
+    $ git stash
+    cp: `.../.git/index': No such file or directory
+    Cannot save the current worktree state
 
- .../jgit/transport/DefaultSshSessionFactory.java   |    4 +++-
- .../org/spearce/jgit/transport/OpenSshConfig.java  |   19 +++++++++++++++++++
- 2 files changed, 22 insertions(+), 1 deletions(-)
+I spent about an hour in #git this morning trying to track it down
+(log: http://colabti.org/irclogger/irclogger_log/git?date=2009-04-10#l1946).
+I've tried stashing with and without content added to the index; I've
+also tried entirely removing .git/index and then recreating it via git
+reset. No dice.
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
-b/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
-index 0d522df..c9050fa 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/DefaultSshSessionFactory.java
-@@ -103,7 +103,9 @@ public synchronized Session getSession(String
-user, String pass,
- 			session.setPassword(pass);
- 		else if (!hc.isBatchMode())
- 			session.setUserInfo(new AWT_UserInfo());
--
-+		final String strictHostKeyCheckingPolicy = hc.getStrictHostKeyChecking();
-+		if (strictHostKeyCheckingPolicy != null)
-+			session.setConfig("StrictHostKeyChecking", strictHostKeyCheckingPolicy);
- 		final String pauth = hc.getPreferredAuthentications();
- 		if (pauth != null)
- 			session.setConfig("PreferredAuthentications", pauth);
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java
-b/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java
-index 0d9f12f..eadcfd0 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java
-@@ -221,6 +221,11 @@ public Host lookup(final String hostName) {
- 				for (final Host c : current)
- 					if (c.batchMode == null)
- 						c.batchMode = yesno(dequote(argValue));
-+			} else if ("StrictHostKeyChecking".equalsIgnoreCase(keyword)) {
-+				String value = dequote(argValue);
-+				for (final Host c : current)
-+					if (c.strictHostKeyChecking == null)
-+						c.strictHostKeyChecking = value;
- 			}
- 		}
+I'm entirely willing to entertain the possibility that this is my
+fault, but I am fairly familiar with git (been using it for about a
+year) and so if it is fault it's gotta be something pretty subtle.
 
-@@ -298,6 +303,8 @@ private File toFile(final String path) {
+I'm concerned by the fact that it doesn't work on *any* repository on
+my machine, though. I think that points to a systematic problem.
 
- 		Boolean batchMode;
+I'm on OS X 10.5.6; Git is 1.6.2.2, built and installed from source,
+though the same problem happened with the old 1.6.0 I had yesterday,
+and also the 1.6.2.1 I installed via the OSX package.
 
-+		String strictHostKeyChecking;
-+
- 		void copyFrom(final Host src) {
- 			if (hostName == null)
- 				hostName = src.hostName;
-@@ -311,9 +318,21 @@ void copyFrom(final Host src) {
- 				preferredAuthentications = src.preferredAuthentications;
- 			if (batchMode == null)
- 				batchMode = src.batchMode;
-+			if (strictHostKeyChecking == null)
-+				strictHostKeyChecking = src.strictHostKeyChecking;
- 		}
+Thanks!
 
- 		/**
-+		 * @return the value StrictHostKeyChecking property, the valid values
-+		 *         are "yes" (unknown hosts are not accepted), "no" (unknown
-+		 *         hosts are always accepted), and "ask" (user should be asked
-+		 *         before accepting the host)
-+		 */
-+		public String getStrictHostKeyChecking() {
-+			return strictHostKeyChecking;
-+		}
-+		
-+		/**
- 		 * @return the real IP address or host name to connect to; never null.
- 		 */
- 		public String getHostName() {
--- 
-1.6.0.2.1172.ga5ed0
+Jacob
