@@ -1,7 +1,7 @@
 From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: [PATCH] git-am: teach git-am to apply a patch to an unborn branch
-Date: Fri, 10 Apr 2009 09:34:42 +0900
-Message-ID: <20090410093442.6117@nanako3.lavabit.com>
+Subject: [PATCH] Documentation/git.txt: GIT 1.6.2.2 has been out for a while
+Date: Fri, 10 Apr 2009 09:34:40 +0900
+Message-ID: <20090410093440.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -12,135 +12,55 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ls4kZ-0007hz-Hl
-	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 02:37:44 +0200
+	id 1Ls4kY-0007hz-QE
+	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 02:37:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S937064AbZDJAfi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Apr 2009 20:35:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936976AbZDJAff
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 20:35:35 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:56680 "EHLO karen.lavabit.com"
+	id S937125AbZDJAff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Apr 2009 20:35:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936428AbZDJAfd
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 20:35:33 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:56675 "EHLO karen.lavabit.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S936725AbZDJAfd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Apr 2009 20:35:33 -0400
+	id S1764445AbZDJAf3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Apr 2009 20:35:29 -0400
 Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
-	by karen.lavabit.com (Postfix) with ESMTP id 032BD11B8B7;
-	Thu,  9 Apr 2009 19:35:33 -0500 (CDT)
+	by karen.lavabit.com (Postfix) with ESMTP id 7556E11B8B7;
+	Thu,  9 Apr 2009 19:35:29 -0500 (CDT)
 Received: from 1828.lavabit.com (212.62.97.20)
-	by lavabit.com with ESMTP id FEMRY7SVS6PG; Thu, 09 Apr 2009 19:35:33 -0500
+	by lavabit.com with ESMTP id 1W4BX8QECPEV; Thu, 09 Apr 2009 19:35:29 -0500
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=E4GF3ziixfqKYPobR7eiqmsKNXFZtHFIuk+xNwsDTpczqMHgsWaund3go5kkHJ9SBUb8vRRL+gr1WF0cjbaiMRQRd1ptsRoxLx7nm/l9oySwsgztwCIsqrMssw4asmSPsxaGBjEDX840hLItQyqOatSgvF2yFRh66nOfMHjyYfw=;
+  b=PJX4hSIAeialmzrxIVoyO8XPjtTaQV+b7IOTzbngoH0TbnbaAiPIYT/AGsYf5aJPNBuaOOlXL01pEvaib8h+CXLhMcycCcv7Ke2gwD5QwzcuI3uxAZMIpoHwJZvLVH1VtQGNT4nfGcehiaS6lR1J0qyNBlN7t1wmy4nXK9uMZ5o=;
   h=From:To:Cc:Subject:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116228>
 
-People sometimes wonder why they cannot apply a patch that only
-creates new files to an unborn branch.
+These links inside "stalenotes" section need to be updated on the master
+branch every time a new stable or maintenance release is made.
 
 Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
 ---
- git-am.sh     |   29 ++++++++++++++++++++++++-----
- t/t4150-am.sh |   15 +++++++++++++++
- 2 files changed, 39 insertions(+), 5 deletions(-)
+ Documentation/git.txt |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-diff --git a/git-am.sh b/git-am.sh
-index d339075..774383f 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -36,6 +36,13 @@ cd_to_toplevel
- git var GIT_COMMITTER_IDENT >/dev/null ||
- 	die "You need to set your committer info first"
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 2ce5e6b..eca29f0 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -43,9 +43,10 @@ unreleased) version of git, that is available from 'master'
+ branch of the `git.git` repository.
+ Documentation for older releases are available here:
  
-+if git rev-parse --verify -q HEAD >/dev/null
-+then
-+	HAS_HEAD=yes
-+else
-+	HAS_HEAD=
-+fi
-+
- sq () {
- 	for sqarg
- 	do
-@@ -290,16 +297,26 @@ else
- 		: >"$dotest/rebasing"
- 	else
- 		: >"$dotest/applying"
--		git update-ref ORIG_HEAD HEAD
-+		if test -n "$HAS_HEAD"
-+		then
-+			git update-ref ORIG_HEAD HEAD
-+		else
-+			git update-ref -d ORIG_HEAD >/dev/null 2>&1
-+		fi
- 	fi
- fi
+-* link:v1.6.2.1/git.html[documentation for release 1.6.2.1]
++* link:v1.6.2.2/git.html[documentation for release 1.6.2.2]
  
- case "$resolved" in
- '')
--	files=$(git diff-index --cached --name-only HEAD --) || exit
-+	case "$HAS_HEAD" in
-+	'')
-+		files=$(git ls-files) ;;
-+	?*)
-+		files=$(git diff-index --cached --name-only HEAD --) ;;
-+	esac || exit
- 	if test "$files"
- 	then
--		: >"$dotest/dirtyindex"
-+		test -n "$HAS_HEAD" && : >"$dotest/dirtyindex"
- 		die "Dirty index: cannot apply patches (dirty: $files)"
- 	fi
- esac
-@@ -541,18 +558,20 @@ do
- 	fi
+ * release notes for
++  link:RelNotes-1.6.2.2.txt[1.6.2.2],
+   link:RelNotes-1.6.2.1.txt[1.6.2.1],
+   link:RelNotes-1.6.2.txt[1.6.2].
  
- 	tree=$(git write-tree) &&
--	parent=$(git rev-parse --verify HEAD) &&
- 	commit=$(
- 		if test -n "$ignore_date"
- 		then
- 			GIT_AUTHOR_DATE=
- 		fi
-+		parent=$(git rev-parse --verify -q HEAD) ||
-+		echo >&2 "applying to an empty history"
-+
- 		if test -n "$committer_date_is_author_date"
- 		then
- 			GIT_COMMITTER_DATE="$GIT_AUTHOR_DATE"
- 			export GIT_COMMITTER_DATE
- 		fi &&
--		git commit-tree $tree -p $parent <"$dotest/final-commit"
-+		git commit-tree $tree ${parent:+-p $parent} <"$dotest/final-commit"
- 	) &&
- 	git update-ref -m "$GIT_REFLOG_ACTION: $FIRSTLINE" HEAD $commit $parent ||
- 	stop_here $this
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index 5e65afa..b97d102 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -290,4 +290,19 @@ test_expect_success 'am --ignore-date' '
- 	echo "$at" | grep "+0000"
- '
- 
-+test_expect_success 'am into an unborn branch' '
-+	rm -fr subdir &&
-+	mkdir -p subdir &&
-+	git format-patch --numbered-files -o subdir -1 first &&
-+	(
-+		cd subdir &&
-+		git init &&
-+		git am 1
-+	) &&
-+	result=$(
-+		cd subdir && git rev-parse HEAD^{tree}
-+	) &&
-+	test "z$result" = "z$(git rev-parse first^{tree})"
-+'
-+
- test_done
 -- 
 1.6.2.2
 
