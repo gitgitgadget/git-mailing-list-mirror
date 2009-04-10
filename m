@@ -1,68 +1,56 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: [PATCH] autoconf: Add limited support for --htmldir
-Date: Fri, 10 Apr 2009 09:34:38 +0900
-Message-ID: <20090410093438.6117@nanako3.lavabit.com>
-References: <9a0027270902272323y44091bfakcb640f168c33a824@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] builtin-branch - allow deleting a fully specified
+ branch-name
+Date: Thu, 09 Apr 2009 17:39:46 -0700
+Message-ID: <7vhc0x1gvh.fsf@gitster.siamese.dyndns.org>
+References: <1239323335-4684-1-git-send-email-mlevedahl@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org, David Syzdek <david@syzdek.net>,
-	Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>,
-	Tim Visher <tim.visher@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 10 02:37:52 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 10 02:41:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ls4kY-0007hz-2Y
-	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 02:37:42 +0200
+	id 1Ls4oN-0008W2-1b
+	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 02:41:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934456AbZDJAfc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Apr 2009 20:35:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765453AbZDJAfa
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 20:35:30 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:56669 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1765214AbZDJAf1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Apr 2009 20:35:27 -0400
-Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
-	by karen.lavabit.com (Postfix) with ESMTP id BBBC811B8B7;
-	Thu,  9 Apr 2009 19:35:26 -0500 (CDT)
-Received: from 1828.lavabit.com (212.62.97.20)
-	by lavabit.com with ESMTP id 1O8ZZN8ERO8F; Thu, 09 Apr 2009 19:35:26 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=Bl8H2vRAm7MD0UreDkeihxoA7+KnogqxLnTR5Q+QcfqP4v/IIRV6cG9Pj61B7qUIT34wmpNLV79WPX7uHxrOId1Y65lGjBx66kfQJ5fhbkEmEW/8YiXq9BNhFVen1nqAP0UKLdsom9RtwEnF1oMwlaKvU2JPnzwrC7Ay5whkXlE=;
-  h=From:To:Cc:Subject:In-Reply-To:References:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <9a0027270902272323y44091bfakcb640f168c33a824@mail.gmail.com>
+	id S937620AbZDJAj6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Apr 2009 20:39:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937433AbZDJAjz
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 20:39:55 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47673 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753576AbZDJAjx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Apr 2009 20:39:53 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 899A1A91B2;
+	Thu,  9 Apr 2009 20:39:51 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 6D792A91AE; Thu,
+  9 Apr 2009 20:39:48 -0400 (EDT)
+In-Reply-To: <1239323335-4684-1-git-send-email-mlevedahl@gmail.com> (Mark
+ Levedahl's message of "Thu, 9 Apr 2009 20:28:55 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 1A47252A-2568-11DE-9DB3-BB14ECB1AA3C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116230>
 
-Quoting David Syzdek <david@syzdek.net>
+Mark Levedahl <mlevedahl@gmail.com> writes:
 
-> I tested the below patch using autoconf 2.59 and autoconf 2.62.  If
-> the version of autoconf used to create the configure script supports
-> the `--htmldir' option then the htmldir is set by either autoconf or
-> the user defined value.  If the version of autoconf does not support
-> the `--htmldir' option, then htmldir defaults to [DATADIR/doc/git].
-> 
-> This way a newer version of autoconf is not required for users on
-> distros more than a year or so old, however users on newer distros are
-> able to use the '--html' flag.
-> 
-> -- >8 --
-> Add support for --htmdir=DIR [DATAROOT/doc/git] if the configure
-> script is created with autoconf 2.60 or higher. htmldir defaults to
-> [DATADIR/doc/git] if the configure script is created with autoconf
-> 2.59 or lower.
-> 
-> Signed-off-by: David M. Syzdek <david@syzdek.net>
+> This change allows, for instance
+> 	git branch -d refs/heads/foo
+> to succeed. Without this patch, the code just assumes that the
+> given branch name should be appended to "refs/heads" or
+> "refs/remotes", thus attempting (and failing) in the above case
+> to delete "refs/heads/refs/heads/foo"
 
-Junio, may I ask what happened to this patch?
+Your logic is broken.
 
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Why doesn't the user simply say "git branch -d foo"?  The command takes
+"the branch name", not "arbitrary ref name".
