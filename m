@@ -1,61 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-stash fails on OSX 10.5
-Date: Fri, 10 Apr 2009 10:26:34 -0700
-Message-ID: <7vy6u8whbp.fsf@gitster.siamese.dyndns.org>
-References: <be4ebbe10904100944p6ec2c0dao8607fcff75d2754e@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add a simple getpass() for MinGW
+Date: Fri, 10 Apr 2009 20:03:07 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904102001340.10279@pacific.mpi-cbg.de>
+References: <cover.1239154140u.git.johannes.schindelin@gmx.de> <7ba615a300fe2742e8d32f0313c6ee9a1a1aaed3.1239154140u.git.johannes.schindelin@gmx.de> <49DE5120.8050904@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jacob Kaplan-Moss <jacob@jacobian.org>
-X-From: git-owner@vger.kernel.org Fri Apr 10 19:28:21 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Fri Apr 10 20:02:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LsKWW-0005cv-85
-	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 19:28:16 +0200
+	id 1LsL3M-0000CV-Ch
+	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 20:02:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759817AbZDJR0m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Apr 2009 13:26:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758439AbZDJR0m
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 13:26:42 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43302 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755209AbZDJR0l (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Apr 2009 13:26:41 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F220AA92C3;
-	Fri, 10 Apr 2009 13:26:38 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id EDC3FA92C1; Fri,
- 10 Apr 2009 13:26:35 -0400 (EDT)
-In-Reply-To: <be4ebbe10904100944p6ec2c0dao8607fcff75d2754e@mail.gmail.com>
- (Jacob Kaplan-Moss's message of "Fri, 10 Apr 2009 11:44:36 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: BFE94E18-25F4-11DE-95E8-C121C5FC92D5-77302942!a-sasl-fastnet.pobox.com
+	id S1765771AbZDJSAf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Apr 2009 14:00:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763771AbZDJSAe
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 14:00:34 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55118 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751218AbZDJSAd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Apr 2009 14:00:33 -0400
+Received: (qmail invoked by alias); 10 Apr 2009 18:00:28 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp002) with SMTP; 10 Apr 2009 20:00:28 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18kRVQGSz8kDcrfBVxzX4yfMLyUyEgT88Ys9/nmiP
+	jKm8sDrXGfzYma
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <49DE5120.8050904@kdbg.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.46
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116268>
 
-Jacob Kaplan-Moss <jacob@jacobian.org> writes:
+Hi,
 
-> Hi folks --
->
-> I'm stumped; git-stash simply won't work on my machine. On any
-> repository I've tried, with various permutations, I keep getting::
->
->     $ git stash
->     cp: `.../.git/index': No such file or directory
->     Cannot save the current worktree state
+On Thu, 9 Apr 2009, Johannes Sixt wrote:
 
-Are you exporting 
+> Johannes Schindelin schrieb:
+> > This should be replaced with a graphical getpass() at some stage.
+> > 
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> > 
+> >  I saw it coming that I had to do this.
+> 
+> There are two callers of getpass: One is in imap-send.c, but we don't 
+> build it on Windows. The other is in http.c. But notice that this is 
+> only built if NO_CURL is not defined, yet, upstream git defines it in 
+> the MinGW section, and so this patch alone is not needed in upstream 
+> git.
+> 
+> I see you have removed NO_CURL = YesPlease in 4msysgit.git. You should 
+> make it a part of a series that removes NO_CURL = YesPlease from the 
+> MinGW section.
 
-	GIT_INDEX_FILE=.../.git/index
+Indeed we did, as we ship curl, and we rely on http:// protocol being 
+available in the netinstaller.
 
-into the environment, and that path perhaps does not exist?
+> >  compat/mingw.c |   15 +++++++++++++++
+> >  1 files changed, 15 insertions(+), 0 deletions(-)
+> > 
+> > diff --git a/compat/mingw.c b/compat/mingw.c
+> > index d50186e..2ab5bbe 100644
+> > --- a/compat/mingw.c
+> > +++ b/compat/mingw.c
+> > @@ -1157,3 +1157,18 @@ int link(const char *oldpath, const char *newpath)
+> >   }
+> >   return 0;
+> > }
+> > +
+> > +char *getpass(const char *prompt)
+> > +{
+> > +	struct strbuf buf = STRBUF_INIT;
+> > +
+> > +	fputs(prompt, stderr);
+> > +	for (;;) {
+> > +		char c = _getch();
+> > +		if (c == '\r' || c == '\n')
+> > +			break;
+> > +		strbuf_addch(&buf, c);
+> > +	}
+> > +	fputs("\n", stderr);
+> > +	return strbuf_detach(&buf, NULL);
+> > +}
+> 
+> Where do the callers get the prototype from (on MinGW)? Usually, we have to
+> have a corresponding function declaration in compat/mingw.h for functions that
+> are missing on Windows.
+> 
+> From http://opengroup.org/onlinepubs/007908775/xsh/getpass.html:
+> 
+>   The return value points to static data whose content may be overwritten
+>   by each call.
+> 
+> I'm not saying that you should use a fixed-size static character array, but
+> only that you should not leak memory on each call ;) (But not even that is
+> very important; I'm just summarizing the research I did because I was
+> wondering what would happen to the returned buffer.)
 
-Otherwise the above error message wouldn't have said ".../.git/index"; it
-is coming from the only invocation of "cp" command in git-stash.sh
+Good catch!
+
+Will fix.
+
+> Apart from that, the implementation looks good. (_getch(), according to 
+> the docs on MSDN, doesn't echo the input.)
+
+I'll probably add handling for ^H (as I need it very often ;-), but not 
+for ^W (overkill).
+
+Ciao,
+Dscho
