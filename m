@@ -1,90 +1,91 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: Performance issue: initial git clone causes massive repack
-Date: Fri, 10 Apr 2009 13:38:46 -0700
-Message-ID: <20090410T203405Z@curie.orbis-terrarum.net>
-References: <alpine.LFD.2.00.0904052315210.6741@xanadu.home> <20090407081019.GK20356@atjola.homenet> <m3tz5023rq.fsf@localhost.localdomain> <alpine.LFD.2.00.0904070903020.6741@xanadu.home> <20090407142147.GA4413@atjola.homenet> <alpine.LFD.2.00.0904071321520.6741@xanadu.home> <20090407181259.GB4413@atjola.homenet> <alpine.LFD.2.00.0904071454250.6741@xanadu.home> <20090407202725.GC4413@atjola.homenet> <alpine.LFD.2.00.0904080041240.6741@xanadu.home>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] process_{tree,blob}: Remove useless xstrdup calls
+Date: Fri, 10 Apr 2009 15:20:18 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.0904101517520.4583@localhost.localdomain>
+References: <20090408112854.GA8624@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="PmA2V3Z32TCmWXqI"
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 10 22:40:46 2009
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nicolas Pitre <nico@cam.org>, Jakub Narebski <jnareb@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>, david@lang.hm,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Apr 11 00:28:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LsNWm-0003TF-5r
-	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 22:40:44 +0200
+	id 1LsPCv-00008m-8n
+	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 00:28:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755294AbZDJUiw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Apr 2009 16:38:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753610AbZDJUiw
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 16:38:52 -0400
-Received: from b01.ext.isohunt.com ([208.71.112.51]:56641 "EHLO
-	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752264AbZDJUiv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Apr 2009 16:38:51 -0400
-Received: (qmail 31788 invoked from network); 10 Apr 2009 20:38:48 -0000
-Received: from tsi-static.orbis-terrarum.net (HELO curie.orbis-terrarum.net) (76.10.188.108)
-  (smtp-auth username robbat2@isohunt.com, mechanism login)
-  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Fri, 10 Apr 2009 20:38:48 +0000
-Received: (qmail 23298 invoked by uid 10000); 10 Apr 2009 13:38:46 -0700
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.0904080041240.6741@xanadu.home>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1758875AbZDJW0s convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Apr 2009 18:26:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758041AbZDJW0s
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 18:26:48 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:42988 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756723AbZDJW0r (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Apr 2009 18:26:47 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n3AMKKYp032520
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 10 Apr 2009 15:20:56 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n3AMKIYU020387;
+	Fri, 10 Apr 2009 15:20:19 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <20090408112854.GA8624@atjola.homenet>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-5.445 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116281>
 
 
---PmA2V3Z32TCmWXqI
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Apr 08, 2009 at 12:52:54AM -0400, Nicolas Pitre wrote:
-> > http://git.overlays.gentoo.org/gitweb/?p=3Dexp/gentoo-x86.git;a=3Dsumma=
-ry
-> > At least that's what I cloned ;-) I hope it's the right one, but it fits
-> > the description...
-> OK.  FWIW, I repacked it with --window=3D250 --depth=3D250 and obtained a=
+On Wed, 8 Apr 2009, Bj=F6rn Steinbrink wrote:
+>
+> The name of the processed object was duplicated for passing it to
+> add_object(), but that already calls path_name, which allocates a new
+> string anyway. So the memory allocated by the xstrdup calls just went
+> nowhere, leaking memory.
+
+Ack, ack.
+
+There's another easy 5% or so for the built-in object walker: once we'v=
+e=20
+created the hash from the name, the name isn't interesting any more, an=
+d=20
+so something trivial like this can help a bit.
+
+Does it matter? Probably not on its own. But a few more memory saving=20
+tricks and it might all make a difference.
+
+		Linus
+
+---
+ builtin-pack-objects.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 9fc3b35..d00eabe 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -1912,6 +1912,8 @@ static void show_object(struct object_array_entry=
+ *p)
+ 	add_preferred_base_object(p->name);
+ 	add_object_entry(p->item->sha1, p->item->type, p->name, 0);
+ 	p->item->flags |=3D OBJECT_ADDED;
++	free(p->name);
++	p->name =3D NULL;
+ }
 =20
-> 725MB pack file.  So that's about half the originally reported size.
-The one problem with having the single large packfile is that Git
-doesn't have a trivial way to resume downloading it when the git://
-protocol is used.
-
-For our developers cursed with bad internet connections (a fair number
-of firewalls that don't seem to respect keepalive properly), I suppose
-I can probably just maintain a separate repo for their initial clones,
-which leaves a large overall download, but more chances to resume.
-
-PS #1: B.Steinbrink's memory improvement patch seems to work nicely too,
-but more memory improvements in that realm are still needed.
-
-PS #2: We finally got some newer hardware to run the large repo, I'm
-working on the install now, but until the memory issue is better
-resolved, I'm still worried we might run short if there are too many
-concurrent clones.
-
---=20
-Robin Hugh Johnson
-Gentoo Linux Developer & Infra Guy
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
-
---PmA2V3Z32TCmWXqI
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.10 (GNU/Linux)
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
-
-iEYEARECAAYFAknfrlUACgkQPpIsIjIzwixg+ACeNPdynBYrNB7TwZ94+WVsjPU6
-/rgAmwYD3k67rI6ZmImqUM1+2mbNzUJD
-=SgdS
------END PGP SIGNATURE-----
-
---PmA2V3Z32TCmWXqI--
+ static void show_edge(struct commit *commit)
