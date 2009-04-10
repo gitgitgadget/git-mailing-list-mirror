@@ -1,85 +1,121 @@
-From: Ping Yin <pkufranky@gmail.com>
-Subject: Re: [PATCH] git-add: introduce --edit (to edit the diff vs. the 
-	index)
-Date: Fri, 10 Apr 2009 10:03:19 +0800
-Message-ID: <46dff0320904091903p57df51c8ice90648ab7a4baa6@mail.gmail.com>
-References: <cover.1239225986u.git.johannes.schindelin@gmx.de>
-	 <61c07126e28aba0a36730da06112bd2d16eabc1b.1239225986u.git.johannes.schindelin@gmx.de>
-	 <46dff0320904081900n7bff2280rc49315e3db427919@mail.gmail.com>
-	 <46dff0320904091843p3e034647j3c78506b4d0c2b4@mail.gmail.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [JGIT PATCH 1/2] Improve end-of-file detection in DirCache
+Date: Fri, 10 Apr 2009 04:35:50 +0200
+Message-ID: <200904100435.50482.robin.rosenberg.lists@dewire.com>
+References: <1239205852-28138-1-git-send-email-robin.rosenberg@dewire.com> <1239290899-24589-1-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Apr 10 04:06:40 2009
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Apr 10 04:38:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ls68S-0000lw-W1
-	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 04:06:29 +0200
+	id 1Ls6dL-0006vS-6n
+	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 04:38:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751881AbZDJCDV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Apr 2009 22:03:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751833AbZDJCDV
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 22:03:21 -0400
-Received: from rv-out-0506.google.com ([209.85.198.227]:61338 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750965AbZDJCDU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Apr 2009 22:03:20 -0400
-Received: by rv-out-0506.google.com with SMTP id f9so868887rvb.1
-        for <git@vger.kernel.org>; Thu, 09 Apr 2009 19:03:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=eAHurVfqFpor1EnENucpkE3lGVK20rpE0qyG/T74Qd8=;
-        b=bM01FxB+kfpr1RnwER9SZr6iBW+6s0UAn+XJJTaJ1+8njvJDjA/INhXfjMiL6cyFSK
-         4N4Z8zjZE60opogZ12hEVJ0fNQ4dMWXJzHEHcuxV7ryV3J/c9oxi2LLSt9cmv43btqzu
-         OBK9ZLJIzgGxbfNTPCECrCMThpvsJjsbMEa+k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=kgVPfIML+RLbXO8eWPqCiFPxUC5tXsyURFer4ruFc8xCFKladDfzQsblm5pN1a4LYb
-         WCJlB8dFgd7UnabuuSrAphpmktBovhcIGM5nFRMXCiSjWBMgxwcH7wbU5Y+fbMt1CjGv
-         EBpexcLw/Q2AsFRPULS2L+63j0KmFPh/k8i3A=
-Received: by 10.114.131.1 with SMTP id e1mr1677853wad.222.1239328999798; Thu, 
-	09 Apr 2009 19:03:19 -0700 (PDT)
-In-Reply-To: <46dff0320904091843p3e034647j3c78506b4d0c2b4@mail.gmail.com>
+	id S935242AbZDJCge (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Apr 2009 22:36:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934070AbZDJCgd
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 22:36:33 -0400
+Received: from pne-smtpout1-sn2.hy.skanova.net ([81.228.8.83]:56173 "EHLO
+	pne-smtpout1-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S934966AbZDJCgc convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 9 Apr 2009 22:36:32 -0400
+Received: from sleipner.localnet (217.213.75.253) by pne-smtpout1-sn2.hy.skanova.net (7.3.129)
+        id 49CCD9F8001C4045; Fri, 10 Apr 2009 04:36:28 +0200
+User-Agent: KMail/1.11.2 (Linux/2.6.27-14-generic; KDE/4.2.2; i686; ; )
+In-Reply-To: <1239290899-24589-1-git-send-email-spearce@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116234>
 
-On Fri, Apr 10, 2009 at 9:43 AM, Ping Yin <pkufranky@gmail.com> wrote:
+torsdag 09 april 2009 17:28:18 skrev "Shawn O. Pearce" <spearce@spearce.org>:
+> When reading from a BufferInputStream attached to a FileInputStream
+> the available() method seems to return the number of unread bytes
+> in the buffer plus the unread number of bytes in the file.  There is
+> no guarantee for this behavior, so we can't rely on it.
+> 
+> Instead we read the expected 20 byte SHA1 trailer into a temporary
+> buffer, and then poll for a remaining byte.  If another byte is
+> still present in the input stream it indicates that there is more
+> than 20 bytes worth of data remaining, which means an extension
+> must be available at the current position.  If there is in fact
+> an extension we put back the 21 bytes we read and proceed to do
+> an 8 byte read for the extension header.
+> 
+> This relies on BufferInputStream's ability to buffer at least 21
+> bytes of data, and put them all back in the event that we found
+> an extension.  This is a much more common usage of the stream API
+> and is something we can rely on working correctly all of the time,
+> on any standard library implementation.
 
-> How about this?
-> =C2=A0'add --edit=3Dpatch' to edit the patch and "add --edit=3Dindex"=
- to edit the index
->
+Much better. Here's a regression test, fails before, but not after.
 
-One usecase for edit index
+-- robin
 
-After a big change in foo.c in the worktree, you find a typo in foo.c.
-You want to fix the typo first before commit the big change. But the
-change is so big that you can't just fix the typo in worktree foo.c
-and then use "add -p" to pick the typo fix first.
+>From b6561578a5ff48309f69a8d442cf47ec1b51bc49 Mon Sep 17 00:00:00 2001
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Date: Fri, 10 Apr 2009 04:16:31 +0200
+Subject: [EGIT PATCH] Test case for the DirCache reading code.
 
-So you can
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+ .../spearce/jgit/dircache/DirCacheTreeTest.java    |   33 ++++++++++++++++++++
+ 1 files changed, 33 insertions(+), 0 deletions(-)
 
-git stash
-fix typo and commit
-git stash apply and resolve the conflict
-
-With 'add --edit=3Dpatch', you can
-git add --edit=3Dpatch foo.c
-
-an editor is fired up with the foo.c in index and worktree open side
-by side. And you can fix the typo in both index and worktree file.
-When exiting the editor, the index file is modified, and no conflict
-to resolve.
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheTreeTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheTreeTest.java
+index b37095d..aca0b90 100644
+--- a/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheTreeTest.java
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheTreeTest.java
+@@ -37,6 +37,9 @@
+ 
+ package org.spearce.jgit.dircache;
+ 
++import java.io.IOException;
++
++import org.spearce.jgit.errors.CorruptObjectException;
+ import org.spearce.jgit.lib.RepositoryTestCase;
+ 
+ public class DirCacheTreeTest extends RepositoryTestCase {
+@@ -147,4 +150,34 @@ public void testTwoLevelSubtree() throws Exception {
+ 		assertEquals(acLast - acFirst + 1, acTree.getEntrySpan());
+ 		assertFalse(acTree.isValid());
+ 	}
++
++	/**
++	 * We had bugs related to buffer size in the DirCache. This test creates an
++	 * index larger than the default BufferedInputStream buffer size. This made
++	 * the DirCache unable to read the extensions when index size exceeded the
++	 * buffer size (in some cases at least).
++	 * 
++	 * @throws CorruptObjectException
++	 * @throws IOException
++	 */
++	public void testWriteReadTree() throws CorruptObjectException, IOException {
++		final DirCache dc = DirCache.lock(db);
++
++		final String A = String.format("a%2000s", "a");
++		final String B = String.format("b%2000s", "b");
++		final String[] paths = { A + ".", A + "." + B, A + "/" + B, A + "0" + B };
++		final DirCacheEntry[] ents = new DirCacheEntry[paths.length];
++		for (int i = 0; i < paths.length; i++)
++			ents[i] = new DirCacheEntry(paths[i]);
++
++		final DirCacheBuilder b = dc.builder();
++		for (int i = 0; i < ents.length; i++)
++			b.add(ents[i]);
++
++		b.commit();
++		DirCache read = DirCache.read(db);
++
++		assertEquals(paths.length, read.getEntryCount());
++		assertEquals(1, read.getCacheTree(true).getChildCount());
++	}
+ }
