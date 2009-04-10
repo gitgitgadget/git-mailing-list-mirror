@@ -1,60 +1,84 @@
-From: Aaron Digulla <digulla@hepe.com>
-Subject: Re: [FR] Encrypting the repository
-Date: Fri, 10 Apr 2009 13:11:10 +0200
-Message-ID: <49DF294E.7010407@hepe.com>
-References: <loom.20090410T084314-918@post.gmane.org> <fabb9a1e0904100330u61a7e252he546f0edc4e016a7@mail.gmail.com>
+From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+Subject: [PATCH] gittutorial: Add global color.ui
+Date: Fri, 10 Apr 2009 14:16:22 +0200
+Message-ID: <20090410141622.10e40448@paolo-desktop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 10 13:51:55 2009
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 10 14:19:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LsFFf-0000PU-6c
-	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 13:50:31 +0200
+	id 1LsFh4-0002kr-Mm
+	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 14:18:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935931AbZDJLst (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Apr 2009 07:48:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935908AbZDJLss
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 07:48:48 -0400
-Received: from sebigbos.hepe.com ([78.47.144.89]:43591 "EHLO www.hepe.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935684AbZDJLsp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Apr 2009 07:48:45 -0400
-Received: from [194.230.154.168] (helo=[192.168.66.2])
-	by www.hepe.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <digulla@hepe.com>)
-	id 1LsEdk-0003Hr-Cf; Fri, 10 Apr 2009 13:11:21 +0200
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <fabb9a1e0904100330u61a7e252he546f0edc4e016a7@mail.gmail.com>
+	id S935986AbZDJMQd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Apr 2009 08:16:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763554AbZDJMQa
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 08:16:30 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:47401 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936005AbZDJMQ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Apr 2009 08:16:29 -0400
+Received: by fxm2 with SMTP id 2so1021698fxm.37
+        for <git@vger.kernel.org>; Fri, 10 Apr 2009 05:16:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=P81za9mYADx83OMZQpHff0uLSjvsQwz8scd8GQ4dtSM=;
+        b=wQi9KiUzHmBc08zcne+HfZkqBrRRVwPvOl5KHQM/MvB6zXDpi0xDNYWdlUO+U0MQRq
+         jrSLq6KUhTtJJGXg4ZcY4DXRBLksxz5PfKl+651GSdMLGeL0LRn5eVZ73l42qgAWLwcd
+         cn03WK88DHBTW3L7iUYLPLbfJN4kyt04ckXhU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:subject:message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        b=Fv1bGyglabjxQD/WSYAsClU2THGg75m3wjcivMZAP74JQ7Vx6gkNuNyZQFjVSLhmY6
+         2Wdaa7rHe7ia2INMmYBhfzIovUyNV9kKIY8XC3yPf+ov3F4Ym2gqdgpnpWKbALrVmMOx
+         3xEPqCLh3hJszDFPEMbztVTbaYglkaLqINpo4=
+Received: by 10.103.225.11 with SMTP id c11mr1816987mur.24.1239365785807;
+        Fri, 10 Apr 2009 05:16:25 -0700 (PDT)
+Received: from paolo-desktop (host245-74-dynamic.4-87-r.retail.telecomitalia.it [87.4.74.245])
+        by mx.google.com with ESMTPS id y6sm2929771mug.27.2009.04.10.05.16.24
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 10 Apr 2009 05:16:25 -0700 (PDT)
+X-Mailer: Sylpheed-Claws 1.0.5 (GTK+ 1.2.10; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116255>
 
-Sverre Rabbelier wrote:
+I consider color.ui so important that I think it deserves to be mentioned in the gittutorial document.
+Patch is against pu.
 
->> I need a way to safely synchronize data between several places using an unsafe
->> storage (USB stick, Internet drive). So my question is: How much work would it
->> be to patch GIT to encrypt all files in the repository using AES-256?
-> 
-> Encrypt the entire drive flash drive [0], and then use git like
-> normal, 0 changes required ;). You can also create an encrypted file,
-> and then use git like normal, also 0 changes required!
+Signed-off-by: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+---
+ Documentation/gittutorial.txt |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
 
-How do I encrypt an Internet drive (like Dropbox)? Also, if possible, 
-I'd like not to have to install any software on the local computer 
-(well, besides git, obviously).
-
-Regards,
-
+diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
+index c5d5596..6748fda 100644
+--- a/Documentation/gittutorial.txt
++++ b/Documentation/gittutorial.txt
+@@ -44,6 +44,14 @@ $ git config --global user.name "Your Name Comes Here"
+ $ git config --global user.email you@yourdomain.example.com
+ ------------------------------------------------
+ 
++This will make prettier the output of certain commands such as `git diff`
++and `git branch`:
++
++------------------------------------------------
++$ git config --global color.ui auto
++------------------------------------------------
++
++
+ 
+ Importing a new project
+ -----------------------
 -- 
-Aaron "Optimizer" Digulla a.k.a. Philmann Dark
-"It's not the universe that's limited, it's our imagination.
-Follow me and I'll show you something beyond the limits."
-http://www.pdark.de/                 http://blog.pdark.de/
+1.6.2.2.485.ge37347
