@@ -1,79 +1,59 @@
-From: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
-Subject: Re: [PATCH v2 1/2] Ensure consistent usage of mergetool.keepBackup
- in git
-Date: Fri, 10 Apr 2009 10:25:36 +0200
-Message-ID: <49DF0280.2060000@pelagic.nl>
-References: <20090409153033.GN23604@spearce.org> <f6297e57a23dc3abac2fcedceb00cecde607de02.1239291673.git.ferry.huberts@pelagic.nl> <20090410032731.GA1545@gmail.com> <49DEEE22.5030500@pelagic.nl> <20090410074327.GA9369@gmail.com> <20090410081843.GB9369@gmail.com>
+From: Aaron Digulla <digulla@hepe.com>
+Subject: [FR] Encrypting the repository
+Date: Fri, 10 Apr 2009 08:49:26 +0000 (UTC)
+Message-ID: <loom.20090410T084314-918@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Charles Bailey <charles@hashpling.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 10 10:27:17 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 10 10:56:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LsC4y-0005Go-6m
-	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 10:27:16 +0200
+	id 1LsCXR-0007DU-Pd
+	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 10:56:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761214AbZDJIZn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Apr 2009 04:25:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759092AbZDJIZl
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 04:25:41 -0400
-Received: from hupie.xs4all.nl ([82.95.241.251]:55240 "EHLO
-	Lighthouse.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1758655AbZDJIZk (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Apr 2009 04:25:40 -0400
-Received: from [192.168.0.101] (unknown [192.168.0.101])
-	by Lighthouse.internal.Hupie.com (Postfix) with ESMTP id 191CC58BD88;
-	Fri, 10 Apr 2009 10:25:37 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <20090410081843.GB9369@gmail.com>
+	id S1762500AbZDJIzJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Apr 2009 04:55:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761378AbZDJIzI
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 04:55:08 -0400
+Received: from main.gmane.org ([80.91.229.2]:60825 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762197AbZDJIzG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Apr 2009 04:55:06 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1LsCVq-0005QZ-Ph
+	for git@vger.kernel.org; Fri, 10 Apr 2009 08:55:02 +0000
+Received: from 194.230.154.168 ([194.230.154.168])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 10 Apr 2009 08:55:02 +0000
+Received: from digulla by 194.230.154.168 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 10 Apr 2009 08:55:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 194.230.154.168 (Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.0.8) Gecko/2009032609 Firefox/3.0.8)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116248>
 
-David Aguilar wrote:
-> On  0, David Aguilar <davvid@gmail.com> wrote:
->> It /seems/ like the docs and completion should be updated.
-> 
-> Though my guess is as good as any....
-> I'd rather hear someone else's opinion.
-> 
-> $ git log -p 44c36d1c
-> commit 44c36d1ccc9a40bfb31910dfd7e18d59fa8be502
-> Author: Charles Bailey <charles@hashpling.org>
-> Date:   Thu Feb 21 23:30:02 2008 +0000
-> 
->     Tidy up git mergetool's backup file behaviour
->     
->     Currently a backup pre-merge file with conflict markers is sometimes
->     kept with a .orig extenstion and sometimes removed depending on the
->     particular merge tool used.
->     
->     This patch makes the handling consistent across all merge tools and
->     configurable via a new mergetool.keepBackup config variable
->     
->     Signed-off-by: Charles Bailey <charles@hashpling.org>
->     Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> 
-> 
-> The commit comment says mergetool.keepBackup, even though the code always
-> had it as merge.keepBackup.
-> 
-> $ git log -p 7e30682c
-> 
-> Right now more people have merge.keepbackup already set since git-gui
-> has had it that way for the last 7 months or so.  Nevertheless,
-> Shawn's already applied the git-gui patch which hints that maybe
-> we should just make the code match the docs.  In which case, a
-> patch against pu would be a good thing, but I would like to
-> hear someone else's opinion just so that you don't waste time
-> going down the wrong route.
-> 
-agree
+Hello,
+
+I need a way to safely synchronize data between several places using an unsafe
+storage (USB stick, Internet drive). So my question is: How much work would it
+be to patch GIT to encrypt all files in the repository using AES-256?
+
+I'm aware that this leaves an issue unresolved (where should I store the
+password so that GIT doesn't have to ask for it all the time?) but one step at a
+time, please :)
+
+Regards,
+
+-- 
+Aaron "Optimizer" Digulla
