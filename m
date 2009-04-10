@@ -1,51 +1,52 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git svn hangs
-Date: Fri, 10 Apr 2009 19:09:19 -0700
-Message-ID: <20090411020919.GA30267@dcvr.yhbt.net>
-References: <49DE2796.4090406@bestmail.us>
+From: rt <rupert.thurner@gmail.com>
+Subject: suggest possible commands after the file list, not before
+Date: Fri, 10 Apr 2009 10:11:32 +0000 (UTC)
+Message-ID: <loom.20090410T093318-984@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jim Babka <babka@bestmail.us>
-X-From: git-owner@vger.kernel.org Sat Apr 11 04:11:28 2009
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 11 08:11:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LsSgb-0004Xk-H7
-	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 04:11:14 +0200
+	id 1LsWRH-0003Tk-Lj
+	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 08:11:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754573AbZDKCJV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Apr 2009 22:09:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754283AbZDKCJV
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 22:09:21 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:46691 "EHLO dcvr.yhbt.net"
+	id S1754993AbZDKGKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Apr 2009 02:10:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754655AbZDKGKG
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 02:10:06 -0400
+Received: from main.gmane.org ([80.91.229.2]:47998 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753811AbZDKCJU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Apr 2009 22:09:20 -0400
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DAFB411309A;
-	Sat, 11 Apr 2009 02:09:19 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <49DE2796.4090406@bestmail.us>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1754123AbZDKGKF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Apr 2009 02:10:05 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1LsWPi-0004GA-VK
+	for git@vger.kernel.org; Sat, 11 Apr 2009 06:10:03 +0000
+Received: from www-gw3.credit-suisse.com ([198.240.212.25])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 11 Apr 2009 06:10:02 +0000
+Received: from rupert.thurner by www-gw3.credit-suisse.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 11 Apr 2009 06:10:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 198.240.212.25 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.6) Gecko/2009011913 Firefox/3.0.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116292>
 
-Jim Babka <jim@babkas.info> wrote:
-> I need some help. I have tried both the native Windows git (git version  
-> 1.6.2.2.1669.g7eaf8, coming from Git-1.6.2.2-preview20090408) and the  
-> git in Cygwin (git version 1.6.1.2), but I see almost the same behavior.  
-> I try to run the following command and see the following results:
+when doing a "git init", and a "git add ." git suggests a command to undo. which
+is great.
 
-Hi Jim,
+but, would it be possible to print the suggestion at the end of the list? git is
+really much too fast that one can notice this at the beginning.
 
-Can you test the clone operation from a Linux/Unix machine?  Does
-git-svn on Windows work for you with other (public) repositories?  I
-can't support Windows other than accepting patches from others.
-
--- 
-Eric Wong
+rupert
