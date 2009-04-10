@@ -1,72 +1,61 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] remote.c: use shorten_unambiguous_ref
-Date: Fri, 10 Apr 2009 13:14:58 -0400
-Message-ID: <20090410171458.GA26478@sigill.intra.peff.net>
-References: <1239291182-12860-1-git-send-email-git@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-stash fails on OSX 10.5
+Date: Fri, 10 Apr 2009 10:26:34 -0700
+Message-ID: <7vy6u8whbp.fsf@gitster.siamese.dyndns.org>
+References: <be4ebbe10904100944p6ec2c0dao8607fcff75d2754e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Apr 10 19:16:45 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jacob Kaplan-Moss <jacob@jacobian.org>
+X-From: git-owner@vger.kernel.org Fri Apr 10 19:28:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LsKLF-0001gr-7L
-	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 19:16:37 +0200
+	id 1LsKWW-0005cv-85
+	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 19:28:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760281AbZDJRPD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Apr 2009 13:15:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757685AbZDJRPB
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 13:15:01 -0400
-Received: from peff.net ([208.65.91.99]:53213 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754991AbZDJRPB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Apr 2009 13:15:01 -0400
-Received: (qmail 26769 invoked by uid 107); 10 Apr 2009 17:15:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 10 Apr 2009 13:15:01 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Apr 2009 13:14:58 -0400
-Content-Disposition: inline
-In-Reply-To: <1239291182-12860-1-git-send-email-git@drmicha.warpmail.net>
+	id S1759817AbZDJR0m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Apr 2009 13:26:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758439AbZDJR0m
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 13:26:42 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43302 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755209AbZDJR0l (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Apr 2009 13:26:41 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F220AA92C3;
+	Fri, 10 Apr 2009 13:26:38 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id EDC3FA92C1; Fri,
+ 10 Apr 2009 13:26:35 -0400 (EDT)
+In-Reply-To: <be4ebbe10904100944p6ec2c0dao8607fcff75d2754e@mail.gmail.com>
+ (Jacob Kaplan-Moss's message of "Fri, 10 Apr 2009 11:44:36 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: BFE94E18-25F4-11DE-95E8-C121C5FC92D5-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116267>
 
-On Thu, Apr 09, 2009 at 05:33:02PM +0200, Michael J Gruber wrote:
+Jacob Kaplan-Moss <jacob@jacobian.org> writes:
 
-> Use the new shorten_unambiguous_ref() for simplifying the output of
-> upstream branch names. This affects status and checkout.
+> Hi folks --
+>
+> I'm stumped; git-stash simply won't work on my machine. On any
+> repository I've tried, with various permutations, I keep getting::
+>
+>     $ git stash
+>     cp: `.../.git/index': No such file or directory
+>     Cannot save the current worktree state
 
-Yeah, this is the spot I was thinking about when I mentioned "use it in
-other places" earlier in the thread. So
+Are you exporting 
 
-Acked-by: Jeff King <peff@peff.net>
+	GIT_INDEX_FILE=.../.git/index
 
-> I haven't seen more obvious place for using shorten_unambiguous_ref().
-> prettify_ref() is a natural candidate but is mostly used for
-> prettyfying refs on the remote side. git branch is covered by Jeff's
-> patch already.
+into the environment, and that path perhaps does not exist?
 
-Hmm. I was thinking we might be able to just do away with prettify_ref,
-but I didn't consider the fact that we need to prettify remote things. I
-think you could still unambiguously prettify the local half of those
-callsites, though.
-
-Given that the two functions are closely related, should we perhaps
-rename them to
-
-  const char *shorten_ref(const char *);
-  const char *shorten_ref_unambiguous(const char *);
-
-? The implementations are quite different, with prettify_ref not really
-respecting the ref lookup rules, but rather just considering a few
-pre-determined bits of the hierarchy as uninteresting. It shouldn't be
-that hard to have them both use the same implementation, like:
-
-  const char *shorten_ref(const char *, int unambiguous);
-
--Peff
+Otherwise the above error message wouldn't have said ".../.git/index"; it
+is coming from the only invocation of "cp" command in git-stash.sh
