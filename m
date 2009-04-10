@@ -1,66 +1,96 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [DOC PATCH] State the effect of filter-branch on graft explicitly
-Date: Fri, 10 Apr 2009 17:57:24 +0200
-Message-ID: <fabb9a1e0904100857q1a77cad8u4a404b893b8e3309@mail.gmail.com>
-References: <1239344809-4451-1-git-send-email-j16sdiz+freenet@gmail.com>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: [PATCH] Fix buffer overflow in config parser
+Date: Fri, 10 Apr 2009 18:10:54 +0200
+Message-ID: <200904101810.54774.markus.heidelberg@web.de>
+References: <49DD21A0.3040505@intra2net.com> <200904090115.17609.markus.heidelberg@web.de> <200904090959.28646.thomas.jarosch@intra2net.com>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: "Daniel Cheng (aka SDiZ)" <j16sdiz+freenet@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 10 18:00:06 2009
+Cc: git@vger.kernel.org
+To: Thomas Jarosch <thomas.jarosch@intra2net.com>
+X-From: git-owner@vger.kernel.org Fri Apr 10 18:12:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LsJ95-0006YA-4N
-	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 17:59:59 +0200
+	id 1LsJKk-0002iK-HX
+	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 18:12:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751061AbZDJP5m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Apr 2009 11:57:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750950AbZDJP5l
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 11:57:41 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:47285 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750918AbZDJP5l (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Apr 2009 11:57:41 -0400
-Received: by fxm2 with SMTP id 2so1109773fxm.37
-        for <git@vger.kernel.org>; Fri, 10 Apr 2009 08:57:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=IgxQk5bX29r7yC4CNKqaMocB9/yAaT9l1UaPWsbmmHg=;
-        b=gIg2skBbdDoPjHW30CnCXb0yU3VkcYBsoD4x6J9O/KEoVA7C/EfqvIS9OG0Qx5ePs6
-         oYQN10QVYw6wJz399oyord9zt5rjx5MM2hv88lv8VvfVioSQQyM+lajqhQVfvLFnh/VH
-         UUp+i2sTAA+gsx4urnT/krZKRljG/8EndmJSw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=Mfw8y9hPKsl71p23hMbY+CMo8poNq7lUtuYQlOL8NIdacANCWQjL4R0RILhLTIIeNj
-         IhvyvXThJyK6FCbMNqQEOsuzYLEvomEfYenuEQu2lS/r1Q4wnOrHF1Z7Zu39N3q3Y00t
-         GDPM/dqGGB29+BCmpjdD85f226Lo13ji2puBM=
-Received: by 10.103.174.16 with SMTP id b16mr1916593mup.28.1239379059276; Fri, 
-	10 Apr 2009 08:57:39 -0700 (PDT)
-In-Reply-To: <1239344809-4451-1-git-send-email-j16sdiz+freenet@gmail.com>
+	id S1765697AbZDJQK0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Apr 2009 12:10:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765670AbZDJQKZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 12:10:25 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:42469 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759385AbZDJQKY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Apr 2009 12:10:24 -0400
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate02.web.de (Postfix) with ESMTP id A404AFCCA29D;
+	Fri, 10 Apr 2009 18:10:22 +0200 (CEST)
+Received: from [89.59.65.40] (helo=.)
+	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1LsJJ8-00015p-00; Fri, 10 Apr 2009 18:10:22 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <200904090959.28646.thomas.jarosch@intra2net.com>
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX1+Gv7PppDKEhT8W6Qbyfk/sqnprmtgsu9SbAZlt
+	pCg/BDA1P814sTAjRfu0f4UzMunyYfAI7iyA+i1zfxTX+L2jMy
+	jOi8ozrj31FcB2vEpH0g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116263>
 
-Heya,
+Thomas Jarosch, 09.04.2009:
+> On Thursday, 9. April 2009 01:15:17 Markus Heidelberg wrote:
+> > > > diff --git a/config.c b/config.c
+> > > > index b76fe4c..a9c67e8 100644
+> > > > --- a/config.c
+> > > > +++ b/config.c
+> > > > @@ -72,7 +72,7 @@ static char *parse_value(void)
+> > > >                         }
+> > > >                 }
+> > > >                 if (space) {
+> > > > -                       if (len)
+> > > > +                       if (len && len < sizeof(value)-1)
+> > > >                                 value[len++] = ' ';
+> > > >                         space = 0;
+> >
+> > Eh, or maybe better add a "continue;" here, so that only one char per
+> > loop is read.
+> 
+> Thanks for the review.
+> 
+> If I understand the intention of the complete code correctly, the idea was
+> to read in 1+ spaces and put -one- space in the buffer as soon as the first
+> non-space character is encountered (if not inside quotes).
+> 
+> Adding a "continue" statement would eat up the first non-space character.
 
-On Fri, Apr 10, 2009 at 08:26, Daniel Cheng (aka SDiZ)
-<j16sdiz+freenet@gmail.com> > +*NOTE*: This command honor
-`.git/info/grafts`. If you have any grafts
-> +defined, running this command will make them permanent.
+Yes, you are right, I judged to quickly.
 
-s/honor/honors/
+> I guess it's ok to modify the first size check or keep to problem local and 
+> check the size before putting the space in the buffer.
 
--- 
-Cheers,
+Keeping the problem local would mean to add this check to the end of the
+"for" loop before "value[len++] = c;" where the overflow actually
+happens.
+OTOH this overflow only occurs within a whitespace area, so from this
+POV it is local at this place.
 
-Sverre Rabbelier
+I think the cleanest solution would be to decrease the existing check at
+the top by 1, even if then the maximum length will be decreased. But
+there is no hint in the docs about it anyway.
+
+> Guess that's up to
+> the maintainer which method he prefers.
+
+Take what you think is the best solution and convince him :)
+
+Markus
