@@ -1,82 +1,127 @@
-From: "Daniel Cheng (aka SDiZ)" <j16sdiz+freenet@gmail.com>
-Subject: [DOC PATCH] State the effect of filter-branch on graft explicitly
-Date: Fri, 10 Apr 2009 14:26:49 +0800
-Message-ID: <1239344809-4451-1-git-send-email-j16sdiz+freenet@gmail.com>
-Cc: git@vger.kernel.org,
-	"Daniel Cheng (aka SDiZ)" <j16sdiz+freenet@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Apr 10 08:28:39 2009
+From: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
+Subject: Re: [PATCH v2 1/2] Ensure consistent usage of mergetool.keepBackup
+ in git
+Date: Fri, 10 Apr 2009 08:58:42 +0200
+Message-ID: <49DEEE22.5030500@pelagic.nl>
+References: <20090409153033.GN23604@spearce.org> <f6297e57a23dc3abac2fcedceb00cecde607de02.1239291673.git.ferry.huberts@pelagic.nl> <20090410032731.GA1545@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 10 09:00:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LsAE9-00049l-QY
-	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 08:28:38 +0200
+	id 1LsAiw-0006lW-Jp
+	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 09:00:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S937949AbZDJG1F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Apr 2009 02:27:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936604AbZDJG1D
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 02:27:03 -0400
-Received: from wf-out-1314.google.com ([209.85.200.173]:24550 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S937942AbZDJG07 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Apr 2009 02:26:59 -0400
-Received: by wf-out-1314.google.com with SMTP id 29so968396wff.4
-        for <git@vger.kernel.org>; Thu, 09 Apr 2009 23:26:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:from:to:cc:subject
-         :date:message-id:x-mailer;
-        bh=GGRR8pJj+bA8XRBG/PGp9hY3glQ5KZ5+L7wGZ7OA3Xk=;
-        b=FjY79wAaZ0OEVby43OEIaZrHuRfr83ez/1m6hF8Lrj+n2F2f6d9KP197GBpt34WWmM
-         lGAjzMJRXBVbsvgvh6yHglS6f8hN0SSapZZq1cZ5vaLWymrXYBa6DHjJUK4BbHhjCPPk
-         2Kf5Z+FvTqhBtt9d1LCqhPObZxTGGivYu2BOw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer;
-        b=Ru0CFIvKQIDSv8qkU/E7if7cXz06FRsgBM5liKJDJcXn2P+HJOGxeIDO0AjqFjbai0
-         STlbXwiyuNVFXX/7nEN4n63rYautFVMFMWfmAh4AQKi9hspKeXx594nbRdzbdowgG3AN
-         lJRE9Kd+/HgzOsMqsQ7+BBCsnp4zoXlaNZxds=
-Received: by 10.142.193.10 with SMTP id q10mr1183373wff.48.1239344815682;
-        Thu, 09 Apr 2009 23:26:55 -0700 (PDT)
-Received: from localhost.localdomain (n1164956087.netvigator.com [116.49.56.87])
-        by mx.google.com with ESMTPS id 28sm2799703wfd.25.2009.04.09.23.26.53
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 09 Apr 2009 23:26:55 -0700 (PDT)
-X-Mailer: git-send-email 1.6.2.1
+	id S1761962AbZDJG6q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Apr 2009 02:58:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759499AbZDJG6q
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 02:58:46 -0400
+Received: from hupie.xs4all.nl ([82.95.241.251]:33655 "EHLO
+	Lighthouse.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751728AbZDJG6p (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Apr 2009 02:58:45 -0400
+Received: from [192.168.0.51] (unknown [192.168.0.51])
+	by Lighthouse.internal.Hupie.com (Postfix) with ESMTP id 2810B58BDA0;
+	Fri, 10 Apr 2009 08:58:43 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <20090410032731.GA1545@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116241>
 
+David Aguilar wrote:
+> Hi
+> 
+> On  0, Ferry Huberts <ferry.huberts@pelagic.nl> wrote:
+>> In several places merge.keepBackup is used i.s.o.
+>> mergetool.keepBackup. This patch makes it all
+>> consistent for git
+>>
+>> Signed-off-by: Ferry Huberts <ferry.huberts@pelagic.nl>
+>> ---
+>>  contrib/difftool/git-difftool.txt |    2 +-
+>>  git-mergetool.sh                  |    2 +-
+>>  2 files changed, 2 insertions(+), 2 deletions(-)
+> 
+> 
+> You missed the usage of merge.keepBackup in
+> contrib/difftool/git-difftool-helper.
+> 
 
-Signed-off-by: Daniel Cheng (aka SDiZ) <j16sdiz+freenet@gmail.com>
----
+I did miss it. didn't read the grep good enough I guess. thanks
 
-The documentation state nothing about effect of graft in filter-branch.
-The only (implicit) reference is the "simplier" method in the example
-section.
+> But.. (for better or worse) the "keep backup" feature
+> was completely removed from difftool, so patching this for
+> difftool now isn't very useful.
+> 
+> See 2e8af7e4 which is currently in origin/pu:
+> 
+> 	difftool: remove the backup file feature
+> 
+> 
+> Also, we just got through a very large round of
+> mergetool/difftool changes.  The latest version is sitting in
+> Junio's pu branch.  The "da/difftool" branch's head is
+> currently pointing at 21d0ba7e.
+> 
+> It might be worth basing your work on top of that series since
+> that'd make things much easier to merge.
+> 
 
-This patch make the reference explicit.
+on pu? I'll do that
 
+> 
+> My only other comment is:
+> 
+> Aside from git-gui, there are other scripts out there that
+> use merge.keepBackup instead of mergetool.keepBackup,
+> so changing the name of the config variable has negligable
+> user benefit and will cause problems for people that:
+> 
+> A) already have merge.keepBackup configured and then get
+> surprised when one day all of a sudden git starts leaving
+> around these ".orig turds" (technical term, overheard from an
+> actual user) for no apparent reason even though they had
+> already configured it to do otherwise in the past, or
+> 
+> B) have written GUIs or scripts that know about
+> merge.keepBackup.
+> 
+> Aside from the naming, there's little user benefit to this
+> change in my opinion.
+> 
 
- Documentation/git-filter-branch.txt |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+I patched it this way because contrib/completion/git-completion.bash and
+Documentation/config.txt talk about mergetool.keepBackup while only
+contrib/difftool/git-difftool.txt talks about merge.keepBackup. That
+seemed the most logical way of doing it.
 
-diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
-index 237f85e..e281290 100644
---- a/Documentation/git-filter-branch.txt
-+++ b/Documentation/git-filter-branch.txt
-@@ -31,6 +31,9 @@ changes, which would normally have no effect.  Nevertheless, this may be
- useful in the future for compensating for some git bugs or such,
- therefore such a usage is permitted.
- 
-+*NOTE*: This command honor `.git/info/grafts`. If you have any grafts
-+defined, running this command will make them permanent.
-+
- *WARNING*! The rewritten history will have different object names for all
- the objects and will not converge with the original branch.  You will not
- be able to easily push and distribute the rewritten branch on top of the
--- 
-1.6.2.1
+I agree that some users might be surprised after this patch, otoh: I was
+quite surprised that I still had turds even when I set
+mergetool.keepBackup, which is what the documentation told me to do :-)
+Do we really want to keep using 2 names for the same thing?
+
+[rebasing now...]
+
+I'm seeing the following grep on pu:
+
+contrib/completion/git-completion.bash:	mergetool.keepBackup
+Documentation/config.txt:mergetool.keepBackup::
+git-gui/lib/mergetool.tcl:if {[is_config_true merge.keepbackup]} {
+git-gui/git-gui:set default_config(merge.keepbackup) true
+git-gui/git-gui.sh:set default_config(merge.keepbackup) true
+git-mergetool.sh:merge_keep_backup="$(git config --bool merge.keepBackup
+|| echo true)"
+
+So it seems that merge.keepBackup is actually used consistently in the
+code while the completion and documentation talk about mergetool.keepBackup.
+
+Shall I just patch the completion and documentation instead?
