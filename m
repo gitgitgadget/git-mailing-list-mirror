@@ -1,78 +1,82 @@
-From: demerphq <demerphq@gmail.com>
-Subject: Re: On Oct 3rd, this year, Alles Wird Git in Berlin
-Date: Fri, 10 Apr 2009 01:49:37 +0200
-Message-ID: <9b18b3110904091649u74b52ae1u3ae5ad6c64e964ad@mail.gmail.com>
-References: <alpine.DEB.1.00.0904091511240.10279@pacific.mpi-cbg.de>
-	 <9b18b3110904090639va08a029j84c0c8182f371137@mail.gmail.com>
-	 <49DE7342.40309@gmail.com>
-	 <200904100042.43749.markus.heidelberg@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitzilla@gmail.com,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: markus.heidelberg@web.de
-X-From: git-owner@vger.kernel.org Fri Apr 10 01:51:19 2009
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: [PATCH] builtin-branch - allow deleting a fully specified branch-name
+Date: Thu,  9 Apr 2009 20:28:55 -0400
+Message-ID: <1239323335-4684-1-git-send-email-mlevedahl@gmail.com>
+Cc: Mark Levedahl <mlevedahl@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 10 02:31:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ls41d-0006M1-TC
-	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 01:51:18 +0200
+	id 1Ls4e8-0006LO-JK
+	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 02:31:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936476AbZDIXtn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Apr 2009 19:49:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762290AbZDIXtn
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 19:49:43 -0400
-Received: from an-out-0708.google.com ([209.85.132.249]:39313 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760028AbZDIXtm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Apr 2009 19:49:42 -0400
-Received: by an-out-0708.google.com with SMTP id d14so782251and.1
-        for <git@vger.kernel.org>; Thu, 09 Apr 2009 16:49:38 -0700 (PDT)
+	id S1752734AbZDJA3c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Apr 2009 20:29:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752685AbZDJA3b
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 20:29:31 -0400
+Received: from mail-qy0-f118.google.com ([209.85.221.118]:52192 "EHLO
+	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750847AbZDJA3a (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Apr 2009 20:29:30 -0400
+Received: by qyk16 with SMTP id 16so1882595qyk.33
+        for <git@vger.kernel.org>; Thu, 09 Apr 2009 17:29:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=tDwr4lf3+s2xThgn0Z5lCeo6kflhIJ7wp3fDIhAtKg4=;
-        b=BL2Rf69e+eKn/DEW8Ba300TXQDEEQpU7drY+z2oGUWLOlGR8hQgeL/NTHYyXVcGiSM
-         OKv2UXuveCLBouIpi5ZjWME79Hz8S8K/x7VAwbxV/FtTmwG7rv7tRXJ13dOSqostIpgR
-         VDp+ut8L3+fVXgFnqiKiqq3SCVI10sRXMz2k8=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=FcKBDTCzcrBdtk+CPO2BDxjxfjoPdJpmt3+JE446gt0=;
+        b=j2v+Eou1J/dH7RIoa9/lMghiE7kirsw1hrtzLx65UrvQWCFs1icpHhddQxzERuuwY3
+         zlJ0yexWceMLzJlSkem6Pq5iXRV07HRPT7eZkgUw9MUbLcrCQW+zsLFn+6kHcjFVOzsI
+         CCXWAH5zsU1L2IYbsgdOjopTUQKyoMbkV1hZY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=oS/5s+0otwVPHxc4IHA03yo2iTCF4sO5ibODjRIsQzWvOUDAo4KdbgH1r+d0r923wv
-         CEl+Ea+SjwoDE3Sh8+PI4viYSn1gBi+4zL8C0TFcAb/qhplvgeQ+KabVUBaSYAhet4eh
-         AWD1qYG4rMEUaQ4wK7IMWc8xUFXdxsqynqDec=
-Received: by 10.231.38.13 with SMTP id z13mr6343ibd.15.1239320977922; Thu, 09 
-	Apr 2009 16:49:37 -0700 (PDT)
-In-Reply-To: <200904100042.43749.markus.heidelberg@web.de>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=GeNHb66AQC2NS5w5pl1YnK9mpSsNbuClRY2COWLlqCeZ1TS+uSs5VXmD6ja8NfSSYZ
+         Mj1d7W/PkrS8xgDd/oQZWoqVFI/JRHAGsIiS0N0NkP+34Qa5e0lBkzrrctGyc0Yz4QEi
+         Oc6sL2c0rEKBYsh/UXcjDH0kd7H7QR5Zn2uTo=
+Received: by 10.224.6.82 with SMTP id 18mr3618917qay.1.1239323368705;
+        Thu, 09 Apr 2009 17:29:28 -0700 (PDT)
+Received: from localhost.localdomain (pool-173-79-135-88.washdc.fios.verizon.net [173.79.135.88])
+        by mx.google.com with ESMTPS id 2sm1010002qwi.43.2009.04.09.17.29.27
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 09 Apr 2009 17:29:28 -0700 (PDT)
+X-Mailer: git-send-email 1.6.2.2.27.g034b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116222>
 
-2009/4/10 Markus Heidelberg <markus.heidelberg@web.de>:
-> A Large Angry SCM, 10.04.2009:
->> demerphq wrote:
->> > Is it ok if people who do not speak German well also come?
->>
->> There is already someone that doesn't speak German planning to atten=
-d. ;-)
->
-> Maybe you can learn a few phrases before.
-> "Freibier f=FCr alle" for example is a liked sentence in Germany ;)
+This change allows, for instance
+	git branch -d refs/heads/foo
+to succeed. Without this patch, the code just assumes that the
+given branch name should be appended to "refs/heads" or
+"refs/remotes", thus attempting (and failing) in the above case
+to delete "refs/heads/refs/heads/foo"
 
-Heh, Ja, richtig. Auch in Englisch. ;-)
+Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
+---
+ builtin-branch.c |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
 
-cheers,
-Yves
-
-
-
---=20
-perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
+diff --git a/builtin-branch.c b/builtin-branch.c
+index ca81d72..f433bc5 100644
+--- a/builtin-branch.c
++++ b/builtin-branch.c
+@@ -131,7 +131,11 @@ static int delete_branches(int argc, const char **argv, int force, int kinds)
+ 
+ 		free(name);
+ 
+-		name = xstrdup(mkpath(fmt, bname.buf));
++		if (bname.len < 5 || memcmp("refs/", bname.buf, 5))
++			name = xstrdup(mkpath(fmt, bname.buf));
++		else
++			name = xstrdup(bname.buf);
++
+ 		if (!resolve_ref(name, sha1, 1, NULL)) {
+ 			error("%sbranch '%s' not found.",
+ 					remote, bname.buf);
+-- 
+1.6.2.2.27.g034b
