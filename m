@@ -1,88 +1,102 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: Re: [PATCH] builtin-branch - allow deleting a fully specified branch-name
-Date: Thu, 9 Apr 2009 21:19:09 -0400
-Message-ID: <200904092119.10520.mlevedahl@gmail.com>
-References: <1239323335-4684-1-git-send-email-mlevedahl@gmail.com> <7vhc0x1gvh.fsf@gitster.siamese.dyndns.org>
+From: Ping Yin <pkufranky@gmail.com>
+Subject: Re: [PATCH] git-add: introduce --edit (to edit the diff vs. the 
+	index)
+Date: Fri, 10 Apr 2009 09:43:59 +0800
+Message-ID: <46dff0320904091843p3e034647j3c78506b4d0c2b4@mail.gmail.com>
+References: <cover.1239225986u.git.johannes.schindelin@gmx.de>
+	 <61c07126e28aba0a36730da06112bd2d16eabc1b.1239225986u.git.johannes.schindelin@gmx.de>
+	 <46dff0320904081900n7bff2280rc49315e3db427919@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 10 03:20:54 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Apr 10 03:45:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ls5QH-0007xy-IK
-	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 03:20:50 +0200
+	id 1Ls5oG-0004jr-OA
+	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 03:45:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756841AbZDJBTP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Apr 2009 21:19:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756532AbZDJBTP
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 21:19:15 -0400
-Received: from qw-out-2122.google.com ([74.125.92.26]:25356 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755767AbZDJBTO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Apr 2009 21:19:14 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so1067224qwh.37
-        for <git@vger.kernel.org>; Thu, 09 Apr 2009 18:19:13 -0700 (PDT)
+	id S934753AbZDJBoF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Apr 2009 21:44:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935011AbZDJBoB
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Apr 2009 21:44:01 -0400
+Received: from wa-out-1112.google.com ([209.85.146.181]:62261 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935004AbZDJBoA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Apr 2009 21:44:00 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so471364wah.21
+        for <git@vger.kernel.org>; Thu, 09 Apr 2009 18:43:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=HnptIu5eZAqKYpuRjQj+AIRpCCoSCM7G+Bu9C13WoQY=;
-        b=WNXuJR4Osh7afCB46r+kYVgbDad1F5dH66Mfu/g2hd9jtGtvzvzB2ARgM9zEue1bJc
-         TD5TaQOz/OF6ohCR9282nOrB36hTsLesKjmQ7UBveSk5extbUNMPzwSKWICBQwUHsGtF
-         gBpEHaqA0w4QzCXHqP7/d0eyVrb9+pI52Fspw=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=J3m5ZahFPcStvQG6GNG2kSceEQmmAAZn5GO6V4162uM=;
+        b=kMTrMDXze7GkizJfnsftCAAPQChj/nTnX0i49OZmPdq7i1icuLWsp3USE3QA7PrqiF
+         JiT7pNz7sawjTmm2S7UEv6EI6tFduK1B+qgfB8H9JJVekDmlzqpEjr//36GslNATjz21
+         BXp0qGUgs2LsyBcao+Ry26mHqi+UfGAvhXEeI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=ei3l611M4BGBuAKkk56zjK8p0CdmsmVw1ywoCMHRHcMTeKuDoiVqN5v9F2PCY6OSGj
-         45NkwSBTLXpQkPKZx3aEf0Rru1FUPGQyJOKHJwdn7f9X+v20WNMx0qNmVKke1Kaq1fgn
-         cOgzaVrZSrPhODGlWiWoiKlLVD9CEM/WOO90M=
-Received: by 10.224.2.84 with SMTP id 20mr3640081qai.3.1239326353403;
-        Thu, 09 Apr 2009 18:19:13 -0700 (PDT)
-Received: from hplap.localnet (pool-173-79-135-88.washdc.fios.verizon.net [173.79.135.88])
-        by mx.google.com with ESMTPS id 26sm1097308qwa.22.2009.04.09.18.19.12
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 09 Apr 2009 18:19:13 -0700 (PDT)
-User-Agent: KMail/1.11.1 (Linux/2.6.27.21-170.2.56.fc10.i686; KDE/4.2.1; i686; ; )
-In-Reply-To: <7vhc0x1gvh.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=FRSzruzY8cp/ZhZSsQ8YrvYn92J9kJURM2Pxc4zhn4A7wMcLPcrD7nBNRv784kG+TQ
+         UL4H0tAFyvvXXG/NQvPFky3RB5uMWeYmIhaNVJB+QUSQVV+iOHei3h6U7eEkLck3GTUD
+         6WlYTwo1pCMZjNgxiELGM4Pix3blwdWsgZL/s=
+Received: by 10.114.148.2 with SMTP id v2mr1693479wad.26.1239327839517; Thu, 
+	09 Apr 2009 18:43:59 -0700 (PDT)
+In-Reply-To: <46dff0320904081900n7bff2280rc49315e3db427919@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116232>
 
-On Thursday 09 April 2009 20:39:46 Junio C Hamano wrote:
-> Mark Levedahl <mlevedahl@gmail.com> writes:
-> > This change allows, for instance
-> > 	git branch -d refs/heads/foo
-> > to succeed. Without this patch, the code just assumes that the
-> > given branch name should be appended to "refs/heads" or
-> > "refs/remotes", thus attempting (and failing) in the above case
-> > to delete "refs/heads/refs/heads/foo"
+On Thu, Apr 9, 2009 at 10:00 AM, Ping Yin <pkufranky@gmail.com> wrote:
+> On Thu, Apr 9, 2009 at 5:30 AM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+>> With "git add -e [<files>]", Git will fire up an editor with the cur=
+rent
+>> diff relative to the index (i.e. what you would get with "git diff
+>> [<files>]").
+>>
+>> Now you can edit the patch as much as you like, including adding/rem=
+oving
+>> lines, editing the text, whatever. =C2=A0Make sure, though, that the=
+ first
+>> character of the hunk lines is still a space, a plus or a minus.
+>>
+>> After you closed the editor, Git will adjust the line counts of the =
+hunks
+>> if necessary, thanks to the --recount option of apply, and commit th=
+e
+>> patch. =C2=A0Except if you deleted everything, in which case nothing=
+ happens
+>> (for obvious reasons).
+>>
+>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> ---
+>>
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0I actually promised myself not to resend =
+this patch, but a
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0certain guy who has a hat now asked for i=
+t.
+>>
 >
-> Your logic is broken.
+> I am that guy :-). Thanks. Sometimes "add -e" is more useful than "ad=
+d
+> -p" since i can see the full context when editing the patch. However,
+> sometimes the ability to edit the index directly is even more useful.
+> For example, if it's a big change (or rewritten), it is hard to edit
+> the patch instead of the index (in diff mode with the worktree file
+> side by side). I even encounter a case that i can't beat the patch
+> into a shape i want when using 'add -p' =C2=A0( it will fail to apply=
+)
 >
-> Why doesn't the user simply say "git branch -d foo"?  The command takes
-> "the branch name", not "arbitrary ref name".
 
-1) git branch -d refs/<whatever> used to work,  I haven't bisected to find 
-when this stopped working, but the change broke one of my scripts, so this is 
-not new behavior, it is restoration of previous behavior.
-2) If I create branch  refs/frotz/bar , how do I ever delete it?
-
-Also, the following all work
-3) git branch refs/heads/foo
-4) git branch -m refs/heads/foo refs/heads/bar 
-5) git  [checkout|pull|push|fetch|show] refs/heads/foo
-
-So, why is "git branch -d" so special?
-
-Mark
+How about this?
+ 'add --edit=3Dpatch' to edit the patch and "add --edit=3Dindex" to edi=
+t the index
