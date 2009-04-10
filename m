@@ -1,67 +1,90 @@
-From: Ferry Huberts <ferry.huberts@pelagic.nl>
-Subject: [PATCH v3 2/2] Ensure consistent usage of mergetool.keepBackup in git
-Date: Fri, 10 Apr 2009 21:33:57 +0200
-Message-ID: <9a358c8b6275a7103eb036a2d1d6073bcf191e09.1239376248.git.ferry.huberts@pelagic.nl>
-References: <f3d401fbaec1556ffbf8c13b83e58849af973a71.1239376248.git.ferry.huberts@pelagic.nl>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	David Aguilar <davvid@gmail.com>,
-	Markus Heidelberg <markus.heidelberg@web.de>,
-	Charles Bailey <charles@hashpling.org>,
-	Ferry Huberts <ferry.huberts@pelagic.nl>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 10 21:35:51 2009
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Re: Performance issue: initial git clone causes massive repack
+Date: Fri, 10 Apr 2009 13:38:46 -0700
+Message-ID: <20090410T203405Z@curie.orbis-terrarum.net>
+References: <alpine.LFD.2.00.0904052315210.6741@xanadu.home> <20090407081019.GK20356@atjola.homenet> <m3tz5023rq.fsf@localhost.localdomain> <alpine.LFD.2.00.0904070903020.6741@xanadu.home> <20090407142147.GA4413@atjola.homenet> <alpine.LFD.2.00.0904071321520.6741@xanadu.home> <20090407181259.GB4413@atjola.homenet> <alpine.LFD.2.00.0904071454250.6741@xanadu.home> <20090407202725.GC4413@atjola.homenet> <alpine.LFD.2.00.0904080041240.6741@xanadu.home>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="PmA2V3Z32TCmWXqI"
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 10 22:40:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LsMVr-0007T4-7q
-	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 21:35:43 +0200
+	id 1LsNWm-0003TF-5r
+	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 22:40:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765093AbZDJTeJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Apr 2009 15:34:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763431AbZDJTeI
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 15:34:08 -0400
-Received: from hupie.xs4all.nl ([82.95.241.251]:44565 "EHLO
-	Lighthouse.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1758329AbZDJTeH (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Apr 2009 15:34:07 -0400
-Received: from localhost.localdomain (unknown [192.168.0.51])
-	by Lighthouse.internal.Hupie.com (Postfix) with ESMTP id 61D6F58BDBA;
-	Fri, 10 Apr 2009 21:33:58 +0200 (CEST)
-X-Mailer: git-send-email 1.6.0.6
-In-Reply-To: <f3d401fbaec1556ffbf8c13b83e58849af973a71.1239376248.git.ferry.huberts@pelagic.nl>
-In-Reply-To: <f3d401fbaec1556ffbf8c13b83e58849af973a71.1239376248.git.ferry.huberts@pelagic.nl>
-References: <f3d401fbaec1556ffbf8c13b83e58849af973a71.1239376248.git.ferry.huberts@pelagic.nl>
+	id S1755294AbZDJUiw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Apr 2009 16:38:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753610AbZDJUiw
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 16:38:52 -0400
+Received: from b01.ext.isohunt.com ([208.71.112.51]:56641 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752264AbZDJUiv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Apr 2009 16:38:51 -0400
+Received: (qmail 31788 invoked from network); 10 Apr 2009 20:38:48 -0000
+Received: from tsi-static.orbis-terrarum.net (HELO curie.orbis-terrarum.net) (76.10.188.108)
+  (smtp-auth username robbat2@isohunt.com, mechanism login)
+  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Fri, 10 Apr 2009 20:38:48 +0000
+Received: (qmail 23298 invoked by uid 10000); 10 Apr 2009 13:38:46 -0700
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.00.0904080041240.6741@xanadu.home>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116280>
 
-In several places merge.keepBackup is used i.s.o.
-mergetool.keepBackup. This patch makes it all
-consistent for git
 
-Signed-off-by: Ferry Huberts <ferry.huberts@pelagic.nl>
----
-Based on pu
+--PmA2V3Z32TCmWXqI
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- git-mergetool.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+On Wed, Apr 08, 2009 at 12:52:54AM -0400, Nicolas Pitre wrote:
+> > http://git.overlays.gentoo.org/gitweb/?p=3Dexp/gentoo-x86.git;a=3Dsumma=
+ry
+> > At least that's what I cloned ;-) I hope it's the right one, but it fits
+> > the description...
+> OK.  FWIW, I repacked it with --window=3D250 --depth=3D250 and obtained a=
+=20
+> 725MB pack file.  So that's about half the originally reported size.
+The one problem with having the single large packfile is that Git
+doesn't have a trivial way to resume downloading it when the git://
+protocol is used.
 
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index efa31a2..2e3e02b 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -257,7 +257,7 @@ prompt_after_failed_merge() {
- merge_tool=$(get_merge_tool "$merge_tool") || exit
- merge_tool_cmd="$(get_merge_tool_cmd "$merge_tool")"
- merge_tool_path="$(get_merge_tool_path "$merge_tool")" || exit
--merge_keep_backup="$(git config --bool merge.keepBackup || echo true)"
-+merge_keep_backup="$(git config --bool mergetool.keepBackup || echo true)"
- merge_keep_temporaries="$(git config --bool mergetool.keepTemporaries || echo false)"
- merge_tool_trust_exit_code="$(git config --bool mergetool."$merge_tool".trustExitCode || echo false)"
- 
--- 
-1.6.0.6
+For our developers cursed with bad internet connections (a fair number
+of firewalls that don't seem to respect keepalive properly), I suppose
+I can probably just maintain a separate repo for their initial clones,
+which leaves a large overall download, but more chances to resume.
+
+PS #1: B.Steinbrink's memory improvement patch seems to work nicely too,
+but more memory improvements in that realm are still needed.
+
+PS #2: We finally got some newer hardware to run the large repo, I'm
+working on the install now, but until the memory issue is better
+resolved, I'm still worried we might run short if there are too many
+concurrent clones.
+
+--=20
+Robin Hugh Johnson
+Gentoo Linux Developer & Infra Guy
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+
+--PmA2V3Z32TCmWXqI
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.10 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+
+iEYEARECAAYFAknfrlUACgkQPpIsIjIzwixg+ACeNPdynBYrNB7TwZ94+WVsjPU6
+/rgAmwYD3k67rI6ZmImqUM1+2mbNzUJD
+=SgdS
+-----END PGP SIGNATURE-----
+
+--PmA2V3Z32TCmWXqI--
