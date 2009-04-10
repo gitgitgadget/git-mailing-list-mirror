@@ -1,75 +1,80 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: legend on top-right pane in 'git gui'
-Date: Fri, 10 Apr 2009 19:19:16 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrngtv6tk.7aq.sitaramc@sitaramc.homelinux.net>
-References: <slrngt4h04.q0l.sitaramc@sitaramc.homelinux.net>
- <slrngtqr13.566.sitaramc@sitaramc.homelinux.net>
- <885649360904082111q31f1d90br8ee62eb4afba2611@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+From: Ferry Huberts <ferry.huberts@pelagic.nl>
+Subject: [PATCH v3 1/2] Ensure consistent usage of mergetool.keepBackup in git-gui
+Date: Fri, 10 Apr 2009 21:33:56 +0200
+Message-ID: <f3d401fbaec1556ffbf8c13b83e58849af973a71.1239376248.git.ferry.huberts@pelagic.nl>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	David Aguilar <davvid@gmail.com>,
+	Markus Heidelberg <markus.heidelberg@web.de>,
+	Charles Bailey <charles@hashpling.org>,
+	Ferry Huberts <ferry.huberts@pelagic.nl>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 10 21:21:09 2009
+X-From: git-owner@vger.kernel.org Fri Apr 10 21:35:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LsMHh-0001ZU-KT
-	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 21:21:06 +0200
+	id 1LsMVs-0007T4-0F
+	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 21:35:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762726AbZDJTTc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Apr 2009 15:19:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760593AbZDJTTb
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 15:19:31 -0400
-Received: from main.gmane.org ([80.91.229.2]:43778 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759150AbZDJTTb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Apr 2009 15:19:31 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LsMG7-0006Rv-NR
-	for git@vger.kernel.org; Fri, 10 Apr 2009 19:19:27 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 10 Apr 2009 19:19:27 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 10 Apr 2009 19:19:27 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S932405AbZDJTeM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Apr 2009 15:34:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763431AbZDJTeJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 15:34:09 -0400
+Received: from hupie.xs4all.nl ([82.95.241.251]:44564 "EHLO
+	Lighthouse.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1762777AbZDJTeH (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Apr 2009 15:34:07 -0400
+Received: from localhost.localdomain (unknown [192.168.0.51])
+	by Lighthouse.internal.Hupie.com (Postfix) with ESMTP id 384B558BDA0;
+	Fri, 10 Apr 2009 21:33:58 +0200 (CEST)
+X-Mailer: git-send-email 1.6.0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116278>
 
-On 2009-04-09, James Pickens <jepicken@gmail.com> wrote:
-> On Wed, Apr 8, 2009, Sitaram Chamarty <sitaramc@gmail.com> wrote:
->> Can someone at least tell me "Sita, you're wrong/this is a
->> stupid question/this is perfectly correct behaviour/whatever"?  :-)
->>
->> I won't even ask why, I promise :-)
->
-> Well, I for one think your proposed new message - "untracked, not
-> staged (partial)" - is nonsense.  A file can't be both untracked
-> and partially staged.
+In several places merge.keepBackup is used i.s.o.
+mergetool.keepBackup. This patch makes it all
+consistent for git-gui
 
-Fine, some other wording may suit better; doesn't matter if
-you don't even agree that the message needs to be different.
+Signed-off-by: Ferry Huberts <ferry.huberts@pelagic.nl>
+---
+Based on pu
 
-> Also I don't agree that the message needs to be different
-> depending on where you click; actually I think such behavior
-> would be more confusing to users than the current behavior.
+Shawn, I think you said you already applied this, I'm still resending to keep
+the series complete.
 
-Right now, both panes say "Portions staged for commit".
+ git-gui/git-gui.sh        |    2 +-
+ git-gui/lib/mergetool.tcl |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-In fact, while one pane does indeed show the portions staged
-for commit, the other one is actually showing portions *not*
-staged for commit.  To some of my users, that is certainly
-confusing.
-
-I guess confusion, like beauty, is in the eyes of the
-beholder...
+diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+index e018e07..e4e643a 100755
+--- a/git-gui/git-gui.sh
++++ b/git-gui/git-gui.sh
+@@ -699,7 +699,7 @@ proc apply_config {} {
+ 
+ set default_config(branch.autosetupmerge) true
+ set default_config(merge.tool) {}
+-set default_config(merge.keepbackup) true
++set default_config(mergetool.keepbackup) true
+ set default_config(merge.diffstat) true
+ set default_config(merge.summary) false
+ set default_config(merge.verbosity) 2
+diff --git a/git-gui/lib/mergetool.tcl b/git-gui/lib/mergetool.tcl
+index eb2b4b5..b7263b3 100644
+--- a/git-gui/lib/mergetool.tcl
++++ b/git-gui/lib/mergetool.tcl
+@@ -382,7 +382,7 @@ proc merge_tool_finish {fd} {
+ 		delete_temp_files $mtool_tmpfiles
+ 		ui_status [mc "Merge tool failed."]
+ 	} else {
+-		if {[is_config_true merge.keepbackup]} {
++		if {[is_config_true mergetool.keepbackup]} {
+ 			file rename -force -- $backup "$mtool_target.orig"
+ 		}
+ 
+-- 
+1.6.0.6
