@@ -1,99 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-add: introduce --edit (to edit the diff vs. the 
- index)
-Date: Fri, 10 Apr 2009 20:10:36 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0904102009440.10279@pacific.mpi-cbg.de>
-References: <cover.1239225986u.git.johannes.schindelin@gmx.de>  <61c07126e28aba0a36730da06112bd2d16eabc1b.1239225986u.git.johannes.schindelin@gmx.de>  <46dff0320904081900n7bff2280rc49315e3db427919@mail.gmail.com>
- <46dff0320904091843p3e034647j3c78506b4d0c2b4@mail.gmail.com>
+From: Jacob Kaplan-Moss <jacob@jacobian.org>
+Subject: Re: git-stash fails on OSX 10.5
+Date: Fri, 10 Apr 2009 13:14:33 -0500
+Message-ID: <be4ebbe10904101114w33c807d1je19b0c949e9a2009@mail.gmail.com>
+References: <be4ebbe10904100944p6ec2c0dao8607fcff75d2754e@mail.gmail.com> 
+	<7vy6u8whbp.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-544917050-1239387036=:10279"
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 10 20:09:41 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 10 20:16:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LsLAU-0002mP-Ct
-	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 20:09:34 +0200
+	id 1LsLHF-0005h1-1k
+	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 20:16:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763771AbZDJSIA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Apr 2009 14:08:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760084AbZDJSH7
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 14:07:59 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38535 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756300AbZDJSH6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Apr 2009 14:07:58 -0400
-Received: (qmail invoked by alias); 10 Apr 2009 18:07:56 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp001) with SMTP; 10 Apr 2009 20:07:56 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18uffY2C3wu6SRtGyTucrglv56ixlCquC4zaakhzS
-	L/IisT35ULR1Ah
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <46dff0320904091843p3e034647j3c78506b4d0c2b4@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S939500AbZDJSOx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Apr 2009 14:14:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S939486AbZDJSOx
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 14:14:53 -0400
+Received: from mail-qy0-f118.google.com ([209.85.221.118]:50195 "EHLO
+	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S939494AbZDJSOw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Apr 2009 14:14:52 -0400
+Received: by qyk16 with SMTP id 16so2428740qyk.33
+        for <git@vger.kernel.org>; Fri, 10 Apr 2009 11:14:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=1qtwsJn2Q6MNznLWAowrc1wgwrc6oDAVgNncCvxkATw=;
+        b=ukez/zIJEN5VyB+lhHWOammxoun7yy2NMCELxTM2jFzgp9r7fXb49CI3cj1e46y/lj
+         Ij1siPYkr5U0CG9KLAg7+WwNAgGdhMUtlEV8gmQz1zPI+WyGOZisrZiICqQGNtK3BEOQ
+         /8/yvHK3Tyh+0LCszF5nhrf8BwliphecYlQUE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        b=Rv8hjkiOz6F6t6xTVUvU33TsnDZjLiek0Wqllcr9FGUaMLgakVaxo7aOAg9vp1xcmA
+         9HXKi4rqGBnsS2aqkVepSPrdfpuHxBG4PG2+cPmjk4sM+3MNCbRMnjgCVS72RnP7h1oA
+         PzP4GwdDPxg5MbPDEUdy58U5/Va6CtncrqQqk=
+Received: by 10.220.75.199 with SMTP id z7mr5003694vcj.112.1239387289606; Fri, 
+	10 Apr 2009 11:14:49 -0700 (PDT)
+In-Reply-To: <7vy6u8whbp.fsf@gitster.siamese.dyndns.org>
+X-Google-Sender-Auth: d16d21b192e13333
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116270>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Fri, Apr 10, 2009 at 12:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Otherwise the above error message wouldn't have said ".../.git/index"; it
+> is coming from the only invocation of "cp" command in git-stash.sh
 
---8323328-544917050-1239387036=:10279
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Sorry; I trimmed the error message to omit the details of where the
+repository is since this happens regardless of the repo. The error
+gives the full path to the file, i.e. "cp:
+`/Users/jacob/Projects/uri/.git/index': No such file or directory".
 
-Hi,
-
-On Fri, 10 Apr 2009, Ping Yin wrote:
-
-> On Thu, Apr 9, 2009 at 10:00 AM, Ping Yin <pkufranky@gmail.com> wrote:
-> > On Thu, Apr 9, 2009 at 5:30 AM, Johannes Schindelin
-> > <johannes.schindelin@gmx.de> wrote:
-> >> With "git add -e [<files>]", Git will fire up an editor with the current
-> >> diff relative to the index (i.e. what you would get with "git diff
-> >> [<files>]").
-> >>
-> >> Now you can edit the patch as much as you like, including adding/removing
-> >> lines, editing the text, whatever.  Make sure, though, that the first
-> >> character of the hunk lines is still a space, a plus or a minus.
-> >>
-> >> After you closed the editor, Git will adjust the line counts of the hunks
-> >> if necessary, thanks to the --recount option of apply, and commit the
-> >> patch.  Except if you deleted everything, in which case nothing happens
-> >> (for obvious reasons).
-> >>
-> >> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >> ---
-> >>
-> >>        I actually promised myself not to resend this patch, but a
-> >>        certain guy who has a hat now asked for it.
-> >>
-> >
-> > I am that guy :-). Thanks. Sometimes "add -e" is more useful than "add
-> > -p" since i can see the full context when editing the patch. However,
-> > sometimes the ability to edit the index directly is even more useful.
-> > For example, if it's a big change (or rewritten), it is hard to edit
-> > the patch instead of the index (in diff mode with the worktree file
-> > side by side). I even encounter a case that i can't beat the patch
-> > into a shape i want when using 'add -p'  ( it will fail to apply)
-> >
-> 
-> How about this?
->  'add --edit=patch' to edit the patch and "add --edit=index" to edit the index
-
-As others have mentioned, there _is_ a reason we have a working directory.  
-Please understand this as a "I do not like the idea of editing the index 
-directly at all".
-
-Ciao,
-Dscho
-
---8323328-544917050-1239387036=:10279--
+Jacob
