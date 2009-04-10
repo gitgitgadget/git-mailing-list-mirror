@@ -1,99 +1,116 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH v2 1/2] Ensure consistent usage of mergetool.keepBackup
-	in git
-Date: Fri, 10 Apr 2009 00:43:29 -0700
-Message-ID: <20090410074327.GA9369@gmail.com>
-References: <20090409153033.GN23604@spearce.org> <f6297e57a23dc3abac2fcedceb00cecde607de02.1239291673.git.ferry.huberts@pelagic.nl> <20090410032731.GA1545@gmail.com> <49DEEE22.5030500@pelagic.nl>
+From: Marius Storm-Olsen <marius@storm-olsen.com>
+Subject: Re: [PATCH] MinGW readdir reimplementation to support
+ d_type
+Date: Fri, 10 Apr 2009 09:50:08 +0200
+Message-ID: <49DEFA30.1000101@gmail.com>
+References: <1239224507-5372-1-git-send-email-marius@trolltech.com> <49DE5BDE.9050709@kdbg.org>
+Reply-To: marius@storm-olsen.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
-X-From: git-owner@vger.kernel.org Fri Apr 10 09:46:36 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: marius@trolltech.com, git@vger.kernel.org, msysgit@googlegroups.com
+To: j6t@kdbg.org
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Fri Apr 10 09:51:57 2009
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-gx0-f203.google.com ([209.85.217.203])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LsBRb-0002sz-ML
-	for gcvg-git-2@gmane.org; Fri, 10 Apr 2009 09:46:36 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752072AbZDJHnr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Apr 2009 03:43:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751315AbZDJHnq
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 03:43:46 -0400
-Received: from rv-out-0506.google.com ([209.85.198.230]:24134 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750834AbZDJHnp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Apr 2009 03:43:45 -0400
-Received: by rv-out-0506.google.com with SMTP id f9so970127rvb.1
-        for <git@vger.kernel.org>; Fri, 10 Apr 2009 00:43:45 -0700 (PDT)
+	id 1LsBWm-0004L5-Md
+	for gcvm-msysgit@m.gmane.org; Fri, 10 Apr 2009 09:51:56 +0200
+Received: by gxk27 with SMTP id 27so255954gxk.21
+        for <gcvm-msysgit@m.gmane.org>; Fri, 10 Apr 2009 00:50:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=v8AUloMPjRXtYiNc9zELsmbJaaecUuzcgGo7e0yvVkA=;
-        b=IEPH5ll8gbbccDIo34VchWUIJgMmI2ZFKOQbSGPy+1VR2Svdi7ghN9kHymubN+Cp/4
-         g6NkwW2ZNKb/Enna/5ih6oS8nBSNghvnaMyK0n2ylFrIJotcNKp9bmJvc4B2Qj9pl0MS
-         7K1kpD6WMCXbT7creuZgb49WqNJ9pR3XDwfac=
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received-spf:authentication-results:received
+         :received:received:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding:reply-to:sender:precedence:x-google-loop
+         :mailing-list:list-id:list-post:list-help:list-unsubscribe
+         :x-beenthere-env:x-beenthere;
+        bh=b3HerQpReS7oQa83xi2+d69da5JT6GRdNe4jdK5IFQQ=;
+        b=BgW5OiQLZurQLl7JgF+d45pWb3J7A2AJIgBAgPHrFJXAZbxBEnJKv31ipNq2VpwQYW
+         ilH0SXxH1oJDGIjO0dkmnacTw1isbgYcPGD05IbyU4yltZP5CnMW1cfP2e8hGTnXkL9w
+         3j27HUYgcu4jETBxQa9umamYxi0EWKDhnve48=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=oUmwiAaN6zaqIeAdTML6FRc8cEl+sTo3p5jiJelZwWCyLMnOdLqlhKVFNTCMpDIsdP
-         WG0NRI8aNKUnL9ydiTSyyMo4NRFmZ7yT84J/N4TzPu2v4GudAfCCfrLhnylq9SpaJq7g
-         aoCbP7FBeE533DAmRYr0DkHyVwFcgsa0aNCiQ=
-Received: by 10.114.192.3 with SMTP id p3mr1818550waf.25.1239349425031;
-        Fri, 10 Apr 2009 00:43:45 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id n40sm1094813wag.13.2009.04.10.00.43.43
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 10 Apr 2009 00:43:44 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <49DEEE22.5030500@pelagic.nl>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-Sender: git-owner@vger.kernel.org
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding
+         :reply-to:sender:precedence:x-google-loop:mailing-list:list-id
+         :list-post:list-help:list-unsubscribe:x-beenthere-env:x-beenthere;
+        b=58feUIMNIGgD3kWzljuKYe1mxax3UG2cZEVhY7k4Ll2ZN5uUM178EhE6bRlwf4GiGw
+         1DgrmpWVCyX0Mmm43h9lGvcLLNeHrMVwQNYPxHILLoQmmzxZ0ZA9zGjDJPtQxUR40y8m
+         5jPMP4nv224oY8OiIR7/R50scckHVsWK6UKtc=
+Received: by 10.90.106.4 with SMTP id e4mr126520agc.3.1239349820478;
+        Fri, 10 Apr 2009 00:50:20 -0700 (PDT)
+Received: by 10.177.2.5 with SMTP id e5gr4756yqi.0;
+	Fri, 10 Apr 2009 00:50:20 -0700 (PDT)
+X-Sender: marius@storm-olsen.com
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.90.50.5 with SMTP id x5mr2093285agx.6.1239349819938; Fri, 10 Apr 2009 00:50:19 -0700 (PDT)
+Received: from yw-out-2324.google.com (yw-out-2324.google.com [74.125.46.28]) by gmr-mx.google.com with ESMTP id 7si69679yxg.4.2009.04.10.00.50.19; Fri, 10 Apr 2009 00:50:19 -0700 (PDT)
+Received-SPF: neutral (google.com: 74.125.46.28 is neither permitted nor denied by best guess record for domain of marius@storm-olsen.com) client-ip=74.125.46.28;
+Authentication-Results: gmr-mx.google.com; spf=neutral (google.com: 74.125.46.28 is neither permitted nor denied by best guess record for domain of marius@storm-olsen.com) smtp.mail=marius@storm-olsen.com
+Received: by yw-out-2324.google.com with SMTP id 3so691232ywj.71 for <msysgit@googlegroups.com>; Fri, 10 Apr 2009 00:50:19 -0700 (PDT)
+Received: by 10.100.207.14 with SMTP id e14mr1914058ang.139.1239349819724; Fri, 10 Apr 2009 00:50:19 -0700 (PDT)
+Received: from ?192.168.0.196? (cm-84.215.55.206.getinternet.no [84.215.55.206]) by mx.google.com with ESMTPS id c14sm4378505ana.1.2009.04.10.00.50.17 (version=SSLv3 cipher=RC4-MD5); Fri, 10 Apr 2009 00:50:18 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.8.1.21) Gecko/20090302 Thunderbird/2.0.0.21 ThunderGit/0.1a Mnenhy/0.7.6.666
+In-Reply-To: <49DE5BDE.9050709@kdbg.org>
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116243>
-
-On  0, "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl> wrote:
-> David Aguilar wrote:
-> 
-> I patched it this way because contrib/completion/git-completion.bash and
-> Documentation/config.txt talk about mergetool.keepBackup while only
-> contrib/difftool/git-difftool.txt talks about merge.keepBackup. That
-> seemed the most logical way of doing it.
-> 
-> I agree that some users might be surprised after this patch, otoh: I was
-> quite surprised that I still had turds even when I set
-> mergetool.keepBackup, which is what the documentation told me to do :-)
-> Do we really want to keep using 2 names for the same thing?
-> 
-> [rebasing now...]
-> 
-> I'm seeing the following grep on pu:
-> 
-> contrib/completion/git-completion.bash:	mergetool.keepBackup
-> Documentation/config.txt:mergetool.keepBackup::
-> git-gui/lib/mergetool.tcl:if {[is_config_true merge.keepbackup]} {
-> git-gui/git-gui:set default_config(merge.keepbackup) true
-> git-gui/git-gui.sh:set default_config(merge.keepbackup) true
-> git-mergetool.sh:merge_keep_backup="$(git config --bool merge.keepBackup
-> || echo true)"
-> 
-> So it seems that merge.keepBackup is actually used consistently in the
-> code while the completion and documentation talk about mergetool.keepBackup.
-> 
-> Shall I just patch the completion and documentation instead?
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116244>
 
 
-Oh wow thanks for your investigation.
-It /seems/ like the docs and completion should be updated.
-That's funny.. I guess it's so subtle it just passed by
-unnoticed this whole time.
+Johannes Sixt said the following on 09.04.2009 22:34:
+> Marius Storm-Olsen schrieb:
+>> +struct mingw_dirent
+>> +{
+>> +	long		d_ino;			/* Always zero. */
+>> +	union {
+>> +		unsigned short	d_reclen;	/* Always zero. */
+>> +		unsigned char   d_type;		/* Reimplementation adds this */
+>> +	};
+> 
+> VERY sneaky! I was wondering why you could get away without replacing
+> opendir and closedir, and why you still defined a replacement
+> mingw_DIR that contains the replacement mingw_dirent, until I noticed
+> this unnamed union.
+> 
+> Since we don't use d_reclen anywhere in the code, wouldn't you get
+> away with
+> 
+> #define d_type d_reclen
+> 
+> unless the type (short vs. char) makes a difference. Or would you say
+> that doing that would be even more sneaky?
 
--- 
+I'm sure it could be done just with a define. However, given the 
+remaining unused variables, I was wondering about also packing in 
+permission bits and file modification time in there, to optimize the 
+status checking even further. That way, on Windows, we would only need 
+one 'readdir' pass to check the whole repository, with no lstats 
+whatsoever. So, this was patch was a 'primer' for that, hence the union 
+with a proper uchar for the d_type.
 
-	David
+However, that would also mean a significant change in the status 
+checking code, as it first lstat's ever file in the index, then uses 
+read_directory + lstat's for others. I guess that'll be too big of a 
+change in core code, so the vision is moot?
+
+I'd be ok to just use the define, provided that it compiles cleanly of 
+course, if the above seems too ambitious. :-) I kinda feel like the 
+current code is more clean though :)
+
+--
+.marius
