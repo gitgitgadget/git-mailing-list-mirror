@@ -1,63 +1,195 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] documentation: Makefile accounts for SHELL_PATH setting
-Date: Sat, 11 Apr 2009 13:42:39 -0700
-Message-ID: <7vmyamdirk.fsf@gitster.siamese.dyndns.org>
-References: <1237728044-15651-1-git-send-email-bwalton@artsci.utoronto.ca>
- <20090410093430.6117@nanako3.lavabit.com>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: [PATCH RFC 3/6] send-email: Handle "GIT:" rather than "GIT: " 
+	during --compose
+Date: Sat, 11 Apr 2009 15:45:53 -0500
+Message-ID: <b4087cc50904111345v4787f38al9d7d234de8a6d24e@mail.gmail.com>
+References: <1239139522-24118-1-git-send-email-mfwitten@gmail.com>
+	 <1239139522-24118-2-git-send-email-mfwitten@gmail.com>
+	 <1239139522-24118-3-git-send-email-mfwitten@gmail.com>
+	 <7vprfjf11h.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ben Walton <bwalton@artsci.utoronto.ca>
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Sat Apr 11 22:44:24 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 11 22:49:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lsk3r-0000jy-Pq
-	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 22:44:24 +0200
+	id 1Lsk6t-0001x3-1F
+	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 22:47:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759226AbZDKUmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Apr 2009 16:42:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759193AbZDKUmt
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 16:42:49 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44607 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758961AbZDKUms (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Apr 2009 16:42:48 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 10080E2C1;
-	Sat, 11 Apr 2009 16:42:45 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 61A9FE2BE; Sat,
- 11 Apr 2009 16:42:41 -0400 (EDT)
-In-Reply-To: <20090410093430.6117@nanako3.lavabit.com> (Nanako Shiraishi's
- message of "Fri, 10 Apr 2009 09:34:30 +0900")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 4F75A5D8-26D9-11DE-9D79-DC76898A30C1-77302942!a-sasl-quonix.pobox.com
+	id S1758785AbZDKUp7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Apr 2009 16:45:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757491AbZDKUp6
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 16:45:58 -0400
+Received: from mail-qy0-f118.google.com ([209.85.221.118]:41124 "EHLO
+	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756695AbZDKUp5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 Apr 2009 16:45:57 -0400
+Received: by qyk16 with SMTP id 16so2988681qyk.33
+        for <git@vger.kernel.org>; Sat, 11 Apr 2009 13:45:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=N9l1tLQ7tGQ/MAzgRCK0LbZ6TI/pyDZJYDFDoaCHikg=;
+        b=gNBfjlxskyrQrw6JlS83ejhTMbsjZUN5jwoQpYB+9LHgSsy9SOo8vA6OsI99BxQS25
+         GwkRmFwGeptO9Eqn4TLRcHHhnGQWTdDfTr2eCNi9d9CJlfwCHh5+DnDxfVCFqJOdmPWx
+         gWQ/DMJ5iru6AOmprP/fs5RKVQjJRETNUAmxQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Aj9FBa86SF/uzKc7pIuZi8C7db6c0rR/l2H19RapQIvYmiZVu2PyxOnCDYlQtZGnrK
+         tqELjSF54AEbWejURiCbsCuzwrhPuuzZCUsBGB68FEBRTDpaM8vPae1ctktoL2iOMMxI
+         NC4tH40xvR8LZGizX2v59UJ/3V5ob0yQZ1NY4=
+Received: by 10.224.54.65 with SMTP id p1mr4995796qag.99.1239482753664; Sat, 
+	11 Apr 2009 13:45:53 -0700 (PDT)
+In-Reply-To: <7vprfjf11h.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116346>
 
-Nanako Shiraishi <nanako3@lavabit.com> writes:
-
-> Quoting Ben Walton:
+On Sat, Apr 11, 2009 at 14:22, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> Michael Witten <mfwitten@gmail.com> writes:
 >
->> Ensure that the Makefile that generates and installs the Documentation
->> is aware of any SHELL_PATH setting.  Use this value if found or the
->> current setting for SHELL if not.  This is an accommodation for systems
->> where sh is not bash.
->>
->> Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
+>> This should make things a little more robust in terms of user input;
+>> before, even the program got it wrong by outputting a line with only
+>> "GIT:", which was left in place as a header, because there would be
+>> no following space character.
 >
-> Junio, may I ask what happened to this patch?
+> An alternative could be to add an extra space after the "GIT:" on the
+> lines the compose template generated by this program, but people can =
+set
+> their editors to strip trailing whitespaces, so I think yours is a be=
+tter
+> approach. =A0I suspect this patch comes from your own experience of g=
+etting
+> bitten by this once, perhaps?
 
-There was a discussion going that eventurally petered out without seeing
-success (or breakage) reports from people with various platforms.
+My first thought was indeed just to add an extra space, but it occurred=
+ to me
+that it's not easily remembered. Consider the original documentation:
 
-I think the patch text is Ok, with "where sh is not bash" in the log
-message rephrased to "where sh is not POSIX", but I do not have an easy
-access to a system where /bin/sh is broken (perhaps I should install
-OpenSolaris in a vbox to try out), so it is still sitting in my inbox.
+> If the body of the message (what you type after the headers and a bla=
+nk line) only contains blank (or GIT: prefixed) lines the summary won't=
+ be sent
+
+>> Also, I cleaned up get_patch_subject().
+>
+> Which is a bit iffy. =A0It does not belong to the primary topic of th=
+e patch
+> to begin with, so it shouldn't be in here even if it weren't iffy.
+
+I can split it into another patch.
+
+> Because "while (<>)" does not localize $_, you are clobbering it in t=
+he
+> caller's context. =A0I do not know if any of the the existing callers=
+ cares,
+> but it is a change in behaviour.
+
+How about:
+
+    while (local $_ =3D <$fh>)
+
+Or, in our case, this:
+
+    while (my $_ =3D <$fh>)
+
+In testing these, I came across behavior that I think is incorrect, and=
+ I
+have a mind to complain about it to the perl guys:
+
+# Well! the print `function' doesn't seem to play by the rules.
+
+# Example 0
+# I expect the output to be:
+# 1
+# 1
+# 3
+# and I am right!
+
+$_ =3D 3;
+
+{
+  local $_ =3D 1;
+  print; print "\n";
+  print $_; print "\n";
+}
+
+print; print "\n";
+
+##############################################
+
+# Example 1
+# I expect the output to be:
+# 3
+# 1
+# 3
+# But it is:
+# 1
+# 1
+# 3
+
+$_ =3D 3;
+
+{
+  my $_ =3D 1;
+  print; print "\n";
+  print $_; print "\n";
+}
+
+print; print "\n";
+
+###############################################
+
+# Example 2
+# I expect the output to be:
+# 1
+# 1
+# 3
+# and I am right!
+
+sub my_print {
+  print(shift or $_);
+}
+
+$_ =3D 3;
+
+{
+  local $_ =3D 1;
+  my_print; print "\n";
+  my_print $_; print "\n";
+}
+
+my_print; print "\n";
+
+###############################################
+
+# Example 3
+# I expect the output to be:
+# 3
+# 1
+# 3
+# and I am right this time!
+
+sub my_print {
+  print(shift or $_);
+}
+
+$_ =3D 3;
+
+{
+  my $_ =3D 1;
+  my_print; print "\n";
+  my_print $_; print "\n";
+}
+
+my_print; print "\n";
