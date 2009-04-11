@@ -1,222 +1,124 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: [PATCH] Add "list" and "rm" sub commands to tg-depend
-Date: Sat, 11 Apr 2009 21:06:36 +0200
-Message-ID: <20090411190636.GA31461@pengutronix.de>
-References: <20090407133329.57b06727.weiny2@llnl.gov> <20090408080824.GF8940@machine.or.cz> <20090408083955.GA28482@pengutronix.de> <20090408091949.8a648d83.weiny2@llnl.gov> <20090409124337.GA6034@pengutronix.de> <20090409091021.5a7ded79.weiny2@llnl.gov> <36ca99e90904091101l6dd1685y5be70dd77bf52b57@mail.gmail.com> <20090409201515.GA4218@pengutronix.de> <36ca99e90904110840g35fa3b37m45f0286cb1f99db6@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ira Weiny <weiny2@llnl.gov>,
-	Brian Behlendorf <behlendorf1@llnl.gov>,
-	Git Mailing List <git@vger.kernel.org>
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 11 21:08:25 2009
+From: Michael Witten <mfwitten@gmail.com>
+Subject: [PATCH RFC 01/10] Docs: send-email: Put options back into alphabetical order
+Date: Sat, 11 Apr 2009 14:08:19 -0500
+Message-ID: <1239476908-25944-1-git-send-email-mfwitten@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 11 21:10:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LsiYv-0000or-Sx
-	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 21:08:22 +0200
+	id 1Lsias-0001Gu-OH
+	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 21:10:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758897AbZDKTGm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Apr 2009 15:06:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757875AbZDKTGm
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 15:06:42 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:43661 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758579AbZDKTGl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Apr 2009 15:06:41 -0400
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1LsiXG-0000Oq-2G; Sat, 11 Apr 2009 21:06:38 +0200
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1LsiXE-0008Bu-9R; Sat, 11 Apr 2009 21:06:36 +0200
-Content-Disposition: inline
-In-Reply-To: <36ca99e90904110840g35fa3b37m45f0286cb1f99db6@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1758768AbZDKTIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Apr 2009 15:08:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758189AbZDKTIu
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 15:08:50 -0400
+Received: from yw-out-2324.google.com ([74.125.46.29]:39318 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757875AbZDKTIt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Apr 2009 15:08:49 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so1608959ywb.1
+        for <git@vger.kernel.org>; Sat, 11 Apr 2009 12:08:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :message-id:x-mailer;
+        bh=o4sbmqZpgineo3tAJZCtrUVKa73frbqLL2gCAWLkkwI=;
+        b=j6dMpzMUvfZRmOemwiRICkkhwVOxHZ6AqcFxx7PBxZuMapGsLwk0eCW6Ug/XNYgOFz
+         TxT6vzlIlz5N2trGR0ela5vHczWpOm2OkHJtT60JWigvdcb/9iwm7Kgg+FjVOZBprUZa
+         ZXPUtI1cdWwwsMvUIYeb+3GSIxdGUoT5kSaOs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:message-id:x-mailer;
+        b=jytTd2x6zjRwY2Zt1rZ8rdtkOnC65HOEByphwiUHudsyVG6MPc8YaPimZigAt02Quh
+         4X7PRjfhh/8dDjvCbftOz0UHkpV9RHHujcwFuS6l0iZoYfVJloP6zBtS5ggsHqqIq0Bg
+         UVpuyYqTxO3S56oZI0aXxw35XnkhS+yB/927o=
+Received: by 10.100.249.10 with SMTP id w10mr4972912anh.3.1239476928513;
+        Sat, 11 Apr 2009 12:08:48 -0700 (PDT)
+Received: from localhost.localdomain (97-116-109-29.mpls.qwest.net [97.116.109.29])
+        by mx.google.com with ESMTPS id 9sm5461438ywf.6.2009.04.11.12.08.47
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 11 Apr 2009 12:08:48 -0700 (PDT)
+X-Mailer: git-send-email 1.6.2.2.479.g2aec
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116310>
 
-Hello Bert,
+I also wrote a comment block as a warning to trespassers.
 
-On Sat, Apr 11, 2009 at 05:40:04PM +0200, Bert Wesarg wrote:
-> 2009/4/9 Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>:
-> > Hello,
-> >
-> > On Thu, Apr 09, 2009 at 08:01:04PM +0200, Bert Wesarg wrote:
-> >> 2009/4/9 Ira Weiny <weiny2@llnl.gov>:
-> >> > On Thu, 9 Apr 2009 14:43:37 +0200
-> >> > Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de> wrote:
-> >> >> You might want to check
-> >> >>
-> >> >> =A0 =A0 =A0 http:// thread.gmane.org/gmane.comp.version-control=
-=2Egit/114581
-> >> >
-> >> > Ah this brings up more issues I had not thought about... =A0:-( =
-=A0But perhaps
-> >> > Bert's work could be used to help implement "rm". =A0Thoughts?
-> >> No, it wont help. Because the base and tip of the topic should not
-> >> changed in respect to the old state (expect for .topdeps of course=
-).
-> >>
-> >> If you really want to remove a dependency, you need to revert a me=
-rge
-> >> of this dep from the topic base. which is not possible today, or m=
-aybe
-> >> I have just an idea for this:
-> >>
-> >> =A0 'topic': the topic
-> >> =A0 'base': =A0the base of the topic, i.e. a merge from all depend=
-ent
-> >> topics dep0, ..., depN
-> >>
-> >> say you want to remove dep0
-> >>
-> >> =A0 1) merge all deps dep1, ..,depN into 'new-base'
-> >>
-> >> =A0 2) merge 'new-base' into base with the merge driver 'theirs', =
-that
-> >> would overwrite all changes from dep0 in the 'base'
-> >>
-> >> =A0 3) update 'topic' to the updated 'base'
-> >>
-> >> Any thoughts from someone who knows more than me?
-> > Some time ago I thought about a similar issue:
-> >
-> > I based a branch on top of the Linux tree of the ARM maintainer (in=
- the
-> > following called "rmk") and decided later to base it on top of Linu=
-s'
-> > tree. =A0So I did ~:
-> >
-> > =A0 =A0 =A0 =A0git checkout refs/top-bases/$branch
-> > =A0 =A0 =A0 =A0git merge -s theirs linus/master
-> > =A0 =A0 =A0 =A0git checkout $branch
-> > =A0 =A0 =A0 =A0sed -i s,rmk,linus, .topdeps
-> > =A0 =A0 =A0 =A0git add -f .topdeps
-> > =A0 =A0 =A0 =A0git commit -m $commitmsg
-> > =A0 =A0 =A0 =A0tg update
-> >
-> > When I thought about it with pencil and paper back then, I saw a pr=
-oblem
-> > with that approach. =A0Now I invested some time now to verify it re=
-ally
-> > exists: =A0In fact I reverted the changes in the rmk/master branch.
-> > Consider Linus pulls from rmk and I update my topgit branch. =A0Gue=
-ss what
-> > happens? =A0Linus' pull + my revert yield Linus' tree without rmk's
-> > changes.
-> >
-> > Here is my recipe:
-> >
-> > =A0 =A0 =A0 =A0# prepare linus/master
-> > =A0 =A0 =A0 =A0git init
-> > =A0 =A0 =A0 =A0echo 'VERSION=3D2.6.28' > Makefile
-> > =A0 =A0 =A0 =A0git add Makefile; git commit -m 'v2.6.28'
-> > =A0 =A0 =A0 =A0git branch -m master linus/master
-> >
-> > =A0 =A0 =A0 =A0# prepare rmk/master
-> > =A0 =A0 =A0 =A0git checkout -b rmk/master
-> > =A0 =A0 =A0 =A0echo 'support for some machine' > arm.c
-> > =A0 =A0 =A0 =A0git add arm.c; git commit -m 'support for some machi=
-ne'
-> >
-> > =A0 =A0 =A0 =A0# new topgit branch
-> > =A0 =A0 =A0 =A0tg create t/test
-> > =A0 =A0 =A0 =A0echo change > lib.c
-> > =A0 =A0 =A0 =A0git add lib.c; git commit -m 'tralala'
-> >
-> > =A0 =A0 =A0 =A0# Linus goes on ...
-> > =A0 =A0 =A0 =A0git checkout linus/master
-> > =A0 =A0 =A0 =A0echo 'VERSION=3D2.6.29-rc1' > Makefile
-> > =A0 =A0 =A0 =A0git add Makefile; git commit -m 'v2.6.29-rc1'
-> >
-> > =A0 =A0 =A0 =A0# "rebase" test branch on linus/master
-> > =A0 =A0 =A0 =A0git checkout refs/top-bases/t/test
-> > =A0 =A0 =A0 =A0git symbolic-ref HEAD refs/top-bases/t/test
-> > =A0 =A0 =A0 =A0git merge --no-commit linus/master
-> > =A0 =A0 =A0 =A0git read-tree linus/master
-> > =A0 =A0 =A0 =A0git commit
-> > =A0 =A0 =A0 =A0rm arm.c
-> > =A0 =A0 =A0 =A0git checkout t/test
-> > =A0 =A0 =A0 =A0sed -i s/rmk/linus/ .topdeps
-> > =A0 =A0 =A0 =A0git add .topdeps; git commit -m 'change dep: rmk/mas=
-ter -> linus/master'
-> > =A0 =A0 =A0 =A0tg update
-> >
-> > =A0 =A0 =A0 =A0# Linus pulls from rmk
-> > =A0 =A0 =A0 =A0git checkout linus/master
-> > =A0 =A0 =A0 =A0git merge rmk/master
-> >
-> > =A0 =A0 =A0 =A0# update test to linus+rmk
-> > =A0 =A0 =A0 =A0git checkout t/test
-> > =A0 =A0 =A0 =A0tg update
-> >
-> > =A0 =A0 =A0 =A0# inspect:
-> > =A0 =A0 =A0 =A0git diff linus/master refs/top-bases/t/test
-> >
-> > The last command shows that refs/top-bases/t/test doesn't have arm.=
-c
-> > :-/
-> >
-> > I'm sure the dependency deletion has exactly the same problem.
-I think I've a solution.  Not an implementation yet, but the right
-thoughs (I hope):
+Signed-off-by: Michael Witten <mfwitten@gmail.com>
+---
+ Documentation/git-send-email.txt |   26 +++++++++++++++-----------
+ 1 files changed, 15 insertions(+), 11 deletions(-)
 
-tg should not merge using the full history but fake the collapsed (as i=
-n
-tg export --collapse) history as HEAD.
-
-> You're probably right. I just found the old discussion about
-> dependencies removal [1]:
->=20
-> On zo, 2008-09-21 at 16:24 +0200, Petr Baudis wrote:
-> > The problem is that you can undo the merge content, but not the his=
-tory
-> > information. So this revert can e.g. propagate even into branches w=
-hich
-> > still *should* depend on the other branch, you get into trouble whe=
-n you
-> > want to make your branch depend on the other one anyway, etc.
->=20
-> On di, 2008-09-23 at 15:27 +0200, Petr Baudis wrote:
-> > what we can't make to work is just the
-> > most generic case, but e.g. if master is a *leaf* branch nothing el=
-se
-> > depends on and it can't get the branch through multiple paths, you =
-can
-> > do the dependency removal rather easily (if it can get through mult=
-iple
-> > paths, you can still do it but you might have to deal with big
-> > conflicts).
->=20
-> Maybe the leaf solution could be done.  Only directly depending
-> branches from the transitive reduction should be removable.  This
-> would help for the 'tip'/'current' branch usecase, for collecting
-> topics.
->=20
-> Bert
->=20
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/95458/focu=
-s=3D96093
-This link isn't optimal.  The highlighted message doesn't contain the
-citations above :-/.
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
-       |
-Industrial Linux Solutions                    | http://www.pengutronix.=
-de/  |
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 0b1f183..595c7ba 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -32,6 +32,10 @@ script
+ This format expects the first line of the file to contain the "Cc:" value
+ and the "Subject:" of the message as the second line.
+ 
++/////////////////////////////////////////////////////////////////////////////////////
++//// Within each category (Composing, Sending, Automating, and Administering),   ////
++//// options are to be given in alphabetical order. Please maintain this layout. ////
++/////////////////////////////////////////////////////////////////////////////////////
+ 
+ OPTIONS
+ -------
+@@ -39,6 +43,11 @@ OPTIONS
+ Composing
+ ~~~~~~~~~
+ 
++--annotate::
++	Review each patch you're about to send in an editor. The setting
++	'sendemail.multiedit' defines if this will spawn one editor per patch
++	or one for all of them at once.
++
+ --bcc=<address>::
+ 	Specify a "Bcc:" value for each email. Default is the value of
+ 	'sendemail.bcc'.
+@@ -51,11 +60,6 @@ The --bcc option must be repeated for each user you want on the bcc list.
+ +
+ The --cc option must be repeated for each user you want on the cc list.
+ 
+---annotate::
+-	Review each patch you're about to send in an editor. The setting
+-	'sendemail.multiedit' defines if this will spawn one editor per patch
+-	or one for all of them at once.
+-
+ --compose::
+ 	Use $GIT_EDITOR, core.editor, $VISUAL, or $EDITOR to edit an
+ 	introductory message for the patch series.
+@@ -230,6 +234,12 @@ have been specified, in which case default to 'compose'.
+ --dry-run::
+ 	Do everything except actually send the emails.
+ 
++--[no-]format-patch::
++	When an argument may be understood either as a reference or as a file name,
++	choose to understand it as a format-patch argument ('--format-patch')
++	or as a file name ('--no-format-patch'). By default, when such a conflict
++	occurs, git send-email will fail.
++
+ --quiet::
+ 	Make git-send-email less verbose.  One line per email should be
+ 	all that is output.
+@@ -246,12 +256,6 @@ have been specified, in which case default to 'compose'.
+ Default is the value of 'sendemail.validate'; if this is not set,
+ default to '--validate'.
+ 
+---[no-]format-patch::
+-	When an argument may be understood either as a reference or as a file name,
+-	choose to understand it as a format-patch argument ('--format-patch')
+-	or as a file name ('--no-format-patch'). By default, when such a conflict
+-	occurs, git send-email will fail.
+-
+ 
+ CONFIGURATION
+ -------------
+-- 
+1.6.2.2.479.g2aec
