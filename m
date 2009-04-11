@@ -1,195 +1,103 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: [PATCH RFC 3/6] send-email: Handle "GIT:" rather than "GIT: " 
-	during --compose
-Date: Sat, 11 Apr 2009 15:45:53 -0500
-Message-ID: <b4087cc50904111345v4787f38al9d7d234de8a6d24e@mail.gmail.com>
-References: <1239139522-24118-1-git-send-email-mfwitten@gmail.com>
-	 <1239139522-24118-2-git-send-email-mfwitten@gmail.com>
-	 <1239139522-24118-3-git-send-email-mfwitten@gmail.com>
-	 <7vprfjf11h.fsf@gitster.siamese.dyndns.org>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [PATCH] process_{tree,blob}: Remove useless xstrdup calls
+Date: Sat, 11 Apr 2009 22:50:44 +0200
+Message-ID: <20090411205044.GA21673@atjola.homenet>
+References: <20090408112854.GA8624@atjola.homenet> <alpine.LFD.2.00.0904101517520.4583@localhost.localdomain> <alpine.LFD.2.00.0904101714420.4583@localhost.localdomain> <alpine.LFD.2.00.0904101806340.4583@localhost.localdomain> <20090411134112.GA1673@atjola.homenet> <20090411140756.GA15288@atjola.homenet> <alpine.LFD.2.00.0904111055480.4583@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 11 22:49:24 2009
+Cc: Nicolas Pitre <nico@cam.org>, Jakub Narebski <jnareb@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>, david@lang.hm,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Apr 11 22:53:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lsk6t-0001x3-1F
-	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 22:47:31 +0200
+	id 1LskBd-0004LA-8m
+	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 22:52:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758785AbZDKUp7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Apr 2009 16:45:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757491AbZDKUp6
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 16:45:58 -0400
-Received: from mail-qy0-f118.google.com ([209.85.221.118]:41124 "EHLO
-	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756695AbZDKUp5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 11 Apr 2009 16:45:57 -0400
-Received: by qyk16 with SMTP id 16so2988681qyk.33
-        for <git@vger.kernel.org>; Sat, 11 Apr 2009 13:45:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=N9l1tLQ7tGQ/MAzgRCK0LbZ6TI/pyDZJYDFDoaCHikg=;
-        b=gNBfjlxskyrQrw6JlS83ejhTMbsjZUN5jwoQpYB+9LHgSsy9SOo8vA6OsI99BxQS25
-         GwkRmFwGeptO9Eqn4TLRcHHhnGQWTdDfTr2eCNi9d9CJlfwCHh5+DnDxfVCFqJOdmPWx
-         gWQ/DMJ5iru6AOmprP/fs5RKVQjJRETNUAmxQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Aj9FBa86SF/uzKc7pIuZi8C7db6c0rR/l2H19RapQIvYmiZVu2PyxOnCDYlQtZGnrK
-         tqELjSF54AEbWejURiCbsCuzwrhPuuzZCUsBGB68FEBRTDpaM8vPae1ctktoL2iOMMxI
-         NC4tH40xvR8LZGizX2v59UJ/3V5ob0yQZ1NY4=
-Received: by 10.224.54.65 with SMTP id p1mr4995796qag.99.1239482753664; Sat, 
-	11 Apr 2009 13:45:53 -0700 (PDT)
-In-Reply-To: <7vprfjf11h.fsf@gitster.siamese.dyndns.org>
+	id S1759341AbZDKUuv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Apr 2009 16:50:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759310AbZDKUuv
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 16:50:51 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37161 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759417AbZDKUut (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Apr 2009 16:50:49 -0400
+Received: (qmail invoked by alias); 11 Apr 2009 20:50:47 -0000
+Received: from i59F56F7C.versanet.de (EHLO atjola.local) [89.245.111.124]
+  by mail.gmx.net (mp026) with SMTP; 11 Apr 2009 22:50:47 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+YsHF88quY7NnbEQUBULgz4vMXiW8mrNJxHncCgn
+	z8W6LCq/3WPFC2
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.00.0904111055480.4583@localhost.localdomain>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.5600000000000001
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116347>
 
-On Sat, Apr 11, 2009 at 14:22, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> Michael Witten <mfwitten@gmail.com> writes:
->
->> This should make things a little more robust in terms of user input;
->> before, even the program got it wrong by outputting a line with only
->> "GIT:", which was left in place as a header, because there would be
->> no following space character.
->
-> An alternative could be to add an extra space after the "GIT:" on the
-> lines the compose template generated by this program, but people can =
-set
-> their editors to strip trailing whitespaces, so I think yours is a be=
-tter
-> approach. =A0I suspect this patch comes from your own experience of g=
-etting
-> bitten by this once, perhaps?
+On 2009.04.11 11:06:17 -0700, Linus Torvalds wrote:
+>=20
+>=20
+> On Sat, 11 Apr 2009, Bj=F6rn Steinbrink wrote:
+> >=20
+> > And for completeness, here are the results for linux-2.6.git
+> >=20
+> >      | With my patch | With your patch on top
+> > -----|---------------|-----------------------
+> > VSZ  |        460376 | 407900
+> > RSS  |        292996 | 239760
+> > time |       0:14.28 | 0:14.66
+>=20
+> Ok, it uses less memory, but more CPU time. That's reasonable - we "w=
+aste"=20
+> CPU time on doing the extra free's, and since the memory use isn't a =
+huge=20
+> constraining factor and cache behavior is bad anyway, it's then actua=
+lly=20
+> slightly slower.
+>=20
+> > And again, the new pack is slightly worse than the old one
+> >  (window=3D250, --depth=3D250).
+> > Old: 240238406
+> > New: 240280452
+> >=20
+> > But again, it's negligible.
+>=20
+> Well, it's sad that it's consistently a bit worse, even if we're talk=
+ing=20
+> just small small fractions of a percent (looks like 0.02% bigger ;).=20
+>=20
+> And I think I can see why. The new code actually does a _better_ job =
+of=20
+> the resulting list being in "recency" order, whereas the old code use=
+d to=20
+> output the root trees all together. Now they're spread out according =
+to=20
+> how soon they are reached.
 
-My first thought was indeed just to add an extra space, but it occurred=
- to me
-that it's not easily remembered. Consider the original documentation:
+Hm, I don't think that was the case. When iterating over the commits,
+process_tree was called with commit->tree, and that added the root tree
+to the objects array as well as walking it to add all referenced object=
+s.
 
-> If the body of the message (what you type after the headers and a bla=
-nk line) only contains blank (or GIT: prefixed) lines the summary won't=
- be sent
+And yep, the 'old' "rev-list --all-objects" shows for example:
+ebace34d059216b3573cd67a83068d2eafe2f2e7 read-cache.c
+a869cb0789d8ad87f04d28dd9b703f3ff343a4a7=20
+497a05b8fa8e9aa3a5db9b42e5c50392f352d2b4 cache.h
+91b2628e3c18e7f75e477c24197d9ef2eca14125 read-cache.c
+6862d1012681cd6812ab9bfe1a866446f92a7c91 read-tree.c
 
->> Also, I cleaned up get_patch_subject().
->
-> Which is a bit iffy. =A0It does not belong to the primary topic of th=
-e patch
-> to begin with, so it shouldn't be in here even if it weren't iffy.
+a869cb0 being a root tree, inbetween two blobs.
 
-I can split it into another patch.
-
-> Because "while (<>)" does not localize $_, you are clobbering it in t=
-he
-> caller's context. =A0I do not know if any of the the existing callers=
- cares,
-> but it is a change in behaviour.
-
-How about:
-
-    while (local $_ =3D <$fh>)
-
-Or, in our case, this:
-
-    while (my $_ =3D <$fh>)
-
-In testing these, I came across behavior that I think is incorrect, and=
- I
-have a mind to complain about it to the perl guys:
-
-# Well! the print `function' doesn't seem to play by the rules.
-
-# Example 0
-# I expect the output to be:
-# 1
-# 1
-# 3
-# and I am right!
-
-$_ =3D 3;
-
-{
-  local $_ =3D 1;
-  print; print "\n";
-  print $_; print "\n";
-}
-
-print; print "\n";
-
-##############################################
-
-# Example 1
-# I expect the output to be:
-# 3
-# 1
-# 3
-# But it is:
-# 1
-# 1
-# 3
-
-$_ =3D 3;
-
-{
-  my $_ =3D 1;
-  print; print "\n";
-  print $_; print "\n";
-}
-
-print; print "\n";
-
-###############################################
-
-# Example 2
-# I expect the output to be:
-# 1
-# 1
-# 3
-# and I am right!
-
-sub my_print {
-  print(shift or $_);
-}
-
-$_ =3D 3;
-
-{
-  local $_ =3D 1;
-  my_print; print "\n";
-  my_print $_; print "\n";
-}
-
-my_print; print "\n";
-
-###############################################
-
-# Example 3
-# I expect the output to be:
-# 3
-# 1
-# 3
-# and I am right this time!
-
-sub my_print {
-  print(shift or $_);
-}
-
-$_ =3D 3;
-
-{
-  my $_ =3D 1;
-  my_print; print "\n";
-  my_print $_; print "\n";
-}
-
-my_print; print "\n";
+Bj=F6rn
