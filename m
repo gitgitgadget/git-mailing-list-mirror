@@ -1,126 +1,277 @@
-From: Ping Yin <pkufranky@gmail.com>
-Subject: Re: [PATCH] git-add: introduce --edit (to edit the diff vs. the 
-	index)
-Date: Sat, 11 Apr 2009 09:11:12 +0800
-Message-ID: <46dff0320904101811g3b5dcc8ag195d40005b181c52@mail.gmail.com>
-References: <cover.1239225986u.git.johannes.schindelin@gmx.de>
-	 <61c07126e28aba0a36730da06112bd2d16eabc1b.1239225986u.git.johannes.schindelin@gmx.de>
-	 <46dff0320904081900n7bff2280rc49315e3db427919@mail.gmail.com>
-	 <46dff0320904091843p3e034647j3c78506b4d0c2b4@mail.gmail.com>
-	 <alpine.DEB.1.00.0904102009440.10279@pacific.mpi-cbg.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] process_{tree,blob}: Remove useless xstrdup calls
+Date: Fri, 10 Apr 2009 18:15:26 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.0904101806340.4583@localhost.localdomain>
+References: <20090408112854.GA8624@atjola.homenet> <alpine.LFD.2.00.0904101517520.4583@localhost.localdomain> <alpine.LFD.2.00.0904101714420.4583@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Apr 11 03:12:52 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nicolas Pitre <nico@cam.org>, Jakub Narebski <jnareb@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>, david@lang.hm,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Apr 11 03:23:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LsRm3-0002nk-G1
-	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 03:12:47 +0200
+	id 1LsRwN-0004VG-91
+	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 03:23:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754120AbZDKBLO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Apr 2009 21:11:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754106AbZDKBLO
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 21:11:14 -0400
-Received: from wa-out-1112.google.com ([209.85.146.178]:51022 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754010AbZDKBLN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Apr 2009 21:11:13 -0400
-Received: by wa-out-1112.google.com with SMTP id j5so662320wah.21
-        for <git@vger.kernel.org>; Fri, 10 Apr 2009 18:11:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=8U5kl5gjhU/4L/VTXiTnLYa1GT4y28cb5+BjYVTifUs=;
-        b=LrLPoEf3le1g6zM5r2QCdM4OnamAsE9sTiWo2ZlhChzmOUcL2rDpN5FPSZGeP6zhNN
-         clx5FRChBAgDSkNevb7D2KW0fEVyLAQ6kaaAuzIh0h/oe8nJLGm7rKy4/HsQJJua8G+Z
-         bc4127T1kBRW5P0XsXYBKHHKXuZID/1EvVFeI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=pPG2eNiU8ddhA+6Sr3EovEqoorgpTn+QfcfUVvgy75hQ9b9WLUEonmg8CyHay1jYVA
-         bi+nFjGWhOl5ShmhjAGtSkU2iKftWr86i3GvWwL2Y8VDj56pCsjnRBu6qsXRaqD5BEuS
-         9UunCP6QbBSmp8+alWrrhttJpbdBuF8A1WV+c=
-Received: by 10.114.74.18 with SMTP id w18mr2111607waa.205.1239412272651; Fri, 
-	10 Apr 2009 18:11:12 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0904102009440.10279@pacific.mpi-cbg.de>
+	id S1754479AbZDKBVz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Apr 2009 21:21:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754419AbZDKBVy
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 21:21:54 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:43238 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754348AbZDKBVx (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Apr 2009 21:21:53 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n3B1FSca011510
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 10 Apr 2009 18:16:05 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n3B1FQJW029311;
+	Fri, 10 Apr 2009 18:15:26 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <alpine.LFD.2.00.0904101714420.4583@localhost.localdomain>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-5.445 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116286>
 
-On Sat, Apr 11, 2009 at 2:10 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Fri, 10 Apr 2009, Ping Yin wrote:
->
->> On Thu, Apr 9, 2009 at 10:00 AM, Ping Yin <pkufranky@gmail.com> wrot=
-e:
->> > On Thu, Apr 9, 2009 at 5:30 AM, Johannes Schindelin
->> > <johannes.schindelin@gmx.de> wrote:
->> >> With "git add -e [<files>]", Git will fire up an editor with the =
-current
->> >> diff relative to the index (i.e. what you would get with "git dif=
-f
->> >> [<files>]").
->> >>
->> >> Now you can edit the patch as much as you like, including adding/=
-removing
->> >> lines, editing the text, whatever. =C2=A0Make sure, though, that =
-the first
->> >> character of the hunk lines is still a space, a plus or a minus.
->> >>
->> >> After you closed the editor, Git will adjust the line counts of t=
-he hunks
->> >> if necessary, thanks to the --recount option of apply, and commit=
- the
->> >> patch. =C2=A0Except if you deleted everything, in which case noth=
-ing happens
->> >> (for obvious reasons).
->> >>
->> >> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->> >> ---
->> >>
->> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0I actually promised myself not to rese=
-nd this patch, but a
->> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0certain guy who has a hat now asked fo=
-r it.
->> >>
->> >
->> > I am that guy :-). Thanks. Sometimes "add -e" is more useful than =
-"add
->> > -p" since i can see the full context when editing the patch. Howev=
-er,
->> > sometimes the ability to edit the index directly is even more usef=
-ul.
->> > For example, if it's a big change (or rewritten), it is hard to ed=
-it
->> > the patch instead of the index (in diff mode with the worktree fil=
-e
->> > side by side). I even encounter a case that i can't beat the patch
->> > into a shape i want when using 'add -p' =C2=A0( it will fail to ap=
-ply)
->> >
->>
->> How about this?
->> =C2=A0'add --edit=3Dpatch' to edit the patch and "add --edit=3Dindex=
-" to edit the index
->
-> As others have mentioned, there _is_ a reason we have a working direc=
-tory.
-> Please understand this as a "I do not like the idea of editing the in=
-dex
-> directly at all".
->
 
-When doing "add --edit" to edit the patch, do you work on the working
-directory? I think they are just different ways to change the index?
+
+On Fri, 10 Apr 2009, Linus Torvalds wrote:
+> 
+> Here's a less trivial thing, and slightly more dubious one.
+
+I'm starting to like it more.
+
+In particular, pushing the "path_name()" call _into_ the show() function 
+would seem to allow
+
+ - more clarity into who "owns" the name (ie now when we free the name in 
+   the show_object callback, it's because we generated it ourselves by 
+   calling path_name())
+
+ - not calling path_name() at all, either because we don't care about the 
+   name in the first place, or because we are actually happy walking the 
+   linked list of "struct name_path *" and the last component.
+
+Now, I didn't do that latter optimization, because it would require some 
+more coding, but especially looking at "builtin-pack-objects.c", we really 
+don't even want the whole pathname, we really would be better off with the 
+list of path components.
+
+Why? We use that name for two things:
+ - add_preferred_base_object(), which actually _wants_ to traverse the 
+   path, and now does it by looking for '/' characters!
+ - for 'name_hash()', which only cares about the last 16 characters of a 
+   name, so again, generating the full name seems to be just unnecessary 
+   work.
+
+Anyway, so I didn't look any closer at those things, but it did convince 
+me that the "show_object()" calling convention was crazy, and we're 
+actually better off doing _less_ in list-objects.c, and giving people 
+access to the internal data structures so that they can decide whether 
+they want to generate a path-name or not.
+
+This patch does that, and then for people who did use the name (even if 
+they might do something more clever in the future), it just does the 
+straightforward "name = path_name(path, component); .. free(name);" thing.
+
+It obviously goes on top of my previous patch.
+
+
+		Linus
+
+---
+ builtin-pack-objects.c |    9 +++------
+ builtin-rev-list.c     |    8 +++++---
+ list-objects.c         |   10 +++++-----
+ list-objects.h         |    2 +-
+ revision.c             |    4 ++--
+ revision.h             |    2 +-
+ upload-pack.c          |    4 +++-
+ 7 files changed, 20 insertions(+), 19 deletions(-)
+
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index e028a02..d74d8a4 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -1907,16 +1907,13 @@ static void show_commit(struct commit *commit)
+ 	commit->object.flags |= OBJECT_ADDED;
+ }
+ 
+-static void show_object(struct object *obj, const char *name)
++static void show_object(struct object *obj, const struct name_path *path, const char *last)
+ {
++	char *name = path_name(path, last);
++
+ 	add_preferred_base_object(name);
+ 	add_object_entry(obj->sha1, obj->type, name, 0);
+ 	obj->flags |= OBJECT_ADDED;
+-
+-	/*
+-	 * We will have generated the hash from the name,
+-	 * but not saved a pointer to it - we can free it
+-	 */
+ 	free(name);
+ }
+ 
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index 0815cf3..aba8a6f 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -168,20 +168,21 @@ static void finish_commit(struct commit *commit)
+ 	commit->buffer = NULL;
+ }
+ 
+-static void finish_object(struct object *obj, const char *name)
++static void finish_object(struct object *obj, const struct name_path *path, const char *name)
+ {
+ 	if (obj->type == OBJ_BLOB && !has_sha1_file(obj->sha1))
+ 		die("missing blob object '%s'", sha1_to_hex(obj->sha1));
+ }
+ 
+-static void show_object(struct object *obj, const char *name)
++static void show_object(struct object *obj, const struct name_path *path, const char *component)
+ {
++	char *name = path_name(path, component);
+ 	/* An object with name "foo\n0000000..." can be used to
+ 	 * confuse downstream "git pack-objects" very badly.
+ 	 */
+ 	const char *ep = strchr(name, '\n');
+ 
+-	finish_object(obj, name);
++	finish_object(obj, path, name);
+ 	if (ep) {
+ 		printf("%s %.*s\n", sha1_to_hex(obj->sha1),
+ 		       (int) (ep - name),
+@@ -189,6 +190,7 @@ static void show_object(struct object *obj, const char *name)
+ 	}
+ 	else
+ 		printf("%s %s\n", sha1_to_hex(obj->sha1), name);
++	free(name);
+ }
+ 
+ static void show_edge(struct commit *commit)
+diff --git a/list-objects.c b/list-objects.c
+index 5a4af62..30ded3d 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -23,7 +23,7 @@ static void process_blob(struct rev_info *revs,
+ 	if (obj->flags & (UNINTERESTING | SEEN))
+ 		return;
+ 	obj->flags |= SEEN;
+-	show(obj, path_name(path, name));
++	show(obj, path, name);
+ }
+ 
+ /*
+@@ -77,7 +77,7 @@ static void process_tree(struct rev_info *revs,
+ 	if (parse_tree(tree) < 0)
+ 		die("bad tree object %s", sha1_to_hex(obj->sha1));
+ 	obj->flags |= SEEN;
+-	show(obj, path_name(path, name));
++	show(obj, path, name);
+ 	me.up = path;
+ 	me.elem = name;
+ 	me.elem_len = strlen(name);
+@@ -140,8 +140,8 @@ static void add_pending_tree(struct rev_info *revs, struct tree *tree)
+ }
+ 
+ void traverse_commit_list(struct rev_info *revs,
+-			  void (*show_commit)(struct commit *),
+-			  void (*show_object)(struct object *, const char *))
++			  show_commit_fn show_commit,
++			  show_object_fn show_object)
+ {
+ 	int i;
+ 	struct commit *commit;
+@@ -158,7 +158,7 @@ void traverse_commit_list(struct rev_info *revs,
+ 			continue;
+ 		if (obj->type == OBJ_TAG) {
+ 			obj->flags |= SEEN;
+-			show_object(obj, name);
++			show_object(obj, NULL, name);
+ 			continue;
+ 		}
+ 		if (obj->type == OBJ_TREE) {
+diff --git a/list-objects.h b/list-objects.h
+index 13b0dd9..0b2de64 100644
+--- a/list-objects.h
++++ b/list-objects.h
+@@ -2,7 +2,7 @@
+ #define LIST_OBJECTS_H
+ 
+ typedef void (*show_commit_fn)(struct commit *);
+-typedef void (*show_object_fn)(struct object *, const char *);
++typedef void (*show_object_fn)(struct object *, const struct name_path *, const char *);
+ typedef void (*show_edge_fn)(struct commit *);
+ 
+ void traverse_commit_list(struct rev_info *revs, show_commit_fn, show_object_fn);
+diff --git a/revision.c b/revision.c
+index 44a9ce2..bd0ea34 100644
+--- a/revision.c
++++ b/revision.c
+@@ -15,9 +15,9 @@
+ 
+ volatile show_early_output_fn_t show_early_output;
+ 
+-char *path_name(struct name_path *path, const char *name)
++char *path_name(const struct name_path *path, const char *name)
+ {
+-	struct name_path *p;
++	const struct name_path *p;
+ 	char *n, *m;
+ 	int nlen = strlen(name);
+ 	int len = nlen + 1;
+diff --git a/revision.h b/revision.h
+index c89e8ff..be39e7d 100644
+--- a/revision.h
++++ b/revision.h
+@@ -146,7 +146,7 @@ struct name_path {
+ 	const char *elem;
+ };
+ 
+-char *path_name(struct name_path *path, const char *name);
++char *path_name(const struct name_path *path, const char *name);
+ 
+ extern void add_object(struct object *obj,
+ 		       struct object_array *p,
+diff --git a/upload-pack.c b/upload-pack.c
+index 5524ac4..536efbb 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -78,11 +78,12 @@ static void show_commit(struct commit *commit)
+ 	commit->buffer = NULL;
+ }
+ 
+-static void show_object(struct object *obj, const char *name)
++static void show_object(struct object *obj, const struct name_path *path, const char *component)
+ {
+ 	/* An object with name "foo\n0000000..." can be used to
+ 	 * confuse downstream git-pack-objects very badly.
+ 	 */
++	const char *name = path_name(path, component);
+ 	const char *ep = strchr(name, '\n');
+ 	if (ep) {
+ 		fprintf(pack_pipe, "%s %.*s\n", sha1_to_hex(obj->sha1),
+@@ -92,6 +93,7 @@ static void show_object(struct object *obj, const char *name)
+ 	else
+ 		fprintf(pack_pipe, "%s %s\n",
+ 				sha1_to_hex(obj->sha1), name);
++	free(name);
+ }
+ 
+ static void show_edge(struct commit *commit)
