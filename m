@@ -1,110 +1,219 @@
-From: =?utf-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>
-Subject: [PATCH] tests: test applying criss-cross rename patch
-Date: Sat, 11 Apr 2009 17:26:24 +0200
-Message-ID: <1239463584-1427-1-git-send-email-michal.kiedrowicz@gmail.com>
-References: <alpine.LFD.2.00.0904091147290.4583@localhost.localdomain>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH] Add "list" and "rm" sub commands to tg-depend
+Date: Sat, 11 Apr 2009 17:40:04 +0200
+Message-ID: <36ca99e90904110840g35fa3b37m45f0286cb1f99db6@mail.gmail.com>
+References: <20090407133329.57b06727.weiny2@llnl.gov>
+	 <20090408080824.GF8940@machine.or.cz>
+	 <20090408083955.GA28482@pengutronix.de>
+	 <20090408091949.8a648d83.weiny2@llnl.gov>
+	 <20090409124337.GA6034@pengutronix.de>
+	 <20090409091021.5a7ded79.weiny2@llnl.gov>
+	 <36ca99e90904091101l6dd1685y5be70dd77bf52b57@mail.gmail.com>
+	 <20090409201515.GA4218@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Apr 11 17:30:55 2009
+Cc: Ira Weiny <weiny2@llnl.gov>,
+	Brian Behlendorf <behlendorf1@llnl.gov>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+X-From: git-owner@vger.kernel.org Sat Apr 11 17:42:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LsfAB-0001Yi-0W
-	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 17:30:35 +0200
+	id 1LsfLk-0005Sg-OG
+	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 17:42:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754763AbZDKP0l convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Apr 2009 11:26:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754300AbZDKP0l
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 11:26:41 -0400
-Received: from mail-bw0-f169.google.com ([209.85.218.169]:62755 "EHLO
-	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753898AbZDKP0k (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Apr 2009 11:26:40 -0400
-Received: by bwz17 with SMTP id 17so1476381bwz.37
-        for <git@vger.kernel.org>; Sat, 11 Apr 2009 08:26:38 -0700 (PDT)
+	id S1751495AbZDKPkL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Apr 2009 11:40:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757015AbZDKPkJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 11:40:09 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:58424 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756359AbZDKPkG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 Apr 2009 11:40:06 -0400
+Received: by fxm2 with SMTP id 2so1466618fxm.37
+        for <git@vger.kernel.org>; Sat, 11 Apr 2009 08:40:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=AqjE8LulK1k6I5l0Fec60bPnJ8muMEEub55nm78kQfo=;
-        b=BQpHIXaai2NLx4TFg2Fp2NwyWzr+QmrfD4Cn2fXrHwio8iQOcsW974bpqSwlRRe1BC
-         C/2PNIKwdYm5WDOU+L8aAyMbxgJSN1Wwwxvo1Ig/eVbacA6kjvx+BRHiljbq75Sce05d
-         Y+tGHGlYwJM+yJ9Qza5/zhRb+8+CYie6VpobE=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=p6s3o17Dln1vsjXOVQEBZ0ZUY0x02E772hV/Chb6BbE=;
+        b=KonSPcXu1A5UjTNmUsaUjNM4oBMNW6MSH33kZheMYxTaGT8gI6E8UrxAjaA0QowPfe
+         LQD/W4PcHIbKpYRrO3Qq64qYwstM6w9gJbYcF9Np2azpL7pIkvIU2+MVO1noCeKM8gFv
+         3o6ruxhnWzbC8BDrGvXi5GSB25M031uR2DWiY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=CM7tY7MhTPk9Rb2A0W54LWUvvh/K3hYIGcZagC072349iTn3Ha03QObkL6qj9hOZPb
-         tUYIXnHK3dC1Kn/69+VkYXAv35Qbb7KJRVhyJw4bqpjMD2u1b1+T0TQsaa1az9HK1G7p
-         bHQy8xn/giZwj/QUojNxFn25WMysku6Dlrt2w=
-Received: by 10.204.115.143 with SMTP id i15mr4295879bkq.103.1239463598165;
-        Sat, 11 Apr 2009 08:26:38 -0700 (PDT)
-Received: from localhost (77-254-83-61.adsl.inetia.pl [77.254.83.61])
-        by mx.google.com with ESMTPS id k29sm2887052fkk.27.2009.04.11.08.26.36
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 11 Apr 2009 08:26:37 -0700 (PDT)
-X-Mailer: git-send-email 1.6.0.6
-In-Reply-To: <alpine.LFD.2.00.0904091147290.4583@localhost.localdomain>
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=m7h8E+x+DOC2AHkk+VBT86TO9AiYy30tqlzuk3eHNBCS6pvRQcl5nxnsRVDKheYFBL
+         4mM5zw6T5oyXdvY1kaKNTeXWyVPo7GAi3kIwSttgKsnVcdu00Jpti12IsOAgtrWMnwkJ
+         IfHZhxBVXMeHpcnSlfBOPcDwb2pzCctWFn1eE=
+Received: by 10.223.126.10 with SMTP id a10mr1328080fas.17.1239464404475; Sat, 
+	11 Apr 2009 08:40:04 -0700 (PDT)
+In-Reply-To: <20090409201515.GA4218@pengutronix.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116300>
 
+2009/4/9 Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>:
+> Hello,
+>
+> On Thu, Apr 09, 2009 at 08:01:04PM +0200, Bert Wesarg wrote:
+>> 2009/4/9 Ira Weiny <weiny2@llnl.gov>:
+>> > On Thu, 9 Apr 2009 14:43:37 +0200
+>> > Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de> wrote:
+>> >> You might want to check
+>> >>
+>> >> =C2=A0 =C2=A0 =C2=A0 http:// thread.gmane.org/gmane.comp.version-=
+control.git/114581
+>> >
+>> > Ah this brings up more issues I had not thought about... =C2=A0:-(=
+ =C2=A0But perhaps
+>> > Bert's work could be used to help implement "rm". =C2=A0Thoughts?
+>> No, it wont help. Because the base and tip of the topic should not
+>> changed in respect to the old state (expect for .topdeps of course).
+>>
+>> If you really want to remove a dependency, you need to revert a merg=
+e
+>> of this dep from the topic base. which is not possible today, or may=
+be
+>> I have just an idea for this:
+>>
+>> =C2=A0 'topic': the topic
+>> =C2=A0 'base': =C2=A0the base of the topic, i.e. a merge from all de=
+pendent
+>> topics dep0, ..., depN
+>>
+>> say you want to remove dep0
+>>
+>> =C2=A0 1) merge all deps dep1, ..,depN into 'new-base'
+>>
+>> =C2=A0 2) merge 'new-base' into base with the merge driver 'theirs',=
+ that
+>> would overwrite all changes from dep0 in the 'base'
+>>
+>> =C2=A0 3) update 'topic' to the updated 'base'
+>>
+>> Any thoughts from someone who knows more than me?
+> Some time ago I thought about a similar issue:
+>
+> I based a branch on top of the Linux tree of the ARM maintainer (in t=
+he
+> following called "rmk") and decided later to base it on top of Linus'
+> tree. =C2=A0So I did ~:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git checkout refs/top-bases/$branch
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git merge -s theirs linus/master
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git checkout $branch
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0sed -i s,rmk,linus, .topdeps
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git add -f .topdeps
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git commit -m $commitmsg
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0tg update
+>
+> When I thought about it with pencil and paper back then, I saw a prob=
+lem
+> with that approach. =C2=A0Now I invested some time now to verify it r=
+eally
+> exists: =C2=A0In fact I reverted the changes in the rmk/master branch=
+=2E
+> Consider Linus pulls from rmk and I update my topgit branch. =C2=A0Gu=
+ess what
+> happens? =C2=A0Linus' pull + my revert yield Linus' tree without rmk'=
+s
+> changes.
+>
+> Here is my recipe:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# prepare linus/master
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git init
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0echo 'VERSION=3D2.6.28' > Makefile
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git add Makefile; git commit -m 'v2.6.28'
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git branch -m master linus/master
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# prepare rmk/master
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git checkout -b rmk/master
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0echo 'support for some machine' > arm.c
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git add arm.c; git commit -m 'support for =
+some machine'
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# new topgit branch
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0tg create t/test
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0echo change > lib.c
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git add lib.c; git commit -m 'tralala'
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# Linus goes on ...
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git checkout linus/master
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0echo 'VERSION=3D2.6.29-rc1' > Makefile
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git add Makefile; git commit -m 'v2.6.29-r=
+c1'
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# "rebase" test branch on linus/master
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git checkout refs/top-bases/t/test
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git symbolic-ref HEAD refs/top-bases/t/tes=
+t
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git merge --no-commit linus/master
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git read-tree linus/master
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git commit
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0rm arm.c
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git checkout t/test
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0sed -i s/rmk/linus/ .topdeps
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git add .topdeps; git commit -m 'change de=
+p: rmk/master -> linus/master'
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0tg update
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# Linus pulls from rmk
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git checkout linus/master
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git merge rmk/master
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# update test to linus+rmk
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git checkout t/test
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0tg update
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# inspect:
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git diff linus/master refs/top-bases/t/tes=
+t
+>
+> The last command shows that refs/top-bases/t/test doesn't have arm.c
+> :-/
+>
+> I'm sure the dependency deletion has exactly the same problem.
+You're probably right. I just found the old discussion about
+dependencies removal [1]:
 
-Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
----
- t/t4130-apply-criss-cross-rename.sh |   35 +++++++++++++++++++++++++++=
-++++++++
- 1 files changed, 35 insertions(+), 0 deletions(-)
- create mode 100755 t/t4130-apply-criss-cross-rename.sh
+On zo, 2008-09-21 at 16:24 +0200, Petr Baudis wrote:
+> The problem is that you can undo the merge content, but not the histo=
+ry
+> information. So this revert can e.g. propagate even into branches whi=
+ch
+> still *should* depend on the other branch, you get into trouble when =
+you
+> want to make your branch depend on the other one anyway, etc.
 
-diff --git a/t/t4130-apply-criss-cross-rename.sh b/t/t4130-apply-criss-=
-cross-rename.sh
-new file mode 100755
-index 0000000..30187ff
---- /dev/null
-+++ b/t/t4130-apply-criss-cross-rename.sh
-@@ -0,0 +1,35 @@
-+#!/bin/sh
-+
-+test_description=3D'git apply handling criss-cross rename patch.'
-+. ./test-lib.sh
-+
-+create_file() {
-+	for ((i=3D0; i<100; i++)); do
-+		echo "$2" >> "$1"
-+	done
-+}
-+
-+test_expect_success 'setup' '
-+	create_file file1 "File1 contents" &&
-+	create_file file2 "File2 contents" &&
-+	git add file1 file2 &&
-+	git commit -m 1
-+'
-+
-+test_expect_success 'criss-cross rename' '
-+	mv file1 tmp &&
-+	mv file2 file1 &&
-+	mv tmp file2
-+'
-+
-+test_expect_success 'diff -M -B' '
-+	git diff -M -B > diff &&
-+	git reset --hard
-+
-+'
-+
-+test_expect_failure 'apply' '
-+	git apply diff
-+'
-+
-+test_done
---=20
-1.6.0.6
+On di, 2008-09-23 at 15:27 +0200, Petr Baudis wrote:
+> what we can't make to work is just the
+> most generic case, but e.g. if master is a *leaf* branch nothing else
+> depends on and it can't get the branch through multiple paths, you ca=
+n
+> do the dependency removal rather easily (if it can get through multip=
+le
+> paths, you can still do it but you might have to deal with big
+> conflicts).
+
+Maybe the leaf solution could be done.  Only directly depending
+branches from the transitive reduction should be removable.  This
+would help for the 'tip'/'current' branch usecase, for collecting
+topics.
+
+Bert
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/95458/focus=3D=
+96093
+>
+> Best regards
+> Uwe
