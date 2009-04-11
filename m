@@ -1,56 +1,77 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: [PATCH RFC 02/10] Docs: send-email: Remove superfluous information in CONFIGURATION
-Date: Sat, 11 Apr 2009 21:42:13 +0000 (UTC)
-Message-ID: <loom.20090411T213511-518@post.gmane.org>
-References: <1239476908-25944-1-git-send-email-mfwitten@gmail.com> <1239476908-25944-2-git-send-email-mfwitten@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] process_{tree,blob}: Remove useless xstrdup calls
+Date: Sat, 11 Apr 2009 14:43:14 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.0904111441240.4583@localhost.localdomain>
+References: <20090408112854.GA8624@atjola.homenet> <alpine.LFD.2.00.0904101517520.4583@localhost.localdomain> <alpine.LFD.2.00.0904101714420.4583@localhost.localdomain> <alpine.LFD.2.00.0904101806340.4583@localhost.localdomain> <20090411134112.GA1673@atjola.homenet>
+ <20090411140756.GA15288@atjola.homenet> <alpine.LFD.2.00.0904111055480.4583@localhost.localdomain> <20090411205044.GA21673@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 11 23:46:50 2009
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nicolas Pitre <nico@cam.org>, Jakub Narebski <jnareb@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>, david@lang.hm,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Apr 11 23:51:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lsl2F-0002FF-8J
-	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 23:46:47 +0200
+	id 1Lsl6u-0003Fh-2r
+	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 23:51:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755945AbZDKVpG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Apr 2009 17:45:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754549AbZDKVpG
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 17:45:06 -0400
-Received: from main.gmane.org ([80.91.229.2]:49052 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750863AbZDKVpF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Apr 2009 17:45:05 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1Lsl0Y-0005Xh-OC
-	for git@vger.kernel.org; Sat, 11 Apr 2009 21:45:03 +0000
-Received: from h-68-164-64-249.lsanca54.dynamic.covad.net ([68.164.64.249])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 11 Apr 2009 21:45:02 +0000
-Received: from bebarino by h-68-164-64-249.lsanca54.dynamic.covad.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 11 Apr 2009 21:45:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 68.164.64.249 (Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.0.8) Gecko/2009032609 Firefox/3.0.8)
+	id S1759238AbZDKVtg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Apr 2009 17:49:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758600AbZDKVtf
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 17:49:35 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:58268 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758192AbZDKVtf (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 Apr 2009 17:49:35 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n3BLhFuM025851
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 11 Apr 2009 14:43:51 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n3BLhEm6028545;
+	Sat, 11 Apr 2009 14:43:14 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <20090411205044.GA21673@atjola.homenet>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-5.445 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116354>
 
-Michael Witten <mfwitten <at> gmail.com> writes:
-> 
-> There is now a comment block warning trespassers.
 
-This patch and the previous have these comment block warnings which look ugly to
-me. Maybe we should make a DocumentationGuidelines, in the same spirit as
-CodingGuidelines where we can place these policies.
 
-Also, the alphabetical ordering of patch 1 is nice, but if we want to do this we
-should probably change every git-<command>.txt to be consistent.
+On Sat, 11 Apr 2009, Bj=F6rn Steinbrink wrote:
+> >=20
+> > And I think I can see why. The new code actually does a _better_ jo=
+b of=20
+> > the resulting list being in "recency" order, whereas the old code u=
+sed to=20
+> > output the root trees all together. Now they're spread out accordin=
+g to=20
+> > how soon they are reached.
+>=20
+> Hm, I don't think that was the case. When iterating over the commits,
+> process_tree was called with commit->tree, and that added the root tr=
+ee
+> to the objects array as well as walking it to add all referenced obje=
+cts.
+
+Oh, you're right. We actually ended up walking the trees at that point,=
+=20
+so recency should be the same.=20
+
+Hmm. Where does the difference in ordering come from, then?=20
+
+			Linus
