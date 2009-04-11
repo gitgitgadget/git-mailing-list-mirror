@@ -1,61 +1,56 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-shell: Add 'git-upload-archive' to allowed commands.
-Date: Sat, 11 Apr 2009 12:22:54 -0700
-Message-ID: <7v3acff10x.fsf@gitster.siamese.dyndns.org>
-References: <49DE537C.8070907@ripe.net>
+Subject: Re: [PATCH v2 3/3] archive: do not read .gitattributes in working 
+ directory
+Date: Sat, 11 Apr 2009 12:22:49 -0700
+Message-ID: <7v8wm7f112.fsf@gitster.siamese.dyndns.org>
+References: <1239260490-6318-1-git-send-email-pclouds@gmail.com>
+ <1239260490-6318-2-git-send-email-pclouds@gmail.com>
+ <1239260490-6318-3-git-send-email-pclouds@gmail.com>
+ <1239260490-6318-4-git-send-email-pclouds@gmail.com>
+ <7vws9u2ov4.fsf@gitster.siamese.dyndns.org>
+ <fcaeb9bf0904090353s4ec770bfk3cd3f6559c367a20@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Erik Broes <erikbroes@ripe.net>
-X-From: git-owner@vger.kernel.org Sat Apr 11 21:25:23 2009
+Cc: git@vger.kernel.org,
+	=?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 11 21:25:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LsipF-0004sO-AE
+	id 1LsipE-0004sO-Ib
 	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 21:25:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758913AbZDKTXA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Apr 2009 15:23:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758910AbZDKTW7
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 15:22:59 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40185 "EHLO
+	id S1758905AbZDKTW4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Apr 2009 15:22:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758900AbZDKTWz
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 15:22:55 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40169 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758900AbZDKTW6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Apr 2009 15:22:58 -0400
+	with ESMTP id S1758870AbZDKTWy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Apr 2009 15:22:54 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 76896EE95;
-	Sat, 11 Apr 2009 15:22:58 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 34F35EE92;
+	Sat, 11 Apr 2009 15:22:54 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E3D3CEE93; Sat,
- 11 Apr 2009 15:22:55 -0400 (EDT)
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 8985AEE90; Sat,
+ 11 Apr 2009 15:22:50 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 2A6F8ACA-26CE-11DE-9FE2-DC76898A30C1-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 27E410C8-26CE-11DE-8259-DC76898A30C1-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116329>
 
-Erik Broes <erikbroes@ripe.net> writes:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-> This allows for example gitosis to allow use of 'git archive --remote' in a
-> controlled environment.
->
-> Signed-off-by: Erik Broes <erikbroes@ripe.net>
-> ---
->
-> There were some questions on IRC raising (valid) concerns about security.
-> If there is a dangling commit on the remote end and any user would know
-> or guess the SHA, it could be retrieved where git-upload-pack will not
-> allow so.
->
-> We were unable to find out if this was the original reason git-shell was
-> never extended with git-upload-archive functionality or if it was a simple
-> oversight. If it was the reason I'm not sure there is an easy way out.
+> Maybe just remove the option and make --fix-attributes
+> default for git-tar-tree. In other words, keep git-tar-tree's current
+> behaviour.
 
-Can't the "security concern" be addressed by whatever creates the
-controlled environment (e.g. gitosis)?  For example, git-daemon can be
-configured to service upload-archive request, so I do not think it is such
-a bad idea to make this available if the site owner wants to use it.
+That sounds like a sensible approach to me.
+
+Thanks.
