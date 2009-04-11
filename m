@@ -1,77 +1,78 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: [PATCH v6 14/14] difftool/mergetool: refactor commands to use
-	git-mergetool--lib
-Date: Sat, 11 Apr 2009 13:10:54 +0100
-Message-ID: <20090411121054.GC10381@hashpling.org>
-References: <1239175040-28974-1-git-send-email-davvid@gmail.com> <20090411120040.GA10381@hashpling.org>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [PATCH] process_{tree,blob}: Remove useless xstrdup calls
+Date: Sat, 11 Apr 2009 15:41:12 +0200
+Message-ID: <20090411134112.GA1673@atjola.homenet>
+References: <20090408112854.GA8624@atjola.homenet> <alpine.LFD.2.00.0904101517520.4583@localhost.localdomain> <alpine.LFD.2.00.0904101714420.4583@localhost.localdomain> <alpine.LFD.2.00.0904101806340.4583@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org, markus.heidelberg@web.de
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 11 14:12:36 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nicolas Pitre <nico@cam.org>, Jakub Narebski <jnareb@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>, david@lang.hm,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Sebrecht <nicolas.s-dev@laposte.net>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Apr 11 16:00:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lsc4W-0002qs-W5
-	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 14:12:33 +0200
+	id 1Lsdkr-00087o-HL
+	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 16:00:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752187AbZDKMK7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Apr 2009 08:10:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752040AbZDKMK6
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 08:10:58 -0400
-Received: from relay.ptn-ipout01.plus.net ([212.159.7.35]:23763 "EHLO
-	relay.ptn-ipout01.plus.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751587AbZDKMK5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 11 Apr 2009 08:10:57 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApoEADol4EnUnw6R/2dsb2JhbADJaIN8Bg
-Received: from ptb-relay01.plus.net ([212.159.14.145])
-  by relay.ptn-ipout01.plus.net with ESMTP; 11 Apr 2009 13:10:55 +0100
-Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by ptb-relay01.plus.net with esmtp (Exim) id 1Lsc2x-0003lt-Eg; Sat, 11 Apr 2009 13:10:55 +0100
-Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
-	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id n3BCAte8011280
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 11 Apr 2009 13:10:55 +0100
-Received: (from charles@localhost)
-	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id n3BCAsVm011279;
-	Sat, 11 Apr 2009 13:10:54 +0100
+	id S1756017AbZDKNlR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Apr 2009 09:41:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755969AbZDKNlR
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 09:41:17 -0400
+Received: from mail.gmx.net ([213.165.64.20]:53138 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755792AbZDKNlR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Apr 2009 09:41:17 -0400
+Received: (qmail invoked by alias); 11 Apr 2009 13:41:14 -0000
+Received: from i59F5409B.versanet.de (EHLO atjola.local) [89.245.64.155]
+  by mail.gmx.net (mp041) with SMTP; 11 Apr 2009 15:41:14 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1/p5RBioXHp+V4xQEPzFvX9navl9r6otsTCrD96nc
+	mBIjfUGrBC0ox3
 Content-Disposition: inline
-In-Reply-To: <20090411120040.GA10381@hashpling.org>
+In-Reply-To: <alpine.LFD.2.00.0904101806340.4583@localhost.localdomain>
 User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Plusnet-Relay: 0cb10297be3488e1c41ed1bb65a9cc1d
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116297>
 
-On Sat, Apr 11, 2009 at 01:00:40PM +0100, Charles Bailey wrote:
-> On Wed, Apr 08, 2009 at 12:17:20AM -0700, David Aguilar wrote:
-> > +    present=false
-> > +    base_present &&
-> > +    present=true
-> 
-> I'm not sure why, but from a style point of view, this seemed a bit
-> inconsistent from the rest of mergetool and grated with me a bit.
-> 
-> I think I'd prefer
-> 
-> if base_present; then
->     present=false
-> else
->     present=true
-> fi
+On 2009.04.10 18:15:26 -0700, Linus Torvalds wrote:
+> It obviously goes on top of my previous patch.
 
-Although with 'true' and 'false' the corrent way around, obviously.
+Gives some nice results for the "rev-list --all --objects" test on the
+gentoo repo says (with the old pack):
 
-> 
-> or even:
-> 
-> present=$(base_present && echo true || echo false)
-> 
+     | With my patch | With your patch on top
+-----|---------------|-----------------------
+VSZ  |       1667952 | 1319324
+RSS  |       1388408 | 1126080
+time |       1:48.99 | 1:42.24
 
--- 
-Charles Bailey
-http://ccgi.hashpling.plus.com/blog/
+Testing a full repack, it feels slower during the "Compressing objects"
+part, but I don't have any hard numbers on that, and maybe I've just
+been more patient the last week, when I did the first repack on that
+repo. I can just tell that it took about 13 minutes for the "Compressin=
+g
+objects" part, and 18 minutes in total, on my Core 2 Quad 2.83GHz with
+4G of RAM.
+
+The new pack is slightly worse than the old one (window=3D250, --depth=3D=
+250):
+Old: 759662467
+New: 759720234
+
+But that's seems totally negligible, and at least the performance of th=
+e
+(stupid) rev-list test is not affected by the different pack layout.
+
+Bj=F6rn
