@@ -1,96 +1,76 @@
 From: Charles Bailey <charles@hashpling.org>
-Subject: Re: [PATCH v2 1/2] Ensure consistent usage of mergetool.keepBackup
-	in git
-Date: Sat, 11 Apr 2009 13:04:35 +0100
-Message-ID: <20090411120435.GB10381@hashpling.org>
-References: <20090409153033.GN23604@spearce.org> <f6297e57a23dc3abac2fcedceb00cecde607de02.1239291673.git.ferry.huberts@pelagic.nl> <20090410032731.GA1545@gmail.com> <49DEEE22.5030500@pelagic.nl> <20090410074327.GA9369@gmail.com> <20090410081843.GB9369@gmail.com>
+Subject: Re: [PATCH v6 14/14] difftool/mergetool: refactor commands to use
+	git-mergetool--lib
+Date: Sat, 11 Apr 2009 13:10:54 +0100
+Message-ID: <20090411121054.GC10381@hashpling.org>
+References: <1239175040-28974-1-git-send-email-davvid@gmail.com> <20090411120040.GA10381@hashpling.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
+Cc: gitster@pobox.com, git@vger.kernel.org, markus.heidelberg@web.de
 To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 11 14:06:35 2009
+X-From: git-owner@vger.kernel.org Sat Apr 11 14:12:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LsbyV-0000yf-Ew
-	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 14:06:19 +0200
+	id 1Lsc4W-0002qs-W5
+	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 14:12:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755756AbZDKMEm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Apr 2009 08:04:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753741AbZDKMEm
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 08:04:42 -0400
-Received: from relay.pcl-ipout01.plus.net ([212.159.7.99]:11830 "EHLO
-	relay.pcl-ipout01.plus.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754500AbZDKMEl (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 11 Apr 2009 08:04:41 -0400
+	id S1752187AbZDKMK7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Apr 2009 08:10:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752040AbZDKMK6
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 08:10:58 -0400
+Received: from relay.ptn-ipout01.plus.net ([212.159.7.35]:23763 "EHLO
+	relay.ptn-ipout01.plus.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751587AbZDKMK5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 Apr 2009 08:10:57 -0400
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApoEANYj4EnUnw6S/2dsb2JhbADJZ4N8Bg
-Received: from ptb-relay02.plus.net ([212.159.14.146])
-  by relay.pcl-ipout01.plus.net with ESMTP; 11 Apr 2009 13:04:37 +0100
+X-IronPort-Anti-Spam-Result: ApoEADol4EnUnw6R/2dsb2JhbADJaIN8Bg
+Received: from ptb-relay01.plus.net ([212.159.14.145])
+  by relay.ptn-ipout01.plus.net with ESMTP; 11 Apr 2009 13:10:55 +0100
 Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by ptb-relay02.plus.net with esmtp (Exim) id 1Lsbwr-0002DQ-1a; Sat, 11 Apr 2009 13:04:37 +0100
+	 by ptb-relay01.plus.net with esmtp (Exim) id 1Lsc2x-0003lt-Eg; Sat, 11 Apr 2009 13:10:55 +0100
 Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
-	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id n3BC4aJe011224
+	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id n3BCAte8011280
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 11 Apr 2009 13:04:36 +0100
+	Sat, 11 Apr 2009 13:10:55 +0100
 Received: (from charles@localhost)
-	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id n3BC4ZYX011223;
-	Sat, 11 Apr 2009 13:04:35 +0100
+	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id n3BCAsVm011279;
+	Sat, 11 Apr 2009 13:10:54 +0100
 Content-Disposition: inline
-In-Reply-To: <20090410081843.GB9369@gmail.com>
+In-Reply-To: <20090411120040.GA10381@hashpling.org>
 User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Plusnet-Relay: a8fc8b4a2f4ecf37bf314a3294ac6d53
+X-Plusnet-Relay: 0cb10297be3488e1c41ed1bb65a9cc1d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116296>
 
-On Fri, Apr 10, 2009 at 01:18:44AM -0700, David Aguilar wrote:
-> On  0, David Aguilar <davvid@gmail.com> wrote:
-> > 
-> > It /seems/ like the docs and completion should be updated.
+On Sat, Apr 11, 2009 at 01:00:40PM +0100, Charles Bailey wrote:
+> On Wed, Apr 08, 2009 at 12:17:20AM -0700, David Aguilar wrote:
+> > +    present=false
+> > +    base_present &&
+> > +    present=true
 > 
-> Though my guess is as good as any....
-> I'd rather hear someone else's opinion.
+> I'm not sure why, but from a style point of view, this seemed a bit
+> inconsistent from the rest of mergetool and grated with me a bit.
 > 
-> $ git log -p 44c36d1c
-> commit 44c36d1ccc9a40bfb31910dfd7e18d59fa8be502
-> Author: Charles Bailey <charles@hashpling.org>
-> Date:   Thu Feb 21 23:30:02 2008 +0000
+> I think I'd prefer
 > 
->     Tidy up git mergetool's backup file behaviour
->     
->     Currently a backup pre-merge file with conflict markers is sometimes
->     kept with a .orig extenstion and sometimes removed depending on the
->     particular merge tool used.
->     
->     This patch makes the handling consistent across all merge tools and
->     configurable via a new mergetool.keepBackup config variable
->     
->     Signed-off-by: Charles Bailey <charles@hashpling.org>
->     Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> 
-> 
-> The commit comment says mergetool.keepBackup, even though the code always
-> had it as merge.keepBackup.
+> if base_present; then
+>     present=false
+> else
+>     present=true
+> fi
 
-Not going by the commit message, but rather by the documentation I do
-believe that mergetool.keepBackup should have been the correct
-variable to use. I'm not sure why I missed this at the time.
+Although with 'true' and 'false' the corrent way around, obviously.
 
-I seem to remember looking for existing consistency in this before.
-Originally I was going on the premise that merge.* were things that
-were general between merges and all mergetools whereas mergetool.*
-were things that were merge tool specific. Subsequently, it was more
-natural to have mergetool.$tool.* for things that were tool specifit
-and to have mergetool.* as general mergetool specific settings,
-leaving merge.* as merge specific settings with the exception of
-merge.tool which is obviously specific to git mergetool, but is in the
-merge.* section.
+> 
+> or even:
+> 
+> present=$(base_present && echo true || echo false)
+> 
 
 -- 
 Charles Bailey
