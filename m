@@ -1,88 +1,195 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH] Add "list" and "rm" sub commands to tg-depend
-Date: Sat, 11 Apr 2009 21:29:15 +0200
-Message-ID: <36ca99e90904111229l21d34100h8e9295748adc9853@mail.gmail.com>
-References: <20090407133329.57b06727.weiny2@llnl.gov>
-	 <20090408080824.GF8940@machine.or.cz>
-	 <20090408083955.GA28482@pengutronix.de>
-	 <20090408091949.8a648d83.weiny2@llnl.gov>
-	 <20090409124337.GA6034@pengutronix.de>
-	 <20090409091021.5a7ded79.weiny2@llnl.gov>
-	 <36ca99e90904091101l6dd1685y5be70dd77bf52b57@mail.gmail.com>
-	 <20090409201515.GA4218@pengutronix.de>
-	 <36ca99e90904110840g35fa3b37m45f0286cb1f99db6@mail.gmail.com>
-	 <20090411190636.GA31461@pengutronix.de>
+From: =?utf-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>
+Subject: [PATCH] builtin-apply: keep information about files to be deleted
+Date: Sat, 11 Apr 2009 21:31:00 +0200
+Message-ID: <1239478260-7420-1-git-send-email-michal.kiedrowicz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ira Weiny <weiny2@llnl.gov>,
-	Brian Behlendorf <behlendorf1@llnl.gov>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Sat Apr 11 21:30:53 2009
+Cc: =?utf-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Apr 11 21:32:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lsiui-0006QP-2w
-	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 21:30:52 +0200
+	id 1LsiwS-0006zn-E7
+	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 21:32:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753923AbZDKT3T convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Apr 2009 15:29:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753483AbZDKT3S
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 15:29:18 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:50552 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753480AbZDKT3S convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 11 Apr 2009 15:29:18 -0400
-Received: by fxm2 with SMTP id 2so1534849fxm.37
-        for <git@vger.kernel.org>; Sat, 11 Apr 2009 12:29:15 -0700 (PDT)
+	id S1754741AbZDKTbI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Apr 2009 15:31:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754609AbZDKTbG
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 15:31:06 -0400
+Received: from mail-bw0-f169.google.com ([209.85.218.169]:60425 "EHLO
+	mail-bw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753975AbZDKTbD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Apr 2009 15:31:03 -0400
+Received: by bwz17 with SMTP id 17so1552937bwz.37
+        for <git@vger.kernel.org>; Sat, 11 Apr 2009 12:31:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:mime-version:content-type
          :content-transfer-encoding;
-        bh=wB2pOjc2GKwSFff4yM4rw8GyTx0TU2Jd+rbAlY7OaPE=;
-        b=VeAZU8cypGUvI9b0+T9sN3h1ec3XJj4X7+Aj9G262tiNMPWgVYrFtFNHRHqXHlPXn4
-         EfuLW4Nk3LKj3YT27W6LszbyunjtvKp3qlHQBJgJLaLWbNRpydFDZL4kJh68wZu7KyaX
-         Rb6T081E23+5Jfezyl53kHY1p4cnn1sKEZDww=
+        bh=MZlUAYh18zBlnQDqTh0CE9ZuCN4VX4s9pHrjmF3xIB8=;
+        b=TwJ18z4H+BO0B/9nO8Kof738T+/6Vbc8p6yYiW3H4J/rwdRe/boust+HZWv7DdzmHY
+         bE4Wrf81fpUFZmFbO4zNvEfRTrYHfwI5eRpE9Sd8z+BllVgL1mJW2D0cxOvbVI7Gjyl9
+         RwQ00YoUCd27w4lVePG2jNfp+D15gp7LI4eaM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=PJjrSLhGHy2gdTqfCskH8Xib2NGz6NamYp5ugZJMgo+avRDzzQITHUQBQVJaArtWlH
-         66wexyl6OYGKtp4J3Kf0gYEtnhQOwbcgcAihANVkGMYZ5zeEU1f4dr79Xrv8lMXNK2tp
-         r1kpMO936d7m0bq7t0ifV3LdyAabnCJYcQ6TQ=
-Received: by 10.223.111.134 with SMTP id s6mr1346267fap.60.1239478155878; Sat, 
-	11 Apr 2009 12:29:15 -0700 (PDT)
-In-Reply-To: <20090411190636.GA31461@pengutronix.de>
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=HZCYrX6+wf2DS0Lv+A06zfBWvWOxGi791wKUDxUKAzvrTzm4CmRDy3WavWhitxTzxJ
+         rb9wxdYusTOD9A0ztN1vE0VzwO9ODdc6qg5tmN/3NYXH2O910o2NJZDfKtzCiVtyXrhi
+         X/pMLL/Om1lxmp/AVFmw1cWVggH4EDP1yfD7c=
+Received: by 10.204.31.230 with SMTP id z38mr4415769bkc.85.1239478261870;
+        Sat, 11 Apr 2009 12:31:01 -0700 (PDT)
+Received: from localhost (77-254-83-61.adsl.inetia.pl [77.254.83.61])
+        by mx.google.com with ESMTPS id 22sm3150211fkr.17.2009.04.11.12.31.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 11 Apr 2009 12:31:01 -0700 (PDT)
+X-Mailer: git-send-email 1.6.0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116334>
 
-2009/4/11 Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>:
->> [1] http://thread.gmane.org/gmane.comp.version-control.git/95458/foc=
-us=3D96093
-> This link isn't optimal. =C2=A0The highlighted message doesn't contai=
-n the
-> citations above :-/.
-Sorry, haven't checked this. Here are the links again:
+Example correct diff generated by `diff -M -B' might look like this:
 
-http://article.gmane.org/gmane.comp.version-control.git/96398
-http://article.gmane.org/gmane.comp.version-control.git/96560
+	diff --git a/file1 b/file2
+	similarity index 100%
+	rename from file1
+	rename to file2
+	diff --git a/file2 b/file1
+	similarity index 100%
+	rename from file2
+	rename to file1
 
-Bert
->
-> Best regards
-> Uwe
->
-> --
-> Pengutronix e.K. =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| Uwe Kleine-K=C3=B6=
-nig =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|
-> Industrial Linux Solutions =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0| http://www.pengutronix.de/ =C2=A0|
->
+Information about removing `file2' comes after information about creati=
+on
+of new `file2' (renamed from `file1'). Existing implementation isn't ab=
+le to
+apply such patch, because it has to know in advance which files will be
+removed.
+
+This patch populates fn_table with information about removal of files
+before calling check_patch() for each patch to be applied.
+
+Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
+---
+ builtin-apply.c |   44 +++++++++++++++++++++++++++++++++++++++-----
+ 1 files changed, 39 insertions(+), 5 deletions(-)
+
+diff --git a/builtin-apply.c b/builtin-apply.c
+index 1926cd8..6f6bf85 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -2271,6 +2271,16 @@ static struct patch *in_fn_table(const char *nam=
+e)
+ 	return NULL;
+ }
+=20
++static int to_be_deleted(struct patch *patch)
++{
++	return patch =3D=3D (struct patch *) -2;
++}
++
++static int was_deleted(struct patch *patch)
++{
++	return patch =3D=3D (struct patch *) -1;
++}
++
+ static void add_to_fn_table(struct patch *patch)
+ {
+ 	struct string_list_item *item;
+@@ -2295,6 +2305,24 @@ static void add_to_fn_table(struct patch *patch)
+ 	}
+ }
+=20
++static void prepare_fn_table(struct patch *patch)
++{
++	/*
++	 * store information about incoming file deletion
++	 */
++
++	while (patch) {
++
++		if ((patch->new_name =3D=3D NULL) || (patch->is_rename)) {
++			struct string_list_item *item =3D
++				string_list_insert(patch->old_name, &fn_table);
++			item->util =3D (struct patch *) -2;
++		}
++
++		patch =3D patch->next;
++	}
++}
++
+ static int apply_data(struct patch *patch, struct stat *st, struct cac=
+he_entry *ce)
+ {
+ 	struct strbuf buf =3D STRBUF_INIT;
+@@ -2304,8 +2332,8 @@ static int apply_data(struct patch *patch, struct=
+ stat *st, struct cache_entry *
+ 	struct patch *tpatch;
+=20
+ 	if (!(patch->is_copy || patch->is_rename) &&
+-	    ((tpatch =3D in_fn_table(patch->old_name)) !=3D NULL)) {
+-		if (tpatch =3D=3D (struct patch *) -1) {
++	    (tpatch =3D in_fn_table(patch->old_name)) !=3D NULL && !to_be_del=
+eted(tpatch)) {
++		if (was_deleted(tpatch)) {
+ 			return error("patch %s has been renamed/deleted",
+ 				patch->old_name);
+ 		}
+@@ -2399,8 +2427,8 @@ static int check_preimage(struct patch *patch, st=
+ruct cache_entry **ce, struct s
+ 	assert(patch->is_new <=3D 0);
+=20
+ 	if (!(patch->is_copy || patch->is_rename) &&
+-	    (tpatch =3D in_fn_table(old_name)) !=3D NULL) {
+-		if (tpatch =3D=3D (struct patch *) -1) {
++	    (tpatch =3D in_fn_table(old_name)) !=3D NULL && !to_be_deleted(tp=
+atch)) {
++		if (was_deleted(tpatch)) {
+ 			return error("%s: has been deleted/renamed", old_name);
+ 		}
+ 		st_mode =3D tpatch->new_mode;
+@@ -2410,6 +2438,8 @@ static int check_preimage(struct patch *patch, st=
+ruct cache_entry **ce, struct s
+ 			return error("%s: %s", old_name, strerror(errno));
+ 	}
+=20
++	if(to_be_deleted(tpatch)) tpatch =3D NULL;
++
+ 	if (check_index && !tpatch) {
+ 		int pos =3D cache_name_pos(old_name, strlen(old_name));
+ 		if (pos < 0) {
+@@ -2471,6 +2501,7 @@ static int check_patch(struct patch *patch)
+ 	const char *new_name =3D patch->new_name;
+ 	const char *name =3D old_name ? old_name : new_name;
+ 	struct cache_entry *ce =3D NULL;
++	struct patch *tpatch;
+ 	int ok_if_exists;
+ 	int status;
+=20
+@@ -2481,7 +2512,8 @@ static int check_patch(struct patch *patch)
+ 		return status;
+ 	old_name =3D patch->old_name;
+=20
+-	if (in_fn_table(new_name) =3D=3D (struct patch *) -1)
++	if ((tpatch =3D in_fn_table(new_name)) &&
++			(was_deleted(tpatch) || to_be_deleted(tpatch)))
+ 		/*
+ 		 * A type-change diff is always split into a patch to
+ 		 * delete old, immediately followed by a patch to
+@@ -2533,6 +2565,8 @@ static int check_patch_list(struct patch *patch)
+ {
+ 	int err =3D 0;
+=20
++	prepare_fn_table(patch);
++
+ 	while (patch) {
+ 		if (apply_verbosely)
+ 			say_patch_name(stderr,
+--=20
+1.6.0.6
