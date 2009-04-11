@@ -1,66 +1,95 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: [PATCH RFC 2/6] send-email: --smtp-server-port should take an 
-	integer
-Date: Sat, 11 Apr 2009 16:07:08 -0500
-Message-ID: <b4087cc50904111407n27aea57n22772c09557f177@mail.gmail.com>
-References: <1239139522-24118-1-git-send-email-mfwitten@gmail.com>
-	 <1239139522-24118-2-git-send-email-mfwitten@gmail.com>
-	 <7vvdpbf11m.fsf@gitster.siamese.dyndns.org>
-	 <200904111501.05734.wjl@icecavern.net>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH] t1301-shared-repo: Fix forced modes test
+Date: Sat, 11 Apr 2009 23:32:05 +0200
+Message-ID: <49E10C55.1050005@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Wesley J. Landaker" <wjl@icecavern.net>
-X-From: git-owner@vger.kernel.org Sat Apr 11 23:08:46 2009
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 11 23:35:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LskRR-0000Ib-6D
-	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 23:08:45 +0200
+	id 1Lskqo-00087g-37
+	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 23:34:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758824AbZDKVHL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Apr 2009 17:07:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759401AbZDKVHL
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 17:07:11 -0400
-Received: from mail-qy0-f118.google.com ([209.85.221.118]:32941 "EHLO
-	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759414AbZDKVHJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Apr 2009 17:07:09 -0400
-Received: by qyk16 with SMTP id 16so2996708qyk.33
-        for <git@vger.kernel.org>; Sat, 11 Apr 2009 14:07:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Ge0Y/cFZIVhtpmYFkQF+9M2xUJWyEkmkSWxc6A5xVdU=;
-        b=mp6F3QK8EPVVrvc1KGXPmO5lg+wvqreGKsremPi25VS3f4YdSk/YQRPsRvfju3lUX7
-         3OYJT5BpftORfzV9tfZCDxPF678f8Ob8qf6S/M792SprrmNG4pSHNbrxcq/czT/Ifzc4
-         HL7+JGnTQQasr5Gk7+3F2pMQ2JkBrBcLg1Fug=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ME4aK0snKQrPzduDzxMC0VznXHY+7TfWExJDLYwD//Qh6oBT4GluEV1jm7VJPPdMGA
-         2AoEeQFBPozpvN8ayWxzDlzbxC8cHHYAi2a0uT/5OH3Un6++kyfaY5fDHPcfnWvUxq0c
-         /cbbWJ8Piuk10O03aEB8oE0lh2zIKvNJQDzjo=
-Received: by 10.224.11.17 with SMTP id r17mr4960147qar.346.1239484028444; Sat, 
-	11 Apr 2009 14:07:08 -0700 (PDT)
-In-Reply-To: <200904111501.05734.wjl@icecavern.net>
+	id S1754549AbZDKVcP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Apr 2009 17:32:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754326AbZDKVcP
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 17:32:15 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:65006 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750863AbZDKVcO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Apr 2009 17:32:14 -0400
+Received: from [77.117.144.164] (77.117.144.164.wireless.dyn.drei.com [77.117.144.164])
+	by bsmtp.bon.at (Postfix) with ESMTP id 81301A7EBD;
+	Sat, 11 Apr 2009 23:32:10 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116351>
 
-On Sat, Apr 11, 2009 at 16:01, Wesley J. Landaker <wjl@icecavern.net> wrote:
-> On Saturday 11 April 2009 13:22:29 Junio C Hamano wrote:
->> Hmm, I have to wonder if there somebody who is using symbolic names for
->> ports, e.g. --smtp-server-port=ssmtp which this patch may start
->> rejecting.
->
-> An common example is --smtp-server-port=submission (for 587).
+This test was added recently (5a688fe, "core.sharedrepository = 0mode"
+should set, not loosen; 2009-03-28). It checked the result of a sed
+invocation for emptyness, but in some cases it forgot to print anything
+at all, so that those checks would never be false.
 
-Clearly, then, this patch is no good. Consider it thrown out.
+Due to this mistake, it went unnoticed that the files in objects/info are
+not necessarily 0440, but can also be 0640. This directory is now exempt
+from the check.
+
+Finally, this test cannot be run on Windows (requires POSIXPERM).
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+
+  I don't have a Linux/Unix readily available right now, so this is only
+  tested on Windows.
+
+  -- Hannes
+
+  t/t1301-shared-repo.sh |    8 +++++---
+  1 files changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
+index 750fbb3..fb7c51d 100755
+--- a/t/t1301-shared-repo.sh
++++ b/t/t1301-shared-repo.sh
+@@ -126,7 +126,7 @@ test_expect_success POSIXPERM 'git reflog expire
+  	esac
+  '
+
+-test_expect_success 'forced modes' '
++test_expect_success POSIXPERM 'forced modes' '
+  	mkdir -p templates/hooks &&
+  	echo update-server-info >templates/hooks/post-update &&
+  	chmod +x templates/hooks/post-update &&
+@@ -145,7 +145,7 @@ test_expect_success 'forced modes' '
+  	xargs ls -ld >actual &&
+
+  	# Everything must be unaccessible to others
+-	test -z "$(sed -n -e "/^.......---/d" actual)" &&
++	test -z "$(sed -e "/^.......---/d" actual)" &&
+
+  	# All directories must have either 2770 or 770
+  	test -z "$(sed -n -e "/^drwxrw[sx]---/d" -e "/^d/p" actual)" &&
+@@ -156,10 +156,12 @@ test_expect_success 'forced modes' '
+  		p
+  	}" actual)" &&
+
+-	# All files inside objects must be 0440
++	# All files inside objects (except objects/info) must be 0440
+  	test -z "$(sed -n -e "/objects\//{
+  		/^d/d
++		/info/d
+  		/^-r--r-----/d
++		p
+  	}" actual)"
+  '
+
+-- 
+1.6.2.2.1458.gf2216d6
