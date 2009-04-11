@@ -1,68 +1,51 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [FR] Encrypting the repository
-Date: Fri, 10 Apr 2009 22:03:58 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0904102159000.6741@xanadu.home>
-References: <loom.20090410T084314-918@post.gmane.org>
- <fabb9a1e0904100330u61a7e252he546f0edc4e016a7@mail.gmail.com>
- <49DF294E.7010407@hepe.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git svn hangs
+Date: Fri, 10 Apr 2009 19:09:19 -0700
+Message-ID: <20090411020919.GA30267@dcvr.yhbt.net>
+References: <49DE2796.4090406@bestmail.us>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
-To: Aaron Digulla <digulla@hepe.com>
-X-From: git-owner@vger.kernel.org Sat Apr 11 04:06:03 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jim Babka <babka@bestmail.us>
+X-From: git-owner@vger.kernel.org Sat Apr 11 04:11:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LsSba-0003eZ-S0
-	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 04:06:03 +0200
+	id 1LsSgb-0004Xk-H7
+	for gcvg-git-2@gmane.org; Sat, 11 Apr 2009 04:11:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754283AbZDKCEJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Apr 2009 22:04:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754319AbZDKCEH
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 22:04:07 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:44508 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754759AbZDKCEF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Apr 2009 22:04:05 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KHW00054Z2MGF30@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 10 Apr 2009 22:03:59 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <49DF294E.7010407@hepe.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1754573AbZDKCJV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Apr 2009 22:09:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754283AbZDKCJV
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Apr 2009 22:09:21 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:46691 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753811AbZDKCJU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Apr 2009 22:09:20 -0400
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id DAFB411309A;
+	Sat, 11 Apr 2009 02:09:19 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <49DE2796.4090406@bestmail.us>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116291>
 
-On Fri, 10 Apr 2009, Aaron Digulla wrote:
+Jim Babka <jim@babkas.info> wrote:
+> I need some help. I have tried both the native Windows git (git version  
+> 1.6.2.2.1669.g7eaf8, coming from Git-1.6.2.2-preview20090408) and the  
+> git in Cygwin (git version 1.6.1.2), but I see almost the same behavior.  
+> I try to run the following command and see the following results:
 
-> Sverre Rabbelier wrote:
-> 
-> > > I need a way to safely synchronize data between several places using an
-> > > unsafe
-> > > storage (USB stick, Internet drive). So my question is: How much work
-> > > would it
-> > > be to patch GIT to encrypt all files in the repository using AES-256?
-> > 
-> > Encrypt the entire drive flash drive [0], and then use git like
-> > normal, 0 changes required ;). You can also create an encrypted file,
-> > and then use git like normal, also 0 changes required!
-> 
-> How do I encrypt an Internet drive (like Dropbox)? Also, if possible, I'd like
-> not to have to install any software on the local computer (well, besides git,
-> obviously).
+Hi Jim,
 
-You can create git bundles, which is a way to synchronize repositories 
-without using a direct network connection.  A bundle is simply a single 
-file with the needed data to perform repository updates.
+Can you test the clone operation from a Linux/Unix machine?  Does
+git-svn on Windows work for you with other (public) repositories?  I
+can't support Windows other than accepting patches from others.
 
-So you could use bundles, and encrypt them with the encryption tool of 
-your choice before storing them on a USB stick for example.
-
-
-Nicolas
+-- 
+Eric Wong
