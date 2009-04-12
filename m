@@ -1,93 +1,79 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] http-push.c: DAV must support olny http and https
-	scheme
-Date: Sun, 12 Apr 2009 11:00:53 +0200
-Message-ID: <20090412090053.GA9920@glandium.org>
-References: <1239371060-3978-1-git-send-email-catap@catap.ru> <7vd4bi9s1m.fsf@gitster.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [RFC PATCH] git add -p: new "quit" command at the prompt.
+Date: Sun, 12 Apr 2009 14:45:23 +0200
+Message-ID: <vpqfxgevy58.fsf@bauges.imag.fr>
+References: <1239375421-2556-1-git-send-email-Matthieu.Moy@imag.fr>
+	<7vws9rdmgd.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Kirill A. Korinskiy" <catap@catap.ru>, git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 12 11:03:54 2009
+X-From: git-owner@vger.kernel.org Sun Apr 12 14:50:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lsvb0-0002mp-GW
-	for gcvg-git-2@gmane.org; Sun, 12 Apr 2009 11:03:22 +0200
+	id 1Lsz8Q-0002Oy-CV
+	for gcvg-git-2@gmane.org; Sun, 12 Apr 2009 14:50:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757612AbZDLJBK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Apr 2009 05:01:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757689AbZDLJBJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Apr 2009 05:01:09 -0400
-Received: from vuizook.err.no ([85.19.221.46]:34379 "EHLO vuizook.err.no"
+	id S1760593AbZDLMsU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Apr 2009 08:48:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760420AbZDLMsU
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Apr 2009 08:48:20 -0400
+Received: from imag.imag.fr ([129.88.30.1]:51213 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757391AbZDLJBH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Apr 2009 05:01:07 -0400
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <mh@glandium.org>)
-	id 1LsvYf-0003Dv-Qg; Sun, 12 Apr 2009 11:01:00 +0200
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1LsvYb-0002ac-Sj; Sun, 12 Apr 2009 11:00:53 +0200
-Content-Disposition: inline
-In-Reply-To: <7vd4bi9s1m.fsf@gitster.siamese.dyndns.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
+	id S1760349AbZDLMsT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Apr 2009 08:48:19 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n3CCjPSm011779
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 12 Apr 2009 14:45:25 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Lsz3r-0000l8-I5; Sun, 12 Apr 2009 14:45:23 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Lsz3r-0002dE-Fo; Sun, 12 Apr 2009 14:45:23 +0200
+In-Reply-To: <7vws9rdmgd.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Sat\, 11 Apr 2009 12\:22\:58 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 12 Apr 2009 14:45:25 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116377>
 
-On Sun, Apr 12, 2009 at 01:48:05AM -0700, Junio C Hamano wrote:
-> "Kirill A. Korinskiy" <catap@catap.ru> writes:
-> 
-> > If the response from remote web-server have scp or other not http-like
-> > scheme http-push can't go to change url, because DAV must work only
-> > over HTTP (http and https scheme).
-> >
-> > Signed-off-by: Kirill A. Korinskiy <catap@catap.ru>
-> > ---
-> >  http-push.c |   19 ++++++++++---------
-> >  1 files changed, 10 insertions(+), 9 deletions(-)
-> >
-> > diff --git a/http-push.c b/http-push.c
-> > index feeb340..48c9a04 100644
-> > --- a/http-push.c
-> > +++ b/http-push.c
-> > @@ -1457,16 +1457,17 @@ static void handle_remote_ls_ctx(struct xml_ctx *ctx, int tag_closed)
-> >  			}
-> >  		} else if (!strcmp(ctx->name, DAV_PROPFIND_NAME) && ctx->cdata) {
-> >  			char *path = ctx->cdata;
-> > -			if (*ctx->cdata == 'h') {
-> > -				path = strstr(path, "//");
-> > -				if (path) {
-> > -					path = strchr(path+2, '/');
-> > -				}
-> > -			}
-> > -			if (path) {
-> > -				path += repo->path_len;
-> > -				ls->dentry_name = xstrdup(path);
-> > +			if (!strcmp(ctx->cdata, "http://")) {
-> > +				path = strchr(path + sizeof("http://") - 1, '/');
-> > +			} else if (!strcmp(ctx->cdata, "https://")) {
-> > +				path = strchr(path + sizeof("https://") - 1, '/');
-> >  			}
-> > +
-> > +			path += remote->path_len;
-> 
-> http-push.c: In function 'handle_remote_ls_ctx':
-> http-push.c:1466: error: 'remote' undeclared (first use in this function)
-> http-push.c:1466: error: (Each undeclared identifier is reported only once
-> http-push.c:1466: error: for each function it appears in.)
-> 
-> Ah, crap.
+Junio C Hamano <gitster@pobox.com> writes:
 
-s/remote/repo/. He must have done his patch before 7b5201a and rebased
-afterwards without checking.
+> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+>
+>> There's already 'd' to stop staging hunks in a file, but no command to
+>> stop the interactive staging (for the current files and the remaining
+>> ones). This patch implements this functionality, and binds it to 'q'.
+>> ---
+>>
+>> I'm not familiar at all with the code in git-add--interactive.perl, so
+>> my code is mostly cut-and-pasted+adapted from the 'd' command.
+>
+> You can say 'd' and then ^C, I think.
 
-Mike
+Yes, you /can/, and that's what I'm doing right now in this situation.
+But that's undocumented, not so intuitive (I found out I could do that
+after trying ^C alone, which doesn't work, staged content is recorded
+on disk at the end of the file only, not after each prompt), ...
+
+I thought the situation was common enough to deserve an explicit
+command. The 'd' command is natural for "git add -i" + patch
+subcommand, but for "git add -p", I found 'd' mostly useless, and I
+really want a "quit" command.
+
+Sure, I can live without it, but if other people would like to have
+it, please speak now ;-).
+
+-- 
+Matthieu
