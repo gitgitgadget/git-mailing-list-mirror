@@ -1,84 +1,96 @@
 From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: [PATCH RFC 3/6] send-email: Handle "GIT:" rather than "GIT: " 
-	during --compose
-Date: Sat, 11 Apr 2009 21:36:48 -0500
-Message-ID: <b4087cc50904111936r6cbde773scbe5e7243442dc79@mail.gmail.com>
-References: <1239139522-24118-1-git-send-email-mfwitten@gmail.com>
-	 <1239139522-24118-2-git-send-email-mfwitten@gmail.com>
-	 <1239139522-24118-3-git-send-email-mfwitten@gmail.com>
-	 <7vprfjf11h.fsf@gitster.siamese.dyndns.org>
-	 <b4087cc50904111345v4787f38al9d7d234de8a6d24e@mail.gmail.com>
-	 <7v3aced6vr.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Subject: Re: [PATCH RFC 08/10] send-email: Add --sleep for email throttling
+Date: Sat, 11 Apr 2009 21:59:57 -0500
+Message-ID: <f661ba4e-cfb0-4756-8ef4-4a4f9f66c4e8mfwitten@gmail.com>
+References: <1239476908-25944-1-git-send-email-mfwitten@gmail.com>
+	 <1239476908-25944-2-git-send-email-mfwitten@gmail.com>
+	 <1239476908-25944-3-git-send-email-mfwitten@gmail.com>
+	 <1239476908-25944-4-git-send-email-mfwitten@gmail.com>
+	 <1239476908-25944-5-git-send-email-mfwitten@gmail.com>
+	 <1239476908-25944-6-git-send-email-mfwitten@gmail.com>
+	 <1239476908-25944-7-git-send-email-mfwitten@gmail.com>
+	 <1239476908-25944-8-git-send-email-mfwitten@gmail.com>
+	 <76718490904111927y683ee4axe512dae9d58e19bb@mail.gmail.com
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 12 04:38:25 2009
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 12 05:21:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LspaS-0003Sj-8A
-	for gcvg-git-2@gmane.org; Sun, 12 Apr 2009 04:38:24 +0200
+	id 1LsqFt-00012R-EB
+	for gcvg-git-2@gmane.org; Sun, 12 Apr 2009 05:21:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754473AbZDLCgv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Apr 2009 22:36:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753944AbZDLCgv
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 22:36:51 -0400
-Received: from mail-qy0-f118.google.com ([209.85.221.118]:47650 "EHLO
-	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752827AbZDLCgu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 11 Apr 2009 22:36:50 -0400
-Received: by qyk16 with SMTP id 16so3121592qyk.33
-        for <git@vger.kernel.org>; Sat, 11 Apr 2009 19:36:49 -0700 (PDT)
+	id S1755429AbZDLDGo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Apr 2009 23:06:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755078AbZDLDGo
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 23:06:44 -0400
+Received: from mail-gx0-f160.google.com ([209.85.217.160]:57263 "EHLO
+	mail-gx0-f160.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754545AbZDLDGn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Apr 2009 23:06:43 -0400
+Received: by gxk4 with SMTP id 4so3642716gxk.13
+        for <git@vger.kernel.org>; Sat, 11 Apr 2009 20:06:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=D7myBbR7vdeoLM8f9VknXVyjDXhP5N4srdK3qphP+kI=;
-        b=RfAKGkGRDh2C9kIewgejartJH7ljehSBJ68Obs3rtSfFk11LTT0ByT/U00jbmNdm8P
-         6HG3T94HZuOBBrUXCFBBDyuxsxlOMmmo5ZceGz7ofICPzVHZt4ZJLCf1YgNw4RcTbBhf
-         dCLt5Np16Zf2loL1Suy8ydmadDCzW/0Rmno1E=
+        h=domainkey-signature:received:received:from:to:cc:date:subject
+         :message-id:references;
+        bh=ihAXZS4bV9c9hm95V1tlxdBbyUni92ncyyS3G/Qb6f8=;
+        b=Nqa2H8OzdSRlbKKS6ZaDBINcnQafuHCI1jwwGuC68TlXHIeu3x/nG8J+J3jQazRwlk
+         JE4s/fPiegEl2IA6qz6gvKzEDQN3RTXB7X1QjO56kZF7cDA1rbrLmUXtDdrVfD2gUlpb
+         BFeqX6SZa7myyASC0P7xw8vjyRBJaHi8yJJCg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=pZ+h3usRkocejPBTUn9EIgJaFSdAtHwUp/uCJwNYR7x7n9UL8u0nHyLUVx6+cXCfe0
-         oI6+XtjmTYV4McTxggI3cZMHM8ElhTVnHoX+pTupYYNH9WxxMfCW6tgXy201FcQ7ciH7
-         AfAFSHbtL4LxjD89g07kOEXPqQgb3xsF1piSE=
-Received: by 10.224.20.77 with SMTP id e13mr5081569qab.186.1239503808756; Sat, 
-	11 Apr 2009 19:36:48 -0700 (PDT)
-In-Reply-To: <7v3aced6vr.fsf@gitster.siamese.dyndns.org>
+        h=from:to:cc:date:subject:message-id:references;
+        b=XXzCD2lDueavb/DZgqr3bz6EagtzaLBP+6Wp29OCh6ZIg4ybbB1uVFty6wMZgtToKK
+         bHECfI9WUtGJT8sustM90MRGrJOC7Ws9wzpyLS2uZ6TEUm+LIP+8YKTlzFR1qIak5Ij2
+         5dzNBOdl4dwI0dehg5KyHNsG50Ec3sXLoOxzw=
+Received: by 10.150.133.13 with SMTP id g13mr9992576ybd.2.1239505601963;
+        Sat, 11 Apr 2009 20:06:41 -0700 (PDT)
+Received: from gmail.com (97-116-116-167.mpls.qwest.net [97.116.116.167])
+        by mx.google.com with ESMTPS id 9sm6057283ywf.26.2009.04.11.20.06.40
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 11 Apr 2009 20:06:41 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116365>
 
-On Sat, Apr 11, 2009 at 19:59, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> Special variables like $_ cannot be made into lexicals, unless you kn=
-ow
-> you will only run with a very recent version of Perl (5.9.1, I think)=
-=2E
-
-Ah. I wish Perl's docs were a little more forthcoming about such
-things. I ended up just trying it out, and indeed I am running 5.10.0.
-
-> If you do not want to worry about portability, typically it is easies=
-t to
-> say "local ($_)" upfront in the beginning of a sub.
+On Sat, Apr 11, 2009 at 21:27, Jay Soffian <jaysoffian@gmail.com> wrote:
+> On Sat, Apr 11, 2009 at 3:08 PM, Michael Witten <mfwitten@gmail.com> wrote:
+>> +if (defined $sleep) {{
+>> +}}
 >
-> I do not understand why you want to change the original
->
-> =A0 =A0 =A0 =A0while (my $line =3D <$fh>) {
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0...
-> =A0 =A0 =A0 =A0}
->
-> though.
+> What's the double-brackets about?
 
-I'm not terribly bent on it; I had already reshaped that function and
-I was curious about making what I had done work out of intellectual
-curiosity. In fact, my commits no longer have the refactored version.
+The {} that form the true-body of the if statement don't actually
+denote a block. The extra layer of {} is explicitly creating a block.
+This is done, because in Perl, blocks can be thought of as loops that
+execute one iteration, so you can use all of the loop flow-control
+operators 'redo', 'last', and 'next'.
+
+In this case, I wanted to use 'last' to jump out of --sleep setup
+should the user decide to do so, because I think it's cleaner than a
+goto or variable check or superfluous loop:
+
+if (defined $sleep) {{
+
+	unless ($chain_reply_to) {
+		...
+		/^b/                                               or
+		/^s/ and $chain_reply_to = 1                       or
+		/^c/ and $sleep = undef, last                      or  # forget --sleep was ever used
+		/^n/ and $chain_reply_to = 1, $sleep = undef, last or  # forget --sleep was ever used
+		/^q/ and exit;
+	}
+	...
+}}
+# last jumps to here
+
+Anyway, this particular behavior was requested (and seems reasonable):
+
+	http://marc.info/?l=git&m=123929919621279&w=2
+
+Sincerely,
+Michael Witten
