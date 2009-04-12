@@ -1,69 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] graph API: Added logic for colored edges
-Date: Sun, 12 Apr 2009 11:45:08 -0700
-Message-ID: <7vk55p7lu3.fsf@gitster.siamese.dyndns.org>
-References: <7vocv6is9g.fsf@gitster.siamese.dyndns.org>
- <20090409222238.GA16573@linux.vnet>
- <7vhc0u9s86.fsf@gitster.siamese.dyndns.org>
- <b2e43f8f0904121043o425ac311ib32c18625fac2c0e@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Teemu Likonen <tlikonen@iki.fi>
-To: Allan Caffee <allan.caffee@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 12 20:47:11 2009
+From: "Kirill A. Korinskiy" <catap@catap.ru>
+Subject: [PATCH] http-push.c: DAV must support olny http and https scheme
+Date: Sun, 12 Apr 2009 22:49:06 +0400
+Message-ID: <1239562146-32133-1-git-send-email-catap@catap.ru>
+References: <7vd4bi9s1m.fsf@gitster.siamese.dyndns.org>
+Cc: git@vger.kernel.org, "Kirill A. Korinskiy" <catap@catap.ru>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Apr 12 20:51:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lt4hq-0000X2-WB
-	for gcvg-git-2@gmane.org; Sun, 12 Apr 2009 20:47:03 +0200
+	id 1Lt4mG-0002Eh-RH
+	for gcvg-git-2@gmane.org; Sun, 12 Apr 2009 20:51:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751716AbZDLSpU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Apr 2009 14:45:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751688AbZDLSpT
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Apr 2009 14:45:19 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41250 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751639AbZDLSpS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Apr 2009 14:45:18 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id D1DCAEB2C;
-	Sun, 12 Apr 2009 14:45:16 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E3407EB2B; Sun,
- 12 Apr 2009 14:45:09 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 10D07024-2792-11DE-B7BE-DC76898A30C1-77302942!a-sasl-quonix.pobox.com
+	id S1751688AbZDLSuA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Apr 2009 14:50:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751449AbZDLSt7
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Apr 2009 14:49:59 -0400
+Received: from mx.catap.ru ([85.25.232.43]:48083 "EHLO mx.catap.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751206AbZDLSt6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Apr 2009 14:49:58 -0400
+Received: from catap.static.corbina.ru ([85.21.143.245] helo=satellite.home.catap.ru)
+	by mx.catap.ru with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <catap@satellite.home.catap.ru>)
+	id 1Lt4kO-0003zr-LY; Sun, 12 Apr 2009 22:49:40 +0400
+Received: from catap by satellite.home.catap.ru with local (Exim 4.69)
+	(envelope-from <catap@satellite.home.catap.ru>)
+	id 1Lt4jq-0008Mx-QC; Sun, 12 Apr 2009 22:49:06 +0400
+X-Mailer: git-send-email 1.6.2
+In-Reply-To: <7vd4bi9s1m.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116387>
 
-Allan Caffee <allan.caffee@gmail.com> writes:
+If the response from remote web-server have scp or other not http-like
+scheme http-push can't go to change url, because DAV must work only
+over HTTP (http and https scheme).
 
->> > +const unsigned short GIT_NOT_A_COLOR = -1;
->>
->> That (-1) is an unusual value for an *unsigned* short variable.
->
-> Perhaps you would prefer USHRT_MAX?  I noticed that none of the existing
-> code #includes limits.h.  Is it safe to assume this header is present?
+Signed-off-by: Kirill A. Korinskiy <catap@catap.ru>
+---
+ http-push.c |   19 ++++++++++---------
+ 1 files changed, 10 insertions(+), 9 deletions(-)
 
-I expected to see something like 
-
-	#define COLUMN_COLORS_MAX (ARRAY_SIZE(column_colors)+1)
-
-	write_with_color(...) {
-                if (c->color < COLUMN_COLORS_MAX)
-                        add color prefix;
-                add string
-                if (c->color < COLUMN_COLORS_MAX)
-                        add color suffix;
-	}
-
-instead, actually, and was a bit surprised with (-1).
+diff --git a/http-push.c b/http-push.c
+index feeb340..cce9ead 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -1457,16 +1457,17 @@ static void handle_remote_ls_ctx(struct xml_ctx *ctx, int tag_closed)
+ 			}
+ 		} else if (!strcmp(ctx->name, DAV_PROPFIND_NAME) && ctx->cdata) {
+ 			char *path = ctx->cdata;
+-			if (*ctx->cdata == 'h') {
+-				path = strstr(path, "//");
+-				if (path) {
+-					path = strchr(path+2, '/');
+-				}
+-			}
+-			if (path) {
+-				path += repo->path_len;
+-				ls->dentry_name = xstrdup(path);
++			if (!strcmp(ctx->cdata, "http://")) {
++				path = strchr(path + sizeof("http://") - 1, '/');
++			} else if (!strcmp(ctx->cdata, "https://")) {
++				path = strchr(path + sizeof("https://") - 1, '/');
+ 			}
++
++			path += repo->path_len;
++
++			ls->dentry_name = xmalloc(strlen(path) -
++						  repo->path_len + 1);
++			strcpy(ls->dentry_name, path + repo->path_len);
+ 		} else if (!strcmp(ctx->name, DAV_PROPFIND_COLLECTION)) {
+ 			ls->dentry_flags |= IS_DIR;
+ 		}
+-- 
+1.6.2
