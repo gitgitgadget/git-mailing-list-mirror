@@ -1,87 +1,67 @@
-From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: Re: [PATCH] documentation: Makefile accounts for SHELL_PATH setting
-Date: Sat, 11 Apr 2009 21:49:25 -0400
-Message-ID: <1239500938-sup-5545@ntdws12.chass.utoronto.ca>
-References: <1237728044-15651-1-git-send-email-bwalton@artsci.utoronto.ca> <20090410093430.6117@nanako3.lavabit.com> <7vmyamdirk.fsf@gitster.siamese.dyndns.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH RFC 08/10] send-email: Add --sleep for email throttling
+Date: Sat, 11 Apr 2009 22:27:29 -0400
+Message-ID: <76718490904111927y683ee4axe512dae9d58e19bb@mail.gmail.com>
+References: <1239476908-25944-1-git-send-email-mfwitten@gmail.com>
+	 <1239476908-25944-2-git-send-email-mfwitten@gmail.com>
+	 <1239476908-25944-3-git-send-email-mfwitten@gmail.com>
+	 <1239476908-25944-4-git-send-email-mfwitten@gmail.com>
+	 <1239476908-25944-5-git-send-email-mfwitten@gmail.com>
+	 <1239476908-25944-6-git-send-email-mfwitten@gmail.com>
+	 <1239476908-25944-7-git-send-email-mfwitten@gmail.com>
+	 <1239476908-25944-8-git-send-email-mfwitten@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; boundary="=-1239500970-775987-21251-5336-63-="; micalg="pgp-sha1"
-Cc: GIT List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 12 03:54:52 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 12 04:35:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LsouJ-0004f3-KC
-	for gcvg-git-2@gmane.org; Sun, 12 Apr 2009 03:54:52 +0200
+	id 1LspXc-0002xY-V9
+	for gcvg-git-2@gmane.org; Sun, 12 Apr 2009 04:35:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753539AbZDLBte (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Apr 2009 21:49:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753470AbZDLBte
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 21:49:34 -0400
-Received: from www.cquest.utoronto.ca ([192.82.128.5]:55970 "EHLO
-	www.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753004AbZDLBtd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Apr 2009 21:49:33 -0400
-Received: from ntdws12.chass.utoronto.ca ([128.100.160.253]:49545 ident=93)
-	by www.cquest.utoronto.ca with esmtp (Exim 4.43)
-	id 1Lsop9-0006jj-2u; Sat, 11 Apr 2009 21:49:31 -0400
-Received: from localhost
-	([127.0.0.1] helo=ntdws12.chass.utoronto.ca ident=505)
-	by ntdws12.chass.utoronto.ca with esmtp (Exim 4.63)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1Lsop9-0006y9-0Q; Sat, 11 Apr 2009 21:49:31 -0400
-Received: (from bwalton@localhost)
-	by ntdws12.chass.utoronto.ca (8.13.8/8.13.8/Submit) id n3C1nUvk026789;
-	Sat, 11 Apr 2009 21:49:30 -0400
-In-Reply-To: <7vmyamdirk.fsf@gitster.siamese.dyndns.org>
-User-Agent: Sup/git
+	id S1753745AbZDLC1c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Apr 2009 22:27:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752916AbZDLC1b
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Apr 2009 22:27:31 -0400
+Received: from mail-gx0-f160.google.com ([209.85.217.160]:36890 "EHLO
+	mail-gx0-f160.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752291AbZDLC1b (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Apr 2009 22:27:31 -0400
+Received: by gxk4 with SMTP id 4so3626349gxk.13
+        for <git@vger.kernel.org>; Sat, 11 Apr 2009 19:27:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=M25xedKdsD5CW+0lWPzWMqshT4iykICTfxtQjDuAPag=;
+        b=XEEB1DQmmD3y9y0yJhZ04A9mnVZgujrH8F/WNCnKU78lHC2BH3VSHLiBr7UR8QPYv/
+         qaabbjZbW4O6V70dc9LLuMSsPj/hfR5E7phJrMxOu5wUWtUF080fZqmNBLbHDc9KXTYs
+         iyjWuQfAq/U1AcIgHJRX8moMgt0luWNW+y5YE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=QW2BYlGcIXZkvn4buFIJm2KSNxrjFcUUlza1d0LUyBc4/FuZVqpipgMbvVloY87JvP
+         7db/dzlERnR9AkYEhisMHp320s/GB1qxj/aYtnXEMfCxAtWuW8AXIdZttI+uhznU0h/M
+         Bdz+Tb1NEIWsTigTd6WXsTrsGxkxJPclEG+fA=
+Received: by 10.150.217.14 with SMTP id p14mr9908293ybg.147.1239503249971; 
+	Sat, 11 Apr 2009 19:27:29 -0700 (PDT)
+In-Reply-To: <1239476908-25944-8-git-send-email-mfwitten@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116363>
 
+On Sat, Apr 11, 2009 at 3:08 PM, Michael Witten <mfwitten@gmail.com> wrote:
+> +if (defined $sleep) {{
+> +}}
 
---=-1239500970-775987-21251-5336-63-=
-Content-Type: text/plain; charset=UTF-8
+What's the double-brackets about?
 
-Excerpts from Junio C Hamano's message of Sat Apr 11 16:42:39 -0400 2009:
-> There was a discussion going that eventurally petered out without seeing
-> success (or breakage) reports from people with various platforms.
-
-I didn't see that part of the discussion.  Were there breakage
-reports?  I'm willing to make any required corrections to the patch
-such that it gets included (then I could drop it locally).
-
-> I think the patch text is Ok, with "where sh is not bash" in the log
-> message rephrased to "where sh is not POSIX", but I do not have an
-> easy
-
-I'll resubmit with the wording correction and any other requested
-alterations.
-
-Thanks
--Ben
--- 
-Ben Walton
-Systems Programmer - CHASS
-University of Toronto
-C:416.407.5610 | W:416.978.4302
-
-GPG Key Id: 8E89F6D2; Key Server: pgp.mit.edu
-Contact me to arrange for a CAcert assurance meeting.
-
---=-1239500970-775987-21251-5336-63-=
-Content-Disposition: attachment; filename="signature.asc"
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
-
-iD8DBQFJ4Uiq8vuMHY6J9tIRArI0AJ9hzKy5Q5psTSkQ7R/Wr3e/TgZuGgCg3fHn
-XDMhmo1KNbdyb0PBUJZRxDc=
-=I5Iq
------END PGP SIGNATURE-----
-
---=-1239500970-775987-21251-5336-63-=--
+j.
