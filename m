@@ -1,74 +1,94 @@
-From: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
-Subject: Re: [PATCH v3 2/2] Ensure consistent usage of mergetool.keepBackup
- in git
-Date: Sun, 12 Apr 2009 09:04:02 +0200
-Message-ID: <49E19262.7090802@pelagic.nl>
-References: <f3d401fbaec1556ffbf8c13b83e58849af973a71.1239376248.git.ferry.huberts@pelagic.nl> <9a358c8b6275a7103eb036a2d1d6073bcf191e09.1239376248.git.ferry.huberts@pelagic.nl> <7vljq7dmg2.fsf@gitster.siamese.dyndns.org> <49E0F27C.8070203@pelagic.nl> <49E0F33B.8070806@pelagic.nl> <7v4owvdju6.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] builtin-branch - allow deleting a fully specified
+	branch-name
+Date: Sun, 12 Apr 2009 03:20:57 -0400
+Message-ID: <20090412072056.GA25837@coredump.intra.peff.net>
+References: <1239323335-4684-1-git-send-email-mlevedahl@gmail.com> <200904092119.10520.mlevedahl@gmail.com> <7vbpr519jq.fsf@gitster.siamese.dyndns.org> <200904111301.31250.mlevedahl@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	David Aguilar <davvid@gmail.com>,
-	Markus Heidelberg <markus.heidelberg@web.de>,
-	Charles Bailey <charles@hashpling.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 12 09:08:01 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 12 09:24:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LstnM-0004g9-Iz
-	for gcvg-git-2@gmane.org; Sun, 12 Apr 2009 09:08:01 +0200
+	id 1Lsu33-00089U-Th
+	for gcvg-git-2@gmane.org; Sun, 12 Apr 2009 09:24:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754845AbZDLHEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Apr 2009 03:04:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754661AbZDLHEH
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Apr 2009 03:04:07 -0400
-Received: from hupie.xs4all.nl ([82.95.241.251]:50814 "EHLO
-	Lighthouse.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1754609AbZDLHEG (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Apr 2009 03:04:06 -0400
-Received: from [192.168.0.101] (unknown [192.168.0.101])
-	by Lighthouse.internal.Hupie.com (Postfix) with ESMTP id E859358BD9F;
-	Sun, 12 Apr 2009 09:04:02 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <7v4owvdju6.fsf@gitster.siamese.dyndns.org>
+	id S1755338AbZDLHVA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Apr 2009 03:21:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753739AbZDLHVA
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Apr 2009 03:21:00 -0400
+Received: from peff.net ([208.65.91.99]:44197 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753416AbZDLHU7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Apr 2009 03:20:59 -0400
+Received: (qmail 12754 invoked by uid 107); 12 Apr 2009 07:21:01 -0000
+Received: from Unknown (HELO coredump.intra.peff.net) (10.0.0.130)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 12 Apr 2009 03:21:01 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 12 Apr 2009 03:20:57 -0400
+Content-Disposition: inline
+In-Reply-To: <200904111301.31250.mlevedahl@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116370>
 
-Junio C Hamano wrote:
-> "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl> writes:
-> 
->> Ferry Huberts (Pelagic) wrote:
->>> Junio C Hamano wrote:
->>>> Ferry Huberts <ferry.huberts@pelagic.nl> writes:
->>>>
->>>>> In several places merge.keepBackup is used i.s.o.
->>>>> mergetool.keepBackup. This patch makes it all
->>>>> consistent for git
->>>> A silly question.  The above makes it sound as if both merge.keepBackup
->>>> and mergetool.keepBackup are valid, but the latter is preferred, and your
->>>> patch makes things consistent even though without it there is nothing
->>>> broken per-se.
->>>>
->>>> Is that really is the case?
->>>>
->>>> Otherwise, perhaps the title and the message should read like this:
->>>>
->>>>     Fix misspelled mergetool.keepBackup
->>>>     
->>>>     In several places mergetool.keepBackup was misspelled as merge.keepBackup.
->>>>     
->>>>     Signed-off-by: Ferry Huberts <ferry.huberts@pelagic.nl>
->>> feel free to change it :-)
-> 
-> Notice that I didn't follow the discussion closely, and I am asking if
-> this is a "bugfix" or "changing for consistency even though there is no
-> breakage".
-> 
+On Sat, Apr 11, 2009 at 01:01:30PM -0400, Mark Levedahl wrote:
 
-it's the latter.
-summary: docs say mergetool.keepBackup. code does merge.keepBackup
+>    $ git checkout -b refs/heads/master refs/heads/master
+>              creates a new branch, refname = refs/heads/refs/heads/master
+> 
+> The last command is the one that I find most curious. The exact same string 
+> has two entirely different meanings to the same command. I can explain why 
+> this happens, but I cannot explain why this is a good thing. 
+
+A command like "grep foo foo" has the same property (one string with
+different meanings based on argument position). The problem is that you
+are thinking of it as:
+
+  git checkout -b <branch> <branch>
+
+And I can see why you might think of it that way, because that is what
+the synopsis in git-checkout(1) says. :) But it is really:
+
+  git checkout -b <branch> <commit>
+
+I'm not sure if changing that synopsis would really help, or if it is
+a bit too subtle.
+
+> A model I could explain without mental gymnastics would be "branch names are 
+> simply refnames without the leading refs/heads or refs/remotes, and a refname 
+> may be used wherever a branch name is requested. While branch names are 
+> potentially ambiguous, refnames never are."  Of course, this would mean that 
+
+So the current model is: "branch names are simply refnames without the
+leading refs/heads or refs/remotes. A <commit> can be referenced by the
+usual names (see git rev-parse, "specifying revisions" for details)".
+
+The thing that I think is more confusing about that is not the
+final example you pointed out, but the difference between
+
+  git checkout master
+
+and
+
+  git checkout refs/heads/master
+
+Which is explained by the fact that the usage for checkout is not
+
+  git checkout <branch>
+
+but actually
+
+  git checkout <branch|commit>
+
+If a branch, then we checkout the branch. If a commit, then we detach on
+that commit.
+
+I'm not sure if that explanation helps you at all, but that is how I
+think of it (and it makes sense to me).
+
+-Peff
