@@ -1,54 +1,75 @@
-From: Erik Broes <erikbroes@ripe.net>
-Subject: Re: [PATCH] git-shell: Add 'git-upload-archive' to allowed commands.
-Date: Sun, 12 Apr 2009 16:07:49 +0200
-Message-ID: <49E1F5B5.6090500@ripe.net>
-References: <49DE537C.8070907@ripe.net> <7v3acff10x.fsf@gitster.siamese.dyndns.org>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: how to squash commits
+Date: Sun, 12 Apr 2009 18:39:10 +0300
+Message-ID: <871vrxlw4h.fsf@iki.fi>
+References: <85b5c3130904111627l7cdd15a1n78271c8e113c4b7a@mail.gmail.com>
+	<cd4419280904120508v37314166pb35db8b50ec54839@mail.gmail.com>
+	<87d4bhlxlf.fsf@iki.fi> <vpqocv1vr1y.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 12 16:09:53 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: git@vger.kernel.org, mercurial@selenic.com
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: mercurial-bounces@selenic.com Sun Apr 12 17:41:03 2009
+Return-path: <mercurial-bounces@selenic.com>
+Envelope-to: gcvmd-mercurial@gmane.org
+Received: from waste.org ([66.93.16.53] helo=mail.waste.org)
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lt0Nd-0007Ix-6o
-	for gcvg-git-2@gmane.org; Sun, 12 Apr 2009 16:09:53 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753406AbZDLOH6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Apr 2009 10:07:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752914AbZDLOH5
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Apr 2009 10:07:57 -0400
-Received: from postgirl.ripe.net ([193.0.19.66]:45367 "EHLO postgirl.ripe.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752500AbZDLOH5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Apr 2009 10:07:57 -0400
-Received: from herring.ripe.net ([193.0.1.203])
-	by postgirl.ripe.net with esmtp (Exim 4.63)
-	(envelope-from <erikbroes@ripe.net>)
-	id 1Lt0Le-0001dh-0A; Sun, 12 Apr 2009 16:07:50 +0200
-Received: from Grumm.local (gw.office.nsrp.ripe.net [193.0.1.126])
-	by herring.ripe.net (Postfix) with ESMTP id E52942F583;
-	Sun, 12 Apr 2009 16:07:49 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Macintosh/20090302)
-In-Reply-To: <7v3acff10x.fsf@gitster.siamese.dyndns.org>
-X-RIPE-Spam-Level: ----
-X-RIPE-Signature: a3d33ccd309479c043417935190f954d46964606caf7301f1b166d72d1508eae
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116379>
+	id 1Lt1ni-0008Ov-2s
+	for gcvmd-mercurial@gmane.org; Sun, 12 Apr 2009 17:40:55 +0200
+Received: from waste.org (staticwaste [66.93.16.53])
+	by mail.waste.org (Postfix) with ESMTP id DAB975C8079;
+	Sun, 12 Apr 2009 10:41:30 -0500 (CDT)
+Received: from jenni2.inet.fi (mta-out.inet.fi [195.156.147.13])
+	by waste.org (8.13.8/8.13.8/Debian-3) with ESMTP id n3CFdJ3W005205
+	for <mercurial@selenic.com>; Sun, 12 Apr 2009 10:39:20 -0500
+Received: from mithlond.arda.local (80.220.180.181) by jenni2.inet.fi (8.5.014)
+	id 49CA1E6700BFEC20; Sun, 12 Apr 2009 18:39:12 +0300
+Received: from dtw by mithlond.arda.local with local (Exim 4.69)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1Lt1m2-0001yi-Am; Sun, 12 Apr 2009 18:39:10 +0300
+In-Reply-To: <vpqocv1vr1y.fsf@bauges.imag.fr> (Matthieu Moy's message of "Sun\,
+	12 Apr 2009 17\:18\:33 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Virus-Scanned: by amavisd-new
+X-BeenThere: mercurial@selenic.com
+X-Mailman-Version: 2.1.9
+Precedence: list
+List-Id: <mercurial.selenic.com>
+List-Unsubscribe: <http://selenic.com/mailman/listinfo/mercurial>,
+	<mailto:mercurial-request@selenic.com?subject=unsubscribe>
+List-Archive: <http://selenic.com/pipermail/mercurial>
+List-Post: <mailto:mercurial@selenic.com>
+List-Help: <mailto:mercurial-request@selenic.com?subject=help>
+List-Subscribe: <http://selenic.com/mailman/listinfo/mercurial>,
+	<mailto:mercurial-request@selenic.com?subject=subscribe>
+Sender: mercurial-bounces@selenic.com
+Errors-To: mercurial-bounces@selenic.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116380>
 
-> Can't the "security concern" be addressed by whatever creates the
-> controlled environment (e.g. gitosis)?  For example, git-daemon can be
-> configured to service upload-archive request, so I do not think it is such
-> a bad idea to make this available if the site owner wants to use it.
+Let's add the Git mailing list to the Cc list if someone there wants to
+comment. The whole thread is here:
 
-I completely agree. :)
+http://thread.gmane.org/gmane.comp.version-control.mercurial.general/13283/focus=13295
 
--- 
-Erik Broes
-Database Group
-RIPE NCC
+
+On 2009-04-12 17:18 (+0200), Matthieu Moy wrote:
+
+> Teemu Likonen <tlikonen@iki.fi> writes:
+>
+>> With the default settings user has 30 days to
+>> recover the branch's previous state,
+>
+> Actually, s/30 days/90 days/ according to "man git-gc".
+
+I understand it that objects which are not reachable form the tip of
+current branches are subject for garbage-collecting in 30 days. For
+example, let's say we are in "master" branch and do "git reset --hard
+master~1". It makes the previous HEAD commit unreachable from "master"
+branch and it can be GCd in 30 days (?).
+
+My understanding can be wrong, of course. The manual explainst options
+like gc.reflogExpire and gc.reflogExpireUnreachable separately but does
+not draw the big picture how things work.
+
+http://www.kernel.org/pub/software/scm/git/docs/git-gc.html
