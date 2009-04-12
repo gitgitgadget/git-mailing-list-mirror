@@ -1,105 +1,72 @@
-From: Orestis Markou <orestis@orestis.gr>
-Subject: git-svn doesn't recognise trunk as parent of branch
-Date: Sun, 12 Apr 2009 19:40:46 +0300
-Message-ID: <F562B0FA-6E9F-45AD-ADD5-D6EE1AD9C248@orestis.gr>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 12 18:42:32 2009
+From: Nicolas Sebrecht <nicolas.s-dev@laposte.net>
+Subject: [RFC PATCH] Re: git add -p: new "quit" command at the prompt.
+Date: Sun, 12 Apr 2009 19:29:36 +0200
+Message-ID: <20090412172936.GA12909@vidovic>
+References: <1239375421-2556-1-git-send-email-Matthieu.Moy@imag.fr> <7vws9rdmgd.fsf@gitster.siamese.dyndns.org> <vpqfxgevy58.fsf@bauges.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Sun Apr 12 19:31:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lt2lE-0001lW-Fp
-	for gcvg-git-2@gmane.org; Sun, 12 Apr 2009 18:42:24 +0200
+	id 1Lt3WX-0000ML-H8
+	for gcvg-git-2@gmane.org; Sun, 12 Apr 2009 19:31:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751593AbZDLQkv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Apr 2009 12:40:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751329AbZDLQku
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Apr 2009 12:40:50 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:63655 "EHLO
+	id S1751623AbZDLR3m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Apr 2009 13:29:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751300AbZDLR3m
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Apr 2009 13:29:42 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:56618 "EHLO
 	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751197AbZDLQku (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Apr 2009 12:40:50 -0400
-Received: by fxm2 with SMTP id 2so1735289fxm.37
-        for <git@vger.kernel.org>; Sun, 12 Apr 2009 09:40:48 -0700 (PDT)
-Received: by 10.103.168.5 with SMTP id v5mr2863768muo.77.1239554447986;
-        Sun, 12 Apr 2009 09:40:47 -0700 (PDT)
-Received: from ?192.168.1.5? (athedsl-129796.home.otenet.gr [85.75.82.163])
-        by mx.google.com with ESMTPS id 14sm7721339muo.50.2009.04.12.09.40.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 12 Apr 2009 09:40:47 -0700 (PDT)
-X-Mailer: Apple Mail (2.930.3)
+	with ESMTP id S1751206AbZDLR3l (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Apr 2009 13:29:41 -0400
+Received: by fxm2 with SMTP id 2so1745429fxm.37
+        for <git@vger.kernel.org>; Sun, 12 Apr 2009 10:29:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=6bZrquPy0zKlBh2andcWLHeUo66bwFf4Xf2LDA4Kzb8=;
+        b=qlM1SDVvxa52lNIyIzmOTOhU6lgD5zQfWxg+Q6cBV7syLKq7/Hsh7NJaSnqAQN2NxI
+         PVF/NVpisXpgQ1KpQ8RBQ5RneRjvlGJjNsXzhpMTVPWb7NlZdfjN+aUY2yVgR5E97kFJ
+         L0+5bq7txyO1GFwCl607EkKH5cGLG0jWPST6k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=QZ11uTLsmwu3hkD4TDdFW0UCadKcoiEWi1iP2zk36R3gmVblcw1568KuNI0NifLtrT
+         fv4x0HMc3NZrql0AeR+AknAql+JRy6CHujIg/p2W7Kc0fEtUI8h2/MwYmEg1s/GfslOx
+         Z90bs2zuXaIna0gVulQThgCBCDcYUwBLjES6Y=
+Received: by 10.86.27.19 with SMTP id a19mr643550fga.58.1239557379816;
+        Sun, 12 Apr 2009 10:29:39 -0700 (PDT)
+Received: from @ (91-164-145-233.rev.libertysurf.net [91.164.145.233])
+        by mx.google.com with ESMTPS id 4sm5818878fge.3.2009.04.12.10.29.38
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 12 Apr 2009 10:29:39 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <vpqfxgevy58.fsf@bauges.imag.fr>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116383>
 
-Hello there - this is my first post to this ML, so please be kind!
+On Sun, Apr 12, 2009 at 02:45:23PM +0200, Matthieu Moy wrote:
 
-I have previously used git-svn with great success. However, in this  
-project, the svn repo layout is a bit unusual and I'm having getting  
-git-svn to do the correct thing.
+> I thought the situation was common enough to deserve an explicit
+> command. The 'd' command is natural for "git add -i" + patch
+> subcommand, but for "git add -p", I found 'd' mostly useless, and I
+> really want a "quit" command.
+> 
+> Sure, I can live without it, but if other people would like to have
+> it, please speak now ;-).
 
-The repository I'm trying to clone is a subdirectory under a huge repo:
+Acked-by: Nicolas Sebrecht <nicolas.s-dev@laposte.net>
 
-http://svn.example.com/projects/trunk/MyProject/Production
-
-which has trunk, branches and tags and a couple of other directories  
-(which I'm not interested in).
-
-Complications so far:
-
-* I don't have read access to the lower directories, only to Production
-* Being a part of a big repo, the initial revision is something like  
-2000
-* trunk, branches, tags where not created in the same revision. trunk  
-didn't exist until revision say 2050.
-
-
-Doing 'git svn init -s http://svn.example.com/projects/trunk/MyProject/Production' 
-  produces the following configuration:
-
-[svn-remote "svn"]
-url = http://svn.example.com/trunk/projects/MyProject/Production
-fetch = trunk:refs/remotes/trunk
-branches = trunk/projects/MyProject/Production/branches/*:refs/remotes/*
-tags = trunk/projects/MyProject/Production/tags/*:refs/remotes/tags/*
-
-Fetching this fetches only trunk and no branches.
-
-Amending the config to be:
-
-[svn-remote "svn"]
-	url = http://svn.example.com/trunk/projects/MyProject/Production/
-	fetch = trunk:refs/remotes/trunk
-	branches = branches/*:refs/remotes/*
-	tags = tags/*:refs/remotes/tags/*
-
-
-and fetching (minor issue - have to start from scratch again), does  
-fetch all commits. However, there is no link between branches and  
-trunk. Using gitk (don't know how else to visualise this) shows  
-branches as having no parent. Indeed, in the fetch messages there is  
-no 'found possible parent' message. Also, when creating new branches  
-in svn, nothing shows up in git until a change happens. Then the  
-branch is created (again, with no parent).
-
-The only case where a correct parent was set was when someone branched  
-*from a branch*. Then the usual 'found possible parent' message  
-appeared, and gitk shows a sane tree.
-
-I'm on Mac OS X, git version 1.6.2.2.471.g6da14 (built from source,  
-master branch). This includes a recent commit that fixed an issue with  
-deep directories in git-svn, (without it I couldn't get the branches  
-anyway), but it doesn't seem to have fixed the problem completely.
-
-Any pointers welcome.
-
-Regards,
-Orestis
---
-orestis@orestis.gr
-http://orestis.gr/
+-- 
+Nicolas Sebrecht
