@@ -1,72 +1,54 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [RFC PATCH] git add -p: new "quit" command at the prompt.
-Date: Sun, 12 Apr 2009 14:54:22 +0200
-Message-ID: <fabb9a1e0904120554n355adf26s99966c92e874880f@mail.gmail.com>
-References: <1239375421-2556-1-git-send-email-Matthieu.Moy@imag.fr>
-	 <7vws9rdmgd.fsf@gitster.siamese.dyndns.org>
-	 <vpqfxgevy58.fsf@bauges.imag.fr>
+From: Erik Broes <erikbroes@ripe.net>
+Subject: Re: [PATCH] git-shell: Add 'git-upload-archive' to allowed commands.
+Date: Sun, 12 Apr 2009 16:07:49 +0200
+Message-ID: <49E1F5B5.6090500@ripe.net>
+References: <49DE537C.8070907@ripe.net> <7v3acff10x.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Sun Apr 12 14:55:58 2009
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 12 16:09:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LszE5-0003rw-Kq
-	for gcvg-git-2@gmane.org; Sun, 12 Apr 2009 14:55:58 +0200
+	id 1Lt0Nd-0007Ix-6o
+	for gcvg-git-2@gmane.org; Sun, 12 Apr 2009 16:09:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760499AbZDLMyZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Apr 2009 08:54:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760479AbZDLMyY
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Apr 2009 08:54:24 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:34627 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760414AbZDLMyY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Apr 2009 08:54:24 -0400
-Received: by fxm2 with SMTP id 2so1689161fxm.37
-        for <git@vger.kernel.org>; Sun, 12 Apr 2009 05:54:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=+nWuGCnG9LSC3tk15Nid6uhfoSJYIIlcJWDl+9GqjoU=;
-        b=M4WnfwWU6f7rdbVjmiJlATOx7E5MfjB8MBYAjC6AqDz9EbXqscNhvxuAuWnOlCdthm
-         y86X/K/W135CslngGI4DiSf7AOwm81rekdZ0hTeNIrorUKAkvBg9eRFTJi2fODTOz9g4
-         hXDRJIm7orYDy2X5yASG1wm0MwSBh5t/HY4ko=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=sFWNr4KFZGQq1hdXtY+QU00jlknEbNQa1G2HRe+XhhP/A02wo9ImiLlLMvljkjhJCH
-         3p/VNuX435uyLEjYdKNy1cyVzeShsYvK52bKlW1ZeVO+BRIzyzVWT35vF+HVDQyNoxk+
-         8vTyKrE6AEopRPg61B571kDmN6bGYu2RuRfTU=
-Received: by 10.103.217.5 with SMTP id u5mr2779080muq.42.1239540862189; Sun, 
-	12 Apr 2009 05:54:22 -0700 (PDT)
-In-Reply-To: <vpqfxgevy58.fsf@bauges.imag.fr>
+	id S1753406AbZDLOH6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Apr 2009 10:07:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752914AbZDLOH5
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Apr 2009 10:07:57 -0400
+Received: from postgirl.ripe.net ([193.0.19.66]:45367 "EHLO postgirl.ripe.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752500AbZDLOH5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Apr 2009 10:07:57 -0400
+Received: from herring.ripe.net ([193.0.1.203])
+	by postgirl.ripe.net with esmtp (Exim 4.63)
+	(envelope-from <erikbroes@ripe.net>)
+	id 1Lt0Le-0001dh-0A; Sun, 12 Apr 2009 16:07:50 +0200
+Received: from Grumm.local (gw.office.nsrp.ripe.net [193.0.1.126])
+	by herring.ripe.net (Postfix) with ESMTP id E52942F583;
+	Sun, 12 Apr 2009 16:07:49 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Macintosh/20090302)
+In-Reply-To: <7v3acff10x.fsf@gitster.siamese.dyndns.org>
+X-RIPE-Spam-Level: ----
+X-RIPE-Signature: a3d33ccd309479c043417935190f954d46964606caf7301f1b166d72d1508eae
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116379>
 
-Heya,
+> Can't the "security concern" be addressed by whatever creates the
+> controlled environment (e.g. gitosis)?  For example, git-daemon can be
+> configured to service upload-archive request, so I do not think it is such
+> a bad idea to make this available if the site owner wants to use it.
 
-On Sunday, April 12, 2009, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
-> Sure, I can live without it, but if other people would like to have
-> it, please speak now ;-).
-
-Yes please, I would like a q command to git add -p too!
-
---
-Cheers,
-
-Sverre Rabbelier
+I completely agree. :)
 
 -- 
-Cheers,
-
-Sverre Rabbelier
+Erik Broes
+Database Group
+RIPE NCC
