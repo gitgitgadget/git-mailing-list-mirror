@@ -1,106 +1,93 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] graph API: Added logic for colored edges
-Date: Sun, 12 Apr 2009 01:44:09 -0700
-Message-ID: <7vhc0u9s86.fsf@gitster.siamese.dyndns.org>
-References: <7vocv6is9g.fsf@gitster.siamese.dyndns.org>
- <20090409222238.GA16573@linux.vnet>
+Subject: Re: [PATCH] http-push.c: DAV must support olny http and https scheme
+Date: Sun, 12 Apr 2009 01:48:05 -0700
+Message-ID: <7vd4bi9s1m.fsf@gitster.siamese.dyndns.org>
+References: <1239371060-3978-1-git-send-email-catap@catap.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Teemu Likonen <tlikonen@iki.fi>
-To: Allan Caffee <allan.caffee@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 12 10:46:40 2009
+Cc: git@vger.kernel.org
+To: "Kirill A. Korinskiy" <catap@catap.ru>
+X-From: git-owner@vger.kernel.org Sun Apr 12 10:49:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LsvKg-0007ZY-S2
-	for gcvg-git-2@gmane.org; Sun, 12 Apr 2009 10:46:31 +0200
+	id 1LsvNk-0008E5-6d
+	for gcvg-git-2@gmane.org; Sun, 12 Apr 2009 10:49:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757230AbZDLIoV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Apr 2009 04:44:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757208AbZDLIoV
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Apr 2009 04:44:21 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45404 "EHLO
+	id S1757278AbZDLIsM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Apr 2009 04:48:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757246AbZDLIsL
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Apr 2009 04:48:11 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45636 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756856AbZDLIoU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Apr 2009 04:44:20 -0400
+	with ESMTP id S1757208AbZDLIsJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Apr 2009 04:48:09 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 4B165E0A7;
-	Sun, 12 Apr 2009 04:44:19 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 67D07E0C8;
+	Sun, 12 Apr 2009 04:48:09 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 340DEE0A6; Sun,
- 12 Apr 2009 04:44:11 -0400 (EDT)
-In-Reply-To: <20090409222238.GA16573@linux.vnet> (Allan Caffee's message of
- "Thu, 9 Apr 2009 18:22:38 -0400")
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id BCDECE0C7; Sun,
+ 12 Apr 2009 04:48:06 -0400 (EDT)
+In-Reply-To: <1239371060-3978-1-git-send-email-catap@catap.ru> (Kirill A.
+ Korinskiy's message of "Fri, 10 Apr 2009 17:44:20 +0400")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 1CD6A900-273E-11DE-BDA4-DC76898A30C1-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A5FFCF18-273E-11DE-B23F-DC76898A30C1-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116375>
 
-Allan Caffee <allan.caffee@gmail.com> writes:
+"Kirill A. Korinskiy" <catap@catap.ru> writes:
 
-> diff --git a/graph.c b/graph.c
-> index 162a516..beb622a 100644
-> --- a/graph.c
-> +++ b/graph.c
-> @@ -1,5 +1,6 @@
->  #include "cache.h"
->  #include "commit.h"
-> +#include "color.h"
->  #include "graph.h"
->  #include "diff.h"
->  #include "revision.h"
-> @@ -72,11 +69,14 @@ struct column {
->  	 */
->  	struct commit *commit;
->  	/*
-> -	 * XXX: Once we add support for colors, struct column could also
-> -	 * contain the color of its branch line.
-> +	 * The color to (optionally) print this column in.  This is an
-> +	 * index into column_colors.
->  	 */
-> +	unsigned short color;
->  };
->  
-> +const unsigned short GIT_NOT_A_COLOR = -1;
+> If the response from remote web-server have scp or other not http-like
+> scheme http-push can't go to change url, because DAV must work only
+> over HTTP (http and https scheme).
+>
+> Signed-off-by: Kirill A. Korinskiy <catap@catap.ru>
+> ---
+>  http-push.c |   19 ++++++++++---------
+>  1 files changed, 10 insertions(+), 9 deletions(-)
+>
+> diff --git a/http-push.c b/http-push.c
+> index feeb340..48c9a04 100644
+> --- a/http-push.c
+> +++ b/http-push.c
+> @@ -1457,16 +1457,17 @@ static void handle_remote_ls_ctx(struct xml_ctx *ctx, int tag_closed)
+>  			}
+>  		} else if (!strcmp(ctx->name, DAV_PROPFIND_NAME) && ctx->cdata) {
+>  			char *path = ctx->cdata;
+> -			if (*ctx->cdata == 'h') {
+> -				path = strstr(path, "//");
+> -				if (path) {
+> -					path = strchr(path+2, '/');
+> -				}
+> -			}
+> -			if (path) {
+> -				path += repo->path_len;
+> -				ls->dentry_name = xstrdup(path);
+> +			if (!strcmp(ctx->cdata, "http://")) {
+> +				path = strchr(path + sizeof("http://") - 1, '/');
+> +			} else if (!strcmp(ctx->cdata, "https://")) {
+> +				path = strchr(path + sizeof("https://") - 1, '/');
+>  			}
+> +
+> +			path += remote->path_len;
 
-That (-1) is an unusual value for an *unsigned* short variable.
+http-push.c: In function 'handle_remote_ls_ctx':
+http-push.c:1466: error: 'remote' undeclared (first use in this function)
+http-push.c:1466: error: (Each undeclared identifier is reported only once
+http-push.c:1466: error: for each function it appears in.)
 
-> @@ -714,10 +790,30 @@ static void graph_output_commit_char(struct git_graph *graph, struct strbuf *sb)
->  	strbuf_addch(sb, '*');
->  }
->  
-> +inline void graph_draw_octopus_merge(const struct git_graph *graph,
-> +				     struct strbuf *sb)
-> +{
-> +	/*
-> +	 * Here dashless_commits represents the number of parents
-> +	 * which don't need to have dashes (because their edges fit
-> +	 * neatly under the commit).
-> +	 */
-> +	const int dashless_commits = 2;
-> +	int col_num, i;
-> +	int num_dashes =
-> +		((graph->num_parents - dashless_commits) * 2) - 1;
-> +	for (i = 0; i < num_dashes; i++) {
-> +		col_num = (i / 2) + dashless_commits;
-> +		strbuf_write_column(sb, &graph->new_columns[col_num], '-');
+Ah, crap.
 
-graph.c: In function 'graph_draw_octopus_merge':
-graph.c:807: error: 'strbuf_write_column' is static but used in inline function 'graph_draw_octopus_merge' which is not static
-graph.c:810: error: 'strbuf_write_column' is static but used in inline function 'graph_draw_octopus_merge' which is not static
-make: *** [graph.o] Error 1
-
-In general, I'd prefer people not to say "inline" unless (1) they know
-what they are doing, and (2) the code is really performance critical.
-
-At least I do not think the colored commit graph is performance critical,
-especially a function that only deals with octopus merges.
+> +			ls->dentry_name = xmalloc(strlen(path) -
+> +						  remote->path_len + 1);
+> +			strcpy(ls->dentry_name, path + remote->path_len);
+>  		} else if (!strcmp(ctx->name, DAV_PROPFIND_COLLECTION)) {
+>  			ls->dentry_flags |= IS_DIR;
+>  		}
+> -- 
+> 1.6.2
