@@ -1,112 +1,99 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-add: introduce --edit (to edit the diff vs. the 
- index)
-Date: Mon, 13 Apr 2009 18:21:19 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0904131820260.10279@pacific.mpi-cbg.de>
-References: <cover.1239225986u.git.johannes.schindelin@gmx.de>  <61c07126e28aba0a36730da06112bd2d16eabc1b.1239225986u.git.johannes.schindelin@gmx.de>  <46dff0320904081900n7bff2280rc49315e3db427919@mail.gmail.com>  <46dff0320904091843p3e034647j3c78506b4d0c2b4@mail.gmail.com>
-  <alpine.DEB.1.00.0904102009440.10279@pacific.mpi-cbg.de> <46dff0320904101811g3b5dcc8ag195d40005b181c52@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/5] docs/checkout: clarify what "non-branch" means
+Date: Mon, 13 Apr 2009 09:31:31 -0700
+Message-ID: <7vmyakh5wc.fsf@gitster.siamese.dyndns.org>
+References: <20090413110947.GA15647@coredump.intra.peff.net>
+ <20090413112104.GE15982@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1652074626-1239639679=:10279"
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 13 18:22:49 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Mark Levedahl <mlevedahl@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Apr 13 18:33:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtOtG-0004uo-Ad
-	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 18:20:10 +0200
+	id 1LtP5w-0001qS-Eh
+	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 18:33:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753145AbZDMQSh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Apr 2009 12:18:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752915AbZDMQSg
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 12:18:36 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44118 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752626AbZDMQSg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Apr 2009 12:18:36 -0400
-Received: (qmail invoked by alias); 13 Apr 2009 16:18:34 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp026) with SMTP; 13 Apr 2009 18:18:34 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18Ja2V3AUMJn048KH4WdEVdt8hsTeT+5tIlvbJ6/2
-	Rjcvn50MwxBdy1
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <46dff0320904101811g3b5dcc8ag195d40005b181c52@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1754135AbZDMQbj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Apr 2009 12:31:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754003AbZDMQbj
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 12:31:39 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64576 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753971AbZDMQbj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Apr 2009 12:31:39 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8D529A9621;
+	Mon, 13 Apr 2009 12:31:37 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2455AA9619; Mon,
+ 13 Apr 2009 12:31:32 -0400 (EDT)
+In-Reply-To: <20090413112104.GE15982@coredump.intra.peff.net> (Jeff King's
+ message of "Mon, 13 Apr 2009 07:21:04 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 8F5B00A6-2848-11DE-A7D6-C121C5FC92D5-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116447>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Jeff King <peff@peff.net> writes:
 
---8323328-1652074626-1239639679=:10279
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+> I hope this helps a little bit with Mark's confusion. But while writing
+> it, I really think it would be a simpler rule to say "if it's in
+> refs/heads/, then it's a branch" (which is similar to what Mark
+> suggested earlier).
+>
+> So "git checkout refs/heads/master" would be identical to "git checkout
+> master". That would require a code change, though.
 
-Hi,
+Sorry, but I do not get the logic behind such a change.
 
-On Sat, 11 Apr 2009, Ping Yin wrote:
+Because you won't be breaking "git checkout frotz" that checks out the
+branch whose name is frotz (i.e. refs/heads/frotz) even when a tag frotz
+exists (i.e. refs/tags/frotz), the updated code cannot be "try to resolve
+the token given from the command line as-is, and if it is in refs/heads/
+it is a branch switch, otherwise it is a detach at the commit".  The
+updated code has to be "try to resolve the token appended to refs/heads
+and if it resolves, that is a branch switch.  Otherwise if the token
+already begins with refs/heads/ then it also is a switch to the branch
+whose name is the token minus the leading refs/heads/, otherwise try to
+resolve it as-is and detach at that commit".
 
-> On Sat, Apr 11, 2009 at 2:10 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > Hi,
-> >
-> > On Fri, 10 Apr 2009, Ping Yin wrote:
-> >
-> >> On Thu, Apr 9, 2009 at 10:00 AM, Ping Yin <pkufranky@gmail.com> wrote:
-> >> > On Thu, Apr 9, 2009 at 5:30 AM, Johannes Schindelin
-> >> > <johannes.schindelin@gmx.de> wrote:
-> >> >> With "git add -e [<files>]", Git will fire up an editor with the 
-> >> >> current diff relative to the index (i.e. what you would get with 
-> >> >> "git diff [<files>]").
-> >> >>
-> >> >> Now you can edit the patch as much as you like, including 
-> >> >> adding/removing lines, editing the text, whatever.  Make sure, 
-> >> >> though, that the first character of the hunk lines is still a 
-> >> >> space, a plus or a minus.
-> >> >>
-> >> >> After you closed the editor, Git will adjust the line counts of 
-> >> >> the hunks if necessary, thanks to the --recount option of apply, 
-> >> >> and commit the patch.  Except if you deleted everything, in which 
-> >> >> case nothing happens (for obvious reasons).
-> >> >>
-> >> >> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de> 
-> >> >> ---
-> >> >>
-> >> >>     I actually promised myself not to resend this patch, but a   
-> >> >>   certain guy who has a hat now asked for it.
-> >> >>
-> >> >
-> >> > I am that guy :-). Thanks. Sometimes "add -e" is more useful than 
-> >> > "add -p" since i can see the full context when editing the patch. 
-> >> > However, sometimes the ability to edit the index directly is even 
-> >> > more useful. For example, if it's a big change (or rewritten), it 
-> >> > is hard to edit the patch instead of the index (in diff mode with 
-> >> > the worktree file side by side). I even encounter a case that i 
-> >> > can't beat the patch into a shape i want when using 'add -p'  ( it 
-> >> > will fail to apply)
-> >> >
-> >>
-> >> How about this?
-> >>  'add --edit=patch' to edit the patch and "add --edit=index" to edit the index
-> >
-> > As others have mentioned, there _is_ a reason we have a working 
-> > directory. Please understand this as a "I do not like the idea of 
-> > editing the index directly at all".
-> 
-> When doing "add --edit" to edit the patch, do you work on the working 
-> directory? I think they are just different ways to change the index?
+The result changes behaviour for two classes of people.
 
-Of course I do "git stash save --keep-index" after staging those changes.
+ (1) People who have a branch whose name is refs/heads/frotz.  Before they
+     could switch to the branch by mechanically giving its name.  Now they
+     have to remember that such a branch with an unusual name needs to be
+     fully spelled "git checkout refs/heads/refs/heads/frotz".
 
-Ciao,
-Dscho
+ (2) People who have scripts that gets a refname (or a list of refnames),
+     and drive "git checkout" to either switch to the branch if that ref
+     is a branch or detach at the commit if it isn't.  Their script had to
+     check if the ref begins with refs/heads/ and if so strip that before
+     giving it to "git checkout", but with your change they do not have
+     to.
 
---8323328-1652074626-1239639679=:10279--
+The former technically is a usability regression which I presume we do not
+care.  The user with such a branch name is sick enough and deserve to be
+punished ;-)
+
+The latter might be improvement, but does it really matter?
+
+Such a script is already checking with refs/heads/ (and it is easy to
+codify in a script anyway), and with or without the change you suggest, it
+will check out the master branch when the ref is refs/heads/master and the
+script strips the leading refs/heads/.  With the change, it also needs to
+delete the logic of stripping refs/heads/ to deal with (1) sanely.
+
+In addition, most likely such a script to check out a series of refs in an
+automated fashion is about autobuilding random set of commits, and it
+would probably be better off working on the HEAD detached at given commit,
+whether the incoming ref happens to be a branch ref or not.
+
+So I am still scratching my head, wondering what improvement from the end
+user's point of view you will be getting from such a change...
