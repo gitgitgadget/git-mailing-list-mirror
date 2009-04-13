@@ -1,89 +1,55 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Andy Lester <andy@petdance.com>
 Subject: Re: C internals cleanup
-Date: Sun, 12 Apr 2009 21:06:44 -0700
-Message-ID: <7v4owtw623.fsf@gitster.siamese.dyndns.org>
-References: <22578EEA-DB8B-4DAF-B217-FF13DC8A3EC7@petdance.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Date: Sun, 12 Apr 2009 23:29:16 -0500
+Message-ID: <A60582E3-0374-4922-B6C9-42BCF2DCAFFB@petdance.com>
+References: <22578EEA-DB8B-4DAF-B217-FF13DC8A3EC7@petdance.com> <7v4owtw623.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Andy Lester <andy@petdance.com>
-X-From: git-owner@vger.kernel.org Mon Apr 13 06:08:39 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 13 06:30:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtDTE-0007W8-2w
-	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 06:08:32 +0200
+	id 1LtDop-0003lO-QI
+	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 06:30:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752158AbZDMEGv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Apr 2009 00:06:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751149AbZDMEGv
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 00:06:51 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:39552 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751098AbZDMEGu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Apr 2009 00:06:50 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 6B325E787;
-	Mon, 13 Apr 2009 00:06:49 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id BAB93E786; Mon,
- 13 Apr 2009 00:06:46 -0400 (EDT)
-In-Reply-To: <22578EEA-DB8B-4DAF-B217-FF13DC8A3EC7@petdance.com> (Andy
- Lester's message of "Sun, 12 Apr 2009 22:15:05 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 8327B92C-27E0-11DE-B6ED-DC76898A30C1-77302942!a-sasl-quonix.pobox.com
+	id S1751919AbZDME3S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Apr 2009 00:29:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751231AbZDME3S
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 00:29:18 -0400
+Received: from huggy.petdance.com ([72.14.176.61]:48986 "EHLO
+	huggy.petdance.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751098AbZDME3R (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Apr 2009 00:29:17 -0400
+Received: from mel.petdance.com (uniqua.petdance.com [64.81.227.163])
+	by huggy.petdance.com (Postfix) with ESMTP id 2A077AC8E7;
+	Mon, 13 Apr 2009 00:29:17 -0400 (EDT)
+In-Reply-To: <7v4owtw623.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116412>
 
-Andy Lester <andy@petdance.com> writes:
+> The general rule of thumb is to do such a clean-up before you start to
+> work on something of substance.
 
-> I've been poking around in the source for git, and wanted to pitch in
-> and clean some things up.
->
-> Two biggies that tend to get overlooked: Applying the const keyword
-> where possible, and localizing variables to innermost blocks.
->
-> Also, want to to get a target going in the Makefile for running under
-> splint.
->
-> Just want to make sure my internal cleanups are not going to be seen
-> as a nuisance.
+I guess that's all in how one defines "substance." :-)
 
-I and my lieutenants are most likely polite enough to avoid using a word
-like nuisance, but I think you will hear words like code churn, especially
-if such a change affects too many places and conflicts with too many
-patches that are still in the queue to be merged.  IOW, you need to be
-careful.
+My ultimate goal is to get more stringent error-checking, to get more  
+compiler warnings enabled, and to get a splint target.  splint is  
+fantastic for tracking all sorts of memory and logic problems, but  
+benefits greatly from getting the const qualifiers in place.  Even gcc  
+will be happier.
 
-The general rule of thumb is to do such a clean-up before you start to
-work on something of substance.
+Thanks for the recap.  It's hard to absorb what you just described  
+just from reading mailing list history.
 
-Your series may look like this:
+xoa
 
- * [Patch 1/2] hello.c: tighten constness and scope
-
-   Many functions in this file do not have to be called from other files,
-   and goodmorning() takes "char *" parameters but does not modify them in
-   any way (others like goodafternoon() and goodevening() are already
-   correct in this regard, both taking "const char *" parameters).
-
-   Make all of tese functions file scope static, and tighten constness to
-   the parameters to gootmorning().  By making their function signatures
-   compatible, this change will help the next patch that refactors the
-   three greeting functions.
-
- * [Patch 2/2] hello.c: refactor goodmorning(), goodafternoon() and goodnight()
-
-   These functions do mostly the same thing; implement a common helper
-   function greeting() and share code among them.
-
-Otherwise, unless the tree is really quiet, a patch that is only clean-up
-and nothing else will have a high maintenance-cost vs reward ratio, and
-needs to be split and timed carefully.  A patch that applies cleanly to
-master and then the result merges cleanly to both next and pu would be Ok
-even if you do not add any value other than code cleanliness.
+--
+Andy Lester => andy@petdance.com => www.petdance.com => AIM:petdance
