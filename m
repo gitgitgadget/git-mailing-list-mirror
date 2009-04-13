@@ -1,71 +1,90 @@
-From: Johnny Lee <johnnylee194@gmail.com>
-Subject: [Question] Why sometimes the unmerged file doesn't contains any 
-	conflicts
-Date: Mon, 13 Apr 2009 10:35:06 +0800
-Message-ID: <488807870904121935nab40117n56070570ecd31aa7@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [Question] Why sometimes the unmerged file doesn't contains any 
+ conflicts
+Date: Sun, 12 Apr 2009 19:47:18 -0700
+Message-ID: <7vk55pxoax.fsf@gitster.siamese.dyndns.org>
+References: <488807870904121935nab40117n56070570ecd31aa7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 13 04:36:55 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johnny Lee <johnnylee194@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 13 04:49:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtC2T-0008Fd-FL
-	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 04:36:50 +0200
+	id 1LtCEF-0001hy-WC
+	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 04:49:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754175AbZDMCfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Apr 2009 22:35:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752740AbZDMCfJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Apr 2009 22:35:09 -0400
-Received: from yx-out-2324.google.com ([74.125.44.28]:13346 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754175AbZDMCfI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Apr 2009 22:35:08 -0400
-Received: by yx-out-2324.google.com with SMTP id 31so2038425yxl.1
-        for <git@vger.kernel.org>; Sun, 12 Apr 2009 19:35:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=hYz16oEcChR3NVjN+CE5QkWPfLWUrOpmN4PgA57/ulA=;
-        b=C+FQrjRrYc1iUIl8eeAeKEwvAxWehJlPciMmgGpDamhu4gP4XNtMbSE/TLVhyVQdgo
-         DDCx4EX2H2uouNNOg/AipT56YQ86URBXTW1AzsbuV5XWRds89EYHGdl0bBtPGqSqT2U/
-         ZK8eGkZGv/HE2UkbEc6FlH5yhS5qSCCFCIxgU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=Bhfti52j6Ih6/oIB6slQhJjbFru6Vn9EEatlu4iVpucAINagtrg10Y+IM23aza7fKG
-         tjsQu+ge9Gm78CqRIR0+6MkrAgaLrDHmVlebLJ8VvjREMTnSEWywfR8JpJlmlLVMeKuF
-         2IwtfUzbqgZ/cHy0YCFliaocnzaQK52jgUJaU=
-Received: by 10.150.50.1 with SMTP id x1mr10088910ybx.52.1239590106528; Sun, 
-	12 Apr 2009 19:35:06 -0700 (PDT)
+	id S1753716AbZDMCr1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Apr 2009 22:47:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753564AbZDMCr1
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Apr 2009 22:47:27 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60000 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753434AbZDMCr0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Apr 2009 22:47:26 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 545DDA93D3;
+	Sun, 12 Apr 2009 22:47:23 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 1FE93A93D2; Sun,
+ 12 Apr 2009 22:47:19 -0400 (EDT)
+In-Reply-To: <488807870904121935nab40117n56070570ecd31aa7@mail.gmail.com>
+ (Johnny Lee's message of "Mon, 13 Apr 2009 10:35:06 +0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 6A559DCA-27D5-11DE-ACCA-C121C5FC92D5-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116401>
 
-Hi all,
+Johnny Lee <johnnylee194@gmail.com> writes:
 
-Sometimes when I merge two branches, the unmerged files don't contain
-any conflicts.
-When I edit the file, I can't find any conflict information. Usually
-all I have to do is manually "git add" them.
+> Sometimes when I merge two branches, the unmerged files don't contain
+> any conflicts.
+> When I edit the file, I can't find any conflict information. Usually
+> all I have to do is manually "git add" them.
+>
+> I do the merge with a clean workspace, all changes have been committed.
+> This doesn't happen all the time, usually the unmerged files contains
+> the correct conflict information inside.
+>
+> Do you know what's going on here?
+> The version of my git is: 1.6.2.1
 
-I do the merge with a clean workspace, all changes have been committed.
-This doesn't happen all the time, usually the unmerged files contains
-the correct conflict information inside.
+Do you see something like these output when it happens?  If that is what
+is happening to you, then it is perfectly normal, and the command even
+gives explanations on what it did to you.  The only thing you need to do
+is to read them ;-).
 
-Do you know what's going on here?
-The version of my git is: 1.6.2.1
+    $ git merge lt/pack-object-memuse
+    Auto-merging builtin-pack-objects.c
+    CONFLICT (content): Merge conflict in builtin-pack-objects.c
+    Auto-merging builtin-rev-list.c
+    CONFLICT (content): Merge conflict in builtin-rev-list.c
+    Auto-merging list-objects.c
+    CONFLICT (content): Merge conflict in list-objects.c
+    Auto-merging list-objects.h
+    CONFLICT (content): Merge conflict in list-objects.h
+    Auto-merging revision.c
+    Auto-merging revision.h
+    Auto-merging upload-pack.c
+    CONFLICT (content): Merge conflict in upload-pack.c
+    Resolved 'builtin-pack-objects.c' using previous resolution.
+    Resolved 'builtin-rev-list.c' using previous resolution.
+    Resolved 'list-objects.c' using previous resolution.
+    Resolved 'list-objects.h' using previous resolution.
+    Resolved 'upload-pack.c' using previous resolution.
+    Automatic merge failed; fix conflicts and then commit the result.
 
-Thanks for your consideration.
+Notice the last set of lines "Resolved '%s' using previous resolution."
 
-Regards,
-Johnny
-
--- 
-we all have our crosses to bear
+Another possibility is the common ancestor of the two branches did not
+have the file in question and you added the same file on each of these
+branches in a non-conflicting way.  That sometimes suggests a bad
+workflow, but in an environment where two people independently pick up the
+same patch on their branches and you end up merging with these two people,
+it is also perfectly normal.
