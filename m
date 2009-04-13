@@ -1,99 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/5] docs/checkout: clarify what "non-branch" means
-Date: Mon, 13 Apr 2009 09:31:31 -0700
-Message-ID: <7vmyakh5wc.fsf@gitster.siamese.dyndns.org>
-References: <20090413110947.GA15647@coredump.intra.peff.net>
- <20090413112104.GE15982@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Mark Levedahl <mlevedahl@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Apr 13 18:33:17 2009
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [RFC PATCH] git add -p: new "quit" command at the prompt.
+Date: Mon, 13 Apr 2009 18:38:22 +0200
+Message-ID: <80317CFC-6D87-4232-92EB-C5927F262E17@wincent.com>
+References: <1239375421-2556-1-git-send-email-Matthieu.Moy@imag.fr> <7vws9rdmgd.fsf@gitster.siamese.dyndns.org> <vpqfxgevy58.fsf@bauges.imag.fr>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Mon Apr 13 18:40:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtP5w-0001qS-Eh
-	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 18:33:16 +0200
+	id 1LtPDG-00045f-QF
+	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 18:40:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754135AbZDMQbj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Apr 2009 12:31:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754003AbZDMQbj
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 12:31:39 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64576 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753971AbZDMQbj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Apr 2009 12:31:39 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 8D529A9621;
-	Mon, 13 Apr 2009 12:31:37 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2455AA9619; Mon,
- 13 Apr 2009 12:31:32 -0400 (EDT)
-In-Reply-To: <20090413112104.GE15982@coredump.intra.peff.net> (Jeff King's
- message of "Mon, 13 Apr 2009 07:21:04 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 8F5B00A6-2848-11DE-A7D6-C121C5FC92D5-77302942!a-sasl-fastnet.pobox.com
+	id S1752104AbZDMQjQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Apr 2009 12:39:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751827AbZDMQjQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 12:39:16 -0400
+Received: from wincent1.inetu.net ([209.235.192.161]:54365 "EHLO
+	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751200AbZDMQjP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Apr 2009 12:39:15 -0400
+Received: from cuzco.lan (125.pool85-53-29.dynamic.orange.es [85.53.29.125])
+	(authenticated bits=0)
+	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id n3DGcjq4022470
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Mon, 13 Apr 2009 12:38:48 -0400
+In-Reply-To: <vpqfxgevy58.fsf@bauges.imag.fr>
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116448>
 
-Jeff King <peff@peff.net> writes:
+El 12/4/2009, a las 14:45, Matthieu Moy escribi=F3:
 
-> I hope this helps a little bit with Mark's confusion. But while writing
-> it, I really think it would be a simpler rule to say "if it's in
-> refs/heads/, then it's a branch" (which is similar to what Mark
-> suggested earlier).
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> So "git checkout refs/heads/master" would be identical to "git checkout
-> master". That would require a code change, though.
+>> You can say 'd' and then ^C, I think.
+>
+> Yes, you /can/, and that's what I'm doing right now in this situation=
+=2E
+> But that's undocumented, not so intuitive (I found out I could do tha=
+t
+> after trying ^C alone, which doesn't work, staged content is recorded
+> on disk at the end of the file only, not after each prompt), ...
+>
+> I thought the situation was common enough to deserve an explicit
+> command. The 'd' command is natural for "git add -i" + patch
+> subcommand, but for "git add -p", I found 'd' mostly useless, and I
+> really want a "quit" command.
+>
+> Sure, I can live without it, but if other people would like to have
+> it, please speak now ;-).
 
-Sorry, but I do not get the logic behind such a change.
+Yes, I'd like it too. I've been using ^C a lot, but I'd never noticed =20
+that changes weren't staged except at the end of each file. Thanks for =
+=20
+bringing it up; you might have saved some people (including me) from =20
+being bitten by it at some point.
 
-Because you won't be breaking "git checkout frotz" that checks out the
-branch whose name is frotz (i.e. refs/heads/frotz) even when a tag frotz
-exists (i.e. refs/tags/frotz), the updated code cannot be "try to resolve
-the token given from the command line as-is, and if it is in refs/heads/
-it is a branch switch, otherwise it is a detach at the commit".  The
-updated code has to be "try to resolve the token appended to refs/heads
-and if it resolves, that is a branch switch.  Otherwise if the token
-already begins with refs/heads/ then it also is a switch to the branch
-whose name is the token minus the leading refs/heads/, otherwise try to
-resolve it as-is and detach at that commit".
-
-The result changes behaviour for two classes of people.
-
- (1) People who have a branch whose name is refs/heads/frotz.  Before they
-     could switch to the branch by mechanically giving its name.  Now they
-     have to remember that such a branch with an unusual name needs to be
-     fully spelled "git checkout refs/heads/refs/heads/frotz".
-
- (2) People who have scripts that gets a refname (or a list of refnames),
-     and drive "git checkout" to either switch to the branch if that ref
-     is a branch or detach at the commit if it isn't.  Their script had to
-     check if the ref begins with refs/heads/ and if so strip that before
-     giving it to "git checkout", but with your change they do not have
-     to.
-
-The former technically is a usability regression which I presume we do not
-care.  The user with such a branch name is sick enough and deserve to be
-punished ;-)
-
-The latter might be improvement, but does it really matter?
-
-Such a script is already checking with refs/heads/ (and it is easy to
-codify in a script anyway), and with or without the change you suggest, it
-will check out the master branch when the ref is refs/heads/master and the
-script strips the leading refs/heads/.  With the change, it also needs to
-delete the logic of stripping refs/heads/ to deal with (1) sanely.
-
-In addition, most likely such a script to check out a series of refs in an
-automated fashion is about autobuilding random set of commits, and it
-would probably be better off working on the HEAD detached at given commit,
-whether the incoming ref happens to be a branch ref or not.
-
-So I am still scratching my head, wondering what improvement from the end
-user's point of view you will be getting from such a change...
+Wincent
