@@ -1,58 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gittutorial: Add global color.ui
-Date: Mon, 13 Apr 2009 00:29:01 -0700
-Message-ID: <7vbpr1hv0i.fsf@gitster.siamese.dyndns.org>
-References: <20090410141622.10e40448@paolo-desktop>
- <4d8e3fd30904130003m78dc7a81pf91ed6772b5c4f93@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Orestis Markou <orestis@orestis.gr>
+Subject: Re: git-svn doesn't recognise trunk as parent of branch
+Date: Mon, 13 Apr 2009 10:35:40 +0300
+Message-ID: <C093912B-E316-4AC1-B50D-D91FF9823582@orestis.gr>
+References: <F562B0FA-6E9F-45AD-ADD5-D6EE1AD9C248@orestis.gr> <20090412185440.GA25300@m62s10.vlinux.de> <3110D1F9-B096-4E10-8795-748EF5E38318@orestis.gr> <CDAC8304-EADC-4481-96C9-968DCC4E61A5@orestis.gr> <20090413072601.GC25300@m62s10.vlinux.de>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 13 09:30:43 2009
+To: Peter Baumann <waste.manager@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Apr 13 09:37:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtGcr-00028O-QE
-	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 09:30:42 +0200
+	id 1LtGjL-0003Y6-5G
+	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 09:37:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753003AbZDMH3K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Apr 2009 03:29:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752923AbZDMH3I
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 03:29:08 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49240 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752297AbZDMH3I (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Apr 2009 03:29:08 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id E5C2DE02C;
-	Mon, 13 Apr 2009 03:29:05 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5C8ADE02A; Mon,
- 13 Apr 2009 03:29:03 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: C510490A-27FC-11DE-922A-DC76898A30C1-77302942!a-sasl-quonix.pobox.com
+	id S1752734AbZDMHft (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Apr 2009 03:35:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752565AbZDMHft
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 03:35:49 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:33898 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752352AbZDMHfs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Apr 2009 03:35:48 -0400
+Received: by fxm2 with SMTP id 2so1883828fxm.37
+        for <git@vger.kernel.org>; Mon, 13 Apr 2009 00:35:46 -0700 (PDT)
+Received: by 10.103.138.16 with SMTP id q16mr3169008mun.114.1239608146652;
+        Mon, 13 Apr 2009 00:35:46 -0700 (PDT)
+Received: from ?192.168.1.5? (athedsl-129796.home.otenet.gr [85.75.82.163])
+        by mx.google.com with ESMTPS id e9sm9244511muf.8.2009.04.13.00.35.45
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 13 Apr 2009 00:35:46 -0700 (PDT)
+In-Reply-To: <20090413072601.GC25300@m62s10.vlinux.de>
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116416>
 
-Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com> writes:
+On 13 Apr 2009, at 10:26, Peter Baumann wrote:
 
-> Should I just wait or does it means that is not considered usefull?
+> On Mon, Apr 13, 2009 at 02:58:45AM +0300, Orestis Markou wrote:
+>> And I also realised that I don't need to rewrite the history  
+>> itself. I
+>> was confused because gitk was caching something and I had to  
+>> restart it
+>> to see the updated info.
+>
+> The rewrite is done by git filter-branch and this *will* be  
+> necessary if you
+> ever want to clone/push/fetch from/to this heavily grafted repo.  
+> Grafts are
+> only repository local and using filter-branch, you could make them  
+> permanent.
+>
+> -Peter
 
-I didn't find it useful myself.  Even though it is not the final word
-around here, I didn't see anybody else agreeing that having color.ui at
-the begining would improve the tutorial.
 
-Many other things are probably as useful to have as color.ui there, if not
-more, and we obviously do not want to list all the things some random
-person found useful and extend the initial part of the tutorial to 100
-pages before showing how to create the very first repository to a new
-person.
+Thanks - I understand that. However, this is a git-svn repo, and I  
+don't have a need to do so. The suggestion is to not push or pull  
+between git-svn repos but go through svn - AFAICT, that is.
 
-So you have to do much better than just saying that you like color.ui.
-You need to justify that it should trump all the other potentially useful
-configurations and added there.
+Orestis
