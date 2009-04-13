@@ -1,96 +1,80 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 3/8] archive: add a failure test wrt .gitattributes  
-  misreading
-Date: Mon, 13 Apr 2009 15:56:27 +0200
-Message-ID: <49E3448B.8010602@lsrfire.ath.cx>
-References: <1239185133-4181-1-git-send-email-pclouds@gmail.com> <1239185133-4181-2-git-send-email-pclouds@gmail.com> <1239185133-4181-3-git-send-email-pclouds@gmail.com> <1239185133-4181-4-git-send-email-pclouds@gmail.com> <7vab6rkl5f.fsf@gitster.siamese.dyndns.org>
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Subject: Re: [PATCH] documentation: Makefile accounts for SHELL_PATH setting
+Date: Mon, 13 Apr 2009 10:21:00 -0400
+Message-ID: <1239632383-sup-5048@ntdws12.chass.utoronto.ca>
+References: <1237728044-15651-1-git-send-email-bwalton@artsci.utoronto.ca> <20090410093430.6117@nanako3.lavabit.com> <7vmyamdirk.fsf@gitster.siamese.dyndns.org> <1239500938-sup-5545@ntdws12.chass.utoronto.ca> <7vzlem9sxu.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, git@vger.kernel.org
+Content-Type: multipart/signed; protocol="application/pgp-signature"; boundary="=-1239632463-791272-21251-1811-67-="; micalg="pgp-sha1"
+Cc: GIT List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 13 15:58:55 2009
+X-From: git-owner@vger.kernel.org Mon Apr 13 16:22:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtMfy-00071M-RN
-	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 15:58:19 +0200
+	id 1LtN3a-0006ml-1G
+	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 16:22:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752100AbZDMN4l convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Apr 2009 09:56:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751995AbZDMN4l
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 09:56:41 -0400
-Received: from india601.server4you.de ([85.25.151.105]:60237 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751983AbZDMN4l (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Apr 2009 09:56:41 -0400
-Received: from [10.0.1.101] (p57B7FFE1.dip.t-dialin.net [87.183.255.225])
-	by india601.server4you.de (Postfix) with ESMTPSA id 4DEC32F8056;
-	Mon, 13 Apr 2009 15:56:39 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <7vab6rkl5f.fsf@gitster.siamese.dyndns.org>
+	id S1751636AbZDMOVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Apr 2009 10:21:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750734AbZDMOVI
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 10:21:08 -0400
+Received: from www.cquest.utoronto.ca ([192.82.128.5]:59248 "EHLO
+	www.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750802AbZDMOVH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Apr 2009 10:21:07 -0400
+Received: from ntdws12.chass.utoronto.ca ([128.100.160.253]:33358 ident=93)
+	by www.cquest.utoronto.ca with esmtp (Exim 4.43)
+	id 1LtN20-00056G-2m; Mon, 13 Apr 2009 10:21:04 -0400
+Received: from localhost
+	([127.0.0.1] helo=ntdws12.chass.utoronto.ca ident=505)
+	by ntdws12.chass.utoronto.ca with esmtp (Exim 4.63)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1LtN20-0005mP-08; Mon, 13 Apr 2009 10:21:04 -0400
+Received: (from bwalton@localhost)
+	by ntdws12.chass.utoronto.ca (8.13.8/8.13.8/Submit) id n3DEL3E0022217;
+	Mon, 13 Apr 2009 10:21:03 -0400
+In-Reply-To: <7vzlem9sxu.fsf@gitster.siamese.dyndns.org>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116442>
 
-Junio C Hamano schrieb:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->=20
->> "git archive" is used to create archives from a tree (or commit), so
->> it should not consult any .gitattributes files on working directory.
->>
->> It currently does,...
->=20
-> ...which _might_ be actively used as a _feature_ by people; I do not =
-think
-> it is a bad idea to have a mode of operation where it solely works wi=
-th
-> in-tree attributes ignoring the work tree ones, and I suspect we prob=
-ably
-> would want to make that the default, but "so it should not" is probab=
-ly a
-> bit too strong.
->=20
-> For example, an older version may record $Id$ with keyword expansion =
-set
-> in its in-tree .gitattributes, and you later found it to be a mistake=
- and
-> have removed it in the current version.  Re-exporting an older versio=
-n
-> with the current code wouldn't have $Id$ expanded, but with your patc=
-h it
-> will.
->=20
-> A stronger example would be crlf conversion, I suppose, but the same =
-"with
-> the current code we can fix it up but after this patch we can't" worr=
-y
-> applies.
->=20
-> So perhaps you may want to resurrect the current behaviour with a new
-> option --fix-attributes, whose description would be "normally the com=
-mand
-> takes attributes settings from the tree being exported, but .gitattri=
-butes
-> files in it may record wrong attributes you may want to fix while
-> exporting.  With this option, corresponding .gitattributes files in t=
-he
-> work tree will override the in-tree .gitattributes" or something like
-> that.
 
-Hmm, "fix" implies that something is broken without this option, which
-is not necessarily the case.  A purely descriptive name like
---worktree-attributes fits better IMHO.
+--=-1239632463-791272-21251-1811-67-=
+Content-Type: text/plain; charset=UTF-8
 
-Also, the last sentence of the description may be taken to imply a
-mixing of attributes from work tree and exported tree is done, which is
-not the case with the patch from series 2 (and shouldn't be).  Perhaps:
-"With this option, .gitattributes files are read from the work tree
-instead of from the exported tree."
+Excerpts from Junio C Hamano's message of Sun Apr 12 04:28:45 -0400 2009:
+> I do not recall breakage reports nor success reports.  At least it does
+> not seem to break things for me, but I do not do anything so...
 
-Ren=C3=A9
+Ok.  I see that you've applied the patch to 'next' already (with
+modified patch text), so I won't re-submit unless someone points out a
+breakage that the change introduced.
+
+Thanks
+-Ben
+-- 
+Ben Walton
+Systems Programmer - CHASS
+University of Toronto
+C:416.407.5610 | W:416.978.4302
+
+GPG Key Id: 8E89F6D2; Key Server: pgp.mit.edu
+Contact me to arrange for a CAcert assurance meeting.
+
+--=-1239632463-791272-21251-1811-67-=
+Content-Disposition: attachment; filename="signature.asc"
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQFJ40pP8vuMHY6J9tIRAiIlAKCZ8zh68aw/9SyE18YDHVKFh3vfygCgjhak
+WPwfDQPLMwGsjAhg02fbI2E=
+=2QB9
+-----END PGP SIGNATURE-----
+
+--=-1239632463-791272-21251-1811-67-=--
