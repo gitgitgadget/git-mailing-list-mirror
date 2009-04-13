@@ -1,68 +1,66 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [RFC PATCH] git add -p: new "quit" command at the prompt.
-Date: Mon, 13 Apr 2009 18:38:22 +0200
-Message-ID: <80317CFC-6D87-4232-92EB-C5927F262E17@wincent.com>
-References: <1239375421-2556-1-git-send-email-Matthieu.Moy@imag.fr> <7vws9rdmgd.fsf@gitster.siamese.dyndns.org> <vpqfxgevy58.fsf@bauges.imag.fr>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Apr 13 18:40:56 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 3/2] rev-parse: --abbrev-ref option to shorten ref
+ name
+Date: Mon, 13 Apr 2009 09:43:42 -0700
+Message-ID: <7vhc0sh5c1.fsf@gitster.siamese.dyndns.org>
+References: <1239618347-17158-1-git-send-email-bert.wesarg@googlemail.com>
+ <1239621626-26952-1-git-send-email-bert.wesarg@googlemail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 13 18:45:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtPDG-00045f-QF
-	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 18:40:51 +0200
+	id 1LtPI4-0005rY-99
+	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 18:45:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752104AbZDMQjQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Apr 2009 12:39:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751827AbZDMQjQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 12:39:16 -0400
-Received: from wincent1.inetu.net ([209.235.192.161]:54365 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751200AbZDMQjP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Apr 2009 12:39:15 -0400
-Received: from cuzco.lan (125.pool85-53-29.dynamic.orange.es [85.53.29.125])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id n3DGcjq4022470
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Mon, 13 Apr 2009 12:38:48 -0400
-In-Reply-To: <vpqfxgevy58.fsf@bauges.imag.fr>
-X-Mailer: Apple Mail (2.930.3)
+	id S1752075AbZDMQnt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Apr 2009 12:43:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751835AbZDMQnt
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 12:43:49 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57666 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751579AbZDMQnt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Apr 2009 12:43:49 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A5DC5D804;
+	Mon, 13 Apr 2009 12:43:47 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 06460D7FF; Mon,
+ 13 Apr 2009 12:43:43 -0400 (EDT)
+In-Reply-To: <1239621626-26952-1-git-send-email-bert.wesarg@googlemail.com>
+ (Bert Wesarg's message of "Mon, 13 Apr 2009 13:20:26 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 428989BC-284A-11DE-A683-DC76898A30C1-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116449>
 
-El 12/4/2009, a las 14:45, Matthieu Moy escribi=F3:
+Bert Wesarg <bert.wesarg@googlemail.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> This applies the shorten_unambiguous_ref function to the object name.
+> Default mode is controlled by core.warnAmbiguousRefs. Else it is given as
+> optional argument to --abbrev-ref={strict|loose}.
 >
->> You can say 'd' and then ^C, I think.
+> This should be faster than 'git for-each-ref --format="%(refname:short)" <ref>'
+> for single refs.
 >
-> Yes, you /can/, and that's what I'm doing right now in this situation=
-=2E
-> But that's undocumented, not so intuitive (I found out I could do tha=
-t
-> after trying ^C alone, which doesn't work, staged content is recorded
-> on disk at the end of the file only, not after each prompt), ...
+> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+> ---
+> Cc: Jeff King <peff@peff.net>
+> Cc: git@vger.kernel.org
 >
-> I thought the situation was common enough to deserve an explicit
-> command. The 'd' command is natural for "git add -i" + patch
-> subcommand, but for "git add -p", I found 'd' mostly useless, and I
-> really want a "quit" command.
->
-> Sure, I can live without it, but if other people would like to have
-> it, please speak now ;-).
+> Can someone check, if I need to alter the filter, thanks.
 
-Yes, I'd like it too. I've been using ^C a lot, but I'd never noticed =20
-that changes weren't staged except at the end of each file. Thanks for =
-=20
-bringing it up; you might have saved some people (including me) from =20
-being bitten by it at some point.
+I do not think so.
 
-Wincent
+This --abbrev-ref option is similar to --symbolic in that how a ref from
+the command line, if any, is output, and should not change the filter at
+all.  For example, "rev-parse --abbrev-ref master -M" shouldn't filter -M
+out by implying --revs-only.
