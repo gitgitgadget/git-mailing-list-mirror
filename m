@@ -1,143 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] builtin-apply: keep information about files to be
- deleted
-Date: Mon, 13 Apr 2009 11:51:55 -0700
-Message-ID: <7v4owsfktw.fsf@gitster.siamese.dyndns.org>
-References: <1239478260-7420-1-git-send-email-michal.kiedrowicz@gmail.com>
+Subject: Re: [PATCH] tests: test applying criss-cross rename patch
+Date: Mon, 13 Apr 2009 12:28:45 -0700
+Message-ID: <7vvdp8e4k2.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LFD.2.00.0904091147290.4583@localhost.localdomain>
+ <1239463584-1427-1-git-send-email-michal.kiedrowicz@gmail.com>
+ <7vd4bgh560.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git Mailing List <git@vger.kernel.org>
 To: =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 13 20:53:55 2009
+X-From: git-owner@vger.kernel.org Mon Apr 13 21:31:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtRHo-0002rZ-8b
-	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 20:53:40 +0200
+	id 1LtRri-0006Dj-5W
+	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 21:30:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751655AbZDMSwG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Apr 2009 14:52:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751514AbZDMSwF
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 14:52:05 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:61939 "EHLO
+	id S1751838AbZDMT2x convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Apr 2009 15:28:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751786AbZDMT2x
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 15:28:53 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38376 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751467AbZDMSwE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Apr 2009 14:52:04 -0400
+	with ESMTP id S1751675AbZDMT2w convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Apr 2009 15:28:52 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 69376AA53D;
-	Mon, 13 Apr 2009 14:52:01 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id E5B6CE6A1;
+	Mon, 13 Apr 2009 15:28:49 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 289D2AA538; Mon,
- 13 Apr 2009 14:51:57 -0400 (EDT)
-In-Reply-To: <1239478260-7420-1-git-send-email-michal.kiedrowicz@gmail.com>
- (=?utf-8?Q?Micha=C5=82?= Kiedrowicz's message of "Sat, 11 Apr 2009 21:31:00
- +0200")
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 4FE13E6A0; Mon,
+ 13 Apr 2009 15:28:47 -0400 (EDT)
+In-Reply-To: <7vd4bgh560.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Mon, 13 Apr 2009 09:47:19 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 2C5CAC84-285C-11DE-AA2C-C121C5FC92D5-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 50BEC972-2861-11DE-A934-DC76898A30C1-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116478>
 
-Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> diff --git a/builtin-apply.c b/builtin-apply.c
-> index 1926cd8..6f6bf85 100644
-> --- a/builtin-apply.c
-> +++ b/builtin-apply.c
-> @@ -2271,6 +2271,16 @@ static struct patch *in_fn_table(const char *n=
-ame)
->  	return NULL;
->  }
-> =20
-> +static int to_be_deleted(struct patch *patch)
-> +{
-> +	return patch =3D=3D (struct patch *) -2;
-> +}
-> +
-> +static int was_deleted(struct patch *patch)
-> +{
-> +	return patch =3D=3D (struct patch *) -1;
-> +}
+> Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com> writes:
+>
+>> Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
+>> ---
+>>  t/t4130-apply-criss-cross-rename.sh |   35 ++++++++++++++++++++++++=
++++++++++++
+>>  1 files changed, 35 insertions(+), 0 deletions(-)
+>>  create mode 100755 t/t4130-apply-criss-cross-rename.sh
+>>
+>> diff --git a/t/t4130-apply-criss-cross-rename.sh b/t/t4130-apply-cri=
+ss-cross-rename.sh
+>> new file mode 100755
+>> index 0000000..30187ff
+>> --- /dev/null
+>> +++ b/t/t4130-apply-criss-cross-rename.sh
+>> @@ -0,0 +1,35 @@
+>> +#!/bin/sh
+>> +
+>> +test_description=3D'git apply handling criss-cross rename patch.'
+>> +. ./test-lib.sh
+>> +
+>> +create_file() {
+>> +	for ((i=3D0; i<100; i++)); do
+>
+> Please don't; isn't this a bashism?
 
-Please use more descriptive symbolic constants, and add a comment.
-Perhaps:
+I've queued your two patches with minimum fix-up (not covering all the
+points in my comments) to 'pu'.  You may want to take a look and send i=
+n
+improvement to replace them.
 
-    /*
-     * item->util in the filename table records the status of the path.
-     * Usually it points at a patch (whose result records the contents
-     * of it after applying it), but it could be PATH_WAS_DELETED for a
-     * path that a previously applied patch has already removed.
-     */
-    #define PATH_TO_BE_DELETED ((struct patch *) -2)
-    #define PATH_WAS_DELETED ((struct patch *) -1)
-
-> @@ -2295,6 +2305,24 @@ static void add_to_fn_table(struct patch *patc=
-h)
-> ...
-> +static void prepare_fn_table(struct patch *patch)
-> +{
-> +	/*
-> +	 * store information about incoming file deletion
-> +	 */
-> +	while (patch) {
-> +		if ((patch->new_name =3D=3D NULL) || (patch->is_rename)) {
-> +			struct string_list_item *item =3D
-> +				string_list_insert(patch->old_name, &fn_table);
-> +			item->util =3D (struct patch *) -2;
-> +		}
-> +		patch =3D patch->next;
-> +	}
-> +}
-
-This PATH_TO_BE_DELETED logic should be Ok for the normal case, but it
-seems a bit fragile.  In a sequence of patches, if you have even one pa=
-tch
-that makes the path disappear, you initialize it as PATH_TO_BE_DELETED,
-and special case the "creation should not clobber existing path" rule t=
-o
-allow it to be present in the tree.
-
-That may make this sequence work, I presume, with your change:
-
-	patch #1	renames frotz.c to hello.c
-        patch #2	renames hello.c to frotz.c
-
-because of patch #2, hello.c is marked as PATH_TO_BE_DELETED initially =
-and
-then when patch #1 is handled, frotz.c is allowed to replace it.
-
-But if you have further patches that do the following (the "file table"
-mechanism was added to handle concatenated patches that affect the same
-path more than once), I thing PATH_TO_BE_DELETED logic would break down=
-:
-
-        patch #3	renames alpha.c to hello.c
-	patch #4	renames hello.c to alpha.c
-
-When patch #3 is handled, the PATH_TO_BE_DELETED mark is long gone from
-hello.c, and we will see the same failure you addressed in your patch,
-won't we?
-
-The prepare_fn_table() may be a good place to diagnose such a situation
-and warn or error out if the user feeds such an input we cannot handle
-sanely.
-
-> @@ -2410,6 +2438,8 @@ static int check_preimage(struct patch *patch, =
-struct cache_entry **ce, struct s
->  			return error("%s: %s", old_name, strerror(errno));
->  	}
-> =20
-> +	if(to_be_deleted(tpatch)) tpatch =3D NULL;
-> +
-
-Style;
-
-	if (to_be_deleted(tpatch))
-        	tpatch =3D NULL;
-
-Other than that, I think it is a sensible approach.
+Thanks.
