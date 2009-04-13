@@ -1,70 +1,88 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 4/5] doc/checkout: split checkout and branch creation in 
-	synopsis
-Date: Mon, 13 Apr 2009 15:21:04 +0200
-Message-ID: <fabb9a1e0904130621x64a93c80w31e769cad8c89c96@mail.gmail.com>
-References: <20090413110947.GA15647@coredump.intra.peff.net> 
-	<20090413111933.GD15982@coredump.intra.peff.net> <fabb9a1e0904130613g5b664706jb6a3c29107ac1fc9@mail.gmail.com> 
-	<20090413131949.GA16293@coredump.intra.peff.net>
+From: =?UTF-8?B?TWljaGHFgg==?= Kiedrowicz <michal.kiedrowicz@gmail.com>
+Subject: Re: [PATCH] builtin-apply: keep information about files to be
+ deleted
+Date: Mon, 13 Apr 2009 15:51:52 +0200
+Message-ID: <20090413155152.726647d8@gmail.com>
+References: <1239478260-7420-1-git-send-email-michal.kiedrowicz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Apr 13 15:22:58 2009
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 13 15:54:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtM7i-00046T-UM
-	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 15:22:55 +0200
+	id 1LtMbZ-0004wA-Cp
+	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 15:53:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751886AbZDMNVX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Apr 2009 09:21:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751741AbZDMNVW
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 09:21:22 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:54482 "EHLO
+	id S1751983AbZDMNwM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Apr 2009 09:52:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751856AbZDMNwL
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 09:52:11 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:52654 "EHLO
 	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751719AbZDMNVV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Apr 2009 09:21:21 -0400
-Received: by fxm2 with SMTP id 2so1986626fxm.37
-        for <git@vger.kernel.org>; Mon, 13 Apr 2009 06:21:19 -0700 (PDT)
+	with ESMTP id S1751863AbZDMNwK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Apr 2009 09:52:10 -0400
+Received: by fxm2 with SMTP id 2so1997383fxm.37
+        for <git@vger.kernel.org>; Mon, 13 Apr 2009 06:52:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=zXMAEas3piRebIA8oGdac6Vn9/MFq3xsPdT9v97Uy7Q=;
-        b=OyR7Cn5hgPlasHC9LJ4chzFVVWXJQ3TFyAAL+ajx2SMtJKiOSoyghNsKoIY2lGdl93
-         i7YYlDUSjltvse1/ULzBs9azylSnjSrtbHIWNkwCW/blEXjfpgfOGbzo5DDUTuEhc+p4
-         AB10BYS9gNEKMaKlfi3idc4ncU2hofVn0Nd8Q=
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:in-reply-to:references:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=9MFVkyW7QzQNXxQwkG62kgk+JoCI1uM0DFC/E5qbKUA=;
+        b=c9aL8qVv2LpvUys8BAKTjmXDNAV+7hYmfv+C5k/v1+1SUOQ5ZTqHgdOU6WVDsvSAQh
+         +GhTSPRydNWEyKufPZPR3I3P3YazHXpspxp3W2UjUe9LozZ24xejhonqrIU+o3/2rlEi
+         7t81K9v2zGcO3NjVSReZ9Yxb/Un0lfiXlO7Rk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=KbqKC4/GOOUayH5yAGC53IO3472mDYbUJ57//Nb1m5hsYKgcS/FxyEAZCh9Y/RQM9Z
-         ArSY2o7BhNedAoVbwqHh6kAWlHzYYSFpdEWgu2fauxQzehl+sQpDHmZEsCJohtONO61g
-         TIVzmXZvWqLsOpfGX0CvPSmp8kzHdz4Kc26gg=
-Received: by 10.103.160.9 with SMTP id m9mr3307039muo.96.1239628879317; Mon, 
-	13 Apr 2009 06:21:19 -0700 (PDT)
-In-Reply-To: <20090413131949.GA16293@coredump.intra.peff.net>
+        h=date:from:to:subject:message-id:in-reply-to:references:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        b=r1VUbQCXQBtG/rgzfLfngTgisKkl6BoqA27D15HtD9it5Bi6NLGtEa7cWoJECfLWLj
+         Y2/lMyA+i2ZdXNZkGgU8CwRvQ/NdHOvWNqf+6iOlT9rwxByJXq0qhW7WFJ5/noZ/+Jce
+         TDJ4F79i6sQl2afed1iEboD2Z+nb21voXZ1U8=
+Received: by 10.86.93.17 with SMTP id q17mr4743746fgb.75.1239630729053;
+        Mon, 13 Apr 2009 06:52:09 -0700 (PDT)
+Received: from localhost (87-205-63-203.adsl.inetia.pl [87.205.63.203])
+        by mx.google.com with ESMTPS id d6sm6764936fga.12.2009.04.13.06.52.08
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 13 Apr 2009 06:52:08 -0700 (PDT)
+In-Reply-To: <1239478260-7420-1-git-send-email-michal.kiedrowicz@gmail.com>
+X-Mailer: Claws Mail 3.7.0 (GTK+ 2.14.7; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116440>
 
-Heya,
+Dnia 2009-04-11, o godz. 21:31:00
+Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com> napisa=C5=82(a):
 
-On Mon, Apr 13, 2009 at 15:19, Jeff King <peff@peff.net> wrote:
-> =A0'git checkout' ... -b <new_branch> [<start_point>]
->
-> The cause where "-b <new_branch>" isn't used is covered in the line
-> above.
+> Example correct diff generated by `diff -M -B' might look like this:
+>=20
+> 	diff --git a/file1 b/file2
+> 	similarity index 100%
+> 	rename from file1
+> 	rename to file2
+> 	diff --git a/file2 b/file1
+> 	similarity index 100%
+> 	rename from file2
+> 	rename to file1
+>=20
+> Information about removing `file2' comes after information about
+> creation of new `file2' (renamed from `file1'). Existing
+> implementation isn't able to apply such patch, because it has to know
+> in advance which files will be removed.
+>=20
+> This patch populates fn_table with information about removal of files
+> before calling check_patch() for each patch to be applied.
+>=20
+> Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
 
-Ah, it is indeed, thatm akes it even more readable! :)
+Can anyone comment on this patch? It should fix bug mentioned at
+
+http://www.spinics.net/lists/git/msg100481.html
 
 --=20
-Cheers,
-
-Sverre Rabbelier
+Micha=C5=82 Kiedrowicz
