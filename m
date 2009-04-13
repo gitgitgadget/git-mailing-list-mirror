@@ -1,81 +1,60 @@
-From: "David E. Wheeler" <david@kineticode.com>
-Subject: Again with git-svn: File was not found in commit
-Date: Mon, 13 Apr 2009 11:08:05 -0700
-Message-ID: <747CFDA3-AC27-44EB-A69C-BF9C29B05A31@kineticode.com>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 13 20:18:49 2009
+From: Tim Retout <tim@retout.co.uk>
+Subject: [PATCH] builtin-reset.c: Extend hard reset error message when using paths.
+Date: Mon, 13 Apr 2009 19:14:04 +0100
+Message-ID: <1239646444-11653-1-git-send-email-tim@retout.co.uk>
+Cc: Tim Retout <tim@retout.co.uk>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 13 20:22:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtQji-0004sE-94
-	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 20:18:26 +0200
+	id 1LtQn8-0005wn-4l
+	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 20:21:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751514AbZDMSQx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Apr 2009 14:16:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751290AbZDMSQx
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 14:16:53 -0400
-Received: from host-201.commandprompt.net ([207.173.203.201]:36497 "EHLO
-	smtp.kineticode.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751029AbZDMSQw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Apr 2009 14:16:52 -0400
-Received: from [192.168.1.120] (c-76-105-135-51.hsd1.or.comcast.net [76.105.135.51])
-	by smtp.kineticode.com (Postfix) with ESMTPSA id 6D6E9508059
-	for <git@vger.kernel.org>; Mon, 13 Apr 2009 11:07:30 -0700 (PDT)
-X-Mailer: Apple Mail (2.930.3)
+	id S1751265AbZDMSUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Apr 2009 14:20:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751228AbZDMSUY
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 14:20:24 -0400
+Received: from jabba.london.02.net ([82.132.130.169]:42418 "EHLO mail.o2.co.uk"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751083AbZDMSUY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Apr 2009 14:20:24 -0400
+X-Greylist: delayed 374 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 Apr 2009 14:20:23 EDT
+Received: from arneb.retout.co.uk (87.194.215.58) by mail.o2.co.uk (8.0.013.3) (authenticated as timretout)
+        id 49E06F1C0072F9AA; Mon, 13 Apr 2009 19:25:10 +0100
+Received: by arneb.retout.co.uk (Postfix, from userid 1000)
+	id 493C110000D; Mon, 13 Apr 2009 19:14:04 +0100 (BST)
+X-Mailer: git-send-email 1.6.2.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116460>
 
-Hello Gits,
+Users who invoke 'git reset --hard <paths>' are probably trying to
+update paths in their working directory.  The error message should
+point them in the direction of git-checkout(1).
 
-I'm looking to migrate [Bricolage][] from Subversion to Git. As such,  
-I'm running `git svn` to create a git repository for the Bricolage  
-repository. I moved the files around in Subversion quite a while ago  
-(the trunk, branches, and tags directories used to be at the root, but  
-now they're under a "bricolage" subdirectory), so there's a fair  
-amount of duplication, but I don't mind that, because I can prune  
-those dupes.
+Signed-off-by: Tim Retout <tim@retout.co.uk>
+---
+ builtin-reset.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-[Bricolage]: http://bricolage.cc/
-
-So I ran `git svn` like so:
-
-     md brictmp
-     cd brictmp
-     git svn init http://svn.bricolage.cc/bricolage --no-metadata -s
-     git config svn.authorsfile ~/Desktop/bricolage_committers.txt
-     git svn fetch
-
-After around 30 hours of the fan running full tilt on my MacBook Pro,  
-creating 343 branches (yeah, we have a lot of tags), `git svn` exited  
-with this error:
-
-     bricolage/branches/rev_1_8/lib/Bric/App/ApacheConfig.pm was not  
-found in commit
-     e5145931069a511e98a087d4cb1a8bb75f43f899 (r5256)
-
-This seemed strange to me, so I had a look at SVN:
-
-     svn list -r5256 http://svn.bricolage.cc/bricolage/branches/rev_1_8/lib/Bric/App/ApacheConfig.pm
-     ApacheConfig.pm
-
-So the file *is* there in that revision. I had been running 1.6.1.2,  
-so I upgraded to 1.6.2.2 and ran `git svn fetch` again to see if it  
-would pick up where it left off, but it returned the same error  
-(please don't tell me I have to start over!).
-
-I see that this issue has come up [before][], earlier this year; has  
-there been any progress on it? Is there perhaps something I can do to  
-get this working?
-
-[before]: http://lists-archives.org/git/677591-git-svn-file-was-not-found-in-commit.html
-
-Many thanks,
-
-David
+diff --git a/builtin-reset.c b/builtin-reset.c
+index c0cb915..885ca9a 100644
+--- a/builtin-reset.c
++++ b/builtin-reset.c
+@@ -257,6 +257,10 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 	if (i < argc) {
+ 		if (reset_type == MIXED)
+ 			warning("--mixed option is deprecated with paths.");
++		else if (reset_type == HARD)
++			die("Cannot do %s reset with paths.\n"
++			    "See git-checkout(1) to update paths in the working tree.",
++					reset_type_names[reset_type]);
+ 		else if (reset_type != NONE)
+ 			die("Cannot do %s reset with paths.",
+ 					reset_type_names[reset_type]);
+-- 
+1.6.2.2
