@@ -1,77 +1,57 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 5/5] docs/checkout: clarify what "non-branch" means
-Date: Mon, 13 Apr 2009 07:21:04 -0400
-Message-ID: <20090413112104.GE15982@coredump.intra.peff.net>
-References: <20090413110947.GA15647@coredump.intra.peff.net>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [JGIT PATCH 1/2] Improve end-of-file detection in DirCache
+Date: Mon, 13 Apr 2009 13:53:00 +0200
+Message-ID: <200904131353.00738.robin.rosenberg.lists@dewire.com>
+References: <1239205852-28138-1-git-send-email-robin.rosenberg@dewire.com> <1239290899-24589-1-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Mark Levedahl <mlevedahl@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 13 13:22:51 2009
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Apr 13 13:54:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtKFP-0001je-Jb
-	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 13:22:44 +0200
+	id 1LtKkN-0001DJ-59
+	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 13:54:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754923AbZDMLVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Apr 2009 07:21:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753687AbZDMLVH
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 07:21:07 -0400
-Received: from peff.net ([208.65.91.99]:43511 "EHLO peff.net"
+	id S1753094AbZDMLxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Apr 2009 07:53:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752734AbZDMLxJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 07:53:09 -0400
+Received: from mail.dewire.com ([83.140.172.130]:2619 "EHLO dewire.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752734AbZDMLVG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Apr 2009 07:21:06 -0400
-Received: (qmail 31851 invoked by uid 107); 13 Apr 2009 11:21:08 -0000
-Received: from Unknown (HELO coredump.intra.peff.net) (10.0.0.130)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 13 Apr 2009 07:21:08 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Apr 2009 07:21:04 -0400
+	id S1752607AbZDMLxI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Apr 2009 07:53:08 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id AD88E14915BC;
+	Mon, 13 Apr 2009 13:53:02 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id PUALiKk4ImtU; Mon, 13 Apr 2009 13:53:02 +0200 (CEST)
+Received: from sleipner.localnet (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 3E0DE148897B;
+	Mon, 13 Apr 2009 13:53:02 +0200 (CEST)
+User-Agent: KMail/1.11.2 (Linux/2.6.27-14-generic; KDE/4.2.2; i686; ; )
+In-Reply-To: <1239290899-24589-1-git-send-email-spearce@spearce.org>
 Content-Disposition: inline
-In-Reply-To: <20090413110947.GA15647@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116433>
 
-In the code we literally stick "refs/heads/" on the front
-and see if it resolves, so that is probably the best
-explanation.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I hope this helps a little bit with Mark's confusion. But while writing
-it, I really think it would be a simpler rule to say "if it's in
-refs/heads/, then it's a branch" (which is similar to what Mark
-suggested earlier).
+As a consequence, I'll reapply the GitMoveDeleteHook reverts we made just
+prior to 0.4 and start deprecating GitIndex. Any preference for re-apply or
+reverting the reverts?
 
-So "git checkout refs/heads/master" would be identical to "git checkout
-master". That would require a code change, though.
+The reverts are in  e7307f14c531d52cf231c39d844841c4adaf5e5a and 
+2066e55e4740d9e9cfaf455596f832ff694f853a
 
- Documentation/git-checkout.txt |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
+I think the original patches are valid.
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 4a1fb53..ad4b31e 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -114,11 +114,11 @@ the conflicted merge in the specified paths.
- 	"merge" style, shows the original contents).
- 
- <branch>::
--	Branch to checkout (when no paths are given); may be any object
--	ID that resolves to a commit.  Defaults to HEAD.
--+
--When this parameter names a non-branch (but still a valid commit object),
--your HEAD becomes 'detached'.
-+	Branch to checkout; if it refers to a branch (i.e., a name that,
-+	when prepended with "refs/heads/", is a valid ref), then that
-+	branch is checked out. Otherwise, if it refers to a valid
-+	commit, your HEAD becomes "detached" and you are no longer on
-+	any branch (see below for details).
- +
- As a special case, the `"@\{-N\}"` syntax for the N-th last branch
- checks out the branch (instead of detaching).  You may also specify
--- 
-1.6.3.rc0.148.g141203.dirty
+-- robin
