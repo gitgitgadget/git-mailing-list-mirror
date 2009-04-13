@@ -1,57 +1,71 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [JGIT PATCH 1/2] Improve end-of-file detection in DirCache
-Date: Mon, 13 Apr 2009 13:53:00 +0200
-Message-ID: <200904131353.00738.robin.rosenberg.lists@dewire.com>
-References: <1239205852-28138-1-git-send-email-robin.rosenberg@dewire.com> <1239290899-24589-1-git-send-email-spearce@spearce.org>
+From: Tim Visher <tim.visher@gmail.com>
+Subject: Re: Error Building 1.6.2.2 on Cygwin
+Date: Mon, 13 Apr 2009 08:16:46 -0400
+Message-ID: <c115fd3c0904130516y3bef1ff3x44d99e7b1dd72a45@mail.gmail.com>
+References: <c115fd3c0904091210u398ea4bag62eac3a6deaffa5f@mail.gmail.com>
+	 <be6fef0d0904092015o10457ca7u844fe868aae4de6b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Apr 13 13:54:45 2009
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 13 14:18:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtKkN-0001DJ-59
-	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 13:54:43 +0200
+	id 1LtL7G-0007QI-0r
+	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 14:18:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753094AbZDMLxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Apr 2009 07:53:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752734AbZDMLxJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 07:53:09 -0400
-Received: from mail.dewire.com ([83.140.172.130]:2619 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752607AbZDMLxI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Apr 2009 07:53:08 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id AD88E14915BC;
-	Mon, 13 Apr 2009 13:53:02 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id PUALiKk4ImtU; Mon, 13 Apr 2009 13:53:02 +0200 (CEST)
-Received: from sleipner.localnet (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 3E0DE148897B;
-	Mon, 13 Apr 2009 13:53:02 +0200 (CEST)
-User-Agent: KMail/1.11.2 (Linux/2.6.27-14-generic; KDE/4.2.2; i686; ; )
-In-Reply-To: <1239290899-24589-1-git-send-email-spearce@spearce.org>
-Content-Disposition: inline
+	id S1751287AbZDMMQt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Apr 2009 08:16:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751197AbZDMMQs
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 08:16:48 -0400
+Received: from yw-out-2324.google.com ([74.125.46.30]:2617 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751147AbZDMMQr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Apr 2009 08:16:47 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so2154531ywb.1
+        for <git@vger.kernel.org>; Mon, 13 Apr 2009 05:16:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=LsS6F+DXnevG7vzY6ubtfRz849Lrm+1xomlGyHB0HTU=;
+        b=oYEbH6FOfG743x68eRnPyukrZXyPZ+nKe+mDchDPLaiKYGLCUyWQ0Crjaz2DvSCDQL
+         sYtc4sAwgF7cSrEHskd+j5QurdbjXMlLYwMapzgWUfOL6NS7TuuIHpY4FtpiVshsJtuM
+         b96x7byGJMSvzfOoHzb5ZWf6bcZw4oDH4PBfQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=uWopsULaS31RVg/l5MguvyJtojmFPqBkeYRyE7gK4qcB/7XPNaPGPtw5kVEpDmD0i4
+         fj6DvcG5X8WkD3u9IlWntrfU27DIWmF6N3tXFSxX/01+XJ7C7DfVfBpMsmRuixmTmlYs
+         WpQYsXxxbN/JXkryE/Ao/6ddhhw4sBuWEj8Vo=
+Received: by 10.100.165.13 with SMTP id n13mr2073550ane.112.1239625006234; 
+	Mon, 13 Apr 2009 05:16:46 -0700 (PDT)
+In-Reply-To: <be6fef0d0904092015o10457ca7u844fe868aae4de6b@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116434>
 
+On Thu, Apr 9, 2009 at 11:15 PM, Tay Ray Chuan <rctay89@gmail.com> wrote:
+> On Fri, Apr 10, 2009 at 3:10 AM, Tim Visher <tim.visher@gmail.com> wrote:
+>> cannot find -liconv
+>
+> you need to get the libiconv package using the cygwin installer.
 
-As a consequence, I'll reapply the GitMoveDeleteHook reverts we made just
-prior to 0.4 and start deprecating GitIndex. Any preference for re-apply or
-reverting the reverts?
+Thanks, Ray.  That fixed it.  I had libiconv2 but I guess it's not
+backwards compatible.
 
-The reverts are in  e7307f14c531d52cf231c39d844841c4adaf5e5a and 
-2066e55e4740d9e9cfaf455596f832ff694f853a
+-- 
 
-I think the original patches are valid.
+In Christ,
 
--- robin
+Timmy V.
+
+http://burningones.com/
+http://five.sentenc.es/ - Spend less time on e-mail
