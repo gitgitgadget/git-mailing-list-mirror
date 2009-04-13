@@ -1,71 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] send-email: Add config option for sender address
-Date: Mon, 13 Apr 2009 00:45:34 -0700
-Message-ID: <7v1vrxhu8x.fsf@gitster.siamese.dyndns.org>
-References: <1235005238-15500-1-git-send-email-xyzzy@speakeasy.org>
- <20090410093432.6117@nanako3.lavabit.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 4/5] make get_short_ref a public function
+Date: Mon, 13 Apr 2009 04:15:43 -0400
+Message-ID: <20090413081543.GA9846@coredump.intra.peff.net>
+References: <20090407070254.GA2870@coredump.intra.peff.net> <20090407071420.GD2924@coredump.intra.peff.net> <36ca99e90904070039m15869c34jc9e12d5ccc48d82@mail.gmail.com> <20090409081857.GC17221@coredump.intra.peff.net> <36ca99e90904090205g8a6a5a6nea96f8c5f44e076a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Trent Piepho <xyzzy@speakeasy.org>
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Mon Apr 13 09:47:16 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 13 10:17:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtGst-0005TO-GP
-	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 09:47:15 +0200
+	id 1LtHLz-0003Cr-QN
+	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 10:17:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753114AbZDMHpm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Apr 2009 03:45:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753106AbZDMHpm
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 03:45:42 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42577 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752297AbZDMHpm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Apr 2009 03:45:42 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 99D32AA3DE;
-	Mon, 13 Apr 2009 03:45:40 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 38CB7AA3DD; Mon,
- 13 Apr 2009 03:45:35 -0400 (EDT)
-In-Reply-To: <20090410093432.6117@nanako3.lavabit.com> (Nanako Shiraishi's
- message of "Fri, 10 Apr 2009 09:34:32 +0900")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 15F2B180-27FF-11DE-B562-C121C5FC92D5-77302942!a-sasl-fastnet.pobox.com
+	id S1753236AbZDMIPq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Apr 2009 04:15:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753133AbZDMIPp
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 04:15:45 -0400
+Received: from peff.net ([208.65.91.99]:48859 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753026AbZDMIPp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Apr 2009 04:15:45 -0400
+Received: (qmail 30828 invoked by uid 107); 13 Apr 2009 08:15:47 -0000
+Received: from Unknown (HELO coredump.intra.peff.net) (10.0.0.130)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 13 Apr 2009 04:15:47 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Apr 2009 04:15:43 -0400
+Content-Disposition: inline
+In-Reply-To: <36ca99e90904090205g8a6a5a6nea96f8c5f44e076a@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116418>
 
-Nanako Shiraishi <nanako3@lavabit.com> writes:
+On Thu, Apr 09, 2009 at 11:05:06AM +0200, Bert Wesarg wrote:
 
-> Quoting Trent Piepho:
->
->> The sender address, as specified with the '--from' command line option,
->> couldn't be set in the config file.  So add a new config option,
->> 'sendemail.from', which sets it.  One can use 'sendemail.<identity>.from'
->> as well of course, which is likely the more useful case.
->> 
->> The sender address would default to GIT_AUTHOR_IDENT, which is usually the
->> right thing, but this doesn't allow switching based on the identity
->> selected.  It's possible to switch the SMTP server and envelope sender by
->> using the '--identity' option, in which case one probably wants to use a
->> different from address as well, but this had to be manually specified.
->> 
->> The docs are also fixed up somewhat.  If '--from' is specified (or the new
->> sendemail.from option is used) then the user isn't prompted.  The default
->> with no '--from' option (or sendemail.from option) is GIT_AUTHOR_IDENT
->> first then GIT_COMMITTER_IDENT, not just GIT_COMMITTER_IDENT.
->> 
->> Signed-off-by: Trent Piepho <xyzzy@speakeasy.org>
->
-> Junio, may I ask what happened to this patch?
+> > you the one you want). An alternative would be to show:
+> >
+> > =C2=A0heads/master
+> > =C2=A0remotes/master
+> >
+> > in this case.
+> Right, and the idea was to choose the alternatives based on the
+> core.warnAmbiguousRefs setting, i.e. the former for false, the latter
+> for true.
+>=20
+> For what I posted a patch some time ago:
+>=20
+> http://thread.gmane.org/gmane.comp.version-control.git/96464
 
-If I recall correctly, it didn't look too invasive and I found it Ok, but
-I didn't see any comments on it, so it was dropped on the floor.
+Ah, OK, now I understand what you meant. I think that is the right
+solution. Thanks.
 
-Perhaps Trent cares to resend?
+-Peff
