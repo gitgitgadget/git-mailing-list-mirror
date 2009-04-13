@@ -1,62 +1,82 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT PATCH 1/2] Improve end-of-file detection in DirCache
-Date: Mon, 13 Apr 2009 08:42:00 -0700
-Message-ID: <20090413154200.GV23604@spearce.org>
-References: <1239205852-28138-1-git-send-email-robin.rosenberg@dewire.com> <1239290899-24589-1-git-send-email-spearce@spearce.org> <200904131353.00738.robin.rosenberg.lists@dewire.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-add: introduce --edit (to edit the diff vs. the 
+ index)
+Date: Mon, 13 Apr 2009 18:19:51 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904131817160.10279@pacific.mpi-cbg.de>
+References: <cover.1239225986u.git.johannes.schindelin@gmx.de>  <61c07126e28aba0a36730da06112bd2d16eabc1b.1239225986u.git.johannes.schindelin@gmx.de>  <46dff0320904081900n7bff2280rc49315e3db427919@mail.gmail.com>  <46dff0320904091843p3e034647j3c78506b4d0c2b4@mail.gmail.com>
+  <alpine.DEB.1.00.0904102009440.10279@pacific.mpi-cbg.de> <fabb9a1e0904101159w7ab19247k81f4b67b8a91198f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Mon Apr 13 17:43:38 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Ping Yin <pkufranky@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 13 18:22:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtOJs-0007x7-77
-	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 17:43:36 +0200
+	id 1LtOrz-00048o-7n
+	for gcvg-git-2@gmane.org; Mon, 13 Apr 2009 18:18:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751888AbZDMPmE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Apr 2009 11:42:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751863AbZDMPmC
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 11:42:02 -0400
-Received: from george.spearce.org ([209.20.77.23]:54532 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751716AbZDMPmB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Apr 2009 11:42:01 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 66E9E38211; Mon, 13 Apr 2009 15:42:00 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <200904131353.00738.robin.rosenberg.lists@dewire.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753367AbZDMQRL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Apr 2009 12:17:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753105AbZDMQRL
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 12:17:11 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42699 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753412AbZDMQRJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Apr 2009 12:17:09 -0400
+Received: (qmail invoked by alias); 13 Apr 2009 16:17:07 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp068) with SMTP; 13 Apr 2009 18:17:07 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19OXCBRfiFO9CF/QuVPL4jTOIhyHYgs4zystpdemQ
+	n8Nd4O0PkY2LwK
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <fabb9a1e0904101159w7ab19247k81f4b67b8a91198f@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116445>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+Hi,
+
+On Fri, 10 Apr 2009, Sverre Rabbelier wrote:
+
+> On Fri, Apr 10, 2009 at 20:10, Johannes Schindelin 
+> <Johannes.Schindelin@gmx.de> > As others have mentioned, there _is_ a 
+> reason we have a working directory.
+> > Please understand this as a "I do not like the idea of editing the 
+> > index directly at all".
 > 
-> As a consequence, I'll reapply the GitMoveDeleteHook reverts we made just
-> prior to 0.4 and start deprecating GitIndex. Any preference for re-apply or
-> reverting the reverts?
-> 
-> The reverts are in  e7307f14c531d52cf231c39d844841c4adaf5e5a and 
-> 2066e55e4740d9e9cfaf455596f832ff694f853a
-> 
-> I think the original patches are valid.
+> I do not intend use it as a replacement of the working directory, but 
+> mostly as a way to split up patches easier. Mainly to _remove_ lines 
+> that I staged that I would like to be in a different patch in the series 
+> (possibly after doing 'git reset --soft'). I always go through my a 
+> longer patch series multiple times until I am satisfied with the result, 
+> this addition would make that a lot easier.
 
-Hmmph.
+Would not a much saner way be
 
-I would cherry-pick with --no-commit and then make two notes in
-the final commit message, e.g.:
+	$ git reset HEAD^
+	$ git add -p
+	$ git stash save --keep-index
+	# test it
+	$ git commit
+	$ git stash apply
+	# test again
+	$ git commit
 
-  ...
+Hmm?
 
-  Temporary-revert: $REVERTCOMMIT
-  Originally: $FIRSTCOMMIT
-  Signed-off-by: ...
+BTW I do not like the "longness" of "git stash save --keep-index"; of 
+course I could install an alias for that, but it feels wrong to have only 
+a cumbersome to call something that should be part of a _lot_ of 
+workflows.
 
-so we can "thread" them with hyperlinks in viewers.
-
--- 
-Shawn.
+Ciao,
+Dscho
