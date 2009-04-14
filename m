@@ -1,59 +1,43 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Fix buffer overflow in config parser
-Date: Tue, 14 Apr 2009 15:38:14 -0700
-Message-ID: <7v3aca3lpl.fsf@gitster.siamese.dyndns.org>
-References: <49E50003.2040907@intra2net.com>
- <alpine.DEB.1.00.0904142340350.10279@pacific.mpi-cbg.de>
+From: "Nathan Patel" <bolgfoquinnlola@priority-health.com>
+Subject: Make wonderful lovemaking your ace of trumps in the pick-up game!
+Date: Tue, 14 Apr 2009 19:26:23 -0300
+Message-ID: <20090414192623.7070701@priority-health.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Jarosch <thomas.jarosch@intra2net.com>, gitster@pobox.com,
-	git@vger.kernel.org, markus.heidelberg@web.de
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Apr 15 00:40:02 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 15 00:55:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtrIQ-0000Xo-03
-	for gcvg-git-2@gmane.org; Wed, 15 Apr 2009 00:40:02 +0200
+	id 1LtrXl-00048Y-T1
+	for gcvg-git-2@gmane.org; Wed, 15 Apr 2009 00:55:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752425AbZDNWiZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2009 18:38:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752013AbZDNWiZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 18:38:25 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55661 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751912AbZDNWiY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Apr 2009 18:38:24 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id AC585E35D;
-	Tue, 14 Apr 2009 18:38:21 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B304AE35B; Tue,
- 14 Apr 2009 18:38:15 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0904142340350.10279@pacific.mpi-cbg.de>
- (Johannes Schindelin's message of "Tue, 14 Apr 2009 23:41:14 +0200 (CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F542288E-2944-11DE-9EEC-DC76898A30C1-77302942!a-sasl-quonix.pobox.com
+	id S1752709AbZDNWxu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2009 18:53:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752538AbZDNWxu
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 18:53:50 -0400
+Received: from 189-47-237-4.dsl.telesp.net.br ([189.47.237.4]:62806 "HELO
+	189-47-237-4.dsl.telesp.net.br" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752205AbZDNWxu (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Apr 2009 18:53:50 -0400
+Received: from [93.184.125.142] (helo=jbrc)
+	by 189-47-237-4.dsl.telesp.net.br with smtp (Exim 4.62 (FreeBSD))
+	id 123974806264-0001iu-QY; Tue, 14 Apr 2009 19:27:42 -0300
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116583>
+X-Spam-Report: 8.5 points;
+ *  3.0 RAZOR2_CF_RANGE_51_100 BODY: Razor2 gives confidence level above 50%
+ *      [cf: 100]
+ *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
+ *  0.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: needenjoy.com]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: needenjoy.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116584>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> Hi,
->
-> On Tue, 14 Apr 2009, Thomas Jarosch wrote:
->
->>  t/t1303-wacky-config.sh |    9 ++++++++-
->
-> I like the name!
->
->> +LONG_VALUE=`perl -e 'print "x" x 1023," a"'`
->
-> But should it not be guarded against NO_PERL?
-
-The right question to ask is a rhetorical "do we need perl to do this?"
+How please knocking-out hottie http://xt.needenjoy.com/
