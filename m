@@ -1,64 +1,64 @@
-From: Jim Babka <jim@babkas.info>
-Subject: Re: git svn hangs
-Date: Tue, 14 Apr 2009 14:39:15 -0500
-Message-ID: <49E4E663.4080802@bestmail.us>
-References: <49DE2796.4090406@bestmail.us> <20090411020919.GA30267@dcvr.yhbt.net>
-Reply-To: babka@bestmail.us
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: On Tracking Binary Files
+Date: Tue, 14 Apr 2009 15:42:07 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0904141532160.6741@xanadu.home>
+References: <7efce40a0904140741w28da9b54ucfe4b54bf48b0844@mail.gmail.com>
+ <7efce40a0904140742i48aad41ds66de5dfe368f3b16@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Apr 14 21:40:52 2009
+To: Patrick Berkeley <patrickberkeley@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 14 21:43:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtoV2-00025s-Cs
-	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 21:40:52 +0200
+	id 1LtoXt-00030m-6U
+	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 21:43:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752436AbZDNTjT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2009 15:39:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752208AbZDNTjT
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 15:39:19 -0400
-Received: from wa-out-1112.google.com ([209.85.146.182]:52871 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751618AbZDNTjS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Apr 2009 15:39:18 -0400
-Received: by wa-out-1112.google.com with SMTP id j5so1404214wah.21
-        for <git@vger.kernel.org>; Tue, 14 Apr 2009 12:39:17 -0700 (PDT)
-Received: by 10.114.125.18 with SMTP id x18mr3857696wac.220.1239737957037;
-        Tue, 14 Apr 2009 12:39:17 -0700 (PDT)
-Received: from ?9.53.51.163? ([32.97.110.53])
-        by mx.google.com with ESMTPS id n30sm7461023wag.21.2009.04.14.12.39.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 14 Apr 2009 12:39:10 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <20090411020919.GA30267@dcvr.yhbt.net>
+	id S1751985AbZDNTmP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2009 15:42:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751767AbZDNTmP
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 15:42:15 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:34394 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751503AbZDNTmP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2009 15:42:15 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KI3004ORW27R8H0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 14 Apr 2009 15:42:07 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7efce40a0904140742i48aad41ds66de5dfe368f3b16@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116560>
 
-The exact same thing happens on a Linux (RedHat) machine. I don't know 
-of any public repositories that I could run this against.
+On Tue, 14 Apr 2009, Patrick Berkeley wrote:
 
-Jim Babka.
+> Does Git track the deltas on binary files?
 
-Eric Wong wrote:
-> Jim Babka <jim@babkas.info> wrote:
->   
->> I need some help. I have tried both the native Windows git (git version  
->> 1.6.2.2.1669.g7eaf8, coming from Git-1.6.2.2-preview20090408) and the  
->> git in Cygwin (git version 1.6.1.2), but I see almost the same behavior.  
->> I try to run the following command and see the following results:
->>     
->
-> Hi Jim,
->
-> Can you test the clone operation from a Linux/Unix machine?  Does
-> git-svn on Windows work for you with other (public) repositories?  I
-> can't support Windows other than accepting patches from others.
->
->   
+Yes.  And actually git's delta storage doesn't care at all whether a 
+file is text or binary.
+
+> Someone in #git mentioned that if the binaries change too much Git no 
+> longer just stores the changes. If this is the case, what is the 
+> breaking point where Git goes from storing the deltas to the entire 
+> new file?
+
+If two versions of the same file are simply too different to make delta 
+compression worth it, then no deltas are used.  It is still possible 
+that a third version of the same file would produce a nice delta against 
+either the first or second version though, in which case that third 
+version will be stored as a delta.  And so on.
+
+A sophisticated set of euristics is applied to the list of objects as a 
+whole to determine the best delta arrangement possible.  So there is no 
+such thing as a simple "breaking point".
+
+
+Nicolas
