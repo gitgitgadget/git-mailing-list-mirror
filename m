@@ -1,72 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Performance issue: initial git clone causes massive repack
-Date: Tue, 14 Apr 2009 17:52:53 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0904141749330.10279@pacific.mpi-cbg.de>
-References: <alpine.LFD.2.00.0904052315210.6741@xanadu.home> <20090407081019.GK20356@atjola.homenet> <m3tz5023rq.fsf@localhost.localdomain> <alpine.LFD.2.00.0904070903020.6741@xanadu.home> <20090407142147.GA4413@atjola.homenet> <alpine.LFD.2.00.0904071321520.6741@xanadu.home>
- <20090407181259.GB4413@atjola.homenet> <alpine.LFD.2.00.0904071454250.6741@xanadu.home> <20090407202725.GC4413@atjola.homenet> <alpine.LFD.2.00.0904080041240.6741@xanadu.home> <20090410T203405Z@curie.orbis-terrarum.net>
+From: Marc Mutz <marc@kdab.net>
+Subject: rebaseing topic branch which has merges from master
+Date: Tue, 14 Apr 2009 17:03:50 +0200
+Message-ID: <gs28e1$ktn$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Robin H. Johnson" <robbat2@gentoo.org>
-X-From: git-owner@vger.kernel.org Tue Apr 14 17:54:33 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 14 18:02:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtkvV-0006Rd-G1
-	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 17:51:57 +0200
+	id 1Ltl5c-0003Li-7h
+	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 18:02:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752411AbZDNPuK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2009 11:50:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751715AbZDNPuJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 11:50:09 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43226 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751784AbZDNPuI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Apr 2009 11:50:08 -0400
-Received: (qmail invoked by alias); 14 Apr 2009 15:50:06 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp008) with SMTP; 14 Apr 2009 17:50:06 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19qNIwM5dpqHBvhGzk729ZEbDYHXPW5VyxaKHNmNv
-	bam/k50uZVguI3
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20090410T203405Z@curie.orbis-terrarum.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5600000000000001
+	id S1757457AbZDNQAJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2009 12:00:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757454AbZDNQAI
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 12:00:08 -0400
+Received: from main.gmane.org ([80.91.229.2]:53351 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757380AbZDNQAG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2009 12:00:06 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1Ltl3L-0004TW-01
+	for git@vger.kernel.org; Tue, 14 Apr 2009 16:00:03 +0000
+Received: from dialbs-213-023-007-034.static.arcor-ip.net ([213.23.7.34])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 14 Apr 2009 16:00:02 +0000
+Received: from marc by dialbs-213-023-007-034.static.arcor-ip.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 14 Apr 2009 16:00:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: dialbs-213-023-007-034.static.arcor-ip.net
+User-Agent: KNode/0.10.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116543>
 
 Hi,
 
-On Fri, 10 Apr 2009, Robin H. Johnson wrote:
+I'd like to achieve the following:
 
-> On Wed, Apr 08, 2009 at 12:52:54AM -0400, Nicolas Pitre wrote:
-> > > http://git.overlays.gentoo.org/gitweb/?p=exp/gentoo-x86.git;a=summary
-> > > At least that's what I cloned ;-) I hope it's the right one, but it fits
-> > > the description...
-> > OK.  FWIW, I repacked it with --window=250 --depth=250 and obtained a 
-> > 725MB pack file.  So that's about half the originally reported size.
-> The one problem with having the single large packfile is that Git
-> doesn't have a trivial way to resume downloading it when the git://
-> protocol is used.
-> 
-> For our developers cursed with bad internet connections (a fair number
-> of firewalls that don't seem to respect keepalive properly), I suppose
-> I can probably just maintain a separate repo for their initial clones,
-> which leaves a large overall download, but more chances to resume.
+---(BP)--- ....---(M1)---     ...    ---(M2)---   .... master
+     \              \                     \
+      \              \                     \
+      (T1)---(T2)---(T3)---(T4)---(T5)---(T6)--- .... topic
+ 
+ 
+                                   ||
+                                   ||
+                                   VV
+ 
+ 
+---(BP)---....---(M1)---     ...    ---(M2)---   .... master
+                   \                     \_____________
+                    \                                  \
+                   (T1)---(T2)---(T3)---(T4)---(T5)---(T6)--- .... topic
 
-IMO the best we could do under these circumstances is to use fsck 
---lost-found to find those commits which have a complete history (i.e. no 
-"broken links") -- this probably needs to be implemented as a special mode 
-of --lost-found -- and store them in a temporary to-be-removed 
-namespace, say refs/heads/incomplete-refs/$number, which will be sent to 
-the server when fetching the next time.  (Might need some iterations to 
-get everything, though.)
+However, when I run
+  git checkout topic
+  git rebase M1
+I get a conflict somewhere around a merge commit down the road, and when I
+gitk to check where I am, I see master commits (M2, M2^) that have changed
+their (sha1) name. That shouldn't happen, afaiu git, so what's wrong? Is
+this simply not supported? Can I flatten the merge commits somehow before
+rebasing?
 
-Ciao,
-Dscho
+Thanks,
+Marc
