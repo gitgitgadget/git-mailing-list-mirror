@@ -1,78 +1,82 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Performance issue: initial git clone causes massive repack
-Date: Tue, 14 Apr 2009 17:02:24 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0904141648370.6741@xanadu.home>
-References: <alpine.LFD.2.00.0904070903020.6741@xanadu.home>
- <20090407142147.GA4413@atjola.homenet>
- <alpine.LFD.2.00.0904071321520.6741@xanadu.home>
- <20090407181259.GB4413@atjola.homenet>
- <alpine.LFD.2.00.0904071454250.6741@xanadu.home>
- <20090407202725.GC4413@atjola.homenet>
- <alpine.LFD.2.00.0904080041240.6741@xanadu.home>
- <20090410T203405Z@curie.orbis-terrarum.net>
- <alpine.DEB.1.00.0904141749330.10279@pacific.mpi-cbg.de>
- <alpine.LFD.2.00.0904141542161.6741@xanadu.home>
- <20090414T202206Z@curie.orbis-terrarum.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add an option for using any HTTP authentication scheme,
+ not only basic
+Date: Tue, 14 Apr 2009 23:08:36 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904142307110.10279@pacific.mpi-cbg.de>
+References: <Pine.LNX.4.64.0904142350140.7479@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Robin H. Johnson" <robbat2@gentoo.org>
-X-From: git-owner@vger.kernel.org Tue Apr 14 23:04:13 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-114051505-1239743316=:10279"
+Cc: git@vger.kernel.org
+To: =?ISO-8859-15?Q?Martin_Storsj=F6?= <martin@martin.st>
+X-From: git-owner@vger.kernel.org Tue Apr 14 23:07:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtpnW-0006cB-NX
-	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 23:04:03 +0200
+	id 1Ltpqx-0007jd-3L
+	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 23:07:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754683AbZDNVCc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2009 17:02:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754435AbZDNVCb
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 17:02:31 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:14547 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752731AbZDNVCa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Apr 2009 17:02:30 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KI3003HUZQ96BO2@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 14 Apr 2009 17:01:21 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20090414T202206Z@curie.orbis-terrarum.net>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1754191AbZDNVFv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2009 17:05:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753343AbZDNVFv
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 17:05:51 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40672 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754042AbZDNVFu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2009 17:05:50 -0400
+Received: (qmail invoked by alias); 14 Apr 2009 21:05:49 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp007) with SMTP; 14 Apr 2009 23:05:49 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX195MNQaMHB59M/NPLAR+gt7LwJ0K8o4S0BokRu1Ck
+	9d7TVLrqnOtKbX
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <Pine.LNX.4.64.0904142350140.7479@localhost.localdomain>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116572>
 
-On Tue, 14 Apr 2009, Robin H. Johnson wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> More recent discussions raised the possibility of using git-bundle to
-> provide a more ideal initial download that they CAN resume easily, as
-> well as being able to move on from it.
-> 
-> So, from the Gentoo side right now, we're looking at this:
-> 1. Setup git-bundle for initial downloads.
-> 2. Disallow initial clones over git:// (allow updates ONLY)
-> 3. Disallow git-over-http, git-over-rsync.
-> 
-> This also avoids the wait time with the initial clone. Just grab the
-> bundle with your choice of rsync or http, check it's integrity, throw it
-> into your repo, and update to the latest tree.
+--8323328-114051505-1239743316=:10279
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
 
-This certainly makes lots of sense until we overcome the current clone 
-bothleneck.  You should tightly repack your repository first, like with
-"git repack -a -f -d --depth=100 --window=500".  Use a fast machine with 
-enough ram of course.  Then you'll have a nice and small bundle.
+Hi,
 
-Of course any git pack/bundle has full self-integrity built in.  So you 
-should not need to do a separate check.
+On Tue, 14 Apr 2009, Martin Storsjö wrote:
 
-And don't forget to delete the bundle once it has been fetched into a 
-full repository, otherwise it'll only wastes disk space.
+> diff --git a/http.c b/http.c
+> index 2e3d649..0b18c64 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -26,6 +26,9 @@ static long curl_low_speed_time = -1;
+>  static int curl_ftp_no_epsv;
+>  static const char *curl_http_proxy;
+>  static char *user_name, *user_pass;
+> +#if LIBCURL_VERSION_NUM >= 0x070a06
+> +static int curl_http_auth_any = 0;
+> +#endif
 
+In six months from now, it might be easier to read
 
-Nicolas
+#if LIBCURL_VERSION_NUM >= 0x070a06
+#define LIBCURL_CAN_HANDLE_ANY_AUTH
+#endif
+
+[...]
+
+#ifdef LIBCURL_CAN_HANDLE_ANY_AUTH
+[...]
+
+Don't you agree?
+
+Thanks,
+Dscho
+--8323328-114051505-1239743316=:10279--
