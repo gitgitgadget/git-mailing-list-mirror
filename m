@@ -1,63 +1,120 @@
-From: David Symonds <dsymonds@gmail.com>
-Subject: Re: making docs
-Date: Tue, 14 Apr 2009 23:14:09 +1000
-Message-ID: <ee77f5c20904140614ofa0753apaec52584f2a3878c@mail.gmail.com>
-References: <49E4A72D.21604.198A9AD@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH] Update docs on behaviour of 'core.sharedRepository' and 'git init --shared'
+Date: Tue, 14 Apr 2009 15:15:42 +0200
+Message-ID: <200904141515.42580.johan@herland.net>
+References: <7vmyaq2nva.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Ulrich Windl <ulrich.windl@rz.uni-regensburg.de>
-X-From: git-owner@vger.kernel.org Tue Apr 14 15:15:55 2009
+To: Junio C Hamano <junio@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 14 15:17:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtiUL-0005LE-HB
-	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 15:15:46 +0200
+	id 1LtiW1-00060V-9r
+	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 15:17:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754429AbZDNNOO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2009 09:14:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753993AbZDNNON
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 09:14:13 -0400
-Received: from mail-ew0-f165.google.com ([209.85.219.165]:64677 "EHLO
-	mail-ew0-f165.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753968AbZDNNOM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Apr 2009 09:14:12 -0400
-Received: by ewy9 with SMTP id 9so2638271ewy.37
-        for <git@vger.kernel.org>; Tue, 14 Apr 2009 06:14:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=tFfBevqQvhG8Zb7pXRbuaF1WlNVx8eBEzyo956tfOIg=;
-        b=LdcMozbM4RwjhrEGv+Muv3F9J2fiwLdqwBbdPyOdoWXvWs5dAbUVOOh03bezFL0TKo
-         WT9PpN46qvJpHZqAz+h1FzrVKMzfNcGJREX4KU1IcDRV6NqTB0RnkGIV5bDBNbjJO59k
-         FrdyHEY4O22ZoUdgvkgnWQOohuDwHSZDlbaGk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=c/QC/3GCo6/A5vetrH38XyuzCtbK1cwd+ZGyxDSrYmeyMytH4O+AzGEq6vmOZP3xtS
-         TgpMNYJ5XUy5Ta0SmkRMBH60lycqpJ0HA6mpPjpNtPIyj57w4dCH6W52bKaU+6NZBPe2
-         f6KTrJwk+Nzt8yV5v2DI6JSFVWVWoWLUVqZ7A=
-Received: by 10.210.62.12 with SMTP id k12mr2917716eba.44.1239714849936; Tue, 
-	14 Apr 2009 06:14:09 -0700 (PDT)
-In-Reply-To: <49E4A72D.21604.198A9AD@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+	id S1754598AbZDNNPz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2009 09:15:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754519AbZDNNPy
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 09:15:54 -0400
+Received: from sam.opera.com ([213.236.208.81]:49627 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753993AbZDNNPx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2009 09:15:53 -0400
+Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id n3EDFg5w020748
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 14 Apr 2009 13:15:48 GMT
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vmyaq2nva.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116537>
 
-On Tue, Apr 14, 2009 at 11:09 PM, Ulrich Windl
-<ulrich.windl@rz.uni-regensburg.de> wrote:
+This documentation update is needed to reflect the recent changes where
+"core.sharedRepository = 0mode" was changed to set, not loosen, the
+repository permissions.
 
-> 1) Pre-build the documentation (manual pages) with the source archive. If the
-> sources are used unmodified, the manual pages should be fine
+Signed-off-by: Johan Herland <johan@herland.net>
+---
 
-This is already in the git.git repository, in the 'man' and 'html' branches.
+On Thursday 09 April 2009, Junio C Hamano wrote:
+> Junio C Hamano (13):
+>   "core.sharedrepository = 0mode" should set, not loosen
+
+It just hit me that after fixing the main problem, we never clarified
+the docs (that were fairly confusing to begin with). I hope this version
+is both correct and understandable.
 
 
-Dave.
+Have fun! :)
+
+...Johan
+
+
+ Documentation/config.txt   |    6 ++++--
+ Documentation/git-init.txt |   16 +++++++++++-----
+ 2 files changed, 15 insertions(+), 7 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index f3ebd2f..59217d2 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -295,8 +295,10 @@ core.sharedRepository::
+ 	group-shareable. When 'umask' (or 'false'), git will use permissions
+ 	reported by umask(2). When '0xxx', where '0xxx' is an octal number,
+ 	files in the repository will have this mode value. '0xxx' will override
+-	user's umask value, and thus, users with a safe umask (0077) can use
+-	this option. Examples: '0660' is equivalent to 'group'. '0640' is a
++	user's umask value (whereas the other options will only override
++	requested parts of the user's umask value). Examples: '0660' will make
++	the repo read/write-able for the owner and group, but inaccessible to
++	others (equivalent to 'group' unless umask is e.g. '0022'). '0640' is a
+ 	repository that is group-readable but not group-writable.
+ 	See linkgit:git-init[1]. False by default.
+ 
+diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
+index 71749c0..7151d12 100644
+--- a/Documentation/git-init.txt
++++ b/Documentation/git-init.txt
+@@ -54,15 +54,21 @@ is given:
+ 
+  - 'group' (or 'true'): Make the repository group-writable, (and g+sx, since
+    the git group may be not the primary group of all users).
++   This is used to loosen the permissions of an otherwise safe umask(2) value.
++   Note that the umask still applies to the other permission bits (e.g. if
++   umask is '0022', using 'group' will not remove read privileges from other
++   (non-group) users). See '0xxx' for how to exactly specify the repository
++   permissions.
+ 
+  - 'all' (or 'world' or 'everybody'): Same as 'group', but make the repository
+    readable by all users.
+ 
+- - '0xxx': '0xxx' is an octal number and each file will have mode '0xxx'
+-   Any option except 'umask' can be set using this option. '0xxx' will
+-   override users umask(2) value, and thus, users with a safe umask (0077)
+-   can use this option. '0640' will create a repository which is group-readable
+-   but not writable. '0660' is equivalent to 'group'.
++ - '0xxx': '0xxx' is an octal number and each file will have mode '0xxx'.
++   '0xxx' will override users' umask(2) value (and not only loosen permissions
++   as 'group' and 'all' does). '0640' will create a repository which is
++   group-readable, but not group-writable or accessible to others. '0660' will
++   create a repo that is readable and writable to the current user and group,
++   but inaccessible to others.
+ 
+ By default, the configuration flag receive.denyNonFastForwards is enabled
+ in shared repositories, so that you cannot force a non fast-forwarding push
+-- 
+1.6.1.2.461.g5bad6
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
