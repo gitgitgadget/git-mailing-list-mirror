@@ -1,74 +1,64 @@
-From: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
-Subject: Re: git init permissions?
-Date: Tue, 14 Apr 2009 21:35:52 +0200
-Message-ID: <49E4E598.6050505@pelagic.nl>
-References: <49E4D16E.9050500@pelagic.nl> <200904142047.21810.johan@herland.net>
+From: Jim Babka <jim@babkas.info>
+Subject: Re: git svn hangs
+Date: Tue, 14 Apr 2009 14:39:15 -0500
+Message-ID: <49E4E663.4080802@bestmail.us>
+References: <49DE2796.4090406@bestmail.us> <20090411020919.GA30267@dcvr.yhbt.net>
+Reply-To: babka@bestmail.us
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, jk@jk.gs
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue Apr 14 21:38:09 2009
+Cc: git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Tue Apr 14 21:40:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtoSO-0001AZ-OI
-	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 21:38:09 +0200
+	id 1LtoV2-00025s-Cs
+	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 21:40:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753479AbZDNTf5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2009 15:35:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753739AbZDNTf4
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 15:35:56 -0400
-Received: from hupie.xs4all.nl ([82.95.241.251]:38885 "EHLO
-	Lighthouse.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753479AbZDNTfz (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Apr 2009 15:35:55 -0400
-Received: from [192.168.0.51] (unknown [192.168.0.51])
-	by Lighthouse.internal.Hupie.com (Postfix) with ESMTP id B182958BDA0;
-	Tue, 14 Apr 2009 21:35:52 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <200904142047.21810.johan@herland.net>
+	id S1752436AbZDNTjT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2009 15:39:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752208AbZDNTjT
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 15:39:19 -0400
+Received: from wa-out-1112.google.com ([209.85.146.182]:52871 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751618AbZDNTjS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2009 15:39:18 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so1404214wah.21
+        for <git@vger.kernel.org>; Tue, 14 Apr 2009 12:39:17 -0700 (PDT)
+Received: by 10.114.125.18 with SMTP id x18mr3857696wac.220.1239737957037;
+        Tue, 14 Apr 2009 12:39:17 -0700 (PDT)
+Received: from ?9.53.51.163? ([32.97.110.53])
+        by mx.google.com with ESMTPS id n30sm7461023wag.21.2009.04.14.12.39.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 14 Apr 2009 12:39:10 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <20090411020919.GA30267@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116559>
 
-Johan Herland wrote:
-> On Tuesday 14 April 2009, Ferry Huberts (Pelagic) wrote:
->> I'm looking at the git init --shared=group result and see:
->>
->> drwxrwsr-x 7 ferry ferry  111 2009-04-14 19:51 .
->> drwxrwxr-x 3 ferry ferry   17 2009-04-14 19:51 ..
->> drwxrwxr-x 2 ferry ferry    6 2009-04-14 19:51 branches
->> -rw-rw-r-- 1 ferry ferry  127 2009-04-14 19:51 config
->> -rw-rw-r-- 1 ferry ferry   58 2009-04-14 19:51 description
->> -rw-rw-r-- 1 ferry ferry   23 2009-04-14 19:51 HEAD
->> drwxrwxr-x 2 ferry ferry 4.0K 2009-04-14 19:51 hooks
->> drwxrwxr-x 2 ferry ferry   20 2009-04-14 19:51 info
->> drwxrwsr-x 4 ferry ferry   28 2009-04-14 19:51 objects
->> drwxrwsr-x 4 ferry ferry   29 2009-04-14 19:51 refs
->>
->> Is there some kind of reason that the branches directory is
->> not created with +s permissions?
->>
->> I can understand it for the hooks and info directories since
->> you can not push into those. You _can_ however push into
->> branches and I would expect it to have +s too, like objects
->> and refs.
->>
->> Bug or my misunderstanding?
->>
->> git version 1.6.0.6
-> 
-> This was caused by the template files not getting adjusted permissions set 
-> correctly when copied into a new repository (by git init).
-> 
-> This has been fixed (along with other --shared issues) in v1.6.2.3. Please 
-> upgrade, if possible.
-> 
+The exact same thing happens on a Linux (RedHat) machine. I don't know 
+of any public repositories that I could run this against.
 
-unfortunately that's not possible since I'm on RHEL.
+Jim Babka.
 
-thanks for the asnwers guys!
+Eric Wong wrote:
+> Jim Babka <jim@babkas.info> wrote:
+>   
+>> I need some help. I have tried both the native Windows git (git version  
+>> 1.6.2.2.1669.g7eaf8, coming from Git-1.6.2.2-preview20090408) and the  
+>> git in Cygwin (git version 1.6.1.2), but I see almost the same behavior.  
+>> I try to run the following command and see the following results:
+>>     
+>
+> Hi Jim,
+>
+> Can you test the clone operation from a Linux/Unix machine?  Does
+> git-svn on Windows work for you with other (public) repositories?  I
+> can't support Windows other than accepting patches from others.
+>
+>   
