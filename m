@@ -1,73 +1,88 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] Add git-replace to .gitignore
-Date: Mon, 13 Apr 2009 19:01:27 -0700
-Message-ID: <1239674487-47460-1-git-send-email-davvid@gmail.com>
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
-To: gitster@pobox.com, chriscool@tuxfamily.org
-X-From: git-owner@vger.kernel.org Tue Apr 14 04:03:14 2009
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: [PATCH 5/5] docs/checkout: clarify what "non-branch" means
+Date: Mon, 13 Apr 2009 23:40:35 -0400
+Message-ID: <200904132340.36191.mlevedahl@gmail.com>
+References: <20090413110947.GA15647@coredump.intra.peff.net> <20090413112104.GE15982@coredump.intra.peff.net> <7vmyakh5wc.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 14 05:50:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtXzV-0007mr-Qg
-	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 04:03:14 +0200
+	id 1LtZfI-0002tf-Bv
+	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 05:50:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752501AbZDNCBj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Apr 2009 22:01:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752434AbZDNCBi
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 22:01:38 -0400
-Received: from rv-out-0506.google.com ([209.85.198.232]:3835 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751838AbZDNCBi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Apr 2009 22:01:38 -0400
-Received: by rv-out-0506.google.com with SMTP id f9so2372442rvb.1
-        for <git@vger.kernel.org>; Mon, 13 Apr 2009 19:01:37 -0700 (PDT)
+	id S1752709AbZDNDsy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Apr 2009 23:48:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752254AbZDNDsx
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Apr 2009 23:48:53 -0400
+Received: from qw-out-2122.google.com ([74.125.92.24]:43900 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751838AbZDNDsx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Apr 2009 23:48:53 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so2742495qwh.37
+        for <git@vger.kernel.org>; Mon, 13 Apr 2009 20:48:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=PsB7omq6RMnuuLL+aDfZxOUkMCEQ3K8ICM/FyCP8U3c=;
-        b=Mx4DVk38AkepQctVPRiw47XOiG7gS5vziKvCSZ0Bmv8obKoZV2dfh/A0z4bChdl1Ev
-         khhPpyzR71o4qhiCR+WpxXDIYAFcZCjcysE7vUse38H8Hqgzrg+E9ePhbwk5fMjJgy0g
-         H9+lAMtv4FUtGC5U4hJJ6VQpHVXaIOJmCW1IM=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=3KW3p2sh9oLYjmnCNNEhfxFg34JyssGEOAkvD8/O7p8=;
+        b=KWMxxpDBwzL6TAeTUvOonoUxdArVoX4+JFiID6lgNfIMCXyWH/rG5xP0scOdLBs29J
+         IbYVs3KncP72L0HobBzE7tP/D6kz0AQWAs6hFEOoEeTrtCQYwS5EUPGi72XtPHxqXpqO
+         qwOsZqn7ciu1dZArRxBo2qt/OyCefyeXmV4lI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=syx36X55BaLiJixKwWMDXMAefiem8UC9ePlH4iKPxyv41mE9jnPOZ0t8EMPUGqyVzS
-         ZMCBd4K17gNMbeIBF8wkyugk96msRJ1jIVlvhGBOzeuLiZGeuu/t38GOJ9Ko2SRw0Awk
-         +gOfvc1RNJhOpIq+pfcHcNj1GOVdkvwIzU9Gk=
-Received: by 10.140.207.2 with SMTP id e2mr2995061rvg.148.1239674497505;
-        Mon, 13 Apr 2009 19:01:37 -0700 (PDT)
-Received: from localhost (wdas-1.disneyanimation.com [12.188.26.1])
-        by mx.google.com with ESMTPS id g22sm6700248rvb.13.2009.04.13.19.01.35
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 13 Apr 2009 19:01:36 -0700 (PDT)
-X-Mailer: git-send-email 1.6.3.rc0.90.g3e2c
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=lXlLCxn5PaK305OUDmyIaqHoPDI5fp+hkW55iRIzvOBKFu6qXQqsmIz1IaONZpqZ6M
+         LivwRroeFbLjtZcrcI9pMxRoL0BS6VjWyDGWrkBywfKiIHeblaMjICy29frNNDUyfJf9
+         iSQcup1Yl0rqVV0cLhwMVh9W+6t3BjMPclTKY=
+Received: by 10.224.73.132 with SMTP id q4mr6888633qaj.319.1239680441132;
+        Mon, 13 Apr 2009 20:40:41 -0700 (PDT)
+Received: from hplap.localnet (pool-173-79-135-88.washdc.fios.verizon.net [173.79.135.88])
+        by mx.google.com with ESMTPS id 8sm179642qwj.6.2009.04.13.20.40.40
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 13 Apr 2009 20:40:40 -0700 (PDT)
+User-Agent: KMail/1.11.1 (Linux/2.6.27.21-170.2.56.fc10.i686; KDE/4.2.1; i686; ; )
+In-Reply-To: <7vmyakh5wc.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116508>
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
+On Monday 13 April 2009 12:31:31 Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> > I hope this helps a little bit with Mark's confusion. But while writing
+> > it, I really think it would be a simpler rule to say "if it's in
+> > refs/heads/, then it's a branch" (which is similar to what Mark
+> > suggested earlier).
+> >
+> > So "git checkout refs/heads/master" would be identical to "git checkout
+> > master". That would require a code change, though.
+>
+> Sorry, but I do not get the logic behind such a change.
+>
 
-This is based on the cc/replace branch in pu.
+I think the question being posed is: Would unifying branch names across all 
+git commands (i.e., always accepting refs/heads/master as naming branch 
+master, and accepting master when that is unambiguous) sufficiently benefit 
+new users trying to learn git that it would be worth the change? The fact that 
+refs/heads/master will be interpreted as branch or non-branch, and possibly as 
+refs/heads/refs/heads/master, being a different branch, across different git 
+commands is certainly not "intuitively obvious" to new users.
 
- .gitignore |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+In this vein, I suggest that
+	$ git checkout --detach master
+as a way to get a detached HEAD on branch master is more understandable than
+	$ git checkout refs/heads/master
 
-diff --git a/.gitignore b/.gitignore
-index 1c57d4c..0d59e93 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -101,6 +101,7 @@ git-reflog
- git-relink
- git-remote
- git-repack
-+git-replace
- git-repo-config
- git-request-pull
- git-rerere
--- 
-1.6.2.2.471.g6da14
+Mark
