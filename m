@@ -1,96 +1,99 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: [PATCH RFC3 05/13] send-email: Cleanup the usage text and docs a 
-	bit
-Date: Tue, 14 Apr 2009 02:15:51 -0500
-Message-ID: <b4087cc50904140015t459f0656te30dcb0dfc6a063@mail.gmail.com>
-References: <1239647037-15381-1-git-send-email-mfwitten@gmail.com>
-	 <1239647037-15381-3-git-send-email-mfwitten@gmail.com>
-	 <1239647037-15381-4-git-send-email-mfwitten@gmail.com>
-	 <1239647037-15381-5-git-send-email-mfwitten@gmail.com>
-	 <1239647037-15381-6-git-send-email-mfwitten@gmail.com>
-	 <7vhc0se0pc.fsf@gitster.siamese.dyndns.org>
-	 <b4087cc50904131542q7354fa05wb763f70e4baf9abb@mail.gmail.com>
-	 <7vfxgbaj5s.fsf@gitster.siamese.dyndns.org>
-	 <b4087cc50904132300m391ac4ffn6a41ecc5cdcb6ed8@mail.gmail.com>
-	 <7vfxgb91hc.fsf@gitster.siamese.dyndns.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH RFC3 09/13] send-email: Remove horrible mix of tabs and
+ spaces
+Date: Tue, 14 Apr 2009 09:17:45 +0200
+Message-ID: <49E43899.7070804@op5.se>
+References: <1239647037-15381-1-git-send-email-mfwitten@gmail.com> <1239647037-15381-3-git-send-email-mfwitten@gmail.com> <1239647037-15381-4-git-send-email-mfwitten@gmail.com> <1239647037-15381-5-git-send-email-mfwitten@gmail.com> <1239647037-15381-6-git-send-email-mfwitten@gmail.com> <1239647037-15381-7-git-send-email-mfwitten@gmail.com> <1239647037-15381-8-git-send-email-mfwitten@gmail.com> <1239647037-15381-9-git-send-email-mfwitten@gmail.com> <1239647037-15381-10-git-send-email-mfwitten@gmail.com> <7vab6ke0ip.fsf@gitster.siamese.dyndns.org> <b4087cc50904131549sec5acc4m7201b1411245b95f@mail.gmail.com> <49E41F99.6010409@op5.se> <7vws9n92q3.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 14 09:17:27 2009
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 14 09:20:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ltcta-0002jp-8c
-	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 09:17:26 +0200
+	id 1Ltcvy-0003II-Nc
+	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 09:19:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752033AbZDNHPx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Apr 2009 03:15:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751925AbZDNHPx
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 03:15:53 -0400
-Received: from qw-out-2122.google.com ([74.125.92.25]:20502 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751875AbZDNHPw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Apr 2009 03:15:52 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so2792195qwh.37
-        for <git@vger.kernel.org>; Tue, 14 Apr 2009 00:15:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=rGL+00z42lsV7SokN/42AMPLkDgvqubRpzm6nOsy/wc=;
-        b=pzVTAq8iUgCRdWBeYuxmngr652CDDbbIeaSF/VixDoav9tL0vw8XwGlp/KqK/g09Gu
-         1IWA2AsOxJ9LpU83Au+6RGEJmrGthvxZ2bsmWd7Yq2h1rXxU4sNfTSQ59nqpyx06at9c
-         hh4fTDvknR/xw4LAHf+Teu7nxJu5UUWVrjLuo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=rSy7FKTjA1Gc+rutlncKB03PUNid42OqtSYsiIyTYrWEoGtABYaW2JOe1EC3zWy2CA
-         rK08ZDHES4cn7qRwQMmIoN2sp07S2ZHEJ3fJDq61TxPlEq8Ql9TvUR49esclE9J/h4P9
-         LpHiRxYrNe4Dy+16NMP2GpqPRuuPEhOkm7mEs=
-Received: by 10.224.67.75 with SMTP id q11mr7004989qai.272.1239693351182; Tue, 
-	14 Apr 2009 00:15:51 -0700 (PDT)
-In-Reply-To: <7vfxgb91hc.fsf@gitster.siamese.dyndns.org>
+	id S1751823AbZDNHRv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2009 03:17:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753331AbZDNHRu
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 03:17:50 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:24638 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751690AbZDNHRt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2009 03:17:49 -0400
+Received: by fg-out-1718.google.com with SMTP id e12so738397fga.17
+        for <git@vger.kernel.org>; Tue, 14 Apr 2009 00:17:48 -0700 (PDT)
+Received: by 10.86.80.5 with SMTP id d5mr5389371fgb.6.1239693467891;
+        Tue, 14 Apr 2009 00:17:47 -0700 (PDT)
+Received: from clix.int.op5.se ([212.112.174.166])
+        by mx.google.com with ESMTPS id e20sm8586414fga.9.2009.04.14.00.17.46
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 14 Apr 2009 00:17:47 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <7vws9n92q3.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116526>
 
-On Tue, Apr 14, 2009 at 01:46, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> Michael Witten <mfwitten@gmail.com> writes:
->
->> The usage text for --smtp-server currently has <host:port>, which
->> doesn't work when 'ssl' is used for the connection to the server.
->
-> Ah, I see. =A0But it does work when ssl is not used, right?
+Junio C Hamano wrote:
+> Andreas Ericsson <ae@op5.se> writes:
+> 
+>> Using tabs to align stuff to indentation level and spaces to align
+>> line continuation is the only possible way to let users choose
+>> whichever indentation depth they want while preserving the continuation
+>> alignment.
+> 
+> Sure, it will look aligned with whatever width of HT ">":
+> 
+> 	>>if (this is a looong
+>         >>....expression that is alighed) {
+>         >>>statement1;
+>         >>>statement2;
+>         >>}
+> 
+> but it is *only true* if your SP "." and everything else is of the same
+> width.
+> 
+> People seem to repeat that without realizing what they are saying, but I
+> find the assumption the argument is based on quite bogus.  Why do people
+> think it is only sane to assume flexible HT width but still monospaced
+> font whose SP, l and w are all of the same width?
+> 
 
-Right.
+Because 99% of all editors designed for programming use a fixed-width font
+by default for precisely that reason, and all others can be set to display
+fixed-width fonts without losing much (if any) readability, but indentation
+comes in 2*$number_of_programmers variations.
 
-> A possible solution would be one of:
->
-> =A0- support host:port in SSL codepath (shouldn't it be trivial?);
 
-Extremely trivial.
+> You either forget about the alignment (there is no such thing---suck it
+> up), or use time honored HT=8 and monospace convention.
+> 
 
-> =A0- split the description in the documentation to clarify it does no=
-t work
-> =A0 for SSL; or
->
-> =A0- remove host:port support to make both consistent.
->
-> To me, the last one makes the least sense. =A0Is that the approach yo=
-u are
-> taking?
+Or you use "indent with tabs, align with spaces" and let those who use a
+word processor for programming go hang. It's quite common actually. Or
+you use some own homecooked style of indentation that's quite obvious
+*to you* Either way, a project's founding father always sets the style,
+and those who contribute get to either follow it or provide some pretty
+strong argument to change it (a lot better than:
 
-That is SORT OF the approach I took. I got lazy and didn't care to
-make <host:port> work for SSL, because there is already
---smtp-server-port and by just replacing <host:port> with <host> in
-the USAGE text, the whole <host:port> notation was effectively
-deprecated but still usable as before. Genius, right? Grade *A*
-laziness.
+"A few of the lines were aligning function arguments via tabs
+and a few extra spaces, which is not reliable in my model.
+
+Frankly, I don't like tabs and spaces sharing the same contiguous
+block. I don't like it all."
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
