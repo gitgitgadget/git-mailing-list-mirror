@@ -1,63 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH RFC3 INTRO] I hope this will do it!
-Date: Tue, 14 Apr 2009 02:02:46 -0700
-Message-ID: <7vy6u36215.fsf@gitster.siamese.dyndns.org>
-References: <1239647037-15381-1-git-send-email-mfwitten@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 5/5] docs/checkout: clarify what "non-branch" means
+Date: Tue, 14 Apr 2009 13:36:58 +0200
+Organization: At home
+Message-ID: <gs1sgq$99e$1@ger.gmane.org>
+References: <20090413110947.GA15647@coredump.intra.peff.net> <20090413112104.GE15982@coredump.intra.peff.net> <7vmyakh5wc.fsf@gitster.siamese.dyndns.org> <200904132340.36191.mlevedahl@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 14 11:06:07 2009
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 14 13:38:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LteZc-0007FW-Om
-	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 11:04:57 +0200
+	id 1LtgyV-0004bh-5U
+	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 13:38:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753519AbZDNJCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2009 05:02:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752565AbZDNJCy
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 05:02:54 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34851 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751823AbZDNJCx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Apr 2009 05:02:53 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0F8A0AADFB;
-	Tue, 14 Apr 2009 05:02:52 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id AC20DAADFA; Tue,
- 14 Apr 2009 05:02:48 -0400 (EDT)
-In-Reply-To: <1239647037-15381-1-git-send-email-mfwitten@gmail.com> (Michael
- Witten's message of "Mon, 13 Apr 2009 13:23:44 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 08E8E976-28D3-11DE-A29E-C121C5FC92D5-77302942!a-sasl-fastnet.pobox.com
+	id S1752271AbZDNLhN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2009 07:37:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751949AbZDNLhN
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 07:37:13 -0400
+Received: from main.gmane.org ([80.91.229.2]:53583 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751896AbZDNLhM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2009 07:37:12 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Ltgwu-0000L5-W1
+	for git@vger.kernel.org; Tue, 14 Apr 2009 11:37:09 +0000
+Received: from abwx202.neoplus.adsl.tpnet.pl ([83.8.247.202])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 14 Apr 2009 11:37:08 +0000
+Received: from jnareb by abwx202.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 14 Apr 2009 11:37:08 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abwx202.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116531>
 
-Michael Witten <mfwitten@gmail.com> writes:
+Mark Levedahl wrote:
 
-> Here is the list of notable improvements:
 
-I've picked up pieces that I think cannot possibly be controversial to
-reduce the size of the remaining patch series still in flight.
+> In this vein, I suggest that
+>       $ git checkout --detach master
+> as a way to get a detached HEAD on branch master is more understandable than
+>       $ git checkout refs/heads/master
 
-Michael Witten (6):
-      Docs: send-email: Put options back into alphabetical order
-      Docs: send-email: Refer to CONFIGURATION section for sendemail.multiedit
-      Docs: send-email: --smtp-server-port can take symbolic ports
-      send-email: Handle "GIT:" rather than "GIT: " during --compose
-      send-email: 'References:' should only reference what is sent
-      send-email: Remove superfluous `my $editor = ...'
+To detach, use
+        $ git checkout master^0
 
-I've reworded the description in "symbolic port names" one a bit.
-
-It is unfortunate that the interesting ones begin at 10th in the series,
-which are beind the 9th one that is a "churn in the middle".
-
-Thanks.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
