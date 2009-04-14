@@ -1,75 +1,63 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH RFC3 08/13] send-email: Remove superfluous `my $editor =
- ...'
-Date: Tue, 14 Apr 2009 01:51:35 -0700
-Message-ID: <7v3acb7h48.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH RFC3 INTRO] I hope this will do it!
+Date: Tue, 14 Apr 2009 02:02:46 -0700
+Message-ID: <7vy6u36215.fsf@gitster.siamese.dyndns.org>
 References: <1239647037-15381-1-git-send-email-mfwitten@gmail.com>
- <1239647037-15381-2-git-send-email-mfwitten@gmail.com>
- <1239647037-15381-3-git-send-email-mfwitten@gmail.com>
- <1239647037-15381-4-git-send-email-mfwitten@gmail.com>
- <1239647037-15381-5-git-send-email-mfwitten@gmail.com>
- <1239647037-15381-6-git-send-email-mfwitten@gmail.com>
- <1239647037-15381-7-git-send-email-mfwitten@gmail.com>
- <1239647037-15381-8-git-send-email-mfwitten@gmail.com>
- <1239647037-15381-9-git-send-email-mfwitten@gmail.com>
- <49E3CD48.1010809@gmail.com> <20090414061645.GB3948@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stephen Boyd <bebarino@gmail.com>,
-	Michael Witten <mfwitten@gmail.com>, git@vger.kernel.org
-To: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Apr 14 10:53:22 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 14 11:06:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LteOP-0002tP-NN
-	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 10:53:22 +0200
+	id 1LteZc-0007FW-Om
+	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 11:04:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753146AbZDNIvs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Apr 2009 04:51:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753376AbZDNIvq
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 04:51:46 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58329 "EHLO
+	id S1753519AbZDNJCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2009 05:02:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752565AbZDNJCy
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 05:02:54 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:34851 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752201AbZDNIvo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Apr 2009 04:51:44 -0400
+	with ESMTP id S1751823AbZDNJCx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2009 05:02:53 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2CC22E9EA;
-	Tue, 14 Apr 2009 04:51:43 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 0F8A0AADFB;
+	Tue, 14 Apr 2009 05:02:52 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 357CEE9E5; Tue,
- 14 Apr 2009 04:51:38 -0400 (EDT)
-In-Reply-To: <20090414061645.GB3948@atjola.homenet> (=?utf-8?Q?Bj=C3=B6rn?=
- Steinbrink's message of "Tue, 14 Apr 2009 08:16:45 +0200")
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id AC20DAADFA; Tue,
+ 14 Apr 2009 05:02:48 -0400 (EDT)
+In-Reply-To: <1239647037-15381-1-git-send-email-mfwitten@gmail.com> (Michael
+ Witten's message of "Mon, 13 Apr 2009 13:23:44 -0500")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 7A3C39B8-28D1-11DE-AF00-DC76898A30C1-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 08E8E976-28D3-11DE-A29E-C121C5FC92D5-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116530>
 
-Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de> writes:
+Michael Witten <mfwitten@gmail.com> writes:
 
-> On 2009.04.13 16:39:52 -0700, Stephen Boyd wrote:
->> Michael Witten wrote:
->>> -	my $editor =3D $ENV{GIT_EDITOR} || Git::config(@repo, "core.edito=
-r") || $ENV{VISUAL} || $ENV{EDITOR} || "vi";
->>
->> I don't want to start an editor war, but why is 'vi' here? It seems
->> that one of the previous four should be set at all times, correct?
->
-> Probably because that's how the rest of git works, too. See core.edit=
-or
-> in git-config(1) or launch_editor() in editor.c if you don't trust th=
-e
-> docs.
->
-> Oh, and I seem to rely on that behaviour :-)
+> Here is the list of notable improvements:
 
-The git specific parts are obviously our invention, but $VISUAL then
-$EDITOR and finally as the last resort falling back on vi has been a
-longstanding UNIXy tradition that is shared by many tools.
+I've picked up pieces that I think cannot possibly be controversial to
+reduce the size of the remaining patch series still in flight.
+
+Michael Witten (6):
+      Docs: send-email: Put options back into alphabetical order
+      Docs: send-email: Refer to CONFIGURATION section for sendemail.multiedit
+      Docs: send-email: --smtp-server-port can take symbolic ports
+      send-email: Handle "GIT:" rather than "GIT: " during --compose
+      send-email: 'References:' should only reference what is sent
+      send-email: Remove superfluous `my $editor = ...'
+
+I've reworded the description in "symbolic port names" one a bit.
+
+It is unfortunate that the interesting ones begin at 10th in the series,
+which are beind the 9th one that is a "churn in the middle".
+
+Thanks.
