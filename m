@@ -1,160 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/3] archive: do not read .gitattributes in working
- directory
-Date: Mon, 13 Apr 2009 22:11:13 -0700
-Message-ID: <7vk55nakge.fsf@gitster.siamese.dyndns.org>
-References: <1239260490-6318-1-git-send-email-pclouds@gmail.com>
- <1239260490-6318-2-git-send-email-pclouds@gmail.com>
- <1239260490-6318-3-git-send-email-pclouds@gmail.com>
- <1239260490-6318-4-git-send-email-pclouds@gmail.com>
- <7vws9u2ov4.fsf@gitster.siamese.dyndns.org>
- <fcaeb9bf0904090353s4ec770bfk3cd3f6559c367a20@mail.gmail.com>
- <49E316CD.7030001@lsrfire.ath.cx> <49E32D9F.2050906@lsrfire.ath.cx>
- <49E33935.5090203@lsrfire.ath.cx>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH RFC3 09/13] send-email: Remove horrible mix of tabs and
+ spaces
+Date: Tue, 14 Apr 2009 07:31:05 +0200
+Message-ID: <49E41F99.6010409@op5.se>
+References: <1239647037-15381-1-git-send-email-mfwitten@gmail.com>	 <1239647037-15381-3-git-send-email-mfwitten@gmail.com>	 <1239647037-15381-4-git-send-email-mfwitten@gmail.com>	 <1239647037-15381-5-git-send-email-mfwitten@gmail.com>	 <1239647037-15381-6-git-send-email-mfwitten@gmail.com>	 <1239647037-15381-7-git-send-email-mfwitten@gmail.com>	 <1239647037-15381-8-git-send-email-mfwitten@gmail.com>	 <1239647037-15381-9-git-send-email-mfwitten@gmail.com>	 <1239647037-15381-10-git-send-email-mfwitten@gmail.com>	 <7vab6ke0ip.fsf@gitster.siamese.dyndns.org> <b4087cc50904131549sec5acc4m7201b1411245b95f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Tue Apr 14 07:13:17 2009
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 14 07:32:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtaxO-000860-BC
-	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 07:13:14 +0200
+	id 1LtbGG-0003FE-B2
+	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 07:32:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750982AbZDNFL1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Apr 2009 01:11:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750746AbZDNFL0
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 01:11:26 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49273 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750711AbZDNFLZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Apr 2009 01:11:25 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 78A36E052;
-	Tue, 14 Apr 2009 01:11:24 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 8C642E051; Tue,
- 14 Apr 2009 01:11:20 -0400 (EDT)
-In-Reply-To: <49E33935.5090203@lsrfire.ath.cx> (=?utf-8?Q?Ren=C3=A9?=
- Scharfe's message of "Mon, 13 Apr 2009 15:08:05 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: B34853DC-28B2-11DE-B4BE-DC76898A30C1-77302942!a-sasl-quonix.pobox.com
+	id S1751100AbZDNFbL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2009 01:31:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750996AbZDNFbK
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 01:31:10 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:9676 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750846AbZDNFbJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2009 01:31:09 -0400
+Received: by fg-out-1718.google.com with SMTP id e12so729125fga.17
+        for <git@vger.kernel.org>; Mon, 13 Apr 2009 22:31:07 -0700 (PDT)
+Received: by 10.86.89.20 with SMTP id m20mr5263575fgb.18.1239687067058;
+        Mon, 13 Apr 2009 22:31:07 -0700 (PDT)
+Received: from clix.int.op5.se ([212.112.174.166])
+        by mx.google.com with ESMTPS id e11sm7970017fga.5.2009.04.13.22.31.06
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 13 Apr 2009 22:31:06 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <b4087cc50904131549sec5acc4m7201b1411245b95f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116512>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+Michael Witten wrote:
+> On Mon, Apr 13, 2009 at 15:55, Junio C Hamano <gitster@pobox.com> wrote:
+>> Michael Witten <mfwitten@gmail.com> writes:
+>>
+>>> Currently, no lines match the following:
+>>>
+>>>     [\t]+[ ]+
+>>>     [ ]+[\t]+
+>> I understand the latter but what's wrong with the former?  The width of a
+>> HT is by definition 8 columns throughout the git codebase.
+> 
+> Ah, well, the width of a HT has been a free variable in my
+> calculations; I was operating under the assumption that whitespace
+> used for indentation can float freely according to the user's
+> settings. A few of the lines were aligning function arguments via tabs
+> and a few extra spaces, which is not reliable in my model.
+> 
+> Frankly, I don't like tabs and spaces sharing the same contiguous
+> block. I don't like it all. ;-B
 
-> Ren=C3=A9 Scharfe schrieb:
->>> I
->>> think it makes sense to create a separate script for the new tests =
-and
->>> eventually move the existing archive attribute tests there.
->>=20
->> Something like this?
->
-> I forgot to add tests against bare repositories.  Otherwise I'd notic=
-ed
-> earlier that read_attr() is only called for non-bare repositories
-> currently, i.e. your patches won't allow reading of .gitattribute fil=
-es
-> from the tree in bare repos.
 
-Curious.
+Using tabs to align stuff to indentation level and spaces to align
+line continuation is the only possible way to let users choose
+whichever indentation depth they want while preserving the continuation
+alignment. What's not to like about that? Especially if you think a
+horizontal tab can be any size at all, you should be all agog.
 
-Shouldn't the call chain look like:
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-    write_archive()
-    ->write_archive_entries()
-      ->unpack_trees() to read the tree into the in-core index
-      ->git_attr_set_direction()
-      ->read_tree_recursive()
-        ->write_archive_entry()
-          ->git_checkattr()
-
-Ah, bootstrap_attr_stack() and prepare_attr_stack() still assume that y=
-ou
-won't be doing any per-level attributes in a bare repository because th=
-e
-concept of attributes is inherently tied to having a work tree from the=
-ir
-point of view.
-
-How about this "mostly re-indent with four line removal" patch?
-
- attr.c |   48 ++++++++++++++++++++++--------------------------
- 1 files changed, 22 insertions(+), 26 deletions(-)
-
-diff --git a/attr.c b/attr.c
-index 37ca288..f5917de 100644
---- a/attr.c
-+++ b/attr.c
-@@ -468,13 +468,11 @@ static void bootstrap_attr_stack(void)
- 		elem->prev =3D attr_stack;
- 		attr_stack =3D elem;
-=20
--		if (!is_bare_repository()) {
--			elem =3D read_attr(GITATTRIBUTES_FILE, 1);
--			elem->origin =3D strdup("");
--			elem->prev =3D attr_stack;
--			attr_stack =3D elem;
--			debug_push(elem);
--		}
-+		elem =3D read_attr(GITATTRIBUTES_FILE, 1);
-+		elem->origin =3D strdup("");
-+		elem->prev =3D attr_stack;
-+		attr_stack =3D elem;
-+		debug_push(elem);
-=20
- 		elem =3D read_attr_from_file(git_path(INFOATTRIBUTES_FILE), 1);
- 		if (!elem)
-@@ -535,25 +533,23 @@ static void prepare_attr_stack(const char *path, =
-int dirlen)
- 	/*
- 	 * Read from parent directories and push them down
- 	 */
--	if (!is_bare_repository()) {
--		while (1) {
--			char *cp;
--
--			len =3D strlen(attr_stack->origin);
--			if (dirlen <=3D len)
--				break;
--			strbuf_reset(&pathbuf);
--			strbuf_add(&pathbuf, path, dirlen);
--			strbuf_addch(&pathbuf, '/');
--			cp =3D strchr(pathbuf.buf + len + 1, '/');
--			strcpy(cp + 1, GITATTRIBUTES_FILE);
--			elem =3D read_attr(pathbuf.buf, 0);
--			*cp =3D '\0';
--			elem->origin =3D strdup(pathbuf.buf);
--			elem->prev =3D attr_stack;
--			attr_stack =3D elem;
--			debug_push(elem);
--		}
-+	while (1) {
-+		char *cp;
-+
-+		len =3D strlen(attr_stack->origin);
-+		if (dirlen <=3D len)
-+			break;
-+		strbuf_reset(&pathbuf);
-+		strbuf_add(&pathbuf, path, dirlen);
-+		strbuf_addch(&pathbuf, '/');
-+		cp =3D strchr(pathbuf.buf + len + 1, '/');
-+		strcpy(cp + 1, GITATTRIBUTES_FILE);
-+		elem =3D read_attr(pathbuf.buf, 0);
-+		*cp =3D '\0';
-+		elem->origin =3D strdup(pathbuf.buf);
-+		elem->prev =3D attr_stack;
-+		attr_stack =3D elem;
-+		debug_push(elem);
- 	}
-=20
- 	/*
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
