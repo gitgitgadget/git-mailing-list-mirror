@@ -1,75 +1,67 @@
-From: Marc Mutz <marc@kdab.net>
-Subject: rebaseing topic branch which has merges from master
-Date: Tue, 14 Apr 2009 17:03:50 +0200
-Message-ID: <gs28e1$ktn$1@ger.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Documentation/CodingGuidelines: improve header includes
+ rules
+Date: Tue, 14 Apr 2009 18:24:43 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904141822030.10279@pacific.mpi-cbg.de>
+References: <20090414003433.39cbdea2.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 14 18:02:43 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	Nathaniel P Dawson <nathaniel.dawson@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Nanako Shiraishi <nanako3@lavabit.com>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Tue Apr 14 18:23:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ltl5c-0003Li-7h
-	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 18:02:24 +0200
+	id 1LtlQ7-0003IE-DM
+	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 18:23:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757457AbZDNQAJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2009 12:00:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757454AbZDNQAI
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 12:00:08 -0400
-Received: from main.gmane.org ([80.91.229.2]:53351 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757380AbZDNQAG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Apr 2009 12:00:06 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1Ltl3L-0004TW-01
-	for git@vger.kernel.org; Tue, 14 Apr 2009 16:00:03 +0000
-Received: from dialbs-213-023-007-034.static.arcor-ip.net ([213.23.7.34])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 14 Apr 2009 16:00:02 +0000
-Received: from marc by dialbs-213-023-007-034.static.arcor-ip.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 14 Apr 2009 16:00:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: dialbs-213-023-007-034.static.arcor-ip.net
-User-Agent: KNode/0.10.9
+	id S1752428AbZDNQWA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2009 12:22:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752032AbZDNQV7
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 12:21:59 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34976 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751896AbZDNQV6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2009 12:21:58 -0400
+Received: (qmail invoked by alias); 14 Apr 2009 16:21:57 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp070) with SMTP; 14 Apr 2009 18:21:57 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18Gb7sBCIYGR3lAZMH370FlPLtR/ri15zEx4cyEKt
+	dQ5OFVu+yEfVJM
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20090414003433.39cbdea2.chriscool@tuxfamily.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116544>
 
 Hi,
 
-I'd like to achieve the following:
+On Tue, 14 Apr 2009, Christian Couder wrote:
 
----(BP)--- ....---(M1)---     ...    ---(M2)---   .... master
-     \              \                     \
-      \              \                     \
-      (T1)---(T2)---(T3)---(T4)---(T5)---(T6)--- .... topic
- 
- 
-                                   ||
-                                   ||
-                                   VV
- 
- 
----(BP)---....---(M1)---     ...    ---(M2)---   .... master
-                   \                     \_____________
-                    \                                  \
-                   (T1)---(T2)---(T3)---(T4)---(T5)---(T6)--- .... topic
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>  Documentation/CodingGuidelines |   26 ++++++++++++++++++++++----
+>  1 files changed, 22 insertions(+), 4 deletions(-)
 
-However, when I run
-  git checkout topic
-  git rebase M1
-I get a conflict somewhere around a merge commit down the road, and when I
-gitk to check where I am, I see master commits (M2, M2^) that have changed
-their (sha1) name. That shouldn't happen, afaiu git, so what's wrong? Is
-this simply not supported? Can I flatten the merge commits somehow before
-rebasing?
+I think that there is a very real possiblity here to make this document so 
+long that hardly anybody reads it to the end.
 
-Thanks,
-Marc
+And is there not a real chance that your change is actually covered by
+
+	As for more concrete guidelines, just imitate the existing code
+
+?
+
+Ciao,
+Dscho
