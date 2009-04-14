@@ -1,61 +1,142 @@
-From: Thomas Jarosch <thomas.jarosch@intra2net.com>
-Subject: Re: [PATCH v2] Fix buffer overflow in config parser
-Date: Tue, 14 Apr 2009 23:47:44 +0200
-Message-ID: <49E50480.5060005@intra2net.com>
-References: <49E50003.2040907@intra2net.com> <alpine.DEB.1.00.0904142340350.10279@pacific.mpi-cbg.de>
+From: =?iso-8859-1?Q?Martin_Storsj=F6?= <martin@martin.st>
+Subject: [PATCH v2] Add an option for using any HTTP authentication scheme,
+ not only basic
+Date: Wed, 15 Apr 2009 00:56:23 +0300 (EEST)
+Message-ID: <Pine.LNX.4.64.0904150054470.7479@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org, markus.heidelberg@web.de
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Apr 14 23:49:22 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 14 23:58:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtqVN-0003l9-Rn
-	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 23:49:22 +0200
+	id 1Ltqdm-0006R2-Nu
+	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 23:58:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753316AbZDNVrt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2009 17:47:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752922AbZDNVrs
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 17:47:48 -0400
-Received: from rs02.intra2net.com ([81.169.173.116]:38159 "EHLO
-	rs02.intra2net.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752307AbZDNVrr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Apr 2009 17:47:47 -0400
-Received: from intranator.m.i2n (unknown [172.16.1.99])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by rs02.intra2net.com (Postfix) with ESMTP id DD3874FCF;
-	Tue, 14 Apr 2009 23:47:45 +0200 (CEST)
-Received: from localhost (intranator.m.i2n [127.0.0.1])
-	by localhost (Postfix) with ESMTP id 7F6722AC4B;
-	Tue, 14 Apr 2009 23:47:45 +0200 (CEST)
-Received: from pikkukde.a.i2n (pikkukde.m.i2n [192.168.12.2])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by intranator.m.i2n (Postfix) with ESMTP id 1653E2AC4A;
-	Tue, 14 Apr 2009 23:47:44 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <alpine.DEB.1.00.0904142340350.10279@pacific.mpi-cbg.de>
-X-Virus-Scanned: by Intranator (www.intra2net.com) with AMaViS and F-Secure AntiVirus (fsavdb 2009-04-14_08)
-X-Spam-Status: hits=-2.9 tests=[ALL_TRUSTED=-1.8,BAYES_05=-1.11]
-X-Spam-Level: 971
+	id S1754203AbZDNV41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2009 17:56:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752971AbZDNV40
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 17:56:26 -0400
+Received: from smtp2.abo.fi ([130.232.213.77]:36397 "EHLO smtp2.abo.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751132AbZDNV40 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2009 17:56:26 -0400
+Received: from albin.abo.fi (albin.abo.fi [130.232.81.192])
+	by smtp2.abo.fi (8.14.3/8.12.9) with ESMTP id n3ELuNXw019781
+	for <git@vger.kernel.org>; Wed, 15 Apr 2009 00:56:24 +0300
+X-X-Sender: mstorsjo@localhost.localdomain
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (smtp2.abo.fi [130.232.213.77]); Wed, 15 Apr 2009 00:56:24 +0300 (EEST)
+X-Virus-Scanned: by roxy.abo.fi (roxy.abo.fi: Wed Apr 15 00:56:24 2009)
+X-Scanned-By: MIMEDefang 2.67 on 130.232.213.77
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116581>
 
-Johannes Schindelin wrote:
->> +LONG_VALUE=`perl -e 'print "x" x 1023," a"'`
-> 
-> But should it not be guarded against NO_PERL?
+This adds the configuration option http.authAny (overridable with
+the environment variable GIT_HTTP_AUTH_ANY), for instructing curl
+to allow any HTTP authentication scheme, not only basic (which
+sends the password in plaintext).
 
-Hmm, lots of other tests like "t4200-rerere.sh" use perl
-and it don't see any special guard around the perl usage.
+When this is enabled, curl has to do double requests most of the time,
+in order to discover which HTTP authentication method to use, which
+lowers the performance slightly. Therefore this isn't enabled by default.
 
-If it's needed, just add it while applying :-)
+One example of another authentication scheme to use is digest, which
+doesn't send the password in plaintext, but uses a challenge-response
+mechanism instead. Using digest authentication in practice requires
+at least curl 7.18.1, due to bugs in the digest handling in earlier
+versions of curl.
 
-Thomas
+Signed-off-by: Martin Storsjo <martin@martin.st>
+---
+
+Repost with the curl version checked in only one place.
+
+ Documentation/config.txt |    7 +++++++
+ http.c                   |   22 ++++++++++++++++++++++
+ 2 files changed, 29 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index f3ebd2f..1515d77 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1011,6 +1011,13 @@ http.noEPSV::
+ 	support EPSV mode. Can be overridden by the 'GIT_CURL_FTP_NO_EPSV'
+ 	environment variable. Default is false (curl will use EPSV).
+ 
++http.authAny::
++	Allow any HTTP authentication method, not only basic. Enabling
++	this lowers the performance slightly, by having to do requests
++	without any authentication to discover the authentication method
++	to use. Can be overridden by the 'GIT_HTTP_AUTH_ANY'
++	environment variable. Default is false.
++
+ i18n.commitEncoding::
+ 	Character encoding the commit messages are stored in; git itself
+ 	does not care per se, but this information is necessary e.g. when
+diff --git a/http.c b/http.c
+index 2e3d649..49b8441 100644
+--- a/http.c
++++ b/http.c
+@@ -3,6 +3,10 @@
+ int data_received;
+ int active_requests;
+ 
++#if LIBCURL_VERSION_NUM >= 0x070a06
++#define LIBCURL_CAN_HANDLE_AUTH_ANY
++#endif
++
+ #ifdef USE_CURL_MULTI
+ static int max_requests = -1;
+ static CURLM *curlm;
+@@ -26,6 +30,9 @@ static long curl_low_speed_time = -1;
+ static int curl_ftp_no_epsv;
+ static const char *curl_http_proxy;
+ static char *user_name, *user_pass;
++#ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
++static int curl_http_auth_any = 0;
++#endif
+ 
+ static struct curl_slist *pragma_header;
+ 
+@@ -150,6 +157,12 @@ static int http_options(const char *var, const char *value, void *cb)
+ 	}
+ 	if (!strcmp("http.proxy", var))
+ 		return git_config_string(&curl_http_proxy, var, value);
++#ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
++	if (!strcmp("http.authany", var)) {
++		curl_http_auth_any = git_config_bool(var, value);
++		return 0;
++	}
++#endif
+ 
+ 	/* Fall back on the default ones */
+ 	return git_default_config(var, value, cb);
+@@ -184,6 +197,10 @@ static CURL *get_curl_handle(void)
+ #if LIBCURL_VERSION_NUM >= 0x070907
+ 	curl_easy_setopt(result, CURLOPT_NETRC, CURL_NETRC_OPTIONAL);
+ #endif
++#ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
++	if (curl_http_auth_any)
++		curl_easy_setopt(result, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
++#endif
+ 
+ 	init_curl_http_auth(result);
+ 
+@@ -329,6 +346,11 @@ void http_init(struct remote *remote)
+ 	if (getenv("GIT_CURL_FTP_NO_EPSV"))
+ 		curl_ftp_no_epsv = 1;
+ 
++#ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
++	if (getenv("GIT_HTTP_AUTH_ANY"))
++		curl_http_auth_any = 1;
++#endif
++
+ 	if (remote && remote->url && remote->url[0])
+ 		http_auth_init(remote->url[0]);
+ 
+-- 
+1.6.0.2
