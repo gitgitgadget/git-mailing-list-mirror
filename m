@@ -1,83 +1,69 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] remote.c: use shorten_unambiguous_ref
-Date: Tue, 14 Apr 2009 14:55:14 +0200
-Message-ID: <49E487B2.5030606@drmicha.warpmail.net>
-References: <1239291182-12860-1-git-send-email-git@drmicha.warpmail.net> <20090410171458.GA26478@sigill.intra.peff.net>
+From: "Ulrich Windl" <ulrich.windl@rz.uni-regensburg.de>
+Subject: making docs
+Date: Tue, 14 Apr 2009 15:09:33 +0200
+Organization: Universitaetsklinikum Regensburg
+Message-ID: <49E4A72D.21604.198A9AD@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 14 14:56:59 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 14 15:11:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtiC8-00070I-8u
-	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 14:56:56 +0200
+	id 1LtiQB-0003gO-AT
+	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 15:11:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751593AbZDNMzY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2009 08:55:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751428AbZDNMzX
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 08:55:23 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:45741 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751330AbZDNMzX (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Apr 2009 08:55:23 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id 2CFC0319C21;
-	Tue, 14 Apr 2009 08:55:22 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Tue, 14 Apr 2009 08:55:22 -0400
-X-Sasl-enc: JI0z1UKah6y79fnqX/vHTIrDUm/dPI8C72olO8sKmNOM 1239713721
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 6CF605CE3;
-	Tue, 14 Apr 2009 08:55:21 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090414 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <20090410171458.GA26478@sigill.intra.peff.net>
+	id S1752767AbZDNNJx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2009 09:09:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751896AbZDNNJx
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 09:09:53 -0400
+Received: from rrzmta1.rz.uni-regensburg.de ([194.94.155.51]:12426 "EHLO
+	rrzmta1.rz.uni-regensburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751833AbZDNNJw (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Apr 2009 09:09:52 -0400
+Received: from rrzmta1.rz.uni-regensburg.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id 043DCACA9B
+	for <git@vger.kernel.org>; Tue, 14 Apr 2009 15:09:56 +0200 (CEST)
+Received: from kgate1.dvm.klinik.uni-regensburg.de (kgate1.klinik.uni-regensburg.de [132.199.176.18])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by rrzmta1.rz.uni-regensburg.de (Postfix) with ESMTP id F08D3ACA9A
+	for <git@vger.kernel.org>; Tue, 14 Apr 2009 15:09:55 +0200 (CEST)
+Received: from rkdvmks1.ngate.uni-regensburg.de (rkdvmks1.dvm.klinik.uni-regensburg.de [132.199.176.1])
+	by kgate1.dvm.klinik.uni-regensburg.de (8.13.6/8.13.6/20070831MT-1) with ESMTP id n3ED9iTh002489
+	for <git@vger.kernel.org>; Tue, 14 Apr 2009 15:09:44 +0200
+Received: from RKDVMKS1/SpoolDir by rkdvmks1.ngate.uni-regensburg.de (Mercury 1.48);
+    14 Apr 09 15:09:45 +0100
+Received: from SpoolDir by RKDVMKS1 (Mercury 1.48); 14 Apr 09 15:09:34 +0100
+X-mailer: Pegasus Mail for Windows (4.41)
+Content-description: Mail message body
+X-Content-Conformance: HerringScan-0.29/Sophos-P=4.37.0+V=4.37+U=2.07.219+R=05 January 2009+T=589852@20090414.125536Z
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116535>
 
-Jeff King venit, vidit, dixit 10.04.2009 19:14:
-> On Thu, Apr 09, 2009 at 05:33:02PM +0200, Michael J Gruber wrote:
-> 
->> Use the new shorten_unambiguous_ref() for simplifying the output of
->> upstream branch names. This affects status and checkout.
-> 
-> Yeah, this is the spot I was thinking about when I mentioned "use it in
-> other places" earlier in the thread. So
-> 
-> Acked-by: Jeff King <peff@peff.net>
-> 
->> I haven't seen more obvious place for using shorten_unambiguous_ref().
->> prettify_ref() is a natural candidate but is mostly used for
->> prettyfying refs on the remote side. git branch is covered by Jeff's
->> patch already.
-> 
-> Hmm. I was thinking we might be able to just do away with prettify_ref,
-> but I didn't consider the fact that we need to prettify remote things. I
-> think you could still unambiguously prettify the local half of those
-> callsites, though.
-> 
-> Given that the two functions are closely related, should we perhaps
-> rename them to
-> 
->   const char *shorten_ref(const char *);
->   const char *shorten_ref_unambiguous(const char *);
-> 
-> ? The implementations are quite different, with prettify_ref not really
-> respecting the ref lookup rules, but rather just considering a few
-> pre-determined bits of the hierarchy as uninteresting. It shouldn't be
-> that hard to have them both use the same implementation, like:
-> 
->   const char *shorten_ref(const char *, int unambiguous);
-> 
-> -Peff
+Hi!
 
-Should I rebase this on top of Bert's newer patch (which has the
-signature you suggest)? Currently I don't see any of them in.
+THis is a change request: When building Git, many systems lack the tools to build 
+the documentation, so the Manual pages (among others) are not built. When 
+installing, several ".txt" files are installed, but when invoking help like "git 
+commit --help", git only complains about not finding the manual page.
 
-Michael
+Obvious solutions are:
+1) Pre-build the documentation (manual pages) with the source archive. If the 
+sources are used unmodified, the manual pages should be fine
+2) If nothing better is found when invoking help, display the text files with a 
+pager
+
+An alternative to 1) would be a add-on "source" package that contains the pre-
+built documentation. Documentation files should be platform-independent, so that 
+should be fine for almost everyone.
+
+Comments?
+
+Regards,
+Ulrich
