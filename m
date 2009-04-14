@@ -1,60 +1,72 @@
-From: Patrick Berkeley <patrickberkeley@gmail.com>
-Subject: On Tracking Binary Files
-Date: Tue, 14 Apr 2009 10:42:22 -0400
-Message-ID: <7efce40a0904140742i48aad41ds66de5dfe368f3b16@mail.gmail.com>
-References: <7efce40a0904140741w28da9b54ucfe4b54bf48b0844@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Performance issue: initial git clone causes massive repack
+Date: Tue, 14 Apr 2009 17:52:53 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904141749330.10279@pacific.mpi-cbg.de>
+References: <alpine.LFD.2.00.0904052315210.6741@xanadu.home> <20090407081019.GK20356@atjola.homenet> <m3tz5023rq.fsf@localhost.localdomain> <alpine.LFD.2.00.0904070903020.6741@xanadu.home> <20090407142147.GA4413@atjola.homenet> <alpine.LFD.2.00.0904071321520.6741@xanadu.home>
+ <20090407181259.GB4413@atjola.homenet> <alpine.LFD.2.00.0904071454250.6741@xanadu.home> <20090407202725.GC4413@atjola.homenet> <alpine.LFD.2.00.0904080041240.6741@xanadu.home> <20090410T203405Z@curie.orbis-terrarum.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 14 16:52:49 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "Robin H. Johnson" <robbat2@gentoo.org>
+X-From: git-owner@vger.kernel.org Tue Apr 14 17:54:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ltk0G-00085Y-GG
-	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 16:52:48 +0200
+	id 1LtkvV-0006Rd-G1
+	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 17:51:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755878AbZDNOum (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2009 10:50:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750793AbZDNOum
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 10:50:42 -0400
-Received: from yw-out-2324.google.com ([74.125.46.30]:10049 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750746AbZDNOul (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Apr 2009 10:50:41 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so2683952ywb.1
-        for <git@vger.kernel.org>; Tue, 14 Apr 2009 07:50:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        bh=ZeFdHSas2AE8vNURl9J+BGA2MtKL9U72CZacCZKuung=;
-        b=bNN7hKna2YZafdCcPc3XQS8ZjvF1tG0VbWA/62wvEGbZ6CioUo4+nzSLmRYv95zt2N
-         ZdWg3f1SR1rkVgnGJO+2dzAxuOhKqE8MVZqyYsWdqBGsz/t1fbEjKopyJb7/hX3lhoAt
-         izw9G1pEK9hvVzhRcqdtr2sv6KJchp/GyOOYs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type:content-transfer-encoding;
-        b=opqtE43uG5IO2gfPxjKKSiJc1ijJxykq5PgHkWJNIBRTdYgyrKdQbT6jfjPgDD+XAP
-         3adtSPy4rhjSM28hBJvkxGfgnG02QT5QaKY8bjBe7e13WaNh4NkS2R7BYSC8TpzD8eJ2
-         k7ypGgOsMrjgttu3FjM1R8SsgLUFMQ8oe+Xgg=
-Received: by 10.151.7.11 with SMTP id k11mr3211253ybi.170.1239720157154; Tue, 
-	14 Apr 2009 07:42:37 -0700 (PDT)
-In-Reply-To: <7efce40a0904140741w28da9b54ucfe4b54bf48b0844@mail.gmail.com>
+	id S1752411AbZDNPuK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2009 11:50:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751715AbZDNPuJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 11:50:09 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43226 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751784AbZDNPuI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2009 11:50:08 -0400
+Received: (qmail invoked by alias); 14 Apr 2009 15:50:06 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp008) with SMTP; 14 Apr 2009 17:50:06 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19qNIwM5dpqHBvhGzk729ZEbDYHXPW5VyxaKHNmNv
+	bam/k50uZVguI3
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20090410T203405Z@curie.orbis-terrarum.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.5600000000000001
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116542>
 
-Does Git track the deltas on binary files?
+Hi,
 
-Someone in #git mentioned that if the binaries change too much Git no
-longer just stores the changes. If this is the case, what is the
-breaking point where Git goes from storing the deltas to the entire
-new file?
+On Fri, 10 Apr 2009, Robin H. Johnson wrote:
 
-Thanks, Patrick
+> On Wed, Apr 08, 2009 at 12:52:54AM -0400, Nicolas Pitre wrote:
+> > > http://git.overlays.gentoo.org/gitweb/?p=exp/gentoo-x86.git;a=summary
+> > > At least that's what I cloned ;-) I hope it's the right one, but it fits
+> > > the description...
+> > OK.  FWIW, I repacked it with --window=250 --depth=250 and obtained a 
+> > 725MB pack file.  So that's about half the originally reported size.
+> The one problem with having the single large packfile is that Git
+> doesn't have a trivial way to resume downloading it when the git://
+> protocol is used.
+> 
+> For our developers cursed with bad internet connections (a fair number
+> of firewalls that don't seem to respect keepalive properly), I suppose
+> I can probably just maintain a separate repo for their initial clones,
+> which leaves a large overall download, but more chances to resume.
+
+IMO the best we could do under these circumstances is to use fsck 
+--lost-found to find those commits which have a complete history (i.e. no 
+"broken links") -- this probably needs to be implemented as a special mode 
+of --lost-found -- and store them in a temporary to-be-removed 
+namespace, say refs/heads/incomplete-refs/$number, which will be sent to 
+the server when fetching the next time.  (Might need some iterations to 
+get everything, though.)
+
+Ciao,
+Dscho
