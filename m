@@ -1,60 +1,56 @@
-From: Caleb Cushing <xenoterracide@gmail.com>
-Subject: git-new-workdir not working right?
-Date: Tue, 14 Apr 2009 00:09:43 -0400
-Message-ID: <81bfc67a0904132109k45f09f79s21ce3132ade02001@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/5] docs/checkout: clarify what "non-branch" means
+Date: Mon, 13 Apr 2009 21:20:56 -0700
+Message-ID: <7v8wm3c1cn.fsf@gitster.siamese.dyndns.org>
+References: <20090413110947.GA15647@coredump.intra.peff.net>
+ <20090413112104.GE15982@coredump.intra.peff.net>
+ <7vmyakh5wc.fsf@gitster.siamese.dyndns.org>
+ <200904132340.36191.mlevedahl@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 14 06:11:47 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 14 06:23:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LtZzs-0006IL-ET
-	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 06:11:44 +0200
+	id 1LtaAx-0008CB-Ir
+	for gcvg-git-2@gmane.org; Tue, 14 Apr 2009 06:23:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750812AbZDNEJq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2009 00:09:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750711AbZDNEJp
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 00:09:45 -0400
-Received: from yw-out-2324.google.com ([74.125.46.29]:49166 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750699AbZDNEJo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Apr 2009 00:09:44 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so2498558ywb.1
-        for <git@vger.kernel.org>; Mon, 13 Apr 2009 21:09:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=2FCr+WxDtt7pL/RxK3Exf5obpsJjxsN6TZUeMVjYYPs=;
-        b=qEBgWPkB3o4TFWvVY3iVa8xssiGpJOiJeHSqoV5wLH2Zq3KtBug0CeLVEs8kEdGljH
-         Olii/FrGmGg1q0S1ryOr/ecVMfBTFjtxV6iCNNgDWZy3Aw5HNBzvpeSssQ6Ex6ymWQuY
-         2RcawgYESTXppH7X5DxrCOCETw7Grn6XEIgKY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=Nenref0Ga8OfsNS5fBRbJPstIFi2X51OuLsGA83tqhVJrTXmWymwEmRAlS23vj/dVj
-         V8fg2qut18OoODxhyrrI4zo3I02CglNcTbhrAmCuSprXCtFyfrSXNeqEwZ2polt+eRrP
-         p1scTAk7nyQWRN6Yon9NeDtrNZ6o+QbM1NRtQ=
-Received: by 10.100.10.15 with SMTP id 15mr9309670anj.6.1239682183073; Mon, 13 
-	Apr 2009 21:09:43 -0700 (PDT)
+	id S1751166AbZDNEVH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Apr 2009 00:21:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750996AbZDNEVH
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 00:21:07 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:43083 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750746AbZDNEVG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Apr 2009 00:21:06 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 07A0CAAF34;
+	Tue, 14 Apr 2009 00:21:03 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B1C17AAF31; Tue,
+ 14 Apr 2009 00:20:58 -0400 (EDT)
+In-Reply-To: <200904132340.36191.mlevedahl@gmail.com> (Mark Levedahl's
+ message of "Mon, 13 Apr 2009 23:40:35 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: AA538870-28AB-11DE-B3A2-C121C5FC92D5-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116510>
 
-before I could do git-new-workdir path/to/repo/.git neworkdirname now
-that doesn't seem to work... I actually had to cd to path/to/repo/.git
-and do git-new-workdir . ../.../neworkdirname to get it to work. it
-was complaining that the .git/ wasn't a git repo.
+Mark Levedahl <mlevedahl@gmail.com> writes:
 
-using git 1.6.2.3
+> I think the question being posed is: Would unifying branch names across all 
+> git commands (i.e., always accepting refs/heads/master as naming branch 
+> master, and accepting master when that is unambiguous) sufficiently benefit 
+> new users...
 
--- 
-Caleb Cushing
+My knee-jerk reaction is that what you are saying is backwards.
 
-http://xenoterracide.blogspot.com
+When do new people even need to know about refs/heads vs refs/tags with
+modern Porcelain command set?
