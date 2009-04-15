@@ -1,73 +1,195 @@
-From: E R <pc88mxer@gmail.com>
-Subject: integrating make and git
-Date: Wed, 15 Apr 2009 10:19:31 -0500
-Message-ID: <3a69fa7c0904150819x7598dea5ic43bf0991c35ae45@mail.gmail.com>
+From: Todd Zullinger <tmz@pobox.com>
+Subject: [PATCH] Use &#160; instead of &nbsp; for XHTML compliance
+Date: Wed, 15 Apr 2009 11:40:12 -0400
+Message-ID: <20090415154012.GX13966@inocybe.teonanacatl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Ricky Zhou <ricky@fedoraproject.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 15 17:27:50 2009
+X-From: git-owner@vger.kernel.org Wed Apr 15 17:42:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lu71R-0005v0-GD
-	for gcvg-git-2@gmane.org; Wed, 15 Apr 2009 17:27:33 +0200
+	id 1Lu7FV-0003J8-QY
+	for gcvg-git-2@gmane.org; Wed, 15 Apr 2009 17:42:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752364AbZDOPZ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Apr 2009 11:25:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752201AbZDOPZ6
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Apr 2009 11:25:58 -0400
-Received: from mail-qy0-f107.google.com ([209.85.221.107]:38152 "EHLO
-	mail-qy0-f107.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751284AbZDOPZ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Apr 2009 11:25:58 -0400
-X-Greylist: delayed 384 seconds by postgrey-1.27 at vger.kernel.org; Wed, 15 Apr 2009 11:25:57 EDT
-Received: by qyk5 with SMTP id 5so839743qyk.33
-        for <git@vger.kernel.org>; Wed, 15 Apr 2009 08:25:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=cjxXjaJGStkEV8pWholbospvSj0GIztDtax5BXJLslg=;
-        b=sPFZA3bGxHsek1sTphlITRp9uiWw1RAflWblY1ILiquP39+3rsoAjnA08A5aI7mNme
-         tQfh1hJaMBR462diVP7lXEkgDqug2adOMcFtabLbfGH2auTvKx8tDpzFrarE3nxGvFwW
-         IFn5aoT8+dR7S18uMZdBunIut5DprOT49NQ6Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=D9MbU0zfmlXxVvLaJaECyDqKva8CMlt7spq0z+oRivHZnxHontRrqT1sP67rAflfN7
-         A1b27FdkucaUF+bxLzuP88vtZ2Jo+yCencIsYoLxwcV35TYS5NUZmM8UMmFENRYmA34x
-         kYQnor5stpBeL4/6rTWSveVZgXxC1x/33RybE=
-Received: by 10.220.77.1 with SMTP id e1mr69518vck.91.1239808771994; Wed, 15 
-	Apr 2009 08:19:31 -0700 (PDT)
+	id S1753112AbZDOPkZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Apr 2009 11:40:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753855AbZDOPkY
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Apr 2009 11:40:24 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58867 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752151AbZDOPkU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Apr 2009 11:40:20 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id A43ABAA236;
+	Wed, 15 Apr 2009 11:40:18 -0400 (EDT)
+Received: from inocybe.teonanacatl.org (unknown [98.117.8.36]) (using TLSv1
+ with cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5F7F6AA233; Wed,
+ 15 Apr 2009 11:40:14 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Pobox-Relay-ID: B902C1BE-29D3-11DE-895B-C121C5FC92D5-09356542!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116615>
 
-I have an idea about integrating make with git, and I'm wondering if
-it is a reasonable thing to do.
+From: Ricky Zhou <ricky@fedoraproject.org>
+---
 
-First of all, I am under the impression that git can quickly compute a
-hash of a directory and its contents. Is that correct?
+This was noticed by the Fedora Infrastructure folks.  The pages
+rendered fine in Firefox, but caused an XML error when run through tor
+and privoxy together.  Part of this problem description may belong in
+the commit message -- I was hesitant to add it, as I didn't read all
+of the IRC log where the problem was noticed and debugged.
 
-If so, suppose you using git to manage revision control of a project
-which has some components like 'lib1', 'lib2', etc. Typically you
-would perform something like: make clean; make all and 'make all'
-would perform 'make lib1' and 'make lib2'. When checking out a
-different revision of the project you would have to perform another
-'make clean' before 'make all' since you aren't sure of what's changed
-and the timestamps of the derived files will be more recent than the
-timestamps of the source files.
+ gitweb/gitweb.perl |   40 ++++++++++++++++++++--------------------
+ 1 files changed, 20 insertions(+), 20 deletions(-)
 
-Now suppose that making 'lib1' only depends on the source code in a
-certain directory. The idea is to associate the hash of the source
-directory for lib1 with its the derived files. Make can check this to
-determine if the component really needs to be rebuilt. Then as you
-move around in the repository you can avoid rebuilding components that
-haven't changed.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 33ef190..55b56f7 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1042,8 +1042,8 @@ sub esc_html ($;%) {
+ 
+ 	$str = to_utf8($str);
+ 	$str = $cgi->escapeHTML($str);
+-	if ($opts{'-nbsp'}) {
+-		$str =~ s/ /&nbsp;/g;
++	if ($opts{'-subspaces'}) {
++		$str =~ s/ /&#160;/g;
+ 	}
+ 	$str =~ s|([[:cntrl:]])|(($1 ne "\t") ? quot_cec($1) : $1)|eg;
+ 	return $str;
+@@ -1056,8 +1056,8 @@ sub esc_path {
+ 
+ 	$str = to_utf8($str);
+ 	$str = $cgi->escapeHTML($str);
+-	if ($opts{'-nbsp'}) {
+-		$str =~ s/ /&nbsp;/g;
++	if ($opts{'-subspaces'}) {
++		$str =~ s/ /&#160;/g;
+ 	}
+ 	$str =~ s|([[:cntrl:]])|quot_cec($1)|eg;
+ 	return $str;
+@@ -1383,7 +1383,7 @@ sub file_type_long {
+ sub format_log_line_html {
+ 	my $line = shift;
+ 
+-	$line = esc_html($line, -nbsp=>1);
++	$line = esc_html($line, -subspaces=>1);
+ 	$line =~ s{\b([0-9a-fA-F]{8,40})\b}{
+ 		$cgi->a({-href => href(action=>"object", hash=>$1),
+ 					-class => "text"}, $1);
+@@ -1710,7 +1710,7 @@ sub format_diff_line {
+ 			                     -class=>"list"}, $to_text);
+ 		}
+ 		$line = "<span class=\"chunk_info\">@@ $from_text $to_text @@</span>" .
+-		        "<span class=\"section\">" . esc_html($section, -nbsp=>1) . "</span>";
++		        "<span class=\"section\">" . esc_html($section, -subspaces=>1) . "</span>";
+ 		return "<div class=\"diff$diff_class\">$line</div>\n";
+ 	} elsif ($from && $to && $line =~ m/^\@{3}/) {
+ 		my ($prefix, $ranges, $section) = $line =~ m/^(\@+) (.*?) \@+(.*)$/;
+@@ -1743,10 +1743,10 @@ sub format_diff_line {
+ 			$line .= $to_text;
+ 		}
+ 		$line .= " $prefix</span>" .
+-		         "<span class=\"section\">" . esc_html($section, -nbsp=>1) . "</span>";
++		         "<span class=\"section\">" . esc_html($section, -subspaces=>1) . "</span>";
+ 		return "<div class=\"diff$diff_class\">$line</div>\n";
+ 	}
+-	return "<div class=\"diff$diff_class\">" . esc_html($line, -nbsp=>1) . "</div>\n";
++	return "<div class=\"diff$diff_class\">" . esc_html($line, -subspaces=>1) . "</div>\n";
+ }
+ 
+ # Generates undef or something like "_snapshot_" or "snapshot (_tbz2_ _zip_)",
+@@ -2101,9 +2101,9 @@ sub git_populate_project_tagcloud {
+ 			# Pad the title with spaces so that the cloud looks
+ 			# less crammed.
+ 			my $title = $ctags_lc{$_}->{topname};
+-			$title =~ s/ /&nbsp;/g;
+-			$title =~ s/^/&nbsp;/g;
+-			$title =~ s/$/&nbsp;/g;
++			$title =~ s/ /&#160;/g;
++			$title =~ s/^/&#160;/g;
++			$title =~ s/$/&#160;/g;
+ 			$cloud->add($title, $home_link."?by_tag=".$_, $ctags_lc{$_}->{count});
+ 		}
+ 	} else {
+@@ -3535,7 +3535,7 @@ sub git_difftree_body {
+ 			               -title => 'commitdiff to parent number ' .
+ 			                          ($i+1) . ': ' . substr($par,0,7)},
+ 			              $i+1) .
+-			      "&nbsp;</th>\n";
++			      "&#160;</th>\n";
+ 		}
+ 		print "</tr></thead>\n<tbody>\n";
+ 	}
+@@ -4275,7 +4275,7 @@ sub git_tags_body {
+ 		if ($tag{'type'} eq "tag") {
+ 			print $cgi->a({-href => href(action=>"tag", hash=>$tag{'id'})}, "tag");
+ 		} else {
+-			print "&nbsp;";
++			print "&#160;";
+ 		}
+ 		print "</td>\n" .
+ 		      "<td class=\"link\">" . " | " .
+@@ -4491,7 +4491,7 @@ sub git_summary {
+ 	git_header_html();
+ 	git_print_page_nav('summary','', $head);
+ 
+-	print "<div class=\"title\">&nbsp;</div>\n";
++	print "<div class=\"title\">&#160;</div>\n";
+ 	print "<table class=\"projects_list\">\n" .
+ 	      "<tr id=\"metadata_desc\"><td>description</td><td>" . esc_html($descr) . "</td></tr>\n" .
+ 	      "<tr id=\"metadata_owner\"><td>owner</td><td>" . esc_html($owner) . "</td></tr>\n";
+@@ -4602,7 +4602,7 @@ sub git_tag {
+ 	my $comment = $tag{'comment'};
+ 	foreach my $line (@$comment) {
+ 		chomp $line;
+-		print esc_html($line, -nbsp=>1) . "<br/>\n";
++		print esc_html($line, -subspaces=>1) . "<br/>\n";
+ 	}
+ 	print "</div>\n";
+ 	git_footer_html();
+@@ -4888,7 +4888,7 @@ sub git_blob {
+ 			$nr++;
+ 			$line = untabify($line);
+ 			printf "<div class=\"pre\"><a id=\"l%i\" href=\"#l%i\" class=\"linenr\">%4i</a> %s</div>\n",
+-			       $nr, $nr, $nr, esc_html($line, -nbsp=>1);
++			       $nr, $nr, $nr, esc_html($line, -subspaces=>1);
+ 		}
+ 	}
+ 	close $fd
+@@ -5913,13 +5913,13 @@ sub git_search {
+ 			} else {
+ 				$ltext = untabify($ltext);
+ 				if ($ltext =~ m/^(.*)($search_regexp)(.*)$/i) {
+-					$ltext = esc_html($1, -nbsp=>1);
++					$ltext = esc_html($1, -subspaces=>1);
+ 					$ltext .= '<span class="match">';
+-					$ltext .= esc_html($2, -nbsp=>1);
++					$ltext .= esc_html($2, -subspaces=>1);
+ 					$ltext .= '</span>';
+-					$ltext .= esc_html($3, -nbsp=>1);
++					$ltext .= esc_html($3, -subspaces=>1);
+ 				} else {
+-					$ltext = esc_html($ltext, -nbsp=>1);
++					$ltext = esc_html($ltext, -subspaces=>1);
+ 				}
+ 				print "<div class=\"pre\">" .
+ 					$cgi->a({-href => href(action=>"blob", hash=>$co{'hash'},
+-- 
+1.6.0.6
 
-Good, bad, ugly?
+-- 
+Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To have a successful relationship, I must learn to make it look like
+I'm giving as much as I'm getting.
