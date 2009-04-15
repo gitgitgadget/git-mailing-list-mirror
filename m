@@ -1,143 +1,165 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Weird growth in packfile during initial push
-Date: Wed, 15 Apr 2009 15:51:40 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0904151443030.6741@xanadu.home>
-References: <20090415182754.GF23644@curie-int>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH v2] fetch: Strip usernames from url's before storing them
+Date: Wed, 15 Apr 2009 22:45:14 +0200
+Message-ID: <49E6475A.3090801@op5.se>
+References: <49E5EBD2.1070704@op5.se> <1239805814-21340-1-git-send-email-ae@op5.se> <7vbpqxvnpl.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Robin H. Johnson" <robbat2@gentoo.org>
-X-From: git-owner@vger.kernel.org Wed Apr 15 21:53:37 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 15 22:47:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LuBAu-0005EO-Oh
-	for gcvg-git-2@gmane.org; Wed, 15 Apr 2009 21:53:37 +0200
+	id 1LuC0T-0007Ty-Rt
+	for gcvg-git-2@gmane.org; Wed, 15 Apr 2009 22:46:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754594AbZDOTwC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Apr 2009 15:52:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753082AbZDOTwB
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Apr 2009 15:52:01 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:23502 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753893AbZDOTwA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Apr 2009 15:52:00 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KI5005VLR4DUCD1@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 15 Apr 2009 15:50:38 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20090415182754.GF23644@curie-int>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1753384AbZDOUpT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Apr 2009 16:45:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751373AbZDOUpT
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Apr 2009 16:45:19 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:59261 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751367AbZDOUpS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Apr 2009 16:45:18 -0400
+Received: by fxm2 with SMTP id 2so80783fxm.37
+        for <git@vger.kernel.org>; Wed, 15 Apr 2009 13:45:16 -0700 (PDT)
+Received: by 10.86.36.17 with SMTP id j17mr490146fgj.38.1239828315940;
+        Wed, 15 Apr 2009 13:45:15 -0700 (PDT)
+Received: from clix.int.op5.se ([212.112.174.166])
+        by mx.google.com with ESMTPS id 4sm11797441fgg.25.2009.04.15.13.45.15
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 15 Apr 2009 13:45:15 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <7vbpqxvnpl.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116647>
 
-On Wed, 15 Apr 2009, Robin H. Johnson wrote:
+Thanks for the feedback. Many appreciated.
 
-> I was doing a more recent conversion of the Gentoo repo, and ran into
-> some odd behavior in the packfile size.
+Junio C Hamano wrote:
+> Andreas Ericsson <ae@op5.se> writes:
 > 
-> For anybody else following the repo, you can now get it on the new hardware at:
-> http://git-exp.overlays.gentoo.org/gitweb/?p=exp/gentoo-x86.git;a=summary
+>> +/*
+>> + * Strip username information from the url and return it in a
+>> + * newly allocated string which the caller has to free.
+>> + *
+>> + * The url's we want to catch are the following:
+>> + *   ssh://[user@]host.xz[:port]/path/to/repo.git/
+>> + *   [user@]host.xz:/path/to/repo.git/
+>> + *   http[s]://[user[:password]@]host.xz/path/to/repo.git
 > 
-> I did the conversion with cvs2svn, packed, added the remote and pushed, only to
-> find that the pack on the remote side suddenly seemed to be ~60MiB larger.
-
-Hmmm.
-
-> $ ls -la /tmp/convert/gentoo-x86-cvs2git/.git/objects/pack
-> total 903804
-> drwxr-xr-x 2 robbat2 users       119 Apr 14 08:05 .
-> drwxr-xr-x 4 robbat2 users        28 Apr 14 08:05 ..
-> -r--r--r-- 1 robbat2 users 139155472 Apr 14 08:05 pack-f805bb448f864becfeac9c7f8a8ac2ef90c26787.idx
-> -r--r--r-- 1 robbat2 users 786336481 Apr 14 08:05 pack-f805bb448f864becfeac9c7f8a8ac2ef90c26787.pack
+> If this is a valid URL:
 > 
-> $ git remote add origin git+ssh://git@git-exp.overlays.gentoo.org/exp/gentoo-x86.git
-> $ git push origin master:master
-> Initialized empty Git repository in /var/gitroot/exp/gentoo-x86.git/
-> Counting objects: 4969800, done.
-> Delta compression using up to 8 threads.
-> Compressing objects: 100% (1217809/1217809), done.
-> Writing objects: 100% (4969800/4969800), 810.56 MiB | 21608 KiB/s, done.
-> Total 4969800 (delta 3735812), reused 4969800 (delta 3735812)
+> 	scheme://host.xz/path@with@at@sign.git/
+> 
+> we do not want to mistakenly trigger this logic.
+> 
 
-Here we know for sure that all objects were directly reused, so no 
-attempt at recompressing them was done.  The only thing that 
-pack-objects might do in this case in addition to directly streaming the 
-existing pack is to convert delta object headers from OFS_DELTA to 
-REF_DELTA.
+I'm guessing, and I'm slightly inebriated so don't yell too hard at me if
+you think your mail will hit me in the morning ;-)
 
-> $ ls -la /var/gitroot/exp/gentoo-x86.git/objects/pack
-> total 966876
-> drwxr-xr-x 2 git git      4096 Apr 14 08:43 .
-> drwxr-xr-x 4 git git      4096 Apr 14 08:35 ..
-> -r--r--r-- 1 git git 139155472 Apr 14 08:43 pack-f805bb448f864becfeac9c7f8a8ac2ef90c26787.idx
-> -r--r--r-- 1 git git 849936308 Apr 14 08:43 pack-f805bb448f864becfeac9c7f8a8ac2ef90c26787.pack
+It *is* valid for "bare ssh" url's, but that would only trigger the fourth
+(and last) case of the if() else if() thing which would return a strdup().
+It won't have a scheme, and it won't have a colon after the @-sign.
 
-Let's see if my theory stands:
+An url with a scheme can't contain a colon *before* the at-sign if it does
+contain a username, and it won't contain a colon *after* the @-sign if it
+*does* contain a username. This is a guess, but I wrote that part of the
+transport code initially, so I've got a decent inkling of what git accepts
+in the first place (although it might not be strong enough in the face of
+the various RFC's, I know).
 
-	849936308 - 786336481 = 63599827
-	63599827 / 3735812 = 17.02
+> I do not know if rsync://me@there/path is supported, but we should
+> generalize to support any scheme://me@there/path to keep the code simpler.
+> You do not do anything special based on the URL scheme other than learning
+> how long the scheme:// part is to copy it anyway.
 
-Hence an average difference of 17 bytes per delta.  Given that REF_DELTA 
-objects have a 20-byte SHA1 base reference which is replaced with a 
-variable length encoding of a pack offset in the OFS_DELTA case, we're 
-talking about 2.98 bytes for that offset encoding which feels about 
-right.
+I've never seen rsync://user@ style url's before. It's trivial to add support
+for it if it's valid though, but for the reasons above, I'm not too fussed
+about trying to support URL's we're extremely unlikely to see in real life.
+The last else if() really does catch a lot.
 
-[...]
+>  Perhaps like...
+> 
+> char *transport_anonymize_url(const char *url)
+> {
+> 	char *anon_url, *scheme_prefix, *anon_part;
+> 	size_t len, prefix_len = 0;
+> 
+> 	anon_part = strchr(url, '@');
+> 	if (is_local(url) || !anon_part)
+> 		goto literal_copy;
+> 
+> 	anon_part++;
+> 	scheme_prefix = strstr(url, "://");
+> 	if (scheme_prefix) {
+> 		const char *cp;
+> 		/* make sure scheme is reasonable */
+> 		for (cp = url; cp < scheme_prefix; cp++) {
+> 			switch (*cp) { /* RFC 1738 2.1 */
+> 			case '+':
+> 			case '.':
+> 			case '-':
+> 				break; /* ok */
 
-And the code matches this theory as well.  Can you try this patch if you 
-have a chance?
-
-diff --git a/builtin-send-pack.c b/builtin-send-pack.c
-index 91c3651..e41adbf 100644
---- a/builtin-send-pack.c
-+++ b/builtin-send-pack.c
-@@ -44,12 +44,16 @@ static int pack_objects(int fd, struct ref *refs, struct extra_have_objects *ext
- 		"--stdout",
- 		NULL,
- 		NULL,
-+		NULL,
- 	};
- 	struct child_process po;
- 	int i;
- 
-+	i = 4;
- 	if (args->use_thin_pack)
--		argv[4] = "--thin";
-+		argv[i++] = "--thin";
-+	if (args->use_ofs_delta)
-+		argv[i++] = "--delta-base-offset";
- 	memset(&po, 0, sizeof(po));
- 	po.argv = argv;
- 	po.in = -1;
-@@ -316,6 +320,8 @@ int send_pack(struct send_pack_args *args,
- 		ask_for_status_report = 1;
- 	if (server_supports("delete-refs"))
- 		allow_deleting_refs = 1;
-+	if (server_supports("ofs-delta"))
-+		args->use_ofs_delta = 1;
- 
- 	if (!remote_refs) {
- 		fprintf(stderr, "No refs in common and none specified; doing nothing.\n"
-diff --git a/send-pack.h b/send-pack.h
-index 83d76c7..1d7b1b3 100644
---- a/send-pack.h
-+++ b/send-pack.h
-@@ -6,6 +6,7 @@ struct send_pack_args {
- 		send_mirror:1,
- 		force_update:1,
- 		use_thin_pack:1,
-+		use_ofs_delta:1,
- 		dry_run:1;
- };
- 
+Isn't %xx also a valid escape sequence for unknown chars in url's, according
+to the aforementioned RFC?
 
 
-Nicolas
+> 			default:
+> 				if (isalnum(*cp))
+> 					break;
+> 				/* it isn't */
+> 				goto literal_copy;
+> 			}
+> 		}
+> 		/* @ past the first slash does not count */
+> 		cp = strchr(scheme_prefix + 3, '/');
+> 		if (cp < anon_part)
+> 			goto literal_copy;
+> 		prefix_len = scheme_prefix - url + 3;
+> 	}
+> 	else if (!strchr(anon_part, ':'))
+> 		/* cannot be "me@there:/path/name" */
+
+Nice, but the comment is misleading to the simple (or drunk) mind.
+It can't contain an @-sign at all due to the check above, which I'd
+be happier if it mentions (me being both atm, I'm inclined to think
+in rather straight lines).
+
+Otherwise I really like it.
+
+> 		goto literal_copy;
+> 	len = prefix_len + strlen(anon_part);
+> 	anon_url = xmalloc(len + 1);
+> 	memcpy(anon_url, url, prefix_len);
+> 	memcpy(anon_url + prefix_len, anon_part, strlen(anon_part));
+> 	return anon_url;
+>  literal_copy:
+> 	return xstrdup(url);
+> }
+
+
+This looks sensible and fairly generic, and I'll happily defer to a
+more capable and less drunk programmer any time of the day. I'll copy
+it into anon-url.c tomorrow and see how it pans out with some of the
+weirder URL's you gave today.
+
+If anyone's got some tricky url's they want me to try, email me
+before 08:00 GMT tomorrow and I'll give 'em a whirl with multiple
+algo's.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
