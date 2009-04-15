@@ -1,67 +1,61 @@
-From: Stefan =?utf-8?b?TsOkd2U=?= <stefan.naewe+git@gmail.com>
-Subject: Re: Tagging stable releases
-Date: Wed, 15 Apr 2009 16:15:51 +0000 (UTC)
-Message-ID: <loom.20090415T161255-114@post.gmane.org>
-References: <23045562.post@talk.nabble.com> <49E59BC9.5060906@op5.se>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: integrating make and git
+Date: Wed, 15 Apr 2009 12:20:00 -0400 (EDT)
+Message-ID: <alpine.LNX.1.00.0904151148030.19665@iabervon.org>
+References: <3a69fa7c0904150819x7598dea5ic43bf0991c35ae45@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 15 18:18:31 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: E R <pc88mxer@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 15 18:22:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lu7oS-0001Jc-Fy
-	for gcvg-git-2@gmane.org; Wed, 15 Apr 2009 18:18:12 +0200
+	id 1Lu7rl-0002d9-24
+	for gcvg-git-2@gmane.org; Wed, 15 Apr 2009 18:21:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754251AbZDOQQI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Apr 2009 12:16:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754771AbZDOQQH
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Apr 2009 12:16:07 -0400
-Received: from main.gmane.org ([80.91.229.2]:50961 "EHLO ciao.gmane.org"
+	id S1752360AbZDOQUE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Apr 2009 12:20:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751941AbZDOQUD
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Apr 2009 12:20:03 -0400
+Received: from iabervon.org ([66.92.72.58]:43122 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754288AbZDOQQG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Apr 2009 12:16:06 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Lu7mN-0007Bv-IG
-	for git@vger.kernel.org; Wed, 15 Apr 2009 16:16:03 +0000
-Received: from dyndsl-095-033-077-254.ewe-ip-backbone.de ([95.33.77.254])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 15 Apr 2009 16:16:03 +0000
-Received: from stefan.naewe+git by dyndsl-095-033-077-254.ewe-ip-backbone.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 15 Apr 2009 16:16:03 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 95.33.77.254 (Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.0.8) Gecko/2009032711 Ubuntu/8.10 (intrepid) Firefox/3.0.8)
+	id S1751314AbZDOQUB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Apr 2009 12:20:01 -0400
+Received: (qmail 17642 invoked by uid 1000); 15 Apr 2009 16:20:00 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 15 Apr 2009 16:20:00 -0000
+In-Reply-To: <3a69fa7c0904150819x7598dea5ic43bf0991c35ae45@mail.gmail.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116622>
 
-Andreas Ericsson <ae <at> op5.se> writes:
+On Wed, 15 Apr 2009, E R wrote:
 
+> I have an idea about integrating make with git, and I'm wondering if
+> it is a reasonable thing to do.
 > 
-> At $dayjob, we have an update hook preventing tags without the "-beta$X"
-> suffix from being pushed unless it points to an already tagged commit,
-> so our workflow goes like this:
-> 1 hack hack hack
-> 2 beta-tag
-> 3 buildbot builds beta package and sends it off to qa
-> 4 qa responds with "ok to release"
-> 5 we stable-tag the exact same version we shipped to qa
-> 6 buildbot builds stable tag and copies it to "to-be-released" directory
-> 7 release-manager pushes the release-button once changelogs and stuff
->   are in place
+> First of all, I am under the impression that git can quickly compute a
+> hash of a directory and its contents. Is that correct?
+> 
+> If so, suppose you using git to manage revision control of a project
+> which has some components like 'lib1', 'lib2', etc. Typically you
+> would perform something like: make clean; make all and 'make all'
+> would perform 'make lib1' and 'make lib2'. When checking out a
+> different revision of the project you would have to perform another
+> 'make clean' before 'make all' since you aren't sure of what's changed
+> and the timestamps of the derived files will be more recent than the
+> timestamps of the source files.
 
-You've been talking about using git at your $dayjob quite often.
-Any chance to share some of your 'infrastructure' (like hooks, e.g.) ?
+No, the timestamps of the changed source files will be newer than the 
+timestamps of the derived files. Git doesn't backdate files in working 
+directories, in order to avoid causing the problem you're trying to fix. 
+(And because getting the history is so quick and easy with git that 
+looking at dates on files in the filesystem is kind of pointless.)
 
-Thanks
-
-Stefan
+	-Daniel
+*This .sig left intentionally blank*
