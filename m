@@ -1,61 +1,81 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: integrating make and git
-Date: Wed, 15 Apr 2009 12:20:00 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0904151148030.19665@iabervon.org>
-References: <3a69fa7c0904150819x7598dea5ic43bf0991c35ae45@mail.gmail.com>
+From: Ricky Zhou <ricky@fedoraproject.org>
+Subject: Re: [PATCH] Use &#160; instead of &nbsp; for XHTML compliance
+Date: Wed, 15 Apr 2009 12:21:23 -0400
+Message-ID: <20090415162123.GC3316@sphe.res.cmu.edu>
+References: <20090415154012.GX13966@inocybe.teonanacatl.org> <200904151755.07425.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: E R <pc88mxer@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 15 18:22:05 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="lCAWRPmW1mITcIfM"
+Cc: Todd Zullinger <tmz@pobox.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 15 18:23:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lu7rl-0002d9-24
-	for gcvg-git-2@gmane.org; Wed, 15 Apr 2009 18:21:37 +0200
+	id 1Lu7tL-0003Oh-Jg
+	for gcvg-git-2@gmane.org; Wed, 15 Apr 2009 18:23:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752360AbZDOQUE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Apr 2009 12:20:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751941AbZDOQUD
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Apr 2009 12:20:03 -0400
-Received: from iabervon.org ([66.92.72.58]:43122 "EHLO iabervon.org"
+	id S1752717AbZDOQVm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Apr 2009 12:21:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752688AbZDOQVl
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Apr 2009 12:21:41 -0400
+Received: from mx2.redhat.com ([66.187.237.31]:44168 "EHLO mx2.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751314AbZDOQUB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Apr 2009 12:20:01 -0400
-Received: (qmail 17642 invoked by uid 1000); 15 Apr 2009 16:20:00 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 15 Apr 2009 16:20:00 -0000
-In-Reply-To: <3a69fa7c0904150819x7598dea5ic43bf0991c35ae45@mail.gmail.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752679AbZDOQVk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Apr 2009 12:21:40 -0400
+Received: from int-mx2.corp.redhat.com (int-mx2.corp.redhat.com [172.16.27.26])
+	by mx2.redhat.com (8.13.8/8.13.8) with ESMTP id n3FGLQgQ018165;
+	Wed, 15 Apr 2009 12:21:26 -0400
+Received: from ns3.rdu.redhat.com (ns3.rdu.redhat.com [10.11.255.199])
+	by int-mx2.corp.redhat.com (8.13.1/8.13.1) with ESMTP id n3FGLOww000939;
+	Wed, 15 Apr 2009 12:21:25 -0400
+Received: from localhost (vpn-14-120.rdu.redhat.com [10.11.14.120])
+	by ns3.rdu.redhat.com (8.13.8/8.13.8) with ESMTP id n3FGLNs6027194;
+	Wed, 15 Apr 2009 12:21:23 -0400
+Content-Disposition: inline
+In-Reply-To: <200904151755.07425.jnareb@gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Scanned-By: MIMEDefang 2.58 on 172.16.27.26
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116623>
 
-On Wed, 15 Apr 2009, E R wrote:
 
-> I have an idea about integrating make with git, and I'm wondering if
-> it is a reasonable thing to do.
-> 
-> First of all, I am under the impression that git can quickly compute a
-> hash of a directory and its contents. Is that correct?
-> 
-> If so, suppose you using git to manage revision control of a project
-> which has some components like 'lib1', 'lib2', etc. Typically you
-> would perform something like: make clean; make all and 'make all'
-> would perform 'make lib1' and 'make lib2'. When checking out a
-> different revision of the project you would have to perform another
-> 'make clean' before 'make all' since you aren't sure of what's changed
-> and the timestamps of the derived files will be more recent than the
-> timestamps of the source files.
+--lCAWRPmW1mITcIfM
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-No, the timestamps of the changed source files will be newer than the 
-timestamps of the derived files. Git doesn't backdate files in working 
-directories, in order to avoid causing the problem you're trying to fix. 
-(And because getting the history is so quick and easy with git that 
-looking at dates on files in the filesystem is kind of pointless.)
+On 2009-04-15 05:55:04 PM, Jakub Narebski wrote:
+> Wouldn't it be a better solution to add DTD with HTML entities if/when
+> gitweb serves XHTML 1.0 together application/xhtml+xml mimetype, instead
+> of unconditionally using what is I think worse solution? Especially that
+> error is I think quite rare situation and/or bug in browser...
+>=20
+> I also don't think that the change -nbsp =3D> -subspaces is necessary;
+> it causes large code churn for nothing, and name is IMVHO worse.
+> It is about nonbreakable and non-compactable space.
+Sorry, as Mike mentioned, I was mistaken about the validity of &nbsp;.
+I'm going to try to reproduce this myself so I can look more into what
+actually caused the error.
 
-	-Daniel
-*This .sig left intentionally blank*
+Thanks,
+Ricky
+
+--lCAWRPmW1mITcIfM
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAknmCYMACgkQrH1ufGsbJY3WGwCdEQDHqyzDroXVDe8q0kgusmaY
+p/UAoIyYD5aQTl23fKfu8270SZT1fz61
+=P/T9
+-----END PGP SIGNATURE-----
+
+--lCAWRPmW1mITcIfM--
