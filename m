@@ -1,90 +1,75 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: GPG signing for git commit?
-Date: Wed, 15 Apr 2009 11:55:54 -0700
-Message-ID: <20090415185554.GG23644@curie-int>
-References: <1238793954.19982.14.camel@hyperair-laptop> <alpine.LFD.2.00.0904031535140.3915@localhost.localdomain> <49D99BB2.2090906@vilain.net>
+Date: Wed, 15 Apr 2009 12:20:54 -0700
+Message-ID: <20090415192054.GE23604@spearce.org>
+References: <1238793954.19982.14.camel@hyperair-laptop> <alpine.LFD.2.00.0904031535140.3915@localhost.localdomain> <49D99BB2.2090906@vilain.net> <20090415185554.GG23644@curie-int>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="3v/vPZnlCeuYLnyQ"
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 15 20:57:54 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "Robin H. Johnson" <robbat2@gentoo.org>
+X-From: git-owner@vger.kernel.org Wed Apr 15 21:22:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LuAIy-00089A-Fr
-	for gcvg-git-2@gmane.org; Wed, 15 Apr 2009 20:57:52 +0200
+	id 1LuAgn-0008Tb-Og
+	for gcvg-git-2@gmane.org; Wed, 15 Apr 2009 21:22:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753212AbZDOS4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Apr 2009 14:56:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752524AbZDOS4A
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Apr 2009 14:56:00 -0400
-Received: from b01.ext.isohunt.com ([208.71.112.51]:43773 "EHLO
-	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752366AbZDOS4A (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Apr 2009 14:56:00 -0400
-Received: (qmail 27480 invoked from network); 15 Apr 2009 18:55:58 -0000
-Received: from tsi-static.orbis-terrarum.net (HELO curie.orbis-terrarum.net) (76.10.188.108)
-  (smtp-auth username robbat2@isohunt.com, mechanism login)
-  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Wed, 15 Apr 2009 18:55:58 +0000
-Received: (qmail 31032 invoked by uid 10000); 15 Apr 2009 11:55:54 -0700
+	id S1752838AbZDOTU4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Apr 2009 15:20:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752661AbZDOTU4
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Apr 2009 15:20:56 -0400
+Received: from george.spearce.org ([209.20.77.23]:36167 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752530AbZDOTUz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Apr 2009 15:20:55 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id EBE5338211; Wed, 15 Apr 2009 19:20:54 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <49D99BB2.2090906@vilain.net>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+In-Reply-To: <20090415185554.GG23644@curie-int>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116645>
 
+"Robin H. Johnson" <robbat2@gentoo.org> wrote:
+> 
+> One of the spots that we're looking for in this, is a model something
+> like what follows. Firstly, a "proxy maintainer" (PM) is a developer
+> with commit rights to the central repo, that's willing to proxy commits
+> by an outside source for some specific package. Think of them as the
+> kernel subsystem maintainer, but many more of them. The PM is still
+> expected to verify the work before passing it on the central repo.
+> 
+> So we have a commit with author+committer being the outside source, and
+> now we want to record (in an easily reviewable fashion) that a specific
+> changeset was introduced to the central tree by the PM.
+> 
+> Not sure of the best route to trace this data. Signing the SHA1 makes
+> the most sense, but need to be able to do that without polluting the tag
+> namespace.
 
---3v/vPZnlCeuYLnyQ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Have the PM push over SSH, and don't ever expire reflogs on the
+central repository?  The reflog will have the old and new commits
+and the user name of the PM.
 
-On Mon, Apr 06, 2009 at 06:05:38PM +1200, Sam Vilain wrote:
-> This system allows for *pushes* to be signed and in general laying the
-> foundation for knowing that commits are authentic without the intrusion
-> into the refs/tags/* space that making lots of signed tags would imply.
-I'm on the lookout for something similar, so that we can be sure who
-introduced some change into the central repo.
+Downsides are:
 
-One of the spots that we're looking for in this, is a model something
-like what follows. Firstly, a "proxy maintainer" (PM) is a developer
-with commit rights to the central repo, that's willing to proxy commits
-by an outside source for some specific package. Think of them as the
-kernel subsystem maintainer, but many more of them. The PM is still
-expected to verify the work before passing it on the central repo.
+- data is in the reflog on the central repository, to access it
+  you need to expose that file via some non-git means (e.g. http
+  or direct shell).
 
-So we have a commit with author+committer being the outside source, and
-now we want to record (in an easily reviewable fashion) that a specific
-changeset was introduced to the central tree by the PM.
+- one reflog record may cover multiple commits, so looking up a
+  single commit is very difficult.  no current tools exist to merge
+  the reflog back against the commit history to attach the record
+  to a range of commits.
 
-Not sure of the best route to trace this data. Signing the SHA1 makes
-the most sense, but need to be able to do that without polluting the tag
-namespace.
+- the reflog is a text file, it will get somewhat large with time.
 
-If the changeset does not have an associated signature, we'd like to
-reject it at the central repo.
+- the reflog is destroyed when the branch is deleted.  you may need a
+  hook to forbid deletion of critical branches, so the reflog stays.
 
---=20
-Robin Hugh Johnson
-Gentoo Linux Developer & Infra Guy
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
-
---3v/vPZnlCeuYLnyQ
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.10 (GNU/Linux)
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
-
-iEYEARECAAYFAknmLboACgkQPpIsIjIzwiwMqACgqPrqKUNXlPswt/IxBdBuy0Lj
-N3gAn0Uv802O6lJ1sXYUf7KaU7CVFNmU
-=ARaC
------END PGP SIGNATURE-----
-
---3v/vPZnlCeuYLnyQ--
+-- 
+Shawn.
