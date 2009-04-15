@@ -1,100 +1,117 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] remote.c: use shorten_unambiguous_ref
-Date: Wed, 15 Apr 2009 04:12:46 -0400
-Message-ID: <20090415081246.GE23332@coredump.intra.peff.net>
-References: <1239291182-12860-1-git-send-email-git@drmicha.warpmail.net> <20090410171458.GA26478@sigill.intra.peff.net> <7vprff41lf.fsf@gitster.siamese.dyndns.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Tagging stable releases
+Date: Wed, 15 Apr 2009 10:33:13 +0200
+Message-ID: <49E59BC9.5060906@op5.se>
+References: <23045562.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Bert Wesarg <bert.wesarg@googlemail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 15 10:14:31 2009
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Asaf <asafs2000@yahoo.com>
+X-From: git-owner@vger.kernel.org Wed Apr 15 10:35:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lu0GK-0003Ne-3O
-	for gcvg-git-2@gmane.org; Wed, 15 Apr 2009 10:14:28 +0200
+	id 1Lu0aF-0000tZ-W4
+	for gcvg-git-2@gmane.org; Wed, 15 Apr 2009 10:35:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752381AbZDOIM4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Apr 2009 04:12:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751438AbZDOIMx
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Apr 2009 04:12:53 -0400
-Received: from peff.net ([208.65.91.99]:50036 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751307AbZDOIMw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Apr 2009 04:12:52 -0400
-Received: (qmail 14776 invoked by uid 107); 15 Apr 2009 08:12:54 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 15 Apr 2009 04:12:54 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Apr 2009 04:12:46 -0400
-Content-Disposition: inline
-In-Reply-To: <7vprff41lf.fsf@gitster.siamese.dyndns.org>
+	id S1756653AbZDOIdT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Apr 2009 04:33:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758718AbZDOIdS
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Apr 2009 04:33:18 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:33394 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757417AbZDOIdQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Apr 2009 04:33:16 -0400
+Received: by fxm2 with SMTP id 2so2778986fxm.37
+        for <git@vger.kernel.org>; Wed, 15 Apr 2009 01:33:14 -0700 (PDT)
+Received: by 10.86.93.19 with SMTP id q19mr4824307fgb.55.1239784394542;
+        Wed, 15 Apr 2009 01:33:14 -0700 (PDT)
+Received: from clix.int.op5.se ([212.112.174.166])
+        by mx.google.com with ESMTPS id d4sm10069425fga.8.2009.04.15.01.33.13
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 15 Apr 2009 01:33:14 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <23045562.post@talk.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116598>
 
-On Tue, Apr 14, 2009 at 09:55:08AM -0700, Junio C Hamano wrote:
-
-> I was hoping that a single "shorten" function that does not even take
-> "unambiguous" parameter would be used by almost everybody.  As far as I
-> can see, Bert's "rev-parse --abbrev-ref" RFC is the only caller that might
-> need to use a value different from warn_ambiguous_refs, and all the other
-> existing callers (including fill_tracking_info() for "upstream" report by
-> git-branch) do not have to pass "0" but can use the default.  IOW, we can
-> have:
+Asaf wrote:
+> Hello,
 > 
-> 	const char *shorten_ref_unambiguous(const char *ref, int strict);
-> 	const char *shorten_ref(const char *ref)
->         {
->         	return shorten_ref_unambiguous(ref, warn_ambiguous_refs);
-> 	}
+> I'm creating many branches, checkout code, make changes, etc..
+> At the end, I always merge these branches to the master branch and delete
+> them when I finish,
 > 
-> and only specialized callers that really care use shorten_ref_unambiguous
-> (without Bert's [PATCH-RFC 3/2] we do not have any such specialized
-> caller, I think).
-
-I think that is a sensible approach; I also thought when reading Bert's
-patch that the parameter seemed like it would not be used in most
-situations.
-
-> But I am not sure how well prettify_ref() fits into this picture.  It is
-> called only from transport and is meant to deal with refs that exist on
-> the remote side, so ambiguity check against our local namespace would not
-> make much sense.  We could:
 > 
-> 	const char *shorten_ref_internal(const char *ref, int mode);
-> 	const char *shorten_ref(const char *ref)
->         {
-> 		unsigned mode = warn_ambiguous_refs ? SHORTEN_STRICT : 0;
->         	return shorten_ref_internal(ref, mode);
-> 	}
-> 	const char *prettify_ref(const char *ref)
->         {
->         	return shorten_ref_internal(ref, SHORTEN_PREFIX_ONLY);
->         }
+> At the point where my local master repo seems to be stable, I push the
+> changes to an origin repo that is public.
 > 
-> and have the SHORTEN_PREFIX_ONLY logic inherit from what the current
-> prettify_ref() does, but at that point it I do not think it makes sense
-> anymore.
+> 
+> I guess this is a standard cycle, right?
+> 
 
-There are three things wrong with prettify_ref:
+There are many standard cycles. This is one of them :)
 
-  1. It takes a ref struct instead of a string with a refname (but only
-     looks at ref->name). This is easily fixed.
+> 
+> What I'm confused about is how to tag correctly versions that are stable,
+> Should I locally just add a tag and push the tag to the public repo?
+> 
 
-  2. It does the same thing as shorten_ref_unambiguous, but without any
-     ambiguity check, so the names should be related. That is easily
-     changed, too, once we settle on the name (either it is shorten_ref
-     to the other's _unambiguous form, or the unambiguous one becomes
-     shorten_ref, and this becomes shorten_ref_remote or something).
+Yes.
 
-  3. It uses its own "skip these random things rules" instead of being
-     based on the usual ref lookup rules. I think this can be folded
-     into the unambiguous case by simply bailing on the first textual
-     match.  I don't know in practice if it matters that much.
+> 
+> Is it enough to use a lightweight tagging for tagging a certain commit as a
+> release?
 
--Peff
+That's up to you. I'd recommend against it, because the default update hooks
+disallow lightweight tags from being pushed.
+
+We use signed tags for all releases, so we know and can verify who tagged
+what. I guess it's a corporate thing to desire the capability of saying
+"It was *HIS* fault, not mine!", and signing a tag means you sign the tree
+as it is at sign-time with all the history leading up to it.
+
+> Is it possible later on to checkout a tag, make a change and push the change
+> into the tagged version?
+> 
+
+No. Consider published tags immutable in git, please. Imagine the confusion
+and headache you'd get from bug-reports if version 4.6.3 is not the same
+code everywhere. What you can and should do is to:
+* create a branch at the location of the old tag
+* make whatever changes are necessary
+* test as necessary
+* cut a new release with your changes
+
+At $dayjob, we have an update hook preventing tags without the "-beta$X"
+suffix from being pushed unless it points to an already tagged commit,
+so our workflow goes like this:
+1 hack hack hack
+2 beta-tag
+3 buildbot builds beta package and sends it off to qa
+4 qa responds with "ok to release"
+5 we stable-tag the exact same version we shipped to qa
+6 buildbot builds stable tag and copies it to "to-be-released" directory
+7 release-manager pushes the release-button once changelogs and stuff
+  are in place
+
+If qa says "hey, it's broken", we repeat steps 1-4 until we get "ok".
+If we accidentally tag something as stable while it's broken, we *can*
+go back and re-create the tag before step 7 is done. We've found out
+that it's usually more trouble than it's worth though, because there's
+always a small uncertainty that qa gets the new code on all his machines,
+and the bug we nearly released may not always show up on all platforms.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
