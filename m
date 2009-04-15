@@ -1,217 +1,77 @@
-From: Byron Bradley <byronb@picochip.com>
-Subject: [PATCH] git-cvsserver: use non-dashed git commands
-Date: Wed, 15 Apr 2009 12:21:07 +0100 (BST)
-Message-ID: <alpine.LRH.2.00.0904151218570.885@dunsop.picochip.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Performance issue: initial git clone causes massive repack
+Date: Wed, 15 Apr 2009 07:51:22 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0904150738340.6741@xanadu.home>
+References: <alpine.LFD.2.00.0904070903020.6741@xanadu.home>
+ <alpine.LFD.2.00.0904071321520.6741@xanadu.home>
+ <20090407181259.GB4413@atjola.homenet>
+ <alpine.LFD.2.00.0904071454250.6741@xanadu.home>
+ <20090407202725.GC4413@atjola.homenet>
+ <alpine.LFD.2.00.0904080041240.6741@xanadu.home>
+ <20090410T203405Z@curie.orbis-terrarum.net>
+ <alpine.DEB.1.00.0904141749330.10279@pacific.mpi-cbg.de>
+ <alpine.LFD.2.00.0904141542161.6741@xanadu.home>
+ <20090414T202206Z@curie.orbis-terrarum.net>
+ <fcaeb9bf0904142009w5a21e483v7e98f91e5e35b14a@mail.gmail.com>
+ <7vljq2zckw.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 15 13:38:25 2009
+Content-Transfer-Encoding: 7BIT
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 15 13:53:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lu3Rg-0000tf-HB
-	for gcvg-git-2@gmane.org; Wed, 15 Apr 2009 13:38:25 +0200
+	id 1Lu3fr-0005W3-Vl
+	for gcvg-git-2@gmane.org; Wed, 15 Apr 2009 13:53:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759711AbZDOLf6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Apr 2009 07:35:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759470AbZDOLf6
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Apr 2009 07:35:58 -0400
-Received: from mail2.picochip.com ([82.111.145.34]:43480 "EHLO
-	arun.picochip.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1759451AbZDOLf4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Apr 2009 07:35:56 -0400
-X-Greylist: delayed 936 seconds by postgrey-1.27 at vger.kernel.org; Wed, 15 Apr 2009 07:35:54 EDT
-Received: from dunsop.picochip.com (dunsop.picochip.com [172.17.1.250])
-	by arun.picochip.com (8.13.1/8.13.1) with ESMTP id n3FBKGEQ032545
-	for <git@vger.kernel.org>; Wed, 15 Apr 2009 12:20:16 +0100
-User-Agent: Alpine 2.00 (LRH 1167 2008-08-23)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (arun.picochip.com [172.17.0.30]); Wed, 15 Apr 2009 12:20:16 +0100 (BST)
-X-Virus-Scanned: ClamAV version 0.91.2, clamav-milter version 0.91.2 on arun.picochip.com
-X-Virus-Status: Clean
+	id S1752874AbZDOLva (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Apr 2009 07:51:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752682AbZDOLv3
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Apr 2009 07:51:29 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:21165 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751731AbZDOLv2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Apr 2009 07:51:28 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KI5007SX4XMCX10@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 15 Apr 2009 07:51:22 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7vljq2zckw.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116606>
+
+On Tue, 14 Apr 2009, Junio C Hamano wrote:
+
+> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+> 
+> > How can you do that? If I understand git protocol correctly, there is
+> > no difference between a fetch request and a clone one.
+> 
+> At the protocol level, you can tell a clone request by noticing that the
+> downloading side does not have any "have" lines, but it is a different
+> matter what the software does out of the box.
+> 
+> You can patch upload-pack to reject such requests.  I am sure gentoo folks
+> are capable of doing that ;-)
+> 
+> Also a rogue client can send a bogus "have" to fool that logic, and that
+> is the primary reason why we do not have such a patch to upload-pack.  It
+> is not worth it as a protection against determined people who want to DoS.
+
+Implementing a minimum treshold with merge-base to ensure that the 
+client has at least commit X should be easy to do.  Unfortunately we 
+don't have any hook for such a purpose yet.
 
 
-Signed-off-by: Byron Bradley <byronb@picochip.com>
----
- git-cvsserver.perl |   42 +++++++++++++++++++++---------------------
- 1 files changed, 21 insertions(+), 21 deletions(-)
-
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index ab6cea3..c320ee9 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -285,7 +285,7 @@ sub req_Root
-        return 0;
-     }
- 
--    my @gitvars = `git-config -l`;
-+    my @gitvars = `git config -l`;
-     if ($?) {
-        print "E problems executing git-config on the server -- this is not a git repository or the PATH is not set correctly.\n";
-         print "E \n";
-@@ -702,7 +702,7 @@ sub req_Modified
-     # Save the file data in $state
-     $state->{entries}{$state->{directory}.$data}{modified_filename} = $filename;
-     $state->{entries}{$state->{directory}.$data}{modified_mode} = $mode;
--    $state->{entries}{$state->{directory}.$data}{modified_hash} = `git-hash-object $filename`;
-+    $state->{entries}{$state->{directory}.$data}{modified_hash} = `git hash-object $filename`;
-     $state->{entries}{$state->{directory}.$data}{modified_hash} =~ s/\s.*$//s;
- 
-     #$log->debug("req_Modified : file=$data mode=$mode size=$size");
-@@ -1289,7 +1289,7 @@ sub req_ci
- 
- 	# do a checkout of the file if it is part of this tree
-         if ($wrev) {
--            system('git-checkout-index', '-f', '-u', $filename);
-+            system('git', 'checkout-index', '-f', '-u', $filename);
-             unless ($? == 0) {
-                 die "Error running git-checkout-index -f -u $filename : $!";
-             }
-@@ -1331,15 +1331,15 @@ sub req_ci
-         {
-             $log->info("Removing file '$filename'");
-             unlink($filename);
--            system("git-update-index", "--remove", $filename);
-+            system("git", "update-index", "--remove", $filename);
-         }
-         elsif ( $addflag )
-         {
-             $log->info("Adding file '$filename'");
--            system("git-update-index", "--add", $filename);
-+            system("git", "update-index", "--add", $filename);
-         } else {
-             $log->info("Updating file '$filename'");
--            system("git-update-index", $filename);
-+            system("git", "update-index", $filename);
-         }
-     }
- 
-@@ -1351,7 +1351,7 @@ sub req_ci
-         return;
-     }
- 
--    my $treehash = `git-write-tree`;
-+    my $treehash = `git write-tree`;
-     chomp $treehash;
- 
-     $log->debug("Treehash : $treehash, Parenthash : $parenthash");
-@@ -1368,7 +1368,7 @@ sub req_ci
-     }
-     close $msg_fh;
- 
--    my $commithash = `git-commit-tree $treehash -p $parenthash < $msg_filename`;
-+    my $commithash = `git commit-tree $treehash -p $parenthash < $msg_filename`;
-     chomp($commithash);
-     $log->info("Commit hash : $commithash");
- 
-@@ -1821,7 +1821,7 @@ sub req_annotate
- 	# TODO: if we got a revision from the client, use that instead
- 	# to look up the commithash in sqlite (still good to default to
- 	# the current head as we do now)
--	system("git-read-tree", $lastseenin);
-+	system("git", "read-tree", $lastseenin);
- 	unless ($? == 0)
- 	{
- 	    print "E error running git-read-tree $lastseenin $ENV{GIT_INDEX_FILE} $!\n";
-@@ -1830,7 +1830,7 @@ sub req_annotate
- 	$log->info("Created index '$ENV{GIT_INDEX_FILE}' with commit $lastseenin - exit status $?");
- 
-         # do a checkout of the file
--        system('git-checkout-index', '-f', '-u', $filename);
-+        system('git', 'checkout-index', '-f', '-u', $filename);
-         unless ($? == 0) {
-             print "E error running git-checkout-index -f -u $filename : $!\n";
-             return;
-@@ -1861,7 +1861,7 @@ sub req_annotate
-         close ANNOTATEHINTS
-             or (print "E failed to write $a_hints: $!\n"), return;
- 
--        my @cmd = (qw(git-annotate -l -S), $a_hints, $filename);
-+        my @cmd = (qw(git annotate -l -S), $a_hints, $filename);
-         if (!open(ANNOTATE, "-|", @cmd)) {
-             print "E error invoking ". join(' ',@cmd) .": $!\n";
-             return;
-@@ -2078,17 +2078,17 @@ sub transmitfile
- 
-     die "Need filehash" unless ( defined ( $filehash ) and $filehash =~ /^[a-zA-Z0-9]{40}$/ );
- 
--    my $type = `git-cat-file -t $filehash`;
-+    my $type = `git cat-file -t $filehash`;
-     chomp $type;
- 
-     die ( "Invalid type '$type' (expected 'blob')" ) unless ( defined ( $type ) and $type eq "blob" );
- 
--    my $size = `git-cat-file -s $filehash`;
-+    my $size = `git cat-file -s $filehash`;
-     chomp $size;
- 
-     $log->debug("transmitfile($filehash) size=$size, type=$type");
- 
--    if ( open my $fh, '-|', "git-cat-file", "blob", $filehash )
-+    if ( open my $fh, '-|', "git", "cat-file", "blob", $filehash )
-     {
-         if ( defined ( $options->{targetfile} ) )
-         {
-@@ -2935,7 +2935,7 @@ sub update
-         push @git_log_params, $self->{module};
-     }
-     # git-rev-list is the backend / plumbing version of git-log
--    open(GITLOG, '-|', 'git-rev-list', @git_log_params) or die "Cannot call git-rev-list: $!";
-+    open(GITLOG, '-|', 'git', 'rev-list', @git_log_params) or die "Cannot call git rev-list: $!";
- 
-     my @commits;
- 
-@@ -3021,7 +3021,7 @@ sub update
-                         next;
-                     }
- 		    my $base = eval {
--			    safe_pipe_capture('git-merge-base',
-+			    safe_pipe_capture('git', 'merge-base',
- 						 $lastpicked, $parent);
- 		    };
- 		    # The two branches may not be related at all,
-@@ -3033,8 +3033,8 @@ sub update
-                     if ($base) {
-                         my @merged;
-                         # print "want to log between  $base $parent \n";
--                        open(GITLOG, '-|', 'git-log', '--pretty=medium', "$base..$parent")
--			  or die "Cannot call git-log: $!";
-+                        open(GITLOG, '-|', 'git', 'log', '--pretty=medium', "$base..$parent")
-+			  or die "Cannot call git log: $!";
-                         my $mergedhash;
-                         while (<GITLOG>) {
-                             chomp;
-@@ -3075,7 +3075,7 @@ sub update
- 
-         if ( defined ( $lastpicked ) )
-         {
--            my $filepipe = open(FILELIST, '-|', 'git-diff-tree', '-z', '-r', $lastpicked, $commit->{hash}) or die("Cannot call git-diff-tree : $!");
-+            my $filepipe = open(FILELIST, '-|', 'git', 'diff-tree', '-z', '-r', $lastpicked, $commit->{hash}) or die("Cannot call git diff-tree : $!");
- 	    local ($/) = "\0";
-             while ( <FILELIST> )
-             {
-@@ -3149,7 +3149,7 @@ sub update
-             # this is used to detect files removed from the repo
-             my $seen_files = {};
- 
--            my $filepipe = open(FILELIST, '-|', 'git-ls-tree', '-z', '-r', $commit->{hash}) or die("Cannot call git-ls-tree : $!");
-+            my $filepipe = open(FILELIST, '-|', 'git', 'ls-tree', '-z', '-r', $commit->{hash}) or die("Cannot call git ls-tree : $!");
- 	    local $/ = "\0";
-             while ( <FILELIST> )
-             {
-@@ -3451,7 +3451,7 @@ sub commitmessage
-         return $message;
-     }
- 
--    my @lines = safe_pipe_capture("git-cat-file", "commit", $commithash);
-+    my @lines = safe_pipe_capture("git", "cat-file", "commit", $commithash);
-     shift @lines while ( $lines[0] =~ /\S/ );
-     $message = join("",@lines);
-     $message .= " " if ( $message =~ /\n$/ );
--- 
-1.6.3.rc0.2.g8152.dirty
+Nicolas
