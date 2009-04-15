@@ -1,82 +1,65 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: GPG signing for git commit?
-Date: Wed, 15 Apr 2009 15:29:14 -0700
-Message-ID: <20090415T220710Z@curie.orbis-terrarum.net>
-References: <1238793954.19982.14.camel@hyperair-laptop> <alpine.LFD.2.00.0904031535140.3915@localhost.localdomain> <49D99BB2.2090906@vilain.net> <20090415185554.GG23644@curie-int> <20090415192054.GE23604@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH] git add -p: new "quit" command at the prompt.
+Date: Wed, 15 Apr 2009 16:25:55 -0700
+Message-ID: <7v7i1lqz24.fsf@gitster.siamese.dyndns.org>
+References: <1239375421-2556-1-git-send-email-Matthieu.Moy@imag.fr>
+ <7vws9rdmgd.fsf@gitster.siamese.dyndns.org> <vpqfxgevy58.fsf@bauges.imag.fr>
+ <vpqtz4rynhp.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="jPcKFu7Fa0A6HrUo"
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 16 00:31:17 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Thu Apr 16 01:27:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LuDdN-0007l8-BA
-	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 00:31:09 +0200
+	id 1LuEW2-00058R-EC
+	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 01:27:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753917AbZDOW3V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Apr 2009 18:29:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753663AbZDOW3V
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Apr 2009 18:29:21 -0400
-Received: from b01.ext.isohunt.com ([208.71.112.51]:34219 "EHLO
-	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752336AbZDOW3U (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Apr 2009 18:29:20 -0400
-Received: (qmail 24787 invoked from network); 15 Apr 2009 22:29:17 -0000
-Received: from tsi-static.orbis-terrarum.net (HELO curie.orbis-terrarum.net) (76.10.188.108)
-  (smtp-auth username robbat2@isohunt.com, mechanism login)
-  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Wed, 15 Apr 2009 22:29:17 +0000
-Received: (qmail 3667 invoked by uid 10000); 15 Apr 2009 15:29:14 -0700
-Content-Disposition: inline
-In-Reply-To: <20090415192054.GE23604@spearce.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1752552AbZDOX0F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Apr 2009 19:26:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752295AbZDOX0E
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Apr 2009 19:26:04 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38411 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751645AbZDOX0D (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Apr 2009 19:26:03 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DA43DAA551;
+	Wed, 15 Apr 2009 19:26:01 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 7D1F2AA54B; Wed,
+ 15 Apr 2009 19:25:57 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: C877EB88-2A14-11DE-A645-C121C5FC92D5-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116656>
 
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
---jPcKFu7Fa0A6HrUo
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I think everybody agree that the intention of the patch is good (well,
+> several pro, and no real counter-argument).
 
-On Wed, Apr 15, 2009 at 12:20:54PM -0700, Shawn O. Pearce wrote:
-> > Not sure of the best route to trace this data. Signing the SHA1 makes
-> > the most sense, but need to be able to do that without polluting the tag
-> > namespace.
-> Have the PM push over SSH, and don't ever expire reflogs on the
-> central repository?  The reflog will have the old and new commits
-> and the user name of the PM.
-All pushing to the central repo will be git+ssh:// anyway.
+Oh, I think we have already passed that state long time ago.  It's queued
+as c9cc8d9 ([NEEDS SIGN OFF, DOC, AND REVIEW] git add -p: new "quit"
+command at the prompt., 2009-04-10) in 'pu'.
 
-I don't follow where the PM's identity is being stored, and how that's
-distributed back out with the later pulls.
+I agree that there is a "Huh?" factor in the repeated and similar hunks to
+patch_update_file, but the first hunk is dealing with the mode change and
+the second one is about the patch text.
 
-The other downside to relying on SSH presentation of identity directly,
-is the inability to use the SSH key to uniquely identify the user during
-the SSH auth (see designs like gitosis, where you always push to
-git+ssh://git@host/repo).
+Currently parse_diff_header() returns the mode line into $mode and the
+main loop treats $mode differently from @hunk, which is an array of hunks
+parsed by parse_diff().  Treating $mode as a "fake hunk" by unshifting it
+at the beginning of @hunk array and teaching the main loop minor details
+such as $mode "fake hunk" cannot be edited nor split, I suspect we _could_
+unify the two.
 
---=20
-Robin Hugh Johnson
-Gentoo Linux Developer & Infra Guy
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
-
---jPcKFu7Fa0A6HrUo
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.10 (GNU/Linux)
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
-
-iEYEARECAAYFAknmX7oACgkQPpIsIjIzwiz6EwCff/YwJzoA1HPSG8w9EXtW4fxB
-miMAoPzHqrj9+SAUJtPNitNxtJvZqZyZ
-=qUEX
------END PGP SIGNATURE-----
-
---jPcKFu7Fa0A6HrUo--
+ca72468 (add--interactive: allow user to choose mode update, 2008-03-27)
+introduced this duplication.  Jeff, what do you think?  I am not sure if
+it is worth it.
