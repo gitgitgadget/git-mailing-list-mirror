@@ -1,70 +1,93 @@
-From: Li Feng <nemokingdom@gmail.com>
-Subject: RA layer request failed while git-svn fetch
-Date: Wed, 15 Apr 2009 11:31:02 +0800
-Message-ID: <f18356030904142031n2db32fcyc035a87b6797fee5@mail.gmail.com>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Re: Performance issue: initial git clone causes massive repack
+Date: Tue, 14 Apr 2009 22:53:17 -0700
+Message-ID: <20090415T044931Z@curie.orbis-terrarum.net>
+References: <alpine.LFD.2.00.0904071321520.6741@xanadu.home> <20090407181259.GB4413@atjola.homenet> <alpine.LFD.2.00.0904071454250.6741@xanadu.home> <20090407202725.GC4413@atjola.homenet> <alpine.LFD.2.00.0904080041240.6741@xanadu.home> <20090410T203405Z@curie.orbis-terrarum.net> <alpine.DEB.1.00.0904141749330.10279@pacific.mpi-cbg.de> <alpine.LFD.2.00.0904141542161.6741@xanadu.home> <20090414T202206Z@curie.orbis-terrarum.net> <fcaeb9bf0904142009w5a21e483v7e98f91e5e35b14a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 15 05:32:41 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="jIHsHaVgx5AQzhyz"
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 15 07:55:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ltvrd-0002n4-0e
-	for gcvg-git-2@gmane.org; Wed, 15 Apr 2009 05:32:41 +0200
+	id 1Lty5L-0003Xu-KN
+	for gcvg-git-2@gmane.org; Wed, 15 Apr 2009 07:55:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752530AbZDODbH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Apr 2009 23:31:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752828AbZDODbG
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Apr 2009 23:31:06 -0400
-Received: from ti-out-0910.google.com ([209.85.142.190]:16694 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752375AbZDODbE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Apr 2009 23:31:04 -0400
-Received: by ti-out-0910.google.com with SMTP id 11so417562tim.23
-        for <git@vger.kernel.org>; Tue, 14 Apr 2009 20:31:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=fMskVbKZxoE3xYXwMjoVIc4KLQJM7UIwARk4Nco6iRc=;
-        b=LeB3wsj/OfvqrWkdNp9QmzP89niSddSK+ddUGrD7wu2vD8V87BC/nqm4shmRV8PuUb
-         yoRNiN5eg7Zeg1UVXTwM1u/wNxykpzugn6LBoOeEwg4RxToVXFzYu3keSMAdTGOyZnt5
-         2IL+yoWCI/eQNReWIn37hrsbhkVI3NkNkzLSI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=KrzSrTueFKu3iNUQBMWxK0W/QEfk2+hTexF5RxMis12PmKMptdwV2DC9UgSNYNjsqy
-         HK/ZD5PA+fbuV9Ch6FO+//ADVE6Sn8mEXM0OuQNI3WOYo55O/zfaZLB9p5YZH1qk3hGy
-         R4p0Jfw4Fl47heNxHFI0xnKD5exXzztJd6858=
-Received: by 10.110.62.4 with SMTP id k4mr5053891tia.11.1239766262617; Tue, 14 
-	Apr 2009 20:31:02 -0700 (PDT)
+	id S1753549AbZDOFxY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Apr 2009 01:53:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753221AbZDOFxY
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Apr 2009 01:53:24 -0400
+Received: from b01.ext.isohunt.com ([208.71.112.51]:53771 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752201AbZDOFxY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Apr 2009 01:53:24 -0400
+Received: (qmail 31540 invoked from network); 15 Apr 2009 05:53:21 -0000
+Received: from tsi-static.orbis-terrarum.net (HELO curie.orbis-terrarum.net) (76.10.188.108)
+  (smtp-auth username robbat2@isohunt.com, mechanism login)
+  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Wed, 15 Apr 2009 05:53:21 +0000
+Received: (qmail 22842 invoked by uid 10000); 14 Apr 2009 22:53:17 -0700
+Content-Disposition: inline
+In-Reply-To: <fcaeb9bf0904142009w5a21e483v7e98f91e5e35b14a@mail.gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116588>
 
-Hi,
 
-I don't know if this is a proper place for asking this
-question, let me know if it's not.
+--jIHsHaVgx5AQzhyz
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I use git svn to sync with the subversion repos:
+On Wed, Apr 15, 2009 at 01:09:43PM +1000, Nguyen Thai Ngoc Duy wrote:
+> On Wed, Apr 15, 2009 at 6:27 AM, Robin H. Johnson <robbat2@gentoo.org> wr=
+ote:
+> > So, from the Gentoo side right now, we're looking at this:
+> > 1. Setup git-bundle for initial downloads.
+> > 2. Disallow initial clones over git:// (allow updates ONLY)
+> How can you do that? If I understand git protocol correctly, there is
+> no difference between a fetch request and a clone one.
+I'm planning on adding a new hook, in upload-pack.
+Inputs: want_obj, have_obj
 
-$ mkdir prj && cd prj
-$ git svn init http://url/to/repos/branches/experimental
-$ git svn fetch
+Not sure of the best way to pass them yet, probably stdin, 'want ....',
+'have ....'.
 
-and got the error message:
+Probably best to run right before git-rev-list.
 
-RA layer request failed: OPTIONS of 'http://url/to/repos/branches/experimental':
-Could not read status line: connection was closed by proxy server
-(http://url/to/repos) at /usr/bin/git-svn line 1352
+For the Gentoo-specific content of the hook, I'm after this design:
+- you don't send ANY have =3D> you get the error
+- you have is too old =3D> you get the error
+- you ask for something non-existent =3D> you get the error
 
-Why and how can I fix this?
+The error will be a message instructing you to use the bundle, and
+pointing to a URL with detailed instructions.
 
-Thanks,
-Li Feng
+The 'too old' case is to able better DoS prevention, stopping somebody
+malicious from finding the first commit in the bundle, and pretending
+they have it, asking for a pack from that to the HEAD.
+
+--=20
+Robin Hugh Johnson
+Gentoo Linux Developer & Infra Guy
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+
+--jIHsHaVgx5AQzhyz
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.10 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+
+iEYEARECAAYFAknldk0ACgkQPpIsIjIzwiweWACg7X90o0ghVJ0EQx3xFqM1nHCb
+Cz4AnidYxHzA95IBwhV+Ewx5DN0eNN7z
+=LQds
+-----END PGP SIGNATURE-----
+
+--jIHsHaVgx5AQzhyz--
