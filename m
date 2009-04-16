@@ -1,71 +1,72 @@
-From: Lucas Sandery <lucas@wallcann.com>
-Subject: Re: releasing your work
-Date: Thu, 16 Apr 2009 17:10:40 +0930
-Message-ID: <49E6E0F8.4050506@wallcann.com>
-References: <49E6B9E3.30707@wallcann.com> <20090416064602.GA3668@lars.home.noschinski.de>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: renaming remote branches
+Date: Thu, 16 Apr 2009 17:00:39 +0900
+Message-ID: <buoab6h2fko.fsf@dhlpc061.dev.necel.com>
+References: <buo3ac9jn18.fsf@dhlpc061.dev.necel.com>
+	<20090416065934.GA20071@coredump.intra.peff.net>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 16 09:42:23 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 16 10:02:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LuMEl-0007fx-Oo
-	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 09:42:20 +0200
+	id 1LuMYD-0004wR-08
+	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 10:02:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752808AbZDPHkq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Apr 2009 03:40:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752661AbZDPHkq
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Apr 2009 03:40:46 -0400
-Received: from carbon.wallcanndns.com ([202.174.106.50]:60543 "EHLO
-	host.carbon.wallcanndns.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752648AbZDPHkp (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Apr 2009 03:40:45 -0400
-Received: from 219-90-196-119.static.adam.com.au ([219.90.196.119] helo=[192.168.1.102])
-	by host.carbon.wallcanndns.com with esmtpa (Exim 4.69)
-	(envelope-from <lucas@wallcann.com>)
-	id 1LuM6l-0006xs-OQ
-	for git@vger.kernel.org; Thu, 16 Apr 2009 17:34:03 +1000
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <20090416064602.GA3668@lars.home.noschinski.de>
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - host.carbon.wallcanndns.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - wallcann.com
+	id S1751661AbZDPIAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Apr 2009 04:00:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751137AbZDPIAu
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Apr 2009 04:00:50 -0400
+Received: from TYO202.gate.nec.co.jp ([202.32.8.206]:62601 "EHLO
+	tyo202.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751123AbZDPIAt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Apr 2009 04:00:49 -0400
+Received: from relay31.aps.necel.com ([10.29.19.54])
+	by tyo202.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id n3G80b24002272;
+	Thu, 16 Apr 2009 17:00:39 +0900 (JST)
+Received: from relay31.aps.necel.com ([10.29.19.20] [10.29.19.20]) by relay31.aps.necel.com with ESMTP; Thu, 16 Apr 2009 17:00:39 +0900
+Received: from dhlpc061 ([10.114.114.58] [10.114.114.58]) by relay31.aps.necel.com with ESMTP; Thu, 16 Apr 2009 17:00:39 +0900
+Received: by dhlpc061 (Postfix, from userid 31295)
+	id B93AE52E277; Thu, 16 Apr 2009 17:00:39 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
+In-Reply-To: <20090416065934.GA20071@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 16 Apr 2009 02:59:34 -0400")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116681>
 
+Jeff King <peff@peff.net> writes:
+> In your situation, I would probably do:
+>   ssh remote-host 'cd remote-dir && git branch -m OLD NEW'
+> but that is not always an option, depending on your setup.
 
-Lars Noschinski wrote:
-> * Lucas Sandery [09-04-16 06:53]:
->   
->> How do I make a "release" a copy (not a clone) of the repository that contains 
->> only tracked files without .gitignore files? I am using git archive but the 
->> resulting zip file still contains .gitignore files.
->>     
-> Have a look at the git-archive man page. You can exclude such files by
-> adding the export-ignore attribute to gitattributes.
->   
-Thanks Lars,
+Yup, don't have real ssh access.
 
-For anyone else out there with the same problem...
+>> Also, I note that the old name ("OLD") remains in .git/info/refs, both
+>> locally and in the remote; is this a problem?  I can update the local
+>> .git/info/refs by running "git update-server-info", but I'm not sure how
+>> to do in for the remote repo without having a login there...
+>
+> If you are not sharing your repo over a dumb transport (like http), then
+> the contents of .git/info/refs shouldn't matter. If you are, then you
+> should enable the post-update hook to run update-server-info after every
+> push (i.e., it is not just the deletion that is a problem, but none of
+> your pushes is being marked in .git/info/refs).
 
-I made a .gitattributes file and it contains only 2 lines:
-.gitignore export-ignore
-.gitattributes export-ignore
+Hmmm, there's no way to update the hooks without shell access, right...?
 
-I make my release with:
-git archive --format=zip -9 master > ../release.zip
-(after right-clicking on my repos root folder and selecting "git bash", 
-i'm on a windoze machine at work)
-the "../" puts the archive next to the repository folder not in it
-e.g. for
-c:\path\to\repos\
-i get
-c:\path\to\release.zip
+[lots of stuff seems undoable without shell access, i.e., changing
+.git/descriptions; it'd be nice if there was at least some way to frob
+all this stuff ...]
+
+-Miles
+
+-- 
+Accordion, n. An instrument in harmony with the sentiments of an assassin.
