@@ -1,63 +1,73 @@
-From: Ben Jackson <ben@ben.com>
-Subject: Re: integrating make and git
-Date: Thu, 16 Apr 2009 03:50:20 +0000 (UTC)
-Message-ID: <loom.20090416T034427-809@post.gmane.org>
-References: <3a69fa7c0904150819x7598dea5ic43bf0991c35ae45@mail.gmail.com>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Re: Git within Git what a git
+Date: Wed, 15 Apr 2009 21:40:25 -0700
+Message-ID: <20090416T043951Z@curie.orbis-terrarum.net>
+References: <23070273.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 16 06:01:43 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="XlarKorwDmMoGA5O"
+To: elkten <elkton.gen@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 16 06:42:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LuInF-0003lU-GH
-	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 06:01:42 +0200
+	id 1LuJQM-0002y2-L4
+	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 06:42:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750771AbZDPEAJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Apr 2009 00:00:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750740AbZDPEAI
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Apr 2009 00:00:08 -0400
-Received: from main.gmane.org ([80.91.229.2]:34965 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750738AbZDPEAH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Apr 2009 00:00:07 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1LuIle-0001ga-EK
-	for git@vger.kernel.org; Thu, 16 Apr 2009 04:00:02 +0000
-Received: from kronos.home.ben.com ([71.117.242.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 16 Apr 2009 04:00:02 +0000
-Received: from ben by kronos.home.ben.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 16 Apr 2009 04:00:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 71.117.242.19 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.8) Gecko/2009032609 Firefox/3.0.8)
+	id S1751119AbZDPEkd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Apr 2009 00:40:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751085AbZDPEkd
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Apr 2009 00:40:33 -0400
+Received: from b01.ext.isohunt.com ([208.71.112.51]:54372 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750959AbZDPEkc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Apr 2009 00:40:32 -0400
+Received: (qmail 21454 invoked from network); 16 Apr 2009 04:40:27 -0000
+Received: from tsi-static.orbis-terrarum.net (HELO curie.orbis-terrarum.net) (76.10.188.108)
+  (smtp-auth username robbat2@isohunt.com, mechanism login)
+  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Thu, 16 Apr 2009 04:40:27 +0000
+Received: (qmail 29657 invoked by uid 10000); 15 Apr 2009 21:40:25 -0700
+Content-Disposition: inline
+In-Reply-To: <23070273.post@talk.nabble.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116667>
 
-E R <pc88mxer <at> gmail.com> writes:
 
-> Now suppose that making 'lib1' only depends on the source code in a
-> certain directory. The idea is to associate the hash of the source
-> directory for lib1 with its the derived files. Make can check this to
-> determine if the component really needs to be rebuilt.
+--XlarKorwDmMoGA5O
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-ClearCase has "wink-ins" which are very much like this.  It knows that a given
-object was produced from a certain set of sources with a particular command. 
-When someone wants to recreate that object (not even necessarily the original
-builder) it can "wink in" the result.  Typically a brand new "view" (a ClearCase
-working directory) build will consist of winking in a ton of objects rather than
-building anything.  I'm not sure how much of this is due to cleverness in
-clearmake and how much is due to the view being implemented as a virtual
-filesystem (which can see every repository file being read as part of a build).
+On Wed, Apr 15, 2009 at 08:11:18PM -0700, elkten wrote:
+> Before I go hacking the git source code, I would like git to be able to
+> manage git trees in git trees, however I would like to check it can't
+> already be done, let me give an example...
+Go and read the docs, the feature exists already, it's called
+submodules.
 
---Ben
+--=20
+Robin Hugh Johnson
+Gentoo Linux Developer & Infra Guy
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+
+--XlarKorwDmMoGA5O
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.10 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+
+iEYEARECAAYFAknmtrkACgkQPpIsIjIzwizNYwCdGei2yF8is4sZwzU9V/4Fm+K7
+Vs4An1+z58H7Uwrwb2TGC2f3tr6IO02m
+=lzsq
+-----END PGP SIGNATURE-----
+
+--XlarKorwDmMoGA5O--
