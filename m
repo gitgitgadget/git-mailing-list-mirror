@@ -1,91 +1,80 @@
-From: elkten <elkton.gen@gmail.com>
-Subject: Git within Git what a git
-Date: Wed, 15 Apr 2009 19:10:21 -0700 (PDT)
-Message-ID: <23070273.post@talk.nabble.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/5] archive attribute series
+Date: Wed, 15 Apr 2009 19:28:32 -0700
+Message-ID: <1239848917-14399-1-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 16 04:12:01 2009
+X-From: git-owner@vger.kernel.org Thu Apr 16 04:30:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LuH55-0005kw-EP
-	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 04:11:59 +0200
+	id 1LuHMi-0000cC-8Q
+	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 04:30:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753757AbZDPCKY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Apr 2009 22:10:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752803AbZDPCKX
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Apr 2009 22:10:23 -0400
-Received: from kuber.nabble.com ([216.139.236.158]:47467 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753301AbZDPCKW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Apr 2009 22:10:22 -0400
-Received: from isper.nabble.com ([192.168.236.156])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists@nabble.com>)
-	id 1LuH3V-0007PD-KE
-	for git@vger.kernel.org; Wed, 15 Apr 2009 19:10:21 -0700
-X-Nabble-From: elkton.gen@gmail.com
+	id S1752281AbZDPC2m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Apr 2009 22:28:42 -0400
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751579AbZDPC2m
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Apr 2009 22:28:42 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49795 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751830AbZDPC2l (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Apr 2009 22:28:41 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 87638F2E0
+	for <git@vger.kernel.org>; Wed, 15 Apr 2009 22:28:39 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2481DF2DF for
+ <git@vger.kernel.org>; Wed, 15 Apr 2009 22:28:39 -0400 (EDT)
+X-Mailer: git-send-email 1.6.3.rc0.6.g08087
+X-Pobox-Relay-ID: 4BC031D0-2A2E-11DE-BB9B-DC76898A30C1-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116659>
 
+Here is my attempt to consolidate the fix-ups on Duy's git-archive
+enhancements.
 
-Hi All,
+I haven't decided if this should go to 1.6.3; it is a sensible change b=
+ut
+it *is* a change in behaviour that could be seen as incompatible.
 
-Before I go hacking the git source code, I would like git to be able to
-manage git trees in git trees, however I would like to check it can't
-already be done, let me give an example...
+Junio C Hamano (1):
+  unpack-trees: do not muck with attributes when we are not checking
+    out
 
-Imagine a directory structure thus...
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (2):
+  attr: add GIT_ATTR_INDEX "direction"
+  archive: do not read .gitattributes in working directory
 
-fedora12-rc3/
-|-- .git
-|-- init
-|   `-- .git
-|-- kernel
-|   `-- .git
-`-- libpng
-    `-- .git
+Ren=C3=A9 Scharfe (2):
+  archive tests: do not use .gitattributes in working directory
+  archive test: test new --fix-attributes feature
 
-fedora12-rc3 is the attempt at a fedor12-rc3 build, inside are the packages
-for init, the kernel and libpng, each of these init, kernel and libpng have
-their own branches which correspond to their respective versions.
-
-Inside the fedora12-rc3 directory is also many branches called fedora12-rc2,
-fedora12-rc1 etc...
-
-I would like to be able to "git checkout fedora12-rc1", and it to
-automatically checkout the corresponding versions relating to fedora12-rc1,
-into init, kernel and libpng.
-
-When I make a new branch in say "init" and check in the changes, when I go
-to the fedora12-rc1 branch I would like then to type git commit, and it
-record the version change within the init branch, thus when I go to check
-out the rc1 branch again I get all my changes.
-
-If I switched branches and there were uncommitted changes in "kernel" it
-would warn me and ask me if I wanted to continue.
-
-There are various different merge options that would be nice to, say fred
-was working on fedora12-rc2-fred and bob was working on fedroa12-rc2-bob,
-and I wanted to merge the two together (and we had made changes to the same
-packages) this would all be done for me.
-
-I can understand this might be possible with some scripting, on git hooks,
-however this would seem a neat feature for git to support itself, does
-anybody have any scripts to do this?
-
-Do other people think this would be a useful feature?
-
-elk
-
-
-
--- 
-View this message in context: http://www.nabble.com/Git-within-Git-what-a-git-tp23070273p23070273.html
-Sent from the git mailing list archive at Nabble.com.
+ Documentation/git-archive.txt |    5 ++-
+ archive.c                     |   22 ++++++++++++++
+ archive.h                     |    1 +
+ attr.c                        |   12 ++++++--
+ attr.h                        |    3 +-
+ builtin-tar-tree.c            |    8 +++++
+ t/t5000-tar-tree.sh           |    9 +++--
+ t/t5001-archive-attr.sh       |   62 +++++++++++++++++++++++++++++++++=
+++++++++
+ unpack-trees.c                |    6 ++-
+ 9 files changed, 117 insertions(+), 11 deletions(-)
+ create mode 100755 t/t5001-archive-attr.sh
