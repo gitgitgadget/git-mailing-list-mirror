@@ -1,80 +1,127 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/5] archive attribute series
-Date: Wed, 15 Apr 2009 19:28:32 -0700
-Message-ID: <1239848917-14399-1-git-send-email-gitster@pobox.com>
+Subject: [PATCH 5/5] archive test: test new --fix-attributes feature
+Date: Wed, 15 Apr 2009 19:28:37 -0700
+Message-ID: <1239848917-14399-6-git-send-email-gitster@pobox.com>
+References: <1239848917-14399-1-git-send-email-gitster@pobox.com>
+ <1239848917-14399-2-git-send-email-gitster@pobox.com>
+ <1239848917-14399-3-git-send-email-gitster@pobox.com>
+ <1239848917-14399-4-git-send-email-gitster@pobox.com>
+ <1239848917-14399-5-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <rene.scharfe@lsrfire.ath.cx>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 16 04:30:16 2009
+X-From: git-owner@vger.kernel.org Thu Apr 16 04:31:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LuHMi-0000cC-8Q
-	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 04:30:12 +0200
+	id 1LuHNg-0000r0-AF
+	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 04:31:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752281AbZDPC2m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Apr 2009 22:28:42 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751579AbZDPC2m
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Apr 2009 22:28:42 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49795 "EHLO
+	id S1757585AbZDPC3A convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Apr 2009 22:29:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756479AbZDPC3A
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Apr 2009 22:29:00 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:62691 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751830AbZDPC2l (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Apr 2009 22:28:41 -0400
+	with ESMTP id S1757034AbZDPC26 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Apr 2009 22:28:58 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 87638F2E0
-	for <git@vger.kernel.org>; Wed, 15 Apr 2009 22:28:39 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E9BACAA3C4;
+	Wed, 15 Apr 2009 22:28:57 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2481DF2DF for
- <git@vger.kernel.org>; Wed, 15 Apr 2009 22:28:39 -0400 (EDT)
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E81D6AA3C3; Wed,
+ 15 Apr 2009 22:28:55 -0400 (EDT)
 X-Mailer: git-send-email 1.6.3.rc0.6.g08087
-X-Pobox-Relay-ID: 4BC031D0-2A2E-11DE-BB9B-DC76898A30C1-77302942!a-sasl-quonix.pobox.com
+In-Reply-To: <1239848917-14399-5-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 56B65AA6-2A2E-11DE-9A41-C121C5FC92D5-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116660>
 
-Here is my attempt to consolidate the fix-ups on Duy's git-archive
-enhancements.
+=46rom: Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx>
 
-I haven't decided if this should go to 1.6.3; it is a sensible change b=
-ut
-it *is* a change in behaviour that could be seen as incompatible.
-
-Junio C Hamano (1):
-  unpack-trees: do not muck with attributes when we are not checking
-    out
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (2):
-  attr: add GIT_ATTR_INDEX "direction"
-  archive: do not read .gitattributes in working directory
-
-Ren=C3=A9 Scharfe (2):
-  archive tests: do not use .gitattributes in working directory
-  archive test: test new --fix-attributes feature
-
- Documentation/git-archive.txt |    5 ++-
- archive.c                     |   22 ++++++++++++++
- archive.h                     |    1 +
- attr.c                        |   12 ++++++--
- attr.h                        |    3 +-
- builtin-tar-tree.c            |    8 +++++
- t/t5000-tar-tree.sh           |    9 +++--
- t/t5001-archive-attr.sh       |   62 +++++++++++++++++++++++++++++++++=
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t5001-archive-attr.sh |   62 +++++++++++++++++++++++++++++++++++++++=
 ++++++++
- unpack-trees.c                |    6 ++-
- 9 files changed, 117 insertions(+), 11 deletions(-)
+ 1 files changed, 62 insertions(+), 0 deletions(-)
  create mode 100755 t/t5001-archive-attr.sh
+
+diff --git a/t/t5001-archive-attr.sh b/t/t5001-archive-attr.sh
+new file mode 100755
+index 0000000..b754f21
+--- /dev/null
++++ b/t/t5001-archive-attr.sh
+@@ -0,0 +1,62 @@
++#!/bin/sh
++
++test_description=3D'git archive attribute tests'
++
++. ./test-lib.sh
++
++SUBSTFORMAT=3D%H%n
++
++test_expect_success 'setup' '
++	echo ignored >ignored &&
++	echo ignored export-ignore >>.git/info/attributes &&
++	git add ignored &&
++
++	echo ignored by tree >ignored-by-tree &&
++	echo ignored-by-tree export-ignore >.gitattributes &&
++	git add ignored-by-tree .gitattributes &&
++
++	echo ignored by worktree >ignored-by-worktree &&
++	echo ignored-by-worktree export-ignore >.gitattributes &&
++	git add ignored-by-worktree &&
++
++	printf "A\$Format:%s\$O" "$SUBSTFORMAT" >nosubstfile &&
++	printf "A\$Format:%s\$O" "$SUBSTFORMAT" >substfile1 &&
++	printf "A not substituted O" >substfile2 &&
++	echo "substfile?" export-subst >>.git/info/attributes &&
++	git add nosubstfile substfile1 substfile2 &&
++
++	git commit -m.
++'
++
++test_expect_success 'git archive' '
++	git archive HEAD >archive.tar &&
++	(mkdir archive && cd archive && "$TAR" xf -) <archive.tar
++'
++
++test_expect_success 'git archive with worktree attributes' '
++	git archive --fix-attributes HEAD >worktree.tar &&
++	(mkdir worktree && cd worktree && "$TAR" xf -) <worktree.tar
++'
++
++test_expect_success 'export-ignore' '
++	test ! -e archive/ignored &&
++	test ! -e archive/ignored-by-tree &&
++	test   -e archive/ignored-by-worktree &&
++	test ! -e worktree/ignored &&
++	test   -e worktree/ignored-by-tree &&
++	test ! -e worktree/ignored-by-worktree
++'
++
++test_expect_success 'export-subst' '
++	git log "--pretty=3Dformat:A${SUBSTFORMAT}O" HEAD >substfile1.expecte=
+d &&
++	test_cmp nosubstfile archive/nosubstfile &&
++	test_cmp substfile1.expected archive/substfile1 &&
++	test_cmp substfile2 archive/substfile2
++'
++
++test_expect_success 'git tar-tree vs. git archive with worktree attrib=
+utes' '
++	git tar-tree HEAD >tar-tree.tar &&
++	test_cmp worktree.tar tar-tree.tar
++'
++
++test_done
+--=20
+1.6.3.rc0.6.g08087
