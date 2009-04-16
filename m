@@ -1,132 +1,91 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/5] attr: add GIT_ATTR_INDEX "direction"
-Date: Wed, 15 Apr 2009 19:28:34 -0700
-Message-ID: <1239848917-14399-3-git-send-email-gitster@pobox.com>
+Subject: [PATCH 1/5] archive tests: do not use .gitattributes in working
+ directory
+Date: Wed, 15 Apr 2009 19:28:33 -0700
+Message-ID: <1239848917-14399-2-git-send-email-gitster@pobox.com>
 References: <1239848917-14399-1-git-send-email-gitster@pobox.com>
- <1239848917-14399-2-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
+Cc: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <rene.scharfe@lsrfire.ath.cx>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 16 04:31:16 2009
+X-From: git-owner@vger.kernel.org Thu Apr 16 04:31:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LuHNe-0000r0-0G
-	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 04:31:10 +0200
+	id 1LuHNd-0000r0-8W
+	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 04:31:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756785AbZDPC2t convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Apr 2009 22:28:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756630AbZDPC2t
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Apr 2009 22:28:49 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:62638 "EHLO
+	id S1754365AbZDPC2p convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Apr 2009 22:28:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753930AbZDPC2o
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Apr 2009 22:28:44 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49801 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756368AbZDPC2s (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Apr 2009 22:28:48 -0400
+	with ESMTP id S1753772AbZDPC2n (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Apr 2009 22:28:43 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5F1F0AA3B7;
-	Wed, 15 Apr 2009 22:28:46 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A6FAEF2E3;
+	Wed, 15 Apr 2009 22:28:42 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 6CFB0AA3B5; Wed,
- 15 Apr 2009 22:28:44 -0400 (EDT)
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 1DBCAF2E2; Wed,
+ 15 Apr 2009 22:28:40 -0400 (EDT)
 X-Mailer: git-send-email 1.6.3.rc0.6.g08087
-In-Reply-To: <1239848917-14399-2-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 4FD10FF6-2A2E-11DE-B1F5-C121C5FC92D5-77302942!a-sasl-fastnet.pobox.com
+In-Reply-To: <1239848917-14399-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 4D9DC620-2A2E-11DE-99E2-DC76898A30C1-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116663>
 
-=46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+=46rom: Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx>
 
-This instructs attr mechanism, not to look into working .gitattributes
-at all. Needed by tools that does not handle working directory, such
-as "git archive".
+We are interested in using archive mostly from a bare repository, so it
+should not add .gitattributes to the work tree.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- attr.c |   12 +++++++++---
- attr.h |    3 ++-
- 2 files changed, 11 insertions(+), 4 deletions(-)
+ t/t5000-tar-tree.sh |    9 +++++----
+ 1 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/attr.c b/attr.c
-index 43259e5..626eadb 100644
---- a/attr.c
-+++ b/attr.c
-@@ -405,7 +405,7 @@ static struct attr_stack *read_attr(const char *pat=
-h, int macro_ok)
- 		if (!res)
- 			res =3D read_attr_from_file(path, macro_ok);
- 	}
--	else {
-+	else if (direction =3D=3D GIT_ATTR_CHECKIN) {
- 		res =3D read_attr_from_file(path, macro_ok);
- 		if (!res)
- 			/*
-@@ -415,6 +415,8 @@ static struct attr_stack *read_attr(const char *pat=
-h, int macro_ok)
- 			 */
- 			res =3D read_attr_from_index(path, macro_ok);
- 	}
-+	else
-+		res =3D read_attr_from_index(path, macro_ok);
- 	if (!res)
- 		res =3D xcalloc(1, sizeof(*res));
- 	return res;
-@@ -466,7 +468,7 @@ static void bootstrap_attr_stack(void)
- 		elem->prev =3D attr_stack;
- 		attr_stack =3D elem;
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index 7641e0d..abb41b0 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -50,7 +50,7 @@ test_expect_success \
+ test_expect_success \
+     'add ignored file' \
+     'echo ignore me >a/ignored &&
+-     echo ignored export-ignore >.gitattributes'
++     echo ignored export-ignore >.git/info/attributes'
 =20
--		if (!is_bare_repository()) {
-+		if (!is_bare_repository() || direction =3D=3D GIT_ATTR_INDEX) {
- 			elem =3D read_attr(GITATTRIBUTES_FILE, 1);
- 			elem->origin =3D strdup("");
- 			elem->prev =3D attr_stack;
-@@ -533,7 +535,7 @@ static void prepare_attr_stack(const char *path, in=
-t dirlen)
- 	/*
- 	 * Read from parent directories and push them down
- 	 */
--	if (!is_bare_repository()) {
-+	if (!is_bare_repository() || direction =3D=3D GIT_ATTR_INDEX) {
- 		while (1) {
- 			char *cp;
+ test_expect_success \
+     'add files to repository' \
+@@ -64,7 +64,7 @@ test_expect_success \
+ test_expect_success \
+     'create bare clone' \
+     'git clone --bare . bare.git &&
+-     cp .gitattributes bare.git/info/attributes'
++     cp .git/info/attributes bare.git/info/attributes'
 =20
-@@ -674,6 +676,10 @@ int git_checkattr(const char *path, int num, struc=
-t git_attr_check *check)
- void git_attr_set_direction(enum git_attr_direction new, struct index_=
-state *istate)
- {
- 	enum git_attr_direction old =3D direction;
-+
-+	if (is_bare_repository() && new !=3D GIT_ATTR_INDEX)
-+		die("BUG: non-INDEX att direction in a bare repo");
-+
- 	direction =3D new;
- 	if (new !=3D old)
- 		drop_attr_stack();
-diff --git a/attr.h b/attr.h
-index 3a2f4ec..69b5767 100644
---- a/attr.h
-+++ b/attr.h
-@@ -33,7 +33,8 @@ int git_checkattr(const char *path, int, struct git_a=
-ttr_check *);
+ test_expect_success \
+     'remove ignored file' \
+@@ -139,10 +139,11 @@ test_expect_success \
 =20
- enum git_attr_direction {
- 	GIT_ATTR_CHECKIN,
--	GIT_ATTR_CHECKOUT
-+	GIT_ATTR_CHECKOUT,
-+	GIT_ATTR_INDEX,
- };
- void git_attr_set_direction(enum git_attr_direction, struct index_stat=
-e *);
+ test_expect_success \
+     'create archives with substfiles' \
+-    'echo "substfile?" export-subst >a/.gitattributes &&
++    'cp .git/info/attributes .git/info/attributes.before &&
++     echo "substfile?" export-subst >>.git/info/attributes &&
+      git archive HEAD >f.tar &&
+      git archive --prefix=3Dprefix/ HEAD >g.tar &&
+-     rm a/.gitattributes'
++     mv .git/info/attributes.before .git/info/attributes'
 =20
+ test_expect_success \
+     'extract substfiles' \
 --=20
 1.6.3.rc0.6.g08087
