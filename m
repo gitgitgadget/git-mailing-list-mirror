@@ -1,54 +1,174 @@
-From: Avo <avo@laborint.com>
-Subject: Building statically linked binary
-Date: Thu, 16 Apr 2009 10:46:53 +0000 (UTC)
-Message-ID: <loom.20090416T104327-682@post.gmane.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 4/5] archive: do not read .gitattributes in working 
+	directory
+Date: Thu, 16 Apr 2009 22:38:46 +1000
+Message-ID: <fcaeb9bf0904160538w4a826c57r40e9cf1c52b0b6ff@mail.gmail.com>
+References: <1239848917-14399-1-git-send-email-gitster@pobox.com> 
+	<1239848917-14399-2-git-send-email-gitster@pobox.com> <1239848917-14399-3-git-send-email-gitster@pobox.com> 
+	<1239848917-14399-4-git-send-email-gitster@pobox.com> <1239848917-14399-5-git-send-email-gitster@pobox.com> 
+	<fcaeb9bf0904160350m14dce828oe88bda6562d98f48@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 16 13:12:25 2009
+Content-Type: multipart/mixed; boundary=000e0cd2e0823d7be20467ab5935
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 16 14:40:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LuPVw-0001oZ-2L
-	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 13:12:16 +0200
+	id 1LuQtU-00005t-Ad
+	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 14:40:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753689AbZDPLKJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Apr 2009 07:10:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752902AbZDPLKH
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Apr 2009 07:10:07 -0400
-Received: from main.gmane.org ([80.91.229.2]:57800 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752618AbZDPLKG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Apr 2009 07:10:06 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1LuPTm-0002Vw-GV
-	for git@vger.kernel.org; Thu, 16 Apr 2009 11:10:02 +0000
-Received: from hydra.interspace.ee ([hydra.interspace.ee])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 16 Apr 2009 11:10:02 +0000
-Received: from avo by hydra.interspace.ee with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 16 Apr 2009 11:10:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 80.235.100.10 (Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.0.8) Gecko/2009032609 Firefox/3.0.8 (.NET CLR 3.5.30729))
+	id S1753255AbZDPMjF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Apr 2009 08:39:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753082AbZDPMjE
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Apr 2009 08:39:04 -0400
+Received: from wf-out-1314.google.com ([209.85.200.169]:7832 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751710AbZDPMjB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Apr 2009 08:39:01 -0400
+Received: by wf-out-1314.google.com with SMTP id 29so376061wff.4
+        for <git@vger.kernel.org>; Thu, 16 Apr 2009 05:39:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=MqmlXZjSI0MBRLz+3o6SXANQLDznI7BlgHIZTcXjYvs=;
+        b=idm6wmdgODbSfQBoMg3VMXwQAm8PdFeuuAAVjB/Udd981yXeMQgV97VfBVVQ1P6wrs
+         08I8YN71Wy+kfVUol37KgColPXdVog3qQhcS5QTCz/JTus72n6HXNRqQyw/IjLTvBNGW
+         zlprDKVT0wibr+F6lseuUR1g4BivxyGcmK3jo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=sxQ7klDRII81s9FLLeftcoLsoN3aon3jRNZwZo3tIDfOm36hNDkZrbdZlszn3SImsp
+         ZFd782iq7nK5//eet/mYvkAWqscrcE3igRFcnO2Z4dct2nq44S1+Qle8P/G9n/lecA8o
+         o7r6jQs3Nn58oxq6geN6ZPmE/gEeoP9r0FB+M=
+Received: by 10.142.217.17 with SMTP id p17mr2097567wfg.235.1239885541112; 
+	Thu, 16 Apr 2009 05:39:01 -0700 (PDT)
+In-Reply-To: <fcaeb9bf0904160350m14dce828oe88bda6562d98f48@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116695>
 
-Has anybody been able to build stand-alone git binary (statically linked)?
-I need it for a virtual hosting, not supporting git by default.
+--000e0cd2e0823d7be20467ab5935
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+On Thu, Apr 16, 2009 at 8:50 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+> I was thinking about loading .gitattributes inside write_archive_entry
+> too, to avoid calling read_tree_recursive twice, but it requires
+> .gitattributes to be traversed first. Won't work if there are files
+> .abc, .def...
+>
+> If read_tree_recusive() expose its tree to read_tree_fn_t, we can then
+> look ahead and load .gitattributes, but that requires changing
+> read_tree_fn_t interface. I'll see if it's feasible to make a
+> customized read_tree_recusive() just for archive.c
 
-If yes, please give me some hints.
-Or better, step by step instructions what to do.
+Here it is (again on top of your patch). Need to read directories
+twice, but not as bad as read_tree_recursive() twice.
+-- 
+Duy
 
-Hope somebody can help,
-Avo
+--000e0cd2e0823d7be20467ab5935
+Content-Type: text/x-patch; charset=US-ASCII; name="attr-3.patch"
+Content-Disposition: attachment; filename="attr-3.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_ftlfoch21
+
+ZGlmZiAtLWdpdCBhL2FyY2hpdmUuYyBiL2FyY2hpdmUuYwppbmRleCAwY2U2MjhiLi44ZGY1M2E4
+IDEwMDY0NAotLS0gYS9hcmNoaXZlLmMKKysrIGIvYXJjaGl2ZS5jCkBAIC05Nyw2ICs5Nyw0MyBA
+QCBzdHJ1Y3QgYXJjaGl2ZXJfY29udGV4dCB7CiAJd3JpdGVfYXJjaGl2ZV9lbnRyeV9mbl90IHdy
+aXRlX2VudHJ5OwogfTsKIAorc3RhdGljIGludCByZWFkX2dpdGF0dHJfdG9faW5kZXgoc3RydWN0
+IHRyZWUgKnRyZWUsIGNvbnN0IGNoYXIgKmJhc2UsIGludCBiYXNlbGVuLCBzdHJ1Y3QgYXJjaGl2
+ZXJfYXJncyAqYXJncykKK3sKKwlzdHJ1Y3QgdHJlZV9kZXNjIGRlc2M7CisJc3RydWN0IG5hbWVf
+ZW50cnkgZW50cnk7CisJc3RydWN0IGNhY2hlX2VudHJ5ICpjZTsKKwl1bnNpZ25lZCBpbnQgc2l6
+ZTsKKwlpbnQgcGF0aGxlbjsKKworCWlmIChwYXJzZV90cmVlKHRyZWUpKQorCQlyZXR1cm4gLTE7
+CisKKwlpbml0X3RyZWVfZGVzYygmZGVzYywgdHJlZS0+YnVmZmVyLCB0cmVlLT5zaXplKTsKKwor
+CXdoaWxlICh0cmVlX2VudHJ5KCZkZXNjLCAmZW50cnkpKSB7CisJCWlmIChTX0lTRElSKGVudHJ5
+Lm1vZGUpIHx8IFNfSVNHSVRMSU5LKGVudHJ5Lm1vZGUpKQorCQkJY29udGludWU7CisJCWlmIChz
+dHJjbXAoZW50cnkucGF0aCwgR0lUQVRUUklCVVRFU19GSUxFKSkKKwkJCWNvbnRpbnVlOworCQlw
+YXRobGVuID0gdHJlZV9lbnRyeV9sZW4oZW50cnkucGF0aCwgZW50cnkuc2hhMSk7CisJCWJhc2Vs
+ZW4gLT0gYXJncy0+YmFzZWxlbjsgLyogcmVtb3ZlIHVzZXIgcHJlZml4ICovCisJCWlmIChiYXNl
+bGVuKQorCQkJYmFzZWxlbisrOyAvKiBzbGFzaCAqLworCQlzaXplID0gY2FjaGVfZW50cnlfc2l6
+ZShiYXNlbGVuICsgcGF0aGxlbik7CisJCWNlID0geGNhbGxvYygxLCBzaXplKTsKKwkJY2UtPmNl
+X21vZGUgPSBjcmVhdGVfY2VfbW9kZShlbnRyeS5tb2RlKTsKKwkJY2UtPmNlX2ZsYWdzID0gY3Jl
+YXRlX2NlX2ZsYWdzKGJhc2VsZW4gKyBwYXRobGVuLCAwKTsKKwkJaWYgKGJhc2VsZW4pIHsKKwkJ
+CW1lbWNweShjZS0+bmFtZSwgYmFzZSArIGFyZ3MtPmJhc2VsZW4sIGJhc2VsZW4tMSk7CisJCQlj
+ZS0+bmFtZVtiYXNlbGVuLTFdID0gJy8nOworCQl9CisJCW1lbWNweShjZS0+bmFtZSArIGJhc2Vs
+ZW4sIGVudHJ5LnBhdGgsIHBhdGhsZW4gKyAxKTsKKwkJaGFzaGNweShjZS0+c2hhMSwgZW50cnku
+c2hhMSk7CisJCXJldHVybiBhZGRfY2FjaGVfZW50cnkoY2UsIEFERF9DQUNIRV9PS19UT19BREQg
+fCBBRERfQ0FDSEVfU0tJUF9ERkNIRUNLKTsKKwl9CisJcmV0dXJuIDA7Cit9CisKIHN0YXRpYyBp
+bnQgd3JpdGVfYXJjaGl2ZV9lbnRyeShjb25zdCB1bnNpZ25lZCBjaGFyICpzaGExLCBjb25zdCBj
+aGFyICpiYXNlLAogCQlpbnQgYmFzZWxlbiwgY29uc3QgY2hhciAqZmlsZW5hbWUsIHVuc2lnbmVk
+IG1vZGUsIGludCBzdGFnZSwKIAkJdm9pZCAqY29udGV4dCkKQEAgLTExOSwxMSArMTU2LDI1IEBA
+IHN0YXRpYyBpbnQgd3JpdGVfYXJjaGl2ZV9lbnRyeShjb25zdCB1bnNpZ25lZCBjaGFyICpzaGEx
+LCBjb25zdCBjaGFyICpiYXNlLAogCXN0cmJ1Zl9hZGRzdHIoJnBhdGgsIGZpbGVuYW1lKTsKIAlw
+YXRoX3dpdGhvdXRfcHJlZml4ID0gcGF0aC5idWYgKyBhcmdzLT5iYXNlbGVuOwogCi0Jc2V0dXBf
+YXJjaGl2ZV9jaGVjayhjaGVjayk7Ci0JaWYgKCFnaXRfY2hlY2thdHRyKHBhdGhfd2l0aG91dF9w
+cmVmaXgsIEFSUkFZX1NJWkUoY2hlY2spLCBjaGVjaykpIHsKLQkJaWYgKEFUVFJfVFJVRShjaGVj
+a1swXS52YWx1ZSkpCi0JCQlyZXR1cm4gMDsKLQkJY29udmVydCA9IEFUVFJfVFJVRShjaGVja1sx
+XS52YWx1ZSk7CisJaWYgKFNfSVNESVIobW9kZSkpIHsKKwkJLyoKKwkJICogd2Ugd2FudCB0byBy
+ZWFkIC5naXRhdHRyaWJ1dGVzIGJlZm9yZSBhbnkgZW50cnkgaXMgcHJvY2Vzc2VkCisJCSAqIHNv
+IGV2ZXJ5IHRpbWUgd2UgZ2V0IGEgZGlyZWN0b3J5IGVudHJ5LCB3ZSBsb29rIGFoZWFkIHRvIHNl
+ZQorCQkgKiBpZiB0aGVyZSBpcyAuZ2l0YXR0cmlidXRlcyBhbmQgbG9hZCBpdAorCQkgKgorCQkg
+KiBsYXRlciB3aGVuIHRoZSBkaXJlY3RvcnkgaXMgcHJvY2Vzc2VkLCAuZ2l0YXR0cmlidXRlcyBp
+cworCQkgKiBhbHJlYWR5IHJlYWR5IGluIGluZGV4IGZvciBnaXRfY2hlY2thdHRyKCkKKwkJICov
+CisJCWlmICghYXJncy0+d29ya3RyZWVfYXR0cmlidXRlcykKKwkJCXJlYWRfZ2l0YXR0cl90b19p
+bmRleChsb29rdXBfdHJlZShzaGExKSwgYmFzZSwgYmFzZWxlbiwgYXJncyk7CisJfQorCWVsc2Ug
+eworCQlzZXR1cF9hcmNoaXZlX2NoZWNrKGNoZWNrKTsKKwkJaWYgKCFnaXRfY2hlY2thdHRyKHBh
+dGhfd2l0aG91dF9wcmVmaXgsIEFSUkFZX1NJWkUoY2hlY2spLCBjaGVjaykpIHsKKwkJCWlmIChB
+VFRSX1RSVUUoY2hlY2tbMF0udmFsdWUpKQorCQkJCXJldHVybiAwOworCQkJY29udmVydCA9IEFU
+VFJfVFJVRShjaGVja1sxXS52YWx1ZSk7CisJCX0KIAl9CiAKIAlpZiAoU19JU0RJUihtb2RlKSB8
+fCBTX0lTR0lUTElOSyhtb2RlKSkgewpAQCAtMTUxLDggKzIwMiw2IEBAIGludCB3cml0ZV9hcmNo
+aXZlX2VudHJpZXMoc3RydWN0IGFyY2hpdmVyX2FyZ3MgKmFyZ3MsCiAJCXdyaXRlX2FyY2hpdmVf
+ZW50cnlfZm5fdCB3cml0ZV9lbnRyeSkKIHsKIAlzdHJ1Y3QgYXJjaGl2ZXJfY29udGV4dCBjb250
+ZXh0OwotCXN0cnVjdCB1bnBhY2tfdHJlZXNfb3B0aW9ucyBvcHRzOwotCXN0cnVjdCB0cmVlX2Rl
+c2MgdDsKIAlpbnQgZXJyOwogCiAJaWYgKGFyZ3MtPmJhc2VsZW4gPiAwICYmIGFyZ3MtPmJhc2Vb
+YXJncy0+YmFzZWxlbiAtIDFdID09ICcvJykgewpAQCAtMTcxLDE5ICsyMjAsOSBAQCBpbnQgd3Jp
+dGVfYXJjaGl2ZV9lbnRyaWVzKHN0cnVjdCBhcmNoaXZlcl9hcmdzICphcmdzLAogCWNvbnRleHQu
+YXJncyA9IGFyZ3M7CiAJY29udGV4dC53cml0ZV9lbnRyeSA9IHdyaXRlX2VudHJ5OwogCi0JLyoK
+LQkgKiBTZXR1cCBpbmRleCBhbmQgaW5zdHJ1Y3QgYXR0ciB0byByZWFkIGluZGV4IG9ubHkKLQkg
+Ki8KIAlpZiAoIWFyZ3MtPndvcmt0cmVlX2F0dHJpYnV0ZXMpIHsKLQkJbWVtc2V0KCZvcHRzLCAw
+LCBzaXplb2Yob3B0cykpOwotCQlvcHRzLmluZGV4X29ubHkgPSAxOwotCQlvcHRzLmhlYWRfaWR4
+ID0gLTE7Ci0JCW9wdHMuc3JjX2luZGV4ID0gJnRoZV9pbmRleDsKLQkJb3B0cy5kc3RfaW5kZXgg
+PSAmdGhlX2luZGV4OwotCQlvcHRzLmZuID0gb25ld2F5X21lcmdlOwotCQlpbml0X3RyZWVfZGVz
+YygmdCwgYXJncy0+dHJlZS0+YnVmZmVyLCBhcmdzLT50cmVlLT5zaXplKTsKLQkJaWYgKHVucGFj
+a190cmVlcygxLCAmdCwgJm9wdHMpKQotCQkJcmV0dXJuIC0xOworCQkvKiByZWFkIC5naXRhdHRy
+aWJ1dGVzIGF0IHJvb3QgaWYgYW55ICovCisJCXJlYWRfZ2l0YXR0cl90b19pbmRleChhcmdzLT50
+cmVlLCBhcmdzLT5iYXNlLCBhcmdzLT5iYXNlbGVuLCBhcmdzKTsKIAkJZ2l0X2F0dHJfc2V0X2Rp
+cmVjdGlvbihHSVRfQVRUUl9JTkRFWCwgJnRoZV9pbmRleCk7CiAJfQogCkBAIC0yMDksMTMgKzI0
+OCwyMyBAQCBzdGF0aWMgY29uc3Qgc3RydWN0IGFyY2hpdmVyICpsb29rdXBfYXJjaGl2ZXIoY29u
+c3QgY2hhciAqbmFtZSkKIH0KIAogc3RhdGljIHZvaWQgcGFyc2VfcGF0aHNwZWNfYXJnKGNvbnN0
+IGNoYXIgKipwYXRoc3BlYywKLQkJc3RydWN0IGFyY2hpdmVyX2FyZ3MgKmFyX2FyZ3MpCisJCXN0
+cnVjdCBhcmNoaXZlcl9hcmdzICphcl9hcmdzLAorCQljb25zdCBjaGFyICpwcmVmaXgpCiB7Ci0J
+YXJfYXJncy0+cGF0aHNwZWMgPSBnZXRfcGF0aHNwZWMoYXJfYXJncy0+YmFzZSwgcGF0aHNwZWMp
+OworCXN0cnVjdCBzdHJidWYgcyA9IFNUUkJVRl9JTklUOworCWlmIChhcl9hcmdzLT5iYXNlKQor
+CQlzdHJidWZfYWRkc3RyKCZzLCBhcl9hcmdzLT5iYXNlKTsKKwlpZiAocHJlZml4KQorCQlzdHJi
+dWZfYWRkc3RyKCZzLCBwcmVmaXgpOworCWFyX2FyZ3MtPnBhdGhzcGVjID0gZ2V0X3BhdGhzcGVj
+KHMubGVuID8gcy5idWYgOiBOVUxMLCBwYXRoc3BlYyk7CisJLyoKKwkgKiBzLmJ1ZiBtdXN0IG5l
+dmVyIGJlIGZyZWVkIGJlY2F1c2UKKwkgKiBnZXRfcGF0aHNwZWMgZG9lcyBub3QgZHVwbGljYXRl
+IGl0CisJICovCiB9CiAKIHN0YXRpYyB2b2lkIHBhcnNlX3RyZWVpc2hfYXJnKGNvbnN0IGNoYXIg
+Kiphcmd2LAotCQlzdHJ1Y3QgYXJjaGl2ZXJfYXJncyAqYXJfYXJncywgY29uc3QgY2hhciAqcHJl
+Zml4KQorCQlzdHJ1Y3QgYXJjaGl2ZXJfYXJncyAqYXJfYXJncykKIHsKIAljb25zdCBjaGFyICpu
+YW1lID0gYXJndlswXTsKIAljb25zdCB1bnNpZ25lZCBjaGFyICpjb21taXRfc2hhMTsKQEAgLTI0
+MCwxOCArMjg5LDYgQEAgc3RhdGljIHZvaWQgcGFyc2VfdHJlZWlzaF9hcmcoY29uc3QgY2hhciAq
+KmFyZ3YsCiAJaWYgKHRyZWUgPT0gTlVMTCkKIAkJZGllKCJub3QgYSB0cmVlIG9iamVjdCIpOwog
+Ci0JaWYgKHByZWZpeCkgewotCQl1bnNpZ25lZCBjaGFyIHRyZWVfc2hhMVsyMF07Ci0JCXVuc2ln
+bmVkIGludCBtb2RlOwotCQlpbnQgZXJyOwotCi0JCWVyciA9IGdldF90cmVlX2VudHJ5KHRyZWUt
+Pm9iamVjdC5zaGExLCBwcmVmaXgsCi0JCQkJICAgICB0cmVlX3NoYTEsICZtb2RlKTsKLQkJaWYg
+KGVyciB8fCAhU19JU0RJUihtb2RlKSkKLQkJCWRpZSgiY3VycmVudCB3b3JraW5nIGRpcmVjdG9y
+eSBpcyB1bnRyYWNrZWQiKTsKLQotCQl0cmVlID0gcGFyc2VfdHJlZV9pbmRpcmVjdCh0cmVlX3No
+YTEpOwotCX0KIAlhcl9hcmdzLT50cmVlID0gdHJlZTsKIAlhcl9hcmdzLT5jb21taXRfc2hhMSA9
+IGNvbW1pdF9zaGExOwogCWFyX2FyZ3MtPmNvbW1pdCA9IGNvbW1pdDsKQEAgLTM2MCw4ICszOTcs
+OCBAQCBpbnQgd3JpdGVfYXJjaGl2ZShpbnQgYXJnYywgY29uc3QgY2hhciAqKmFyZ3YsIGNvbnN0
+IGNoYXIgKnByZWZpeCwKIAlpZiAoc2V0dXBfcHJlZml4ICYmIHByZWZpeCA9PSBOVUxMKQogCQlw
+cmVmaXggPSBzZXR1cF9naXRfZGlyZWN0b3J5KCk7CiAKLQlwYXJzZV90cmVlaXNoX2FyZyhhcmd2
+LCAmYXJncywgcHJlZml4KTsKLQlwYXJzZV9wYXRoc3BlY19hcmcoYXJndiArIDEsICZhcmdzKTsK
+KwlwYXJzZV90cmVlaXNoX2FyZyhhcmd2LCAmYXJncyk7CisJcGFyc2VfcGF0aHNwZWNfYXJnKGFy
+Z3YgKyAxLCAmYXJncywgcHJlZml4KTsKIAogCWdpdF9jb25maWcoZ2l0X2RlZmF1bHRfY29uZmln
+LCBOVUxMKTsKIAo=
+--000e0cd2e0823d7be20467ab5935--
