@@ -1,76 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Add the diff option --no-defaults
-Date: Thu, 16 Apr 2009 05:41:55 -0400
-Message-ID: <20090416094154.GA30479@coredump.intra.peff.net>
-References: <1237600853-22815-1-git-send-email-keith@cs.ucla.edu> <alpine.DEB.1.00.0903210415110.10279@pacific.mpi-cbg.de> <alpine.GSO.2.00.0904021647120.16242@kiwi.cs.ucla.edu> <alpine.DEB.1.00.0904091030030.10279@pacific.mpi-cbg.de> <20090409084903.GA18947@coredump.intra.peff.net> <alpine.DEB.1.00.0904091242430.10279@pacific.mpi-cbg.de> <20090410080155.GB32195@coredump.intra.peff.net> <alpine.DEB.1.00.0904140036341.10279@pacific.mpi-cbg.de> <20090416083443.GA27399@coredump.intra.peff.net> <alpine.DEB.1.00.0904161124000.10279@pacific.mpi-cbg.de>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: integrating make and git
+Date: Thu, 16 Apr 2009 11:55:05 +0200
+Message-ID: <vpq63h42a9y.fsf@bauges.imag.fr>
+References: <3a69fa7c0904150819x7598dea5ic43bf0991c35ae45@mail.gmail.com>
+	<alpine.LNX.1.00.0904151148030.19665@iabervon.org>
+	<3a69fa7c0904150947w25783199n6e304d7b4efcd051@mail.gmail.com>
+	<200904151930.32816.robin.rosenberg.lists@dewire.com>
+	<20090416082615.GA27365@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Keith Cascio <keith@CS.UCLA.EDU>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Apr 16 11:46:18 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	E R <pc88mxer@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 16 12:06:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LuO8A-0005KW-Le
-	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 11:43:39 +0200
+	id 1LuOQZ-0004k8-2N
+	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 12:02:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753703AbZDPJmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Apr 2009 05:42:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753146AbZDPJmE
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Apr 2009 05:42:04 -0400
-Received: from peff.net ([208.65.91.99]:48441 "EHLO peff.net"
+	id S1754243AbZDPKBG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Apr 2009 06:01:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754112AbZDPKBE
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Apr 2009 06:01:04 -0400
+Received: from imag.imag.fr ([129.88.30.1]:49873 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752873AbZDPJmC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Apr 2009 05:42:02 -0400
-Received: (qmail 1517 invoked by uid 107); 16 Apr 2009 09:42:06 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 16 Apr 2009 05:42:06 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Apr 2009 05:41:55 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0904161124000.10279@pacific.mpi-cbg.de>
+	id S1754580AbZDPKBB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Apr 2009 06:01:01 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n3G9tu04000690
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 16 Apr 2009 11:55:56 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1LuOJG-0004Is-4W; Thu, 16 Apr 2009 11:55:06 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1LuOJG-0006vW-2F; Thu, 16 Apr 2009 11:55:06 +0200
+In-Reply-To: <20090416082615.GA27365@coredump.intra.peff.net> (Jeff King's message of "Thu\, 16 Apr 2009 04\:26\:15 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 16 Apr 2009 11:55:56 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116690>
 
-On Thu, Apr 16, 2009 at 11:25:08AM +0200, Johannes Schindelin wrote:
+Jeff King <peff@peff.net> writes:
 
-> > This feels very hack-ish to me, but perhaps this is a case of "perfect
-> > is the enemy of the good".
-> 
-> I have a strong feeling that none of our diff/rev options can sanely take 
-> a parameter looking like "--defaults" or "--no-defaults".
-> 
-> But I do not have the time to audit the options.  Maybe you have?
+> But one could probably design a system to replace both ccache and make
+> that relies on git's fast sha-1 reporting to avoid duplicate work. I
+> suspect nobody has bothered because make+ccache is "fast enough" that
+> the added complexity would not be worth it.
 
-Right now, I think we are safe. A few options like "--default" do take a
-separated string argument, but saying "--default --no-defaults" seems a
-little crazy to me (besides being confusing because they are talking
-about two totally unrelated defaults).
+AIUI, ClearCase does something similar to that. Call that an immense
+bloatware where everything has to come together, or a nice integration
+of different tools, I never used it, so I don't know (I heard the
+first option more than the second ...).
 
-Most of the string-taking options require --option=<arg> and don't
-support the separated version. If the code were ever parseopt-ified,
-they would start to support "--option <arg>"; however, at that time we
-should be able to write an "I know about these parseopt options, but
-please ignore them according to what we know about them taking an
-argument" function.
-
-The one I would worry most about is "-S" since "-S--no-defaults" is a
-very reasonable thing to ask for. Right now its argument _must_ be
-connected. To be consistent with other git options, "-S --no-defaults"
-_should_ be the same thing. But we can perhaps ignore that because:
-
-  1. That might never happen, because it breaks historical usage. IOW,
-     it changes the meaning of "git log -S HEAD" to something else.
-
-  2. If it does happen, it is likely to be in a transition to parseopt,
-     which would fall under the case mentioned above.
-
-I think the biggest danger is that it is a potential bomb for somebody
-to add a new revision option which takes an arbitrary string. They
-would probably need to keep it as "--option=<arg>" only.
-
--Peff
+-- 
+Matthieu
