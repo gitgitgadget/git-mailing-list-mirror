@@ -1,96 +1,99 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: [PATCH 1/1] hook/update: example of how to prevent branch creation
-Date: Thu, 16 Apr 2009 22:00:44 +0200
-Message-ID: <1239912044-29923-1-git-send-email-madcoder@debian.org>
-Cc: Pierre Habouzit <madcoder@debian.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 16 22:14:51 2009
+From: Mike Hommey <mh@glandium.org>
+Subject: [PATCH] Allow git-shell to be used as a ssh forced-command
+Date: Thu, 16 Apr 2009 23:10:56 +0200
+Message-ID: <1239916256-10878-1-git-send-email-mh@glandium.org>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Apr 16 23:13:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LuXwI-0000Aa-5v
-	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 22:12:02 +0200
+	id 1LuYtx-0007PF-GI
+	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 23:13:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751226AbZDPUK2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Apr 2009 16:10:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751211AbZDPUK1
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Apr 2009 16:10:27 -0400
-Received: from pan.madism.org ([88.191.52.104]:40179 "EHLO hermes.madism.org"
+	id S1753603AbZDPVLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Apr 2009 17:11:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751318AbZDPVLI
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Apr 2009 17:11:08 -0400
+Received: from vuizook.err.no ([85.19.221.46]:40003 "EHLO vuizook.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750713AbZDPUK1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Apr 2009 16:10:27 -0400
-X-Greylist: delayed 570 seconds by postgrey-1.27 at vger.kernel.org; Thu, 16 Apr 2009 16:10:27 EDT
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 9222C41FF1;
-	Thu, 16 Apr 2009 22:00:56 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 37C9A2B4D9; Thu, 16 Apr 2009 22:00:55 +0200 (CEST)
-X-Mailer: git-send-email 1.6.3.rc0.201.gadb14
+	id S1753349AbZDPVLH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Apr 2009 17:11:07 -0400
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <mh@glandium.org>)
+	id 1LuYrK-0006Z8-Ma; Thu, 16 Apr 2009 23:11:01 +0200
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1LuYrI-0002q1-RV; Thu, 16 Apr 2009 23:10:56 +0200
+X-Mailer: git-send-email 1.6.3.rc0.1.g8bd72.dirty
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116717>
 
-Since git doesn't provide a receive.denyBranchCreation or similar, here is
-an example of how to be sure users cannot create branches remotely by
-pushing a new reference.
+When using a forced-command, OpenSSH sets the SSH_ORIGINAL_COMMAND
+variable to what would otherwise be passed to $SHELL -c. When this
+variable is set, we use it instead of the contents of argv.
 
-This setup has been proven useful to prevent creation of spurious branches
-because of users having their remote.origin.push set to HEAD, when they
-use `git push` while being on a local topic branch of theirs instead of
-the proper one.
-
-Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+Signed-off-by: Mike Hommey <mh@glandium.org>
 ---
- templates/hooks--update.sample |   11 ++++++++++-
- 1 files changed, 10 insertions(+), 1 deletions(-)
 
-diff --git a/templates/hooks--update.sample b/templates/hooks--update.sample
-index a3f68ae..62b9cfe 100755
---- a/templates/hooks--update.sample
-+++ b/templates/hooks--update.sample
-@@ -16,6 +16,9 @@
- # hooks.allowdeletebranch
- #   This boolean sets whether deleting branches will be allowed in the
- #   repository.  By default they won't be.
-+# hooks.denycreatebranch
-+#   This boolean sets wether remotely creating branches will be denied
-+#   in the repository.  By default this is allowed.
- #
+I was unsure whether I needed to give more information about
+forced-commands in the commit message itself, anyways, just in case
+you don't know what it is:
+http://oreilly.com/catalog/sshtdg/chapter/ch08.html#22858
+
+I'm not sure if it's worth adding a check for SSH2_ORIGINAL_COMMAND.
+Are people using the commercial SSH2 ?
+
+ shell.c |   29 +++++++++++++++++------------
+ 1 files changed, 17 insertions(+), 12 deletions(-)
+
+diff --git a/shell.c b/shell.c
+index e339369..14ff266 100644
+--- a/shell.c
++++ b/shell.c
+@@ -62,20 +62,25 @@ int main(int argc, char **argv)
+ 		die("opening /dev/null failed (%s)", strerror(errno));
+ 	close (devnull_fd);
  
- # --- Command line
-@@ -39,6 +42,7 @@ fi
- # --- Config
- allowunannotated=$(git config --bool hooks.allowunannotated)
- allowdeletebranch=$(git config --bool hooks.allowdeletebranch)
-+denycreatebranch=$(git config --bool hooks.denycreatebranch)
- allowdeletetag=$(git config --bool hooks.allowdeletetag)
+-	/*
+-	 * Special hack to pretend to be a CVS server
+-	 */
+-	if (argc == 2 && !strcmp(argv[1], "cvs server"))
+-		argv--;
++	/* Use original command if we were run from a ssh forced-command */
++	prog = getenv("SSH_ORIGINAL_COMMAND");
++	if (!prog) {
++		/*
++		 * Special hack to pretend to be a CVS server
++		 */
++		if (argc == 2 && !strcmp(argv[1], "cvs server"))
++			argv--;
  
- # check for no description
-@@ -52,7 +56,8 @@ esac
+-	/*
+-	 * We do not accept anything but "-c" followed by "cmd arg",
+-	 * where "cmd" is a very limited subset of git commands.
+-	 */
+-	else if (argc != 3 || strcmp(argv[1], "-c"))
+-		die("What do you think I am? A shell?");
++		/*
++		 * We do not accept anything but "-c" followed by "cmd arg",
++		 * where "cmd" is a very limited subset of git commands.
++		 */
++		else if (argc != 3 || strcmp(argv[1], "-c"))
++			die("What do you think I am? A shell?");
++
++		prog = argv[2];
++	}
  
- # --- Check types
- # if $newrev is 0000...0000, it's a commit to delete a ref.
--if [ "$newrev" = "0000000000000000000000000000000000000000" ]; then
-+zero="0000000000000000000000000000000000000000"
-+if [ "$newrev" = "$zero" ]; then
- 	newrev_type=delete
- else
- 	newrev_type=$(git-cat-file -t $newrev)
-@@ -80,6 +85,10 @@ case "$refname","$newrev_type" in
- 		;;
- 	refs/heads/*,commit)
- 		# branch
-+		if [ "$oldrev" = "$zero" -a "$denycreatebranch" = "true" ]; then
-+			echo "*** Creating a branch is not allowed in this repository" >&2
-+			exit 1
-+		fi
- 		;;
- 	refs/heads/*,delete)
- 		# delete branch
+-	prog = argv[2];
+ 	if (!strncmp(prog, "git", 3) && isspace(prog[3]))
+ 		/* Accept "git foo" as if the caller said "git-foo". */
+ 		prog[3] = '-';
 -- 
-1.6.3.rc0.201.gadb14
+1.6.3.rc0.1.g8bd72.dirty
