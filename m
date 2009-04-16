@@ -1,72 +1,84 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: renaming remote branches
-Date: Thu, 16 Apr 2009 17:00:39 +0900
-Message-ID: <buoab6h2fko.fsf@dhlpc061.dev.necel.com>
-References: <buo3ac9jn18.fsf@dhlpc061.dev.necel.com>
-	<20090416065934.GA20071@coredump.intra.peff.net>
-Reply-To: Miles Bader <miles@gnu.org>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: integrating make and git
+Date: Thu, 16 Apr 2009 10:05:56 +0200
+Message-ID: <8763h5qazf.fsf@krank.kagedal.org>
+References: <3a69fa7c0904150819x7598dea5ic43bf0991c35ae45@mail.gmail.com> <loom.20090416T034427-809@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 16 10:02:25 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 16 10:07:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LuMYD-0004wR-08
-	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 10:02:25 +0200
+	id 1LuMdP-0006Xd-Am
+	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 10:07:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751661AbZDPIAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Apr 2009 04:00:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751137AbZDPIAu
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Apr 2009 04:00:50 -0400
-Received: from TYO202.gate.nec.co.jp ([202.32.8.206]:62601 "EHLO
-	tyo202.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751123AbZDPIAt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Apr 2009 04:00:49 -0400
-Received: from relay31.aps.necel.com ([10.29.19.54])
-	by tyo202.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id n3G80b24002272;
-	Thu, 16 Apr 2009 17:00:39 +0900 (JST)
-Received: from relay31.aps.necel.com ([10.29.19.20] [10.29.19.20]) by relay31.aps.necel.com with ESMTP; Thu, 16 Apr 2009 17:00:39 +0900
-Received: from dhlpc061 ([10.114.114.58] [10.114.114.58]) by relay31.aps.necel.com with ESMTP; Thu, 16 Apr 2009 17:00:39 +0900
-Received: by dhlpc061 (Postfix, from userid 31295)
-	id B93AE52E277; Thu, 16 Apr 2009 17:00:39 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-Reply-To: <20090416065934.GA20071@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 16 Apr 2009 02:59:34 -0400")
+	id S1751494AbZDPIGP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Apr 2009 04:06:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751377AbZDPIGO
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Apr 2009 04:06:14 -0400
+Received: from main.gmane.org ([80.91.229.2]:47785 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750881AbZDPIGM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Apr 2009 04:06:12 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LuMbp-0002OJ-Ea
+	for git@vger.kernel.org; Thu, 16 Apr 2009 08:06:09 +0000
+Received: from cust-ip-10.data.tre.se ([80.251.207.10])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 16 Apr 2009 08:06:09 +0000
+Received: from davidk by cust-ip-10.data.tre.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 16 Apr 2009 08:06:09 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: cust-ip-10.data.tre.se
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+Cancel-Lock: sha1:JLCakL9HXimWaKaIZNvwoj7fgug=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116682>
 
-Jeff King <peff@peff.net> writes:
-> In your situation, I would probably do:
->   ssh remote-host 'cd remote-dir && git branch -m OLD NEW'
-> but that is not always an option, depending on your setup.
+Ben Jackson <ben@ben.com> writes:
 
-Yup, don't have real ssh access.
-
->> Also, I note that the old name ("OLD") remains in .git/info/refs, both
->> locally and in the remote; is this a problem?  I can update the local
->> .git/info/refs by running "git update-server-info", but I'm not sure how
->> to do in for the remote repo without having a login there...
+> E R <pc88mxer <at> gmail.com> writes:
 >
-> If you are not sharing your repo over a dumb transport (like http), then
-> the contents of .git/info/refs shouldn't matter. If you are, then you
-> should enable the post-update hook to run update-server-info after every
-> push (i.e., it is not just the deletion that is a problem, but none of
-> your pushes is being marked in .git/info/refs).
+>> Now suppose that making 'lib1' only depends on the source code in a
+>> certain directory. The idea is to associate the hash of the source
+>> directory for lib1 with its the derived files. Make can check this t=
+o
+>> determine if the component really needs to be rebuilt.
+>
+> ClearCase has "wink-ins" which are very much like this.  It knows tha=
+t a given
+> object was produced from a certain set of sources with a particular c=
+ommand.=20
+> When someone wants to recreate that object (not even necessarily the =
+original
+> builder) it can "wink in" the result.  Typically a brand new "view" (=
+a ClearCase
+> working directory) build will consist of winking in a ton of objects =
+rather than
+> building anything.  I'm not sure how much of this is due to clevernes=
+s in
+> clearmake and how much is due to the view being implemented as a virt=
+ual
+> filesystem (which can see every repository file being read as part of=
+ a build).
 
-Hmmm, there's no way to update the hooks without shell access, right...?
+It very much depends on implementing its own file system, since it
+otherwise would have no idea what the *real* build dependencies are.
 
-[lots of stuff seems undoable without shell access, i.e., changing
-.git/descriptions; it'd be nice if there was at least some way to frob
-all this stuff ...]
+That one of the nice things about clearmake, by the way. You don't
+have to worry much about describing the dependencies, since it will
+figure it out all by itself when you first build the project.
 
--Miles
+But I don't think there is much in CC for git to copy... :-)
 
--- 
-Accordion, n. An instrument in harmony with the sentiments of an assassin.
+--=20
+David K=C3=A5gedal
