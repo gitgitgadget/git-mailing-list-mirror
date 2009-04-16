@@ -1,67 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/8] archive: add a failure test wrt .gitattributes  
- misreading
-Date: Thu, 16 Apr 2009 01:22:26 -0700
-Message-ID: <7v4owpm2il.fsf@gitster.siamese.dyndns.org>
-References: <1239185133-4181-1-git-send-email-pclouds@gmail.com>
- <1239185133-4181-2-git-send-email-pclouds@gmail.com>
- <1239185133-4181-3-git-send-email-pclouds@gmail.com>
- <1239185133-4181-4-git-send-email-pclouds@gmail.com>
- <7vab6rkl5f.fsf@gitster.siamese.dyndns.org> <49E3448B.8010602@lsrfire.ath.cx>
+From: Jeff King <peff@peff.net>
+Subject: Re: integrating make and git
+Date: Thu, 16 Apr 2009 04:26:15 -0400
+Message-ID: <20090416082615.GA27365@coredump.intra.peff.net>
+References: <3a69fa7c0904150819x7598dea5ic43bf0991c35ae45@mail.gmail.com> <alpine.LNX.1.00.0904151148030.19665@iabervon.org> <3a69fa7c0904150947w25783199n6e304d7b4efcd051@mail.gmail.com> <200904151930.32816.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Thu Apr 16 10:24:10 2009
+Cc: E R <pc88mxer@gmail.com>, git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Thu Apr 16 10:27:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LuMtF-0003Dq-BZ
-	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 10:24:09 +0200
+	id 1LuMwt-0004Kk-7e
+	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 10:27:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751574AbZDPIWi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Apr 2009 04:22:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751494AbZDPIWg
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Apr 2009 04:22:36 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40147 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751255AbZDPIWf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Apr 2009 04:22:35 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id E376EF520;
-	Thu, 16 Apr 2009 04:22:33 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 3E680F516; Thu,
- 16 Apr 2009 04:22:30 -0400 (EDT)
-In-Reply-To: <49E3448B.8010602@lsrfire.ath.cx> (=?utf-8?Q?Ren=C3=A9?=
- Scharfe's message of "Mon, 13 Apr 2009 15:56:27 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: BC6D1B9C-2A5F-11DE-A303-DC76898A30C1-77302942!a-sasl-quonix.pobox.com
+	id S1751760AbZDPI0Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Apr 2009 04:26:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751652AbZDPI0W
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Apr 2009 04:26:22 -0400
+Received: from peff.net ([208.65.91.99]:37653 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751494AbZDPI0V (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Apr 2009 04:26:21 -0400
+Received: (qmail 1155 invoked by uid 107); 16 Apr 2009 08:26:26 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 16 Apr 2009 04:26:26 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Apr 2009 04:26:15 -0400
+Content-Disposition: inline
+In-Reply-To: <200904151930.32816.robin.rosenberg.lists@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116686>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+On Wed, Apr 15, 2009 at 07:30:32PM +0200, Robin Rosenberg wrote:
 
-> Hmm, "fix" implies that something is broken without this option, whic=
-h
-> is not necessarily the case.
+> Take a look at ccache. It doesn't use Git, but it uses hashes of source, and
+> compiler flags and associates that with the resulting object files, so it
+> can avoid compiling. If you are building largs C/C++ (especially C++)
+> projects you want it. 
 
-"What is recorded in the tree is unsuitable for the purpose of this
-particular export, so we are xxxing using yyy", is the intended use cas=
-e,
-and I think the verb "fix" is a good fit there in "xxx" part.  "Tweak"
-would also work well.
+In theory, one could improve something like ccache by asking git the
+sha-1 of the file. Since git maintains a cache based on stat info, you
+can get away with not looking at the file contents at all (which saves
+CPU time in hashing, but also helps a lot when building from a cold
+cache).
 
-Your suggestion is to say "attributes from the work tree" in place of
-"yyy", which also is good.
+In practice, this doesn't help because:
 
-I got the impression that people tend to prefer the operation named aft=
-er
-what it does than how it does it, but I can go either way.
+  1. ccache looks at more than just the file itself. I believe it
+     actually runs it through cpp and hashes that.
+
+  2. People combine ccache with make; if the stat data hasn't changed,
+     in most cases, you will skip building before you even get to
+     ccache.
+
+But one could probably design a system to replace both ccache and make
+that relies on git's fast sha-1 reporting to avoid duplicate work. I
+suspect nobody has bothered because make+ccache is "fast enough" that
+the added complexity would not be worth it.
+
+-Peff
