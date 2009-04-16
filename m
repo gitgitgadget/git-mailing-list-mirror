@@ -1,100 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] doc/gitattributes: clarify location of config text
-Date: Thu, 16 Apr 2009 03:17:12 -0400
-Message-ID: <20090416071712.GA26567@coredump.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 4/5] archive: do not read .gitattributes in working directory
+Date: Thu, 16 Apr 2009 09:29:12 +0200
+Organization: At home
+Message-ID: <gs6mo9$nc6$1@ger.gmane.org>
+References: <1239848917-14399-1-git-send-email-gitster@pobox.com> <1239848917-14399-2-git-send-email-gitster@pobox.com> <1239848917-14399-3-git-send-email-gitster@pobox.com> <1239848917-14399-4-git-send-email-gitster@pobox.com> <1239848917-14399-5-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 16 09:20:36 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 16 09:31:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LuLs5-0000MH-Lj
-	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 09:18:54 +0200
+	id 1LuM3r-0004XR-LM
+	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 09:31:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752977AbZDPHRT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Apr 2009 03:17:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752808AbZDPHRT
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Apr 2009 03:17:19 -0400
-Received: from peff.net ([208.65.91.99]:49810 "EHLO peff.net"
+	id S1752945AbZDPH3b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Apr 2009 03:29:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752661AbZDPH3a
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Apr 2009 03:29:30 -0400
+Received: from main.gmane.org ([80.91.229.2]:53766 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752746AbZDPHRS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Apr 2009 03:17:18 -0400
-Received: (qmail 714 invoked by uid 107); 16 Apr 2009 07:17:23 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 16 Apr 2009 03:17:23 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Apr 2009 03:17:12 -0400
-Content-Disposition: inline
+	id S1751365AbZDPH3a (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Apr 2009 03:29:30 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LuM2G-0000zZ-4R
+	for git@vger.kernel.org; Thu, 16 Apr 2009 07:29:24 +0000
+Received: from abvp180.neoplus.adsl.tpnet.pl ([83.8.213.180])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 16 Apr 2009 07:29:24 +0000
+Received: from jnareb by abvp180.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 16 Apr 2009 07:29:24 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abvp180.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116679>
 
-The gitattributes documentation has a section on the "diff"
-attribute, with subsections for each of the things you might
-want to configure in your diff config section (external
-diff, hunk headers, etc). The first such subsection
-specifically notes that the definition of the diff driver
-should go into $GIT_DIR/config, but subsequent sections do
-not.
+Junio C Hamano wrote:
 
-This location is implied if you are reading the
-documentation sequentially, but it is not uncommon for a new
-user to jump to (or be referred to) a specific section. For
-a new user who does not know git well enough to recognize
-the config syntax, it is not clear that those directives
-don't also go into the gitattributes file.
+> The old behaviour still remains with --fix-attributes, and it is always on
+> for the legacy "git tar-tree".
 
-This patch just mentions the config file in each subsection,
-similar to the way it is mentioned in the first.
+I thought that we agreed on '--worktree-attributes' being better name,
+didn't we?
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This is a re-send of
-
-  http://article.gmane.org/gmane.comp.version-control.git/115866
-
-which seems to have just been missed.
-
- Documentation/gitattributes.txt |    9 ++++++---
- 1 files changed, 6 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index b762bba..aaa073e 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -297,7 +297,8 @@ for paths.
- 
- Then, you would define a "diff.tex.xfuncname" configuration to
- specify a regular expression that matches a line that you would
--want to appear as the hunk header "TEXT", like this:
-+want to appear as the hunk header "TEXT". Add a section to your
-+`$GIT_DIR/config` file (or `$HOME/.gitconfig` file) like this:
- 
- ------------------------
- [diff "tex"]
-@@ -345,7 +346,8 @@ split words in a line, by specifying an appropriate regular expression
- in the "diff.*.wordRegex" configuration variable.  For example, in TeX
- a backslash followed by a sequence of letters forms a command, but
- several such commands can be run together without intervening
--whitespace.  To separate them, use a regular expression such as
-+whitespace.  To separate them, use a regular expression in your
-+`$GIT_DIR/config` file (or `$HOME/.gitconfig` file) like this:
- 
- ------------------------
- [diff "tex"]
-@@ -373,7 +375,8 @@ resulting text on stdout.
- 
- For example, to show the diff of the exif information of a
- file instead of the binary information (assuming you have the
--exif tool installed):
-+exif tool installed), add the following section to your
-+`$GIT_DIR/config` file (or `$HOME/.gitconfig` file):
- 
- ------------------------
- [diff "jpg"]
 -- 
-1.6.3.rc0.204.g6bb2
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
