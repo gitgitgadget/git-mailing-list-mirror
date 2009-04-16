@@ -1,139 +1,71 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 1/2] git add -p: new "quit" command at the prompt.
-Date: Thu, 16 Apr 2009 18:46:22 +0200
-Message-ID: <1239900383-29628-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <vpqiql4tuov.fsf@bauges.imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 16 18:53:15 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add the diff option --no-defaults
+Date: Thu, 16 Apr 2009 09:52:50 -0700
+Message-ID: <7v4owok0bh.fsf@gitster.siamese.dyndns.org>
+References: <1237600853-22815-1-git-send-email-keith@cs.ucla.edu>
+ <alpine.DEB.1.00.0903210415110.10279@pacific.mpi-cbg.de>
+ <alpine.GSO.2.00.0904021647120.16242@kiwi.cs.ucla.edu>
+ <alpine.DEB.1.00.0904091030030.10279@pacific.mpi-cbg.de>
+ <20090409084903.GA18947@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0904091242430.10279@pacific.mpi-cbg.de>
+ <20090410080155.GB32195@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0904140036341.10279@pacific.mpi-cbg.de>
+ <20090416083443.GA27399@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0904161124000.10279@pacific.mpi-cbg.de>
+ <20090416094154.GA30479@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Keith Cascio <keith@CS.UCLA.EDU>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 16 18:55:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LuUpg-0007K2-Ly
-	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 18:53:01 +0200
+	id 1LuUra-00088g-Bv
+	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 18:54:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757169AbZDPQug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Apr 2009 12:50:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756197AbZDPQug
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Apr 2009 12:50:36 -0400
-Received: from imag.imag.fr ([129.88.30.1]:38687 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756247AbZDPQue (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Apr 2009 12:50:34 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n3GGkXeN028350
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 16 Apr 2009 18:46:33 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1LuUjQ-0004w1-RI; Thu, 16 Apr 2009 18:46:32 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1LuUjQ-0007iS-OT; Thu, 16 Apr 2009 18:46:32 +0200
-X-Mailer: git-send-email 1.6.2.2.449.g92961.dirty
-In-Reply-To: <vpqiql4tuov.fsf@bauges.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 16 Apr 2009 18:46:33 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1757649AbZDPQxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Apr 2009 12:53:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757048AbZDPQxE
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Apr 2009 12:53:04 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42986 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756723AbZDPQxB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Apr 2009 12:53:01 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3AAE6AB361;
+	Thu, 16 Apr 2009 12:52:58 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0B76CAB35C; Thu,
+ 16 Apr 2009 12:52:51 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 09EDB510-2AA7-11DE-8734-C121C5FC92D5-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116712>
 
-There's already 'd' to stop staging hunks in a file, but no explicit
-command to stop the interactive staging (for the current files and the
-remaining ones).  Of course you can do 'd' and then ^C, but it would be
-more intuitive to allow 'quit' action.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-add.txt |    1 +
- git-add--interactive.perl |   20 +++++++++++++++++++-
- 2 files changed, 20 insertions(+), 1 deletions(-)
+> On Thu, Apr 16, 2009 at 11:25:08AM +0200, Johannes Schindelin wrote:
+>
+>> > This feels very hack-ish to me, but perhaps this is a case of "perfect
+>> > is the enemy of the good".
+>> 
+>> I have a strong feeling that none of our diff/rev options can sanely take 
+>> a parameter looking like "--defaults" or "--no-defaults".
+>> 
+>> But I do not have the time to audit the options.  Maybe you have?
+>
+> Right now, I think we are safe. A few options like "--default" do take a
+> separated string argument, but saying "--default --no-defaults" seems a
+> little crazy to me (besides being confusing because they are talking
+> about two totally unrelated defaults).
 
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index ce71838..709e04b 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -245,6 +245,7 @@ patch::
- 
-        y - stage this hunk
-        n - do not stage this hunk
-+       q - quite, do not stage this hunk nor any of the remaining ones
-        a - stage this and all the remaining hunks in the file
-        d - do not stage this hunk nor any of the remaining hunks in the file
-        j - leave this hunk undecided, see next undecided hunk
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index def062a..210d230 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -894,6 +894,7 @@ sub help_patch_cmd {
- 	print colored $help_color, <<\EOF ;
- y - stage this hunk
- n - do not stage this hunk
-+q - quit, do not stage this hunk nor any of the remaining ones
- a - stage this and all the remaining hunks in the file
- d - do not stage this hunk nor any of the remaining hunks in the file
- g - select a hunk to go to
-@@ -930,7 +931,7 @@ sub patch_update_cmd {
- 					@mods);
- 	}
- 	for (@them) {
--		patch_update_file($_->{VALUE});
-+		return 0 if patch_update_file($_->{VALUE});
- 	}
- }
- 
-@@ -976,6 +977,7 @@ sub display_hunks {
- }
- 
- sub patch_update_file {
-+	my $quit = 0;
- 	my ($ix, $num);
- 	my $path = shift;
- 	my ($head, @hunk) = parse_diff($path);
-@@ -1006,6 +1008,11 @@ sub patch_update_file {
- 				$_->{USE} = 0 foreach ($mode, @hunk);
- 				last;
- 			}
-+			elsif ($line =~ /^q/i) {
-+				$_->{USE} = 0 foreach ($mode, @hunk);
-+				$quit = 1;
-+				last;
-+			}
- 			else {
- 				help_patch_cmd('');
- 				next;
-@@ -1113,6 +1120,16 @@ sub patch_update_file {
- 				}
- 				next;
- 			}
-+			elsif ($line =~ /^q/i) {
-+				while ($ix < $num) {
-+					if (!defined $hunk[$ix]{USE}) {
-+						$hunk[$ix]{USE} = 0;
-+					}
-+					$ix++;
-+				}
-+				$quit = 1;
-+				next;
-+			}
- 			elsif ($line =~ m|^/(.*)|) {
- 				my $regex = $1;
- 				if ($1 eq "") {
-@@ -1239,6 +1256,7 @@ sub patch_update_file {
- 	}
- 
- 	print "\n";
-+	return $quit;
- }
- 
- sub diff_cmd {
--- 
-1.6.2.2.449.g92961.dirty
+Maybe you guys have already considered and discarded this as too hacky,
+but isn't it the easiest to explain and code to declare --no-defaults is
+acceptable only at the beginning?
