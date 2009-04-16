@@ -1,84 +1,70 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: integrating make and git
-Date: Thu, 16 Apr 2009 10:05:56 +0200
-Message-ID: <8763h5qazf.fsf@krank.kagedal.org>
-References: <3a69fa7c0904150819x7598dea5ic43bf0991c35ae45@mail.gmail.com> <loom.20090416T034427-809@post.gmane.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: renaming remote branches
+Date: Thu, 16 Apr 2009 04:18:35 -0400
+Message-ID: <20090416081835.GA26972@coredump.intra.peff.net>
+References: <buo3ac9jn18.fsf@dhlpc061.dev.necel.com> <20090416065934.GA20071@coredump.intra.peff.net> <buoab6h2fko.fsf@dhlpc061.dev.necel.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 16 10:07:49 2009
+Cc: git@vger.kernel.org
+To: Miles Bader <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Apr 16 10:20:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LuMdP-0006Xd-Am
-	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 10:07:47 +0200
+	id 1LuMpW-0001yG-0i
+	for gcvg-git-2@gmane.org; Thu, 16 Apr 2009 10:20:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751494AbZDPIGP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Apr 2009 04:06:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751377AbZDPIGO
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Apr 2009 04:06:14 -0400
-Received: from main.gmane.org ([80.91.229.2]:47785 "EHLO ciao.gmane.org"
+	id S1751383AbZDPISo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Apr 2009 04:18:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751017AbZDPISn
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Apr 2009 04:18:43 -0400
+Received: from peff.net ([208.65.91.99]:38276 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750881AbZDPIGM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Apr 2009 04:06:12 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LuMbp-0002OJ-Ea
-	for git@vger.kernel.org; Thu, 16 Apr 2009 08:06:09 +0000
-Received: from cust-ip-10.data.tre.se ([80.251.207.10])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 16 Apr 2009 08:06:09 +0000
-Received: from davidk by cust-ip-10.data.tre.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 16 Apr 2009 08:06:09 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: cust-ip-10.data.tre.se
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-Cancel-Lock: sha1:JLCakL9HXimWaKaIZNvwoj7fgug=
+	id S1750749AbZDPISm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Apr 2009 04:18:42 -0400
+Received: (qmail 1073 invoked by uid 107); 16 Apr 2009 08:18:46 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 16 Apr 2009 04:18:46 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Apr 2009 04:18:35 -0400
+Content-Disposition: inline
+In-Reply-To: <buoab6h2fko.fsf@dhlpc061.dev.necel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116683>
 
-Ben Jackson <ben@ben.com> writes:
+On Thu, Apr 16, 2009 at 05:00:39PM +0900, Miles Bader wrote:
 
-> E R <pc88mxer <at> gmail.com> writes:
->
->> Now suppose that making 'lib1' only depends on the source code in a
->> certain directory. The idea is to associate the hash of the source
->> directory for lib1 with its the derived files. Make can check this t=
-o
->> determine if the component really needs to be rebuilt.
->
-> ClearCase has "wink-ins" which are very much like this.  It knows tha=
-t a given
-> object was produced from a certain set of sources with a particular c=
-ommand.=20
-> When someone wants to recreate that object (not even necessarily the =
-original
-> builder) it can "wink in" the result.  Typically a brand new "view" (=
-a ClearCase
-> working directory) build will consist of winking in a ton of objects =
-rather than
-> building anything.  I'm not sure how much of this is due to clevernes=
-s in
-> clearmake and how much is due to the view being implemented as a virt=
-ual
-> filesystem (which can see every repository file being read as part of=
- a build).
+> > If you are not sharing your repo over a dumb transport (like http), then
+> > the contents of .git/info/refs shouldn't matter. If you are, then you
+> > should enable the post-update hook to run update-server-info after every
+> > push (i.e., it is not just the deletion that is a problem, but none of
+> > your pushes is being marked in .git/info/refs).
+> 
+> Hmmm, there's no way to update the hooks without shell access, right...?
 
-It very much depends on implementing its own file system, since it
-otherwise would have no idea what the *real* build dependencies are.
+No, not through any means shipped with git itself.  There are obvious
+security implications to arbitrarily modifying hooks, since they are
+runnable code. In other words, updating hooks is a great way to _get_
+shell access. :)
 
-That one of the nice things about clearmake, by the way. You don't
-have to worry much about describing the dependencies, since it will
-figure it out all by itself when you first build the project.
+There is no reason to forbid enabling hooks which have been pre-approved
+by the site admin, but such a policy decision is outside the scope of
+git itself.  The only mechanism git provides is the "templates" feature
+of init (so that a site admin can apply the same hook setup to all
+repos as they are created).
 
-But I don't think there is much in CC for git to copy... :-)
+> [lots of stuff seems undoable without shell access, i.e., changing
+> .git/descriptions; it'd be nice if there was at least some way to frob
+> all this stuff ...]
 
---=20
-David K=C3=A5gedal
+In general, git takes the approach that users can edit files in .git/
+directly, and for setups where they can't, it is up to the site admin to
+make wrappers implementing whatever policy they want. Third party tools
+can provide the mechanism for accomplishing that (I don't know what
+support something like gitosis has for enabling hooks, updating
+descriptions, or moving branches, though).
+
+-Peff
