@@ -1,59 +1,87 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [PATCH 1/3] Documentation: fix typos / spelling mistakes
-Date: Fri, 17 Apr 2009 20:48:54 +0200
-Message-ID: <200904172048.55528.markus.heidelberg@web.de>
-References: <1239992010-16698-1-git-send-email-mike@abacus.co.uk> <1239992010-16698-2-git-send-email-mike@abacus.co.uk>
-Reply-To: markus.heidelberg@web.de
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: git for local web development
+Date: Fri, 17 Apr 2009 20:48:13 +0200
+Message-ID: <46a038f90904171148xefb2085yc47e58c62cd3bbaf@mail.gmail.com>
+References: <135754252540163221910297561025355826788-Webmail@me.com>
+	 <20090417115925.GB29121@coredump.intra.peff.net>
+	 <loom.20090417T153819-898@post.gmane.org>
+	 <20090417183046.GB30240@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Mike Ralphson <mike.ralphson@gmail.com>
-To: Mike Ralphson <mike@abacus.co.uk>
-X-From: git-owner@vger.kernel.org Fri Apr 17 20:50:19 2009
+Cc: William DiNoia <william.dinoia@mac.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 17 20:55:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lut8k-0003eK-WC
-	for gcvg-git-2@gmane.org; Fri, 17 Apr 2009 20:50:19 +0200
+	id 1LutDL-0005U6-5n
+	for gcvg-git-2@gmane.org; Fri, 17 Apr 2009 20:55:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759814AbZDQSsp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Apr 2009 14:48:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760389AbZDQSsp
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Apr 2009 14:48:45 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:54062 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759814AbZDQSso (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Apr 2009 14:48:44 -0400
-Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 40112100292A3;
-	Fri, 17 Apr 2009 20:48:43 +0200 (CEST)
-Received: from [89.59.108.154] (helo=.)
-	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1Lut7D-0008Ro-00; Fri, 17 Apr 2009 20:48:43 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <1239992010-16698-2-git-send-email-mike@abacus.co.uk>
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX1/KDOsSFsRUK1SU70/n4J4LLMp8a5puTLiyqxHq
-	fehZeUrOzb5m8qb589nA0qzY6+h9/0vZP9Z8ovHYYjEYkJlk16
-	9ASpC0RZfwJv+zMBP8Wg==
+	id S1756052AbZDQSx3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Apr 2009 14:53:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754685AbZDQSx3
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Apr 2009 14:53:29 -0400
+Received: from mail-bw0-f211.google.com ([209.85.218.211]:33132 "EHLO
+	mail-bw0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754055AbZDQSx2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Apr 2009 14:53:28 -0400
+X-Greylist: delayed 312 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Apr 2009 14:53:27 EDT
+Received: by bwz7 with SMTP id 7so288693bwz.37
+        for <git@vger.kernel.org>; Fri, 17 Apr 2009 11:53:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=wgbETmrvwPaYrzP65sbHn6kq0sDWGAZUPsGMUBKri2Q=;
+        b=USmrzXmOWH6LVoaKbUjAG7Jsw9e5Zz1f7D+NgDVNZXFSbBq9OeAblrDNuMCm12dBPZ
+         734ebwa/p1K9xUXsW5GDrhj/PL8jj6citjNxuiWMce4QFdbFsJRTxSj1cLsDXGcMesrG
+         0UbfTDl8zGuj+h43PlNcaOZUsrjtk9UPEBUQU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=SXYEsAeNuUuewBoLgBTwXQB7S8cDRd/x4uhSA4ReBXeVMwapfwa9jjkNZdb3s7z3q6
+         BTvR+TQ0e3m6CMkEUxKhq+TuobHJvCt9ocQvSsGTZGugQb+duWXjEqojKg0fOTixoWlv
+         UTkmW/dr6ZFhgRg9bwYl4gIYw77K48cmh52LE=
+Received: by 10.223.116.77 with SMTP id l13mr869863faq.106.1239994093603; Fri, 
+	17 Apr 2009 11:48:13 -0700 (PDT)
+In-Reply-To: <20090417183046.GB30240@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116776>
 
-Mike Ralphson, 17.04.2009:
-> diff --git a/gitweb/README b/gitweb/README
-> -   'utf-8'. Value mist be valid encodig; see Encoding::Supported(3pm) man
-> +   'utf-8'. Value mist be valid encoding; see Encoding::Supported(3pm) man
+On Fri, Apr 17, 2009 at 8:30 PM, Jeff King <peff@peff.net> wrote:
+> repo and working tree are not owned by "william"? As long as www-data,
+> presumably the webserver could still serve it.
 
-I guess this should be "must" instead of "mist". Of course the spell
-checker couldn't find it, but while we are in this line...
+Also, as long as they are owned by www-data, the setup is more
+vulnerable to security problems.
 
-Markus
+Files served by Apache (or any other webserver) should _not_ be owned
+by the same user that the webserver runs under. The www-data ownership
+is exclusively for files that you expect the webserver to be able to
+_modify_: files uploaded by users, session data files, sqlite
+databases and such.
+
+You don't really want your webserver changing executable files such as PHP.
+
+It is a valid thing to create a user to own those files, and in
+servers where a team was maintaining the code, we have often used
+'www-code'.
+
+cheers,
+
+
+
+m
+-- 
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
