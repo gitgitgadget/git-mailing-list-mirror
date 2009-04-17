@@ -1,59 +1,62 @@
-From: Kai Schlamp <schlamp@gmx.de>
-Subject: Re: Change git gui language (+ some other suggestions)
-Date: Fri, 17 Apr 2009 17:11:08 +0200
-Message-ID: <gsa66j$25c$1@ger.gmane.org>
-References: <49E89304.9060303@gmx.de> <237967ef0904170747l61adf4feq1a5df5f1b26debe2@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [JGIT PATCH 3/3] Extracted AWT-independent superclass from
+	DefaultSshSessionFactory
+Date: Fri, 17 Apr 2009 08:16:45 -0700
+Message-ID: <20090417151645.GQ23604@spearce.org>
+References: <85647ef50904160711w6fbcfcedk2b9a9e1740a4ddd3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 17 17:13:19 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 17 17:18:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LupkZ-0005i9-CW
-	for gcvg-git-2@gmane.org; Fri, 17 Apr 2009 17:13:07 +0200
+	id 1Luppx-0007tg-FN
+	for gcvg-git-2@gmane.org; Fri, 17 Apr 2009 17:18:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757869AbZDQPLb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Apr 2009 11:11:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756537AbZDQPLb
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Apr 2009 11:11:31 -0400
-Received: from main.gmane.org ([80.91.229.2]:49483 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754586AbZDQPLa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Apr 2009 11:11:30 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Lupiz-00011w-7U
-	for git@vger.kernel.org; Fri, 17 Apr 2009 15:11:29 +0000
-Received: from p54a8f090.dip.t-dialin.net ([84.168.240.144])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 17 Apr 2009 15:11:29 +0000
-Received: from schlamp by p54a8f090.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 17 Apr 2009 15:11:29 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: p54a8f090.dip.t-dialin.net
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <237967ef0904170747l61adf4feq1a5df5f1b26debe2@mail.gmail.com>
+	id S1760010AbZDQPQs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Apr 2009 11:16:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759084AbZDQPQr
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Apr 2009 11:16:47 -0400
+Received: from george.spearce.org ([209.20.77.23]:47812 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756999AbZDQPQq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Apr 2009 11:16:46 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 02F4438211; Fri, 17 Apr 2009 15:16:45 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <85647ef50904160711w6fbcfcedk2b9a9e1740a4ddd3@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116745>
 
-> I don't know much about language selection on windows (which you
-> didn't say you're using, but I'm inferring it from the referenced
-> thread), but you could try setting LC_MESSAGES=en and LANG=de_DE or
-> whatever germany is, that should at least work in linux :). Maybe tk
-> is nice enough to follow the same rules?
+Constantine Plotnikov <constantine.plotnikov@gmail.com> wrote:
+> The part of DefaultSshSessionFactory that does not depend on
+> AWT was refactored to the super class SshConfigSessionFactory.
+> The parts of DefaultSshSessionFactory that were used only by
+> the OpenSshConfig class were moved to that class.
 > 
+> Signed-off-by: Constantine Plotnikov <constantine.plotnikov@gmail.com>
 
-Thanks Mikael. But it seems that it was more a problem with the Cygwin 
-console. LANG=en works now too without changing the keyboard layout.
-But your recommendation works also :-)
+Thanks. I applied this, but with a couple of style nitpicks corrected.
 
-Cheers,
-Kai
+> --- a/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java
+> +++ b/org.spearce.jgit/src/org/spearce/jgit/transport/OpenSshConfig.java
+> @@ -95,6 +97,9 @@ public static OpenSshConfig get() {
+>  	/** Cached entries read out of the configuration file. */
+>  	private Map<String, Host> hosts;
+> 
+> +	/** IANA assigned port number for SSH. */
+> +	static final int SSH_PORT = 22;
+> +
+
+Static constants should be at the top of the class, not after the
+instance members.
+
+-- 
+Shawn.
