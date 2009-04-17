@@ -1,66 +1,70 @@
-From: Hannu Koivisto <azure@iki.fi>
-Subject: Tests in Cygwin
-Date: Fri, 17 Apr 2009 12:47:02 +0300
-Organization: NOYB
-Message-ID: <83prfbhasp.fsf@kalahari.s2.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] gitk: use themed tk widgets
+Date: Fri, 17 Apr 2009 12:10:48 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904171206290.6675@intel-tinevez-2-302>
+References: <873ac8m8jg.fsf@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 17 11:48:59 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, paulus@samba.org
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Fri Apr 17 12:12:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lukgq-0007FS-5U
-	for gcvg-git-2@gmane.org; Fri, 17 Apr 2009 11:48:56 +0200
+	id 1Lul3Z-0005T4-TO
+	for gcvg-git-2@gmane.org; Fri, 17 Apr 2009 12:12:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757894AbZDQJrR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Apr 2009 05:47:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757786AbZDQJrR
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Apr 2009 05:47:17 -0400
-Received: from main.gmane.org ([80.91.229.2]:42643 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757748AbZDQJrQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Apr 2009 05:47:16 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LukfC-00038y-7e
-	for git@vger.kernel.org; Fri, 17 Apr 2009 09:47:14 +0000
-Received: from s2.org ([195.197.64.39])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 17 Apr 2009 09:47:14 +0000
-Received: from azure by s2.org with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 17 Apr 2009 09:47:14 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: s2.org
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/22.2 (gnu/linux)
-Cancel-Lock: sha1:u3GrTZPVS9BM25ixSsmZCywcZi4=
+	id S1759706AbZDQKKw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Apr 2009 06:10:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757550AbZDQKKw
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Apr 2009 06:10:52 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43053 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755263AbZDQKKv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Apr 2009 06:10:51 -0400
+Received: (qmail invoked by alias); 17 Apr 2009 10:10:49 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp034) with SMTP; 17 Apr 2009 12:10:49 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+1gso7XNS12itJckq+l08gTVCe9fyMaZ6YMohfRV
+	2MYmg0AWJX88DJ
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <873ac8m8jg.fsf@users.sourceforge.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116730>
 
-Greetings,
+Hi,
 
-I upgraded to the latest git.git as of yesterday
-(f800b65bea1504299747e7be03ee279508a74e1f) in Cygwin to see if it
-still has the rebase and bogus modified files problem(s) (reported
-earlier http://osdir.com/ml/git/2009-04/msg00619.html).  It does;
-I'll try to bisect it if I manage to make the test case automatic.
+On Fri, 17 Apr 2009, Pat Thoyts wrote:
 
-I also thought I'd run all the tests just for the heck of it.  The
-result is about 240 failures which are available here (lines
-indicating passed tests removed):
+> 
+>   With Tk 8.5+ use the themed widgets to improve the appearence
+>   on Windows and MacOSX. On X11 less difference is apparent but
+>   users can select alternate themes by setting *TkTheme in the
+>   resource database (eg: *TkTheme: clam)
+> 
+>   With Tk 8.6 there is a built-in font selection dialog and this
+>   patch will make use of that when available as on Windows and
+>   MacOSX it calls the native font selection dialog.
 
-http://www.iki.fi/azure/tmp/git-test-results-cygwin-f800b65bea1504299747e7be03ee279508a74e1f.txt
+I had several conflicts applying your patch, and I do not have object 
+a346bd5 here (not even fetching from Paul's repository), but I fixed them 
+all up.  (In function setoptions(), you seemed to remove a part asking 
+about the windowingsystem being "aqua", but my gitk did not have that.)
 
-I wonder, since there seems to be some sort of mechanism to mark
-failures "known" (at least I got a couple of "still broken ..."
-lines), are all these unexpected, new problems, or is there perhaps
-some separate list of known failures on Cygwin?
+The end result can be marveled at in 4msysgit's 'ttk' branch.
 
--- 
-Hannu
+I did not have time to go through your changes, though.
+
+But can I place another wish with you?  It all looks nicer now, except the 
+text which is not anti-aliased...  Any chance to fix that?
+
+Ciao,
+Dscho
