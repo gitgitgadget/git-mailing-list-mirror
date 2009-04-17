@@ -1,101 +1,80 @@
-From: William DiNoia <william.dinoia@mac.com>
-Subject: Re: git for local web development
-Date: Fri, 17 Apr 2009 15:44:43 +0000 (UTC)
-Message-ID: <loom.20090417T153819-898@post.gmane.org>
-References: <135754252540163221910297561025355826788-Webmail@me.com> <20090417115925.GB29121@coredump.intra.peff.net>
+From: "Aaron Gray" <aaronngray.lists@googlemail.com>
+Subject: git & ssh on F10 server
+Date: Fri, 17 Apr 2009 16:56:16 +0100
+Message-ID: <489CF11BD65F439998B6CF3FCC610576@HPLAPTOP>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 17 17:46:39 2009
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 17 17:58:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LuqGu-0002LL-6f
-	for gcvg-git-2@gmane.org; Fri, 17 Apr 2009 17:46:32 +0200
+	id 1LuqSJ-0007M5-Ep
+	for gcvg-git-2@gmane.org; Fri, 17 Apr 2009 17:58:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753936AbZDQPo6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Apr 2009 11:44:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753257AbZDQPo5
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Apr 2009 11:44:57 -0400
-Received: from main.gmane.org ([80.91.229.2]:55808 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751441AbZDQPo4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Apr 2009 11:44:56 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1LuqFK-0002kW-FH
-	for git@vger.kernel.org; Fri, 17 Apr 2009 15:44:54 +0000
-Received: from c-76-117-28-254.hsd1.pa.comcast.net ([76.117.28.254])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 17 Apr 2009 15:44:54 +0000
-Received: from william.dinoia by c-76-117-28-254.hsd1.pa.comcast.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 17 Apr 2009 15:44:54 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 76.117.28.254 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.7) Gecko/2009032803 Iceweasel/3.0.6 (Debian-3.0.6-1))
+	id S1758057AbZDQP4V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Apr 2009 11:56:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756924AbZDQP4V
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Apr 2009 11:56:21 -0400
+Received: from mail-ew0-f176.google.com ([209.85.219.176]:47104 "EHLO
+	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755581AbZDQP4U (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Apr 2009 11:56:20 -0400
+Received: by ewy24 with SMTP id 24so288859ewy.37
+        for <git@vger.kernel.org>; Fri, 17 Apr 2009 08:56:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to:subject
+         :date:mime-version:content-type:content-transfer-encoding:x-priority
+         :x-msmail-priority:x-mailer:x-mimeole;
+        bh=CQXuAvjEhcIZH/VSvyE6cSJf6bkRTwa1BaXv2arpGQE=;
+        b=k/H0qq0eenlXk8OJp8vqDnQ3Uc7gdZIfBzPBJxp0U62/37I06liDCMWKaeVwihCc8X
+         /D4URdJmp+vpR1yCecoaRSOi0kpsODS/LygU/1XYrc0pUoqcUsIVzkaApUGrYcsQTzjo
+         8tDppkGWVXWxHg7XsHfcE4V7/G1po0S06cyAw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:from:to:subject:date:mime-version:content-type
+         :content-transfer-encoding:x-priority:x-msmail-priority:x-mailer
+         :x-mimeole;
+        b=XoiY2PLOz9SJPKG3/mRdV+sCs34nC8dVHjkx8n5xb6Km2HseLHyrvsbUSyNBA902zL
+         BfXq8UTFnD2GVDViGizP39Uhs05C3dy+WEkGRwMHCLvJPCCxBm0rxxPyBOfPIxpjhsxS
+         38bUnIVj5ctio9VXp9nFg8TC+2oO3WLYRN9J8=
+Received: by 10.210.41.14 with SMTP id o14mr819232ebo.8.1239983779341;
+        Fri, 17 Apr 2009 08:56:19 -0700 (PDT)
+Received: from HPLAPTOP (mwgray.force9.co.uk [212.159.110.144])
+        by mx.google.com with ESMTPS id 28sm3778808eye.34.2009.04.17.08.56.18
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 17 Apr 2009 08:56:18 -0700 (PDT)
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5512
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116752>
 
-Jeff King <peff <at> peff.net> writes:
+Hi,
 
-> 
-> On Thu, Apr 16, 2009 at 07:04:10PM -0400, William DiNoia wrote:
-> 
-> > I would like to be able to git-push and have the work tree updated.
-> >
-> > [...]
-> >
-> > $vim .git/hooks/post-receive
-> >  #!/bin/sh
-> >  git-checkout -f
-> > $chmod +x .git/hooks/post-receive
-> >
-> > [...]
-> >
-> > Counting objects: 5, done.
-> > Compressing objects: 100% (2/2), done.
-> > Writing objects: 100% (3/3), 277 bytes, done.
-> > Total 3 (delta 1), reused 0 (delta 0)
-> > Unpacking objects: 100% (3/3), done.
-> > To /var/www/sites/test.com/.git
-> >    9b490a2..5e5cc63  master -> master
-> > error: unable to unlink old 'index.html' (Permission denied)
-> > error: hooks/post-receive exited with error code 1
-> 
-> Well, your post-receive hook is running, and checkout is barfing with a
-> permission denied error. Probably the repo directory is owned by
-> www-data, and you are pushing as user "william"? What are the directory
-> permissions like?
-> 
-> -Peff
+we have a Fedora 10 server in SELinux enforcing mode setup running 
+git-deamon and gitweb (with home grown SElinux policy).
 
-I have since switched to using the post-update hook which now looks like:
+Anyway now we find out you cannot do a 'push' over the basic git protocol, 
+back to the server repository.
 
-git-checkout -f
-exec git-update-server-info
+So now am trying to get git to work over ssh. The repositories are located 
+/pub/git/*/.git
 
-However upon git-push from /home/william/Desktop I receive the following:
+Basic attempts using BerliOS'es instructions for client end failed.
 
-Counting objects: 5, done.
-Compressing objects: 100% (2/2), done.
-Writing objects: 100% (3/3), 281 bytes, done.
-Total 3 (delta 1), reused 0 (delta 0)
-Unpacking objects: 100% (3/3), done.
-To /var/www/sites/test.com/.git
-   e337c9b..581228f  master -> master
-error: unable to unlink old 'index.html' (Permission denied)
+    http://developer.berlios.de/docman/display_doc.php?docid=1812&group_id=2
 
-The repo is owned by "www-data" and I am pushing as user "william". "william"
-is in the "www-data" group. I also ran
+Could someone please help us with this.
 
-git-config core.sharedrepository group
-
-as "www-data", but no change...
+Aaron
