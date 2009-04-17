@@ -1,66 +1,54 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: renaming remote branches
-Date: Fri, 17 Apr 2009 08:07:41 -0400
-Message-ID: <20090417120741.GD29121@coredump.intra.peff.net>
-References: <buo3ac9jn18.fsf@dhlpc061.dev.necel.com> <20090416065934.GA20071@coredump.intra.peff.net> <76718490904160609s1ef9c1e0m6f19ff169666fa3@mail.gmail.com> <20090416135037.GA7770@coredump.intra.peff.net> <buomyagf6g7.fsf@dhlpc061.dev.necel.com>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH] gitk: use themed tk widgets
+Date: Fri, 17 Apr 2009 23:01:32 +1000
+Message-ID: <18920.32172.162401.593355@cargo.ozlabs.ibm.com>
+References: <873ac8m8jg.fsf@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Fri Apr 17 14:09:22 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Fri Apr 17 15:03:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lumsj-0008WD-Ag
-	for gcvg-git-2@gmane.org; Fri, 17 Apr 2009 14:09:21 +0200
+	id 1Luniu-00031z-91
+	for gcvg-git-2@gmane.org; Fri, 17 Apr 2009 15:03:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758391AbZDQMHt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Apr 2009 08:07:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754298AbZDQMHs
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Apr 2009 08:07:48 -0400
-Received: from peff.net ([208.65.91.99]:41264 "EHLO peff.net"
+	id S1754298AbZDQNBn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Apr 2009 09:01:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754209AbZDQNBm
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Apr 2009 09:01:42 -0400
+Received: from bilbo.ozlabs.org ([203.10.76.25]:50806 "EHLO bilbo.ozlabs.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753787AbZDQMHs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Apr 2009 08:07:48 -0400
-Received: (qmail 16880 invoked by uid 107); 17 Apr 2009 12:07:53 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 17 Apr 2009 08:07:53 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Apr 2009 08:07:41 -0400
-Content-Disposition: inline
-In-Reply-To: <buomyagf6g7.fsf@dhlpc061.dev.necel.com>
+	id S1753936AbZDQNBm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Apr 2009 09:01:42 -0400
+Received: by bilbo.ozlabs.org (Postfix, from userid 1003)
+	id 95D4AB7079; Fri, 17 Apr 2009 23:01:40 +1000 (EST)
+In-Reply-To: <873ac8m8jg.fsf@users.sourceforge.net>
+X-Mailer: VM 8.0.9 under Emacs 22.2.1 (i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116737>
 
-On Fri, Apr 17, 2009 at 09:51:36AM +0900, Miles Bader wrote:
+Pat Thoyts writes:
 
-> E.g., a project has a long-term public branch "oink" which is finally
-> merged to master, and thereafter ceases to be kept up-to-date.
-> Sometimes the developers are reluctant to delete it becaue they want to
-> keep the history around.  However simply leaving it in place can be
+>   With Tk 8.5+ use the themed widgets to improve the appearence
+>   on Windows and MacOSX. On X11 less difference is apparent but
+>   users can select alternate themes by setting *TkTheme in the
+>   resource database (eg: *TkTheme: clam)
 
-For some definition of "history", I suppose. Everything of interest
-should now be part of the history of "master", except:
+Looks nice, but the geometry restoration code doesn't seem to work
+when using the themed widgets.  I normally have gitk set so that the
+top pane is about half the height of the bottom pane, but when I start
+gitk with this patch both panes always come up about the same height,
+no matter what sizes they had last time gitk ran.
 
-  1.  you can no longer refer to the branch by name (but why would you
-      want to, if it is now obsolete?)
+I notice that the code that restores the height and width of the top
+pane is now inside if {!$use_ttk}.  Is there no way to restore the
+pane layout with the themed widgets?
 
-  2. the reflog history for oink would be gone (but that will be gone
-     anyway after the 90-day expiration period)
-
-So I think it is a case of those developers being overly cautious. But I
-respect the fact that it is sometimes easier to simply move the branches
-than try to convince them otherwise.
-
-If you were keeping reflogs forever for auditing purposes (as has been
-discussed elsewhere in the thread about gentoo), then I can see some
-point to (2). But in such a workflow, your "delete and create" strategy
-doesn't help at all, as the reflog is still purged. You would want to
-disable branch deletion entirely in such a workflow, and use a
-first-class move command. So a first-class "move remote branch"
-operation would be useful there.
-
--Peff
+Paul.
