@@ -1,61 +1,66 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Add the diff option --no-defaults
-Date: Fri, 17 Apr 2009 07:54:14 -0400
-Message-ID: <20090417115414.GA29121@coredump.intra.peff.net>
-References: <alpine.GSO.2.00.0904021647120.16242@kiwi.cs.ucla.edu> <alpine.DEB.1.00.0904091030030.10279@pacific.mpi-cbg.de> <20090409084903.GA18947@coredump.intra.peff.net> <alpine.DEB.1.00.0904091242430.10279@pacific.mpi-cbg.de> <20090410080155.GB32195@coredump.intra.peff.net> <alpine.DEB.1.00.0904140036341.10279@pacific.mpi-cbg.de> <20090416083443.GA27399@coredump.intra.peff.net> <alpine.DEB.1.00.0904161124000.10279@pacific.mpi-cbg.de> <20090416094154.GA30479@coredump.intra.peff.net> <7v4owok0bh.fsf@gitster.siamese.dyndns.org>
+Subject: Re: git for local web development
+Date: Fri, 17 Apr 2009 07:59:25 -0400
+Message-ID: <20090417115925.GB29121@coredump.intra.peff.net>
+References: <135754252540163221910297561025355826788-Webmail@me.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Keith Cascio <keith@CS.UCLA.EDU>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 17 13:56:21 2009
+Cc: git@vger.kernel.org
+To: William DiNoia <william.dinoia@mac.com>
+X-From: git-owner@vger.kernel.org Fri Apr 17 14:01:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lumfl-0003lM-JO
-	for gcvg-git-2@gmane.org; Fri, 17 Apr 2009 13:55:58 +0200
+	id 1Lumki-0005eA-Ju
+	for gcvg-git-2@gmane.org; Fri, 17 Apr 2009 14:01:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756679AbZDQLyW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Apr 2009 07:54:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756247AbZDQLyW
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Apr 2009 07:54:22 -0400
-Received: from peff.net ([208.65.91.99]:56346 "EHLO peff.net"
+	id S1757772AbZDQL7f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Apr 2009 07:59:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753463AbZDQL7d
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Apr 2009 07:59:33 -0400
+Received: from peff.net ([208.65.91.99]:36600 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753495AbZDQLyW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Apr 2009 07:54:22 -0400
-Received: (qmail 15349 invoked by uid 107); 17 Apr 2009 11:54:26 -0000
+	id S1753739AbZDQL7c (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Apr 2009 07:59:32 -0400
+Received: (qmail 15951 invoked by uid 107); 17 Apr 2009 11:59:38 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 17 Apr 2009 07:54:26 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Apr 2009 07:54:14 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 17 Apr 2009 07:59:38 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Apr 2009 07:59:25 -0400
 Content-Disposition: inline
-In-Reply-To: <7v4owok0bh.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <135754252540163221910297561025355826788-Webmail@me.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116733>
 
-On Thu, Apr 16, 2009 at 09:52:50AM -0700, Junio C Hamano wrote:
+On Thu, Apr 16, 2009 at 07:04:10PM -0400, William DiNoia wrote:
 
-> > Right now, I think we are safe. A few options like "--default" do take a
-> > separated string argument, but saying "--default --no-defaults" seems a
-> > little crazy to me (besides being confusing because they are talking
-> > about two totally unrelated defaults).
-> 
-> Maybe you guys have already considered and discarded this as too hacky,
-> but isn't it the easiest to explain and code to declare --no-defaults is
-> acceptable only at the beginning?
+> I would like to be able to git-push and have the work tree updated.
+>
+> [...]
+>
+> $vim .git/hooks/post-receive
+>  #!/bin/sh
+>  git-checkout -f
+> $chmod +x .git/hooks/post-receive
+>
+> [...]
+>
+> Counting objects: 5, done.
+> Compressing objects: 100% (2/2), done.
+> Writing objects: 100% (3/3), 277 bytes, done.
+> Total 3 (delta 1), reused 0 (delta 0)
+> Unpacking objects: 100% (3/3), done.
+> To /var/www/sites/test.com/.git
+>    9b490a2..5e5cc63  master -> master
+> error: unable to unlink old 'index.html' (Permission denied)
+> error: hooks/post-receive exited with error code 1
 
-I discarded that as "too hacky". If I had to choose my poison between
-"insane string options don't work" and "option must inexplicably be at
-the front", I think I take the former. It is perhaps a more difficult
-rule to realize you are triggering, but it is much less likely to come
-up in practice.
-
-But I think all of this is just ending up in the same place that Keith
-and I arrived at much earlier in the thread: you _are_ choosing a
-poison, and his patch was meant to avoid that. The question is whether
-the added code complexity is worth it.
+Well, your post-receive hook is running, and checkout is barfing with a
+permission denied error. Probably the repo directory is owned by
+www-data, and you are pushing as user "william"? What are the directory
+permissions like?
 
 -Peff
