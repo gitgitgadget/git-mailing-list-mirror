@@ -1,152 +1,204 @@
 From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH v2 5/5] archive test: attributes
-Date: Sat, 18 Apr 2009 00:18:10 +0200
-Message-ID: <49E90022.20700@lsrfire.ath.cx>
+Subject: [PATCH v2 4/5] archive: do not read .gitattributes in working directory
+Date: Sat, 18 Apr 2009 00:18:05 +0200
+Message-ID: <49E9001D.9020209@lsrfire.ath.cx>
 References: <1239848917-14399-1-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org,
 	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
 	<pclouds@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 18 00:20:26 2009
+X-From: git-owner@vger.kernel.org Sat Apr 18 00:20:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LuwQ4-0000iT-RG
-	for gcvg-git-2@gmane.org; Sat, 18 Apr 2009 00:20:25 +0200
+	id 1LuwQ4-0000iT-3B
+	for gcvg-git-2@gmane.org; Sat, 18 Apr 2009 00:20:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762044AbZDQWSS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Apr 2009 18:18:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762204AbZDQWSQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Apr 2009 18:18:16 -0400
-Received: from india601.server4you.de ([85.25.151.105]:46220 "EHLO
+	id S1762212AbZDQWSN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Apr 2009 18:18:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762149AbZDQWSM
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Apr 2009 18:18:12 -0400
+Received: from india601.server4you.de ([85.25.151.105]:46217 "EHLO
 	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762149AbZDQWSP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Apr 2009 18:18:15 -0400
+	with ESMTP id S1762010AbZDQWSK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Apr 2009 18:18:10 -0400
 Received: from [10.0.1.101] (p57B7DF1E.dip.t-dialin.net [87.183.223.30])
-	by india601.server4you.de (Postfix) with ESMTPSA id 9A3562F8044;
-	Sat, 18 Apr 2009 00:18:13 +0200 (CEST)
+	by india601.server4you.de (Postfix) with ESMTPSA id 7D4AC2F8044;
+	Sat, 18 Apr 2009 00:18:08 +0200 (CEST)
 User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
 In-Reply-To: <1239848917-14399-1-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116797>
 
-Add a test script for all archive attributes and their handling in
-normal and bare repositories.  export-ignore and export-subst are
-tested, as well as the effect of the option --worktree-attributes.
+=46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+The old behaviour still remains with --worktree-attributes, and it is
+always on for the legacy "git tar-tree".
+
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
-Any attribute related tests in t5000 can eventually be removed if
-there is an equivalent test in t5001 -- and there should be.
+Changes:
 
- t/t5001-archive-attr.sh |   91 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 91 insertions(+), 0 deletions(-)
- create mode 100755 t/t5001-archive-attr.sh
+   s/--fix-attributes/--worktree-attributes/g
 
-diff --git a/t/t5001-archive-attr.sh b/t/t5001-archive-attr.sh
-new file mode 100755
-index 0000000..426b319
---- /dev/null
-+++ b/t/t5001-archive-attr.sh
-@@ -0,0 +1,91 @@
-+#!/bin/sh
+   Don't make tar-tree silently ignore --worktree-attributes; its
+   behaviour should not be changed any more.
+
+ Documentation/git-archive.txt |    5 ++++-
+ archive.c                     |   23 +++++++++++++++++++++++
+ archive.h                     |    1 +
+ builtin-tar-tree.c            |    9 ++++++++-
+ 4 files changed, 36 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.=
+txt
+index c1adf59..bc132c8 100644
+--- a/Documentation/git-archive.txt
++++ b/Documentation/git-archive.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git archive' --format=3D<fmt> [--list] [--prefix=3D<prefix>/] [<extra=
+>]
+-	      [--output=3D<file>]
++	      [--output=3D<file>] [--worktree-attributes]
+ 	      [--remote=3D<repo> [--exec=3D<git-upload-archive>]] <tree-ish>
+ 	      [path...]
+=20
+@@ -51,6 +51,9 @@ OPTIONS
+ --output=3D<file>::
+ 	Write the archive to <file> instead of stdout.
+=20
++--worktree-attributes::
++	Look for attributes in .gitattributes in working directory too.
 +
-+test_description='git archive attribute tests'
+ <extra>::
+ 	This can be any options that the archiver backend understands.
+ 	See next section.
+diff --git a/archive.c b/archive.c
+index 96b62d4..b2b90d3 100644
+--- a/archive.c
++++ b/archive.c
+@@ -4,6 +4,7 @@
+ #include "attr.h"
+ #include "archive.h"
+ #include "parse-options.h"
++#include "unpack-trees.h"
+=20
+ static char const * const archive_usage[] =3D {
+ 	"git archive [options] <tree-ish> [path...]",
+@@ -150,6 +151,8 @@ int write_archive_entries(struct archiver_args *arg=
+s,
+ 		write_archive_entry_fn_t write_entry)
+ {
+ 	struct archiver_context context;
++	struct unpack_trees_options opts;
++	struct tree_desc t;
+ 	int err;
+=20
+ 	if (args->baselen > 0 && args->base[args->baselen - 1] =3D=3D '/') {
+@@ -168,6 +171,22 @@ int write_archive_entries(struct archiver_args *ar=
+gs,
+ 	context.args =3D args;
+ 	context.write_entry =3D write_entry;
+=20
++	/*
++	 * Setup index and instruct attr to read index only
++	 */
++	if (!args->worktree_attributes) {
++		memset(&opts, 0, sizeof(opts));
++		opts.index_only =3D 1;
++		opts.head_idx =3D -1;
++		opts.src_index =3D &the_index;
++		opts.dst_index =3D &the_index;
++		opts.fn =3D oneway_merge;
++		init_tree_desc(&t, args->tree->buffer, args->tree->size);
++		if (unpack_trees(1, &t, &opts))
++			return -1;
++		git_attr_set_direction(GIT_ATTR_INDEX, &the_index);
++	}
 +
-+. ./test-lib.sh
+ 	err =3D  read_tree_recursive(args->tree, args->base, args->baselen, 0=
+,
+ 			args->pathspec, write_archive_entry, &context);
+ 	if (err =3D=3D READ_TREE_RECURSIVE)
+@@ -258,6 +277,7 @@ static int parse_archive_args(int argc, const char =
+**argv,
+ 	int verbose =3D 0;
+ 	int i;
+ 	int list =3D 0;
++	int worktree_attributes =3D 0;
+ 	struct option opts[] =3D {
+ 		OPT_GROUP(""),
+ 		OPT_STRING(0, "format", &format, "fmt", "archive format"),
+@@ -265,6 +285,8 @@ static int parse_archive_args(int argc, const char =
+**argv,
+ 			"prepend prefix to each pathname in the archive"),
+ 		OPT_STRING(0, "output", &output, "file",
+ 			"write the archive to this file"),
++		OPT_BOOLEAN(0, "worktree-attributes", &worktree_attributes,
++			"read .gitattributes in working directory"),
+ 		OPT__VERBOSE(&verbose),
+ 		OPT__COMPR('0', &compression_level, "store only", 0),
+ 		OPT__COMPR('1', &compression_level, "compress faster", 1),
+@@ -324,6 +346,7 @@ static int parse_archive_args(int argc, const char =
+**argv,
+ 	args->verbose =3D verbose;
+ 	args->base =3D base;
+ 	args->baselen =3D strlen(base);
++	args->worktree_attributes =3D worktree_attributes;
+=20
+ 	return argc;
+ }
+diff --git a/archive.h b/archive.h
+index 0b15b35..038ac35 100644
+--- a/archive.h
++++ b/archive.h
+@@ -10,6 +10,7 @@ struct archiver_args {
+ 	time_t time;
+ 	const char **pathspec;
+ 	unsigned int verbose : 1;
++	unsigned int worktree_attributes : 1;
+ 	int compression_level;
+ };
+=20
+diff --git a/builtin-tar-tree.c b/builtin-tar-tree.c
+index 0713bca..1a5a2ed 100644
+--- a/builtin-tar-tree.c
++++ b/builtin-tar-tree.c
+@@ -24,7 +24,7 @@ int cmd_tar_tree(int argc, const char **argv, const c=
+har *prefix)
+ 	 * 	git archive --format-tar --prefix=3Dbasedir tree-ish
+ 	 */
+ 	int i;
+-	const char **nargv =3D xcalloc(sizeof(*nargv), argc + 2);
++	const char **nargv =3D xcalloc(sizeof(*nargv), argc + 3);
+ 	char *basedir_arg;
+ 	int nargc =3D 0;
+=20
+@@ -36,6 +36,13 @@ int cmd_tar_tree(int argc, const char **argv, const =
+char *prefix)
+ 		argv++;
+ 		argc--;
+ 	}
 +
-+SUBSTFORMAT=%H%n
++	/*
++	 * Because it's just a compatibility wrapper, tar-tree supports only
++	 * the old behaviour of reading attributes from the work tree.
++	 */
++	nargv[nargc++] =3D "--worktree-attributes";
 +
-+test_expect_exists() {
-+	test_expect_success " $1 exists" "test -e $1"
-+}
-+
-+test_expect_missing() {
-+	test_expect_success " $1 does not exist" "test ! -e $1"
-+}
-+
-+test_expect_success 'setup' '
-+	echo ignored >ignored &&
-+	echo ignored export-ignore >>.git/info/attributes &&
-+	git add ignored &&
-+
-+	echo ignored by tree >ignored-by-tree &&
-+	echo ignored-by-tree export-ignore >.gitattributes &&
-+	git add ignored-by-tree .gitattributes &&
-+
-+	echo ignored by worktree >ignored-by-worktree &&
-+	echo ignored-by-worktree export-ignore >.gitattributes &&
-+	git add ignored-by-worktree &&
-+
-+	printf "A\$Format:%s\$O" "$SUBSTFORMAT" >nosubstfile &&
-+	printf "A\$Format:%s\$O" "$SUBSTFORMAT" >substfile1 &&
-+	printf "A not substituted O" >substfile2 &&
-+	echo "substfile?" export-subst >>.git/info/attributes &&
-+	git add nosubstfile substfile1 substfile2 &&
-+
-+	git commit -m. &&
-+
-+	git clone --bare . bare &&
-+	cp .git/info/attributes bare/info/attributes
-+'
-+
-+test_expect_success 'git archive' '
-+	git archive HEAD >archive.tar &&
-+	(mkdir archive && cd archive && "$TAR" xf -) <archive.tar
-+'
-+
-+test_expect_missing	archive/ignored
-+test_expect_missing	archive/ignored-by-tree
-+test_expect_exists	archive/ignored-by-worktree
-+
-+test_expect_success 'git archive with worktree attributes' '
-+	git archive --worktree-attributes HEAD >worktree.tar &&
-+	(mkdir worktree && cd worktree && "$TAR" xf -) <worktree.tar
-+'
-+
-+test_expect_missing	worktree/ignored
-+test_expect_exists	worktree/ignored-by-tree
-+test_expect_missing	worktree/ignored-by-worktree
-+
-+test_expect_success 'git archive vs. bare' '
-+	(cd bare && git archive HEAD) >bare-archive.tar &&
-+	test_cmp archive.tar bare-archive.tar
-+'
-+
-+test_expect_success 'git archive with worktree attributes, bare' '
-+	(cd bare && git archive --worktree-attributes HEAD) >bare-worktree.tar &&
-+	(mkdir bare-worktree && cd bare-worktree && "$TAR" xf -) <bare-worktree.tar
-+'
-+
-+test_expect_missing	bare-worktree/ignored
-+test_expect_exists	bare-worktree/ignored-by-tree
-+test_expect_exists	bare-worktree/ignored-by-worktree
-+
-+test_expect_success 'export-subst' '
-+	git log "--pretty=format:A${SUBSTFORMAT}O" HEAD >substfile1.expected &&
-+	test_cmp nosubstfile archive/nosubstfile &&
-+	test_cmp substfile1.expected archive/substfile1 &&
-+	test_cmp substfile2 archive/substfile2
-+'
-+
-+test_expect_success 'git tar-tree vs. git archive with worktree attributes' '
-+	git tar-tree HEAD >tar-tree.tar &&
-+	test_cmp worktree.tar tar-tree.tar
-+'
-+
-+test_expect_success 'git tar-tree vs. git archive with worktree attrs, bare' '
-+	(cd bare && git tar-tree HEAD) >bare-tar-tree.tar &&
-+	test_cmp bare-worktree.tar bare-tar-tree.tar
-+'
-+
-+test_done
--- 
+ 	switch (argc) {
+ 	default:
+ 		usage(tar_tree_usage);
+--=20
 1.6.3.rc0
