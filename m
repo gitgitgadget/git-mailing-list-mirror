@@ -1,66 +1,63 @@
-From: Paul Gortmaker <paul.gortmaker@windriver.com>
-Subject: [PATCH] gitweb: filter escapes from longer commit titles that break firefox
-Date: Fri, 17 Apr 2009 12:24:33 -0400
-Message-ID: <1239985473-666-1-git-send-email-paul.gortmaker@windriver.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 17 18:27:07 2009
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH] Allow git-shell to be used as a ssh forced-command
+Date: Fri, 17 Apr 2009 20:24:35 +0400
+Message-ID: <37fcd2780904170924t61168a49uf1800098cdb1d730@mail.gmail.com>
+References: <1239916256-10878-1-git-send-email-mh@glandium.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Fri Apr 17 18:27:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Luqtu-0002LV-EF
+	id 1Luqtt-0002LV-LF
 	for gcvg-git-2@gmane.org; Fri, 17 Apr 2009 18:26:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761413AbZDQQYr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Apr 2009 12:24:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760836AbZDQQYr
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Apr 2009 12:24:47 -0400
-Received: from mail.windriver.com ([147.11.1.11]:54636 "EHLO mail.wrs.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760409AbZDQQYq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Apr 2009 12:24:46 -0400
-Received: from ALA-MAIL03.corp.ad.wrs.com (ala-mail03 [147.11.57.144])
-	by mail.wrs.com (8.13.6/8.13.6) with ESMTP id n3HGOj7C008179
-	for <git@vger.kernel.org>; Fri, 17 Apr 2009 09:24:45 -0700 (PDT)
-Received: from ala-mail06.corp.ad.wrs.com ([147.11.57.147]) by ALA-MAIL03.corp.ad.wrs.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Fri, 17 Apr 2009 09:24:44 -0700
-Received: from localhost.localdomain ([128.224.146.65]) by ala-mail06.corp.ad.wrs.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Fri, 17 Apr 2009 09:24:44 -0700
-X-Mailer: git-send-email 1.6.2.3
-X-OriginalArrivalTime: 17 Apr 2009 16:24:44.0719 (UTC) FILETIME=[04AD63F0:01C9BF79]
+	id S1761631AbZDQQYi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Apr 2009 12:24:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760409AbZDQQYh
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Apr 2009 12:24:37 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:32912 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760667AbZDQQYg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Apr 2009 12:24:36 -0400
+Received: by fg-out-1718.google.com with SMTP id e12so336528fga.17
+        for <git@vger.kernel.org>; Fri, 17 Apr 2009 09:24:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=kNMsEwI++D96Uw0Gf6cGMQvldmNgCBuRapZJCLvUSOg=;
+        b=ELMExQwojNLDVgcoOzfVEHImu9NVFsjZs1eT2HPrOUHNU6V2JZDy7SEoTOTYstSI5z
+         FpgSl+1t/nYMax7ZaY+sb7foEcggF5oFxRuAxrnX4/tAK83bKVrXF/v1j/uscEBO2kel
+         zVpgbGXZNGiJ1UZ5hG3ZMYvDK6vDjTBtXeLxA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ieLO/7QY/Z30FyR3ofEOg38Jn1v/coVQC1Ib5AKt87yeAx9g0peqoiIZrzWMcUJxIZ
+         TQy4egtmR8IjVz57bShBYf9g4QAiu36LqBKCIYDK+VvDnAv86bd4Sfd7KzLR/YiAKX0l
+         enZdcuzj7m37DMD3mzh79zlCLq5LJrd4Qcjyg=
+Received: by 10.86.59.18 with SMTP id h18mr555453fga.14.1239985475307; Fri, 17 
+	Apr 2009 09:24:35 -0700 (PDT)
+In-Reply-To: <1239916256-10878-1-git-send-email-mh@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116756>
 
-If there is a commit that ends in ^X and is longer in length than
-what will fit in title_short, then it doesn't get fed through
-esc_html() and so the ^X will appear as-is in the page source.
+On Thu, Apr 16, 2009 at 11:10:56PM +0200, Mike Hommey wrote:
+> When using a forced-command, OpenSSH sets the SSH_ORIGINAL_COMMAND
+> variable to what would otherwise be passed to $SHELL -c. When this
+> variable is set, we use it instead of the contents of argv.
 
-When Firefox comes across this, it will fail to display the page,
-and only display a couple lines of error messages that read like:
+It would be nice to provide some justification where it can be used.
+IOW, why do you want to have the force command where essentially
+you execute the original command as it were no force-command?
 
-   XML Parsing Error: not well-formed
-   Location: http://git ....
-
-Signed-off-by: Paul Gortmaker <paul.gortmaker@windriver.com>
----
- gitweb/gitweb.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 33ef190..e686e82 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2470,7 +2470,7 @@ sub parse_commit_text {
- 	foreach my $title (@commit_lines) {
- 		$title =~ s/^    //;
- 		if ($title ne "") {
--			$co{'title'} = chop_str($title, 80, 5);
-+			$co{'title'} = chop_and_escape_str($title, 80, 5);
- 			# remove leading stuff of merges to make the interesting part visible
- 			if (length($title) > 50) {
- 				$title =~ s/^Automatic //;
--- 
-1.6.2.3
+Dmitry
