@@ -1,81 +1,59 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT PATCH 1/3] Changed Transport class hierarchy basing on
-	underlying transport
-Date: Fri, 17 Apr 2009 07:58:46 -0700
-Message-ID: <20090417145846.GP23604@spearce.org>
-References: <85647ef50904160703y3a416294k54f21b50f6006040@mail.gmail.com>
+From: Kai Schlamp <schlamp@gmx.de>
+Subject: Re: Change git gui language (+ some other suggestions)
+Date: Fri, 17 Apr 2009 17:11:08 +0200
+Message-ID: <gsa66j$25c$1@ger.gmane.org>
+References: <49E89304.9060303@gmx.de> <237967ef0904170747l61adf4feq1a5df5f1b26debe2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Constantine Plotnikov <constantine.plotnikov@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 17 17:00:36 2009
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 17 17:13:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LupYF-0000mM-49
-	for gcvg-git-2@gmane.org; Fri, 17 Apr 2009 17:00:23 +0200
+	id 1LupkZ-0005i9-CW
+	for gcvg-git-2@gmane.org; Fri, 17 Apr 2009 17:13:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756944AbZDQO6r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Apr 2009 10:58:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756454AbZDQO6r
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Apr 2009 10:58:47 -0400
-Received: from george.spearce.org ([209.20.77.23]:59366 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753936AbZDQO6r (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Apr 2009 10:58:47 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 6CEF338211; Fri, 17 Apr 2009 14:58:46 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <85647ef50904160703y3a416294k54f21b50f6006040@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1757869AbZDQPLb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Apr 2009 11:11:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756537AbZDQPLb
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Apr 2009 11:11:31 -0400
+Received: from main.gmane.org ([80.91.229.2]:49483 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754586AbZDQPLa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Apr 2009 11:11:30 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Lupiz-00011w-7U
+	for git@vger.kernel.org; Fri, 17 Apr 2009 15:11:29 +0000
+Received: from p54a8f090.dip.t-dialin.net ([84.168.240.144])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 17 Apr 2009 15:11:29 +0000
+Received: from schlamp by p54a8f090.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 17 Apr 2009 15:11:29 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: p54a8f090.dip.t-dialin.net
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <237967ef0904170747l61adf4feq1a5df5f1b26debe2@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116744>
 
-Constantine Plotnikov <constantine.plotnikov@gmail.com> wrote:
-> Instead of WalkTransport and PackTransport the transports
-> are now using SshTransport, TcpTransport, and HttpTransport,
-> indicating the type of basic underlying protocol is dealt
-> with. This lays groundwork for supplying transport specific
-> properties in the future. The WalkTransport and PackTransport
-> are now marker interfaces.
+> I don't know much about language selection on windows (which you
+> didn't say you're using, but I'm inferring it from the referenced
+> thread), but you could try setting LC_MESSAGES=en and LANG=de_DE or
+> whatever germany is, that should at least work in linux :). Maybe tk
+> is nice enough to follow the same rules?
+> 
 
-The entire patch looks fine.  Except its corrupted by line wrapping
-by your MUA.  Can you please resend without using format-flawed ?
-:-)
- 
->  .../spearce/jgit/transport/BasePackConnection.java |    8 +-
->  .../jgit/transport/BasePackFetchConnection.java    |    4 +-
->  .../jgit/transport/BasePackPushConnection.java     |    4 +-
->  .../jgit/transport/BundleFetchConnection.java      |  247 ++++++++++++++++++++
->  .../org/spearce/jgit/transport/HttpTransport.java  |   62 +++++
->  .../org/spearce/jgit/transport/PackTransport.java  |   12 +-
->  .../org/spearce/jgit/transport/SshTransport.java   |   62 +++++
->  .../org/spearce/jgit/transport/TcpTransport.java   |   62 +++++
->  .../spearce/jgit/transport/TransportAmazonS3.java  |    2 +-
->  .../spearce/jgit/transport/TransportBundle.java    |  227 +-----------------
->  .../jgit/transport/TransportBundleFile.java        |   16 ++-
->  .../jgit/transport/TransportBundleStream.java      |   11 +-
->  .../spearce/jgit/transport/TransportGitAnon.java   |    2 +-
->  .../spearce/jgit/transport/TransportGitSsh.java    |    2 +-
->  .../org/spearce/jgit/transport/TransportHttp.java  |    9 +-
->  .../org/spearce/jgit/transport/TransportLocal.java |    2 +-
->  .../org/spearce/jgit/transport/TransportSftp.java  |    2 +-
->  .../jgit/transport/WalkFetchConnection.java        |    3 +-
->  .../spearce/jgit/transport/WalkPushConnection.java |    5 +-
->  .../org/spearce/jgit/transport/WalkTransport.java  |   21 +--
->  20 files changed, 497 insertions(+), 266 deletions(-)
->  create mode 100644
-> org.spearce.jgit/src/org/spearce/jgit/transport/BundleFetchConnection.java
->  create mode 100644
-> org.spearce.jgit/src/org/spearce/jgit/transport/HttpTransport.java
->  create mode 100644
-> org.spearce.jgit/src/org/spearce/jgit/transport/SshTransport.java
->  create mode 100644
-> org.spearce.jgit/src/org/spearce/jgit/transport/TcpTransport.java
+Thanks Mikael. But it seems that it was more a problem with the Cygwin 
+console. LANG=en works now too without changing the keyboard layout.
+But your recommendation works also :-)
 
--- 
-Shawn.
+Cheers,
+Kai
