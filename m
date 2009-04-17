@@ -1,77 +1,75 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: git & ssh on F10 server
-Date: Fri, 17 Apr 2009 17:19:04 +0100 (BST)
-Message-ID: <alpine.LNX.2.00.0904171716150.8346@reaper.quantumfyre.co.uk>
-References: <489CF11BD65F439998B6CF3FCC610576@HPLAPTOP>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: renaming remote branches
+Date: Fri, 17 Apr 2009 20:20:52 +0400
+Message-ID: <37fcd2780904170920m5a0c6c24se345275b0944e59d@mail.gmail.com>
+References: <buo3ac9jn18.fsf@dhlpc061.dev.necel.com>
+	 <20090416065934.GA20071@coredump.intra.peff.net>
+	 <76718490904160609s1ef9c1e0m6f19ff169666fa3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Aaron Gray <aaronngray.lists@googlemail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 17 18:21:59 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Miles Bader <miles@gnu.org>,
+	git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 17 18:22:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Luqox-0000Dw-BQ
-	for gcvg-git-2@gmane.org; Fri, 17 Apr 2009 18:21:43 +0200
+	id 1Luqpj-0000Yb-C9
+	for gcvg-git-2@gmane.org; Fri, 17 Apr 2009 18:22:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758813AbZDQQUF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Apr 2009 12:20:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758809AbZDQQUF
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Apr 2009 12:20:05 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:42201 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757095AbZDQQUE (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Apr 2009 12:20:04 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.quantumfyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id CB752132859
-	for <git@vger.kernel.org>; Fri, 17 Apr 2009 17:20:02 +0100 (BST)
-Received: (qmail 23429 invoked by uid 103); 17 Apr 2009 17:19:04 +0100
-Received: from darkphoton.datavampyre.co.uk by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-2.05st 
- (clamdscan: 0.94.2/9248. spamassassin: 3.2.1. perlscan: 2.05st.  
- Clear:RC:1(212.159.54.234):. 
- Processed in 0.036791 secs); 17 Apr 2009 16:19:04 -0000
-Received: from darkphoton.datavampyre.co.uk (212.159.54.234)
-  by neutron.quantumfyre.co.uk with SMTP; 17 Apr 2009 17:19:04 +0100
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <489CF11BD65F439998B6CF3FCC610576@HPLAPTOP>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1755998AbZDQQU4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Apr 2009 12:20:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754542AbZDQQUz
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Apr 2009 12:20:55 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:31183 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753158AbZDQQUy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Apr 2009 12:20:54 -0400
+Received: by fg-out-1718.google.com with SMTP id 16so129850fgg.17
+        for <git@vger.kernel.org>; Fri, 17 Apr 2009 09:20:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=T6X/PYDdBauk3v9KeI/ThieE0vwGs+DLjy8B7kgdfzo=;
+        b=vTNFOjfycfZ+KY1at9c9AckAJa8UGYZgdxnkniAGr6LOBEBhAsiRKsh2JVzRhdQ3bN
+         D6klqp2fTietsomIzwGYxfH52mk2MUWNvSRUVWjLSZ9mzrc3dnj75DRtklfVAozM0XnG
+         PRjLltvSyftulHp1DTBH+a4ZI3rtbVOU1vc0o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=rlRrdHudA83Sg/Q0tbx0QsJn9OoB5kupEREkiQiSrhGAJyzTccRpFxFkK5PfFiF+0Y
+         9Y24xYwr1UmG5XvS5m1uwYM44TLQHfoksjrZMIKml6CfSUpqspTHGH5uyVARO1a0ILAW
+         haIBLo4oCUHBtVVHPnVWlbRxBzW8DDse87aCw=
+Received: by 10.86.82.6 with SMTP id f6mr2121412fgb.77.1239985252238; Fri, 17 
+	Apr 2009 09:20:52 -0700 (PDT)
+In-Reply-To: <76718490904160609s1ef9c1e0m6f19ff169666fa3@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116754>
 
-On Fri, 17 Apr 2009, Aaron Gray wrote:
-
-> Hi,
+On Thu, Apr 16, 2009 at 5:09 PM, Jay Soffian <jaysoffian@gmail.com> wrote:
 >
-> we have a Fedora 10 server in SELinux enforcing mode setup running git-deamon 
-> and gitweb (with home grown SElinux policy).
+> I wonder whether we should:
 >
-> Anyway now we find out you cannot do a 'push' over the basic git protocol, 
-> back to the server repository.
-
-You can push over git://, but you get no authentication mechanism so it's 
-disabled by default.  It's only really useful if you trust everyone who 
-has IP access to the server.
-
-> So now am trying to get git to work over ssh. The repositories are located 
-> /pub/git/*/.git
+> a) teach git remote a rename-branch sub-command
+> b) add support on the remote side for properly preserving the config and reflog
 >
-> Basic attempts using BerliOS'es instructions for client end failed.
->
->   http://developer.berlios.de/docman/display_doc.php?docid=1812&group_id=2
->
-> Could someone please help us with this.
->
-> Aaron
+> Thoughts?
 
-You haven't said what commands you tried, nor what the errors you received 
-were, so it's a bit hard to say what went wrong ...
+Besides a race condition in creating new and deleting old branch, which
+Jeff already mentioned, it could be some other problems. For instance,
+how this new feature is going to interact with the update hook that many
+users already have? It seems to me there is no way to make it backward
+compatible with existing update hooks, so it will require to add a new
+hook, and by default (unless this rename hook is explicitly allowed),
+renaming should not be allowed, otherwise it can be used to circumvent
+restrictions built inside 'update' hook.
 
--- 
-Julian
-
-  ---
-10.0 times 0.1 is hardly ever 1.0.
+Dmitry
