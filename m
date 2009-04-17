@@ -1,130 +1,72 @@
 From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 5/5] archive test: test new --fix-attributes feature
-Date: Fri, 17 Apr 2009 21:53:52 +0200
-Message-ID: <49E8DE50.5000908@lsrfire.ath.cx>
-References: <1239848917-14399-1-git-send-email-gitster@pobox.com> <1239848917-14399-2-git-send-email-gitster@pobox.com> <1239848917-14399-3-git-send-email-gitster@pobox.com> <1239848917-14399-4-git-send-email-gitster@pobox.com> <1239848917-14399-5-git-send-email-gitster@pobox.com> <1239848917-14399-6-git-send-email-gitster@pobox.com>
+Subject: Re: [PATCH 3/8] archive: add a failure test wrt .gitattributes  
+ misreading
+Date: Fri, 17 Apr 2009 22:15:36 +0200
+Message-ID: <49E8E368.2010703@lsrfire.ath.cx>
+References: <1239185133-4181-1-git-send-email-pclouds@gmail.com> <1239185133-4181-2-git-send-email-pclouds@gmail.com> <1239185133-4181-3-git-send-email-pclouds@gmail.com> <1239185133-4181-4-git-send-email-pclouds@gmail.com> <7vab6rkl5f.fsf@gitster.siamese.dyndns.org> <49E3448B.8010602@lsrfire.ath.cx> <7v4owpm2il.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 17 21:55:42 2009
+X-From: git-owner@vger.kernel.org Fri Apr 17 22:17:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Luu9r-00034t-PY
-	for gcvg-git-2@gmane.org; Fri, 17 Apr 2009 21:55:32 +0200
+	id 1LuuUw-0002Xk-Dn
+	for gcvg-git-2@gmane.org; Fri, 17 Apr 2009 22:17:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753734AbZDQTx6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Apr 2009 15:53:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753582AbZDQTx5
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Apr 2009 15:53:57 -0400
-Received: from india601.server4you.de ([85.25.151.105]:60675 "EHLO
+	id S1752611AbZDQUPm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Apr 2009 16:15:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752043AbZDQUPl
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Apr 2009 16:15:41 -0400
+Received: from india601.server4you.de ([85.25.151.105]:54845 "EHLO
 	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753449AbZDQTx5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Apr 2009 15:53:57 -0400
+	with ESMTP id S1750907AbZDQUPl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Apr 2009 16:15:41 -0400
 Received: from [10.0.1.101] (p57B7F146.dip.t-dialin.net [87.183.241.70])
-	by india601.server4you.de (Postfix) with ESMTPSA id 905592F8044;
-	Fri, 17 Apr 2009 21:53:55 +0200 (CEST)
+	by india601.server4you.de (Postfix) with ESMTPSA id DA2BC2F8044;
+	Fri, 17 Apr 2009 22:15:39 +0200 (CEST)
 User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <1239848917-14399-6-git-send-email-gitster@pobox.com>
+In-Reply-To: <7v4owpm2il.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116785>
 
-Could you please squash in the following, which adds test cases for bare repos
-and gives every export-ignore file existence test its own test case?  And also
+Junio C Hamano schrieb:
+> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+>=20
+>> Hmm, "fix" implies that something is broken without this option, whi=
+ch
+>> is not necessarily the case.
+>=20
+> "What is recorded in the tree is unsuitable for the purpose of this
+> particular export, so we are xxxing using yyy", is the intended use c=
+ase,
+> and I think the verb "fix" is a good fit there in "xxx" part.  "Tweak=
+"
+> would also work well.
+>=20
+> Your suggestion is to say "attributes from the work tree" in place of
+> "yyy", which also is good.
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+> I got the impression that people tend to prefer the operation named a=
+fter
+> what it does than how it does it, but I can go either way.
 
-?
+That's a good rule to follow in general.  "Fix" sounds to me as if git'=
+s
+default behaviour is wrong and needs an option to make it work
+correctly, though.  It's too broad a term.
 
- t/t5001-archive-attr.sh |   46 ++++++++++++++++++++++++++++++++++++++--------
- 1 files changed, 38 insertions(+), 8 deletions(-)
+I think the fixing, tweaking or even breaking will be done by the user,
+when editing the attribute files in the work tree.  git then only
+applies or evaluates these attributes, creating the archive using a
+different source of meta data.  "--worktree-attributes" captures this
+nicely.
 
-diff --git a/t/t5001-archive-attr.sh b/t/t5001-archive-attr.sh
-index b754f21..dd93c3f 100755
---- a/t/t5001-archive-attr.sh
-+++ b/t/t5001-archive-attr.sh
-@@ -6,6 +6,14 @@ test_description='git archive attribute tests'
- 
- SUBSTFORMAT=%H%n
- 
-+test_expect_exists() {
-+	test_expect_success " $1 exists" "test -e $1"
-+}
-+
-+test_expect_missing() {
-+	test_expect_success " $1 does not exist" "test ! -e $1"
-+}
-+
- test_expect_success 'setup' '
- 	echo ignored >ignored &&
- 	echo ignored export-ignore >>.git/info/attributes &&
-@@ -25,7 +33,10 @@ test_expect_success 'setup' '
- 	echo "substfile?" export-subst >>.git/info/attributes &&
- 	git add nosubstfile substfile1 substfile2 &&
- 
--	git commit -m.
-+	git commit -m. &&
-+
-+	git clone --bare . bare &&
-+	cp .git/info/attributes bare/info/attributes
- '
- 
- test_expect_success 'git archive' '
-@@ -33,20 +44,34 @@ test_expect_success 'git archive' '
- 	(mkdir archive && cd archive && "$TAR" xf -) <archive.tar
- '
- 
-+test_expect_missing	archive/ignored
-+test_expect_missing	archive/ignored-by-tree
-+test_expect_exists	archive/ignored-by-worktree
-+
- test_expect_success 'git archive with worktree attributes' '
- 	git archive --fix-attributes HEAD >worktree.tar &&
- 	(mkdir worktree && cd worktree && "$TAR" xf -) <worktree.tar
- '
- 
--test_expect_success 'export-ignore' '
--	test ! -e archive/ignored &&
--	test ! -e archive/ignored-by-tree &&
--	test   -e archive/ignored-by-worktree &&
--	test ! -e worktree/ignored &&
--	test   -e worktree/ignored-by-tree &&
--	test ! -e worktree/ignored-by-worktree
-+test_expect_missing	worktree/ignored
-+test_expect_exists	worktree/ignored-by-tree
-+test_expect_missing	worktree/ignored-by-worktree
-+
-+test_expect_success 'git archive vs. bare' '
-+	(cd bare && git archive HEAD) >bare-archive.tar &&
-+	test_cmp archive.tar bare-archive.tar
-+'
-+
-+test_expect_success 'git archive with worktree attributes, bare' '
-+	(cd bare && git archive --fix-attributes HEAD) >bare-worktree.tar &&
-+	(mkdir bare-worktree && cd bare-worktree && "$TAR" xf -
-+	) <bare-worktree.tar
- '
- 
-+test_expect_missing	bare-worktree/ignored
-+test_expect_exists	bare-worktree/ignored-by-tree
-+test_expect_exists	bare-worktree/ignored-by-worktree
-+
- test_expect_success 'export-subst' '
- 	git log "--pretty=format:A${SUBSTFORMAT}O" HEAD >substfile1.expected &&
- 	test_cmp nosubstfile archive/nosubstfile &&
-@@ -59,4 +84,9 @@ test_expect_success 'git tar-tree vs. git archive with worktree attributes' '
- 	test_cmp worktree.tar tar-tree.tar
- '
- 
-+test_expect_success 'git tar-tree vs. git archive with worktree attrs, bare' '
-+	(cd bare && git tar-tree HEAD) >bare-tar-tree.tar &&
-+	test_cmp bare-worktree.tar bare-tar-tree.tar
-+'
-+
- test_done
+Ren=C3=A9
