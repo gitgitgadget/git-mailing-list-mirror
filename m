@@ -1,81 +1,89 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH] Allow git-shell to be used as a ssh forced-command
-Date: Sat, 18 Apr 2009 01:00:35 +0400
-Message-ID: <37fcd2780904171400uf9d1f36g4d24e02aebf6ac3f@mail.gmail.com>
-References: <1239916256-10878-1-git-send-email-mh@glandium.org>
-	 <37fcd2780904170924t61168a49uf1800098cdb1d730@mail.gmail.com>
-	 <20090417194919.GA7611@glandium.org>
+From: Roger Garvin <yoyodyn@gmail.com>
+Subject: Re: Suggested Workflow Question
+Date: Fri, 17 Apr 2009 21:11:24 +0000 (UTC)
+Message-ID: <loom.20090417T205632-412@post.gmane.org>
+References: <loom.20090317T175010-470@post.gmane.org> <46a038f90903172141o7b272c17v2c485bb66b529fe8@mail.gmail.com> <loom.20090318T125717-946@post.gmane.org> <200903181452.53497.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Fri Apr 17 23:02:18 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 17 23:13:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LuvCR-0000Uc-LR
-	for gcvg-git-2@gmane.org; Fri, 17 Apr 2009 23:02:16 +0200
+	id 1LuvN4-0004KC-GA
+	for gcvg-git-2@gmane.org; Fri, 17 Apr 2009 23:13:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752370AbZDQVAk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Apr 2009 17:00:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752043AbZDQVAj
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Apr 2009 17:00:39 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:26033 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751732AbZDQVAi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Apr 2009 17:00:38 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so165918fgg.17
-        for <git@vger.kernel.org>; Fri, 17 Apr 2009 14:00:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=qgc40vxt8GzDXOHhwbVBTN64Q0+EnuhiwJAIoTaZr14=;
-        b=pZqMIhrgFi82ffet4SD05yE3sxJtSmttIFb1aq1wmrR4sOlyFkvTbkH52/JSLNXMwL
-         DvYZISl6jDc75q+fT5zw44uPwQy2zx+VbZSs0gCWgRygYpZZyE6yoFKkBBRWtqaewWHb
-         pQT38sgg3Sa0M3h6SptMYrH7UGMFmPLKj+9nU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ADa5IfCVbQB2spy2450qCkat2xJMYQlLAi6c2tVnVtaO1aSSJYV/i6lAS4gs/j3M5c
-         c2JTqb/enkHuTtUvTqB62qJ0nX54E+JCMcmmQ1lMY6VGegAoQL1qctHbSEyAc/YU+c5/
-         0TNc79/dxmYXIdwYAK18r70ZPc6VoIjLraSVY=
-Received: by 10.86.82.6 with SMTP id f6mr2268709fgb.77.1240002036014; Fri, 17 
-	Apr 2009 14:00:36 -0700 (PDT)
-In-Reply-To: <20090417194919.GA7611@glandium.org>
+	id S1752752AbZDQVLk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Apr 2009 17:11:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752339AbZDQVLj
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Apr 2009 17:11:39 -0400
+Received: from main.gmane.org ([80.91.229.2]:55371 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752150AbZDQVLi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Apr 2009 17:11:38 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1LuvLU-0002qJ-Oi
+	for git@vger.kernel.org; Fri, 17 Apr 2009 21:11:36 +0000
+Received: from 65.14.229.26 ([65.14.229.26])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 17 Apr 2009 21:11:36 +0000
+Received: from yoyodyn by 65.14.229.26 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 17 Apr 2009 21:11:36 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 65.14.229.26 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.8) Gecko/2009032609 Firefox/3.0.8)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116789>
 
-On Fri, Apr 17, 2009 at 09:49:19PM +0200, Mike Hommey wrote:
-> On Fri, Apr 17, 2009 at 08:24:35PM +0400, Dmitry Potapov wrote:
-> > On Thu, Apr 16, 2009 at 11:10:56PM +0200, Mike Hommey wrote:
-> > > When using a forced-command, OpenSSH sets the SSH_ORIGINAL_COMMAND
-> > > variable to what would otherwise be passed to $SHELL -c. When this
-> > > variable is set, we use it instead of the contents of argv.
-> >_
-> > It would be nice to provide some justification where it can be used.
-> > IOW, why do you want to have the force command where essentially
-> > you execute the original command as it were no force-command?
->_
-> You're not executing any command, but only what git-shell allows.
-> This allows git-shell to be set as a forced-command for a specific
-> ssh key, for example.
+Robin Rosenberg <robin.rosenberg.lists <at> dewire.com> writes:
 
-Would it better to set git-shell as the login shell for this account?
-IMHO, that provides better security than using a forced-command, and
-that is how git-shell is intended to use. So, I am not sure what are
-benefits of using a forced-command when it just executes the original
-command using git-shell.
+> Don't forget the option of mailing bundles (man git-bundle). Those will give
+the effect of push/fetch via
+> e-mail. I.e. the exact same commit SHA's get replicated, That may be relevant
+for the branches that
+> contain your released/official test code.
 
-Besides, you made SSH_ORIGINAL_COMMAND to take precedent over explicitly
-specified parameters given to git-shell. Maybe it should be the other
-way around?
+After trying this out for a little while I and projecting some into the future I
+think I am going to have a problem that I am not sure if it really is a problem,
+or if Git will "take care of it".  Let me give you a simplistic commit history
+to illustrate my point.  In its most basic form you have three branches; dev,
+test, prod.  In a perfect world all the development happens on dev, then updates
+are pushed to test, and finally after tests pass are pushed out to prod.  So at
+a point in time you have something like this:
 
-Dmitry
+(P)<--(T)<--(D)
+
+Since I would think (and maybe this is my problem) that ideally Prod is a direct
+descendant of Test and Test is a direct descendant of Dev.  However we don't
+live in a perfect world, so changes get made on Test that aren't in production
+yet, and also in an emergency directly on the Prod branch.  Eventually those
+changes get migrated back either through a merge or a rebase (rebase would be
+bad since there would be multiple developers using these repos.)  Obviously
+making a change to Prod and then merging back to Test, and then merging back to
+Dev creates a lot of extra commits.
+
+ (P)<---(T)<----(D)
+  ^      ^       ^
+   \      \      \
+  (P')<--(T')<--(D')
+
+Things get even more complicated when the customer decides to only push certain
+features into Prod from test, it looks like cherry pick would be ideal for this
+and make it much easier for us.
+
+Is trying to maintain a direct ancestral relationship between Prod, Test, and
+Dev worth it?  Am I crazy for even trying to?  I am still a pretty green git
+user so it might not be worth it.  But it does seem to me that merges might be
+easier and faster if the common ancestor between two commits is closer rather
+than farther away in the commit history.
+
+Thanks again for your help.
