@@ -1,7 +1,7 @@
 From: Michael Witten <mfwitten@gmail.com>
-Subject: [PATCH RFC3.5 09/12] Docs: send-email: Reorganize the CONFIGURATION section
-Date: Sat, 18 Apr 2009 12:02:05 -0500
-Message-ID: <1240074128-16132-10-git-send-email-mfwitten@gmail.com>
+Subject: [PATCH RFC3.5 10/12] Docs: Embolden the CONFIGURATION references
+Date: Sat, 18 Apr 2009 12:02:06 -0500
+Message-ID: <1240074128-16132-11-git-send-email-mfwitten@gmail.com>
 References: <1240074128-16132-1-git-send-email-mfwitten@gmail.com>
  <1240074128-16132-2-git-send-email-mfwitten@gmail.com>
  <1240074128-16132-3-git-send-email-mfwitten@gmail.com>
@@ -11,169 +11,80 @@ References: <1240074128-16132-1-git-send-email-mfwitten@gmail.com>
  <1240074128-16132-7-git-send-email-mfwitten@gmail.com>
  <1240074128-16132-8-git-send-email-mfwitten@gmail.com>
  <1240074128-16132-9-git-send-email-mfwitten@gmail.com>
+ <1240074128-16132-10-git-send-email-mfwitten@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 18 19:08:50 2009
+X-From: git-owner@vger.kernel.org Sat Apr 18 19:09:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LvE1z-0007Tv-As
-	for gcvg-git-2@gmane.org; Sat, 18 Apr 2009 19:08:43 +0200
+	id 1LvE2S-0007cL-6d
+	for gcvg-git-2@gmane.org; Sat, 18 Apr 2009 19:09:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758062AbZDRRHJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Apr 2009 13:07:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757608AbZDRRHI
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Apr 2009 13:07:08 -0400
+	id S1753500AbZDRRHi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Apr 2009 13:07:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752879AbZDRRHi
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Apr 2009 13:07:38 -0400
 Received: from mail-qy0-f126.google.com ([209.85.221.126]:45168 "EHLO
 	mail-qy0-f126.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757583AbZDRRHG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Apr 2009 13:07:06 -0400
+	with ESMTP id S1752864AbZDRRHh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Apr 2009 13:07:37 -0400
 Received: by mail-qy0-f126.google.com with SMTP id 32so634324qyk.33
-        for <git@vger.kernel.org>; Sat, 18 Apr 2009 10:07:06 -0700 (PDT)
+        for <git@vger.kernel.org>; Sat, 18 Apr 2009 10:07:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=2dsWxjzKxHLPjhU3iSMQeeBN2ESsTu5vKPTPT4Bqumk=;
-        b=Wr/oma+yKqCKENawp6CveJAxyQjEElhwIBnT4nvOEFWKg/SIDx9shWdyqJBxN9oqcA
-         pjMAySLvKYydQhq+EcCnK9+/WSomndDNeRwj7MbzB9OY23ESzawjaqCYKXJUPaJxNAYN
-         3nmI578HufPBXdtp60RqPA6LiPW+G8KffnSwQ=
+        bh=adg5SVZLUVoyBn3gPZfCzmrDXwdd4udym5JieD4q8iY=;
+        b=hngBOQus5XOB3r6GBx0u81v/G5Q4M3cwJbywBzL+GJeeZs2DK3CYLQSPyrqwLkP/7G
+         e6ELCDnw3pvzR9b+RyVt/zbjN6Tjvv4Prqxr2oLeZidorTK1GCBBtxfEF3HTBpaQiY2q
+         hmQEQtDWKG7mI9JfkeVymGMlmDk4w8kbY3PVI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=lC3LBPPLX8pBp0ugasww+YXgYGFi46MHIqPKgmStZKEz8Z4pDG6xvAQMT0haI0ihbZ
-         QNUv5BupcwPLyz+SM+oNaZiGR6jsqw/yKDGp3cyQVebB90+m7MyyjInFNrOAPd4V73Xj
-         OuVjsqFreID3sJMIV0usyv7y8QcktiMSvtqRg=
-Received: by 10.220.94.137 with SMTP id z9mr4281210vcm.52.1240074425875;
-        Sat, 18 Apr 2009 10:07:05 -0700 (PDT)
+        b=GripkLp1MPDaUWztPrxH8N1DaZVmCCRZu5xiz+9B7YNA/qxnCfLj58O5G3pdGZCxSR
+         Pk4Y7B1ILk0iY8Snz9LBOkuzhVq4RIXsjsYKKrBvI1PZ04p5oPNsgzIbIKIl0oIKfhf/
+         NIhk5PHSUUP4yQClclkxhGd49Eh+uVmANLZZM=
+Received: by 10.220.92.79 with SMTP id q15mr4256973vcm.11.1240074456788;
+        Sat, 18 Apr 2009 10:07:36 -0700 (PDT)
 Received: from localhost.localdomain (97-116-125-103.mpls.qwest.net [97.116.125.103])
-        by mx.google.com with ESMTPS id 6sm1776586ywn.52.2009.04.18.10.07.05
+        by mx.google.com with ESMTPS id 6sm1776586ywn.52.2009.04.18.10.07.35
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 18 Apr 2009 10:07:05 -0700 (PDT)
+        Sat, 18 Apr 2009 10:07:36 -0700 (PDT)
 X-Mailer: git-send-email 1.6.2.2.479.g2aec
-In-Reply-To: <1240074128-16132-9-git-send-email-mfwitten@gmail.com>
+In-Reply-To: <1240074128-16132-10-git-send-email-mfwitten@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116853>
-
-For each configuration variable, the reader is either prompted
-to seek out the description of the corresponding command line option,
-or a description is given if there is no corresponding command line
-option.
-
-The CONFIGURATION section has also been recast into the Composing,
-Sending, Automating, and Administering sections, and configuration
-variables are listed in alphabetical order within each section.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116854>
 
 Signed-off-by: Michael Witten <mfwitten@gmail.com>
 ---
- Documentation/git-send-email.txt |   83 ++++++++++++++++++++++++++++++++++----
- 1 files changed, 75 insertions(+), 8 deletions(-)
+ Documentation/git-send-email.txt |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 92985ee..6f770d0 100644
+index 6f770d0..93c39e1 100644
 --- a/Documentation/git-send-email.txt
 +++ b/Documentation/git-send-email.txt
-@@ -282,6 +282,28 @@ default to '--validate'.
- CONFIGURATION
- -------------
+@@ -41,7 +41,7 @@ Composing
  
-+Composing
-+~~~~~~~~~
-+
-+sendemail.bcc::
-+	See '--bcc'
-+
-+sendemail.cc::
-+	See '--cc'
-+
-+sendemail.multiedit::
-+	If true (default), a single editor instance will be spawned to edit
-+	files you have to edit (patches when '--annotate' is used, and the
-+	summary when '--compose' is used). If false, files will be edited one
-+	after the other, spawning a new editor each time.
-+
-+sendemail.to::
-+	See '--from'
-+
-+
-+Sending
-+~~~~~~~
-+
- sendemail.aliasesfile::
- 	To avoid typing long email addresses, point this to one or more
- 	email aliases files.  You must also supply 'sendemail.aliasfiletype'.
-@@ -290,16 +312,61 @@ sendemail.aliasfiletype::
- 	Format of the file(s) specified in sendemail.aliasesfile. Must be
- 	one of 'mutt', 'mailrc', 'pine', or 'gnus'.
+ --annotate::
+ 	Review and edit each patch you're about to send. See the
+-	CONFIGURATION section for 'sendemail.multiedit'.
++	*CONFIGURATION* section for 'sendemail.multiedit'.
  
--sendemail.multiedit::
--	If true (default), a single editor instance will be spawned to edit
--	files you have to edit (patches when '--annotate' is used, and the
--	summary when '--compose' is used). If false, files will be edited one
--	after the other, spawning a new editor each time.
-+sendemail.envelopesender::
-+	See '--envelope-sender'
-+
-+sendemail.smtpencryption::
-+	See '--smtp-encryption'
-+
-+sendemail.smtppass::
-+	See '--smtp-pass'
-+
-+sendemail.smtpserver::
-+	See '--smtp-server'
-+
-+sendemail.smtpserverport::
-+	See '--smtp-server-port'
-+
-+sendemail.smtpuser::
-+	See '--smtp-ssl'
-+
-+
-+Automating
-+~~~~~~~~~~
-+
-+sendemail.cccmd::
-+	See '--cc-cmd'
-+
-+sendemail.chainreplyto::
-+	See '--[no-]chain-reply-to'
-+
-+sendemail.identity::
-+	See '--identity'
-+
-+sendemail.signedoffbycc::
-+	See '--[no-]signed-off-by-cc'
-+
-+sendemail.sleep::
-+	See '--sleep'
-+
-+sendemail.suppresscc::
-+	See '--suppress-cc'
-+
-+sendemail.suppressfrom::
-+	See '--[no-]suppress-from'
-+
-+sendemail.thread::
-+	See '--[no-]thread'
-+
-+
-+Administering
-+~~~~~~~~~~~~~
+ --bcc=<address>::
+ 	Specify a "Bcc:" value for each email. Default is the value of
+@@ -67,7 +67,7 @@ and In-Reply-To headers will be used unless they are removed.
+ +
+ Missing From or In-Reply-To headers will be prompted for.
+ +
+-See the CONFIGURATION section for 'sendemail.multiedit'.
++See the *CONFIGURATION* section for 'sendemail.multiedit'.
  
- sendemail.confirm::
--	Sets the default for whether to confirm before sending. Must be
--	one of 'always', 'never', 'cc', 'compose', or 'auto'. See '--confirm'
--	in the previous section for the meaning of these values.
-+	See '--confirm'
-+
-+sendemail.validate::
-+	See '--dry-run'
- 
- 
- Author
+ --from=<address>::
+ 	Specify the sender of the emails.  This will default to
 -- 
 1.6.2.2.479.g2aec
