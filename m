@@ -1,62 +1,64 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: [PATCH] gitcvs-migration: Link to git-cvsimport documentation
-Date: Sat, 18 Apr 2009 16:38:42 +0200
-Message-ID: <1240065522-23647-1-git-send-email-frank@lichtenheld.de>
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Apr 18 16:40:17 2009
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: [PATCH QGit] Don't hardcode GIT_EXEC_DIR for Windows so much
+Date: Sat, 18 Apr 2009 17:04:39 +0200
+Message-ID: <1240067079-31358-1-git-send-email-markus.heidelberg@web.de>
+Cc: git@vger.kernel.org, Markus Heidelberg <markus.heidelberg@web.de>
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 18 17:06:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LvBiK-00038I-7x
-	for gcvg-git-2@gmane.org; Sat, 18 Apr 2009 16:40:16 +0200
+	id 1LvC7s-0002Zj-D8
+	for gcvg-git-2@gmane.org; Sat, 18 Apr 2009 17:06:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754599AbZDROim (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Apr 2009 10:38:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754594AbZDROim
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Apr 2009 10:38:42 -0400
-Received: from aiolos.lenk.info ([85.214.124.154]:50451 "EHLO aiolos.lenk.info"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754294AbZDROim (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Apr 2009 10:38:42 -0400
-Received: from mail.lenk.info ([78.47.143.197] ident=Debian-exim)
-	by mx.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
-	id 1LvBgm-0004XP-Sx; Sat, 18 Apr 2009 16:38:40 +0200
-Received: from p57b2734b.dip.t-dialin.net ([87.178.115.75] helo=penrose.djpig.de)
-	by mail.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
-	id 1LvBgi-00012l-2P; Sat, 18 Apr 2009 16:38:36 +0200
-Received: from flichtenheld by penrose.djpig.de with local (Exim 4.69)
-	(envelope-from <flichtenheld@astaro.com>)
-	id 1LvBgo-00069q-Oo; Sat, 18 Apr 2009 16:38:42 +0200
-X-Mailer: git-send-email 1.6.2.1
+	id S1755100AbZDRPEj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Apr 2009 11:04:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754737AbZDRPEj
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Apr 2009 11:04:39 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:59794 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753591AbZDRPEi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Apr 2009 11:04:38 -0400
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 73E1110036FE9;
+	Sat, 18 Apr 2009 17:04:37 +0200 (CEST)
+Received: from [89.59.75.158] (helo=localhost.localdomain)
+	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1LvC5t-0001BJ-00; Sat, 18 Apr 2009 17:04:37 +0200
+X-Mailer: git-send-email 1.6.3.rc0.77.g079dc
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX18fVmzfFyTkdKH/Exbsi4r24FF2H5T5KtywNtPB
+	FwVc85lf4AQvTCZdoll9bv+3AxM/peKj4ve50c6K+IRK+uFPgN
+	a4Ww44LzUpg4JOKZe1Sg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116828>
 
-From: Frank Lichtenheld <flichtenheld@astaro.com>
+Use the environment variable %ProgramFiles% which points to the right
+program installation directory, regardless of your system locale.
 
-Signed-off-by: Frank Lichtenheld <flichtenheld@astaro.com>
+Also escape the backslash to play it safe.
+
+Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
 ---
- Documentation/gitcvs-migration.txt |    2 +-
+ src/src.pro |    2 +-
  1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/gitcvs-migration.txt b/Documentation/gitcvs-migration.txt
-index aaa7ef7..0e49c1c 100644
---- a/Documentation/gitcvs-migration.txt
-+++ b/Documentation/gitcvs-migration.txt
-@@ -118,7 +118,7 @@ Importing a CVS archive
- First, install version 2.1 or higher of cvsps from
- link:http://www.cobite.com/cvsps/[http://www.cobite.com/cvsps/] and make
- sure it is in your path.  Then cd to a checked out CVS working directory
--of the project you are interested in and run 'git-cvsimport':
-+of the project you are interested in and run linkgit:git-cvsimport[1]:
+diff --git a/src/src.pro b/src/src.pro
+index 810db28..619a9a8 100644
+--- a/src/src.pro
++++ b/src/src.pro
+@@ -1,6 +1,6 @@
+ # Under Windows launch script start_qgit.bat needs the
+ # value GIT_EXEC_DIR to be set to the git bin directory
+-GIT_EXEC_DIR = "C:\Program Files\Git\bin"
++GIT_EXEC_DIR = "$(ProgramFiles)\\Git\\bin"
  
- -------------------------------------------
- $ git cvsimport -C <destination> <module>
+ # Under Windows uncomment following line to enable console messages
+ #CONFIG += ENABLE_CONSOLE_MSG
 -- 
-1.6.2.1
+1.6.3.rc0.77.g079dc
