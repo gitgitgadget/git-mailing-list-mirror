@@ -1,93 +1,55 @@
-From: "Aaron Gray" <aaronngray.lists@googlemail.com>
-Subject: push git: failing
-Date: Sat, 18 Apr 2009 19:07:28 +0100
-Message-ID: <1A83D14F3FC342B9A02B82C64AC080D8@HPLAPTOP>
-References: <489CF11BD65F439998B6CF3FCC610576@HPLAPTOP> <alpine.LNX.2.00.0904171716150.8346@reaper.quantumfyre.co.uk> <FD77671D77E2465097BD60A1E144BB91@HPLAPTOP> <alpine.LNX.2.00.0904171812330.8773@reaper.quantumfyre.co.uk> <DD909F216D254CDAB2A0C0847AEB75C0@HPLAPTOP> <alpine.LNX.2.00.0904181632150.20139@reaper.quantumfyre.co.uk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Git.pm: Always set Repository to absolute path if
+ autodetecting
+Date: Sat, 18 Apr 2009 20:13:05 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904182012330.10279@pacific.mpi-cbg.de>
+References: <1240070330-31446-1-git-send-email-frank@lichtenheld.de> <1240070330-31446-2-git-send-email-frank@lichtenheld.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=response
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Apr 18 20:09:07 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: gitster@pobox.com, Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: Frank Lichtenheld <frank@lichtenheld.de>
+X-From: git-owner@vger.kernel.org Sat Apr 18 20:11:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LvEyQ-0007RO-LU
-	for gcvg-git-2@gmane.org; Sat, 18 Apr 2009 20:09:07 +0200
+	id 1LvF10-0008AC-Oz
+	for gcvg-git-2@gmane.org; Sat, 18 Apr 2009 20:11:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753026AbZDRSHc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Apr 2009 14:07:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752219AbZDRSHb
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Apr 2009 14:07:31 -0400
-Received: from mail-ew0-f176.google.com ([209.85.219.176]:58110 "EHLO
-	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751949AbZDRSHb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Apr 2009 14:07:31 -0400
-Received: by ewy24 with SMTP id 24so622835ewy.37
-        for <git@vger.kernel.org>; Sat, 18 Apr 2009 11:07:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to:references
-         :subject:date:mime-version:content-type:content-transfer-encoding
-         :x-priority:x-msmail-priority:x-mailer:x-mimeole;
-        bh=VoNWUl9KhktZoUl/b5ZzdKk5n/oYmgMbxvUgmSGFeaY=;
-        b=ilF60bIDeckBJy6+Q5eI3+zNadSVam/9+yC3nhlnTk6tHSrFfbFb3Q7wZXGs/CiZPi
-         u/hzdseGzuNRSrBRBoMXJu3oLxvn+eo2IIIY+k06Evf7DKIQwtR6qBTn7Yq2h+M4O3KT
-         Qd0S45w/46f31X/NduS7aqAbxE+eEPAsLHbGc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:from:to:references:subject:date:mime-version
-         :content-type:content-transfer-encoding:x-priority:x-msmail-priority
-         :x-mailer:x-mimeole;
-        b=TpXGbTW1FVOuev7PV5aTlTZtkqHCxD9rhOCqy/W7IEwrfjBU2oyX0xTIPkOljySaHs
-         LklH4Z3bJK8kMFE7u7v9R2vBg2uNde6aoColf4I4KIuUquCQfUYdP07wL68UznfzoIGD
-         vfCTrcpvciiJDIKq9REaHsGGP/sXfL0zXGdlE=
-Received: by 10.210.33.3 with SMTP id g3mr4031469ebg.82.1240078049766;
-        Sat, 18 Apr 2009 11:07:29 -0700 (PDT)
-Received: from HPLAPTOP (mwgray.force9.co.uk [212.159.110.144])
-        by mx.google.com with ESMTPS id 7sm5272717eyb.50.2009.04.18.11.07.29
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 18 Apr 2009 11:07:29 -0700 (PDT)
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5512
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
+	id S1753305AbZDRSKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Apr 2009 14:10:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753303AbZDRSKN
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Apr 2009 14:10:13 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57723 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751932AbZDRSKM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Apr 2009 14:10:12 -0400
+Received: (qmail invoked by alias); 18 Apr 2009 18:10:10 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp033) with SMTP; 18 Apr 2009 20:10:10 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19EHR1GyT5ETf49qSGvpvrEVwQJhHMFqemBCYJ5QW
+	xNDxPoMHhjJebU
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1240070330-31446-2-git-send-email-frank@lichtenheld.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.78
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116859>
 
-I am trying to get git to do a remote push, but it is intermittent, hanging 
-sometimes, and not working others :-
+Hi,
 
-    Aaron Gray@AMD2500-PC /usr/src/test/gittest/hello-world
-    $ git push git://git.***/hello-world
-    Counting objects: 4, done.
-    Compressing objects: 100% (3/3), done.
-    Writing objects: 100% (3/3), 557 bytes, done.
-    Total 3 (delta 1), reused 0 (delta 0)
-    fatal: read error (Software caused connection abort)
+On Sat, 18 Apr 2009, Frank Lichtenheld wrote:
 
-Server: F10
-        git is version 1.6.0.6
-        git-daemon 1.6.0.6-3.fc10.i386
+> So far we only set it to absolute paths in some cases which lead to 
+> problems like wc_chdir not working.
 
-Client: Cygwin
-        git is version 1.6.1.2
+We had something similar in setup.c until Linus pointed out that it 
+deteriorates performance.
 
-/var/log/messages :-
-Apr 18 18:18:28 *** xinetd[29002]: START: git pid=3083 
-from=::ffff:212.19.110.144
-Apr 18 18:18:28 *** git-daemon: [3083] Connection from 212.159.110.144:6008
-Apr 18 18:18:28 *** git-daemon: [3083] Extended attributes (25 bytes) exist 
-<host=git.***.org>
-Apr 18 18:18:29 *** git-daemon: [3083] Request receive-pack for 
-'/hello-world'
-Apr 18 18:18:29 *** xinetd[29002]: EXIT: git status=0 pid=3083 
-duration=1(sec)
-
-Aaron
+Ciao,
+Dscho
