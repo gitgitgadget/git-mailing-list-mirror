@@ -1,42 +1,42 @@
 From: Markus Heidelberg <markus.heidelberg@web.de>
 Subject: [PATCH] doc/git-daemon: add missing arguments to options
-Date: Sat, 18 Apr 2009 11:44:07 +0200
-Message-ID: <1240047847-24524-1-git-send-email-markus.heidelberg@web.de>
+Date: Sat, 18 Apr 2009 11:46:06 +0200
+Message-ID: <1240047966-24575-1-git-send-email-markus.heidelberg@web.de>
 Cc: git@vger.kernel.org, Markus Heidelberg <markus.heidelberg@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 18 11:45:45 2009
+To: markus.hd@gmx.de
+X-From: git-owner@vger.kernel.org Sat Apr 18 11:47:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lv77F-0002Iw-Gc
-	for gcvg-git-2@gmane.org; Sat, 18 Apr 2009 11:45:42 +0200
+	id 1Lv78w-0002it-FJ
+	for gcvg-git-2@gmane.org; Sat, 18 Apr 2009 11:47:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753264AbZDRJoJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Apr 2009 05:44:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752826AbZDRJoI
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Apr 2009 05:44:08 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:42611 "EHLO
+	id S1753356AbZDRJpz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Apr 2009 05:45:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753292AbZDRJpy
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Apr 2009 05:45:54 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:43962 "EHLO
 	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751359AbZDRJoF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Apr 2009 05:44:05 -0400
+	with ESMTP id S1752943AbZDRJpx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Apr 2009 05:45:53 -0400
 Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 649B5FAAFF57;
-	Sat, 18 Apr 2009 11:44:04 +0200 (CEST)
+	by fmmailgate03.web.de (Postfix) with ESMTP id C1460FAAFEE3;
+	Sat, 18 Apr 2009 11:45:52 +0200 (CEST)
 Received: from [89.59.75.158] (helo=localhost.localdomain)
 	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
 	(WEB.DE 4.110 #277)
-	id 1Lv75g-0001oG-00; Sat, 18 Apr 2009 11:44:04 +0200
+	id 1Lv77Q-0002JM-00; Sat, 18 Apr 2009 11:45:52 +0200
 X-Mailer: git-send-email 1.6.3.rc0.77.g079dc
 X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX19egk0zUH2ZEjBCbmd5zLsh91t/3O/5p52xEaHQ
-	HrtqzEj7yVVvAx+HfAlLeqMGzZVLcbKDkoK+rmsRv1iX1YmB7O
-	LFRZvvbUrDJjfmV+zwLA==
+X-Provags-ID: V01U2FsdGVkX1/9zK1LWKpiVbgUC6OcdO3YiiOXmRDq36GZOKLy
+	FSeOkTi3qVeVloAUWVABWa2LMI0vJrst31ilKEtcilk1AD4TuS
+	kWzLvLAlugzNI6Z+djiA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116818>
 
 Also fix some spellings and typos.
 
