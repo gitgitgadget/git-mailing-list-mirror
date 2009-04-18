@@ -1,58 +1,66 @@
-From: Paul Bolle <pebolle@tiscali.nl>
-Subject: [PATCH] [TRIVIAL] imap-send: use correct configuration variable in
- documentation
-Date: Sat, 18 Apr 2009 13:26:42 +0200
-Message-ID: <1240054002.12170.15.camel@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 18 13:45:47 2009
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: [PATCH] init: Do not segfault on big GIT_TEMPLATE_DIR environment variable
+Date: Sat, 18 Apr 2009 16:14:02 +0200
+Message-ID: <1240064042-22539-1-git-send-email-frank@lichtenheld.de>
+Cc: git@vger.kernel.org, Frank Lichtenheld <flichtenheld@astaro.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Apr 18 16:31:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lv8zR-0007vF-8b
-	for gcvg-git-2@gmane.org; Sat, 18 Apr 2009 13:45:45 +0200
+	id 1LvBa3-0000kn-3w
+	for gcvg-git-2@gmane.org; Sat, 18 Apr 2009 16:31:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753685AbZDRLoN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Apr 2009 07:44:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753362AbZDRLoL
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Apr 2009 07:44:11 -0400
-Received: from smtp-out1.tiscali.nl ([195.241.79.176]:45176 "EHLO
-	smtp-out1.tiscali.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753037AbZDRLoK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Apr 2009 07:44:10 -0400
-X-Greylist: delayed 1045 seconds by postgrey-1.27 at vger.kernel.org; Sat, 18 Apr 2009 07:44:10 EDT
-Received: from [212.123.169.34] (helo=[192.168.1.61])
-	by smtp-out1.tiscali.nl with esmtp 
-	id 1Lv8h1-0005QY-W1; Sat, 18 Apr 2009 13:26:44 +0200
-X-Mailer: Evolution 2.26.1 (2.26.1-2.fc11) 
+	id S1756800AbZDRO33 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Apr 2009 10:29:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758542AbZDRO33
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Apr 2009 10:29:29 -0400
+Received: from aiolos.lenk.info ([85.214.124.154]:49989 "EHLO aiolos.lenk.info"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758772AbZDRO32 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Apr 2009 10:29:28 -0400
+X-Greylist: delayed 927 seconds by postgrey-1.27 at vger.kernel.org; Sat, 18 Apr 2009 10:29:28 EDT
+Received: from mail.lenk.info ([78.47.143.197] ident=Debian-exim)
+	by mx.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
+	id 1LvBIt-0001vX-TB; Sat, 18 Apr 2009 16:13:59 +0200
+Received: from p57b2734b.dip.t-dialin.net ([87.178.115.75] helo=penrose.djpig.de)
+	by mail.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
+	id 1LvBIq-00082U-Do; Sat, 18 Apr 2009 16:13:56 +0200
+Received: from flichtenheld by penrose.djpig.de with local (Exim 4.69)
+	(envelope-from <flichtenheld@astaro.com>)
+	id 1LvBIw-0005s0-Jj; Sat, 18 Apr 2009 16:14:02 +0200
+X-Mailer: git-send-email 1.6.2.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116826>
 
-It's imap.pass (not imap.password).
+From: Frank Lichtenheld <flichtenheld@astaro.com>
 
-Signed-off-by: Paul Bolle <pebolle@tiscali.nl>
+Signed-off-by: Frank Lichtenheld <flichtenheld@astaro.com>
 ---
- Documentation/git-imap-send.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ builtin-init-db.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/git-imap-send.txt b/Documentation/git-imap-send.txt
-index 024084b..d016daf 100644
---- a/Documentation/git-imap-send.txt
-+++ b/Documentation/git-imap-send.txt
-@@ -51,7 +51,7 @@ imap.host::
- imap.user::
- 	The username to use when logging in to the server.
- 
--imap.password::
-+imap.pass::
- 	The password to use when logging in to the server.
- 
- imap.port::
+diff --git a/builtin-init-db.c b/builtin-init-db.c
+index 4e02b33..d1fa12a 100644
+--- a/builtin-init-db.c
++++ b/builtin-init-db.c
+@@ -122,8 +122,10 @@ static void copy_templates(const char *template_dir)
+ 		template_dir = system_path(DEFAULT_GIT_TEMPLATE_DIR);
+ 	if (!template_dir[0])
+ 		return;
++	template_len = strlen(template_dir);
++	if (PATH_MAX <= (template_len+strlen("/config")))
++		die("insanely long template path %s", template_dir);
+ 	strcpy(template_path, template_dir);
+-	template_len = strlen(template_path);
+ 	if (template_path[template_len-1] != '/') {
+ 		template_path[template_len++] = '/';
+ 		template_path[template_len] = 0;
 -- 
-1.6.2.2
+1.6.2.1
