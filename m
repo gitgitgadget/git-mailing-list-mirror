@@ -1,71 +1,74 @@
-From: Frank Terbeck <ft@bewatermyfriend.org>
-Subject: [PATCH 5/6] Add documentation for --cover-overwrite
-Date: Sat, 18 Apr 2009 18:16:20 +0200
-Message-ID: <1240071381-25165-6-git-send-email-ft@bewatermyfriend.org>
-References: <1240071381-25165-1-git-send-email-ft@bewatermyfriend.org>
-Cc: Frank Terbeck <ft@bewatermyfriend.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 18 18:30:49 2009
+From: Keith Cascio <keith@CS.UCLA.EDU>
+Subject: Re: [PATCH] Add the diff option --no-defaults
+Date: Sat, 18 Apr 2009 09:41:01 -0700 (PDT)
+Message-ID: <alpine.GSO.2.00.0904180930390.16775@kiwi.cs.ucla.edu>
+References: <alpine.GSO.2.00.0904021647120.16242@kiwi.cs.ucla.edu> <alpine.DEB.1.00.0904091030030.10279@pacific.mpi-cbg.de> <20090409084903.GA18947@coredump.intra.peff.net> <alpine.DEB.1.00.0904091242430.10279@pacific.mpi-cbg.de> <20090410080155.GB32195@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0904140036341.10279@pacific.mpi-cbg.de> <20090416083443.GA27399@coredump.intra.peff.net> <alpine.DEB.1.00.0904161124000.10279@pacific.mpi-cbg.de> <20090416094154.GA30479@coredump.intra.peff.net> <7v4owok0bh.fsf@gitster.siamese.dyndns.org>
+ <20090417115414.GA29121@coredump.intra.peff.net> <alpine.DEB.1.00.0904171514440.6675@intel-tinevez-2-302>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Apr 18 18:44:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LvDRH-0004Mb-2R
-	for gcvg-git-2@gmane.org; Sat, 18 Apr 2009 18:30:47 +0200
+	id 1LvDeo-0000AO-OL
+	for gcvg-git-2@gmane.org; Sat, 18 Apr 2009 18:44:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754508AbZDRQ3N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Apr 2009 12:29:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754069AbZDRQ3N
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Apr 2009 12:29:13 -0400
-Received: from smtprelay08.ispgateway.de ([80.67.29.8]:38645 "EHLO
-	smtprelay08.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753080AbZDRQ3M (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Apr 2009 12:29:12 -0400
-X-Greylist: delayed 735 seconds by postgrey-1.27 at vger.kernel.org; Sat, 18 Apr 2009 12:29:12 EDT
-Received: from [212.117.84.81] (helo=fsst.voodoo.lan)
-	by smtprelay08.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <ft@bewatermyfriend.org>)
-	id 1LvDDr-00010O-7k; Sat, 18 Apr 2009 18:16:55 +0200
-Received: from hawk by fsst.voodoo.lan with local (Exim 4.69)
-	(envelope-from <ft@bewatermyfriend.org>)
-	id 1LvDDL-0006Yi-La; Sat, 18 Apr 2009 18:16:24 +0200
-X-Mailer: git-send-email 1.6.2.2.446.gfbdc0
-In-Reply-To: <1240071381-25165-1-git-send-email-ft@bewatermyfriend.org>
-X-Df-Sender: 430444
+	id S1752336AbZDRQlL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Apr 2009 12:41:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751615AbZDRQlL
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Apr 2009 12:41:11 -0400
+Received: from Kiwi.CS.UCLA.EDU ([131.179.128.19]:39452 "EHLO kiwi.cs.ucla.edu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751220AbZDRQlK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Apr 2009 12:41:10 -0400
+Received: from kiwi.cs.ucla.edu (localhost.cs.ucla.edu [127.0.0.1])
+	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/UCLACS-6.0) with ESMTP id n3IGf2nh016952;
+	Sat, 18 Apr 2009 09:41:02 -0700 (PDT)
+Received: from localhost (keith@localhost)
+	by kiwi.cs.ucla.edu (8.13.8+Sun/8.13.8/Submit) with ESMTP id n3IGf1gT016948;
+	Sat, 18 Apr 2009 09:41:01 -0700 (PDT)
+X-Authentication-Warning: kiwi.cs.ucla.edu: keith owned process doing -bs
+In-Reply-To: <alpine.DEB.1.00.0904171514440.6675@intel-tinevez-2-302>
+User-Agent: Alpine 2.00 (GSO 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116842>
 
-Signed-off-by: Frank Terbeck <ft@bewatermyfriend.org>
----
- Documentation/git-format-patch.txt |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+Dscho,
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 65e4089..07a2ee3 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -21,6 +21,7 @@ SYNOPSIS
- 		   [--cc=<email>]
- 		   [--cover-letter]
- 		   [--cover-one-patch]
-+		   [--cover-overwrite]
- 		   [ <since> | <revision range> ]
- 
- DESCRIPTION
-@@ -173,6 +174,10 @@ if that is not set.
- 	will prevent the creation of cover letters, if disabled.
- 	This option can force creating a cover letter in those cases.
- 
-+--cover-overwrite::
-+	If format.overwritecoverletter is unset, this option will
-+	temporarily force overwriting cover letters.
-+
- --suffix=.<sfx>::
- 	Instead of using `.patch` as the suffix for generated
- 	filenames, use specified suffix.  A common alternative is
--- 
-1.6.2.2.446.gfbdc0
+On Fri, 17 Apr 2009, Johannes Schindelin wrote:
+
+> Besides, you still will have a poison:
+> 
+> 	git config diff.defaultOptions --no-defaults
+> 
+> which is Russel's paradoxon right there.
+
+I can cleanly modify my v3 to handle this case.  In diff_setup_done(), change 
+this:
+
++	if (DIFF_OPT_TST(options, ALLOW_DEFAULT_OPTIONS))
++		flatten_diff_options(options, defaults ? defaults :
++			parse_diff_defaults(diff_setup(defaults =
++				xmalloc(sizeof(struct diff_options)))));
+
+to this:
+
++	if (DIFF_OPT_TST(options, ALLOW_DEFAULT_OPTIONS) && (defaults ||
++		parse_diff_defaults(diff_setup(defaults = xmalloc(
++			sizeof(struct diff_options))))) && DIFF_OPT_TST(
++				defaults, ALLOW_DEFAULT_OPTIONS))
++					flatten_diff_options(options,
++						defaults);
+
+All I did there was add the test DIFF_OPT_TST(defaults, ALLOW_DEFAULT_OPTIONS) 
+to the condition that controls whether to perform the flattening.  Clean and 
+clear.
+                                  -- Keith
