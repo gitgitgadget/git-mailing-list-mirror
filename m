@@ -1,76 +1,132 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: [PATCH] Git.pm: Always set Repository to absolute path if
-	autodetecting
-Date: Sat, 18 Apr 2009 23:02:25 +0200
-Message-ID: <20090418210225.GC17706@mail-vs.djpig.de>
-References: <1240070330-31446-1-git-send-email-frank@lichtenheld.de> <1240070330-31446-2-git-send-email-frank@lichtenheld.de> <alpine.DEB.1.00.0904182012330.10279@pacific.mpi-cbg.de>
+From: =?UTF-8?B?TWljaGHFgg==?= Kiedrowicz <michal.kiedrowicz@gmail.com>
+Subject: [PATCH] tests: make test-apply-criss-cross-rename more robust
+Date: Sat, 18 Apr 2009 23:03:57 +0200
+Message-ID: <20090418230357.47b7c6c2@gmail.com>
+References: <1239478260-7420-1-git-send-email-michal.kiedrowicz@gmail.com>
+	<7v4owsfktw.fsf@gitster.siamese.dyndns.org>
+	<20090413230351.7cbb01f5@gmail.com>
+	<7v1vrwdyxx.fsf@gitster.siamese.dyndns.org>
+	<20090417192324.3a888abf@gmail.com>
+	<7vskk6y2tl.fsf@gitster.siamese.dyndns.org>
+	<20090418225847.54862bdf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Apr 18 23:04:15 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 18 23:06:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LvHht-0007v3-VA
-	for gcvg-git-2@gmane.org; Sat, 18 Apr 2009 23:04:14 +0200
+	id 1LvHjM-0008E2-PI
+	for gcvg-git-2@gmane.org; Sat, 18 Apr 2009 23:05:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754131AbZDRVCj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Apr 2009 17:02:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754034AbZDRVCj
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Apr 2009 17:02:39 -0400
-Received: from pauli.djpig.de ([78.46.38.139]:60416 "EHLO pauli.djpig.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753583AbZDRVCj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Apr 2009 17:02:39 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by pauli.djpig.de (Postfix) with ESMTP id D6C509007F;
-	Sat, 18 Apr 2009 23:02:35 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at pauli.djpig.de
-Received: from pauli.djpig.de ([127.0.0.1])
-	by localhost (pauli.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id BVMrdH+NXKaZ; Sat, 18 Apr 2009 23:02:26 +0200 (CEST)
-Received: from mail-vs.djpig.de (mail-vs.djpig.de [78.47.136.189])
-	by pauli.djpig.de (Postfix) with ESMTP id 2B1879007D;
-	Sat, 18 Apr 2009 23:02:26 +0200 (CEST)
-Received: from djpig by mail-vs.djpig.de with local (Exim 4.69)
-	(envelope-from <djpig@mail-vs.djpig.de>)
-	id 1LvHg9-0005NG-Kk; Sat, 18 Apr 2009 23:02:25 +0200
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0904182012330.10279@pacific.mpi-cbg.de>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1754709AbZDRVEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Apr 2009 17:04:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754034AbZDRVEF
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Apr 2009 17:04:05 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:59652 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752562AbZDRVEE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Apr 2009 17:04:04 -0400
+Received: by fxm2 with SMTP id 2so1374538fxm.37
+        for <git@vger.kernel.org>; Sat, 18 Apr 2009 14:04:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:in-reply-to:references:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=pgYyYQ57BCE4O/1Kspo89yxYDF/ClEiYsY+mNaWZkdA=;
+        b=purD+VqH1QI9bceXt4pmWe4CI5fz7O1DAVxGB6GSNCgTG3RD3mzRdZBnmu/HnfAmFR
+         Q7ynS/85ZiQAZjkJbvHq1Fcu8ZJ5WDJ8tAPbZvZqyyRYpyBExrG2Mxck5s9i+V9R5X88
+         LFRrH8PXXWvASGuB8t4zk4U94D26sQYs+8BaE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        b=n0p11mIaiKLlmymDILqllSG8XVqw5ATO+jJN7qv2Xzeo0QR3N8bBxcBHcbW42YVqR0
+         /pudReV3TH4biCOYeyLn6PIr90wpwXVtYXz1PIwVwxUj/3RlxrZpMeV+wG/pBaoiMqof
+         0Vdjzy+/NAwRX/Zhqz+BIu9LEeDv/d5JImfdE=
+Received: by 10.204.124.7 with SMTP id s7mr3710249bkr.189.1240088640768;
+        Sat, 18 Apr 2009 14:04:00 -0700 (PDT)
+Received: from localhost (77-253-158-167.adsl.inetia.pl [77.253.158.167])
+        by mx.google.com with ESMTPS id z10sm6605990fka.38.2009.04.18.14.04.00
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 18 Apr 2009 14:04:00 -0700 (PDT)
+In-Reply-To: <20090418225847.54862bdf@gmail.com>
+X-Mailer: Claws Mail 3.7.0 (GTK+ 2.14.7; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116868>
 
-On Sat, Apr 18, 2009 at 08:13:05PM +0200, Johannes Schindelin wrote:
-> On Sat, 18 Apr 2009, Frank Lichtenheld wrote:
-> 
-> > So far we only set it to absolute paths in some cases which lead to 
-> > problems like wc_chdir not working.
-> 
-> We had something similar in setup.c until Linus pointed out that it 
-> deteriorates performance.
+I realized that this test does check if git-apply succeeds, but doesn't
+tell if it applies patches correctly. So I added test_cmp to check it.
 
-You mean 044bbbcb63281dfdb78344ada2c44c96122dc822 ?
+I also added a test which checks swapping three files.
+---
+ t/t4130-apply-criss-cross-rename.sh |   34 +++++++++++++++++++++++++++++++---
+ 1 files changed, 31 insertions(+), 3 deletions(-)
 
-I don't think we're talking about the same issue here. The code in setup.c
-prepares a variable for usage inside the running git command, while the Perl
-code needs to prepare a variable for calling a git command, i.e. the content
-of the GIT_DIR environment variable. As you can see from the code in setup.c
-git will in fact make that content absolute before making it relative again,
-so no harm should come from the fact that we're giving it an already absolute
-value.
-
-Also if we're giving it a relative path it will interpret it relative to the
-current working directory and not GIT_WORK_TREE, so we should in fact not store
-it relative because we would need to recalculate it after wc_chdir, which is
-exactly what's causing problems.
-
-Gruesse,
+diff --git a/t/t4130-apply-criss-cross-rename.sh b/t/t4130-apply-criss-cross-rename.sh
+index 8623dbe..7cfa2d6 100755
+--- a/t/t4130-apply-criss-cross-rename.sh
++++ b/t/t4130-apply-criss-cross-rename.sh
+@@ -15,14 +15,17 @@ create_file() {
+ test_expect_success 'setup' '
+ 	create_file file1 "File1 contents" &&
+ 	create_file file2 "File2 contents" &&
+-	git add file1 file2 &&
++	create_file file3 "File3 contents" &&
++	git add file1 file2 file3 &&
+ 	git commit -m 1
+ '
+ 
+ test_expect_success 'criss-cross rename' '
+ 	mv file1 tmp &&
+ 	mv file2 file1 &&
+-	mv tmp file2
++	mv tmp file2 &&
++	cp file1 file1-swapped &&
++	cp file2 file2-swapped
+ '
+ 
+ test_expect_success 'diff -M -B' '
+@@ -32,7 +35,32 @@ test_expect_success 'diff -M -B' '
+ '
+ 
+ test_expect_success 'apply' '
+-	git apply diff
++	git apply diff &&
++	test_cmp file1 file1-swapped &&
++	test_cmp file2 file2-swapped
++'
++
++test_expect_success 'criss-cross rename' '
++	git reset --hard &&
++	mv file1 tmp &&
++	mv file2 file1 &&
++	mv file3 file2
++	mv tmp file3 &&
++	cp file1 file1-swapped &&
++	cp file2 file2-swapped &&
++	cp file3 file3-swapped
++'
++
++test_expect_success 'diff -M -B' '
++	git diff -M -B > diff &&
++	git reset --hard
++'
++
++test_expect_success 'apply' '
++	git apply diff &&
++	test_cmp file1 file1-swapped &&
++	test_cmp file2 file2-swapped &&
++	test_cmp file3 file3-swapped
+ '
+ 
+ test_done
 -- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+1.6.0.6
