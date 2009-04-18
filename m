@@ -1,63 +1,64 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] Allow git-shell to be used as a ssh forced-command
-Date: Sat, 18 Apr 2009 08:31:00 +0200
-Message-ID: <20090418063100.GA18568@glandium.org>
-References: <1239916256-10878-1-git-send-email-mh@glandium.org> <7v63h24znd.fsf@gitster.siamese.dyndns.org> <20090417234859.GY898@eagain.net>
+From: Ealdwulf Wuffinga <ealdwulf@googlemail.com>
+Subject: Re: integrating make and git
+Date: Sat, 18 Apr 2009 08:03:13 +0100
+Message-ID: <efe2b6d70904180003k1ef1afdbi98e21193fb61895@mail.gmail.com>
+References: <3a69fa7c0904150819x7598dea5ic43bf0991c35ae45@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Tommi Virtanen <tv@eagain.net>
-X-From: git-owner@vger.kernel.org Sat Apr 18 08:32:47 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: E R <pc88mxer@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 18 09:06:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lv46Y-0006MK-8h
-	for gcvg-git-2@gmane.org; Sat, 18 Apr 2009 08:32:46 +0200
+	id 1Lv4bw-00044v-Hn
+	for gcvg-git-2@gmane.org; Sat, 18 Apr 2009 09:05:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751812AbZDRGbN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Apr 2009 02:31:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751510AbZDRGbM
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Apr 2009 02:31:12 -0400
-Received: from vuizook.err.no ([85.19.221.46]:33721 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751023AbZDRGbM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Apr 2009 02:31:12 -0400
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <mh@glandium.org>)
-	id 1Lv44r-000142-No; Sat, 18 Apr 2009 08:31:04 +0200
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1Lv44q-0004r9-1u; Sat, 18 Apr 2009 08:31:00 +0200
-Content-Disposition: inline
-In-Reply-To: <20090417234859.GY898@eagain.net>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
+	id S1754310AbZDRHDd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Apr 2009 03:03:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755208AbZDRHDc
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Apr 2009 03:03:32 -0400
+Received: from fk-out-0910.google.com ([209.85.128.187]:6335 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754908AbZDRHDb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Apr 2009 03:03:31 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so534161fkq.5
+        for <git@vger.kernel.org>; Sat, 18 Apr 2009 00:03:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=4ck/Zs0ywoXhCf8jRgQKB/p76s/3b1SM8cAOW1MYSkY=;
+        b=OXCj2bi4RSppptR+gLYVnVqgOVt7AbQGBvJMn5lYnx4ibxovO9Z5OetJOQ8Q8MpU1q
+         rpNQOxGN1qkqh6/l8qiR0kkJ3R7cnWWHQeyRHf1Ox0EfinZYLA/n067we+DlAkhqbYNg
+         UEo5NuwKU0kcfWAqrMTeHzOc3vZQ2xb07W9l0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=HG1jWkjGrQ9RAKjyfAwuBbGeNhu0oM3F0cw+VQK4KfVNNRty0H2bMGBvvS68PoRZ9O
+         VMabeY6d2CVPrIEnv7g9h06EScjl2vBtXAnddl8oLMmJL8K7l+tvMdNjhAz7WCdLWmU6
+         oPvvaiU75dgpBt7ieOwRd+rwZUUL7xtURLe4A=
+Received: by 10.223.122.15 with SMTP id j15mr1006504far.10.1240038208120; Sat, 
+	18 Apr 2009 00:03:28 -0700 (PDT)
+In-Reply-To: <3a69fa7c0904150819x7598dea5ic43bf0991c35ae45@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116814>
 
-On Fri, Apr 17, 2009 at 04:48:59PM -0700, Tommi Virtanen wrote:
-> On Fri, Apr 17, 2009 at 04:40:54PM -0700, Junio C Hamano wrote:
-> > How does this interact with a typical gitosis installation?  I think it
-> > extracts bits from the ORIGINAL_COMMAND and formulates a sanitized command
-> > line and then passes it to git-shell but I do not think it removes the
-> > variable from the environment.
-> 
-> Yup, not sanitizing. I could make that change easily, if you want, but
-> there's plenty of installations out there already.
-> 
-> I'd say add a git-shell flag that enables any magic behavior, don't
-> just magically work differently based on that environment variable.
-> Sometimes that is set for reasons that are not related to what you're
-> actually running in the end; e.g. "chroot /foo exec-whatever-i-gave-you".
+This idea sounds very much like vesta (http://www.vestasys.org) -
+except that vesta has its
+own version control system, rather than using git. It has its own
+filesystem (actually a user-mode nfs server). It's GPL, so in theory
+you could swipe its filesystem code, or replace its
+vcs with git. Don't know how hard that would be, though - doesn't
+sound trivial. It's worth looking at vesta for ideas, though, even if
+you don't use the code. The owners are fairly responsive on their IRC
+channel, too.
 
-What about triggering only when there is no option at all? Doing so
-would normally terminate git-shell telling the user it's not a shell.
-
-Mike
+Ealdwulf
