@@ -1,67 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] builtin-apply: keep information about files to be
- deleted
-Date: Sat, 18 Apr 2009 12:56:19 -0700
-Message-ID: <7vws9hviqk.fsf@gitster.siamese.dyndns.org>
-References: <1239478260-7420-1-git-send-email-michal.kiedrowicz@gmail.com>
- <7v4owsfktw.fsf@gitster.siamese.dyndns.org>
- <20090413230351.7cbb01f5@gmail.com>
- <7v1vrwdyxx.fsf@gitster.siamese.dyndns.org>
- <20090417192324.3a888abf@gmail.com>
- <7vskk6y2tl.fsf@gitster.siamese.dyndns.org> <49E9B90F.8070204@op5.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>,
-	git@vger.kernel.org
-To: Andreas Ericsson <exon@op5.com>
-X-From: git-owner@vger.kernel.org Sat Apr 18 21:58:03 2009
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [PATCH] Changed to use more Eclipse-oriented naming
+Date: Sat, 18 Apr 2009 22:23:11 +0200
+Message-ID: <1240086192-20325-1-git-send-email-robin.rosenberg@dewire.com>
+Cc: git@vger.kernel.org, Alex Blewitt <alex.blewitt@gmail.com>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Sat Apr 18 22:24:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LvGfp-0006VQ-Uq
-	for gcvg-git-2@gmane.org; Sat, 18 Apr 2009 21:58:02 +0200
+	id 1LvH5k-0005TL-Ie
+	for gcvg-git-2@gmane.org; Sat, 18 Apr 2009 22:24:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753561AbZDRT40 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Apr 2009 15:56:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752244AbZDRT40
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Apr 2009 15:56:26 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:39499 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751607AbZDRT4Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Apr 2009 15:56:25 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A666510B48;
-	Sat, 18 Apr 2009 15:56:24 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id EF61910B44; Sat,
- 18 Apr 2009 15:56:20 -0400 (EDT)
-In-Reply-To: <49E9B90F.8070204@op5.com> (Andreas Ericsson's message of "Sat,
- 18 Apr 2009 13:27:11 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: FF1A9740-2C52-11DE-BBBB-DC76898A30C1-77302942!a-sasl-quonix.pobox.com
+	id S1754437AbZDRUXR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Apr 2009 16:23:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754062AbZDRUXR
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Apr 2009 16:23:17 -0400
+Received: from mail.dewire.com ([83.140.172.130]:16258 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753654AbZDRUXQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Apr 2009 16:23:16 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id F39AB149164D;
+	Sat, 18 Apr 2009 22:23:14 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id MVQaRzHKHyAT; Sat, 18 Apr 2009 22:23:14 +0200 (CEST)
+Received: from localhost.localdomain (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 6897E1491629;
+	Sat, 18 Apr 2009 22:23:14 +0200 (CEST)
+X-Mailer: git-send-email 1.6.2.2.446.gfbdc0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116863>
 
-Andreas Ericsson <exon@op5.com> writes:
+From: Alex Blewitt <alex.blewitt@gmail.com>
 
->> There are two stances we can take:
->>
->>  (1) The user knows what he is doing.
->>
->>      In the first example, if he wanted the change in #3 to end up in B,
->>      he would have arranged the patches in a different order, namely, 3 1
->>      2, but he didn't.  We should modify A (that came from C).
->>
->
-> This gets my vote. Standard "diff -u" patches have always had to be
-> numbered properly if they have even the slightest chance of interfering
-> with each other, so developers are already used to it.
 
-You stripped the more important part from the quote, where I describe why
-this would not work well for the second situation.  Without addressing it,
-how could you possibly vote?
+Signed-off-by: Alex Blewitt <alex.blewitt@gmail.com>
+---
+ org.spearce.egit.ui/plugin.properties |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+Shawn: I think these are fine, so I'll push them soon.
+
+diff --git a/org.spearce.egit.ui/plugin.properties b/org.spearce.egit.ui/plugin.properties
+index 0627a62..7748770 100644
+--- a/org.spearce.egit.ui/plugin.properties
++++ b/org.spearce.egit.ui/plugin.properties
+@@ -16,10 +16,10 @@ DisconnectAction_tooltip=Disconnect the Git team provider.
+ AssumeUnchangedAction_label=Assume unchanged
+ AssumeUnchangedAction_tooltip=Assume selected folders/files are unchanged
+ 
+-TrackAction_label=Track (&Add)
++TrackAction_label=&Add to Version Control
+ TrackAction_tooltip=Track selected files/folders with Git.
+ 
+-UntrackAction_label=Untrack (Remove)
++UntrackAction_label=&Remove from Version Control
+ UntrackAction_tooltip=Stop tracking selected files/folders with Git.
+ 
+ UpdateAction_label=Update Index (Refresh)
+-- 
+1.6.2.2
