@@ -1,126 +1,105 @@
-From: Ben Jackson <ben@ben.com>
-Subject: [PATCH] Work around ash "alternate value" expansion bug
-Date: Sat, 18 Apr 2009 01:47:39 -0700
-Message-ID: <1240044459-57227-1-git-send-email-ben@ben.com>
-Cc: nanako3@lavabit.com, gitster@pobox.com, ben@ben.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 18 10:49:29 2009
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: [PATCH] doc/git-daemon: add missing arguments to options
+Date: Sat, 18 Apr 2009 11:44:07 +0200
+Message-ID: <1240047847-24524-1-git-send-email-markus.heidelberg@web.de>
+Cc: git@vger.kernel.org, Markus Heidelberg <markus.heidelberg@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 18 11:45:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lv6En-00033C-6A
-	for gcvg-git-2@gmane.org; Sat, 18 Apr 2009 10:49:25 +0200
+	id 1Lv77F-0002Iw-Gc
+	for gcvg-git-2@gmane.org; Sat, 18 Apr 2009 11:45:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753624AbZDRIru (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Apr 2009 04:47:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753358AbZDRIrt
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Apr 2009 04:47:49 -0400
-Received: from kronos.home.ben.com ([71.117.242.19]:51504 "EHLO
-	kronos.home.ben.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751732AbZDRIrs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Apr 2009 04:47:48 -0400
-Received: from kronos.home.ben.com (localhost [127.0.0.1])
-	by kronos.home.ben.com (8.14.3/8.14.3) with ESMTP id n3I8lf5p057250;
-	Sat, 18 Apr 2009 01:47:41 -0700 (PDT)
-Received: (from bjj@localhost)
-	by kronos.home.ben.com (8.14.3/8.14.3/Submit) id n3I8ldmT057248;
-	Sat, 18 Apr 2009 01:47:39 -0700 (PDT)
-	(envelope-from bjj)
-X-Mailer: git-send-email 1.6.0.1
-X-Virus-Scanned: ClamAV 0.93.3/9254/Fri Apr 17 16:36:48 2009 on kronos.home.ben.com
-X-Virus-Status: Clean
+	id S1753264AbZDRJoJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Apr 2009 05:44:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752826AbZDRJoI
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Apr 2009 05:44:08 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:42611 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751359AbZDRJoF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Apr 2009 05:44:05 -0400
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 649B5FAAFF57;
+	Sat, 18 Apr 2009 11:44:04 +0200 (CEST)
+Received: from [89.59.75.158] (helo=localhost.localdomain)
+	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1Lv75g-0001oG-00; Sat, 18 Apr 2009 11:44:04 +0200
+X-Mailer: git-send-email 1.6.3.rc0.77.g079dc
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX19egk0zUH2ZEjBCbmd5zLsh91t/3O/5p52xEaHQ
+	HrtqzEj7yVVvAx+HfAlLeqMGzZVLcbKDkoK+rmsRv1iX1YmB7O
+	LFRZvvbUrDJjfmV+zwLA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116817>
 
-Ash (used as /bin/sh on many distros) has a shell expansion bug
-for the form ${var:+word word}.  The result is a single argument
-"word word".  Work around by using ${var:+word} ${var:+word} or
-equivalent.
+Also fix some spellings and typos.
 
-Signed-off-by: Ben Jackson <ben@ben.com>
+Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
 ---
+ Documentation/git-daemon.txt |   18 +++++++++---------
+ 1 files changed, 9 insertions(+), 9 deletions(-)
 
-I found this by accident while testing another trivial git-am patch.
-It was broken about a week ago in git-am.sh by f79d4c8a and one of the
-test cases caught it on FreeBSD.
-
-The other instance has been around longer and I found it by grepping.
-I added a new testcase (none too exciting) which exposes the problem.
-There are more instances of ${x:+alt} which don't have spaces which I
-did not touch.
-
-For the curious:
-
-bash on linux:
-	$ parent=ok
-	$ echo ${parent:+-p $parent}
-	-p ok
-	$ for i in ${parent:+-p $parent} ; do echo .$i; done
-	.-p
-	.ok
-
-ash (/bin/sh) on freebsd:
-	$ parent=ok
-	$ echo ${parent:+-p $parent}
-	-p ok
-	$ for i in ${parent:+-p $parent} ; do echo .$i; done
-	.-p ok
-
-This is probably a bug in ash.  It does expand ${foo:+*} into many words.
-
- git-am.sh                  |    2 +-
- git-submodule.sh           |    2 +-
- t/t7400-submodule-basic.sh |    8 ++++++++
- 3 files changed, 10 insertions(+), 2 deletions(-)
-
-diff --git a/git-am.sh b/git-am.sh
-index bfc50c9..e539c60 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -570,7 +570,7 @@ do
- 			GIT_COMMITTER_DATE="$GIT_AUTHOR_DATE"
- 			export GIT_COMMITTER_DATE
- 		fi &&
--		git commit-tree $tree ${parent:+-p $parent} <"$dotest/final-commit"
-+		git commit-tree $tree ${parent:+-p} $parent <"$dotest/final-commit"
- 	) &&
- 	git update-ref -m "$GIT_REFLOG_ACTION: $FIRSTLINE" HEAD $commit $parent ||
- 	stop_here $this
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 7c2e060..bb3766d 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -204,7 +204,7 @@ cmd_add()
- 	else
+diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
+index 36f00ae..a85121c 100644
+--- a/Documentation/git-daemon.txt
++++ b/Documentation/git-daemon.txt
+@@ -48,7 +48,7 @@ OPTIONS
+ 	'git-daemon' will refuse to start when this option is enabled and no
+ 	whitelist is specified.
  
- 		module_clone "$path" "$realrepo" || exit
--		(unset GIT_DIR; cd "$path" && git checkout -f -q ${branch:+-b "$branch" "origin/$branch"}) ||
-+		(unset GIT_DIR; cd "$path" && git checkout -f -q ${branch:+-b} ${branch:+"$branch"} ${branch:+"origin/$branch"}) ||
- 		die "Unable to checkout submodule '$path'"
- 	fi
+---base-path::
++--base-path=path::
+ 	Remap all the path requests as relative to the given path.
+ 	This is sort of "GIT root" - if you run 'git-daemon' with
+ 	'--base-path=/srv/git' on example.com, then if you later try to pull
+@@ -81,8 +81,8 @@ OPTIONS
+ 	Incompatible with --port, --listen, --user and --group options.
  
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index af690ec..3c05c27 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -64,6 +64,14 @@ test_expect_success 'submodule add' '
- 	)
- '
+ --listen=host_or_ipaddr::
+-	Listen on an a specific IP address or hostname.  IP addresses can
+-	be either an IPv4 address or an IPV6 address if supported.  If IPv6
++	Listen on a specific IP address or hostname.  IP addresses can
++	be either an IPv4 address or an IPv6 address if supported.  If IPv6
+ 	is not supported, then --listen=hostname is also not supported and
+ 	--listen must be given an IPv4 address.
+ 	Incompatible with '--inetd' option.
+@@ -90,17 +90,17 @@ OPTIONS
+ --port=n::
+ 	Listen on an alternative port.  Incompatible with '--inetd' option.
  
-+test_expect_success 'submodule add --branch' '
-+	(
-+		cd addtest &&
-+		git submodule add -b initial "$submodurl" submod-branch &&
-+		git submodule init
-+	)
-+'
-+
- test_expect_success 'submodule add with ./ in path' '
- 	(
- 		cd addtest &&
+---init-timeout::
++--init-timeout=n::
+ 	Timeout between the moment the connection is established and the
+ 	client request is received (typically a rather low value, since
+ 	that should be basically immediate).
+ 
+---timeout::
++--timeout=n::
+ 	Timeout for specific client sub-requests. This includes the time
+-	it takes for the server to process the sub-request and time spent
+-	waiting for next client's request.
++	it takes for the server to process the sub-request and the time spent
++	waiting for the next client's request.
+ 
+---max-connections::
++--max-connections=n::
+ 	Maximum number of concurrent clients, defaults to 32.  Set it to
+ 	zero for no limit.
+ 
+@@ -150,7 +150,7 @@ the facility of inet daemon to achieve the same before spawning
+ 	Enable/disable the service site-wide per default.  Note
+ 	that a service disabled site-wide can still be enabled
+ 	per repository if it is marked overridable and the
+-	repository enables the service with an configuration
++	repository enables the service with a configuration
+ 	item.
+ 
+ --allow-override=service::
 -- 
-1.6.0.1
+1.6.3.rc0.77.g079dc
