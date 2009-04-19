@@ -1,158 +1,79 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [EGIT PATCH] Add support for writing/appending .gitignore file
-Date: Sun, 19 Apr 2009 23:50:55 +0200
-Message-ID: <200904192350.56348.robin.rosenberg.lists@dewire.com>
-References: <AFFAB806-28F7-4D48-B603-B7B96052B0F3@gmail.com>
+From: Tuncer Ayaz <tuncer.ayaz@gmail.com>
+Subject: Re: What are branches?
+Date: Mon, 20 Apr 2009 00:10:52 +0200
+Message-ID: <4ac8254d0904191510v72ab2f92t6839c8354d0c6fe4@mail.gmail.com>
+References: <alpine.DEB.1.00.0904191709220.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Alex Blewitt <alex.blewitt@gmail.com>,
-	Ferry Huberts <ferry.huberts@pelagic.nl>
-X-From: git-owner@vger.kernel.org Sun Apr 19 23:52:45 2009
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Apr 20 00:13:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LvewH-0006h3-Uw
-	for gcvg-git-2@gmane.org; Sun, 19 Apr 2009 23:52:38 +0200
+	id 1LvfFl-0004QT-1H
+	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 00:12:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751004AbZDSVvG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 19 Apr 2009 17:51:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750937AbZDSVvE
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Apr 2009 17:51:04 -0400
-Received: from mail.dewire.com ([83.140.172.130]:20252 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750944AbZDSVvD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Apr 2009 17:51:03 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 82492149165B;
-	Sun, 19 Apr 2009 23:50:59 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id e+-Q8iIaRhh9; Sun, 19 Apr 2009 23:50:59 +0200 (CEST)
-Received: from sleipner.localnet (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id CD46D149165A;
-	Sun, 19 Apr 2009 23:50:58 +0200 (CEST)
-User-Agent: KMail/1.11.2 (Linux/2.6.27-14-generic; KDE/4.2.2; i686; ; )
-In-Reply-To: <AFFAB806-28F7-4D48-B603-B7B96052B0F3@gmail.com>
-Content-Disposition: inline
+	id S1751502AbZDSWLL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 19 Apr 2009 18:11:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751347AbZDSWLK
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Apr 2009 18:11:10 -0400
+Received: from ey-out-2122.google.com ([74.125.78.26]:64242 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751110AbZDSWLJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Apr 2009 18:11:09 -0400
+Received: by ey-out-2122.google.com with SMTP id 9so71806eyd.37
+        for <git@vger.kernel.org>; Sun, 19 Apr 2009 15:11:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=B7tgFOlwXR1CKMNQkhmsVvtrjPNn+pweVJsOnMm4xbw=;
+        b=v+3E+yHkDOWinEipxYq/0fUsExcyV9FmjT17Jm6i1JtD97MA7A4z5TcWbH80IoZvr/
+         /G5BKXPoXDdk/W5dVNvtZMiiAH4jQr5sNsnmQoYkYoBvIwWs/98dBi+Ow4gN+c0PHng3
+         SpPdDiaqgap9PJ7sPu35vt1lZK0e2m5T21UVQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=GLs9I0CG1y4qPPVGPc34WG/ioQwe6gn728EcasiQxoORydTcHu7dX/Zx+Kxjkjal35
+         SH6fsYAbV/erKEIgRdFU+XcuJJVKv/52Ll7y+De+bqEd+/PY4b0AgfWRKdPqeNsvOC3r
+         E4gVjkg3yphzxCjHdhhHVtmmF/zcmEV9D0GQI=
+Received: by 10.210.111.17 with SMTP id j17mr5123986ebc.22.1240179067098; Sun, 
+	19 Apr 2009 15:11:07 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0904191709220.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116914>
 
+On Sun, Apr 19, 2009 at 5:17 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> if you're like me, you used Git for _way_ too long to really understa=
+nd
+> how anybody can say that Git is hard to learn. =A0The concepts underl=
+ying
+> Git have sunk so deep that I do not question them anymore.
+>
+> But it is important to keep in mind that our concept of branches is n=
+ot
+> intuitive:
+>
+> http://longair.net/blog/2009/04/16/git-fetch-and-merge/
+>
+> In particular, we have some pretty confusing nomenclature when it com=
+es to
+> branches, and we might want to think how to improve the situation.
+>
+> Food for thought on a lazy Sunday afternoon.
 
-=46irst, Ferry Huberts is also working on a solution for ignore See=20
-http://thread.gmane.org/gmane.comp.version-control.git/114825 though yo=
-u=20
-focus on different aspects.
+Probably in the same confusion department:
+http://blog.teksol.info/2009/04/15/beware-of-gits-content-tracking.html
 
-s=F6ndag 19 april 2009 15:09:32 skrev Alex Blewitt <alex.blewitt@gmail.=
-com>:
-> This is in addition to the other patches mailed earlier and attached =
-=20
-> with issue 64
-
-This patch is whitespace damaged.  Pasting into gmail won't work. Gmail
-has authenticated SMTP on port 25 and 465 (SSL) so git-send-email shoul=
-d work that way.
-
-> +	private static final String GITIGNORE_ENCODING =3D "UTF-8";
-
-=46or the time being we use Constants.CHARACTER_ENCODING (which
-is UTF-8). There are some problems with that too. We read an
-interpret (by guessing) (using RawParseUtils.decode) and write UTF-8 (a=
-lways).
-This is one of git's weak spots; it doesn't define encoding of stuff. F=
-or
-JGit we do (it's perfectly valid since it's not defined). Our internal
-encoding is UTF-8, with fallbacks for accepting other encodings if
-it doesn't look like UTF-8. See RawParseUtils.decode() for details.
-
-You may also want to look at msysgit's list of encoding related bug rep=
-orts.
-
-> +	private static final String GITIGNORE =3D ".gitignore";
-> +
->   	@SuppressWarnings("restriction")
->   	@Override
->   	public void run(IAction action) {
-> -
-> +		NullProgressMonitor m =3D new NullProgressMonitor();
-I guess this method should execute fairly fast, but in general we shoul=
-d run
-with a real progress monitor. See an action, like Track (maybe we shoul=
-d
-rename to TrackAction...).
-
-	getTargetPart().getSite().getWorkbenchWindow().run
-
->   		IResource[] resources =3D getSelectedResources();
-> -		for (IResource resource : resources) {
-> -			// NB This does the same thing in DecoratableResourceAdapter, but=
- =20
-> neither currently consult .gitignore
-> -			if (!Team.isIgnoredHint(resource))
-> -			{
-> -				// TODO Actually add to .gitignore here
-
-I think this series should be one patch only.
-
-> +		try {
-> +			for (IResource resource : resources) {
-> +				// TODO This is pretty inefficient; multiple ignores in the same=
- =20
-> directory cause multiple writes.
-> +				// NB This does the same thing in DecoratableResourceAdapter, bu=
-t =20
-> neither currently consult .gitignore
-> +				if (!Team.isIgnoredHint(resource)) {
-> +					IContainer container =3D resource.getParent();
-> +					IFile gitignore =3D container.getFile(new Path(GITIGNORE));
-> +					String entry =3D "/" + resource.getName() + "\n"; //$NON-NLS-1$=
-  //=20
-> $NON-NLS-2$
-> +					// TODO What is the character set and new-line convention?
-> +					if(gitignore.exists()) {
-> +						// This is ugly. CVS uses an internal representation of =20
-> the .gitignore to re-write/overwrite each time.
-> +						ByteArrayOutputStream out =3D new ByteArrayOutputStream(2048);
-> +						out.write(entry.getBytes(GITIGNORE_ENCODING)); // TODO Default=
- =20
-> encoding?
-> +						gitignore.appendContents(new =20
-> ByteArrayInputStream(out.toByteArray()),true,true,m);
-> +					} else {
-> +						ByteArrayInputStream bais =3D new =20
-> ByteArrayInputStream( entry.getBytes(GITIGNORE_ENCODING) ); //$NON-=20
-> NLS-1$
-> +						gitignore.create( bais,true,m);				=09
-> +					}
-The character encoding issues, I think, should be interpreted such that=
- we rewrite the whole
-file in the same encoding, should it actually change.
-
-> +				}
->   			}
-> +		} catch (UnsupportedEncodingException e) {
-> +			// TODO Auto-generated catch block
-> +			e.printStackTrace();
-> +		} catch (CoreException e) {
-> +			// TODO Auto-generated catch block
-> +			e.printStackTrace();
-> +		} catch (IOException e) {
-> +			// TODO Auto-generated catch block
-> +			e.printStackTrace();
-
-Some actual error logging would be nice. Activator.logError for just lo=
-gging and MessageDialog.openError
-for posting an error message to the user.
-
->   		}
->   		return;
->   	}
-
--- robin
+Is he right and is this the defined correct behavior?
