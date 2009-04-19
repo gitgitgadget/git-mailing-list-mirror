@@ -1,79 +1,119 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: [PATCH RFC3.5 05/12] send-email: Improve redability and 
-	error-handling in send_message's sendmail code
-Date: Sat, 18 Apr 2009 21:43:58 -0500
-Message-ID: <b4087cc50904181943t71d501a6r51bb4cc846f32f78@mail.gmail.com>
-References: <1240074128-16132-1-git-send-email-mfwitten@gmail.com>
-	 <1240074128-16132-2-git-send-email-mfwitten@gmail.com>
-	 <1240074128-16132-3-git-send-email-mfwitten@gmail.com>
-	 <1240074128-16132-4-git-send-email-mfwitten@gmail.com>
-	 <1240074128-16132-5-git-send-email-mfwitten@gmail.com>
-	 <1240074128-16132-6-git-send-email-mfwitten@gmail.com>
-	 <76718490904181851g2701ce59x614ea60452b914ce@mail.gmail.com>
-	 <b4087cc50904181913g117937le333c3b255f7d184@mail.gmail.com>
-	 <18071eea0904181917u7c7187bubc8fab6ede2d19ef@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-To: Thomas Adam <thomas.adam22@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 19 04:46:19 2009
+From: Ben Jackson <ben@ben.com>
+Subject: [PATCH v2] Work around ash "alternate value" expansion bug
+Date: Sat, 18 Apr 2009 20:42:07 -0700
+Message-ID: <1240112527-79979-1-git-send-email-ben@ben.com>
+References: <1240044459-57227-1-git-send-email-ben@ben.com>
+Cc: gitster@pobox.com, Ben Jackson <ben@ben.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 19 05:43:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LvN2x-00044d-03
-	for gcvg-git-2@gmane.org; Sun, 19 Apr 2009 04:46:19 +0200
+	id 1LvNwf-0003oP-Sc
+	for gcvg-git-2@gmane.org; Sun, 19 Apr 2009 05:43:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759983AbZDSCoD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 18 Apr 2009 22:44:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759973AbZDSCoA
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Apr 2009 22:44:00 -0400
-Received: from qw-out-2122.google.com ([74.125.92.25]:43588 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759902AbZDSCn7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 18 Apr 2009 22:43:59 -0400
-Received: by qw-out-2122.google.com with SMTP id 5so568969qwd.37
-        for <git@vger.kernel.org>; Sat, 18 Apr 2009 19:43:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=VQe3a8xh84hLXd3EkWcDQswPupiceetrfeKu5Vva2ZI=;
-        b=t4AfMCuGkBZMDQg572yLayJg40xDQ+vTytLBpjttTtAIawAvoN7ZXzVW7LuyEhY8Ay
-         V5ZKxTy7Xkoydyty9vuftmzV1YsZGP/Ieq9xa703rcYAOrGtdIe91CSAgevWAtvEME3H
-         NiVvkdxEwbx7hX13AjmHJvQQog0u0hTmyxMyQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=WKH7ZYmbxSfGL9os/tlWfEY6AVURx6f6lAo8m0nXFi9O6pQSFGKxLUzd4CxtFF00Cm
-         dUf/X6tWgcxTtubqm75T9h6xVpSQA4nd/KeuDQV0lr4jl/XbWy3dyhpxc+0hP7rl/Wlk
-         A0oAuqvQa5cpyTIudmJeoXMuwIUkTEIrDe/Zo=
-Received: by 10.224.74.6 with SMTP id s6mr5173953qaj.327.1240109038618; Sat, 
-	18 Apr 2009 19:43:58 -0700 (PDT)
-In-Reply-To: <18071eea0904181917u7c7187bubc8fab6ede2d19ef@mail.gmail.com>
+	id S1753436AbZDSDmO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Apr 2009 23:42:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752395AbZDSDmO
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Apr 2009 23:42:14 -0400
+Received: from kronos.home.ben.com ([71.117.242.19]:50555 "EHLO
+	kronos.home.ben.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752095AbZDSDmN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Apr 2009 23:42:13 -0400
+Received: from kronos.home.ben.com (localhost [127.0.0.1])
+	by kronos.home.ben.com (8.14.3/8.14.3) with ESMTP id n3J3g9Ew080113;
+	Sat, 18 Apr 2009 20:42:09 -0700 (PDT)
+Received: (from bjj@localhost)
+	by kronos.home.ben.com (8.14.3/8.14.3/Submit) id n3J3g72m080112;
+	Sat, 18 Apr 2009 20:42:07 -0700 (PDT)
+	(envelope-from bjj)
+X-Mailer: git-send-email 1.6.0.1
+In-Reply-To: <1240044459-57227-1-git-send-email-ben@ben.com>
+X-Virus-Scanned: ClamAV 0.93.3/9256/Sat Apr 18 16:13:04 2009 on kronos.home.ben.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116880>
 
-On Sat, Apr 18, 2009 at 21:17, Thomas Adam <thomas.adam22@gmail.com> wr=
-ote:
-> More concerning is that it's a perl 5.10ism -- you cannot assume that
-> perl 5.10 is installed on all platforms. =A0I really wouldn't use thi=
-s
-> construct.
+Ash (used as /bin/sh on many distros) has a shell expansion bug
+for the form ${var:+word word}.  The result is a single argument
+"word word".  Work around by using ${var:+word} ${var:+word} or
+equivalent.
 
-See that's the thing: How am I supposed to know it's a perl 5.10ism?
-The Perl docs give absolutely no clue; Perl[5] is based way too much
-on practice rather than theory, because only people that have been
-using it since day 1 know what's going on. A couple of weeks ago, I
-went to the perldoc website and just read each website one after the
-other---that is my total knowledge of Perl, and already I've caught
-flack a number of times for having used 'new-fangled technologies'; I
-really wish the docs would specify when a feature became available.
+Signed-off-by: Ben Jackson <ben@ben.com>
+---
 
-=2E.. add that to the list of perldoc shortcomings.
+See http://thread.gmane.org/gmane.comp.version-control.git/116816 for
+the original notes which describe the problem in more detail.
+
+This version uses a different workaround suggested by Junio for
+git-submodule which is less likely to be "cleaned up" back to the
+original problem.  Since new the change is more complex I beefed
+up the new test slightly to ensure we are getting into the right case.
+
+ git-am.sh                  |    2 +-
+ git-submodule.sh           |   11 +++++++++--
+ t/t7400-submodule-basic.sh |   10 ++++++++++
+ 3 files changed, 20 insertions(+), 3 deletions(-)
+
+diff --git a/git-am.sh b/git-am.sh
+index bfc50c9..e539c60 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -570,7 +570,7 @@ do
+ 			GIT_COMMITTER_DATE="$GIT_AUTHOR_DATE"
+ 			export GIT_COMMITTER_DATE
+ 		fi &&
+-		git commit-tree $tree ${parent:+-p $parent} <"$dotest/final-commit"
++		git commit-tree $tree ${parent:+-p} $parent <"$dotest/final-commit"
+ 	) &&
+ 	git update-ref -m "$GIT_REFLOG_ACTION: $FIRSTLINE" HEAD $commit $parent ||
+ 	stop_here $this
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 7c2e060..8e234a4 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -204,8 +204,15 @@ cmd_add()
+ 	else
+ 
+ 		module_clone "$path" "$realrepo" || exit
+-		(unset GIT_DIR; cd "$path" && git checkout -f -q ${branch:+-b "$branch" "origin/$branch"}) ||
+-		die "Unable to checkout submodule '$path'"
++		(
++			unset GIT_DIR
++			cd "$path" &&
++			# ash fails to wordsplit ${branch:+-b "$branch"...}
++			case "$branch" in
++			'') git checkout -f -q ;;
++			?*) git checkout -f -q -b "$branch" "origin/$branch" ;;
++			esac
++		) || die "Unable to checkout submodule '$path'"
+ 	fi
+ 
+ 	git add "$path" ||
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index af690ec..0f2ccc6 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -64,6 +64,16 @@ test_expect_success 'submodule add' '
+ 	)
+ '
+ 
++test_expect_success 'submodule add --branch' '
++	(
++		cd addtest &&
++		git submodule add -b initial "$submodurl" submod-branch &&
++		git submodule init &&
++		cd submod-branch &&
++		git branch | grep initial
++	)
++'
++
+ test_expect_success 'submodule add with ./ in path' '
+ 	(
+ 		cd addtest &&
+-- 
+1.6.0.1
