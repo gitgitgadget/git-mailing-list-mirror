@@ -1,72 +1,71 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH RFC3.5 08/12] send-email: Move Subject sanitization from 
-	--compose code to send_message
-Date: Sat, 18 Apr 2009 21:54:07 -0400
-Message-ID: <76718490904181854o380fe118y9f3a52c926bd1f6d@mail.gmail.com>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: [PATCH RFC3.5 05/12] send-email: Improve redability and 
+	error-handling in send_message's sendmail code
+Date: Sat, 18 Apr 2009 21:13:20 -0500
+Message-ID: <b4087cc50904181913g117937le333c3b255f7d184@mail.gmail.com>
 References: <1240074128-16132-1-git-send-email-mfwitten@gmail.com>
 	 <1240074128-16132-2-git-send-email-mfwitten@gmail.com>
 	 <1240074128-16132-3-git-send-email-mfwitten@gmail.com>
 	 <1240074128-16132-4-git-send-email-mfwitten@gmail.com>
 	 <1240074128-16132-5-git-send-email-mfwitten@gmail.com>
 	 <1240074128-16132-6-git-send-email-mfwitten@gmail.com>
-	 <1240074128-16132-7-git-send-email-mfwitten@gmail.com>
-	 <1240074128-16132-8-git-send-email-mfwitten@gmail.com>
-	 <1240074128-16132-9-git-send-email-mfwitten@gmail.com>
+	 <76718490904181851g2701ce59x614ea60452b914ce@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 19 03:55:45 2009
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 19 04:14:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LvMFz-0005Nt-5C
-	for gcvg-git-2@gmane.org; Sun, 19 Apr 2009 03:55:43 +0200
+	id 1LvMYa-00084W-Ao
+	for gcvg-git-2@gmane.org; Sun, 19 Apr 2009 04:14:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753285AbZDSByL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 18 Apr 2009 21:54:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753213AbZDSByJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Apr 2009 21:54:09 -0400
-Received: from yw-out-2324.google.com ([74.125.46.28]:52536 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752977AbZDSByI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 18 Apr 2009 21:54:08 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so997437ywb.1
-        for <git@vger.kernel.org>; Sat, 18 Apr 2009 18:54:07 -0700 (PDT)
+	id S1753941AbZDSCNX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Apr 2009 22:13:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753667AbZDSCNW
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Apr 2009 22:13:22 -0400
+Received: from qw-out-2122.google.com ([74.125.92.26]:52034 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753458AbZDSCNV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Apr 2009 22:13:21 -0400
+Received: by qw-out-2122.google.com with SMTP id 5so565104qwd.37
+        for <git@vger.kernel.org>; Sat, 18 Apr 2009 19:13:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=WExvd8DQYgdfg1V8G+MMsLV0Fpf7GtboRBWXAv9/M98=;
-        b=C81B8MkcfryT0EVuCRJm2zv+qRYyLQuOjBkNRIdSYiVThgzcDFr4OUo2RDwnOeNNmD
-         k8ZmUIJlqHwWpKhIT3xYiQvxH5PrK5Os2aQAdyTQIlxe48SOhT0lyy3s4/dF62Lh1ig5
-         g/lazq1y3ZxRIpVEh5/FnqmuBNas4+Q5lYic4=
+        bh=QR9cHH1fgDIw72d/npbBJq/mmZdYpDG5V/ZB5PR8J9w=;
+        b=xqkqCGK33OQY8uSx9FZ74Vx63xnFHYMxZkAObi8ItqNIQeYdHXPZAQqhDZBq9EVMuk
+         WnakGo2+9Apo5OKIAx5oGQWzetGY9kub4CGGkvms0HGXFsIVuRFHJlIyRQHrtiW+LT+8
+         dZeMMyyph9ChofW/240wzH0M95rzMeBYfrW8A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=HtupCI0IuA06nqyxkg0QsO0rdLKreubexd1SObKEgT/mFPYgEcs9etj3z/J0mfh9WJ
-         mfbZev0mOEjhQbZJ0SvLDU522U74wPPs5lVR9Zo1KoI2eZC03wGT3qUmCKOjMINkpIQT
-         BUqvGyWmTrXhHS4KG8DhyACw93CzCYCbmmolI=
-Received: by 10.150.149.19 with SMTP id w19mr5464657ybd.79.1240106047225; Sat, 
-	18 Apr 2009 18:54:07 -0700 (PDT)
-In-Reply-To: <1240074128-16132-9-git-send-email-mfwitten@gmail.com>
+        b=aHuUU5vTaIDYsbx8KASDAH0iyOzqG/jDWWT927I7Eiy2ZsadngjcNdWwFQfgI68QSb
+         zdALR2/ZVnmTlRaFBO3K4hPwixUQJSfd9fpkwzip0wrgfBCV6XwyZK4kS0hs18/JfHAm
+         L7/GsHA9pex3x3sfu1cy5bMaI1MfXCQait6oI=
+Received: by 10.224.2.202 with SMTP id 10mr5161990qak.336.1240107200286; Sat, 
+	18 Apr 2009 19:13:20 -0700 (PDT)
+In-Reply-To: <76718490904181851g2701ce59x614ea60452b914ce@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116876>
 
-On Sat, Apr 18, 2009 at 1:02 PM, Michael Witten <mfwitten@gmail.com> wr=
-ote:
-> + =C2=A0 =C2=A0 =C2=A0 my $sanitized_subject =3D ($subject =3D~ /[^[:=
-ascii:]]/) ? quote_rfc2047($subject) : $subject;
+On Sat, Apr 18, 2009 at 20:51, Jay Soffian <jaysoffian@gmail.com> wrote:
+> What is '//' about?
 
-I wonder if it would be clearer to always call quote_rfc2047, then
-have that function just return its input unaltered if quoting is not
-needed.
+It's called the Logical Defined-OR:
 
-j.
+    http://perldoc.perl.org/perlop.html#C-style-Logical-Defined-Or
+
+> Although it has no direct equivalent in C, Perl's // operator is related to its C-style or. In fact, it's exactly the same as ||, except that it tests the left hand side's definedness instead of its truth. Thus, $a // $b is similar to defined($a) || $b  (except that it returns the value of $a rather than the value of defined($a)) and is exactly equivalent to defined($a) ? $a : $b . This is very useful for providing default values for variables. If you actually want to test if at least one of $a  and $b  is defined, use defined($a // $b) ...
+
+However, I wonder if your comment is a veiled quip at my "Improve
+redability" claim (which is also ironically unreadable). :-)
