@@ -1,88 +1,57 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: [PATCH RFC3.5 08/12] send-email: Move Subject sanitization from 
-	--compose code to send_message
-Date: Sun, 19 Apr 2009 09:53:47 -0500
-Message-ID: <b4087cc50904190753v6f5862c0sebe2dcc56c5269dc@mail.gmail.com>
-References: <1240074128-16132-1-git-send-email-mfwitten@gmail.com>
-	 <1240074128-16132-5-git-send-email-mfwitten@gmail.com>
-	 <1240074128-16132-6-git-send-email-mfwitten@gmail.com>
-	 <1240074128-16132-7-git-send-email-mfwitten@gmail.com>
-	 <1240074128-16132-8-git-send-email-mfwitten@gmail.com>
-	 <1240074128-16132-9-git-send-email-mfwitten@gmail.com>
-	 <76718490904181854o380fe118y9f3a52c926bd1f6d@mail.gmail.com>
-	 <b4087cc50904181937q38ef45fm7409e020ecf40792@mail.gmail.com>
-	 <76718490904190713l3d6b5abcmf54544512de87413@mail.gmail.com>
-	 <b4087cc50904190739u54a9a9d7p6f011ab2b47c1d05@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: What are branches?
+Date: Sun, 19 Apr 2009 17:17:52 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904191709220.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 19 16:55:30 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 19 17:16:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LvYQU-0002r4-MO
-	for gcvg-git-2@gmane.org; Sun, 19 Apr 2009 16:55:23 +0200
+	id 1LvYl9-0000Sr-Jf
+	for gcvg-git-2@gmane.org; Sun, 19 Apr 2009 17:16:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760703AbZDSOxt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Apr 2009 10:53:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760683AbZDSOxt
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Apr 2009 10:53:49 -0400
-Received: from mail-qy0-f126.google.com ([209.85.221.126]:59034 "EHLO
-	mail-qy0-f126.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758457AbZDSOxs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Apr 2009 10:53:48 -0400
-Received: by qyk32 with SMTP id 32so999652qyk.33
-        for <git@vger.kernel.org>; Sun, 19 Apr 2009 07:53:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=cJ4zp+ZmTv6f3AXyaewlicKwG/f8c3iAkIbmp5reRW0=;
-        b=QWNCG7hvXVoE+Nzh2y3tRl8lgLlnSHCXkyzpncbXQssDPuSZYoDoXrZeO71RSa2IxB
-         ZXEyADQrTJyaai95SMx6ZUZolaF3JGf/zvu1chcnpI8XcozIihN1PVn+uMQD4G4Ey1dl
-         6Gp3ANbtT7fIktWGezC5s+oano6JUAqnxdw2A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=UkspeuSEzXG+BppK9hPoILvJ6W4Tlkr8tLw7M1zWGMAOf2RurkY5Ccc3KS5vt5OAmq
-         9xCYZVcVOFyRF4A4l+4/UcA9qIzb62KawkPT0WlyDKKjqjDErpeWsSabGT6A64h9/Un9
-         3a7X147QMU741HarnLfQvhLV4W06TIeIfk/dI=
-Received: by 10.224.80.193 with SMTP id u1mr5420216qak.353.1240152827167; Sun, 
-	19 Apr 2009 07:53:47 -0700 (PDT)
-In-Reply-To: <b4087cc50904190739u54a9a9d7p6f011ab2b47c1d05@mail.gmail.com>
+	id S1758323AbZDSPPH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Apr 2009 11:15:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758233AbZDSPPH
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Apr 2009 11:15:07 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52158 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757836AbZDSPPG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Apr 2009 11:15:06 -0400
+Received: (qmail invoked by alias); 19 Apr 2009 15:15:04 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp059) with SMTP; 19 Apr 2009 17:15:04 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19qEXMHN4Jq6VODgIn5uYISZ05IOw8mRULMENwkb6
+	wFksd0SnURctUa
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.72
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116903>
 
-On Sun, Apr 19, 2009 at 09:39, Michael Witten <mfwitten@gmail.com> wrote:
-> I'm morally opposed to this kind of thing. The caller should be
-> required to test whether quote_rfc2047() is required, as it's not the
-> job of quote_rfc2047 to validate. Suppose that quote_rfc2047 were
-> actually part of a library of useful functions that my program
-> imports. Perhaps my program knows that it must always quote some piece
-> of text. Why, then, should my program be forced to waste the cycles to
-> perform a useless test?
->
-> IMnsHO, verification should always be done by the caller with one
-> exception: Interactive (human) input should always be verified,
-> because humans represent an unreliable component in the system (in
-> terms of digital systems, their asynchronous input must be
-> synchronized with the clocked system). WIth this model, there's are
-> fewer wasted cycles, because you can reuse verification across similar
-> functions, and the code (particularly library code) is easier to
-> understand.
+Hi,
 
-I should add, though, that making the logic of the program clear is a
-good idea. In that sense, your approach makes sense. Since we 'own'
-quote_rfc2047(), I'd say we could take your approach, but rename the
-function to something like quote_rfc2047_if_necessary(). If
-quote_rfc2047() were part of a library, I think the only moral
-solution would be to insist that callers wrap it in another function
-named quote_rfc2047_if_necessary().
+if you're like me, you used Git for _way_ too long to really understand 
+how anybody can say that Git is hard to learn.  The concepts underlying 
+Git have sunk so deep that I do not question them anymore.
+
+But it is important to keep in mind that our concept of branches is not 
+intuitive:
+
+http://longair.net/blog/2009/04/16/git-fetch-and-merge/
+
+In particular, we have some pretty confusing nomenclature when it comes to 
+branches, and we might want to think how to improve the situation.
+
+Food for thought on a lazy Sunday afternoon.
+
+Ciao,
+Dscho
