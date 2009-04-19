@@ -1,94 +1,123 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: [PATCH RFC3.5.1 03/12] send-email: Interpret --smtp-server "" as "use a default".
-Date: Sun, 19 Apr 2009 09:16:55 -0500
-Message-ID: <1240150615-3939-1-git-send-email-mfwitten@gmail.com>
-References: <b4087cc50904181713m49849f89q87a9f5a392085939@mail.gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 19 16:18:52 2009
+From: "Aaron Gray" <aaronngray.lists@googlemail.com>
+Subject: Re: push git: failing on remote Fedora 10 as well as Cygwin too
+Date: Sun, 19 Apr 2009 15:19:39 +0100
+Message-ID: <52ECF09C6DA04E3EBD97076191CF1BD8@HPLAPTOP>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Apr 19 16:21:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LvXr8-0001Eh-Ku
-	for gcvg-git-2@gmane.org; Sun, 19 Apr 2009 16:18:51 +0200
+	id 1LvXtY-0001zX-6w
+	for gcvg-git-2@gmane.org; Sun, 19 Apr 2009 16:21:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758098AbZDSORS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Apr 2009 10:17:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758091AbZDSORR
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Apr 2009 10:17:17 -0400
-Received: from qw-out-2122.google.com ([74.125.92.25]:51830 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757417AbZDSORQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Apr 2009 10:17:16 -0400
-Received: by qw-out-2122.google.com with SMTP id 5so640711qwd.37
-        for <git@vger.kernel.org>; Sun, 19 Apr 2009 07:17:15 -0700 (PDT)
+	id S1760231AbZDSOTo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Apr 2009 10:19:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758111AbZDSOTn
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Apr 2009 10:19:43 -0400
+Received: from mail-ew0-f176.google.com ([209.85.219.176]:49966 "EHLO
+	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758091AbZDSOTn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Apr 2009 10:19:43 -0400
+Received: by ewy24 with SMTP id 24so819681ewy.37
+        for <git@vger.kernel.org>; Sun, 19 Apr 2009 07:19:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=s5PDvt0CgfAYBsePKDwcGeP3UBwhqvOVsbaeu3qFh+A=;
-        b=aQqBl/e4CmGR/CW1Il+MddVOrsseGTmA6fTGeLg6ESFwib1FkuWd5PoN0WQPLLhddz
-         j4kh70bxbGwexFAD+OcZDliz9bNwXNTqtZE+4A6gUM3TCFNC1SL09Z1YXDJsg19f5+ap
-         dfxKS+q6szq7Pq3+taJ2+GNLfHCbJxW8UJnmA=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to:subject
+         :date:mime-version:content-type:content-transfer-encoding:x-priority
+         :x-msmail-priority:x-mailer:x-mimeole;
+        bh=Ecvi3RNEhzsTeTcXodizDDchrZnLG6Tv9MRm4/+reYk=;
+        b=fm2yD2l8qBoK8a6KGiGGEBvRH5aac4Ee5Lu4GccvrM/bRbTRFrJtwKn3KSIcKKo1H1
+         qFSQfhB5+INMhPKpZuR6kxgE+vpf5P22UlQqY6DyXSv+seCnscEuHh0KbkIEyZPJMgPU
+         djblJ5oE8DnkG6KLSgtxJz/hfOOkRnb5LEprI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=VwFT9S11hdBSdTNFyNV5EKlwtmF5Ex9ILzO+4KqanDnWUXvuKnmiwKbxs3KoDbToEp
-         dRnleR0qBoQqvQEHr9vfgx8s+Ks+ztNVtm5/itkteU7z/PUS13hWRvCyvjP9HtrmW6U6
-         KdLOapMY2HC0JMAXey1KAqSLibX1ErXH7ag7c=
-Received: by 10.220.100.83 with SMTP id x19mr4639645vcn.84.1240150635087;
-        Sun, 19 Apr 2009 07:17:15 -0700 (PDT)
-Received: from localhost.localdomain (97-116-111-23.mpls.qwest.net [97.116.111.23])
-        by mx.google.com with ESMTPS id 5sm3978397ywd.20.2009.04.19.07.17.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 19 Apr 2009 07:17:14 -0700 (PDT)
-X-Mailer: git-send-email 1.6.2.2.479.g2aec
-In-Reply-To: <b4087cc50904181713m49849f89q87a9f5a392085939@mail.gmail.com>
+        d=googlemail.com; s=gamma;
+        h=message-id:from:to:subject:date:mime-version:content-type
+         :content-transfer-encoding:x-priority:x-msmail-priority:x-mailer
+         :x-mimeole;
+        b=lGLXXzSl90k59h++Zc1MnxkG4qpkmnshRT7H498zFW5fG92LLX7fDFmuwJqi5NdMvY
+         SnT3XhyL56uAyE5GmGp7qLW2VT5mbyo/hI0SjLg8LCH3JMopK1Fd98IWqutfD872sQd1
+         m56Mc856RObkvc9rmja6IqZh231PtZQRidmgM=
+Received: by 10.210.33.3 with SMTP id g3mr4762220ebg.82.1240150781263;
+        Sun, 19 Apr 2009 07:19:41 -0700 (PDT)
+Received: from HPLAPTOP (mwgray.force9.co.uk [212.159.110.144])
+        by mx.google.com with ESMTPS id 10sm2006728eyz.38.2009.04.19.07.19.40
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 19 Apr 2009 07:19:41 -0700 (PDT)
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5512
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116899>
 
-Why not? It's at least useful for testing.
+The same F10 server is failing when doing a push locally from Linux :-
 
-Signed-off-by: Michael Witten <mfwitten@gmail.com>
----
+[root@*** hello-world]# git push git://git.***/hello-world
+Counting objects: 4, done.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 535 bytes, done.
+Total 3 (delta 1), reused 0 (delta 0)
+error: unpack failed: unpacker exited with error code
+To git://git.cybercomms.org/hello-world
+ ! [remote rejected] master -> master (n/a (unpacker error))
+error: failed to push some refs to 'git://git.***/hello-world'
 
-		NOTE: This also resulted in a similar change to:
-		[PATCH RFC3.5 04/12] send-email: Verification...
+messages :-
 
- Documentation/git-send-email.txt |    4 +++-
- git-send-email.perl              |    2 +-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+Apr 19 15:10:43 *** xinetd[29002]: START: git pid=30384 
+from=::ffff:192.168.0.1
+Apr 19 15:10:43 *** git-daemon: [30384] Connection from 192.168.0.1:40205
+Apr 19 15:10:43 *** git-daemon: [30384] Extended attributes (25 bytes) exist 
+<host=git.***>
+Apr 19 15:10:44 *** git-daemon: [30384] Request receive-pack for 
+'/hello-world'
+Apr 19 15:10:44 *** xinetd[29002]: EXIT: git status=0 pid=30384 
+duration=1(sec)
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 071e9bf..0937dd0 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -132,7 +132,9 @@ user is prompted for a password while the input is masked for privacy.
- 	be specified by the 'sendemail.smtpserver' configuration
- 	variable; the built-in default is `/usr/sbin/sendmail` or
- 	`/usr/lib/sendmail` if such a program is available, or
--	`localhost` otherwise.
-+	`localhost` otherwise. Also, the built-in default is used if
-+	`<host>` or 'sendemail.smtpserver' is the empty string (for
-+	example, if '--smtp-server ""' is specified on the command line).
- 
- --smtp-server-port=<port>::
- 	Specifies a port different from the default port (SMTP
-diff --git a/git-send-email.perl b/git-send-email.perl
-index fed3554..be6d171 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -675,7 +675,7 @@ if (defined $initial_reply_to) {
- 	$initial_reply_to = "<$initial_reply_to>" if $initial_reply_to ne '';
- }
- 
--if (defined $smtp_server) {
-+if (defined $smtp_server && $smtp_server ne '') {
- 
- 	$smtp_server_is_a_command = ($smtp_server =~ m{^/});
- 
--- 
-1.6.2.2.479.g2aec
+a 'git push /pub/git/hello-world' works fine though.
+
+Aaron
+
+On Sat, Apr 18, 2009 at 7:07 PM, Aaron Gray 
+<aaronngray.lists@googlemail.com> wrote:
+
+I am trying to get git to do a remote push, but it is intermittent, hanging 
+sometimes, and not working others :-
+
+  Aaron Gray@AMD2500-PC /usr/src/test/gittest/hello-world
+  $ git push git://git.***/hello-world
+  Counting objects: 4, done.
+  Compressing objects: 100% (3/3), done.
+  Writing objects: 100% (3/3), 557 bytes, done.
+  Total 3 (delta 1), reused 0 (delta 0)
+  fatal: read error (Software caused connection abort)
+
+Server: F10
+      git is version 1.6.0.6
+      git-daemon 1.6.0.6-3.fc10.i386
+
+Client: Cygwin
+      git is version 1.6.1.2
+
+/var/log/messages :-
+Apr 18 18:18:28 *** xinetd[29002]: START: git pid=3083 
+from=::ffff:212.19.110.144
+Apr 18 18:18:28 *** git-daemon: [3083] Connection from 212.159.110.144:6008
+Apr 18 18:18:28 *** git-daemon: [3083] Extended attributes (25 bytes) exist 
+<host=git.***.org>
+Apr 18 18:18:29 *** git-daemon: [3083] Request receive-pack for 
+'/hello-world'
+Apr 18 18:18:29 *** xinetd[29002]: EXIT: git status=0 pid=3083 
+duration=1(sec)
+
+Aaron 
