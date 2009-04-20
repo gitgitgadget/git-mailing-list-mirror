@@ -1,169 +1,180 @@
 From: Michael Witten <mfwitten@gmail.com>
-Subject: Subject: Re: [PATCH RFC3.5 02/12] send-email: No longer repeatedly test if $smtp_server is a command
-Date: Sun, 19 Apr 2009 23:53:16 -0500
-Message-ID: <49ec020a.050cc00a.2a50.ffffd0e3@mx.google.com>
+Subject: Re: [PATCH RFC3.5 06/12] send-email: Cleanup and streamline the SMTP 
+	code in send_message
+Date: Mon, 20 Apr 2009 00:38:50 -0500
+Message-ID: <b4087cc50904192238j744f353dtf5f6a616cada8cd8@mail.gmail.com>
 References: <1240074128-16132-1-git-send-email-mfwitten@gmail.com>
- <1240074128-16132-2-git-send-email-mfwitten@gmail.com>
- <1240074128-16132-3-git-send-email-mfwitten@gmail.com>
- <7veivop0dx.fsf@gitster.siamese.dyndns.org>
- <b4087cc50904191937x55f94dc3sb6fbda27f380b105@mail.gmail.com>
- <7viql0lzuw.fsf@gitster.siamese.dyndns.org>
+	 <1240074128-16132-2-git-send-email-mfwitten@gmail.com>
+	 <1240074128-16132-3-git-send-email-mfwitten@gmail.com>
+	 <1240074128-16132-4-git-send-email-mfwitten@gmail.com>
+	 <1240074128-16132-5-git-send-email-mfwitten@gmail.com>
+	 <1240074128-16132-6-git-send-email-mfwitten@gmail.com>
+	 <1240074128-16132-7-git-send-email-mfwitten@gmail.com>
+	 <7vskk4nlrg.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 20 07:06:37 2009
+X-From: git-owner@vger.kernel.org Mon Apr 20 07:40:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LvliB-0002Vp-6t
-	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 07:06:31 +0200
+	id 1LvmF0-000083-PD
+	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 07:40:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752289AbZDTFDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2009 01:03:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751923AbZDTFDJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 01:03:09 -0400
-Received: from mail-qy0-f126.google.com ([209.85.221.126]:35433 "EHLO
+	id S1753370AbZDTFix convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Apr 2009 01:38:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752853AbZDTFiw
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 01:38:52 -0400
+Received: from mail-qy0-f126.google.com ([209.85.221.126]:35503 "EHLO
 	mail-qy0-f126.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751659AbZDTFDI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2009 01:03:08 -0400
-Received: by qyk32 with SMTP id 32so1332353qyk.33
-        for <git@vger.kernel.org>; Sun, 19 Apr 2009 22:03:06 -0700 (PDT)
+	with ESMTP id S1750951AbZDTFiv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Apr 2009 01:38:51 -0400
+Received: by qyk32 with SMTP id 32so1347242qyk.33
+        for <git@vger.kernel.org>; Sun, 19 Apr 2009 22:38:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to:cc:date
-         :subject:in-reply-to:references;
-        bh=hQd98atM2XOIWyRQj1CTm00s9GVGwUah3uBDl1AmwOw=;
-        b=R5jnncgbIy8x9+jg5gkzlMMesM8FHcxobpHtNLG7W7C5xOoXk5l4wEAun+3EGsLw6I
-         V16dtYW5DIlm5DjCffjCYtjDiEeMslUY+CzU+Ys6QsVVLiUIkhHljHqEkPbIqqR02Jgl
-         DqTmpHoS0/CkkCLwfWQ6Gf1otnL08EJxDL5TY=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=fdsFxbaGOA2whPd5qvSNvpYMXs2fLLmcGOebHxnp0WQ=;
+        b=d/DvvP9AGFynFIZBtFqxi4slw7wZjGg8k90kSqIslhxSLxsw5F4Svcd5W7UDj9mdl+
+         4B/hoRuiVBderlUIoK0/xT5uXi2ASqz+tVL4JDviGtwRPwTi+3gmgXmJnbBQ13L5OfV6
+         uly+tPLL/I1xSw4P4sYRoL/Y5nCZuRy91jfs4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:from:to:cc:date:subject:in-reply-to:references;
-        b=hHugW2U0/bXroBYRsPpL8zmUlUQITresG/hCXFcYkn3xRh4phxqYqY4igNzLsRBp5v
-         77jsvxlw8x9ybtTrmjTkfAIPYDLE2df+eSZTeILWZj78e2aDopMEbsbSzUcDote++hLI
-         mp8JrmixE5WkKbAYxs2BgfTOomnjz/py5qSjY=
-Received: by 10.220.77.18 with SMTP id e18mr5191126vck.85.1240203786813;
-        Sun, 19 Apr 2009 22:03:06 -0700 (PDT)
-Received: from gmail.com (97-116-107-50.mpls.qwest.net [97.116.107.50])
-        by mx.google.com with ESMTPS id 5sm5671975ywl.8.2009.04.19.22.03.05
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 19 Apr 2009 22:03:06 -0700 (PDT)
-In-Reply-To: <7viql0lzuw.fsf@gitster.siamese.dyndns.org>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=d2XJg5j78kTTlDy/H0BFk5q3eIHHQlVQ1g9Z3hlnTRaDNEfbW/aXi5BcAClDjPb5ui
+         qDjqNcoKlukXzmk45HA5jvyBRTu7hlTXM2mMwHerjlqYCgQNHd5JBZ5hw1YXXtjliVrE
+         giRQ9Ld76QPdGxp9+E7gIvsE2JFEJaXkE+rOA=
+Received: by 10.224.37.138 with SMTP id x10mr5774641qad.147.1240205930172; 
+	Sun, 19 Apr 2009 22:38:50 -0700 (PDT)
+In-Reply-To: <7vskk4nlrg.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116936>
 
-On Sun, Apr 19, 2009 at 23:21, Junio C Hamano <gitster@pobox.com> wrote:
+On Sun, Apr 19, 2009 at 20:42, Junio C Hamano <gitster@pobox.com> wrote=
+:
 > Michael Witten <mfwitten@gmail.com> writes:
 >
->> ...
->>> I think a genuine improvement would be something like:
->>>
->>> 	if (!defined $smtp_server) {
->>> 		$smtp_server = 'localhost';
->>> 	}
->>
->> You don't care to search for a possible sendmail?
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 die "Serve=
+r does not support STARTTLS: " . $smtp->message . "\n"
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 unless $smtp->code =3D=3D 220;
 >
-> That's something you already did before setting smtp_server
-> unconditionally to localhost, right?  You do (in the above):
+> ...
+> But the following, which is equivalent to what you did, is inexcuable=
+=2E
 >
-> 	if (user gave $smtp_server) {
-> 		use it, notice and note if it is a command;
-> 	} else {
-> 		if (standard binary avaiable) {
-> 			use it, note it is a command;
-> 		}
-> 		# otherwise it still is undef
-> 	}
-> 	if (!defined $smtp_server) {
-> 		set it to localhost;
-> 	}
+> =A0 =A0 =A0 =A0do this;
+> =A0 =A0 =A0 =A0do that;
+> =A0 =A0 =A0 =A0do something unusual
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if some condition that rarely holds tr=
+ue;
+> =A0 =A0 =A0 =A0do some other thing;
 >
-> But I would probably write it this way:
+> When your eyes and brain are coasting over this segment of code, your
+> thought process needs to stumble and hiccup at the statment that does
+> something unusual, and then need to realize that it is qualified with=
+ a
+> statement modifier that says "this is only for rare case".
+
+I mostly agree, and I frequently consider[ed] exactly those points.
+However, there are 2 things that played a role in my decision:
+
+    * For most conditional cases, I personally
+      loathe curly braces around one statement.
+
+    * The flow is actually:
+
+            do this;
+            do that;
+
+            DIE "whisper some curses with the last breath"
+                UNLESS some condition that holds mostly true;
+
+            do some other thing;
+
+      The "die" and thoughtful spacing should be pretty good clues.
+      However, the "unless" can be strange to think with (at first);
+      I figured Perlers would be happy with it.
+
+In any case, I also like:
+
+    condition and/or (do something);
+
+or:
+
+    condition and/or do something;
+
+The only thing keeping me from using that more often is that I assume
+other people would be less comfortable with it and that it may
+introduce an unnecessary comparison of the return value of "do
+something"; also, it might make the line a little long, which some
+people get really angry about.
+
+> Written without statement modifier:
 >
-> 	if (user didn't give us $smtp_server) {
-> 		if (standard binary avaiable) {
-> 			use it, note it is a command;
-> 		} else {
-> 			use localhost;
-> 		}
-> 	}
-> 	if ($smtp_server looks like a command) {
-> 		$smtp_server_is_a_command = true;
-> 	}
+> =A0 =A0 =A0 =A0do this;
+> =A0 =A0 =A0 =A0do that;
+> =A0 =A0 =A0 =A0if (some consition that rarely holds true) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0do something unusual
+> =A0 =A0 =A0 =A0}
+> =A0 =A0 =A0 =A0do some other thing;
+
+I just have a hard time stomaching those curly braces. I really wish
+perl didn't enforce them when there's only one statement. Also, I
+would use some whitespace:
+
+    do this;
+    do that;
+
+    if (some consition that rarely holds true) {
+        do something unusual
+    }
+
+    do some other thing;
+
+>> + =A0 =A0 =A0 =A0 =A0 =A0 $smtp->mail($raw_from) =A0 =A0 =A0 =A0 =A0=
+ =A0 =A0 and
+>> + =A0 =A0 =A0 =A0 =A0 =A0 $smtp->to(@recipients) =A0 =A0 =A0 =A0 =A0=
+ =A0 =A0 and
+>> + =A0 =A0 =A0 =A0 =A0 =A0 $smtp->data =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 =A0 =A0 =A0 =A0and
+>> + =A0 =A0 =A0 =A0 =A0 =A0 $smtp->datasend("$header\n$message") and
+>> + =A0 =A0 =A0 =A0 =A0 =A0 $smtp->dataend =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 =A0 =A0 =A0 or
+>> +
+>> + =A0 =A0 =A0 =A0 =A0 =A0 die "Failed to send '$subject': " . $smtp-=
+>message . "\n";
 >
->
+> These do make things more pleasant to read.
 
-I suppose it's hard to tell from the patch, but it's actually
-a combination of those two:
-
-	if (user gave $smtp_server) {
-		use it, notice and note if it is a command;
-	} else { # use a default:
-		if (standard binary avaiable) {
-			use it, note it is a command;
-		} else {
-			use localhost;
-			# automatically noted as a command
-			# without doing anything (this would
-			# cause warnings if $smtp_is_a_command
-			# is used in places other than the bool
-			# context, because it will be undef);
-			# thus, my choice is a bad choice in
-			# the long run, but I'm sticking to it.
-		}
-	}
-
-The actual code:
-
-	if (defined $smtp_server) {
-
-		$smtp_server_is_a_command = ($smtp_server =~ m{^/});
-
-	} else { # use a default:
-
-		foreach (qw( /usr/sbin/sendmail /usr/lib/sendmail )) {
-			if (-x $_) {
-				$smtp_server = $_;
-				$smtp_server_is_a_command = 1;
-				last;
-			}
-		}
-
-		$smtp_server = 'localhost' # 127.0.0.1 is not compatible with IPv6
-			unless $smtp_server_is_a_command;
-	}
-
-(I'll remove the "127.0.0.1" comment).
-
-There's a minimum of checking and assigning; it's beautiful.
-Plus, this organization fits in well with the server/port
-verification (if I recall).
+Thanks!
 
 P.S.
 
-I also like:
+Sorry if the formatting of this email is bad; I'm in the middle of a
+large move between systems, and currently I'm stuck with gmail's
+webmail, which insists on reformatting my text and refusing to render
+in fixed-width font (though I bet I could hack firefox's css to get
+that one working.... hmmm.....), and firefox doesn't make it easy to
+input tabs.
 
-	$smtp_server_is_a_command or ($smtp_server = 'localhost');
+So, I've actually been writing and sending some emails with a combinati=
+on of:
 
-or, maybe:
+    * vim
+    * date +'%a, %e %b %Y %T %z'
+    * uuidgen (though I've found gmail makes a Message-ID for me)
+    * cat path/to/email.txt | perl -pe 's/\n/\r\n/; END {print
+"\r\n"}' | msmtp -t
 
-	$smtp_server_is_a_command or $smtp_server = 'localhost;
-
-However, I wasn't sure if that is acceptable to others; more
-importantly (:-D), I'm not sure that perl is smart enough to
-optimize away the unnecessary comparison of the values, so I
-figured that the modifier 'unless' is morally superior, because
-it probably has the advantage of fewer cycles than the 'or' form,
-and it has greater readability than the curly-braced conditional.
-I absolutely loathe curly braces around a body of one line:
-
-	if ($you_loath_this) {
-		print "Clap Your Hands!\n";
-	}
-
-If only the curly-braces weren't there. I don't know why, they
-just bug me terribly.
+This email was written in the webmail in firefox; I actually counted
+spaces for indentation in the hope that things line up. ;-)
