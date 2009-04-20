@@ -1,116 +1,121 @@
-From: Paul Gortmaker <paul.gortmaker@windriver.com>
-Subject: Re: [PATCH] gitweb: filter escapes from longer commit titles that
- break firefox
-Date: Mon, 20 Apr 2009 09:29:15 -0400
-Message-ID: <49EC78AB.6020009@windriver.com>
-References: <1239985473-666-1-git-send-email-paul.gortmaker@windriver.com> <m3r5znpt5g.fsf@localhost.localdomain>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH 2/2] Windows: Skip fstat/lstat optimization in
+	write_entry()
+Date: Mon, 20 Apr 2009 17:33:05 +0400
+Message-ID: <20090420133305.GE25059@dpotapov.dyndns.org>
+References: <49EC2F7C.8070209@viscovery.net> <20090420110302.GB25059@dpotapov.dyndns.org> <81b0412b0904200558w2d506f18i675d5dfb990005ce@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 20 15:31:42 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Kjetil Barvik <barvik@broadpark.no>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 20 15:35:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LvtaX-0001Zi-MP
-	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 15:31:10 +0200
+	id 1LvteX-0003AO-Mq
+	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 15:35:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755335AbZDTN3g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2009 09:29:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755324AbZDTN3g
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 09:29:36 -0400
-Received: from mail.windriver.com ([147.11.1.11]:63504 "EHLO mail.wrs.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754964AbZDTN3g (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2009 09:29:36 -0400
-Received: from ALA-MAIL03.corp.ad.wrs.com (ala-mail03 [147.11.57.144])
-	by mail.wrs.com (8.13.6/8.13.6) with ESMTP id n3KDTXYT007418;
-	Mon, 20 Apr 2009 06:29:33 -0700 (PDT)
-Received: from ala-mail06.corp.ad.wrs.com ([147.11.57.147]) by ALA-MAIL03.corp.ad.wrs.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Mon, 20 Apr 2009 06:29:33 -0700
-Received: from [128.224.146.65] ([128.224.146.65]) by ala-mail06.corp.ad.wrs.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Mon, 20 Apr 2009 06:29:32 -0700
-User-Agent: Thunderbird 2.0.0.21 (X11/20090409)
-In-Reply-To: <m3r5znpt5g.fsf@localhost.localdomain>
-X-OriginalArrivalTime: 20 Apr 2009 13:29:32.0866 (UTC) FILETIME=[0A5D2A20:01C9C1BC]
+	id S1755382AbZDTNdh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2009 09:33:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755076AbZDTNdh
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 09:33:37 -0400
+Received: from rv-out-0506.google.com ([209.85.198.236]:26866 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754238AbZDTNdg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2009 09:33:36 -0400
+Received: by rv-out-0506.google.com with SMTP id f9so1893312rvb.1
+        for <git@vger.kernel.org>; Mon, 20 Apr 2009 06:33:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=XBvszPj5k17cf5yzirphXUBs9EXIubS21Sc6NmYw6OM=;
+        b=kpIuvUmgh1NzxSD+kmFfcdc1CNXX2n109GVxM8dFtcrnBZoWwL7+M8Psko++57AqmJ
+         JDL+I+zgZyCCTTuq7mBZlTf5OMr1RuM8fQDBE2/wB4rsqFj6aerx/52XZjzCvN9uHFU0
+         BX7fDSlWqS9Q46R3W0KukPWBpuW9l7knspMSY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=TJCeREBIdeuol5Sq2BlYrSjYgRCVl/czEjQn90UuZ/+skmGi/JFSS3n/Rhb62Up6E3
+         KPNxOlzaXllNtKtqbMdBYUI5mO3pK1Gk7HU6kacgTQXxO+uufI7Rq0SJL+12Ha0dHcYa
+         9HRCHptD0mo/ck7ztWMinSgtn5hUb3ZFda0oE=
+Received: by 10.114.152.17 with SMTP id z17mr3321080wad.73.1240234415871;
+        Mon, 20 Apr 2009 06:33:35 -0700 (PDT)
+Received: from localhost ([91.78.50.115])
+        by mx.google.com with ESMTPS id k37sm16855634rvb.8.2009.04.20.06.33.33
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 20 Apr 2009 06:33:35 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <81b0412b0904200558w2d506f18i675d5dfb990005ce@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116983>
 
-Jakub Narebski wrote:
-> Paul Gortmaker <paul.gortmaker@windriver.com> writes:
->
->   
->> If there is a commit that ends in ^X and is longer in length than
->> what will fit in title_short, then it doesn't get fed through
->> esc_html() and so the ^X will appear as-is in the page source.
->>
->> When Firefox comes across this, it will fail to display the page,
->> and only display a couple lines of error messages that read like:
->>
->>    XML Parsing Error: not well-formed
->>    Location: http://git ....
->>
->> Signed-off-by: Paul Gortmaker <paul.gortmaker@windriver.com>
->>     
->
-> This is an issue for when project doesn't follow sanity (control
-> characters in commit message) nor commit message conventions of git
-> (limiting length of first line of commit message to 60-70 characters).
->   
+On Mon, Apr 20, 2009 at 02:58:49PM +0200, Alex Riesen wrote:
+> 2009/4/20 Dmitry Potapov <dpotapov@gmail.com>:
+> > The cygwin version has the same problem. (In fact, it is even worse,
+> > because we have an optimized version for lstat/stat but not for fstat,
+> > and they return different values for some fields like i_no). But even
+> > if we used the only Cygwin functions, we would still face the problem,
+> > because Windows returns the wrong values for timestamps (and maybe
+> > even size on FAT?). So I think the following patch should be squashed
+> > on top.
+> 
+> I just sent a patch with an "optimized" fstat. I see no problems (at least none
+> like these) with that patch. Timestamps match. Windows XP, yes. But since
+> that MSDN article mentions that it is not guaranteed, I guess I just been lucky.
 
-I agree - the situation should be that it doesn't happen, but it can 
-happen (and it did
-happen) that a novice, or a simple mistake ends up with such a commit. 
+If the time passed between the creating file and end of writing to it is
+small (less than timestamp resolution), you may not notice the problem.
+The following program demonstrates the problem with fstat on Windows.
+(I compiled it using Cygwin). If you remove 'sleep' then you may not
+notice the problem for a long time.
 
-> But I do not think that the solution presented here is good solution
-> for this problem.  chop_and_escape_str is meant as _output_ filter,
-> because it generates (can generate) fragment of HTML.  It is not a
-> good solution to use it for shortening in intermediate representation
-> of %co{'title'}.
->
-> And I think that issue might be a bug elsewhere in gitweb if we have
-> text output which is not passed through esc_html... or bug in CGI.pm
-> if the error is in not escaping of -title _attribute_ (attribute
-> escaping has slightly different rules than escaping HTML, and should
-> be done automatically by CGI.pm).
->
->
-> So thanks for noticing the issue, but NAK on the solution.
->   
+-- >8 --
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
-Fair enough -- I wasn't familiar with the code in there, and there 
-wasn't really any indication that it was for output only.  I can easily 
-believe that there is a better place for it -- I just didn't see where 
-any global esc_html filtering was taking place...
+#define FILENAME "stat-test.tmp"
 
-Paul.
+int main()
+{
+	struct stat st1, st2;
 
->   
->> ---
->>  gitweb/gitweb.perl |    2 +-
->>  1 files changed, 1 insertions(+), 1 deletions(-)
->>
->> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
->> index 33ef190..e686e82 100755
->> --- a/gitweb/gitweb.perl
->> +++ b/gitweb/gitweb.perl
->> @@ -2470,7 +2470,7 @@ sub parse_commit_text {
->>  	foreach my $title (@commit_lines) {
->>  		$title =~ s/^    //;
->>  		if ($title ne "") {
->> -			$co{'title'} = chop_str($title, 80, 5);
->> +			$co{'title'} = chop_and_escape_str($title, 80, 5);
->>  			# remove leading stuff of merges to make the interesting part visible
->>  			if (length($title) > 50) {
->>  				$title =~ s/^Automatic //;
->> -- 
->> 1.6.2.3
->>
->>     
->
->   
+	memset(&st1, 0, sizeof(st1));
+	memset(&st2, 0, sizeof(st2));
+
+	unlink(FILENAME);
+	int fd = open(FILENAME, O_CREAT|O_RDWR|O_TRUNC, S_IRWXU);
+	if (fd == -1)
+	{
+		perror("Cannot open " FILENAME);
+		return -1;
+	}
+	sleep(1); /* It is IMPORTANT! */
+	write(fd, "test\n", 5);
+	fstat(fd, &st1);
+	close(fd);
+	lstat(FILENAME, &st2);
+	if (memcmp(&st1, &st2, sizeof(st1))==0)
+		printf("fstat is OK\n");
+	else
+		printf("fstat is broken\n");
+	return 0;
+}
+-- >8 --
+
+Dmitry
