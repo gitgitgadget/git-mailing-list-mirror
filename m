@@ -1,102 +1,74 @@
-From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-Subject: Re: Oldest supported Perl version
-Date: Mon, 20 Apr 2009 23:10:35 +0200
-Message-ID: <20090420231035.683a7e0f@pc09.procura.nl>
-References: <76718490904200759l24e1bd9exe0e1b60f7b2847a7@mail.gmail.com>
-	<m3eivnp5p4.fsf@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] Windows: Skip fstat/lstat optimization in
+ write_entry()
+Date: Mon, 20 Apr 2009 14:17:36 -0700
+Message-ID: <7vbpqrdnyn.fsf@gitster.siamese.dyndns.org>
+References: <49EC2F7C.8070209@viscovery.net>
+ <20090420110302.GB25059@dpotapov.dyndns.org>
+ <81b0412b0904200558w2d506f18i675d5dfb990005ce@mail.gmail.com>
+ <20090420133305.GE25059@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael Witten <mfwitten@gmail.com>, git <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 20 23:12:16 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Kjetil Barvik <barvik@broadpark.no>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 20 23:19:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lw0mk-0007Gf-Gx
-	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 23:12:15 +0200
+	id 1Lw0u7-0001DL-Nq
+	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 23:19:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756084AbZDTVKk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2009 17:10:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755807AbZDTVKk
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 17:10:40 -0400
-Received: from smtp-vbr10.xs4all.nl ([194.109.24.30]:2718 "EHLO
-	smtp-vbr10.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752219AbZDTVKj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2009 17:10:39 -0400
-Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
-	(authenticated bits=0)
-	by smtp-vbr10.xs4all.nl (8.13.8/8.13.8) with ESMTP id n3KLAZ62024038
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 20 Apr 2009 23:10:35 +0200 (CEST)
-	(envelope-from h.m.brand@xs4all.nl)
-In-Reply-To: <m3eivnp5p4.fsf@localhost.localdomain>
-X-Mailer: Claws Mail 3.7.1cvs44 (GTK+ 2.14.4; x86_64-unknown-linux-gnu)
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
- JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
- e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
- TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
- LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
- NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
- AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
- n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
- 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
- LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
- I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1757275AbZDTVRt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2009 17:17:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757176AbZDTVRt
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 17:17:49 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:52082 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756587AbZDTVRs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2009 17:17:48 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3A5EBAC4E0;
+	Mon, 20 Apr 2009 17:17:46 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 09D07AC4DB; Mon,
+ 20 Apr 2009 17:17:37 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: B190DA80-2DF0-11DE-B380-C121C5FC92D5-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117038>
 
-On Mon, 20 Apr 2009 10:59:14 -0700 (PDT), Jakub Narebski
-<jnareb@gmail.com> wrote:
+Dmitry Potapov <dpotapov@gmail.com> writes:
 
-> Jay Soffian <jaysoffian@gmail.com> writes:
-> 
-> > On Sun, Apr 19, 2009 at 9:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> > >
-> > > Now the real question was if we still support anything older, and if so
-> > > what is the bottom version?
-> > >
-> > > I certainly can go with "5.8.1 or later", but I vaguely recall during the
-> > > gitweb discussion we said anything without the utf-8 support is unusable
-> > > for gitweb, but I think we also said that the rest of the git codebase
-> > > should support running with something older (5.6.1, perhaps).
-> 
-> > So here's my take-away. For the *.perl scripts and gitweb, it's
-> > 5.8.0. For the test suite and Git.pm, all Perl versions are
-> > theoretically supported, but for practical purposes, it may be
-> > 5.6.0.
-> 
-> Errr... no.  For gitweb we require good Unicode support, which means
-> Perl 5.8.x (IIRC 5.8.1).  For all other: commands (and helpers)
+> On Mon, Apr 20, 2009 at 02:58:49PM +0200, Alex Riesen wrote:
+>> 2009/4/20 Dmitry Potapov <dpotapov@gmail.com>:
+>> > The cygwin version has the same problem. (In fact, it is even worse,
+>> > because we have an optimized version for lstat/stat but not for fstat,
+>> > and they return different values for some fields like i_no). But even
+>> > if we used the only Cygwin functions, we would still face the problem,
+>> > because Windows returns the wrong values for timestamps (and maybe
+>> > even size on FAT?). So I think the following patch should be squashed
+>> > on top.
+>> 
+>> I just sent a patch with an "optimized" fstat. I see no problems (at least none
+>> like these) with that patch. Timestamps match. Windows XP, yes. But since
+>> that MSDN article mentions that it is not guaranteed, I guess I just been lucky.
+>
+> If the time passed between the creating file and end of writing to it is
+> small (less than timestamp resolution), you may not notice the problem.
+> The following program demonstrates the problem with fstat on Windows.
+> (I compiled it using Cygwin). If you remove 'sleep' then you may not
+> notice the problem for a long time.
 
-Unicode? 5.8.4 or up. Most desirable 5.8.5
-5.8.1 is the worst distribution ever.
+I take that you mean that Alex's patch does not work as intended.  In the
+meantime, I've squashed your one-liner "Cygwin-too" into Hannes's patch.
 
-ask purl on irc :
- <Tux> purl, perl-5.8.1?
-<purl> i guess perl-5.8.1 is made from blood, sweat, tears, coffee and single malt
-
-> written in Perl like git-svn, fragments of Perl in test suite (because
-> of incompatibility and corner cases of shell scripting) - with possible
-> exception of testing gitweb, and Git.pm (which some commands in Perl
-> use) I think it is reasonable to expect 5.6.0 at least.
-
-5.6.1 or 5.8.5
-
-> > Whatever is decided this time, perhaps it should be burned into the tops of
-> > the *.perl scripts (i.e. "require 5.008;"). It should also be added to
-> > CodingGuidelines. You know, so this conversation doesn't keep recurring. :-)
-
--- 
-H.Merijn Brand  http://tux.nl      Perl Monger  http://amsterdam.pm.org/
-using & porting perl 5.6.2, 5.8.x, 5.10.x, 5.11.x on HP-UX 10.20, 11.00,
-11.11, 11.23, and 11.31, OpenSuSE 10.3, 11.0, and 11.1, AIX 5.2 and 5.3.
-http://mirrors.develooper.com/hpux/           http://www.test-smoke.org/
-http://qa.perl.org      http://www.goldmark.org/jeff/stupid-disclaimers/
+Thanks.
