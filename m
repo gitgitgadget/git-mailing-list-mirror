@@ -1,96 +1,113 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Bug in test-lib.sh: test_create_repo() / RFC
-Date: Mon, 20 Apr 2009 16:51:18 +0200
-Message-ID: <49EC8BE6.2030709@drmicha.warpmail.net>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Oldest supported Perl version
+Date: Mon, 20 Apr 2009 10:59:00 -0400
+Message-ID: <76718490904200759l24e1bd9exe0e1b60f7b2847a7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 20 16:53:14 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Witten <mfwitten@gmail.com>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 20 17:00:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lvurj-0005uy-SV
-	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 16:53:00 +0200
+	id 1LvuzP-0000SI-2z
+	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 17:00:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755740AbZDTOv0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2009 10:51:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755694AbZDTOv0
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 10:51:26 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:49715 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755548AbZDTOv0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Apr 2009 10:51:26 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 70DF331C71A
-	for <git@vger.kernel.org>; Mon, 20 Apr 2009 10:51:25 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Mon, 20 Apr 2009 10:51:25 -0400
-X-Sasl-enc: cTqQTtPqVZlILLykgZl3yhTlB/cX8i/M4/FDDS1g4CqZ 1240239085
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id EEC742103A
-	for <git@vger.kernel.org>; Mon, 20 Apr 2009 10:51:24 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090420 Lightning/1.0pre Shredder/3.0b3pre
+	id S1756081AbZDTO7I convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Apr 2009 10:59:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756201AbZDTO7G
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 10:59:06 -0400
+Received: from mail-gx0-f166.google.com ([209.85.217.166]:63898 "EHLO
+	mail-gx0-f166.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755987AbZDTO7E convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Apr 2009 10:59:04 -0400
+Received: by gxk10 with SMTP id 10so601259gxk.13
+        for <git@vger.kernel.org>; Mon, 20 Apr 2009 07:59:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=qYvuEceE+blrujrFZwtZZJ4RpngxeB1M62bd4LI01Y0=;
+        b=sAuo8g1ltjjoYkjOWcaf5sQMyFplSaCarYA5NoaiqqNE7tav44bRz6CPB5baPafs57
+         kJCZ0EybWgTbelDjYdcpdSSRTHbAnqnw0QEX8/5H3mJ7O5BGxas/axoNxSLgTJTo00HM
+         qi2zAaf8rmkOpyHn1u1JX0TW0UpIkCMIhb+Uk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=CEF/JbqAkUrR5WIRMeBb3d0IkHH5Q1R9jsUoAPEoSXQnIHpA+pibOjsMj1rDDA3Q5g
+         VyQNYoeSPqbOe3W2c7MwbzpX0qZ/1RtKJLL2PyDbCM+m/+CE/WwVIz/Y2fQScvaiOTgT
+         U+mbemfKp7O0dCbr5Cav0m2hT3U57XuSWIFEo=
+Received: by 10.150.133.18 with SMTP id g18mr6516096ybd.57.1240239541197; Mon, 
+	20 Apr 2009 07:59:01 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116998>
 
-Hi there,
+On Sun, Apr 19, 2009 at 9:58 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Sorry, I should have checked myself. =C2=A0defined-or "//" is 5.8.1 o=
+r later.
+>
+> Now the real question was if we still support anything older, and if =
+so
+> what is the bottom version?
+>
+> I certainly can go with "5.8.1 or later", but I vaguely recall during=
+ the
+> gitweb discussion we said anything without the utf-8 support is unusa=
+ble
+> for gitweb, but I think we also said that the rest of the git codebas=
+e
+> should support running with something older (5.6.1, perhaps).
 
-running the test suite with -v for the upcoming release exposed a
-certain problem with test_create_repo() whose consequences I can't quite
-fathom at the moment. That means: I don't know whether it's maint
-material or forbidden fruits during rc-cycle...
+15 minutes of research:
 
-Problem:
-Since a6d63b7 (test-lib: avoid assuming that templates/ are in the
-GIT_EXEC_PATH, 2009-02-04), test_create_repo() assumes to be called from
-a directory such that `pwd`/../templates/blt/ contains templates for
-git-init.
+* 2006-06-25 Junio C Hamano: "Tentatively let's say our cut-off point i=
+s
+  somewhere around 5.6." --
+  http://article.gmane.org/gmane.comp.version-control.git/22607
 
-Several tests (see below) call test_create_repo() from a different
-directory, which means the repo is created without any of the default
-files (and that a mv .git/hooks .git/hooks-disabled later in the
-function errors out). Now, for most tests this probably doesn't matter
-at all but it's not nice.
+* 2008-05-30 Lea Wiemann: "Gitweb relies on Unicode support (e.g. "use
+  Encode") and will continue to be compatible with 5.8 and 5.10 only" -=
+-
+  http://article.gmane.org/gmane.comp.version-control.git/83339
 
-RFC:
-I see several possible solutions:
+* 2008-08-13 Lea Wiemann: "This makes Git.pm dependent on Perl 5.6.1. S=
+ome
+  tests (like t3701-add-interactive.sh) seem to work with pretty much a=
+ny Perl
+  version out there, and requiring File::Spec changes this" --
+  http://article.gmane.org/gmane.comp.version-control.git/92260
 
-- Make sure all tests use test_create_repo() from t/. Cumbersome and
-fragile.
+* 2008-08-15 Marcus Griep: "Git.pm: Make File::Spec and File::Temp requ=
+irement
+  lazy" -- c14c8ce
 
-- Simply use $(TEST_DIRECTORY)/../templates/blt/. Nice and easy. But
-uses the templates from the git repo containing t/ even when testing
-against and installed git (just like now, for most of the tests).
+* 2008-08-30 Junio C Hamano: "I agree we should say we rely on 5.6 or n=
+ewer."
+  -- http://article.gmane.org/gmane.comp.version-control.git/94399
 
-- Teach git a "--templates-dir" option similar to "--html-path" and use
-that (from the git actually being tested). Means we use the templates
-belonging to the tested git; but also means we can test only git
-versions containing that new option.
+* 2008-09-01 Junio C Hamano: "I personally think it is probably Ok to d=
+eclare
+  that we do depend on 5.8" --
+  http://article.gmane.org/gmane.comp.version-control.git/94523
 
-What do you think?
 
-Michael
+So here's my take-away. For the *.perl scripts and gitweb, it's 5.8.0. =
+=46or the
+test suite and Git.pm, all Perl versions are theoretically supported, b=
+ut for
+practical purposes, it may be 5.6.0.
 
-Affected tests:
-t0050-filesystem.sh
-t1007-hash-object.sh
-t1302-repo-version.sh
-t2103-update-index-ignore-missing.sh
-t4027-diff-submodule.sh
-t5300-pack-object.sh
-t5513-fetch-track.sh
-t5600-clone-fail-cleanup.sh
-t5601-clone.sh
-t5700-clone-reference.sh
-t5710-info-alternate.sh
-t6026-merge-attr.sh
-t7001-mv.sh
-t7010-setup.sh
-t7401-submodule-summary.sh
-t7506-status-submodule.sh
-t7508-status.sh
+Whatever is decided this time, perhaps it should be burned into the top=
+s of
+the *.perl scripts (i.e. "require 5.008;"). It should also be added to
+CodingGuidelines. You know, so this conversation doesn't keep recurring=
+=2E :-)
+
+j.
