@@ -1,113 +1,106 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: What are branches?
-Date: Mon, 20 Apr 2009 15:32:16 +0400
-Message-ID: <20090420113216.GC25059@dpotapov.dyndns.org>
-References: <alpine.DEB.1.00.0904191709220.10279@pacific.mpi-cbg.de>
+From: Hannu Koivisto <azure@iki.fi>
+Subject: Re: git rebase -i (and gitk) problem in Windows/Cygwin
+Date: Mon, 20 Apr 2009 15:06:11 +0300
+Message-ID: <83ljpvh6mk.fsf@kalahari.s2.org>
+References: <831vs4im37.fsf@kalahari.s2.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Apr 20 13:34:23 2009
+Cc: Kjetil Barvik <barvik@broadpark.no>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 20 14:08:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LvrlV-00028C-27
-	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 13:34:21 +0200
+	id 1LvsHt-0004e8-MN
+	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 14:07:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754721AbZDTLcs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2009 07:32:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754686AbZDTLcs
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 07:32:48 -0400
-Received: from rv-out-0506.google.com ([209.85.198.234]:17116 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754630AbZDTLcr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2009 07:32:47 -0400
-Received: by rv-out-0506.google.com with SMTP id b25so1308104rvf.5
-        for <git@vger.kernel.org>; Mon, 20 Apr 2009 04:32:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=o0ZnXQQ3emuXCk+5EJhbSflWr5v7FWz8qtkrasSOLuk=;
-        b=gxcUFCJ41QUzwCAbkDjJ+ubCzDlQr+HMIZRA/QbPaLKQqJy+mz9S2xygjWWLmYxgba
-         44BBvkEgZ8AooBIMX5yCm3i1KJwxEG34ir//yb1d/3gZCuLIYuhfmBrIn6iT/24pr3WU
-         8X57xGMKiXo3wRF6eDinyFbjMFtvOjHFA9gdg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=NYzkicEgrfhv+Mef8ftfTY59wVaw1CKkSZqlLy1jnfgwXJ8W/rz9gUaLpcVsQf/XXP
-         q+cHQAB3lBOpT+owL5P+sfNZlp0FbgmPJUw2h5w8lwemgm5Smn46xGitLYXOQ8kl+BJU
-         rz9cklfQ8/pF/U2gll/uL3mh8BlAmzqeCCKiU=
-Received: by 10.141.52.3 with SMTP id e3mr2486939rvk.73.1240227166420;
-        Mon, 20 Apr 2009 04:32:46 -0700 (PDT)
-Received: from localhost ([91.78.50.115])
-        by mx.google.com with ESMTPS id g22sm13722069rvb.35.2009.04.20.04.32.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 20 Apr 2009 04:32:45 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0904191709220.10279@pacific.mpi-cbg.de>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1755022AbZDTMGO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2009 08:06:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754934AbZDTMGO
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 08:06:14 -0400
+Received: from s2.org ([195.197.64.39]:42176 "EHLO kalahari.s2.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754467AbZDTMGN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2009 08:06:13 -0400
+Received: from azure by kalahari.s2.org with local (Exim 4.69)
+	(envelope-from <azure@iki.fi>)
+	id 1LvsGJ-0000AJ-W6; Mon, 20 Apr 2009 15:06:12 +0300
+In-Reply-To: <831vs4im37.fsf@kalahari.s2.org> (Hannu Koivisto's message of
+	"Tue, 07 Apr 2009 17:18:20 +0300")
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/22.2 (gnu/linux)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: azure@iki.fi
+X-SA-Exim-Scanned: No (on kalahari.s2.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116975>
 
-On Sun, Apr 19, 2009 at 05:17:52PM +0200, Johannes Schindelin wrote:
-> 
-> But it is important to keep in mind that our concept of branches is not 
-> intuitive:
-> 
-> http://longair.net/blog/2009/04/16/git-fetch-and-merge/
+Hannu Koivisto <azure@iki.fi> writes:
 
-I don't see how our concept of branches is any different from what other
-version control systems have; but I see why it is so confusing for many
-people. We define a branch as a line of development (I'm still think it
-is a pretty good and widely accepted definition of branch), yet when a
-newcomer runs gitk, what he or she sees is not a line but a graph.
+> Greetings,
+>
+> With current git.git (1.6.2.2.446.gfbdc0) built for Cygwin, running
+> on Windows XP, executing the following commands...
+>
+> mkdir test
+> cd test
+> git init
+>
+> echo initial > kala.c
+> echo initial > sur.c
+> git add *.c
+> git commit -m "Initial commit."
+>
+> echo addition >> kala.c
+> git commit -a -m "Kala addition 1."
+>
+> echo addition >> sur.c
+> git commit -a -m "Sur addition."
+>
+> echo addition2 >> kala.c
+> git commit -a -m "Kala addition 2."
+>
+> git rebase -i HEAD~3
+>
+> ...and moving commit "Kala addition 2." right after "Kala addition
+> 1." and marking it to be squashed results to
+>
+> ---8<----------------------------------------------------
+> error: Entry 'kala.c' not uptodate. Cannot merge.
+> fatal: merging of trees 787519579d90e45dfee00189985fa8c92f56be8f and 83f124d88764604c7d348e73103168bd98665e56 failed
+>
+> Could not apply 14eb9c7... Kala addition 2.
+> ---8<----------------------------------------------------
+>
+> rebase -i used to work fine earlier, but unfortunately I don't
+> remember which version I used back then (1.6.something).
+>
+> This problem doesn't occur on Linux with the same git version.
 
-Thus anyone looking at a gitk image may ask you: "Where is this line
-that represents the master branch?" Indeed, it is nearly impossible to
-see it, but it does not mean this line does not exist. If you run:
-gitk --first-parent master
-you can see it.
+For what it's worth, I managed to bisect the rebase problem down to
+commit e4c7292353dbef39feac1c6a60c5cde9140520a6 by Kjetil Barvik:
 
-Unfortunately, this line is far from being one straight line drawn in
-a single color. Thus, not surprisingly that this line cannot be seen in
-the graph, and here is where the mental image that a new user has about
-branches (based on different books and diagrams) clashes with the image
-presented by gitk. No one will ever draw the mainline like this:
+    write_entry(): use fstat() instead of lstat() when file is open
 
--o--o--o         o--o--o
-        \       /
-         o--o--o
+    Currently inside write_entry() we do an lstat(path, &st) call on a
+    file which have just been opened inside the exact same function.  It
+    should be better to call fstat(fd, &st) on the file while it is open,
+    and it should be at least as fast as the lstat() method.
 
-but it is not uncommon for gitk to display it in this way, and when
-this line is intervene with many other branches that forking from and
-merging to this mainline, all what you can see a complex graph and
-nothing more.
+> I don't know if it might be related (I suppose it could be because
+> of that "...not uptodate" message) but I also see the following
+> behaviour with gitk:
+>
+> * I change a file in workspace.
+> * I "Update" in gitk - I see the change.
+> * I undo the change.
+> * I "Update" in gitk - I see an empty change.
+> * "Reload" doesn't help - I still se an empty change.
+> * I run "git status" on the command line and then select "Update"
+>   in gitk -> now the change disappears.
 
-There is one more thing. In Git, all branches are equal and that is a
-really good feature from the implementation point of view as it makes
-design simpler and more powerful. But the user point of view, branches
-are never equal -- there is a _big_ difference between the master and
-any feature branch. All diagrams explaining branching and merging will
-show the mainline as a thick straight line running through all history
-(like a tree trunk) while feature branches fork and merge back to it.
-
-That is the mental image that a new user has, and that image clashes
-with what he or she sees in gitk. BTW, when I started to use Git, I
-strongly preferred qgit over gitk. Admittedly, gitk displays branches
-much better when you have a really bushy tree, but straight lines
-displayed by qgit were much easier to understand and to follow.
-
-So, I don't think that we have any conceptual problem here. It may be
-a visualization problem, but if you have a really complex tree, it may
-be impossible to present it as nice and simple as artificial diagrams
-in textbooks.
-
-
-Dmitry
+-- 
+Hannu
