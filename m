@@ -1,87 +1,63 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] tests: test applying criss-cross rename patch
-Date: Mon, 20 Apr 2009 16:11:01 +0200
-Message-ID: <81b0412b0904200711p66ea2500s7cc5894aba71f641@mail.gmail.com>
-References: <alpine.LFD.2.00.0904091147290.4583@localhost.localdomain>
-	 <1239463584-1427-1-git-send-email-michal.kiedrowicz@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 2/2] Windows: Skip fstat/lstat optimization in 	write_entry()
+Date: Mon, 20 Apr 2009 16:19:09 +0200
+Message-ID: <49EC845D.6020107@viscovery.net>
+References: <49EC2F7C.8070209@viscovery.net>	 <20090420110302.GB25059@dpotapov.dyndns.org>	 <81b0412b0904200558w2d506f18i675d5dfb990005ce@mail.gmail.com>	 <20090420133305.GE25059@dpotapov.dyndns.org> <81b0412b0904200654w1606a31fu227fa535cc14e10d@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?Q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 20 16:12:53 2009
+Content-Transfer-Encoding: 7bit
+Cc: Dmitry Potapov <dpotapov@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Kjetil Barvik <barvik@broadpark.no>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 20 16:21:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LvuEj-0008HJ-CZ
-	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 16:12:41 +0200
+	id 1LvuMd-0002s6-NP
+	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 16:20:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755549AbZDTOLH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Apr 2009 10:11:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755552AbZDTOLF
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 10:11:05 -0400
-Received: from mail-gx0-f166.google.com ([209.85.217.166]:32784 "EHLO
-	mail-gx0-f166.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755545AbZDTOLE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Apr 2009 10:11:04 -0400
-Received: by gxk10 with SMTP id 10so547377gxk.13
-        for <git@vger.kernel.org>; Mon, 20 Apr 2009 07:11:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=AuMSO3tDUIxMidHFEnMoYbHBZOm5KNqt3UtPtrBpDPE=;
-        b=FWAMHXDO+y8Gsvw/ZVkHZUk4Mmq1QJFKNQy4xQpXfZvmcHwS3Hy4S5TbI7wdkIe7x7
-         dV8HOIzRHDcgaTr8aEYoibxp9vR7sasqZY2iS99ZXHNef22HtxKPAOlvnIWyHHktHspa
-         JF8bJTUMD5sPWLBWkZFmnqBf6QydHGUCKssT8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=S4OfFPJ/4MStI/TgtaWw4+smLOodweC/itfPT7L5qZEqyvowfpatJfVp6DyjGqdyPx
-         gL0DP+ij7HDp6U5OHeeZykHp1wsj1aN0agJzUDjXuzLy/UNRXWGbfS8RbNhIw2R3jENm
-         aJIHldAoTep7yUl1NRy/FnShxrBRXGHf4Ox1w=
-Received: by 10.151.150.13 with SMTP id c13mr1942104ybo.179.1240236661912; 
-	Mon, 20 Apr 2009 07:11:01 -0700 (PDT)
-In-Reply-To: <1239463584-1427-1-git-send-email-michal.kiedrowicz@gmail.com>
+	id S1755647AbZDTOTS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2009 10:19:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755579AbZDTOTR
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 10:19:17 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:23293 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755558AbZDTOTR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2009 10:19:17 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LvuL1-0000XS-Bf; Mon, 20 Apr 2009 16:19:11 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 1A3AE4E4; Mon, 20 Apr 2009 16:19:11 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <81b0412b0904200654w1606a31fu227fa535cc14e10d@mail.gmail.com>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116989>
 
-2009/4/11 Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>:
-> +test_expect_success 'criss-cross rename' '
-> + =C2=A0 =C2=A0 =C2=A0 mv file1 tmp &&
-> + =C2=A0 =C2=A0 =C2=A0 mv file2 file1 &&
-> + =C2=A0 =C2=A0 =C2=A0 mv tmp file2
-> +'
-> +
-> +test_expect_success 'diff -M -B' '
-> + =C2=A0 =C2=A0 =C2=A0 git diff -M -B > diff &&
-> + =C2=A0 =C2=A0 =C2=A0 git reset --hard
-> +
-> +'
+Alex Riesen schrieb:
+> 2009/4/20 Dmitry Potapov <dpotapov@gmail.com>:
+>> If the time passed between the creating file and end of writing to it is
+>> small (less than timestamp resolution), you may not notice the problem.
+>> The following program demonstrates the problem with fstat on Windows.
+>> (I compiled it using Cygwin). If you remove 'sleep' then you may not
+>> notice the problem for a long time.
+> 
+> And the Windows being as slow as it is, the problem can stay undetected for
+> a long time in a real working code.
 
-This cannot work on systems where ctime is not trusted:
-git diff will produce no data, as there are no changes in
-metadata (the files are of the same size). Either make
-the file sizes different or add a "touch file1 file2".
+You got that wrong: If Windows were slow, the error would have been
+triggered more often and it would have been detected earlier. There you
+have the proof: Windows is fast ... enough :-P
 
-diff --git a/t/t4130-apply-criss-cross-rename.sh
-b/t/t4130-apply-criss-cross-rename.sh
-index 8623dbe..1ff049a 100755
---- a/t/t4130-apply-criss-cross-rename.sh
-+++ b/t/t4130-apply-criss-cross-rename.sh
-@@ -14,7 +14,7 @@ create_file() {
-
- test_expect_success 'setup' '
- 	create_file file1 "File1 contents" &&
--	create_file file2 "File2 contents" &&
-+	create_file file2 "Contents of File2" &&
- 	git add file1 file2 &&
- 	git commit -m 1
- '
+-- Hannes
