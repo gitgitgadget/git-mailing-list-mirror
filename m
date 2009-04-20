@@ -1,95 +1,77 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH 2/2] Windows: Skip fstat/lstat optimization in
-	write_entry()
-Date: Mon, 20 Apr 2009 15:03:02 +0400
-Message-ID: <20090420110302.GB25059@dpotapov.dyndns.org>
-References: <49EC2F7C.8070209@viscovery.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Kjetil Barvik <barvik@broadpark.no>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Apr 20 13:05:53 2009
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] clone: add test for push on an empty clone.
+Date: Mon, 20 Apr 2009 13:09:37 +0200
+Message-ID: <1240225777-31334-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <7vfxg3ipib.fsf@gitster.siamese.dyndns.org>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 20 13:15:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LvrJn-0002qK-Ep
-	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 13:05:52 +0200
+	id 1LvrSv-0005Vs-Du
+	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 13:15:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754768AbZDTLDh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2009 07:03:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754759AbZDTLDg
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 07:03:36 -0400
-Received: from rv-out-0506.google.com ([209.85.198.228]:12388 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754728AbZDTLDf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2009 07:03:35 -0400
-Received: by rv-out-0506.google.com with SMTP id f9so1843222rvb.1
-        for <git@vger.kernel.org>; Mon, 20 Apr 2009 04:03:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=c1vVXztlZIwOxcN+NktpBhhzezX8LiwUkKOkb/v8j8U=;
-        b=A8KiCOE/TAwTtTtzrtIDH9UbPimXmve8puYrgLk73ls2sa0Qhym4k1qBtQ7jwURCS+
-         nU98U5EQHr8U2+xpTpCaj/54mMFCqftKNwreWSgJlyQsv0NDnlHIAfJN6vUrD3cAeCzo
-         9VpP7WFIOZam9/zaqYcyZdK+zXR5vl5NXLvvQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=IL4Zth0rD31U+lqLaf9h10RiFyRxrRWw57I3EV/DqhfHfXTpgmKPwjLgSPJd6CF0sJ
-         qqRMiczRnO1zEg27h6bYZpCMJQDs2j4FweWkTwnMaVJwsX4hg6+Zb1AkLgO7BqQ9TeYN
-         oaVPwCN5vXF6VuD5wmmCgqvGwRuHyVnF1sZtw=
-Received: by 10.141.172.7 with SMTP id z7mr2476503rvo.128.1240225413275;
-        Mon, 20 Apr 2009 04:03:33 -0700 (PDT)
-Received: from localhost ([91.78.50.115])
-        by mx.google.com with ESMTPS id b8sm9895040rvf.10.2009.04.20.04.03.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 20 Apr 2009 04:03:31 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <49EC2F7C.8070209@viscovery.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1755126AbZDTLM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2009 07:12:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755120AbZDTLM7
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 07:12:59 -0400
+Received: from imag.imag.fr ([129.88.30.1]:40434 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754922AbZDTLM6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2009 07:12:58 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n3KB9kEY027609
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 20 Apr 2009 13:09:46 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1LvrNd-0000Fv-61; Mon, 20 Apr 2009 13:09:41 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1LvrNd-00089v-3g; Mon, 20 Apr 2009 13:09:41 +0200
+X-Mailer: git-send-email 1.6.2.2.449.g92961.dirty
+In-Reply-To: <7vfxg3ipib.fsf@gitster.siamese.dyndns.org>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 20 Apr 2009 13:09:46 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116972>
 
-The cygwin version has the same problem. (In fact, it is even worse,
-because we have an optimized version for lstat/stat but not for fstat,
-and they return different values for some fields like i_no). But even
-if we used the only Cygwin functions, we would still face the problem,
-because Windows returns the wrong values for timestamps (and maybe
-even size on FAT?). So I think the following patch should be squashed
-on top.
+Commit 55f0566 (get_local_heads(): do not return random pointer if
+there is no head, 2009-04-17) fixed a segfault for git push, this
+patch adds a test-case to avoid future regressions.
 
--- >8 --
-From 1f957680d9b0e0bfeda9bf0e20397b0323b45334 Mon Sep 17 00:00:00 2001
-From: Dmitry Potapov <dpotapov@gmail.com>
-Date: Mon, 20 Apr 2009 14:54:16 +0400
-Subject: [PATCH] cygwin: Skip fstat/lstat optimization in write_entry()
-
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- Makefile |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ t/t5701-clone-local.sh |   10 ++++++++++
+ 1 files changed, 10 insertions(+), 0 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 2af0dfb..177dc15 100644
---- a/Makefile
-+++ b/Makefile
-@@ -809,6 +809,7 @@ ifeq ($(uname_S),HP-UX)
- endif
- ifneq (,$(findstring CYGWIN,$(uname_S)))
- 	COMPAT_OBJS += compat/cygwin.o
-+	UNRELIABLE_FSTAT = UnfortunatelyYes
- endif
- ifneq (,$(findstring MINGW,$(uname_S)))
- 	NO_PREAD = YesPlease
+diff --git a/t/t5701-clone-local.sh b/t/t5701-clone-local.sh
+index 3559d17..f26b511 100755
+--- a/t/t5701-clone-local.sh
++++ b/t/t5701-clone-local.sh
+@@ -132,4 +132,14 @@ test_expect_success 'clone empty repository' '
+ 	 test $actual = $expected)
+ '
+ 
++test_expect_success 'clone empty repository, and then push should not segfault.' '
++	cd "$D" &&
++	rm -fr empty/ empty-clone/ &&
++	mkdir empty &&
++	(cd empty && git init) &&
++	git clone empty empty-clone &&
++	cd empty-clone &&
++	test_must_fail git push
++'
++
+ test_done
 -- 
-1.6.1.20.gee856
--- >8 --
+1.6.2.2.449.g92961.dirty
